@@ -3,6 +3,31 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="none">
 
+        <item android:id="@+id/setAlarmType"
+            android:title="@string/configAction_setAlarmType"
+            android:icon="?attr/icActionNotification"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/setAlarmEvent"
+            android:title="@string/configAction_setAlarmEvent"
+            android:icon="?attr/icActionAlarm"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/setAlarmOffset"
+            android:title="@string/configAction_setAlarmOffset"
+            android:icon="?attr/icActionAlarm"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/setAlarmLocation"
+            android:title="@string/configAction_setAlarmLocation"
+            android:icon="?attr/icActionPlace"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/setAlarmRepeat"
+            android:title="@string/configAction_setAlarmRepeat"
+            android:icon="?attr/icActionCalendar"
+            app:showAsAction="never" />
+
         <item android:id="@+id/deleteAlarm"
             android:title="@string/configAction_deleteAlarm"
             android:icon="?attr/icActionDelete"

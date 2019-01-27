@@ -1419,6 +1419,34 @@ public class AlarmClockActivity extends AppCompatActivity
                 {
                     switch (menuItem.getItemId())
                     {
+                        case R.id.setAlarmType:
+                            showAlarmTypeMenu(item, buttonView, itemView);
+                            return true;
+
+                        case R.id.setAlarmEvent:
+                            if (adapterListener != null) {
+                                adapterListener.onRequestSolarEvent(item);
+                            }
+                            return true;
+
+                        case R.id.setAlarmOffset:
+                            if (adapterListener != null) {
+                                adapterListener.onRequestOffset(item);
+                            }
+                            return true;
+
+                        case R.id.setAlarmLocation:
+                            if (adapterListener != null) {
+                                adapterListener.onRequestLocation(item);
+                            }
+                            return true;
+
+                        case R.id.setAlarmRepeat:
+                            if (adapterListener != null) {
+                                adapterListener.onRequestRepetition(item);
+                            }
+                            return true;
+
                         case R.id.deleteAlarm:
                             deleteAlarm(item, itemView);
                             return true;
