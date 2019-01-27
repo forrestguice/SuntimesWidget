@@ -291,9 +291,7 @@ public class AlarmClockActivity extends AppCompatActivity
         super.onSaveInstanceState(outState);
         saveListViewPosition(outState);
 
-        if (t_selectedItem != null) {
-            outState.putString(KEY_SELECTED_ROWID, t_selectedItem.toString());
-        }
+        outState.putString(KEY_SELECTED_ROWID, adapter.getSelectedItem() + "");
 
         if (t_selectedLocation != null) {
             outState.putParcelable(KEY_SELECTED_LOCATION, t_selectedLocation);
@@ -312,6 +310,7 @@ public class AlarmClockActivity extends AppCompatActivity
         } else {
             try {
                 t_selectedItem = Long.parseLong(idString);
+                setSelectedItem(t_selectedItem);
 
             } catch (NumberFormatException e) {
                 Log.w(TAG, "onRestoreInstanceState: KEY_SELECTED_ROWID is invalid! not a Long.. ignoring: " + idString);
@@ -389,14 +388,20 @@ public class AlarmClockActivity extends AppCompatActivity
             if (adapter != null)
             {
                 AlarmClockItem item = adapter.getItem(position);
-                if (item != null)
-                {
-                    t_selectedItem = item.rowID;
-                    adapter.setSelectedItem(item.rowID);
+                if (item != null) {
+                    setSelectedItem(item.rowID);
                 }
             }
         }
     };
+
+    protected void setSelectedItem(long rowID)
+    {
+        t_selectedItem = rowID;
+        if (adapter != null) {
+            adapter.setSelectedItem(rowID);
+        } else Log.d(TAG, "setSelectedItem: adapter is null");
+    }
 
     /**
      * onActionButtonClick
@@ -545,6 +550,9 @@ public class AlarmClockActivity extends AppCompatActivity
         public void onFinished(AlarmClockAdapter result)
         {
             adapter = result;
+            if (t_selectedItem != null) {
+                adapter.setSelectedItem(t_selectedItem);
+            }
             adapter.setAdapterListener(onAdapterAction);
         }
     };
