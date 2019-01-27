@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.calculator.core;
 
 /**
  * CalculatorProviderContract
- * @version 0 (0.1.0)
+ * @version 1 (0.2.0)
  *
  * Supported URIs have the form: "content://AUTHORITY/query"
  * ..where [AUTHORITY] is "suntimeswidget.calculator.provider"
@@ -207,8 +207,8 @@ public interface CalculatorProviderContract
 {
     String AUTHORITY = "suntimeswidget.calculator.provider";
     String READ_PERMISSION = "suntimes.permission.READ_CALCULATOR";
-    String VERSION_NAME = "v0.1.0";
-    int VERSION_CODE = 0;
+    String VERSION_NAME = "v0.2.0";
+    int VERSION_CODE = 1;
 
     /**
      * CONFIG
@@ -219,6 +219,7 @@ public interface CalculatorProviderContract
     String COLUMN_CONFIG_APP_VERSION_CODE = "config_app_version_code";             // int (app version code)
     String COLUMN_CONFIG_APP_THEME = "config_app_theme";                           // String (themeName)
     String COLUMN_CONFIG_LOCALE = "config_locale";                                 // String (localeCode)
+    String COLUMN_CONFIG_LOCATION = "location";                                    // String (locationName)
     String COLUMN_CONFIG_LATITUDE = "latitude";                                    // String (dd)
     String COLUMN_CONFIG_LONGITUDE = "longitude";                                  // String (dd)
     String COLUMN_CONFIG_ALTITUDE = "altitude";                                    // String (meters)
@@ -233,31 +234,31 @@ public interface CalculatorProviderContract
             COLUMN_CONFIG_PROVIDER_VERSION, COLUMN_CONFIG_PROVIDER_VERSION_CODE,
             COLUMN_CONFIG_LOCALE, COLUMN_CONFIG_APP_THEME,
             COLUMN_CONFIG_CALCULATOR, COLUMN_CONFIG_CALCULATOR_FEATURES,
-            COLUMN_CONFIG_LATITUDE, COLUMN_CONFIG_LONGITUDE, COLUMN_CONFIG_ALTITUDE,
+            COLUMN_CONFIG_LOCATION, COLUMN_CONFIG_LATITUDE, COLUMN_CONFIG_LONGITUDE, COLUMN_CONFIG_ALTITUDE,
             COLUMN_CONFIG_TIMEZONE, COLUMN_CONFIG_APPWIDGETID
     };
 
     /**
      * SUN
      */
-    String COLUMN_SUN_NOON = "solarnoon";                   // long (timestamp)
-    String COLUMN_SUN_ACTUAL_RISE = "sunrise";              // long (timestamp)
-    String COLUMN_SUN_ACTUAL_SET = "sunset";                // long (timestamp)
+    String COLUMN_SUN_NOON = "solarnoon";                   // long (timestamp); (broken <= v0.10.2 [returns Calendar])
+    String COLUMN_SUN_ACTUAL_RISE = "sunrise";              // long (timestamp); (broken <= v0.10.2 [returns Calendar])
+    String COLUMN_SUN_ACTUAL_SET = "sunset";                // long (timestamp); (broken <= v0.10.2 [returns Calendar])
 
-    String COLUMN_SUN_CIVIL_RISE = "civilrise";             // long (timestamp)
-    String COLUMN_SUN_CIVIL_SET = "civilset";               // long (timestamp)
-    String COLUMN_SUN_NAUTICAL_RISE = "nauticalrise";       // long (timestamp)
-    String COLUMN_SUN_NAUTICAL_SET = "nauticalset";         // long (timestamp)
-    String COLUMN_SUN_ASTRO_RISE = "astrorise";             // long (timestamp)
-    String COLUMN_SUN_ASTRO_SET = "astroset";               // long (timestamp)
+    String COLUMN_SUN_CIVIL_RISE = "civilrise";             // long (timestamp); (broken <= v0.10.2 [returns Calendar])
+    String COLUMN_SUN_CIVIL_SET = "civilset";               // long (timestamp); (broken <= v0.10.2 [returns Calendar])
+    String COLUMN_SUN_NAUTICAL_RISE = "nauticalrise";       // long (timestamp); (broken <= v0.10.2 [returns Calendar])
+    String COLUMN_SUN_NAUTICAL_SET = "nauticalset";         // long (timestamp); (broken <= v0.10.2 [returns Calendar])
+    String COLUMN_SUN_ASTRO_RISE = "astrorise";             // long (timestamp); (broken <= v0.10.2 [returns Calendar])
+    String COLUMN_SUN_ASTRO_SET = "astroset";               // long (timestamp); (broken <= v0.10.2 [returns Calendar])
 
-    String COLUMN_SUN_GOLDEN_MORNING = "goldenmorning";     // long (timestamp)
-    String COLUMN_SUN_GOLDEN_EVENING = "goldenevening";     // long (timestamp)
+    String COLUMN_SUN_GOLDEN_MORNING = "goldenmorning";     // long (timestamp); (broken <= v0.10.2 [returns Calendar])
+    String COLUMN_SUN_GOLDEN_EVENING = "goldenevening";     // long (timestamp); (broken <= v0.10.2 [returns Calendar])
 
-    String COLUMN_SUN_BLUE8_RISE = "blue8rise";             // long (timestamp)
-    String COLUMN_SUN_BLUE4_RISE = "blue4rise";             // long (timestamp)
-    String COLUMN_SUN_BLUE8_SET = "blue8set";               // long (timestamp)
-    String COLUMN_SUN_BLUE4_SET = "blue4set";               // long (timestamp)
+    String COLUMN_SUN_BLUE8_RISE = "blue8rise";             // long (timestamp); (broken <= v0.10.2 [returns Calendar])
+    String COLUMN_SUN_BLUE4_RISE = "blue4rise";             // long (timestamp); (broken <= v0.10.2 [returns Calendar])
+    String COLUMN_SUN_BLUE8_SET = "blue8set";               // long (timestamp); (broken <= v0.10.2 [returns Calendar])
+    String COLUMN_SUN_BLUE4_SET = "blue4set";               // long (timestamp); (broken <= v0.10.2 [returns Calendar])
 
     String QUERY_SUN = "sun";
     String[] QUERY_SUN_PROJECTION = new String[] {
@@ -291,8 +292,8 @@ public interface CalculatorProviderContract
     /**
      * MOON
      */
-    String COLUMN_MOON_RISE = "moonrise";                  // long (timestamp)
-    String COLUMN_MOON_SET = "moonset";                    // long (timestamp)
+    String COLUMN_MOON_RISE = "moonrise";                  // long (timestamp); (broken <= v0.10.2 [returns Calendar])
+    String COLUMN_MOON_SET = "moonset";                    // long (timestamp); (broken <= v0.10.2 [returns Calendar])
 
     String QUERY_MOON = "moon";
     String[] QUERY_MOON_PROJECTION = new String[] { COLUMN_MOON_RISE, COLUMN_MOON_SET };
