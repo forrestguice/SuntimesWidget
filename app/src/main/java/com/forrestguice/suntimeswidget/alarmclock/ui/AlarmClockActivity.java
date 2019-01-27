@@ -55,6 +55,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -374,9 +375,19 @@ public class AlarmClockActivity extends AppCompatActivity
         actionButton.setOnClickListener(onActionButtonClick);
 
         alarmList = (ListView)findViewById(R.id.alarmList);
+        alarmList.setOnItemClickListener(onAlarmItemClick);
+
         emptyView = findViewById(android.R.id.empty);
         emptyView.setOnClickListener(onEmptyViewClick);
     }
+
+    private AdapterView.OnItemClickListener onAlarmItemClick = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+        {
+            // TODO
+        }
+    };
 
     /**
      * onActionButtonClick
