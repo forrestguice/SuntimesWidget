@@ -312,6 +312,7 @@ public class AlarmClockActivity extends AppCompatActivity
         } else {
             try {
                 t_selectedItem = Long.parseLong(idString);
+
             } catch (NumberFormatException e) {
                 Log.w(TAG, "onRestoreInstanceState: KEY_SELECTED_ROWID is invalid! not a Long.. ignoring: " + idString);
                 t_selectedItem = null;
@@ -385,7 +386,15 @@ public class AlarmClockActivity extends AppCompatActivity
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id)
         {
-            // TODO
+            if (adapter != null)
+            {
+                AlarmClockItem item = adapter.getItem(position);
+                if (item != null)
+                {
+                    t_selectedItem = item.rowID;
+                    adapter.setSelectedItem(item.rowID);
+                }
+            }
         }
     };
 
@@ -1103,9 +1112,10 @@ public class AlarmClockActivity extends AppCompatActivity
     public static class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
     {
         private Context context;
+        private long selectedItem;
         private ArrayList<AlarmClockItem> items;
         private int iconAlarm, iconNotification, iconSoundEnabled, iconSoundDisabled;
-        private int alarmEnabledColor, alarmDisabledColor;
+        private int alarmEnabledColor, alarmDisabledColor, alarmSelectedColor;
 
         public AlarmClockAdapter(Context context)
         {
@@ -1135,6 +1145,8 @@ public class AlarmClockActivity extends AppCompatActivity
             iconSoundEnabled = a.getResourceId(4, R.drawable.ic_action_soundenabled);
             iconSoundDisabled = a.getResourceId(5, R.drawable.ic_action_sounddisabled);
             a.recycle();
+
+            alarmSelectedColor = ContextCompat.getColor(context, R.color.accent);  // TODO
         }
 
         @Override
@@ -1168,6 +1180,16 @@ public class AlarmClockActivity extends AppCompatActivity
             return null;
         }
 
+        public void setSelectedItem(long rowID)
+        {
+            selectedItem = rowID;
+            notifyDataSetChanged();
+        }
+
+        public long getSelectedItem() {
+             return selectedItem;
+        }
+
         @Override
         @NonNull
         public View getView(int position, View convertView, @NonNull ViewGroup parent)
@@ -1192,14 +1214,19 @@ public class AlarmClockActivity extends AppCompatActivity
                 view.setVisibility(View.GONE);
                 return view;
             }
+            final boolean isSelected = (item.rowID == selectedItem);
 
             //ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
             //icon.setImageResource(item.icon);
 
             final View card = view.findViewById(R.id.layout_alarmcard);
-            if (card != null)
-            {
+            if (card != null) {
                 card.setBackgroundColor(item.enabled ? alarmEnabledColor : alarmDisabledColor);
+            }
+
+            final View cardBackdrop = view.findViewById(R.id.layout_alarmcard0);
+            if (cardBackdrop != null && isSelected) {
+                cardBackdrop.setBackgroundColor( alarmSelectedColor );
             }
 
             final ImageButton typeButton = (ImageButton) view.findViewById(R.id.type_menu);
@@ -1209,7 +1236,11 @@ public class AlarmClockActivity extends AppCompatActivity
                 @Override
                 public void onClick(View v)
                 {
-                    showAlarmTypeMenu(item, typeButton, view);
+                    if (isSelected) {
+                        showAlarmTypeMenu(item, typeButton, view);
+                    } else {
+                        setSelectedItem(item.rowID);
+                    }
                 }
             });
 
@@ -1223,8 +1254,12 @@ public class AlarmClockActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v)
                     {
-                        if (adapterListener != null) {
-                            adapterListener.onRequestLabel(item);
+                        if (isSelected) {
+                            if (adapterListener != null) {
+                                adapterListener.onRequestLabel(item);
+                            }
+                        } else {
+                            setSelectedItem(item.rowID);
                         }
                     }
                 });
@@ -1239,9 +1274,13 @@ public class AlarmClockActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v)
                     {
-                        if (adapterListener != null)
-                        {
-                            adapterListener.onRequestSolarEvent(item);
+                        if (isSelected) {
+                            if (adapterListener != null)
+                            {
+                                adapterListener.onRequestSolarEvent(item);
+                            }
+                        } else {
+                            setSelectedItem(item.rowID);
                         }
                     }
                 });
@@ -1269,8 +1308,12 @@ public class AlarmClockActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v)
                     {
-                        if (adapterListener != null) {
-                            adapterListener.onRequestTime(item);
+                        if (isSelected) {
+                            if (adapterListener != null) {
+                                adapterListener.onRequestTime(item);
+                            }
+                        } else {
+                            setSelectedItem(item.rowID);
                         }
                     }
                 });
@@ -1286,8 +1329,12 @@ public class AlarmClockActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v)
                     {
-                        if (adapterListener != null) {
-                            adapterListener.onRequestLocation(item);
+                        if (isSelected) {
+                            if (adapterListener != null) {
+                                adapterListener.onRequestLocation(item);
+                            }
+                        } else {
+                            setSelectedItem(item.rowID);
                         }
                     }
                 });
@@ -1302,6 +1349,9 @@ public class AlarmClockActivity extends AppCompatActivity
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                     {
+                        if (!isSelected) {
+                            setSelectedItem(item.rowID);
+                        }
                         enableAlarm(item, card, isChecked);
                     }
                 });
@@ -1325,8 +1375,12 @@ public class AlarmClockActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v)
                     {
-                        if (adapterListener != null) {
-                            adapterListener.onRequestRingtone(item);
+                        if (isSelected) {
+                            if (adapterListener != null) {
+                                adapterListener.onRequestRingtone(item);
+                            }
+                        } else {
+                            setSelectedItem(item.rowID);
                         }
                     }
                 });
@@ -1347,6 +1401,7 @@ public class AlarmClockActivity extends AppCompatActivity
                         task.execute(item);
                     }
                 });
+                check_vibrate.setEnabled(isSelected);
             }
 
             TextView option_repeat = (TextView) view.findViewById(R.id.option_repeat);
@@ -1363,8 +1418,12 @@ public class AlarmClockActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v)
                     {
-                        if (adapterListener != null) {
-                            adapterListener.onRequestRepetition(item);
+                        if (isSelected) {
+                            if (adapterListener != null) {
+                                adapterListener.onRequestRepetition(item);
+                            }
+                        } else {
+                            setSelectedItem(item.rowID);
                         }
                     }
                 });
@@ -1389,8 +1448,12 @@ public class AlarmClockActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v)
                     {
-                        if (adapterListener != null) {
-                            adapterListener.onRequestOffset(item);
+                        if (isSelected) {
+                            if (adapterListener != null) {
+                                adapterListener.onRequestOffset(item);
+                            }
+                        } else {
+                            setSelectedItem(item.rowID);
                         }
                     }
                 });
@@ -1407,6 +1470,7 @@ public class AlarmClockActivity extends AppCompatActivity
                         showOverflowMenu(item, v, view);
                     }
                 });
+                overflow.setVisibility(isSelected ? View.VISIBLE : View.INVISIBLE);
             }
 
             return view;
