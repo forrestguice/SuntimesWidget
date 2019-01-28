@@ -8,6 +8,11 @@
             android:title="@string/configAction_clearAlarms"
             app:showAsAction="never" />
 
+        <item android:id="@+id/action_settings"
+            android:icon="?attr/icActionSettings"
+            android:title="@string/configAction_settings"
+            app:showAsAction="never" />
+
         <item android:id="@+id/action_help"
             android:icon="?attr/icActionHelp"
             android:title="@string/configAction_help"

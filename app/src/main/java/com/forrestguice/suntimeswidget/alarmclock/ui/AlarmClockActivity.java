@@ -954,6 +954,15 @@ public class AlarmClockActivity extends AppCompatActivity
     }
 
     /**
+     * showSettings
+     */
+    protected void showSettings()
+    {
+        Intent settingsIntent = new Intent(this, SuntimesSettingsActivity.class);
+        startActivity(settingsIntent);
+    }
+
+    /**
      * showHelp
      */
     protected void showHelp()
@@ -1721,6 +1730,10 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             case R.id.action_clear:
                 clearAlarms();
+                return true;
+
+            case R.id.action_settings:
+                showSettings();
                 return true;
 
             case R.id.action_help:
