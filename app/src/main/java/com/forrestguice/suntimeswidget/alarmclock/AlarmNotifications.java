@@ -212,10 +212,13 @@ public class AlarmNotifications extends BroadcastReceiver
         return intent;
     }
 
-    public static Intent getAlarmListIntent(Context context)
+    public static Intent getAlarmListIntent(Context context, Long selectedAlarmId)
     {
         Intent intent = new Intent(context, AlarmClockActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (selectedAlarmId != null) {
+            intent.putExtra(AlarmClockActivity.EXTRA_SELECTED_ALARM, selectedAlarmId);
+        }
         return intent;
     }
 
@@ -803,7 +806,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onFinished(Boolean result, AlarmClockItem item)
                 {
                     Log.d(TAG, "State Saved (onDisabled)");
-                    context.startActivity(getAlarmListIntent(context));   // open the alarm list
+                    context.startActivity(getAlarmListIntent(context, item.rowID));   // open the alarm list
                     stopForeground(true);     // remove notification (will kill running tasks)
                     //dismissNotification(context, (int)item.rowID);  // dismiss upcoming reminders
                 }
@@ -822,6 +825,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         Log.d(TAG, "State Saved (onScheduledDistant)");
                         long transitionAt = item.alarmtime - AlarmSettings.loadPrefAlarmUpcoming(context) + 1000;
                         addAlarmTimeout(context, ACTION_SCHEDULE, item.getUri(), transitionAt);
+                        context.startActivity(getAlarmListIntent(context, item.rowID));   // open the alarm list
                         //dismissNotification(context, (int)item.rowID);
                     }
                 }

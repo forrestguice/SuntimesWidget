@@ -32,6 +32,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.provider.AlarmClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -71,6 +72,7 @@ import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
+import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
@@ -95,6 +97,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
     public static final String EXTRA_SHOWBACK = "showBack";
     public static final String EXTRA_SOLAREVENT = "solarevent";
+    public static final String EXTRA_SELECTED_ALARM = "selectedAlarm";
     public static final int REQUEST_RINGTONE = 10;
 
     private static final String DIALOGTAG_EVENT_FAB = "alarmeventfab";
@@ -194,6 +197,14 @@ public class AlarmClockActivity extends AppCompatActivity
                 Log.i(TAG, "ACTION_SET_ALARM :: " + param_label + ", " + param_hour + ", " + param_minute + ", " + param_event);
                 addAlarm(AlarmClockItem.AlarmType.ALARM, param_label, param_event, param_hour, param_minute, param_vibrate, param_ringtoneUri, param_days);
             }
+        }
+
+        long selectedID = intent.getLongExtra(EXTRA_SELECTED_ALARM, -1);
+        if (selectedID != -1)
+        {
+            Log.d(TAG, "handleIntent: selected id: " + selectedID);
+            t_selectedItem = selectedID;
+            setSelectedItem(t_selectedItem);
         }
     }
 
