@@ -1176,7 +1176,7 @@ public class AlarmClockActivity extends AppCompatActivity
             iconSoundDisabled = a.getResourceId(5, R.drawable.ic_action_sounddisabled);
             a.recycle();
 
-            alarmSelectedColor = ContextCompat.getColor(context, R.color.accent);  // TODO
+            alarmSelectedColor = ContextCompat.getColor(context, R.color.grid_selected);
         }
 
         @Override
