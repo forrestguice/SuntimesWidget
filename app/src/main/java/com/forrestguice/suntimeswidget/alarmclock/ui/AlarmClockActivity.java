@@ -1381,7 +1381,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 ImageSpan icon = SuntimesUtils.createImageSpan(context, iconID, 28, 28, 0);
 
                 final String none = context.getString(R.string.alarmOption_ringtone_none);
-                String ringtoneName = (item.ringtoneName != null ? item.ringtoneName : none);
+                String ringtoneName = isSelected ? (item.ringtoneName != null ? item.ringtoneName : none) : "";
 
                 String ringtoneLabel = context.getString(R.string.alarmOption_ringtone_label, ringtoneName);
                 SpannableStringBuilder ringtoneDisplay = SuntimesUtils.createSpan(context, ringtoneLabel, "[icon]", icon);
@@ -1426,6 +1426,9 @@ public class AlarmClockActivity extends AppCompatActivity
                     }
                 });
                 check_vibrate.setEnabled(isSelected);
+                if (!isSelected) {
+                    check_vibrate.setText("");
+                }
             }
 
             TextView option_repeat = (TextView) view.findViewById(R.id.option_repeat);
