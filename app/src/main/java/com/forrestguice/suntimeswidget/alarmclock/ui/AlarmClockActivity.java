@@ -1416,6 +1416,13 @@ public class AlarmClockActivity extends AppCompatActivity
                         item.modified = true;
                         AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, false);
                         task.execute(item);
+
+                        if (isChecked) {
+                            Vibrator vibrate = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                            if (vibrate != null) {
+                                vibrate.vibrate(500);
+                            }
+                        }
                     }
                 });
                 check_vibrate.setEnabled(isSelected);
