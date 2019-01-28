@@ -1445,12 +1445,14 @@ public class AlarmClockActivity extends AppCompatActivity
             TextView option_repeat = (TextView) view.findViewById(R.id.option_repeat);
             if (option_repeat != null)
             {
+                boolean noRepeat = item.repeatingDays == null || item.repeatingDays.isEmpty();
+
                 String repeatText = AlarmClockItem.repeatsEveryDay(item.repeatingDays)
                         ? context.getString(R.string.alarmOption_repeat_all)
-                        : (item.repeatingDays == null || item.repeatingDays.isEmpty())
+                        : noRepeat
                                 ? context.getString(R.string.alarmOption_repeat_none)
                                 : AlarmRepeatDialog.getDisplayString(context, item.repeatingDays);
-                option_repeat.setText(repeatText);
+                option_repeat.setText( isSelected || !noRepeat ? repeatText : "" );
 
                 option_repeat.setOnClickListener(new View.OnClickListener() {
                     @Override
