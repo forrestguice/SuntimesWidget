@@ -1536,6 +1536,12 @@ public class AlarmClockActivity extends AppCompatActivity
                             showAlarmTypeMenu(item, buttonView, itemView);
                             return true;
 
+                        case R.id.setAlarmLabel:
+                            if (adapterListener != null) {
+                                adapterListener.onRequestLabel(item);
+                            }
+                            return true;
+
                         case R.id.setAlarmEvent:
                             if (adapterListener != null) {
                                 adapterListener.onRequestSolarEvent(item);

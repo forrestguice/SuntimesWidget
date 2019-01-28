@@ -8,6 +8,11 @@
             android:icon="?attr/icActionNotification"
             app:showAsAction="never" />
 
+        <item android:id="@+id/setAlarmLabel"
+            android:title="@string/configAction_setAlarmLabel"
+            android:icon="?attr/icActionNotification"
+            app:showAsAction="never" />
+
         <item android:id="@+id/setAlarmEvent"
             android:title="@string/configAction_setAlarmEvent"
             android:icon="?attr/icActionAlarm"
