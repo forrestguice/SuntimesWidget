@@ -302,7 +302,9 @@ public class AlarmClockActivity extends AppCompatActivity
         super.onSaveInstanceState(outState);
         saveListViewPosition(outState);
 
-        outState.putString(KEY_SELECTED_ROWID, adapter.getSelectedItem() + "");
+        if (adapter != null) {
+            outState.putString(KEY_SELECTED_ROWID, adapter.getSelectedItem() + "");
+        }
 
         if (t_selectedLocation != null) {
             outState.putParcelable(KEY_SELECTED_LOCATION, t_selectedLocation);
