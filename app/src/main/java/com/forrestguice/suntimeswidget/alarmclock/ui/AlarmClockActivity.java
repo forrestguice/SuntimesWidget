@@ -23,9 +23,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.graphics.PorterDuff;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -38,9 +42,14 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v4.widget.CompoundButtonCompat;
+import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
@@ -1146,6 +1155,7 @@ public class AlarmClockActivity extends AppCompatActivity
         private ArrayList<AlarmClockItem> items;
         private int iconAlarm, iconNotification, iconSoundEnabled, iconSoundDisabled;
         private int alarmEnabledColor, alarmDisabledColor, alarmSelectedColor;
+        private int disabledTextColor, pressedTextColor;
 
         public AlarmClockAdapter(Context context)
         {
@@ -1176,7 +1186,9 @@ public class AlarmClockActivity extends AppCompatActivity
             iconSoundDisabled = a.getResourceId(5, R.drawable.ic_action_sounddisabled);
             a.recycle();
 
-            alarmSelectedColor = ContextCompat.getColor(context, R.color.grid_selected);
+            alarmSelectedColor = ContextCompat.getColor(context, R.color.grid_selected);        // TODO: themed
+            disabledTextColor = ContextCompat.getColor(context, R.color.text_disabled_dark);    // TODO: themed
+            pressedTextColor = ContextCompat.getColor(context, R.color.btn_tint_pressed_dark);  // TODO: themed
         }
 
         @Override
@@ -1273,6 +1285,9 @@ public class AlarmClockActivity extends AppCompatActivity
                     }
                 }
             });
+            if (!isSelected) {
+                ImageViewCompat.setImageTintList(typeButton, SuntimesUtils.colorStateList(disabledTextColor, disabledTextColor, disabledTextColor));
+            }
 
             final TextView text = (TextView) view.findViewById(android.R.id.text1);
             if (text != null)
@@ -1293,6 +1308,9 @@ public class AlarmClockActivity extends AppCompatActivity
                         }
                     }
                 });
+                if (!isSelected) {
+                    text.setTextColor(disabledTextColor);
+                }
             }
 
             final TextView text2 = (TextView) view.findViewById(android.R.id.text2);
@@ -1314,6 +1332,9 @@ public class AlarmClockActivity extends AppCompatActivity
                         }
                     }
                 });
+                if (!isSelected) {
+                    text2.setTextColor(disabledTextColor);
+                }
             }
 
             TextView text_datetime = (TextView) view.findViewById(R.id.text_datetime);
@@ -1331,6 +1352,10 @@ public class AlarmClockActivity extends AppCompatActivity
                     String timeString = timeText.getValue() + " " + timeText.getSuffix();
                     SpannableString timeDisplay = SuntimesUtils.createRelativeSpan(null, timeString, " " + timeText.getSuffix(), 0.40f);
                     text_datetime.setText(timeDisplay);
+                }
+
+                if (!isSelected && !item.enabled) {
+                    text_datetime.setTextColor(disabledTextColor);
                 }
 
                 text_datetime.setOnClickListener(new View.OnClickListener()
@@ -1368,6 +1393,11 @@ public class AlarmClockActivity extends AppCompatActivity
                         }
                     }
                 });
+                if (!isSelected) {
+                    Drawable[] d = SuntimesUtils.tintCompoundDrawables(text_location.getCompoundDrawables(), disabledTextColor);
+                    text_location.setCompoundDrawables(d[0], d[1], d[2], d[3]);
+                    text_location.setTextColor(disabledTextColor);
+                }
             }
 
             Switch switch_enabled = (Switch) view.findViewById(R.id.switch_enabled);
@@ -1391,7 +1421,8 @@ public class AlarmClockActivity extends AppCompatActivity
             if (text_ringtone != null)
             {
                 int iconID = item.ringtoneName != null ? iconSoundEnabled : iconSoundDisabled;
-                ImageSpan icon = SuntimesUtils.createImageSpan(context, iconID, 28, 28, 0);
+                ImageSpan icon = isSelected ? SuntimesUtils.createImageSpan(context, iconID, 28, 28, 0)
+                                            : SuntimesUtils.createImageSpan(context, iconID, 28, 28, disabledTextColor, PorterDuff.Mode.MULTIPLY);
 
                 final String none = context.getString(R.string.alarmOption_ringtone_none);
                 String ringtoneName = isSelected ? (item.ringtoneName != null ? item.ringtoneName : none) : "";
@@ -1455,6 +1486,9 @@ public class AlarmClockActivity extends AppCompatActivity
                                 ? context.getString(R.string.alarmOption_repeat_none)
                                 : AlarmRepeatDialog.getDisplayString(context, item.repeatingDays);
                 option_repeat.setText( isSelected || !noRepeat ? repeatText : "" );
+                if (!isSelected) {
+                    option_repeat.setTextColor(disabledTextColor);
+                }
 
                 option_repeat.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -1483,6 +1517,10 @@ public class AlarmClockActivity extends AppCompatActivity
                     String offsetDisplay = offsetText + (isBefore ? " before" : " after");        // TODO
                     Spannable offsetSpan = SuntimesUtils.createBoldSpan(null, offsetDisplay, offsetText);
                     option_offset.setText(offsetSpan);
+                }
+
+                if (!isSelected && !item.enabled) {
+                    option_offset.setTextColor(disabledTextColor);
                 }
 
                 option_offset.setOnClickListener(new View.OnClickListener()
@@ -1673,6 +1711,7 @@ public class AlarmClockActivity extends AppCompatActivity
                             Intent disableIntent = AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISABLE, item.getUri());
                             context.sendBroadcast(disableIntent);
                         }
+                        notifyDataSetChanged();
 
                     } else Log.e("AlarmClockActivity", "enableAlarm: failed to save state!");
                 }
