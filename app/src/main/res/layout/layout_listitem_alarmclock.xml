@@ -80,7 +80,7 @@
         <TextView
             android:id="@+id/text_datetime"
             android:layout_width="0dp" android:layout_height="wrap_content"
-            tools:text="11:22 am"
+            tools:text="11:22 am" android:textColor="?attr/text_buttonSelector"
             android:layout_marginTop="14dp"
             android:layout_marginStart="8dp" android:layout_marginLeft="8dp"
             android:gravity="start" android:ellipsize="end" android:maxLines="1"
