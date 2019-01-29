@@ -1250,6 +1250,10 @@ public class SuntimesUtils
 
     public static ImageSpan createImageSpan(Context context, int drawableID, int width, int height, int tint)
     {
+        return createImageSpan(context, drawableID, width, height, tint, PorterDuff.Mode.SRC_ATOP);
+    }
+    public static ImageSpan createImageSpan(Context context, int drawableID, int width, int height, int tint, PorterDuff.Mode tintMode)
+    {
         Drawable drawable = null;
         try {
             drawable = context.getResources().getDrawable(drawableID);
@@ -1264,7 +1268,7 @@ public class SuntimesUtils
             {
                 drawable.setBounds(0, 0, width, height);
             }
-            drawable.setColorFilter(tint, PorterDuff.Mode.SRC_ATOP);
+            drawable.setColorFilter(tint, tintMode);
         }
         return new ImageSpan(drawable);
     }
