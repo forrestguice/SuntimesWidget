@@ -1681,4 +1681,26 @@ public class SuntimesUtils
         );
     }
 
+    /**
+     *
+     * @param drawables an array of compound drawable; expects [4] {left, top, right, bottom}
+     * @param tintColor the color to apply
+     * @return the same array now containing tinted drawables
+     */
+    public static Drawable[] tintCompoundDrawables(Drawable[] drawables, int tintColor)
+    {
+        if (drawables.length > 0)
+        {
+            for (int i=0; i<drawables.length; i++)
+            {
+                if (drawables[i] != null)
+                {
+                    drawables[i] = drawables[i].mutate();
+                    drawables[i].setColorFilter(tintColor, PorterDuff.Mode.MULTIPLY);
+                }
+            }
+        }
+        return drawables;
+    }
+
 }
