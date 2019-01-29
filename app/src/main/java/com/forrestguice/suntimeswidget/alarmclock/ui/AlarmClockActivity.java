@@ -492,6 +492,8 @@ public class AlarmClockActivity extends AppCompatActivity
             public void onFinished(Boolean result, AlarmClockItem item)
             {
                 if (result) {
+                    Log.d(TAG, "onAlarmAdded: " + item.rowID);
+                    t_selectedItem = item.rowID;
                     updateViews(AlarmClockActivity.this);
                 }
             }

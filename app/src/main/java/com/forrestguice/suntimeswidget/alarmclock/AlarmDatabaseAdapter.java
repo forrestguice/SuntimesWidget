@@ -491,12 +491,19 @@ public class AlarmDatabaseAdapter
             for (AlarmClockItem item : items)
             {
                 lastItem = item;
-                boolean itemUpdated = ((flag_add
-                        ? (db.addAlarm(item.asContentValues(false)) > 0)
-                        : (db.updateAlarm(item.rowID, item.asContentValues(false)))));
+                long lastItemID = item.rowID;
+
+                boolean itemUpdated;
+                if (flag_add) {
+                    lastItem.rowID = db.addAlarm(item.asContentValues(false));
+                    itemUpdated = (lastItem.rowID > 0);
+
+                } else {
+                    itemUpdated = (db.updateAlarm(item.rowID, item.asContentValues(false)));
+                }
 
                 if (itemUpdated && flag_withState && item.state != null) {
-                    db.updateAlarmState(item.rowID, item.state.asContentValues());
+                    db.updateAlarmState(lastItemID, item.state.asContentValues());
                 }
 
                 updated = updated && itemUpdated;
