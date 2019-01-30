@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -121,27 +122,41 @@ public class AlarmTimeDialog extends DialogFragment
     protected void initViews( final Context context, View dialogContent )
     {
         timePicker = (TimePicker)dialogContent.findViewById(R.id.timepicker);
-        if (timePicker != null)
-        {
-            timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener()
-            {
-                @Override
-                public void onTimeChanged(TimePicker view, int hourOfDay, int minute)
-                {
-                    AlarmTimeDialog.this.hour = hourOfDay;
-                    AlarmTimeDialog.this.minute = minute;
-                }
-            });
+        setTimeChangedListener();
+    }
+
+    private void setTimeChangedListener()
+    {
+        if (timePicker != null) {
+            timePicker.setOnTimeChangedListener(onTimeChanged);
         }
     }
+    private void clearTimeChangedListener()
+    {
+        if (timePicker != null) {
+            timePicker.setOnTimeChangedListener(null);
+        }
+    }
+
+    private TimePicker.OnTimeChangedListener onTimeChanged = new TimePicker.OnTimeChangedListener()
+    {
+        @Override
+        public void onTimeChanged(TimePicker view, int hourOfDay, int minute)
+        {
+            AlarmTimeDialog.this.hour = hourOfDay;
+            AlarmTimeDialog.this.minute = minute;
+        }
+    };
 
     private void updateViews(Context context)
     {
         if (timePicker != null)
         {
+            clearTimeChangedListener();
             timePicker.setIs24HourView(is24);
             timePicker.setCurrentHour(hour);
             timePicker.setCurrentMinute(minute);
+            setTimeChangedListener();
         }
     }
 
