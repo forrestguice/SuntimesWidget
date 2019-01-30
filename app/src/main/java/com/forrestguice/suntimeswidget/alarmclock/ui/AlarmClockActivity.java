@@ -1288,7 +1288,7 @@ public class AlarmClockActivity extends AppCompatActivity
                     }
                 }
             });
-            if (!isSelected) {
+            if (!isSelected && !item.enabled) {
                 ImageViewCompat.setImageTintList(typeButton, SuntimesUtils.colorStateList(disabledTextColor, disabledTextColor, disabledTextColor));
             }
 
@@ -1424,8 +1424,8 @@ public class AlarmClockActivity extends AppCompatActivity
             if (text_ringtone != null)
             {
                 int iconID = item.ringtoneName != null ? iconSoundEnabled : iconSoundDisabled;
-                ImageSpan icon = isSelected ? SuntimesUtils.createImageSpan(context, iconID, 28, 28, 0)
-                                            : SuntimesUtils.createImageSpan(context, iconID, 28, 28, disabledTextColor, PorterDuff.Mode.MULTIPLY);
+                ImageSpan icon = isSelected || item.enabled ? SuntimesUtils.createImageSpan(context, iconID, 28, 28, 0)
+                                                            : SuntimesUtils.createImageSpan(context, iconID, 28, 28, disabledTextColor, PorterDuff.Mode.MULTIPLY);
 
                 final String none = context.getString(R.string.alarmOption_ringtone_none);
                 String ringtoneName = isSelected ? (item.ringtoneName != null ? item.ringtoneName : none) : "";

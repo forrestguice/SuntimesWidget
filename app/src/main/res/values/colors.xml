@@ -16,8 +16,8 @@
 
     <color name="text_alertDialogListItem">#000000</color>
 
-    <color name="grid_selected_dark">#81009688</color>
-    <color name="grid_selected_light">#810096FF</color>
+    <color name="grid_selected_dark">@color/sunIcon_color_rising_dark</color>  <!-- #81009688 -->
+    <color name="grid_selected_light">@color/sunIcon_color_rising_light</color>
 
     <color name="text_disabled_dark">#4Dffffff</color>
     <color name="text_accent_dark">@color/deep_teal_200</color>
