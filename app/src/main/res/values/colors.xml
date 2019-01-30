@@ -15,7 +15,9 @@
     <color name="btn_tint_pressed_light">#3277C7</color> <!-- #CF4800 -->
 
     <color name="text_alertDialogListItem">#000000</color>
-    <color name="grid_selected">#81009688</color>
+
+    <color name="grid_selected_dark">#81009688</color>
+    <color name="grid_selected_light">#810096FF</color>
 
     <color name="text_disabled_dark">#4Dffffff</color>
     <color name="text_accent_dark">@color/deep_teal_200</color>

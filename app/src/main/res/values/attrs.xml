@@ -14,6 +14,7 @@
 
     <attr name="alarmCardEnabled" format="reference" />
     <attr name="alarmCardDisabled" format="reference" />
+    <attr name="gridItemSelected" format="reference" />
 
     <attr name="buttonPressColor" format="reference" />
     <attr name="text_buttonSelector" format="reference" />

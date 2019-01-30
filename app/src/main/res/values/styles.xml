@@ -18,6 +18,7 @@
 
         <item name="alarmCardEnabled">@color/alarm_enabled_light</item>
         <item name="alarmCardDisabled">@color/alarm_disabled_light</item>
+        <item name="gridItemSelected">@color/grid_selected_light</item>
 
         <item name="buttonPressColor">@color/btn_tint_pressed_light</item>
         <item name="text_buttonSelector">@drawable/btn_txt_light</item>
@@ -115,6 +116,7 @@
 
         <item name="alarmCardEnabled">@color/alarm_enabled_dark</item>
         <item name="alarmCardDisabled">@color/alarm_disabled_dark</item>
+        <item name="gridItemSelected">@color/grid_selected_dark</item>
 
         <item name="buttonPressColor">@color/btn_tint_pressed_dark</item>
         <item name="text_buttonSelector">@drawable/btn_txt_dark</item>
