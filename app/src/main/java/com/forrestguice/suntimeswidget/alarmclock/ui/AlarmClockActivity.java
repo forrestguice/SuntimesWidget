@@ -1178,7 +1178,9 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             this.context = context;
 
-            int[] attrs = { R.attr.alarmCardEnabled, R.attr.alarmCardDisabled, R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.icActionSoundEnabled, R.attr.icActionSoundDisabled};
+            int[] attrs = { R.attr.alarmCardEnabled, R.attr.alarmCardDisabled,
+                    R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.icActionSoundEnabled, R.attr.icActionSoundDisabled,
+                    R.attr.text_disabledColor, R.attr.gridItemSelected, R.attr.buttonPressColor};
             TypedArray a = context.obtainStyledAttributes(attrs);
             alarmEnabledColor = ContextCompat.getColor(context, a.getResourceId(0, R.color.alarm_enabled_dark));
             alarmDisabledColor = ContextCompat.getColor(context, a.getResourceId(1, R.color.alarm_disabled_dark));
@@ -1186,11 +1188,10 @@ public class AlarmClockActivity extends AppCompatActivity
             iconNotification = a.getResourceId(3, R.drawable.ic_action_notification);
             iconSoundEnabled = a.getResourceId(4, R.drawable.ic_action_soundenabled);
             iconSoundDisabled = a.getResourceId(5, R.drawable.ic_action_sounddisabled);
+            disabledTextColor = ContextCompat.getColor(context, a.getResourceId(6, R.color.text_disabled_dark));
+            alarmSelectedColor = ContextCompat.getColor(context, a.getResourceId(7, R.color.grid_selected_dark));
+            pressedTextColor = ContextCompat.getColor(context, a.getResourceId(8, R.color.btn_tint_pressed_dark));
             a.recycle();
-
-            alarmSelectedColor = ContextCompat.getColor(context, R.color.grid_selected);        // TODO: themed
-            disabledTextColor = ContextCompat.getColor(context, R.color.text_disabled_dark);    // TODO: themed
-            pressedTextColor = ContextCompat.getColor(context, R.color.btn_tint_pressed_dark);  // TODO: themed
         }
 
         @Override
