@@ -4,6 +4,11 @@
 * adds a clock widget (#154, #260); displays solar time (Local Mean Time, Apparent Solar Time), or the time in a given timezone.
 * changes the default solar time mode to "Apparent Solar Time".
 
+### v0.10.3 (2019-01-31)
+* adds app shortcuts (Android 7.1+); a shortcut to the Widget List, a shortcut to the Theme Editor (#288).
+* reveals previously hidden azimuthal map projection in the World Map dialog (#284); layout issues for this projection continue to exist for smaller screens.
+* fixes a CalculatorProvider bug where sun/moon queries returned the wrong data type (Calendar obj vs long timestamp).
+
 ### v0.10.2 (2019-01-10)
 * fixes bug "'get location' does not honor the 'units of length' pref" (#290).
 * improves the accuracy of the apparent solar time calculation (#291).
