@@ -1,6 +1,7 @@
 ### ~
 
-### v0.10.2 (2019-01-28)
+### v0.10.3 (2019-01-31)
+* adds app shortcuts (Android 7.1+); a shortcut to the Widget List, a shortcut to the Theme Editor (#288).
 * reveals previously hidden azimuthal map projection in the World Map dialog (#284); layout issues for this projection continue to exist for smaller screens.
 * fixes a CalculatorProvider bug where sun/moon queries returned the wrong data type (Calendar obj vs long timestamp).
 
