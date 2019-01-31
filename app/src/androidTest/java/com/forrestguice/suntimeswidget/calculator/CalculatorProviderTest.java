@@ -28,10 +28,12 @@ import android.support.annotation.Nullable;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -125,6 +127,7 @@ public class CalculatorProviderTest
 {
     private Context mockContext;
     private Calendar TEST_DATE0, TEST_DATE1;
+    private SuntimesCalculator sunCalculator, moonCalculator;
 
     @Before
     public void setup()
@@ -136,6 +139,18 @@ public class CalculatorProviderTest
 
         TEST_DATE1 = Calendar.getInstance();
         TEST_DATE1.set(2019, 0, 0, 0, 0, 0);
+
+        sunCalculator = getCalculator("");
+        moonCalculator = getCalculator("moon");
+    }
+
+    private SuntimesCalculator getCalculator(String calculatorName)
+    {
+        Location location = WidgetSettings.loadLocationPref(mockContext, 0);
+        TimeZone timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(mockContext, 0));
+        SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(mockContext, 0, calculatorName);
+        SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(mockContext, descriptor);
+        return factory.createCalculator(location, timezone);
     }
 
     @Test
@@ -266,12 +281,16 @@ public class CalculatorProviderTest
         String[] projection0 = QUERY_SEASONS_PROJECTION;
         Cursor cursor0 = resolver.query(uri0, projection0, null, null, null);
         test_cursorHasColumns("QUERY_SEASONS", cursor0, projection0);
+        assertTrue(COLUMN_SEASON_YEAR + " should contain int!", columnIsInt(cursor0, COLUMN_SEASON_YEAR));
+        test_allColumnsLong("QUERY_SEASONS", cursor0, new String[] {COLUMN_SEASON_VERNAL, COLUMN_SEASON_SUMMER, COLUMN_SEASON_AUTUMN, COLUMN_SEASON_WINTER});
 
         // case 1: year
         Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SEASONS + "/" + TEST_DATE0.get(Calendar.YEAR));
         String[] projection1 = QUERY_SEASONS_PROJECTION;
         Cursor cursor1 = resolver.query(uri1, projection1, null, null, null);
         test_cursorHasColumns("QUERY_SEASONS", cursor1, projection1);
+        assertTrue(COLUMN_SEASON_YEAR + " should contain int!", columnIsInt(cursor1, COLUMN_SEASON_YEAR));
+        test_allColumnsLong("QUERY_SEASONS", cursor1, new String[] {COLUMN_SEASON_VERNAL, COLUMN_SEASON_SUMMER, COLUMN_SEASON_AUTUMN, COLUMN_SEASON_WINTER});
 
         // case 2: range
         Uri uri2 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SEASONS + "/" + TEST_DATE0.get(Calendar.YEAR) + "-" + TEST_DATE1.get(Calendar.YEAR));
@@ -349,18 +368,107 @@ public class CalculatorProviderTest
         String[] projection = QUERY_SUN_PROJECTION;
         Cursor cursor = resolver.query(uri, projection, null, null, null);
         test_cursorHasColumns("QUERY_SUN", cursor, projection);
+        test_allColumnsLong("QUERY_SUN", cursor, projection);
+        test_suntimes(cursor, sunCalculator, Calendar.getInstance());
 
         // case 1: date
         Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SUN + "/" + TEST_DATE0.getTimeInMillis());
         String[] projection1 = QUERY_SUN_PROJECTION;
         Cursor cursor1 = resolver.query(uri1, projection1, null, null, null);
         test_cursorHasColumns("QUERY_SUN", cursor1, projection1);
+        test_allColumnsLong("QUERY_SUN", cursor, projection1);
+        test_suntimes(cursor1, sunCalculator, TEST_DATE0);
 
         // case 2: range
         Uri uri2 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SUN + "/" + TEST_DATE0.getTimeInMillis() + "-" + TEST_DATE1.getTimeInMillis());
         String[] projection2 = QUERY_SUN_PROJECTION;
         Cursor cursor2 = resolver.query(uri2, projection2, null, null, null);
         test_cursorHasColumns("QUERY_SUN", cursor2, projection2);
+    }
+
+    public void test_suntimes(Cursor cursor, SuntimesCalculator calculator, Calendar date)
+    {
+        if (cursor != null)
+        {
+            cursor.moveToFirst();
+
+            Calendar noon0 = calculator.getSolarNoonCalendarForDate(date);
+            Calendar noon1 = Calendar.getInstance();
+            noon1.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_NOON)));
+            assertTrue("noon time should match .. " + noon0.getTimeInMillis() + " != " + noon1.getTimeInMillis(), noon0.getTimeInMillis() == noon1.getTimeInMillis());
+
+
+            Calendar sunrise0 = calculator.getOfficialSunriseCalendarForDate(date);
+            Calendar sunrise1 = Calendar.getInstance();
+            sunrise1.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_ACTUAL_RISE)));
+            assertTrue("sunrise time should match .. " + sunrise0.getTimeInMillis() + " != " + sunrise1.getTimeInMillis(), sunrise0.getTimeInMillis() == sunrise1.getTimeInMillis());
+
+            Calendar civilrise0 = calculator.getCivilSunriseCalendarForDate(date);
+            Calendar civilrise1 = Calendar.getInstance();
+            civilrise1.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_CIVIL_RISE)));
+            assertTrue("civilrise time should match .. " + civilrise0.getTimeInMillis() + " != " + civilrise1.getTimeInMillis(), civilrise0.getTimeInMillis() == civilrise1.getTimeInMillis());
+
+            Calendar nauticalrise0 = calculator.getNauticalSunriseCalendarForDate(date);
+            Calendar nauticalrise1 = Calendar.getInstance();
+            nauticalrise1.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_NAUTICAL_RISE)));
+            assertTrue("nauticalrise time should match .. " + nauticalrise0.getTimeInMillis() + " != " + nauticalrise1.getTimeInMillis(), nauticalrise0.getTimeInMillis() == nauticalrise1.getTimeInMillis());
+
+            Calendar astrorise0 = calculator.getAstronomicalSunriseCalendarForDate(date);
+            Calendar astrorise1 = Calendar.getInstance();
+            astrorise1.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_ASTRO_RISE)));
+            assertTrue("astrorise time should match .. " + astrorise0.getTimeInMillis() + " != " + astrorise1.getTimeInMillis(), astrorise0.getTimeInMillis() == astrorise1.getTimeInMillis());
+
+
+            Calendar sunset0 = calculator.getOfficialSunsetCalendarForDate(date);
+            Calendar sunset1 = Calendar.getInstance();
+            sunset1.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_ACTUAL_SET)));
+            assertTrue("sunset time should match .. " + sunset0.getTimeInMillis() + " != " + sunset1.getTimeInMillis(), sunset0.getTimeInMillis() == sunset1.getTimeInMillis());
+
+            Calendar civilset0 = calculator.getCivilSunsetCalendarForDate(date);
+            Calendar civilset1 = Calendar.getInstance();
+            civilset1.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_CIVIL_SET)));
+            assertTrue("civilset time should match .. " + civilset0.getTimeInMillis() + " != " + civilset1.getTimeInMillis(), civilset0.getTimeInMillis() == civilset1.getTimeInMillis());
+
+            Calendar nauticalset0 = calculator.getNauticalSunsetCalendarForDate(date);
+            Calendar nauticalset1 = Calendar.getInstance();
+            nauticalset1.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_NAUTICAL_SET)));
+            assertTrue("nauticalset time should match .. " + nauticalset0.getTimeInMillis() + " != " + nauticalset1.getTimeInMillis(), nauticalset0.getTimeInMillis() == nauticalset1.getTimeInMillis());
+
+            Calendar astroset0 = calculator.getAstronomicalSunsetCalendarForDate(date);
+            Calendar astroset1 = Calendar.getInstance();
+            astroset1.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_ASTRO_SET)));
+            assertTrue("astroset time should match .. " + astroset0.getTimeInMillis() + " != " + astroset1.getTimeInMillis(), astroset0.getTimeInMillis() == astroset1.getTimeInMillis());
+
+
+            Calendar golden_m0 = calculator.getMorningGoldenHourForDate(date);
+            Calendar golden_m1 = Calendar.getInstance();
+            golden_m1.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_GOLDEN_MORNING)));
+            assertTrue("golden morning time should match .. " + golden_m0.getTimeInMillis() + " != " + golden_m1.getTimeInMillis(), golden_m0.getTimeInMillis() == golden_m1.getTimeInMillis());
+
+            Calendar golden_e0 = calculator.getEveningGoldenHourForDate(date);
+            Calendar golden_e1 = Calendar.getInstance();
+            golden_e1.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_GOLDEN_EVENING)));
+            assertTrue("golden evening time should match .. " + golden_e0.getTimeInMillis() + " != " + golden_e1.getTimeInMillis(), golden_e0.getTimeInMillis() == golden_e1.getTimeInMillis());
+
+            Calendar[] blueMorning0 = calculator.getMorningBlueHourForDate(date);
+            Calendar[] blueEvening0 = calculator.getEveningBlueHourForDate(date);
+
+            Calendar blueMorning_81 = Calendar.getInstance();
+            blueMorning_81.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_BLUE8_RISE)));
+            assertTrue("blue morning time should match .. " + blueMorning0[0].getTimeInMillis() + " != " + blueMorning_81.getTimeInMillis(), blueMorning0[0].getTimeInMillis() == blueMorning_81.getTimeInMillis());
+
+            Calendar blueMorning_41 = Calendar.getInstance();
+            blueMorning_41.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_BLUE4_RISE)));
+            assertTrue("blue morning time should match .. " + blueMorning0[1].getTimeInMillis() + " != " + blueMorning_41.getTimeInMillis(), blueMorning0[1].getTimeInMillis() == blueMorning_41.getTimeInMillis());
+
+            Calendar blueEvening_41 = Calendar.getInstance();
+            blueEvening_41.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_BLUE4_SET)));
+            assertTrue("blue evening time should match .. " + blueEvening0[0].getTimeInMillis() + " != " + blueEvening_41.getTimeInMillis(), blueEvening0[0].getTimeInMillis() == blueEvening_41.getTimeInMillis());
+
+            Calendar blueEvening_81 = Calendar.getInstance();
+            blueEvening_81.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_SUN_BLUE8_SET)));
+            assertTrue("blue evening time should match .. " + blueEvening0[1].getTimeInMillis() + " != " + blueEvening_81.getTimeInMillis(), blueEvening0[1].getTimeInMillis() == blueEvening_81.getTimeInMillis());
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -399,12 +507,16 @@ public class CalculatorProviderTest
         String[] projection = QUERY_SUNPOS_PROJECTION;
         Cursor cursor = resolver.query(uri, projection, null, null, null);
         test_cursorHasColumns("QUERY_SUNPOS", cursor, projection);
+        test_allColumnsDouble("QUERY_SUNPOS", cursor, new String[] {COLUMN_SUNPOS_ALT, COLUMN_SUNPOS_AZ, COLUMN_SUNPOS_DEC, COLUMN_SUNPOS_RA} );
+        assertTrue("sunpos date column should be long", columnIsLong(cursor, COLUMN_SUNPOS_DATE));
 
         // case 1: date
         Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_SUNPOS + "/" + TEST_DATE0.getTimeInMillis());
         String[] projection1 = QUERY_SUNPOS_PROJECTION;
         Cursor cursor1 = resolver.query(uri1, projection1, null, null, null);
         test_cursorHasColumns("QUERY_SUNPOS", cursor1, projection1);
+        test_allColumnsDouble("QUERY_SUNPOS", cursor, new String[] {COLUMN_SUNPOS_ALT, COLUMN_SUNPOS_AZ, COLUMN_SUNPOS_DEC, COLUMN_SUNPOS_RA} );
+        assertTrue("sunpos date column should be long", columnIsLong(cursor, COLUMN_SUNPOS_DATE));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -439,18 +551,37 @@ public class CalculatorProviderTest
         String[] projection = QUERY_MOON_PROJECTION;
         Cursor cursor = resolver.query(uri, projection, null, null, null);
         test_cursorHasColumns("QUERY_MOON", cursor, projection);
+        test_allColumnsLong("QUERY_MOON", cursor, projection);
+        test_moontimes(cursor, moonCalculator.getMoonTimesForDate(Calendar.getInstance()));
 
         // case 1: date
         Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOON + "/" + TEST_DATE0.getTimeInMillis());
         String[] projection1 = QUERY_MOON_PROJECTION;
         Cursor cursor1 = resolver.query(uri1, projection1, null, null, null);
         test_cursorHasColumns("QUERY_MOON", cursor1, projection1);
+        test_allColumnsLong("QUERY_MOON", cursor, projection1);
+        test_moontimes(cursor1, moonCalculator.getMoonTimesForDate(TEST_DATE0));
 
         // case 2: range
         Uri uri2 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOON + "/" + TEST_DATE0.getTimeInMillis() + "-" + TEST_DATE1.getTimeInMillis());
         String[] projection2 = QUERY_MOON_PROJECTION;
         Cursor cursor2 = resolver.query(uri2, projection2, null, null, null);
         test_cursorHasColumns("QUERY_MOON", cursor2, projection2);
+    }
+
+    public void test_moontimes(Cursor cursor, SuntimesCalculator.MoonTimes oracle)
+    {
+        if (cursor != null)
+        {
+            cursor.moveToFirst();
+            Calendar moonrise = Calendar.getInstance();
+            moonrise.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_MOON_RISE)));
+            assertTrue("moonrise time should match .. " + oracle.riseTime.getTimeInMillis() + " != " + moonrise.getTimeInMillis(), oracle.riseTime.getTimeInMillis() == moonrise.getTimeInMillis());
+
+            Calendar moonset = Calendar.getInstance();
+            moonset.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_MOON_SET)));
+            assertTrue("moonset time should match .. " + oracle.setTime + " != " + moonset, oracle.setTime.getTimeInMillis() == moonset.getTimeInMillis());
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -489,12 +620,16 @@ public class CalculatorProviderTest
         String[] projection0 = QUERY_MOONPOS_PROJECTION;
         Cursor cursor0 = resolver.query(uri0, projection0, null, null, null);
         test_cursorHasColumns("QUERY_MOONPOS", cursor0, projection0);
+        test_allColumnsDouble("QUERY_MOONPOS", cursor0, new String[] {COLUMN_MOONPOS_ALT, COLUMN_MOONPOS_AZ, COLUMN_MOONPOS_DEC, COLUMN_MOONPOS_RA} );
+        assertTrue("moonpos date column should be long", columnIsLong(cursor0, COLUMN_MOONPOS_DATE));
 
         // case 1: date
         Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOONPOS + "/" + TEST_DATE0.getTimeInMillis());
         String[] projection1 = QUERY_MOONPOS_PROJECTION;
         Cursor cursor1 = resolver.query(uri1, projection1, null, null, null);
         test_cursorHasColumns("QUERY_MOONPOS", cursor1, projection1);
+        test_allColumnsDouble("QUERY_MOONPOS", cursor0, new String[] {COLUMN_MOONPOS_ALT, COLUMN_MOONPOS_AZ, COLUMN_MOONPOS_DEC, COLUMN_MOONPOS_RA} );
+        assertTrue("moonpos date column should be long", columnIsLong(cursor0, COLUMN_MOONPOS_DATE));
     }
 
 
@@ -535,18 +670,21 @@ public class CalculatorProviderTest
         String[] projection0 = QUERY_MOONPHASE_PROJECTION;
         Cursor cursor0 = resolver.query(uri0, projection0, null, null, null);
         test_cursorHasColumns("QUERY_MOONPHASE", cursor0, projection0);
+        test_allColumnsLong("QUERY_MOONPHASE", cursor0, projection0);
 
         // case 1: date
         Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOONPHASE + "/" + startDate.getTimeInMillis());
         String[] projection1 = QUERY_MOONPHASE_PROJECTION;
         Cursor cursor1 = resolver.query(uri1, projection1, null, null, null);
         test_cursorHasColumns("QUERY_MOONPHASE", cursor1, projection1);
+        test_allColumnsLong("QUERY_MOONPHASE", cursor1, projection1);
 
         // case 2: range
         Uri uri2 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOONPHASE + "/" + startDate.getTimeInMillis() + "-" + endDate.getTimeInMillis());
         String[] projection2 = QUERY_MOONPHASE_PROJECTION;
         Cursor cursor2 = resolver.query(uri2, projection2, null, null, null);
         test_cursorHasColumns("QUERY_MOONPHASE", cursor2, projection2);
+        test_allColumnsLong("QUERY_MOONPHASE", cursor2, projection2);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -638,7 +776,7 @@ public class CalculatorProviderTest
     @Test
     public void test_parseYearRange()
     {
-        Calendar now = TEST_DATE0;
+        Calendar now = Calendar.getInstance();
         String[] TEST_SEGMENTS = new String[] {
                 "2018-2020",            // valid
                 "2018-2010",            // order
@@ -651,7 +789,7 @@ public class CalculatorProviderTest
 
         for (String segment : TEST_SEGMENTS)
         {
-            int startYear = now.get(Calendar.YEAR);
+            int startYear = TEST_DATE0.get(Calendar.YEAR);
             int endYear = startYear;
             String[] parts = segment.split("-");
             if (parts.length == 2) {
@@ -663,6 +801,9 @@ public class CalculatorProviderTest
                     startYear = now.get(Calendar.YEAR);
                     endYear = now.get(Calendar.YEAR);
                 }
+            } else {
+                startYear = now.get(Calendar.YEAR);
+                endYear = now.get(Calendar.YEAR);
             }
 
             Calendar[] range = CalculatorProvider.parseYearRange(segment);
@@ -687,6 +828,93 @@ public class CalculatorProviderTest
         for (String column : projection) {
             assertTrue(tag + " results should contain " + column, cursor.getColumnIndex(column) >= 0);
         }
+    }
+
+    private void test_allColumnsLong(String tag, Cursor cursor, String[] columns)
+    {
+        if (cursor != null)
+        {
+            cursor.moveToFirst();
+            boolean allColumnsLong = true;
+            for (String column : columns)
+            {
+                boolean isLong = columnIsLong(cursor, column);
+                allColumnsLong = (allColumnsLong && isLong);
+
+                if (!isLong) {
+                    Log.w(tag, column + " is not long!");
+                }
+            }
+            assertTrue("all columns should contain long!", allColumnsLong);
+        }
+    }
+
+    private void test_allColumnsDouble(String tag, Cursor cursor, String[] columns)
+    {
+        if (cursor != null)
+        {
+            cursor.moveToFirst();
+            boolean allColumnsDouble = true;
+            for (String column : columns)
+            {
+                boolean isDouble = columnIsDouble(cursor, column);
+                allColumnsDouble = (allColumnsDouble && isDouble);
+
+                if (!isDouble) {
+                    Log.w(tag, column + " is not double!");
+                }
+            }
+            assertTrue("all columns should contain double!", allColumnsDouble);
+        }
+    }
+
+    private boolean columnIsInt(Cursor cursor, String column)
+    {
+        if (cursor != null) {
+            try {
+                int index = cursor.getColumnIndex(column);
+                if (cursor.getType(index) == Cursor.FIELD_TYPE_INTEGER);
+                {
+                    int value = cursor.getInt(index);
+                    return true;
+                }
+
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    private boolean columnIsDouble(Cursor cursor, String column)
+    {
+        if (cursor != null) {
+            try {
+                int index = cursor.getColumnIndex(column);
+                if (cursor.getType(index) == Cursor.FIELD_TYPE_FLOAT)
+                {
+                    double value = cursor.getDouble(index);
+                    return true;
+                }
+
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    private boolean columnIsLong(Cursor cursor, String column)
+    {
+        if (cursor != null) {
+            try {
+                long value = cursor.getLong(cursor.getColumnIndex(column));
+            } catch (NumberFormatException e) {
+                Log.d("DEBUG", "columnIsLong: not a long .. " + column);
+                return false;
+            }
+        }
+        return true;
     }
 
     private void test_projectionHasUniqueColumns(String[] projection)
