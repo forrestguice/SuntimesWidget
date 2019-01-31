@@ -29,6 +29,24 @@
     <string name="configAction_settings">Settings</string>
     <string name="configAction_aboutWidget">About</string>
 
+    <!-- Shortcuts -->
+
+    <string name="shortcut_suninfo_short">@string/configAction_sunDialog</string>
+    <string name="shortcut_suninfo_long">@string/configAction_sunDialog</string>
+    <string name="shortcut_suninfo_disabled">@string/configAction_sunDialog</string>
+
+    <string name="shortcut_mooninfo_short">@string/configAction_moon</string>
+    <string name="shortcut_mooninfo_long">@string/configAction_moon</string>
+    <string name="shortcut_mooninfo_disabled">@string/configAction_moon</string>
+
+    <string name="shortcut_widgetlist_short">@string/configLabel_widgetList</string>
+    <string name="shortcut_widgetlist_long">@string/configLabel_widgetList</string>
+    <string name="shortcut_widgetlist_disabled">@string/configLabel_widgetList</string>
+
+    <string name="shortcut_themelist_short">@string/configLabel_widgetThemeList</string>
+    <string name="shortcut_themelist_long">@string/configLabel_widgetThemeList</string>
+    <string name="shortcut_themelist_disabled">@string/configLabel_widgetThemeList</string>
+
     <!-- Button: Next/Prev Date
          The next/prev button contentDescription (accessibility).
     -->
