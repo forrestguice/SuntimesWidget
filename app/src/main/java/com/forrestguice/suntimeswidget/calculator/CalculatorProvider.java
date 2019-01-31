@@ -54,6 +54,7 @@ import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProvider
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_CALCULATOR_FEATURES;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LATITUDE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LOCALE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LOCATION;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION_CODE;
@@ -358,6 +359,13 @@ public class CalculatorProvider extends ContentProvider
 
                         case COLUMN_CONFIG_APP_THEME:
                             row[i] = AppSettings.loadThemePref(context);
+                            break;
+
+                        case COLUMN_CONFIG_LOCATION:
+                            if (location == null) {
+                                location = WidgetSettings.loadLocationPref(context, appWidgetID);
+                            }
+                            row[i] = location.getLabel();
                             break;
 
                         case COLUMN_CONFIG_LATITUDE:
