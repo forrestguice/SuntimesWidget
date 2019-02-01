@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -162,12 +163,16 @@ public class WorldMapDialog extends DialogFragment
         dialogTitle = (TextView)dialogView.findViewById(R.id.worldmapdialog_title);
         utcTime = (TextView)dialogView.findViewById(R.id.info_time_utc);
         worldmap = (WorldMapView)dialogView.findViewById(R.id.info_time_worldmap);
-        /**worldmap.setOnLongClickListener(new View.OnLongClickListener() {
+        worldmap.setOnLongClickListener(new View.OnLongClickListener()
+        {
             @Override
-            public boolean onLongClick(View view) {
+            public boolean onLongClick(View view)
+            {
+                // TODO: additional share options; e.g. animated over range
+                worldmap.shareBitmap();
                 return true;
             }
-        });*/
+        });
 
         ArrayList<WorldMapWidgetSettings.WorldMapWidgetMode> modes = new ArrayList<>(Arrays.asList(WorldMapWidgetSettings.WorldMapWidgetMode.values()));
         //modes.remove(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE);  // option disabled; TODO: fix layout issues
@@ -303,4 +308,5 @@ public class WorldMapDialog extends DialogFragment
             updateViews();
         }
     };
+
 }

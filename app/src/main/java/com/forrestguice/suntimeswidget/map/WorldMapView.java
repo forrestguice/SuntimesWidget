@@ -27,7 +27,9 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -351,6 +353,26 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     public Bitmap getBitmap()
     {
         return bitmap;
+    }
+
+    public void shareBitmap()
+    {
+        if (bitmap != null)
+        {
+            WorldMapExportTask exportTask = new WorldMapExportTask(getContext(), "SuntimesWorldMap", true, true);
+            exportTask.setTaskListener(new ExportTask.TaskListener()
+            {
+                @Override
+                public void onFinished(ExportTask.ExportResult result)
+                {
+                    super.onFinished(result);
+                    Toast.makeText(getContext(), "Share Bitmap TODO", Toast.LENGTH_SHORT).show();                     // TODO
+                }
+            });
+            exportTask.setBitmaps(new Bitmap[] { bitmap });
+            exportTask.execute();
+
+        } else Log.w(LOGTAG, "shareBitmap: null!");
     }
 
 }
