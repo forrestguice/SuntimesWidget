@@ -68,8 +68,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         if (isInEditMode())
         {
             setBackgroundColor(Color.WHITE);
-            Bitmap b = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888);
-            setImageBitmap(b);
+            setImageBitmap(Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888));
         }
         setMapMode(context, mode);
         themeViews(context);
@@ -338,6 +337,20 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     public static abstract class WorldMapTaskListener
     {
         public void onFinished( Bitmap result ) {}
+    }
+
+
+    @Override
+    public void setImageBitmap(Bitmap b)
+    {
+        this.bitmap = b;
+        super.setImageBitmap(b);
+    }
+
+    private Bitmap bitmap;
+    public Bitmap getBitmap()
+    {
+        return bitmap;
     }
 
 }
