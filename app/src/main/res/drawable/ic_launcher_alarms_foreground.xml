@@ -1,33 +1,71 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
         android:width="108dp"
         android:height="108dp"
-        android:viewportWidth="37.180798"
-        android:viewportHeight="37.180798">
-    <group android:translateX="6.418265"
-            android:translateY="7.451065">
+        android:viewportWidth="38.93048"
+        android:viewportHeight="38.93048">
+    <group android:translateX="7.285007"
+            android:translateY="8.366409">
       <path
-          android:pathData="m4.3303,12.4369a7.8218,7.913 0,0 0,7.8216 7.7741,7.8218 7.913,0 0,0 7.8122,-7.7804h-7.8153z"
+          android:pathData="m22.1316,5.2036 l-4.6,-3.86 -1.29,1.53 4.6,3.86z"
+          android:strokeAlpha="1"
+          android:strokeWidth="0.2"
+          android:fillColor="#808080"
+          android:strokeColor="#00000000"
+          android:fillAlpha="1"/>
+      <path
+          android:pathData="m8.0116,2.8736 l-1.28,-1.53 -4.6,3.85 1.29,1.53z"
+          android:strokeAlpha="1"
+          android:strokeWidth="0.2"
+          android:fillColor="#808080"
+          android:strokeColor="#00000000"
+          android:fillAlpha="1"/>
+      <path
+          android:pathData="m12.1316,3.4836c-4.97,0 -9,4.03 -9,9 0,4.97 4.02,9 9,9 4.97,0 9,-4.03 9,-9 0,-4.97 -4.03,-9 -9,-9z"
+          android:strokeAlpha="1"
+          android:strokeWidth="0.2"
+          android:fillColor="#808080"
+          android:strokeColor="#00000000"
+          android:fillAlpha="1"/>
+      <path
+          android:pathData="m5.1663,12.4493a7.0165,6.9356 90,0 0,6.9354 6.8933,7.0165 6.9356,90 0,0 6.9271,-6.8989l-6.9299,0z"
           android:strokeAlpha="1"
           android:strokeLineJoin="miter"
-          android:strokeWidth="0.1"
+          android:strokeWidth="1"
           android:fillColor="#ff9900"
-          android:strokeColor="#00000000"
+          android:strokeColor="#4b4b4b"
           android:fillType="evenOdd"
           android:fillAlpha="1"
           android:strokeLineCap="square"/>
       <path
-          android:pathData="m4.3365,12.5942a7.8218,7.913 0,0 1,7.8216 -7.7741,7.8218 7.913,0 0,1 7.8122,7.7804h-7.8153z"
-          android:strokeAlpha="0.81818183"
+          android:pathData="m5.1719,12.5888a7.0165,6.9356 90,0 1,6.9354 -6.8934,7.0165 6.9356,90 0,1 6.9271,6.8989l-6.9299,0z"
+          android:strokeAlpha="1"
           android:strokeLineJoin="miter"
           android:strokeWidth="1"
           android:fillColor="#ffcc00"
-          android:strokeColor="#616161"
+          android:strokeColor="#4b4b4b"
           android:fillType="evenOdd"
           android:fillAlpha="1"
           android:strokeLineCap="square"/>
       <path
-          android:pathData="m22.1316,5.2036 l-4.6,-3.86 -1.29,1.53 4.6,3.86zM8.0116,2.8736 L6.7316,1.3436 2.1316,5.1936 3.4216,6.7236zM12.6316,7.4836h-1.5L11.1316,13.4836l4.75,2.85 0.75,-1.23 -4,-2.37zM12.1316,3.4836c-4.97,0 -9,4.03 -9,9 0,4.97 4.02,9 9,9 4.97,0 9,-4.03 9,-9 0,-4.97 -4.03,-9 -9,-9zM12.1316,19.4836c-3.87,0 -7,-3.13 -7,-7 0,-3.87 3.13,-7 7,-7 3.87,0 7,3.13 7,7 0,3.87 -3.13,7 -7,7z"
-          android:fillColor="#808080"
+          android:pathData="M-30.8145,-8.0145h15.3111v1h-15.3111z"
+          android:strokeAlpha="1"
+          android:strokeWidth="1.29075658"
+          android:fillColor="#4b4b4b"
+          android:strokeColor="#00000000"
+          android:fillAlpha="1"/>
+      <path
+          android:pathData="m12.6316,7.4836h-1.5V13.4836l4.75,2.85 0.75,-1.23 -4,-2.37z"
+          android:strokeAlpha="1"
+          android:strokeWidth="0.05"
+          android:fillColor="#6d7d8f"
+          android:strokeColor="#00000000"
+          android:fillAlpha="0.94949496"/>
+      <path
+          android:pathData="m12.1073,5.0398c-4.124,0 -7.4681,3.344 -7.4681,7.4681 0,4.124 3.3357,7.4681 7.4681,7.4681 4.124,0 7.4681,-3.344 7.4681,-7.4681 0,-4.124 -3.344,-7.4681 -7.4681,-7.4681z"
+          android:strokeAlpha="1"
+          android:strokeWidth="0.3"
+          android:fillColor="#00000000"
+          android:strokeColor="#808080"
           android:fillAlpha="1"/>
     </group>
 </vector>
