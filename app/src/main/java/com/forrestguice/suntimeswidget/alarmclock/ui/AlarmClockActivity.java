@@ -55,6 +55,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -392,6 +393,18 @@ public class AlarmClockActivity extends AppCompatActivity
 
         alarmList = (ListView)findViewById(R.id.alarmList);
         alarmList.setOnItemClickListener(onAlarmItemClick);
+        alarmList.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                int pos = alarmList.pointToPosition((int)event.getX(), (int)event.getY());
+                if ((event.getAction() == MotionEvent.ACTION_DOWN) && pos == -1) {
+                    setSelectedItem(-1);
+                }
+                return false;
+            }
+        });
 
         emptyView = findViewById(android.R.id.empty);
         emptyView.setOnClickListener(onEmptyViewClick);
