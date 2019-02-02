@@ -45,6 +45,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -1321,8 +1322,10 @@ public class AlarmClockActivity extends AppCompatActivity
                         }
                     }
                 });
-                if (!isSelected) {
+                if (!isSelected && !item.enabled) {
                     text.setTextColor(disabledTextColor);
+                } else if (item.enabled) {
+                    text.setTextColor(pressedTextColor);
                 }
             }
 
@@ -1415,7 +1418,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 }
             }
 
-            Switch switch_enabled = (Switch) view.findViewById(R.id.switch_enabled);
+            SwitchCompat switch_enabled = (SwitchCompat) view.findViewById(R.id.switch_enabled);
             if (switch_enabled != null)
             {
                 switch_enabled.setChecked(item.enabled);

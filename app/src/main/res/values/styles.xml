@@ -15,6 +15,7 @@
         <item name="hrColor">@color/hr_light</item>
         <item name="text_accentColor">@color/text_accent_light</item>
         <item name="text_disabledColor">@color/text_disabled_light</item>
+        <item name="colorControlActivated">@color/btn_tint_pressed_light</item>
 
         <item name="alarmCardEnabled">@drawable/card_alarmitem_enabled_light</item>
         <item name="alarmCardDisabled">@drawable/card_alarmitem_disabled_light</item>
@@ -113,6 +114,7 @@
         <item name="hrColor">@color/hr_dark</item>
         <item name="text_accentColor">@color/text_accent_dark</item>
         <item name="text_disabledColor">@color/text_disabled_dark</item>
+        <item name="colorControlActivated">@color/btn_tint_pressed_dark</item>
 
         <item name="alarmCardEnabled">@drawable/card_alarmitem_enabled_dark</item>
         <item name="alarmCardDisabled">@drawable/card_alarmitem_disabled_dark</item>
