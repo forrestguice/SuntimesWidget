@@ -4,6 +4,7 @@
     <shape android:shape="rectangle">
         <size android:width="22dp" android:height="22dp" />
         <solid android:color="@color/alarm_disabled_bg_light" />
+        <corners android:radius="3dp" />
     </shape>
 </item>
 </layer-list>
