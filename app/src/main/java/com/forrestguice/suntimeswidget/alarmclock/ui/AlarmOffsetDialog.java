@@ -63,7 +63,7 @@ public class AlarmOffsetDialog extends DialogFragment
         builder.setView(dialogContent, 0, padding, 0, 0);
         builder.setTitle(myParent.getString(R.string.alarmoffset_dialog_title));
 
-        AlertDialog dialog = builder.create();
+        final AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
 
         dialog.setButton(AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.alarmoffset_dialog_cancel),
@@ -94,6 +94,30 @@ public class AlarmOffsetDialog extends DialogFragment
                 }
         );
 
+        dialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.configAction_clearOffset), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) { /* EMPTY */ }
+        });
+        dialog.setOnShowListener(new DialogInterface.OnShowListener()
+        {
+            @Override
+            public void onShow(DialogInterface d)
+            {
+                dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v) {
+                        if (offset == 0) {
+                            dialog.dismiss();
+                            if (onAccepted != null) {
+                                onAccepted.onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
+                            }
+                        } else setOffset(0);
+                    }
+                });
+            }
+        });
+
         initViews(myParent, dialogContent);
         if (savedInstanceState != null) {
             loadSettings(savedInstanceState);
@@ -112,10 +136,10 @@ public class AlarmOffsetDialog extends DialogFragment
     private NumberPicker pickerDirection;
     private NumberPicker pickerOffsetMinutes, pickerOffsetHours;
 
-    private static String[] minuteStrings = new String[] {"--", "1m", "5m", "10m", "15m", "20m", "25m", "30m", "35m", "40m", "45m", "50m", "55m"};
+    private static String[] minuteStrings = new String[] {"  ", "1m", "5m", "10m", "15m", "20m", "25m", "30m", "35m", "40m", "45m", "50m", "55m"};
     private static int[] minuteValues = new int[] {0, 1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55};
 
-    private static String[] hourStrings = new String[] {"--", "1h", "2h", "3h", "4h", "5h", "6h", "7h", "8h", "9h", "10h", "11h", "12h"};
+    private static String[] hourStrings = new String[] {"  ", "1h", "2h", "3h", "4h", "5h", "6h", "7h", "8h", "9h", "10h", "11h", "12h"};
     private static int[] hourValues = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
 
     protected void initViews( final Context context, View dialogContent )

@@ -38,11 +38,6 @@
             android:descendantFocusability="blocksDescendants"
             android:fadingEdge="vertical" />
 
-        <TextView
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text=":" />
-
         <NumberPicker
             android:id="@+id/alarmOption_offset_minute"
             android:layout_width="0dp" android:layout_weight="1"
