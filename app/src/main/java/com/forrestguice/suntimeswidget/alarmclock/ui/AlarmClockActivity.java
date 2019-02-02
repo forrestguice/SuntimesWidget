@@ -1298,6 +1298,8 @@ public class AlarmClockActivity extends AppCompatActivity
             });
             if (!isSelected && !item.enabled) {
                 ImageViewCompat.setImageTintList(typeButton, SuntimesUtils.colorStateList(disabledTextColor, disabledTextColor, disabledTextColor));
+            } else if (item.enabled) {
+                ImageViewCompat.setImageTintList(typeButton, SuntimesUtils.colorStateList(pressedTextColor, disabledTextColor, disabledTextColor));
             }
 
             final TextView text = (TextView) view.findViewById(android.R.id.text1);
@@ -1367,6 +1369,8 @@ public class AlarmClockActivity extends AppCompatActivity
 
                 if (!isSelected && !item.enabled) {
                     text_datetime.setTextColor(disabledTextColor);
+                } else if (item.enabled) {
+                    text_datetime.setTextColor(pressedTextColor);
                 }
 
                 text_datetime.setOnClickListener(new View.OnClickListener()
@@ -1432,7 +1436,7 @@ public class AlarmClockActivity extends AppCompatActivity
             if (text_ringtone != null)
             {
                 int iconID = item.ringtoneName != null ? iconSoundEnabled : iconSoundDisabled;
-                ImageSpan icon = isSelected || item.enabled ? SuntimesUtils.createImageSpan(context, iconID, 28, 28, 0)
+                ImageSpan icon = isSelected || item.enabled ? SuntimesUtils.createImageSpan(context, iconID, 28, 28, item.enabled ? pressedTextColor : 0)
                                                             : SuntimesUtils.createImageSpan(context, iconID, 28, 28, disabledTextColor, PorterDuff.Mode.MULTIPLY);
 
                 final String none = context.getString(R.string.alarmOption_ringtone_none);
