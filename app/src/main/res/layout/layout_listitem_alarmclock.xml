@@ -31,9 +31,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="4dp"
-        android:background="?attr/alarmCardDisabled"
-        android:orientation="horizontal" android:descendantFocusability="blocksDescendants"
-        android:padding="4dp">
+        android:background="?attr/alarmCardEnabled"
+        android:orientation="horizontal" android:descendantFocusability="blocksDescendants">
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline2"
@@ -48,7 +47,8 @@
             android:orientation="horizontal" android:gravity="center_vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="4dp" android:layout_marginRight="4dp" android:layout_marginTop="4dp" android:layout_marginBottom="0dp">
 
             <ImageButton
                 android:id="@+id/type_menu"
@@ -154,13 +154,14 @@
             android:id="@+id/layout_options"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
 
             android:gravity="start|center_vertical"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_location_label">
+            app:layout_constraintTop_toBottomOf="@+id/text_location_label"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginLeft="4dp" android:layout_marginRight="4dp" android:layout_marginTop="8dp" android:layout_marginBottom="4dp">
 
             <TextView
                 android:id="@+id/option_repeat"

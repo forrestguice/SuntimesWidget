@@ -23,12 +23,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.PorterDuff;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -42,14 +40,10 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatImageButton;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
@@ -1156,7 +1150,8 @@ public class AlarmClockActivity extends AppCompatActivity
         private long selectedItem;
         private ArrayList<AlarmClockItem> items;
         private int iconAlarm, iconNotification, iconSoundEnabled, iconSoundDisabled;
-        private int alarmEnabledColor, alarmDisabledColor, alarmSelectedColor;
+        private Drawable alarmEnabledBG, alarmDisabledBG;
+        private int alarmSelectedColor;
         private int disabledTextColor, pressedTextColor;
 
         public AlarmClockAdapter(Context context)
@@ -1182,8 +1177,8 @@ public class AlarmClockActivity extends AppCompatActivity
                     R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.icActionSoundEnabled, R.attr.icActionSoundDisabled,
                     R.attr.text_disabledColor, R.attr.gridItemSelected, R.attr.buttonPressColor};
             TypedArray a = context.obtainStyledAttributes(attrs);
-            alarmEnabledColor = ContextCompat.getColor(context, a.getResourceId(0, R.color.alarm_enabled_dark));
-            alarmDisabledColor = ContextCompat.getColor(context, a.getResourceId(1, R.color.alarm_disabled_dark));
+            alarmEnabledBG = ContextCompat.getDrawable(context, a.getResourceId(0, R.drawable.card_alarmitem_enabled_dark));
+            alarmDisabledBG = ContextCompat.getDrawable(context, a.getResourceId(1, R.drawable.card_alarmitem_disabled_dark));
             iconAlarm = a.getResourceId(2, R.drawable.ic_action_alarms);
             iconNotification = a.getResourceId(3, R.drawable.ic_action_notification);
             iconSoundEnabled = a.getResourceId(4, R.drawable.ic_action_soundenabled);
@@ -1266,7 +1261,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
             final View card = view.findViewById(R.id.layout_alarmcard);
             if (card != null) {
-                card.setBackgroundColor(item.enabled ? alarmEnabledColor : alarmDisabledColor);
+                card.setBackground(item.enabled ? alarmEnabledBG : alarmDisabledBG);
             }
 
             final View cardBackdrop = view.findViewById(R.id.layout_alarmcard0);
@@ -1691,7 +1686,7 @@ public class AlarmClockActivity extends AppCompatActivity
          */
         protected void enableAlarm(final AlarmClockItem item, View itemView, final boolean enabled)
         {
-            itemView.setBackgroundColor(enabled ? alarmEnabledColor : alarmDisabledColor);
+            itemView.setBackground(enabled ? alarmEnabledBG : alarmDisabledBG);
 
             item.alarmtime = 0;
             item.enabled = enabled;
