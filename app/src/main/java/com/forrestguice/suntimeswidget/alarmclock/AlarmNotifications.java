@@ -378,6 +378,7 @@ public class AlarmNotifications extends BroadcastReceiver
         PendingIntent pendingDismiss = PendingIntent.getBroadcast(context, alarm.hashCode(), getAlarmIntent(context, ACTION_DISMISS, alarm.getUri()), PendingIntent.FLAG_UPDATE_CURRENT);
         PendingIntent pendingSnooze = PendingIntent.getBroadcast(context, (int)alarm.rowID, getAlarmIntent(context, ACTION_SNOOZE, alarm.getUri()), PendingIntent.FLAG_UPDATE_CURRENT);
         PendingIntent alarmFullscreen = PendingIntent.getActivity(context, (int)alarm.rowID, getFullscreenIntent(context, alarm.getUri()), PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingView = PendingIntent.getActivity(context, alarm.hashCode(), getAlarmListIntent(context, alarm.rowID), PendingIntent.FLAG_UPDATE_CURRENT);
 
         if (alarm.type == AlarmClockItem.AlarmType.ALARM)
         {
@@ -390,12 +391,18 @@ public class AlarmNotifications extends BroadcastReceiver
                     builder.setPriority( NotificationCompat.PRIORITY_HIGH );
                     notificationMsg = context.getString(R.string.alarmAction_timeoutMsg);
                     notificationIcon = R.drawable.ic_action_timeout;
+                    builder.setContentIntent(pendingView);
+                    builder.setAutoCancel(true);
+                    builder.setOngoing(false);
                     break;
 
                 case AlarmState.STATE_SCHEDULED_SOON:
                     builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
-                    builder.setPriority( NotificationCompat.PRIORITY_HIGH );
+                    builder.setPriority( NotificationCompat.PRIORITY_LOW );
                     notificationMsg = context.getString(R.string.alarmAction_upcomingMsg);
+                    builder.setContentIntent(pendingView);
+                    builder.setAutoCancel(false);
+                    builder.setOngoing(true);
                     break;
 
                 case AlarmState.STATE_SNOOZING:
@@ -406,6 +413,9 @@ public class AlarmNotifications extends BroadcastReceiver
                     notificationMsg = context.getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
                     notificationIcon = R.drawable.ic_action_snooze;
                     builder.setFullScreenIntent(alarmFullscreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
+                    builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
+                    builder.setAutoCancel(false);
+                    builder.setOngoing(true);
                     break;
 
                 case AlarmState.STATE_SOUNDING:
@@ -414,17 +424,19 @@ public class AlarmNotifications extends BroadcastReceiver
                     builder.addAction(R.drawable.ic_action_snooze, context.getString(R.string.alarmAction_snooze), pendingSnooze);
                     builder.setProgress(0,0,true);
                     builder.setFullScreenIntent(alarmFullscreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
+                    builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
+                    builder.setAutoCancel(false);
+                    builder.setOngoing(true);
                     break;
 
                 default:
                     Log.w(TAG, "createNotification: unhandled state: " + alarmState);
                     builder.setCategory( NotificationCompat.CATEGORY_RECOMMENDATION );
                     builder.setPriority( NotificationCompat.PRIORITY_MIN );
+                    builder.setAutoCancel(true);
+                    builder.setOngoing(false);
                     break;
             }
-            builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
-            builder.setOngoing(true);
-            builder.setAutoCancel(false);
 
         } else {
             // NOTIFICATION
