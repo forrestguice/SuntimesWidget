@@ -636,16 +636,16 @@
 
     <string name="alarmenabled_toast">Alarm set for <xliff:g id="alarmTime" example="8h">%1$s</xliff:g> from now.</string> <!-- toast msg --> <!-- TODO -->
 
-    <string name="configLabel_alarms_silenceAfter">Silence after</string>
+    <string name="configLabel_alarms_silenceAfter">Auto-silence after</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_timeoutAfter">Dismiss after</string>
+    <string name="configLabel_alarms_timeoutAfter">Auto-dismiss after</string>
     <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_snooze">Snooze for</string>
+    <string name="configLabel_alarms_snooze">Snooze alarms for</string>
     <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_upcoming">Reminder within</string>
+    <string name="configLabel_alarms_upcoming">Alarm reminder within</string>
     <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
     <string name="configLabel_alarms_hardwarebuttons">Camera and Volume Buttons</string>
@@ -1334,10 +1334,10 @@
     <string name="def_app_appearance_theme" translatable="false">dark</string>
     <string name="def_app_accessibility_verbose" translatable="false">false</string>
 
-    <string name="def_app_alarms_silence" translatable="false">600000</string>
-    <string name="def_app_alarms_timeout" translatable="false">600000</string>
-    <string name="def_app_alarms_snooze" translatable="false">600000</string>
-    <string name="def_app_alarms_upcoming" translatable="false">600000</string>
+    <string name="def_app_alarms_silence" translatable="false">900000</string>     <!-- silence after 15m -->
+    <string name="def_app_alarms_timeout" translatable="false">1800000</string>    <!-- dismiss after 30m -->
+    <string name="def_app_alarms_snooze" translatable="false">600000</string>      <!-- snooze for 10m -->
+    <string name="def_app_alarms_upcoming" translatable="false">36000000</string>  <!-- show reminder within 10h -->
     <string name="def_app_alarms_hardwarebuttons_action" translatable="false">suntimeswidget.alarm.silent</string>
 
 </resources>
