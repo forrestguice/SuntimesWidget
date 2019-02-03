@@ -135,6 +135,8 @@ public class AlarmClockActivity extends AppCompatActivity
     private AlarmClockListTask updateTask = null;
     private static final SuntimesUtils utils = new SuntimesUtils();
 
+    private AppSettings.LocaleInfo localeInfo;
+
     public AlarmClockActivity()
     {
         super();
@@ -143,7 +145,7 @@ public class AlarmClockActivity extends AppCompatActivity
     @Override
     protected void attachBaseContext(Context newBase)
     {
-        Context context = AppSettings.initLocale(newBase);
+        Context context = AppSettings.initLocale(newBase, localeInfo = new AppSettings.LocaleInfo());
         super.attachBaseContext(context);
     }
 
@@ -946,9 +948,9 @@ public class AlarmClockActivity extends AppCompatActivity
             case REQUEST_SETTINGS:
                 recreateActivity = ((!AppSettings.loadThemePref(AlarmClockActivity.this).equals(appTheme))                           // theme mode changed
                  //       || (appThemeOverride != null && !appThemeOverride.themeName().equals(getThemeOverride()))                       // or theme override changed
-                 //       || (localeInfo.localeMode != AppSettings.loadLocaleModePref(SuntimesActivity.this))                             // or localeMode changed
-                 //       || ((localeInfo.localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE                                              // or customLocale changed
-                 //       && !AppSettings.loadLocalePref(SuntimesActivity.this).equals(localeInfo.customLocale))));
+                        || (localeInfo.localeMode != AppSettings.loadLocaleModePref(AlarmClockActivity.this))                             // or localeMode changed
+                        || ((localeInfo.localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE                                              // or customLocale changed
+                        && !AppSettings.loadLocalePref(AlarmClockActivity.this).equals(localeInfo.customLocale)))
                 );
                 if (recreateActivity) {
                     Handler handler = new Handler();
