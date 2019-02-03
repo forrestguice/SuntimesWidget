@@ -27,26 +27,23 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.text.format.DateUtils;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.ToggleButton;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 
-import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Locale;
 
 public class AlarmRepeatDialog extends DialogFragment
 {
@@ -58,7 +55,7 @@ public class AlarmRepeatDialog extends DialogFragment
 
     protected static final SuntimesUtils utils = new SuntimesUtils();
 
-    private Switch switchRepeat;
+    private SwitchCompat switchRepeat;
     private boolean repeat = PREF_DEF_ALARM_REPEAT;
     private ArrayList<Integer> repeatDays = PREF_DEF_ALARM_REPEATDAYS;
     private SparseArray<ToggleButton> btnDays;
@@ -143,7 +140,7 @@ public class AlarmRepeatDialog extends DialogFragment
         initColors(context);
         SuntimesUtils.initDisplayStrings(context);
 
-        switchRepeat = (Switch) dialogContent.findViewById(R.id.alarmOption_repeat);
+        switchRepeat = (SwitchCompat) dialogContent.findViewById(R.id.alarmOption_repeat);
         if (switchRepeat != null) {
             switchRepeat.setOnCheckedChangeListener(onRepeatChanged);
         }
