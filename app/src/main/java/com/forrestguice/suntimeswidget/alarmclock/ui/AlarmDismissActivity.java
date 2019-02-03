@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
@@ -293,14 +294,17 @@ public class AlarmDismissActivity extends AppCompatActivity
         AlarmDatabaseAdapter.AlarmItemTask task = new AlarmDatabaseAdapter.AlarmItemTask(context);
         task.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener() {
             @Override
-            public void onItemLoaded(AlarmClockItem item) {
-                setAlarmItem(context, item);
+            public void onItemLoaded(AlarmClockItem item)
+            {
+                if (item != null) {
+                    setAlarmItem(context, item);
+                }
             }
         });
         task.execute(alarmID);
     }
 
-    public void setAlarmItem(Context context, AlarmClockItem item)
+    public void setAlarmItem(@NonNull Context context, @NonNull AlarmClockItem item)
     {
         alarm = item;
 
