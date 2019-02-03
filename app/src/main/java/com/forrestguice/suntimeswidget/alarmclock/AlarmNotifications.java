@@ -196,6 +196,11 @@ public class AlarmNotifications extends BroadcastReceiver
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static Intent getServiceIntent(Context context)
+    {
+        return new Intent(context, NotificationService.class);
+    }
+
     public static Intent getFullscreenIntent(Context context, Uri data)
     {
         Intent intent = new Intent(context, AlarmDismissActivity.class);
@@ -497,41 +502,48 @@ public class AlarmNotifications extends BroadcastReceiver
         public int onStartCommand(Intent intent, int flags, int startId)
         {
             super.onStartCommand(intent, flags, startId);
-            String action = intent.getAction();
-            Uri data = intent.getData();
-
-            if (AlarmNotifications.ACTION_SHOW.equals(action) && data != null)
+            if (intent != null)
             {
-                Log.d(TAG, "ACTION_SHOW");
+                String action = intent.getAction();
+                Uri data = intent.getData();
+                if (data != null)
+                {
+                    if (AlarmNotifications.ACTION_SHOW.equals(action))
+                    {
+                        Log.d(TAG, "ACTION_SHOW");
 
-            } else if (AlarmNotifications.ACTION_DISMISS.equals(action) && data != null) {
-                Log.d(TAG, "ACTION_DISMISS: " + data);
-                AlarmNotifications.stopAlert();
+                    } else if (AlarmNotifications.ACTION_DISMISS.equals(action)) {
+                        Log.d(TAG, "ACTION_DISMISS: " + data);
+                        AlarmNotifications.stopAlert();
 
-            } else if (AlarmNotifications.ACTION_DISABLE.equals(action) && data != null) {
-                Log.d(TAG, "ACTION_DISABLE: " + data);
-                AlarmNotifications.stopAlert();
+                    } else if (AlarmNotifications.ACTION_DISABLE.equals(action)) {
+                        Log.d(TAG, "ACTION_DISABLE: " + data);
+                        AlarmNotifications.stopAlert();
 
-            } else if (AlarmNotifications.ACTION_SILENT.equals(action)) {
-                Log.d(TAG, "ACTION_SILENT: " + data);
-                AlarmNotifications.stopAlert(false);
-                showAlarmSilencedToast(getApplicationContext());
+                    } else if (AlarmNotifications.ACTION_SILENT.equals(action)) {
+                        Log.d(TAG, "ACTION_SILENT: " + data);
+                        AlarmNotifications.stopAlert(false);
+                        showAlarmSilencedToast(getApplicationContext());
 
-            } else if (AlarmNotifications.ACTION_SNOOZE.equals(action) && data != null) {
-                Log.d(TAG, "ACTION_SNOOZE: " + data);
-                AlarmNotifications.stopAlert();
+                    } else if (AlarmNotifications.ACTION_SNOOZE.equals(action)) {
+                        Log.d(TAG, "ACTION_SNOOZE: " + data);
+                        AlarmNotifications.stopAlert();
 
-            } else if (AlarmNotifications.ACTION_TIMEOUT.equals(action) && data != null) {
-                Log.d(TAG, "ACTION_TIMEOUT: " + data);
-                AlarmNotifications.stopAlert();
+                    } else if (AlarmNotifications.ACTION_TIMEOUT.equals(action)) {
+                        Log.d(TAG, "ACTION_TIMEOUT: " + data);
+                        AlarmNotifications.stopAlert();
 
-            } else {
-                Log.w(TAG, "Unrecognized action: " + action);
-            }
+                    } else {
+                        Log.w(TAG, "onStartCommand: Unrecognized action: " + action);
+                    }
 
-            AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
-            itemTask.setAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), action));
-            itemTask.execute(ContentUris.parseId(data));
+                    AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
+                    itemTask.setAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), action));
+                    itemTask.execute(ContentUris.parseId(data));
+
+                } else Log.w(TAG, "onStartCommand: null data!");
+            } else Log.w(TAG, "onStartCommand: null intent!");
+
             return START_STICKY;
         }
 
