@@ -764,7 +764,12 @@ public class AlarmNotifications extends BroadcastReceiver
                         Intent intent = getAlarmIntent(context, nextAction, data);
                         context.sendBroadcast(intent);  // trigger followup action
                     }
-                    stopForeground(true);   // remove notification (will kill running tasks)
+
+                    Intent serviceIntent = getServiceIntent(context);
+                    startService(serviceIntent);                                   // keep service running after stopping foreground notification
+                    stopForeground(true );    // remove notification (will kill running tasks)
+                    dismissNotification(context, (int)item.rowID);                 // dismiss upcoming reminders
+                    stopService(serviceIntent);
                 }
             };
         }
@@ -830,9 +835,12 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onFinished(Boolean result, AlarmClockItem item)
                 {
                     Log.d(TAG, "State Saved (onDisabled)");
-                    context.startActivity(getAlarmListIntent(context, item.rowID));   // open the alarm list
+                    Intent serviceIntent = getServiceIntent(context);
+                    startService(serviceIntent);  // keep service running after stopping foreground notification
                     stopForeground(true);     // remove notification (will kill running tasks)
-                    //dismissNotification(context, (int)item.rowID);  // dismiss upcoming reminders
+                    context.startActivity(getAlarmListIntent(context, item.rowID));   // open the alarm list
+                    dismissNotification(context, (int)item.rowID);                    // dismiss upcoming reminders
+                    stopService(serviceIntent);
                 }
             };
         }
