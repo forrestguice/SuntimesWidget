@@ -1365,8 +1365,7 @@ public class AlarmClockActivity extends AppCompatActivity
             final TextView text = (TextView) view.findViewById(android.R.id.text1);
             if (text != null)
             {
-                String emptyLabel = ((item.type == AlarmClockItem.AlarmType.ALARM) ? context.getString(R.string.alarmMode_alarm) : context.getString(R.string.alarmMode_notification));
-                text.setText((item.label == null || item.label.isEmpty()) ? emptyLabel : item.label);
+                text.setText(getAlarmLabel(context, item));
                 text.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
@@ -1391,8 +1390,7 @@ public class AlarmClockActivity extends AppCompatActivity
             final TextView text2 = (TextView) view.findViewById(android.R.id.text2);
             if (text2 != null)
             {
-                final String clockTime = context.getString(R.string.alarmOption_solarevent_none);
-                text2.setText(item.event != null ? item.event.getLongDisplayString() : clockTime);
+                text2.setText(getAlarmEvent(context, item));
                 text2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v)
@@ -1415,19 +1413,7 @@ public class AlarmClockActivity extends AppCompatActivity
             TextView text_datetime = (TextView) view.findViewById(R.id.text_datetime);
             if (text_datetime != null)
             {
-                Calendar alarmTime = Calendar.getInstance();
-                alarmTime.setTimeInMillis(item.timestamp);
-
-                SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, alarmTime, false);
-                if (SuntimesUtils.is24())
-                {
-                    text_datetime.setText(timeText.getValue());
-
-                } else {
-                    String timeString = timeText.getValue() + " " + timeText.getSuffix();
-                    SpannableString timeDisplay = SuntimesUtils.createRelativeSpan(null, timeString, " " + timeText.getSuffix(), 0.40f);
-                    text_datetime.setText(timeDisplay);
-                }
+                text_datetime.setText(getAlarmTime(context, item));
 
                 if (!isSelected && !item.enabled) {
                     text_datetime.setTextColor(disabledTextColor);
@@ -1807,15 +1793,44 @@ public class AlarmClockActivity extends AppCompatActivity
             enableTask.execute(item);   // TD
         }
 
+        private static CharSequence getAlarmLabel(Context context, AlarmClockItem item)
+        {
+            String emptyLabel = ((item.type == AlarmClockItem.AlarmType.ALARM) ? context.getString(R.string.alarmMode_alarm) : context.getString(R.string.alarmMode_notification));
+            return (item.label == null || item.label.isEmpty()) ? emptyLabel : item.label;
+        }
+
+        private static CharSequence getAlarmEvent(Context context, AlarmClockItem item)
+        {
+            return (item.event != null ? item.event.getLongDisplayString() : context.getString(R.string.alarmOption_solarevent_none));
+        }
+
+        private static CharSequence getAlarmTime(Context context, AlarmClockItem item)
+        {
+            Calendar alarmTime = Calendar.getInstance();
+            alarmTime.setTimeInMillis(item.timestamp);
+
+            CharSequence alarmDesc;
+            SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, alarmTime, false);
+            if (SuntimesUtils.is24()) {
+                alarmDesc = timeText.getValue();
+
+            } else {
+                String timeString = timeText.getValue() + " " + timeText.getSuffix();
+                alarmDesc = SuntimesUtils.createRelativeSpan(null, timeString, " " + timeText.getSuffix(), 0.40f);
+            }
+            return alarmDesc;
+        }
+
         /**
          * deleteAlarm
          * @param item AlarmClockItem
          */
         protected void deleteAlarm(final AlarmClockItem item, final View itemView)
         {
+            String message = context.getString(R.string.deletealarm_dialog_message, getAlarmLabel(context, item), getAlarmTime(context, item), getAlarmEvent(context, item));
             AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                     .setTitle(context.getString(R.string.deletealarm_dialog_title))
-                    .setMessage(context.getString(R.string.deletealarm_dialog_message, item.rowID + ""))
+                    .setMessage(message)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(context.getString(R.string.deletealarm_dialog_ok), new DialogInterface.OnClickListener()
                     {
