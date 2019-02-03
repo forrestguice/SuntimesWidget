@@ -34,6 +34,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.provider.AlarmClock;
 import android.support.annotation.NonNull;
@@ -103,7 +104,9 @@ public class AlarmClockActivity extends AppCompatActivity
     public static final String EXTRA_SHOWBACK = "showBack";
     public static final String EXTRA_SOLAREVENT = "solarevent";
     public static final String EXTRA_SELECTED_ALARM = "selectedAlarm";
+
     public static final int REQUEST_RINGTONE = 10;
+    public static final int REQUEST_SETTINGS = 20;
 
     private static final String DIALOGTAG_EVENT_FAB = "alarmeventfab";
     private static final String DIALOGTAG_EVENT = "alarmevent";
@@ -151,12 +154,20 @@ public class AlarmClockActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle icicle)
     {
-        setTheme(AppSettings.loadTheme(this));
+        initTheme();
         super.onCreate(icicle);
         initLocale(this);
         setContentView(R.layout.layout_activity_alarmclock);
         initViews(this);
         handleIntent(getIntent());
+    }
+
+    private String appTheme;
+    private int appThemeResID;
+    private void initTheme()
+    {
+        appTheme = AppSettings.loadThemePref(this);
+        setTheme(appThemeResID = AppSettings.themePrefToStyleId(this, appTheme, null));
     }
 
     @Override
@@ -925,9 +936,26 @@ public class AlarmClockActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        boolean recreateActivity = false;
         AlarmClockItem item = adapter.findItem(t_selectedItem);
+
         switch (requestCode)
         {
+            case REQUEST_SETTINGS:
+                recreateActivity = ((!AppSettings.loadThemePref(AlarmClockActivity.this).equals(appTheme))                           // theme mode changed
+                 //       || (appThemeOverride != null && !appThemeOverride.themeName().equals(getThemeOverride()))                       // or theme override changed
+                 //       || (localeInfo.localeMode != AppSettings.loadLocaleModePref(SuntimesActivity.this))                             // or localeMode changed
+                 //       || ((localeInfo.localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE                                              // or customLocale changed
+                 //       && !AppSettings.loadLocalePref(SuntimesActivity.this).equals(localeInfo.customLocale))));
+                );
+                if (recreateActivity) {
+                    Handler handler = new Handler();
+                    handler.postDelayed(recreateRunnable, 0);    // post to end of execution queue (onResume must be allowed to finish before calling recreate)
+                }
+                break;
+
             case REQUEST_RINGTONE:
                 if (resultCode == RESULT_OK && item != null && data != null)
                 {
@@ -945,11 +973,24 @@ public class AlarmClockActivity extends AppCompatActivity
                     task.setTaskListener(onUpdateItem);
                     task.execute(item);
                 }
-                t_selectedItem = null;
                 break;
         }
-        super.onActivityResult(requestCode, resultCode, data);
     }
+
+    private Runnable recreateRunnable = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                recreate();
+
+            } else {
+                finish();
+                startActivity(getIntent());
+            }
+        }
+    };
 
     /**
      * clearAlarms
@@ -991,7 +1032,7 @@ public class AlarmClockActivity extends AppCompatActivity
     protected void showSettings()
     {
         Intent settingsIntent = new Intent(this, SuntimesSettingsActivity.class);
-        startActivity(settingsIntent);
+        startActivityForResult(settingsIntent, REQUEST_SETTINGS);
     }
 
     /**
