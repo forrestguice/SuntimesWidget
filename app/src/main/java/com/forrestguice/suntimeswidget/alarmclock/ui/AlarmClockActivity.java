@@ -633,9 +633,25 @@ public class AlarmClockActivity extends AppCompatActivity
         }
 
         @Override
-        public void onRequestTime(AlarmClockItem forItem)
+        public void onRequestTime(final AlarmClockItem forItem)
         {
-            pickTime(forItem);
+            if (forItem.event != null)
+            {
+                AlertDialog.Builder confirmOverride = new AlertDialog.Builder(AlarmClockActivity.this);
+                confirmOverride.setIcon(android.R.drawable.ic_dialog_alert);
+                confirmOverride.setMessage(getString(R.string.alarmtime_dialog_message));
+                confirmOverride.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface d, int which) {
+                        pickTime(forItem);
+                    }
+                });
+                confirmOverride.setNegativeButton(getString(android.R.string.cancel), null);
+                confirmOverride.show();
+
+            } else {
+                pickTime(forItem);
+            }
         }
 
         @Override
@@ -1647,6 +1663,12 @@ public class AlarmClockActivity extends AppCompatActivity
                         case R.id.setAlarmLabel:
                             if (adapterListener != null) {
                                 adapterListener.onRequestLabel(item);
+                            }
+                            return true;
+
+                        case R.id.setAlarmTime:
+                            if (adapterListener != null) {
+                                adapterListener.onRequestTime(item);
                             }
                             return true;
 
