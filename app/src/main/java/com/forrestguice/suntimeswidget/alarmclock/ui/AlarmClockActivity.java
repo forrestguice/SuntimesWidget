@@ -1628,6 +1628,11 @@ public class AlarmClockActivity extends AppCompatActivity
             MenuInflater inflater = menu.getMenuInflater();
             inflater.inflate(R.menu.alarmcontext, menu.getMenu());
 
+            MenuItem typeMenuItem = menu.getMenu().findItem(R.id.setAlarmType);
+            if (typeMenuItem != null) {
+                typeMenuItem.setEnabled(!item.enabled);    // changing type only permitted when alarm not already enabled
+            }
+
             menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
             {
                 @Override
@@ -1895,7 +1900,7 @@ public class AlarmClockActivity extends AppCompatActivity
     protected void onHomePressed()
     {
         Intent intent = new Intent(this, SuntimesActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
