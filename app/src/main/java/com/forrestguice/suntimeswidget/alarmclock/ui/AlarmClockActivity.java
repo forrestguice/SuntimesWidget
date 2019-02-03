@@ -1085,6 +1085,8 @@ public class AlarmClockActivity extends AppCompatActivity
     protected void showAbout()
     {
         AboutDialog aboutDialog = new AboutDialog();
+        aboutDialog.setIconID(R.mipmap.ic_launcher_alarms);
+        aboutDialog.setAppName(R.string.app_name_alarmclock);
         aboutDialog.show(getSupportFragmentManager(), DIALOGTAG_ABOUT);
     }
 
