@@ -516,10 +516,26 @@ public class AlarmClockActivity extends AppCompatActivity
                     Log.d(TAG, "onAlarmAdded: " + item.rowID);
                     t_selectedItem = item.rowID;
                     updateViews(AlarmClockActivity.this);
+
+                    if (item.enabled) {
+                        setAlarmEnabled(AlarmClockActivity.this, item, true);
+                    }
+
                 }
             }
         });
         task.execute(alarm);
+    }
+
+    public static void setAlarmEnabled(Context context, AlarmClockItem item, boolean enabled)
+    {
+        if (enabled) {
+            Intent scheduleIntent = AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, item.getUri());
+            context.sendBroadcast(scheduleIntent);
+        } else {
+            Intent disableIntent = AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISABLE, item.getUri());
+            context.sendBroadcast(disableIntent);
+        }
     }
 
     public static boolean getDefaultNewAlarmsEnabled(Context context)
@@ -1774,19 +1790,9 @@ public class AlarmClockActivity extends AppCompatActivity
                 @Override
                 public void onFinished(Boolean result, AlarmClockItem item)
                 {
-                    if (result)
-                    {
-                        if (enabled)
-                        {
-                            Intent scheduleIntent = AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, item.getUri());
-                            context.sendBroadcast(scheduleIntent);
-
-                        } else {
-                            Intent disableIntent = AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISABLE, item.getUri());
-                            context.sendBroadcast(disableIntent);
-                        }
+                    if (result) {
+                        setAlarmEnabled(context, item, enabled);
                         notifyDataSetChanged();
-
                     } else Log.e("AlarmClockActivity", "enableAlarm: failed to save state!");
                 }
             });
