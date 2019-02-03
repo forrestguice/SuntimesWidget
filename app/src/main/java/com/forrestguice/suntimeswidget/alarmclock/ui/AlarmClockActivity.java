@@ -53,6 +53,7 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -1502,8 +1503,9 @@ public class AlarmClockActivity extends AppCompatActivity
             if (text_ringtone != null)
             {
                 int iconID = item.ringtoneName != null ? iconSoundEnabled : iconSoundDisabled;
-                ImageSpan icon = isSelected || item.enabled ? SuntimesUtils.createImageSpan(context, iconID, 28, 28, item.enabled ? pressedTextColor : 0)
-                                                            : SuntimesUtils.createImageSpan(context, iconID, 28, 28, disabledTextColor, PorterDuff.Mode.MULTIPLY);
+                int iconDimen = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,20, context.getResources().getDisplayMetrics());
+                ImageSpan icon = isSelected || item.enabled ? SuntimesUtils.createImageSpan(context, iconID, iconDimen, iconDimen, item.enabled ? pressedTextColor : 0)
+                                                            : SuntimesUtils.createImageSpan(context, iconID, iconDimen, iconDimen, disabledTextColor, PorterDuff.Mode.MULTIPLY);
 
                 final String none = context.getString(R.string.alarmOption_ringtone_none);
                 String ringtoneName = isSelected ? (item.ringtoneName != null ? item.ringtoneName : none) : "";
