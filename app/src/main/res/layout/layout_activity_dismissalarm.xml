@@ -45,18 +45,21 @@
             app:layout_constraintBottom_toTopOf="@+id/txt_alarm_time">
 
             <ImageView
+				android:id="@+id/icon_alarm_sounding"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_alarm_huge"
                 tools:ignore="ContentDescription" />
 
             <ImageView
+				android:id="@+id/icon_alarm_snooze"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_alarm_snooze_huge"
                 tools:ignore="ContentDescription" />
 
 			<ImageView
+				android:id="@+id/icon_alarm_timeout"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:src="@drawable/ic_alarm_timeout_huge"

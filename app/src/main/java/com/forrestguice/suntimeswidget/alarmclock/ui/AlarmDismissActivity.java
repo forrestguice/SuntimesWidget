@@ -18,24 +18,36 @@
 
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
+import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.TypedArray;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.graphics.drawable.ArgbEvaluator;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -65,7 +77,15 @@ public class AlarmDismissActivity extends AppCompatActivity
     private TextView alarmTitle, alarmSubtitle, alarmText, infoText;
     private Button snoozeButton, dismissButton;
     private ViewFlipper icon;
+    private ImageView iconSounding, iconSnoozing;
     private SuntimesUtils utils = new SuntimesUtils();
+
+    private int pulseSoundingDuration = 4000;
+    private int pulseSoundingColor_start, pulseSoundingColor_end;
+
+    private int pulseSnoozingDuration = 8000;
+    private int pulseSnoozingColor_start, pulseSnoozingColor_end;
+
 
     public AlarmDismissActivity()
     {
@@ -91,7 +111,10 @@ public class AlarmDismissActivity extends AppCompatActivity
         alarmSubtitle = (TextView)findViewById(R.id.txt_alarm_label2);
         alarmText = (TextView)findViewById(R.id.txt_alarm_time);
         infoText = (TextView)findViewById(R.id.txt_snooze);
+
         icon = (ViewFlipper)findViewById(R.id.icon_alarm);
+        iconSounding = (ImageView)findViewById(R.id.icon_alarm_sounding);
+        iconSnoozing = (ImageView)findViewById(R.id.icon_alarm_snooze);
 
         dismissButton = (Button) findViewById(R.id.btn_dismiss);
         dismissButton.setOnClickListener(onDismissClicked);
@@ -179,12 +202,22 @@ public class AlarmDismissActivity extends AppCompatActivity
         bundle.putString(EXTRA_MODE, mode);
     }
 
+    @SuppressLint("ResourceType")
     private void initLocale(Context context)
     {
         WidgetSettings.initDefaults(context);
         WidgetSettings.initDisplayStrings(context);
         SuntimesUtils.initDisplayStrings(context);
         SolarEvents.initDisplayStrings(context);
+
+        int[] attrs = { R.attr.sunsetColor,  R.attr.sunriseColor, R.attr.dialogBackgroundAlt, R.attr.text_disabledColor };
+        TypedArray a = context.obtainStyledAttributes(attrs);
+        pulseSoundingColor_start = ContextCompat.getColor(context, a.getResourceId(0, R.color.sunIcon_color_setting_dark));
+        pulseSoundingColor_end = ContextCompat.getColor(context, a.getResourceId(1, R.color.sunIcon_color_rising_dark));
+
+        pulseSnoozingColor_start = ContextCompat.getColor(context, a.getResourceId(2, android.R.color.darker_gray));
+        pulseSnoozingColor_end = ContextCompat.getColor(context, a.getResourceId(3, android.R.color.white));
+        a.recycle();
     }
 
     private View.OnClickListener onSnoozeClicked = new View.OnClickListener()
@@ -225,6 +258,7 @@ public class AlarmDismissActivity extends AppCompatActivity
 
         if (AlarmNotifications.ACTION_SNOOZE.equals(action))
         {
+            animateIcon(iconSnoozing, pulseSnoozingColor_start, pulseSnoozingColor_end, pulseSnoozingDuration, new AccelerateDecelerateInterpolator());
             SuntimesUtils.initDisplayStrings(this);
             SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, AlarmSettings.loadPrefAlarmSnooze(this));
             String snoozeString = getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
@@ -252,6 +286,7 @@ public class AlarmDismissActivity extends AppCompatActivity
             setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
 
         } else {
+            animateIcon(iconSounding, pulseSoundingColor_start, pulseSoundingColor_end, pulseSoundingDuration, new AccelerateInterpolator());
             hardwareButtonPressed = false;
             infoText.setText("");
             infoText.setVisibility(View.GONE);
@@ -287,6 +322,30 @@ public class AlarmDismissActivity extends AppCompatActivity
         });
         animator.setDuration(durationMillis);
         animator.reverse();
+    }
+
+    private static void animateIcon(final ImageView icon, int startColor, int endColor, long duration, @Nullable TimeInterpolator interpolator)
+    {
+        if (icon != null)
+        {
+            ValueAnimator animation = ValueAnimator.ofObject(new ArgbEvaluator(), startColor, endColor);
+            animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
+            {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animator) {
+                    icon.setColorFilter((int) animator.getAnimatedValue());
+                }
+            });
+            if (Build.VERSION.SDK_INT >= 11) {
+                animation.setRepeatCount(ValueAnimator.INFINITE);
+                animation.setRepeatMode(ValueAnimator.REVERSE);
+            }
+            if (interpolator != null) {
+                animation.setInterpolator(interpolator);
+            }
+            animation.setDuration(duration);
+            animation.start();
+        }
     }
 
     public void setAlarmID(final Context context, long alarmID)
