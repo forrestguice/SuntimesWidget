@@ -373,6 +373,7 @@ public class AlarmClockItem
             alarmTime = Calendar.getInstance();
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + item.offset);
             while (now.after(alarmTime)) {
+                Log.w("AlarmReceiverItem", "updateAlarmTime: clock time " + item.hour + ":" + item.minute + " (+" + item.offset + ") has passed, advancing by 1 day..");
                 eventTime.add(Calendar.DAY_OF_YEAR, 1);
                 alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + item.offset);
             }
