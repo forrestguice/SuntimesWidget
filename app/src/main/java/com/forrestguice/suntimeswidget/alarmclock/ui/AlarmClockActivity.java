@@ -1304,6 +1304,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 cardBackdrop.setBackgroundColor( alarmSelectedColor );
             }
 
+            // type button
             final ImageButton typeButton = (ImageButton) view.findViewById(R.id.type_menu);
             typeButton.setImageDrawable(ContextCompat.getDrawable(context, (item.type == AlarmClockItem.AlarmType.ALARM ? iconAlarm : iconNotification)));
             typeButton.setOnClickListener(new View.OnClickListener()
@@ -1311,7 +1312,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 @Override
                 public void onClick(View v)
                 {
-                    if (isSelected) {
+                    if (isSelected && !item.enabled) {
                         showAlarmTypeMenu(item, typeButton, view);
                     } else {
                         setSelectedItem(item.rowID);
@@ -1324,6 +1325,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 ImageViewCompat.setImageTintList(typeButton, SuntimesUtils.colorStateList(pressedTextColor, disabledTextColor, disabledTextColor));
             }
 
+            // label
             final TextView text = (TextView) view.findViewById(android.R.id.text1);
             if (text != null)
             {
@@ -1358,7 +1360,7 @@ public class AlarmClockActivity extends AppCompatActivity
                     public void onClick(View v)
                     {
                         if (isSelected) {
-                            if (adapterListener != null)
+                            if (adapterListener != null && !item.enabled)
                             {
                                 adapterListener.onRequestSolarEvent(item);
                             }
@@ -1372,6 +1374,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 }
             }
 
+            // time
             TextView text_datetime = (TextView) view.findViewById(R.id.text_datetime);
             if (text_datetime != null)
             {
@@ -1389,7 +1392,7 @@ public class AlarmClockActivity extends AppCompatActivity
                     public void onClick(View v)
                     {
                         if (isSelected) {
-                            if (adapterListener != null) {
+                            if (adapterListener != null && !item.enabled) {
                                 adapterListener.onRequestTime(item);
                             }
                         } else {
@@ -1399,6 +1402,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 });
             }
 
+            // location
             final TextView text_location = (TextView) view.findViewById(R.id.text_location_label);
             if (text_location != null)
             {
@@ -1410,7 +1414,7 @@ public class AlarmClockActivity extends AppCompatActivity
                     public void onClick(View v)
                     {
                         if (isSelected) {
-                            if (adapterListener != null) {
+                            if (adapterListener != null && !item.enabled) {
                                 adapterListener.onRequestLocation(item);
                             }
                         } else {
@@ -1425,6 +1429,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 }
             }
 
+            // enabled / disabled
             SwitchCompat switch_enabled = (SwitchCompat) view.findViewById(R.id.switch_enabled);
             if (switch_enabled != null)
             {
@@ -1442,6 +1447,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 });
             }
 
+            // ringtone
             final TextView text_ringtone = (TextView) view.findViewById(R.id.text_ringtone);
             if (text_ringtone != null)
             {
@@ -1473,6 +1479,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 });
             }
 
+            // vibrate
             CheckBox check_vibrate = (CheckBox) view.findViewById(R.id.check_vibrate);
             if (check_vibrate != null)
             {
@@ -1501,6 +1508,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 }
             }
 
+            // repeating
             TextView option_repeat = (TextView) view.findViewById(R.id.option_repeat);
             if (option_repeat != null)
             {
@@ -1531,6 +1539,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 });
             }
 
+            // offset (before / after)
             TextView option_offset = (TextView) view.findViewById(R.id.option_offset);
             if (option_offset != null)
             {
@@ -1555,7 +1564,7 @@ public class AlarmClockActivity extends AppCompatActivity
                     public void onClick(View v)
                     {
                         if (isSelected) {
-                            if (adapterListener != null) {
+                            if (adapterListener != null && !item.enabled) {
                                 adapterListener.onRequestOffset(item);
                             }
                         } else {
@@ -1565,6 +1574,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 });
             }
 
+            // overflow menu
             ImageButton overflow = (ImageButton) view.findViewById(R.id.overflow_menu);
             if (overflow != null)
             {
@@ -1593,9 +1603,15 @@ public class AlarmClockActivity extends AppCompatActivity
             MenuInflater inflater = menu.getMenuInflater();
             inflater.inflate(R.menu.alarmcontext, menu.getMenu());
 
-            MenuItem typeMenuItem = menu.getMenu().findItem(R.id.setAlarmType);
-            if (typeMenuItem != null) {
-                typeMenuItem.setEnabled(!item.enabled);    // changing type only permitted when alarm not already enabled
+            MenuItem[] restrictedMenuItems = new MenuItem[] {     // only permitted when alarm not already enabled
+                    menu.getMenu().findItem(R.id.setAlarmType),
+                    menu.getMenu().findItem(R.id.setAlarmTime),
+                    menu.getMenu().findItem(R.id.setAlarmOffset),
+                    menu.getMenu().findItem(R.id.setAlarmEvent),
+                    menu.getMenu().findItem(R.id.setAlarmLocation)
+            };
+            for (MenuItem menuItem : restrictedMenuItems) {
+                menuItem.setEnabled(!item.enabled);
             }
 
             menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
