@@ -57,7 +57,7 @@ public class AlarmDismissActivity extends AppCompatActivity
 {
     public static final String TAG = "AlarmReceiverDismiss";
     public static final String EXTRA_MODE = "activityMode";
-    public static final String BROADCAST_UPDATE = "com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockDismissActivity.UPDATE";
+    public static final String ACTION_UPDATE = "com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockDismissActivity.UPDATE";
 
     private AlarmClockItem alarm = null;
     private String mode = null;
@@ -136,10 +136,10 @@ public class AlarmDismissActivity extends AppCompatActivity
         {
             String action = intent.getAction();
             Uri data = intent.getData();
-            Log.d(TAG, "updateReceiver.onReceive: " + data);
+            Log.d(TAG, "updateReceiver.onReceive: " + data + " :: " + action);
 
             if (action != null) {
-                if (action.equals(BROADCAST_UPDATE)) {
+                if (action.equals(ACTION_UPDATE)) {
                     if (data != null) {
                         setAlarmID(AlarmDismissActivity.this, ContentUris.parseId(data));
                     } else Log.e(TAG, "updateReceiver.onReceive: null data!");
@@ -153,7 +153,7 @@ public class AlarmDismissActivity extends AppCompatActivity
     {
         super.onStart();
         IntentFilter updateFilter = new IntentFilter();
-        updateFilter.addAction(BROADCAST_UPDATE);
+        updateFilter.addAction(ACTION_UPDATE);
         updateFilter.addDataScheme("content");
         registerReceiver(updateReceiver, updateFilter);
     }
@@ -330,6 +330,10 @@ public class AlarmDismissActivity extends AppCompatActivity
         {
             switch (alarm.state.getState())
             {
+                case AlarmState.STATE_SOUNDING:
+                    setMode(null);
+                    break;
+
                 case AlarmState.STATE_SNOOZING:
                     setMode(AlarmNotifications.ACTION_SNOOZE);
                     break;
@@ -339,7 +343,7 @@ public class AlarmDismissActivity extends AppCompatActivity
                     break;
 
                 default:
-                    setMode(null);
+                    finish();
                     break;
             }
         }

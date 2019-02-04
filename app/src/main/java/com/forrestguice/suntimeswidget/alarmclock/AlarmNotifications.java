@@ -212,7 +212,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static Intent getFullscreenBroadcast(Uri data)
     {
-        Intent intent = new Intent(AlarmDismissActivity.BROADCAST_UPDATE);
+        Intent intent = new Intent(AlarmDismissActivity.ACTION_UPDATE);
         intent.setData(data);
         return intent;
     }
@@ -769,6 +769,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     startService(serviceIntent);                                   // keep service running after stopping foreground notification
                     stopForeground(true );    // remove notification (will kill running tasks)
                     dismissNotification(context, (int)item.rowID);                 // dismiss upcoming reminders
+                    context.sendBroadcast(getFullscreenBroadcast(item.getUri()));  // dismiss fullscreen activity
                     stopService(serviceIntent);
                 }
             };
@@ -840,6 +841,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     stopForeground(true);     // remove notification (will kill running tasks)
                     context.startActivity(getAlarmListIntent(context, item.rowID));   // open the alarm list
                     dismissNotification(context, (int)item.rowID);                    // dismiss upcoming reminders
+                    context.sendBroadcast(getFullscreenBroadcast(item.getUri()));     // dismiss fullscreen activity
                     stopService(serviceIntent);
                 }
             };
