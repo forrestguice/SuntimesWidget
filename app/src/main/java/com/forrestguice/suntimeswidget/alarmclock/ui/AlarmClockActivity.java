@@ -583,7 +583,7 @@ public class AlarmClockActivity extends AppCompatActivity
             {
                 item.event = dialog.getChoice();
                 item.modified = true;
-                updateAlarmTime(AlarmClockActivity.this, item);
+                AlarmClockItem.updateAlarmTime(AlarmClockActivity.this, item);
 
                 AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, true);
                 task.setTaskListener(onUpdateItem);   // TODO: reset state and reschedule on SolarEventChanged
@@ -772,7 +772,7 @@ public class AlarmClockActivity extends AppCompatActivity
             {
                 item.location = location;
                 item.modified = true;
-                updateAlarmTime(AlarmClockActivity.this, item);
+                AlarmClockItem.updateAlarmTime(AlarmClockActivity.this, item);
 
                 AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, true);
                 task.setTaskListener(onUpdateItem);    // TODO: reset state and reschedule on locationChanged
@@ -827,7 +827,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 item.hour = timeDialog.getHour();
                 item.minute = timeDialog.getMinute();
                 item.modified = true;
-                updateAlarmTime(AlarmClockActivity.this, item);
+                AlarmClockItem.updateAlarmTime(AlarmClockActivity.this, item);
 
                 AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, true);
                 task.setTaskListener(onUpdateItem);          // TODO: reset state and reschedule on time changed
@@ -1125,7 +1125,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 DatabaseUtils.cursorRowToContentValues(cursor, entryValues);
 
                 AlarmClockItem item = new AlarmClockItem(entryValues);
-                updateAlarmTime(contextRef.get(), item);
+                AlarmClockItem.updateAlarmTime(contextRef.get(), item);
                 items.add(item);
                 publishProgress(item);
 
@@ -1173,63 +1173,6 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             public void onFinished(AlarmClockAdapter result) {}
         }
-    }
-
-    /**
-     * updateAlarmTime
-     * @param item AlarmClockItem
-     */
-    protected static void updateAlarmTime(Context context, final AlarmClockItem item)
-    {
-        Calendar now = Calendar.getInstance();
-        Calendar eventTime;
-        if (item.location != null && item.event != null)
-        {
-            // Event Mode; set timestamp based on SolarEvent
-            switch (item.event.getType())
-            {
-                case SolarEvents.TYPE_MOON:
-                    SuntimesMoonData moonData = new SuntimesMoonData(context, 0);
-                    moonData.setLocation(item.location);
-                    moonData.calculate();
-                    eventTime = (item.event.isRising() ? moonData.moonriseCalendarToday() : moonData.moonsetCalendarToday());
-                    if (now.after(eventTime)) {
-                        eventTime = (item.event.isRising() ? moonData.moonriseCalendarTomorrow() : moonData.moonsetCalendarTomorrow());
-                    }
-                    break;
-
-                case SolarEvents.TYPE_SUN:
-                default:
-                    SuntimesRiseSetData sunData = new SuntimesRiseSetData(context, 0);
-                    sunData.setLocation(item.location);
-                    WidgetSettings.TimeMode timeMode = item.event.toTimeMode();
-                    sunData.setTimeMode(timeMode != null ? timeMode : WidgetSettings.TimeMode.OFFICIAL);
-                    sunData.calculate();
-                    eventTime = (item.event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
-                    if (now.after(eventTime)) {
-                        eventTime = (item.event.isRising() ? sunData.sunriseCalendarOther() : sunData.sunsetCalendarOther());
-                    }
-                    break;
-            }
-            item.hour = eventTime.get(Calendar.HOUR_OF_DAY);
-            item.minute = eventTime.get(Calendar.MINUTE);
-
-        } else {
-            // Clock Mode; set timestamp from hour and minute
-            eventTime = Calendar.getInstance();
-            if (item.hour >= 0 && item.hour < 24) {
-                eventTime.set(Calendar.HOUR_OF_DAY, item.hour);
-            }
-            if (item.minute >= 0 && item.minute < 60) {
-                eventTime.set(Calendar.MINUTE, item.minute);
-            }
-            while (now.after(eventTime)) {
-                eventTime.add(Calendar.DAY_OF_YEAR, 1);
-            }
-        }
-
-        item.timestamp = eventTime.getTimeInMillis();
-        item.modified = true;
     }
 
     /**

@@ -657,8 +657,15 @@ public class AlarmNotifications extends BroadcastReceiver
                                     // expired alarm/notification
                                     if (item.enabled)    // enabled; reschedule alarm/notification
                                     {
-                                        Log.d(TAG, "(Re)Scheduling Alarm: " + item.rowID);
-                                        item.alarmtime = Calendar.getInstance().getTimeInMillis() + AlarmSettings.loadPrefAlarmUpcoming(context) + (1000 * 60);  // TODO:
+                                        Log.d(TAG, "(Re)Scheduling: " + item.rowID + " :: offset " + item.offset);
+                                        if (item.type == AlarmClockItem.AlarmType.NOTIFICATION)
+                                        {
+                                            AlarmClockItem.updateAlarmTime(context, item);     // sets item.hour, item.minute, item.timestamp (calculates the eventTime)
+                                            item.alarmtime = item.timestamp + item.offset;     // the scheduled sounding time before/after eventTime by some offset
+
+                                        } else {
+                                            item.alarmtime = Calendar.getInstance().getTimeInMillis() + AlarmSettings.loadPrefAlarmUpcoming(context) + (1000 * 60);  // TODO:
+                                        }
                                         //showAlarmEnabledToast(context, item);
 
                                     } else {    // disabled; this alarm should have been dismissed
