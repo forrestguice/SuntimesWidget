@@ -1351,6 +1351,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 }
             }
 
+            // event
             final TextView text2 = (TextView) view.findViewById(android.R.id.text2);
             if (text2 != null)
             {
@@ -1369,7 +1370,7 @@ public class AlarmClockActivity extends AppCompatActivity
                         }
                     }
                 });
-                if (!isSelected) {
+                if (!isSelected || item.enabled) {
                     text2.setTextColor(disabledTextColor);
                 }
             }
@@ -1422,7 +1423,7 @@ public class AlarmClockActivity extends AppCompatActivity
                         }
                     }
                 });
-                if (!isSelected) {
+                if (!isSelected || item.enabled) {
                     Drawable[] d = SuntimesUtils.tintCompoundDrawables(text_location.getCompoundDrawables(), disabledTextColor);
                     text_location.setCompoundDrawables(d[0], d[1], d[2], d[3]);
                     text_location.setTextColor(disabledTextColor);
@@ -1554,7 +1555,7 @@ public class AlarmClockActivity extends AppCompatActivity
                     option_offset.setText(offsetSpan);
                 }
 
-                if (!isSelected && !item.enabled) {
+                if (!isSelected || item.enabled) {
                     option_offset.setTextColor(disabledTextColor);
                 }
 
