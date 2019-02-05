@@ -328,6 +328,7 @@ public class AlarmClockItem
     {
         Calendar now = Calendar.getInstance();
         Calendar eventTime, alarmTime;
+
         if (item.location != null && item.event != null)
         {
             // Event Mode; set timestamp based on SolarEvent
@@ -361,6 +362,7 @@ public class AlarmClockItem
 
         } else {
             // Clock Mode; set timestamp from hour and minute
+            alarmTime = Calendar.getInstance();
             eventTime = Calendar.getInstance();
             if (item.hour >= 0 && item.hour < 24) {
                 eventTime.set(Calendar.HOUR_OF_DAY, item.hour);
@@ -369,11 +371,12 @@ public class AlarmClockItem
                 eventTime.set(Calendar.MINUTE, item.minute);
             }
             eventTime.set(Calendar.SECOND, 0);
-
-            alarmTime = Calendar.getInstance();
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + item.offset);
-            while (now.after(alarmTime)) {
-                Log.w("AlarmReceiverItem", "updateAlarmTime: clock time " + item.hour + ":" + item.minute + " (+" + item.offset + ") has passed, advancing by 1 day..");
+
+            while (now.after(alarmTime)
+                    || (item.repeating && !item.repeatingDays.contains(alarmTime.get(Calendar.DAY_OF_WEEK))))
+            {
+                Log.w("AlarmReceiverItem", "updateAlarmTime: clock time " + item.hour + ":" + item.minute + " (+" + item.offset + ") advancing by 1 day..");
                 eventTime.add(Calendar.DAY_OF_YEAR, 1);
                 alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + item.offset);
             }
