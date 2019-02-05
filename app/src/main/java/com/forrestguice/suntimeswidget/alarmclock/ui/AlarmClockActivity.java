@@ -586,7 +586,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 AlarmNotifications.updateAlarmTime(AlarmClockActivity.this, item);
 
                 AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, true);
-                task.setTaskListener(onUpdateItem);   // TODO: reset state and reschedule on SolarEventChanged
+                task.setTaskListener(onUpdateItem);
                 task.execute(item);
             }
         }
@@ -775,7 +775,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 AlarmNotifications.updateAlarmTime(AlarmClockActivity.this, item);
 
                 AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, true);
-                task.setTaskListener(onUpdateItem);    // TODO: reset state and reschedule on locationChanged
+                task.setTaskListener(onUpdateItem);
                 task.execute(item);
                 return true;
             }
@@ -830,7 +830,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 AlarmNotifications.updateAlarmTime(AlarmClockActivity.this, item);
 
                 AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, true);
-                task.setTaskListener(onUpdateItem);          // TODO: reset state and reschedule on time changed
+                task.setTaskListener(onUpdateItem);
                 task.execute(item);
             }
 
@@ -867,8 +867,10 @@ public class AlarmClockActivity extends AppCompatActivity
             {
                 item.offset = offsetDialog.getOffset();
                 item.modified = true;
+                AlarmNotifications.updateAlarmTime(AlarmClockActivity.this, item);
+
                 AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, true);
-                task.setTaskListener(onUpdateItem);  // TODO: reset state and reschedule on offset changed
+                task.setTaskListener(onUpdateItem);
                 task.execute(item);
             }
         }
@@ -906,6 +908,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 item.repeating = repeatDialog.getRepetition();
                 item.repeatingDays = repeatDialog.getRepetitionDays();
                 item.modified = true;
+                AlarmNotifications.updateAlarmTime(AlarmClockActivity.this, item);
 
                 AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, false);
                 task.setTaskListener(onUpdateItem);
