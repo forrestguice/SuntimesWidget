@@ -378,7 +378,7 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
-        String emptyLabel = ((alarm.event != null) ? alarm.event.getShortDisplayString() : context.getString(R.string.alarmOption_solarevent_none));  // TODO: refactor to convenience method
+        String emptyLabel = ((alarm.event != null) ? alarm.event.getShortDisplayString() : context.getString(R.string.alarmOption_solarevent_none));
         String notificationTitle = (alarm.label == null || alarm.label.isEmpty() ? emptyLabel : alarm.label);
         String notificationMsg = notificationTitle;
         int notificationIcon = ((alarm.type == AlarmClockItem.AlarmType.NOTIFICATION) ? R.drawable.ic_action_notification : R.drawable.ic_action_alarms);
@@ -663,20 +663,16 @@ public class AlarmNotifications extends BroadcastReceiver
                                     // expired alarm/notification
                                     if (item.enabled)    // enabled; reschedule alarm/notification
                                     {
-                                        if (item.type == AlarmClockItem.AlarmType.NOTIFICATION)
-                                        {
-                                            Log.d(TAG, "(Re)Scheduling notification: " + item.rowID);
-                                            updateAlarmTime(context, item);     // sets item.hour, item.minute, item.timestamp (calculates the eventTime)
-                                            item.alarmtime = item.timestamp + item.offset;     // the scheduled sounding time (-before/+after eventTime by some offset)
+                                        Log.d(TAG, "(Re)Scheduling: " + item.rowID);
+                                        updateAlarmTime(context, item);     // sets item.hour, item.minute, item.timestamp (calculates the eventTime)
+                                        item.alarmtime = item.timestamp + item.offset;     // the scheduled sounding time (-before/+after eventTime by some offset)
 
-                                        } else {
-                                            Log.d(TAG, "(Re)Scheduling alarm: " + item.rowID + " :: offset " + item.offset);
-                                            item.alarmtime = Calendar.getInstance().getTimeInMillis() + AlarmSettings.loadPrefAlarmUpcoming(context) + (1000 * 60);  // TODO:
+                                        if (item.type == AlarmClockItem.AlarmType.ALARM) {   // TODO: remove this debug trigger
+                                            item.alarmtime = Calendar.getInstance().getTimeInMillis() + AlarmSettings.loadPrefAlarmUpcoming(context) + (1000 * 30);
                                         }
-                                        //showAlarmEnabledToast(context, item);
 
                                     } else {    // disabled; this alarm should have been dismissed
-                                        Log.d(TAG, "Dismissing Alarm: " + item.rowID);
+                                        Log.d(TAG, "Dismissing: " + item.rowID);
                                         sendBroadcast(getAlarmIntent(context, ACTION_DISMISS, item.getUri()));
                                         return;
                                     }
@@ -690,14 +686,14 @@ public class AlarmNotifications extends BroadcastReceiver
                                     nextState = (verySoon ? AlarmState.STATE_SCHEDULED_SOON : AlarmState.STATE_SCHEDULED_DISTANT);
                                     if (verySoon)
                                     {
-                                        Log.i(TAG, "Scheduling Alarm: " + item.rowID + " :: very soon");
+                                        Log.i(TAG, "Scheduling: " + item.rowID + " :: very soon");
                                         onScheduledState = onScheduledSoonState(context);
                                     } else {
-                                        Log.i(TAG, "Scheduling Alarm: " + item.rowID + " :: distant");
+                                        Log.i(TAG, "Scheduling: " + item.rowID + " :: distant");
                                         onScheduledState = onScheduledDistantState(context);
                                     }
                                 } else {
-                                    Log.i(TAG, "Scheduling Notification: " + item.rowID);
+                                    Log.i(TAG, "Scheduling: " + item.rowID);
                                     onScheduledState = onScheduledNotification(context);
                                 }
 
@@ -901,8 +897,8 @@ public class AlarmNotifications extends BroadcastReceiver
                     if (item.type == AlarmClockItem.AlarmType.ALARM)
                     {
                         Log.d(TAG, "State Saved (onScheduledSoon)");
-                        long alarmAt = Calendar.getInstance().getTimeInMillis() + (1000 * 10);  // TODO: testing .. 10s from now sound alarm
-                        addAlarmTimeout(context, ACTION_SHOW, item.getUri(), alarmAt);
+                        long debugAlarmAt = Calendar.getInstance().getTimeInMillis() + (1000 * 10);
+                        addAlarmTimeout(context, ACTION_SHOW, item.getUri(), debugAlarmAt); //item.alarmtime);  // TODO: remove debug timeout
 
                         if (AlarmSettings.loadPrefAlarmUpcoming(context) > 0) {
                             showNotification(context, item, true);             // show upcoming reminder
