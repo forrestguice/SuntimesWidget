@@ -48,8 +48,14 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AlarmNotifications extends BroadcastReceiver
@@ -660,7 +666,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                         if (item.type == AlarmClockItem.AlarmType.NOTIFICATION)
                                         {
                                             Log.d(TAG, "(Re)Scheduling notification: " + item.rowID);
-                                            AlarmClockItem.updateAlarmTime(context, item);     // sets item.hour, item.minute, item.timestamp (calculates the eventTime)
+                                            updateAlarmTime(context, item);     // sets item.hour, item.minute, item.timestamp (calculates the eventTime)
                                             item.alarmtime = item.timestamp + item.offset;     // the scheduled sounding time (-before/+after eventTime by some offset)
 
                                         } else {
@@ -906,6 +912,119 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * updateAlarmTime
+     * @param item AlarmClockItem
+     */
+    public static void updateAlarmTime(Context context, final AlarmClockItem item)
+    {
+        Calendar eventTime = Calendar.getInstance();
+        if (item.location != null && item.event != null)
+        {
+            switch (item.event.getType())
+            {
+                case SolarEvents.TYPE_MOON:
+                    eventTime = updateAlarmTime_moonEvent(context, item.event, item.location, item.offset, item.repeating, item.repeatingDays);
+                    break;
+
+                case SolarEvents.TYPE_SUN:
+                    eventTime = updateAlarmTime_sunEvent(context, item.event, item.location, item.offset, item.repeating, item.repeatingDays);
+                    break;
+            }
+        } else {
+            eventTime = updateAlarmTime_clockTime(item.hour, item.minute, item.offset, item.repeating, item.repeatingDays);
+        }
+        item.hour = eventTime.get(Calendar.HOUR_OF_DAY);
+        item.minute = eventTime.get(Calendar.MINUTE);
+        item.timestamp = eventTime.getTimeInMillis();
+        item.modified = true;
+    }
+
+    private static Calendar updateAlarmTime_sunEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays)
+    {
+        WidgetSettings.TimeMode timeMode = event.toTimeMode();
+        SuntimesRiseSetData sunData = new SuntimesRiseSetData(context, 0);
+        sunData.setLocation(location);
+        sunData.setTimeMode(timeMode != null ? timeMode : WidgetSettings.TimeMode.OFFICIAL);
+
+        Calendar now = Calendar.getInstance();
+        Calendar alarmTime = Calendar.getInstance();
+        Calendar eventTime;
+
+        Calendar day = Calendar.getInstance();
+        sunData.setTodayIs(day);
+        sunData.calculate();
+        eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
+        alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+
+        while (now.after(alarmTime)
+                || (repeating && !repeatingDays.contains(alarmTime.get(Calendar.DAY_OF_WEEK))))
+        {
+            Log.w("AlarmReceiverItem", "updateAlarmTime: sunEvent advancing by 1 day..");
+            day.add(Calendar.DAY_OF_YEAR, 1);
+            sunData.setTodayIs(day);
+            sunData.calculate();
+            eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
+            alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+        }
+        return eventTime;
+    }
+
+    private static Calendar updateAlarmTime_moonEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays)
+    {
+        SuntimesMoonData moonData = new SuntimesMoonData(context, 0);
+        moonData.setLocation(location);
+
+        Calendar now = Calendar.getInstance();
+        Calendar alarmTime = Calendar.getInstance();
+
+        Calendar day = Calendar.getInstance();
+        moonData.setTodayIs(day);
+        moonData.calculate();
+        Calendar eventTime = (event.isRising() ? moonData.moonriseCalendarToday() : moonData.moonsetCalendarToday());
+        alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+
+        while (now.after(alarmTime)
+                || (repeating && !repeatingDays.contains(alarmTime.get(Calendar.DAY_OF_WEEK))))
+        {
+            Log.w("AlarmReceiverItem", "updateAlarmTime: moonEvent advancing by 1 day..");
+            day.add(Calendar.DAY_OF_YEAR, 1);
+            moonData.setTodayIs(day);
+            moonData.calculate();
+            eventTime = (event.isRising() ? moonData.moonriseCalendarToday() : moonData.moonsetCalendarToday());
+            alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+        }
+        return eventTime;
+    }
+
+    private static Calendar updateAlarmTime_clockTime(int hour, int minute, long offset, boolean repeating, ArrayList<Integer> repeatingDays)
+    {
+        Calendar now = Calendar.getInstance();
+        Calendar alarmTime = Calendar.getInstance();
+        Calendar eventTime = Calendar.getInstance();
+
+        eventTime.set(Calendar.SECOND, 0);
+        if (hour >= 0 && hour < 24) {
+            eventTime.set(Calendar.HOUR_OF_DAY, hour);
+        }
+        if (minute >= 0 && minute < 60) {
+            eventTime.set(Calendar.MINUTE, minute);
+        }
+
+        alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+        while (now.after(alarmTime)
+                || (repeating && !repeatingDays.contains(alarmTime.get(Calendar.DAY_OF_WEEK))))
+        {
+            Log.w("AlarmReceiverItem", "updateAlarmTime: clock time " + hour + ":" + minute + " (+" + offset + ") advancing by 1 day..");
+            eventTime.add(Calendar.DAY_OF_YEAR, 1);
+            alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+        }
+        return eventTime;
     }
 
 }

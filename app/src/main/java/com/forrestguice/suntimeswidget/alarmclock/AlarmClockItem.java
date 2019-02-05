@@ -22,9 +22,11 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -318,72 +320,6 @@ public class AlarmClockItem
             }
             return retValue;
         }
-    }
-
-    /**
-     * updateAlarmTime
-     * @param item AlarmClockItem
-     */
-    public static void updateAlarmTime(Context context, final AlarmClockItem item)
-    {
-        Calendar now = Calendar.getInstance();
-        Calendar eventTime, alarmTime;
-
-        if (item.location != null && item.event != null)
-        {
-            // Event Mode; set timestamp based on SolarEvent
-            switch (item.event.getType())
-            {
-                case SolarEvents.TYPE_MOON:
-                    SuntimesMoonData moonData = new SuntimesMoonData(context, 0);
-                    moonData.setLocation(item.location);
-                    moonData.calculate();
-                    eventTime = (item.event.isRising() ? moonData.moonriseCalendarToday() : moonData.moonsetCalendarToday());
-                    if (now.after(eventTime)) {
-                        eventTime = (item.event.isRising() ? moonData.moonriseCalendarTomorrow() : moonData.moonsetCalendarTomorrow());
-                    }
-                    break;
-
-                case SolarEvents.TYPE_SUN:
-                default:
-                    SuntimesRiseSetData sunData = new SuntimesRiseSetData(context, 0);
-                    sunData.setLocation(item.location);
-                    WidgetSettings.TimeMode timeMode = item.event.toTimeMode();
-                    sunData.setTimeMode(timeMode != null ? timeMode : WidgetSettings.TimeMode.OFFICIAL);
-                    sunData.calculate();
-                    eventTime = (item.event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
-                    if (now.after(eventTime)) {
-                        eventTime = (item.event.isRising() ? sunData.sunriseCalendarOther() : sunData.sunsetCalendarOther());
-                    }
-                    break;
-            }
-            item.hour = eventTime.get(Calendar.HOUR_OF_DAY);
-            item.minute = eventTime.get(Calendar.MINUTE);
-
-        } else {
-            // Clock Mode; set timestamp from hour and minute
-            alarmTime = Calendar.getInstance();
-            eventTime = Calendar.getInstance();
-            if (item.hour >= 0 && item.hour < 24) {
-                eventTime.set(Calendar.HOUR_OF_DAY, item.hour);
-            }
-            if (item.minute >= 0 && item.minute < 60) {
-                eventTime.set(Calendar.MINUTE, item.minute);
-            }
-            eventTime.set(Calendar.SECOND, 0);
-            alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + item.offset);
-
-            while (now.after(alarmTime)
-                    || (item.repeating && !item.repeatingDays.contains(alarmTime.get(Calendar.DAY_OF_WEEK))))
-            {
-                Log.w("AlarmReceiverItem", "updateAlarmTime: clock time " + item.hour + ":" + item.minute + " (+" + item.offset + ") advancing by 1 day..");
-                eventTime.add(Calendar.DAY_OF_YEAR, 1);
-                alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + item.offset);
-            }
-        }
-
-        item.timestamp = eventTime.getTimeInMillis();
-        item.modified = true;
     }
 
 }

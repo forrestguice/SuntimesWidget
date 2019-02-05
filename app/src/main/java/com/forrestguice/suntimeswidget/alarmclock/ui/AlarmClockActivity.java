@@ -583,7 +583,7 @@ public class AlarmClockActivity extends AppCompatActivity
             {
                 item.event = dialog.getChoice();
                 item.modified = true;
-                AlarmClockItem.updateAlarmTime(AlarmClockActivity.this, item);
+                AlarmNotifications.updateAlarmTime(AlarmClockActivity.this, item);
 
                 AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, true);
                 task.setTaskListener(onUpdateItem);   // TODO: reset state and reschedule on SolarEventChanged
@@ -772,7 +772,7 @@ public class AlarmClockActivity extends AppCompatActivity
             {
                 item.location = location;
                 item.modified = true;
-                AlarmClockItem.updateAlarmTime(AlarmClockActivity.this, item);
+                AlarmNotifications.updateAlarmTime(AlarmClockActivity.this, item);
 
                 AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, true);
                 task.setTaskListener(onUpdateItem);    // TODO: reset state and reschedule on locationChanged
@@ -827,7 +827,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 item.hour = timeDialog.getHour();
                 item.minute = timeDialog.getMinute();
                 item.modified = true;
-                AlarmClockItem.updateAlarmTime(AlarmClockActivity.this, item);
+                AlarmNotifications.updateAlarmTime(AlarmClockActivity.this, item);
 
                 AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, true);
                 task.setTaskListener(onUpdateItem);          // TODO: reset state and reschedule on time changed
@@ -1125,7 +1125,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 DatabaseUtils.cursorRowToContentValues(cursor, entryValues);
 
                 AlarmClockItem item = new AlarmClockItem(entryValues);
-                AlarmClockItem.updateAlarmTime(contextRef.get(), item);
+                AlarmNotifications.updateAlarmTime(contextRef.get(), item);
                 items.add(item);
                 publishProgress(item);
 
