@@ -960,16 +960,18 @@ public class AlarmNotifications extends BroadcastReceiver
         sunData.setTodayIs(day);
         sunData.calculate();
         eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
+        eventTime.set(Calendar.SECOND, 0);
         alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
 
         while (now.after(alarmTime)
-                || (repeating && !repeatingDays.contains(alarmTime.get(Calendar.DAY_OF_WEEK))))
+                || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))
         {
             Log.w("AlarmReceiverItem", "updateAlarmTime: sunEvent advancing by 1 day..");
             day.add(Calendar.DAY_OF_YEAR, 1);
             sunData.setTodayIs(day);
             sunData.calculate();
             eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
+            eventTime.set(Calendar.SECOND, 0);
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
         }
         return eventTime;
@@ -987,16 +989,18 @@ public class AlarmNotifications extends BroadcastReceiver
         moonData.setTodayIs(day);
         moonData.calculate();
         Calendar eventTime = (event.isRising() ? moonData.moonriseCalendarToday() : moonData.moonsetCalendarToday());
+        eventTime.set(Calendar.SECOND, 0);
         alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
 
         while (now.after(alarmTime)
-                || (repeating && !repeatingDays.contains(alarmTime.get(Calendar.DAY_OF_WEEK))))
+                || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))
         {
             Log.w("AlarmReceiverItem", "updateAlarmTime: moonEvent advancing by 1 day..");
             day.add(Calendar.DAY_OF_YEAR, 1);
             moonData.setTodayIs(day);
             moonData.calculate();
             eventTime = (event.isRising() ? moonData.moonriseCalendarToday() : moonData.moonsetCalendarToday());
+            eventTime.set(Calendar.SECOND, 0);
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
         }
         return eventTime;
@@ -1018,7 +1022,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
         alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
         while (now.after(alarmTime)
-                || (repeating && !repeatingDays.contains(alarmTime.get(Calendar.DAY_OF_WEEK))))
+                || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))
         {
             Log.w("AlarmReceiverItem", "updateAlarmTime: clock time " + hour + ":" + minute + " (+" + offset + ") advancing by 1 day..");
             eventTime.add(Calendar.DAY_OF_YEAR, 1);
