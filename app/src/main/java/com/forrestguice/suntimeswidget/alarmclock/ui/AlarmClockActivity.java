@@ -1521,7 +1521,7 @@ public class AlarmClockActivity extends AppCompatActivity
                                 ? context.getString(R.string.alarmOption_repeat_none)
                                 : AlarmRepeatDialog.getDisplayString(context, item.repeatingDays);
                 option_repeat.setText( isSelected || !noRepeat ? repeatText : "" );
-                if (!isSelected) {
+                if (!isSelected || item.enabled) {
                     option_repeat.setTextColor(disabledTextColor);
                 }
 
@@ -1609,7 +1609,8 @@ public class AlarmClockActivity extends AppCompatActivity
                     menu.getMenu().findItem(R.id.setAlarmTime),
                     menu.getMenu().findItem(R.id.setAlarmOffset),
                     menu.getMenu().findItem(R.id.setAlarmEvent),
-                    menu.getMenu().findItem(R.id.setAlarmLocation)
+                    menu.getMenu().findItem(R.id.setAlarmLocation),
+                    menu.getMenu().findItem(R.id.setAlarmRepeat)
             };
             for (MenuItem menuItem : restrictedMenuItems) {
                 menuItem.setEnabled(!item.enabled);
