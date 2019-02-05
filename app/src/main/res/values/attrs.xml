@@ -120,4 +120,12 @@
         <attr name="hintText" />
     </declare-styleable>
 
+    <declare-styleable name="MillisecondPickerPreference">
+        <attr name="mode" format="enum">
+            <enum name="seconds" value="20"/>
+            <enum name="minutes" value="0"/>
+            <enum name="hours" value="10"/>
+        </attr>
+    </declare-styleable>
+
 </resources>
