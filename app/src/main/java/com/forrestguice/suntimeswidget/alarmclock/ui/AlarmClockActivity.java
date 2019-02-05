@@ -49,7 +49,6 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
@@ -69,7 +68,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -86,7 +84,6 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -1315,8 +1312,12 @@ public class AlarmClockActivity extends AppCompatActivity
                 @Override
                 public void onClick(View v)
                 {
-                    if (isSelected && !item.enabled) {
-                        showAlarmTypeMenu(item, typeButton, view);
+                    if (isSelected)
+                    {
+                        if (item.enabled)
+                            AlarmNotifications.showTimeUntilToast(context, v, item);
+                        else showAlarmTypeMenu(item, typeButton, view);
+
                     } else {
                         setSelectedItem(item.rowID);
                     }
@@ -1364,9 +1365,10 @@ public class AlarmClockActivity extends AppCompatActivity
                     public void onClick(View v)
                     {
                         if (isSelected) {
-                            if (adapterListener != null && !item.enabled)
-                            {
+                            if (adapterListener != null && !item.enabled) {
                                 adapterListener.onRequestSolarEvent(item);
+                            } else {
+                                AlarmNotifications.showTimeUntilToast(context, v, item);
                             }
                         } else {
                             setSelectedItem(item.rowID);
@@ -1398,6 +1400,8 @@ public class AlarmClockActivity extends AppCompatActivity
                         if (isSelected) {
                             if (adapterListener != null && !item.enabled) {
                                 adapterListener.onRequestTime(item);
+                            } else {
+                                AlarmNotifications.showTimeUntilToast(context, v, item);
                             }
                         } else {
                             setSelectedItem(item.rowID);
@@ -1420,6 +1424,8 @@ public class AlarmClockActivity extends AppCompatActivity
                         if (isSelected) {
                             if (adapterListener != null && !item.enabled) {
                                 adapterListener.onRequestLocation(item);
+                            } else {
+                                AlarmNotifications.showTimeUntilToast(context, v, item);
                             }
                         } else {
                             setSelectedItem(item.rowID);
@@ -1445,6 +1451,9 @@ public class AlarmClockActivity extends AppCompatActivity
                     {
                         if (!isSelected) {
                             setSelectedItem(item.rowID);
+                        }
+                        if (isChecked) {
+                            AlarmNotifications.showTimeUntilToast(context, buttonView, item);
                         }
                         enableAlarm(item, card, isChecked);
                     }
@@ -1533,8 +1542,10 @@ public class AlarmClockActivity extends AppCompatActivity
                     public void onClick(View v)
                     {
                         if (isSelected) {
-                            if (adapterListener != null) {
+                            if (adapterListener != null && !item.enabled) {
                                 adapterListener.onRequestRepetition(item);
+                            } else {
+                                AlarmNotifications.showTimeUntilToast(context, v, item);
                             }
                         } else {
                             setSelectedItem(item.rowID);
@@ -1570,6 +1581,8 @@ public class AlarmClockActivity extends AppCompatActivity
                         if (isSelected) {
                             if (adapterListener != null && !item.enabled) {
                                 adapterListener.onRequestOffset(item);
+                            } else {
+                                AlarmNotifications.showTimeUntilToast(context, v, item);
                             }
                         } else {
                             setSelectedItem(item.rowID);

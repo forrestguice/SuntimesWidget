@@ -37,11 +37,13 @@ import android.os.IBinder;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.NotificationCompat;
 import android.text.SpannableString;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
@@ -93,19 +95,20 @@ public class AlarmNotifications extends BroadcastReceiver
 
     /**
      */
-    protected static void showAlarmEnabledToast(Context context, @NonNull AlarmClockItem item)
+    public static void showTimeUntilToast(Context context, View view, @NonNull AlarmClockItem item)
     {
         if (context != null)
         {
             Calendar now = Calendar.getInstance();
             SuntimesUtils.initDisplayStrings(context);
-            SuntimesUtils.TimeDisplayText alarmText = utils.timeDeltaLongDisplayString(now.getTimeInMillis(), item.timestamp);
-            String alarmString = context.getString(R.string.alarmenabled_toast, alarmText.getValue());
+            SuntimesUtils.TimeDisplayText alarmText = utils.timeDeltaLongDisplayString(now.getTimeInMillis(), item.timestamp + item.offset);
+            String alarmString = context.getString(R.string.alarmenabled_toast, item.type.getDisplayString(), alarmText.getValue());
             SpannableString alarmDisplay = SuntimesUtils.createBoldSpan(null, alarmString, alarmText.getValue());
-            Toast msg = Toast.makeText(context, alarmDisplay, Toast.LENGTH_SHORT);
-            msg.show();
 
-        } else Log.e(TAG, "showAlarmEnabledToast: context is null!");
+            //Snackbar.make(view, alarmDisplay, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, alarmDisplay, Toast.LENGTH_SHORT).show();
+
+        } else Log.e(TAG, "showTimeUntilToast: context is null!");
     }
 
     /**
