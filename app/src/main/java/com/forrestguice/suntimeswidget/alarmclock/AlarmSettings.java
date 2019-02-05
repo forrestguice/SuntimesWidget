@@ -30,16 +30,16 @@ public class AlarmSettings
     public static final String PREF_DEF_ALARM_HARDAREBUTTON_ACTION = AlarmNotifications.ACTION_SILENT;
 
     public static final String PREF_KEY_ALARM_SILENCEAFTER = "app_alarms_silenceafter";
-    public static final int PREF_DEF_ALARM_SILENCEAFTER = 1000 * 10; //10 * 60 * 1000;   // 10 min
+    public static final int PREF_DEF_ALARM_SILENCEAFTER = 1000 * 60 * 15;   // 15 min
 
     public static final String PREF_KEY_ALARM_TIMEOUT = "app_alarms_timeoutMillis";
-    public static final int PREF_DEF_ALARM_TIMEOUT = 1000 * 60; //1000 * 60 * 10;  // 15 min
+    public static final int PREF_DEF_ALARM_TIMEOUT = 1000 * 60 * 30;  // 30 min
 
     public static final String PREF_KEY_ALARM_SNOOZE = "app_alarms_snoozeMillis";
-    public static final int PREF_DEF_ALARM_SNOOZE = 1000 * 60; //1000 * 60 * 10;  // 10 min
+    public static final int PREF_DEF_ALARM_SNOOZE = 1000 * 60 * 10;  // 10 min
 
     public static final String PREF_KEY_ALARM_UPCOMING = "app_alarms_upcomingMillis";
-    public static final int PREF_DEF_ALARM_UPCOMING = 1000 * 60;  //1000 * 60 * 60 * 12;  // 12 hours   // TODO: expose through PrefActivity
+    public static final int PREF_DEF_ALARM_UPCOMING = 1000 * 60 * 60 * 10;  // 10 hours
 
     public static String loadPrefOnHardwareButtons(Context context)
     {
