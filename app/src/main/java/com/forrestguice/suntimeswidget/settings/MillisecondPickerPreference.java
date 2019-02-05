@@ -20,10 +20,12 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,8 +94,10 @@ public class MillisecondPickerPreference extends DialogPreference
         params0.gravity = Gravity.CENTER;
         picker.setLayoutParams(params0);
 
+        float marginPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getContext().getResources().getDisplayMetrics());
         LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params1.gravity = Gravity.CENTER;
+        params1.gravity = Gravity.START;
+        params1.setMargins((int)marginPx * 2, (int)marginPx, (int)marginPx * 2, (int)marginPx);
         pickerLabel.setLayoutParams(params1);
 
         LinearLayout dialogView = new LinearLayout(getContext());
