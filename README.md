@@ -17,7 +17,11 @@ Displays sunrise and sunset, twilights (civil / nautical / astronomical), blue a
 <img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="68" align="left" /></a>
 
 <a href="https://github.com/forrestguice/SuntimesCalendars/releases"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/images/ic_launcher.png" height="64" /></a> <a href="https://github.com/forrestguice/SuntimesCalendars/releases">Suntimes Calendars</a> <br />
-A calendar provider add-on.<br/><br />
+A calendar provider add-on Suntimes.<br/><br />
+    
+<img align="left" src="https://forrestguice.github.io/SuntimesWidget/images/ic_launcher_alarms.png" height="64" /></a> Suntimes Alarms<br />
+An alarm clock for Suntimes.<br/><br />
+        
     
 The app:
 * displays the current time (system time zone, custom time zone, or solar time) 
@@ -28,7 +32,7 @@ The app:
 * displays the solstices and equinoxes, and notes the time until the next event.
 * displays the sun's current position, and its position at sunrise, sunset, and noon.
 * displays the moon's current position, and its position at moonrise and moonset.
-* can set an alarm for the next sunrise or sunset (or other rising/setting event).
+* includes an Alarm Clock that can set a repeating alarm or notification for the next sunrise or sunset (or other rising/setting event).
 * can display the configured location on a map (requires a map application) and configure the location from a map (using geo intent).
 
 The app:
