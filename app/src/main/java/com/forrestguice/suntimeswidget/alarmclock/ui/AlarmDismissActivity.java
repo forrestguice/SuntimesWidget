@@ -36,6 +36,7 @@ import android.support.annotation.Nullable;
 import android.support.graphics.drawable.ArgbEvaluator;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -73,7 +74,7 @@ public class AlarmDismissActivity extends AppCompatActivity
     private AlarmClockItem alarm = null;
     private String mode = null;
 
-    private TextView alarmTitle, alarmSubtitle, alarmText, clockText, infoText;
+    private TextView alarmTitle, alarmSubtitle, alarmText, clockText, offsetText, infoText;
     private Button snoozeButton, dismissButton;
     private ViewFlipper icon;
     private ImageView iconSounding, iconSnoozing;
@@ -110,6 +111,7 @@ public class AlarmDismissActivity extends AppCompatActivity
         alarmSubtitle = (TextView)findViewById(R.id.txt_alarm_label2);
         alarmText = (TextView)findViewById(R.id.txt_alarm_time);
         clockText = (TextView)findViewById(R.id.txt_clock_time);
+        offsetText = (TextView)findViewById(R.id.txt_alarm_offset);
         infoText = (TextView)findViewById(R.id.txt_snooze);
 
         icon = (ViewFlipper)findViewById(R.id.icon_alarm);
@@ -395,6 +397,15 @@ public class AlarmDismissActivity extends AppCompatActivity
             alarmSubtitle.setVisibility(View.VISIBLE);
 
         } else alarmSubtitle.setVisibility(View.GONE);
+
+        Spannable offsetSpan = new SpannableString("");
+        if (item.offset != 0) {
+            boolean isBefore = (item.offset <= 0);
+            String offsetText = utils.timeDeltaLongDisplayString(0, item.offset).getValue();
+            String offsetDisplay = context.getString((isBefore ? R.string.offset_before : R.string.offset_after) , offsetText);
+            offsetSpan = SuntimesUtils.createBoldSpan(null, offsetDisplay, offsetText);
+        }
+        offsetText.setText(offsetSpan);
 
         SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, item.getCalendar(), false);
         if (SuntimesUtils.is24()) {

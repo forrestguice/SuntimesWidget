@@ -77,22 +77,29 @@
 			app:layout_constraintBottom_toTopOf="@+id/txt_clock_time">
 
 			<TextView
+				style="@style/TextAppearance.AppCompat.Small"
+				android:id="@+id/txt_alarm_offset"
+				android:layout_width="match_parent" android:layout_height="wrap_content"
+				android:gravity="center" tools:text="30m before" />
+
+			<TextView
+				style="@style/TextAppearance.AppCompat.Large"
+				android:id="@+id/txt_alarm_time" android:textSize="32sp"
+				android:layout_width="match_parent" android:layout_height="wrap_content"
+				android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+				android:gravity="center" tools:text="7:00 AM" />
+
+			<TextView
 				style="@style/TextAppearance.AppCompat.Medium"
 				android:id="@+id/txt_alarm_label2"
 				android:layout_width="match_parent" android:layout_height="wrap_content"
 				android:gravity="center"
 				tools:text="Sunrise" />
 
-			<TextView
-				style="@style/TextAppearance.AppCompat.Medium"
-				android:id="@+id/txt_alarm_time"
-				android:layout_width="match_parent" android:layout_height="wrap_content"
-				android:gravity="center" tools:text="7:00 AM" />
-
 		</LinearLayout>
 
 		<TextView android:id="@+id/txt_clock_time"
-			style="@style/SunsetTimeTextView" android:textSize="56sp"
+			style="@style/SunsetTimeTextView" android:textSize="72sp"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content" android:gravity="center"
 			app:layout_constraintEnd_toEndOf="parent"
