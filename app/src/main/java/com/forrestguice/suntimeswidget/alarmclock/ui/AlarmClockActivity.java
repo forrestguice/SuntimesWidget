@@ -1075,9 +1075,9 @@ public class AlarmClockActivity extends AppCompatActivity
      */
     protected void showHelp()
     {
-        HelpDialog helpDialog = new HelpDialog();
+        /**HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(getString(R.string.help_alarmclock));
-        helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
+        helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);**/
     }
 
     /**
