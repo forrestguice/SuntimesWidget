@@ -407,9 +407,10 @@ public class AlarmNotifications extends BroadcastReceiver
                     builder.setPriority( NotificationCompat.PRIORITY_HIGH );
                     notificationMsg = context.getString(R.string.alarmAction_timeoutMsg);
                     notificationIcon = R.drawable.ic_action_timeout;
-                    builder.setContentIntent(pendingView);
-                    builder.setAutoCancel(true);
-                    builder.setOngoing(false);
+                    builder.setFullScreenIntent(alarmFullscreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
+                    builder.setContentIntent(pendingDismiss);
+                    builder.setAutoCancel(false);
+                    builder.setOngoing(true);
                     break;
 
                 case AlarmState.STATE_SCHEDULED_SOON:
