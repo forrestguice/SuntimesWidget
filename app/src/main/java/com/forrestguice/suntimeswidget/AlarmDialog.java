@@ -584,7 +584,7 @@ public class AlarmDialog extends DialogFragment
 
         Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
         alarmIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        alarmIntent.putExtra(AlarmClock.EXTRA_MESSAGE, label);
+        //alarmIntent.putExtra(AlarmClock.EXTRA_MESSAGE, label);
         alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, hour);
         alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
         alarmIntent.putExtra(AlarmClockActivity.EXTRA_SOLAREVENT, event.name());
