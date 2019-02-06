@@ -2,7 +2,7 @@
 Android app (and widget collection) that displays sunlight and moonlight times for a given location. 
 
 <a href="https://f-droid.org/repository/browse/?fdid=com.forrestguice.suntimeswidget" target="_blank">
-<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="68" align="left" /></a><br />
+<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="68" align="left" /></a><br /><br />
 
 [![F-Droid](https://img.shields.io/f-droid/v/com.forrestguice.suntimeswidget.svg)](https://f-droid.org/en/packages/com.forrestguice.suntimeswidget/)
 [![GitHub release](https://img.shields.io/github/release/forrestguice/SuntimesWidget.svg)](https://github.com/forrestguice/SuntimesWidget/releases)
@@ -15,13 +15,12 @@ Android app (and widget collection) that displays sunlight and moonlight times f
 * [Contributions](#project-contributions)
 
 Displays sunrise and sunset, twilights (civil / nautical / astronomical), blue and golden hour, solstices and equinoxes, moonrise and moonset, moon phases and illumination. 
+    
+<a><img align="left" src="https://forrestguice.github.io/SuntimesWidget/images/ic_launcher_alarms.png" height="64" /></a> Suntimes Alarms<br />
+An alarm clock for Suntimes.<br/><br />
 
 <a href="https://github.com/forrestguice/SuntimesCalendars/releases"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/images/ic_launcher.png" height="64" /></a> <a href="https://github.com/forrestguice/SuntimesCalendars/releases">Suntimes Calendars</a> <br />
-A calendar provider add-on Suntimes.<br/><br />
-    
-<img align="left" src="https://forrestguice.github.io/SuntimesWidget/images/ic_launcher_alarms.png" height="64" /></a> Suntimes Alarms<br />
-An alarm clock for Suntimes.<br/><br />
-        
+A calendar provider add-on Suntimes.<br/><br />        
     
 The app:
 * displays the current time (system time zone, custom time zone, or solar time) 
