@@ -1559,12 +1559,12 @@ public class AlarmClockActivity extends AppCompatActivity
             if (option_offset != null)
             {
                 if (item.offset == 0) {
-                    option_offset.setText("at");  // TODO
+                    option_offset.setText(context.getString(R.string.offset_at));
 
                 } else {
                     boolean isBefore = (item.offset <= 0);
                     String offsetText = utils.timeDeltaLongDisplayString(0, item.offset).getValue();
-                    String offsetDisplay = offsetText + (isBefore ? " before" : " after");        // TODO
+                    String offsetDisplay = context.getString((isBefore ? R.string.offset_before : R.string.offset_after) , offsetText);
                     Spannable offsetSpan = SuntimesUtils.createBoldSpan(null, offsetDisplay, offsetText);
                     option_offset.setText(offsetSpan);
                 }
