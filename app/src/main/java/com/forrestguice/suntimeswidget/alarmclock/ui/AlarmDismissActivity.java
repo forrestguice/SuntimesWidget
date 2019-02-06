@@ -35,8 +35,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.graphics.drawable.ArgbEvaluator;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.animation.FastOutSlowInInterpolator;
-import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.util.Log;
@@ -45,7 +43,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -62,6 +59,8 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.util.Calendar;
+
 /**
  * AlarmDismissActivity
  */
@@ -74,7 +73,7 @@ public class AlarmDismissActivity extends AppCompatActivity
     private AlarmClockItem alarm = null;
     private String mode = null;
 
-    private TextView alarmTitle, alarmSubtitle, alarmText, infoText;
+    private TextView alarmTitle, alarmSubtitle, alarmText, clockText, infoText;
     private Button snoozeButton, dismissButton;
     private ViewFlipper icon;
     private ImageView iconSounding, iconSnoozing;
@@ -110,6 +109,7 @@ public class AlarmDismissActivity extends AppCompatActivity
         alarmTitle = (TextView)findViewById(R.id.txt_alarm_label);
         alarmSubtitle = (TextView)findViewById(R.id.txt_alarm_label2);
         alarmText = (TextView)findViewById(R.id.txt_alarm_time);
+        clockText = (TextView)findViewById(R.id.txt_clock_time);
         infoText = (TextView)findViewById(R.id.txt_snooze);
 
         icon = (ViewFlipper)findViewById(R.id.icon_alarm);
@@ -179,11 +179,13 @@ public class AlarmDismissActivity extends AppCompatActivity
         updateFilter.addAction(ACTION_UPDATE);
         updateFilter.addDataScheme("content");
         registerReceiver(updateReceiver, updateFilter);
+        clockText.post(updateClockTask);
     }
 
     @Override
     protected void onStop()
     {
+        clockText.removeCallbacks(updateClockTask);
         unregisterReceiver(updateReceiver);
         super.onStop();
     }
@@ -362,6 +364,24 @@ public class AlarmDismissActivity extends AppCompatActivity
         });
         task.execute(alarmID);
     }
+
+    public static final int CLOCK_UPDATE_RATE = 3000;
+    private Runnable updateClockTask = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(AlarmDismissActivity.this, Calendar.getInstance(), false);
+            if (SuntimesUtils.is24()) {
+                clockText.setText(timeText.getValue());
+            } else {
+                String timeString = timeText.getValue() + " " + timeText.getSuffix();
+                SpannableString timeDisplay = SuntimesUtils.createRelativeSpan(null, timeString, " " + timeText.getSuffix(), 0.40f);
+                clockText.setText(timeDisplay);
+            }
+            clockText.postDelayed(this, CLOCK_UPDATE_RATE);
+        }
+    };
 
     public void setAlarmItem(@NonNull Context context, @NonNull AlarmClockItem item)
     {
