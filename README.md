@@ -16,10 +16,10 @@ Android app (and widget collection) that displays sunlight and moonlight times f
 
 Displays sunrise and sunset, twilights (civil / nautical / astronomical), blue and golden hour, solstices and equinoxes, moonrise and moonset, moon phases and illumination. 
     
-<a href=""><img align="left" src="https://forrestguice.github.io/SuntimesWidget/images/ic_launcher_alarms.png" height="64" /></a> Suntimes Alarms<br />
+<a href="https://forrestguice.github.io/SuntimesWidget/" target="_blank"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/images/ic_launcher_alarms.png" height="64" /></a> Suntimes Alarms<br />
 An alarm clock for Suntimes.<br/><br />
 
-<a href="https://github.com/forrestguice/SuntimesCalendars/releases"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/images/ic_launcher.png" height="64" /></a> <a href="https://github.com/forrestguice/SuntimesCalendars/releases">Suntimes Calendars</a> <br />
+<a href="https://github.com/forrestguice/SuntimesCalendars/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/images/ic_launcher.png" height="64" /></a> <a href="https://github.com/forrestguice/SuntimesCalendars/">Suntimes Calendars</a> <br />
 A calendar provider add-on Suntimes.<br/><br />        
     
 The app:
