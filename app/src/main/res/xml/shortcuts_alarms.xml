@@ -5,7 +5,7 @@
     <shortcut
         android:shortcutId="shortcut_alarmclock_addalarm"
         android:enabled="true"
-        android:icon="@drawable/ic_action_alarms"
+        android:icon="@drawable/ic_shortcut_alarm_add0"
         android:shortcutShortLabel="@string/shortcut_alarmclock_addalarm_short"
         android:shortcutLongLabel="@string/shortcut_alarmclock_addalarm_long"
         android:shortcutDisabledMessage="@string/shortcut_alarmclock_addalarm_disabled">
@@ -19,7 +19,7 @@
     <shortcut
         android:shortcutId="shortcut_alarmclock_addnotify"
         android:enabled="true"
-        android:icon="@drawable/ic_action_notification"
+        android:icon="@drawable/ic_shortcut_alarm_add1"
         android:shortcutShortLabel="@string/shortcut_alarmclock_addnotify_short"
         android:shortcutLongLabel="@string/shortcut_alarmclock_addnotify_long"
         android:shortcutDisabledMessage="@string/shortcut_alarmclock_addnotify_disabled">
