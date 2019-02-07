@@ -49,6 +49,7 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -67,6 +68,9 @@ import java.util.TimeZone;
 
 public class AlarmDialog extends DialogFragment
 {
+    public static final String KEY_ALARM_TYPE = "alarmdialog_alarmtype";
+    public static final AlarmClockItem.AlarmType DEF_ALARM_TYPE = AlarmClockItem.AlarmType.ALARM;
+
     public static final String PREF_KEY_ALARM_LASTCHOICE = "alarmdialog_lastchoice";
     public static final SolarEvents PREF_DEF_ALARM_LASTCHOICE = SolarEvents.SUNRISE;
 
@@ -78,6 +82,14 @@ public class AlarmDialog extends DialogFragment
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     public int getAppWidgetId() { return appWidgetId; }
     public void setAppWidgetId(int value) { appWidgetId = value; }
+
+    private AlarmClockItem.AlarmType type = DEF_ALARM_TYPE;
+    public AlarmClockItem.AlarmType getType() {
+        return type;
+    }
+    public void setType(AlarmClockItem.AlarmType type) {
+        this.type = type;
+    }
 
     /**
      * The supporting datasets.
@@ -363,6 +375,18 @@ public class AlarmDialog extends DialogFragment
             choice = PREF_DEF_ALARM_LASTCHOICE;
         }
         setChoice(choice);
+
+        String typeString = bundle.getString(KEY_ALARM_TYPE);
+        if (typeString != null)
+        {
+            try {
+                type = AlarmClockItem.AlarmType.valueOf(typeString);
+            } catch (IllegalArgumentException e) {
+                type = DEF_ALARM_TYPE;
+            }
+        } else {
+            type = DEF_ALARM_TYPE;
+        }
     }
 
     /**
@@ -382,6 +406,7 @@ public class AlarmDialog extends DialogFragment
      */
     protected void saveSettings(Bundle bundle)
     {
+        bundle.putString(KEY_ALARM_TYPE, type.name());
         bundle.putString(PREF_KEY_ALARM_LASTCHOICE, choice.name());
     }
 
