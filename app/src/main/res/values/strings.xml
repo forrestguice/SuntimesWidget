@@ -625,7 +625,7 @@
     <string name="deletealarm_dialog_message">Are you sure you want to delete <xliff:g id="type">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg --> <!-- TODO -->
     <string name="deletealarm_dialog_ok">Delete</string>        <!-- button --> <!-- TODO -->
     <string name="deletealarm_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
-    <string name="deletealarm_toast_success"><xliff:g id="alarm">%1$s</xliff:g> was deleted.</string> <!-- toast msg --> <!-- TODO -->
+    <string name="deletealarm_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) was deleted.</string> <!-- toast msg --> <!-- TODO -->
 
     <string name="clearalarms_dialog_title">Clear Alarms</string>        <!-- dialog title -->  <!-- TODO -->
     <string name="clearalarms_dialog_message">Are you sure you want to delete all alarms?</string>   <!-- dialog msg --> <!-- TODO -->

@@ -1872,7 +1872,7 @@ public class AlarmClockActivity extends AppCompatActivity
                                             {
                                                 items.remove(item);
                                                 notifyDataSetChanged();
-                                                Toast.makeText(context, context.getString(R.string.deletealarm_toast_success, item.rowID + ""), Toast.LENGTH_LONG).show();
+                                                Toast.makeText(context, context.getString(R.string.deletealarm_toast_success, getAlarmLabel(context, item), getAlarmTime(context, item), getAlarmEvent(context, item)), Toast.LENGTH_LONG).show();
                                             }
                                         });
                                         itemView.startAnimation(animation);
