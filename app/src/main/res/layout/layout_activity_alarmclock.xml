@@ -59,6 +59,7 @@
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:src="?attr/icActionNew"
 			android:layout_margin="16dp"
+			android:contentDescription="@string/configAction_addAlarm"
 			app:backgroundTint="?attr/fab_backgroundColor"
 			app:rippleColor="?attr/fab_rippleColor"
             app:layout_constraintEnd_toEndOf="parent"
