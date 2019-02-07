@@ -578,6 +578,8 @@
     -->
     <string name="configLabel_alarmClock">Alarms</string>            <!-- group title -->  <!-- TODO -->
     <string name="configLabel_alarmClock_emptyMsg">No Alarms</string>     <!-- a label that is displayed in place of an empty listview -->  <!-- TODO -->
+    <string name="configAction_addAlarm">Add Alarm</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_addNotification">Add Notification</string> <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_deleteAlarm">Delete</string>               <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_clearAlarms">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_clearOffset">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
