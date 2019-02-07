@@ -46,6 +46,14 @@
     <string name="shortcut_themelist_long">@string/configLabel_widgetThemeList</string>
     <string name="shortcut_themelist_disabled">@string/configLabel_widgetThemeList</string>
 
+    <string name="shortcut_alarmclock_addalarm_short">@string/configAction_addAlarm</string>
+    <string name="shortcut_alarmclock_addalarm_long">@string/configAction_addAlarm</string>
+    <string name="shortcut_alarmclock_addalarm_disabled">@string/configAction_addAlarm</string>
+
+    <string name="shortcut_alarmclock_addnotify_short">@string/configAction_addNotification</string>
+    <string name="shortcut_alarmclock_addnotify_long">@string/configAction_addNotification</string>
+    <string name="shortcut_alarmclock_addnotify_disabled">@string/configAction_addNotification</string>
+
     <!-- Button: Next/Prev Date
          The next/prev button contentDescription (accessibility).
     -->

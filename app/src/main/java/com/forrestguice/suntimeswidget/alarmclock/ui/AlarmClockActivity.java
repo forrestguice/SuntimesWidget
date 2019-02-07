@@ -73,7 +73,6 @@ import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.AboutDialog;
 import com.forrestguice.suntimeswidget.AlarmDialog;
-import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
@@ -95,9 +94,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 
+/**
+ * AlarmClockActivity
+ */
 public class AlarmClockActivity extends AppCompatActivity
 {
     public static final String TAG = "AlarmReceiverList";
+
+    public static final String ACTION_ADD_ALARM = "com.forrestguice.suntimeswidget.alarmclock.ADD_ALARM";
+    public static final String ACTION_ADD_NOTIFICATION = "com.forrestguice.suntimeswidget.alarmclock.ADD_NOTIFICATION";
 
     public static final String EXTRA_SHOWBACK = "showBack";
     public static final String EXTRA_SOLAREVENT = "solarevent";
@@ -212,6 +217,14 @@ public class AlarmClockActivity extends AppCompatActivity
 
                 Log.i(TAG, "ACTION_SET_ALARM :: " + param_label + ", " + param_hour + ", " + param_minute + ", " + param_event);
                 addAlarm(AlarmClockItem.AlarmType.ALARM, param_label, param_event, param_hour, param_minute, param_vibrate, param_ringtoneUri, param_days);
+
+            } else if (param_action.equals(ACTION_ADD_ALARM)) {
+                Log.d("DEBUG", "handleIntent: add alarm");
+                showAddDialog(AlarmClockItem.AlarmType.ALARM);
+
+            } else if (param_action.equals(ACTION_ADD_NOTIFICATION)) {
+                Log.d("DEBUG", "handleIntent: add notification");
+                showAddDialog(AlarmClockItem.AlarmType.NOTIFICATION);
             }
         }
 
@@ -252,7 +265,7 @@ public class AlarmClockActivity extends AppCompatActivity
         if (eventDialog0 != null)
         {
             initEventDialog(eventDialog0, null);
-            eventDialog0.setOnAcceptedListener(onActionButtonAccepted);
+            eventDialog0.setOnAcceptedListener((eventDialog0.getType() == AlarmClockItem.AlarmType.ALARM) ? onAddAlarmAccepted : onAddNotificationAccepted);
         }
 
         AlarmDialog eventDialog1 = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
@@ -451,26 +464,41 @@ public class AlarmClockActivity extends AppCompatActivity
         @Override
         public void onClick(View v)
         {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmDialog eventDialog0 = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
-            if (eventDialog0 == null)
-            {
-                final AlarmDialog dialog = new AlarmDialog();
-                initEventDialog(dialog, null);
-                dialog.setChoice(SolarEvents.SUNRISE);
-                dialog.setOnAcceptedListener(onActionButtonAccepted);
-                dialog.show(getSupportFragmentManager(), DIALOGTAG_EVENT_FAB);
-            }
+            showAddDialog(AlarmClockItem.AlarmType.ALARM);
         }
     };
 
-    private DialogInterface.OnClickListener onActionButtonAccepted = new DialogInterface.OnClickListener() {
+    private DialogInterface.OnClickListener onAddAlarmAccepted = new DialogInterface.OnClickListener() {
         @Override
-        public void onClick(DialogInterface d, int which)
-        {
+        public void onClick(DialogInterface d, int which) {
+            Log.d("DEBUG", "onAddAlarmAccepted");
             addAlarm(AlarmClockItem.AlarmType.ALARM);
         }
     };
+    private DialogInterface.OnClickListener onAddNotificationAccepted = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface d, int which) {
+            Log.d("DEBUG", "onAddNotificationAccepted");
+            addAlarm(AlarmClockItem.AlarmType.NOTIFICATION);
+        }
+    };
+
+    protected void showAddDialog(AlarmClockItem.AlarmType type)
+    {
+        Log.d("DEBUG", "showAddDialog: " + type);
+        FragmentManager fragments = getSupportFragmentManager();
+        AlarmDialog eventDialog0 = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
+        if (eventDialog0 == null)
+        {
+            final AlarmDialog dialog = new AlarmDialog();
+            initEventDialog(dialog, null);
+            dialog.setType(type);
+            dialog.setChoice(SolarEvents.SUNRISE);
+            DialogInterface.OnClickListener clickListener = (type == AlarmClockItem.AlarmType.ALARM ? onAddAlarmAccepted : onAddNotificationAccepted);
+            dialog.setOnAcceptedListener(clickListener);
+            dialog.show(getSupportFragmentManager(), DIALOGTAG_EVENT_FAB);
+        }
+    }
 
     protected void addAlarm(AlarmClockItem.AlarmType type)
     {
@@ -480,6 +508,7 @@ public class AlarmClockActivity extends AppCompatActivity
     }
     protected void addAlarm(AlarmClockItem.AlarmType type, String label, SolarEvents event, int hour, int minute, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays)
     {
+        Log.d("DEBUG", "addAlarm: type is " + type.toString());
         final AlarmClockItem alarm = new AlarmClockItem();
         alarm.enabled = getDefaultNewAlarmsEnabled(this);
         alarm.type = type;
