@@ -81,6 +81,14 @@ public class MillisecondPickerPreference extends DialogPreference
     @Override
     protected View onCreateDialogView()
     {
+        Context context = getContext();
+
+        float marginTopBottom = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getContext().getResources().getDisplayMetrics());
+        float marginLeftRight;
+        TypedArray a = context.obtainStyledAttributes(new int[] { R.attr.dialogPreferredPadding });
+        marginLeftRight = context.getResources().getDimension(a.getResourceId(0, R.dimen.settingsGroup_margin));
+        a.recycle();
+
         pickerLabel = new TextView(getContext());
         picker = new NumberPicker(getContext());
         picker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
@@ -94,10 +102,9 @@ public class MillisecondPickerPreference extends DialogPreference
         params0.gravity = Gravity.CENTER;
         picker.setLayoutParams(params0);
 
-        float marginPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getContext().getResources().getDisplayMetrics());
         LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params1.gravity = Gravity.START;
-        params1.setMargins((int)marginPx * 2, (int)marginPx, (int)marginPx * 2, (int)marginPx);
+        params1.setMargins((int)marginLeftRight, (int)marginTopBottom, (int)marginLeftRight, (int)marginTopBottom);
         pickerLabel.setLayoutParams(params1);
 
         LinearLayout dialogView = new LinearLayout(getContext());
