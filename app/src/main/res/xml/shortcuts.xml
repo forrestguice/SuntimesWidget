@@ -3,17 +3,31 @@
     tools:targetApi="n_mr1">
 
     <shortcut
-        android:shortcutId="shortcut_widgetlist"
+        android:shortcutId="shortcut_mooninfo"
         android:enabled="true"
-        android:icon="@drawable/ic_shortcut_widgets"
-        android:shortcutShortLabel="@string/shortcut_widgetlist_short"
-        android:shortcutLongLabel="@string/shortcut_widgetlist_long"
-        android:shortcutDisabledMessage="@string/shortcut_widgetlist_disabled">
+        android:icon="@drawable/ic_moon"
+        android:shortcutShortLabel="@string/shortcut_mooninfo_short"
+        android:shortcutLongLabel="@string/shortcut_mooninfo_long"
+        android:shortcutDisabledMessage="@string/shortcut_mooninfo_disabled">
 
         <intent
-            android:action="android.intent.action.VIEW"
+            android:action="com.forrestguice.suntimeswidget.VIEW_MOON"
             android:targetPackage="com.forrestguice.suntimeswidget"
-            android:targetClass="com.forrestguice.suntimeswidget.SuntimesWidgetListActivity" />
+            android:targetClass="com.forrestguice.suntimeswidget.SuntimesActivity" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="shortcut_suninfo"
+        android:enabled="true"
+        android:icon="@drawable/ic_sun"
+        android:shortcutShortLabel="@string/shortcut_suninfo_short"
+        android:shortcutLongLabel="@string/shortcut_suninfo_long"
+        android:shortcutDisabledMessage="@string/shortcut_suninfo_disabled">
+
+        <intent
+            android:action="com.forrestguice.suntimeswidget.VIEW_SUN"
+            android:targetPackage="com.forrestguice.suntimeswidget"
+            android:targetClass="com.forrestguice.suntimeswidget.SuntimesActivity" />
     </shortcut>
 
     <shortcut
@@ -28,6 +42,20 @@
             android:action="android.intent.action.VIEW"
             android:targetPackage="com.forrestguice.suntimeswidget"
             android:targetClass="com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="shortcut_widgetlist"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_widgets"
+        android:shortcutShortLabel="@string/shortcut_widgetlist_short"
+        android:shortcutLongLabel="@string/shortcut_widgetlist_long"
+        android:shortcutDisabledMessage="@string/shortcut_widgetlist_disabled">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.forrestguice.suntimeswidget"
+            android:targetClass="com.forrestguice.suntimeswidget.SuntimesWidgetListActivity" />
     </shortcut>
 
 </shortcuts>
