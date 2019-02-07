@@ -113,6 +113,10 @@ public class SuntimesActivity extends AppCompatActivity
     public static final String SUNTIMES_APP_UPDATE_PARTIAL = "suntimes.SUNTIMES_APP_UPDATE_PARTIAL";
     public static final int SUNTIMES_SETTINGS_REQUEST = 10;
 
+    public static final String ACTION_VIEW_SUN = "com.forrestguice.suntimeswidget.VIEW_SUN";
+    public static final String ACTION_VIEW_MOON = "com.forrestguice.suntimeswidget.VIEW_MOON";
+    public static final String ACTION_VIEW_SOLSTICE = "com.forrestguice.suntimeswidget.VIEW_SOLSTICE";
+
     public static final String KEY_UI_CARDISTOMORROW = "cardIsTomorrow";
     public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedCard";
 
@@ -270,12 +274,34 @@ public class SuntimesActivity extends AppCompatActivity
         getFixHelper.loadSettings(savedState);
         onStart_resetNoteIndex = true;
 
-        Intent intent = getIntent();
+        handleIntent(getIntent());
+    }
+
+    private void handleIntent(Intent intent)
+    {
+        String action = intent.getAction();
+        intent.setAction(null);
+
         Uri data = intent.getData();
-        if (data != null)
+        intent.setData(null);
+
+        Log.d("handleIntent", "action: " + action + ", data: " + data);
+        if (action != null)
         {
-            intent.setData(null);
-            configLocation(data);
+            if (action.equals(ACTION_VIEW_SUN)) {
+                showLightMapDialog();
+
+            } else if (action.equals(ACTION_VIEW_MOON)) {
+                showMoonDialog();
+
+            } else if (action.equals(ACTION_VIEW_SOLSTICE)) {
+                showEquinoxDialog();
+
+            } else {
+                if (data != null) {
+                    configLocation(data);
+                }
+            }
         }
     }
 
