@@ -5,7 +5,7 @@
     <shortcut
         android:shortcutId="shortcut_widgetlist"
         android:enabled="true"
-        android:icon="@drawable/ic_action_widget"
+        android:icon="@drawable/ic_shortcut_widgets"
         android:shortcutShortLabel="@string/shortcut_widgetlist_short"
         android:shortcutLongLabel="@string/shortcut_widgetlist_long"
         android:shortcutDisabledMessage="@string/shortcut_widgetlist_disabled">
@@ -19,7 +19,7 @@
     <shortcut
         android:shortcutId="shortcut_themelist"
         android:enabled="true"
-        android:icon="@drawable/ic_palette"
+        android:icon="@drawable/ic_shortcut_themes"
         android:shortcutShortLabel="@string/shortcut_themelist_short"
         android:shortcutLongLabel="@string/shortcut_themelist_long"
         android:shortcutDisabledMessage="@string/shortcut_themelist_disabled">
