@@ -88,6 +88,7 @@
     <attr name="icActionDismiss" format="reference" />
     <attr name="icActionCancel" format="reference" />
     <attr name="icActionShare" format="reference" />
+    <attr name="icActionSnooze" format="reference" />
 
     <attr name="icActionNext" format="reference" />
     <attr name="icActionPrevious" format="reference" />

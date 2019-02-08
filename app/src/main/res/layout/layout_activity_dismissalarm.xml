@@ -113,7 +113,7 @@
 			style="@style/Widget.AppCompat.Button.Borderless"
 			android:layout_width="0dp" android:layout_height="100dp"
 			android:text="@string/alarmAction_snooze"
-			android:drawableTop="?attr/icActionAlarm" android:gravity="top|center_horizontal"
+			android:drawableTop="?attr/icActionSnooze" android:gravity="top|center_horizontal"
             android:paddingTop="20dp"
 
 			app:layout_constraintEnd_toStartOf="@+id/btn_dismiss"

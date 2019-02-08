@@ -95,6 +95,7 @@
         <item name="icActionDismiss">@drawable/ic_action_cancel_light</item>
         <item name="icActionCancel">@drawable/ic_action_cancel_light</item>
         <item name="icActionShare">@drawable/ic_action_share_light</item>
+        <item name="icActionSnooze">@drawable/ic_action_snooze_light</item>
 
         <item name="windowActionModeOverlay">true</item>
     </style>
@@ -194,6 +195,7 @@
         <item name="icActionDismiss">@drawable/ic_action_cancel</item>
         <item name="icActionCancel">@drawable/ic_action_cancel</item>
         <item name="icActionShare">@drawable/ic_action_share</item>
+        <item name="icActionSnooze">@drawable/ic_action_snooze</item>
 
         <item name="windowActionModeOverlay">true</item>
     </style>
