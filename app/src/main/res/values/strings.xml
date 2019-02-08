@@ -1150,6 +1150,28 @@
           <b>Winter Solstice:</b> TODO.<br/>
     ]]></string>
     <string name="help_general_solartime"><![CDATA[
+          <b>Apparent Solar Time:</b> Sundial time. The time determined by tracking the motion of the apparent sun with respect to a given longitude and latitude.
+          <br/><br/>
+          The motion of the apparent sun is not constant. It varies seasonally due to the obliquity of the ecliptic and eccentricity of the Earth\'s orbit.
+          The length of each apparent solar day, measured from one noon to the next, may be slightly longer or shorter than 24 hours (up to 30s).
+          These small variations accumulate with each passing day (and average out over the course of the year).
+          <br/><br/>
+
+          <b>Local Mean Time:</b> Clock time. The time determined from the position of the mean sun with respect to a given longitude.
+          <br/><br/>
+          The motion of the mean sun corrects for obliquity and eccentricity and is uniform.
+          The length of each mean solar day is exactly 24 hours.<br/><br/>
+
+          <b>Equation of Time (EOT):</b> The difference between local mean time and apparent solar time.
+          This is the accumulated variation of the apparent solar day.
+          <br/><br/>
+          Apparent solar time may differ from local mean time by up to 16 minutes depending on the season.
+          <br/><br/>
+
+          <i>This app uses an algorithm to calculate the equation of time (and derive the apparent solar time).
+          Your location is used to determine the local mean time.</i>
+          <br/><br/>
+
     ]]></string> <!-- TODO -->
     <string name="help_general_daylength"><![CDATA[
         <b>Length of day:</b> The amount of time between sunrise and sunset.<br/><br/>
