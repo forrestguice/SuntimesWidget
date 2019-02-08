@@ -27,7 +27,10 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -80,6 +83,8 @@ public class AlarmDismissActivity extends AppCompatActivity
     private ImageView iconSounding, iconSnoozing;
     private SuntimesUtils utils = new SuntimesUtils();
 
+    private int enabledColor, disabledColor, pressedColor;
+
     private int pulseSoundingDuration = 4000;
     private int pulseSoundingColor_start, pulseSoundingColor_end;
 
@@ -118,11 +123,17 @@ public class AlarmDismissActivity extends AppCompatActivity
         iconSounding = (ImageView)findViewById(R.id.icon_alarm_sounding);
         iconSnoozing = (ImageView)findViewById(R.id.icon_alarm_snooze);
 
+        ColorStateList buttonColors = SuntimesUtils.colorStateList(enabledColor, disabledColor, pressedColor);
+
         dismissButton = (Button) findViewById(R.id.btn_dismiss);
+        dismissButton.setTextColor(buttonColors);
         dismissButton.setOnClickListener(onDismissClicked);
+        colorizeButtonCompoundDrawable(enabledColor, dismissButton);
 
         snoozeButton = (Button) findViewById(R.id.btn_snooze);
+        snoozeButton.setTextColor(buttonColors);
         snoozeButton.setOnClickListener(onSnoozeClicked);
+        colorizeButtonCompoundDrawable(enabledColor, snoozeButton);
 
         Intent intent = getIntent();
         Uri data = intent.getData();
@@ -214,13 +225,15 @@ public class AlarmDismissActivity extends AppCompatActivity
         SuntimesUtils.initDisplayStrings(context);
         SolarEvents.initDisplayStrings(context);
 
-        int[] attrs = { R.attr.sunsetColor,  R.attr.sunriseColor, R.attr.dialogBackgroundAlt, R.attr.text_disabledColor };
+        int[] attrs = { R.attr.sunsetColor,  R.attr.sunriseColor, R.attr.dialogBackgroundAlt,
+                R.attr.text_disabledColor, R.attr.buttonPressColor, R.attr.text_disabledColor };
         TypedArray a = context.obtainStyledAttributes(attrs);
         pulseSoundingColor_start = ContextCompat.getColor(context, a.getResourceId(0, R.color.sunIcon_color_setting_dark));
         pulseSoundingColor_end = ContextCompat.getColor(context, a.getResourceId(1, R.color.sunIcon_color_rising_dark));
-
         pulseSnoozingColor_start = ContextCompat.getColor(context, a.getResourceId(2, android.R.color.darker_gray));
         pulseSnoozingColor_end = ContextCompat.getColor(context, a.getResourceId(3, android.R.color.white));
+        pressedColor = enabledColor = ContextCompat.getColor(context, a.getResourceId(4, R.color.btn_tint_pressed_dark));
+        disabledColor = ContextCompat.getColor(context, a.getResourceId(5, R.color.text_disabled_dark));
         a.recycle();
     }
 
@@ -300,6 +313,17 @@ public class AlarmDismissActivity extends AppCompatActivity
             icon.setDisplayedChild(0);
             setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
         }
+    }
+
+    private void colorizeButtonCompoundDrawable(int color, @NonNull Button button)
+    {
+        Drawable[] drawables = button.getCompoundDrawables();
+        for (Drawable d : drawables) {
+            if (d != null) {
+                d.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+            }
+        }
+        button.setCompoundDrawables(drawables[0], drawables[1], drawables[2], drawables[3]);
     }
 
     private void setBrightness(float toValue)
@@ -467,5 +491,6 @@ public class AlarmDismissActivity extends AppCompatActivity
         } else return super.dispatchKeyEvent(event);
     }
     private boolean hardwareButtonPressed = false;
+
 
 }
