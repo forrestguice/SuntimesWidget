@@ -1149,6 +1149,8 @@
           <b>Autumn Equinox:</b> TODO.<br/><br/>
           <b>Winter Solstice:</b> TODO.<br/>
     ]]></string>
+    <string name="help_general_solartime"><![CDATA[
+    ]]></string> <!-- TODO -->
     <string name="help_general_daylength"><![CDATA[
         <b>Length of day:</b> The amount of time between sunrise and sunset.<br/><br/>
         <b>Usable light:</b> The amount of time between morning and evening civil twilight.<br/>
