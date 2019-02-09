@@ -62,7 +62,7 @@ import java.util.Calendar;
 public class AlarmNotifications extends BroadcastReceiver
 {
     /** DEBUG_ALARMUI .. when 'true' Alarms are scheduled immediately (to step through and test the UI) */
-    private static final boolean DEBUG_ALARMUI = true;
+    private static final boolean DEBUG_ALARMUI = false;  // TODO: remove this flag
 
     public static final String TAG = "AlarmReceiver";
 
