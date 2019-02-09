@@ -25,24 +25,51 @@
 		android:orientation="vertical" android:padding="16dp" android:animateLayoutChanges="true">
 
 		<TextView
-			style="@style/TextAppearance.AppCompat.Large" android:textSize="36sp"
+			style="@style/TextAppearance.AppCompat.Large" android:textSize="32sp"
 			android:id="@+id/txt_alarm_label"
-			android:layout_width="0dp" android:layout_height="wrap_content"
+			android:layout_width="match_parent" android:layout_height="wrap_content"
 			android:gravity="center"
 			app:layout_constraintVertical_chainStyle="spread"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintBottom_toTopOf="@+id/icon_alarm"
 			tools:text="Alarm" />
 
-        <ViewFlipper android:id="@+id/icon_alarm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+		<LinearLayout android:id="@+id/layout_alarm_label2"
+			android:orientation="vertical"
+			android:layout_width="match_parent" android:layout_height="wrap_content"
+			app:layout_constraintVertical_chainStyle="spread"
+			app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+
+			app:layout_constraintBottom_toTopOf="@+id/icon_alarm">
+
+			<TextView
+				style="@style/TextAppearance.AppCompat.Small"
+				android:id="@+id/txt_alarm_offset" android:textSize="12sp"
+				android:layout_width="match_parent" android:layout_height="wrap_content"
+				android:gravity="bottom|center_horizontal" tools:text="30m before" />
+
+			<TextView
+				style="@style/TextAppearance.AppCompat.Large"
+				android:id="@+id/txt_alarm_time" android:visibility="gone"
+				android:layout_width="match_parent" android:layout_height="wrap_content"
+				android:gravity="center" tools:text="7:00 AM" />
+
+			<TextView
+				style="@style/TextAppearance.AppCompat.Medium"
+				android:id="@+id/txt_alarm_label2"
+				android:layout_width="match_parent" android:layout_height="wrap_content"
+				android:gravity="top|center_horizontal"
+				tools:text="Sunrise" />
+
+		</LinearLayout>
+
+
+		<ViewFlipper android:id="@+id/icon_alarm"
+            android:layout_width="200dp" android:layout_height="200dp"
+			app:layout_constraintVertical_bias="0.35"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_alarm_label"
-            app:layout_constraintBottom_toTopOf="@+id/txt_clock_time">
+			app:layout_constraintBottom_toTopOf="@+id/btn_dismiss">
 
             <ImageView
 				android:id="@+id/icon_alarm_sounding"
@@ -67,51 +94,20 @@
 
         </ViewFlipper>
 
-		<LinearLayout android:id="@+id/layout_alarm_label2"
-			android:orientation="vertical"
-			android:layout_width="match_parent" android:layout_height="wrap_content"
-			app:layout_constraintVertical_chainStyle="spread"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/icon_alarm"
-			app:layout_constraintBottom_toTopOf="@+id/txt_clock_time">
-
-			<TextView
-				style="@style/TextAppearance.AppCompat.Small"
-				android:id="@+id/txt_alarm_offset"
-				android:layout_width="match_parent" android:layout_height="wrap_content"
-				android:gravity="center" tools:text="30m before" />
-
-			<TextView
-				style="@style/TextAppearance.AppCompat.Large"
-				android:id="@+id/txt_alarm_time" android:textSize="32sp"
-				android:layout_width="match_parent" android:layout_height="wrap_content"
-				android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
-				android:gravity="center" tools:text="7:00 AM" />
-
-			<TextView
-				style="@style/TextAppearance.AppCompat.Medium"
-				android:id="@+id/txt_alarm_label2"
-				android:layout_width="match_parent" android:layout_height="wrap_content"
-				android:gravity="center"
-				tools:text="Sunrise" />
-
-		</LinearLayout>
-
 		<TextView android:id="@+id/txt_clock_time"
-			style="@style/SunsetTimeTextView" android:textSize="72sp"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content" android:gravity="center"
+			style="@style/SunsetTimeTextView" android:textSize="58sp" android:textStyle="bold"
+			android:layout_width="match_parent" android:layout_height="wrap_content"
+			android:gravity="center"
+			app:layout_constraintVertical_bias="0.65"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/layout_alarm_label2"
+			app:layout_constraintTop_toBottomOf="@+id/icon_alarm"
 			app:layout_constraintBottom_toTopOf="@+id/btn_dismiss"
-            android:layout_marginBottom="0dp" android:layout_marginTop="16dp"
 			tools:text="00:00 AM" />
 
 		<Button android:id="@+id/btn_snooze" android:visibility="visible"
 			style="@style/Widget.AppCompat.Button.Borderless"
-			android:layout_width="0dp" android:layout_height="100dp"
+			android:layout_width="0dp" android:layout_height="96dp"
 			android:text="@string/alarmAction_snooze"
 			android:drawableTop="?attr/icActionSnooze" android:gravity="top|center_horizontal"
             android:paddingTop="20dp"
@@ -124,27 +120,24 @@
 
 		<Button android:id="@+id/btn_dismiss"
 			style="@style/Widget.AppCompat.Button.Borderless"
-			android:layout_width="0dp" android:layout_height="100dp"
+			android:layout_width="0dp" android:layout_height="96dp"
 			android:text="@string/alarmAction_dismiss"
 			android:drawableTop="?attr/icActionDismiss" android:gravity="top|center_horizontal"
             android:paddingTop="20dp"
 
-			app:layout_constraintTop_toBottomOf="@+id/txt_clock_time"
 			app:layout_constraintBottom_toTopOf="@+id/txt_snooze"
 			app:layout_constraintStart_toEndOf="@+id/btn_snooze"
 			app:layout_constraintEnd_toEndOf="parent" />
-
 
 		<TextView android:id="@+id/txt_snooze" android:visibility="visible"
 			style="@style/TextAppearance.AppCompat.Small"
 			android:layout_width="match_parent" android:layout_height="wrap_content"
 			android:gravity="center"
+
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/btn_dismiss"
 			app:layout_constraintBottom_toBottomOf="parent"
 			tools:text="Snoozing for 10m" />
-
 
 	</android.support.constraint.ConstraintLayout>
 
