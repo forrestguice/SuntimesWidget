@@ -37,6 +37,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 
+import android.text.SpannableString;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,7 +49,11 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -63,6 +68,9 @@ import java.util.TimeZone;
 
 public class AlarmDialog extends DialogFragment
 {
+    public static final String KEY_ALARM_TYPE = "alarmdialog_alarmtype";
+    public static final AlarmClockItem.AlarmType DEF_ALARM_TYPE = AlarmClockItem.AlarmType.ALARM;
+
     public static final String PREF_KEY_ALARM_LASTCHOICE = "alarmdialog_lastchoice";
     public static final SolarEvents PREF_DEF_ALARM_LASTCHOICE = SolarEvents.SUNRISE;
 
@@ -74,6 +82,14 @@ public class AlarmDialog extends DialogFragment
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     public int getAppWidgetId() { return appWidgetId; }
     public void setAppWidgetId(int value) { appWidgetId = value; }
+
+    private AlarmClockItem.AlarmType type = DEF_ALARM_TYPE;
+    public AlarmClockItem.AlarmType getType() {
+        return type;
+    }
+    public void setType(AlarmClockItem.AlarmType type) {
+        this.type = type;
+    }
 
     /**
      * The supporting datasets.
@@ -242,6 +258,7 @@ public class AlarmDialog extends DialogFragment
     private Spinner spinner_scheduleMode;
     private TextView txt_note;
     private ImageView icon_note;
+    private TextView txt_location;
 
     protected void initViews( final Context context, View dialogContent )
     {
@@ -256,6 +273,11 @@ public class AlarmDialog extends DialogFragment
         txt_note = (TextView) dialogContent.findViewById(R.id.appwidget_schedalarm_note);
         txt_note.setText("");
 
+        txt_location = (TextView) dialogContent.findViewById(R.id.appwidget_schedalarm_location);
+        if (txt_location != null) {
+            txt_location.setText("");
+        }
+
         spinner_scheduleMode = (Spinner) dialogContent.findViewById(R.id.appwidget_schedalarm_mode);
         if (adapter != null)
         {
@@ -267,8 +289,9 @@ public class AlarmDialog extends DialogFragment
                 {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
                     {
-                        choice = (SolarEvents)spinner_scheduleMode.getSelectedItem();
+                        updateLocationLabel(context, txt_location, dataset.location());
 
+                        choice = (SolarEvents)spinner_scheduleMode.getSelectedItem();
                         Calendar now0 = dataset.nowThen(dataset.calendar());
                         Calendar alarmCalendar = getCalendarForAlarmChoice(choice, now0);
                         if (alarmCalendar != null)
@@ -352,6 +375,18 @@ public class AlarmDialog extends DialogFragment
             choice = PREF_DEF_ALARM_LASTCHOICE;
         }
         setChoice(choice);
+
+        String typeString = bundle.getString(KEY_ALARM_TYPE);
+        if (typeString != null)
+        {
+            try {
+                type = AlarmClockItem.AlarmType.valueOf(typeString);
+            } catch (IllegalArgumentException e) {
+                type = DEF_ALARM_TYPE;
+            }
+        } else {
+            type = DEF_ALARM_TYPE;
+        }
     }
 
     /**
@@ -371,6 +406,7 @@ public class AlarmDialog extends DialogFragment
      */
     protected void saveSettings(Bundle bundle)
     {
+        bundle.putString(KEY_ALARM_TYPE, type.name());
         bundle.putString(PREF_KEY_ALARM_LASTCHOICE, choice.name());
     }
 
@@ -550,7 +586,7 @@ public class AlarmDialog extends DialogFragment
                 {
                     DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
                     String alarmLabel = context.getString(R.string.schedalarm_labelformat, choice.getShortDisplayString(), dateFormat.format(calendar.getTime()));
-                    AlarmDialog.scheduleAlarm(getActivity(), alarmLabel, calendar);
+                    AlarmDialog.scheduleAlarm(getActivity(), alarmLabel, calendar, choice);
 
                 } else {
                     String alarmErrorTxt = getString(R.string.schedalarm_dialog_error) + "\n" + getString(R.string.schedalarm_dialog_note2, choice.getLongDisplayString());
@@ -561,7 +597,7 @@ public class AlarmDialog extends DialogFragment
         }
     };
 
-    public static void scheduleAlarm(Activity context, String label, Calendar calendar)
+    public static void scheduleAlarm(Activity context, String label, Calendar calendar, SolarEvents event)
     {
         if (calendar == null)
             return;
@@ -573,9 +609,10 @@ public class AlarmDialog extends DialogFragment
 
         Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
         alarmIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        alarmIntent.putExtra(AlarmClock.EXTRA_MESSAGE, label);
+        //alarmIntent.putExtra(AlarmClock.EXTRA_MESSAGE, label);
         alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, hour);
         alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
+        alarmIntent.putExtra(AlarmClockActivity.EXTRA_SOLAREVENT, event.name());
 
         if (alarmIntent.resolveActivity(context.getPackageManager()) != null)
         {
@@ -599,6 +636,27 @@ public class AlarmDialog extends DialogFragment
                 context.startActivity(alarmsIntent);
             }
         }
+    }
+
+    public static boolean updateLocationLabel(Context context, TextView text_location, Location location)
+    {
+        if (text_location != null)
+        {
+            if (location != null)
+            {
+                String coordString = context.getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
+                String labelString = location.getLabel();
+                String displayString = labelString + "\n" + coordString;
+                SpannableString displayText = SuntimesUtils.createBoldSpan(null, displayString, labelString);
+                displayText = SuntimesUtils.createRelativeSpan(displayText, displayString, coordString, 0.75f);
+                text_location.setText(displayText);
+                return true;
+
+            } else {
+                text_location.setText("");
+                return false;
+            }
+        } else return false;
     }
 
 }

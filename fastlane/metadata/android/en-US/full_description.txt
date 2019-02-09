@@ -1,6 +1,6 @@
-<p>Displays sunlight and moonlight times. Features an app and widget collection.</p>
+<p>Displays sunlight and moonlight times. Features an app, alarm clock, and widget collection.</p>
 
-<p>Displays sunrise and sunset, twilight (civil / nautical / astronomical), blue and golden hour, the solstices and equinoxes, moonrise and moonset, moon phases and illumination.</p>
+<p>Suntimes displays sunrise and sunset, twilight (civil / nautical / astronomical), blue and golden hour, the solstices and equinoxes, moonrise and moonset, moon phases and illumination. The alarm clock schedules daily repeating alarms (or notifications) for sunrise, sunset, or other events.</p>
 
 <p>The times reported by this app are approximate. The app doesn't require network connectivity, GPS is optional.</p>
 

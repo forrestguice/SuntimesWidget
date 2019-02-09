@@ -10,6 +10,23 @@
 
     </header>
 
+    <header android:fragment="com.forrestguice.suntimeswidget.SuntimesSettingsActivity$AlarmPrefsFragment"
+        android:icon="?attr/icActionAlarm"
+        android:title="@string/configLabel_alarmClock"
+        android:summary=""
+        tools:ignore="UnusedAttribute">
+    </header>
+
+    <!--<header android:id="@+id/prefHeaderAlarmClock"
+        android:icon="?attr/icActionAlarm"
+        android:title="@string/configLabel_alarmClock"
+        android:summary="">
+        <intent android:targetPackage="com.forrestguice.suntimeswidget"
+            android:targetClass="com.forrestguice.suntimeswidget.alarmclock.AlarmClockActivity">
+            <extra android:name="showBack" android:value="true" />
+        </intent>
+    </header>-->
+
     <header android:fragment="com.forrestguice.suntimeswidget.SuntimesSettingsActivity$CalendarPrefsFragment"
         android:icon="?attr/icActionCalendar"
         android:title="@string/configLabel_calendars"

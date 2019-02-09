@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import android.support.annotation.NonNull;
 import android.util.Log;
 

@@ -15,6 +15,11 @@
         <item name="hrColor">@color/hr_light</item>
         <item name="text_accentColor">@color/text_accent_light</item>
         <item name="text_disabledColor">@color/text_disabled_light</item>
+        <item name="colorControlActivated">@color/btn_tint_pressed_light</item>
+
+        <item name="alarmCardEnabled">@drawable/card_alarmitem_enabled_light</item>
+        <item name="alarmCardDisabled">@drawable/card_alarmitem_disabled_light</item>
+        <item name="gridItemSelected">@color/grid_selected_light</item>
 
         <item name="buttonPressColor">@color/btn_tint_pressed_light</item>
         <item name="text_buttonSelector">@drawable/btn_txt_light</item>
@@ -55,6 +60,9 @@
         <item name="snackbar_accentColor">?colorAccent</item>
         <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
 
+        <item name="fab_backgroundColor">@color/sunIcon_color_setting_light</item>
+        <item name="fab_rippleColor">@color/sunIcon_color_rising_light</item>
+
         <item name="icActionGPS">@drawable/ic_action_location_found_light</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off_light</item>
         <item name="icActionGPS_searching">@drawable/ic_action_location_searching_light</item>
@@ -65,6 +73,9 @@
         <item name="icActionDst">@drawable/ic_weather_sunny_light</item>
         <item name="icActionAlarm">@drawable/ic_action_alarms_light</item>
         <item name="icActionCalendar">@drawable/ic_calendar_light</item>
+        <item name="icActionNotification">@drawable/ic_action_notification_light</item>
+        <item name="icActionSoundEnabled">@drawable/ic_action_soundenabled_light</item>
+        <item name="icActionSoundDisabled">@drawable/ic_action_sounddisabled_light</item>
         <item name="icActionAbout">@drawable/ic_action_about_light</item>
         <item name="icActionWarning">@drawable/ic_action_warning_light</item>
         <item name="icActionError">@drawable/ic_action_error_light</item>
@@ -81,7 +92,10 @@
         <item name="icActionEdit">@drawable/ic_action_edit_light</item>
         <item name="icActionDelete">@drawable/ic_action_discard_light</item>
         <item name="icActionCopy">@drawable/ic_action_copy_light</item>
+        <item name="icActionDismiss">@drawable/ic_action_cancel_light</item>
+        <item name="icActionCancel">@drawable/ic_action_cancel_light</item>
         <item name="icActionShare">@drawable/ic_action_share_light</item>
+        <item name="icActionSnooze">@drawable/ic_action_snooze_light</item>
 
         <item name="windowActionModeOverlay">true</item>
     </style>
@@ -101,6 +115,11 @@
         <item name="hrColor">@color/hr_dark</item>
         <item name="text_accentColor">@color/text_accent_dark</item>
         <item name="text_disabledColor">@color/text_disabled_dark</item>
+        <item name="colorControlActivated">@color/btn_tint_pressed_dark</item>
+
+        <item name="alarmCardEnabled">@drawable/card_alarmitem_enabled_dark</item>
+        <item name="alarmCardDisabled">@drawable/card_alarmitem_disabled_dark</item>
+        <item name="gridItemSelected">@color/grid_selected_dark</item>
 
         <item name="buttonPressColor">@color/btn_tint_pressed_dark</item>
         <item name="text_buttonSelector">@drawable/btn_txt_dark</item>
@@ -141,6 +160,9 @@
         <item name="snackbar_accentColor">?colorAccent</item>
         <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
 
+        <item name="fab_backgroundColor">@color/sunIcon_color_setting_dark</item>
+        <item name="fab_rippleColor">@color/sunIcon_color_rising_dark</item>
+
         <item name="icActionGPS">@drawable/ic_action_location_found</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off</item>
         <item name="icActionGPS_searching">@drawable/ic_action_location_searching</item>
@@ -151,6 +173,9 @@
         <item name="icActionDst">@drawable/ic_weather_sunny</item>
         <item name="icActionAlarm">@drawable/ic_action_alarms</item>
         <item name="icActionCalendar">@drawable/ic_calendar</item>
+        <item name="icActionNotification">@drawable/ic_action_notification</item>
+        <item name="icActionSoundEnabled">@drawable/ic_action_soundenabled</item>
+        <item name="icActionSoundDisabled">@drawable/ic_action_sounddisabled</item>
         <item name="icActionAbout">@drawable/ic_action_about</item>
         <item name="icActionWarning">@drawable/ic_action_warning</item>
         <item name="icActionError">@drawable/ic_action_error</item>
@@ -167,7 +192,10 @@
         <item name="icActionEdit">@drawable/ic_action_edit</item>
         <item name="icActionDelete">@drawable/ic_action_discard</item>
         <item name="icActionCopy">@drawable/ic_action_copy</item>
+        <item name="icActionDismiss">@drawable/ic_action_cancel</item>
+        <item name="icActionCancel">@drawable/ic_action_cancel</item>
         <item name="icActionShare">@drawable/ic_action_share</item>
+        <item name="icActionSnooze">@drawable/ic_action_snooze</item>
 
         <item name="windowActionModeOverlay">true</item>
     </style>

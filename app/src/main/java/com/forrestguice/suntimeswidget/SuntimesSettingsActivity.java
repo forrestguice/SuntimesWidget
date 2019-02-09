@@ -48,7 +48,9 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
@@ -79,6 +81,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     public static final String LOG_TAG = "SuntimesSettings";
 
     final static String ACTION_PREFS_GENERAL = "com.forrestguice.suntimeswidget.PREFS_GENERAL";
+    final static String ACTION_PREFS_ALARMCLOCK = "com.forrestguice.suntimeswidget.PREFS_ALARMCLOCK";
     final static String ACTION_PREFS_LOCALE = "com.forrestguice.suntimeswidget.PREFS_LOCALE";
     final static String ACTION_PREFS_UI = "com.forrestguice.suntimeswidget.PREFS_UI";
     final static String ACTION_PREFS_WIDGETLIST = "com.forrestguice.suntimeswidget.PREFS_WIDGETLIST";
@@ -168,6 +171,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 addPreferencesFromResource(R.xml.preference_general);
                 initPref_general();
 
+            } else if (action.equals(ACTION_PREFS_ALARMCLOCK)) {
+                addPreferencesFromResource(R.xml.preference_alarms);
+                initPref_alarms();
+
             } else if (action.equals(ACTION_PREFS_LOCALE)) {
                 //noinspection deprecation
                 addPreferencesFromResource(R.xml.preference_locale);
@@ -185,6 +192,11 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
             } else if (action.equals(ACTION_PREFS_WIDGETLIST)) {
                 Intent intent = new Intent(this, SuntimesWidgetListActivity.class);
+                startActivity(intent);
+                finish();
+
+            } else if (action.equals(ACTION_PREFS_ALARMCLOCK)) {
+                Intent intent = new Intent(this, AlarmClockActivity.class);
                 startActivity(intent);
                 finish();
 
@@ -280,7 +292,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             loadHeadersFromResource(R.xml.preference_headers, target);
 
             TypedValue typedValue = new TypedValue();
-            int[] icActionAttr = new int[] { R.attr.icActionSettings, R.attr.icActionLocale, R.attr.icActionPlace, R.attr.icActionCalendar, R.attr.icActionAppearance, R.attr.icActionWidgets };
+            int[] icActionAttr = new int[] { R.attr.icActionSettings, R.attr.icActionLocale, R.attr.icActionPlace, R.attr.icActionCalendar, R.attr.icActionAppearance, R.attr.icActionWidgets, R.attr.icActionAlarm };
             TypedArray a = obtainStyledAttributes(typedValue.data, icActionAttr);
             int settingsIcon = a.getResourceId(0, R.drawable.ic_action_settings);
             int localeIcon = a.getResourceId(1, R.drawable.ic_action_locale);
@@ -288,6 +300,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             int calendarIcon = a.getResourceId(3, R.drawable.ic_calendar);
             int paletteIcon = a.getResourceId(4, R.drawable.ic_palette);
             int widgetIcon = a.getResourceId(5, R.drawable.ic_action_widget);
+            int alarmIcon = a.getResourceId(6, R.drawable.ic_action_alarms);
             a.recycle();
 
             for (Header header : target)
@@ -302,12 +315,16 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                             header.iconRes = placesIcon;
                         } else if (header.fragment.endsWith("CalendarPrefsFragment")) {
                             header.iconRes = calendarIcon;
+                        } else if (header.fragment.endsWith("AlarmPrefsFragment")) {
+                            header.iconRes = alarmIcon;
                         } else if (header.fragment.endsWith("UIPrefsFragment")) {
                             header.iconRes = paletteIcon;
                         } else header.iconRes = settingsIcon;
                     } else {
                         if (header.id == R.id.prefHeaderWidgets)
                             header.iconRes = widgetIcon;
+                        //else if (header.id == R.id.prefHeaderAlarmClock)
+                            //header.iconRes = alarmIcon;
                         //else if (header.id == R.id.prefHeaderCalendar)
                             //header.iconRes = calendarIcon;
                         else header.iconRes = settingsIcon;
@@ -325,6 +342,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     protected boolean isValidFragment(String fragmentName)
     {
         return GeneralPrefsFragment.class.getName().equals(fragmentName) ||
+               AlarmPrefsFragment.class.getName().equals(fragmentName) ||
                CalendarPrefsFragment.class.getName().equals(fragmentName) ||
                LocalePrefsFragment.class.getName().equals(fragmentName) ||
                UIPrefsFragment.class.getName().equals(fragmentName) ||
@@ -1309,6 +1327,34 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         darkPref.setEnabled(AppSettings.THEME_DARK.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode));
         lightPref.setEnabled(AppSettings.THEME_LIGHT.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode));
     }
+
+    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
+
+    /**
+     * Alarm Prefs
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class AlarmPrefsFragment extends PreferenceFragment
+    {
+        @Override
+        public void onCreate(Bundle savedInstanceState)
+        {
+            super.onCreate(savedInstanceState);
+            AppSettings.initLocale(getActivity());
+            Log.i(LOG_TAG, "AlarmPrefsFragment: Arguments: " + getArguments());
+
+            PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_alarms, false);
+            addPreferencesFromResource(R.xml.preference_alarms);
+
+            initPref_alarms(AlarmPrefsFragment.this);
+        }
+    }
+
+    private void initPref_alarms() {}
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private static void initPref_alarms(final PreferenceFragment fragment) {}
 
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////

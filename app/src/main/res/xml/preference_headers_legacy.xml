@@ -11,6 +11,15 @@
     </Preference>
 
     <Preference
+        android:title="@string/configLabel_alarmClock"
+        android:summary="" >
+        <intent
+            android:targetPackage="com.forrestguice.suntimeswidget"
+            android:targetClass="com.forrestguice.suntimeswidget.alarmclock.AlarmClockActivity"
+            android:action="com.forrestguice.suntimeswidget.PREFS_ALARMCLOCK" />
+    </Preference>
+
+    <Preference
         android:title="@string/configLabel_locale"
         android:summary=""  >
         <intent
