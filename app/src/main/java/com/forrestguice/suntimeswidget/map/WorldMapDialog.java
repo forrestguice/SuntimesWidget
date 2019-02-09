@@ -157,33 +157,17 @@ public class WorldMapDialog extends DialogFragment
         }
     };
 
-    private int tapCount = 0;
-
     public void initViews(Context context, View dialogView)
     {
         dialogTitle = (TextView)dialogView.findViewById(R.id.worldmapdialog_title);
         utcTime = (TextView)dialogView.findViewById(R.id.info_time_utc);
         worldmap = (WorldMapView)dialogView.findViewById(R.id.info_time_worldmap);
-        worldmap.setOnLongClickListener(new View.OnLongClickListener()
-        {
+        /**worldmap.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onLongClick(View view)
-            {
-                tapCount++;
-                if (tapCount < 3) {
-                    return true;
-
-                } else if (tapCount == 3) {
-                    mapAdapter.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE);
-                    mapAdapter.notifyDataSetChanged();
-                    mapSelector.setSelection(mapAdapter.getPosition(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE), true);
-                    return true;
-
-                } else {
-                    return false;
-                }
+            public boolean onLongClick(View view) {
+                return true;
             }
-        });
+        });*/
 
         ArrayList<WorldMapWidgetSettings.WorldMapWidgetMode> modes = new ArrayList<>(Arrays.asList(WorldMapWidgetSettings.WorldMapWidgetMode.values()));
         //modes.remove(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE);  // option disabled; TODO: fix layout issues
