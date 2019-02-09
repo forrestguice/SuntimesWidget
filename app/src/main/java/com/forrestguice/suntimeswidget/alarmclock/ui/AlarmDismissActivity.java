@@ -78,17 +78,21 @@ public class AlarmDismissActivity extends AppCompatActivity
     private String mode = null;
 
     private TextView alarmTitle, alarmSubtitle, alarmText, clockText, offsetText, infoText;
+    private TextView[] labels;
+
     private Button snoozeButton, dismissButton;
+    private Button[] buttons;
+
     private ViewFlipper icon;
     private ImageView iconSounding, iconSnoozing;
     private SuntimesUtils utils = new SuntimesUtils();
 
-    private int enabledColor, disabledColor, pressedColor;
+    private int enabledColor, disabledColor, pressedColor, textColor, timeColor;
 
     private int pulseSoundingDuration = 4000;
     private int pulseSoundingColor_start, pulseSoundingColor_end;
 
-    private int pulseSnoozingDuration = 8000;
+    private int pulseSnoozingDuration = 6000;
     private int pulseSnoozingColor_start, pulseSnoozingColor_end;
 
 
@@ -123,17 +127,15 @@ public class AlarmDismissActivity extends AppCompatActivity
         iconSounding = (ImageView)findViewById(R.id.icon_alarm_sounding);
         iconSnoozing = (ImageView)findViewById(R.id.icon_alarm_snooze);
 
-        ColorStateList buttonColors = SuntimesUtils.colorStateList(enabledColor, disabledColor, pressedColor);
-
         dismissButton = (Button) findViewById(R.id.btn_dismiss);
-        dismissButton.setTextColor(buttonColors);
         dismissButton.setOnClickListener(onDismissClicked);
-        colorizeButtonCompoundDrawable(enabledColor, dismissButton);
 
         snoozeButton = (Button) findViewById(R.id.btn_snooze);
-        snoozeButton.setTextColor(buttonColors);
         snoozeButton.setOnClickListener(onSnoozeClicked);
-        colorizeButtonCompoundDrawable(enabledColor, snoozeButton);
+
+        buttons = new Button[] {snoozeButton, dismissButton};
+        labels = new TextView[] {alarmSubtitle, offsetText};
+        stopAnimateColors(labels, buttons);
 
         Intent intent = getIntent();
         Uri data = intent.getData();
@@ -226,7 +228,9 @@ public class AlarmDismissActivity extends AppCompatActivity
         SolarEvents.initDisplayStrings(context);
 
         int[] attrs = { R.attr.sunsetColor,  R.attr.sunriseColor, R.attr.dialogBackgroundAlt,
-                R.attr.text_disabledColor, R.attr.buttonPressColor, R.attr.text_disabledColor };
+                R.attr.text_disabledColor, R.attr.buttonPressColor, R.attr.text_disabledColor,
+                android.R.attr.textColorSecondary, android.R.attr.textColorPrimary
+        };
         TypedArray a = context.obtainStyledAttributes(attrs);
         pulseSoundingColor_start = ContextCompat.getColor(context, a.getResourceId(0, R.color.sunIcon_color_setting_dark));
         pulseSoundingColor_end = ContextCompat.getColor(context, a.getResourceId(1, R.color.sunIcon_color_rising_dark));
@@ -234,6 +238,8 @@ public class AlarmDismissActivity extends AppCompatActivity
         pulseSnoozingColor_end = ContextCompat.getColor(context, a.getResourceId(3, android.R.color.white));
         pressedColor = enabledColor = ContextCompat.getColor(context, a.getResourceId(4, R.color.btn_tint_pressed_dark));
         disabledColor = ContextCompat.getColor(context, a.getResourceId(5, R.color.text_disabled_dark));
+        textColor = ContextCompat.getColor(context, a.getResourceId(6, android.R.color.secondary_text_dark));
+        timeColor = ContextCompat.getColor(context, a.getResourceId(7, android.R.color.primary_text_dark));
         a.recycle();
     }
 
@@ -275,7 +281,7 @@ public class AlarmDismissActivity extends AppCompatActivity
 
         if (AlarmNotifications.ACTION_SNOOZE.equals(action))
         {
-            animateIcon(iconSnoozing, pulseSnoozingColor_start, pulseSnoozingColor_end, pulseSnoozingDuration, new AccelerateDecelerateInterpolator());
+            animateColors(labels, buttons, iconSnoozing, pulseSnoozingColor_start, pulseSnoozingColor_end, pulseSnoozingDuration, new AccelerateDecelerateInterpolator());
             SuntimesUtils.initDisplayStrings(this);
             SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, AlarmSettings.loadPrefAlarmSnooze(this));
             String snoozeString = getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
@@ -294,6 +300,7 @@ public class AlarmDismissActivity extends AppCompatActivity
             else setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF);
 
         } else if (AlarmNotifications.ACTION_TIMEOUT.equals(action)) {
+            stopAnimateColors(labels, buttons);
             infoText.setText(getString(R.string.alarmAction_timeoutMsg));
             infoText.setVisibility(View.VISIBLE);
             snoozeButton.setVisibility(View.GONE);
@@ -303,7 +310,7 @@ public class AlarmDismissActivity extends AppCompatActivity
             setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
 
         } else {
-            animateIcon(iconSounding, pulseSoundingColor_start, pulseSoundingColor_end, pulseSoundingDuration, new AccelerateInterpolator());
+            animateColors(labels, buttons, iconSounding, pulseSoundingColor_start, pulseSoundingColor_end, pulseSoundingDuration, new AccelerateInterpolator());
             hardwareButtonPressed = false;
             infoText.setText("");
             infoText.setVisibility(View.GONE);
@@ -315,7 +322,7 @@ public class AlarmDismissActivity extends AppCompatActivity
         }
     }
 
-    private void colorizeButtonCompoundDrawable(int color, @NonNull Button button)
+    private static void colorizeButtonCompoundDrawable(int color, @NonNull Button button)
     {
         Drawable[] drawables = button.getCompoundDrawables();
         for (Drawable d : drawables) {
@@ -352,16 +359,32 @@ public class AlarmDismissActivity extends AppCompatActivity
         animator.reverse();
     }
 
-    private static void animateIcon(final ImageView icon, int startColor, int endColor, long duration, @Nullable TimeInterpolator interpolator)
+    private ValueAnimator animation;
+    private void animateColors(final TextView[] labels, final Button[] buttons, final ImageView icon, int startColor, int endColor, long duration, @Nullable TimeInterpolator interpolator)
     {
-        if (icon != null)
+        if (icon != null && labels != null)
         {
-            ValueAnimator animation = ValueAnimator.ofObject(new ArgbEvaluator(), startColor, endColor);
+            animation = ValueAnimator.ofObject(new ArgbEvaluator(), startColor, endColor);
             animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
             {
                 @Override
-                public void onAnimationUpdate(ValueAnimator animator) {
-                    icon.setColorFilter((int) animator.getAnimatedValue());
+                public void onAnimationUpdate(ValueAnimator animator)
+                {
+                    int animatedValue = (int) animator.getAnimatedValue();
+                    icon.setColorFilter(animatedValue);
+
+                    for (TextView label : labels) {
+                        if (label != null) {
+                            label.setTextColor(animatedValue);
+                        }
+                    }
+
+                    for (Button button : buttons) {
+                        if (button != null) {
+                            button.setTextColor(animatedValue);
+                            colorizeButtonCompoundDrawable(animatedValue, button);
+                        }
+                    }
                 }
             });
             if (Build.VERSION.SDK_INT >= 11) {
@@ -373,6 +396,26 @@ public class AlarmDismissActivity extends AppCompatActivity
             }
             animation.setDuration(duration);
             animation.start();
+        }
+    }
+    private void stopAnimateColors(TextView[] labels, Button[] buttons)
+    {
+        if (animation != null) {
+            animation.removeAllUpdateListeners();
+        }
+
+        for (TextView label : labels){
+            if (label != null) {
+                label.setTextColor(textColor);
+            }
+        }
+
+        ColorStateList buttonColors = SuntimesUtils.colorStateList(enabledColor, disabledColor, pressedColor);
+        for (Button button : buttons) {
+            if (button != null) {
+                button.setTextColor(buttonColors);
+                colorizeButtonCompoundDrawable(enabledColor, button);
+            }
         }
     }
 
