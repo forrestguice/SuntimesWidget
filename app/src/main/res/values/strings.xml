@@ -63,7 +63,9 @@
     <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> The time zone may be wrong for this location.</string>  <!-- snackbar message -->
     <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> daylight saving</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraDST_short"><xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> dst</string>  <!-- timezone dialog label -->
     <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> equation of time</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraApparentSolar_short"><xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> eot</string>  <!-- timezone dialog label -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -230,6 +232,7 @@
     <string name="configLabel_title0">@string/app_name_widget0</string>         <!-- used as title when adding -->
     <string name="configLabel_title1">Flippable Widget</string>                 <!-- used as title when adding -->
     <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->
+    <string name="configLabel_clockwidget0">@string/app_name_clockwidget0</string>                  <!-- used as title when adding -->
     <string name="configLabel_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding -->
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
@@ -238,6 +241,8 @@
     <string name="configLabel_general_calculator">Data Source:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Sun Data Source</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Moon Data Source</string>         <!-- preference label -->
+
+    <string name="configLabel_general_timeFormatMode">Time Format:</string>         <!-- spinner label -->  <!-- TODO -->
 
     <string name="configLabel_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label -->
@@ -1041,6 +1046,7 @@
     <string name="app_name_widget0">Suntimes Widget</string>
     <string name="app_name_widget1">Suntimes Widget (flippable)</string>
     <string name="app_name_widget2">Sun Position Widget</string>
+    <string name="app_name_clockwidget0">Clock Widget</string>  <!-- TODO -->
     <string name="app_name_solsticewidget0">Solstice Widget</string>
     <string name="app_name_moonwidget0">Moon Widget</string>
     <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
@@ -1143,6 +1149,30 @@
           <b>Autumn Equinox:</b> TODO.<br/><br/>
           <b>Winter Solstice:</b> TODO.<br/>
     ]]></string>
+    <string name="help_general_solartime"><![CDATA[
+          <b>Apparent Solar Time:</b> Sundial time. The time determined by tracking the motion of the apparent sun with respect to a given longitude and latitude.
+          <br/><br/>
+          The motion of the apparent sun is not constant. It varies seasonally due to the obliquity of the ecliptic and eccentricity of the Earth\'s orbit.
+          The length of each apparent solar day, measured from one noon to the next, may be slightly longer or shorter than 24 hours (up to 30s).
+          These small variations accumulate with each passing day (and average out over the course of the year).
+          <br/><br/>
+
+          <b>Local Mean Time:</b> Clock time. The time determined from the position of the mean sun with respect to a given longitude.
+          <br/><br/>
+          The motion of the mean sun corrects for obliquity and eccentricity and is uniform.
+          The length of each mean solar day is exactly 24 hours.<br/><br/>
+
+          <b>Equation of Time (EOT):</b> The difference between local mean time and apparent solar time.
+          This is the accumulated variation of the apparent solar day.
+          <br/><br/>
+          Apparent solar time may differ from local mean time by up to 16 minutes depending on the season.
+          <br/><br/>
+
+          <i>This app uses an algorithm to calculate the equation of time (and derive the apparent solar time).
+          Your location is used to determine the local mean time.</i>
+          <br/><br/>
+
+    ]]></string> <!-- TODO -->
     <string name="help_general_daylength"><![CDATA[
         <b>Length of day:</b> The amount of time between sunrise and sunset.<br/><br/>
         <b>Usable light:</b> The amount of time between morning and evening civil twilight.<br/>

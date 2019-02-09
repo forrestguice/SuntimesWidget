@@ -48,6 +48,9 @@ Widgets are themeable and provide:
 
 Widgets are resizable and include...
 
+**Clock widgets:**
+* 1x1 digital clock widget that displays solar time (or a given timezone).
+
 **Sun widgets:**
 * 1x1 sun widget that displays the sunrise or sunset time.
 * 1x1 sun widget that displays both sunrise and sunset times.
