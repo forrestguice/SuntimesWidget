@@ -658,13 +658,13 @@
     <string name="configLabel_alarms_timeoutAfter">Timeout after</string>  <!-- TODO -->
     <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
 
-    <string name="configLabel_alarms_snooze">Snooze alarms for</string>  <!-- TODO -->
+    <string name="configLabel_alarms_snooze">Snooze for</string>  <!-- TODO -->
     <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
 
-    <string name="configLabel_alarms_upcoming">Alarm reminder within</string>  <!-- TODO -->
+    <string name="configLabel_alarms_upcoming">Reminder within</string>  <!-- TODO -->
     <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
 
-    <string name="configLabel_alarms_hardwarebuttons">Camera and Volume Buttons</string>  <!-- TODO -->
+    <string name="configLabel_alarms_hardwarebuttons">Hardware Buttons</string>  <!-- TODO -->
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>  <!-- TODO -->
     <string-array name="alarm_hardwarebutton_actions_display">  <!-- TODO -->
         <item>Dismiss</item>
