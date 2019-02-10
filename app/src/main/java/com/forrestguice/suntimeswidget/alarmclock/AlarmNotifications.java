@@ -417,6 +417,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
                     builder.setPriority( NotificationCompat.PRIORITY_LOW );
                     notificationMsg = context.getString(R.string.alarmAction_upcomingMsg);
+                    builder.setWhen(alarm.alarmtime);
                     builder.setContentIntent(pendingView);
                     builder.setAutoCancel(false);
                     builder.setOngoing(true);
