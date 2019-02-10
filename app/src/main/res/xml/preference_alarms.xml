@@ -18,11 +18,11 @@
             android:summary="@string/configLabel_alarms_snooze_summary"
             android:defaultValue="@string/def_app_alarms_snooze" />
 
-        <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
+        <!--<com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
             android:key="app_alarms_silenceafter"
             android:title="@string/configLabel_alarms_silenceAfter"
             android:summary="@string/configLabel_alarms_silenceAfter_summary"
-            android:defaultValue="@string/def_app_alarms_silence" />
+            android:defaultValue="@string/def_app_alarms_silence" />-->
 
         <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
             android:key="app_alarms_timeoutMillis"
