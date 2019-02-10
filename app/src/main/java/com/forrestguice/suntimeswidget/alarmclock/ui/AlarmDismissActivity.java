@@ -62,6 +62,8 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
 
@@ -111,11 +113,32 @@ public class AlarmDismissActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle icicle)
     {
-        setTheme(AppSettings.loadTheme(this));
+        initTheme(this);
         super.onCreate(icicle);
         initLocale(this);
-
         setContentView(R.layout.layout_activity_dismissalarm);
+        initViews(this);
+        themeViews(this);
+    }
+
+    private String appTheme;
+    private int appThemeResID;
+    private SuntimesTheme appThemeOverride = null;
+
+    private void initTheme(Context context)
+    {
+        appTheme = AppSettings.loadThemePref(this);
+        setTheme(appThemeResID = AppSettings.themePrefToStyleId(this, appTheme, null));
+
+        String themeName = AppSettings.getThemeOverride(this, appThemeResID);
+        if (themeName != null) {
+            Log.i(TAG, "initTheme: Overriding \"" + appTheme + "\" using: " + themeName);
+            appThemeOverride = WidgetThemes.loadTheme(this, themeName);
+        }
+    }
+
+    protected void initViews(Context context)
+    {
         alarmTitle = (TextView)findViewById(R.id.txt_alarm_label);
         alarmSubtitle = (TextView)findViewById(R.id.txt_alarm_label2);
         alarmText = (TextView)findViewById(R.id.txt_alarm_time);
@@ -137,6 +160,16 @@ public class AlarmDismissActivity extends AppCompatActivity
         labels = new TextView[] {alarmSubtitle, offsetText};
         stopAnimateColors(labels, buttons);
     }
+
+    protected void themeViews(Context context)
+    {
+        if (appThemeOverride != null)
+        {
+            pressedColor = enabledColor = appThemeOverride.getActionColor();
+            // TODO: override colors
+        }
+    }
+
 
     @Override
     public void onNewIntent( Intent intent )

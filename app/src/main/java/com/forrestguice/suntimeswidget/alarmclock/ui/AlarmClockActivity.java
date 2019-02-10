@@ -89,6 +89,8 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -165,15 +167,24 @@ public class AlarmClockActivity extends AppCompatActivity
         initLocale(this);
         setContentView(R.layout.layout_activity_alarmclock);
         initViews(this);
+        themeViews(this);
         handleIntent(getIntent());
     }
 
     private String appTheme;
     private int appThemeResID;
+    private SuntimesTheme appThemeOverride = null;
+
     private void initTheme()
     {
         appTheme = AppSettings.loadThemePref(this);
         setTheme(appThemeResID = AppSettings.themePrefToStyleId(this, appTheme, null));
+
+        String themeName = AppSettings.getThemeOverride(this, appThemeResID);
+        if (themeName != null) {
+            Log.i("initTheme", "Overriding \"" + appTheme + "\" using: " + themeName);
+            appThemeOverride = WidgetThemes.loadTheme(this, themeName);
+        }
     }
 
     @Override
@@ -434,6 +445,15 @@ public class AlarmClockActivity extends AppCompatActivity
 
         emptyView = findViewById(android.R.id.empty);
         emptyView.setOnClickListener(onEmptyViewClick);
+    }
+
+    protected void themeViews(Context context)
+    {
+        if (appThemeOverride != null)
+        {
+            //actionButton.setColor
+            // TODO: override colors
+        }
     }
 
     private AdapterView.OnItemClickListener onAlarmItemClick = new AdapterView.OnItemClickListener() {
