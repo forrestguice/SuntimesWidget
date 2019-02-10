@@ -69,7 +69,8 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final String ACTION_SNOOZE = "suntimeswidget.alarm.snooze";            // snooze an alarm
     public static final String ACTION_SCHEDULE = "suntimeswidget.alarm.schedule";        // enable (schedule) an alarm
     public static final String ACTION_DISABLE = "suntimeswidget.alarm.disable";          // disable an alarm
-    public static final String ACTION_TIMEOUT = "suntimeswidget.alarm.timeout";         // timeout an alarm
+    public static final String ACTION_TIMEOUT = "suntimeswidget.alarm.timeout";          // timeout an alarm
+    public static final String ACTION_DELETE = "suntimeswidget.alarm.delete";            // delete an alarm
 
     public static final String EXTRA_NOTIFICATION_ID = "notificationID";
     public static final String ALARM_NOTIFICATION_TAG = "suntimesalarm";
@@ -230,6 +231,7 @@ public class AlarmNotifications extends BroadcastReceiver
         Intent intent = new Intent(context, AlarmClockActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (selectedAlarmId != null) {
+            intent.setData(ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, selectedAlarmId));
             intent.putExtra(AlarmClockActivity.EXTRA_SELECTED_ALARM, selectedAlarmId);
         }
         return intent;
@@ -543,8 +545,12 @@ public class AlarmNotifications extends BroadcastReceiver
                         Log.d(TAG, "ACTION_TIMEOUT: " + data);
                         AlarmNotifications.stopAlert();
 
+                    } else if (AlarmNotifications.ACTION_DELETE.equals(action)) {
+                        Log.d(TAG, "ACTION_DELETE: " + data);
+                        AlarmNotifications.stopAlert();
+
                     } else {
-                        Log.w(TAG, "onStartCommand: Unrecognized action: " + action);
+                        Log.w(TAG, "onStartCommand: Unhandled action: " + action);
                     }
 
                     AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
@@ -643,7 +649,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             ////////////////////////////////////////////////////////////////////////////
                             if (AlarmState.transitionState(item.state, AlarmState.STATE_DISABLED))
                             {
-                                Log.i(TAG, "Disabled: " + item.rowID);
+                                Log.i(TAG, "Disable: " + item.rowID);
                                 cancelAlarmTimeouts(context, item.getUri());
 
                                 item.enabled = false;
@@ -651,6 +657,20 @@ public class AlarmNotifications extends BroadcastReceiver
                                 AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
                                 updateItem.setTaskListener(onDisabledState(context));
                                 updateItem.execute(item);    // write state
+                            }
+
+                        } else if (action.equals(ACTION_DELETE)) {
+                            ////////////////////////////////////////////////////////////////////////////
+                            // Delete Alarm
+                            ////////////////////////////////////////////////////////////////////////////
+                            if (AlarmState.transitionState(item.state, AlarmState.STATE_DISABLED))
+                            {
+                                Log.i(TAG, "Delete: " + item.rowID);
+                                cancelAlarmTimeouts(context, item.getUri());
+
+                                AlarmDatabaseAdapter.AlarmDeleteTask deleteTask = new AlarmDatabaseAdapter.AlarmDeleteTask(context);
+                                deleteTask.setTaskListener(onDeletedState(context));
+                                deleteTask.execute(item.rowID);
                             }
 
                         } else if (action.equals(ACTION_SCHEDULE)) {
@@ -847,6 +867,30 @@ public class AlarmNotifications extends BroadcastReceiver
                     context.startActivity(getAlarmListIntent(context, item.rowID));   // open the alarm list
                     dismissNotification(context, (int)item.rowID);                    // dismiss upcoming reminders
                     context.sendBroadcast(getFullscreenBroadcast(item.getUri()));     // dismiss fullscreen activity
+                    stopService(serviceIntent);
+                }
+            };
+        }
+
+        private AlarmDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener onDeletedState(final Context context)
+        {
+            return new AlarmDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener()
+            {
+                @Override
+                public void onFinished(Boolean result, Long itemID)
+                {
+                    Log.d(TAG, "Alarm Deleted (onDeleted)");
+                    Intent serviceIntent = getServiceIntent(context);
+                    startService(serviceIntent);  // keep service running after stopping foreground notification
+
+                    stopForeground(true);                                      // dismiss active notification (will kill running tasks)
+                    dismissNotification(context, itemID.intValue());                                                                   // dismiss upcoming reminders
+                    context.sendBroadcast(getFullscreenBroadcast(ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, itemID)));     // dismiss fullscreen activity
+
+                    Intent alarmListIntent = getAlarmListIntent(context, itemID);
+                    alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
+                    context.startActivity(alarmListIntent);   // open the alarm list
+
                     stopService(serviceIntent);
                 }
             };

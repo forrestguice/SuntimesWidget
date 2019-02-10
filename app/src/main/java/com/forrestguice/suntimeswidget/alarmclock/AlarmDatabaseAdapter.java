@@ -538,6 +538,7 @@ public class AlarmDatabaseAdapter
     public static class AlarmDeleteTask extends AsyncTask<Long, Void, Boolean>
     {
         protected AlarmDatabaseAdapter db;
+        protected Long lastRowId;
 
         public AlarmDeleteTask(Context context)
         {
@@ -553,9 +554,11 @@ public class AlarmDatabaseAdapter
             {
                 for (long rowID : rowIDs) {
                     removed = removed && db.removeAlarm(rowID);
+                    lastRowId = rowID;
                 }
             } else {
                 removed = db.clearAlarms();
+                lastRowId = null;
             }
             db.close();
             return removed;
@@ -565,7 +568,7 @@ public class AlarmDatabaseAdapter
         protected void onPostExecute(Boolean result)
         {
             if (listener != null)
-                listener.onFinished(result);
+                listener.onFinished(result, lastRowId);
         }
 
         protected AlarmClockDeleteTaskListener listener = null;
@@ -576,7 +579,7 @@ public class AlarmDatabaseAdapter
 
         public static abstract class AlarmClockDeleteTaskListener
         {
-            public void onFinished(Boolean result) {}
+            public void onFinished(Boolean result, Long rowID) {}
         }
     }
 

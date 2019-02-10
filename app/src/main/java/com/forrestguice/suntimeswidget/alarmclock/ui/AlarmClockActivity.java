@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.annotation.SuppressLint;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -199,6 +200,11 @@ public class AlarmClockActivity extends AppCompatActivity
         String param_action = intent.getAction();
         intent.setAction(null);
 
+        Uri param_data = intent.getData();
+        intent.setData(null);
+
+        boolean selectItem = true;
+
         if (param_action != null)
         {
             if (param_action.equals(AlarmClock.ACTION_SET_ALARM))
@@ -231,17 +237,28 @@ public class AlarmClockActivity extends AppCompatActivity
                 addAlarm(AlarmClockItem.AlarmType.ALARM, param_label, param_event, param_hour, param_minute, param_vibrate, param_ringtoneUri, param_days);
 
             } else if (param_action.equals(ACTION_ADD_ALARM)) {
-                //Log.d("DEBUG", "handleIntent: add alarm");
+                //Log.d(TAG, "handleIntent: add alarm");
                 showAddDialog(AlarmClockItem.AlarmType.ALARM);
 
             } else if (param_action.equals(ACTION_ADD_NOTIFICATION)) {
-                //Log.d("DEBUG", "handleIntent: add notification");
+                //Log.d(TAG, "handleIntent: add notification");
                 showAddDialog(AlarmClockItem.AlarmType.NOTIFICATION);
+
+            } else if (param_action.equals(AlarmNotifications.ACTION_DELETE)) {
+                //Log.d(TAG, "handleIntent: alarm deleted");
+                if (param_data != null && adapter != null && alarmList != null)
+                {
+                    final AlarmClockItem item = adapter.findItem(ContentUris.parseId(param_data));
+                    if (item != null) {
+                        adapter.onAlarmDeleted(true, item, alarmList.getChildAt(adapter.getPosition(item)));
+                        selectItem = false;
+                    }
+                }
             }
         }
 
         long selectedID = intent.getLongExtra(EXTRA_SELECTED_ALARM, -1);
-        if (selectedID != -1)
+        if (selectItem && selectedID != -1)
         {
             Log.d(TAG, "handleIntent: selected id: " + selectedID);
             t_selectedItem = selectedID;
@@ -1075,7 +1092,7 @@ public class AlarmClockActivity extends AppCompatActivity
     /**
      * clearAlarms
      */
-    protected void clearAlarms()
+    protected void clearAlarms()   // TODO: bug; dismiss notifications
     {
         final Context context = this;
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
@@ -1090,7 +1107,7 @@ public class AlarmClockActivity extends AppCompatActivity
                         clearTask.setTaskListener(new AlarmDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener()
                         {
                             @Override
-                            public void onFinished(Boolean result)
+                            public void onFinished(Boolean result, Long itemId)
                             {
                                 if (result)
                                 {
@@ -1726,7 +1743,7 @@ public class AlarmClockActivity extends AppCompatActivity
                             return true;
 
                         case R.id.deleteAlarm:
-                            deleteAlarm(item, itemView);
+                            confirmDeleteAlarm(item, itemView);
                             return true;
 
                         default:
@@ -1855,10 +1872,10 @@ public class AlarmClockActivity extends AppCompatActivity
         }
 
         /**
-         * deleteAlarm
+         * confirmDeleteAlarm
          * @param item AlarmClockItem
          */
-        protected void deleteAlarm(final AlarmClockItem item, final View itemView)
+        protected void confirmDeleteAlarm(final AlarmClockItem item, final View itemView)
         {
             String message = context.getString(R.string.deletealarm_dialog_message, getAlarmLabel(context, item), getAlarmTime(context, item), getAlarmEvent(context, item));
             AlertDialog.Builder confirm = new AlertDialog.Builder(context)
@@ -1867,40 +1884,39 @@ public class AlarmClockActivity extends AppCompatActivity
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(context.getString(R.string.deletealarm_dialog_ok), new DialogInterface.OnClickListener()
                     {
-                        public void onClick(DialogInterface dialog, int whichButton)
-                        {
-                            AlarmDatabaseAdapter.AlarmDeleteTask deleteTask = new AlarmDatabaseAdapter.AlarmDeleteTask(context);
-                            deleteTask.setTaskListener(new AlarmDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener()
-                            {
-                                @Override
-                                public void onFinished(Boolean result)
-                                {
-                                    if (result)
-                                    {
-                                        final Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_out_right);
-                                        animation.setAnimationListener(new Animation.AnimationListener()
-                                        {
-                                            @Override
-                                            public void onAnimationStart(Animation animation) {}
-                                            @Override
-                                            public void onAnimationRepeat(Animation animation) {}
-                                            @Override
-                                            public void onAnimationEnd(Animation animation)
-                                            {
-                                                items.remove(item);
-                                                notifyDataSetChanged();
-                                                Toast.makeText(context, context.getString(R.string.deletealarm_toast_success, getAlarmLabel(context, item), getAlarmTime(context, item), getAlarmEvent(context, item)), Toast.LENGTH_LONG).show();
-                                            }
-                                        });
-                                        itemView.startAnimation(animation);
-                                    }
-                                }
-                            });
-                            deleteTask.execute(item.rowID);
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            deleteAlarm(item, itemView);
                         }
                     })
                     .setNegativeButton(context.getString(R.string.deletealarm_dialog_cancel), null);
             confirm.show();
+        }
+
+        private void deleteAlarm(final AlarmClockItem item, final View itemView) {
+            Intent deleteIntent = AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DELETE, item.getUri());
+            context.sendBroadcast(deleteIntent);
+        }
+        protected void onAlarmDeleted(boolean result, final AlarmClockItem item, View itemView)
+        {
+           if (result)
+           {
+                final Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_out_right);
+                animation.setAnimationListener(new Animation.AnimationListener()
+                {
+                    @Override
+                    public void onAnimationStart(Animation animation) {}
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {}
+                    @Override
+                    public void onAnimationEnd(Animation animation)
+                    {
+                        items.remove(item);
+                        notifyDataSetChanged();
+                        Toast.makeText(context, context.getString(R.string.deletealarm_toast_success, getAlarmLabel(context, item), getAlarmTime(context, item), getAlarmEvent(context, item)), Toast.LENGTH_LONG).show();
+                    }
+                });
+                itemView.startAnimation(animation);
+            }
         }
 
         protected AlarmClockAdapterListener adapterListener;
