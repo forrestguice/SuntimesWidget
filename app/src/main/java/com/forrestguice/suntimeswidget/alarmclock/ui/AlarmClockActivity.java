@@ -1215,7 +1215,7 @@ public class AlarmClockActivity extends AppCompatActivity
         private ArrayList<AlarmClockItem> items;
         private int iconAlarm, iconNotification, iconSoundEnabled, iconSoundDisabled;
         private Drawable alarmEnabledBG, alarmDisabledBG;
-        private int alarmSelectedColor;
+        private int alarmSelectedColor, alarmEnabledColor;
         private int disabledTextColor, pressedTextColor;
 
         public AlarmClockAdapter(Context context)
@@ -1239,7 +1239,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
             int[] attrs = { R.attr.alarmCardEnabled, R.attr.alarmCardDisabled,
                     R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.icActionSoundEnabled, R.attr.icActionSoundDisabled,
-                    R.attr.text_disabledColor, R.attr.gridItemSelected, R.attr.buttonPressColor};
+                    R.attr.text_disabledColor, R.attr.gridItemSelected, R.attr.buttonPressColor, R.attr.alarmColorEnabled};
             TypedArray a = context.obtainStyledAttributes(attrs);
             alarmEnabledBG = ContextCompat.getDrawable(context, a.getResourceId(0, R.drawable.card_alarmitem_enabled_dark));
             alarmDisabledBG = ContextCompat.getDrawable(context, a.getResourceId(1, R.drawable.card_alarmitem_disabled_dark));
@@ -1250,6 +1250,7 @@ public class AlarmClockActivity extends AppCompatActivity
             disabledTextColor = ContextCompat.getColor(context, a.getResourceId(6, R.color.text_disabled_dark));
             alarmSelectedColor = ContextCompat.getColor(context, a.getResourceId(7, R.color.grid_selected_dark));
             pressedTextColor = ContextCompat.getColor(context, a.getResourceId(8, R.color.btn_tint_pressed_dark));
+            alarmEnabledColor = ContextCompat.getColor(context, a.getResourceId(9, R.color.alarm_enabled_dark));
             a.recycle();
         }
 
@@ -1355,7 +1356,7 @@ public class AlarmClockActivity extends AppCompatActivity
             if (!isSelected && !item.enabled) {
                 ImageViewCompat.setImageTintList(typeButton, SuntimesUtils.colorStateList(disabledTextColor, disabledTextColor, disabledTextColor));
             } else if (item.enabled) {
-                ImageViewCompat.setImageTintList(typeButton, SuntimesUtils.colorStateList(pressedTextColor, disabledTextColor, disabledTextColor));
+                ImageViewCompat.setImageTintList(typeButton, SuntimesUtils.colorStateList(alarmEnabledColor, disabledTextColor, pressedTextColor));
             }
 
             // label
@@ -1380,7 +1381,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 if (!isSelected && !item.enabled) {
                     text.setTextColor(disabledTextColor);
                 } else if (item.enabled) {
-                    text.setTextColor(pressedTextColor);
+                    text.setTextColor(SuntimesUtils.colorStateList(alarmEnabledColor, alarmEnabledColor, pressedTextColor));
                 }
             }
 
@@ -1418,7 +1419,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 if (!isSelected && !item.enabled) {
                     text_datetime.setTextColor(disabledTextColor);
                 } else if (item.enabled) {
-                    text_datetime.setTextColor(pressedTextColor);
+                    text_datetime.setTextColor(SuntimesUtils.colorStateList(alarmEnabledColor, alarmEnabledColor, pressedTextColor));
                 }
 
                 text_datetime.setOnClickListener(new View.OnClickListener()
@@ -1495,7 +1496,7 @@ public class AlarmClockActivity extends AppCompatActivity
             {
                 int iconID = item.ringtoneName != null ? iconSoundEnabled : iconSoundDisabled;
                 int iconDimen = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,20, context.getResources().getDisplayMetrics());
-                ImageSpan icon = isSelected || item.enabled ? SuntimesUtils.createImageSpan(context, iconID, iconDimen, iconDimen, item.enabled ? pressedTextColor : 0)
+                ImageSpan icon = isSelected || item.enabled ? SuntimesUtils.createImageSpan(context, iconID, iconDimen, iconDimen, item.enabled ? alarmEnabledColor : 0)
                                                             : SuntimesUtils.createImageSpan(context, iconID, iconDimen, iconDimen, disabledTextColor, PorterDuff.Mode.MULTIPLY);
 
                 final String none = context.getString(R.string.alarmOption_ringtone_none);

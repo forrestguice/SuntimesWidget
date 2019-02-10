@@ -12,6 +12,7 @@
     <attr name="text_accentColor" format="reference" />
     <attr name="text_disabledColor" format="reference" />
 
+    <attr name="alarmColorEnabled" format="reference" />
     <attr name="alarmCardEnabled" format="reference" />
     <attr name="alarmCardDisabled" format="reference" />
     <attr name="gridItemSelected" format="reference" />
