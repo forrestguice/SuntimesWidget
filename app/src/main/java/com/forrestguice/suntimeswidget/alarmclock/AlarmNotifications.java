@@ -61,9 +61,6 @@ import java.util.Calendar;
 
 public class AlarmNotifications extends BroadcastReceiver
 {
-    /** DEBUG_ALARMUI .. when 'true' Alarms are scheduled immediately (to step through and test the UI) */
-    private static final boolean DEBUG_ALARMUI = false;  // TODO: remove this flag
-
     public static final String TAG = "AlarmReceiver";
 
     public static final String ACTION_SHOW = "suntimeswidget.alarm.show";                // sound an alarm
@@ -674,10 +671,6 @@ public class AlarmNotifications extends BroadcastReceiver
                                         updateAlarmTime(context, item);     // sets item.hour, item.minute, item.timestamp (calculates the eventTime)
                                         item.alarmtime = item.timestamp + item.offset;     // scheduled sounding time (-before/+after eventTime by some offset)
 
-                                        if (DEBUG_ALARMUI) {   // TODO: remove this debug trigger
-                                            item.alarmtime = Calendar.getInstance().getTimeInMillis() + AlarmSettings.loadPrefAlarmUpcoming(context) + (1000 * 30);
-                                        }
-
                                     } else {    // disabled; this alarm should have been dismissed
                                         Log.d(TAG, "Dismissing: " + item.rowID);
                                         sendBroadcast(getAlarmIntent(context, ACTION_DISMISS, item.getUri()));
@@ -904,12 +897,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     if (item.type == AlarmClockItem.AlarmType.ALARM)
                     {
                         Log.d(TAG, "State Saved (onScheduledSoon)");
-
-                        if (DEBUG_ALARMUI) {
-                            long debugAlarmAt = Calendar.getInstance().getTimeInMillis() + (1000 * 10);
-                            addAlarmTimeout(context, ACTION_SHOW, item.getUri(), debugAlarmAt);  // TODO: remove debug timeout
-                        } else addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);
-
+                        addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);
                         if (AlarmSettings.loadPrefAlarmUpcoming(context) > 0) {
                             showNotification(context, item, true);             // show upcoming reminder
                         }
