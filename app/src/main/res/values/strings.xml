@@ -1364,6 +1364,6 @@
     <string name="def_app_alarms_timeout" translatable="false">1800000</string>    <!-- dismiss after 30m -->
     <string name="def_app_alarms_snooze" translatable="false">600000</string>      <!-- snooze for 10m -->
     <string name="def_app_alarms_upcoming" translatable="false">36000000</string>  <!-- show reminder within 10h -->
-    <string name="def_app_alarms_hardwarebuttons_action" translatable="false">suntimeswidget.alarm.silent</string>
+    <string name="def_app_alarms_hardwarebuttons_action" translatable="false">suntimeswidget.alarm.snooze</string>
 
 </resources>

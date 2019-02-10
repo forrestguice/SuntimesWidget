@@ -30,12 +30,13 @@
             android:summary="@string/configLabel_alarms_timeoutAfter_summary"
             android:defaultValue="@string/def_app_alarms_silence" />
 
-        <ListPreference android:key="app_alarms_hardwarebutton_action"
+        <!--<ListPreference android:key="app_alarms_hardwarebutton_action"
+            android:enabled="false"
             android:title="@string/configLabel_alarms_hardwarebuttons"
             android:summary="@string/configLabel_alarms_hardwarebuttons_summary"
             android:defaultValue="@string/def_app_alarms_hardwarebuttons_action"
             android:entryValues="@array/alarm_hardwarebutton_actions_values"
-            android:entries="@array/alarm_hardwarebutton_actions_display" />
+            android:entries="@array/alarm_hardwarebutton_actions_display" />-->
 
     </PreferenceCategory>
 

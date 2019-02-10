@@ -27,7 +27,7 @@ import android.preference.PreferenceManager;
 public class AlarmSettings
 {
     public static final String PREF_KEY_ALARM_HARDAREBUTTON_ACTION = "app_alarms_hardwarebutton_action";
-    public static final String PREF_DEF_ALARM_HARDAREBUTTON_ACTION = AlarmNotifications.ACTION_SILENT;
+    public static final String PREF_DEF_ALARM_HARDAREBUTTON_ACTION = AlarmNotifications.ACTION_SNOOZE;
 
     public static final String PREF_KEY_ALARM_SILENCEAFTER = "app_alarms_silenceafter";
     public static final int PREF_DEF_ALARM_SILENCEAFTER = 1000 * 60 * 15;   // 15 min
