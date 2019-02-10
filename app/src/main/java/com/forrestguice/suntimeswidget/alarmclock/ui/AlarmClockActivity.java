@@ -246,11 +246,17 @@ public class AlarmClockActivity extends AppCompatActivity
 
             } else if (param_action.equals(AlarmNotifications.ACTION_DELETE)) {
                 //Log.d(TAG, "handleIntent: alarm deleted");
-                if (param_data != null && adapter != null && alarmList != null)
+                if (adapter != null && alarmList != null)
                 {
-                    final AlarmClockItem item = adapter.findItem(ContentUris.parseId(param_data));
-                    if (item != null) {
-                        adapter.onAlarmDeleted(true, item, alarmList.getChildAt(adapter.getPosition(item)));
+                    if (param_data != null)
+                    {
+                        final AlarmClockItem item = adapter.findItem(ContentUris.parseId(param_data));
+                        if (item != null) {
+                            adapter.onAlarmDeleted(true, item, alarmList.getChildAt(adapter.getPosition(item)));
+                            selectItem = false;
+                        }
+                    } else {
+                        onClearAlarms(true);
                         selectItem = false;
                     }
                 }
@@ -1090,9 +1096,9 @@ public class AlarmClockActivity extends AppCompatActivity
     };
 
     /**
-     * clearAlarms
+     * confirmClearAlarms
      */
-    protected void clearAlarms()   // TODO: bug; dismiss notifications
+    protected void confirmClearAlarms()
     {
         final Context context = this;
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
@@ -1101,26 +1107,26 @@ public class AlarmClockActivity extends AppCompatActivity
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(context.getString(R.string.clearalarms_dialog_ok), new DialogInterface.OnClickListener()
                 {
-                    public void onClick(DialogInterface dialog, int whichButton)
-                    {
-                        AlarmDatabaseAdapter.AlarmDeleteTask clearTask = new AlarmDatabaseAdapter.AlarmDeleteTask(context);
-                        clearTask.setTaskListener(new AlarmDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener()
-                        {
-                            @Override
-                            public void onFinished(Boolean result, Long itemId)
-                            {
-                                if (result)
-                                {
-                                    Toast.makeText(context, context.getString(R.string.clearalarms_toast_success), Toast.LENGTH_LONG).show();
-                                    updateViews(context);
-                                }
-                            }
-                        });
-                        clearTask.execute();
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        clearAlarms(context);
                     }
                 })
                 .setNegativeButton(context.getString(R.string.clearalarms_dialog_cancel), null);
         confirm.show();
+    }
+
+    protected void clearAlarms(final Context context)
+    {
+        Intent clearIntent = AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DELETE, null);
+        context.sendBroadcast(clearIntent);
+    }
+
+    protected void onClearAlarms(boolean result)
+    {
+        if (result) {
+            Toast.makeText(this, getString(R.string.clearalarms_toast_success), Toast.LENGTH_LONG).show();
+            updateViews(this);
+        }
     }
 
     /**
@@ -1896,6 +1902,7 @@ public class AlarmClockActivity extends AppCompatActivity
             Intent deleteIntent = AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DELETE, item.getUri());
             context.sendBroadcast(deleteIntent);
         }
+
         protected void onAlarmDeleted(boolean result, final AlarmClockItem item, View itemView)
         {
            if (result)
@@ -1951,7 +1958,7 @@ public class AlarmClockActivity extends AppCompatActivity
         switch (item.getItemId())
         {
             case R.id.action_clear:
-                clearAlarms();
+                confirmClearAlarms();
                 return true;
 
             case R.id.action_settings:

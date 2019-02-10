@@ -245,7 +245,7 @@ public class AlarmNotifications extends BroadcastReceiver
         if (Build.VERSION.SDK_INT >= 16) {
             intent.setFlags(Intent.FLAG_RECEIVER_FOREGROUND);  // on my device (api19) the receiver fails to respond when app is closed unless this flag is set
         }
-        intent.putExtra(EXTRA_NOTIFICATION_ID, (int)ContentUris.parseId(data));
+        intent.putExtra(EXTRA_NOTIFICATION_ID, (data != null ? (int)ContentUris.parseId(data) : null));
         return intent;
     }
 
@@ -499,6 +499,11 @@ public class AlarmNotifications extends BroadcastReceiver
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.cancel(ALARM_NOTIFICATION_TAG, notificationID);
     }
+    public static void dismissNotifications(Context context)
+    {
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        notificationManager.cancelAll();
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -557,7 +562,17 @@ public class AlarmNotifications extends BroadcastReceiver
                     itemTask.setAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), action));
                     itemTask.execute(ContentUris.parseId(data));
 
-                } else Log.w(TAG, "onStartCommand: null data!");
+                } else {
+                    if (AlarmNotifications.ACTION_DELETE.equals(action))
+                    {
+                        Log.d(TAG, "ACTION_DELETE: clear all");
+                        AlarmNotifications.stopAlert();
+                        AlarmDatabaseAdapter.AlarmDeleteTask clearTask = new AlarmDatabaseAdapter.AlarmDeleteTask(getApplicationContext());
+                        clearTask.setTaskListener(onClearedState(getApplicationContext()));
+                        clearTask.execute();
+
+                    } else Log.w(TAG, "onStartCommand: null data!");
+                }
             } else Log.w(TAG, "onStartCommand: null intent!");
 
             return START_STICKY;
@@ -886,6 +901,30 @@ public class AlarmNotifications extends BroadcastReceiver
                     stopForeground(true);                                      // dismiss active notification (will kill running tasks)
                     dismissNotification(context, itemID.intValue());                                                                   // dismiss upcoming reminders
                     context.sendBroadcast(getFullscreenBroadcast(ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, itemID)));     // dismiss fullscreen activity
+
+                    Intent alarmListIntent = getAlarmListIntent(context, itemID);
+                    alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
+                    context.startActivity(alarmListIntent);   // open the alarm list
+
+                    stopService(serviceIntent);
+                }
+            };
+        }
+
+        private AlarmDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener onClearedState(final Context context)
+        {
+            return new AlarmDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener()
+            {
+                @Override
+                public void onFinished(Boolean result, Long itemID)
+                {
+                    Log.d(TAG, "Alarms Cleared (onCleared)");
+                    Intent serviceIntent = getServiceIntent(context);
+                    startService(serviceIntent);  // keep service running after stopping foreground notification
+
+                    context.sendBroadcast(getFullscreenBroadcast(null));     // dismiss fullscreen activity
+                    stopForeground(true);                         // dismiss active notifications
+                    dismissNotifications(context);                                // dismiss upcoming reminders
 
                     Intent alarmListIntent = getAlarmListIntent(context, itemID);
                     alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
