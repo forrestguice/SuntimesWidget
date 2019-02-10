@@ -652,10 +652,10 @@
 
     <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> set for <xliff:g id="duration" example="8h">%2$s</xliff:g> from now.</string> <!-- toast msg --> <!-- TODO -->
 
-    <string name="configLabel_alarms_silenceAfter">Auto-silence after</string>  <!-- TODO -->
+    <string name="configLabel_alarms_silenceAfter">Go silent after</string>  <!-- TODO -->
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
 
-    <string name="configLabel_alarms_timeoutAfter">Auto-dismiss after</string>  <!-- TODO -->
+    <string name="configLabel_alarms_timeoutAfter">Timeout after</string>  <!-- TODO -->
     <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
 
     <string name="configLabel_alarms_snooze">Snooze alarms for</string>  <!-- TODO -->
