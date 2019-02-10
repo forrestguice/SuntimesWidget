@@ -136,19 +136,6 @@ public class AlarmDismissActivity extends AppCompatActivity
         buttons = new Button[] {snoozeButton, dismissButton};
         labels = new TextView[] {alarmSubtitle, offsetText};
         stopAnimateColors(labels, buttons);
-
-        Intent intent = getIntent();
-        Uri data = intent.getData();
-        if (data != null)
-        {
-            Log.d(TAG, "onCreate: " + data);
-            setAlarmID(this, ContentUris.parseId(data));
-
-        } else {
-            Log.e(TAG, "onCreate: missing data uri! canceling...");
-            setResult(RESULT_CANCELED);
-            finish();
-        }
     }
 
     @Override
@@ -195,6 +182,25 @@ public class AlarmDismissActivity extends AppCompatActivity
         updateFilter.addDataScheme("content");
         registerReceiver(updateReceiver, updateFilter);
         clockText.post(updateClockTask);
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        Intent intent = getIntent();
+        Uri data = intent.getData();
+        if (data != null)
+        {
+            Log.d(TAG, "onCreate: " + data);
+            setAlarmID(this, ContentUris.parseId(data));
+
+        } else {
+            Log.e(TAG, "onCreate: missing data uri! canceling...");
+            setResult(RESULT_CANCELED);
+            finish();
+        }
     }
 
     @Override
