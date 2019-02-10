@@ -41,6 +41,9 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_UPCOMING = "app_alarms_upcomingMillis";
     public static final int PREF_DEF_ALARM_UPCOMING = 1000 * 60 * 60 * 10;  // 10 hours
 
+    public static final String PREF_KEY_ALARM_AUTOENABLE = "app_alarms_autoenable";
+    public static final boolean PREF_DEF_ALARM_AUTOENABLE = false;
+
     public static String loadPrefOnHardwareButtons(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -57,6 +60,12 @@ public class AlarmSettings
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getInt(PREF_KEY_ALARM_TIMEOUT, PREF_DEF_ALARM_TIMEOUT);
+    }
+
+    public static boolean loadPrefAlarmAutoEnable(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_ALARM_AUTOENABLE, PREF_DEF_ALARM_AUTOENABLE);
     }
 
     /**

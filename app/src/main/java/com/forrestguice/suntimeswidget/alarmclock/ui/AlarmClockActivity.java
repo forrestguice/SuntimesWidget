@@ -81,6 +81,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -510,7 +511,7 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         //Log.d("DEBUG", "addAlarm: type is " + type.toString());
         final AlarmClockItem alarm = new AlarmClockItem();
-        alarm.enabled = getDefaultNewAlarmsEnabled(this);
+        alarm.enabled = AlarmSettings.loadPrefAlarmAutoEnable(AlarmClockActivity.this);
         alarm.type = type;
         alarm.label = label;
 
@@ -563,11 +564,6 @@ public class AlarmClockActivity extends AppCompatActivity
             Intent disableIntent = AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISABLE, item.getUri());
             context.sendBroadcast(disableIntent);
         }
-    }
-
-    public static boolean getDefaultNewAlarmsEnabled(Context context)
-    {
-        return true;
     }
 
     public static Uri getDefaultRingtoneUri(Context context, AlarmClockItem.AlarmType type)
