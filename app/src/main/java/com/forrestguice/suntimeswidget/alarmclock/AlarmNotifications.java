@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -198,6 +198,24 @@ public class AlarmNotifications extends BroadcastReceiver
                 alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_TIMEOUT, data));
                 alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SHOW, data));
                 alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SCHEDULE, data));
+            } else Log.e(TAG, "cancelAlarmTimeouts: AlarmManager is null!");
+        } else Log.e(TAG, "cancelAlarmTimeouts: context is null!");
+    }
+
+    protected static void cancelAlarmTimeouts(Context context, Long[] alarmIds)
+    {
+        if (context != null) {
+            AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+            if (alarmManager != null)
+            {
+                for (long alarmId : alarmIds)
+                {
+                    Uri data = ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, alarmId);
+                    alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data));
+                    alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_TIMEOUT, data));
+                    alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SHOW, data));
+                    alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SCHEDULE, data));
+                }
             } else Log.e(TAG, "cancelAlarmTimeouts: AlarmManager is null!");
         } else Log.e(TAG, "cancelAlarmTimeouts: context is null!");
     }
@@ -567,9 +585,20 @@ public class AlarmNotifications extends BroadcastReceiver
                     {
                         Log.d(TAG, "ACTION_DELETE: clear all");
                         AlarmNotifications.stopAlert();
-                        AlarmDatabaseAdapter.AlarmDeleteTask clearTask = new AlarmDatabaseAdapter.AlarmDeleteTask(getApplicationContext());
-                        clearTask.setTaskListener(onClearedState(getApplicationContext()));
-                        clearTask.execute();
+
+                        AlarmDatabaseAdapter.AlarmListTask alarmListTask = new AlarmDatabaseAdapter.AlarmListTask(getApplicationContext());
+                        alarmListTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
+                            @Override
+                            public void onItemsLoaded(Long[] ids)
+                            {
+                                cancelAlarmTimeouts(getApplicationContext(), ids);
+
+                                AlarmDatabaseAdapter.AlarmDeleteTask clearTask = new AlarmDatabaseAdapter.AlarmDeleteTask(getApplicationContext());
+                                clearTask.setTaskListener(onClearedState(getApplicationContext()));
+                                clearTask.execute();
+                            }
+                        });
+                        alarmListTask.execute();
 
                     } else Log.w(TAG, "onStartCommand: null data!");
                 }
