@@ -566,24 +566,12 @@ public class AlarmClockActivity extends AppCompatActivity
                     updateViews(AlarmClockActivity.this);
 
                     if (item.enabled) {
-                        setAlarmEnabled(AlarmClockActivity.this, item, true);
+                        sendBroadcast( AlarmNotifications.getAlarmIntent(AlarmClockActivity.this, AlarmNotifications.ACTION_SCHEDULE, item.getUri()) );
                     }
-
                 }
             }
         });
         task.execute(alarm);
-    }
-
-    public static void setAlarmEnabled(Context context, AlarmClockItem item, boolean enabled)
-    {
-        if (enabled) {
-            Intent scheduleIntent = AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, item.getUri());
-            context.sendBroadcast(scheduleIntent);
-        } else {
-            Intent disableIntent = AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISABLE, item.getUri());
-            context.sendBroadcast(disableIntent);
-        }
     }
 
     public static Uri getDefaultRingtoneUri(Context context, AlarmClockItem.AlarmType type)

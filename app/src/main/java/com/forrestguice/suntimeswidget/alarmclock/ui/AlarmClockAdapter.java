@@ -650,7 +650,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
      */
     protected void enableAlarm(final AlarmClockItem item, View itemView, final boolean enabled)
     {
-        itemView.setBackground(enabled ? alarmEnabledBG : alarmDisabledBG);
+        //itemView.setBackground(enabled ? alarmEnabledBG : alarmDisabledBG);
 
         item.alarmtime = 0;
         item.enabled = enabled;
@@ -663,12 +663,13 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
             public void onFinished(Boolean result, AlarmClockItem item)
             {
                 if (result) {
-                    AlarmClockActivity.setAlarmEnabled(context, item, enabled);
-                    notifyDataSetChanged();
+                    context.sendBroadcast( enabled ? AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, item.getUri())
+                                                   : AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISABLE, item.getUri()) );
+                    notifyDataSetChanged();  // TODO: this causes the entire list ot be torn down, causing jank?
                 } else Log.e("AlarmClockActivity", "enableAlarm: failed to save state!");
             }
         });
-        enableTask.execute(item);   // TD
+        enableTask.execute(item);
     }
 
     private static CharSequence getAlarmLabel(Context context, AlarmClockItem item)
@@ -754,6 +755,9 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         adapterListener = l;
     }
 
+    /**
+     * AlarmClockAdapterListener
+     */
     public static abstract class AlarmClockAdapterListener
     {
         public void onRequestLabel(AlarmClockItem forItem) {}
