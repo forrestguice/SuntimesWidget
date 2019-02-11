@@ -214,6 +214,18 @@ public class AlarmDatabaseAdapter
         }
         return cursor;
     }
+    public Cursor getAllAlarms(int n, boolean fullEntry, boolean enabledOnly)
+    {
+        String selection = (enabledOnly ? KEY_ALARM_ENABLED + " = ?" : null);    // select enabled
+        String[] selectionArgs = (enabledOnly ? new String[] {"1"} : null);    // is 1 (true)
+        String[] query = (fullEntry) ? QUERY_ALARMS_FULLENTRY : QUERY_ALARMS_MINENTRY;
+        Cursor cursor =  (n > 0) ? database.query( TABLE_ALARMS, query, selection, selectionArgs, null, null, "_id DESC", n+"" )
+                                 : database.query( TABLE_ALARMS, query, selection, selectionArgs, null, null, "_id DESC" );
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
 
     /**
      * Get an alarm from the database
@@ -700,13 +712,19 @@ public class AlarmDatabaseAdapter
             db = new AlarmDatabaseAdapter(context.getApplicationContext());
         }
 
+        private boolean param_enabledOnly = false;
+        public void setParam_enabledOnly( boolean value ) {
+            param_enabledOnly = value;
+        }
+
         @Override
         protected Long[] doInBackground(Void... voids)
         {
             ArrayList<Long> alarmIds = new ArrayList<>();
             db.open();
-            Cursor cursor = db.getAllAlarms(0, false);
-            while (!cursor.isAfterLast()) {
+            Cursor cursor = db.getAllAlarms(0, false, param_enabledOnly);
+            while (!cursor.isAfterLast())
+            {
                 alarmIds.add(cursor.getLong(cursor.getColumnIndex(AlarmDatabaseAdapter.KEY_ROWID)));
                 cursor.moveToNext();
             }
