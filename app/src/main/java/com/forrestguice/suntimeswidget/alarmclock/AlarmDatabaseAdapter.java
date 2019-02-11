@@ -29,6 +29,8 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 public class AlarmDatabaseAdapter
 {
     public static final String DATABASE_NAME = "suntimesAlarms";
@@ -685,5 +687,51 @@ public class AlarmDatabaseAdapter
             public void onFinished(Boolean result) {}
         }
     }
+
+    /**
+     * AlarmListTask
+     */
+    public static class AlarmListTask extends AsyncTask<Void, Void, Long[]>
+    {
+        protected AlarmDatabaseAdapter db;
+
+        public AlarmListTask(Context context)
+        {
+            db = new AlarmDatabaseAdapter(context.getApplicationContext());
+        }
+
+        @Override
+        protected Long[] doInBackground(Void... voids)
+        {
+            ArrayList<Long> alarmIds = new ArrayList<>();
+            db.open();
+            Cursor cursor = db.getAllAlarms(0, false);
+            while (!cursor.isAfterLast()) {
+                alarmIds.add(cursor.getLong(cursor.getColumnIndex(AlarmDatabaseAdapter.KEY_ROWID)));
+                cursor.moveToNext();
+            }
+            db.close();
+            return alarmIds.toArray(new Long[0]);
+        }
+
+        protected void onPostExecute( Long[] items )
+        {
+            if (taskListener != null) {
+                taskListener.onItemsLoaded(items);
+            }
+        }
+
+        private AlarmListTaskListener taskListener = null;
+        public void setAlarmItemTaskListener( AlarmListTaskListener listener )
+        {
+            this.taskListener = listener;
+        }
+
+        public static abstract class AlarmListTaskListener
+        {
+            public void onItemsLoaded(Long[] ids ) {}
+        }
+    }
+
 
 }
