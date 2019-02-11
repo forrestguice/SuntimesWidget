@@ -213,7 +213,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 int param_hour = intent.getIntExtra(AlarmClock.EXTRA_HOUR, -1);
                 int param_minute = intent.getIntExtra(AlarmClock.EXTRA_MINUTES, -1);
 
-                ArrayList<Integer> param_days = getDefaultRepetition(this);
+                ArrayList<Integer> param_days = AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS;
                 boolean param_vibrate = getDefaultVibrate(this);
                 Uri param_ringtoneUri = getDefaultRingtoneUri(this, AlarmClockItem.AlarmType.ALARM);
                 if (Build.VERSION.SDK_INT >= 19)
@@ -548,7 +548,7 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         FragmentManager fragments = getSupportFragmentManager();
         AlarmDialog dialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
-        addAlarm(type, "", dialog.getChoice(), -1, -1, getDefaultVibrate(this), getDefaultRingtoneUri(this, type), getDefaultRepetition(this));
+        addAlarm(type, "", dialog.getChoice(), -1, -1, getDefaultVibrate(this), getDefaultRingtoneUri(this, type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
     protected void addAlarm(AlarmClockItem.AlarmType type, String label, SolarEvents event, int hour, int minute, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays)
     {
@@ -624,11 +624,6 @@ public class AlarmClockActivity extends AppCompatActivity
     public static boolean getDefaultVibrate(Context context)
     {
         return false;
-    }
-
-    public static ArrayList<Integer> getDefaultRepetition(Context context)
-    {
-        return AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS;
     }
 
     /**
@@ -1159,6 +1154,9 @@ public class AlarmClockActivity extends AppCompatActivity
         aboutDialog.show(getSupportFragmentManager(), DIALOGTAG_ABOUT);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * AlarmClockListTask
      */
@@ -1242,6 +1240,9 @@ public class AlarmClockActivity extends AppCompatActivity
             public void onFinished(AlarmClockAdapter result) {}
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * AlarmClockAdapter
@@ -1943,6 +1944,9 @@ public class AlarmClockActivity extends AppCompatActivity
             public void onRequestRepetition(AlarmClockItem forItem) {}
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
