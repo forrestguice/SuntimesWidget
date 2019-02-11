@@ -585,17 +585,27 @@ public class AlarmNotifications extends BroadcastReceiver
                     {
                         Log.d(TAG, "ACTION_DELETE: clear all");
                         AlarmNotifications.stopAlert();
-
                         AlarmDatabaseAdapter.AlarmListTask alarmListTask = new AlarmDatabaseAdapter.AlarmListTask(getApplicationContext());
                         alarmListTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
                             @Override
                             public void onItemsLoaded(Long[] ids)
                             {
                                 cancelAlarmTimeouts(getApplicationContext(), ids);
-
                                 AlarmDatabaseAdapter.AlarmDeleteTask clearTask = new AlarmDatabaseAdapter.AlarmDeleteTask(getApplicationContext());
                                 clearTask.setTaskListener(onClearedState(getApplicationContext()));
                                 clearTask.execute();
+                            }
+                        });
+                        alarmListTask.execute();
+
+                    } else if (AlarmNotifications.ACTION_SCHEDULE.equals(action)) {
+                        Log.d(TAG, "ACTION_SCHEDULE: refresh all");
+                        AlarmDatabaseAdapter.AlarmListTask alarmListTask = new AlarmDatabaseAdapter.AlarmListTask(getApplicationContext());
+                        alarmListTask.setParam_enabledOnly(true);
+                        alarmListTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
+                            @Override
+                            public void onItemsLoaded(Long[] ids) {
+                                // TODO: reschedule alarms
                             }
                         });
                         alarmListTask.execute();
