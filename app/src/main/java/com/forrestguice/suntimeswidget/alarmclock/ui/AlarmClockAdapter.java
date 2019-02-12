@@ -173,10 +173,6 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
 
     /**
      * itemView
-     * @param position
-     * @param convertView
-     * @param parent
-     * @return
      */
     private View itemView(int position, View convertView, @NonNull final ViewGroup parent)
     {
@@ -199,8 +195,6 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
 
     /**
      * setListeners
-     * @param view
-     * @param item
      */
     private void setListeners( final AlarmClockItemView view, final AlarmClockItem item )
     {
@@ -305,7 +299,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
                 if (isChecked) {
                     AlarmNotifications.showTimeUntilToast(context, buttonView, item);
                 }
-                enableAlarm(item, view.card, isChecked);
+                enableAlarm(item, view, isChecked);
             }
         });
 
@@ -407,8 +401,6 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
 
     /**
      * updateView
-     * @param view
-     * @param item
      */
     private void updateView(AlarmClockItemView view, @NonNull final AlarmClockItem item)
     {
@@ -677,7 +669,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
      * @param item AlarmClockItem
      * @param enabled enabled/disabled
      */
-    protected void enableAlarm(final AlarmClockItem item, View itemView, final boolean enabled)
+    protected void enableAlarm(final AlarmClockItem item, final AlarmClockItemView itemView, final boolean enabled)
     {
         item.alarmtime = 0;
         item.enabled = enabled;
@@ -692,7 +684,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
                 if (result) {
                     context.sendBroadcast( enabled ? AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, item.getUri())
                                                    : AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISABLE, item.getUri()) );
-                    //notifyDataSetChanged();
+                    updateView(itemView, item);
 
                 } else Log.e("AlarmClockActivity", "enableAlarm: failed to save state!");
             }
