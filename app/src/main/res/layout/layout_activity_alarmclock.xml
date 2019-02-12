@@ -55,9 +55,20 @@
         </LinearLayout>
 
 		<android.support.design.widget.FloatingActionButton
+			android:id="@+id/btn_addNotification" android:visibility="gone"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:src="?attr/icActionNewNotification"
+			android:layout_margin="16dp"
+			android:contentDescription="@string/configAction_addNotification"
+			app:backgroundTint="?attr/fab_backgroundColor"
+			app:rippleColor="?attr/fab_rippleColor"
+			app:layout_constraintEnd_toStartOf="@+id/btn_addAlarm"
+			app:layout_constraintBottom_toBottomOf="parent" />
+
+		<android.support.design.widget.FloatingActionButton
 			android:id="@+id/btn_addAlarm"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:src="?attr/icActionNew"
+			android:src="?attr/icActionNewAlarm"
 			android:layout_margin="16dp"
 			android:contentDescription="@string/configAction_addAlarm"
 			app:backgroundTint="?attr/fab_backgroundColor"

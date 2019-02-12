@@ -110,7 +110,7 @@ public class AlarmClockActivity extends AppCompatActivity
     private ActionBar actionBar;
     private ListView alarmList;
     private View emptyView;
-    private FloatingActionButton actionButton;
+    private FloatingActionButton addAlarmButton, addNotificationButton;
 
     private AlarmClockAdapter adapter = null;
     private Long t_selectedItem = null;
@@ -424,8 +424,11 @@ public class AlarmClockActivity extends AppCompatActivity
             }
         }
 
-        actionButton = (FloatingActionButton) findViewById(R.id.btn_addAlarm);
-        actionButton.setOnClickListener(onActionButtonClick);
+        addAlarmButton = (FloatingActionButton) findViewById(R.id.btn_addAlarm);
+        addAlarmButton.setOnClickListener(onAddAlarmButtonClick);
+
+        addNotificationButton = (FloatingActionButton) findViewById(R.id.btn_addNotification);
+        addNotificationButton.setOnClickListener(onAddNotificationButtonClick);
 
         alarmList = (ListView)findViewById(R.id.alarmList);
         alarmList.setOnItemClickListener(onAlarmItemClick);
@@ -450,7 +453,7 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         if (appThemeOverride != null)
         {
-            //actionButton.setColor
+            //addAlarmButton.setColor
             // TODO: override colors
         }
     }
@@ -477,14 +480,18 @@ public class AlarmClockActivity extends AppCompatActivity
         } else Log.d(TAG, "setSelectedItem: adapter is null");
     }
 
-    /**
-     * onActionButtonClick
-     */
-    private View.OnClickListener onActionButtonClick = new View.OnClickListener() {
+    private View.OnClickListener onAddAlarmButtonClick = new View.OnClickListener() {
         @Override
         public void onClick(View v)
         {
             showAddDialog(AlarmClockItem.AlarmType.ALARM);
+        }
+    };
+    private View.OnClickListener onAddNotificationButtonClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v)
+        {
+            showAddDialog(AlarmClockItem.AlarmType.NOTIFICATION);
         }
     };
 
