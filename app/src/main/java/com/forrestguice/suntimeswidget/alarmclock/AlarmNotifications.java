@@ -604,8 +604,14 @@ public class AlarmNotifications extends BroadcastReceiver
                         alarmListTask.setParam_enabledOnly(true);
                         alarmListTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
                             @Override
-                            public void onItemsLoaded(Long[] ids) {
-                                // TODO: reschedule alarms
+                            public void onItemsLoaded(Long[] ids)
+                            {
+                                for (long id : ids)
+                                {
+                                    AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
+                                    itemTask.setAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), AlarmNotifications.ACTION_SCHEDULE));
+                                    itemTask.execute(id);
+                                }
                             }
                         });
                         alarmListTask.execute();
@@ -1002,7 +1008,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         Log.d(TAG, "State Saved (onScheduledDistant)");
                         long transitionAt = item.alarmtime - AlarmSettings.loadPrefAlarmUpcoming(context) + 1000;
                         addAlarmTimeout(context, ACTION_SCHEDULE, item.getUri(), transitionAt);
-                        context.startActivity(getAlarmListIntent(context, item.rowID));   // open the alarm list
+                        //context.startActivity(getAlarmListIntent(context, item.rowID));   // open the alarm list
                         //dismissNotification(context, (int)item.rowID);
                     }
                 }
