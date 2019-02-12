@@ -59,6 +59,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -79,6 +80,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
     private Drawable alarmEnabledBG, alarmDisabledBG;
     private int alarmSelectedColor, alarmEnabledColor;
     private int enabledTextColor, disabledTextColor, pressedTextColor;
+    private SuntimesTheme suntimesTheme = null;
 
     public AlarmClockAdapter(Context context)
     {
@@ -94,11 +96,27 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         this.items = items;
     }
 
-    @SuppressLint("ResourceType")
+    public AlarmClockAdapter(Context context, ArrayList<AlarmClockItem> items, SuntimesTheme theme)
+    {
+        super(context, R.layout.layout_listitem_alarmclock, items);
+        suntimesTheme = theme;
+        initAdapter(context);
+        this.items = items;
+    }
+
     private void initAdapter(Context context)
     {
         this.context = context;
 
+        themeAdapterViews();
+        if (suntimesTheme != null) {
+            themeAdapterViews(suntimesTheme);
+        }
+    }
+
+    @SuppressLint("ResourceType")
+    private void themeAdapterViews()
+    {
         int[] attrs = { R.attr.alarmCardEnabled, R.attr.alarmCardDisabled,
                 R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.icActionSoundEnabled, R.attr.icActionSoundDisabled,
                 android.R.attr.textColorPrimary, R.attr.text_disabledColor, R.attr.gridItemSelected, R.attr.buttonPressColor, R.attr.alarmColorEnabled};
@@ -115,6 +133,17 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         pressedTextColor = ContextCompat.getColor(context, a.getResourceId(9, R.color.btn_tint_pressed_dark));
         alarmEnabledColor = ContextCompat.getColor(context, a.getResourceId(10, R.color.alarm_enabled_dark));
         a.recycle();
+    }
+
+    public void themeAdapterViews(SuntimesTheme theme)
+    {
+        suntimesTheme = theme;
+        //alarmEnabledBG = ContextCompat.getDrawable(context, a.getResourceId(0, R.drawable.card_alarmitem_enabled_dark));
+        //alarmDisabledBG = ContextCompat.getDrawable(context, a.getResourceId(1, R.drawable.card_alarmitem_disabled_dark));
+
+        alarmSelectedColor = theme.getActionColor();
+        pressedTextColor = theme.getActionColor();
+        alarmEnabledColor = theme.getActionColor();
     }
 
     @Override
@@ -476,6 +505,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         String ringtoneLabel = context.getString(R.string.alarmOption_ringtone_label, ringtoneName);
         SpannableStringBuilder ringtoneDisplay = SuntimesUtils.createSpan(context, ringtoneLabel, "[icon]", icon);
 
+        view.text_ringtone.setTextColor(SuntimesUtils.colorStateList(enabledTextColor, disabledTextColor, pressedTextColor));
         view.text_ringtone.setText(ringtoneDisplay);
 
         // vibrate

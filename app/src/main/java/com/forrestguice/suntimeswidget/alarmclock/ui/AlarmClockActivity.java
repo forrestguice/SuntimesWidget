@@ -626,6 +626,9 @@ public class AlarmClockActivity extends AppCompatActivity
         public void onFinished(AlarmClockAdapter result)
         {
             adapter = result;
+            if (appThemeOverride != null) {
+                adapter.themeAdapterViews(appThemeOverride);
+            }
             if (t_selectedItem != null) {
                 adapter.setSelectedItem(t_selectedItem);
             }
@@ -1155,7 +1158,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
             Context context = contextRef.get();
             if (context != null)
-                return new AlarmClockAdapter(context, items);
+                return new AlarmClockAdapter(context, items, theme);
             else return null;
         }
 
@@ -1181,6 +1184,11 @@ public class AlarmClockActivity extends AppCompatActivity
                     taskListener.onFinished(result);
                 }
             }
+        }
+
+        protected SuntimesTheme theme = null;
+        public void setTheme(SuntimesTheme theme) {
+            this.theme = theme;
         }
 
         protected AlarmClockListTaskListener taskListener;
