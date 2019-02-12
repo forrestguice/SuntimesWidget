@@ -405,12 +405,11 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
     private void updateView(AlarmClockItemView view, @NonNull final AlarmClockItem item)
     {
         final boolean isSelected = (item.rowID == selectedItem);
+        view.cardBackdrop.setBackgroundColor( isSelected ? alarmSelectedColor : Color.TRANSPARENT );
 
         // enabled / disabled
         view.switch_enabled.setChecked(item.enabled);
         view.card.setBackground(item.enabled ? alarmEnabledBG : alarmDisabledBG);
-
-        view.cardBackdrop.setBackgroundColor( isSelected ? alarmSelectedColor : Color.TRANSPARENT );
 
         // type button
         view.typeButton.setImageDrawable(ContextCompat.getDrawable(context, (item.type == AlarmClockItem.AlarmType.ALARM ? iconAlarm : iconNotification)));
@@ -824,5 +823,6 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
             option_offset = (TextView) view.findViewById(R.id.option_offset);
             overflow = (ImageButton) view.findViewById(R.id.overflow_menu);
         }
+
     }
 }

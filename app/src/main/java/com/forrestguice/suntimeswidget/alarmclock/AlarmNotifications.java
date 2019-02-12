@@ -290,7 +290,7 @@ public class AlarmNotifications extends BroadcastReceiver
         if (alarm.vibrate && vibrator != null)
         {
             int repeatFrom = (alarm.type == AlarmClockItem.AlarmType.ALARM ? 0 : -1);
-            vibrator.vibrate(AlarmSettings.loadDefaultVibratePattern(context, alarm.type), repeatFrom);
+            vibrator.vibrate(AlarmSettings.loadPrefVibratePattern(context, alarm.type), repeatFrom);
         }
 
         Uri soundUri = ((alarm.ringtoneURI != null && !alarm.ringtoneURI.isEmpty()) ? Uri.parse(alarm.ringtoneURI) : null);

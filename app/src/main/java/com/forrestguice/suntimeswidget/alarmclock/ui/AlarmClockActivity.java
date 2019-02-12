@@ -117,7 +117,6 @@ public class AlarmClockActivity extends AppCompatActivity
     private Location t_selectedLocation = null;
 
     private AlarmClockListTask updateTask = null;
-    private static final SuntimesUtils utils = new SuntimesUtils();
 
     private AppSettings.LocaleInfo localeInfo;
 
@@ -191,8 +190,8 @@ public class AlarmClockActivity extends AppCompatActivity
                 int param_minute = intent.getIntExtra(AlarmClock.EXTRA_MINUTES, -1);
 
                 ArrayList<Integer> param_days = AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS;
-                boolean param_vibrate = getDefaultVibrate(this);
-                Uri param_ringtoneUri = getDefaultRingtoneUri(this, AlarmClockItem.AlarmType.ALARM);
+                boolean param_vibrate = AlarmSettings.loadPrefVibrateDefault(this);
+                Uri param_ringtoneUri = AlarmSettings.getDefaultRingtoneUri(this, AlarmClockItem.AlarmType.ALARM);
                 if (Build.VERSION.SDK_INT >= 19)
                 {
                     param_vibrate = intent.getBooleanExtra(AlarmClock.EXTRA_VIBRATE, param_vibrate);
@@ -525,7 +524,7 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         FragmentManager fragments = getSupportFragmentManager();
         AlarmDialog dialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
-        addAlarm(type, "", dialog.getChoice(), -1, -1, getDefaultVibrate(this), getDefaultRingtoneUri(this, type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
+        addAlarm(type, "", dialog.getChoice(), -1, -1, AlarmSettings.loadPrefVibrateDefault(this), AlarmSettings.getDefaultRingtoneUri(this, type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
     protected void addAlarm(AlarmClockItem.AlarmType type, String label, SolarEvents event, int hour, int minute, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays)
     {
@@ -572,23 +571,6 @@ public class AlarmClockActivity extends AppCompatActivity
             }
         });
         task.execute(alarm);
-    }
-
-    public static Uri getDefaultRingtoneUri(Context context, AlarmClockItem.AlarmType type)
-    {
-        switch (type)
-        {
-            case ALARM:
-                return RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_ALARM);
-            case NOTIFICATION:
-            default:
-                return RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_NOTIFICATION);
-        }
-    }
-
-    public static boolean getDefaultVibrate(Context context)
-    {
-        return false;
     }
 
     /**
@@ -990,7 +972,7 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, getDefaultRingtoneUri(this, item.type));
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, AlarmSettings.getDefaultRingtoneUri(this, item.type));
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (item.ringtoneURI != null ? Uri.parse(item.ringtoneURI) : null));
         t_selectedItem = item.rowID;
         startActivityForResult(intent, REQUEST_RINGTONE);
