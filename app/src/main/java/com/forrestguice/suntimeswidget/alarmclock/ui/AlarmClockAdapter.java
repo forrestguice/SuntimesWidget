@@ -26,9 +26,13 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.ColorUtils;
+import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
@@ -434,10 +438,16 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
     private void updateView(AlarmClockItemView view, @NonNull final AlarmClockItem item)
     {
         final boolean isSelected = (item.rowID == selectedItem);
-        view.cardBackdrop.setBackgroundColor( isSelected ? alarmSelectedColor : Color.TRANSPARENT );
+        view.cardBackdrop.setBackgroundColor( isSelected ? ColorUtils.setAlphaComponent(alarmSelectedColor, 170) : Color.TRANSPARENT );
 
         // enabled / disabled
         view.switch_enabled.setChecked(item.enabled);
+        view.switch_enabled.setThumbTintList(SuntimesUtils.colorStateList(alarmEnabledColor, disabledTextColor, pressedTextColor));
+        view.switch_enabled.setTrackTintList(SuntimesUtils.colorStateList(ColorUtils.setAlphaComponent(alarmEnabledColor, 85), disabledTextColor, pressedTextColor));  // 33% alpha (85 / 255)
+
+        LayerDrawable alarmEnabledLayers = (LayerDrawable)alarmEnabledBG;
+        GradientDrawable alarmEnabledLayers0 = (GradientDrawable)alarmEnabledLayers.getDrawable(0);
+        alarmEnabledLayers0.setStroke((int)(3 * context.getResources().getDisplayMetrics().density), alarmEnabledColor);
         view.card.setBackground(item.enabled ? alarmEnabledBG : alarmDisabledBG);
 
         // type button
@@ -512,6 +522,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         view.check_vibrate.setChecked(item.vibrate);
         view.check_vibrate.setEnabled(isSelected);
         view.check_vibrate.setText( isSelected ? context.getString(R.string.alarmOption_vibrate) : "");
+        CompoundButtonCompat.setButtonTintList(view.check_vibrate, SuntimesUtils.colorStateList(alarmEnabledColor, (item.enabled ? alarmEnabledColor : disabledTextColor), pressedTextColor));
 
         // repeating
         boolean noRepeat = item.repeatingDays == null || item.repeatingDays.isEmpty();
