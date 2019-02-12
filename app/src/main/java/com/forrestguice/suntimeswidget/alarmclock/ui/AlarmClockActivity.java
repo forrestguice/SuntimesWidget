@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,11 +18,13 @@
 
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
+import android.annotation.SuppressLint;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.media.Ringtone;
@@ -36,6 +38,7 @@ import android.provider.AlarmClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -120,6 +123,8 @@ public class AlarmClockActivity extends AppCompatActivity
 
     private AppSettings.LocaleInfo localeInfo;
 
+    private int colorAlarmEnabled, colorOn, colorOff, colorEnabled, colorDisabled, colorPressed;
+
     public AlarmClockActivity()
     {
         super();
@@ -144,7 +149,6 @@ public class AlarmClockActivity extends AppCompatActivity
         initLocale(this);
         setContentView(R.layout.layout_activity_alarmclock);
         initViews(this);
-        themeViews(this);
         handleIntent(getIntent());
     }
 
@@ -248,12 +252,26 @@ public class AlarmClockActivity extends AppCompatActivity
         }
     }
 
+    @SuppressLint("ResourceType")
     private void initLocale(Context context)
     {
         WidgetSettings.initDefaults(context);
         WidgetSettings.initDisplayStrings(context);
         SuntimesUtils.initDisplayStrings(context);
         SolarEvents.initDisplayStrings(context);
+
+        int[] attrs = { R.attr.alarmColorEnabled, android.R.attr.textColorPrimary, R.attr.text_disabledColor, R.attr.buttonPressColor, android.R.attr.colorForeground };
+        TypedArray a = context.obtainStyledAttributes(attrs);
+        colorAlarmEnabled = colorOn = ContextCompat.getColor(context, a.getResourceId(0, R.color.alarm_enabled_dark));
+        colorEnabled = ContextCompat.getColor(context, a.getResourceId(1, android.R.color.primary_text_dark));
+        colorDisabled = ContextCompat.getColor(context, a.getResourceId(2, R.color.text_disabled_dark));
+        colorPressed = ContextCompat.getColor(context, a.getResourceId(3, R.color.btn_tint_pressed_dark));
+        colorOff = ContextCompat.getColor(context, a.getResourceId(4, R.color.grey_600));
+        a.recycle();
+
+        if (appThemeOverride != null) {
+            colorAlarmEnabled = colorOn = colorPressed = appThemeOverride.getActionColor();
+        }
     }
 
     /**
@@ -447,15 +465,6 @@ public class AlarmClockActivity extends AppCompatActivity
 
         emptyView = findViewById(android.R.id.empty);
         emptyView.setOnClickListener(onEmptyViewClick);
-    }
-
-    protected void themeViews(Context context)
-    {
-        if (appThemeOverride != null)
-        {
-            //addAlarmButton.setColor
-            // TODO: override colors
-        }
     }
 
     private AdapterView.OnItemClickListener onAlarmItemClick = new AdapterView.OnItemClickListener() {
@@ -900,6 +909,7 @@ public class AlarmClockActivity extends AppCompatActivity
     protected void pickRepetition(@NonNull AlarmClockItem item)
     {
         AlarmRepeatDialog repeatDialog = new AlarmRepeatDialog();
+        repeatDialog.setColorOverrides(colorOn, colorOff, colorDisabled, colorPressed);
         repeatDialog.setRepetition(item.repeating, item.repeatingDays);
         repeatDialog.setOnAcceptedListener(onRepetitionChanged);
 
@@ -941,6 +951,7 @@ public class AlarmClockActivity extends AppCompatActivity
     protected void pickLabel(@NonNull AlarmClockItem item)
     {
         AlarmLabelDialog dialog = new AlarmLabelDialog();
+        dialog.setAccentColor(colorAlarmEnabled);
         dialog.setOnAcceptedListener(onLabelChanged);
         dialog.setLabel(item.label);
 

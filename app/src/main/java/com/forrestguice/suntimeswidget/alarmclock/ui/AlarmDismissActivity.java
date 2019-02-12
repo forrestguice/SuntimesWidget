@@ -89,7 +89,7 @@ public class AlarmDismissActivity extends AppCompatActivity
     private ImageView iconSounding, iconSnoozing;
     private SuntimesUtils utils = new SuntimesUtils();
 
-    private int enabledColor, disabledColor, pressedColor, textColor, timeColor;
+    private int enabledColor, disabledColor, pressedColor, textColor, timeColor, titleColor;
 
     private int pulseSoundingDuration = 4000;
     private int pulseSoundingColor_start, pulseSoundingColor_end;
@@ -118,7 +118,6 @@ public class AlarmDismissActivity extends AppCompatActivity
         initLocale(this);
         setContentView(R.layout.layout_activity_dismissalarm);
         initViews(this);
-        themeViews(this);
     }
 
     private String appTheme;
@@ -160,16 +159,6 @@ public class AlarmDismissActivity extends AppCompatActivity
         labels = new TextView[] {alarmSubtitle, offsetText};
         stopAnimateColors(labels, buttons);
     }
-
-    protected void themeViews(Context context)
-    {
-        if (appThemeOverride != null)
-        {
-            pressedColor = enabledColor = appThemeOverride.getActionColor();
-            // TODO: override colors
-        }
-    }
-
 
     @Override
     public void onNewIntent( Intent intent )
@@ -278,8 +267,18 @@ public class AlarmDismissActivity extends AppCompatActivity
         pressedColor = enabledColor = ContextCompat.getColor(context, a.getResourceId(4, R.color.btn_tint_pressed_dark));
         disabledColor = ContextCompat.getColor(context, a.getResourceId(5, R.color.text_disabled_dark));
         textColor = ContextCompat.getColor(context, a.getResourceId(6, android.R.color.secondary_text_dark));
-        timeColor = ContextCompat.getColor(context, a.getResourceId(7, android.R.color.primary_text_dark));
+        timeColor = titleColor = ContextCompat.getColor(context, a.getResourceId(7, android.R.color.primary_text_dark));
         a.recycle();
+
+        if (appThemeOverride != null)
+        {
+            pressedColor = enabledColor = appThemeOverride.getActionColor();
+            pulseSoundingColor_start = appThemeOverride.getSunsetTextColor();
+            pulseSoundingColor_end = appThemeOverride.getSunriseTextColor();
+            timeColor = appThemeOverride.getTimeColor();
+            titleColor = appThemeOverride.getTitleColor();
+            textColor = appThemeOverride.getTextColor();
+        }
     }
 
     private View.OnClickListener onSnoozeClicked = new View.OnClickListener()
@@ -439,6 +438,9 @@ public class AlarmDismissActivity extends AppCompatActivity
     }
     private void stopAnimateColors(TextView[] labels, Button[] buttons)
     {
+        clockText.setTextColor(timeColor);
+        //alarmTitle.setTextColor(titleColor);
+
         if (animation != null) {
             animation.removeAllUpdateListeners();
         }

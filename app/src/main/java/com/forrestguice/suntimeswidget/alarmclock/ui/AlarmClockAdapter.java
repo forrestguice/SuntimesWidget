@@ -83,7 +83,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
     private int iconAlarm, iconNotification, iconSoundEnabled, iconSoundDisabled;
     private Drawable alarmEnabledBG, alarmDisabledBG;
     private int alarmSelectedColor, alarmEnabledColor;
-    private int enabledTextColor, disabledTextColor, pressedTextColor;
+    private int onColor, offColor, disabledColor, pressedColor;
     private SuntimesTheme suntimesTheme = null;
 
     public AlarmClockAdapter(Context context)
@@ -123,7 +123,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
     {
         int[] attrs = { R.attr.alarmCardEnabled, R.attr.alarmCardDisabled,
                 R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.icActionSoundEnabled, R.attr.icActionSoundDisabled,
-                android.R.attr.textColorPrimary, R.attr.text_disabledColor, R.attr.gridItemSelected, R.attr.buttonPressColor, R.attr.alarmColorEnabled};
+                android.R.attr.textColorPrimary, android.R.attr.colorForeground, R.attr.text_disabledColor, R.attr.gridItemSelected, R.attr.buttonPressColor, R.attr.alarmColorEnabled};
         TypedArray a = context.obtainStyledAttributes(attrs);
         alarmEnabledBG = ContextCompat.getDrawable(context, a.getResourceId(0, R.drawable.card_alarmitem_enabled_dark));
         alarmDisabledBG = ContextCompat.getDrawable(context, a.getResourceId(1, R.drawable.card_alarmitem_disabled_dark));
@@ -131,11 +131,12 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         iconNotification = a.getResourceId(3, R.drawable.ic_action_notification);
         iconSoundEnabled = a.getResourceId(4, R.drawable.ic_action_soundenabled);
         iconSoundDisabled = a.getResourceId(5, R.drawable.ic_action_sounddisabled);
-        enabledTextColor = ContextCompat.getColor(context, a.getResourceId(6, android.R.color.primary_text_dark));
-        disabledTextColor = ContextCompat.getColor(context, a.getResourceId(7, R.color.text_disabled_dark));
-        alarmSelectedColor = ContextCompat.getColor(context, a.getResourceId(8, R.color.grid_selected_dark));
-        pressedTextColor = ContextCompat.getColor(context, a.getResourceId(9, R.color.btn_tint_pressed_dark));
-        alarmEnabledColor = ContextCompat.getColor(context, a.getResourceId(10, R.color.alarm_enabled_dark));
+        onColor = ContextCompat.getColor(context, a.getResourceId(6, android.R.color.primary_text_dark));
+        offColor = ContextCompat.getColor(context, a.getResourceId(7, R.color.grey_600));
+        disabledColor = ContextCompat.getColor(context, a.getResourceId(8, R.color.text_disabled_dark));
+        alarmSelectedColor = ContextCompat.getColor(context, a.getResourceId(9, R.color.grid_selected_dark));
+        pressedColor = ContextCompat.getColor(context, a.getResourceId(10, R.color.btn_tint_pressed_dark));
+        alarmEnabledColor = ContextCompat.getColor(context, a.getResourceId(11, R.color.alarm_enabled_dark));
         a.recycle();
     }
 
@@ -146,7 +147,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         //alarmDisabledBG = ContextCompat.getDrawable(context, a.getResourceId(1, R.drawable.card_alarmitem_disabled_dark));
 
         alarmSelectedColor = theme.getActionColor();
-        pressedTextColor = theme.getActionColor();
+        pressedColor = theme.getActionColor();
         alarmEnabledColor = theme.getActionColor();
     }
 
@@ -438,12 +439,14 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
     private void updateView(AlarmClockItemView view, @NonNull final AlarmClockItem item)
     {
         final boolean isSelected = (item.rowID == selectedItem);
-        view.cardBackdrop.setBackgroundColor( isSelected ? ColorUtils.setAlphaComponent(alarmSelectedColor, 170) : Color.TRANSPARENT );
+        view.cardBackdrop.setBackgroundColor( isSelected ? ColorUtils.setAlphaComponent(alarmSelectedColor, 170) : Color.TRANSPARENT );  // 66% alpha
 
         // enabled / disabled
         view.switch_enabled.setChecked(item.enabled);
-        view.switch_enabled.setThumbTintList(SuntimesUtils.colorStateList(alarmEnabledColor, disabledTextColor, pressedTextColor));
-        view.switch_enabled.setTrackTintList(SuntimesUtils.colorStateList(ColorUtils.setAlphaComponent(alarmEnabledColor, 85), disabledTextColor, pressedTextColor));  // 33% alpha (85 / 255)
+        view.switch_enabled.setThumbTintList(SuntimesUtils.colorStateList(alarmEnabledColor, offColor, disabledColor, pressedColor));
+        view.switch_enabled.setTrackTintList(SuntimesUtils.colorStateList(
+                ColorUtils.setAlphaComponent(alarmEnabledColor, 85), ColorUtils.setAlphaComponent(offColor, 85),
+                ColorUtils.setAlphaComponent(disabledColor, 85), ColorUtils.setAlphaComponent(pressedColor, 85)));  // 33% alpha (85 / 255)
 
         LayerDrawable alarmEnabledLayers = (LayerDrawable)alarmEnabledBG;
         GradientDrawable alarmEnabledLayers0 = (GradientDrawable)alarmEnabledLayers.getDrawable(0);
@@ -454,39 +457,39 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         view.typeButton.setImageDrawable(ContextCompat.getDrawable(context, (item.type == AlarmClockItem.AlarmType.ALARM ? iconAlarm : iconNotification)));
 
         if (!isSelected && !item.enabled) {
-            ImageViewCompat.setImageTintList(view.typeButton, SuntimesUtils.colorStateList(disabledTextColor, disabledTextColor, disabledTextColor));
+            ImageViewCompat.setImageTintList(view.typeButton, SuntimesUtils.colorStateList(disabledColor, disabledColor, disabledColor));
         } else if (item.enabled) {
-            ImageViewCompat.setImageTintList(view.typeButton, SuntimesUtils.colorStateList(alarmEnabledColor, disabledTextColor, pressedTextColor));
+            ImageViewCompat.setImageTintList(view.typeButton, SuntimesUtils.colorStateList(alarmEnabledColor, disabledColor, pressedColor));
         } else {
-            ImageViewCompat.setImageTintList(view.typeButton, SuntimesUtils.colorStateList(enabledTextColor, disabledTextColor, pressedTextColor));
+            ImageViewCompat.setImageTintList(view.typeButton, SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
         }
 
         // label
         view.text.setText(getAlarmLabel(context, item));
         if (!isSelected && !item.enabled) {
-            view.text.setTextColor(disabledTextColor);
+            view.text.setTextColor(disabledColor);
         } else if (item.enabled) {
-            view.text.setTextColor(SuntimesUtils.colorStateList(alarmEnabledColor, alarmEnabledColor, enabledTextColor));
+            view.text.setTextColor(SuntimesUtils.colorStateList(alarmEnabledColor, alarmEnabledColor, onColor));
         } else {
-            view.text.setTextColor(SuntimesUtils.colorStateList(enabledTextColor, disabledTextColor, pressedTextColor));
+            view.text.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
         }
 
         // event
         view.text2.setText(getAlarmEvent(context, item));
         if (!isSelected || item.enabled) {
-            view.text2.setTextColor(disabledTextColor);
+            view.text2.setTextColor(disabledColor);
         } else {
-            view.text2.setTextColor(SuntimesUtils.colorStateList(enabledTextColor, disabledTextColor, pressedTextColor));
+            view.text2.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
         }
 
         // time
         view.text_datetime.setText(getAlarmTime(context, item));
         if (!isSelected && !item.enabled) {
-            view.text_datetime.setTextColor(disabledTextColor);
+            view.text_datetime.setTextColor(disabledColor);
         } else if (item.enabled) {
-            view.text_datetime.setTextColor(SuntimesUtils.colorStateList(alarmEnabledColor, alarmEnabledColor, pressedTextColor));
+            view.text_datetime.setTextColor(SuntimesUtils.colorStateList(alarmEnabledColor, alarmEnabledColor, pressedColor));
         } else {
-            view.text_datetime.setTextColor(SuntimesUtils.colorStateList(enabledTextColor, disabledTextColor, pressedTextColor));
+            view.text_datetime.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
         }
 
         // location
@@ -494,20 +497,20 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         AlarmDialog.updateLocationLabel(context, view.text_location, item.location);
 
         if (!isSelected || item.enabled) {
-            Drawable[] d = SuntimesUtils.tintCompoundDrawables(view.text_location.getCompoundDrawables(), disabledTextColor);
+            Drawable[] d = SuntimesUtils.tintCompoundDrawables(view.text_location.getCompoundDrawables(), disabledColor);
             view.text_location.setCompoundDrawables(d[0], d[1], d[2], d[3]);
-            view.text_location.setTextColor(disabledTextColor);
+            view.text_location.setTextColor(disabledColor);
         } else {
-            Drawable[] d = SuntimesUtils.tintCompoundDrawables(view.text_location.getCompoundDrawables(), enabledTextColor);
+            Drawable[] d = SuntimesUtils.tintCompoundDrawables(view.text_location.getCompoundDrawables(), onColor);
             view.text_location.setCompoundDrawables(d[0], d[1], d[2], d[3]);
-            view.text_location.setTextColor(SuntimesUtils.colorStateList(enabledTextColor, disabledTextColor, pressedTextColor));
+            view.text_location.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
         }
 
         // ringtone
         int iconID = item.ringtoneName != null ? iconSoundEnabled : iconSoundDisabled;
         int iconDimen = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,20, context.getResources().getDisplayMetrics());
         ImageSpan icon = isSelected || item.enabled ? SuntimesUtils.createImageSpan(context, iconID, iconDimen, iconDimen, item.enabled ? alarmEnabledColor : 0)
-                : SuntimesUtils.createImageSpan(context, iconID, iconDimen, iconDimen, disabledTextColor, PorterDuff.Mode.MULTIPLY);
+                : SuntimesUtils.createImageSpan(context, iconID, iconDimen, iconDimen, disabledColor, PorterDuff.Mode.MULTIPLY);
 
         final String none = context.getString(R.string.alarmOption_ringtone_none);
         String ringtoneName = isSelected ? (item.ringtoneName != null ? item.ringtoneName : none) : "";
@@ -515,14 +518,14 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         String ringtoneLabel = context.getString(R.string.alarmOption_ringtone_label, ringtoneName);
         SpannableStringBuilder ringtoneDisplay = SuntimesUtils.createSpan(context, ringtoneLabel, "[icon]", icon);
 
-        view.text_ringtone.setTextColor(SuntimesUtils.colorStateList(enabledTextColor, disabledTextColor, pressedTextColor));
+        view.text_ringtone.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
         view.text_ringtone.setText(ringtoneDisplay);
 
         // vibrate
         view.check_vibrate.setChecked(item.vibrate);
         view.check_vibrate.setEnabled(isSelected);
         view.check_vibrate.setText( isSelected ? context.getString(R.string.alarmOption_vibrate) : "");
-        CompoundButtonCompat.setButtonTintList(view.check_vibrate, SuntimesUtils.colorStateList(alarmEnabledColor, (item.enabled ? alarmEnabledColor : disabledTextColor), pressedTextColor));
+        CompoundButtonCompat.setButtonTintList(view.check_vibrate, SuntimesUtils.colorStateList(alarmEnabledColor, (item.enabled ? alarmEnabledColor : disabledColor), pressedColor));
 
         // repeating
         boolean noRepeat = item.repeatingDays == null || item.repeatingDays.isEmpty();
@@ -534,9 +537,9 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         view.option_repeat.setText( isSelected || !noRepeat ? repeatText : "" );
 
         if (!isSelected || item.enabled) {
-            view.option_repeat.setTextColor(disabledTextColor);
+            view.option_repeat.setTextColor(disabledColor);
         } else {
-            view.option_repeat.setTextColor(SuntimesUtils.colorStateList(enabledTextColor, disabledTextColor, pressedTextColor));
+            view.option_repeat.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
         }
 
         // offset (before / after)
@@ -552,9 +555,9 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         }
 
         if (!isSelected || item.enabled) {
-            view.option_offset.setTextColor(disabledTextColor);
+            view.option_offset.setTextColor(disabledColor);
         } else {
-            view.option_offset.setTextColor(SuntimesUtils.colorStateList(enabledTextColor, disabledTextColor, pressedTextColor));
+            view.option_offset.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
         }
 
         // overflow menu
