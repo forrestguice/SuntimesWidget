@@ -359,16 +359,21 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
-                item.vibrate = isChecked;
-                item.modified = true;
-                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, false);
-                task.execute(item);
+                if (isSelected)
+                {
+                    item.vibrate = isChecked;
+                    item.modified = true;
+                    AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, false);
+                    task.execute(item);
 
-                if (isChecked) {
-                    Vibrator vibrate = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-                    if (vibrate != null) {
-                        vibrate.vibrate(500);
+                    if (isChecked) {
+                        Vibrator vibrate = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                        if (vibrate != null) {
+                            vibrate.vibrate(500);
+                        }
                     }
+                } else {
+                    setSelectedItem(item.rowID);
                 }
             }
         });
@@ -523,7 +528,6 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
 
         // vibrate
         view.check_vibrate.setChecked(item.vibrate);
-        view.check_vibrate.setEnabled(isSelected);
         view.check_vibrate.setText( isSelected ? context.getString(R.string.alarmOption_vibrate) : "");
         CompoundButtonCompat.setButtonTintList(view.check_vibrate, SuntimesUtils.colorStateList(alarmEnabledColor, (item.enabled ? alarmEnabledColor : disabledColor), pressedColor));
 
