@@ -265,12 +265,13 @@ public class AlarmClockActivity extends AppCompatActivity
         colorAlarmEnabled = colorOn = ContextCompat.getColor(context, a.getResourceId(0, R.color.alarm_enabled_dark));
         colorEnabled = ContextCompat.getColor(context, a.getResourceId(1, android.R.color.primary_text_dark));
         colorDisabled = ContextCompat.getColor(context, a.getResourceId(2, R.color.text_disabled_dark));
-        colorPressed = ContextCompat.getColor(context, a.getResourceId(3, R.color.btn_tint_pressed_dark));
+        colorPressed = ContextCompat.getColor(context, a.getResourceId(3, R.color.sunIcon_color_setting_dark));
         colorOff = ContextCompat.getColor(context, a.getResourceId(4, R.color.grey_600));
         a.recycle();
 
         if (appThemeOverride != null) {
-            colorAlarmEnabled = colorOn = colorPressed = appThemeOverride.getActionColor();
+            colorAlarmEnabled = colorOn = appThemeOverride.getAccentColor();
+            colorPressed = appThemeOverride.getActionColor();
         }
     }
 
@@ -443,6 +444,8 @@ public class AlarmClockActivity extends AppCompatActivity
         }
 
         addAlarmButton = (FloatingActionButton) findViewById(R.id.btn_addAlarm);
+        addAlarmButton.setBackgroundColor(colorAlarmEnabled);
+        addAlarmButton.setRippleColor(colorPressed);
         addAlarmButton.setOnClickListener(onAddAlarmButtonClick);
 
         addNotificationButton = (FloatingActionButton) findViewById(R.id.btn_addNotification);

@@ -135,7 +135,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         offColor = ContextCompat.getColor(context, a.getResourceId(7, R.color.grey_600));
         disabledColor = ContextCompat.getColor(context, a.getResourceId(8, R.color.text_disabled_dark));
         alarmSelectedColor = ContextCompat.getColor(context, a.getResourceId(9, R.color.grid_selected_dark));
-        pressedColor = ContextCompat.getColor(context, a.getResourceId(10, R.color.btn_tint_pressed_dark));
+        pressedColor = ContextCompat.getColor(context, a.getResourceId(10, R.color.sunIcon_color_rising_dark));
         alarmEnabledColor = ContextCompat.getColor(context, a.getResourceId(11, R.color.alarm_enabled_dark));
         a.recycle();
     }
@@ -146,9 +146,9 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         //alarmEnabledBG = ContextCompat.getDrawable(context, a.getResourceId(0, R.drawable.card_alarmitem_enabled_dark));
         //alarmDisabledBG = ContextCompat.getDrawable(context, a.getResourceId(1, R.drawable.card_alarmitem_disabled_dark));
 
-        alarmSelectedColor = theme.getActionColor();
         pressedColor = theme.getActionColor();
-        alarmEnabledColor = theme.getActionColor();
+        alarmSelectedColor = theme.getAccentColor();
+        alarmEnabledColor = theme.getAccentColor();
     }
 
     @Override
@@ -474,7 +474,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         if (!isSelected && !item.enabled) {
             view.text.setTextColor(disabledColor);
         } else if (item.enabled) {
-            view.text.setTextColor(SuntimesUtils.colorStateList(alarmEnabledColor, alarmEnabledColor, onColor));
+            view.text.setTextColor(SuntimesUtils.colorStateList(alarmEnabledColor, alarmEnabledColor, pressedColor));
         } else {
             view.text.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
         }
@@ -529,7 +529,9 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         // vibrate
         view.check_vibrate.setChecked(item.vibrate);
         view.check_vibrate.setText( isSelected ? context.getString(R.string.alarmOption_vibrate) : "");
-        CompoundButtonCompat.setButtonTintList(view.check_vibrate, SuntimesUtils.colorStateList(alarmEnabledColor, (item.enabled ? alarmEnabledColor : disabledColor), pressedColor));
+        if (item.enabled)
+            CompoundButtonCompat.setButtonTintList(view.check_vibrate, SuntimesUtils.colorStateList(alarmEnabledColor, disabledColor, pressedColor));
+        else CompoundButtonCompat.setButtonTintList(view.check_vibrate, SuntimesUtils.colorStateList((isSelected ? alarmEnabledColor : disabledColor), disabledColor, pressedColor));
 
         // repeating
         boolean noRepeat = item.repeatingDays == null || item.repeatingDays.isEmpty();
