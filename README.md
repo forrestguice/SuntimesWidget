@@ -20,7 +20,7 @@ Displays sunrise and sunset, twilights (civil / nautical / astronomical), blue a
 An alarm clock for Suntimes.<br/><br />
 
 <a href="https://github.com/forrestguice/SuntimesCalendars/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/images/ic_launcher.png" height="64" /></a> <a href="https://github.com/forrestguice/SuntimesCalendars/">Suntimes Calendars</a> <br />
-A calendar provider add-on Suntimes.<br/><br />        
+A calendar provider add-on for Suntimes.<br/><br />        
     
 The app:
 * displays the current time (system time zone, custom time zone, or solar time) 
