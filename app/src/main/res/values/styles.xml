@@ -60,8 +60,8 @@
         <item name="snackbar_accentColor">?colorAccent</item>
         <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
 
-        <item name="fab_backgroundColor">@color/sunIcon_color_rising_light</item>
-        <item name="fab_rippleColor">@color/sunIcon_color_setting_light</item>
+        <item name="fab_backgroundColor">@color/sunIcon_color_setting_light</item>
+        <item name="fab_rippleColor">@color/sunIcon_color_rising_light</item>
 
         <item name="icActionGPS">@drawable/ic_action_location_found_light</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off_light</item>
@@ -162,8 +162,8 @@
         <item name="snackbar_accentColor">?colorAccent</item>
         <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
 
-        <item name="fab_backgroundColor">@color/sunIcon_color_setting_dark</item>
-        <item name="fab_rippleColor">@color/sunIcon_color_rising_dark</item>
+        <item name="fab_backgroundColor">@color/sunIcon_color_rising_dark</item>
+        <item name="fab_rippleColor">@color/sunIcon_color_setting_dark</item>
 
         <item name="icActionGPS">@drawable/ic_action_location_found</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off</item>
