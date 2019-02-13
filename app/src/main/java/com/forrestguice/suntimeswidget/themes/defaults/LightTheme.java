@@ -150,7 +150,7 @@ public class LightTheme extends SuntimesTheme
         this.themeMapHighlightColor = ContextCompat.getColor(context, THEMEDEF_MAP_HIGHLIGHTCOLOR_ID);
 
         this.themeActionColor = this.themeSunriseIconColor;
-        this.themeAccentColor = this.themeSunriseIconColor;   // TODO: default accent color
+        this.themeAccentColor = this.themeSunsetIconColor;
     }
 
     public ThemeDescriptor themeDescriptor()

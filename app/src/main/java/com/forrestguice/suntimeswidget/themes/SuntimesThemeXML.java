@@ -645,10 +645,10 @@ public class SuntimesThemeXML implements SuntimesThemeIO
             theme.themeBackground = SuntimesTheme.ThemeBackground.DARK;
         }
         if (theme.themeActionColor == 0) {
-            theme.themeActionColor = theme.themeSunsetIconColor;
+            theme.themeActionColor = theme.themeSunriseIconColor;
         }
         if (theme.themeAccentColor == 0) {
-            theme.themeAccentColor = theme.themeSunsetIconColor;     // TODO: default accent color
+            theme.themeAccentColor = theme.themeSunsetIconColor;
         }
         return theme;
     }

@@ -149,8 +149,8 @@ public class DarkTheme extends SuntimesTheme
         this.themeMapShadowColor = ContextCompat.getColor(context, THEMEDEF_MAP_SHADOWCOLOR_ID);
         this.themeMapHighlightColor = ContextCompat.getColor(context, THEMEDEF_MAP_HIGHLIGHTCOLOR_ID);
 
-        this.themeActionColor = this.themeSunsetIconColor;
-        this.themeAccentColor = this.themeSunsetIconColor;  // TODO: default accent color
+        this.themeActionColor = this.themeSunriseIconColor;
+        this.themeAccentColor = this.themeSunsetIconColor;
     }
 
     public ThemeDescriptor themeDescriptor()
