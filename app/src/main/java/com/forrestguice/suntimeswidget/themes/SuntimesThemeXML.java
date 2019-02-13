@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2018 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -38,7 +38,7 @@ public class SuntimesThemeXML implements SuntimesThemeIO
 {
     public static final String KEY_THEMES = "themes";
     public static final String KEY_THEME = "theme";
-    public static final String VERSION = "1.4";
+    public static final String VERSION = "1.5";
 
     public SuntimesThemeXML() {}
 
@@ -214,6 +214,10 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                 xml.startTag(namespace, SuntimesTheme.THEME_ACTIONCOLOR);
                 xml.text(colorToString(theme.getActionColor()));
                 xml.endTag(namespace, SuntimesTheme.THEME_ACTIONCOLOR);
+
+                xml.startTag(namespace, SuntimesTheme.THEME_ACCENTCOLOR);
+                xml.text(colorToString(theme.getAccentColor()));
+                xml.endTag(namespace, SuntimesTheme.THEME_ACCENTCOLOR);
 
                 xml.startTag(namespace, SuntimesTheme.THEME_SUNRISECOLOR);
                 xml.text(colorToString(theme.getSunriseTextColor()));
@@ -534,6 +538,8 @@ public class SuntimesThemeXML implements SuntimesThemeIO
                         theme.themeTimeSuffixColor = colorStringToInt(value);
                     } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_ACTIONCOLOR)) {
                         theme.themeActionColor = colorStringToInt(value);
+                    } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_ACCENTCOLOR)) {
+                        theme.themeAccentColor = colorStringToInt(value);
 
                     } else if (tag.equalsIgnoreCase(SuntimesTheme.THEME_SUNRISECOLOR)) {
                         theme.themeSunriseTextColor = colorStringToInt(value);
@@ -640,6 +646,9 @@ public class SuntimesThemeXML implements SuntimesThemeIO
         }
         if (theme.themeActionColor == 0) {
             theme.themeActionColor = theme.themeSunsetIconColor;
+        }
+        if (theme.themeAccentColor == 0) {
+            theme.themeAccentColor = theme.themeSunsetIconColor;     // TODO: default accent color
         }
         return theme;
     }

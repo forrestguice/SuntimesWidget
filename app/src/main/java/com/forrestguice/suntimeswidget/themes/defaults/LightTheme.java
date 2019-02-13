@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2014-2018 Forrest Guice
+   Copyright (C) 2014-2019 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -150,6 +150,7 @@ public class LightTheme extends SuntimesTheme
         this.themeMapHighlightColor = ContextCompat.getColor(context, THEMEDEF_MAP_HIGHLIGHTCOLOR_ID);
 
         this.themeActionColor = this.themeSunriseIconColor;
+        this.themeAccentColor = this.themeSunriseIconColor;   // TODO: default accent color
     }
 
     public ThemeDescriptor themeDescriptor()
