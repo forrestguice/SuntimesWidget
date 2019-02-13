@@ -260,7 +260,7 @@ public class AlarmClockActivity extends AppCompatActivity
         SuntimesUtils.initDisplayStrings(context);
         SolarEvents.initDisplayStrings(context);
 
-        int[] attrs = { R.attr.alarmColorEnabled, android.R.attr.textColorPrimary, R.attr.text_disabledColor, R.attr.buttonPressColor, android.R.attr.colorForeground };
+        int[] attrs = { R.attr.alarmColorEnabled, android.R.attr.textColorPrimary, R.attr.text_disabledColor, R.attr.buttonPressColor, android.R.attr.textColor };
         TypedArray a = context.obtainStyledAttributes(attrs);
         colorAlarmEnabled = colorOn = ContextCompat.getColor(context, a.getResourceId(0, R.color.alarm_enabled_dark));
         colorEnabled = ContextCompat.getColor(context, a.getResourceId(1, android.R.color.primary_text_dark));

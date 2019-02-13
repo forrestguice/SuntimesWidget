@@ -28,6 +28,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
+import android.os.Build;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -123,7 +124,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
     {
         int[] attrs = { R.attr.alarmCardEnabled, R.attr.alarmCardDisabled,
                 R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.icActionSoundEnabled, R.attr.icActionSoundDisabled,
-                android.R.attr.textColorPrimary, android.R.attr.colorForeground, R.attr.text_disabledColor, R.attr.gridItemSelected, R.attr.buttonPressColor, R.attr.alarmColorEnabled};
+                android.R.attr.textColorPrimary, android.R.attr.textColor, R.attr.text_disabledColor, R.attr.gridItemSelected, R.attr.buttonPressColor, R.attr.alarmColorEnabled};
         TypedArray a = context.obtainStyledAttributes(attrs);
         alarmEnabledBG = ContextCompat.getDrawable(context, a.getResourceId(0, R.drawable.card_alarmitem_enabled_dark));
         alarmDisabledBG = ContextCompat.getDrawable(context, a.getResourceId(1, R.drawable.card_alarmitem_disabled_dark));
@@ -359,20 +360,19 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
-                if (isSelected)
-                {
-                    item.vibrate = isChecked;
-                    item.modified = true;
-                    AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, false);
-                    task.execute(item);
+                item.vibrate = isChecked;
+                item.modified = true;
+                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, false);
+                task.execute(item);
 
-                    if (isChecked) {
-                        Vibrator vibrate = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-                        if (vibrate != null) {
-                            vibrate.vibrate(500);
-                        }
+                if (isChecked) {
+                    Vibrator vibrate = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                    if (vibrate != null) {
+                        vibrate.vibrate(500);
                     }
-                } else {
+                }
+
+                if (!isSelected) {
                     setSelectedItem(item.rowID);
                 }
             }
