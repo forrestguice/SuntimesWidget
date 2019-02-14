@@ -1,8 +1,10 @@
 ### ~
 
 ##
+* add "Suntimes Alarms", an Alarm Clock (#140, #250, #261) with support for daily repeating alarms and notifications.
 * adds a clock widget (#154, #260); displays solar time (Local Mean Time, Apparent Solar Time), or the time in a given timezone.
 * changes the default solar time mode to "Apparent Solar Time".
+* adds permission: BOOT_COMPLETED. This permission is needed to restore active alarms after reboot. [PERMISSION]
 
 ### v0.10.3 (2019-01-31)
 * adds app shortcuts (Android 7.1+); a shortcut to the Widget List, a shortcut to the Theme Editor (#288).
