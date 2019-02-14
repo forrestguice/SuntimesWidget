@@ -12,6 +12,7 @@
     <attr name="text_accentColor" format="reference" />
     <attr name="text_disabledColor" format="reference" />
 
+    <attr name="alarmColorEnabled" format="reference" />
     <attr name="alarmCardEnabled" format="reference" />
     <attr name="alarmCardDisabled" format="reference" />
     <attr name="gridItemSelected" format="reference" />
@@ -81,6 +82,8 @@
 
     <attr name="icActionAccept" format="reference" />
     <attr name="icActionNew" format="reference" />
+    <attr name="icActionNewAlarm" format="reference" />
+    <attr name="icActionNewNotification" format="reference" />
     <attr name="icActionSave" format="reference" />
     <attr name="icActionEdit" format="reference" />
     <attr name="icActionDelete" format="reference" />

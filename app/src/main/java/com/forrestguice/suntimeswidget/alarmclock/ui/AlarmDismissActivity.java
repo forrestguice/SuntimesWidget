@@ -62,6 +62,8 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
 
@@ -87,7 +89,7 @@ public class AlarmDismissActivity extends AppCompatActivity
     private ImageView iconSounding, iconSnoozing;
     private SuntimesUtils utils = new SuntimesUtils();
 
-    private int enabledColor, disabledColor, pressedColor, textColor, timeColor;
+    private int enabledColor, disabledColor, pressedColor, textColor, timeColor, titleColor;
 
     private int pulseSoundingDuration = 4000;
     private int pulseSoundingColor_start, pulseSoundingColor_end;
@@ -111,11 +113,31 @@ public class AlarmDismissActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle icicle)
     {
-        setTheme(AppSettings.loadTheme(this));
+        initTheme(this);
         super.onCreate(icicle);
         initLocale(this);
-
         setContentView(R.layout.layout_activity_dismissalarm);
+        initViews(this);
+    }
+
+    private String appTheme;
+    private int appThemeResID;
+    private SuntimesTheme appThemeOverride = null;
+
+    private void initTheme(Context context)
+    {
+        appTheme = AppSettings.loadThemePref(this);
+        setTheme(appThemeResID = AppSettings.themePrefToStyleId(this, appTheme, null));
+
+        String themeName = AppSettings.getThemeOverride(this, appThemeResID);
+        if (themeName != null) {
+            Log.i(TAG, "initTheme: Overriding \"" + appTheme + "\" using: " + themeName);
+            appThemeOverride = WidgetThemes.loadTheme(this, themeName);
+        }
+    }
+
+    protected void initViews(Context context)
+    {
         alarmTitle = (TextView)findViewById(R.id.txt_alarm_label);
         alarmSubtitle = (TextView)findViewById(R.id.txt_alarm_label2);
         alarmText = (TextView)findViewById(R.id.txt_alarm_time);
@@ -136,19 +158,6 @@ public class AlarmDismissActivity extends AppCompatActivity
         buttons = new Button[] {snoozeButton, dismissButton};
         labels = new TextView[] {alarmSubtitle, offsetText};
         stopAnimateColors(labels, buttons);
-
-        Intent intent = getIntent();
-        Uri data = intent.getData();
-        if (data != null)
-        {
-            Log.d(TAG, "onCreate: " + data);
-            setAlarmID(this, ContentUris.parseId(data));
-
-        } else {
-            Log.e(TAG, "onCreate: missing data uri! canceling...");
-            setResult(RESULT_CANCELED);
-            finish();
-        }
     }
 
     @Override
@@ -198,6 +207,25 @@ public class AlarmDismissActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        Intent intent = getIntent();
+        Uri data = intent.getData();
+        if (data != null)
+        {
+            Log.d(TAG, "onCreate: " + data);
+            setAlarmID(this, ContentUris.parseId(data));
+
+        } else {
+            Log.e(TAG, "onCreate: missing data uri! canceling...");
+            setResult(RESULT_CANCELED);
+            finish();
+        }
+    }
+
+    @Override
     protected void onStop()
     {
         clockText.removeCallbacks(updateClockTask);
@@ -239,8 +267,18 @@ public class AlarmDismissActivity extends AppCompatActivity
         pressedColor = enabledColor = ContextCompat.getColor(context, a.getResourceId(4, R.color.btn_tint_pressed_dark));
         disabledColor = ContextCompat.getColor(context, a.getResourceId(5, R.color.text_disabled_dark));
         textColor = ContextCompat.getColor(context, a.getResourceId(6, android.R.color.secondary_text_dark));
-        timeColor = ContextCompat.getColor(context, a.getResourceId(7, android.R.color.primary_text_dark));
+        timeColor = titleColor = ContextCompat.getColor(context, a.getResourceId(7, android.R.color.primary_text_dark));
         a.recycle();
+
+        if (appThemeOverride != null)
+        {
+            pressedColor = enabledColor = appThemeOverride.getActionColor();
+            pulseSoundingColor_start = appThemeOverride.getSunsetTextColor();
+            pulseSoundingColor_end = appThemeOverride.getSunriseTextColor();
+            timeColor = appThemeOverride.getTimeColor();
+            titleColor = appThemeOverride.getTitleColor();
+            textColor = appThemeOverride.getTextColor();
+        }
     }
 
     private View.OnClickListener onSnoozeClicked = new View.OnClickListener()
@@ -400,6 +438,9 @@ public class AlarmDismissActivity extends AppCompatActivity
     }
     private void stopAnimateColors(TextView[] labels, Button[] buttons)
     {
+        clockText.setTextColor(timeColor);
+        //alarmTitle.setTextColor(titleColor);
+
         if (animation != null) {
             animation.removeAllUpdateListeners();
         }

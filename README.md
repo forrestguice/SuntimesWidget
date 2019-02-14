@@ -20,7 +20,7 @@ Displays sunrise and sunset, twilights (civil / nautical / astronomical), blue a
 An alarm clock for Suntimes.<br/><br />
 
 <a href="https://github.com/forrestguice/SuntimesCalendars/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/images/ic_launcher.png" height="64" /></a> <a href="https://github.com/forrestguice/SuntimesCalendars/">Suntimes Calendars</a> <br />
-A calendar provider add-on Suntimes.<br/><br />        
+A calendar provider add-on for Suntimes.<br/><br />        
     
 The app:
 * displays the current time (system time zone, custom time zone, or solar time) 
@@ -102,7 +102,8 @@ The app benefits from the following permissions...
 |---|---|---|
 |ACCESS_COARSE_LOCATION|To get current location.|v0.1.0|
 |ACCESS_FINE_LOCATION|To get current location (GPS).|v0.1.0|
-|SET_ALARM|To interact with the AlarmClock app.|v0.1.0|
+|BOOT_COMPLETED|To restore active alarms when the device boots.|v0.11.0|
+|SET_ALARM|To interact with the system AlarmClock app.|v0.1.0|
 |WRITE_EXTERNAL_STORAGE|To export data (places, themes, etc.) to file.|v0.2.2 (api<=18)|
 
 Version `0.9.*` contained the following additional permissions (removed in v0.10.0)...
@@ -131,7 +132,7 @@ When submitting a bug please be detailed and specific. What did you expect the a
 
 ## Legal Stuff
 
-Copyright &#169 2014-2019 Forrest Guice
+Copyright &#169; 2014-2019 Forrest Guice<br/>
 The goal of this project is an app that is free and open-source (FOSS). The source code is available under *GPLv3* (https://github.com/forrestguice/SuntimesWidget).
 
 Icons and images from:

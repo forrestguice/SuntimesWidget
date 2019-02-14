@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -26,6 +26,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -37,11 +38,14 @@ import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 
 public class AlarmLabelDialog extends DialogFragment
 {
     public static final String PREF_KEY_ALARM_LABEL = "alarmlabel";
     public static final String PREF_DEF_ALARM_LABEL = "";
+
+    public static final String KEY_COLORS = "alarmlabel_colors";
 
     private EditText edit;
     private String label = PREF_DEF_ALARM_LABEL;
@@ -102,10 +106,10 @@ public class AlarmLabelDialog extends DialogFragment
                 }
         );
 
-        initViews(myParent, dialogContent);
         if (savedInstanceState != null) {
             loadSettings(savedInstanceState);
         }
+        initViews(myParent, dialogContent);
         updateViews(getContext());
 
         Window w = dialog.getWindow();
@@ -114,6 +118,11 @@ public class AlarmLabelDialog extends DialogFragment
         }
         selectAll();
         return dialog;
+    }
+
+    private int accentColor = -1;
+    public void setAccentColor( int color ) {
+        accentColor = color;
     }
 
     public void selectAll()
@@ -137,6 +146,9 @@ public class AlarmLabelDialog extends DialogFragment
         edit = (EditText) dialogContent.findViewById(R.id.edit_alarmLabel);
         if (edit != null)
         {
+            if (accentColor != -1) {
+                ViewCompat.setBackgroundTintList(edit, SuntimesUtils.colorStateList(accentColor, accentColor, accentColor));
+            }
             edit.addTextChangedListener(new TextWatcher()
             {
                 @Override
@@ -174,11 +186,13 @@ public class AlarmLabelDialog extends DialogFragment
     protected void loadSettings(Bundle bundle)
     {
         this.label =  bundle.getString(PREF_KEY_ALARM_LABEL, PREF_DEF_ALARM_LABEL);
+        this.accentColor = bundle.getInt(KEY_COLORS, accentColor);
     }
 
     protected void saveSettings(Bundle bundle)
     {
         bundle.putString(PREF_KEY_ALARM_LABEL, label);
+        bundle.putInt(KEY_COLORS, accentColor);
     }
 
     /**

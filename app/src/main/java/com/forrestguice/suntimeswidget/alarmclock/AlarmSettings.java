@@ -19,6 +19,8 @@ package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 
 /**
@@ -27,10 +29,10 @@ import android.preference.PreferenceManager;
 public class AlarmSettings
 {
     public static final String PREF_KEY_ALARM_HARDAREBUTTON_ACTION = "app_alarms_hardwarebutton_action";
-    public static final String PREF_DEF_ALARM_HARDAREBUTTON_ACTION = AlarmNotifications.ACTION_SILENT;
+    public static final String PREF_DEF_ALARM_HARDAREBUTTON_ACTION = AlarmNotifications.ACTION_SNOOZE;
 
     public static final String PREF_KEY_ALARM_SILENCEAFTER = "app_alarms_silenceafter";
-    public static final int PREF_DEF_ALARM_SILENCEAFTER = 1000 * 60 * 15;   // 15 min
+    public static final int PREF_DEF_ALARM_SILENCEAFTER = -1; // -1 disabled    //1000 * 60 * 15;   // 15 min
 
     public static final String PREF_KEY_ALARM_TIMEOUT = "app_alarms_timeoutMillis";
     public static final int PREF_DEF_ALARM_TIMEOUT = 1000 * 60 * 30;  // 30 min
@@ -40,6 +42,12 @@ public class AlarmSettings
 
     public static final String PREF_KEY_ALARM_UPCOMING = "app_alarms_upcomingMillis";
     public static final int PREF_DEF_ALARM_UPCOMING = 1000 * 60 * 60 * 10;  // 10 hours
+
+    public static final String PREF_KEY_ALARM_AUTOENABLE = "app_alarms_autoenable";
+    public static final boolean PREF_DEF_ALARM_AUTOENABLE = false;
+
+    public static final String PREF_KEY_ALARM_AUTOVIBRATE = "app_alarms_autovibrate";
+    public static final boolean PREF_DEF_ALARM_AUTOVIBRATE = false;
 
     public static String loadPrefOnHardwareButtons(Context context)
     {
@@ -57,6 +65,12 @@ public class AlarmSettings
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getInt(PREF_KEY_ALARM_TIMEOUT, PREF_DEF_ALARM_TIMEOUT);
+    }
+
+    public static boolean loadPrefAlarmAutoEnable(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_ALARM_AUTOENABLE, PREF_DEF_ALARM_AUTOENABLE);
     }
 
     /**
@@ -77,7 +91,14 @@ public class AlarmSettings
         return prefs.getInt(PREF_KEY_ALARM_SNOOZE, PREF_DEF_ALARM_SNOOZE);
     }
 
-    public static long[] loadDefaultVibratePattern(Context context, AlarmClockItem.AlarmType type)
+    public static boolean loadPrefVibrateDefault(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_ALARM_AUTOVIBRATE, PREF_DEF_ALARM_AUTOVIBRATE);
+    }
+
+
+    public static long[] loadPrefVibratePattern(Context context, AlarmClockItem.AlarmType type)
     {
         switch (type)
         {
@@ -85,6 +106,18 @@ public class AlarmSettings
             case ALARM:
             default:                    // TODO
                 return new long[] {0, 400, 200, 400, 800};   // 0 immediate start, 400ms buzz, 200ms break, 400ms buzz, 800ms break [repeat]
+        }
+    }
+
+    public static Uri getDefaultRingtoneUri(Context context, AlarmClockItem.AlarmType type)
+    {
+        switch (type)
+        {
+            case ALARM:
+                return RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_ALARM);
+            case NOTIFICATION:
+            default:
+                return RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_NOTIFICATION);
         }
     }
 

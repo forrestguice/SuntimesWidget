@@ -508,6 +508,7 @@
     <string name="configLabel_themeColorFall">Autumn</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Winter</string> <!-- color label -->
 
+    <string name="configLabel_themeColorAccent">Accent</string> <!-- color label -->  <!-- TODO -->
     <string name="configLabel_themeColorAction">Action</string> <!-- color label -->
 
     <string name="configLabel_themeColorMapBackground">Map Background</string> <!-- color label -->
@@ -657,19 +658,19 @@
 
     <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> set for <xliff:g id="duration" example="8h">%2$s</xliff:g> from now.</string> <!-- toast msg --> <!-- TODO -->
 
-    <string name="configLabel_alarms_silenceAfter">Auto-silence after</string>  <!-- TODO -->
+    <string name="configLabel_alarms_silenceAfter">Go silent after</string>  <!-- TODO -->
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
 
-    <string name="configLabel_alarms_timeoutAfter">Auto-dismiss after</string>  <!-- TODO -->
+    <string name="configLabel_alarms_timeoutAfter">Timeout after</string>  <!-- TODO -->
     <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
 
-    <string name="configLabel_alarms_snooze">Snooze alarms for</string>  <!-- TODO -->
+    <string name="configLabel_alarms_snooze">Snooze for</string>  <!-- TODO -->
     <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
 
-    <string name="configLabel_alarms_upcoming">Alarm reminder within</string>  <!-- TODO -->
+    <string name="configLabel_alarms_upcoming">Reminder within</string>  <!-- TODO -->
     <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
 
-    <string name="configLabel_alarms_hardwarebuttons">Camera and Volume Buttons</string>  <!-- TODO -->
+    <string name="configLabel_alarms_hardwarebuttons">Hardware Buttons</string>  <!-- TODO -->
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>  <!-- TODO -->
     <string-array name="alarm_hardwarebutton_actions_display">  <!-- TODO -->
         <item>Dismiss</item>
@@ -1390,10 +1391,11 @@
     <string name="def_app_appearance_theme" translatable="false">dark</string>
     <string name="def_app_accessibility_verbose" translatable="false">false</string>
 
-    <string name="def_app_alarms_silence" translatable="false">900000</string>     <!-- silence after 15m -->
+    <string name="def_app_alarms_silence" translatable="false">-1</string>         <!-- silence disabled -->
     <string name="def_app_alarms_timeout" translatable="false">1800000</string>    <!-- dismiss after 30m -->
     <string name="def_app_alarms_snooze" translatable="false">600000</string>      <!-- snooze for 10m -->
     <string name="def_app_alarms_upcoming" translatable="false">36000000</string>  <!-- show reminder within 10h -->
-    <string name="def_app_alarms_hardwarebuttons_action" translatable="false">suntimeswidget.alarm.silent</string>
+    <string name="def_app_alarms_hardwarebuttons_action" translatable="false">suntimeswidget.alarm.snooze</string>
+    <string name="def_app_alarms_autoenable" translatable="false">false</string>   <!-- automatically enable new alarms (false) -->
 
 </resources>

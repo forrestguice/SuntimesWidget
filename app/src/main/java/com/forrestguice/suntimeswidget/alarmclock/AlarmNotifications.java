@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.alarmclock;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -28,6 +29,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 
+import android.content.res.TypedArray;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -37,12 +39,14 @@ import android.os.IBinder;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.NotificationCompat;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
@@ -61,9 +65,6 @@ import java.util.Calendar;
 
 public class AlarmNotifications extends BroadcastReceiver
 {
-    /** DEBUG_ALARMUI .. when 'true' Alarms are scheduled immediately (to step through and test the UI) */
-    private static final boolean DEBUG_ALARMUI = false;  // TODO: remove this flag
-
     public static final String TAG = "AlarmReceiver";
 
     public static final String ACTION_SHOW = "suntimeswidget.alarm.show";                // sound an alarm
@@ -71,8 +72,10 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final String ACTION_DISMISS = "suntimeswidget.alarm.dismiss";          // dismiss an alarm
     public static final String ACTION_SNOOZE = "suntimeswidget.alarm.snooze";            // snooze an alarm
     public static final String ACTION_SCHEDULE = "suntimeswidget.alarm.schedule";        // enable (schedule) an alarm
+    public static final String ACTION_RESCHEDULE = "suntimeswidget.alarm.reschedule";    // reschedule; same as schedule but prev alarmtime is cleared
     public static final String ACTION_DISABLE = "suntimeswidget.alarm.disable";          // disable an alarm
-    public static final String ACTION_TIMEOUT = "suntimeswidget.alarm.timeout";         // timeout an alarm
+    public static final String ACTION_TIMEOUT = "suntimeswidget.alarm.timeout";          // timeout an alarm
+    public static final String ACTION_DELETE = "suntimeswidget.alarm.delete";            // delete an alarm
 
     public static final String EXTRA_NOTIFICATION_ID = "notificationID";
     public static final String ALARM_NOTIFICATION_TAG = "suntimesalarm";
@@ -106,11 +109,42 @@ public class AlarmNotifications extends BroadcastReceiver
             SuntimesUtils.TimeDisplayText alarmText = utils.timeDeltaLongDisplayString(now.getTimeInMillis(), item.timestamp + item.offset);
             String alarmString = context.getString(R.string.alarmenabled_toast, item.type.getDisplayString(), alarmText.getValue());
             SpannableString alarmDisplay = SuntimesUtils.createBoldSpan(null, alarmString, alarmText.getValue());
-
-            //Snackbar.make(view, alarmDisplay, Toast.LENGTH_SHORT).show();
-            Toast.makeText(context, alarmDisplay, Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar.make(view, alarmDisplay, Toast.LENGTH_SHORT);
+            themeSnackbar(context, snackbar, null);
+            snackbar.show();
+            //Toast.makeText(context, alarmDisplay, Toast.LENGTH_SHORT).show();
 
         } else Log.e(TAG, "showTimeUntilToast: context is null!");
+    }
+
+    @SuppressLint("ResourceType")
+    public static void themeSnackbar(Context context, Snackbar snackbar, Integer[] colorOverrides)
+    {
+        Integer[] colors = new Integer[] {null, null, null};
+        int[] colorAttrs = { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor };
+        TypedArray a = context.obtainStyledAttributes(colorAttrs);
+        colors[0] = ContextCompat.getColor(context, a.getResourceId(0, android.R.color.primary_text_dark));
+        colors[1] = ContextCompat.getColor(context, a.getResourceId(1, R.color.text_accent_dark));
+        colors[2] = ContextCompat.getColor(context, a.getResourceId(2, R.color.card_bg_dark));
+        a.recycle();
+
+        if (colorOverrides != null && colorOverrides.length == colors.length) {
+            for (int i=0; i<colors.length; i++) {
+                if (colorOverrides[i] != null) {
+                    colors[i] = colorOverrides[i];
+                }
+            }
+        }
+
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(colors[2]);
+        snackbar.setActionTextColor(colors[1]);
+
+        TextView snackbarText = (TextView)snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+        if (snackbarText != null) {
+            snackbarText.setTextColor(colors[0]);
+            snackbarText.setMaxLines(3);
+        }
     }
 
     /**
@@ -204,6 +238,24 @@ public class AlarmNotifications extends BroadcastReceiver
         } else Log.e(TAG, "cancelAlarmTimeouts: context is null!");
     }
 
+    protected static void cancelAlarmTimeouts(Context context, Long[] alarmIds)
+    {
+        if (context != null) {
+            AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+            if (alarmManager != null)
+            {
+                for (long alarmId : alarmIds)
+                {
+                    Uri data = ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, alarmId);
+                    alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SILENT, data));
+                    alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_TIMEOUT, data));
+                    alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SHOW, data));
+                    alarmManager.cancel(getPendingIntent(context, AlarmNotifications.ACTION_SCHEDULE, data));
+                }
+            } else Log.e(TAG, "cancelAlarmTimeouts: AlarmManager is null!");
+        } else Log.e(TAG, "cancelAlarmTimeouts: context is null!");
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -233,6 +285,7 @@ public class AlarmNotifications extends BroadcastReceiver
         Intent intent = new Intent(context, AlarmClockActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (selectedAlarmId != null) {
+            intent.setData(ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, selectedAlarmId));
             intent.putExtra(AlarmClockActivity.EXTRA_SELECTED_ALARM, selectedAlarmId);
         }
         return intent;
@@ -246,7 +299,7 @@ public class AlarmNotifications extends BroadcastReceiver
         if (Build.VERSION.SDK_INT >= 16) {
             intent.setFlags(Intent.FLAG_RECEIVER_FOREGROUND);  // on my device (api19) the receiver fails to respond when app is closed unless this flag is set
         }
-        intent.putExtra(EXTRA_NOTIFICATION_ID, (int)ContentUris.parseId(data));
+        intent.putExtra(EXTRA_NOTIFICATION_ID, (data != null ? (int)ContentUris.parseId(data) : null));
         return intent;
     }
 
@@ -273,7 +326,7 @@ public class AlarmNotifications extends BroadcastReceiver
         if (alarm.vibrate && vibrator != null)
         {
             int repeatFrom = (alarm.type == AlarmClockItem.AlarmType.ALARM ? 0 : -1);
-            vibrator.vibrate(AlarmSettings.loadDefaultVibratePattern(context, alarm.type), repeatFrom);
+            vibrator.vibrate(AlarmSettings.loadPrefVibratePattern(context, alarm.type), repeatFrom);
         }
 
         Uri soundUri = ((alarm.ringtoneURI != null && !alarm.ringtoneURI.isEmpty()) ? Uri.parse(alarm.ringtoneURI) : null);
@@ -417,6 +470,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
                     builder.setPriority( NotificationCompat.PRIORITY_LOW );
                     notificationMsg = context.getString(R.string.alarmAction_upcomingMsg);
+                    builder.setWhen(alarm.alarmtime);
                     builder.setContentIntent(pendingView);
                     builder.setAutoCancel(false);
                     builder.setOngoing(true);
@@ -499,6 +553,11 @@ public class AlarmNotifications extends BroadcastReceiver
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.cancel(ALARM_NOTIFICATION_TAG, notificationID);
     }
+    public static void dismissNotifications(Context context)
+    {
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        notificationManager.cancelAll();
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -545,15 +604,56 @@ public class AlarmNotifications extends BroadcastReceiver
                         Log.d(TAG, "ACTION_TIMEOUT: " + data);
                         AlarmNotifications.stopAlert();
 
+                    } else if (AlarmNotifications.ACTION_DELETE.equals(action)) {
+                        Log.d(TAG, "ACTION_DELETE: " + data);
+                        AlarmNotifications.stopAlert();
+
                     } else {
-                        Log.w(TAG, "onStartCommand: Unrecognized action: " + action);
+                        Log.w(TAG, "onStartCommand: Unhandled action: " + action);
                     }
 
                     AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
                     itemTask.setAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), action));
                     itemTask.execute(ContentUris.parseId(data));
 
-                } else Log.w(TAG, "onStartCommand: null data!");
+                } else {
+                    if (AlarmNotifications.ACTION_SCHEDULE.equals(action) || Intent.ACTION_BOOT_COMPLETED.equals(action) || Intent.ACTION_TIME_CHANGED.equals(action))
+                    {
+                        Log.d(TAG, action + ": schedule all");
+                        AlarmDatabaseAdapter.AlarmListTask alarmListTask = new AlarmDatabaseAdapter.AlarmListTask(getApplicationContext());
+                        alarmListTask.setParam_enabledOnly(true);
+                        alarmListTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
+                            @Override
+                            public void onItemsLoaded(Long[] ids)
+                            {
+                                for (long id : ids)
+                                {
+                                    AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
+                                    itemTask.setAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), AlarmNotifications.ACTION_RESCHEDULE));
+                                    itemTask.execute(id);
+                                }
+                            }
+                        });
+                        alarmListTask.execute();
+
+                    } else if (AlarmNotifications.ACTION_DELETE.equals(action)) {
+                        Log.d(TAG, "ACTION_DELETE: clear all");
+                        AlarmNotifications.stopAlert();
+                        AlarmDatabaseAdapter.AlarmListTask alarmListTask = new AlarmDatabaseAdapter.AlarmListTask(getApplicationContext());
+                        alarmListTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
+                            @Override
+                            public void onItemsLoaded(Long[] ids)
+                            {
+                                cancelAlarmTimeouts(getApplicationContext(), ids);
+                                AlarmDatabaseAdapter.AlarmDeleteTask clearTask = new AlarmDatabaseAdapter.AlarmDeleteTask(getApplicationContext());
+                                clearTask.setTaskListener(onClearedState(getApplicationContext()));
+                                clearTask.execute();
+                            }
+                        });
+                        alarmListTask.execute();
+
+                    } else Log.w(TAG, "onStartCommand: null data!");
+                }
             } else Log.w(TAG, "onStartCommand: null intent!");
 
             return START_STICKY;
@@ -645,7 +745,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             ////////////////////////////////////////////////////////////////////////////
                             if (AlarmState.transitionState(item.state, AlarmState.STATE_DISABLED))
                             {
-                                Log.i(TAG, "Disabled: " + item.rowID);
+                                Log.i(TAG, "Disable: " + item.rowID);
                                 cancelAlarmTimeouts(context, item.getUri());
 
                                 item.enabled = false;
@@ -655,7 +755,21 @@ public class AlarmNotifications extends BroadcastReceiver
                                 updateItem.execute(item);    // write state
                             }
 
-                        } else if (action.equals(ACTION_SCHEDULE)) {
+                        } else if (action.equals(ACTION_DELETE)) {
+                            ////////////////////////////////////////////////////////////////////////////
+                            // Delete Alarm
+                            ////////////////////////////////////////////////////////////////////////////
+                            if (AlarmState.transitionState(item.state, AlarmState.STATE_DISABLED))
+                            {
+                                Log.i(TAG, "Delete: " + item.rowID);
+                                cancelAlarmTimeouts(context, item.getUri());
+
+                                AlarmDatabaseAdapter.AlarmDeleteTask deleteTask = new AlarmDatabaseAdapter.AlarmDeleteTask(context);
+                                deleteTask.setTaskListener(onDeletedState(context));
+                                deleteTask.execute(item.rowID);
+                            }
+
+                        } else if (action.equals(ACTION_SCHEDULE) || (action.equals(ACTION_RESCHEDULE))) {
                             ////////////////////////////////////////////////////////////////////////////
                             // Schedule Alarm
                             ////////////////////////////////////////////////////////////////////////////
@@ -664,7 +778,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 cancelAlarmTimeouts(context, item.getUri());
 
                                 long now = Calendar.getInstance().getTimeInMillis();
-                                if (item.alarmtime <= now || item.alarmtime == 0)
+                                if (item.alarmtime <= now || item.alarmtime == 0 || action.equals(ACTION_RESCHEDULE))
                                 {
                                     // expired alarm/notification
                                     if (item.enabled)    // enabled; reschedule alarm/notification
@@ -672,10 +786,6 @@ public class AlarmNotifications extends BroadcastReceiver
                                         Log.d(TAG, "(Re)Scheduling: " + item.rowID);
                                         updateAlarmTime(context, item);     // sets item.hour, item.minute, item.timestamp (calculates the eventTime)
                                         item.alarmtime = item.timestamp + item.offset;     // scheduled sounding time (-before/+after eventTime by some offset)
-
-                                        if (DEBUG_ALARMUI) {   // TODO: remove this debug trigger
-                                            item.alarmtime = Calendar.getInstance().getTimeInMillis() + AlarmSettings.loadPrefAlarmUpcoming(context) + (1000 * 30);
-                                        }
 
                                     } else {    // disabled; this alarm should have been dismissed
                                         Log.d(TAG, "Dismissing: " + item.rowID);
@@ -858,6 +968,54 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
+        private AlarmDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener onDeletedState(final Context context)
+        {
+            return new AlarmDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener()
+            {
+                @Override
+                public void onFinished(Boolean result, Long itemID)
+                {
+                    Log.d(TAG, "Alarm Deleted (onDeleted)");
+                    Intent serviceIntent = getServiceIntent(context);
+                    startService(serviceIntent);  // keep service running after stopping foreground notification
+
+                    stopForeground(true);                                      // dismiss active notification (will kill running tasks)
+                    dismissNotification(context, itemID.intValue());                                                                   // dismiss upcoming reminders
+                    context.sendBroadcast(getFullscreenBroadcast(ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, itemID)));     // dismiss fullscreen activity
+
+                    Intent alarmListIntent = getAlarmListIntent(context, itemID);
+                    alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
+                    context.startActivity(alarmListIntent);   // open the alarm list
+
+                    stopService(serviceIntent);
+                }
+            };
+        }
+
+        private AlarmDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener onClearedState(final Context context)
+        {
+            return new AlarmDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener()
+            {
+                @Override
+                public void onFinished(Boolean result, Long itemID)
+                {
+                    Log.d(TAG, "Alarms Cleared (onCleared)");
+                    Intent serviceIntent = getServiceIntent(context);
+                    startService(serviceIntent);  // keep service running after stopping foreground notification
+
+                    context.sendBroadcast(getFullscreenBroadcast(null));     // dismiss fullscreen activity
+                    stopForeground(true);                         // dismiss active notifications
+                    dismissNotifications(context);                                // dismiss upcoming reminders
+
+                    Intent alarmListIntent = getAlarmListIntent(context, itemID);
+                    alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
+                    context.startActivity(alarmListIntent);   // open the alarm list
+
+                    stopService(serviceIntent);
+                }
+            };
+        }
+
         private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onScheduledNotification(final Context context)
         {
             return new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
@@ -886,8 +1044,8 @@ public class AlarmNotifications extends BroadcastReceiver
                         Log.d(TAG, "State Saved (onScheduledDistant)");
                         long transitionAt = item.alarmtime - AlarmSettings.loadPrefAlarmUpcoming(context) + 1000;
                         addAlarmTimeout(context, ACTION_SCHEDULE, item.getUri(), transitionAt);
-                        context.startActivity(getAlarmListIntent(context, item.rowID));   // open the alarm list
-                        //dismissNotification(context, (int)item.rowID);
+                        //context.startActivity(getAlarmListIntent(context, item.rowID));   // open the alarm list
+                        dismissNotification(context, (int)item.rowID);
                     }
                 }
             };
@@ -903,12 +1061,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     if (item.type == AlarmClockItem.AlarmType.ALARM)
                     {
                         Log.d(TAG, "State Saved (onScheduledSoon)");
-
-                        if (DEBUG_ALARMUI) {
-                            long debugAlarmAt = Calendar.getInstance().getTimeInMillis() + (1000 * 10);
-                            addAlarmTimeout(context, ACTION_SHOW, item.getUri(), debugAlarmAt);  // TODO: remove debug timeout
-                        } else addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);
-
+                        addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);
                         if (AlarmSettings.loadPrefAlarmUpcoming(context) > 0) {
                             showNotification(context, item, true);             // show upcoming reminder
                         }

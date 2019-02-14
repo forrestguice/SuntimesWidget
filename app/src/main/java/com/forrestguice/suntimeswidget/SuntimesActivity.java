@@ -310,7 +310,7 @@ public class SuntimesActivity extends AppCompatActivity
         appTheme = AppSettings.loadThemePref(this);
         setTheme(appThemeResID = AppSettings.themePrefToStyleId(this, appTheme, null));
 
-        String themeName = getThemeOverride();
+        String themeName = AppSettings.getThemeOverride(this, appThemeResID);
         if (themeName != null)
         {
             Log.i("initTheme", "Overriding \"" + appTheme + "\" using: " + themeName);
@@ -325,11 +325,6 @@ public class SuntimesActivity extends AppCompatActivity
         a.recycle();
 
         GetFixUI.themeIcons(this);
-    }
-    private String getThemeOverride()
-    {
-        String themeOverride = ((appThemeResID == R.style.AppTheme_Light) ? AppSettings.loadThemeLightPref(this) : AppSettings.loadThemeDarkPref(this));
-        return ((themeOverride != null && !themeOverride.equals("default")) ? themeOverride : null);
     }
 
     private void initLocale( Context context )
@@ -686,7 +681,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (requestCode == SUNTIMES_SETTINGS_REQUEST && resultCode == RESULT_OK)
         {
             boolean needsRecreate = ((!AppSettings.loadThemePref(SuntimesActivity.this).equals(appTheme))                           // theme mode changed
-                    || (appThemeOverride != null && !appThemeOverride.themeName().equals(getThemeOverride()))                       // or theme override changed
+                    || (appThemeOverride != null && !appThemeOverride.themeName().equals(AppSettings.getThemeOverride(this, appThemeResID))) // or theme override changed
                     || (localeInfo.localeMode != AppSettings.loadLocaleModePref(SuntimesActivity.this))                             // or localeMode changed
                     || ((localeInfo.localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE                                              // or customLocale changed
                     && !AppSettings.loadLocalePref(SuntimesActivity.this).equals(localeInfo.customLocale))));

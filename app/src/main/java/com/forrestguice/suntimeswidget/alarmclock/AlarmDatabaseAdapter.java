@@ -29,6 +29,8 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 public class AlarmDatabaseAdapter
 {
     public static final String DATABASE_NAME = "suntimesAlarms";
@@ -208,6 +210,18 @@ public class AlarmDatabaseAdapter
                                  : database.query( TABLE_ALARMS, QUERY, null, null, null, null, "_id DESC" );
         if (cursor != null)
         {
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
+    public Cursor getAllAlarms(int n, boolean fullEntry, boolean enabledOnly)
+    {
+        String selection = (enabledOnly ? KEY_ALARM_ENABLED + " = ?" : null);    // select enabled
+        String[] selectionArgs = (enabledOnly ? new String[] {"1"} : null);    // is 1 (true)
+        String[] query = (fullEntry) ? QUERY_ALARMS_FULLENTRY : QUERY_ALARMS_MINENTRY;
+        Cursor cursor =  (n > 0) ? database.query( TABLE_ALARMS, query, selection, selectionArgs, null, null, "_id DESC", n+"" )
+                                 : database.query( TABLE_ALARMS, query, selection, selectionArgs, null, null, "_id DESC" );
+        if (cursor != null) {
             cursor.moveToFirst();
         }
         return cursor;
@@ -538,6 +552,7 @@ public class AlarmDatabaseAdapter
     public static class AlarmDeleteTask extends AsyncTask<Long, Void, Boolean>
     {
         protected AlarmDatabaseAdapter db;
+        protected Long lastRowId;
 
         public AlarmDeleteTask(Context context)
         {
@@ -553,9 +568,11 @@ public class AlarmDatabaseAdapter
             {
                 for (long rowID : rowIDs) {
                     removed = removed && db.removeAlarm(rowID);
+                    lastRowId = rowID;
                 }
             } else {
                 removed = db.clearAlarms();
+                lastRowId = null;
             }
             db.close();
             return removed;
@@ -565,7 +582,7 @@ public class AlarmDatabaseAdapter
         protected void onPostExecute(Boolean result)
         {
             if (listener != null)
-                listener.onFinished(result);
+                listener.onFinished(result, lastRowId);
         }
 
         protected AlarmClockDeleteTaskListener listener = null;
@@ -576,7 +593,7 @@ public class AlarmDatabaseAdapter
 
         public static abstract class AlarmClockDeleteTaskListener
         {
-            public void onFinished(Boolean result) {}
+            public void onFinished(Boolean result, Long rowID) {}
         }
     }
 
@@ -682,5 +699,57 @@ public class AlarmDatabaseAdapter
             public void onFinished(Boolean result) {}
         }
     }
+
+    /**
+     * AlarmListTask
+     */
+    public static class AlarmListTask extends AsyncTask<Void, Void, Long[]>
+    {
+        protected AlarmDatabaseAdapter db;
+
+        public AlarmListTask(Context context)
+        {
+            db = new AlarmDatabaseAdapter(context.getApplicationContext());
+        }
+
+        private boolean param_enabledOnly = false;
+        public void setParam_enabledOnly( boolean value ) {
+            param_enabledOnly = value;
+        }
+
+        @Override
+        protected Long[] doInBackground(Void... voids)
+        {
+            ArrayList<Long> alarmIds = new ArrayList<>();
+            db.open();
+            Cursor cursor = db.getAllAlarms(0, false, param_enabledOnly);
+            while (!cursor.isAfterLast())
+            {
+                alarmIds.add(cursor.getLong(cursor.getColumnIndex(AlarmDatabaseAdapter.KEY_ROWID)));
+                cursor.moveToNext();
+            }
+            db.close();
+            return alarmIds.toArray(new Long[0]);
+        }
+
+        protected void onPostExecute( Long[] items )
+        {
+            if (taskListener != null) {
+                taskListener.onItemsLoaded(items);
+            }
+        }
+
+        private AlarmListTaskListener taskListener = null;
+        public void setAlarmItemTaskListener( AlarmListTaskListener listener )
+        {
+            this.taskListener = listener;
+        }
+
+        public static abstract class AlarmListTaskListener
+        {
+            public void onItemsLoaded(Long[] ids ) {}
+        }
+    }
+
 
 }

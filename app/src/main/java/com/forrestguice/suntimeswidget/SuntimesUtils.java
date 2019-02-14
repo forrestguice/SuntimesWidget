@@ -1709,6 +1709,18 @@ public class SuntimesUtils
         );
     }
 
+    public static ColorStateList colorStateList(int onColor, int offColor, int disabledColor, int pressedColor)
+    {
+        return new ColorStateList(
+                new int[][] { new int[] {android.R.attr.state_focused},
+                        new int[] {android.R.attr.state_pressed},
+                        new int[] {-android.R.attr.state_enabled},
+                        new int[] {android.R.attr.state_checked},
+                        new int[] {} },
+                new int[] {onColor, pressedColor, disabledColor, onColor, offColor}
+        );
+    }
+
     /**
      *
      * @param drawables an array of compound drawable; expects [4] {left, top, right, bottom}

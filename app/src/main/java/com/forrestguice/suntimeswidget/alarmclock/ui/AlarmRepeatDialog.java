@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -26,6 +26,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.graphics.ColorUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
@@ -53,12 +54,23 @@ public class AlarmRepeatDialog extends DialogFragment
     public static final String PREF_KEY_ALARM_REPEATDAYS = "alarmrepeat_days";
     public static final ArrayList<Integer> PREF_DEF_ALARM_REPEATDAYS = new ArrayList<>(Arrays.asList(Calendar.SUNDAY, Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY, Calendar.SATURDAY));
 
+    public static final String KEY_COLORS = "alarmrepeat_colors";
+
     protected static final SuntimesUtils utils = new SuntimesUtils();
 
     private SwitchCompat switchRepeat;
     private boolean repeat = PREF_DEF_ALARM_REPEAT;
     private ArrayList<Integer> repeatDays = PREF_DEF_ALARM_REPEATDAYS;
     private SparseArray<ToggleButton> btnDays;
+
+    private int[] colorOverrides = new int[] {-1, -1, -1, -1};
+    public void setColorOverrides(int onColor, int offColor, int disabledColor, int pressedColor)
+    {
+        colorOverrides[0] = onColor;
+        colorOverrides[1] = offColor;
+        colorOverrides[2] = disabledColor;
+        colorOverrides[3] = pressedColor;
+    }
 
     /**
      * @param savedInstanceState a Bundle containing dialog state
@@ -113,10 +125,10 @@ public class AlarmRepeatDialog extends DialogFragment
                 }
         );
 
-        initViews(myParent, dialogContent);
         if (savedInstanceState != null) {
             loadSettings(savedInstanceState);
         }
+        initViews(myParent, dialogContent);
         updateViews(getContext());
         return dialog;
     }
@@ -137,12 +149,24 @@ public class AlarmRepeatDialog extends DialogFragment
      */
     protected void initViews( final Context context, View dialogContent )
     {
-        initColors(context);
         SuntimesUtils.initDisplayStrings(context);
 
         switchRepeat = (SwitchCompat) dialogContent.findViewById(R.id.alarmOption_repeat);
-        if (switchRepeat != null) {
+        if (switchRepeat != null)
+        {
             switchRepeat.setOnCheckedChangeListener(onRepeatChanged);
+            if (colorOverrides[0] != -1) {
+                switchRepeat.setThumbTintList(SuntimesUtils.colorStateList(
+                        colorOverrides[0],
+                        colorOverrides[1],
+                        colorOverrides[2],
+                        colorOverrides[3]));
+                switchRepeat.setTrackTintList(SuntimesUtils.colorStateList(
+                        ColorUtils.setAlphaComponent(colorOverrides[0], 85),
+                        ColorUtils.setAlphaComponent(colorOverrides[1], 85),
+                        ColorUtils.setAlphaComponent(colorOverrides[2], 85),
+                        ColorUtils.setAlphaComponent(colorOverrides[3], 85)));  // 33% alpha (85 / 255)
+            }
         }
 
         btnDays = new SparseArray<>();
@@ -251,15 +275,6 @@ public class AlarmRepeatDialog extends DialogFragment
         }
     }
 
-    private void initColors(Context context)
-    {
-        /**int[] colorAttrs = { android.R.attr.textColorPrimary };
-        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
-        int def = Color.WHITE;
-        color_textTimeDelta = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
-        typedArray.recycle();*/
-    }
-
     /**
      * @param value true alarm should repeat, false one-time alarm
      */
@@ -325,6 +340,10 @@ public class AlarmRepeatDialog extends DialogFragment
      */
     protected void loadSettings(Bundle bundle)
     {
+        int[] colors = bundle.getIntArray(KEY_COLORS);
+        if (colors != null) {
+            colorOverrides = colors;
+        }
         setRepetition( bundle.getBoolean(PREF_KEY_ALARM_REPEAT, PREF_DEF_ALARM_REPEAT),
                        bundle.getIntegerArrayList(PREF_KEY_ALARM_REPEATDAYS) );
     }
@@ -337,6 +356,7 @@ public class AlarmRepeatDialog extends DialogFragment
     {
         bundle.putBoolean(PREF_KEY_ALARM_REPEAT, repeat);
         bundle.putIntegerArrayList(PREF_KEY_ALARM_REPEATDAYS, repeatDays);
+        bundle.putIntArray(KEY_COLORS, colorOverrides);
     }
 
     /**

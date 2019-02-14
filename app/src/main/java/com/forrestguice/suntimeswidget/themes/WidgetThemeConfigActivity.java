@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2018 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -131,7 +131,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ColorChooser chooseColorRise, chooseColorRiseIconFill, chooseColorRiseIconStroke;
     private ColorChooser chooseColorNoon, chooseColorNoonIconFill, chooseColorNoonIconStroke;
     private ColorChooser chooseColorSet, chooseColorSetIconFill, chooseColorSetIconStroke;
-    private ColorChooser chooseColorTitle, chooseColorText, chooseColorTime, chooseColorSuffix, chooseColorAction;
+    private ColorChooser chooseColorTitle, chooseColorText, chooseColorTime, chooseColorSuffix, chooseColorAction, chooseColorAccent;
     private ColorChooser chooseColorDay, chooseColorCivil, chooseColorNautical, chooseColorAstro, chooseColorNight;
     private ColorChooser chooseColorSpring, chooseColorSummer, chooseColorFall, chooseColorWinter;
     private ColorChooser chooseColorMoonrise, chooseColorMoonset;
@@ -346,6 +346,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseColorTime = createColorChooser(this, R.id.chooser_timeColor, SuntimesTheme.THEME_TIMECOLOR);
         chooseColorSuffix = createColorChooser(this, R.id.chooser_suffixColor, SuntimesTheme.THEME_TIMESUFFIXCOLOR);
         chooseColorAction = createColorChooser(this, R.id.chooser_actionColor, SuntimesTheme.THEME_ACTIONCOLOR);
+        chooseColorAccent = createColorChooser(this, R.id.chooser_accentColor, SuntimesTheme.THEME_ACCENTCOLOR);
 
         checkUseNoon = (CheckBox)findViewById(R.id.enable_noonColor);
         checkUseNoon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
@@ -1330,6 +1331,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             chooseColorTime.setColor(theme.getTimeColor());
             chooseColorSuffix.setColor(theme.getTimeSuffixColor());
             chooseColorAction.setColor(theme.getActionColor());
+            chooseColorAccent.setColor(theme.getAccentColor());
 
             checkTitleBold.setChecked(theme.getTitleBold());
             checkTimeBold.setChecked(theme.getTimeBold());
@@ -1413,6 +1415,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 this.themeTimeColor = chooseColorTime.getColor();
                 this.themeTimeSuffixColor = chooseColorSuffix.getColor();
                 this.themeActionColor = chooseColorAction.getColor();
+                this.themeAccentColor = chooseColorAccent.getColor();
 
                 this.themeTitleBold = checkTitleBold.isChecked();
                 this.themeTimeBold = checkTimeBold.isChecked();
