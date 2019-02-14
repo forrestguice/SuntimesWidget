@@ -1010,7 +1010,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         long transitionAt = item.alarmtime - AlarmSettings.loadPrefAlarmUpcoming(context) + 1000;
                         addAlarmTimeout(context, ACTION_SCHEDULE, item.getUri(), transitionAt);
                         //context.startActivity(getAlarmListIntent(context, item.rowID));   // open the alarm list
-                        //dismissNotification(context, (int)item.rowID);
+                        dismissNotification(context, (int)item.rowID);
                     }
                 }
             };
