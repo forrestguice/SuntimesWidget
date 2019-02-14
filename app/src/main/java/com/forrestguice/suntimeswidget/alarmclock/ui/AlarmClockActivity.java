@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -39,6 +40,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.ColorUtils;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -445,8 +447,8 @@ public class AlarmClockActivity extends AppCompatActivity
         }
 
         addAlarmButton = (FloatingActionButton) findViewById(R.id.btn_addAlarm);
-        addAlarmButton.setBackgroundTintList(SuntimesUtils.colorStateList(colorPressed, colorDisabled, colorAlarmEnabled));
-        addAlarmButton.setRippleColor(colorAlarmEnabled);
+        addAlarmButton.setBackgroundTintList(SuntimesUtils.colorStateList(colorAlarmEnabled, colorDisabled, colorPressed));
+        addAlarmButton.setRippleColor(Color.TRANSPARENT);
         addAlarmButton.setOnClickListener(onAddAlarmButtonClick);
 
         addNotificationButton = (FloatingActionButton) findViewById(R.id.btn_addNotification);

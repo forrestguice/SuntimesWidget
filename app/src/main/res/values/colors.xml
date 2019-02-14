@@ -12,7 +12,7 @@
     <color name="labeltext_light">#575757</color>
 
     <color name="btn_tint_pressed_dark">#ff9900</color>
-    <color name="btn_tint_pressed_light">#CF4800</color> <!-- #3277C7 .. #CF4800 -->
+    <color name="btn_tint_pressed_light">#CF4800</color> <!-- #CF4800 -->
 
     <color name="text_alertDialogListItem">#000000</color>
 
