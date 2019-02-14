@@ -68,6 +68,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final String ACTION_DISMISS = "suntimeswidget.alarm.dismiss";          // dismiss an alarm
     public static final String ACTION_SNOOZE = "suntimeswidget.alarm.snooze";            // snooze an alarm
     public static final String ACTION_SCHEDULE = "suntimeswidget.alarm.schedule";        // enable (schedule) an alarm
+    public static final String ACTION_RESCHEDULE = "suntimeswidget.alarm.reschedule";    // reschedule; same as schedule but prev alarmtime is cleared
     public static final String ACTION_DISABLE = "suntimeswidget.alarm.disable";          // disable an alarm
     public static final String ACTION_TIMEOUT = "suntimeswidget.alarm.timeout";          // timeout an alarm
     public static final String ACTION_DELETE = "suntimeswidget.alarm.delete";            // delete an alarm
@@ -733,7 +734,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 deleteTask.execute(item.rowID);
                             }
 
-                        } else if (action.equals(ACTION_SCHEDULE)) {
+                        } else if (action.equals(ACTION_SCHEDULE) || (action.equals(ACTION_RESCHEDULE))) {
                             ////////////////////////////////////////////////////////////////////////////
                             // Schedule Alarm
                             ////////////////////////////////////////////////////////////////////////////
@@ -742,7 +743,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 cancelAlarmTimeouts(context, item.getUri());
 
                                 long now = Calendar.getInstance().getTimeInMillis();
-                                if (item.alarmtime <= now || item.alarmtime == 0)
+                                if (item.alarmtime <= now || item.alarmtime == 0 || action.equals(ACTION_RESCHEDULE))
                                 {
                                     // expired alarm/notification
                                     if (item.enabled)    // enabled; reschedule alarm/notification
