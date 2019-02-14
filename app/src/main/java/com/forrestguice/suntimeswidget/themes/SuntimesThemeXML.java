@@ -645,7 +645,7 @@ public class SuntimesThemeXML implements SuntimesThemeIO
             theme.themeBackground = SuntimesTheme.ThemeBackground.DARK;
         }
         if (theme.themeActionColor == 0) {
-            theme.themeActionColor = theme.themeSunriseIconColor;
+            theme.themeActionColor = theme.themeSunsetIconColor;
         }
         if (theme.themeAccentColor == 0) {
             theme.themeAccentColor = theme.themeSunsetIconColor;

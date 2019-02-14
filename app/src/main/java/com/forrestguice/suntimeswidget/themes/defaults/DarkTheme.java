@@ -81,6 +81,9 @@ public class DarkTheme extends SuntimesTheme
     public static final int THEMEDEF_MAP_SHADOWCOLOR_ID = R.color.map_sunshadow_dark;
     public static final int THEMEDEF_MAP_HIGHLIGHTCOLOR_ID = R.color.map_moonlight_dark;
 
+    public static final int THEMEDEF_ACCENT_ID = R.color.text_accent_dark;
+    public static final int THEMEDEF_ACTION_ID = R.color.btn_tint_pressed_dark;
+
     public DarkTheme(Context context)
     {
         super();
@@ -149,8 +152,9 @@ public class DarkTheme extends SuntimesTheme
         this.themeMapShadowColor = ContextCompat.getColor(context, THEMEDEF_MAP_SHADOWCOLOR_ID);
         this.themeMapHighlightColor = ContextCompat.getColor(context, THEMEDEF_MAP_HIGHLIGHTCOLOR_ID);
 
-        this.themeActionColor = this.themeSunriseIconColor;
-        this.themeAccentColor = this.themeSunsetIconColor;
+        this.themeAccentColor = ContextCompat.getColor(context, THEMEDEF_ACCENT_ID);
+        this.themeActionColor = ContextCompat.getColor(context, THEMEDEF_ACTION_ID);
+
     }
 
     public ThemeDescriptor themeDescriptor()
