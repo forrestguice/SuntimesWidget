@@ -99,7 +99,8 @@ The app benefits from the following permissions...
 |---|---|---|
 |ACCESS_COARSE_LOCATION|To get current location.|v0.1.0|
 |ACCESS_FINE_LOCATION|To get current location (GPS).|v0.1.0|
-|SET_ALARM|To interact with the AlarmClock app.|v0.1.0|
+|BOOT_COMPLETED|To restore active alarms when the device boots.|v0.11.0|
+|SET_ALARM|To interact with the system AlarmClock app.|v0.1.0|
 |WRITE_EXTERNAL_STORAGE|To export data (places, themes, etc.) to file.|v0.2.2 (api<=18)|
 
 Version `0.9.*` contained the following additional permissions (removed in v0.10.0)...
