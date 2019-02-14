@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.alarmclock;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -28,6 +29,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 
+import android.content.res.TypedArray;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -37,12 +39,14 @@ import android.os.IBinder;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.NotificationCompat;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
@@ -105,11 +109,42 @@ public class AlarmNotifications extends BroadcastReceiver
             SuntimesUtils.TimeDisplayText alarmText = utils.timeDeltaLongDisplayString(now.getTimeInMillis(), item.timestamp + item.offset);
             String alarmString = context.getString(R.string.alarmenabled_toast, item.type.getDisplayString(), alarmText.getValue());
             SpannableString alarmDisplay = SuntimesUtils.createBoldSpan(null, alarmString, alarmText.getValue());
-
-            //Snackbar.make(view, alarmDisplay, Toast.LENGTH_SHORT).show();
-            Toast.makeText(context, alarmDisplay, Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar.make(view, alarmDisplay, Toast.LENGTH_SHORT);
+            themeSnackbar(context, snackbar, null);
+            snackbar.show();
+            //Toast.makeText(context, alarmDisplay, Toast.LENGTH_SHORT).show();
 
         } else Log.e(TAG, "showTimeUntilToast: context is null!");
+    }
+
+    @SuppressLint("ResourceType")
+    public static void themeSnackbar(Context context, Snackbar snackbar, Integer[] colorOverrides)
+    {
+        Integer[] colors = new Integer[] {null, null, null};
+        int[] colorAttrs = { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor };
+        TypedArray a = context.obtainStyledAttributes(colorAttrs);
+        colors[0] = ContextCompat.getColor(context, a.getResourceId(0, android.R.color.primary_text_dark));
+        colors[1] = ContextCompat.getColor(context, a.getResourceId(1, R.color.text_accent_dark));
+        colors[2] = ContextCompat.getColor(context, a.getResourceId(2, R.color.card_bg_dark));
+        a.recycle();
+
+        if (colorOverrides != null && colorOverrides.length == colors.length) {
+            for (int i=0; i<colors.length; i++) {
+                if (colorOverrides[i] != null) {
+                    colors[i] = colorOverrides[i];
+                }
+            }
+        }
+
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(colors[2]);
+        snackbar.setActionTextColor(colors[1]);
+
+        TextView snackbarText = (TextView)snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+        if (snackbarText != null) {
+            snackbarText.setTextColor(colors[0]);
+            snackbarText.setMaxLines(3);
+        }
     }
 
     /**

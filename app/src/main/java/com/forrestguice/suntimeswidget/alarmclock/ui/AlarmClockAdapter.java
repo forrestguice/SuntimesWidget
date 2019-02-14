@@ -31,6 +31,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v4.widget.CompoundButtonCompat;
@@ -795,7 +796,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         context.sendBroadcast(deleteIntent);
     }
 
-    protected void onAlarmDeleted(boolean result, final AlarmClockItem item, View itemView)
+    protected void onAlarmDeleted(boolean result, final AlarmClockItem item, final View itemView)
     {
        if (result)
        {
@@ -811,7 +812,8 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
                 {
                     items.remove(item);
                     notifyDataSetChanged();
-                    Toast.makeText(context, context.getString(R.string.deletealarm_toast_success, getAlarmLabel(context, item), getAlarmTime(context, item), getAlarmEvent(context, item)), Toast.LENGTH_LONG).show();
+                    CharSequence message = context.getString(R.string.deletealarm_toast_success, getAlarmLabel(context, item), getAlarmTime(context, item), getAlarmEvent(context, item));
+                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                 }
             });
             itemView.startAnimation(animation);
