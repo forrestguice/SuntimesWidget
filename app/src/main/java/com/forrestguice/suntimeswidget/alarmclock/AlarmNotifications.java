@@ -582,8 +582,26 @@ public class AlarmNotifications extends BroadcastReceiver
                     itemTask.execute(ContentUris.parseId(data));
 
                 } else {
-                    if (AlarmNotifications.ACTION_DELETE.equals(action))
+                    if (AlarmNotifications.ACTION_SCHEDULE.equals(action) || Intent.ACTION_BOOT_COMPLETED.equals(action) || Intent.ACTION_TIME_CHANGED.equals(action))
                     {
+                        Log.d(TAG, action + ": schedule all");
+                        AlarmDatabaseAdapter.AlarmListTask alarmListTask = new AlarmDatabaseAdapter.AlarmListTask(getApplicationContext());
+                        alarmListTask.setParam_enabledOnly(true);
+                        alarmListTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
+                            @Override
+                            public void onItemsLoaded(Long[] ids)
+                            {
+                                for (long id : ids)
+                                {
+                                    AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
+                                    itemTask.setAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), AlarmNotifications.ACTION_RESCHEDULE));
+                                    itemTask.execute(id);
+                                }
+                            }
+                        });
+                        alarmListTask.execute();
+
+                    } else if (AlarmNotifications.ACTION_DELETE.equals(action)) {
                         Log.d(TAG, "ACTION_DELETE: clear all");
                         AlarmNotifications.stopAlert();
                         AlarmDatabaseAdapter.AlarmListTask alarmListTask = new AlarmDatabaseAdapter.AlarmListTask(getApplicationContext());
@@ -595,24 +613,6 @@ public class AlarmNotifications extends BroadcastReceiver
                                 AlarmDatabaseAdapter.AlarmDeleteTask clearTask = new AlarmDatabaseAdapter.AlarmDeleteTask(getApplicationContext());
                                 clearTask.setTaskListener(onClearedState(getApplicationContext()));
                                 clearTask.execute();
-                            }
-                        });
-                        alarmListTask.execute();
-
-                    } else if (AlarmNotifications.ACTION_SCHEDULE.equals(action)) {
-                        Log.d(TAG, "ACTION_SCHEDULE: refresh all");
-                        AlarmDatabaseAdapter.AlarmListTask alarmListTask = new AlarmDatabaseAdapter.AlarmListTask(getApplicationContext());
-                        alarmListTask.setParam_enabledOnly(true);
-                        alarmListTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
-                            @Override
-                            public void onItemsLoaded(Long[] ids)
-                            {
-                                for (long id : ids)
-                                {
-                                    AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
-                                    itemTask.setAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), AlarmNotifications.ACTION_SCHEDULE));
-                                    itemTask.execute(id);
-                                }
                             }
                         });
                         alarmListTask.execute();

@@ -11,7 +11,8 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />  <!-- needed by "export" features (e.g. "export places" to file) -->
 
-    <uses-permission android:name="android.permission.VIBRATE" />  <!-- needed by AlarmClock -->
+    <uses-permission android:name="android.permission.VIBRATE" />                 <!-- needed by AlarmClock -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />  <!-- needed by AlarmClock to restore alarms after shutdown/reboot -->
     
     <permission
         android:name="suntimes.permission.READ_CALCULATOR"
@@ -147,7 +148,11 @@
         </activity>
 
         <service android:name=".alarmclock.AlarmNotifications$NotificationService" />
-        <receiver android:name=".alarmclock.AlarmNotifications" android:exported="false">
+        <receiver android:name=".alarmclock.AlarmNotifications">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.TIME_SET" />
+            </intent-filter>
             <intent-filter>
                 <action android:name="suntimeswidget.alarm.show" />
                 <action android:name="suntimeswidget.alarm.silent" />
