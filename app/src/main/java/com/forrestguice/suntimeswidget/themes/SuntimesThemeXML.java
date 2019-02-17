@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2018 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -31,6 +31,7 @@ import org.xmlpull.v1.XmlSerializer;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 @SuppressWarnings("Convert2Diamond")
@@ -148,7 +149,7 @@ public class SuntimesThemeXML implements SuntimesThemeIO
      * @throws IOException if failed to write to out
      */
     @Override
-    public boolean write(Context context, BufferedOutputStream out, SuntimesTheme[] themes) throws IOException
+    public boolean write(Context context, OutputStream out, SuntimesTheme[] themes) throws IOException
     {
         signalExportStarted();
         if (themes != null)

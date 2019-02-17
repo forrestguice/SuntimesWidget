@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -23,10 +23,11 @@ import android.content.Context;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 public interface SuntimesThemeIO
 {
-    boolean write(Context context, BufferedOutputStream out, SuntimesTheme[] themes) throws IOException;
+    boolean write(Context context, OutputStream out, SuntimesTheme[] themes) throws IOException;
     SuntimesTheme[] read(Context context, BufferedInputStream in) throws IOException;
 
     void setProgressListener( ProgressListener listener );
