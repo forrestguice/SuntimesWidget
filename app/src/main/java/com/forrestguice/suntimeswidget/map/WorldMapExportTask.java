@@ -25,6 +25,8 @@ import android.widget.Toast;
 import com.forrestguice.suntimeswidget.ExportTask;
 
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
@@ -35,12 +37,12 @@ public class WorldMapExportTask extends ExportTask
     public WorldMapExportTask(Context context, String exportTarget)
     {
         super(context, exportTarget);
-        ext = ".zip";
+        ext = ".png";
     }
     public WorldMapExportTask(Context context, String exportTarget, boolean useExternalStorage, boolean saveToCache)
     {
         super(context, exportTarget, useExternalStorage, saveToCache);
-        ext = ".zip";
+        ext = ".png";
     }
 
     private Bitmap[] bitmaps;
@@ -54,15 +56,16 @@ public class WorldMapExportTask extends ExportTask
     @Override
     protected boolean export(Context context, BufferedOutputStream out) throws IOException
     {
-        if (bitmaps != null)
+        if (bitmaps != null && bitmaps.length > 0)
         {
-            for (int i=0; i<bitmaps.length; i++)
-            {
-                Bitmap bitmap = bitmaps[i];
+            //for (int i=0; i<bitmaps.length; i++)
+            //{
+                Bitmap bitmap = bitmaps[0];
                 if (bitmap != null) {
-                    // TODO
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                    out.flush();
                 }
-            }
+            //}
         }
         return true;
     }

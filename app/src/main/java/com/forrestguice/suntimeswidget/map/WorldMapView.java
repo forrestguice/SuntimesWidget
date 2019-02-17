@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,12 +19,15 @@ package com.forrestguice.suntimeswidget.map;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.Toast;
@@ -33,6 +36,8 @@ import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+
+import java.io.File;
 
 public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 {
@@ -365,8 +370,36 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 @Override
                 public void onFinished(ExportTask.ExportResult result)
                 {
-                    super.onFinished(result);
-                    Toast.makeText(getContext(), "Share Bitmap TODO", Toast.LENGTH_SHORT).show();                     // TODO
+                    Context context = getContext();
+                    if (context != null)
+                    {
+                        if (result.getResult())
+                        {
+                            Intent shareIntent = new Intent();
+                            shareIntent.setAction(Intent.ACTION_SEND);
+                            shareIntent.setType("image/png");
+                            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                            try {
+                                Uri shareURI = FileProvider.getUriForFile(context, "com.forrestguice.suntimeswidget.fileprovider", result.getExportFile());
+                                shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
+
+                                String successMessage = context.getString(R.string.msg_export_success, result.getExportFile().getAbsolutePath());
+                                Toast.makeText(context.getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
+
+                                context.startActivity(Intent.createChooser(shareIntent, context.getResources().getText(R.string.msg_export_to)));
+                                return;   // successful export ends here...
+
+                            } catch (Exception e) {
+                                Log.e(LOGTAG, "Failed to share file URI! " + e);
+                            }
+
+                        } else {
+                            File file = result.getExportFile();
+                            String path = ((file != null) ? file.getAbsolutePath() : "<path>");
+                            Toast.makeText(context.getApplicationContext(), context.getString(R.string.msg_export_failure, path), Toast.LENGTH_LONG).show();
+                        }
+                    }
                 }
             });
             exportTask.setBitmaps(new Bitmap[] { bitmap });
