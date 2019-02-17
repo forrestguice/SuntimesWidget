@@ -18,6 +18,7 @@
 package com.forrestguice.suntimeswidget.map;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -368,15 +369,22 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             exportTask.setTaskListener(new ExportTask.TaskListener()
             {
                 @Override
+                public void onStarted()
+                {
+                    showProgress();
+                }
+
+                @Override
                 public void onFinished(ExportTask.ExportResult result)
                 {
+                    dismissProgress();
+
                     Context context = getContext();
                     if (context != null)
                     {
                         if (result.getResult())
                         {
                             Intent shareIntent = new Intent();
-
                             shareIntent.setAction(Intent.ACTION_SEND);
                             shareIntent.setType(result.getMimeType());
                             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -407,6 +415,35 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             exportTask.execute();
 
         } else Log.w(LOGTAG, "shareBitmap: null!");
+    }
+
+    private ProgressDialog progressDialog;
+    private void showProgress()
+    {
+        dismissProgress();
+        Context context = getContext();
+        if (context != null)
+        {
+            progressDialog = new ProgressDialog(context);
+            progressDialog.show();
+        }
+    }
+    private void dismissProgress()
+    {
+        if (progressDialog != null)
+        {
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+            progressDialog = null;
+        }
+    }
+
+    @Override
+    public void onDetachedFromWindow()
+    {
+        super.onDetachedFromWindow();
+        dismissProgress();
     }
 
 }
