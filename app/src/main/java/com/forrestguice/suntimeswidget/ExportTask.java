@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2018 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -106,6 +106,17 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
     }
 
     /**
+     * Property: mimeType
+     */
+    protected String mimeType = "";
+    public String getMimeType() {
+        return mimeType;
+    }
+    public void setMimeType(String mimeType) {
+        this.mimeType = mimeType;
+    }
+
+    /**
      * onPreExecute
      * Runs before task begins.
      */
@@ -126,7 +137,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         if (context == null)
         {
             Log.w("ExportTask", "Reference (weak) to context is null at start of doInBackground; cancelling...");
-            return new ExportResult(false, null);
+            return new ExportResult(false, null, "");
         }
 
         long startTime = System.currentTimeMillis();
@@ -148,7 +159,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
 
                 } catch (IOException e) {
                     Log.w("ExportTask", "Canceling export; failed to create external temp file.");
-                    return new ExportResult(false, null);
+                    return new ExportResult(false, null, "");
                 }
 
             } else {                 // save to: external download dir
@@ -160,7 +171,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
                 if (targetExists && !overwriteTarget)
                 {
                     Log.w("ExportTask", "Canceling export; the target already exists (and overwrite flag is false). " + exportFile.getAbsolutePath());
-                    return new ExportResult(false, exportFile);
+                    return new ExportResult(false, exportFile, mimeType);
 
                 } else if (targetExists) {
                     int c = 0;
@@ -180,12 +191,12 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
 
             } catch (IOException e) {
                 Log.w("ExportTask", "Canceling export; failed to create internal temp file.");
-                return new ExportResult(false, null);
+                return new ExportResult(false, null, "");
             }
 
         } else {
             Log.w("ExportTask", "Canceling export; external storage is unavailable.");
-            return new ExportResult(false, null);
+            return new ExportResult(false, null, "");
         }
 
         //
@@ -223,7 +234,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         {
             endTime = System.currentTimeMillis();
         }
-        return new ExportResult(exported, exportFile);
+        return new ExportResult(exported, exportFile, mimeType);
     }
 
     protected abstract boolean export(Context context, BufferedOutputStream out) throws IOException;
@@ -245,10 +256,11 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
      */
     public static class ExportResult
     {
-        public ExportResult( boolean result, File exportFile )
+        public ExportResult( boolean result, File exportFile, String mimeType )
         {
             this.result = result;
             this.exportFile = exportFile;
+            this.mimeType = mimeType;
         }
 
         private final boolean result;
@@ -256,6 +268,11 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
 
         private final File exportFile;
         public File getExportFile() { return exportFile; }
+
+        private String mimeType;
+        public String getMimeType() {
+            return mimeType;
+        }
     }
 
     /**

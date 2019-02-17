@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -29,12 +29,18 @@ public class ExportThemesTask extends ExportTask
     public ExportThemesTask(Context context, String exportTarget)
     {
         super(context, exportTarget);
-        ext = ".xml";
+        initTask();
     }
     public ExportThemesTask(Context context, String exportTarget, boolean useExternalStorage, boolean saveToCache)
     {
         super(context, exportTarget, useExternalStorage, saveToCache);
+        initTask();
+    }
+
+    private void initTask()
+    {
         ext = ".xml";
+        mimeType = "text/plain";
     }
 
     private SuntimesTheme.ThemeDescriptor[] descriptors = null;
