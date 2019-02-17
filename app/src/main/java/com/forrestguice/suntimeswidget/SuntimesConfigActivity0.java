@@ -120,6 +120,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected LinearLayout layout_solartime;
     protected TextView label_solartime;
     protected Spinner spinner_solartime;
+    protected ImageButton button_solartime_help;
 
     protected String customTimezoneID;
     protected ActionMode.Callback spinner_timezone_actionMode;
@@ -507,6 +508,16 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             spinner_solartime.setAdapter(createAdapter_solarTimeMode());
         }
+
+        button_solartime_help = (ImageButton) findViewById(R.id.appwidget_solartime_help);
+        button_solartime_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HelpDialog helpDialog = new HelpDialog();
+                helpDialog.setContent(getString(R.string.help_general_solartime));
+                helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
+            }
+        });
 
         spinner_timezone_actionMode = new WidgetTimezones.TimeZoneSpinnerSortActionCompat(context, spinner_timezone)
         {
