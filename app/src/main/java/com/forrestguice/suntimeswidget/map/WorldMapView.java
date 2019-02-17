@@ -376,8 +376,9 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                         if (result.getResult())
                         {
                             Intent shareIntent = new Intent();
+
                             shareIntent.setAction(Intent.ACTION_SEND);
-                            shareIntent.setType("image/png");
+                            shareIntent.setType(result.getMimeType());
                             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
                             try {

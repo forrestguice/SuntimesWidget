@@ -37,12 +37,18 @@ public class WorldMapExportTask extends ExportTask
     public WorldMapExportTask(Context context, String exportTarget)
     {
         super(context, exportTarget);
-        ext = ".zip";
+        initTask();
     }
     public WorldMapExportTask(Context context, String exportTarget, boolean useExternalStorage, boolean saveToCache)
     {
         super(context, exportTarget, useExternalStorage, saveToCache);
+        initTask();
+    }
+
+    private void initTask()
+    {
         ext = ".zip";
+        mimeType = "application/zip";
     }
 
     private Bitmap[] bitmaps;
