@@ -20,14 +20,14 @@ package com.forrestguice.suntimeswidget.map;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.widget.Toast;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 
 import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * This task writes one or more (worldmap) bitmaps to zip file.
@@ -37,12 +37,12 @@ public class WorldMapExportTask extends ExportTask
     public WorldMapExportTask(Context context, String exportTarget)
     {
         super(context, exportTarget);
-        ext = ".png";
+        ext = ".zip";
     }
     public WorldMapExportTask(Context context, String exportTarget, boolean useExternalStorage, boolean saveToCache)
     {
         super(context, exportTarget, useExternalStorage, saveToCache);
-        ext = ".png";
+        ext = ".zip";
     }
 
     private Bitmap[] bitmaps;
@@ -53,21 +53,45 @@ public class WorldMapExportTask extends ExportTask
         return this.bitmaps;
     }
 
+    private String imageExt = ".png";
+    private Bitmap.CompressFormat imageFormat = Bitmap.CompressFormat.PNG;
+    private int imageQuality = 100;
+    public void setImageFormat(Bitmap.CompressFormat format, int quality, String fileExt)
+    {
+        imageFormat = format;
+        imageQuality = quality;
+        imageExt = fileExt;
+    }
+
     @Override
     protected boolean export(Context context, BufferedOutputStream out) throws IOException
     {
         if (bitmaps != null && bitmaps.length > 0)
         {
-            //for (int i=0; i<bitmaps.length; i++)
-            //{
-                Bitmap bitmap = bitmaps[0];
-                if (bitmap != null) {
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-                    out.flush();
+            ZipOutputStream zippedOut = new ZipOutputStream(out);
+            try {
+                for (int i=0; i<bitmaps.length; i++)
+                {
+                    Bitmap bitmap = bitmaps[i];
+                    if (bitmap != null)
+                    {
+                        ZipEntry entry = new ZipEntry(i + imageExt);
+                        entry.setMethod(ZipEntry.DEFLATED);
+                        zippedOut.putNextEntry(entry);
+                        bitmap.compress(imageFormat, imageQuality, zippedOut);
+                        zippedOut.flush();
+                    }
                 }
-            //}
-        }
-        return true;
+
+            } catch (IOException e) {
+                Log.e("ExportTask", "Error writing zip file: " + e);
+                throw e;
+
+            } finally {
+                zippedOut.close();
+            }
+            return true;
+        } else return true;
     }
 
 }

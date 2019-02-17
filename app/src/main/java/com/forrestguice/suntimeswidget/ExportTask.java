@@ -198,7 +198,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
             exported = export(context, out);
 
         } catch (IOException e) {
-            Log.w("ExportPlaces", "FAILED to write to the export target! " + exportFile.getAbsolutePath() + " :: " + e);
+            Log.w("ExportTask", "FAILED to write to the export target! " + exportFile.getAbsolutePath() + " :: " + e);
 
         } finally {
             //
@@ -209,7 +209,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
                 try {
                     out.close();
                 } catch (IOException e2) {
-                    Log.w("ExportPlaces", "FAILED to close the export target! " + exportFile.getAbsolutePath() + " :: " + e2);
+                    Log.w("ExportTask", "FAILED to close the export target! " + exportFile.getAbsolutePath() + " :: " + e2);
                 }
             }
             cleanup(context);
