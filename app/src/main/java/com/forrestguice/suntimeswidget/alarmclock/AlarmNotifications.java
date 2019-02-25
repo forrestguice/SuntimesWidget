@@ -180,8 +180,28 @@ public class AlarmNotifications extends BroadcastReceiver
     protected static void addAlarmTimeout(Context context, @NonNull AlarmManager alarmManager, String action, Uri data, long timeoutAt, int type)
     {
         Log.d(TAG, "addAlarmTimeout: " + action + ": " + data + " (wakeup:" + type + ")");
-        if (Build.VERSION.SDK_INT >= 19) {
+
+        if (Build.VERSION.SDK_INT >= 23)
+        {
+            // The timeouts fail to fire when device is "dozing" or in "deep sleep", they are paused / suspended until the device wakes.
+            // Apparently to wake the device we should be calling `setExactAndAllowWhileIdle` (api23) or `setAlarmClock` (api21) instead of `setExact` (api19).
+            // However repeated use of `setExactAndAllowWhileIdle` in doze is throttled to once every 15m,
+            // which implies that the followup snooze and silence timeouts may not fire (delayed) unless also rewritten.
+            alarmManager.setExactAndAllowWhileIdle(type, timeoutAt, getPendingIntent(context, action, data));
+
+        /*
+        } else if (Build.VERSION.SDK_INT >= 21) {
+            // The `setAlarmClock` method is also available (and actually does exactly what we need),
+            // but introduces additional complexity. These alarms come with their own notification, which makes
+            // the current reminder via notification unnecessary for newer devices.
+            PendingIntent showAlarmIntent = PendingIntent.getActivity(context, 0, getAlarmListIntent(context, ContentUris.parseId(data)), 0);
+            AlarmManager.AlarmClockInfo alarmInfo = new AlarmManager.AlarmClockInfo(timeoutAt, showAlarmIntent);
+            alarmManager.setAlarmClock(alarmInfo, getPendingIntent(context, action, data));
+        */
+
+        } else if (Build.VERSION.SDK_INT >= 19) {
             alarmManager.setExact(type, timeoutAt, getPendingIntent(context, action, data));
+
         } else alarmManager.set(type, timeoutAt, getPendingIntent(context, action, data));
     }
 
