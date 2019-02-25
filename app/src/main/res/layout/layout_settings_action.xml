@@ -66,13 +66,10 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:inputType="textMultiLine|textNoSuggestions" />
 
-            <ImageButton android:id="@+id/appwidget_action_launch_helpButton"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:src="?attr/icActionHelp"
-                android:scaleType="center"
-                android:cropToPadding="false"
-                android:adjustViewBounds="false"
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_helpButton"
+                style="@style/Widget.AppCompat.ActionButton"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
                 android:contentDescription="@string/configAction_help"/>
 
         </LinearLayout>
