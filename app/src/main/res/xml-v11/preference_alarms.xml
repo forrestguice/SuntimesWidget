@@ -6,25 +6,25 @@
         android:title="@string/configLabel_alarmClock"
         android:key="app_alarms_category">
 
-        <EditTextPreference
+        <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
             android:key="app_alarms_upcomingMillis"
             android:title="@string/configLabel_alarms_upcoming"
             android:summary="@string/configLabel_alarms_upcoming_summary" app:mode="hours"
             android:defaultValue="@string/def_app_alarms_upcoming" />
 
-        <EditTextPreference
+        <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
             android:key="app_alarms_snoozeMillis"
             android:title="@string/configLabel_alarms_snooze"
             android:summary="@string/configLabel_alarms_snooze_summary"
             android:defaultValue="@string/def_app_alarms_snooze" />
 
-        <!--<EditTextPreference
+        <!--<com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
             android:key="app_alarms_silenceafter"
             android:title="@string/configLabel_alarms_silenceAfter"
             android:summary="@string/configLabel_alarms_silenceAfter_summary"
             android:defaultValue="@string/def_app_alarms_silence" />-->
 
-        <EditTextPreference
+        <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
             android:key="app_alarms_timeoutMillis"
             android:title="@string/configLabel_alarms_timeoutAfter"
             android:summary="@string/configLabel_alarms_timeoutAfter_summary"

@@ -20,22 +20,20 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 
+@TargetApi(11)
 public class MillisecondPickerPreference extends DialogPreference
 {
     public static final int MODE_MINUTES = 0;
@@ -53,6 +51,7 @@ public class MillisecondPickerPreference extends DialogPreference
     private boolean wrap = false;
     private int mode = MODE_MINUTES;
 
+    @TargetApi(21)
     public MillisecondPickerPreference(Context context)
     {
         super(context);
