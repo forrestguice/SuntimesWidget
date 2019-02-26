@@ -52,6 +52,9 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_AUTOVIBRATE = "app_alarms_autovibrate";
     public static final boolean PREF_DEF_ALARM_AUTOVIBRATE = false;
 
+    public static final String PREF_KEY_ALARM_ALLRINGTONES = "app_alarms_allringtones";  // TODO: expose this pref in settings activity
+    public static final boolean PREF_DEF_ALARM_ALLRINGTONES = false;
+
     public static String loadPrefOnHardwareButtons(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -110,6 +113,12 @@ public class AlarmSettings
             default:                    // TODO
                 return new long[] {0, 400, 200, 400, 800};   // 0 immediate start, 400ms buzz, 200ms break, 400ms buzz, 800ms break [repeat]
         }
+    }
+
+    public static boolean loadPrefAllRingtones(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_ALARM_ALLRINGTONES, PREF_DEF_ALARM_ALLRINGTONES);
     }
 
     public static Uri getDefaultRingtoneUri(Context context, AlarmClockItem.AlarmType type)
