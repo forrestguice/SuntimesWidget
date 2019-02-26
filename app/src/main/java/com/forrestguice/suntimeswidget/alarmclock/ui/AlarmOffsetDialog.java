@@ -18,6 +18,7 @@
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -34,6 +35,7 @@ import android.widget.NumberPicker;
 
 import com.forrestguice.suntimeswidget.R;
 
+@TargetApi(11)
 public class AlarmOffsetDialog extends DialogFragment
 {
     public static final String PREF_KEY_ALARM_TIME_OFFSET = "alarmoffset";
