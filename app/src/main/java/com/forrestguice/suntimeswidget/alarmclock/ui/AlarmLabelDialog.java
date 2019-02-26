@@ -185,7 +185,10 @@ public class AlarmLabelDialog extends DialogFragment
 
     protected void loadSettings(Bundle bundle)
     {
-        this.label =  bundle.getString(PREF_KEY_ALARM_LABEL, PREF_DEF_ALARM_LABEL);
+        this.label =  bundle.getString(PREF_KEY_ALARM_LABEL);
+        if (this.label == null) {
+            this.label = PREF_DEF_ALARM_LABEL;
+        }
         this.accentColor = bundle.getInt(KEY_COLORS, accentColor);
     }
 

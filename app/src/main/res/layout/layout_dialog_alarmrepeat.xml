@@ -17,21 +17,15 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingLeft="?dialogPreferredPadding"
     android:paddingRight="?dialogPreferredPadding"
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
     android:orientation="vertical">
 
-    <android.support.v7.widget.SwitchCompat
-        android:id="@+id/alarmOption_repeat"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:textOn="" android:textOff="" app:switchMinWidth="100dp"
-        tools:text="Repeat" />
+    <include layout="@layout/layout_dialog_alarmrepeat_switch" />
 
     <LinearLayout
         android:layout_width="wrap_content" android:layout_height="wrap_content"

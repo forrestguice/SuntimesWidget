@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
@@ -330,11 +331,13 @@ public class AlarmClockActivity extends AppCompatActivity
             timeDialog.setOnAcceptedListener(onTimeChanged);
         }
 
-        AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) fragments.findFragmentByTag(DIALOGTAG_OFFSET);
-        if (offsetDialog != null)
+        if (Build.VERSION.SDK_INT >= 11)
         {
-            offsetDialog.setOnAcceptedListener(onOffsetChanged);
-        }
+            AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) fragments.findFragmentByTag(DIALOGTAG_OFFSET);
+            if (offsetDialog != null) {
+                offsetDialog.setOnAcceptedListener(onOffsetChanged);
+            }
+        } // else // TODO
     }
 
     @Override
@@ -873,11 +876,13 @@ public class AlarmClockActivity extends AppCompatActivity
      */
     protected void pickOffset(@NonNull AlarmClockItem item)
     {
-        AlarmOffsetDialog offsetDialog = new AlarmOffsetDialog();
-        offsetDialog.setOffset(item.offset);
-        offsetDialog.setOnAcceptedListener(onOffsetChanged);
-        t_selectedItem = item.rowID;
-        offsetDialog.show(getSupportFragmentManager(), DIALOGTAG_OFFSET);
+        if (Build.VERSION.SDK_INT >= 11) {
+            AlarmOffsetDialog offsetDialog = new AlarmOffsetDialog();
+            offsetDialog.setOffset(item.offset);
+            offsetDialog.setOnAcceptedListener(onOffsetChanged);
+            t_selectedItem = item.rowID;
+            offsetDialog.show(getSupportFragmentManager(), DIALOGTAG_OFFSET);
+        } // else // TODO
     }
 
     /**

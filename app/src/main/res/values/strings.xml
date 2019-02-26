@@ -605,6 +605,7 @@
     <string name="configAction_setAlarmEvent">Set Event</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmTime">Override Time</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmSound">Set Sound</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_alarmMenu">Alarm Menu</string>         <!-- button (contentDescription) -->  <!-- TODO -->
 
     <string name="alarmAction_dismiss">Dismiss</string>                <!-- notification action button -->  <!-- TODO -->
     <string name="alarmAction_snooze">Snooze</string>                  <!-- notification action button -->  <!-- TODO -->

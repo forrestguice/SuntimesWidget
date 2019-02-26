@@ -1423,6 +1423,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
        };
     }
 
+    @TargetApi(23)
     protected static boolean isIgnoringBatteryOptimizations(Context context)
     {
         PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
