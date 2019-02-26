@@ -26,7 +26,9 @@
         android:id="@+id/edit_alarmLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textCursorDrawable="@null" />
+        android:inputType="text"
+        android:textCursorDrawable="@null"
+        tools:ignore="LabelFor" />
 
 </LinearLayout>
 
