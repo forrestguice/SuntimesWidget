@@ -15,7 +15,12 @@
 
         <item android:id="@+id/setAlarmLabel"
             android:title="@string/configAction_setAlarmLabel"
-            android:icon="?attr/icActionNotification"
+            android:icon="?attr/icActionEdit"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/setAlarmSound"
+            android:title="@string/configAction_setAlarmSound"
+            android:icon="?attr/icActionSoundEnabled"
             app:showAsAction="never" />
 
         <item android:id="@+id/setAlarmEvent"

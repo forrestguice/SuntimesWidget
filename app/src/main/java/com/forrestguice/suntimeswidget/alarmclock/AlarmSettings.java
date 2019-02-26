@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -28,6 +28,9 @@ import android.preference.PreferenceManager;
  */
 public class AlarmSettings
 {
+    public static final String PREF_KEY_ALARM_CATEGORY = "app_alarms_category";
+    public static final String PREF_KEY_ALARM_BATTERYOPT = "app_alarms_batterytopt";
+
     public static final String PREF_KEY_ALARM_HARDAREBUTTON_ACTION = "app_alarms_hardwarebutton_action";
     public static final String PREF_DEF_ALARM_HARDAREBUTTON_ACTION = AlarmNotifications.ACTION_SNOOZE;
 
@@ -48,6 +51,9 @@ public class AlarmSettings
 
     public static final String PREF_KEY_ALARM_AUTOVIBRATE = "app_alarms_autovibrate";
     public static final boolean PREF_DEF_ALARM_AUTOVIBRATE = false;
+
+    public static final String PREF_KEY_ALARM_ALLRINGTONES = "app_alarms_allringtones";
+    public static final boolean PREF_DEF_ALARM_ALLRINGTONES = false;
 
     public static String loadPrefOnHardwareButtons(Context context)
     {
@@ -107,6 +113,12 @@ public class AlarmSettings
             default:                    // TODO
                 return new long[] {0, 400, 200, 400, 800};   // 0 immediate start, 400ms buzz, 200ms break, 400ms buzz, 800ms break [repeat]
         }
+    }
+
+    public static boolean loadPrefAllRingtones(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_ALARM_ALLRINGTONES, PREF_DEF_ALARM_ALLRINGTONES);
     }
 
     public static Uri getDefaultRingtoneUri(Context context, AlarmClockItem.AlarmType type)

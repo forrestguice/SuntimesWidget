@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        android:title="@string/configLabel_alarmClock">
-
+        android:title="@string/configLabel_alarmClock"
+        android:key="app_alarms_category">
 
         <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
             android:key="app_alarms_upcomingMillis"
@@ -37,6 +37,22 @@
             android:defaultValue="@string/def_app_alarms_hardwarebuttons_action"
             android:entryValues="@array/alarm_hardwarebutton_actions_values"
             android:entries="@array/alarm_hardwarebutton_actions_display" />-->
+
+        <Preference
+            android:key="app_alarms_batterytopt" android:persistent="false"
+            android:title="@string/configLabel_alarms_optWhiteList"
+            android:summary="@string/configLabel_alarms_optWhiteList_unlisted" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/configLabel_alarmSounds" >
+
+        <CheckBoxPreference
+            android:key="app_alarms_allringtones"
+            android:title="@string/configLabel_alarms_allRingtones"
+            android:summary="@string/configLabel_alarms_allRingtones_summary"
+            android:defaultValue="@string/def_app_alarms_allringtones" />
 
     </PreferenceCategory>
 
