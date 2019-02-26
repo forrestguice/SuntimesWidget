@@ -23,10 +23,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.graphics.ColorUtils;
+import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
@@ -34,6 +36,7 @@ import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
@@ -59,6 +62,8 @@ public class AlarmRepeatDialog extends DialogFragment
     protected static final SuntimesUtils utils = new SuntimesUtils();
 
     private SwitchCompat switchRepeat;
+    private CheckBox checkRepeat;
+
     private boolean repeat = PREF_DEF_ALARM_REPEAT;
     private ArrayList<Integer> repeatDays = PREF_DEF_ALARM_REPEATDAYS;
     private SparseArray<ToggleButton> btnDays;
@@ -151,21 +156,32 @@ public class AlarmRepeatDialog extends DialogFragment
     {
         SuntimesUtils.initDisplayStrings(context);
 
+        checkRepeat = (CheckBox) dialogContent.findViewById(R.id.alarmOption_repeat_check);
         switchRepeat = (SwitchCompat) dialogContent.findViewById(R.id.alarmOption_repeat);
-        if (switchRepeat != null)
+
+        if (Build.VERSION.SDK_INT >= 14)
         {
-            switchRepeat.setOnCheckedChangeListener(onRepeatChanged);
-            if (colorOverrides[0] != -1) {
-                switchRepeat.setThumbTintList(SuntimesUtils.colorStateList(
-                        colorOverrides[0],
-                        colorOverrides[1],
-                        colorOverrides[2],
-                        colorOverrides[3]));
-                switchRepeat.setTrackTintList(SuntimesUtils.colorStateList(
-                        ColorUtils.setAlphaComponent(colorOverrides[0], 85),
-                        ColorUtils.setAlphaComponent(colorOverrides[1], 85),
-                        ColorUtils.setAlphaComponent(colorOverrides[2], 85),
-                        ColorUtils.setAlphaComponent(colorOverrides[3], 85)));  // 33% alpha (85 / 255)
+            if (switchRepeat != null)
+            {
+                switchRepeat.setOnCheckedChangeListener(onRepeatChanged);
+                if (colorOverrides[0] != -1) {
+                    switchRepeat.setThumbTintList(SuntimesUtils.colorStateList(
+                            colorOverrides[0],
+                            colorOverrides[1],
+                            colorOverrides[2],
+                            colorOverrides[3]));
+                    switchRepeat.setTrackTintList(SuntimesUtils.colorStateList(
+                            ColorUtils.setAlphaComponent(colorOverrides[0], 85),
+                            ColorUtils.setAlphaComponent(colorOverrides[1], 85),
+                            ColorUtils.setAlphaComponent(colorOverrides[2], 85),
+                            ColorUtils.setAlphaComponent(colorOverrides[3], 85)));  // 33% alpha (85 / 255)
+                }
+            }
+
+        } else {
+            if (checkRepeat != null) {
+                checkRepeat.setOnCheckedChangeListener(onRepeatChanged);
+                CompoundButtonCompat.setButtonTintList(checkRepeat, SuntimesUtils.colorStateList(colorOverrides[0], colorOverrides[1], colorOverrides[2], colorOverrides[3]));
             }
         }
 
@@ -287,15 +303,30 @@ public class AlarmRepeatDialog extends DialogFragment
 
     private void updateViews(Context context)
     {
-        if (switchRepeat != null)
+        if (Build.VERSION.SDK_INT >= 14)
         {
-            if (repeatDays == null || repeatDays.isEmpty())
-                switchRepeat.setText(context.getString(R.string.alarmOption_repeat_none));
-            else switchRepeat.setText(AlarmClockItem.repeatsEveryDay(repeatDays) ? context.getString(R.string.alarmOption_repeat_all) : context.getString(R.string.alarmOption_repeat));
+            if (switchRepeat != null)
+            {
+                if (repeatDays == null || repeatDays.isEmpty())
+                    switchRepeat.setText(context.getString(R.string.alarmOption_repeat_none));
+                else switchRepeat.setText(AlarmClockItem.repeatsEveryDay(repeatDays) ? context.getString(R.string.alarmOption_repeat_all) : context.getString(R.string.alarmOption_repeat));
 
-            switchRepeat.setOnCheckedChangeListener(null);
-            switchRepeat.setChecked(this.repeat);
-            switchRepeat.setOnCheckedChangeListener(onRepeatChanged);
+                switchRepeat.setOnCheckedChangeListener(null);
+                switchRepeat.setChecked(this.repeat);
+                switchRepeat.setOnCheckedChangeListener(onRepeatChanged);
+            }
+
+        } else {
+            if (checkRepeat != null)
+            {
+                if (repeatDays == null || repeatDays.isEmpty())
+                    checkRepeat.setText(context.getString(R.string.alarmOption_repeat_none));
+                else checkRepeat.setText(AlarmClockItem.repeatsEveryDay(repeatDays) ? context.getString(R.string.alarmOption_repeat_all) : context.getString(R.string.alarmOption_repeat));
+
+                checkRepeat.setOnCheckedChangeListener(null);
+                checkRepeat.setChecked(this.repeat);
+                checkRepeat.setOnCheckedChangeListener(onRepeatChanged);
+            }
         }
 
         if (btnDays != null)
