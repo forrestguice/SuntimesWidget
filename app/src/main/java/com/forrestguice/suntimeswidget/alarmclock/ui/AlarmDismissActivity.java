@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@ import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -157,7 +158,9 @@ public class AlarmDismissActivity extends AppCompatActivity
 
         buttons = new Button[] {snoozeButton, dismissButton};
         labels = new TextView[] {alarmSubtitle, offsetText};
-        stopAnimateColors(labels, buttons);
+        if (Build.VERSION.SDK_INT >= 12) {
+            stopAnimateColors(labels, buttons);
+        }
     }
 
     @Override
@@ -319,7 +322,9 @@ public class AlarmDismissActivity extends AppCompatActivity
 
         if (AlarmNotifications.ACTION_SNOOZE.equals(action))
         {
-            animateColors(labels, buttons, iconSnoozing, pulseSnoozingColor_start, pulseSnoozingColor_end, pulseSnoozingDuration, new AccelerateDecelerateInterpolator());
+            if (Build.VERSION.SDK_INT >= 12) {
+                animateColors(labels, buttons, iconSnoozing, pulseSnoozingColor_start, pulseSnoozingColor_end, pulseSnoozingDuration, new AccelerateDecelerateInterpolator());
+            }
             SuntimesUtils.initDisplayStrings(this);
             SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, AlarmSettings.loadPrefAlarmSnooze(this));
             String snoozeString = getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
@@ -334,11 +339,19 @@ public class AlarmDismissActivity extends AppCompatActivity
 
             boolean needsTransition = (!AlarmNotifications.ACTION_SNOOZE.equals(prevMode));
             if (needsTransition)
-                animateBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF, 1000);
-            else setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF);
+            {
+                if (Build.VERSION.SDK_INT >= 11)
+                    animateBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF, 1000);
+                else setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF);
+
+            } else {
+                setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF);
+            }
 
         } else if (AlarmNotifications.ACTION_TIMEOUT.equals(action)) {
-            stopAnimateColors(labels, buttons);
+            if (Build.VERSION.SDK_INT >= 11) {
+                stopAnimateColors(labels, buttons);
+            }
             infoText.setText(getString(R.string.alarmAction_timeoutMsg));
             infoText.setVisibility(View.VISIBLE);
             snoozeButton.setVisibility(View.GONE);
@@ -348,7 +361,9 @@ public class AlarmDismissActivity extends AppCompatActivity
             setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE);
 
         } else {
-            animateColors(labels, buttons, iconSounding, pulseSoundingColor_start, pulseSoundingColor_end, pulseSoundingDuration, new AccelerateInterpolator());
+            if (Build.VERSION.SDK_INT >= 11) {
+                animateColors(labels, buttons, iconSounding, pulseSoundingColor_start, pulseSoundingColor_end, pulseSoundingDuration, new AccelerateInterpolator());
+            }
             hardwareButtonPressed = false;
             infoText.setText("");
             infoText.setVisibility(View.GONE);
@@ -378,6 +393,7 @@ public class AlarmDismissActivity extends AppCompatActivity
         getWindow().setAttributes(layoutParams);
     }
 
+    @TargetApi(12)
     private void animateBrightness(float downToValue, @SuppressWarnings("SameParameterValue") int durationMillis)
     {
         WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
@@ -385,6 +401,7 @@ public class AlarmDismissActivity extends AppCompatActivity
         ValueAnimator animator = ValueAnimator.ofFloat(startValue, downToValue);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
         {
+            @TargetApi(12)
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator)
             {
@@ -397,12 +414,14 @@ public class AlarmDismissActivity extends AppCompatActivity
         animator.reverse();
     }
 
-    private ValueAnimator animation;
+    private Object animationObj;
+    @TargetApi(12)
     private void animateColors(final TextView[] labels, final Button[] buttons, final ImageView icon, int startColor, int endColor, long duration, @Nullable TimeInterpolator interpolator)
     {
         if (icon != null && labels != null)
         {
-            animation = ValueAnimator.ofObject(new ArgbEvaluator(), startColor, endColor);
+            ValueAnimator animation = ValueAnimator.ofObject(new ArgbEvaluator(), startColor, endColor);
+            animationObj = animation;
             animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
             {
                 @Override
@@ -436,11 +455,13 @@ public class AlarmDismissActivity extends AppCompatActivity
             animation.start();
         }
     }
+    @TargetApi(11)
     private void stopAnimateColors(TextView[] labels, Button[] buttons)
     {
         clockText.setTextColor(timeColor);
         //alarmTitle.setTextColor(titleColor);
 
+        ValueAnimator animation = (ValueAnimator)animationObj;
         if (animation != null) {
             animation.removeAllUpdateListeners();
         }
