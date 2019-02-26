@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -52,7 +52,7 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_AUTOVIBRATE = "app_alarms_autovibrate";
     public static final boolean PREF_DEF_ALARM_AUTOVIBRATE = false;
 
-    public static final String PREF_KEY_ALARM_ALLRINGTONES = "app_alarms_allringtones";  // TODO: expose this pref in settings activity
+    public static final String PREF_KEY_ALARM_ALLRINGTONES = "app_alarms_allringtones";
     public static final boolean PREF_DEF_ALARM_ALLRINGTONES = false;
 
     public static String loadPrefOnHardwareButtons(Context context)
