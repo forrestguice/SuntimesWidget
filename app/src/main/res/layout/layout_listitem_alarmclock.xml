@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -54,7 +54,8 @@
                 android:id="@+id/type_menu"
                 android:layout_width="32dp" android:layout_height="32dp"
                 android:src="?attr/icActionAlarm"
-                style="?attr/actionOverflowButtonStyle" />
+                style="?attr/actionOverflowButtonStyle"
+                tools:ignore="ContentDescription" /> <!-- content description provided by AlarmClockAdapter -->
 
             <TextView
                 android:id="@android:id/text1"
@@ -68,6 +69,7 @@
             <ImageButton
                 android:id="@+id/overflow_menu"
                 android:layout_width="32dp" android:layout_height="32dp"
+                android:contentDescription="@string/configAction_alarmMenu"
                 style="?attr/actionOverflowButtonStyle" />
 
             <android.support.v7.widget.SwitchCompat
