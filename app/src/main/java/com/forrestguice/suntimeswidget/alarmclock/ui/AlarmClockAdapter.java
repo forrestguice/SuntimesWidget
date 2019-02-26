@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -37,6 +38,7 @@ import android.support.v4.graphics.ColorUtils;
 import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Spannable;
@@ -160,6 +162,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         super.add(item);
     }
 
+    @TargetApi(11)
     @Override
     public void addAll (AlarmClockItem... items)
     {
@@ -324,20 +327,12 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         });
 
         // enabled / disabled
-        view.switch_enabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-            {
-                if (!isSelected) {
-                    setSelectedItem(item.rowID);
-                }
-                if (isChecked) {
-                    AlarmNotifications.showTimeUntilToast(context, buttonView, item);
-                }
-                enableAlarm(item, view, isChecked);
-            }
-        });
+        if (view.switch_enabled != null) {
+            view.switch_enabled.setOnCheckedChangeListener(onAlarmEnabledChanged(view, item, isSelected));
+        }
+        if (view.check_enabled != null) {
+            view.check_enabled.setOnCheckedChangeListener(onAlarmEnabledChanged(view, item, isSelected));
+        }
 
         // ringtone
         view.text_ringtone.setOnClickListener(new View.OnClickListener()
@@ -431,12 +426,18 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         view.text2.setOnClickListener(null);
         view.text_datetime.setOnClickListener(null);
         view.text_location.setOnClickListener(null);
-        view.switch_enabled.setOnCheckedChangeListener(null);
         view.text_ringtone.setOnClickListener(null);
         view.check_vibrate.setOnCheckedChangeListener(null);
         view.option_repeat.setOnClickListener(null);
         view.option_offset.setOnClickListener(null);
         view.overflow.setOnClickListener(null);
+
+        if (view.switch_enabled != null) {
+            view.switch_enabled.setOnCheckedChangeListener(null);
+        }
+        if (view.check_enabled != null) {
+            view.check_enabled.setOnCheckedChangeListener(null);
+        }
     }
 
     /**
@@ -448,16 +449,26 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         view.cardBackdrop.setBackgroundColor( isSelected ? ColorUtils.setAlphaComponent(alarmSelectedColor, 170) : Color.TRANSPARENT );  // 66% alpha
 
         // enabled / disabled
-        view.switch_enabled.setChecked(item.enabled);
-        view.switch_enabled.setThumbTintList(SuntimesUtils.colorStateList(alarmEnabledColor, offColor, disabledColor, pressedColor));
-        view.switch_enabled.setTrackTintList(SuntimesUtils.colorStateList(
-                ColorUtils.setAlphaComponent(alarmEnabledColor, 85), ColorUtils.setAlphaComponent(offColor, 85),
-                ColorUtils.setAlphaComponent(disabledColor, 85), ColorUtils.setAlphaComponent(pressedColor, 85)));  // 33% alpha (85 / 255)
+        if (Build.VERSION.SDK_INT >= 14)
+        {
+            view.switch_enabled.setChecked(item.enabled);
+            view.switch_enabled.setThumbTintList(SuntimesUtils.colorStateList(alarmEnabledColor, offColor, disabledColor, pressedColor));
+            view.switch_enabled.setTrackTintList(SuntimesUtils.colorStateList(
+                    ColorUtils.setAlphaComponent(alarmEnabledColor, 85), ColorUtils.setAlphaComponent(offColor, 85),
+                    ColorUtils.setAlphaComponent(disabledColor, 85), ColorUtils.setAlphaComponent(pressedColor, 85)));  // 33% alpha (85 / 255)
+        } else {
+            view.check_enabled.setChecked(item.enabled);
+            CompoundButtonCompat.setButtonTintList(view.check_enabled, SuntimesUtils.colorStateList(alarmEnabledColor, offColor, disabledColor, pressedColor));
+        }
 
         LayerDrawable alarmEnabledLayers = (LayerDrawable)alarmEnabledBG;
         GradientDrawable alarmEnabledLayers0 = (GradientDrawable)alarmEnabledLayers.getDrawable(0);
         alarmEnabledLayers0.setStroke((int)(3 * context.getResources().getDisplayMetrics().density), alarmEnabledColor);
-        view.card.setBackground(item.enabled ? alarmEnabledBG : alarmDisabledBG);
+        if (Build.VERSION.SDK_INT >= 16) {
+            view.card.setBackground(item.enabled ? alarmEnabledBG : alarmDisabledBG);
+        } else {
+            view.card.setBackgroundDrawable(item.enabled ? alarmEnabledBG : alarmDisabledBG);
+        }
 
         // type button
         view.typeButton.setImageDrawable(ContextCompat.getDrawable(context, (item.type == AlarmClockItem.AlarmType.ALARM ? iconAlarm : iconNotification)));
@@ -749,6 +760,24 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         enableTask.execute(item);
     }
 
+    private CompoundButton.OnCheckedChangeListener onAlarmEnabledChanged(final AlarmClockItemView view, final AlarmClockItem item, final boolean isSelected)
+    {
+        return new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                if (!isSelected) {
+                    setSelectedItem(item.rowID);
+                }
+                if (isChecked) {
+                    AlarmNotifications.showTimeUntilToast(context, buttonView, item);
+                }
+                enableAlarm(item, view, isChecked);
+            }
+        };
+    }
+
     private static CharSequence getAlarmLabel(Context context, AlarmClockItem item)
     {
         String emptyLabel = ((item.type == AlarmClockItem.AlarmType.ALARM) ? context.getString(R.string.alarmMode_alarm) : context.getString(R.string.alarmMode_notification));
@@ -860,6 +889,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         public TextView text_datetime;
         public TextView text_location;
         public SwitchCompat switch_enabled;
+        public CheckBox check_enabled;
         public TextView text_ringtone;
         public CheckBox check_vibrate;
         public TextView option_repeat;
@@ -875,7 +905,8 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
             text2 = (TextView) view.findViewById(android.R.id.text2);
             text_datetime = (TextView) view.findViewById(R.id.text_datetime);
             text_location = (TextView) view.findViewById(R.id.text_location_label);
-            switch_enabled = (SwitchCompat) view.findViewById(R.id.switch_enabled);
+            switch_enabled = (SwitchCompat) view.findViewById(R.id.switch_enabled);        // switch used by api >= 14 (otherwise null)
+            check_enabled = (CheckBox) view.findViewById(R.id.check_enabled);              // checkbox used by api < 14 (otherwise null)
             text_ringtone = (TextView) view.findViewById(R.id.text_ringtone);
             check_vibrate = (CheckBox) view.findViewById(R.id.check_vibrate);
             option_repeat = (TextView) view.findViewById(R.id.option_repeat);
