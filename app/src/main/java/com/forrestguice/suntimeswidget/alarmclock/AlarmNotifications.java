@@ -364,7 +364,9 @@ public class AlarmNotifications extends BroadcastReceiver
                     public void onPrepared(MediaPlayer mediaPlayer)
                     {
                         mediaPlayer.setLooping(isAlarm);
-                        mediaPlayer.setNextMediaPlayer(null);
+                        if (Build.VERSION.SDK_INT >= 16) {
+                            mediaPlayer.setNextMediaPlayer(null);
+                        }
                         if (audioManager != null) {
                             audioManager.requestAudioFocus(null, streamType, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
                         }
