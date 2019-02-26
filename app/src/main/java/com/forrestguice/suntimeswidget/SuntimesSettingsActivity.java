@@ -30,15 +30,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.text.SpannableString;
@@ -48,6 +52,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
@@ -1346,15 +1351,85 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_alarms, false);
             addPreferencesFromResource(R.xml.preference_alarms);
+        }
 
+        @Override
+        public void onResume()
+        {
+            super.onResume();
             initPref_alarms(AlarmPrefsFragment.this);
         }
     }
 
-    private void initPref_alarms() {}
+    private void initPref_alarms()
+    {
+        Preference batteryOptimization = findPreference(AlarmSettings.PREF_KEY_ALARM_BATTERYOPT);
+        PreferenceCategory alarmsCategory = (PreferenceCategory)findPreference(AlarmSettings.PREF_KEY_ALARM_CATEGORY);
+        removePrefFromCategory(batteryOptimization, alarmsCategory);
+    }
 
+    @SuppressLint("ResourceType")
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private static void initPref_alarms(final PreferenceFragment fragment) {}
+    private static void initPref_alarms(final PreferenceFragment fragment)
+    {
+        final Context context = fragment.getActivity();
+        Preference batteryOptimization = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_BATTERYOPT);
+        if (batteryOptimization != null && context != null)
+        {
+            if (Build.VERSION.SDK_INT >= 23)
+            {
+                batteryOptimization.setOnPreferenceClickListener(onBatteryOptimizationClicked(context));
+
+                int[] colorAttrs = { R.attr.text_accentColor, R.attr.tagColor_warning };
+                TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+                int colorListed = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.text_accent_dark));
+                int colorUnlisted = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.warningTag_dark));
+                typedArray.recycle();
+
+                if (isIgnoringBatteryOptimizations(fragment.getContext()))
+                {
+                    String listed = context.getString(R.string.configLabel_alarms_optWhiteList_listed);
+                    batteryOptimization.setSummary(SuntimesUtils.createColorSpan(null, listed, listed, colorListed));
+
+                } else {
+                    String unlisted = context.getString(R.string.configLabel_alarms_optWhiteList_unlisted);
+                    batteryOptimization.setSummary(SuntimesUtils.createColorSpan(null, unlisted, unlisted, colorUnlisted));
+                }
+                
+            } else {
+                PreferenceCategory alarmsCategory = (PreferenceCategory)fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_CATEGORY);
+                removePrefFromCategory(batteryOptimization, alarmsCategory);  // battery optimization is api 23+
+            }
+        }
+    }
+
+    private static void removePrefFromCategory(Preference pref, PreferenceCategory category)
+    {
+        if (pref != null && category != null) {
+            category.removePreference(pref);
+        }
+    }
+
+    private static Preference.OnPreferenceClickListener onBatteryOptimizationClicked(final Context context)
+    {
+       return new Preference.OnPreferenceClickListener() {
+           @Override
+           public boolean onPreferenceClick(Preference preference) {
+               if (Build.VERSION.SDK_INT >= 23) {
+                   context.startActivity(new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS));
+               }
+               return false;
+           }
+       };
+    }
+
+    protected static boolean isIgnoringBatteryOptimizations(Context context)
+    {
+        PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        if (powerManager != null)
+            return powerManager.isIgnoringBatteryOptimizations(context.getPackageName());
+        else return false;
+    }
 
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
