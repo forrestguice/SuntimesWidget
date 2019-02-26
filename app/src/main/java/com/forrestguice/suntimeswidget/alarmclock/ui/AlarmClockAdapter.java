@@ -605,6 +605,12 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
                         showAlarmTypeMenu(item, buttonView, itemView);
                         return true;
 
+                    case R.id.setAlarmSound:
+                        if (adapterListener != null) {
+                            adapterListener.onRequestRingtone(item);
+                        }
+                        return true;
+
                     case R.id.setAlarmLabel:
                         if (adapterListener != null) {
                             adapterListener.onRequestLabel(item);
