@@ -690,6 +690,8 @@
     <string name="configLabel_alarms_allRingtones">Show all ringtones</string>  <!-- TODO -->
     <string name="configLabel_alarms_allRingtones_summary">Show all system sounds during selection regardless of ringtone type.</string>  <!-- TODO -->
 
+    <string name="no_reminder">Never</string> <!-- TODO -->
+
     <plurals name="units_hours">
         <item quantity="one">%d hour</item>
         <item quantity="other">%d hours</item>
