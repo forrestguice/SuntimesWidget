@@ -9,13 +9,15 @@
         <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
             android:key="app_alarms_upcomingMillis"
             android:title="@string/configLabel_alarms_upcoming"
-            android:summary="@string/configLabel_alarms_upcoming_summary" app:mode="hours"
+            android:summary="@string/configLabel_alarms_upcoming_summary"
+            app:mode="hours" app:minValue="@integer/minAlarmReminderHours" app:zeroValueText="@string/no_reminder"
             android:defaultValue="@string/def_app_alarms_upcoming" />
 
         <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
             android:key="app_alarms_snoozeMillis"
             android:title="@string/configLabel_alarms_snooze"
             android:summary="@string/configLabel_alarms_snooze_summary"
+            app:mode="minutes" app:minValue="5"
             android:defaultValue="@string/def_app_alarms_snooze" />
 
         <!--<com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference

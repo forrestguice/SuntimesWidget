@@ -170,6 +170,13 @@ public class AlarmNotifications extends BroadcastReceiver
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * addAlarmTimeout
+     * @param context context
+     * @param action e.g. ACTION_SHOW, ACTION_SCHEDULE, ACTION_SILENCE, ACTION_SNOOZE, ACTION_TIMEOUT
+     * @param data alarm Uri
+     * @param timeoutAt long timestamp
+     */
     protected static void addAlarmTimeout(Context context, String action, Uri data, long timeoutAt)
     {
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
@@ -180,29 +187,29 @@ public class AlarmNotifications extends BroadcastReceiver
     protected static void addAlarmTimeout(Context context, @NonNull AlarmManager alarmManager, String action, Uri data, long timeoutAt, int type)
     {
         Log.d(TAG, "addAlarmTimeout: " + action + ": " + data + " (wakeup:" + type + ")");
-
-        if (Build.VERSION.SDK_INT >= 23)
+        if (action.equals(ACTION_SHOW))
         {
-            // The timeouts fail to fire when device is "dozing" or in "deep sleep", they are paused / suspended until the device wakes.
-            // Apparently to wake the device we should be calling `setExactAndAllowWhileIdle` (api23) or `setAlarmClock` (api21) instead of `setExact` (api19).
-            // However repeated use of `setExactAndAllowWhileIdle` in doze is throttled to once every 15m,
-            // which implies that the followup snooze and silence timeouts may not fire (delayed) unless also rewritten.
-            alarmManager.setExactAndAllowWhileIdle(type, timeoutAt, getPendingIntent(context, action, data));
+            if (Build.VERSION.SDK_INT >= 21)
+            {
+                PendingIntent showAlarmIntent = PendingIntent.getActivity(context, 0, getAlarmListIntent(context, ContentUris.parseId(data)), 0);
+                AlarmManager.AlarmClockInfo alarmInfo = new AlarmManager.AlarmClockInfo(timeoutAt, showAlarmIntent);
+                alarmManager.setAlarmClock(alarmInfo, getPendingIntent(context, action, data));
 
-        /*
-        } else if (Build.VERSION.SDK_INT >= 21) {
-            // The `setAlarmClock` method is also available (and actually does exactly what we need),
-            // but introduces additional complexity. These alarms come with their own notification, which makes
-            // the current reminder via notification unnecessary for newer devices.
-            PendingIntent showAlarmIntent = PendingIntent.getActivity(context, 0, getAlarmListIntent(context, ContentUris.parseId(data)), 0);
-            AlarmManager.AlarmClockInfo alarmInfo = new AlarmManager.AlarmClockInfo(timeoutAt, showAlarmIntent);
-            alarmManager.setAlarmClock(alarmInfo, getPendingIntent(context, action, data));
-        */
+            } else if (Build.VERSION.SDK_INT >= 19) {
+                alarmManager.setExact(type, timeoutAt, getPendingIntent(context, action, data));
 
-        } else if (Build.VERSION.SDK_INT >= 19) {
-            alarmManager.setExact(type, timeoutAt, getPendingIntent(context, action, data));
+            } else alarmManager.set(type, timeoutAt, getPendingIntent(context, action, data));
 
-        } else alarmManager.set(type, timeoutAt, getPendingIntent(context, action, data));
+        } else {
+            // ACTION_SCHEDULE, ACTION_SILENCE, ACTION_SNOOZE, ACTION_TIMEOUT
+            if (Build.VERSION.SDK_INT >= 23) {
+                alarmManager.setExactAndAllowWhileIdle(type, timeoutAt, getPendingIntent(context, action, data));
+
+            } else if (Build.VERSION.SDK_INT >= 19) {
+                alarmManager.setExact(type, timeoutAt, getPendingIntent(context, action, data));
+
+            } else alarmManager.set(type, timeoutAt, getPendingIntent(context, action, data));
+        }
     }
 
     protected static void addAlarmTimeouts(Context context, Uri data)
@@ -453,6 +460,7 @@ public class AlarmNotifications extends BroadcastReceiver
      * createNotification
      * @param context Context
      * @param alarm AlarmClockItem
+     * @return a Notification object (or null if a notification shouldn't be shown)
      */
     public static Notification createNotification(Context context, @NonNull AlarmClockItem alarm)
     {
@@ -489,13 +497,16 @@ public class AlarmNotifications extends BroadcastReceiver
                     break;
 
                 case AlarmState.STATE_SCHEDULED_SOON:
-                    builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
-                    builder.setPriority( NotificationCompat.PRIORITY_LOW );
-                    notificationMsg = context.getString(R.string.alarmAction_upcomingMsg);
-                    builder.setWhen(alarm.alarmtime);
-                    builder.setContentIntent(pendingView);
-                    builder.setAutoCancel(false);
-                    builder.setOngoing(true);
+                    if (Build.VERSION.SDK_INT < 21)
+                    {
+                        builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
+                        builder.setPriority( NotificationCompat.PRIORITY_LOW );
+                        notificationMsg = context.getString(R.string.alarmAction_upcomingMsg);
+                        builder.setWhen(alarm.alarmtime);
+                        builder.setContentIntent(pendingView);
+                        builder.setAutoCancel(false);
+                        builder.setOngoing(true);
+                    } else return null;  // don't show reminder for api 21+ (uses notification provided by setAlarm instead)
                     break;
 
                 case AlarmState.STATE_SNOOZING:
@@ -562,10 +573,13 @@ public class AlarmNotifications extends BroadcastReceiver
     }
     public static void showNotification(Context context, @NonNull AlarmClockItem item, boolean quiet)
     {
-        int notificationID = (int)item.rowID;
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         Notification notification = createNotification(context, item);
-        notificationManager.notify(ALARM_NOTIFICATION_TAG, notificationID, notification);
+        if (notification != null)
+        {
+            int notificationID = (int)item.rowID;
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+            notificationManager.notify(ALARM_NOTIFICATION_TAG, notificationID, notification);
+        }
         if (!quiet) {
             startAlert(context, item);
         }
@@ -874,7 +888,10 @@ public class AlarmNotifications extends BroadcastReceiver
                                     addAlarmTimeouts(context, item.getUri());
 
                                     dismissNotification(context, (int)item.rowID);
-                                    startForeground((int)item.rowID, AlarmNotifications.createNotification(context, item));
+                                    Notification notification = AlarmNotifications.createNotification(context, item);
+                                    if (notification != null) {
+                                        startForeground((int) item.rowID, notification);
+                                    }
                                     AlarmNotifications.startAlert(context, item);
 
                                 } else {
@@ -929,7 +946,9 @@ public class AlarmNotifications extends BroadcastReceiver
                     {
                         Log.d(TAG, "State Saved (onSnooze)");
                         Notification notification = AlarmNotifications.createNotification(context, item);
-                        startForeground((int)item.rowID, notification);  // update notification
+                        if (notification != null) {
+                            startForeground((int) item.rowID, notification);  // update notification
+                        }
                         context.sendBroadcast(getFullscreenBroadcast(item.getUri()));  // update fullscreen activity
                     }
                 }
@@ -947,7 +966,9 @@ public class AlarmNotifications extends BroadcastReceiver
                     {
                         Log.d(TAG, "State Saved (onTimeout)");
                         Notification notification = AlarmNotifications.createNotification(context, item);
-                        startForeground((int)item.rowID, notification);  // update notification
+                        if (notification != null) {
+                            startForeground((int)item.rowID, notification);  // update notification
+                        }
                         context.sendBroadcast(getFullscreenBroadcast(item.getUri()));  // update fullscreen activity
                     }
                 }
