@@ -1372,7 +1372,7 @@
     <string name="def_app_accessibility_verbose" translatable="false">false</string>
 
     <string name="def_app_alarms_silence" translatable="false">-1</string>         <!-- silence disabled -->
-    <string name="def_app_alarms_timeout" translatable="false">1800000</string>    <!-- dismiss after 30m -->
+    <string name="def_app_alarms_timeout" translatable="false">1200000</string>    <!-- dismiss after 20m -->
     <string name="def_app_alarms_snooze" translatable="false">600000</string>      <!-- snooze for 10m -->
     <string name="def_app_alarms_upcoming" translatable="false">36000000</string>  <!-- show reminder within 10h -->
     <string name="def_app_alarms_hardwarebuttons_action" translatable="false">suntimeswidget.alarm.snooze</string>

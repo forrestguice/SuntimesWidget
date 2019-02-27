@@ -38,7 +38,7 @@ public class AlarmSettings
     public static final int PREF_DEF_ALARM_SILENCEAFTER = -1; // -1 disabled    //1000 * 60 * 15;   // 15 min
 
     public static final String PREF_KEY_ALARM_TIMEOUT = "app_alarms_timeoutMillis";
-    public static final int PREF_DEF_ALARM_TIMEOUT = 1000 * 60 * 30;  // 30 min
+    public static final int PREF_DEF_ALARM_TIMEOUT = 1000 * 60 * 20;  // 20 min
 
     public static final String PREF_KEY_ALARM_SNOOZE = "app_alarms_snoozeMillis";
     public static final int PREF_DEF_ALARM_SNOOZE = 1000 * 60 * 10;  // 10 min
