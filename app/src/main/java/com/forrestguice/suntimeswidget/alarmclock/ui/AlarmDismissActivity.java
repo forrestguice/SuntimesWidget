@@ -220,6 +220,7 @@ public class AlarmDismissActivity extends AppCompatActivity
         {
             Log.d(TAG, "onCreate: " + data);
             setAlarmID(this, ContentUris.parseId(data));
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
 
         } else {
             Log.e(TAG, "onCreate: missing data uri! canceling...");
