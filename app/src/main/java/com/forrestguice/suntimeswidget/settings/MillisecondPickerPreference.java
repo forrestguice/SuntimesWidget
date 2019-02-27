@@ -50,6 +50,9 @@ public class MillisecondPickerPreference extends DialogPreference
     private TextView pickerLabel;
     private boolean wrap = false;
     private int mode = MODE_MINUTES;
+    private int param_min = 1;
+    private int param_max = MAX_MINUTES;
+    private String param_zeroText = null;
 
     @TargetApi(21)
     public MillisecondPickerPreference(Context context)
@@ -61,6 +64,7 @@ public class MillisecondPickerPreference extends DialogPreference
     {
         super(context, attrs);
         setMode(context, attrs);
+        setParamMinMax(context, attrs);
     }
 
     @TargetApi(21)
@@ -68,6 +72,7 @@ public class MillisecondPickerPreference extends DialogPreference
     {
         super(context, attrs, defStyleAttr);
         setMode(context, attrs);
+        setParamMinMax(context, attrs);
     }
 
     @TargetApi(21)
@@ -75,6 +80,7 @@ public class MillisecondPickerPreference extends DialogPreference
     {
         super(context, attrs, defStyleAttr, defStyleRes);
         setMode(context, attrs);
+        setParamMinMax(context, attrs);
     }
 
     @Override
@@ -151,6 +157,22 @@ public class MillisecondPickerPreference extends DialogPreference
         picker.setMaxValue(max);
         picker.setWrapSelectorWheel(isWrapping());
         picker.setValue(value);
+
+        String[] pickerDisplayValues = picker.getDisplayedValues();
+        if (param_min == 0 && param_zeroText != null)
+        {
+            if (pickerDisplayValues != null) {
+                pickerDisplayValues[0] = param_zeroText;
+            } else {
+                pickerDisplayValues = new String[param_max - param_min + 1];
+                pickerDisplayValues[0] = param_zeroText;
+                for (int i=1; i<pickerDisplayValues.length; i++) {
+                    pickerDisplayValues[i] = (param_min + i) + "";
+                }
+            }
+            picker.setDisplayedValues(pickerDisplayValues);
+        }
+
         pickerLabel.setText(createSummaryString(pickerValuesToMs(value)));
     }
 
@@ -196,14 +218,14 @@ public class MillisecondPickerPreference extends DialogPreference
         switch (mode)
         {
             case MODE_HOURS:
-                range = new int[] {HOUR_TO_MS, MAX_HOURS * HOUR_TO_MS};   // [1, 12] hours
+                range = new int[] {(param_min * HOUR_TO_MS), param_max * HOUR_TO_MS};   // [1, 12] hours
                 break;
             case MODE_SECONDS:
-                range = new int[] {SECOND_TO_MS, MAX_SECONDS * SECOND_TO_MS};   // [1, 59] seconds
+                range = new int[] {(param_min * SECOND_TO_MS), param_max * SECOND_TO_MS};   // [1, 59] seconds
                 break;
             case MODE_MINUTES:
             default:
-                range = new int[] {MINUTE_TO_MS, MAX_MINUTES * MINUTE_TO_MS};   // [1, 59] minutes
+                range = new int[] {(param_min * MINUTE_TO_MS), param_max * MINUTE_TO_MS};   // [1, 59] minutes
                 break;
         }
     }
@@ -259,6 +281,38 @@ public class MillisecondPickerPreference extends DialogPreference
         return mode;
     }
 
+    public static int getMaxForMode( int mode )
+    {
+        switch (mode)
+        {
+            case MODE_HOURS:
+                return MAX_HOURS;
+            case MODE_SECONDS:
+                return MAX_SECONDS;
+            case MODE_MINUTES:
+            default:
+                return MAX_MINUTES;
+        }
+    }
+
+    public void setParamMinMax(Context context, AttributeSet attrs)
+    {
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MillisecondPickerPreference, 0, 0);
+        try {
+            param_min = a.getInt(R.styleable.MillisecondPickerPreference_minValue, param_min);
+            param_max = a.getInt(R.styleable.MillisecondPickerPreference_maxValue, getMaxForMode(mode));
+            param_zeroText = a.getString(R.styleable.MillisecondPickerPreference_zeroValueText);
+        } finally {
+            a.recycle();
+        }
+    }
+    public void setParamMinMax(int min, int max)
+    {
+        param_min = min;
+        param_max = max;
+        initRange();
+    }
+
     private String createSummaryString(int value)
     {
         Context context = getContext();
@@ -270,18 +324,24 @@ public class MillisecondPickerPreference extends DialogPreference
         {
             case MODE_HOURS:
                 if (context != null) {
-                    return context.getResources().getQuantityString(R.plurals.units_hours, valueHours, valueHours);
+                    if (valueHours == 0 && param_zeroText != null)
+                        return param_zeroText;
+                    else return context.getResources().getQuantityString(R.plurals.units_hours, valueHours, valueHours);
                 } else return valueHours + "";
 
             case MODE_SECONDS:
                 if (context != null) {
-                    return context.getResources().getQuantityString(R.plurals.units_seconds, valueSeconds, valueSeconds);
+                    if (valueSeconds == 0 && param_zeroText != null)
+                        return param_zeroText;
+                    else return context.getResources().getQuantityString(R.plurals.units_seconds, valueSeconds, valueSeconds);
                 } else return valueSeconds + "";
 
             case MODE_MINUTES:
             default:
                 if (context != null) {
-                    return context.getResources().getQuantityString(R.plurals.units_minutes, valueMinutes, valueMinutes);
+                    if (valueMinutes == 0 && param_zeroText != null)
+                        return param_zeroText;
+                    else return context.getResources().getQuantityString(R.plurals.units_minutes, valueMinutes, valueMinutes);
                 } else return valueMinutes + "";
         }
     }

@@ -130,6 +130,9 @@
             <enum name="minutes" value="0"/>
             <enum name="hours" value="10"/>
         </attr>
+        <attr name="minValue" format="integer" />
+        <attr name="maxValue" format="integer" />
+        <attr name="zeroValueText" format="string" />
     </declare-styleable>
 
 </resources>
