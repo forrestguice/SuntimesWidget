@@ -497,13 +497,16 @@ public class AlarmNotifications extends BroadcastReceiver
                     break;
 
                 case AlarmState.STATE_SCHEDULED_SOON:
-                    builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
-                    builder.setPriority( NotificationCompat.PRIORITY_LOW );
-                    notificationMsg = context.getString(R.string.alarmAction_upcomingMsg);
-                    builder.setWhen(alarm.alarmtime);
-                    builder.setContentIntent(pendingView);
-                    builder.setAutoCancel(false);
-                    builder.setOngoing(true);
+                    if (Build.VERSION.SDK_INT < 21)
+                    {
+                        builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
+                        builder.setPriority( NotificationCompat.PRIORITY_LOW );
+                        notificationMsg = context.getString(R.string.alarmAction_upcomingMsg);
+                        builder.setWhen(alarm.alarmtime);
+                        builder.setContentIntent(pendingView);
+                        builder.setAutoCancel(false);
+                        builder.setOngoing(true);
+                    } else return null;  // don't show reminder for api 21+ (uses notification provided by setAlarm instead)
                     break;
 
                 case AlarmState.STATE_SNOOZING:
