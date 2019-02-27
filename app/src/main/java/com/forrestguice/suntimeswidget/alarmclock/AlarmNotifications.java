@@ -834,7 +834,8 @@ public class AlarmNotifications extends BroadcastReceiver
                                 AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onScheduledState;
                                 if (item.type == AlarmClockItem.AlarmType.ALARM)
                                 {
-                                    boolean verySoon = ((item.alarmtime - now) < AlarmSettings.loadPrefAlarmUpcoming(context));
+                                    long reminderWithin = AlarmSettings.loadPrefAlarmUpcoming(context);
+                                    boolean verySoon = (((item.alarmtime - now) < reminderWithin) || reminderWithin <= 0);
                                     nextState = (verySoon ? AlarmState.STATE_SCHEDULED_SOON : AlarmState.STATE_SCHEDULED_DISTANT);
                                     if (verySoon)
                                     {
