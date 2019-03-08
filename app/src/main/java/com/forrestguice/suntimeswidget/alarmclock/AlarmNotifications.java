@@ -518,6 +518,9 @@ public class AlarmNotifications extends BroadcastReceiver
                     notificationIcon = R.drawable.ic_action_snooze;
                     builder.setFullScreenIntent(alarmFullscreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
                     builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
+                    if (Build.VERSION.SDK_INT < 16) {
+                        builder.setContentIntent(pendingDismiss);    // action buttons require expanded notifications (api 16+)
+                    }
                     builder.setAutoCancel(false);
                     builder.setOngoing(true);
                     break;
@@ -529,6 +532,9 @@ public class AlarmNotifications extends BroadcastReceiver
                     builder.setProgress(0,0,true);
                     builder.setFullScreenIntent(alarmFullscreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
                     builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
+                    if (Build.VERSION.SDK_INT < 16) {
+                        builder.setContentIntent(pendingDismiss);    // action buttons require expanded notifications (api 16+)
+                    }
                     builder.setAutoCancel(false);
                     builder.setOngoing(true);
                     break;

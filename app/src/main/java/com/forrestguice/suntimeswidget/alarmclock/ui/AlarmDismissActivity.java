@@ -45,6 +45,7 @@ import android.text.SpannableString;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
@@ -220,7 +221,7 @@ public class AlarmDismissActivity extends AppCompatActivity
         {
             Log.d(TAG, "onCreate: " + data);
             setAlarmID(this, ContentUris.parseId(data));
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+            screenOn();
 
         } else {
             Log.e(TAG, "onCreate: missing data uri! canceling...");
@@ -338,15 +339,16 @@ public class AlarmDismissActivity extends AppCompatActivity
             snoozeButton.setEnabled(false);
             dismissButton.setEnabled(true);
 
+            float dimScreenValue = 0.1f;  // 10% [0,1]  // was previously.. WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF;  // BUG: on some devices a value of (0) BRIGHTNESS_OVERRIDE_OFF will complete black out the screen
             boolean needsTransition = (!AlarmNotifications.ACTION_SNOOZE.equals(prevMode));
             if (needsTransition)
             {
                 if (Build.VERSION.SDK_INT >= 11)
-                    animateBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF, 1000);
-                else setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF);
+                    animateBrightness(dimScreenValue, 1000);
+                else setBrightness(dimScreenValue);
 
             } else {
-                setBrightness(WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF);
+                setBrightness(dimScreenValue);
             }
 
         } else if (AlarmNotifications.ACTION_TIMEOUT.equals(action)) {
@@ -598,5 +600,12 @@ public class AlarmDismissActivity extends AppCompatActivity
     }
     private boolean hardwareButtonPressed = false;
 
+    private void screenOn()
+    {
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+                | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+    }
 
 }
