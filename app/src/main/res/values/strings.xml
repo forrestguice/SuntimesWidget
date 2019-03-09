@@ -688,7 +688,7 @@
 
     <string name="configLabel_alarmSounds">Sounds</string>            <!-- group title -->  <!-- TODO -->
     <string name="configLabel_alarms_allRingtones">Show all ringtones</string>  <!-- TODO -->
-    <string name="configLabel_alarms_allRingtones_summary">Show all system sounds during selection regardless of ringtone type.</string>  <!-- TODO -->
+    <string name="configLabel_alarms_allRingtones_summary">Show all system sounds during selection (ignore ringtone type).</string>  <!-- TODO -->
 
     <string name="no_reminder">Never</string> <!-- TODO -->
 
