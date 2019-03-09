@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -197,11 +197,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
             } else if (action.equals(ACTION_PREFS_WIDGETLIST)) {
                 Intent intent = new Intent(this, SuntimesWidgetListActivity.class);
-                startActivity(intent);
-                finish();
-
-            } else if (action.equals(ACTION_PREFS_ALARMCLOCK)) {
-                Intent intent = new Intent(this, AlarmClockActivity.class);
                 startActivity(intent);
                 finish();
 

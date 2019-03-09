@@ -15,7 +15,7 @@
         android:summary="" >
         <intent
             android:targetPackage="com.forrestguice.suntimeswidget"
-            android:targetClass="com.forrestguice.suntimeswidget.alarmclock.AlarmClockActivity"
+            android:targetClass="com.forrestguice.suntimeswidget.SuntimesSettingsActivity"
             android:action="com.forrestguice.suntimeswidget.PREFS_ALARMCLOCK" />
     </Preference>
 
