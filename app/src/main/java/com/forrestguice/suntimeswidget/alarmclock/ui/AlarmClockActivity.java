@@ -1047,14 +1047,30 @@ public class AlarmClockActivity extends AppCompatActivity
                 if (resultCode == RESULT_OK && item != null && data != null)
                 {
                     Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-                    Ringtone ringtone = RingtoneManager.getRingtone(this, uri);
-                    String ringtoneName = ringtone.getTitle(this);
-                    ringtone.stop();
+                    if (uri != null)
+                    {
+                        Ringtone ringtone = RingtoneManager.getRingtone(this, uri);
+                        if (ringtone != null)
+                        {
+                            String ringtoneName = ringtone.getTitle(this);
+                            ringtone.stop();
 
-                    item.ringtoneName = (uri != null ? ringtoneName : null);
-                    item.ringtoneURI = (uri != null ? uri.toString() : null);
+                            item.ringtoneName = ringtoneName;
+                            item.ringtoneURI = uri.toString();
+                            Log.d(TAG, "onActivityResult: uri: " + item.ringtoneURI + ", title: " + ringtoneName);
+
+                        } else {
+                            item.ringtoneName = null;
+                            item.ringtoneURI = null;
+                            Log.d(TAG, "onActivityResult: uri: " + uri + " <null ringtone>");
+                        }
+
+                    } else {
+                        item.ringtoneName = null;
+                        item.ringtoneURI = null;
+                        Log.d(TAG, "onActivityResult: null uri");
+                    }
                     item.modified = true;
-                    Log.d(TAG, "onActivityResult: uri: " + item.ringtoneURI + ", title: " + ringtoneName);
 
                     AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(this, false, false);
                     task.setTaskListener(onUpdateItem);
