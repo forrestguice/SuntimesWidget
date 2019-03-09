@@ -536,6 +536,7 @@ public class AlarmClockActivity extends AppCompatActivity
         if (eventDialog0 == null)
         {
             final AlarmDialog dialog = new AlarmDialog();
+            dialog.setDialogTitle((type == AlarmClockItem.AlarmType.NOTIFICATION) ? getString(R.string.configAction_addNotification) : getString(R.string.configAction_addAlarm));
             initEventDialog(dialog, null);
             dialog.setType(type);
             dialog.setChoice(SolarEvents.SUNRISE);
@@ -756,6 +757,7 @@ public class AlarmClockActivity extends AppCompatActivity
     protected void pickSolarEvent(@NonNull AlarmClockItem item)
     {
         final AlarmDialog dialog = new AlarmDialog();
+        dialog.setDialogTitle((item.type == AlarmClockItem.AlarmType.NOTIFICATION) ? getString(R.string.configAction_addNotification) : getString(R.string.configAction_addAlarm));
         initEventDialog(dialog, item.location);
         dialog.setChoice(item.event);
         dialog.setOnAcceptedListener(onSolarEventChanged);
