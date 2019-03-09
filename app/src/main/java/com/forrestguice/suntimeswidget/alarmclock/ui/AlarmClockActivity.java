@@ -826,25 +826,31 @@ public class AlarmClockActivity extends AppCompatActivity
      */
     protected void pickTime(@NonNull AlarmClockItem item)
     {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(item.timestamp);
+        if (Build.VERSION.SDK_INT >= 11)
+        {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(item.timestamp);
 
-        int hour = item.hour;
-        if (hour < 0 || hour >= 24) {
-            hour = calendar.get(Calendar.HOUR_OF_DAY);
+            int hour = item.hour;
+            if (hour < 0 || hour >= 24) {
+                hour = calendar.get(Calendar.HOUR_OF_DAY);
+            }
+
+            int minute = item.minute;
+            if (minute < 0 || minute >= 60) {
+                minute = calendar.get(Calendar.MINUTE);
+            }
+
+            AlarmTimeDialog timeDialog = new AlarmTimeDialog();
+            timeDialog.setTime(hour, minute);
+            timeDialog.set24Hour(SuntimesUtils.is24());
+            timeDialog.setOnAcceptedListener(onTimeChanged);
+            t_selectedItem = item.rowID;
+            timeDialog.show(getSupportFragmentManager(), DIALOGTAG_TIME);
+
+        }  else {
+            Toast.makeText(getApplicationContext(), getString(R.string.feature_not_supported_by_api, Build.VERSION.SDK_INT), Toast.LENGTH_SHORT).show();  // TODO: support api10 requires alternative to TimePicker
         }
-
-        int minute = item.minute;
-        if (minute < 0 || minute >= 60) {
-            minute = calendar.get(Calendar.MINUTE);
-        }
-
-        AlarmTimeDialog timeDialog = new AlarmTimeDialog();
-        timeDialog.setTime(hour, minute);
-        timeDialog.set24Hour(SuntimesUtils.is24());
-        timeDialog.setOnAcceptedListener(onTimeChanged);
-        t_selectedItem = item.rowID;
-        timeDialog.show(getSupportFragmentManager(), DIALOGTAG_TIME);
     }
 
     private DialogInterface.OnClickListener onTimeChanged = new DialogInterface.OnClickListener()
@@ -880,13 +886,17 @@ public class AlarmClockActivity extends AppCompatActivity
      */
     protected void pickOffset(@NonNull AlarmClockItem item)
     {
-        if (Build.VERSION.SDK_INT >= 11) {
+        if (Build.VERSION.SDK_INT >= 11)
+        {
             AlarmOffsetDialog offsetDialog = new AlarmOffsetDialog();
             offsetDialog.setOffset(item.offset);
             offsetDialog.setOnAcceptedListener(onOffsetChanged);
             t_selectedItem = item.rowID;
             offsetDialog.show(getSupportFragmentManager(), DIALOGTAG_OFFSET);
-        } // else // TODO
+
+        }  else {
+            Toast.makeText(getApplicationContext(), getString(R.string.feature_not_supported_by_api, Build.VERSION.SDK_INT), Toast.LENGTH_SHORT).show();  // TODO: support api10 requires alternative to TimePicker
+        }
     }
 
     /**

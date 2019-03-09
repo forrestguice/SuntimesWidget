@@ -606,6 +606,17 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
             menuItem.setEnabled(!item.enabled);
         }
 
+        if (Build.VERSION.SDK_INT < 11)     // TODO: add support for api10
+        {
+            MenuItem[] notSupportedMenuItems = new MenuItem[] {     // not supported by api level
+                    menu.getMenu().findItem(R.id.setAlarmTime),
+                    menu.getMenu().findItem(R.id.setAlarmOffset)
+            };
+            for (MenuItem menuItem : notSupportedMenuItems) {
+                menuItem.setEnabled(false);
+            }
+        }
+
         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {
             @Override
