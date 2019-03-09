@@ -60,8 +60,8 @@
         <item name="snackbar_accentColor">?colorAccent</item>
         <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
 
-        <item name="fab_backgroundColor">@color/text_accent_light</item>
-        <item name="fab_rippleColor">@color/sunIcon_color_rising_light</item>
+        <item name="fab_backgroundColor">@color/sunIcon_color_rising_light</item>
+        <item name="fab_rippleColor">@color/text_accent_light</item>
 
         <item name="icActionGPS">@drawable/ic_action_location_found_light</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off_light</item>
@@ -88,8 +88,8 @@
         <item name="icActionHelp">@drawable/ic_action_help_light</item>
         <item name="icActionAccept">@drawable/ic_action_accept_light</item>
         <item name="icActionNew">@drawable/ic_action_new_light</item>
-        <item name="icActionNewAlarm">@drawable/ic_action_new_light</item>
-        <item name="icActionNewNotification">@drawable/ic_action_new_light</item>
+        <item name="icActionNewAlarm">@drawable/ic_action_alarms_light</item>
+        <item name="icActionNewNotification">@drawable/ic_action_notification_light</item>
         <item name="icActionSave">@drawable/ic_action_save_light</item>
         <item name="icActionEdit">@drawable/ic_action_edit_light</item>
         <item name="icActionDelete">@drawable/ic_action_discard_light</item>
@@ -162,8 +162,8 @@
         <item name="snackbar_accentColor">?colorAccent</item>
         <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
 
-        <item name="fab_backgroundColor">@color/text_accent_dark</item>
-        <item name="fab_rippleColor">@color/sunIcon_color_setting_dark</item>
+        <item name="fab_backgroundColor">@color/sunIcon_color_setting_dark</item>
+        <item name="fab_rippleColor">@color/text_accent_dark</item>
 
         <item name="icActionGPS">@drawable/ic_action_location_found</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off</item>
@@ -190,8 +190,8 @@
         <item name="icActionHelp">@drawable/ic_action_help</item>
         <item name="icActionAccept">@drawable/ic_action_accept</item>
         <item name="icActionNew">@drawable/ic_action_new</item>
-        <item name="icActionNewAlarm">@drawable/ic_action_new</item>
-        <item name="icActionNewNotification">@drawable/ic_action_new</item>
+        <item name="icActionNewAlarm">@drawable/ic_action_alarms</item>
+        <item name="icActionNewNotification">@drawable/ic_action_notification</item>
         <item name="icActionSave">@drawable/ic_action_save</item>
         <item name="icActionEdit">@drawable/ic_action_edit</item>
         <item name="icActionDelete">@drawable/ic_action_discard</item>

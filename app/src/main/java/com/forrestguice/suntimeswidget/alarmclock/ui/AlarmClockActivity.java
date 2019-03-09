@@ -448,11 +448,13 @@ public class AlarmClockActivity extends AppCompatActivity
         }
 
         addAlarmButton = (FloatingActionButton) findViewById(R.id.btn_addAlarm);
-        addAlarmButton.setBackgroundTintList(SuntimesUtils.colorStateList(colorAlarmEnabled, colorDisabled, colorPressed));
+        addAlarmButton.setBackgroundTintList(SuntimesUtils.colorStateList(colorPressed, colorDisabled, colorAlarmEnabled));
         addAlarmButton.setRippleColor(Color.TRANSPARENT);
         addAlarmButton.setOnClickListener(onAddAlarmButtonClick);
 
         addNotificationButton = (FloatingActionButton) findViewById(R.id.btn_addNotification);
+        addNotificationButton.setBackgroundTintList(SuntimesUtils.colorStateList(colorPressed, colorDisabled, colorAlarmEnabled));
+        addNotificationButton.setRippleColor(Color.TRANSPARENT);
         addNotificationButton.setOnClickListener(onAddNotificationButtonClick);
 
         alarmList = (ListView)findViewById(R.id.alarmList);
