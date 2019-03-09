@@ -845,26 +845,28 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
 
     protected void onAlarmDeleted(boolean result, final AlarmClockItem item, final View itemView)
     {
-       if (result)
+       if (result && itemView != null)
        {
-            final Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_out_right);
-            animation.setAnimationListener(new Animation.AnimationListener()
-            {
-                @Override
-                public void onAnimationStart(Animation animation) {}
-                @Override
-                public void onAnimationRepeat(Animation animation) {}
-                @Override
-                public void onAnimationEnd(Animation animation)
-                {
-                    items.remove(item);
-                    notifyDataSetChanged();
-                    CharSequence message = context.getString(R.string.deletealarm_toast_success, getAlarmLabel(context, item), getAlarmTime(context, item), getAlarmEvent(context, item));
-                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-                }
-            });
-            itemView.startAnimation(animation);
-        }
+           final Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_out_right);
+           animation.setAnimationListener(new Animation.AnimationListener() {
+               @Override
+               public void onAnimationStart(Animation animation) {
+               }
+
+               @Override
+               public void onAnimationRepeat(Animation animation) {
+               }
+
+               @Override
+               public void onAnimationEnd(Animation animation) {
+                   items.remove(item);
+                   notifyDataSetChanged();
+                   CharSequence message = context.getString(R.string.deletealarm_toast_success, getAlarmLabel(context, item), getAlarmTime(context, item), getAlarmEvent(context, item));
+                   Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+               }
+           });
+           itemView.startAnimation(animation);
+       }
     }
 
     protected AlarmClockAdapterListener adapterListener;
