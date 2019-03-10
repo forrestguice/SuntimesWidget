@@ -33,17 +33,21 @@
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <CheckedTextView
-            style="?android:attr/dropDownItemStyle"
+        <android.support.v7.widget.AppCompatCheckedTextView style="?android:attr/dropDownItemStyle"
             android:id="@android:id/text1"
-            android:checkMark="@android:drawable/btn_radio"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="?android:attr/textColorAlertDialogListItem"
-            android:singleLine="true"
-            android:textStyle="bold"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:duplicateParentState="true"
-            android:paddingTop="0dp" android:paddingBottom="0dp"
+            android:paddingTop="0dp" android:paddingBottom="0dp" android:layout_marginTop="4dp"
+            android:paddingStart="?android:attr/listPreferredItemPaddingLeft" android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+            android:paddingEnd="?android:attr/listPreferredItemPaddingEnd" android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+
+            android:drawableStart="?android:attr/listChoiceIndicatorSingle" android:drawableLeft="?android:attr/listChoiceIndicatorSingle"
+            android:drawablePadding="8dp"
+            android:checkMark="@null"
+
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="?android:attr/textColorAlertDialogListItem"
+            android:singleLine="true" android:textStyle="bold"
             tools:text="Primary" />
 
         <TextView
@@ -54,7 +58,9 @@
             android:textSize="12sp"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:duplicateParentState="true"
-            android:layout_marginTop="-6dp" android:layout_marginBottom="8dp"
+            android:layout_marginTop="0dp" android:layout_marginBottom="8dp"
+            android:paddingStart="?attr/dialogPreferredPadding" android:paddingLeft="?attr/dialogPreferredPadding"
+            android:paddingEnd="36dp" android:paddingRight="36dp"
             android:paddingTop="0dp" android:paddingBottom="0dp"
             tools:text="Secondary" />
 
