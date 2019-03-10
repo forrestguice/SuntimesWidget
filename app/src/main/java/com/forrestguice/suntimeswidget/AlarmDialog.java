@@ -71,6 +71,8 @@ public class AlarmDialog extends DialogFragment
     public static final String KEY_ALARM_TYPE = "alarmdialog_alarmtype";
     public static final AlarmClockItem.AlarmType DEF_ALARM_TYPE = AlarmClockItem.AlarmType.ALARM;
 
+    public static final String KEY_DIALOGTITLE = "alarmdialog_title";
+
     public static final String PREF_KEY_ALARM_LASTCHOICE = "alarmdialog_lastchoice";
     public static final SolarEvents PREF_DEF_ALARM_LASTCHOICE = SolarEvents.SUNRISE;
 
@@ -89,6 +91,11 @@ public class AlarmDialog extends DialogFragment
     }
     public void setType(AlarmClockItem.AlarmType type) {
         this.type = type;
+    }
+
+    private String dialogTitle = null;
+    public void setDialogTitle( String title ) {
+        dialogTitle = title;
     }
 
     /**
@@ -188,9 +195,12 @@ public class AlarmDialog extends DialogFragment
         Resources r = getResources();
         int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, r.getDisplayMetrics());
 
+        String titleString = (dialogTitle != null) ? dialogTitle
+                : myParent.getString(R.string.configAction_setAlarm);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
         builder.setView(dialogContent, 0, padding, 0, 0);
-        builder.setTitle(myParent.getString(R.string.schedalarm_dialog_title));
+        builder.setTitle(titleString);
 
         AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
@@ -284,6 +294,11 @@ public class AlarmDialog extends DialogFragment
             spinner_scheduleMode.setAdapter(adapter);
         }
 
+        TextView txt_modeLabel = (TextView) dialogContent.findViewById(R.id.appwidget_schedalarm_mode_label);
+        if (txt_modeLabel != null) {
+            txt_modeLabel.setText(type == AlarmClockItem.AlarmType.NOTIFICATION ? getString(R.string.configLabel_schednotify_mode) : getString(R.string.configLabel_schedalarm_mode) );
+        }
+
         spinner_scheduleMode.setOnItemSelectedListener(
                 new Spinner.OnItemSelectedListener()
                 {
@@ -312,7 +327,9 @@ public class AlarmDialog extends DialogFragment
                             String noteString = context.getString(R.string.schedalarm_dialog_note, timeString);
                             txt_note.setText(SuntimesUtils.createBoldColorSpan(null, noteString, timeString, color_textTimeDelta));
                             icon_note.setVisibility(View.GONE);
-                            SuntimesUtils.announceForAccessibility(txt_note, context.getString(R.string.configLabel_schedalarm_mode) + " " + choice.getLongDisplayString() + ", " + txt_note.getText());
+
+                            String modeDescription = (type == AlarmClockItem.AlarmType.NOTIFICATION) ? context.getString(R.string.configLabel_schednotify_mode) : context.getString(R.string.configLabel_schedalarm_mode);
+                            SuntimesUtils.announceForAccessibility(txt_note,  modeDescription + " " + choice.getLongDisplayString() + ", " + txt_note.getText());
 
                         } else {
                             String timeString = " " + choice.getLongDisplayString() + " ";
@@ -363,6 +380,8 @@ public class AlarmDialog extends DialogFragment
     }
     protected void loadSettings(Bundle bundle)
     {
+        dialogTitle = bundle.getString(KEY_DIALOGTITLE);
+
         String choiceString = bundle.getString(PREF_KEY_ALARM_LASTCHOICE);
         if (choiceString != null)
         {
@@ -406,6 +425,7 @@ public class AlarmDialog extends DialogFragment
      */
     protected void saveSettings(Bundle bundle)
     {
+        bundle.putString(KEY_DIALOGTITLE, dialogTitle);
         bundle.putString(KEY_ALARM_TYPE, type.name());
         bundle.putString(PREF_KEY_ALARM_LASTCHOICE, choice.name());
     }

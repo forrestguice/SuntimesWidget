@@ -339,16 +339,15 @@ public class AlarmDismissActivity extends AppCompatActivity
             snoozeButton.setEnabled(false);
             dismissButton.setEnabled(true);
 
-            float dimScreenValue = 0.1f;  // 10% [0,1]  // was previously.. WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF;  // BUG: on some devices a value of (0) BRIGHTNESS_OVERRIDE_OFF will complete black out the screen
-            boolean needsTransition = (!AlarmNotifications.ACTION_SNOOZE.equals(prevMode));
-            if (needsTransition)
+            if (Build.VERSION.SDK_INT >= 17)  // BUG: on some older devices modifying brightness turns off the screen
             {
-                if (Build.VERSION.SDK_INT >= 11)
+                float dimScreenValue = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_OFF;
+                boolean needsTransition = (!AlarmNotifications.ACTION_SNOOZE.equals(prevMode));
+                if (needsTransition) {
                     animateBrightness(dimScreenValue, 1000);
-                else setBrightness(dimScreenValue);
-
-            } else {
-                setBrightness(dimScreenValue);
+                } else {
+                    setBrightness(dimScreenValue);
+                }
             }
 
         } else if (AlarmNotifications.ACTION_TIMEOUT.equals(action)) {
@@ -602,8 +601,8 @@ public class AlarmDismissActivity extends AppCompatActivity
 
     private void screenOn()
     {
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
-                | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON   // BUG: turning the screen on this way works once (first time) .. after an alarm snoozes (and the device falls back asleep) this won't work the second time
+                //| WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON            // a potential workaround is to keep the screen on ... but this might consume noticeable battery.
                 | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
                 | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
     }

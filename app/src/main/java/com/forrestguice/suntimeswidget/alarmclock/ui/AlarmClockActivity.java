@@ -448,11 +448,13 @@ public class AlarmClockActivity extends AppCompatActivity
         }
 
         addAlarmButton = (FloatingActionButton) findViewById(R.id.btn_addAlarm);
-        addAlarmButton.setBackgroundTintList(SuntimesUtils.colorStateList(colorAlarmEnabled, colorDisabled, colorPressed));
+        addAlarmButton.setBackgroundTintList(SuntimesUtils.colorStateList(colorPressed, colorDisabled, colorAlarmEnabled));
         addAlarmButton.setRippleColor(Color.TRANSPARENT);
         addAlarmButton.setOnClickListener(onAddAlarmButtonClick);
 
         addNotificationButton = (FloatingActionButton) findViewById(R.id.btn_addNotification);
+        addNotificationButton.setBackgroundTintList(SuntimesUtils.colorStateList(colorPressed, colorDisabled, colorAlarmEnabled));
+        addNotificationButton.setRippleColor(Color.TRANSPARENT);
         addNotificationButton.setOnClickListener(onAddNotificationButtonClick);
 
         alarmList = (ListView)findViewById(R.id.alarmList);
@@ -534,6 +536,7 @@ public class AlarmClockActivity extends AppCompatActivity
         if (eventDialog0 == null)
         {
             final AlarmDialog dialog = new AlarmDialog();
+            dialog.setDialogTitle((type == AlarmClockItem.AlarmType.NOTIFICATION) ? getString(R.string.configAction_addNotification) : getString(R.string.configAction_addAlarm));
             initEventDialog(dialog, null);
             dialog.setType(type);
             dialog.setChoice(SolarEvents.SUNRISE);
@@ -754,6 +757,7 @@ public class AlarmClockActivity extends AppCompatActivity
     protected void pickSolarEvent(@NonNull AlarmClockItem item)
     {
         final AlarmDialog dialog = new AlarmDialog();
+        dialog.setDialogTitle((item.type == AlarmClockItem.AlarmType.NOTIFICATION) ? getString(R.string.configAction_addNotification) : getString(R.string.configAction_addAlarm));
         initEventDialog(dialog, item.location);
         dialog.setChoice(item.event);
         dialog.setOnAcceptedListener(onSolarEventChanged);
@@ -822,25 +826,31 @@ public class AlarmClockActivity extends AppCompatActivity
      */
     protected void pickTime(@NonNull AlarmClockItem item)
     {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(item.timestamp);
+        if (Build.VERSION.SDK_INT >= 11)
+        {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(item.timestamp);
 
-        int hour = item.hour;
-        if (hour < 0 || hour >= 24) {
-            hour = calendar.get(Calendar.HOUR_OF_DAY);
+            int hour = item.hour;
+            if (hour < 0 || hour >= 24) {
+                hour = calendar.get(Calendar.HOUR_OF_DAY);
+            }
+
+            int minute = item.minute;
+            if (minute < 0 || minute >= 60) {
+                minute = calendar.get(Calendar.MINUTE);
+            }
+
+            AlarmTimeDialog timeDialog = new AlarmTimeDialog();
+            timeDialog.setTime(hour, minute);
+            timeDialog.set24Hour(SuntimesUtils.is24());
+            timeDialog.setOnAcceptedListener(onTimeChanged);
+            t_selectedItem = item.rowID;
+            timeDialog.show(getSupportFragmentManager(), DIALOGTAG_TIME);
+
+        }  else {
+            Toast.makeText(getApplicationContext(), getString(R.string.feature_not_supported_by_api, Build.VERSION.SDK_INT), Toast.LENGTH_SHORT).show();  // TODO: support api10 requires alternative to TimePicker
         }
-
-        int minute = item.minute;
-        if (minute < 0 || minute >= 60) {
-            minute = calendar.get(Calendar.MINUTE);
-        }
-
-        AlarmTimeDialog timeDialog = new AlarmTimeDialog();
-        timeDialog.setTime(hour, minute);
-        timeDialog.set24Hour(SuntimesUtils.is24());
-        timeDialog.setOnAcceptedListener(onTimeChanged);
-        t_selectedItem = item.rowID;
-        timeDialog.show(getSupportFragmentManager(), DIALOGTAG_TIME);
     }
 
     private DialogInterface.OnClickListener onTimeChanged = new DialogInterface.OnClickListener()
@@ -876,13 +886,17 @@ public class AlarmClockActivity extends AppCompatActivity
      */
     protected void pickOffset(@NonNull AlarmClockItem item)
     {
-        if (Build.VERSION.SDK_INT >= 11) {
+        if (Build.VERSION.SDK_INT >= 11)
+        {
             AlarmOffsetDialog offsetDialog = new AlarmOffsetDialog();
             offsetDialog.setOffset(item.offset);
             offsetDialog.setOnAcceptedListener(onOffsetChanged);
             t_selectedItem = item.rowID;
             offsetDialog.show(getSupportFragmentManager(), DIALOGTAG_OFFSET);
-        } // else // TODO
+
+        }  else {
+            Toast.makeText(getApplicationContext(), getString(R.string.feature_not_supported_by_api, Build.VERSION.SDK_INT), Toast.LENGTH_SHORT).show();  // TODO: support api10 requires alternative to TimePicker
+        }
     }
 
     /**
@@ -1043,14 +1057,30 @@ public class AlarmClockActivity extends AppCompatActivity
                 if (resultCode == RESULT_OK && item != null && data != null)
                 {
                     Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-                    Ringtone ringtone = RingtoneManager.getRingtone(this, uri);
-                    String ringtoneName = ringtone.getTitle(this);
-                    ringtone.stop();
+                    if (uri != null)
+                    {
+                        Ringtone ringtone = RingtoneManager.getRingtone(this, uri);
+                        if (ringtone != null)
+                        {
+                            String ringtoneName = ringtone.getTitle(this);
+                            ringtone.stop();
 
-                    item.ringtoneName = (uri != null ? ringtoneName : null);
-                    item.ringtoneURI = (uri != null ? uri.toString() : null);
+                            item.ringtoneName = ringtoneName;
+                            item.ringtoneURI = uri.toString();
+                            Log.d(TAG, "onActivityResult: uri: " + item.ringtoneURI + ", title: " + ringtoneName);
+
+                        } else {
+                            item.ringtoneName = null;
+                            item.ringtoneURI = null;
+                            Log.d(TAG, "onActivityResult: uri: " + uri + " <null ringtone>");
+                        }
+
+                    } else {
+                        item.ringtoneName = null;
+                        item.ringtoneURI = null;
+                        Log.d(TAG, "onActivityResult: null uri");
+                    }
                     item.modified = true;
-                    Log.d(TAG, "onActivityResult: uri: " + item.ringtoneURI + ", title: " + ringtoneName);
 
                     AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(this, false, false);
                     task.setTaskListener(onUpdateItem);

@@ -592,8 +592,8 @@
     -->
     <string name="configLabel_alarmClock">Alarms</string>            <!-- group title -->  <!-- TODO -->
     <string name="configLabel_alarmClock_emptyMsg">No Alarms</string>     <!-- a label that is displayed in place of an empty listview -->  <!-- TODO -->
-    <string name="configAction_addAlarm">Add Alarm</string>               <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_addNotification">Add Notification</string> <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_addAlarm">Set Alarm</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_addNotification">Set Notification</string> <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_deleteAlarm">Delete</string>               <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_clearAlarms">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_clearOffset">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
@@ -693,7 +693,7 @@
 
     <string name="configLabel_alarmSounds">Sounds</string>            <!-- group title -->  <!-- TODO -->
     <string name="configLabel_alarms_allRingtones">Show all ringtones</string>  <!-- TODO -->
-    <string name="configLabel_alarms_allRingtones_summary">Show all system sounds during selection regardless of ringtone type.</string>  <!-- TODO -->
+    <string name="configLabel_alarms_allRingtones_summary">Show all system sounds during selection (ignore ringtone type).</string>  <!-- TODO -->
 
     <string name="no_reminder">Never</string> <!-- TODO -->
 
@@ -1047,8 +1047,9 @@
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Schedule an alarm for</string>
-    <string name="schedalarm_dialog_title">Set Alarm</string>
-    <string name="schedalarm_dialog_ok">Set Alarm</string>
+    <string name="configLabel_schednotify_mode">Schedule a notification for</string>  <!-- TODO -->
+    <string name="schedalarm_dialog_title">@string/configAction_setAlarm</string>  <!-- may also be set to configAction_setNotification -->  <!-- TODO -->
+    <string name="schedalarm_dialog_ok">Schedule</string>  <!-- TODO -->
     <string name="schedalarm_dialog_cancel">Cancel</string>
     <string name="schedalarm_dialog_error">Alarm was not set…</string>
     <string name="schedalarm_dialog_error2">Alarm cannot be set…</string>
@@ -1360,6 +1361,8 @@
 
     <string name="security_dialog_title">Security Alert</string>  <!-- TODO -->
     <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  <!-- TODO -->
+
+    <string name="feature_not_supported_by_api">This feature is not supported by api %1$s.</string>  <!-- TODO -->
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

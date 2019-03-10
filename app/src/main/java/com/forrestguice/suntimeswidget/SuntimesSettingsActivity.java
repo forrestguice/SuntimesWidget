@@ -200,11 +200,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 startActivity(intent);
                 finish();
 
-            } else if (action.equals(ACTION_PREFS_ALARMCLOCK)) {
-                Intent intent = new Intent(this, AlarmClockActivity.class);
-                startActivity(intent);
-                finish();
-
             } else {
                 Log.w(LOG_TAG, "initLegacyPrefs: unhandled action: " + action);
             }
