@@ -1,11 +1,13 @@
 ### ~
 
-##
-* add "Suntimes Alarms", an Alarm Clock (#140, #250, #261) with support for daily repeating alarms and notifications.
-* adds permission: BOOT_COMPLETED. This permission is needed to restore active alarms after reboot. [PERMISSION]
+### v0.11.0 (2019-03-12)
+* adds "Suntimes Alarms", an Alarm Clock (#140, #250, #261) with support for daily repeating alarms and notifications.
 * adds a clock widget (#154, #260); displays solar time (Local Mean Time, Apparent Solar Time), or the time in a given timezone.
+* adds a "share" action to the World Map dialog (exports to png) (#284).
 * changes the default solar time mode to "Apparent Solar Time"; adds a help button to solar time mode selector.
-* adds a "share" action to the World Map dialog (exports a single png) (#284). 
+* new permission: BOOT_COMPLETED. This permission is needed to restore active alarms after reboot. [PERMISSION]
+* new permission: VIBRATE. This permission is used by alarm notifications. [PERMISSION]
+* misc style and layout fixes.
 
 ### v0.10.3 (2019-01-31)
 * adds app shortcuts (Android 7.1+); a shortcut to the Widget List, a shortcut to the Theme Editor (#288).
