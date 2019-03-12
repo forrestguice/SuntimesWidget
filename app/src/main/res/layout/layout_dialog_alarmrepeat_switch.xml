@@ -24,7 +24,7 @@
         android:orientation="vertical">
 
         <CheckBox
-            android:id="@+id/alarmOption_repeat_check"
+            android:id="@+id/alarmOption_repeat"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:textOn="" android:textOff=""
             tools:text="Repeat" />
