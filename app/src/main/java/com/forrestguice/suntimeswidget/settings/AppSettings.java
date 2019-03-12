@@ -613,6 +613,12 @@ public class AppSettings
         return styleID;
     }
 
+    public static String getThemeOverride(Context context, int appThemeResID)
+    {
+        String themeOverride = ((appThemeResID == R.style.AppTheme_Light) ? AppSettings.loadThemeLightPref(context) : AppSettings.loadThemeDarkPref(context));
+        return ((themeOverride != null && !themeOverride.equals("default")) ? themeOverride : null);
+    }
+
     /**
      * @param prefs an instance of SharedPreferences
      * @param defaultValue the default max age value if pref can't be loaded

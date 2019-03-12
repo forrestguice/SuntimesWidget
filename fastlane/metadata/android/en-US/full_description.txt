@@ -1,14 +1,12 @@
-<p>Displays sunlight and moonlight times. Features an app and widget collection.</p>
-
-<p>Displays sunrise and sunset, twilight (civil / nautical / astronomical), blue and golden hour, the solstices and equinoxes, moonrise and moonset, moon phases and illumination.</p>
-
+<p>Displays sunlight and moonlight times. Features an app, alarm clock, and widget collection.</p>
+<p>Suntimes displays sunrise and sunset, twilight (civil / nautical / astronomical), blue and golden hour, the solstices and equinoxes, moonrise and moonset, moon phases and illumination. The alarm clock schedules daily repeating alarms (or notifications) for sunrise, sunset, or other events.</p>
 <p>The times reported by this app are approximate. The app doesn't require network connectivity, GPS is optional.</p>
-
 The app benefits from the following permissions:
 <ul>
 <li><small><u>ACCESS_FINE_LOCATION</u></small> is used to obtain the current position (latitude, longitude, altitude).</li>
+<li><small><u>BOOT_COMPLETED</u></small> is used to restore active alarms after a reboot.</li>
 <li><small><u>SET_ALARM</u></small> is used to schedule alarms using the AlarmClock app.</li>
-<li><small><u>WRITE_EXTERNAL_STORAGE</u></small> is used to backup data to file (places, themes, etc) (api<=18 only).</li>
+<li><small><u>VIBRATE</u></small> is used by alarm notifications.</li>
+<li><small><u>WRITE_EXTERNAL_STORAGE</u></small> is used to backup data to file (places, themes, etc) <small>(api<=18 only)</small>.</li>
 </ul>
-
-<p>Note: The "Calendar Integration" and permissions added in v0.9.0 have been removed in v0.10.0. This feature is now available as a separate add-on app; <a href="https://f-droid.org/en/packages/com.forrestguice.suntimescalendars">Suntimes Calendars</a>.</p>
+<p>Note: The "Calendar Integration" and permissions added in v0.9.0 were removed in v0.10.0. This feature is now available as a separate add-on app; <a href="https://f-droid.org/en/packages/com.forrestguice.suntimescalendars">Suntimes Calendars</a>.</p>

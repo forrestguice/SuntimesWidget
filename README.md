@@ -1,6 +1,9 @@
 # Suntimes
 Android app (and widget collection) that displays sunlight and moonlight times for a given location. 
 
+<a href="https://f-droid.org/repository/browse/?fdid=com.forrestguice.suntimeswidget" target="_blank">
+<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="68" align="left" /></a><br /><br />
+
 [![F-Droid](https://img.shields.io/f-droid/v/com.forrestguice.suntimeswidget.svg)](https://f-droid.org/en/packages/com.forrestguice.suntimeswidget/)
 [![GitHub release](https://img.shields.io/github/release/forrestguice/SuntimesWidget.svg)](https://github.com/forrestguice/SuntimesWidget/releases)
 [![Build Status](https://travis-ci.org/forrestguice/SuntimesWidget.svg?branch=master)](https://travis-ci.org/forrestguice/SuntimesWidget)
@@ -12,12 +15,12 @@ Android app (and widget collection) that displays sunlight and moonlight times f
 * [Contributions](#project-contributions)
 
 Displays sunrise and sunset, twilights (civil / nautical / astronomical), blue and golden hour, solstices and equinoxes, moonrise and moonset, moon phases and illumination. 
+    
+<a href="https://forrestguice.github.io/SuntimesWidget/" target="_blank"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/images/ic_launcher_alarms.png" height="64" /></a> Suntimes Alarms<br />
+An alarm clock for Suntimes.<br/><br />
 
-<a href="https://f-droid.org/repository/browse/?fdid=com.forrestguice.suntimeswidget" target="_blank">
-<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="68" align="left" /></a>
-
-<a href="https://github.com/forrestguice/SuntimesCalendars/releases"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/images/ic_launcher.png" height="64" /></a> <a href="https://github.com/forrestguice/SuntimesCalendars/releases">Suntimes Calendars</a> <br />
-A calendar provider add-on.<br/><br />
+<a href="https://github.com/forrestguice/SuntimesCalendars/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/images/ic_launcher.png" height="64" /></a> <a href="https://github.com/forrestguice/SuntimesCalendars/">Suntimes Calendars</a> <br />
+A calendar provider add-on for Suntimes.<br/><br />        
     
 The app:
 * displays the current time (system time zone, custom time zone, or solar time) 
@@ -28,7 +31,7 @@ The app:
 * displays the solstices and equinoxes, and notes the time until the next event.
 * displays the sun's current position, and its position at sunrise, sunset, and noon.
 * displays the moon's current position, and its position at moonrise and moonset.
-* can set an alarm for the next sunrise or sunset (or other rising/setting event).
+* includes an Alarm Clock that can set a repeating alarm or notification for the next sunrise or sunset (or other rising/setting event).
 * can display the configured location on a map (requires a map application) and configure the location from a map (using geo intent).
 
 The app:
@@ -47,6 +50,9 @@ Widgets are themeable and provide:
 * a (default) light theme (and light w/ transparent background).
 
 Widgets are resizable and include...
+
+**Clock widgets:**
+* 1x1 digital clock widget that displays solar time (or a given timezone).
 
 **Sun widgets:**
 * 1x1 sun widget that displays the sunrise or sunset time.
@@ -96,7 +102,8 @@ The app benefits from the following permissions...
 |---|---|---|
 |ACCESS_COARSE_LOCATION|To get current location.|v0.1.0|
 |ACCESS_FINE_LOCATION|To get current location (GPS).|v0.1.0|
-|SET_ALARM|To interact with the AlarmClock app.|v0.1.0|
+|BOOT_COMPLETED|To restore active alarms when the device boots.|v0.11.0|
+|SET_ALARM|To interact with the system AlarmClock app.|v0.1.0|
 |WRITE_EXTERNAL_STORAGE|To export data (places, themes, etc.) to file.|v0.2.2 (api<=18)|
 
 Version `0.9.*` contained the following additional permissions (removed in v0.10.0)...
@@ -125,7 +132,7 @@ When submitting a bug please be detailed and specific. What did you expect the a
 
 ## Legal Stuff
 
-Copyright &#169 2014-2019 Forrest Guice
+Copyright &#169; 2014-2019 Forrest Guice<br/>
 The goal of this project is an app that is free and open-source (FOSS). The source code is available under *GPLv3* (https://github.com/forrestguice/SuntimesWidget).
 
 Icons and images from:

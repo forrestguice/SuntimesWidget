@@ -260,6 +260,12 @@ public class SuntimesRiseSetDataset
     {
         return dataActual.location();
     }
+    public void setLocation(Location location)
+    {
+        for (SuntimesRiseSetData data : dataset ) {
+            data.setLocation(location);
+        }
+    }
 
     public TimeZone timezone()
     {
