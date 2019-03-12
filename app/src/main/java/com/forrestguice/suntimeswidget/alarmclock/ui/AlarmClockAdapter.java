@@ -901,13 +901,14 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         public TextView text2;
         public TextView text_datetime;
         public TextView text_location;
-        public SwitchCompat switch_enabled;
-        public CheckBox check_enabled;
         public TextView text_ringtone;
         public CheckBox check_vibrate;
         public TextView option_repeat;
         public TextView option_offset;
         public ImageButton overflow;
+
+        public SwitchCompat switch_enabled;
+        public CheckBox check_enabled;
 
         public AlarmClockItemView(View view)
         {
@@ -918,13 +919,17 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
             text2 = (TextView) view.findViewById(android.R.id.text2);
             text_datetime = (TextView) view.findViewById(R.id.text_datetime);
             text_location = (TextView) view.findViewById(R.id.text_location_label);
-            switch_enabled = (SwitchCompat) view.findViewById(R.id.switch_enabled);        // switch used by api >= 14 (otherwise null)
-            check_enabled = (CheckBox) view.findViewById(R.id.check_enabled);              // checkbox used by api < 14 (otherwise null)
             text_ringtone = (TextView) view.findViewById(R.id.text_ringtone);
             check_vibrate = (CheckBox) view.findViewById(R.id.check_vibrate);
             option_repeat = (TextView) view.findViewById(R.id.option_repeat);
             option_offset = (TextView) view.findViewById(R.id.option_offset);
             overflow = (ImageButton) view.findViewById(R.id.overflow_menu);
+
+            if (Build.VERSION.SDK_INT >= 14) {
+                switch_enabled = (SwitchCompat) view.findViewById(R.id.switch_enabled);        // switch used by api >= 14 (otherwise null)
+            } else {
+                check_enabled = (CheckBox) view.findViewById(R.id.switch_enabled);              // checkbox used by api < 14 (otherwise null)
+            }
         }
 
     }
