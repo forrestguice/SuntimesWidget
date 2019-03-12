@@ -849,7 +849,7 @@ public class AlarmClockActivity extends AppCompatActivity
             timeDialog.show(getSupportFragmentManager(), DIALOGTAG_TIME);
 
         }  else {
-            Toast.makeText(getApplicationContext(), getString(R.string.feature_not_supported_by_api, Build.VERSION.SDK_INT), Toast.LENGTH_SHORT).show();  // TODO: support api10 requires alternative to TimePicker
+            Toast.makeText(getApplicationContext(), getString(R.string.feature_not_supported_by_api, Integer.toString(Build.VERSION.SDK_INT)), Toast.LENGTH_SHORT).show();  // TODO: support api10 requires alternative to TimePicker
         }
     }
 
@@ -895,7 +895,7 @@ public class AlarmClockActivity extends AppCompatActivity
             offsetDialog.show(getSupportFragmentManager(), DIALOGTAG_OFFSET);
 
         }  else {
-            Toast.makeText(getApplicationContext(), getString(R.string.feature_not_supported_by_api, Build.VERSION.SDK_INT), Toast.LENGTH_SHORT).show();  // TODO: support api10 requires alternative to TimePicker
+            Toast.makeText(getApplicationContext(), getString(R.string.feature_not_supported_by_api, Integer.toString(Build.VERSION.SDK_INT)), Toast.LENGTH_SHORT).show();  // TODO: support api10 requires alternative to TimePicker
         }
     }
 

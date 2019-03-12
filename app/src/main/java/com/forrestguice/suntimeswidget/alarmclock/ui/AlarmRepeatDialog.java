@@ -155,7 +155,7 @@ public class AlarmRepeatDialog extends DialogFragment
     protected void initViews( final Context context, View dialogContent )
     {
         SuntimesUtils.initDisplayStrings(context);
-        
+
         if (Build.VERSION.SDK_INT >= 14)
         {
             switchRepeat = (SwitchCompat) dialogContent.findViewById(R.id.alarmOption_repeat);
