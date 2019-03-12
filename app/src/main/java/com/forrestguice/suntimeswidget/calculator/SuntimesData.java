@@ -94,6 +94,11 @@ public class SuntimesData
     {
         return location;
     }
+    public void setLocation(Location location)
+    {
+        this.location = location;
+        invalidateCalculation();
+    }
 
     /**
      * Property: calculator (plugin descriptor)

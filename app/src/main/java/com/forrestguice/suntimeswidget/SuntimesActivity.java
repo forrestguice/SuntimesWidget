@@ -113,6 +113,10 @@ public class SuntimesActivity extends AppCompatActivity
     public static final String SUNTIMES_APP_UPDATE_PARTIAL = "suntimes.SUNTIMES_APP_UPDATE_PARTIAL";
     public static final int SUNTIMES_SETTINGS_REQUEST = 10;
 
+    public static final String ACTION_VIEW_SUN = "com.forrestguice.suntimeswidget.VIEW_SUN";
+    public static final String ACTION_VIEW_MOON = "com.forrestguice.suntimeswidget.VIEW_MOON";
+    public static final String ACTION_VIEW_SOLSTICE = "com.forrestguice.suntimeswidget.VIEW_SOLSTICE";
+
     public static final String KEY_UI_CARDISTOMORROW = "cardIsTomorrow";
     public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedCard";
 
@@ -270,12 +274,34 @@ public class SuntimesActivity extends AppCompatActivity
         getFixHelper.loadSettings(savedState);
         onStart_resetNoteIndex = true;
 
-        Intent intent = getIntent();
+        handleIntent(getIntent());
+    }
+
+    private void handleIntent(Intent intent)
+    {
+        String action = intent.getAction();
+        intent.setAction(null);
+
         Uri data = intent.getData();
-        if (data != null)
+        intent.setData(null);
+
+        Log.d("handleIntent", "action: " + action + ", data: " + data);
+        if (action != null)
         {
-            intent.setData(null);
-            configLocation(data);
+            if (action.equals(ACTION_VIEW_SUN)) {
+                showLightMapDialog();
+
+            } else if (action.equals(ACTION_VIEW_MOON)) {
+                showMoonDialog();
+
+            } else if (action.equals(ACTION_VIEW_SOLSTICE)) {
+                showEquinoxDialog();
+
+            } else {
+                if (data != null) {
+                    configLocation(data);
+                }
+            }
         }
     }
 
@@ -284,7 +310,7 @@ public class SuntimesActivity extends AppCompatActivity
         appTheme = AppSettings.loadThemePref(this);
         setTheme(appThemeResID = AppSettings.themePrefToStyleId(this, appTheme, null));
 
-        String themeName = getThemeOverride();
+        String themeName = AppSettings.getThemeOverride(this, appThemeResID);
         if (themeName != null)
         {
             Log.i("initTheme", "Overriding \"" + appTheme + "\" using: " + themeName);
@@ -299,11 +325,6 @@ public class SuntimesActivity extends AppCompatActivity
         a.recycle();
 
         GetFixUI.themeIcons(this);
-    }
-    private String getThemeOverride()
-    {
-        String themeOverride = ((appThemeResID == R.style.AppTheme_Light) ? AppSettings.loadThemeLightPref(this) : AppSettings.loadThemeDarkPref(this));
-        return ((themeOverride != null && !themeOverride.equals("default")) ? themeOverride : null);
     }
 
     private void initLocale( Context context )
@@ -660,7 +681,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (requestCode == SUNTIMES_SETTINGS_REQUEST && resultCode == RESULT_OK)
         {
             boolean needsRecreate = ((!AppSettings.loadThemePref(SuntimesActivity.this).equals(appTheme))                           // theme mode changed
-                    || (appThemeOverride != null && !appThemeOverride.themeName().equals(getThemeOverride()))                       // or theme override changed
+                    || (appThemeOverride != null && !appThemeOverride.themeName().equals(AppSettings.getThemeOverride(this, appThemeResID))) // or theme override changed
                     || (localeInfo.localeMode != AppSettings.loadLocaleModePref(SuntimesActivity.this))                             // or localeMode changed
                     || ((localeInfo.localeMode == AppSettings.LocaleMode.CUSTOM_LOCALE                                              // or customLocale changed
                     && !AppSettings.loadLocalePref(SuntimesActivity.this).equals(localeInfo.customLocale))));

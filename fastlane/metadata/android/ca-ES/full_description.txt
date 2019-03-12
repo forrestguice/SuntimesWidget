@@ -1,12 +1,12 @@
 <p>Mostra els calendaris solars i lunars. Conté una app i un una coŀlecció de ginys.</p>
-
 <p>Mostra quan és l'alba, capvespre, crepuscles (civil / nàutic / astronòmic), hores blava i daurada, els solsticis i equinoccis, sortida i posta de la Lluna, les fases de la Lluna i la intensitat d'iŀluminació.</p>
-
 <p>Els temps donats per l'aplicació són aproximats. L'aplicació no necessita connexió a una xarxa, el GPS és opcional.</p>
-
 L'aplicació requereix una sèrie de permissos per a que algunes característiques funcionin correctament:
 <ul>
 <li><small><u>ACCESS_FINE_LOCATION</u></small> és utilitzat per obtenir la posició actual (latitud, longitud, altitud).</li>
+<li><small><u>BOOT_COMPLETED</u></small>.</li>
 <li><small><u>SET_ALARM</u></small> és utilitzat per planificar alarmes emprant l'aplicació Rellotge.</li>
-<li><small><u>WRITE_EXTERNAL_STORAGE</u></small> és utilitzat per fer còpies de seguretat a un arxiu (llocs, temes, etc.) (només api<=18).</li>
+<li><small><u>VIBRATE</u></small>.</li>
+<li><small><u>WRITE_EXTERNAL_STORAGE</u></small> és utilitzat per fer còpies de seguretat a un arxiu (llocs, temes, etc.) <small>(només api<=18)</small>.</li>
 </ul>
+<p><a href="https://f-droid.org/en/packages/com.forrestguice.suntimescalendars">Suntimes Calendars</a></p>

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2016 Forrest Guice
+    Copyright (C) 2016-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,10 +19,22 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.CheckedTextView;
+import android.widget.ListAdapter;
+import android.widget.TextView;
+
+import com.forrestguice.suntimeswidget.R;
 
 /**
  * A custom ListPreference to work around some bugs pre api 19.
@@ -50,6 +62,75 @@ public class ListPreference extends android.preference.ListPreference
     public ListPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
     {
         super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+    @Override
+    public void onPrepareDialogBuilder( AlertDialog.Builder builder )
+    {
+        int index = findIndexOfValue(getSharedPreferences().getString(getKey(), "1"));
+        ListAdapter adapter = createListAdapter(index);
+        builder.setAdapter(adapter, this);
+        super.onPrepareDialogBuilder(builder);
+    }
+
+    protected ListAdapter createListAdapter(int selectedPos)
+    {
+        return new ListPrefAdapter(getContext(), R.layout.layout_listitem_checkedoneline, getEntries(), selectedPos);
+    }
+
+    /**
+     * ListAdapter
+     */
+    public static class ListPrefAdapter extends ArrayAdapter<CharSequence>
+    {
+        private CharSequence[] summaries;
+        private int layoutID;
+        private int index;
+
+        public ListPrefAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull CharSequence[] entries, int i)
+        {
+            super(context, resource, entries);
+            this.layoutID = resource;
+            this.index = i;
+        }
+
+        public ListPrefAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull CharSequence[] entries, @NonNull CharSequence[] summaries, int i)
+        {
+            super(context, resource, entries);
+            this.summaries = summaries;
+            this.layoutID = resource;
+            this.index = i;
+        }
+
+        @NonNull
+        public View getView(int position, View convertView, @NonNull ViewGroup parent)
+        {
+            View row = convertView;
+            if (row == null)
+            {
+                LayoutInflater inflater = LayoutInflater.from(getContext());
+                row = inflater.inflate(this.layoutID, parent, false);
+            }
+
+            CheckedTextView checkedText = (CheckedTextView)row.findViewById(android.R.id.text1);
+            checkedText.setText(getItem(position));
+            checkedText.setChecked((position == index));
+
+            TextView summaryText = (TextView)row.findViewById(android.R.id.text2);
+            if (summaryText != null)
+            {
+                summaryText.setText(getSummary(position));
+            }
+
+            return row;
+        }
+
+        private CharSequence getSummary(int i)
+        {
+            if (i >= 0 && i < summaries.length)
+                return summaries[i];
+            else return "";
+        }
     }
 
     /**

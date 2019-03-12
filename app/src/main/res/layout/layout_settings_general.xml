@@ -43,6 +43,22 @@
 
         </LinearLayout>
 
+        <LinearLayout android:id="@+id/appwidget_general_timeformatmode_layout" android:visibility="gone"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+            <TextView android:labelFor="@+id/appwidget_general_timeformatmode"
+                android:id="@+id/appwidget_general_timeformatmode_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="@string/configLabel_general_timeFormatMode" />
+
+            <Spinner android:id="@+id/appwidget_general_timeformatmode" android:layout_width="match_parent"
+                android:dropDownVerticalOffset="16sp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
         <LinearLayout android:id="@+id/appwidget_general_timeMode_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -51,20 +67,19 @@
 
             <TextView android:labelFor="@+id/appwidget_general_timeMode"
                 android:id="@+id/appwidget_general_timeMode_label"
+                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="@string/configLabel_general_timeMode" />
 
             <Spinner android:id="@+id/appwidget_general_timeMode" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:dropDownVerticalOffset="16sp"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1" />
 
-            <ImageButton android:id="@+id/appwidget_general_timeMode_helpButton"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:src="?attr/icActionHelp"
-                android:scaleType="center"
-                android:cropToPadding="false"
-                android:adjustViewBounds="false"
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_general_timeMode_helpButton"
+                style="@style/Widget.AppCompat.ActionButton"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
                 android:contentDescription="@string/configAction_help" />
 
         </LinearLayout>
