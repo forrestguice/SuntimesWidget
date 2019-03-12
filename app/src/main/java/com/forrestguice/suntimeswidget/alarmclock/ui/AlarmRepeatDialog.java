@@ -155,12 +155,10 @@ public class AlarmRepeatDialog extends DialogFragment
     protected void initViews( final Context context, View dialogContent )
     {
         SuntimesUtils.initDisplayStrings(context);
-
-        checkRepeat = (CheckBox) dialogContent.findViewById(R.id.alarmOption_repeat_check);
-        switchRepeat = (SwitchCompat) dialogContent.findViewById(R.id.alarmOption_repeat);
-
+        
         if (Build.VERSION.SDK_INT >= 14)
         {
+            switchRepeat = (SwitchCompat) dialogContent.findViewById(R.id.alarmOption_repeat);
             if (switchRepeat != null)
             {
                 switchRepeat.setOnCheckedChangeListener(onRepeatChanged);
@@ -179,6 +177,7 @@ public class AlarmRepeatDialog extends DialogFragment
             }
 
         } else {
+            checkRepeat = (CheckBox) dialogContent.findViewById(R.id.alarmOption_repeat);
             if (checkRepeat != null) {
                 checkRepeat.setOnCheckedChangeListener(onRepeatChanged);
                 CompoundButtonCompat.setButtonTintList(checkRepeat, SuntimesUtils.colorStateList(colorOverrides[0], colorOverrides[1], colorOverrides[2], colorOverrides[3]));
