@@ -12,6 +12,11 @@
     <attr name="text_accentColor" format="reference" />
     <attr name="text_disabledColor" format="reference" />
 
+    <attr name="alarmColorEnabled" format="reference" />
+    <attr name="alarmCardEnabled" format="reference" />
+    <attr name="alarmCardDisabled" format="reference" />
+    <attr name="gridItemSelected" format="reference" />
+
     <attr name="buttonPressColor" format="reference" />
     <attr name="text_buttonSelector" format="reference" />
     <attr name="date_buttonSelector" format="reference" />
@@ -51,6 +56,9 @@
     <attr name="snackbar_accentColor" format="reference" />
     <attr name="snackbar_backgroundColor" format="reference" />
 
+    <attr name="fab_backgroundColor" format="reference" />
+    <attr name="fab_rippleColor" format="reference" />
+
     <attr name="toolbarTheme" format="reference" />
     <attr name="icActionPlace" format="reference" />
     <attr name="icActionMap" format="reference" />
@@ -58,6 +66,9 @@
     <attr name="icActionDst" format="reference" />
     <attr name="icActionAlarm" format="reference" />
     <attr name="icActionCalendar" format="reference" />
+    <attr name="icActionNotification" format="reference" />
+    <attr name="icActionSoundEnabled" format="reference" />
+    <attr name="icActionSoundDisabled" format="reference" />
     <attr name="icActionAbout" format="reference" />
     <attr name="icActionWarning" format="reference" />
     <attr name="icActionError" format="reference" />
@@ -71,11 +82,16 @@
 
     <attr name="icActionAccept" format="reference" />
     <attr name="icActionNew" format="reference" />
+    <attr name="icActionNewAlarm" format="reference" />
+    <attr name="icActionNewNotification" format="reference" />
     <attr name="icActionSave" format="reference" />
     <attr name="icActionEdit" format="reference" />
     <attr name="icActionDelete" format="reference" />
     <attr name="icActionCopy" format="reference" />
+    <attr name="icActionDismiss" format="reference" />
+    <attr name="icActionCancel" format="reference" />
     <attr name="icActionShare" format="reference" />
+    <attr name="icActionSnooze" format="reference" />
 
     <attr name="icActionNext" format="reference" />
     <attr name="icActionPrevious" format="reference" />
@@ -106,6 +122,17 @@
     <declare-styleable name="SizeEditView">
         <attr name="labelText" />
         <attr name="hintText" />
+    </declare-styleable>
+
+    <declare-styleable name="MillisecondPickerPreference">
+        <attr name="mode" format="enum">
+            <enum name="seconds" value="20"/>
+            <enum name="minutes" value="0"/>
+            <enum name="hours" value="10"/>
+        </attr>
+        <attr name="minValue" format="integer" />
+        <attr name="maxValue" format="integer" />
+        <attr name="zeroValueText" format="string" />
     </declare-styleable>
 
 </resources>

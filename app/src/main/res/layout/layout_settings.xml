@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -59,13 +59,13 @@
         android:layout_gravity="center_horizontal"
         android:layout_margin="@dimen/widgetActivity_padding_inner">
 
-        <LinearLayout
+        <LinearLayout android:id="@+id/appwidget_settings_layout"
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:focusable="true" android:focusableInTouchMode="true">
 
-            <LinearLayout
+            <LinearLayout android:id="@+id/appwidget_location_layout"
                 style="@style/SunsetTimeWidget_dark"
                 android:layout_marginBottom="@dimen/settingsGroup_margin"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <LinearLayout android:id="@+id/appwidget_general_layout"
                 style="@style/SunsetTimeWidget_dark"
                 android:layout_marginBottom="@dimen/settingsGroup_margin"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
                 <include layout="@layout/layout_settings_general" />
             </LinearLayout>
 
-            <LinearLayout
+            <LinearLayout android:id="@+id/appwidget_timezone_layout"
                 style="@style/SunsetTimeWidget_dark"
                 android:layout_marginBottom="@dimen/settingsGroup_margin"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
                 <include layout="@layout/layout_settings_timezone" />
             </LinearLayout>
 
-            <LinearLayout
+            <LinearLayout android:id="@+id/appwidget_appearance_layout"
                 style="@style/SunsetTimeWidget_dark"
                 android:layout_marginBottom="@dimen/settingsGroup_margin"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
                 <include layout="@layout/layout_settings_appearance" />
             </LinearLayout>
 
-            <LinearLayout
+            <LinearLayout android:id="@+id/appwidget_action_layout"
                 style="@style/SunsetTimeWidget_dark"
                 android:layout_marginBottom="@dimen/settingsGroup_margin"
                 android:layout_width="match_parent" android:layout_height="wrap_content"

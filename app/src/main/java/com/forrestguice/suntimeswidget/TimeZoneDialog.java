@@ -45,6 +45,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -66,6 +67,8 @@ public class TimeZoneDialog extends DialogFragment
     public static final String KEY_NOW = "paramNow";
     public static final String KEY_LONGITUDE = "paramLongitude";
 
+    private static final String DIALOGTAG_HELP = "timezone_help";
+
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     private String customTimezoneID;
 
@@ -78,6 +81,7 @@ public class TimeZoneDialog extends DialogFragment
     private LinearLayout layout_solartime;
     private TextView label_solartime;
     private Spinner spinner_solartime;
+    private ImageButton button_solartime_help;
     private Object actionMode = null;
 
     private View layout_timezoneExtras;
@@ -270,6 +274,16 @@ public class TimeZoneDialog extends DialogFragment
 
         spinner_solartime = (Spinner) dialogContent.findViewById(R.id.appwidget_solartime);
         spinner_solartime.setAdapter(spinner_solartimeAdapter);
+
+        button_solartime_help = (ImageButton) dialogContent.findViewById(R.id.appwidget_solartime_help);
+        button_solartime_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HelpDialog helpDialog = new HelpDialog();
+                helpDialog.setContent(getString(R.string.help_general_solartime));
+                helpDialog.show(getFragmentManager(), DIALOGTAG_HELP);
+            }
+        });
 
         layout_timezoneExtras = dialogContent.findViewById(R.id.appwidget_timezone_extrasgroup);
         label_tzExtras0 = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_extras0);

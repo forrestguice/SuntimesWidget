@@ -386,6 +386,13 @@ public class SuntimesWidget0 extends AppWidgetProvider
         // The update alarms are now removed in onDeleted().
     }
 
+    @TargetApi(17)
+    public static int widgetCategory(AppWidgetManager appWidgetManager, int appWidgetId)
+    {
+        Bundle widgetOptions = appWidgetManager.getAppWidgetOptions(appWidgetId);
+        return widgetOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_HOST_CATEGORY);
+    }
+
     protected static int[] widgetSizeDp(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize)
     {
         int[] mustFitWithinDp = {defSize[0], defSize[1]};
@@ -576,12 +583,15 @@ public class SuntimesWidget0 extends AppWidgetProvider
         {
             PendingIntent alarmIntent = getUpdateIntent(context, alarmID);
             long updateTime = getUpdateTimeMillis(context, alarmID);
-            if (Build.VERSION.SDK_INT < 19) {
-                alarmManager.set(AlarmManager.RTC, updateTime, alarmIntent);
-            } else {
-                alarmManager.setWindow(AlarmManager.RTC, updateTime, 5 * 1000, alarmIntent);
-            }
-            Log.d(TAG, "setUpdateAlarm: " + utils.calendarDateTimeDisplayString(context, updateTime).toString() + " --> " + getUpdateIntentFilter() + "(" + alarmID + ") :: " + utils.timeDeltaLongDisplayString(getUpdateInterval(), true) );
+            if (updateTime > 0)
+            {
+                if (Build.VERSION.SDK_INT < 19) {
+                    alarmManager.set(AlarmManager.RTC, updateTime, alarmIntent);
+                } else {
+                    alarmManager.setWindow(AlarmManager.RTC, updateTime, 5 * 1000, alarmIntent);
+                }
+                Log.d(TAG, "setUpdateAlarm: " + utils.calendarDateTimeDisplayString(context, updateTime).toString() + " --> " + getUpdateIntentFilter() + "(" + alarmID + ") :: " + utils.timeDeltaLongDisplayString(getUpdateInterval(), true) );
+            } else Log.d(TAG, "setUpdateAlarm: skipping " + alarmID);
         }
     }
 

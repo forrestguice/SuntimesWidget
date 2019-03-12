@@ -65,7 +65,7 @@
         </LinearLayout>
 
         <LinearLayout android:id="@+id/appwidget_solartime_layout"
-                      android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_gravity="center"
                       android:orientation="horizontal"
                       android:paddingTop="@dimen/settingsGroup_padding"
                       android:visibility="gone">
@@ -76,9 +76,16 @@
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content" android:text="@string/configLabel_solartime" />
 
-            <Spinner android:id="@+id/appwidget_solartime" android:layout_width="match_parent"
-                     android:dropDownVerticalOffset="16sp"
-                     android:layout_height="wrap_content" />
+            <Spinner android:id="@+id/appwidget_solartime"
+                android:layout_width="0dp" android:layout_weight="1" android:layout_gravity="center"
+                android:dropDownVerticalOffset="16sp"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_solartime_help"
+                style="@style/Widget.AppCompat.ActionButton"
+                android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:contentDescription="@string/configAction_help" />
 
         </LinearLayout>
 

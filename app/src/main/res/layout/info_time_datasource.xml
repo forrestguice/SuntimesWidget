@@ -47,7 +47,7 @@
                 android:scaleY="0.7"
                 android:textSize="10sp"
                 android:textStyle="bold"
-                app:buttonTint="?attr/colorAccent"
+                app:buttonTint="?colorControlActivated"
                 tools:ignore="SmallSp" />
 
             <ImageView

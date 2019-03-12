@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -30,15 +30,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.text.SpannableString;
@@ -48,7 +52,10 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
@@ -79,6 +86,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     public static final String LOG_TAG = "SuntimesSettings";
 
     final static String ACTION_PREFS_GENERAL = "com.forrestguice.suntimeswidget.PREFS_GENERAL";
+    final static String ACTION_PREFS_ALARMCLOCK = "com.forrestguice.suntimeswidget.PREFS_ALARMCLOCK";
     final static String ACTION_PREFS_LOCALE = "com.forrestguice.suntimeswidget.PREFS_LOCALE";
     final static String ACTION_PREFS_UI = "com.forrestguice.suntimeswidget.PREFS_UI";
     final static String ACTION_PREFS_WIDGETLIST = "com.forrestguice.suntimeswidget.PREFS_WIDGETLIST";
@@ -167,6 +175,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 //noinspection deprecation
                 addPreferencesFromResource(R.xml.preference_general);
                 initPref_general();
+
+            } else if (action.equals(ACTION_PREFS_ALARMCLOCK)) {
+                addPreferencesFromResource(R.xml.preference_alarms);
+                initPref_alarms();
 
             } else if (action.equals(ACTION_PREFS_LOCALE)) {
                 //noinspection deprecation
@@ -280,7 +292,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             loadHeadersFromResource(R.xml.preference_headers, target);
 
             TypedValue typedValue = new TypedValue();
-            int[] icActionAttr = new int[] { R.attr.icActionSettings, R.attr.icActionLocale, R.attr.icActionPlace, R.attr.icActionCalendar, R.attr.icActionAppearance, R.attr.icActionWidgets };
+            int[] icActionAttr = new int[] { R.attr.icActionSettings, R.attr.icActionLocale, R.attr.icActionPlace, R.attr.icActionCalendar, R.attr.icActionAppearance, R.attr.icActionWidgets, R.attr.icActionAlarm };
             TypedArray a = obtainStyledAttributes(typedValue.data, icActionAttr);
             int settingsIcon = a.getResourceId(0, R.drawable.ic_action_settings);
             int localeIcon = a.getResourceId(1, R.drawable.ic_action_locale);
@@ -288,6 +300,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             int calendarIcon = a.getResourceId(3, R.drawable.ic_calendar);
             int paletteIcon = a.getResourceId(4, R.drawable.ic_palette);
             int widgetIcon = a.getResourceId(5, R.drawable.ic_action_widget);
+            int alarmIcon = a.getResourceId(6, R.drawable.ic_action_alarms);
             a.recycle();
 
             for (Header header : target)
@@ -302,12 +315,16 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                             header.iconRes = placesIcon;
                         } else if (header.fragment.endsWith("CalendarPrefsFragment")) {
                             header.iconRes = calendarIcon;
+                        } else if (header.fragment.endsWith("AlarmPrefsFragment")) {
+                            header.iconRes = alarmIcon;
                         } else if (header.fragment.endsWith("UIPrefsFragment")) {
                             header.iconRes = paletteIcon;
                         } else header.iconRes = settingsIcon;
                     } else {
                         if (header.id == R.id.prefHeaderWidgets)
                             header.iconRes = widgetIcon;
+                        //else if (header.id == R.id.prefHeaderAlarmClock)
+                            //header.iconRes = alarmIcon;
                         //else if (header.id == R.id.prefHeaderCalendar)
                             //header.iconRes = calendarIcon;
                         else header.iconRes = settingsIcon;
@@ -325,6 +342,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     protected boolean isValidFragment(String fragmentName)
     {
         return GeneralPrefsFragment.class.getName().equals(fragmentName) ||
+               AlarmPrefsFragment.class.getName().equals(fragmentName) ||
                CalendarPrefsFragment.class.getName().equals(fragmentName) ||
                LocalePrefsFragment.class.getName().equals(fragmentName) ||
                UIPrefsFragment.class.getName().equals(fragmentName) ||
@@ -1004,7 +1022,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 {
                     Intent shareIntent = new Intent();
                     shareIntent.setAction(Intent.ACTION_SEND);
-                    shareIntent.setType("text/csv");
+                    shareIntent.setType(results.getMimeType());
                     shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
                     try {
@@ -1308,6 +1326,105 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     {
         darkPref.setEnabled(AppSettings.THEME_DARK.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode));
         lightPref.setEnabled(AppSettings.THEME_LIGHT.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode));
+    }
+
+    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
+
+    /**
+     * Alarm Prefs
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class AlarmPrefsFragment extends PreferenceFragment
+    {
+        @Override
+        public void onCreate(Bundle savedInstanceState)
+        {
+            super.onCreate(savedInstanceState);
+            AppSettings.initLocale(getActivity());
+            Log.i(LOG_TAG, "AlarmPrefsFragment: Arguments: " + getArguments());
+
+            PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_alarms, false);
+            addPreferencesFromResource(R.xml.preference_alarms);
+        }
+
+        @Override
+        public void onResume()
+        {
+            super.onResume();
+            initPref_alarms(AlarmPrefsFragment.this);
+        }
+    }
+
+    private void initPref_alarms()
+    {
+        Preference batteryOptimization = findPreference(AlarmSettings.PREF_KEY_ALARM_BATTERYOPT);
+        PreferenceCategory alarmsCategory = (PreferenceCategory)findPreference(AlarmSettings.PREF_KEY_ALARM_CATEGORY);
+        removePrefFromCategory(batteryOptimization, alarmsCategory);
+    }
+
+    @SuppressLint("ResourceType")
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private static void initPref_alarms(final PreferenceFragment fragment)
+    {
+        final Context context = fragment.getActivity();
+        Preference batteryOptimization = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_BATTERYOPT);
+        if (batteryOptimization != null && context != null)
+        {
+            if (Build.VERSION.SDK_INT >= 23)
+            {
+                batteryOptimization.setOnPreferenceClickListener(onBatteryOptimizationClicked(context));
+
+                int[] colorAttrs = { R.attr.text_accentColor, R.attr.tagColor_warning };
+                TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+                int colorListed = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.text_accent_dark));
+                int colorUnlisted = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.warningTag_dark));
+                typedArray.recycle();
+
+                if (isIgnoringBatteryOptimizations(fragment.getContext()))
+                {
+                    String listed = context.getString(R.string.configLabel_alarms_optWhiteList_listed);
+                    batteryOptimization.setSummary(SuntimesUtils.createColorSpan(null, listed, listed, colorListed));
+
+                } else {
+                    String unlisted = context.getString(R.string.configLabel_alarms_optWhiteList_unlisted);
+                    batteryOptimization.setSummary(SuntimesUtils.createColorSpan(null, unlisted, unlisted, colorUnlisted));
+                }
+                
+            } else {
+                PreferenceCategory alarmsCategory = (PreferenceCategory)fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_CATEGORY);
+                removePrefFromCategory(batteryOptimization, alarmsCategory);  // battery optimization is api 23+
+            }
+        }
+    }
+
+    private static void removePrefFromCategory(Preference pref, PreferenceCategory category)
+    {
+        if (pref != null && category != null) {
+            category.removePreference(pref);
+        }
+    }
+
+    private static Preference.OnPreferenceClickListener onBatteryOptimizationClicked(final Context context)
+    {
+       return new Preference.OnPreferenceClickListener() {
+           @Override
+           public boolean onPreferenceClick(Preference preference) {
+               if (Build.VERSION.SDK_INT >= 23) {
+                   context.startActivity(new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS));
+               }
+               return false;
+           }
+       };
+    }
+
+    @TargetApi(23)
+    protected static boolean isIgnoringBatteryOptimizations(Context context)
+    {
+        PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        if (powerManager != null)
+            return powerManager.isIgnoringBatteryOptimizations(context.getPackageName());
+        else return false;
     }
 
     //////////////////////////////////////////////////

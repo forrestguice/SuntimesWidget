@@ -24,14 +24,18 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
+import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -157,9 +161,7 @@ public class WorldMapDialog extends DialogFragment
         }
     };
 
-    private int tapCount = 0;
-
-    public void initViews(Context context, View dialogView)
+    public void initViews(final Context context, View dialogView)
     {
         dialogTitle = (TextView)dialogView.findViewById(R.id.worldmapdialog_title);
         utcTime = (TextView)dialogView.findViewById(R.id.info_time_utc);
@@ -167,21 +169,8 @@ public class WorldMapDialog extends DialogFragment
         worldmap.setOnLongClickListener(new View.OnLongClickListener()
         {
             @Override
-            public boolean onLongClick(View view)
-            {
-                tapCount++;
-                if (tapCount < 3) {
-                    return true;
-
-                } else if (tapCount == 3) {
-                    mapAdapter.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE);
-                    mapAdapter.notifyDataSetChanged();
-                    mapSelector.setSelection(mapAdapter.getPosition(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE), true);
-                    return true;
-
-                } else {
-                    return false;
-                }
+            public boolean onLongClick(View view) {
+                return showShareMenu(context, view);
             }
         });
 
@@ -319,4 +308,35 @@ public class WorldMapDialog extends DialogFragment
             updateViews();
         }
     };
+
+
+    protected boolean showShareMenu(Context context, View view)
+    {
+        PopupMenu menu = new PopupMenu(context, view);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.mapshare, menu.getMenu());
+
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        {
+            @Override
+            public boolean onMenuItemClick(MenuItem item)
+            {
+                switch (item.getItemId())
+                {
+                    // TODO: additional share options; e.g. animated over range
+
+                    case R.id.shareMap:
+                        worldmap.shareBitmap();
+                        return true;
+
+                    default:
+                        return false;
+                }
+            }
+        });
+        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        menu.show();
+        return true;
+    }
+
 }
