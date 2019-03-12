@@ -43,6 +43,7 @@ import android.graphics.drawable.Drawable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.format.DateUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
@@ -57,6 +58,7 @@ import android.view.ViewParent;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 
 import java.lang.reflect.Method;
 import java.text.DateFormat;
@@ -71,6 +73,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings.TimeFormatMode;
 
+import java.text.DateFormatSymbols;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
@@ -194,6 +197,11 @@ public class SuntimesUtils
     public static boolean isInitialized()
     {
         return initialized;
+    }
+
+    public static boolean is24()
+    {
+        return is24;
     }
 
     /**
@@ -461,6 +469,61 @@ public class SuntimesUtils
             return (is24 ? calendarTime24HrDisplayString(context, cal, showSeconds)
                     : calendarTime12HrDisplayString(context, cal, showSeconds));
         }
+    }
+    public TimeDisplayText calendarTimeShortDisplayString(Context context, Calendar cal, boolean showSeconds, TimeFormatMode format)
+    {
+        if (!initialized) {
+            Log.w("SuntimesUtils", "Not initialized! (calendarTimeShortDisplayString was called anyway; using defaults)");
+        }
+
+        if (cal == null) {
+            return new TimeDisplayText(strTimeNone);
+
+        } else {
+            switch (format)
+            {
+                case MODE_24HR:
+                    return calendarTime24HrDisplayString(context, cal, showSeconds);
+
+                case MODE_12HR:
+                    return calendarTime12HrDisplayString(context, cal, showSeconds);
+
+                case MODE_SYSTEM:
+                    boolean sysIs24 = android.text.format.DateFormat.is24HourFormat(context);
+                    return (sysIs24 ? calendarTime24HrDisplayString(context, cal, showSeconds)
+                            : calendarTime12HrDisplayString(context, cal, showSeconds));
+
+                default:
+                    return new TimeDisplayText(strTimeNone);
+            }
+        }
+    }
+
+    /**
+     * getDayString
+     * @param context Context
+     * @param day e.g. Calendar.SUNDAY
+     * @return "Sunday"
+     */
+    public String getDayString(Context context, int day)
+    {
+        return DateUtils.getDayOfWeekString(day, DateUtils.LENGTH_LONG);
+    }
+
+    /**
+     * getShortDayString
+     * @param context Context
+     * @param day e.g. Calendar.SUNDAY
+     * @return "Sun"
+     */
+    public String getShortDayString(Context context, int day)
+    {
+        String[] shortWeekDays = getShortDayStrings(context);
+        return (day >= 0 && day < shortWeekDays.length ? shortWeekDays[day] : "");
+    }
+    public String[] getShortDayStrings(Context context)
+    {
+        return DateFormatSymbols.getInstance(getLocale()).getShortWeekdays();
     }
 
     /**
@@ -1215,6 +1278,10 @@ public class SuntimesUtils
 
     public static ImageSpan createImageSpan(Context context, int drawableID, int width, int height, int tint)
     {
+        return createImageSpan(context, drawableID, width, height, tint, PorterDuff.Mode.SRC_ATOP);
+    }
+    public static ImageSpan createImageSpan(Context context, int drawableID, int width, int height, int tint, PorterDuff.Mode tintMode)
+    {
         Drawable drawable = null;
         try {
             drawable = context.getResources().getDrawable(drawableID);
@@ -1229,7 +1296,7 @@ public class SuntimesUtils
             {
                 drawable.setBounds(0, 0, width, height);
             }
-            drawable.setColorFilter(tint, PorterDuff.Mode.SRC_ATOP);
+            drawable.setColorFilter(tint, tintMode);
         }
         return new ImageSpan(drawable);
     }
@@ -1640,6 +1707,40 @@ public class SuntimesUtils
                         new int[] {} },
                 new int[] {pressedColor, enabledColor, disabledColor, enabledColor}
         );
+    }
+
+    public static ColorStateList colorStateList(int onColor, int offColor, int disabledColor, int pressedColor)
+    {
+        return new ColorStateList(
+                new int[][] { new int[] {android.R.attr.state_focused},
+                        new int[] {android.R.attr.state_pressed},
+                        new int[] {-android.R.attr.state_enabled},
+                        new int[] {android.R.attr.state_checked},
+                        new int[] {} },
+                new int[] {onColor, pressedColor, disabledColor, onColor, offColor}
+        );
+    }
+
+    /**
+     *
+     * @param drawables an array of compound drawable; expects [4] {left, top, right, bottom}
+     * @param tintColor the color to apply
+     * @return the same array now containing tinted drawables
+     */
+    public static Drawable[] tintCompoundDrawables(Drawable[] drawables, int tintColor)
+    {
+        if (drawables.length > 0)
+        {
+            for (int i=0; i<drawables.length; i++)
+            {
+                if (drawables[i] != null)
+                {
+                    drawables[i] = drawables[i].mutate();
+                    drawables[i].setColorFilter(tintColor, PorterDuff.Mode.MULTIPLY);
+                }
+            }
+        }
+        return drawables;
     }
 
 }

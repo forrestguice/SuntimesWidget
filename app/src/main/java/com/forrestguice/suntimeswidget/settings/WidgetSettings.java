@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -177,7 +178,7 @@ public class WidgetSettings
     public static final String PREF_DEF_TIMEZONE_CUSTOM = "US/Arizona";
 
     public static final String PREF_KEY_TIMEZONE_SOLARMODE = "solarmode";
-    public static final SolarTimeMode PREF_DEF_TIMEZONE_SOLARMODE = SolarTimeMode.LOCAL_MEAN_TIME;
+    public static final SolarTimeMode PREF_DEF_TIMEZONE_SOLARMODE = SolarTimeMode.APPARENT_SOLAR_TIME;
 
     public static final String PREF_KEY_DATE_MODE = "dateMode";
     public static final DateMode PREF_DEF_DATE_MODE = DateMode.CURRENT_DATE;
@@ -633,7 +634,11 @@ public class WidgetSettings
             MODE_SYSTEM.setDisplayString(context.getString(R.string.timeFormatMode_system));
             MODE_12HR.setDisplayString(context.getString(R.string.timeFormatMode_12hr));
             MODE_24HR.setDisplayString(context.getString(R.string.timeFormatMode_24hr));
+        }
 
+        public String toString()
+        {
+            return displayString;
         }
     }
 
@@ -1801,9 +1806,13 @@ public class WidgetSettings
     }
     public static WidgetSettings.TimezoneMode loadTimezoneModePref(Context context, int appWidgetId)
     {
+        return loadTimezoneModePref(context, appWidgetId, PREF_DEF_TIMEZONE_MODE);
+    }
+    public static WidgetSettings.TimezoneMode loadTimezoneModePref(Context context, int appWidgetId, TimezoneMode defaultMode)
+    {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
-        String modeString = prefs.getString(prefs_prefix + PREF_KEY_TIMEZONE_MODE, PREF_DEF_TIMEZONE_MODE.name());
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_TIMEZONE_MODE, defaultMode.name());
 
         TimezoneMode timezoneMode;
         try
@@ -1811,7 +1820,7 @@ public class WidgetSettings
             timezoneMode = WidgetSettings.TimezoneMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
-            timezoneMode = PREF_DEF_TIMEZONE_MODE;
+            timezoneMode = defaultMode;
         }
         return timezoneMode;
     }

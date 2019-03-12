@@ -47,10 +47,18 @@ public class AboutDialog extends DialogFragment
     public static final String COMMIT_URL = "https://github.com/forrestguice/SuntimesWidget/commit/";
 
     public static final String KEY_ICONID = "paramIconID";
+    public static final String KEY_APPNAME = "paramAppName";
+
     private int param_iconID = R.mipmap.ic_launcher;
     public void setIconID( int resID )
     {
         param_iconID = resID;
+    }
+
+    private int param_appName = R.string.app_name;
+    public void setAppName( int resID )
+    {
+        param_appName = resID;
     }
 
     @NonNull @Override
@@ -80,6 +88,7 @@ public class AboutDialog extends DialogFragment
         if (savedInstanceState != null)
         {
             param_iconID = savedInstanceState.getInt(KEY_ICONID, param_iconID);
+            param_appName = savedInstanceState.getInt(KEY_APPNAME, param_appName);
         }
 
         initViews(getActivity(), dialogContent);
@@ -120,6 +129,7 @@ public class AboutDialog extends DialogFragment
     public void initViews(Context context, View dialogContent)
     {
         TextView nameView = (TextView) dialogContent.findViewById(R.id.txt_about_name);
+        nameView.setText(getString(param_appName));
         nameView.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -173,6 +183,7 @@ public class AboutDialog extends DialogFragment
     public void onSaveInstanceState( Bundle outState )
     {
         outState.putInt(KEY_ICONID, param_iconID);
+        outState.putInt(KEY_APPNAME, param_appName);
         super.onSaveInstanceState(outState);
     }
 }

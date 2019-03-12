@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:title="@string/configLabel_alarmClock"
+        android:key="app_alarms_category">
+
+        <com.forrestguice.suntimeswidget.settings.EditTextPreference
+            android:key="app_alarms_upcomingMillis"
+            android:title="@string/configLabel_alarms_upcoming"
+            android:summary="@string/configLabel_alarms_upcoming_summary" app:mode="hours"
+            android:defaultValue="@string/def_app_alarms_upcoming" />
+
+        <com.forrestguice.suntimeswidget.settings.EditTextPreference
+            android:key="app_alarms_snoozeMillis"
+            android:title="@string/configLabel_alarms_snooze"
+            android:summary="@string/configLabel_alarms_snooze_summary"
+            android:defaultValue="@string/def_app_alarms_snooze" />
+
+        <!--<EditTextPreference
+            android:key="app_alarms_silenceafter"
+            android:title="@string/configLabel_alarms_silenceAfter"
+            android:summary="@string/configLabel_alarms_silenceAfter_summary"
+            android:defaultValue="@string/def_app_alarms_silence" />-->
+
+        <com.forrestguice.suntimeswidget.settings.EditTextPreference
+            android:key="app_alarms_timeoutMillis"
+            android:title="@string/configLabel_alarms_timeoutAfter"
+            android:summary="@string/configLabel_alarms_timeoutAfter_summary"
+            android:defaultValue="@string/def_app_alarms_timeout" />
+
+        <!--<ListPreference android:key="app_alarms_hardwarebutton_action"
+            android:enabled="false"
+            android:title="@string/configLabel_alarms_hardwarebuttons"
+            android:summary="@string/configLabel_alarms_hardwarebuttons_summary"
+            android:defaultValue="@string/def_app_alarms_hardwarebuttons_action"
+            android:entryValues="@array/alarm_hardwarebutton_actions_values"
+            android:entries="@array/alarm_hardwarebutton_actions_display" />-->
+
+        <Preference
+            android:key="app_alarms_batterytopt" android:persistent="false"
+            android:title="@string/configLabel_alarms_optWhiteList"
+            android:summary="@string/configLabel_alarms_optWhiteList_unlisted" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/configLabel_alarmSounds" >
+
+        <CheckBoxPreference
+            android:key="app_alarms_allringtones"
+            android:title="@string/configLabel_alarms_allRingtones"
+            android:summary="@string/configLabel_alarms_allRingtones_summary"
+            android:defaultValue="@string/def_app_alarms_allringtones" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

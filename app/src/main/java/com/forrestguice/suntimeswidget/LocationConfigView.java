@@ -171,8 +171,36 @@ public class LocationConfigView extends LinearLayout
     public void setHideTitle(boolean value)
     {
         hideTitle = value;
+
         TextView groupTitle = (TextView)findViewById(R.id.appwidget_location_grouptitle);
-        groupTitle.setVisibility( (hideTitle ? View.GONE : View.VISIBLE) );
+        if (groupTitle != null) {
+            groupTitle.setVisibility( (hideTitle ? View.GONE : View.VISIBLE) );
+        }
+    }
+
+    /**
+     * Property: hide mode
+     */
+    private boolean hideMode = false;
+    public boolean getHideMode()
+    {
+        return hideMode;
+    }
+    public void setHideMode(boolean value)
+    {
+        hideMode = value;
+        if (hideMode)
+        {
+            View locationModeLayout = findViewById(R.id.appwidget_location_mode_layout);
+            if (locationModeLayout != null) {
+                locationModeLayout.setVisibility( hideMode ? View.GONE : View.VISIBLE );
+            }
+
+            View locationModeDivider = findViewById(R.id.appwidget_location_mode_divider);
+            if (locationModeDivider != null) {
+                locationModeDivider.setVisibility( hideMode ? View.GONE : View.VISIBLE );
+            }
+        }
     }
 
     /**
@@ -494,6 +522,14 @@ public class LocationConfigView extends LinearLayout
         getFixHelper = new GetFixHelper(myParent, getFixUI_editMode);    // 0; getFixUI_editMode
         getFixHelper.addUI(getFixUI_autoMode);                           // 1; getFixUI_autoMode
         updateGPSButtonIcons();
+
+        if (hideTitle) {
+            setHideTitle(hideTitle);
+        }
+
+        if (hideMode) {
+            setHideMode(hideMode);
+        }
     }
 
 
@@ -627,6 +663,10 @@ public class LocationConfigView extends LinearLayout
                 viewMode = LocationViewMode.MODE_CUSTOM_SELECT;
             }
             setMode(viewMode);
+
+            if (viewMode == LocationViewMode.MODE_CUSTOM_SELECT) {
+                populateLocationList();
+            }
         }
 
         getFixHelper.loadSettings(bundle);
@@ -692,6 +732,10 @@ public class LocationConfigView extends LinearLayout
 
     public static Bundle bundleData( Uri data, String label )
     {
+        return bundleData(data, label, LocationViewMode.MODE_CUSTOM_ADD);
+    }
+    public static Bundle bundleData( Uri data, String label, LocationViewMode viewMode )
+    {
         String lat = "";
         String lon = "";
         String alt = "";
@@ -718,7 +762,7 @@ public class LocationConfigView extends LinearLayout
         }
 
         Bundle bundle = new Bundle();
-        bundle.putString(KEY_DIALOGMODE, LocationViewMode.MODE_CUSTOM_ADD.name());
+        bundle.putString(KEY_DIALOGMODE, viewMode.name());
         bundle.putString(KEY_LOCATION_MODE, WidgetSettings.LocationMode.CUSTOM_LOCATION.name());
         bundle.putString(KEY_LOCATION_LATITUDE, lat);
         bundle.putString(KEY_LOCATION_LONGITUDE, lon);

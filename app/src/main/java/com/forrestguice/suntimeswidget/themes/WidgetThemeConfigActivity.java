@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2018 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -65,6 +65,8 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.layouts.ClockLayout;
+import com.forrestguice.suntimeswidget.layouts.ClockLayout_1x1_0;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
 import com.forrestguice.suntimeswidget.map.WorldMapView;
@@ -79,11 +81,13 @@ import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import java.security.InvalidParameterException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_BACKGROUND_COLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_NAME;
+import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_TIMESIZE_MAX;
 
 public class WidgetThemeConfigActivity extends AppCompatActivity
 {
@@ -98,6 +102,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     public static final int PREVIEWID_MOON_3x1 = 2;
     public static final int PREVIEWID_SUNPOS_3x1 = 3;
     public static final int PREVIEWID_SUNPOS_3x2 = 4;
+    public static final int PREVIEWID_CLOCK_1x1 = 5;
 
     public static final int ADD_THEME_REQUEST = 0;
     public static final int EDIT_THEME_REQUEST = 1;
@@ -126,7 +131,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ColorChooser chooseColorRise, chooseColorRiseIconFill, chooseColorRiseIconStroke;
     private ColorChooser chooseColorNoon, chooseColorNoonIconFill, chooseColorNoonIconStroke;
     private ColorChooser chooseColorSet, chooseColorSetIconFill, chooseColorSetIconStroke;
-    private ColorChooser chooseColorTitle, chooseColorText, chooseColorTime, chooseColorSuffix, chooseColorAction;
+    private ColorChooser chooseColorTitle, chooseColorText, chooseColorTime, chooseColorSuffix, chooseColorAction, chooseColorAccent;
     private ColorChooser chooseColorDay, chooseColorCivil, chooseColorNautical, chooseColorAstro, chooseColorNight;
     private ColorChooser chooseColorSpring, chooseColorSummer, chooseColorFall, chooseColorWinter;
     private ColorChooser chooseColorMoonrise, chooseColorMoonset;
@@ -341,6 +346,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseColorTime = createColorChooser(this, R.id.chooser_timeColor, SuntimesTheme.THEME_TIMECOLOR);
         chooseColorSuffix = createColorChooser(this, R.id.chooser_suffixColor, SuntimesTheme.THEME_TIMESUFFIXCOLOR);
         chooseColorAction = createColorChooser(this, R.id.chooser_actionColor, SuntimesTheme.THEME_ACTIONCOLOR);
+        chooseColorAccent = createColorChooser(this, R.id.chooser_accentColor, SuntimesTheme.THEME_ACCENTCOLOR);
 
         checkUseNoon = (CheckBox)findViewById(R.id.enable_noonColor);
         checkUseNoon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
@@ -663,6 +669,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         updatePreview_sun(previewLayout);
         updatePreview_moon(previewLayout);
+        updatePreview_clock(previewLayout);
 
         int displayed = preview.getDisplayedChild();
         if (displayed == PREVIEWID_SUNPOS_3x1)
@@ -741,7 +748,34 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     }
 
     /**
-     * Update the provided preview layout.
+     * @param previewLayout the layout to update
+     */
+    protected void updatePreview_clock(View previewLayout)
+    {
+        TextView previewTime = (TextView)previewLayout.findViewById(R.id.text_time);
+        TextView previewTimeSuffix = (TextView)previewLayout.findViewById(R.id.text_time_suffix);
+        if (previewTime != null && previewTimeSuffix != null)
+        {
+            float[] adjustedSizeSp = ClockLayout_1x1_0.adjustTextSize(this, new int[] {80, 80}, choosePadding.getPadding(),
+                    "sans-serif", checkTimeBold.isChecked(),"00:00", (float)chooseTimeSize.getValue(), THEME_TIMESIZE_MAX, "MM", (float)chooseSuffixSize.getValue());
+            previewTime.setTextSize(TypedValue.COMPLEX_UNIT_SP, adjustedSizeSp[0]);
+            previewTimeSuffix.setTextSize(TypedValue.COMPLEX_UNIT_SP, adjustedSizeSp[1]);
+
+            Calendar now = Calendar.getInstance();
+            WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(this, 0);
+            SuntimesUtils.TimeDisplayText nowText = utils.calendarTimeShortDisplayString(this, now, false, timeFormat);
+            String nowString = nowText.getValue();
+            CharSequence nowChars = (checkTimeBold.isChecked() ? SuntimesUtils.createBoldSpan(null, nowString, nowString) : nowString);
+
+            previewTime.setTextColor(chooseColorTime.getColor());
+            previewTime.setText(nowChars);
+
+            previewTimeSuffix.setTextColor(chooseColorSuffix.getColor());
+            previewTimeSuffix.setText(nowText.getSuffix());
+        }
+    }
+
+    /**
      * @param previewLayout the layout to update
      */
     protected void updatePreview_sun(View previewLayout)
@@ -1297,6 +1331,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             chooseColorTime.setColor(theme.getTimeColor());
             chooseColorSuffix.setColor(theme.getTimeSuffixColor());
             chooseColorAction.setColor(theme.getActionColor());
+            chooseColorAccent.setColor(theme.getAccentColor());
 
             checkTitleBold.setChecked(theme.getTitleBold());
             checkTimeBold.setChecked(theme.getTimeBold());
@@ -1380,6 +1415,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 this.themeTimeColor = chooseColorTime.getColor();
                 this.themeTimeSuffixColor = chooseColorSuffix.getColor();
                 this.themeActionColor = chooseColorAction.getColor();
+                this.themeAccentColor = chooseColorAccent.getColor();
 
                 this.themeTitleBold = checkTitleBold.isChecked();
                 this.themeTimeBold = checkTimeBold.isChecked();
