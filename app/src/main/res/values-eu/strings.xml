@@ -331,10 +331,10 @@
 
     <string name="configLabel_action">Ekintzen ezarpenak</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Ukitzerakoan:</string>                    <!-- spinner label -->
-    <string name="configLabel_action_onClockTap">Erlojua ukitzerakoan:</string>         <!-- spinner label -->
-    <string name="configLabel_action_onNoteTap">Oharra ukitzerakoan:</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap">Data ukitzerakoan:</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap1">Data luze ukitzerakoan:</string>   <!-- spinner label -->
+    <string name="configLabel_action_onClockTap">Erlojua ukitzerakoan</string>         <!-- spinner label -->
+    <string name="configLabel_action_onNoteTap">Oharra ukitzerakoan</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap">Data ukitzerakoan</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap1">Data luze ukitzerakoan</string>   <!-- spinner label -->
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Oraingoa (azken ezaguna)</string>  <!-- setting -->

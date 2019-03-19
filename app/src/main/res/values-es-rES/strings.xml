@@ -325,10 +325,10 @@
 
     <string name="configLabel_action">Opciones de pulsación</string>                  
     <string name="configLabel_action_onTap">Al pulsar:</string>                    
-    <string name="configLabel_action_onClockTap">Al pulsar el reloj:</string>         
-    <string name="configLabel_action_onNoteTap">Al pulsar una nota:</string>           
-    <string name="configLabel_action_onDateTap">Al pulsar la fecha:</string>           
-    <string name="configLabel_action_onDateTap1">Al mantener pulsado en la fecha:</string>
+    <string name="configLabel_action_onClockTap">Al pulsar el reloj</string>
+    <string name="configLabel_action_onNoteTap">Al pulsar una nota</string>
+    <string name="configLabel_action_onDateTap">Al pulsar la fecha</string>
+    <string name="configLabel_action_onDateTap1">Al mantener pulsado en la fecha</string>
 
     
     <string name="locationMode_current">Actual (última conocida)</string>  

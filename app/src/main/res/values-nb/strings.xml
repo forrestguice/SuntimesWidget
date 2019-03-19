@@ -331,10 +331,10 @@
 
     <string name="configLabel_action">Handlingsinnstillinger</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Ved trykk:</string>                    <!-- spinner label -->
-    <string name="configLabel_action_onClockTap">Ved trykk på klokke:</string>         <!-- spinner label -->
-    <string name="configLabel_action_onNoteTap">Ved trykk på notis:</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap">Ved trykk på dato:</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap1">Ved lang-trykk på dato:</string>   <!-- spinner label -->
+    <string name="configLabel_action_onClockTap">Ved trykk på klokke</string>         <!-- spinner label -->
+    <string name="configLabel_action_onNoteTap">Ved trykk på notis</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap">Ved trykk på dato</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap1">Ved lang-trykk på dato</string>   <!-- spinner label -->
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Gjeldende (sist kjente)</string>  <!-- setting -->

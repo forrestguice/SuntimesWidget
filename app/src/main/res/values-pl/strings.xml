@@ -321,10 +321,10 @@
 
     <string name="configLabel_action">Ustawienia akcji</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Przy kliknięciu:</string>                    <!-- spinner label -->
-    <string name="configLabel_action_onClockTap">Przy kliknięciu zegara:</string>         <!-- spinner label -->
-    <string name="configLabel_action_onNoteTap">Przy kliknięciu notatki:</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap">Przy kliknięciu daty:</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap1">Przy przytrzymaniu daty:</string>   <!-- spinner label -->
+    <string name="configLabel_action_onClockTap">Przy kliknięciu zegara</string>         <!-- spinner label -->
+    <string name="configLabel_action_onNoteTap">Przy kliknięciu notatki</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap">Przy kliknięciu daty</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap1">Przy przytrzymaniu daty</string>   <!-- spinner label -->
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Obecna (ostatnia znana)</string>  <!-- setting -->

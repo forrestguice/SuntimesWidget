@@ -338,10 +338,10 @@
 
     <string name="configLabel_action">Azioni</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Al tocco:</string>                    <!-- spinner label -->
-    <string name="configLabel_action_onClockTap">Al tocco sull\'orologio:</string>         <!-- spinner label -->
-    <string name="configLabel_action_onNoteTap">Al tocco sulla nota:</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap">Al tocco sulla data:</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap1">Alla pressione prolungata sulla data:</string>   <!-- spinner label -->
+    <string name="configLabel_action_onClockTap">Al tocco sull\'orologio</string>         <!-- spinner label -->
+    <string name="configLabel_action_onNoteTap">Al tocco sulla nota</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap">Al tocco sulla data</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap1">Alla pressione prolungata sulla data</string>   <!-- spinner label -->
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Corrente (ultima nota)</string>  <!-- setting -->

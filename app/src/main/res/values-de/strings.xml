@@ -317,10 +317,10 @@
 
   <string name="configLabel_action">Aktionen</string>                  <!-- group title -->
   <string name="configLabel_action_onTap">Bei Antippen:</string>                    <!-- spinner label -->
-  <string name="configLabel_action_onClockTap">Bei Antippen der Uhr:</string>         <!-- spinner label -->
-  <string name="configLabel_action_onNoteTap">Bei Antippen der Kurzinfo:</string>           <!-- spinner label -->
-  <string name="configLabel_action_onDateTap">Bei Antippen des Datums:</string>           <!-- spinner label -->
-  <string name="configLabel_action_onDateTap1">On Date Long Press:</string>   <!-- spinner label -->  <!-- TODO -->
+  <string name="configLabel_action_onClockTap">Bei Antippen der Uhr</string>         <!-- spinner label -->
+  <string name="configLabel_action_onNoteTap">Bei Antippen der Kurzinfo</string>           <!-- spinner label -->
+  <string name="configLabel_action_onDateTap">Bei Antippen des Datums</string>           <!-- spinner label -->
+  <string name="configLabel_action_onDateTap1">On Date Long Press</string>   <!-- spinner label -->  <!-- TODO -->
 
   <!-- Widget Setting: location -->
   <string name="locationMode_current">Aktueller Standort</string>  <!-- setting -->

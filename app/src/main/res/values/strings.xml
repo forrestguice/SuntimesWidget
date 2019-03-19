@@ -377,10 +377,10 @@
 
     <string name="configLabel_action">Action Settings</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">On Tap:</string>                    <!-- spinner label -->
-    <string name="configLabel_action_onClockTap">On Clock Tap</string>         <!-- spinner label -->  <!-- TODO: no ":" -->
-    <string name="configLabel_action_onNoteTap">On Note Tap</string>           <!-- spinner label -->  <!-- TODO: no ":" -->
-    <string name="configLabel_action_onDateTap">On Date Tap</string>           <!-- spinner label -->  <!-- TODO: no ":" -->
-    <string name="configLabel_action_onDateTap1">On Date Long Press</string>   <!-- spinner label -->  <!-- TODO: no ":" -->
+    <string name="configLabel_action_onClockTap">On Clock Tap</string>         <!-- spinner label -->
+    <string name="configLabel_action_onNoteTap">On Note Tap</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap">On Date Tap</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap1">On Date Long Press</string>   <!-- spinner label -->
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Current (last known)</string>  <!-- setting -->

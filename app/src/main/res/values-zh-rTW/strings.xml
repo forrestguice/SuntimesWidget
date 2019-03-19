@@ -338,10 +338,10 @@
 
     <string name="configLabel_action">動作設置</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">輕按時：</string>                    <!-- spinner label -->
-    <string name="configLabel_action_onClockTap">輕按時鐘時：</string>         <!-- spinner label -->
-    <string name="configLabel_action_onNoteTap">輕按便簽時：</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap">輕按日期時：</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap1">長按日期時：</string>   <!-- spinner label -->
+    <string name="configLabel_action_onClockTap">輕按時鐘時</string>         <!-- spinner label -->
+    <string name="configLabel_action_onNoteTap">輕按便簽時</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap">輕按日期時</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap1">長按日期時</string>   <!-- spinner label -->
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">當前（最近獲取到的位置）</string>  <!-- setting -->

@@ -316,10 +316,10 @@
 
     <string name="configLabel_action">Agordoj de agoj</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Je frapeto:</string>                    <!-- spinner label -->
-    <string name="configLabel_action_onClockTap">Je frapeto sur horloĝo:</string>         <!-- spinner label -->
-    <string name="configLabel_action_onNoteTap">Je frapeto sur noto:</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap">Je frapeto sur dato:</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap1">Je frapetado sur dato:</string>   <!-- spinner label -->
+    <string name="configLabel_action_onClockTap">Je frapeto sur horloĝo</string>         <!-- spinner label -->
+    <string name="configLabel_action_onNoteTap">Je frapeto sur noto</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap">Je frapeto sur dato</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap1">Je frapetado sur dato</string>   <!-- spinner label -->
 
     <!-- App Setting: time zone sort -->
     <string name="timezone_sort_byOffset">laŭ deŝovo</string>

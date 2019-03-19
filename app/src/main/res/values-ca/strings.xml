@@ -327,10 +327,10 @@
 
     <string name="configLabel_action">Opcions de pulsació</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Al prèmer:</string>                    <!-- spinner label -->
-    <string name="configLabel_action_onClockTap">Al prèmer el rellotge:</string>         <!-- spinner label -->
-    <string name="configLabel_action_onNoteTap">Al prèmer una nota:</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap">Al prèmer la data:</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap1">Al mantenir polsat en la data:</string>   <!-- spinner label -->
+    <string name="configLabel_action_onClockTap">Al prèmer el rellotge</string>         <!-- spinner label -->
+    <string name="configLabel_action_onNoteTap">Al prèmer una nota</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap">Al prèmer la data</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap1">Al mantenir polsat en la data</string>   <!-- spinner label -->
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Actual (última coneguda)</string>  <!-- setting -->
