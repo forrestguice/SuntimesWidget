@@ -254,7 +254,7 @@
     <string name="configLabel_general_calculator_sun">Sun Data Source</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Moon Data Source</string>         <!-- preference label -->
 
-    <string name="configLabel_general_timeFormatMode">Time Format:</string>         <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_general_timeFormatMode">Time Format:</string>         <!-- spinner label -->
 
     <string name="configLabel_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label -->
@@ -293,9 +293,9 @@
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
 
     <!-- Widget Setting: riseSetOrder -->
-    <string name="configLabel_general_riseSetOrder">Order:</string>     <!-- label -->  <!-- TODO: i18n -->
-    <string name="risesetorder_today">Today</string>                    <!-- setting -->  <!-- TODO: i18n -->
-    <string name="risesetorder_lastnext">Last / Next</string>           <!-- setting -->  <!-- TODO: i18n -->
+    <string name="configLabel_general_riseSetOrder">Order:</string>     <!-- label -->
+    <string name="risesetorder_today">Today</string>                    <!-- setting -->
+    <string name="risesetorder_lastnext">Last / Next</string>           <!-- setting -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Noon</string>                    <!-- setting -->
@@ -508,7 +508,7 @@
     <string name="configLabel_themeColorFall">Autumn</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Winter</string> <!-- color label -->
 
-    <string name="configLabel_themeColorAccent">Accent</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorAccent">Accent</string> <!-- color label -->
     <string name="configLabel_themeColorAction">Action</string> <!-- color label -->
 
     <string name="configLabel_themeColorMapBackground">Map Background</string> <!-- color label -->
@@ -1043,11 +1043,11 @@
     <string name="worldmap_dialog_option_sunlight">Sunlight</string>
     <string name="worldmap_dialog_option_moonlight">Moonlight</string>
     <string name="worldmap_dialog_option_all">Both</string>
-    <string name="configAction_shareMap">Share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->  <!-- TODO -->
+    <string name="configAction_shareMap">Share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Schedule an alarm for</string>
-    <string name="configLabel_schednotify_mode">Schedule a notification for</string>  <!-- TODO -->
+    <string name="configLabel_schednotify_mode">Schedule a notification for</string>
     <string name="schedalarm_dialog_title">@string/configAction_setAlarm</string>  <!-- may also be set to configAction_setNotification -->  <!-- TODO -->
     <string name="schedalarm_dialog_ok">Schedule</string>  <!-- TODO -->
     <string name="schedalarm_dialog_cancel">Cancel</string>

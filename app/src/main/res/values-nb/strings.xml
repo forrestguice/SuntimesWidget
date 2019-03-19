@@ -208,6 +208,8 @@
     <string name="configLabel_general_calculator_sun">Soldatakilde</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Månedatakilde</string>         <!-- preference label -->
 
+    <string name="configLabel_general_timeFormatMode">Time Format:</string>         <!-- spinner label -->  <!-- TODO -->
+
     <string name="configLabel_general_altitude_enabled">Bruk høyde</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Bruk høydebaserte forbedringer.</string>        <!-- checkbox label -->
 
@@ -243,6 +245,11 @@
     <string name="configLabel_appearance_showTitle">Vis tittel</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Tittel:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
+
+    <!-- Widget Setting: riseSetOrder -->
+    <string name="configLabel_general_riseSetOrder">Order:</string>     <!-- label -->  <!-- TODO -->
+    <string name="risesetorder_today">Today</string>                    <!-- setting -->  <!-- TODO -->
+    <string name="risesetorder_lastnext">Last / Next</string>           <!-- setting -->  <!-- TODO -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Middag</string>                    <!-- setting -->
@@ -454,6 +461,7 @@
     <string name="configLabel_themeColorFall">Høstfarge</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Vinterfarge</string> <!-- color label -->
 
+    <string name="configLabel_themeColorAccent">Accent</string> <!-- color label -->  <!-- TODO -->
     <string name="configLabel_themeColorAction">Handling</string> <!-- color label -->
 
     <string name="configLabel_themeColorMapBackground">Kartbakgrunn</string> <!-- color label -->
@@ -886,9 +894,11 @@
     <string name="worldmap_dialog_option_sunlight">Sollys</string>
     <string name="worldmap_dialog_option_moonlight">Månelys</string>
     <string name="worldmap_dialog_option_all">Begge</string>
+    <string name="configAction_shareMap">Share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->  <!-- TODO -->
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Planlegg en alarm for</string>
+    <string name="configLabel_schednotify_mode">Schedule a notification for</string>  <!-- TODO -->
     <string name="schedalarm_dialog_title">Still inn alarm</string>
     <string name="schedalarm_dialog_ok">OK</string>
     <string name="schedalarm_dialog_cancel">Avbryt</string>

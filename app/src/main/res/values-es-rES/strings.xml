@@ -202,7 +202,9 @@
     <string name="configLabel_general">Opciones generales</string>                
     <string name="configLabel_general_calculator">Fuente de datos:</string>         
     <string name="configLabel_general_calculator_sun">Fuente de datos del Sol</string>         
-    <string name="configLabel_general_calculator_moon">Fuente de datos de la Luna</string>         
+    <string name="configLabel_general_calculator_moon">Fuente de datos de la Luna</string>
+
+    <string name="configLabel_general_timeFormatMode">Time Format:</string>         <!-- spinner label -->  <!-- TODO -->
 
     <string name="configLabel_general_altitude_enabled">Usar elevación</string>        
     <string name="configLabel_general_altitude_enabled_summary">Aplica refinamientos basados en altitud.</string>
@@ -239,6 +241,10 @@
     <string name="configLabel_appearance_titleText">Título:</string>
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string>
 
+    <!-- Widget Setting: riseSetOrder -->
+    <string name="configLabel_general_riseSetOrder">Order:</string>     <!-- label -->  <!-- TODO -->
+    <string name="risesetorder_today">Today</string>                    <!-- setting -->  <!-- TODO -->
+    <string name="risesetorder_lastnext">Last / Next</string>           <!-- setting -->  <!-- TODO -->
     
     <string name="timeMode_noon_short">Mediodía</string>
     <string name="timeMode_noon">Mediodía</string>
@@ -449,6 +455,7 @@
     <string name="configLabel_themeColorFall">Color de otoño</string>
     <string name="configLabel_themeColorWinter">Color de invierno</string>
 
+    <string name="configLabel_themeColorAccent">Accent</string> <!-- color label -->  <!-- TODO -->
     <string name="configLabel_themeColorAction">Action</string> <!-- color label -->  <!-- TODO -->
 
     <string name="configLabel_themeColorMapBackground">Fondo del mapa</string> 
@@ -887,9 +894,11 @@
     <string name="worldmap_dialog_option_sunlight">Luz solar</string>
     <string name="worldmap_dialog_option_moonlight">Luz lunar</string>
     <string name="worldmap_dialog_option_all">Ambos</string>
+    <string name="configAction_shareMap">Share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->  <!-- TODO -->
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Planificar alarma para</string>
+    <string name="configLabel_schednotify_mode">Schedule a notification for</string>  <!-- TODO -->
     <string name="schedalarm_dialog_title">Poner alarma</string>
     <string name="schedalarm_dialog_ok">Poner alarma</string>
     <string name="schedalarm_dialog_cancel">Cancelar</string>

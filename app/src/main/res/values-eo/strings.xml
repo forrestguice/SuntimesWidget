@@ -193,6 +193,8 @@
     <string name="configLabel_general_calculator_sun">Fonto de sunaj datumoj</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Fonto de lunaj datumoj</string>         <!-- preference label -->
 
+    <string name="configLabel_general_timeFormatMode">Time Format:</string>         <!-- spinner label -->  <!-- TODO -->
+
     <string name="configLabel_general_altitude_enabled">Uzi altitudon</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Apliki plibonigojn surbaze de altitudo.</string>        <!-- checkbox label -->
 
@@ -228,6 +230,11 @@
     <string name="configLabel_appearance_showTitle">Montri titolon</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Titolo:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
+
+    <!-- Widget Setting: riseSetOrder -->
+    <string name="configLabel_general_riseSetOrder">Order:</string>     <!-- label -->  <!-- TODO -->
+    <string name="risesetorder_today">Today</string>                    <!-- setting -->  <!-- TODO -->
+    <string name="risesetorder_lastnext">Last / Next</string>           <!-- setting -->  <!-- TODO -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Tagmezo</string>                    <!-- setting -->
@@ -446,6 +453,7 @@
     <string name="configLabel_themeColorFall">Aŭtuna koloro</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Vintra koloro</string> <!-- color label -->
 
+    <string name="configLabel_themeColorAccent">Accent</string> <!-- color label -->  <!-- TODO -->
     <string name="configLabel_themeColorAction">Ago</string> <!-- color label -->
 
     <string name="configLabel_themeColorMapBackground">Fono de mapo</string> <!-- color label -->
@@ -784,9 +792,11 @@
     <string name="worldmap_dialog_option_sunlight">Suno</string>
     <string name="worldmap_dialog_option_moonlight">Luno</string>
     <string name="worldmap_dialog_option_all">Ambaŭ</string>
+    <string name="configAction_shareMap">Share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->  <!-- TODO -->
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Plani averton por</string>
+    <string name="configLabel_schednotify_mode">Schedule a notification for</string>  <!-- TODO -->
     <string name="schedalarm_dialog_title">Plani averton</string>
     <string name="schedalarm_dialog_ok">Plani averton</string>
     <string name="schedalarm_dialog_cancel">Rezigni</string>

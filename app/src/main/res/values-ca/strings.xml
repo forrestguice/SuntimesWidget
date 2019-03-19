@@ -204,6 +204,8 @@
     <string name="configLabel_general_calculator_sun">Font de dades del Sol</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Font de dades de la Lluna</string>         <!-- preference label -->
 
+    <string name="configLabel_general_timeFormatMode">Time Format:</string>         <!-- spinner label -->  <!-- TODO -->
+
     <string name="configLabel_general_altitude_enabled">Utilitza elevació</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Aplica refinaments basats en l\'altitud.</string>        <!-- checkbox label -->
 
@@ -239,6 +241,11 @@
     <string name="configLabel_appearance_showTitle">Mostrar títol</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Títol:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
+
+    <!-- Widget Setting: riseSetOrder -->
+    <string name="configLabel_general_riseSetOrder">Order:</string>     <!-- label -->  <!-- TODO -->
+    <string name="risesetorder_today">Today</string>                    <!-- setting -->  <!-- TODO -->
+    <string name="risesetorder_lastnext">Last / Next</string>           <!-- setting -->  <!-- TODO -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Migdia</string>                    <!-- setting -->
@@ -450,6 +457,7 @@
     <string name="configLabel_themeColorFall">Color de tardor</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Color de hivern</string> <!-- color label -->
 
+    <string name="configLabel_themeColorAccent">Accent</string> <!-- color label -->  <!-- TODO -->
     <string name="configLabel_themeColorAction">Action</string> <!-- color label -->  <!-- TODO -->
 
     <string name="configLabel_themeColorMapBackground">Fons del mapa</string> <!-- color label -->
@@ -890,9 +898,11 @@
     <string name="worldmap_dialog_option_sunlight">Llum solar</string>
     <string name="worldmap_dialog_option_moonlight">Llum lunar</string>
     <string name="worldmap_dialog_option_all">Ambdòs</string>
+    <string name="configAction_shareMap">Share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->  <!-- TODO -->
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Planificar alarma per a</string>
+    <string name="configLabel_schednotify_mode">Schedule a notification for</string>  <!-- TODO -->
     <string name="schedalarm_dialog_title">Posar alarma</string>
     <string name="schedalarm_dialog_ok">Posar alarma</string>
     <string name="schedalarm_dialog_cancel">Canceŀla</string>

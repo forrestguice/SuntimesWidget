@@ -215,6 +215,8 @@
     <string name="configLabel_general_calculator_sun">日光數據來源</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">月光數據來源</string>         <!-- preference label -->
 
+    <string name="configLabel_general_timeFormatMode">Time Format:</string>         <!-- spinner label -->  <!-- TODO -->
+
     <string name="configLabel_general_altitude_enabled">使用海拔</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">套用海拔以提高精度。</string>        <!-- checkbox label -->
 
@@ -250,6 +252,11 @@
     <string name="configLabel_appearance_showTitle">顯示標題</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">標題：</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
+
+    <!-- Widget Setting: riseSetOrder -->
+    <string name="configLabel_general_riseSetOrder">Order:</string>     <!-- label -->  <!-- TODO -->
+    <string name="risesetorder_today">Today</string>                    <!-- setting -->  <!-- TODO -->
+    <string name="risesetorder_lastnext">Last / Next</string>           <!-- setting -->  <!-- TODO -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">正午</string>                    <!-- setting -->
@@ -461,6 +468,7 @@
     <string name="configLabel_themeColorFall">秋季顏色</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">冬季顏色</string> <!-- color label -->
 
+    <string name="configLabel_themeColorAccent">Accent</string> <!-- color label -->  <!-- TODO -->
     <string name="configLabel_themeColorAction">Action</string> <!-- color label -->  <!-- TODO -->
 
     <string name="configLabel_themeColorMapBackground">地圖背景</string> <!-- color label -->
@@ -906,9 +914,11 @@
     <string name="worldmap_dialog_option_sunlight">日照</string>
     <string name="worldmap_dialog_option_moonlight">月照</string>
     <string name="worldmap_dialog_option_all">全部</string>
+    <string name="configAction_shareMap">Share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->  <!-- TODO -->
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">新建一個鬧鐘排程</string>
+    <string name="configLabel_schednotify_mode">Schedule a notification for</string>  <!-- TODO -->
     <string name="schedalarm_dialog_title">設置鬧鐘</string>
     <string name="schedalarm_dialog_ok">設置鬧鐘</string>
     <string name="schedalarm_dialog_cancel">取消</string>
