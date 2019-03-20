@@ -576,10 +576,10 @@
     <string name="alarmOption_repeat_all">Cada dia</string>         <!-- label text; an alarm that repeats every day -->  
 
     <string name="deletealarm_dialog_title">esborra</string>        <!-- dialog title -->  
-    <string name="deletealarm_dialog_message">Estàs segur de voler esborrar <xliff:g id="type">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg --> 
+    <string name="deletealarm_dialog_message">Estàs segur de voler esborrar <xliff:g id="type">%1$s</xliff:g> de les <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg --> 
     <string name="deletealarm_dialog_ok">Esborra</string>        <!-- button --> 
     <string name="deletealarm_dialog_cancel">Canceŀla</string>    <!-- button --> 
-    <string name="deletealarm_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) s\'ha esborrat.</string> <!-- toast msg --> 
+    <string name="deletealarm_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> de les <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) s\'ha esborrat.</string> <!-- toast msg --> 
 
     <string name="clearalarms_dialog_title">Elimina les alarmes</string>        <!-- dialog title -->  
     <string name="clearalarms_dialog_message">Estàs segur de voler esborrar totes les alarmes?</string>   <!-- dialog msg --> 
