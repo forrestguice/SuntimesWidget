@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -25,6 +25,7 @@ import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public class SuntimesTheme
@@ -48,6 +49,8 @@ public class SuntimesTheme
     public static final String THEME_TITLECOLOR = "titlecolor";
     public static final String THEME_TIMECOLOR = "timecolor";
     public static final String THEME_TIMESUFFIXCOLOR = "timesuffixcolor";
+    public static final String THEME_ACTIONCOLOR = "actioncolor";
+    public static final String THEME_ACCENTCOLOR = "accentcolor";
 
     public static final String THEME_SUNRISECOLOR = "sunrisecolor";
     public static final String THEME_NOONCOLOR = "nooncolor";
@@ -141,6 +144,8 @@ public class SuntimesTheme
     protected int themeTextColor;
     protected int themeTimeColor;
     protected int themeTimeSuffixColor;
+    protected int themeActionColor;
+    protected int themeAccentColor;
 
     protected int themeSunriseTextColor;
     protected int themeSunriseIconColor;
@@ -312,6 +317,8 @@ public class SuntimesTheme
         this.themeTitleColor = themes.getInt( theme + THEME_TITLECOLOR, defaultTheme.themeTitleColor );
         this.themeTimeColor = themes.getInt( theme + THEME_TIMECOLOR, defaultTheme.themeTimeColor );
         this.themeTimeSuffixColor = themes.getInt( theme + THEME_TIMESUFFIXCOLOR, defaultTheme.themeTimeSuffixColor );
+        this.themeActionColor = themes.getInt( theme + THEME_ACTIONCOLOR, defaultTheme.themeActionColor );
+        this.themeAccentColor = themes.getInt( theme + THEME_ACCENTCOLOR, defaultTheme.themeAccentColor );
 
         this.themeSunriseTextColor = themes.getInt( theme + THEME_SUNRISECOLOR, defaultTheme.themeSunriseTextColor );
         this.themeSunriseIconColor = themes.getInt( theme + THEME_RISEICON_FILL_COLOR, defaultTheme.themeSunriseIconColor );
@@ -394,6 +401,8 @@ public class SuntimesTheme
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_TITLECOLOR, this.themeTitleColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_TIMECOLOR, this.themeTimeColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_TIMESUFFIXCOLOR, this.themeTimeSuffixColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_ACTIONCOLOR, this.themeActionColor);
+        themePrefs.putInt(themePrefix + SuntimesTheme.THEME_ACCENTCOLOR, this.themeAccentColor);
 
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_SUNRISECOLOR, this.themeSunriseTextColor);
         themePrefs.putInt(themePrefix + SuntimesTheme.THEME_RISEICON_FILL_COLOR, this.themeSunriseIconColor);
@@ -482,6 +491,8 @@ public class SuntimesTheme
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_TITLECOLOR);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_TIMECOLOR);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_TIMESUFFIXCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_ACTIONCOLOR);
+        themePrefs.remove(themePrefix + SuntimesTheme.THEME_ACCENTCOLOR);
 
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_SUNRISECOLOR);
         themePrefs.remove(themePrefix + SuntimesTheme.THEME_RISEICON_FILL_COLOR);
@@ -615,11 +626,9 @@ public class SuntimesTheme
 
     public int getSunriseIconStrokePixels(Context context)
     {
-        //if (themeSunriseIconStrokePixels == -1)
-        //{
-            DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-            themeSunriseIconStrokePixels = (int)((metrics.density * getSunriseIconStrokeWidth()) + 0.5f);
-        //}
+        int strokeWidth = getSunriseIconStrokeWidth();
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        themeSunriseIconStrokePixels = (strokeWidth > 0 ? (int)((metrics.density * getSunriseIconStrokeWidth()) + 0.5f) : 0);
         return themeSunriseIconStrokePixels;
     }
 
@@ -646,11 +655,9 @@ public class SuntimesTheme
 
     public int getNoonIconStrokePixels(Context context)
     {
-        //if (themeNoonIconStrokePixels == -1)
-        //{
-            DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-            themeNoonIconStrokePixels = (int)((metrics.density * getNoonIconStrokeWidth()) + 0.5f);
-        //}
+        int strokeWidth = getNoonIconStrokeWidth();
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        themeNoonIconStrokePixels = (strokeWidth > 0 ? (int)((metrics.density * strokeWidth) + 0.5f) : 0);
         return themeNoonIconStrokePixels;
     }
 
@@ -707,11 +714,9 @@ public class SuntimesTheme
 
     public int getSunsetIconStrokePixels(Context context)
     {
-        //if (themeSunsetIconStrokePixels == -1)
-        //{
-            DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-            themeSunsetIconStrokePixels = (int)((metrics.density * getSunsetIconStrokeWidth()) + 0.5f);
-        //}
+        int strokeWidth = getSunsetIconStrokeWidth();
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        themeSunsetIconStrokePixels = (strokeWidth > 0 ? (int)((metrics.density * strokeWidth) + 0.5f) : 0);
         return themeSunsetIconStrokePixels;
     }
 
@@ -723,8 +728,9 @@ public class SuntimesTheme
 
     public int getMoonFullStrokePixels(Context context)
     {
+        int strokeWidth = getMoonFullStroke();
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        themeMoonFullStrokePixels = (int)((metrics.density * getMoonFullStroke()) + 0.5f);
+        themeMoonFullStrokePixels = (strokeWidth > 0 ? (int)((metrics.density * strokeWidth) + 0.5f) : 0);
         return themeMoonFullStrokePixels;
     }
 
@@ -736,8 +742,9 @@ public class SuntimesTheme
 
     public int getMoonNewStrokePixels(Context context)
     {
+        int strokeWidth = getMoonNewStroke();
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        themeMoonNewStrokePixels = (int)((metrics.density * getMoonNewStroke()) + 0.5f);
+        themeMoonNewStrokePixels = (strokeWidth > 0 ? (int)((metrics.density * strokeWidth) + 0.5f) : 0);
         return themeMoonNewStrokePixels;
     }
 
@@ -846,6 +853,16 @@ public class SuntimesTheme
     public int getBackgroundColor()
     {
         return themeBackgroundColor;
+    }
+
+    public int getActionColor()
+    {
+        return themeActionColor;
+    }
+
+    public int getAccentColor()
+    {
+        return themeAccentColor;
     }
 
     public int[] getPadding()
@@ -988,6 +1005,77 @@ public class SuntimesTheme
         {
             ThemeDescriptor other = (ThemeDescriptor)another;
             return name.compareTo(other.name());
+        }
+    }
+
+
+    /**
+     * ThemeBackground
+     */
+    public enum ThemeBackground
+    {
+        COLOR(-1, "Colour", true),
+        DARK(R.drawable.bg_widget_dark, "Dark", false),
+        LIGHT(R.drawable.bg_widget, "Light", false),
+        TRANSPARENT(android.R.color.transparent, "Transparent", false);
+
+        private int resID;
+        private String displayString;
+        private boolean customColors = false;
+
+        private ThemeBackground(int resId, String displayString, boolean customColors )
+        {
+            this.resID = resId;
+            this.displayString = displayString;
+            this.customColors = customColors;
+        }
+
+        public int getResID()
+        {
+            return resID;
+        }
+
+        public boolean supportsCustomColors()
+        {
+            return customColors;
+        }
+
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+        public void setDisplayString( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        @Override
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            DARK.setDisplayString(context.getString(R.string.configLabel_themeBackground_dark));
+            LIGHT.setDisplayString(context.getString(R.string.configLabel_themeBackground_light));
+            TRANSPARENT.setDisplayString(context.getString(R.string.configLabel_themeBackground_trans));
+            COLOR.setDisplayString(context.getString(R.string.configLabel_themeBackground_color));
+        }
+
+        @NonNull
+        public static ThemeBackground getThemeBackground( int resID )
+        {
+            ThemeBackground[] backgrounds = ThemeBackground.values();
+            //noinspection ForLoopReplaceableByForEach
+            for (int i=0; i<backgrounds.length; i++)
+            {
+                if (backgrounds[i] != null && backgrounds[i].getResID() == resID)
+                {
+                    return backgrounds[i];
+                }
+            }
+            return ThemeBackground.DARK;
         }
     }
 

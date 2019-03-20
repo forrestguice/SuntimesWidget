@@ -24,14 +24,16 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 //import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 
 import android.util.AttributeSet;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
 
@@ -44,8 +46,6 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     private static final double MINUTES_IN_DAY = 24 * 60;
 
     public static final int DEFAULT_MAX_UPDATE_RATE = 15 * 1000;  // ms value; once every 15s
-    public static final int DEFAULT_POINT_RADIUS = 3;
-    public static final int DEFAULT_STROKE_WIDTH = 2;
 
     private LightMapTask drawTask;
 
@@ -113,6 +113,21 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         {
             updateViews(true);
         }
+    }
+
+    /**
+     * themeViews
+     */
+    public void themeViews( Context context, @NonNull SuntimesTheme theme )
+    {
+        colors = new LightMapColors();
+        colors.colorNight = theme.getNightColor();
+        colors.colorDay = theme.getDayColor();
+        colors.colorAstro = theme.getAstroColor();
+        colors.colorNautical = theme.getNauticalColor();
+        colors.colorCivil = theme.getCivilColor();
+        colors.colorPointFill = theme.getNoonIconColor();
+        colors.colorPointStroke = theme.getNoonIconStrokeColor();
     }
 
     /**
@@ -200,8 +215,6 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     public static class LightMapTask extends AsyncTask<Object, Void, Bitmap>
     {
         private LightMapColors colors;
-        private int pointRadius = DEFAULT_POINT_RADIUS;
-        private int pointStrokeWidth = DEFAULT_STROKE_WIDTH;
 
         /**
          * @param params 0: SuntimesRiseSetDataset,
@@ -321,7 +334,10 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 }
 
                 // draw now marker
-                drawPoint(data.now(), pointRadius, c, p);
+                int pointRadius = Math.min( (int)Math.ceil(c.getWidth() / 96d),      // a circle that is 1/2 hr wide
+                                            (int)Math.ceil(c.getHeight() / 4d) );    // a circle that is 1/2 the height of the graph
+                int pointStroke = (int)Math.ceil(pointRadius / 3d);
+                drawPoint(data.now(), pointRadius, pointStroke, c, p);
             }
 
             return b;
@@ -409,7 +425,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             return true;
         }
 
-        protected void drawPoint( Calendar calendar, int radius, Canvas c, Paint p )
+        protected void drawPoint( Calendar calendar, int radius, int strokeWidth, Canvas c, Paint p )
         {
             if (calendar != null)
             {
@@ -425,7 +441,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 c.drawCircle(x, y, radius, p);
 
                 p.setStyle(Paint.Style.STROKE);
-                p.setStrokeWidth(pointStrokeWidth);
+                p.setStrokeWidth(strokeWidth);
                 p.setColor(colors.colorPointStroke);
                 c.drawCircle(x, y, radius, p);
             }
@@ -501,8 +517,8 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             colorNautical = ContextCompat.getColor(context, R.color.graphColor_nautical_dark);
             colorAstro = ContextCompat.getColor(context, R.color.graphColor_astronomical_dark);
             colorNight = ContextCompat.getColor(context, R.color.graphColor_night_dark);
-            colorPointFill = ContextCompat.getColor(context, R.color.sunIcon_color_setting_dark);
-            colorPointStroke = ContextCompat.getColor(context, R.color.grey_800);
+            colorPointFill = ContextCompat.getColor(context, R.color.sunIcon_color_noon_dark);
+            colorPointStroke = ContextCompat.getColor(context, R.color.sunIcon_color_noonBorder_dark);
         }
 
         public void initDefaultLight(Context context)
@@ -512,8 +528,8 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             colorNautical = ContextCompat.getColor(context, R.color.graphColor_nautical_light);
             colorAstro = ContextCompat.getColor(context, R.color.graphColor_astronomical_light);
             colorNight = ContextCompat.getColor(context, R.color.graphColor_night_light);
-            colorPointFill = ContextCompat.getColor(context, R.color.sunIcon_color_setting_light);
-            colorPointStroke = ContextCompat.getColor(context, R.color.grey_800);
+            colorPointFill = ContextCompat.getColor(context, R.color.sunIcon_color_noon_light);
+            colorPointStroke = ContextCompat.getColor(context, R.color.sunIcon_color_noonBorder_light);
         }
     }
 

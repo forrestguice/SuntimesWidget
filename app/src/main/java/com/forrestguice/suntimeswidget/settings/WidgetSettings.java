@@ -20,11 +20,12 @@ package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
+
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_0;
@@ -40,11 +41,9 @@ import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_0;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_1;
 
-import com.forrestguice.suntimeswidget.themes.DarkTheme;
+import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -97,6 +96,9 @@ public class WidgetSettings
     public static final String PREF_KEY_APPEARANCE_TIMEFORMATMODE = "timeformatmode";
     public static final TimeFormatMode PREF_DEF_APPEARANCE_TIMEFORMATMODE = TimeFormatMode.MODE_SYSTEM;
 
+    public static final String PREF_KEY_GENERAL_RISESETORDER = "risesetorder";
+    public static final RiseSetOrder PREF_DEF_GENERAL_RISESETORDER = RiseSetOrder.TODAY;
+
     public static final String PREF_KEY_GENERAL_TIMEMODE = "timemode";
     public static final TimeMode PREF_DEF_GENERAL_TIMEMODE = TimeMode.OFFICIAL;
 
@@ -142,6 +144,9 @@ public class WidgetSettings
     public static final String PREF_KEY_GENERAL_OBSERVERHEIGHT = "observerheight";
     public static final float PREF_DEF_GENERAL_OBSERVERHEIGHT = 1.8288f; // meters (6ft)
 
+    public static final String PREF_KEY_GENERAL_UNITS_LENGTH = "lengthunits";
+    public static LengthUnit PREF_DEF_GENERAL_UNITS_LENGTH = LengthUnit.METRIC;  // reassigned later by initDefaults
+
     public static final String PREF_KEY_ACTION_MODE = "action";
     public static final ActionMode PREF_DEF_ACTION_MODE = ActionMode.ONTAP_LAUNCH_CONFIG;
 
@@ -173,7 +178,7 @@ public class WidgetSettings
     public static final String PREF_DEF_TIMEZONE_CUSTOM = "US/Arizona";
 
     public static final String PREF_KEY_TIMEZONE_SOLARMODE = "solarmode";
-    public static final SolarTimeMode PREF_DEF_TIMEZONE_SOLARMODE = SolarTimeMode.LOCAL_MEAN_TIME;
+    public static final SolarTimeMode PREF_DEF_TIMEZONE_SOLARMODE = SolarTimeMode.APPARENT_SOLAR_TIME;
 
     public static final String PREF_KEY_DATE_MODE = "dateMode";
     public static final DateMode PREF_DEF_DATE_MODE = DateMode.CURRENT_DATE;
@@ -187,8 +192,53 @@ public class WidgetSettings
     public static final String PREF_KEY_DATE_DAY = "dateDay";
     public static final int PREF_DEF_DATE_DAY = -1;
 
+    public static final String PREF_KEY_NEXTUPDATE = "nextUpdate";
+    public static final long PREF_DEF_NEXTUPDATE = -1L;
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * LengthUnit
+     */
+    public static enum LengthUnit
+    {
+        METRIC("Metric"),
+        IMPERIAL("Imperial"),
+        USC("U.S. Customary");
+
+        private LengthUnit(String displayString)
+        {
+            this.displayString = displayString;
+        }
+
+        private String displayString;
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+        public void setDisplayString(String value)
+        {
+            displayString = value;
+        }
+        public static void initDisplayStrings(Context context)
+        {
+            METRIC.setDisplayString(context.getString(R.string.lengthUnits_metric));
+            IMPERIAL.setDisplayString(context.getString(R.string.lengthUnits_imperial));
+            IMPERIAL.setDisplayString(context.getString(R.string.lengthUnits_usc));
+        }
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public static double metersToFeet(double meters) {
+            return 3.28084d * meters;
+        }
+        public static double feetToMeters(double feet) {
+            return (feet * (1d / 3.28084d) );
+        }
+    }
 
     /**
      * WidgetOnTap
@@ -584,7 +634,11 @@ public class WidgetSettings
             MODE_SYSTEM.setDisplayString(context.getString(R.string.timeFormatMode_system));
             MODE_12HR.setDisplayString(context.getString(R.string.timeFormatMode_12hr));
             MODE_24HR.setDisplayString(context.getString(R.string.timeFormatMode_24hr));
+        }
 
+        public String toString()
+        {
+            return displayString;
         }
     }
 
@@ -622,196 +676,6 @@ public class WidgetSettings
         {
             CURRENT_LOCATION.setDisplayString(context.getString(R.string.locationMode_current));
             CUSTOM_LOCATION.setDisplayString(context.getString(R.string.locationMode_custom));
-        }
-    }
-
-    /**
-     * Location
-     */
-    public static class Location
-    {
-        public static String pattern_latLon = "#.#####";
-
-        private String label;
-        private String latitude;   // decimal degrees (DD)
-        private String longitude;  // decimal degrees (DD)
-        private String altitude;   // meters above the WGS 84 reference ellipsoid
-        private boolean useAltitude = true;
-
-        /**
-         * @param latitude decimal degrees (DD) string
-         * @param longitude decimal degrees (DD) string
-         */
-        public Location( String latitude, String longitude )
-        {
-            this(null, latitude, longitude, null);
-        }
-
-        /**
-         * @param label display name
-         * @param latitude decimal degrees (DD) string
-         * @param longitude decimal degrees (DD) string
-         */
-        public Location( String label, String latitude, String longitude )
-        {
-            this(label, latitude, longitude, null);
-        }
-
-        /**
-         * @param label display name
-         * @param latitude decimal degrees (DD) string
-         * @param longitude decimal degrees (DD) string
-         * @param altitude meters string
-         */
-        public Location( String label, String latitude, String longitude, String altitude )
-        {
-            this.label = (label == null) ? "" : label;
-            this.latitude = latitude;
-            this.longitude = longitude;
-            this.altitude = (altitude == null) ? "" : altitude;
-        }
-
-        /**
-         * @param label display name
-         * @param location an android.location.Location object (that might be obtained via GPS or otherwise)
-         */
-        public Location( String label, @NonNull android.location.Location location )
-        {
-            double rawLatitude = location.getLatitude();
-            double rawLongitude = location.getLongitude();
-            double rawAltitude = location.getAltitude();
-
-            DecimalFormat formatter = decimalDegreesFormatter();
-
-            this.label = label;
-            this.latitude = formatter.format(rawLatitude);
-            this.longitude = formatter.format(rawLongitude);
-            this.altitude = rawAltitude + "";
-        }
-
-        /**
-         * @return a user-defined display label / location name
-         */
-        public String getLabel()
-        {
-            return label;
-        }
-
-        /**
-         * @return latitude in decimal degrees (DD)
-         */
-        public String getLatitude()
-        {
-            return latitude;
-        }
-
-        public Double getLatitudeAsDouble()
-        {
-            double latitudeDouble = Double.parseDouble(latitude);
-            if (latitudeDouble > 90 || latitudeDouble < -90)
-            {
-                double s = Math.signum(latitudeDouble);
-                double adjusted = (s * 90) - (latitudeDouble % (s * 90));
-                Log.w("Location", "latitude is out of range! adjusting.. " + latitudeDouble + " -> " + adjusted);
-                latitudeDouble = adjusted;
-            }
-            return latitudeDouble;
-        }
-
-        /**
-         * @return longitude in decimal degrees (DD)
-         */
-        public String getLongitude()
-        {
-            return longitude;
-        }
-
-        public Double getLongitudeAsDouble()
-        {
-            Double longitudeDouble = Double.parseDouble(longitude);
-            if (longitudeDouble > 180 || longitudeDouble < -180)
-            {
-                double s = Math.signum(longitudeDouble);
-                double adjusted = (longitudeDouble % (s * 180)) - (s * 180);
-                Log.w("Location", "longitude is out of range! adjusting.. " + longitudeDouble + " -> " + adjusted);
-                longitudeDouble = adjusted;
-            }
-            if (longitudeDouble == 180d) {
-                longitudeDouble = -180d;
-            }
-            return longitudeDouble;
-        }
-
-        /**
-         * @return altitude in meters
-         */
-        public String getAltitude()
-        {
-            return altitude;
-        }
-
-        public Double getAltitudeAsDouble()
-        {
-            if (!useAltitude || altitude.isEmpty())
-                return 0.0;
-            else return Double.parseDouble(altitude);
-        }
-        public Integer getAltitudeAsInteger()
-        {
-            if (!useAltitude || altitude.isEmpty())
-                return 0;
-            else return getAltitudeAsDouble().intValue();
-        }
-        public void setUseAltitude( boolean enabled )
-        {
-            useAltitude = enabled;
-        }
-
-        /**
-         * @return a "geo" URI describing this Location
-         */
-        public Uri getUri()
-        {
-            String uriString = "geo:" + latitude + "," + longitude;
-            if (!altitude.isEmpty())
-            {
-                uriString += "," + altitude;
-            }
-            return Uri.parse(uriString);
-        }
-
-        /**
-         * @return a decimal degrees string "latitude, longitude" describing this location
-         */
-        public String toString()
-        {
-            return latitude + ", " + longitude;
-        }
-
-        /**
-         * @param obj another Location object
-         * @return true the locations are the same (label, lat, lon, and alt), false they are different somehow
-         */
-        @Override
-        public boolean equals(Object obj)
-        {
-            if (!(obj instanceof Location))
-            {
-                return false;
-            } else {
-                Location that = (Location)obj;
-                return (this.getLabel().equals(that.getLabel()))
-                        && (this.getLatitude().equals(that.getLatitude()))
-                        && (this.getLongitude().equals(that.getLongitude()))
-                        && (this.getAltitude().equals(that.getAltitude()));
-            }
-        }
-
-        public static DecimalFormat decimalDegreesFormatter()
-        {
-            DecimalFormat formatter = (DecimalFormat)(NumberFormat.getNumberInstance(Locale.US));
-            formatter.applyLocalizedPattern(pattern_latLon);
-            return formatter;
         }
     }
 
@@ -1086,6 +950,98 @@ public class WidgetSettings
             BLUE4.setDisplayStrings( context.getString(R.string.timeMode_blue4_short),
                     context.getString(R.string.timeMode_blue4) );
         }
+    }
+
+
+    /**
+     * RiseSetOrder
+     */
+    public static enum RiseSetOrder
+    {
+        TODAY("Today"),
+        LASTNEXT("Last / Next");
+
+        private String displayString;
+
+        private RiseSetOrder(String displayString)
+        {
+            this.displayString = displayString;
+        }
+
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public void setDisplayString(String displayString)
+        {
+            this.displayString = displayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            TODAY.setDisplayString( context.getString(R.string.risesetorder_today) );
+            LASTNEXT.setDisplayString( context.getString(R.string.risesetorder_lastnext) );
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static long getNextSuggestedUpdate(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId;
+        return prefs.getLong(prefs_prefix + PREF_KEY_NEXTUPDATE, -1);
+    }
+    public static void saveNextSuggestedUpdate(Context context, int appWidgetId, long updateTime)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId;
+        prefs.putLong(prefs_prefix + PREF_KEY_NEXTUPDATE, updateTime);
+        prefs.apply();
+    }
+    public static void deleteNextSuggestedUpdate(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId;
+        prefs.remove(prefs_prefix + PREF_KEY_NEXTUPDATE);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void saveRiseSetOrderPref(Context context, int appWidgetId, RiseSetOrder mode)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_RISESETORDER, mode.name());
+        prefs.apply();
+    }
+    public static RiseSetOrder loadRiseSetOrderPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_RISESETORDER, PREF_DEF_GENERAL_RISESETORDER.name());
+
+        RiseSetOrder mode;
+        try
+        {
+            mode = RiseSetOrder.valueOf(modeString);
+
+        } catch (IllegalArgumentException e) {
+            mode = PREF_DEF_GENERAL_RISESETORDER;
+            Log.w("loadRiseSetOrder", "Failed to load value '" + modeString + "'; using default '" + PREF_DEF_GENERAL_RISESETORDER.name() + "'.");
+        }
+        return mode;
+    }
+    public static void deleteRiseSetOrderPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_RISESETORDER);
+        prefs.apply();
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -1850,9 +1806,13 @@ public class WidgetSettings
     }
     public static WidgetSettings.TimezoneMode loadTimezoneModePref(Context context, int appWidgetId)
     {
+        return loadTimezoneModePref(context, appWidgetId, PREF_DEF_TIMEZONE_MODE);
+    }
+    public static WidgetSettings.TimezoneMode loadTimezoneModePref(Context context, int appWidgetId, TimezoneMode defaultMode)
+    {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
-        String modeString = prefs.getString(prefs_prefix + PREF_KEY_TIMEZONE_MODE, PREF_DEF_TIMEZONE_MODE.name());
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_TIMEZONE_MODE, defaultMode.name());
 
         TimezoneMode timezoneMode;
         try
@@ -1860,7 +1820,7 @@ public class WidgetSettings
             timezoneMode = WidgetSettings.TimezoneMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
-            timezoneMode = PREF_DEF_TIMEZONE_MODE;
+            timezoneMode = defaultMode;
         }
         return timezoneMode;
     }
@@ -2168,6 +2128,8 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveObserverHeightPref(Context context, int appWidgetId, float meters)
     {
@@ -2190,6 +2152,45 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void saveLengthUnitsPref(Context context, int appWidgetId, LengthUnit value)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.putString(prefs_prefix + PREF_KEY_GENERAL_UNITS_LENGTH, value.name());
+        prefs.apply();
+    }
+
+    public static LengthUnit loadLengthUnitsPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        return getLengthUnit(prefs.getString(prefs_prefix + PREF_KEY_GENERAL_UNITS_LENGTH, PREF_DEF_GENERAL_UNITS_LENGTH.name()));
+    }
+
+    public static LengthUnit getLengthUnit(String unitName)
+    {
+        LengthUnit retValue;
+        try {
+            retValue = LengthUnit.valueOf(unitName);
+        } catch (IllegalArgumentException e) {
+            retValue = PREF_DEF_GENERAL_UNITS_LENGTH;
+        }
+        return retValue;
+    }
+
+    public static void deleteLengthUnitsPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
+        prefs.remove(prefs_prefix + PREF_KEY_GENERAL_UNITS_LENGTH);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveTimeNoteRisePref(Context context, int appWidgetId, SolarEvents riseChoice)
     {
@@ -2259,6 +2260,7 @@ public class WidgetSettings
 
     public static void deletePrefs(Context context, int appWidgetId)
     {
+        deleteNextSuggestedUpdate(context, appWidgetId);
         deleteActionModePref(context, appWidgetId);
         deleteActionLaunchPref(context, appWidgetId);
 
@@ -2280,6 +2282,7 @@ public class WidgetSettings
         deleteTimeMode2Pref(context, appWidgetId);
         deleteTimeMode3Pref(context, appWidgetId);
 
+        deleteRiseSetOrderPref(context, appWidgetId);
         deleteCompareModePref(context, appWidgetId);
         deleteShowComparePref(context, appWidgetId);
         deleteShowNoonPref(context, appWidgetId);
@@ -2289,9 +2292,10 @@ public class WidgetSettings
         deleteShowTimeDatePref(context, appWidgetId);
 
         deleteObserverHeightPref(context, appWidgetId);
+        deleteLengthUnitsPref(context, appWidgetId);
 
         deleteLocationModePref(context, appWidgetId);
-	deleteLocationAltitudeEnabledPref(context, appWidgetId);
+        deleteLocationAltitudeEnabledPref(context, appWidgetId);
         deleteLocationPref(context, appWidgetId);
 
         deleteTimezoneModePref(context, appWidgetId);
@@ -2311,10 +2315,12 @@ public class WidgetSettings
         PREF_DEF_LOCATION_LATITUDE = context.getString(R.string.default_location_latitude);
         PREF_DEF_LOCATION_LONGITUDE = context.getString(R.string.default_location_longitude);
         PREF_DEF_LOCATION_ALTITUDE = context.getString(R.string.default_location_altitude);
+        PREF_DEF_GENERAL_UNITS_LENGTH = getLengthUnit(context.getString(R.string.default_units_length));
     }
 
     public static void initDisplayStrings( Context context )
     {
+        LengthUnit.initDisplayStrings(context);
         ActionMode.initDisplayStrings(context);
         WidgetModeSun1x1.initDisplayStrings(context);
         WidgetModeSunPos1x1.initDisplayStrings(context);
@@ -2329,5 +2335,6 @@ public class WidgetSettings
         SolarTimeMode.initDisplayStrings(context);
         DateMode.initDisplayStrings(context);
         TimeFormatMode.initDisplayStrings(context);
+        RiseSetOrder.initDisplayStrings(context);
     }
 }

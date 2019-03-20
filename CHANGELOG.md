@@ -1,6 +1,64 @@
 ### ~
 
-###
+### v0.11.0 (2019-03-12)
+* adds "Suntimes Alarms", an Alarm Clock (#140, #250, #261) with support for daily repeating alarms and notifications.
+* adds a clock widget (#154, #260); displays solar time (Local Mean Time, Apparent Solar Time), or the time in a given timezone.
+* adds a "share" action to the World Map dialog (exports to png) (#284).
+* changes the default solar time mode to "Apparent Solar Time"; adds a help button to solar time mode selector.
+* new permission: BOOT_COMPLETED. This permission is needed to restore active alarms after reboot. [PERMISSION]
+* new permission: VIBRATE. This permission is used by alarm notifications. [PERMISSION]
+* misc style and layout fixes.
+
+### v0.10.3 (2019-01-31)
+* adds app shortcuts (Android 7.1+); a shortcut to the Widget List, a shortcut to the Theme Editor (#288).
+* reveals previously hidden azimuthal map projection in the World Map dialog (#284); layout issues for this projection continue to exist for smaller screens.
+* fixes a CalculatorProvider bug where sun/moon queries returned the wrong data type (Calendar obj vs long timestamp).
+
+### v0.10.2 (2019-01-10)
+* fixes bug "'get location' does not honor the 'units of length' pref" (#290).
+* improves the accuracy of the apparent solar time calculation (#291).
+* updates translation to Basque (eu) (#294 by beriain). 
+
+### v0.10.1 (2018-12-23)
+* fixes bug "sun/moon circles are difficult to see (too small)" (#286) on lightmap and worldmap widgets.
+* updates translation to Norwegian (nb) (#285 by FTno).
+* updates dependency (Time4A 4.2-2018g).
+
+### v0.10.0 (2018-12-09)
+* adds support for themes to the app; it is now possible to customize the app's appearance using widget themes (#264, #275).
+* adds "order" option to sun and moon widgets; "display tomorrow's sunrise once sunset time has passed" (#190).
+* adds "distance units" (imperial, metric) to General Settings; display distances (altitude/elevation, shadow length) using meters or feet (#273).
+* adds "shadow length" to the Sun Position dialog (#189, #273), and "object height" to General Settings.
+* adds support for third-party apps and widgets through a ContentProvider (#266, #276); https://github.com/forrestguice/SuntimesWidget/wiki/Interfaces.
+* removes Calendar permissions (READ_CALENDAR, WRITE_CALENDAR, READ_SYNC_STATS, WRITE_SYNC_SETTINGS); 
+* removes Calendar Integration; this feature is now available as a separate apk (#239, #266, #277); https://github.com/forrestguice/SuntimesCalendars.
+* extends the widget update strategy to support per widget updates; the sun and moon widgets may now trigger an update shortly after each event (in addition to the daily update at midnight).
+* adds dst label to timezone dialog; displayed when selected timezone is using daylight saving time (#274).
+* adds eot label to timezone dialog; displayed for apparent solar time (#274).
+* adds "import themes" and "share themes" (export) to the theme list activity (#275). 
+* adds "action color" to themes (button press color) (#275).
+* fixes cropped text in theme config activity (#254); misc layout improvements.
+* updates the legacy icon to match the appearance of the adaptive icon (#272).
+* updates translation to Polish and Esperanto (eo, pl) (#282 by Verdulo).
+* updates build; Android gradle plugin version bumped to `com.android.tools.build:gradle:3.0.0` (and gradle wrapper to `gradle-4.1`).
+* updates dependency (Time4A 4.1-2018g).
+
+### v0.9.5 (2018-11-12)
+* modifies the default colors to improve contrast and readability (#247, #264, #268).
+* fixes bug "language selectors fails for some languages" (#262).
+* fixes empty widgetlist; an oversized label and icon are now displayed when the list is empty.
+* fixes worldmap bug where the sun/moon positions are drawn despite sunlight/moonlight options toggled off.
+* fixes settings activity iconography (unique icons for each header); the previous patch only fixed this for older Android versions where the icon attribute is completely ignored.
+* updates translation to Basque (eu) (#271 by beriain).
+* updates translation to Norwegian (nb) (#270 by FTno).
+* updates translation to Polish and Esperanto (eo, pl) (#263, #267 by Verdulo).
+
+### v0.9.4 (2018-10-28)
+* fixes bug "widgets missing" (#258); installLocation set to internalOnly.
+* fixes appearance of main table for locales with header text shorter than event times; sunset column now has minWidth.
+* fixes appearance of snackbar warnings; now styled by theme.
+* fixes readability of snackbar warnings for locales with long action button text.
+* fixes Settings Activity iconography; unique icons for each header.
 * updates translations to Spanish (es-es) and Catalan (ca) (#255 by Raulvo).
 * updates translation to Norwegian (nb) (#253 by FTno).
 * adds translation to Traditional Chinese (zh-tw) (contributed by ft42) (#252).

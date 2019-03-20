@@ -29,6 +29,10 @@ import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
 
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
+import android.util.Log;
 import android.util.TypedValue;
 
 import android.support.annotation.NonNull;
@@ -41,14 +45,17 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
+import java.util.Calendar;
 import java.util.TimeZone;
 
 @SuppressWarnings("Convert2Diamond")
@@ -57,6 +64,10 @@ public class TimeZoneDialog extends DialogFragment
     public static final String KEY_TIMEZONE_MODE = "timezoneMode";
     public static final String KEY_TIMEZONE_ID = "timezoneID";
     public static final String KEY_SOLARTIME_MODE = "solartimeMode";
+    public static final String KEY_NOW = "paramNow";
+    public static final String KEY_LONGITUDE = "paramLongitude";
+
+    private static final String DIALOGTAG_HELP = "timezone_help";
 
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     private String customTimezoneID;
@@ -70,10 +81,33 @@ public class TimeZoneDialog extends DialogFragment
     private LinearLayout layout_solartime;
     private TextView label_solartime;
     private Spinner spinner_solartime;
+    private ImageButton button_solartime_help;
     private Object actionMode = null;
+
+    private View layout_timezoneExtras;
+    private TextView label_tzExtras0;
+    private SuntimesUtils utils;
 
     private WidgetTimezones.TimeZoneItemAdapter spinner_timezone_adapter;
     private boolean loading = false;
+
+    private Calendar now = Calendar.getInstance();
+    public void setNow( Calendar now )
+    {
+        this.now = now;
+    }
+
+    private double longitude = 0;
+    public void setLongitude( double longitude )
+    {
+        this.longitude = longitude;
+    }
+
+    private SuntimesCalculator calculator = null;
+    public void setCalculator( SuntimesCalculator calculator )
+    {
+        this.calculator = calculator;
+    }
 
     @SuppressWarnings({"deprecation","RestrictedApi"})
     @NonNull @Override
@@ -166,6 +200,10 @@ public class TimeZoneDialog extends DialogFragment
         return dialog;
     }
 
+    /**
+     * onSaveInstanceState
+     * @param outState
+     */
     @Override
     public void onSaveInstanceState(Bundle outState)
     {
@@ -174,9 +212,16 @@ public class TimeZoneDialog extends DialogFragment
         super.onSaveInstanceState(outState);
     }
 
+    /**
+     * initViews
+     * @param context
+     * @param dialogContent
+     */
     protected void initViews( Context context, View dialogContent )
     {
         WidgetSettings.initDisplayStrings(context);
+        SuntimesUtils.initDisplayStrings(context);
+        utils = new SuntimesUtils();
 
         layout_timezone = (LinearLayout) dialogContent.findViewById(R.id.appwidget_timezone_custom_layout);
         label_timezone = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_custom_label);
@@ -229,16 +274,132 @@ public class TimeZoneDialog extends DialogFragment
 
         spinner_solartime = (Spinner) dialogContent.findViewById(R.id.appwidget_solartime);
         spinner_solartime.setAdapter(spinner_solartimeAdapter);
+
+        button_solartime_help = (ImageButton) dialogContent.findViewById(R.id.appwidget_solartime_help);
+        button_solartime_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HelpDialog helpDialog = new HelpDialog();
+                helpDialog.setContent(getString(R.string.help_general_solartime));
+                helpDialog.show(getFragmentManager(), DIALOGTAG_HELP);
+            }
+        });
+
+        layout_timezoneExtras = dialogContent.findViewById(R.id.appwidget_timezone_extrasgroup);
+        label_tzExtras0 = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_extras0);
     }
 
+    private void updateExtrasLabel(@NonNull Context context, int stringResID, long offset)
+    {
+        SuntimesUtils.TimeDisplayText dstSavings = utils.timeDeltaLongDisplayString(0L, offset, false, false, true);
+        ImageSpan dstIcon = SuntimesUtils.createDstSpan(context, 24, 24);
+        String dstString = (dstSavings.getRawValue() < 0 ? "-" : "+") + dstSavings.getValue();
+        String extrasString = getString(stringResID, dstString);
+
+        SpannableStringBuilder extrasSpan = SuntimesUtils.createSpan(context, extrasString, SuntimesUtils.SPANTAG_DST, dstIcon);
+        SpannableString boldedExtrasSpan = SuntimesUtils.createBoldSpan(SpannableString.valueOf(extrasSpan), extrasString, dstString);
+        label_tzExtras0.setText(boldedExtrasSpan);
+        layout_timezoneExtras.setVisibility(View.VISIBLE);
+    }
+
+    private void updateExtrasLabel(String text)
+    {
+        if (text == null)
+        {
+            layout_timezoneExtras.setVisibility(View.GONE);
+            label_tzExtras0.setText("");
+
+        } else {
+            label_tzExtras0.setText(text);
+            layout_timezoneExtras.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void updateExtras(Context context, boolean solarTime, Object item0)
+    {
+        if (solarTime)
+        {
+            WidgetSettings.SolarTimeMode item = (WidgetSettings.SolarTimeMode)item0;
+            if (item != null && item == WidgetSettings.SolarTimeMode.APPARENT_SOLAR_TIME)
+            {
+                int eot = WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.getTimeInMillis(), calculator);
+                updateExtrasLabel(getContext(), R.string.timezoneExtraApparentSolar, eot);
+            } else updateExtrasLabel(null);
+
+        } else {
+            WidgetTimezones.TimeZoneItem item = (WidgetTimezones.TimeZoneItem)item0;
+            if (item != null)
+            {
+                TimeZone timezone = TimeZone.getTimeZone(item.getID());
+                boolean usesDST = (Build.VERSION.SDK_INT < 24 ? timezone.useDaylightTime() : timezone.observesDaylightTime());
+                boolean inDST = usesDST && timezone.inDaylightTime(now.getTime());
+                if (inDST)
+                    updateExtrasLabel(context, R.string.timezoneExtraDST, (long)timezone.getDSTSavings());
+                else updateExtrasLabel(null);
+            } else updateExtrasLabel(null);
+        }
+    }
+
+    /**
+     * onSolarTimeSelected
+     */
+    private AdapterView.OnItemSelectedListener onSolarTimeSelected = new AdapterView.OnItemSelectedListener()
+    {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+        {
+            Context context = getContext();
+            if (layout_timezoneExtras != null && label_tzExtras0 != null && context != null) {
+                updateExtras(context, true, parent.getItemAtPosition(position));
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {}
+    };
+
+    /**
+     * onTimeZoneSelected
+     */
+    private AdapterView.OnItemSelectedListener onTimeZoneSelected = new AdapterView.OnItemSelectedListener()
+    {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+        {
+            Context context = getContext();
+            if (layout_timezoneExtras != null && label_tzExtras0 != null && context != null) {
+                updateExtras(context, false, parent.getItemAtPosition(position));
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {}
+    };
+
+    /**
+     * onTimeZoneModeSelected
+     */
     private Spinner.OnItemSelectedListener onTimeZoneModeSelected = new Spinner.OnItemSelectedListener()
     {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
+            spinner_timezone.setOnItemSelectedListener(null);
+            spinner_solartime.setOnItemSelectedListener(null);
+
             final WidgetSettings.TimezoneMode[] timezoneModes = WidgetSettings.TimezoneMode.values();
             WidgetSettings.TimezoneMode timezoneMode = timezoneModes[parent.getSelectedItemPosition()];
+
+            boolean useSolarTime = (timezoneMode == WidgetSettings.TimezoneMode.SOLAR_TIME);
+            if (useSolarTime)
+                spinner_solartime.setOnItemSelectedListener(onSolarTimeSelected);
+            else spinner_timezone.setOnItemSelectedListener(onTimeZoneSelected);
+
             setUseCustomTimezone((timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE));
             setUseSolarTime((timezoneMode == WidgetSettings.TimezoneMode.SOLAR_TIME));
+
+            Object item = (useSolarTime ? spinner_solartime.getSelectedItem() : spinner_timezone.getSelectedItem());
+            updateExtras(getContext(), useSolarTime, item);
+
             SuntimesUtils.announceForAccessibility(spinner_timezoneMode, timezoneMode.getDisplayString());
         }
 
@@ -410,6 +571,12 @@ public class TimeZoneDialog extends DialogFragment
             WidgetSettings.SolarTimeMode solartimeMode = WidgetSettings.SolarTimeMode.valueOf(solarModeString);
             spinner_solartime.setSelection(solartimeMode.ordinal());
         }
+
+        long nowMillis = bundle.getLong(KEY_NOW, Calendar.getInstance().getTimeInMillis());
+        now = Calendar.getInstance();
+        now.setTimeInMillis(nowMillis);
+
+        longitude = bundle.getDouble(KEY_LONGITUDE);
     }
 
     /**
@@ -457,6 +624,14 @@ public class TimeZoneDialog extends DialogFragment
         {
             bundle.putString(KEY_SOLARTIME_MODE, solarTimeMode.name());
         }
+
+        // save: now
+        if (now != null) {
+            bundle.putLong(KEY_NOW, now.getTimeInMillis());
+        }
+
+        // save: longitude
+        bundle.putDouble(KEY_LONGITUDE, longitude);
     }
 
     /**

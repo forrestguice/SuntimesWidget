@@ -46,15 +46,14 @@ import java.util.Set;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
-import com.forrestguice.suntimeswidget.themes.DarkThemeTranslucent;
+import com.forrestguice.suntimeswidget.themes.defaults.DarkThemeTranslucent;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 
-import com.forrestguice.suntimeswidget.themes.DarkTheme;
-import com.forrestguice.suntimeswidget.themes.DarkThemeTrans;
-import com.forrestguice.suntimeswidget.themes.LightTheme;
-import com.forrestguice.suntimeswidget.themes.LightThemeTrans;
-import com.forrestguice.suntimeswidget.themes.ThemeBackground;
+import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
+import com.forrestguice.suntimeswidget.themes.defaults.DarkThemeTrans;
+import com.forrestguice.suntimeswidget.themes.defaults.LightTheme;
+import com.forrestguice.suntimeswidget.themes.defaults.LightThemeTrans;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -302,7 +301,7 @@ public class WidgetThemes
     {
         private final Context context;
         private final SuntimesTheme.ThemeDescriptor[] themes;
-        private int selectedResourceID = R.color.grid_selected;
+        private int selectedResourceID = R.color.grid_selected_dark;    // TODO: themed
         private int nonselectedResourceID = R.color.transparent;
 
         public ThemeGridAdapter(Context context, SuntimesTheme.ThemeDescriptor[] themes)
@@ -521,7 +520,7 @@ public class WidgetThemes
 
                 View layout = view.findViewById(R.id.widgetframe_inner);
                 try {
-                    ThemeBackground background = theme.getBackground();
+                    SuntimesTheme.ThemeBackground background = theme.getBackground();
                     if (background.supportsCustomColors())
                         layout.setBackgroundColor(theme.getBackgroundColor());
                     else layout.setBackgroundResource(background.getResID());

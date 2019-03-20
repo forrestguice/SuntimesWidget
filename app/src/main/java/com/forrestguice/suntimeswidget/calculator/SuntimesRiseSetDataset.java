@@ -21,6 +21,8 @@ package com.forrestguice.suntimeswidget.calculator;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.ArrayList;
@@ -254,9 +256,15 @@ public class SuntimesRiseSetDataset
         }
     }
 
-    public WidgetSettings.Location location()
+    public Location location()
     {
         return dataActual.location();
+    }
+    public void setLocation(Location location)
+    {
+        for (SuntimesRiseSetData data : dataset ) {
+            data.setLocation(location);
+        }
     }
 
     public TimeZone timezone()

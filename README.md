@@ -1,6 +1,9 @@
 # Suntimes
 Android app (and widget collection) that displays sunlight and moonlight times for a given location. 
 
+<a href="https://f-droid.org/repository/browse/?fdid=com.forrestguice.suntimeswidget" target="_blank">
+<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="68" align="left" /></a><br /><br />
+
 [![F-Droid](https://img.shields.io/f-droid/v/com.forrestguice.suntimeswidget.svg)](https://f-droid.org/en/packages/com.forrestguice.suntimeswidget/)
 [![GitHub release](https://img.shields.io/github/release/forrestguice/SuntimesWidget.svg)](https://github.com/forrestguice/SuntimesWidget/releases)
 [![Build Status](https://travis-ci.org/forrestguice/SuntimesWidget.svg?branch=master)](https://travis-ci.org/forrestguice/SuntimesWidget)
@@ -12,21 +15,24 @@ Android app (and widget collection) that displays sunlight and moonlight times f
 * [Contributions](#project-contributions)
 
 Displays sunrise and sunset, twilights (civil / nautical / astronomical), blue and golden hour, solstices and equinoxes, moonrise and moonset, moon phases and illumination. 
+    
+<a href="https://forrestguice.github.io/SuntimesWidget/" target="_blank"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/images/ic_launcher_alarms.png" height="64" /></a> Suntimes Alarms<br />
+An alarm clock for Suntimes.<br/><br />
 
-<a href="https://f-droid.org/repository/browse/?fdid=com.forrestguice.suntimeswidget" target="_blank">
-<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="80"/></a>
-
+<a href="https://github.com/forrestguice/SuntimesCalendars/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/images/ic_launcher.png" height="64" /></a> <a href="https://github.com/forrestguice/SuntimesCalendars/">Suntimes Calendars</a> <br />
+A calendar provider add-on for Suntimes.<br/><br />        
+    
 The app:
-* displays the current time (system timezone, custom timezone, or solar time), and notes the time until the next rising/setting event.
+* displays the current time (system time zone, custom time zone, or solar time) 
+* displays the time until the next rising/setting event.
 * displays the sunrise and sunset, blue and golden hour, and twilight times (civil / nautical / astronomical).
 * displays the current moon phase, illumination, moonrise and moonset times, and major phase dates.
 * displays the current sunlight and moonlight projected over a world map (basic equirectangular, blue marble).
 * displays the solstices and equinoxes, and notes the time until the next event.
 * displays the sun's current position, and its position at sunrise, sunset, and noon.
 * displays the moon's current position, and its position at moonrise and moonset.
-* can set an alarm for the next sunrise or sunset (or other rising/setting event).
-* can provide the Calendar app with custom calendars (moon phase, solstice, and equinox events).
-* can display the configured location on a map (requires a map application), and configure the location from a map (using geo intent).
+* includes an Alarm Clock that can set a repeating alarm or notification for the next sunrise or sunset (or other rising/setting event).
+* can display the configured location on a map (requires a map application) and configure the location from a map (using geo intent).
 
 The app:
 * *does not* require GPS. The location is manually specified by default (and optionally obtained from GPS).
@@ -34,9 +40,9 @@ The app:
 
 Widgets are (re)configurable:
 * location (latitude, longitude, elevation).
-* timezone (system / custom), or solar time (local mean time, apparent solar time).
+* time zone (system / custom), or solar time (local mean time, apparent solar time).
 * user-defined titles (supporting limited substitutions).
-* misc options: "use elevation", "show seconds", "show noon", and "show comparison", etc.
+* misc. options: "use elevation", "show seconds", "show noon", and "show comparison", etc.
 
 Widgets are themeable and provide:
 * a theme editor and support for basic custom themes.
@@ -44,6 +50,9 @@ Widgets are themeable and provide:
 * a (default) light theme (and light w/ transparent background).
 
 Widgets are resizable and include...
+
+**Clock widgets:**
+* 1x1 digital clock widget that displays solar time (or a given timezone).
 
 **Sun widgets:**
 * 1x1 sun widget that displays the sunrise or sunset time.
@@ -80,7 +89,7 @@ Widgets are resizable and include...
 <img height="256px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/sunposwidget0_3x2_preview.png" align="center"></img>
 <br />Additional screenshots can be found on the <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Screenshots">project wiki</a> and in the <a href="https://github.com/forrestguice/SuntimesWidget/tree/gh-pages/doc/screenshots">gh-pages branch</a>.
 
-<img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.8.1/en/activity-main0-dark.png' width="280px" />&nbsp;&nbsp;<img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.8.1/en/activity-main0-light.png' width="280px" />
+<img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.9.5/en/activity-main0-dark.png' width="280px" />&nbsp;&nbsp;<img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.9.5/en/activity-main0-light.png' width="280px" />
 
 ## Privacy and Permissions ##
 
@@ -93,8 +102,14 @@ The app benefits from the following permissions...
 |---|---|---|
 |ACCESS_COARSE_LOCATION|To get current location.|v0.1.0|
 |ACCESS_FINE_LOCATION|To get current location (GPS).|v0.1.0|
-|SET_ALARM|To interact with the AlarmClock app.|v0.1.0|
-|WRITE_EXTERNAL_STORAGE|To export data (places, themes, etc) to file.|v0.2.2 (api<=18)|
+|BOOT_COMPLETED|To restore active alarms when the device boots.|v0.11.0|
+|SET_ALARM|To interact with the system AlarmClock app.|v0.1.0|
+|WRITE_EXTERNAL_STORAGE|To export data (places, themes, etc.) to file.|v0.2.2 (api<=18)|
+
+Version `0.9.*` contained the following additional permissions (removed in v0.10.0)...
+
+|Permission||Version|
+|---|---|---|
 |READ_CALENDAR|To interact with the Calendar app (access events).|v0.9.0|
 |WRITE_CALENDAR|To interact with the Calendar app (add/remove events).|v0.9.0|
 |READ_SYNC_STATS|To interact with the Calendar app (access custom calendars).|v0.9.0|
@@ -117,6 +132,7 @@ When submitting a bug please be detailed and specific. What did you expect the a
 
 ## Legal Stuff
 
+Copyright &#169; 2014-2019 Forrest Guice<br/>
 The goal of this project is an app that is free and open-source (FOSS). The source code is available under *GPLv3* (https://github.com/forrestguice/SuntimesWidget).
 
 Icons and images from:
@@ -126,7 +142,7 @@ Icons and images from:
 * "NASA Visible Earth: Blue Marble" [Public Domain] (https://visibleearth.nasa.gov/view_cat.php?categoryID=1484)
 
 Libraries used:
-* Time4A [LGPL-2.1] (http://github.com/MenoData/Time4A) 
+* Time4A [Apache License 2.0] (http://github.com/MenoData/Time4A) 
 * ca.rmen.sunrisesunset [LGPL-2.1] (http://github.com/caarmen/SunriseSunset)
 * sunrisesunsetlib-java [Apache License 2.0] (http://mikereedell.github.io/sunrisesunsetlib-java/) 
 * QuadFlask/colorpicker [Apache License 2.0] (https://github.com/QuadFlask/colorpicker) 
@@ -140,7 +156,8 @@ Hungarian translation by <u>Erci</u>.<br/>
 Catalan and Spanish translations by <u><a href="https://github.com/Raulvo">Raulvo</a></u>.<br/>
 Basque translation by <u>beriain</u>.<br/>
 Norwegian translation by <u>FTno</u>.<br/>
-Italian translation by <u>Matteo Caoduro</u>.
+Italian translation by <u>Matteo Caoduro</u>.<br/>
+Traditional Chinese translation by <u><a href=https://github.com/pggdt>ft42</a></u>.<br />
 
 [Contributions to the project](CONTRIBUTING.md) are welcome.
 

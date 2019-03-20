@@ -21,37 +21,57 @@
 
     <LinearLayout
         android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="?attr/dialogBackground"
-        android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
-        android:paddingTop="10dp" android:paddingBottom="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:text="@string/configLabel_schedalarm_mode"
-            />
-
-        <Spinner android:id="@+id/appwidget_schedalarm_mode"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
-            />
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="?attr/dialogBackground"
+            android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
+            android:paddingTop="12dp" android:paddingBottom="12dp">
 
-            <ImageView
-                android:id="@+id/appwidget_schedalarm_note_icon"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:src="?attr/icActionAbout"
-                tools:ignore="contentDescription" />
-
-            <TextView android:id="@+id/appwidget_schedalarm_note"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:paddingLeft="5dp" android:paddingRight="5dp"
-                android:text="@string/schedalarm_dialog_note"
+            <TextView android:id="@+id/appwidget_schedalarm_mode_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="@string/configLabel_schedalarm_mode"
                 />
+
+            <Spinner android:id="@+id/appwidget_schedalarm_mode"
+                android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/appwidget_schedalarm_note_icon"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:src="?attr/icActionAbout"
+                    tools:ignore="contentDescription" />
+
+                <TextView android:id="@+id/appwidget_schedalarm_note"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="4dp" android:paddingRight="4dp"
+                    android:text="@string/schedalarm_dialog_note"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
+
+            android:paddingTop="8dp" android:paddingBottom="8dp">
+
+            <TextView
+                android:id="@+id/appwidget_schedalarm_location"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:drawableLeft="?attr/icActionPlace" android:drawableStart="?attr/icActionPlace"
+                tools:text="Location" />
 
         </LinearLayout>
 

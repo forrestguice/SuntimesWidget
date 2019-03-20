@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 public class EquinoxDialog extends DialogFragment
 {
@@ -62,7 +63,7 @@ public class EquinoxDialog extends DialogFragment
         builder.setView(dialogContent);
         AlertDialog dialog = builder.create();
 
-        initViews(dialogContent);
+        equinoxView = (EquinoxView) dialogContent.findViewById(R.id.info_time_equinox);
         if (savedInstanceState != null)
         {
             Log.d("DEBUG", "EquinoxDialog onCreate (restoreState)");
@@ -70,6 +71,7 @@ public class EquinoxDialog extends DialogFragment
         }
 
         dialog.setOnShowListener(onShowListener);
+        themeViews(getContext());
         return dialog;
     }
 
@@ -84,9 +86,22 @@ public class EquinoxDialog extends DialogFragment
         }
     };
 
-    public void initViews(View dialogView)
+    private void themeViews(Context context)
     {
-        equinoxView = (EquinoxView) dialogView.findViewById(R.id.info_time_equinox);
+        if (themeOverride != null) {
+            equinoxView.themeViews(context, themeOverride);
+        }
+    }
+
+    private SuntimesTheme themeOverride = null;
+    public void themeViews(Context context, SuntimesTheme theme)
+    {
+        if (theme != null) {
+            themeOverride = theme;
+            if (equinoxView != null) {
+                themeViews(context);
+            }
+        }
     }
 
     public void updateViews()

@@ -27,12 +27,11 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.LightMapView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
-import com.forrestguice.suntimeswidget.themes.ThemeBackground;
 
 import java.util.Calendar;
 
@@ -132,7 +131,7 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
         themeViewsAzimuthElevationText(context, views, theme);
 
         colors = new LightMapView.LightMapColors();
-        if (theme.getBackground() == ThemeBackground.LIGHT)
+        if (theme.getBackground() == SuntimesTheme.ThemeBackground.LIGHT)
             colors.initDefaultLight(context);
         else colors.initDefaultDark(context);
 

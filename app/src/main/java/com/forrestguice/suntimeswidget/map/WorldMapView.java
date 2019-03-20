@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,18 +18,27 @@
 package com.forrestguice.suntimeswidget.map;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+
+import java.io.File;
 
 public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 {
@@ -67,10 +76,10 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         if (isInEditMode())
         {
             setBackgroundColor(Color.WHITE);
-            Bitmap b = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888);
-            setImageBitmap(b);
+            setImageBitmap(Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_8888));
         }
         setMapMode(context, mode);
+        themeViews(context);
     }
 
     public WorldMapWidgetSettings.WorldMapWidgetMode getMapMode()
@@ -86,7 +95,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         {
             case EQUIAZIMUTHAL_SIMPLE:
                 options.map = ContextCompat.getDrawable(context, R.drawable.worldmap2);
-                options.foregroundColor = ContextCompat.getColor(context, R.color.map_foreground);
+                options.foregroundColor = foregroundColor;
                 break;
 
             case EQUIRECTANGULAR_BLUEMARBLE:
@@ -97,31 +106,9 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             case EQUIRECTANGULAR_SIMPLE:
             default:
                 options.map = ContextCompat.getDrawable(context, R.drawable.worldmap);
-                options.foregroundColor = ContextCompat.getColor(context, R.color.map_foreground);
+                options.foregroundColor = foregroundColor;
                 break;
         }
-
-        options.backgroundColor = ContextCompat.getColor(context, R.color.map_background);
-        options.sunShadowColor = ContextCompat.getColor(context, R.color.map_sunshadow);
-        options.moonLightColor = ContextCompat.getColor(context, R.color.map_moonlight);
-        options.gridXColor = options.moonLightColor;
-        options.gridYColor = options.moonLightColor;
-
-        options.showMajorLatitudes = false;
-
-        int[] colorAttrs = {
-                R.attr.graphColor_pointFill,            // 0
-                R.attr.graphColor_pointStroke,          // 1
-                R.attr.moonriseColor,                   // 2
-                R.attr.moonsetColor                     // 3
-        };
-        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
-        int def = R.color.transparent;
-        options.sunFillColor = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
-        options.sunStrokeColor = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
-        options.moonFillColor = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
-        options.moonStrokeColor = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
-        typedArray.recycle();
     }
 
     public WorldMapTask.WorldMapOptions getOptions()
@@ -169,6 +156,47 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             Log.w(LOGTAG, "onSizeChanged: valid dimensions, triggering update...");
             updateViews(true);
         }
+    }
+
+    @SuppressLint("ResourceType")
+    private void themeViews(Context context)
+    {
+        foregroundColor = ContextCompat.getColor(context, R.color.map_foreground);
+        options.backgroundColor = ContextCompat.getColor(context, R.color.map_background);
+        options.sunShadowColor = ContextCompat.getColor(context, R.color.map_sunshadow);
+        options.moonLightColor = ContextCompat.getColor(context, R.color.map_moonlight);
+        options.gridXColor = options.moonLightColor;
+        options.gridYColor = options.moonLightColor;
+        options.showMajorLatitudes = false;
+
+        int[] colorAttrs = {
+                R.attr.graphColor_pointFill,            // 0
+                R.attr.graphColor_pointStroke,          // 1
+                R.attr.moonriseColor,                   // 2
+                R.attr.moonsetColor                     // 3
+        };
+        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+        int def = R.color.transparent;
+        options.sunFillColor = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
+        options.sunStrokeColor = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
+        options.moonFillColor = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
+        options.moonStrokeColor = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
+        typedArray.recycle();
+    }
+
+    private int foregroundColor;
+    public void themeViews(Context context, SuntimesTheme theme)
+    {
+        foregroundColor = theme.getMapForegroundColor();
+        options.backgroundColor = theme.getMapBackgroundColor();
+        options.sunShadowColor = theme.getMapShadowColor();
+        options.moonLightColor = theme.getMapHighlightColor();
+        options.gridXColor = options.moonLightColor;
+        options.gridYColor = options.moonLightColor;
+        options.sunFillColor = theme.getNoonIconColor();
+        options.sunStrokeColor = theme.getNoonIconStrokeColor();
+        options.moonFillColor = theme.getMoonFullColor();
+        options.moonStrokeColor = theme.getMoonWaningColor();
     }
 
     /**
@@ -317,6 +345,105 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     public static abstract class WorldMapTaskListener
     {
         public void onFinished( Bitmap result ) {}
+    }
+
+
+    @Override
+    public void setImageBitmap(Bitmap b)
+    {
+        this.bitmap = b;
+        super.setImageBitmap(b);
+    }
+
+    private Bitmap bitmap;
+    public Bitmap getBitmap()
+    {
+        return bitmap;
+    }
+
+    public void shareBitmap()
+    {
+        if (bitmap != null)
+        {
+            WorldMapExportTask exportTask = new WorldMapExportTask(getContext(), "SuntimesWorldMap", true, true);
+            exportTask.setTaskListener(new ExportTask.TaskListener()
+            {
+                @Override
+                public void onStarted()
+                {
+                    showProgress();
+                }
+
+                @Override
+                public void onFinished(ExportTask.ExportResult result)
+                {
+                    dismissProgress();
+
+                    Context context = getContext();
+                    if (context != null)
+                    {
+                        if (result.getResult())
+                        {
+                            Intent shareIntent = new Intent();
+                            shareIntent.setAction(Intent.ACTION_SEND);
+                            shareIntent.setType(result.getMimeType());
+                            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                            try {
+                                Uri shareURI = FileProvider.getUriForFile(context, "com.forrestguice.suntimeswidget.fileprovider", result.getExportFile());
+                                shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
+
+                                String successMessage = context.getString(R.string.msg_export_success, result.getExportFile().getAbsolutePath());
+                                Toast.makeText(context.getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
+
+                                context.startActivity(Intent.createChooser(shareIntent, context.getResources().getText(R.string.msg_export_to)));
+                                return;   // successful export ends here...
+
+                            } catch (Exception e) {
+                                Log.e(LOGTAG, "Failed to share file URI! " + e);
+                            }
+
+                        } else {
+                            File file = result.getExportFile();
+                            String path = ((file != null) ? file.getAbsolutePath() : "<path>");
+                            Toast.makeText(context.getApplicationContext(), context.getString(R.string.msg_export_failure, path), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+            });
+            exportTask.setBitmaps(new Bitmap[] { bitmap });
+            exportTask.execute();
+
+        } else Log.w(LOGTAG, "shareBitmap: null!");
+    }
+
+    private ProgressDialog progressDialog;
+    private void showProgress()
+    {
+        dismissProgress();
+        Context context = getContext();
+        if (context != null)
+        {
+            progressDialog = new ProgressDialog(context);
+            progressDialog.show();
+        }
+    }
+    private void dismissProgress()
+    {
+        if (progressDialog != null)
+        {
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+            progressDialog = null;
+        }
+    }
+
+    @Override
+    public void onDetachedFromWindow()
+    {
+        super.onDetachedFromWindow();
+        dismissProgress();
     }
 
 }

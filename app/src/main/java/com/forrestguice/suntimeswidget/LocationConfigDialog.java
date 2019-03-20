@@ -18,6 +18,7 @@
 package com.forrestguice.suntimeswidget;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -30,9 +31,13 @@ import android.support.v7.app.AlertDialog;
 import android.util.TypedValue;
 import android.view.View;
 
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+
 public class LocationConfigDialog extends DialogFragment
 {
     public static final String KEY_LOCATION_HIDETITLE = "hidetitle";
+    public static final String KEY_LOCATION_HIDEMODE = "hidemode";
 
     /**
      * The dialog content; in this case just a wrapper around a LocationConfigView.
@@ -58,6 +63,47 @@ public class LocationConfigDialog extends DialogFragment
         onCanceled = listener;
     }
 
+    /***
+     * LocationConfigDialogListener
+     */
+    protected LocationConfigDialogListener defaultDialogListener = new LocationConfigDialogListener()
+    {
+        @Override
+        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
+        {
+            return dialogContent.saveSettings(context);
+        }
+    };
+    protected LocationConfigDialogListener dialogListener = defaultDialogListener;
+
+    public void setDialogListener( LocationConfigDialogListener listener )
+    {
+        if (listener == null)
+            this.dialogListener = defaultDialogListener;
+        else this.dialogListener = listener;
+    }
+
+    public static abstract class LocationConfigDialogListener
+    {
+        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
+        {
+            return true;
+        }
+    }
+
+    /**
+     * setLocation
+     * @param location
+     */
+    private Location presetLocation = null;
+    public void setLocation(Context context, Location location)
+    {
+        presetLocation = location;
+        if (dialogContent != null) {
+            dialogContent.loadSettings(context, LocationConfigView.bundleData(presetLocation.getUri(), presetLocation.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
+        }
+    }
+
     /**
      * Show / hide the title widget.
      */
@@ -71,6 +117,23 @@ public class LocationConfigDialog extends DialogFragment
         }
     }
     public boolean getHideTitle() { return hideTitle; }
+
+    /***
+     * Show / hide the location mode; when hidden the mode is locked to user-defined.
+     */
+    private boolean hideMode = false;
+    public void setHideMode(boolean value)
+    {
+        hideMode = value;
+        if (dialogContent != null)
+        {
+            dialogContent.setHideMode(hideMode);
+        }
+    }
+    public boolean getHideMode()
+    {
+        return hideMode;
+    }
 
     /**
      * Preset data (in the form of a geo URI)
@@ -132,8 +195,9 @@ public class LocationConfigDialog extends DialogFragment
 
         final FragmentActivity myParent = getActivity();
         dialogContent = new com.forrestguice.suntimeswidget.LocationConfigView(myParent);
-        dialogContent.init(myParent, true);
         dialogContent.setHideTitle(hideTitle);
+        dialogContent.setHideMode(hideMode);
+        dialogContent.init(myParent, true);
 
         Resources r = getResources();
         int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, r.getDisplayMetrics());
@@ -180,7 +244,8 @@ public class LocationConfigDialog extends DialogFragment
                     public void onClick(View view)
                     {
                         dialogContent.cancelGetFix();
-                        if (dialogContent.saveSettings(myParent))
+                        if (dialogListener != null &&
+                                dialogListener.saveSettings(myParent, dialogContent.getLocationMode(), dialogContent.getLocation()))
                         {
                             LocationConfigView.LocationViewMode mode = dialogContent.getMode();
                             switch (mode)
@@ -206,8 +271,12 @@ public class LocationConfigDialog extends DialogFragment
         if (savedInstanceState != null)
         {
             loadSettings(savedInstanceState);
+
         } else if (presetData != null) {
             dialogContent.loadSettings(myParent, presetData);
+
+        } else if (presetLocation != null) {
+            setLocation(getContext(), presetLocation);
         }
         return dialog;
     }
@@ -230,6 +299,7 @@ public class LocationConfigDialog extends DialogFragment
     {
         //Log.d("DEBUG", "LocationConfigDialog saveSettings (bundle)");
         bundle.putBoolean(KEY_LOCATION_HIDETITLE, hideTitle);
+        bundle.putBoolean(KEY_LOCATION_HIDEMODE, hideMode);
         if (dialogContent != null)
         {
             dialogContent.saveSettings(bundle);
@@ -245,8 +315,10 @@ public class LocationConfigDialog extends DialogFragment
         hideTitle = bundle.getBoolean(KEY_LOCATION_HIDETITLE);
         setHideTitle(hideTitle);
 
-        if (dialogContent != null)
-        {
+        hideMode = bundle.getBoolean(KEY_LOCATION_HIDEMODE);
+        setHideMode(hideMode);
+
+        if (dialogContent != null) {
             dialogContent.loadSettings(getActivity(), bundle);
         }
     }

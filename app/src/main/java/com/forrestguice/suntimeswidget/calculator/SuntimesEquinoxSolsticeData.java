@@ -154,6 +154,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
         //Log.v("SuntimesWidgetData", "timezone: " + timezone);
 
         initCalculator(context);
+        initTimezone(context);
 
         todaysCalendar = Calendar.getInstance(timezone);
         otherCalendar = Calendar.getInstance(timezone);

@@ -21,8 +21,8 @@ package com.forrestguice.suntimeswidget.calculator.time4a;
 import android.content.Context;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import net.time4j.Moment;
 import net.time4j.PlainDate;
@@ -60,19 +60,19 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
-    public void init(WidgetSettings.Location locationSetting, String timezone)
+    public void init(Location locationSetting, String timezone)
     {
         init(locationSetting, TimeZone.getTimeZone(timezone));
     }
 
     @Override
-    public void init(WidgetSettings.Location location, TimeZone timezone)
+    public void init(Location location, TimeZone timezone)
     {
         init(location, timezone, null);
     }
 
     @Override
-    public void init(WidgetSettings.Location location, TimeZone timezone, Context context)
+    public void init(Location location, TimeZone timezone, Context context)
     {
         this.solarTime = SolarTime.ofLocation(location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), clampAltitude(location.getAltitudeAsInteger()), getCalculator());
         this.timezone = timezone;
@@ -387,6 +387,13 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         Moment moment = TemporalType.JAVA_UTIL_DATE.translate(dateTime.getTime());
         net.time4j.calendar.astro.SunPosition position = net.time4j.calendar.astro.SunPosition.at(moment, solarTime);
         return position.getShadowLength(objHeight);
+    }
+
+    @Override
+    public double equationOfTime(Calendar dateTime)
+    {
+        Moment moment = TemporalType.JAVA_UTIL_DATE.translate(dateTime.getTime());
+        return SolarTime.equationOfTime(moment, solarTime.getCalculator().name());
     }
 
 }

@@ -17,6 +17,7 @@
 */
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.SuppressLint;
 import android.appwidget.AppWidgetManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -105,12 +106,13 @@ public class LocationConfigView extends LinearLayout
 
     public boolean isInitialized() { return isInitialized; }
 
-    public WidgetSettings.Location getLocation()
+    public com.forrestguice.suntimeswidget.calculator.core.Location getLocation()
     {
         String name = text_locationName.getText().toString();
         String latitude = text_locationLat.getText().toString();
         String longitude = text_locationLon.getText().toString();
 
+        WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(getContext(), appWidgetId);
         String altitude = text_locationAlt.getText().toString();
         if (altitude.trim().isEmpty()) {
             altitude = "0";
@@ -133,9 +135,10 @@ public class LocationConfigView extends LinearLayout
             latitude = WidgetSettings.PREF_DEF_LOCATION_LATITUDE;
             longitude = WidgetSettings.PREF_DEF_LOCATION_LONGITUDE;
             altitude = WidgetSettings.PREF_DEF_LOCATION_ALTITUDE;
+            units = WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH;
         }
 
-        return new WidgetSettings.Location(name, latitude, longitude, altitude);
+        return new com.forrestguice.suntimeswidget.calculator.core.Location(name, latitude, longitude, altitude, units == WidgetSettings.LengthUnit.METRIC);
     }
 
     public WidgetSettings.LocationMode getLocationMode()
@@ -168,8 +171,36 @@ public class LocationConfigView extends LinearLayout
     public void setHideTitle(boolean value)
     {
         hideTitle = value;
+
         TextView groupTitle = (TextView)findViewById(R.id.appwidget_location_grouptitle);
-        groupTitle.setVisibility( (hideTitle ? View.GONE : View.VISIBLE) );
+        if (groupTitle != null) {
+            groupTitle.setVisibility( (hideTitle ? View.GONE : View.VISIBLE) );
+        }
+    }
+
+    /**
+     * Property: hide mode
+     */
+    private boolean hideMode = false;
+    public boolean getHideMode()
+    {
+        return hideMode;
+    }
+    public void setHideMode(boolean value)
+    {
+        hideMode = value;
+        if (hideMode)
+        {
+            View locationModeLayout = findViewById(R.id.appwidget_location_mode_layout);
+            if (locationModeLayout != null) {
+                locationModeLayout.setVisibility( hideMode ? View.GONE : View.VISIBLE );
+            }
+
+            View locationModeDivider = findViewById(R.id.appwidget_location_mode_divider);
+            if (locationModeDivider != null) {
+                locationModeDivider.setVisibility( hideMode ? View.GONE : View.VISIBLE );
+            }
+        }
     }
 
     /**
@@ -273,6 +304,7 @@ public class LocationConfigView extends LinearLayout
 
     private TextView labl_locationAlt;
     private EditText text_locationAlt;
+    private TextView text_locationAltUnits;
 
     private TextView labl_locationLat;
     private EditText text_locationLat;
@@ -306,10 +338,10 @@ public class LocationConfigView extends LinearLayout
         @Override
         public void updateUI(Location... locations)
         {
-            DecimalFormat formatter = WidgetSettings.Location.decimalDegreesFormatter();
+            DecimalFormat formatter = com.forrestguice.suntimeswidget.calculator.core.Location.decimalDegreesFormatter();
             text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
             text_locationLon.setText( formatter.format(locations[0].getLongitude()) );
-            text_locationAlt.setText( formatter.format(locations[0].getAltitude()) );
+            text_locationAlt.setText( getAltitudeString(locations[0], formatter, WidgetSettings.loadLengthUnitsPref(getContext(), appWidgetId)) );
         }
 
         @Override
@@ -333,6 +365,20 @@ public class LocationConfigView extends LinearLayout
         }
     };
 
+    protected CharSequence getAltitudeString(Location location, DecimalFormat formatter, WidgetSettings.LengthUnit units)
+    {
+        switch (units)
+        {
+            case IMPERIAL:
+            case USC:
+                return formatter.format(WidgetSettings.LengthUnit.metersToFeet(location.getAltitude()));
+
+            case METRIC:
+            default:
+                return formatter.format(location.getAltitude());
+        }
+    }
+
     private ImageButton button_auto;
     private ProgressBar progress_auto;
     private GetFixUI getFixUI_autoMode = new GetFixUI()
@@ -349,10 +395,10 @@ public class LocationConfigView extends LinearLayout
         @Override
         public void updateUI(Location... locations)
         {
-            DecimalFormat formatter = WidgetSettings.Location.decimalDegreesFormatter();
+            DecimalFormat formatter = com.forrestguice.suntimeswidget.calculator.core.Location.decimalDegreesFormatter();
             text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
             text_locationLon.setText( formatter.format(locations[0].getLongitude()) );
-            text_locationAlt.setText( formatter.format(locations[0].getAltitude()) );
+            text_locationAlt.setText( getAltitudeString(locations[0], formatter, WidgetSettings.loadLengthUnitsPref(getContext(), appWidgetId)) );
         }
 
         @Override
@@ -442,6 +488,7 @@ public class LocationConfigView extends LinearLayout
 
         labl_locationAlt = (TextView)findViewById(R.id.appwidget_location_alt_label);
         text_locationAlt = (EditText)findViewById(R.id.appwidget_location_alt);
+        text_locationAltUnits = (TextView)findViewById(R.id.appwidget_location_alt_units);
 
         // custom mode: toggle edit mode
         button_edit = (ImageButton)findViewById(R.id.appwidget_location_edit);
@@ -475,6 +522,14 @@ public class LocationConfigView extends LinearLayout
         getFixHelper = new GetFixHelper(myParent, getFixUI_editMode);    // 0; getFixUI_editMode
         getFixHelper.addUI(getFixUI_autoMode);                           // 1; getFixUI_autoMode
         updateGPSButtonIcons();
+
+        if (hideTitle) {
+            setHideTitle(hideTitle);
+        }
+
+        if (hideMode) {
+            setHideMode(hideMode);
+        }
     }
 
 
@@ -505,12 +560,32 @@ public class LocationConfigView extends LinearLayout
     /**
      * @param location a WidgetSettings.Location instance to update from
      */
-    private void updateViews(WidgetSettings.Location location)
+    @SuppressLint("SetTextI18n")
+    private void updateViews(com.forrestguice.suntimeswidget.calculator.core.Location location)
     {
         text_locationLat.setText(location.getLatitude());
         text_locationLon.setText(location.getLongitude());
         text_locationName.setText(location.getLabel());
-        text_locationAlt.setText(location.getAltitude());
+
+        Context context = getContext();
+        if (context != null)
+        {
+            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(getContext(), appWidgetId);
+            switch (units)
+            {
+                case IMPERIAL:
+                case USC:
+                    text_locationAlt.setText( Double.toString(WidgetSettings.LengthUnit.metersToFeet(location.getAltitudeAsDouble())) );
+                    text_locationAltUnits.setText(context.getString(R.string.units_feet_short));
+                    break;
+
+                case METRIC:
+                default:
+                    text_locationAlt.setText(location.getAltitude());
+                    text_locationAltUnits.setText(context.getString(R.string.units_meters));
+                    break;
+            }
+        }
     }
 
     /**
@@ -530,7 +605,7 @@ public class LocationConfigView extends LinearLayout
             spinner_locationMode.setSelection(locationMode.ordinal());
         }
 
-        WidgetSettings.Location location = WidgetSettings.loadLocationPref(context, appWidgetId);
+        com.forrestguice.suntimeswidget.calculator.core.Location location = WidgetSettings.loadLocationPref(context, appWidgetId);
         updateViews(location);
     }
 
@@ -563,12 +638,12 @@ public class LocationConfigView extends LinearLayout
         String longitude = bundle.getString(KEY_LOCATION_LONGITUDE);
         String latitude = bundle.getString(KEY_LOCATION_LATITUDE);
         String altitude = bundle.getString(KEY_LOCATION_ALTITUDE);
-        WidgetSettings.Location location;
+        com.forrestguice.suntimeswidget.calculator.core.Location location;
         if (longitude != null && latitude != null)
         {
             if (altitude != null)
-                location = new WidgetSettings.Location(label, latitude, longitude, altitude);
-            else location = new WidgetSettings.Location(label, latitude, longitude);
+                location = new com.forrestguice.suntimeswidget.calculator.core.Location(label, latitude, longitude, altitude);
+            else location = new com.forrestguice.suntimeswidget.calculator.core.Location(label, latitude, longitude);
 
         } else {
             Log.w("LocationConfigView", "Bundle contained null lat or lon; falling back to saved prefs.");
@@ -588,6 +663,10 @@ public class LocationConfigView extends LinearLayout
                 viewMode = LocationViewMode.MODE_CUSTOM_SELECT;
             }
             setMode(viewMode);
+
+            if (viewMode == LocationViewMode.MODE_CUSTOM_SELECT) {
+                populateLocationList();
+            }
         }
 
         getFixHelper.loadSettings(bundle);
@@ -619,7 +698,7 @@ public class LocationConfigView extends LinearLayout
             String longitude = text_locationLon.getText().toString();
             String altitude = text_locationAlt.getText().toString();
             String name = text_locationName.getText().toString();
-            WidgetSettings.Location location = new WidgetSettings.Location(name, latitude, longitude, altitude);
+            com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(name, latitude, longitude, altitude, WidgetSettings.loadLengthUnitsPref(context, appWidgetId) == WidgetSettings.LengthUnit.METRIC);
             WidgetSettings.saveLocationPref(context, appWidgetId, location);
             return true;
         }
@@ -653,6 +732,10 @@ public class LocationConfigView extends LinearLayout
 
     public static Bundle bundleData( Uri data, String label )
     {
+        return bundleData(data, label, LocationViewMode.MODE_CUSTOM_ADD);
+    }
+    public static Bundle bundleData( Uri data, String label, LocationViewMode viewMode )
+    {
         String lat = "";
         String lon = "";
         String alt = "";
@@ -679,7 +762,7 @@ public class LocationConfigView extends LinearLayout
         }
 
         Bundle bundle = new Bundle();
-        bundle.putString(KEY_DIALOGMODE, LocationViewMode.MODE_CUSTOM_ADD.name());
+        bundle.putString(KEY_DIALOGMODE, viewMode.name());
         bundle.putString(KEY_LOCATION_MODE, WidgetSettings.LocationMode.CUSTOM_LOCATION.name());
         bundle.putString(KEY_LOCATION_LATITUDE, lat);
         bundle.putString(KEY_LOCATION_LONGITUDE, lon);
@@ -874,7 +957,7 @@ public class LocationConfigView extends LinearLayout
     }
     public void copyLocationToClipboard(Context context, boolean silent)
     {
-        WidgetSettings.Location location = getLocation();
+        com.forrestguice.suntimeswidget.calculator.core.Location location = getLocation();
         String clipboardText = location.toString();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
@@ -950,7 +1033,7 @@ public class LocationConfigView extends LinearLayout
 
             if (cursor.getColumnCount() >= 4)
             {
-                updateViews(new WidgetSettings.Location(cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
+                updateViews(new com.forrestguice.suntimeswidget.calculator.core.Location(cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
             }
         }
         public void onNothingSelected(AdapterView<?> parent) {}

@@ -24,14 +24,14 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 public class LocationListTask extends AsyncTask<Object, Object, LocationListTask.LocationListTaskResult>
 {
     private GetFixDatabaseAdapter db;
-    private WidgetSettings.Location selected;
+    private Location selected;
 
-    public LocationListTask(Context context, WidgetSettings.Location selected)
+    public LocationListTask(Context context, Location selected)
     {
         db = new GetFixDatabaseAdapter(context.getApplicationContext());
         this.selected = selected;

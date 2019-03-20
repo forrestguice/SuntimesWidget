@@ -29,6 +29,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -111,7 +112,7 @@ public class SuntimesThemeTest extends SuntimesActivityTestBase
     public static final String TESTDEF_NAME = "test";
     public static final String TESTDEF_DISPLAYSTRING = "Test";
     public static final int TESTDEF_VERSION = 1;
-    public static final ThemeBackground TESTDEF_BACKGROUND = ThemeBackground.DARK;
+    public static final SuntimesTheme.ThemeBackground TESTDEF_BACKGROUND = SuntimesTheme.ThemeBackground.DARK;
     public static final int[] TESTDEF_PADDING = {1, 2, 3, 4};
     public static final float TESTDEF_TITLESIZE = 10;
     public static final float TESTDEF_TEXTSIZE = 10;

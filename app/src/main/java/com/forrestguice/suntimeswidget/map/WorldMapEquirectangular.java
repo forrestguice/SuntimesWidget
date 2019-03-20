@@ -25,9 +25,9 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.Calendar;
@@ -114,7 +114,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
             SuntimesCalculator calculator = data.calculator();
             SuntimesCalculator.SunPosition sunPos = calculator.getSunPosition(now);
             SuntimesCalculator.MoonPosition moonPos = calculator.getMoonPosition(now);
-            WidgetSettings.Location location = data.location();
+            Location location = data.location();
 
             long gmtMillis = now.getTimeInMillis() + (long)(WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.get(Calendar.MONTH)) * 60 * 1000);
             double gmtHours = (((gmtMillis / 1000d) / 60d) / 60d) % 24d;
@@ -213,7 +213,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
 
             ////////////////
             // draw sun
-            if (options.showSunPosition)
+            if (options.showSunPosition && options.showSunShadow)
             {
                 int sunX = (int) (mid[0] - ((ghaSun180 / 180d) * mid[0]));
                 int sunY = (int) (mid[1] - ((sunPos.declination / 90d) * mid[1]));
@@ -222,7 +222,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
 
             ////////////////
             // draw moon
-            if (options.showMoonPosition)
+            if (options.showMoonPosition && options.showMoonLight)
             {
                 int moonX = (int) (mid[0] - ((moonPos2[0] / 180d) * mid[0]));
                 int moonY = (int) (mid[1] - ((moonPos2[1] / 90d) * mid[1]));

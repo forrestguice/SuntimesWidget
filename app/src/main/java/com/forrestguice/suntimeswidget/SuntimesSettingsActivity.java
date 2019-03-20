@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,29 +19,31 @@
 package com.forrestguice.suntimeswidget;
 
 import android.annotation.SuppressLint;
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -50,20 +52,30 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.widget.Toast;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
-import com.forrestguice.suntimeswidget.calendar.SuntimesCalendarTask;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.LengthPreference;
 import com.forrestguice.suntimeswidget.settings.SummaryListPreference;
+import com.forrestguice.suntimeswidget.settings.ThemePreference;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
 import java.io.File;
 import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+
+import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_APPEARANCE_THEME_DARK;
+import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT;
 
 /**
  * A preferences activity for the main app;
@@ -74,14 +86,17 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     public static final String LOG_TAG = "SuntimesSettings";
 
     final static String ACTION_PREFS_GENERAL = "com.forrestguice.suntimeswidget.PREFS_GENERAL";
-    final static String ACTION_PREFS_CALENDAR = "com.forrestguice.suntimeswidget.PREFS_CALENDAR";
+    final static String ACTION_PREFS_ALARMCLOCK = "com.forrestguice.suntimeswidget.PREFS_ALARMCLOCK";
     final static String ACTION_PREFS_LOCALE = "com.forrestguice.suntimeswidget.PREFS_LOCALE";
     final static String ACTION_PREFS_UI = "com.forrestguice.suntimeswidget.PREFS_UI";
     final static String ACTION_PREFS_WIDGETLIST = "com.forrestguice.suntimeswidget.PREFS_WIDGETLIST";
     final static String ACTION_PREFS_PLACES = "com.forrestguice.suntimeswidget.PREFS_PLACES";
 
-    public static final int REQUEST_CALENDARPREFSFRAGMENT_ENABLED = 2;
-    public static final int REQUEST_CALENDARPREFSFRAGMENT_DISABLED = 4;
+    public static String calendarPackage = "com.forrestguice.suntimescalendars";
+    public static String calendarActivity = "com.forrestguice.suntimeswidget.calendar.SuntimesCalendarActivity";
+
+    public static final int REQUEST_PICKTHEME_LIGHT = 20;
+    public static final int REQUEST_PICKTHEME_DARK = 30;
 
     private Context context;
     private PlacesPrefsBase placesPrefBase = null;
@@ -114,6 +129,36 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         PreferenceManager.getDefaultSharedPreferences(context).registerOnSharedPreferenceChangeListener(onChangedNeedingRebuild);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        Log.d(LOG_TAG, "onActivityResult: " + requestCode + " (" + resultCode + ")");
+        if (requestCode == REQUEST_PICKTHEME_LIGHT || requestCode == REQUEST_PICKTHEME_DARK) {
+            onPickTheme(requestCode, resultCode, data);
+        }
+    }
+
+    private void onPickTheme(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode == RESULT_OK)
+        {
+            String selection = data.getStringExtra(SuntimesTheme.THEME_NAME);
+            boolean adapterModified = data.getBooleanExtra(WidgetThemeListActivity.ADAPTER_MODIFIED, false);
+            Log.d("onPickTheme", "Picked " + selection + " (adapterModified:" + adapterModified + ")");
+
+            if (selection != null)
+            {
+                SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+                pref.putString((requestCode == REQUEST_PICKTHEME_LIGHT ? PREF_KEY_APPEARANCE_THEME_LIGHT : PREF_KEY_APPEARANCE_THEME_DARK), selection);
+                pref.apply();
+                rebuildActivity();
+
+            } else if (adapterModified) {
+                rebuildActivity();
+            }
+        }
+    }
+
     /**
      * legacy pref api used for pre honeycomb devices, while honeycomb+ uses the fragment based api.
      */
@@ -131,9 +176,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 addPreferencesFromResource(R.xml.preference_general);
                 initPref_general();
 
-            } else if (action.equals(ACTION_PREFS_CALENDAR)) {
-                addPreferencesFromResource(R.xml.preference_calendars);
-                initPref_calendars();
+            } else if (action.equals(ACTION_PREFS_ALARMCLOCK)) {
+                addPreferencesFromResource(R.xml.preference_alarms);
+                initPref_alarms();
 
             } else if (action.equals(ACTION_PREFS_LOCALE)) {
                 //noinspection deprecation
@@ -219,37 +264,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             themeChanged = !prevTheme.equals(appTheme);
         }
 
-        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) && (themeChanged))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
         {
-            invalidateHeaders();
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
-    {
-        if (grantResults.length > 0 && permissions.length > 0)
-        {
-            switch (requestCode)
-            {
-                case REQUEST_CALENDARPREFSFRAGMENT_ENABLED:
-                case REQUEST_CALENDARPREFSFRAGMENT_DISABLED:
-                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                    {
-                        boolean enabled = requestCode == (REQUEST_CALENDARPREFSFRAGMENT_ENABLED);
-                        runCalendarTask(SuntimesSettingsActivity.this, enabled);
-
-                        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
-                        pref.putBoolean(AppSettings.PREF_KEY_CALENDARS_ENABLED, enabled);
-                        pref.apply();
-
-                        if (tmp_calendarPref != null)
-                        {
-                            tmp_calendarPref.setChecked(enabled);
-                            tmp_calendarPref = null;
-                        }
-                    }
-                    break;
+            if (themeChanged) {
+                invalidateHeaders();
             }
         }
     }
@@ -262,6 +280,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     }
 
     /**
+     * forces styled icons on headers
      * @param target the target list to place headers into
      */
     @Override
@@ -272,17 +291,44 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         {
             loadHeadersFromResource(R.xml.preference_headers, target);
 
-            TypedValue typedValue = new TypedValue();   // force styled icons on headers
-            int[] icActionAttr = new int[] { R.attr.icActionSettings };
+            TypedValue typedValue = new TypedValue();
+            int[] icActionAttr = new int[] { R.attr.icActionSettings, R.attr.icActionLocale, R.attr.icActionPlace, R.attr.icActionCalendar, R.attr.icActionAppearance, R.attr.icActionWidgets, R.attr.icActionAlarm };
             TypedArray a = obtainStyledAttributes(typedValue.data, icActionAttr);
             int settingsIcon = a.getResourceId(0, R.drawable.ic_action_settings);
+            int localeIcon = a.getResourceId(1, R.drawable.ic_action_locale);
+            int placesIcon = a.getResourceId(2, R.drawable.ic_action_place);
+            int calendarIcon = a.getResourceId(3, R.drawable.ic_calendar);
+            int paletteIcon = a.getResourceId(4, R.drawable.ic_palette);
+            int widgetIcon = a.getResourceId(5, R.drawable.ic_action_widget);
+            int alarmIcon = a.getResourceId(6, R.drawable.ic_action_alarms);
             a.recycle();
 
             for (Header header : target)
             {
                 if (header.iconRes == 0)
                 {
-                    header.iconRes = settingsIcon;
+                    if (header.fragment != null)
+                    {
+                        if (header.fragment.endsWith("LocalePrefsFragment")) {
+                            header.iconRes = localeIcon;
+                        } else if (header.fragment.endsWith("PlacesPrefsFragment")) {
+                            header.iconRes = placesIcon;
+                        } else if (header.fragment.endsWith("CalendarPrefsFragment")) {
+                            header.iconRes = calendarIcon;
+                        } else if (header.fragment.endsWith("AlarmPrefsFragment")) {
+                            header.iconRes = alarmIcon;
+                        } else if (header.fragment.endsWith("UIPrefsFragment")) {
+                            header.iconRes = paletteIcon;
+                        } else header.iconRes = settingsIcon;
+                    } else {
+                        if (header.id == R.id.prefHeaderWidgets)
+                            header.iconRes = widgetIcon;
+                        //else if (header.id == R.id.prefHeaderAlarmClock)
+                            //header.iconRes = alarmIcon;
+                        //else if (header.id == R.id.prefHeaderCalendar)
+                            //header.iconRes = calendarIcon;
+                        else header.iconRes = settingsIcon;
+                    }
                 }
             }
         }
@@ -296,6 +342,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     protected boolean isValidFragment(String fragmentName)
     {
         return GeneralPrefsFragment.class.getName().equals(fragmentName) ||
+               AlarmPrefsFragment.class.getName().equals(fragmentName) ||
                CalendarPrefsFragment.class.getName().equals(fragmentName) ||
                LocalePrefsFragment.class.getName().equals(fragmentName) ||
                UIPrefsFragment.class.getName().equals(fragmentName) ||
@@ -308,7 +355,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
         {
             if (key.equals(AppSettings.PREF_KEY_LOCALE) || key.equals(AppSettings.PREF_KEY_LOCALE_MODE)
-                    || key.equals(AppSettings.PREF_KEY_APPEARANCE_THEME))
+                    || key.equals(AppSettings.PREF_KEY_APPEARANCE_THEME) || key.endsWith(WidgetSettings.PREF_KEY_GENERAL_UNITS_LENGTH))
             {
                 //Log.d("SettingsActivity", "Locale change detected; restarting activity");
                 updateLocale();
@@ -416,6 +463,26 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
             // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
             WidgetSettings.saveShowHoursPref(this, 0, sharedPreferences.getBoolean(key, WidgetSettings.PREF_DEF_GENERAL_SHOWHOURS));
+            return;
+        }
+
+        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_OBSERVERHEIGHT))
+        {
+            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
+            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
+            try {
+                WidgetSettings.saveObserverHeightPref(this, 0,
+                        Float.parseFloat(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_OBSERVERHEIGHT + "")));
+            } catch (NumberFormatException e) {
+                Log.e(LOG_TAG, "onPreferenceChangeD: Failed to persist observerHeight: bad value!" + e);
+            }
+        }
+
+        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_UNITS_LENGTH))
+        {
+            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
+            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
+            WidgetSettings.saveLengthUnitsPref(this, 0, WidgetSettings.getLengthUnit(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH.name())));
             return;
         }
     }
@@ -530,6 +597,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             initPref_calculator(this, moonCalculatorPref, new int[] {SuntimesCalculator.FEATURE_MOON}, WidgetSettings.PREF_DEF_GENERAL_CALCULATOR_MOON);
             loadPref_calculator(this, moonCalculatorPref,"moon");
         }
+
+        String key_observerHeight = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_OBSERVERHEIGHT;
+        LengthPreference observerHeightPref = (LengthPreference) findPreference(key_observerHeight);
+        if (observerHeightPref != null)
+        {
+            initPref_observerHeight(this, observerHeightPref);
+            loadPref_observerHeight(this, observerHeightPref);
+        }
     }
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private static void initPref_general(PreferenceFragment fragment)
@@ -568,12 +643,22 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             initPref_calculator(context, moonCalculatorPref, new int[] {SuntimesCalculator.FEATURE_MOON}, WidgetSettings.PREF_DEF_GENERAL_CALCULATOR_MOON);
             loadPref_calculator(context, moonCalculatorPref, "moon");
         }
+
+        String key_observerHeight = WidgetSettings.PREF_PREFIX_KEY + "0" + WidgetSettings.PREF_PREFIX_KEY_GENERAL + WidgetSettings.PREF_KEY_GENERAL_OBSERVERHEIGHT;
+        LengthPreference observerHeightPref = (LengthPreference) fragment.findPreference(key_observerHeight);
+        if (observerHeightPref != null)
+        {
+            initPref_observerHeight(fragment.getActivity(), observerHeightPref);
+            loadPref_observerHeight(fragment.getActivity(), observerHeightPref);
+        }
     }
 
-
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
 
+    /**
+     * Calendar Prefs
+     */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class CalendarPrefsFragment extends PreferenceFragment
     {
@@ -581,84 +666,48 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         public void onCreate(Bundle savedInstanceState)
         {
             super.onCreate(savedInstanceState);
-            AppSettings.initLocale(getActivity());
-            Log.i("CalendarPrefsFragment", "Arguments: " + getArguments());
 
-            PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_calendars, false);
-            addPreferencesFromResource(R.xml.preference_calendars);
+            Intent calendarIntent = new Intent();
+            calendarIntent.setComponent(new ComponentName(calendarPackage, calendarActivity));
+            calendarIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            initPref_calendars(CalendarPrefsFragment.this);
-        }
-    }
-
-    private void initPref_calendars()
-    {
-        CheckBoxPreference calendarsEnabledPref = (CheckBoxPreference) findPreference(AppSettings.PREF_KEY_CALENDARS_ENABLED);
-        initPref_calendars(this, calendarsEnabledPref);
-    }
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private static void initPref_calendars(PreferenceFragment fragment)
-    {
-        CheckBoxPreference calendarsEnabledPref = (CheckBoxPreference) fragment.findPreference(AppSettings.PREF_KEY_CALENDARS_ENABLED);
-        initPref_calendars(fragment.getActivity(), calendarsEnabledPref);
-    }
-    private static void initPref_calendars(final Activity activity, final CheckBoxPreference enabledPref )
-    {
-        final Preference.OnPreferenceChangeListener onPreferenceChanged0 = new Preference.OnPreferenceChangeListener()
-        {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue)
+            PackageManager packageManager = getActivity().getPackageManager();
+            if (calendarIntent.resolveActivity(packageManager) != null)
             {
-                boolean enabled = (Boolean)newValue;
-                int calendarPermission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_CALENDAR);
-                if (calendarPermission != PackageManager.PERMISSION_GRANTED)
-                {
-                    final int requestCode = (enabled ? REQUEST_CALENDARPREFSFRAGMENT_ENABLED : REQUEST_CALENDARPREFSFRAGMENT_DISABLED);
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_CALENDAR))
-                    {
-                        String permissionMessage = activity.getString(R.string.privacy_permission_calendar);
-                        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                        builder.setTitle(activity.getString(R.string.privacy_permissiondialog_title))
-                                .setMessage(SuntimesUtils.fromHtml(permissionMessage))
-                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
-                                {
-                                    public void onClick(DialogInterface dialog, int which)
-                                    {
-                                        ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.WRITE_CALENDAR }, requestCode);
-                                        tmp_calendarPref = enabledPref;
-                                    }
-                                });
+                try {
+                    startActivity(calendarIntent);
+                    getActivity().finish();
+                    return;
 
-                        if (Build.VERSION.SDK_INT >= 11)
-                            builder.setIconAttribute(R.attr.icActionWarning);
-                        else builder.setIcon(R.drawable.ic_action_warning);
-
-                        builder.show();
-                        return false;
-
-                    } else {
-                        ActivityCompat.requestPermissions(activity, new String[] { Manifest.permission.WRITE_CALENDAR }, requestCode);
-                        tmp_calendarPref = enabledPref;
-                        return false;
-                    }
-
-                } else {
-                    runCalendarTask(activity, enabled);
-                    return true;
+                } catch (Exception e) {
+                    Log.e("CalendarPrefs", "Unable to launch SuntimesCalendarActivity! " + e);
                 }
             }
-        };
-        enabledPref.setOnPreferenceChangeListener(onPreferenceChanged0);
-    }
-    private static CheckBoxPreference tmp_calendarPref = null;
 
-    private static void runCalendarTask(final Activity activity, boolean enabled)
-    {
-        SuntimesCalendarTask calendarTask = new SuntimesCalendarTask(activity);
-        if (!enabled) {
-            calendarTask.setFlagClearCalendars(true);
+            AppSettings.initLocale(getActivity());
+            addPreferencesFromResource(R.xml.preference_calendar);
+            Preference calendarReadme = findPreference("appwidget_0_calendars_readme");
+            if (calendarReadme != null)
+            {
+                calendarReadme.setSummary(SuntimesUtils.fromHtml(getString(R.string.help_calendar)));
+                calendarReadme.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
+                {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference)
+                    {
+                        Activity activity = getActivity();
+                        if (activity != null) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(AboutDialog.ADDONS_URL));
+                            if (intent.resolveActivity(activity.getPackageManager()) != null) {
+                                activity.startActivity(intent);
+                            }
+                        }
+                        return false;
+                    }
+                });
+            }
+            Log.i(LOG_TAG, "CalendarPrefsFragment: Arguments: " + getArguments());
         }
-        calendarTask.execute();
     }
 
     //////////////////////////////////////////////////
@@ -973,7 +1022,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 {
                     Intent shareIntent = new Intent();
                     shareIntent.setAction(Intent.ACTION_SEND);
-                    shareIntent.setType("text/csv");
+                    shareIntent.setType(results.getMimeType());
                     shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
                     try {
@@ -1151,6 +1200,16 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 initPref_ui_field(field, this, i, showFields[i]);
             }
         }
+
+        ThemePreference overrideTheme_light = (ThemePreference)findPreference(PREF_KEY_APPEARANCE_THEME_LIGHT);
+        initPref_ui_themeOverride(this, overrideTheme_light, this, PREF_KEY_APPEARANCE_THEME_LIGHT);
+        loadPref_ui_themeOverride(this, overrideTheme_light, PREF_KEY_APPEARANCE_THEME_LIGHT, this);
+
+        ThemePreference overrideTheme_dark = (ThemePreference)findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
+        initPref_ui_themeOverride(this, overrideTheme_dark, this, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
+        loadPref_ui_themeOverride(this, overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK, this);
+
+        updatePref_ui_themeOverride(AppSettings.loadThemePref(this), overrideTheme_dark, overrideTheme_light);
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -1164,6 +1223,16 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 initPref_ui_field(field, fragment.getActivity(), i, showFields[i]);
             }
         }
+
+        final ThemePreference overrideTheme_light = (ThemePreference)fragment.findPreference(PREF_KEY_APPEARANCE_THEME_LIGHT);
+        initPref_ui_themeOverride(fragment.getActivity(), overrideTheme_light, fragment.getActivity(), PREF_KEY_APPEARANCE_THEME_LIGHT);
+        loadPref_ui_themeOverride(fragment.getActivity(), overrideTheme_light, PREF_KEY_APPEARANCE_THEME_LIGHT, fragment.getActivity());
+
+        final ThemePreference overrideTheme_dark = (ThemePreference)fragment.findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
+        initPref_ui_themeOverride(fragment.getActivity(), overrideTheme_dark, fragment.getActivity(), AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
+        loadPref_ui_themeOverride(fragment.getActivity(), overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK, fragment.getActivity());
+
+        updatePref_ui_themeOverride(AppSettings.loadThemePref(fragment.getActivity()), overrideTheme_dark, overrideTheme_light);
     }
 
     private static void initPref_ui_field(CheckBoxPreference field, final Context context, final int k, boolean value)
@@ -1182,8 +1251,229 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         });
     }
 
+    private static Preference.OnPreferenceChangeListener onOverrideThemeChanged(final Activity activity, final ThemePreference overridePref, final int requestCode)
+    {
+        return new Preference.OnPreferenceChangeListener()
+        {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                overridePref.setThemePreferenceListener(createThemeListPreferenceListener(activity, (String)newValue, requestCode));
+                return true;
+            }
+        };
+    }
+
+    private static ThemePreference.ThemePreferenceListener createThemeListPreferenceListener(final Activity activity, final String selectedTheme, final int requestCode)
+    {
+        return new ThemePreference.ThemePreferenceListener()
+        {
+            @Override
+            public void onActionButtonClicked()
+            {
+                Intent configThemesIntent = new Intent(activity, WidgetThemeListActivity.class);
+                configThemesIntent.putExtra(WidgetThemeListActivity.PARAM_NOSELECT, false);
+                configThemesIntent.putExtra(WidgetThemeListActivity.PARAM_SELECTED, selectedTheme);
+                activity.startActivityForResult(configThemesIntent, requestCode);
+            }
+        };
+    }
+
+    private static void initPref_ui_themeOverride(Activity activity, ThemePreference listPref, Context context, String key)
+    {
+        if (listPref != null)
+        {
+            WidgetThemes.initThemes(context);
+            SuntimesTheme.ThemeDescriptor[] themes = WidgetThemes.sortedValues(true);
+            String[] themeEntries = new String[themes.length + 1];
+            String[] themeValues = new String[themes.length + 1];
+
+            themeValues[0] = "default";
+            themeEntries[0] = context.getString(R.string.configLabel_tagDefault);
+            for (int i=0; i<themes.length; i++)                // i:0 is reserved for "default"
+            {
+                themeValues[i + 1] = themes[i].name();
+                themeEntries[i + 1] = themes[i].displayString();
+            }
+
+            listPref.setEntries(themeEntries);
+            listPref.setEntryValues(themeValues);
+        }
+    }
+
+    private static void loadPref_ui_themeOverride(Activity activity, ThemePreference listPref, String key, Context context)
+    {
+        if (listPref != null)
+        {
+            boolean isLightTheme = key.equals(PREF_KEY_APPEARANCE_THEME_LIGHT);
+            String themeName = ((isLightTheme ? AppSettings.loadThemeLightPref(context) : AppSettings.loadThemeDarkPref(context)));
+            int requestCode = (isLightTheme ? REQUEST_PICKTHEME_LIGHT : REQUEST_PICKTHEME_DARK);
+
+            int currentIndex = ((themeName != null) ? listPref.findIndexOfValue(themeName) : -1);
+            if (currentIndex >= 0)
+            {
+                listPref.setValueIndex(currentIndex);
+                listPref.setThemePreferenceListener(createThemeListPreferenceListener(activity, themeName, requestCode));
+                listPref.setOnPreferenceChangeListener(onOverrideThemeChanged(activity, listPref, requestCode));
+
+            } else {
+                Log.w(LOG_TAG, "loadPref: Unable to load " + key + "... The list is missing an entry for the descriptor: " + themeName);
+                listPref.setValueIndex(0);
+            }
+        }
+    }
+
+    private static void updatePref_ui_themeOverride(String mode, ListPreference darkPref, ListPreference lightPref)
+    {
+        darkPref.setEnabled(AppSettings.THEME_DARK.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode));
+        lightPref.setEnabled(AppSettings.THEME_LIGHT.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode));
+    }
+
     //////////////////////////////////////////////////
     //////////////////////////////////////////////////
+
+    /**
+     * Alarm Prefs
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class AlarmPrefsFragment extends PreferenceFragment
+    {
+        @Override
+        public void onCreate(Bundle savedInstanceState)
+        {
+            super.onCreate(savedInstanceState);
+            AppSettings.initLocale(getActivity());
+            Log.i(LOG_TAG, "AlarmPrefsFragment: Arguments: " + getArguments());
+
+            PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_alarms, false);
+            addPreferencesFromResource(R.xml.preference_alarms);
+        }
+
+        @Override
+        public void onResume()
+        {
+            super.onResume();
+            initPref_alarms(AlarmPrefsFragment.this);
+        }
+    }
+
+    private void initPref_alarms()
+    {
+        Preference batteryOptimization = findPreference(AlarmSettings.PREF_KEY_ALARM_BATTERYOPT);
+        PreferenceCategory alarmsCategory = (PreferenceCategory)findPreference(AlarmSettings.PREF_KEY_ALARM_CATEGORY);
+        removePrefFromCategory(batteryOptimization, alarmsCategory);
+    }
+
+    @SuppressLint("ResourceType")
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private static void initPref_alarms(final PreferenceFragment fragment)
+    {
+        final Context context = fragment.getActivity();
+        Preference batteryOptimization = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_BATTERYOPT);
+        if (batteryOptimization != null && context != null)
+        {
+            if (Build.VERSION.SDK_INT >= 23)
+            {
+                batteryOptimization.setOnPreferenceClickListener(onBatteryOptimizationClicked(context));
+
+                int[] colorAttrs = { R.attr.text_accentColor, R.attr.tagColor_warning };
+                TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+                int colorListed = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.text_accent_dark));
+                int colorUnlisted = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.warningTag_dark));
+                typedArray.recycle();
+
+                if (isIgnoringBatteryOptimizations(fragment.getContext()))
+                {
+                    String listed = context.getString(R.string.configLabel_alarms_optWhiteList_listed);
+                    batteryOptimization.setSummary(SuntimesUtils.createColorSpan(null, listed, listed, colorListed));
+
+                } else {
+                    String unlisted = context.getString(R.string.configLabel_alarms_optWhiteList_unlisted);
+                    batteryOptimization.setSummary(SuntimesUtils.createColorSpan(null, unlisted, unlisted, colorUnlisted));
+                }
+                
+            } else {
+                PreferenceCategory alarmsCategory = (PreferenceCategory)fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_CATEGORY);
+                removePrefFromCategory(batteryOptimization, alarmsCategory);  // battery optimization is api 23+
+            }
+        }
+    }
+
+    private static void removePrefFromCategory(Preference pref, PreferenceCategory category)
+    {
+        if (pref != null && category != null) {
+            category.removePreference(pref);
+        }
+    }
+
+    private static Preference.OnPreferenceClickListener onBatteryOptimizationClicked(final Context context)
+    {
+       return new Preference.OnPreferenceClickListener() {
+           @Override
+           public boolean onPreferenceClick(Preference preference) {
+               if (Build.VERSION.SDK_INT >= 23) {
+                   context.startActivity(new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS));
+               }
+               return false;
+           }
+       };
+    }
+
+    @TargetApi(23)
+    protected static boolean isIgnoringBatteryOptimizations(Context context)
+    {
+        PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        if (powerManager != null)
+            return powerManager.isIgnoringBatteryOptimizations(context.getPackageName());
+        else return false;
+    }
+
+    //////////////////////////////////////////////////
+    //////////////////////////////////////////////////
+
+    private static void initPref_observerHeight(final Activity context, final LengthPreference pref)
+    {
+        TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.icActionShadow});
+        int drawableID = a.getResourceId(0, R.drawable.ic_action_shadow);
+        a.recycle();
+
+        String title = context.getString(R.string.configLabel_general_observerheight) + "  [i]";
+        ImageSpan shadowIcon = SuntimesUtils.createImageSpan(context, drawableID, 32, 32, 0);
+        SpannableStringBuilder titleSpan = SuntimesUtils.createSpan(context, title, "[i]", shadowIcon);
+        pref.setTitle(titleSpan);
+
+        WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+        pref.setMetric(units == WidgetSettings.LengthUnit.METRIC);
+        pref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+        {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue)
+            {
+                try {
+                    double doubleValue = Double.parseDouble((String)newValue);
+                    if (doubleValue > 0)
+                    {
+                        WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+                        preference.setSummary(formatObserverHeightSummary(preference.getContext(), doubleValue, units, false));
+                        return true;
+
+                    } else return false;
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+            }
+        });
+    }
+    private static void loadPref_observerHeight(Context context, final LengthPreference pref)
+    {
+        final WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+        double observerHeight = WidgetSettings.loadObserverHeightPref(context, 0);
+        pref.setSummary(formatObserverHeightSummary(context, observerHeight, units, true));
+    }
+    private static CharSequence formatObserverHeightSummary(Context context, double observerHeight, WidgetSettings.LengthUnit units, boolean convert)
+    {
+        String observerHeightDisplay = SuntimesUtils.formatAsHeight(context, observerHeight, units, convert, 2);
+        return context.getString(R.string.configLabel_general_observerheight_summary, observerHeightDisplay);
+    }
 
     private static void initPref_altitude(final Activity context, final CheckBoxPreference altitudePref)
     {

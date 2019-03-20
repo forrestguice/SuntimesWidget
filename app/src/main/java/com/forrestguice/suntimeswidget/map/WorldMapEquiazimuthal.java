@@ -26,9 +26,9 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.Calendar;
@@ -147,7 +147,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
             SuntimesCalculator calculator = data.calculator();
             SuntimesCalculator.SunPosition sunPos = calculator.getSunPosition(now);
             SuntimesCalculator.MoonPosition moonPos = calculator.getMoonPosition(now);
-            WidgetSettings.Location location = data.location();
+            Location location = data.location();
 
             long gmtMillis = now.getTimeInMillis() + (long)(WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.get(Calendar.MONTH)) * 60 * 1000);
             double gmtHours = (((gmtMillis / 1000d) / 60d) / 60d) % 24d;
@@ -262,7 +262,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
 
             ////////////////
             // draw sun
-            if (options.showSunPosition)
+            if (options.showSunPosition && options.showSunShadow)
             {
                 double[] point = toCartesian(toPolar(sunLat, sunLon));
                 int sunX = (int)(mid[0] + ((point[0] / 180d) * mid[0]) );
@@ -272,7 +272,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
 
             ////////////////
             // draw moon
-            if (options.showMoonPosition)
+            if (options.showMoonPosition && options.showMoonLight)
             {
                 double[] point = toCartesian(toPolar(moonLat, moonLon));
                 int moonX = (int)(mid[0] + ((point[0] / 180d) * mid[0]) );

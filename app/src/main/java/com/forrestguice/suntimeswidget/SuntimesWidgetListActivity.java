@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -45,6 +45,7 @@ import android.view.MenuItem;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
@@ -212,15 +213,33 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 reconfigureWidget(widgetItem);
             }
         });
+
+        View widgetListEmpty = findViewById(android.R.id.empty);
+        widgetListEmpty.setOnClickListener(onEmptyViewClick);
+        widgetList.setEmptyView(widgetListEmpty);
     }
 
+    /**
+     * onEmptyViewClick
+     */
+    private View.OnClickListener onEmptyViewClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showHelp();
+        }
+    };
+
+    /**
+     * updateViews
+     * @param context context
+     */
     protected void updateViews(Context context)
     {
         widgetList.setAdapter(WidgetListAdapter.createWidgetListAdapter(context));
     }
 
     /**
-     *
+     * showHelp
      */
     protected void showHelp()
     {
@@ -230,7 +249,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     }
 
     /**
-     *
+     * showAbout
      */
     protected void showAbout()
     {
@@ -239,7 +258,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     }
 
     /**
-     *
+     * launchThemeEditor
      */
     protected void launchThemeEditor(Context context)
     {
@@ -260,6 +279,10 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         startActivity(configIntent);
     }
 
+    /**
+     * updateWidgetAlarms
+     * @param context context
+     */
     public static void updateWidgetAlarms(Context context)
     {
         Intent updateIntent = new Intent();
@@ -407,6 +430,11 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                         widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
                         data = data0;
 
+                    } else if (widgetClass ==ClockWidget0.class || widgetClass == ClockWidget0_3x1.class) {
+                        SuntimesClockData data0 = new SuntimesClockData(context, id);
+                        widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
+                        data = data0;
+
                     } else {
                         SuntimesRiseSetData data0 = new SuntimesRiseSetData(context, id);
                         widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
@@ -439,6 +467,8 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2.class, titlePattern1));
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2_3x1.class, titlePattern1));
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2_3x2.class, titlePattern1));
+            items.addAll(createWidgetListItems(context, widgetManager, ClockWidget0.class, titlePattern1));
+            items.addAll(createWidgetListItems(context, widgetManager, ClockWidget0_3x1.class, titlePattern1));
 
             return new WidgetListAdapter(context, items);
         }
@@ -447,6 +477,12 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         {
             if (widgetClass == SolsticeWidget0.class)
                 return context.getString(R.string.app_name_solsticewidget0);
+
+            if (widgetClass == ClockWidget0.class)
+                return context.getString(R.string.app_name_clockwidget0);
+
+            if (widgetClass == ClockWidget0_3x1.class)
+                return context.getString(R.string.app_name_clockwidget0) + " (3x1)";
 
             if (widgetClass == MoonWidget0.class)
                 return context.getString(R.string.app_name_moonwidget0);

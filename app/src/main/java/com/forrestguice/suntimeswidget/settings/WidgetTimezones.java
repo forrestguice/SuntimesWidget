@@ -19,6 +19,8 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -54,7 +56,7 @@ import java.util.TimeZone;
 
 public class WidgetTimezones
 {
-    public static boolean isProbablyNotLocal( TimeZone timezone, WidgetSettings.Location atLocation, Date onDate )
+    public static boolean isProbablyNotLocal(TimeZone timezone, Location atLocation, Date onDate )
     {
         double zoneOffset = timezone.getOffset(onDate.getTime()) / (1000 * 60 * 60);   // timezone offset in hrs
         double lonOffset = atLocation.getLongitudeAsDouble() * 24 / 360;               // longitude offset in hrs
@@ -93,14 +95,19 @@ public class WidgetTimezones
     ///////////////////////////////////////
     ///////////////////////////////////////
 
-    public static TimeZone localMeanTime( Context context, WidgetSettings.Location location )
+    public static TimeZone localMeanTime( Context context, Location location )
     {
         return new LocalMeanTime(location.getLongitudeAsDouble(), context.getString(R.string.solartime_localMean));
     }
 
-    public static TimeZone apparentSolarTime( Context context, WidgetSettings.Location location )
+    public static TimeZone apparentSolarTime(Context context, Location location)
     {
         return new ApparentSolarTime(location.getLongitudeAsDouble(), context.getString(R.string.solartime_apparent));
+    }
+
+    public static TimeZone apparentSolarTime(Context context, Location location, SuntimesCalculator calculator)
+    {
+        return new ApparentSolarTime(location.getLongitudeAsDouble(), context.getString(R.string.solartime_apparent), calculator);
     }
 
     /**
@@ -187,6 +194,18 @@ public class WidgetTimezones
             super(longitude, name);
         }
 
+        public ApparentSolarTime(double longitude, String name, SuntimesCalculator calculator)
+        {
+            super(longitude, name);
+            this.calculator = calculator;
+        }
+
+        private SuntimesCalculator calculator = null;
+        public void setCalculator(SuntimesCalculator calculator)
+        {
+            this.calculator = calculator;
+        }
+
         @Override
         public int getOffset(int era, int year, int month, int day, int dayOfWeek, int milliseconds)
         {
@@ -202,14 +221,40 @@ public class WidgetTimezones
         @Override
         public int getOffset( long date )
         {
+            return getRawOffset() + equationOfTimeOffset(date, calculator);
+        }
+
+        public static int equationOfTimeOffset(long date,SuntimesCalculator calculator)
+        {
+            if (calculator != null)
+            {
+                Calendar calendar = new GregorianCalendar();
+                calendar.setTimeInMillis(date);
+                double eotSeconds = calculator.equationOfTime(calendar);
+                if (eotSeconds != Double.POSITIVE_INFINITY)
+                {
+                    //Log.d("ApparentSolar", "equationOfTime: using " + calculator.name() + ": eot is: " + (eotSeconds / 60d) + " minutes" );
+                    return (int)(eotSeconds * 1000);
+
+                } else {
+                    //Log.d("ApparentSolar", "equationOfTime: not supported by " + calculator.name() + " using fallback: " + (equationOfTimeOffset(date) / 1000d / 60d) );
+                    return equationOfTimeOffset(date);    // not supported; use fall-back implementation
+                }
+            } else {
+                //Log.d("ApparentSolar", "equationOfTime: null calculator, using fallback: " + (equationOfTimeOffset(date) / 1000d / 60d) );
+                return equationOfTimeOffset(date);      // no calculator; use fall-back implementation
+            }
+        }
+
+        /**
+         * @param date a given date
+         * @return equation of time correction in milliseconds
+         */
+        public static int equationOfTimeOffset(long date)
+        {
             Calendar calendar = new GregorianCalendar();
             calendar.setTimeInMillis(date);
-            double equationOfTimeOffset = equationOfTimeOffset(calendar.get(Calendar.DAY_OF_YEAR));  // equation of time correction (minutes)
-            //Log.d("DEBUG", "eot: " + equationOfTimeOffset);
-
-            int localMeanOffsetMs = getRawOffset();
-            int equationOfTimeOffsetMs = (int)(equationOfTimeOffset * 60 * 1000);
-            return localMeanOffsetMs + equationOfTimeOffsetMs;
+            return (int)(equationOfTimeOffset(calendar.get(Calendar.DAY_OF_YEAR)) * 60 * 1000);
         }
 
         /**

@@ -21,6 +21,8 @@ package com.forrestguice.suntimeswidget.calculator;
 import android.content.Context;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
@@ -87,10 +89,15 @@ public class SuntimesData
     /**
      * Property: location
      */
-    protected WidgetSettings.Location location;
-    public WidgetSettings.Location location()
+    protected Location location;
+    public Location location()
     {
         return location;
+    }
+    public void setLocation(Location location)
+    {
+        this.location = location;
+        invalidateCalculation();
     }
 
     /**
@@ -198,31 +205,7 @@ public class SuntimesData
         // from timezone settings
         timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetId));
         timezoneMode = WidgetSettings.loadTimezoneModePref(context, appWidgetId);
-
-        switch (timezoneMode)
-        {
-            case CUSTOM_TIMEZONE:
-                // empty; use preset timezone value
-                break;
-
-            case CURRENT_TIMEZONE:
-                timezone = TimeZone.getDefault();
-                break;
-
-            case SOLAR_TIME:
-                WidgetSettings.SolarTimeMode solarMode = WidgetSettings.loadSolarTimeModePref(context, appWidgetId);
-                switch (solarMode)
-                {
-                    case APPARENT_SOLAR_TIME:
-                        timezone = WidgetTimezones.apparentSolarTime(context, location);
-                        break;
-
-                    default:
-                        timezone = WidgetTimezones.localMeanTime(context, location);
-                        break;
-                }
-                break;
-        }
+        initTimezone(context);
 
         // from date settings
         WidgetSettings.DateMode dateMode = WidgetSettings.loadDateModePref(context, appWidgetId);
@@ -240,6 +223,34 @@ public class SuntimesData
 
         } else {
             setTodayIsToday();
+        }
+    }
+
+    protected void initTimezone(Context context)
+    {
+        switch (timezoneMode)
+        {
+            case CUSTOM_TIMEZONE:
+                // empty; use preset timezone value
+                break;
+
+            case CURRENT_TIMEZONE:
+                timezone = TimeZone.getDefault();
+                break;
+
+            case SOLAR_TIME:
+                WidgetSettings.SolarTimeMode solarMode = WidgetSettings.loadSolarTimeModePref(context, appWidgetID);
+                switch (solarMode)
+                {
+                    case APPARENT_SOLAR_TIME:
+                        timezone = WidgetTimezones.apparentSolarTime(context, location, calculator);
+                        break;
+
+                    default:
+                        timezone = WidgetTimezones.localMeanTime(context, location);
+                        break;
+                }
+                break;
         }
     }
 
@@ -320,6 +331,30 @@ public class SuntimesData
         nowThen.set(Calendar.MONTH, date.get(Calendar.MONTH));
         nowThen.set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH));
         return nowThen;
+    }
+
+    /**
+     * findSoonest
+     */
+    public static long findSoonest(Calendar now, Calendar... events)
+    {
+        Calendar soonest = null;
+        long tillSoonest = Long.MAX_VALUE;
+        long nowMillis = now.getTimeInMillis();
+
+        for (Calendar event : events)
+        {
+            if (now.before(event))
+            {
+                long tillEvent = event.getTimeInMillis() - nowMillis;
+                if (tillEvent < tillSoonest)
+                {
+                    soonest = event;
+                    tillSoonest = tillEvent;
+                }
+            }
+        }
+        return (soonest != null ? soonest.getTimeInMillis() : -1);
     }
 
 }

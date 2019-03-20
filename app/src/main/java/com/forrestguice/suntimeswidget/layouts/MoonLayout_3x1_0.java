@@ -28,7 +28,7 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -132,7 +132,7 @@ public class MoonLayout_3x1_0 extends MoonLayout
     }
 
     @Override
-    public void prepareForUpdate(SuntimesMoonData data)
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
     {
         Calendar midnight = data.midnight();
         SuntimesCalculator.MoonPhase nextPhase = data.nextPhase(midnight);

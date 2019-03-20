@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.LightingColorFilter;
@@ -42,10 +43,12 @@ import android.graphics.drawable.Drawable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.format.DateUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.RelativeSizeSpan;
+import android.text.style.UnderlineSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -55,6 +58,7 @@ import android.view.ViewParent;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 
 import java.lang.reflect.Method;
 import java.text.DateFormat;
@@ -65,9 +69,11 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings.TimeFormatMode;
 
+import java.text.DateFormatSymbols;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
@@ -191,6 +197,11 @@ public class SuntimesUtils
     public static boolean isInitialized()
     {
         return initialized;
+    }
+
+    public static boolean is24()
+    {
+        return is24;
     }
 
     /**
@@ -458,6 +469,61 @@ public class SuntimesUtils
             return (is24 ? calendarTime24HrDisplayString(context, cal, showSeconds)
                     : calendarTime12HrDisplayString(context, cal, showSeconds));
         }
+    }
+    public TimeDisplayText calendarTimeShortDisplayString(Context context, Calendar cal, boolean showSeconds, TimeFormatMode format)
+    {
+        if (!initialized) {
+            Log.w("SuntimesUtils", "Not initialized! (calendarTimeShortDisplayString was called anyway; using defaults)");
+        }
+
+        if (cal == null) {
+            return new TimeDisplayText(strTimeNone);
+
+        } else {
+            switch (format)
+            {
+                case MODE_24HR:
+                    return calendarTime24HrDisplayString(context, cal, showSeconds);
+
+                case MODE_12HR:
+                    return calendarTime12HrDisplayString(context, cal, showSeconds);
+
+                case MODE_SYSTEM:
+                    boolean sysIs24 = android.text.format.DateFormat.is24HourFormat(context);
+                    return (sysIs24 ? calendarTime24HrDisplayString(context, cal, showSeconds)
+                            : calendarTime12HrDisplayString(context, cal, showSeconds));
+
+                default:
+                    return new TimeDisplayText(strTimeNone);
+            }
+        }
+    }
+
+    /**
+     * getDayString
+     * @param context Context
+     * @param day e.g. Calendar.SUNDAY
+     * @return "Sunday"
+     */
+    public String getDayString(Context context, int day)
+    {
+        return DateUtils.getDayOfWeekString(day, DateUtils.LENGTH_LONG);
+    }
+
+    /**
+     * getShortDayString
+     * @param context Context
+     * @param day e.g. Calendar.SUNDAY
+     * @return "Sun"
+     */
+    public String getShortDayString(Context context, int day)
+    {
+        String[] shortWeekDays = getShortDayStrings(context);
+        return (day >= 0 && day < shortWeekDays.length ? shortWeekDays[day] : "");
+    }
+    public String[] getShortDayStrings(Context context)
+    {
+        return DateFormatSymbols.getInstance(getLocale()).getShortWeekdays();
     }
 
     /**
@@ -868,6 +934,58 @@ public class SuntimesUtils
         return new TimeDisplayText(formatAsDegrees(degreeValue, places), "", strDecSymbol);
     }
 
+    public static String formatAsHeight(Context context, double value, WidgetSettings.LengthUnit units, boolean convert, int places)
+    {
+        int stringID;
+        switch (units)
+        {
+            case USC:
+            case IMPERIAL:
+                if (convert) {
+                    value = WidgetSettings.LengthUnit.metersToFeet(value);
+                }
+                stringID = R.plurals.units_feet_long;
+                break;
+
+            case METRIC:
+            default:
+                stringID = R.plurals.units_meters_long;
+                break;
+        }
+        int h = ((value > 1) ? (int)Math.ceil(value)   // TODO: better use of plurals w/ fractional values..
+               : (value < 1) ? 2 : 1);   // this is a hack; there must be a better way to treat fractions as plural
+
+        NumberFormat formatter = NumberFormat.getInstance();
+        formatter.setMinimumFractionDigits(0);
+        formatter.setMaximumFractionDigits(places);
+        return context.getResources().getQuantityString(stringID, h, formatter.format(value));
+    }
+
+    public static TimeDisplayText formatAsHeight(Context context, double meters, WidgetSettings.LengthUnit units, int places, boolean shortForm)
+    {
+        double value;
+        String unitsString;
+        switch (units)
+        {
+            case USC:
+            case IMPERIAL:
+                value = WidgetSettings.LengthUnit.metersToFeet(meters);
+                unitsString = (shortForm ? context.getString(R.string.units_feet_short) : context.getString(R.string.units_feet));
+                break;
+
+            case METRIC:
+            default:
+                value = meters;
+                unitsString = (shortForm ? context.getString(R.string.units_meters_short) : context.getString(R.string.units_meters));
+                break;
+        }
+
+        NumberFormat formatter = NumberFormat.getInstance();
+        formatter.setMinimumFractionDigits(0);
+        formatter.setMaximumFractionDigits(places);
+        return new TimeDisplayText(formatter.format(value), unitsString, "");
+    }
+
     /**
      * Creates a title string from a given "title pattern".
      *
@@ -894,9 +1012,14 @@ public class SuntimesUtils
         String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData)data);
         String modePattern = "%M";
         String modePatternShort = "%m";
+        String orderPattern = "%o";
+
         WidgetSettings.TimeMode timeMode = data.timeMode();
+        WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
+
         displayString = displayString.replaceAll(modePatternShort, timeMode.getShortDisplayString());
         displayString = displayString.replaceAll(modePattern, timeMode.getLongDisplayString());
+        displayString = displayString.replaceAll(orderPattern, order.toString());
         return displayString;
     }
 
@@ -908,9 +1031,13 @@ public class SuntimesUtils
             String modePattern = "%M";
             String modePatternShort = "%m";
             String illumPattern = "%i";
+            String orderPattern = "%o";
+
+            WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
 
             displayString = displayString.replaceAll(modePatternShort, data.getMoonPhaseToday().getShortDisplayString());
             displayString = displayString.replaceAll(modePattern, data.getMoonPhaseToday().getLongDisplayString());
+            displayString = displayString.replaceAll(orderPattern, order.toString());
 
             if (displayString.contains(illumPattern)) {
                 NumberFormat percentage = NumberFormat.getPercentInstance();
@@ -925,9 +1052,14 @@ public class SuntimesUtils
         String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData)data);
         String modePattern = "%M";
         String modePatternShort = "%m";
+        String orderPattern = "%o";
+
+        WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, data.appWidgetID());
         WidgetSettings.SolsticeEquinoxMode timeMode = data.timeMode();
+
         displayString = displayString.replaceAll(modePatternShort, timeMode.getShortDisplayString());
         displayString = displayString.replaceAll(modePattern, timeMode.getLongDisplayString());
+        displayString = displayString.replaceAll(orderPattern, trackingMode.toString());
         return displayString;
     }
 
@@ -954,7 +1086,7 @@ public class SuntimesUtils
         String widgetIDPattern = "%id";
         String percentPattern = "%%";
 
-        WidgetSettings.Location location = data.location();
+        Location location = data.location();
         String timezoneID = data.timezone().getID();
         String datasource = (data.calculatorMode() == null) ? "" : data.calculatorMode().getName();
         String appWidgetID = (data.appWidgetID() != null ? String.format("%s", data.appWidgetID()) : "");
@@ -1030,6 +1162,20 @@ public class SuntimesUtils
             span = createBoldSpan(span, text, toColorize);
         }
         return createColorSpan(span, text, toColorize, color);
+    }
+
+    public static SpannableString createUnderlineSpan(SpannableString span, String text, String toUnderline)
+    {
+        if (span == null) {
+            span = new SpannableString(text);
+        }
+        int start = text.indexOf(toUnderline);
+        if (start >= 0)
+        {
+            int end = start + toUnderline.length();
+            span.setSpan(new UnderlineSpan(), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return span;
     }
 
     public static SpannableString createBoldSpan(SpannableString span, String text, String toBold)
@@ -1132,6 +1278,10 @@ public class SuntimesUtils
 
     public static ImageSpan createImageSpan(Context context, int drawableID, int width, int height, int tint)
     {
+        return createImageSpan(context, drawableID, width, height, tint, PorterDuff.Mode.SRC_ATOP);
+    }
+    public static ImageSpan createImageSpan(Context context, int drawableID, int width, int height, int tint, PorterDuff.Mode tintMode)
+    {
         Drawable drawable = null;
         try {
             drawable = context.getResources().getDrawable(drawableID);
@@ -1146,7 +1296,7 @@ public class SuntimesUtils
             {
                 drawable.setBounds(0, 0, width, height);
             }
-            drawable.setColorFilter(tint, PorterDuff.Mode.SRC_ATOP);
+            drawable.setColorFilter(tint, tintMode);
         }
         return new ImageSpan(drawable);
     }
@@ -1360,6 +1510,28 @@ public class SuntimesUtils
         return drawableToBitmap(context, tinted, w, h, true);
     }
 
+    public static Drawable tintDrawable(Drawable drawable, int fillColor, int strokeColor, int strokePixels)
+    {
+        Drawable d = null;
+        try {
+            d = tintDrawable((InsetDrawable)drawable, fillColor, strokeColor, strokePixels);
+
+        } catch (ClassCastException e) {
+            try {
+                d = tintDrawable((LayerDrawable)drawable, fillColor, strokeColor, strokePixels);
+
+            } catch (ClassCastException e2) {
+                try {
+                    d = tintDrawable((GradientDrawable)drawable, fillColor, strokeColor, strokePixels);
+
+                } catch (ClassCastException e3) {
+                    Log.e("tintDrawable", "");
+                }
+            }
+        }
+        return d;
+    }
+
     /**
      * @param drawable a ShapeDrawable
      * @param fillColor the fill color
@@ -1505,6 +1677,70 @@ public class SuntimesUtils
                 }
             }
         }
+    }
+
+    /**
+     * @param enabledColor normal state color
+     * @param disabledColor disabled state color
+     * @return a ColorStateList w/ enabled / disabled states (intended for text label)
+     */
+    public static ColorStateList colorStateList(int enabledColor, int disabledColor)
+    {
+        return new ColorStateList(
+                new int[][] { new int[] { android.R.attr.state_enabled}, new int[] {-android.R.attr.state_enabled}},
+                new int[] {enabledColor, disabledColor}
+        );
+    }
+
+    /**
+     * @param enabledColor normal state color
+     * @param disabledColor disabled state color
+     * @param pressedColor pressed/focused color
+     * @return a ColorStateList w/ pressed, enabled, and disabled states (intended for text button)
+     */
+    public static ColorStateList colorStateList(int enabledColor, int disabledColor, int pressedColor)
+    {
+        return new ColorStateList(
+                new int[][] { new int[] { android.R.attr.state_pressed},
+                        new int[] { android.R.attr.state_focused},
+                        new int[] {-android.R.attr.state_enabled},
+                        new int[] {} },
+                new int[] {pressedColor, enabledColor, disabledColor, enabledColor}
+        );
+    }
+
+    public static ColorStateList colorStateList(int onColor, int offColor, int disabledColor, int pressedColor)
+    {
+        return new ColorStateList(
+                new int[][] { new int[] {android.R.attr.state_focused},
+                        new int[] {android.R.attr.state_pressed},
+                        new int[] {-android.R.attr.state_enabled},
+                        new int[] {android.R.attr.state_checked},
+                        new int[] {} },
+                new int[] {onColor, pressedColor, disabledColor, onColor, offColor}
+        );
+    }
+
+    /**
+     *
+     * @param drawables an array of compound drawable; expects [4] {left, top, right, bottom}
+     * @param tintColor the color to apply
+     * @return the same array now containing tinted drawables
+     */
+    public static Drawable[] tintCompoundDrawables(Drawable[] drawables, int tintColor)
+    {
+        if (drawables.length > 0)
+        {
+            for (int i=0; i<drawables.length; i++)
+            {
+                if (drawables[i] != null)
+                {
+                    drawables[i] = drawables[i].mutate();
+                    drawables[i].setColorFilter(tintColor, PorterDuff.Mode.MULTIPLY);
+                }
+            }
+        }
+        return drawables;
     }
 
 }
