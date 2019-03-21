@@ -102,7 +102,7 @@
     <string name="until">hasta</string>
     <string name="until_end">hasta el final</string>
 
-    <string name="offset_at">at</string>  
+    <string name="offset_at" />             <!-- TODO -->
     <string name="offset_before">%1$s before</string>  <!-- e.g. 30m before -->  <!-- TODO -->
     <string name="offset_after">%1$s after</string>    <!-- e.g. 1h after -->    <!-- TODO -->
 
