@@ -44,8 +44,8 @@
     -->
     <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> La zona horària pot estar malament per a aquesta localització.</string>  <!-- snackbar message -->
-    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Daylight Saving</string>  <!-- timezone dialog label -->  <!-- TODO -->
-    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> equation of time</string>  <!-- timezone dialog label -->  <!-- TODO -->
+    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Horari d\'estiu</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> equació del temps</string>  <!-- timezone dialog label -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -101,9 +101,12 @@
     <string name="until">fins</string>
     <string name="until_end">fins al final</string>
 
-    <string name="offset_at">at</string>  <!-- TODO -->
-    <string name="offset_before">%1$s before</string>  <!-- e.g. 30m before -->  <!-- TODO -->
-    <string name="offset_after">%1$s after</string>    <!-- e.g. 1h after -->  <!-- TODO -->
+    <string name="offset_at">en</string>  
+    <string name="offset_before">%1$s abans</string>  <!-- e.g. 30m before -->
+    <string name="offset_after">%1$s desprès</string>    <!-- e.g. 1h after -->
+
+    <string name="offset_button_before">abans</string>    <!-- button label; [1h] [5m] [before] (-) -->
+    <string name="offset_button_after">desprès</string>      <!-- button label; [1h] [5m] [after] (+) -->
 
     <!-- NoteBody: sunset/sunrise/twilight string
          The note body text; appears next to the prefix (layout/info_time_note.xml)
@@ -161,22 +164,22 @@
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
 
     <!-- distances (meters, feet, etc) -->
-    <string name="lengthUnits_metric">Metric</string>    <!-- TODO -->
-    <string name="lengthUnits_imperial">Imperial</string>   <!-- TODO -->
+    <string name="lengthUnits_metric">Mètric</string>
+    <string name="lengthUnits_imperial">Imperial</string>
 
     <string name="units_feet">peus</string>
     <string name="units_feet_short">ft</string>
     <plurals name="units_feet_long">
-        <item quantity="one">%s foot</item>
-        <item quantity="other">%s feet</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="one">%s peu</item>
+        <item quantity="other">%s peus</item>
+    </plurals>
 
     <string name="units_meters">metres</string>
     <string name="units_meters_short">m</string>
     <plurals name="units_meters_long">
-        <item quantity="one">%s meter</item>
-        <item quantity="other">%s meters</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="one">%s metre</item>
+        <item quantity="other">%s metres</item>
+    </plurals>
 
     <!--
          WIDGET CONFIG
@@ -204,12 +207,12 @@
     <string name="configLabel_general_calculator_sun">Font de dades del Sol</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Font de dades de la Lluna</string>         <!-- preference label -->
 
-    <string name="configLabel_general_timeFormatMode">Time Format:</string>         <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_general_timeFormatMode">Format de la data:</string>         <!-- spinner label -->
 
     <string name="configLabel_general_altitude_enabled">Utilitza elevació</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Aplica refinaments basats en l\'altitud.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_general_lengthUnits">Unitats de longitud</string>        <!-- spinner label -->
 
     <string name="configLabel_general_showSeconds">Mostrar segons</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Inclou segons quan es mostra el temps.</string>        <!-- checkbox label -->
@@ -223,8 +226,8 @@
     <string name="configLabel_general_showHours">Mostrar hores</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">Inclou hores i minuts en intervals de temps majors a un dia.</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_observerheight">Object Shadow</string>        <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_general_observerheight">Ombra de l\'objecte</string>        <!-- checkbox label -->  
+    <string name="configLabel_general_observerheight_summary">Mostra la longitud de les ombres projectades per un objecte amb una altura de <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->  
 
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">Configuració avançada</string>                        <!-- group title -->
@@ -234,7 +237,7 @@
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Opcions d\'apariència</string>           <!-- group title -->
-    <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_mode">Apariència</string>                  <!-- spinner label -->  
     <string name="configLabel_appearance_theme">Tema:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Creix amb l\'espai disponible (reescalable)</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_showLabels">Mostra etiquetes</string>          <!-- checkbox label -->
@@ -243,15 +246,15 @@
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
 
     <!-- Widget Setting: riseSetOrder -->
-    <string name="configLabel_general_riseSetOrder">Order:</string>     <!-- label -->  <!-- TODO -->
-    <string name="risesetorder_today">Today</string>                    <!-- setting -->  <!-- TODO -->
-    <string name="risesetorder_lastnext">Last / Next</string>           <!-- setting -->  <!-- TODO -->
+    <string name="configLabel_general_riseSetOrder">Ordre:</string>     <!-- label -->  
+    <string name="risesetorder_today">Avui</string>                    <!-- setting -->  
+    <string name="risesetorder_lastnext">Anterior / Següent</string>           <!-- setting -->  
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Migdia</string>                    <!-- setting -->
     <string name="timeMode_noon">Migdia</string>                    <!-- setting -->
-    <string name="timeMode_official_short">Natural</string>              <!-- setting -->
-    <string name="timeMode_official">Temps natural</string>               <!-- setting -->
+    <string name="timeMode_official_short">Oficial</string>              <!-- setting -->
+    <string name="timeMode_official">Hora oficial</string>               <!-- setting -->
     <string name="timeMode_civil_short">Civil</string>                  <!-- setting -->
     <string name="timeMode_civil">Crepuscle civil</string>               <!-- setting -->
     <string name="timeMode_nautical_short">Nàutic</string>            <!-- setting -->
@@ -457,8 +460,8 @@
     <string name="configLabel_themeColorFall">Color de tardor</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Color de hivern</string> <!-- color label -->
 
-    <string name="configLabel_themeColorAccent">Accent</string> <!-- color label -->  <!-- TODO -->
-    <string name="configLabel_themeColorAction">Action</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorAccent">Accent</string> <!-- color label -->  
+    <string name="configLabel_themeColorAction">Acció</string> <!-- color label -->  
 
     <string name="configLabel_themeColorMapBackground">Fons del mapa</string> <!-- color label -->
     <string name="configLabel_themeColorMapForeground">Front del mapa</string> <!-- color label -->
@@ -536,99 +539,99 @@
     <!--
         ALARM CLOCK
      -->
-    <string name="configLabel_alarmClock">Alarms</string>            <!-- group title -->  <!-- TODO -->
-    <string name="configLabel_alarmClock_emptyMsg">No Alarms</string>     <!-- a label that is displayed in place of an empty listview -->  <!-- TODO -->
-    <string name="configAction_addAlarm">Set Alarm</string>               <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_addNotification">Set Notification</string> <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_deleteAlarm">Delete</string>               <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_clearAlarms">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
-    <string name="configAction_clearOffset">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
-    <string name="configAction_setAlarmOffset">Set Offset</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_setAlarmType">Set Type</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_setAlarmLabel">Set Label</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_setAlarmLocation">Set Location</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_setAlarmRepeat">Set Repeating</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_setAlarmEvent">Set Event</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_setAlarmTime">Override Time</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_setAlarmSound">Set Sound</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_alarmMenu">Alarm Menu</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configLabel_alarmClock">Alarmes</string>            <!-- group title -->  
+    <string name="configLabel_alarmClock_emptyMsg">Sense alarmes</string>     <!-- a label that is displayed in place of an empty listview -->  
+    <string name="configAction_addAlarm">Posar alarma</string>               <!-- button (contentDescription) -->  
+    <string name="configAction_addNotification">Posar notificatió</string> <!-- button (contentDescription) -->  
+    <string name="configAction_deleteAlarm">Esborrar</string>               <!-- button (contentDescription) -->  
+    <string name="configAction_clearAlarms">Elimina tot</string>                <!-- action button / menu item -->  
+    <string name="configAction_clearOffset">Elimina tot</string>                <!-- action button / menu item -->  
+    <string name="configAction_setAlarmOffset">Posar retard</string>         <!-- button (contentDescription) -->  
+    <string name="configAction_setAlarmType">Posar tipus</string>         <!-- button (contentDescription) -->  
+    <string name="configAction_setAlarmLabel">Posar etiqueta</string>         <!-- button (contentDescription) -->  
+    <string name="configAction_setAlarmLocation">Posar localització</string>         <!-- button (contentDescription) -->  
+    <string name="configAction_setAlarmRepeat">Posar repetició</string>         <!-- button (contentDescription) -->  
+    <string name="configAction_setAlarmEvent">Posar event</string>         <!-- button (contentDescription) -->  
+    <string name="configAction_setAlarmTime">Canvia l\'hora</string>         <!-- button (contentDescription) -->  
+    <string name="configAction_setAlarmSound">Posar so</string>         <!-- button (contentDescription) -->  
+    <string name="configAction_alarmMenu">Menú d\'alarmes</string>         <!-- button (contentDescription) -->  
 
-    <string name="alarmAction_dismiss">Dismiss</string>                <!-- notification action button -->  <!-- TODO -->
-    <string name="alarmAction_snooze">Snooze</string>                  <!-- notification action button -->  <!-- TODO -->
-    <string name="alarmAction_timeout">Timeout</string>                  <!-- notification action button -->  <!-- TODO -->
+    <string name="alarmAction_dismiss">Ignorar</string>                <!-- notification action button -->  
+    <string name="alarmAction_snooze">Dormita</string>                  <!-- notification action button -->  
+    <string name="alarmAction_timeout">Caducar</string>                  <!-- notification action button -->  
 
-    <string name="alarmAction_playingMsg"><xliff:g id="label">%1$s</xliff:g></string>          <!-- toast message -->  <!-- TODO -->
-    <string name="alarmAction_silencedMsg">Alarm silenced</string>          <!-- toast message -->  <!-- TODO -->
-    <string name="alarmAction_snoozeMsg">Snoozing for <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->  <!-- TODO -->
-    <string name="alarmAction_timeoutMsg">The alarm timed out.</string>     <!-- notification msg -->  <!-- TODO -->
-    <string name="alarmAction_upcomingMsg">Upcoming Alarm</string>     <!-- notification msg -->  <!-- TODO -->
+    <string name="alarmAction_playingMsg"><xliff:g id="label">%1$s</xliff:g></string>          <!-- toast message -->  
+    <string name="alarmAction_silencedMsg">Alarma silenciada</string>          <!-- toast message -->  
+    <string name="alarmAction_snoozeMsg">Dormitarà durant <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->  
+    <string name="alarmAction_timeoutMsg">L\'alarma ha caducat.</string>     <!-- notification msg -->  
+    <string name="alarmAction_upcomingMsg">Alarma inminent</string>     <!-- notification msg -->  
 
-    <string name="alarmMode_alarm">Alarm</string>                <!-- alarm type (setting) -->  <!-- TODO -->
-    <string name="alarmMode_notification">Notification</string>                <!-- alarm type (setting) -->  <!-- TODO -->
+    <string name="alarmMode_alarm">Alarma</string>                <!-- alarm type (setting) -->  
+    <string name="alarmMode_notification">Notificació</string>                <!-- alarm type (setting) -->  
 
-    <string name="alarmOption_vibrate">Vibrate</string>                <!-- checkbox text -->  <!-- TODO -->
-    <string name="alarmOption_ringtone_none">No Sound</string>          <!-- ringtone label (none) -->  <!-- TODO -->
-    <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->  <!-- TODO -->
-    <string name="alarmOption_solarevent_none">Clock Time</string>          <!-- ringtone label (none) -->  <!-- TODO -->
+    <string name="alarmOption_vibrate">Vibra</string>                <!-- checkbox text -->  
+    <string name="alarmOption_ringtone_none">Sense so</string>          <!-- ringtone label (none) -->  
+    <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
+    <string name="alarmOption_solarevent_none">Temps de rellotge</string>          <!-- ringtone label (none) -->  
 
-    <string name="alarmOption_repeat">Repeat</string>                <!-- checkbox text; an alarm that repeats -->  <!-- TODO -->
-    <string name="alarmOption_repeat_none">No Repeat</string>         <!-- label text; an alarm that does not repeat (occurs once) -->  <!-- TODO -->
-    <string name="alarmOption_repeat_all">Every Day</string>         <!-- label text; an alarm that repeats every day -->  <!-- TODO -->
+    <string name="alarmOption_repeat">Repeteix</string>                <!-- checkbox text; an alarm that repeats -->  
+    <string name="alarmOption_repeat_none">No repeteixis</string>         <!-- label text; an alarm that does not repeat (occurs once) -->  
+    <string name="alarmOption_repeat_all">Cada dia</string>         <!-- label text; an alarm that repeats every day -->  
 
-    <string name="deletealarm_dialog_title">Delete</string>        <!-- dialog title -->  <!-- TODO -->
-    <string name="deletealarm_dialog_message">Are you sure you want to delete <xliff:g id="type">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg --> <!-- TODO -->
-    <string name="deletealarm_dialog_ok">Delete</string>        <!-- button --> <!-- TODO -->
-    <string name="deletealarm_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
-    <string name="deletealarm_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) was deleted.</string> <!-- toast msg --> <!-- TODO -->
+    <string name="deletealarm_dialog_title">esborra</string>        <!-- dialog title -->  
+    <string name="deletealarm_dialog_message">Estàs segur de voler esborrar <xliff:g id="type">%1$s</xliff:g> de les <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg --> 
+    <string name="deletealarm_dialog_ok">Esborra</string>        <!-- button --> 
+    <string name="deletealarm_dialog_cancel">Canceŀla</string>    <!-- button --> 
+    <string name="deletealarm_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> de les <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) s\'ha esborrat.</string> <!-- toast msg --> 
 
-    <string name="clearalarms_dialog_title">Clear Alarms</string>        <!-- dialog title -->  <!-- TODO -->
-    <string name="clearalarms_dialog_message">Are you sure you want to delete all alarms?</string>   <!-- dialog msg --> <!-- TODO -->
-    <string name="clearalarms_dialog_ok">Clear</string>        <!-- button --> <!-- TODO -->
-    <string name="clearalarms_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
-    <string name="clearalarms_toast_success">Alarms cleared.</string> <!-- toast msg --> <!-- TODO -->
+    <string name="clearalarms_dialog_title">Elimina les alarmes</string>        <!-- dialog title -->  
+    <string name="clearalarms_dialog_message">Estàs segur de voler esborrar totes les alarmes?</string>   <!-- dialog msg --> 
+    <string name="clearalarms_dialog_ok">Esborra</string>        <!-- button --> 
+    <string name="clearalarms_dialog_cancel">Canceŀla</string>    <!-- button --> 
+    <string name="clearalarms_toast_success">Alarmes esborrades.</string> <!-- toast msg --> 
 
-    <string name="alarmlabel_dialog_title">Label</string>        <!-- dialog title -->  <!-- TODO -->
-    <string name="alarmlabel_dialog_ok">Apply</string>        <!-- button --> <!-- TODO -->
-    <string name="alarmlabel_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
+    <string name="alarmlabel_dialog_title">Etiqueta</string>        <!-- dialog title -->  
+    <string name="alarmlabel_dialog_ok">Aplica</string>        <!-- button --> 
+    <string name="alarmlabel_dialog_cancel">Canceŀla</string>    <!-- button --> 
 
-    <string name="alarmrepeat_dialog_title">Repeat Alarm</string>        <!-- dialog title -->  <!-- TODO -->
-    <string name="alarmrepeat_dialog_ok">Apply</string>        <!-- button --> <!-- TODO -->
-    <string name="alarmrepeat_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
+    <string name="alarmrepeat_dialog_title">Repeteix l\'alarma</string>        <!-- dialog title -->  
+    <string name="alarmrepeat_dialog_ok">Aplica</string>        <!-- button --> 
+    <string name="alarmrepeat_dialog_cancel">Canceŀla</string>    <!-- button --> 
 
-    <string name="alarmtime_dialog_title">Alarm Time</string>        <!-- dialog title -->  <!-- TODO -->
-    <string name="alarmtime_dialog_ok">Override</string>        <!-- button --> <!-- TODO -->
-    <string name="alarmtime_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
-    <string name="alarmtime_dialog_message">Override the alarm time?\n\nThis alarm will no longer be scheduled by event.</string>   <!-- dialog msg --> <!-- TODO -->
+    <string name="alarmtime_dialog_title">Hora de l\'alarma</string>        <!-- dialog title -->  
+    <string name="alarmtime_dialog_ok">Modifica</string>        <!-- button --> 
+    <string name="alarmtime_dialog_cancel">Canceŀla</string>    <!-- button --> 
+    <string name="alarmtime_dialog_message">Modificar l\'hora de l\'alarma?\n\nAquesta alarma ja no estarà planificada per events.</string>   <!-- dialog msg --> 
 
-    <string name="alarmoffset_dialog_title">Alarm Offset</string>        <!-- dialog title -->  <!-- TODO -->
-    <string name="alarmoffset_dialog_ok">Apply</string>        <!-- button --> <!-- TODO -->
-    <string name="alarmoffset_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
+    <string name="alarmoffset_dialog_title">Retard de l\'alarma</string>        <!-- dialog title -->  
+    <string name="alarmoffset_dialog_ok">Aplica</string>        <!-- button --> 
+    <string name="alarmoffset_dialog_cancel">Canceŀla</string>    <!-- button --> 
 
-    <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> set for <xliff:g id="duration" example="8h">%2$s</xliff:g> from now.</string> <!-- toast msg --> <!-- TODO -->
+    <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> posat per <xliff:g id="duration" example="8h">%2$s</xliff:g> des d\'ara.</string> <!-- toast msg --> 
 
-    <string name="configLabel_alarms_optWhiteList">Battery optimization</string>  <!-- TODO -->
-    <string name="configLabel_alarms_optWhiteList_listed">Not optimized (recommended)</string>  <!-- TODO -->
-    <string name="configLabel_alarms_optWhiteList_unlisted">Optimizing battery use.\nAlarms may be delayed up to 15 minutes.</string>  <!-- TODO -->
+    <string name="configLabel_alarms_optWhiteList">Optimització de bateria</string>  
+    <string name="configLabel_alarms_optWhiteList_listed">Sense optimitzar (recomanat)</string>  
+    <string name="configLabel_alarms_optWhiteList_unlisted">Optimitzant l\'ús de la bateria.\nLes alarmes es poden endarrerir fins a 15 minuts.</string>  
 
-    <string name="configLabel_alarms_silenceAfter">Go silent after</string>  <!-- TODO -->
-    <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
+    <string name="configLabel_alarms_silenceAfter">Silenciar desprès de</string>  
+    <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  
 
-    <string name="configLabel_alarms_timeoutAfter">Timeout after</string>  <!-- TODO -->
-    <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
+    <string name="configLabel_alarms_timeoutAfter">Caducar desprès de</string>  
+    <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  
 
-    <string name="configLabel_alarms_snooze">Snooze for</string>  <!-- TODO -->
-    <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
+    <string name="configLabel_alarms_snooze">Dormitar durant</string>  
+    <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  
 
-    <string name="configLabel_alarms_upcoming">Reminder within</string>  <!-- TODO -->
-    <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
+    <string name="configLabel_alarms_upcoming">Recordar en</string>  
+    <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  
 
-    <string name="configLabel_alarms_hardwarebuttons">Hardware Buttons</string>  <!-- TODO -->
-    <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>  <!-- TODO -->
-    <string-array name="alarm_hardwarebutton_actions_display">  <!-- TODO -->
-        <item>Dismiss</item>
-        <item>Silence</item>
-        <item>Snooze</item>
-        <item>Do Nothing</item>
+    <string name="configLabel_alarms_hardwarebuttons">Butons físics</string>  
+    <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>  
+    <string-array name="alarm_hardwarebutton_actions_display">  
+        <item>Ignorar</item>
+        <item>Silenciar</item>
+        <item>Dormitar</item>
+        <item>No facis res</item>
     </string-array>
     <string-array name="alarm_hardwarebutton_actions_values" translatable="false">
         <item>suntimeswidget.alarm.dismiss</item>
@@ -637,26 +640,26 @@
         <item>suntimeswidget.alarm.none</item>
     </string-array>
 
-    <string name="configLabel_alarmSounds">Sounds</string>            <!-- group title -->  <!-- TODO -->
-    <string name="configLabel_alarms_allRingtones">Show all ringtones</string>  <!-- TODO -->
-    <string name="configLabel_alarms_allRingtones_summary">Show all system sounds during selection (ignore ringtone type).</string>  <!-- TODO -->
+    <string name="configLabel_alarmSounds">Sons</string>            <!-- group title -->  
+    <string name="configLabel_alarms_allRingtones">Mostra tots els tons de trucada</string>  
+    <string name="configLabel_alarms_allRingtones_summary">Mostra tots els sons del sistema durant la selecció (ignora el tipus de to de trucada).</string>  
 
-    <string name="no_reminder">Never</string> <!-- TODO -->
+    <string name="no_reminder">Mai</string> 
 
     <plurals name="units_hours">
-        <item quantity="one">%d hour</item>
-        <item quantity="other">%d hours</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="one">%d hora</item>
+        <item quantity="other">%d hores</item>
+    </plurals>  
 
     <plurals name="units_minutes">
-        <item quantity="one">%d minute</item>
-        <item quantity="other">%d minutes</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="one">%d minut</item>
+        <item quantity="other">%d minuts</item>
+    </plurals>  
 
     <plurals name="units_seconds">
-        <item quantity="one">%d second</item>
-        <item quantity="other">%d seconds</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="one">%d segon</item>
+        <item quantity="other">%d segons</item>
+    </plurals>  
 
     <!--
          APP SETTINGS
@@ -669,7 +672,7 @@
     <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
     <string name="configLabel_widgetListHelp_title">Ajuda</string>               <!-- always the first item in the widgetList -->
     <string name="configLabel_widgetListHelp_summary">Mostrar ajuda del giny</string>
-    <string name="configLabel_widgetList_emptyMsg">No Widgets</string>          <!-- a label that is displayed in place of an empty listview -->  <!-- TODO -->
+    <string name="configLabel_widgetList_emptyMsg">Sense ginys</string>          <!-- a label that is displayed in place of an empty listview -->  
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Llocs</string>                           <!-- group title -->
@@ -898,11 +901,11 @@
     <string name="worldmap_dialog_option_sunlight">Llum solar</string>
     <string name="worldmap_dialog_option_moonlight">Llum lunar</string>
     <string name="worldmap_dialog_option_all">Ambdòs</string>
-    <string name="configAction_shareMap">Share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->  <!-- TODO -->
+    <string name="configAction_shareMap">Comparteix</string>   <!-- button (contentDescription) -->  <!-- export (share) -->  
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Planificar alarma per a</string>
-    <string name="configLabel_schednotify_mode">Schedule a notification for</string>  <!-- TODO -->
+    <string name="configLabel_schednotify_mode">Planificar una notificació per a</string>  
     <string name="schedalarm_dialog_title">Posar alarma</string>
     <string name="schedalarm_dialog_ok">Posar alarma</string>
     <string name="schedalarm_dialog_cancel">Canceŀla</string>
@@ -1017,17 +1020,17 @@
     <string name="msg_export_to">Exportar amb</string>  <!-- title displayed over "share action" chooser -->
 
     <!-- Dialog: Import Themes -->
-    <string name="themesimport_dialog_title">Importing Themes</string>                   <!-- TODO -->
-    <string name="themesimport_dialog_message">Importing themes from file…</string>      <!-- TODO -->
+    <string name="themesimport_dialog_title">Important temes</string>                   
+    <string name="themesimport_dialog_message">Important temes des d\'un arxiu…</string>      
 
-    <string name="msg_import_success">Imported <xliff:g id="themePlural">%s</xliff:g>.</string>  <!-- TODO -->
-    <string name="msg_import_failure">Import from <xliff:g id="filepath">%s</xliff:g> failed!</string>  <!-- TODO -->
-    <string name="msg_import_noresults">Import skipped; no new themes were found.</string>  <!-- TODO -->
+    <string name="msg_import_success">Importat <xliff:g id="themePlural">%s</xliff:g>.</string>  
+    <string name="msg_import_failure">La importació des de <xliff:g id="filepath">%s</xliff:g> ha fallat!</string>  
+    <string name="msg_import_noresults">La importació no s\'ha fet; no s\'han trobat temes nous.</string>  
 
     <plurals name="themePlural">
-        <item quantity="one">%d theme</item>
-        <item quantity="other">%d themes</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="one">%d tema</item>
+        <item quantity="other">%d temes</item>
+    </plurals>  
 
     <!-- Dialog: Color -->
     <string name="color_dialog_msg">Escollir color</string>
@@ -1037,11 +1040,11 @@
     <!-- Dialog: About -->
     <string name="about_dialog_title">Quant a</string>
     <string name="app_name">Suntimes</string>
-    <string name="app_name_alarmclock">Suntimes Alarms</string>  <!-- TODO -->
+    <string name="app_name_alarmclock">Alarmes de Suntimes</string>  
     <string name="app_name_widget0">Giny de Suntimes</string>
     <string name="app_name_widget1">Giny de Suntimes (reversible)</string>
     <string name="app_name_widget2">Giny solar</string>
-    <string name="app_name_clockwidget0">Clock Widget</string>  <!-- TODO -->
+    <string name="app_name_clockwidget0">Giny de rellotge</string>  
     <string name="app_name_solsticewidget0">Giny de solstici</string>
     <string name="app_name_moonwidget0">Giny lunar</string>
     <string name="app_version"><![CDATA[<b>Versió:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
@@ -1108,7 +1111,7 @@
     ]]></string>
 
     <string name="help_general_timeMode"><![CDATA[
-      <b>Temps natural:</b> El Sol està en l\'horitzó: això és el temps  aproximat de la sortida i posta de sol.<br/><br/>
+      <b>Hora oficial:</b> El Sol està en l\'horitzó: això és l\'hora  aproximada de la sortida i posta de sol.<br/><br/>
       <b>Crepuscle civil:</b> El Sol està 6 graus per sota de l\'horitzó; les estrelles més brillants són visibles. Hi ha suficient llum per a la majoría de les activitats a l\'aire lliure sense necessitat de llanterna.<br/><br/>
       <b>Crepuscle nàutic:</b> El Sol està 12 graus per sota de l\'horitzó; les siluetes dels objectes i l\'horitzó són difícils de distingir. No hi ha suficient llum per a activitatss a l\'aire lliure sense llanterna.<br/><br/>
       <b>Crepuscle astrònomic:</b> El Sol està 18 graus per sota de l\'horitzó. Qüasi l\'obscuritat de la nit.<br/>
@@ -1141,27 +1144,27 @@
       Per <b>reconfigurar un giny existent</b> pots sel·leccionar un de la següent llista.<br/>
 ]]></string>
     <string name="help_themelist">
-          [Icon Add] Add a new theme or [Icon Copy] copy from an existing theme.\n
+          [Icon Add] Afegeix un nou tema o [Icon Copy] copia des d\'un tema existent.\n
           \n
-          [Icon Edit] Edit or [Icon Delete] delete themes.\n
-          The [Icon Default] default themes cannot be modified.
-    </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  --> <!-- TODO -->
+          [Icon Edit] Edita o [Icon Delete] esborra temes.\n
+          Els [Icon Default] temes per defecte no es poden modificar.
+    </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  --> 
 
-    <string name="help_calendar"><![CDATA[Supply events to the Calendar app (moon phases, solstices, and equinoxes).<br />
+    <string name="help_calendar"><![CDATA[Proporciona events a l\'aplicació Calendari (fases llunars, solsticis, i equinoccis).<br />
         <br />
-        <u><b><font color="#ff9900">Calendar permissions have been removed.</font></b></u><br />
+        <u><b><font color="#ff9900">Els permisos de Calendari s\'han eliminat.</font></b></u><br />
         <br />
-        This feature is now available as a <a href="moreInfoLink">separate app</a>.
-    ]]></string>  <!-- TODO -->
+        Aquesta caracteristica està disponible en una <a href="moreInfoLink">aplicació separada</a>.
+    ]]></string>  
 
     <string name="privacy_policy"><![CDATA[<b>Privadesa:</b><br/>Suntimes no coŀlecta, emmagatzema, o transmet dades personals. <b>No contè anuncis</b>, <b>càlculs estadístics</b>, <b>rastrejadors</b>, i <b>no utilitza permissos innecessaris</b>. <br/><br/>L\'aplicació es configura amb dades de localització. Aquesta informació (i qualsevol altra dada configurada emprada per l\'aplicació) s\'emmagatzema localment i no surt del dispositiu.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes utilitza el permís de <b>localització</b> per determinar la teva longitud i latitud.<br/><br/>Aquest permís és opcional; la localització es configura manualment per defecte.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes utilitza el permís d\'<b>emmagatzematge extern</b> per fer una còpia de seguretat o exportar dades a un arxiu (p. ex. llocs, temes).]]></string>
     <string name="privacy_permissiondialog_title">Permissos</string>
 
-    <string name="security_dialog_title">Security Alert</string>  <!-- TODO -->
-    <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  <!-- TODO -->
-    <string name="feature_not_supported_by_api">This feature is not supported by API %1$s.</string>  <!-- TODO -->
+    <string name="security_dialog_title">Alerta de seguretat</string>  
+    <string name="security_duplicate_permissions">Un permís que pertany a Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\ntambé està definit per: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  
+    <string name="feature_not_supported_by_api">Aquesta caracteristica no està suportada per l\'API %1$s.</string>  
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

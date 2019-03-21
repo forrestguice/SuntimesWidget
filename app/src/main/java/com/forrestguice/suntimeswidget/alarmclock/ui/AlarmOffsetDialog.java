@@ -149,7 +149,7 @@ public class AlarmOffsetDialog extends DialogFragment
         pickerDirection = (NumberPicker) dialogContent.findViewById(R.id.alarmOption_offset_direction);
         pickerDirection.setMinValue(0);
         pickerDirection.setMaxValue(1);
-        pickerDirection.setDisplayedValues( new String[] {"before", "after"} );  // TODO: i18n
+        pickerDirection.setDisplayedValues( new String[] {context.getString(R.string.offset_button_before), context.getString(R.string.offset_button_after)} );
         pickerDirection.setOnValueChangedListener(onOffsetChanged);
 
         pickerOffsetMinutes = (NumberPicker) dialogContent.findViewById(R.id.alarmOption_offset_minute);
