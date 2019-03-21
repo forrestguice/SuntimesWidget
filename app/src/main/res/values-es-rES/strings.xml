@@ -639,7 +639,7 @@
     <string name="configLabel_alarms_allRingtones">Mostrar todos los tonos de llamada</string>  
     <string name="configLabel_alarms_allRingtones_summary">Mostrar todos los sonidos durante la selección (ignorar el tipo de tono de llamada).</string>  
 
-    <string name="no_reminder">Nnunca</string> 
+    <string name="no_reminder">Nunca</string>
 
     <plurals name="units_hours">
         <item quantity="one">%d hora</item>
