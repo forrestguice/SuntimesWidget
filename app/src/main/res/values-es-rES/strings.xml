@@ -566,7 +566,7 @@
 
     <string name="alarmOption_vibrate">Vibrar</string>                <!-- checkbox text -->  
     <string name="alarmOption_ringtone_none">Sin sonido</string>          <!-- ringtone label (none) -->  
-    <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icono]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->  
+    <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
     <string name="alarmOption_solarevent_none">Hora de reloj</string>          <!-- ringtone label (none) -->  
 
     <string name="alarmOption_repeat">Repetir</string>                <!-- checkbox text; an alarm that repeats -->  
