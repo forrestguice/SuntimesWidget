@@ -100,9 +100,24 @@
     <string name="until">do</string>
     <string name="until_end">do</string>
 
-    <string name="offset_at">at</string>  <!-- TODO -->
-    <string name="offset_before">%1$s before</string>  <!-- e.g. 30m before -->  <!-- TODO -->
-    <string name="offset_after">%1$s after</string>    <!-- e.g. 1h after -->  <!-- TODO -->
+    <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. the time component is shown on the next line -->
+        <item quantity="one">at</item>
+        <item quantity="few">at</item>
+        <item quantity="many">at</item>
+        <item quantity="other">at</item>
+    </plurals>  <!-- TODO -->
+    <plurals name="offset_before_plural">      <!-- e.g. "30m before \n 5:30PM" .. the time component is shown on the next line -->
+        <item quantity="one">%1$s before</item>
+        <item quantity="few">%1$s before</item>
+        <item quantity="many">%1$s before</item>
+        <item quantity="other">%1$s before</item>
+    </plurals>  <!-- TODO -->
+    <plurals name="offset_after_plural">      <!-- e.g. "30m after \n 5:30PM" .. the time component is shown on the next line -->
+        <item quantity="one">%1$s after</item>
+        <item quantity="few">%1$s after</item>
+        <item quantity="many">%1$s after</item>
+        <item quantity="other">%1$s after</item>
+    </plurals>  <!-- TODO -->
 
     <!-- NoteBody: sunset/sunrise/twilight string
          The note body text; appears next to the prefix (layout/info_time_note.xml)

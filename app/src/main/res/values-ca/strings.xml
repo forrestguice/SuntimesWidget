@@ -101,9 +101,18 @@
     <string name="until">fins</string>
     <string name="until_end">fins al final</string>
 
-    <string name="offset_at">en</string>  
-    <string name="offset_before">%1$s abans</string>  <!-- e.g. 30m before -->
-    <string name="offset_after">%1$s desprès</string>    <!-- e.g. 1h after -->
+    <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. the time component is shown on the next line -->
+        <item quantity="one">en</item>
+        <item quantity="other">en</item>
+    </plurals>
+    <plurals name="offset_before_plural">      <!-- e.g. "30m before \n 5:30PM" .. the time component is shown on the next line -->
+        <item quantity="one">%1$s abans</item>
+        <item quantity="other">%1$s abans</item>
+    </plurals>
+    <plurals name="offset_after_plural">      <!-- e.g. "30m after \n 5:30PM" .. the time component is shown on the next line -->
+        <item quantity="one">%1$s desprès</item>
+        <item quantity="other">%1$s desprès</item>
+    </plurals>
 
     <string name="offset_button_before">abans</string>    <!-- button label; [1h] [5m] [before] (-) -->
     <string name="offset_button_after">desprès</string>      <!-- button label; [1h] [5m] [after] (+) -->

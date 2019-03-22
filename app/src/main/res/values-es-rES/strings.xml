@@ -102,9 +102,6 @@
     <string name="until">hasta</string>
     <string name="until_end">hasta el final</string>
 
-    <string name="offset_at" />             <!-- TODO -->
-    <string name="offset_before">%1$s before</string>  <!-- e.g. 30m before -->  <!-- TODO -->
-    <string name="offset_after">%1$s after</string>    <!-- e.g. 1h after -->    <!-- TODO -->
 
     <string name="offset_button_before">before</string>    <!-- button label; [1h] [5m] [before] (-) --> <!-- TODO -->
     <string name="offset_button_after">after</string>      <!-- button label; [1h] [5m] [after] (+) -->  <!-- TODO -->
