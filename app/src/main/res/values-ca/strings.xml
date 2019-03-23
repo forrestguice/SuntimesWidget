@@ -636,17 +636,11 @@
 
     <string name="configLabel_alarms_hardwarebuttons">Butons físics</string>  
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>  
-    <string-array name="alarm_hardwarebutton_actions_display">  
+    <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->
         <item>Ignorar</item>
         <item>Silenciar</item>
         <item>Dormitar</item>
         <item>No facis res</item>
-    </string-array>
-    <string-array name="alarm_hardwarebutton_actions_values" translatable="false">
-        <item>suntimeswidget.alarm.dismiss</item>
-        <item>suntimeswidget.alarm.silent</item>
-        <item>suntimeswidget.alarm.snooze</item>
-        <item>suntimeswidget.alarm.none</item>
     </string-array>
 
     <string name="configLabel_alarmSounds">Sons</string>            <!-- group title -->  

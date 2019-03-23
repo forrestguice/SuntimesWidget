@@ -636,17 +636,11 @@
 
     <string name="configLabel_alarms_hardwarebuttons">Hardware Buttons</string>  <!-- TODO -->
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>  <!-- TODO -->
-    <string-array name="alarm_hardwarebutton_actions_display">  <!-- TODO -->
+    <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values --> <!-- TODO -->
         <item>Dismiss</item>
         <item>Silence</item>
         <item>Snooze</item>
         <item>Do Nothing</item>
-    </string-array>
-    <string-array name="alarm_hardwarebutton_actions_values" translatable="false">
-        <item>suntimeswidget.alarm.dismiss</item>
-        <item>suntimeswidget.alarm.silent</item>
-        <item>suntimeswidget.alarm.snooze</item>
-        <item>suntimeswidget.alarm.none</item>
     </string-array>
 
     <string name="configLabel_alarmSounds">Sounds</string>            <!-- group title -->  <!-- TODO -->
