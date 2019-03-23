@@ -103,7 +103,7 @@
     <string name="until_end">hasta el final</string>
 
     <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. the time component is shown on the next line -->
-        <item quantity="one">a la</item>
+        <item quantity="one">a las</item>
         <item quantity="other">a las</item>
     </plurals>
     <plurals name="offset_before_plural">      <!-- e.g. "30m after \n 5:30PM" .. the time component is shown on the next line -->
