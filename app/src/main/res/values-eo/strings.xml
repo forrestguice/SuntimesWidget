@@ -643,7 +643,7 @@
     <string name="configLabel_alarms_allRingtones">Montri ĉiujn voksonojn</string>
     <string name="configLabel_alarms_allRingtones_summary">Montri ĉiujn sistemajn sonojn dum elekti (ignori tipon de voksono).</string>
 
-    <string name="no_reminder">Neniam</string>
+    <string name="no_reminder">neniam</string>
 
     <plurals name="units_hours">
         <item quantity="one">%d horo</item>
