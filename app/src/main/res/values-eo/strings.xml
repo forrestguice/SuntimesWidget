@@ -561,7 +561,7 @@
     <string name="configAction_setAlarmSound">Agordi sonon</string>         <!-- button (contentDescription) -->
     <string name="configAction_alarmMenu">Alarma menuo</string>         <!-- button (contentDescription) -->
 
-    <string name="alarmAction_dismiss">Malaktivigi</string>                <!-- notification action button -->
+    <string name="alarmAction_dismiss">Silentigi</string>                <!-- notification action button -->
     <string name="alarmAction_snooze">Prokrasti</string>                  <!-- notification action button -->
     <string name="alarmAction_timeout">Silentiĝis</string>                  <!-- notification action button -->  <!-- TODO -->
 
@@ -631,9 +631,9 @@
     <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutoj">%s</xliff:g></string>
 
     <string name="configLabel_alarms_hardwarebuttons">Fizikaj butonoj</string>
-    <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="dormeti">%s</xliff:g></string>
+    <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Dormeti">%s</xliff:g></string>
     <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->  <!-- TODO -->
-        <item>Rezigni</item>
+        <item>Silentigi</item>
         <item>Silentigi</item>
         <item>Dormeti</item>
         <item>Fari nenion</item>
