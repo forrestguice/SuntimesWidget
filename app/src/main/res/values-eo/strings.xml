@@ -561,7 +561,7 @@
     <string name="configAction_setAlarmSound">Agordi sonon</string>         <!-- button (contentDescription) -->
     <string name="configAction_alarmMenu">Alarma menuo</string>         <!-- button (contentDescription) -->
 
-    <string name="alarmAction_dismiss">Rezigni</string>                <!-- notification action button -->
+    <string name="alarmAction_dismiss">Malaktivigi</string>                <!-- notification action button -->
     <string name="alarmAction_snooze">Prokrasti</string>                  <!-- notification action button -->
     <string name="alarmAction_timeout">Silentiĝis</string>                  <!-- notification action button -->  <!-- TODO -->
 
