@@ -627,7 +627,7 @@
     <string name="configLabel_alarms_snooze">Dormeti por</string>
     <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutoj">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_upcoming">Rememori post</string>
+    <string name="configLabel_alarms_upcoming">Rememori antaŭ</string>
     <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutoj">%s</xliff:g></string>
 
     <string name="configLabel_alarms_hardwarebuttons">Fizikaj butonoj</string>
