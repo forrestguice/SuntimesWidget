@@ -241,7 +241,7 @@
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">Zaawansowane ustawienia</string>                        <!-- group title -->
     <string name="configLabel_experimental">Eksperymentalne ustawienia</string>                <!-- group title -->
-    <string name="configLabel_general_scanPlugins">Wtyczki żródeł danych</string>                                <!-- checkbox label -->
+    <string name="configLabel_general_scanPlugins">Wtyczki źródeł danych</string>                                <!-- checkbox label -->
     <string name="configLabel_general_scanPlugins_summary">Skanuj i załaduj zewnętrzne wtyczki.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
@@ -256,7 +256,7 @@
 
     <!-- Widget Setting: riseSetOrder -->
     <string name="configLabel_general_riseSetOrder">Który:</string>     <!-- label -->
-    <string name="risesetorder_today">dziesiejszy</string>                    <!-- setting -->
+    <string name="risesetorder_today">dzisiejszy</string>                    <!-- setting -->
     <string name="risesetorder_lastnext">poprzedni / następny</string>           <!-- setting -->
 
     <!-- Widget Setting: time mode -->
@@ -315,7 +315,7 @@
     <string name="widgetMode1x1_both_2">Wschód i zachód (2)</string>  <!-- setting -->
 
     <string name="widgetMode1x1_altaz">Wysokość i azymut</string>     <!-- setting -->
-    <string name="widgetMode1x1_decright">Deklinacja i rekascensja</string>     <!-- setting -->
+    <string name="widgetMode1x1_decright">Deklinacja i rektascensja</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Zwykła</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Biegunowa</string>     <!-- setting -->
@@ -604,7 +604,7 @@
     <string name="alarmlabel_dialog_cancel">Anuluj</string>    <!-- button -->
 
     <string name="alarmrepeat_dialog_title">Powtórz alarm</string>        <!-- dialog title -->
-    <string name="alarmrepeat_dialog_ok">Zastowuj</string>        <!-- button -->
+    <string name="alarmrepeat_dialog_ok">Zastosuj</string>        <!-- button -->
     <string name="alarmrepeat_dialog_cancel">Anuluj</string>    <!-- button -->
 
     <string name="alarmtime_dialog_title">Stała godzina</string>        <!-- dialog title -->
@@ -1101,7 +1101,7 @@
           Pozorny ruch Słońca nie jest stały. Ulega tymczasowym wahaniom na skutek nachylenia ekliptyki i ekscentryczności orbity Ziemi. Długość rzeczywistej doby (czasu pomiędzy dwoma górowaniami Słońca) może być nieco krótsza lub dłuższa niż 24 godziny (maksymalnie do 30s).
           Te małe wahania akumulują się z każdym dniem (i zerują w ciągu roku).<br/><br/>
           <b>Średni czas słoneczny:</b> czas określony na podstawie średniej pozycji Słońca dla danej długości geograficznej.<br/><br/>
-          Średni ruch Słońca zawier poprawki na nachylenie ekliptyki i ekscentryczność orbity, jest jednorodny.
+          Średni ruch Słońca zawiera poprawki na nachylenie ekliptyki i ekscentryczność orbity, jest jednorodny.
           Długość każdego średniego dnia słonecznego wynosi dokładnie 24 godziny.<br/><br/>
           <b>Równanie czasu:</b> różnica między średnim czasem słonecznym i prawdziwym czasem słonecznym.
           Powstaje na skutek kumulacji różnic prawdziwego czasu słonecznego.<br/><br/>
