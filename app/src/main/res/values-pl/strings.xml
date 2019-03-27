@@ -204,10 +204,10 @@
     <string name="configAction_addWidget">Dodaj widżet</string>                   <!-- Button: Add -->
     <string name="configAction_reconfigWidget_short">Edytuj</string>       <!-- Button: Reconfigure -->
     <string name="configAction_reconfigWidget">Edytuj widżet</string>      <!-- used as title when reconfiguring -->
-    <string name="configLabel_title0">Zmierzchy i Świty Widżet</string>                  <!-- used as title when adding -->
+    <string name="configLabel_title0">@string/app_name_widget0</string>                  <!-- used as title when adding -->
     <string name="configLabel_title1">Przełączalny widżet</string>                 <!-- used as title when adding -->
     <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->
-    <string name="configLabel_solsticewidget0">Widżet przesilenia</string>                  <!-- used as title when adding -->
+    <string name="configLabel_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding -->
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
@@ -368,8 +368,8 @@
     <string name="timezoneMode_current">Systemowa</string>                         <!-- setting -->
     <string name="timezoneMode_custom">Użytkownika</string>                    <!-- setting -->
 
-    <string name="solartime_localMean">średni lokalny cz. sł.</string>                 <!-- setting / custom timezone id -->
-    <string name="solartime_apparent">prawdziwy lokalny cz. sł.</string>              <!-- setting / custom timezone id -->
+    <string name="solartime_localMean">średni czas słoneczny</string>                 <!-- setting / custom timezone id -->
+    <string name="solartime_apparent">prawdziwy czas słoneczny</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
@@ -640,7 +640,7 @@
         <item>Wycisz</item>
         <item>Wycisz</item>
         <item>Drzemka</item>
-        <item>Brak akcji</item>
+        <item>Nie rób nic</item>
     </string-array>
 
     <string name="configLabel_alarmSounds">Dźwięki</string>            <!-- group title -->
@@ -929,7 +929,7 @@
         <item>poranna błękitna godzina (koniec)</item>
         <item>wschód Słońca</item>
         <item>poranna złota godzina (koniec)</item>
-        <item>kulminację Słońca</item>
+        <item>kulminacja Słońca</item>
         <item>wieczorna złota godzina (początek)</item>
         <item>zachód Słońca</item>
         <item>wieczorna błękitna godzina (początek)</item>
@@ -1096,29 +1096,20 @@
           <b>Świt/zmierzch astronomiczny: </b> Słońce znajduje się 18 stopni pod horyzontem. Praktycznie czarne niebo.<br/>
     ]]></string>
         
-        
 <string name="help_general_solartime"><![CDATA[
-          <b>Prawdziwy lokalny czas słoneczny:</b> czas na zegarze słoneczny. Czas określony przez śledzenie pozornego ruchu Słońca dla danej długości i szerokości geograficznej.<br/><br/>
+          <b>Prawdziwy czas słoneczny:</b> czas określony przez śledzenie pozornego ruchu Słońca dla danej długości i szerokości geograficznej.<br/><br/>
           Pozorny ruch Słońca nie jest stały. Ulega tymczasowym wahaniom na skutek nachylenia ekliptyki i ekscentryczności orbity Ziemi. Długość rzeczywistej doby (czasu pomiędzy dwoma górowaniami Słońca) może być nieco krótsza lub dłuższa niż 24 godziny (maksymalnie do 30s).
           Te małe wahania akumulują się z każdym dniem (i zerują w ciągu roku).<br/><br/>
-          <b>Średni lokalny czas słoneczny:</b> czas zegarowy (nie uwzględniając stref). The time determined from the position of the mean sun with respect to a given longitude.
+          <b>Średni czas słoneczny:</b> czas określony na podstawie średniej pozycji Słońca dla danej długości geograficznej.<br/><br/>
+          Średni ruch Słońca zawier poprawki na nachylenie ekliptyki i ekscentryczność orbity, jest jednorodny.
+          Długość każdego średniego dnia słonecznego wynosi dokładnie 24 godziny.<br/><br/>
+          <b>Równanie czasu:</b> różnica między średnim czasem słonecznym i prawdziwym czasem słonecznym.
+          Powstaje na skutek kumulacji różnic prawdziwego czasu słonecznego.<br/><br/>
+          Prawdziwy czas słoneczny może się różnić od czasu średniego o maksymalnie 16 minut w zależności od pory roku.<br/><br/>
+          <i>T aplikacja korzysta z algorytmu do obliczenia równania czasu (i wyprowadzenia prawdziwego czasu słonecznego).
+          Twoje położenie jest wykorzystywane do obliczenia średniego czasu słonecznego.</i>
           <br/><br/>
-          The motion of the mean sun corrects for obliquity and eccentricity and is uniform.
-          The length of each mean solar day is exactly 24 hours.<br/><br/>
-          <b>Equation of Time (EOT):</b> The difference between local mean time and apparent solar time.
-          This is the accumulated variation of the apparent solar day.
-          <br/><br/>
-          Apparent solar time may differ from local mean time by up to 16 minutes depending on the season.
-          <br/><br/>
-          <i>This app uses an algorithm to calculate the equation of time (and derive the apparent solar time).
-          Your location is used to determine the local mean time.</i>
-          <br/><br/>
-    ]]></string> <!-- TODO -->        
-        
-        
-        
-        
-        
+    ]]></string>
         
     <string name="help_general_daylength"><![CDATA[
         <b>Długość dnia:</b> czas pomiędzy wschodem i zachodem Słońca.<br/><br/>
@@ -1155,7 +1146,7 @@
         Ta funkcja jest teraz dostępna jako <a href="moreInfoLink">osobna aplikacja</a>.
     ]]></string>
 
-    <string name="privacy_policy"><![CDATA[<b>Prywatność:</b><br/>Aplikacja Zmierzchy i Świty nie zbiera, przechowuje i przesyła osobistych danych użytkownika. Ta aplikacja nie zawiera reklam, narzędzi analitycznych i zbędnych uprawnień.<br/><br/>Aplikacja konfiguruje się używając danych lokalizacji; te dane (i inne używane przez program) są zapisywane lokalnie i nie opuszczają urządzenia.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
+    <string name="privacy_policy"><![CDATA[<b>Prywatność:</b><br/>Aplikacja Czasy Słońca nie zbiera, przechowuje i przesyła osobistych danych użytkownika. Ta aplikacja nie zawiera reklam, narzędzi analitycznych i zbędnych uprawnień.<br/><br/>Aplikacja konfiguruje się używając danych lokalizacji; te dane (i inne używane przez program) są zapisywane lokalnie i nie opuszczają urządzenia.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Uprawnienie <b>określenia lokalizacji</b> jest używane do ustalenia bieżącej szerokości i długości geograficznej. To uprawnienie jest opcjonalne; położenie domyślnie jest wpisywane ręcznie.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Uprawnienie <b>dostępu do pamięci zewnętrznej</b> jest wymagane do wyeksportowania danych do pliku (np. miejsc, skórek).]]></string>
     <string name="privacy_permissiondialog_title">Uprawnienia</string>
