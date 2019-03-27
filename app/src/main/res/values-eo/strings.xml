@@ -1106,7 +1106,7 @@
     ]]>
     </string>
     <string name="help_general_moonillum"><![CDATA[
-        <b>Prilumeco de Luno:</b> fenestraĵoj kaj la ĉefa paĝo vidigas prilumecon de la Luno je ĝia ekstremo (midpunkto inter lunleviĝo kaj lunsubiro), sed la ekrano de lun-informoj vidigas nunan prilumecon de la Luno.<br/><br/>
+        <b>Prilumeco de Luno:</b> fenestraĵoj kaj la ĉefa paĝo vidigas prilumecon de la Luno je ĝia ekstremo (mezpunkto inter lunleviĝo kaj lunsubiro), sed la ekrano de lun-informoj vidigas nunan prilumecon de la Luno.<br/><br/>
     ]]></string>
     <string name="help_general_goldhour"><![CDATA[
         <b>Ora horo:</b> la Suno estas inter 6 gradoj sub kaj super la horizonto. Matene la ora horo komenciĝas kun civila krepusko kaj finiĝas baldaŭ post sunleviĝo. Vespere la ora horo komenciĝas tuj antaŭ sunsubiro kaj finiĝas kun civila krepusko.<br/>
@@ -1141,7 +1141,7 @@
     <string name="privacy_permissiondialog_title">Permesoj</string>
 
     <string name="security_dialog_title">Sekureca averto</string>
-    <string name="security_duplicate_permissions">La permeso, kiu apertenas al la programo Suntempoj:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nestas ankaŭ difinita de: <xliff:g id="packageName" example="iu.alia.aplikajho">%2$s</xliff:g></string>
+    <string name="security_duplicate_permissions">La permeso, kiu apartenas al la programo Suntempoj:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nestas ankaŭ difinita de: <xliff:g id="packageName" example="iu.alia.aplikajho">%2$s</xliff:g></string>
     <string name="feature_not_supported_by_api">Tiu ĉi eblaĵo ne estas subtenata per API %1$s.</string>
 
     <!-- calculator implemenations -->
