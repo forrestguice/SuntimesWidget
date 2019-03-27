@@ -112,8 +112,8 @@
         <item quantity="other">%1$s post</item>
     </plurals>
 
-    <string name="offset_button_before">post</string>    <!-- button label; [1h] [5m] [before] (-) -->
-    <string name="offset_button_after">antaŭ</string>      <!-- button label; [1h] [5m] [after] (+) -->
+    <string name="offset_button_before">antaŭ</string>    <!-- button label; [1h] [5m] [before] (-) -->
+    <string name="offset_button_after">post</string>      <!-- button label; [1h] [5m] [after] (+) -->
 
     <!-- NoteBody: sunset/sunrise/twilight string
          The note body text; appears next to the prefix (layout/info_time_note.xml)
