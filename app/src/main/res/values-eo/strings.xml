@@ -193,10 +193,10 @@
     <string name="configAction_addWidget">Aldoni fenestraĵon</string>                   <!-- Button: Add -->
     <string name="configAction_reconfigWidget_short">Reagordi</string>       <!-- Button: Reconfigure -->
     <string name="configAction_reconfigWidget">Reagordi fenestraĵon</string>      <!-- used as title when reconfiguring -->
-    <string name="configLabel_title0">Suntempoj fenestraĵo</string>                  <!-- used as title when adding -->
+    <string name="configLabel_title0">@string/app_name_widget0</string>                  <!-- used as title when adding -->
     <string name="configLabel_title1">Baskulebla fenestraĵo </string>                 <!-- used as title when adding -->
     <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->
-    <string name="configLabel_solsticewidget0">Solstica fenestraĵo</string>                  <!-- used as title when adding -->
+    <string name="configLabel_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding -->
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
@@ -618,10 +618,10 @@
     <string name="configLabel_alarms_optWhiteList_listed">Ne optimumigita (konsilinde)</string>
     <string name="configLabel_alarms_optWhiteList_unlisted">Aktiva optimumigo de pilo.\nAlarmoj povas prokrastĝi maksimume je 15 minutoj.</string>
 
-    <string name="configLabel_alarms_silenceAfter">Silentiĝi post</string>
+    <string name="configLabel_alarms_silenceAfter">Silentiĝi post</string> <!-- TODO -->
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutoj">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_timeoutAfter">Silentiĝi post</string>
+    <string name="configLabel_alarms_timeoutAfter">Silentiĝi post</string> <!-- TODO -->
     <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutoj">%s</xliff:g></string>
 
     <string name="configLabel_alarms_snooze">Dormeti por</string>
