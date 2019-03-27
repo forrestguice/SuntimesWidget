@@ -364,7 +364,7 @@
     <string name="timezoneMode_current">Sistema</string>                         <!-- setting -->
     <string name="timezoneMode_custom">Propra</string>                    <!-- setting -->
 
-    <string name="solartime_localMean">loka mezuma suntempo</string>                 <!-- setting / custom timezone id -->
+    <string name="solartime_localMean">mezuma suntempo</string>                 <!-- setting / custom timezone id -->
     <string name="solartime_apparent">ŝajna suntempo</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
@@ -1085,19 +1085,18 @@
           <b>Astronomia krepusko:</b> la Suno estas 18 gradoj sub la horizonto. Preskaŭ nigra nokto.<br/>
     ]]></string>
         <string name="help_general_solartime"><![CDATA[
-          <b>Ŝajna suntempo:</b> tempo sur sunhorloĝo. La tempo determinita per spuri movon de ŝajna Suno al la agordita longitudo kaj latitudo.<br/><br/>
+          <b>Ŝajna suntempo:</b> tempo determinita per spuri movon de ŝajna Suno al la agordita longitudo kaj latitudo.<br/><br/>
           Ŝajna movo de Suno ne estas konstanta. Ĝi ŝanĝiĝas laŭ sezonoj pro aksa kliniĝo de ekliptiko kaj pro discentreco de Tera orbito.
           Longo de ĉiu ŝajna suna tago – mezurita inter du tagmezoj – povas iomete malegali al 24 horoj (maksimume je 30s).
           Tiuj etaj ŝanĝoj kolektiĝas kun ĉiu pasigita tago (kaj nuliĝas dum jaro).<br/><br/>
-          <b>Loka mezuma suntempo:</b> la tempo determinita el mezuma pozicio de Suno por agordita longitudo.<br/><br/>
+          <b>Mezuma suntempo:</b> la tempo determinita el mezuma pozicio de Suno por agordita longitudo.<br/><br/>
           Mezuma movo de Suno enhavas korektojn por aksa kliniĝo kaj discentreco kaj estas egaligita.
           Longo de ĉiu mezuma suna tago estas ekzakte 24 horoj.<br/><br/>
-          <b>Ekvacio de tempo:</b> diferenco inter mezuma loka tempo kaj ŝajna suntempo.
+          <b>Ekvacio de tempo:</b> diferenco inter mezuma suntempo kaj ŝajna suntempo.
           Estiĝis pro kolektigitaj diferencoj inter ŝajnaj sunaj tagoj.<br/><br/>
-          Ŝajna suntempo povas diferenci de loka mezuma tempo maksimume je 16 minutoj, depende de sezono.
-          <br/><br/>
+          Ŝajna suntempo povas diferenci de mezuma suntempo maksimume je 16 minutoj, depende de sezono.<br/><br/>
           <i>Tiu ĉi aplikaĵo uzas algoritmon por kalkuli ekvacion de tempo (kaj derivi ŝajnan suntempon).
-          Via pozicio estas uzata por kalkuli lokan mezuman suntempon.</i>
+          Via pozicio estas uzata por kalkuli mezuman suntempon.</i>
           <br/><br/>
     ]]></string>
         
