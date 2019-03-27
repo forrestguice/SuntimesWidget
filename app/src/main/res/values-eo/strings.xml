@@ -580,7 +580,7 @@
     <string name="alarmOption_solarevent_none">konstanta tempo</string>          <!-- ringtone label (none) -->
 
     <string name="alarmOption_repeat">ripeti je</string>                <!-- checkbox text; an alarm that repeats -->
-    <string name="alarmOption_repeat_none">ne ripeti/string>         <!-- label text; an alarm that does not repeat (occurs once) -->
+    <string name="alarmOption_repeat_none">ne ripeti</string>         <!-- label text; an alarm that does not repeat (occurs once) -->
     <string name="alarmOption_repeat_all">ĉiutage</string>         <!-- label text; an alarm that repeats every day -->
 
     <string name="deletealarm_dialog_title">Forigi</string>        <!-- dialog title -->

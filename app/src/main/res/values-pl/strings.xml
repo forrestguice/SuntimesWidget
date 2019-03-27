@@ -585,7 +585,7 @@
 
     <string name="alarmOption_repeat">powtarzaj</string>                <!-- checkbox text; an alarm that repeats -->
     <string name="alarmOption_repeat_none">jednorazowo</string>         <!-- label text; an alarm that does not repeat (occurs once) -->
-    <string name="alarmOption_repeat_all">codziennie/string>         <!-- label text; an alarm that repeats every day -->
+    <string name="alarmOption_repeat_all">codziennie</string>         <!-- label text; an alarm that repeats every day -->
 
     <string name="deletealarm_dialog_title">Usuń</string>        <!-- dialog title -->
     <string name="deletealarm_dialog_message">Czy na pewno chcesz usunąć <xliff:g id="type">%1$s</xliff:g> z <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg -->
