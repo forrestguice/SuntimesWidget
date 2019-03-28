@@ -2,6 +2,7 @@
 
 ### v0.11.1
 * updates translations to Spanish (es-es) and Catalan (ca) (#301 by Raulvo).
+* updates translations to Polish (pl) and Esperanto (eo) (#302 by Verdulo).
 
 ### v0.11.0 (2019-03-12)
 * adds "Suntimes Alarms", an Alarm Clock (#140, #250, #261) with support for daily repeating alarms and notifications.
