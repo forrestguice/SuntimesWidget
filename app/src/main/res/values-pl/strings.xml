@@ -1107,7 +1107,7 @@
           <b>Równanie czasu:</b> różnica między średnim czasem słonecznym i prawdziwym czasem słonecznym.
           Powstaje na skutek kumulacji różnic prawdziwego czasu słonecznego.<br/><br/>
           Prawdziwy czas słoneczny może się różnić od czasu średniego o maksymalnie 16 minut w zależności od pory roku.<br/><br/>
-          <i>T aplikacja korzysta z algorytmu do obliczenia równania czasu (i wyprowadzenia prawdziwego czasu słonecznego).
+          <i>Ta aplikacja korzysta z algorytmu do obliczenia równania czasu (i wyprowadzenia prawdziwego czasu słonecznego).
           Twoje położenie jest wykorzystywane do obliczenia średniego czasu słonecznego.</i>
           <br/><br/>
     ]]></string>
