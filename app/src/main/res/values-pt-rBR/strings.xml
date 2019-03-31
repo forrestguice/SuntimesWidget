@@ -111,7 +111,7 @@
     <string name="length_delimiter">|</string>
 
     <!-- Field: moon illumination (as seen in moon widget) -->
-    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> illuminated</string>  <!-- used in 2x1 widget -->
+    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> illuminated</string>  <!-- used in 2x1 widget -->  <!-- TODO -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- used in 1x1 widget -->
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
@@ -137,15 +137,15 @@
     <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. the time component is shown on the next line -->
         <item quantity="one" xliff:ignore="ImpliedQuantity">at</item>
         <item quantity="other">at</item>
-    </plurals>
+    </plurals>  <!-- TODO -->
     <plurals name="offset_before_plural">      <!-- e.g. "30m before \n 5:30PM" .. the time component is shown on the next line -->
         <item quantity="one">%1$s before</item>
         <item quantity="other">%1$s before</item>
-    </plurals>
+    </plurals>  <!-- TODO -->
     <plurals name="offset_after_plural">      <!-- e.g. "30m after \n 5:30PM" .. the time component is shown on the next line -->
         <item quantity="one">%1$s after</item>
         <item quantity="other">%1$s after</item>
-    </plurals>
+    </plurals>  <!-- TODO -->
 
     <string name="offset_button_before">antes</string>    <!-- button label; [1h] [5m] [before] (-) -->
     <string name="offset_button_after">depois</string>      <!-- button label; [1h] [5m] [after] (+) -->
@@ -159,9 +159,9 @@
     <string name="until_sunrise">nascer do sol</string>
     <string name="until_noon">tarde solar</string>
     <string name="until_sunset">pôr do sol</string>
-    <string name="untilEnd_civilTwilight">civil twilight</string>
-    <string name="untilEnd_nauticalTwilight">nautical twilight</string>
-    <string name="untilEnd_astroTwilight">astronomical twilight</string>
+    <string name="untilEnd_civilTwilight">crepúsculo civil</string>
+    <string name="untilEnd_nauticalTwilight">crepúsculo náutico</string>
+    <string name="untilEnd_astroTwilight">crepúsculo astronômico</string>
     <string name="until_goldhour">hora dourada</string>
     <string name="untilEnd_goldhour">hora dourada</string>
     <string name="until_bluehour">hora azul</string>
@@ -477,9 +477,9 @@
     <string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>   <!-- copied theme id -->
     <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (copy)</string>                            <!-- copied theme name (display string) -->
 
-    <string name="addtheme_toast_success">Added <xliff:g id="themeName">%1$s</xliff:g>.</string>          <!-- toast msg -->
-    <string name="edittheme_toast_success">Saved <xliff:g id="themeName">%1$s</xliff:g>.</string>         <!-- toast msg -->
-    <string name="deletetheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> was deleted.</string> <!-- toast msg -->
+    <string name="addtheme_toast_success">Added <xliff:g id="themeName">%1$s</xliff:g>.</string>          <!-- toast msg -->  <!-- TODO -->
+    <string name="edittheme_toast_success">Saved <xliff:g id="themeName">%1$s</xliff:g>.</string>         <!-- toast msg -->  <!-- TODO -->
+    <string name="deletetheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> was deleted.</string> <!-- toast msg -->  <!-- TODO -->
 
     <string name="edittheme_error_themeName_empty">ID deve ser exclusivo (obrigatório).</string>        <!-- error hint (themeName empty) -->
     <string name="edittheme_error_themeName_unique">ID deve ser exclusivo (não é exclusivo).</string>  <!-- error hint (themeName taken) -->
@@ -588,10 +588,10 @@
     <string name="widgetLabel_altitude_short">Alt</string>               <!-- label -->
     <string name="widgetLabel_altitude_symbol">∠</string>               <!-- label/suffix -->
 
-    <string name="widgetLabel_rightAscension">Right Ascension</string>    <!-- label -->
+    <string name="widgetLabel_rightAscension">Right Ascension</string>    <!-- label -->  <!-- TODO -->
     <string name="widgetLabel_rightAscension_short">RA</string>    <!-- label -->
     <string name="widgetLabel_rightAscension_symbol">α</string>    <!-- label/suffix -->
-    <string name="widgetLabel_declination">Declination</string>           <!-- label -->
+    <string name="widgetLabel_declination">Declination</string>           <!-- label -->  <!-- TODO -->
     <string name="widgetLabel_declination_short">Dec</string>           <!-- label -->
     <string name="widgetLabel_declination_symbol">δ</string>           <!-- label/suffix -->
 
@@ -660,13 +660,13 @@
     <string name="alarmtime_dialog_title">Tempo do Alarme</string>        <!-- dialog title -->
     <string name="alarmtime_dialog_ok">Exceder</string>        <!-- button -->
     <string name="alarmtime_dialog_cancel">Cancelar</string>    <!-- button -->
-    <string name="alarmtime_dialog_message">Override the alarm time?\n\nThis alarm will no longer be scheduled by event.</string>   <!-- dialog msg -->
+    <string name="alarmtime_dialog_message">Override the alarm time?\n\nThis alarm will no longer be scheduled by event.</string>   <!-- dialog msg -->  <!-- TODO -->
 
     <string name="alarmoffset_dialog_title">Alarme Offset</string>        <!-- dialog title -->
     <string name="alarmoffset_dialog_ok">Aplicar</string>        <!-- button -->
     <string name="alarmoffset_dialog_cancel">Cancelar</string>    <!-- button -->
 
-    <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> set for <xliff:g id="duration" example="8h">%2$s</xliff:g> from now.</string> <!-- toast msg -->
+    <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> set for <xliff:g id="duration" example="8h">%2$s</xliff:g> from now.</string> <!-- toast msg -->  <!-- TODO -->
 
     <string name="configLabel_alarms_optWhiteList">Otimização da bateria</string>
     <string name="configLabel_alarms_optWhiteList_listed">Não otimizado (recomendado)</string>
@@ -739,8 +739,8 @@
     <string name="configLabel_ui">Interface do Usuário</string>                       <!-- group title -->
 
     <!-- App Setting: Verbose Accessibility -->
-    <string name="configLabel_accessibility_verbose">Verbose TalkBack</string>
-    <string name="configLabel_accessibility_verbose_summary">Announce automated changes to the UI.</string>
+    <string name="configLabel_accessibility_verbose">Verbose TalkBack</string>  <!-- TODO -->
+    <string name="configLabel_accessibility_verbose_summary">Announce automated changes to the UI.</string>  <!-- TODO -->
 
     <!-- App Setting: UI Warnings -->
     <string name="configLabel_ui_showWarnings">Mostrar Avisos</string>
@@ -804,7 +804,7 @@
         <item>Swap cards (today/tomorrow)</item>
         <item>Show calendar app</item>
         <item>Set custom date</item>
-    </string-array>
+    </string-array>  <!-- TODO -->
 
     <!-- App Setting: Clock UI "on tap" action -->
     <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
@@ -813,7 +813,7 @@
         <item>@string/configAction_setTimeZone</item>
         <item>Show next note</item>
         <item>Show previous note</item>
-    </string-array>
+    </string-array>  <!-- TODO -->
 
     <!-- App Setting: Note UI "on tap" action -->
     <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
@@ -821,12 +821,12 @@
         <item>Set alarm for note</item>
         <item>Show next note</item>
         <item>Show previous note</item>
-    </string-array>
+    </string-array>  <!-- TODO -->
 
     <!-- App Setting: time zone sort modes -->
-    <string name="timezone_sort_byOffset">by offset</string>
-    <string name="timezone_sort_byId">by id</string>
-    <string name="timezone_sort_byName">by name</string>
+    <string name="timezone_sort_byOffset">by offset</string>  <!-- TODO -->
+    <string name="timezone_sort_byId">by id</string>  <!-- TODO -->
+    <string name="timezone_sort_byName">by name</string>  <!-- TODO -->
 
     <string-array name="timezoneSort_display">  <!-- display values (one-to-one with timezoneSort_values) -->
         <item>@string/timezone_sort_byOffset</item>
@@ -834,23 +834,23 @@
         <item>@string/timezone_sort_byName</item>
     </string-array>
 
-    <string name="timezone_sort_contextAction">Sort zones</string>           <!-- action bar title -->
-    <string name="timezone_sort_msg">Time zones sorted (%1$s).</string>      <!-- toast msg -->
+    <string name="timezone_sort_contextAction">Sort zones</string>           <!-- action bar title -->  <!-- TODO -->
+    <string name="timezone_sort_msg">Time zones sorted (%1$s).</string>      <!-- toast msg -->  <!-- TODO -->
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">GPS time limit</string>
-    <string name="configLabel_getFix_maxElapse_summary">Give up after <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
+    <string name="configLabel_getFix_maxElapse">GPS time limit</string>    <!-- TODO -->
+    <string name="configLabel_getFix_maxElapse_summary">Give up after <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>    <!-- TODO -->
     <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 seconds</item>
         <item>30 seconds</item>
         <item>1 minute</item>
         <item>5 minutes</item>
         <item>10 minutes</item>
-    </string-array>
+    </string-array>  <!-- TODO -->
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">GPS recent max age</string>
-    <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> considered recent</string>
+    <string name="configLabel_getFix_maxAge">GPS recent max age</string>  <!-- TODO -->
+    <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> considered recent</string>  <!-- TODO -->
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>1 minute</item>
         <item>5 minutes</item>
@@ -862,28 +862,28 @@
         <item>two days (48 hours)</item>
         <item>one week (168 hours)</item>
         <item>one month (672 hours)</item>
-    </string-array>
+    </string-array>  <!-- TODO -->
 
     <!-- App Setting: calendars -->
-    <string name="configLabel_calendars">Calendars</string>   <!-- group title -->
-    <string name="configLabel_calendars_enabled">Calendar Integration</string>
+    <string name="configLabel_calendars">Calendars</string>   <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_calendars_enabled">Calendar Integration</string>  <!-- TODO -->
 
     <!-- App Setting: passive location mode -->
-    <string name="configLabel_getFix_passiveMode">Passive Location</string>
-    <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string>
+    <string name="configLabel_getFix_passiveMode">Passive Location</string>  <!-- TODO -->
+    <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string>  <!-- TODO -->
 
     <!-- App Setting: locale mode -->
-    <string name="configLabel_locale">Language Settings</string>   <!-- group title -->
+    <string name="configLabel_locale">Language Settings</string>   <!-- group title -->  <!-- TODO -->
 
-    <string name="configLabel_localeMode">Mode</string>
+    <string name="configLabel_localeMode">Mode</string>  <!-- TODO -->
     <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
     <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
         <item>System</item>
         <item>User Defined</item>
-    </string-array>
+    </string-array>  <!-- TODO -->
 
     <!-- App Setting: custom Locale -->
-    <string name="configLabel_localeSelect">Language</string>
+    <string name="configLabel_localeSelect">Language</string>  <!-- TODO -->
     <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
     <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
         <item>English</item>
@@ -898,8 +898,8 @@
         <item>Basque</item>
         <item>Norwegian</item>
         <item>Traditional Chinese</item>
-        <item>Portuguese</item>
-    </string-array>
+        <item>Português</item>
+    </string-array>  <!-- TODO: these should be language names as understood in portuguese -->
 
     <!-- position formats -->
     <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
@@ -1125,11 +1125,11 @@
         French translation by Jej & Aloha. <br />
         Hungarian translation by Erci. <br />
         Spanish and Catalan translation by <a href=https://github.com/Raulvo>Raulvo</a>. <br />
-		Brazilian Portuguese translation by <a href=https://github.com/NetoSilva15>Neto Silva</a>. <br />
         Basque translation by beriain. <br />
         Norwegian translation by FTno. <br />
         Italian translation by Matteo Caoduro. <br />
-        Traditional Chinese translation by <a href=https://github.com/pggdt>ft42</a>.
+        Traditional Chinese translation by <a href=https://github.com/pggdt>ft42</a>. <br />
+        Brazilian Portuguese translation by <a href=https://github.com/NetoSilva15>Neto Silva</a>.
     ]]></string>
     <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
