@@ -135,7 +135,7 @@
     <string name="until_end">até o fim</string>
 
     <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. the time component is shown on the next line -->
-        <item quantity="one">at</item>
+        <item quantity="one" xliff:ignore="ImpliedQuantity">at</item>
         <item quantity="other">at</item>
     </plurals>
     <plurals name="offset_before_plural">      <!-- e.g. "30m before \n 5:30PM" .. the time component is shown on the next line -->
