@@ -894,42 +894,12 @@
         <item>Italian</item>
         <item>Polish</item>
         <item>Spanish</item>
-		<!--<item>Portuguese</item>-->  <!-- TODO -->
         <item>Catalan</item>
         <item>Basque</item>
         <item>Norwegian</item>
         <item>Traditional Chinese</item>
+        <item>Portuguese</item>
     </string-array>
-    <!--<string-array name="locale_display_native" translatable="false">
-        <item>English</item>
-        <item>Esperanto</item>
-        <item>Français</item>
-        <item>Deutsche</item>
-        <item>Magyar</item>
-        <item>Italiano</item>
-        <item>Polski</item>
-        <item>Español</item>
-        <item>Português</item>
-		<item>Català</item>
-        <item>Euskara</item>
-        <item>Norsk</item>
-        <item>正體中文</item>
-    </string-array>-->
-    <!--<string-array name="locale_values" translatable="false">
-        <item>en</item>
-        <item>eo</item>
-        <item>fr</item>
-        <item>de</item>
-        <item>hu</item>
-        <item>it</item>
-        <item>pl</item>
-        <item>es_ES</item>
-		<item>pt_BR</item>
-        <item>ca</item>
-        <item>eu</item>
-        <item>nb</item>
-        <item>zh_TW</item>
-    </string-array>-->
 
     <!-- position formats -->
     <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
