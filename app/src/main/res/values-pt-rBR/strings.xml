@@ -216,10 +216,6 @@
     <string name="lengthUnits_metric">Métrica</string>
     <string name="lengthUnits_imperial">Imperial</string>
     <string name="lengthUnits_usc">Estadunidense</string>     <!-- TODO -->
-    <string-array name="lengthUnits_values" translatable="false">
-        <item>METRIC</item>
-        <item>IMPERIAL</item>
-    </string-array>
     <string-array name="lengthUnits_display"> <!-- one-to-one with lengthUnits_values -->
         <item>@string/lengthUnits_metric</item>
         <item>@string/lengthUnits_imperial</item>
@@ -696,12 +692,6 @@
         <item>Cochilar</item>
         <item>Nada</item>
     </string-array>
-    <string-array name="alarm_hardwarebutton_actions_values" translatable="false">
-        <item>suntimeswidget.alarm.dismiss</item>
-        <item>suntimeswidget.alarm.silent</item>
-        <item>suntimeswidget.alarm.snooze</item>
-        <item>suntimeswidget.alarm.none</item>
-    </string-array>
 
     <string name="configLabel_alarmSounds">Áudio</string>            <!-- group title -->
     <string name="configLabel_alarms_allRingtones">Mostrar todos os áudios</string>
@@ -794,11 +784,6 @@
         <item>@string/appThemes_darkTheme</item>
         <item>Light Theme / Dark Theme (Night&#160;Mode)</item>  <!-- TODO: nbsp -->
     </string-array>
-    <string-array name="appThemes_values" translatable="false">  <!-- config values (one-to-one with appThemes_display) -->
-        <item>light</item>
-        <item>dark</item>
-        <item>daynight</item>
-    </string-array>
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
@@ -806,20 +791,11 @@
         <item>@string/timeFormatMode_12hr</item>
         <item>@string/timeFormatMode_24hr</item>
     </string-array>
-    <string-array name="timeFormatMode_values" translatable="false">  <!-- one-to-one with timeFormatMode_display -->
-        <item>MODE_SYSTEM</item>
-        <item>MODE_12HR</item>
-        <item>MODE_24HR</item>
-    </string-array>
 
     <!-- App Setting: solstice tracking mode -->
     <string-array name="solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
         <item>@string/trackingMode_closest</item>
         <item>@string/trackingMode_soonest</item>
-    </string-array>
-    <string-array name="solsticeTrackingMode_values" translatable="false">  <!-- one-to-one with solsticeTrackingMode_display -->
-        <item>CLOSEST</item>
-        <item>SOONEST</item>
     </string-array>
 
     <!-- App Setting: Date "on tap" action -->
@@ -828,12 +804,6 @@
         <item>Swap cards (today/tomorrow)</item>
         <item>Show calendar app</item>
         <item>Set custom date</item>
-    </string-array>
-    <string-array name="dateTapActions_values" translatable="false"> <!-- config values (one-to-one with dateTapActions_display) -->
-        <item>NOTHING</item>
-        <item>SWAP_CARD</item>
-        <item>SHOW_CALENDAR</item>
-        <item>CONFIG_DATE</item>
     </string-array>
 
     <!-- App Setting: Clock UI "on tap" action -->
@@ -844,13 +814,6 @@
         <item>Show next note</item>
         <item>Show previous note</item>
     </string-array>
-    <string-array name="clockTapActions_values" translatable="false">  <!-- config values (one-to-one with clockTapActions_display) -->
-        <item>NOTHING</item>
-        <item>ALARM</item>
-        <item>TIMEZONE</item>
-        <item>NEXT_NOTE</item>
-        <item>PREV_NOTE</item>
-    </string-array>
 
     <!-- App Setting: Note UI "on tap" action -->
     <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
@@ -858,12 +821,6 @@
         <item>Set alarm for note</item>
         <item>Show next note</item>
         <item>Show previous note</item>
-    </string-array>
-    <string-array name="noteTapActions_values" translatable="false">   <!-- config values (one-to-one with noteTapActions_display) -->
-        <item>NOTHING</item>
-        <item>ALARM</item>
-        <item>NEXT_NOTE</item>
-        <item>PREV_NOTE</item>
     </string-array>
 
     <!-- App Setting: time zone sort modes -->
@@ -875,11 +832,6 @@
         <item>@string/timezone_sort_byOffset</item>
         <item>@string/timezone_sort_byId</item>
         <item>@string/timezone_sort_byName</item>
-    </string-array>
-    <string-array name="timezoneSort_values" translatable="false">   <!-- config values (one-to-one with timezoneSort_display) -->
-        <item>SORT_BY_OFFSET</item>
-        <item>SORT_BY_ID</item>
-        <item>SORT_BY_DISPLAYNAME</item>
     </string-array>
 
     <string name="timezone_sort_contextAction">Sort zones</string>           <!-- action bar title -->
@@ -894,13 +846,6 @@
         <item>1 minute</item>
         <item>5 minutes</item>
         <item>10 minutes</item>
-    </string-array>
-    <string-array name="getFix_maxElapse_values" translatable="false">   <!-- ms config values (one-to-one with getFix_maxElapse_display) -->
-        <item>15000</item>
-        <item>30000></item>
-        <item>60000</item>
-        <item>300000</item>
-        <item>600000</item>
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
@@ -917,18 +862,6 @@
         <item>two days (48 hours)</item>
         <item>one week (168 hours)</item>
         <item>one month (672 hours)</item>
-    </string-array>
-    <string-array name="getFix_maxAge_values" translatable="false">     <!-- ms config values (one-to-one with getFix_maxAge_display) -->
-        <item>60000</item>
-        <item>300000</item>
-        <item>900000</item>
-        <item>3600000</item>
-        <item>14400000</item>
-        <item>43200000</item>
-        <item>86400000</item>
-        <item>172800000</item>
-        <item>604800000</item>
-        <item>2419200000</item>
     </string-array>
 
     <!-- App Setting: calendars -->
@@ -948,10 +881,6 @@
         <item>System</item>
         <item>User Defined</item>
     </string-array>
-    <string-array name="localeMode_values" translatable="false">  <!-- one-to-one with localeMode_display -->
-        <item>SYSTEM_LOCALE</item>
-        <item>CUSTOM_LOCALE</item>
-    </string-array>
 
     <!-- App Setting: custom Locale -->
     <string name="configLabel_localeSelect">Language</string>
@@ -965,13 +894,13 @@
         <item>Italian</item>
         <item>Polish</item>
         <item>Spanish</item>
-		<item>Portuguese</item>
+		<!--<item>Portuguese</item>-->  <!-- TODO -->
         <item>Catalan</item>
         <item>Basque</item>
         <item>Norwegian</item>
         <item>Traditional Chinese</item>
     </string-array>
-    <string-array name="locale_display_native" translatable="false">             <!-- one-to-one with locale_values -->
+    <!--<string-array name="locale_display_native" translatable="false">
         <item>English</item>
         <item>Esperanto</item>
         <item>Français</item>
@@ -985,8 +914,8 @@
         <item>Euskara</item>
         <item>Norsk</item>
         <item>正體中文</item>
-    </string-array>
-    <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
+    </string-array>-->
+    <!--<string-array name="locale_values" translatable="false">
         <item>en</item>
         <item>eo</item>
         <item>fr</item>
@@ -1000,7 +929,7 @@
         <item>eu</item>
         <item>nb</item>
         <item>zh_TW</item>
-    </string-array>
+    </string-array>-->
 
     <!-- position formats -->
     <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
@@ -1386,48 +1315,5 @@
     <string name="calculator_displayString_time4a_noaa">Segue algoritmos publicados por National Oceanic e Atmospheric Administration.</string>
     <string name="calculator_displayString_time4a_cc">Segue algoritmos publicados por Dershowitz/Reingold no livro "Calendrical Calculations" (terceira edição).</string>
     <string name="calculator_displayString_time4a_4j">Baseado em cálculos publicados por Jean Meeus no livro "Astronomical Algorithms" (segunda edição).</string>
-
-    <!-- pref defaults -->
-    <string name="def_appwidget_0_general_calculator" translatable="false">time4a-time4j</string>
-    <string name="def_appwidget_0_general_calculator_moon" translatable="false">time4a-time4j</string>
-    <string name="def_appwidget_0_general_altitude_enabled" translatable="false">true</string>
-    <string name="def_appwidget_0_appearance_timeformatmode" translatable="false">MODE_SYSTEM</string>
-    <string name="def_appwidget_0_general_showweeks" translatable="false">false</string>
-    <string name="def_appwidget_0_general_showhours" translatable="false">true</string>
-    <string name="def_appwidget_0_general_showseconds" translatable="false">false</string>
-    <string name="def_appwidget_0_general_showtimedate" translatable="false">true</string>
-    <string name="def_appwidget_0_general_trackingmode" translatable="false">SOONEST</string>
-    <string name="def_appwidget_0_general_observerheight" translatable="false">1.8288</string>
-
-    <string name="def_app_plugins_enabled" translatable="false">false</string>
-
-    <string name="def_app_locale_mode" translatable="false">SYSTEM_LOCALE</string>
-    <string name="def_app_locale" translatable="false">en</string>
-
-    <string name="def_getFix_maxElapsed" translatable="false">60000</string>
-    <string name="def_getFix_maxAge" translatable="false">300000</string>
-    <string name="def_getFix_passiveMode" translatable="false">false</string>
-
-    <string name="def_app_ui_showwarnings" translatable="false">true</string>
-    <string name="def_app_ui_showmoon" translatable="false">true</string>
-    <string name="def_app_ui_showequinox" translatable="false">true</string>
-    <string name="def_app_ui_showlightmap" translatable="false">true</string>
-    <string name="def_app_ui_showgoldhour" translatable="false">true</string>
-    <string name="def_app_ui_showbluehour" translatable="false">false</string>
-    <string name="def_app_ui_showdatasource" translatable="false">true</string>
-    <string name="def_app_ui_datetapaction" translatable="false">CONFIG_DATE</string>
-    <string name="def_app_ui_datetapaction1" translatable="false">SHOW_CALENDAR</string>
-    <string name="def_app_ui_notetapaction" translatable="false">NEXT_NOTE</string>
-    <string name="def_app_ui_clocktapaction" translatable="false">ALARM</string>
-    <string name="def_app_appearance_theme" translatable="false">dark</string>
-    <string name="def_app_accessibility_verbose" translatable="false">false</string>
-
-    <string name="def_app_alarms_silence" translatable="false">-1</string>         <!-- silence disabled -->
-    <string name="def_app_alarms_timeout" translatable="false">1200000</string>    <!-- dismiss after 20m -->
-    <string name="def_app_alarms_snooze" translatable="false">600000</string>      <!-- snooze for 10m -->
-    <string name="def_app_alarms_upcoming" translatable="false">36000000</string>  <!-- show reminder within 10h -->
-    <string name="def_app_alarms_hardwarebuttons_action" translatable="false">suntimeswidget.alarm.snooze</string>
-    <string name="def_app_alarms_autoenable" translatable="false">false</string>   <!-- automatically enable new alarms (false) -->
-    <string name="def_app_alarms_allringtones" translatable="false">false</string>   <!-- show all ringtones during selection (ignore ringtone type) -->
 
 </resources>
