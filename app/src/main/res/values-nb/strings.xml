@@ -842,6 +842,7 @@
         <item>Baskisk</item>
         <item>Norsk</item>
         <item>Tradisjonell kinesisk</item>
+        <item>Portuguese</item>  <!-- TODO -->
     </string-array>
 
     <!-- position formats -->

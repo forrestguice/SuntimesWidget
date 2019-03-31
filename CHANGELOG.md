@@ -1,5 +1,9 @@
 ### ~
 
+### v0.11.1 (2019-03-28)
+* updates translations to Spanish (es-es) and Catalan (ca) (#301 by Raulvo).
+* updates translations to Polish (pl) and Esperanto (eo) (#302 by Verdulo).
+
 ### v0.11.0 (2019-03-12)
 * adds "Suntimes Alarms", an Alarm Clock (#140, #250, #261) with support for daily repeating alarms and notifications.
 * adds a clock widget (#154, #260); displays solar time (Local Mean Time, Apparent Solar Time), or the time in a given timezone.
