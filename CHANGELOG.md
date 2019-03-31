@@ -1,5 +1,8 @@
 ### ~
 
+### v0.11.2
+* adds translation to Brazilian Portuguese (pt-br) (contributed by Neto Silva) (#304).
+
 ### v0.11.1 (2019-03-28)
 * updates translations to Spanish (es-es) and Catalan (ca) (#301 by Raulvo).
 * updates translations to Polish (pl) and Esperanto (eo) (#302 by Verdulo).
