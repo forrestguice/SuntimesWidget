@@ -548,8 +548,8 @@
     <string name="configLabel_alarmClock_emptyMsg">Neniuj alarmoj</string>     <!-- a label that is displayed in place of an empty listview -->
     <string name="configAction_addAlarm">Agordi alarmon</string>               <!-- button (contentDescription) -->
     <string name="configAction_addNotification">Agordi sciigon</string> <!-- button (contentDescription) -->
-    <string name="configAction_deleteAlarm">Forigi ĉiujn</string>               <!-- button (contentDescription) -->
-    <string name="configAction_clearAlarms">Forgi</string>                <!-- action button / menu item -->
+    <string name="configAction_deleteAlarm">Forigi</string>               <!-- button (contentDescription) -->
+    <string name="configAction_clearAlarms">Forgi ĉiujn</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">Forviŝi</string>                <!-- action button / menu item -->
     <string name="configAction_setAlarmOffset">Agordi deŝovon</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmType">Agordi tipon</string>         <!-- button (contentDescription) -->
