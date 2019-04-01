@@ -5,14 +5,15 @@ android:
     - platform-tools
     - tools
 
-    - build-tools-26.0.2
+    - build-tools-28.0.3
     - android-25
     - extra-android-support
     - extra-android-m2repository
 
-before_install:
-  - mkdir "$ANDROID_HOME/licenses" || true
-  - cp ./google-licenses/* "$ANDROID_HOME/licenses/"
+  licenses:
+    - 'android-sdk-license-.+'
+    - 'android-sdk-preview-license-.+'
+    - '-.+'
 
 script:
   - ./gradlew clean assemble
