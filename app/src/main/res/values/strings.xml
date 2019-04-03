@@ -726,7 +726,7 @@
 
     <string name="configLabel_alarmMisc">Miscellaneous</string>  <!-- TODO -->
     <string name="configLabel_alarms_showlauncher">Launcher Icon</string>  <!-- TODO -->
-    <string name="configLabel_alarms_showlauncher_summary">Show alarm clock launcher icon in app tray.</string>  <!-- TODO -->
+    <string name="configLabel_alarms_showlauncher_summary">Show alarm clock icon in the app tray.</string>  <!-- TODO -->
 
     <!--
          APP SETTINGS
