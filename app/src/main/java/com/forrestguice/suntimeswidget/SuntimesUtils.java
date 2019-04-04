@@ -106,7 +106,7 @@ public class SuntimesUtils
     protected static String strRaSymbol = "α";
     protected static String strDecSymbol = "δ";
     protected static String strDegreesFormat = "%1$s\u00B0";
-    protected static String strDirectionFormat = "%1$s %2$s";
+    protected static String strDirectionFormat = "%1$s\u00A0%2$s";
     protected static String strElevationFormat = "%1$s%2$s";
     protected static String strDeclinationFormat = "%1$s %2$s";
     protected static String strRaFormat = "%1$s %2$s";
