@@ -95,10 +95,10 @@ public class MoonLayout_1x1_4 extends MoonLayout
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
             float timeSize = theme.getTimeSizeSp();
-            views.setTextViewTextSize(R.id.moonphase_major_date, TypedValue.COMPLEX_UNIT_SP, timeSize);
+            views.setTextViewTextSize(R.id.moonphase_major_date, TypedValue.COMPLEX_UNIT_DIP, timeSize);
 
             float textSize = theme.getTextSizeSp();
-            views.setTextViewTextSize(R.id.moonphase_major_label, TypedValue.COMPLEX_UNIT_SP, textSize);
+            views.setTextViewTextSize(R.id.moonphase_major_label, TypedValue.COMPLEX_UNIT_DIP, textSize);
         }
     }
 
