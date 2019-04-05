@@ -96,7 +96,7 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
 
             } else {
                 views.setTextViewText(R.id.text_time_event, "");
-                views.setTextViewText(R.id.text_time_event_note, context.getString(R.string.configLabel_ui_showEquinox_notImplemented));
+                views.setTextViewText(R.id.text_time_event_note, context.getString(R.string.feature_not_supported_by_source));
                 views.setTextViewText(R.id.text_time_event_label, "");
                 views.setViewVisibility(R.id.text_time_event_label, View.GONE);
             }
