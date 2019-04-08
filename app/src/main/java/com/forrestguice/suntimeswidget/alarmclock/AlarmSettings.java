@@ -58,6 +58,9 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_ALLRINGTONES = "app_alarms_allringtones";
     public static final boolean PREF_DEF_ALARM_ALLRINGTONES = false;
 
+    public static final String PREF_KEY_ALARM_SHOWLAUNCHER = "app_alarms_showlauncher";
+    public static final boolean PREF_DEF_ALARM_SHOWLAUNCHER = true;
+
     public static String loadPrefOnHardwareButtons(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);

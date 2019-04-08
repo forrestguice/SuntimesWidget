@@ -125,6 +125,18 @@
             android:launchMode="singleTop">
 
             <intent-filter>
+                <action android:name="android.intent.action.SET_ALARM" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
+
+        <activity-alias
+            android:name=".alarmclock.ui.AlarmClockActivityLauncher"
+            android:targetActivity=".alarmclock.ui.AlarmClockActivity"
+            android:enabled="true">
+
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -132,12 +144,7 @@
             <meta-data android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts_alarms" />
 
-            <intent-filter>
-                <action android:name="android.intent.action.SET_ALARM" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
-        </activity>
+        </activity-alias>
 
         <activity
             android:name=".alarmclock.ui.AlarmDismissActivity"
