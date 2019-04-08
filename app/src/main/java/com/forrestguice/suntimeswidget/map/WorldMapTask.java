@@ -24,6 +24,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -180,7 +181,7 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
          * @param pos azimuth and altitude
          * @return { greenwich hour angle, declination }
          */
-        protected double[] gha(Location location, SuntimesCalculator.Position pos)
+        protected double[] gha(Location location, @NonNull SuntimesCalculator.Position pos)
         {
             double radLat = Math.toRadians(location.getLatitudeAsDouble());
             double sinLat = Math.sin(radLat);

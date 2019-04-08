@@ -767,12 +767,12 @@
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Show Moon</string>
     <string name="configLabel_ui_showmoon_summary">Show rise and set times, phase, and illumination.</string>
-    <string name="configLabel_ui_showmoon_notImplemented">Moon not implemented by this data source.</string>
+    <string name="configLabel_ui_showmoon_notImplemented">Moon not implemented by this data source.</string>   <!-- TODO: remove -->
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Show Solstice / Equinox</string>
     <string name="configLabel_ui_showEquinox_summary">Show time until next solstice or equinox.</string>
-    <string name="configLabel_ui_showEquinox_notImplemented">Solstice and equinox not implemented by this data source.</string>
+    <string name="configLabel_ui_showEquinox_notImplemented">Solstice and equinox not implemented by this data source.</string>     <!-- TODO: remove -->
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Solstice Tracking</string>
@@ -1381,6 +1381,7 @@
     <string name="security_dialog_title">Security Alert</string>
     <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
     <string name="feature_not_supported_by_api">This feature is not supported by API %1$s.</string>
+    <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>  <!-- TODO -->
     <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>  <!-- TODO -->
 
     <!-- calculator implementations -->
