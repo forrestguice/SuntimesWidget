@@ -83,8 +83,8 @@ public class SunLayout_1x1_1 extends SunLayout
         views.setTextColor(R.id.text_time_rise, sunriseColor);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            views.setTextViewTextSize(R.id.text_time_rise_suffix, TypedValue.COMPLEX_UNIT_SP, theme.getTimeSuffixSizeSp());
-            views.setTextViewTextSize(R.id.text_time_rise, TypedValue.COMPLEX_UNIT_SP, theme.getTimeSizeSp());
+            views.setTextViewTextSize(R.id.text_time_rise_suffix, TypedValue.COMPLEX_UNIT_DIP, theme.getTimeSuffixSizeSp());
+            views.setTextViewTextSize(R.id.text_time_rise, TypedValue.COMPLEX_UNIT_DIP, theme.getTimeSizeSp());
         }
 
         Bitmap sunriseIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_sunrise_large0, theme.getSunriseIconColor(), theme.getSunriseIconStrokeColor(), theme.getSunriseIconStrokePixels(context));

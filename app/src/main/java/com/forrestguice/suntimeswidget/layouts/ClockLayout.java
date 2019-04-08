@@ -120,7 +120,7 @@ public abstract class ClockLayout extends SuntimesLayout
 
     public static void getTextBounds(@NonNull Context context, @NonNull String text, float textSizeSp, @NonNull Paint textPaint, @NonNull Rect textBounds)
     {
-        textPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, textSizeSp, context.getResources().getDisplayMetrics()));
+        textPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textSizeSp, context.getResources().getDisplayMetrics()));
         textPaint.getTextBounds(text, 0, text.length(), textBounds);
     }
 

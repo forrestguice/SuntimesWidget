@@ -101,16 +101,16 @@ public class MoonLayout_3x1_0 extends MoonLayout
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
             float timeSize = theme.getTimeSizeSp();
-            views.setTextViewTextSize(R.id.moonphase_new_date, TypedValue.COMPLEX_UNIT_SP, timeSize);
-            views.setTextViewTextSize(R.id.moonphase_firstquarter_date, TypedValue.COMPLEX_UNIT_SP, timeSize);
-            views.setTextViewTextSize(R.id.moonphase_full_date, TypedValue.COMPLEX_UNIT_SP, timeSize);
-            views.setTextViewTextSize(R.id.moonphase_thirdquarter_date, TypedValue.COMPLEX_UNIT_SP, timeSize);
+            views.setTextViewTextSize(R.id.moonphase_new_date, TypedValue.COMPLEX_UNIT_DIP, timeSize);
+            views.setTextViewTextSize(R.id.moonphase_firstquarter_date, TypedValue.COMPLEX_UNIT_DIP, timeSize);
+            views.setTextViewTextSize(R.id.moonphase_full_date, TypedValue.COMPLEX_UNIT_DIP, timeSize);
+            views.setTextViewTextSize(R.id.moonphase_thirdquarter_date, TypedValue.COMPLEX_UNIT_DIP, timeSize);
 
             float textSize = theme.getTextSizeSp();
-            views.setTextViewTextSize(R.id.moonphase_new_label, TypedValue.COMPLEX_UNIT_SP, textSize);
-            views.setTextViewTextSize(R.id.moonphase_firstquarter_label, TypedValue.COMPLEX_UNIT_SP, textSize);
-            views.setTextViewTextSize(R.id.moonphase_full_label, TypedValue.COMPLEX_UNIT_SP, textSize);
-            views.setTextViewTextSize(R.id.moonphase_thirdquarter_label, TypedValue.COMPLEX_UNIT_SP, textSize);
+            views.setTextViewTextSize(R.id.moonphase_new_label, TypedValue.COMPLEX_UNIT_DIP, textSize);
+            views.setTextViewTextSize(R.id.moonphase_firstquarter_label, TypedValue.COMPLEX_UNIT_DIP, textSize);
+            views.setTextViewTextSize(R.id.moonphase_full_label, TypedValue.COMPLEX_UNIT_DIP, textSize);
+            views.setTextViewTextSize(R.id.moonphase_thirdquarter_label, TypedValue.COMPLEX_UNIT_DIP, textSize);
         }
 
         int colorWaxing = theme.getMoonWaxingColor();

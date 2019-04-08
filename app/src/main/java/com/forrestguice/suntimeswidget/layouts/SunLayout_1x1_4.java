@@ -71,8 +71,8 @@ public class SunLayout_1x1_4 extends SunLayout
         views.setTextColor(R.id.text_time_noon, noonColor);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            views.setTextViewTextSize(R.id.text_time_noon_suffix, TypedValue.COMPLEX_UNIT_SP, theme.getTimeSuffixSizeSp());
-            views.setTextViewTextSize(R.id.text_time_noon, TypedValue.COMPLEX_UNIT_SP, theme.getTimeSizeSp());
+            views.setTextViewTextSize(R.id.text_time_noon_suffix, TypedValue.COMPLEX_UNIT_DIP, theme.getTimeSuffixSizeSp());
+            views.setTextViewTextSize(R.id.text_time_noon, TypedValue.COMPLEX_UNIT_DIP, theme.getTimeSizeSp());
         }
 
         Bitmap noonIcon = SuntimesUtils.gradientDrawableToBitmap(context, R.drawable.ic_noon_large0, theme.getNoonIconColor(), theme.getNoonIconStrokeColor(), theme.getNoonIconStrokePixels(context));

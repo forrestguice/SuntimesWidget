@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.layouts;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -129,6 +130,14 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
     {
         super.themeViews(context, views, theme);
         themeViewsAzimuthElevationText(context, views, theme);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            float timeSize = theme.getTimeSizeSp();
+            views.setTextViewTextSize(R.id.info_sun_azimuth_rising, TypedValue.COMPLEX_UNIT_DIP, timeSize);
+            views.setTextViewTextSize(R.id.info_sun_elevation_atnoon, TypedValue.COMPLEX_UNIT_DIP, timeSize);
+            views.setTextViewTextSize(R.id.info_sun_azimuth_setting, TypedValue.COMPLEX_UNIT_DIP, timeSize);
+        }
 
         colors = new LightMapView.LightMapColors();
         if (theme.getBackground() == SuntimesTheme.ThemeBackground.LIGHT)

@@ -58,4 +58,15 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="@string/configLabel_alarmMisc" >
+
+        <CheckBoxPreference
+            android:key="app_alarms_showlauncher"
+            android:title="@string/configLabel_alarms_showlauncher"
+            android:summary="@string/configLabel_alarms_showlauncher_summary"
+            android:defaultValue="@string/def_app_alarms_showlauncher" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>
