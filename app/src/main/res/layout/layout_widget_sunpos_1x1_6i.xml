@@ -50,6 +50,7 @@
                 android:layout_marginLeft="2dp" android:layout_marginStart="2dp"
                 android:layout_marginRight="2dp" android:layout_marginEnd="2dp"
                 android:layout_marginTop="0dp"
+                android:singleLine="true" android:ellipsize="none"
                 android:text="" tools:text="48" />
 
         </LinearLayout>
@@ -70,6 +71,7 @@
                 android:layout_marginLeft="2dp" android:layout_marginStart="2dp"
                 android:layout_marginRight="2dp" android:layout_marginEnd="2dp"
                 android:layout_marginTop="0dp"
+                android:singleLine="true" android:ellipsize="none"
                 android:text="" tools:text="280" />
 
         </LinearLayout>

@@ -111,7 +111,7 @@ public abstract class SuntimesLayout
             views.setViewPadding(R.id.widgetframe_inner, padding[0], padding[1], padding[2], padding[3]);
 
             // theme title text size
-            views.setTextViewTextSize(R.id.text_title, TypedValue.COMPLEX_UNIT_SP, theme.getTitleSizeSp());
+            views.setTextViewTextSize(R.id.text_title, TypedValue.COMPLEX_UNIT_DIP, theme.getTitleSizeSp());
         }
 
         // theme title and text

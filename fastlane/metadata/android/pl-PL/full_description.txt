@@ -1,5 +1,5 @@
 <p>Wyświetla czasy świecenia Słońca i Księżyca. Zawiera aplikację, budzik i zestaw widżetów.</p>
-<p>Aplikacja <b>Czasy Słońca wyświetla wschód i zachód Słońca, świt/zmierzch (cywilny, żeglarski, astronomiczny), złotą i błękitną godzinę, przesilenia i równonoce, wschód i zachód Księżyca, fazy i oświetlenie Księżyca. Pozwala też ustawić codzienny alarm (lub powiadomienie) dla wschodu/zachodu Słońca lub innych wydarzeń.</p>
+<p>Aplikacja <b>Czasy Słońca</b> wyświetla wschód i zachód Słońca, świt/zmierzch (cywilny, żeglarski, astronomiczny), złotą i błękitną godzinę, przesilenia i równonoce, wschód i zachód Księżyca, fazy i oświetlenie Księżyca. Pozwala też ustawić codzienny alarm (lub powiadomienie) dla wschodu/zachodu Słońca lub innych wydarzeń.</p>
 <p>Czasy podawane przez aplikację są przybliżone. Nie jest wymagane połączenie z internetem, GPS jest opcjonalny.</p>
 Aplikacja korzysta z następujących uprawnień
 <ul>

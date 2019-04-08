@@ -724,6 +724,10 @@
         <item quantity="other">%d seconds</item>
     </plurals>
 
+    <string name="configLabel_alarmMisc">Miscellaneous</string>  <!-- TODO -->
+    <string name="configLabel_alarms_showlauncher">Launcher Icon</string>  <!-- TODO -->
+    <string name="configLabel_alarms_showlauncher_summary">Show alarm clock icon in the app tray.</string>  <!-- TODO -->
+
     <!--
          APP SETTINGS
     -->
@@ -763,12 +767,12 @@
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Show Moon</string>
     <string name="configLabel_ui_showmoon_summary">Show rise and set times, phase, and illumination.</string>
-    <string name="configLabel_ui_showmoon_notImplemented">Moon not implemented by this data source.</string>
+    <string name="configLabel_ui_showmoon_notImplemented">Moon not implemented by this data source.</string>   <!-- TODO: remove -->
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Show Solstice / Equinox</string>
     <string name="configLabel_ui_showEquinox_summary">Show time until next solstice or equinox.</string>
-    <string name="configLabel_ui_showEquinox_notImplemented">Solstice and equinox not implemented by this data source.</string>
+    <string name="configLabel_ui_showEquinox_notImplemented">Solstice and equinox not implemented by this data source.</string>     <!-- TODO: remove -->
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Solstice Tracking</string>
@@ -1005,9 +1009,9 @@
     <!-- position formats -->
     <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
     <string name="elevation_format"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="altSymbol" example="∠">%2$s</xliff:g></string>  <!-- e.g. 45°∠ -->
-    <string name="declination_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° δ -->
-    <string name="rightascension_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° α -->
-    <string name="direction_format"><xliff:g id="degrees" example="180°">%1$s</xliff:g> <xliff:g id="directions_short" example="S">%2$s</xliff:g></string>  <!-- e.g. 180°S -->
+    <string name="declination_format"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° δ -->
+    <string name="rightascension_format"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° α -->
+    <string name="direction_format"><xliff:g id="degrees" example="180°">%1$s</xliff:g>&#160;<xliff:g id="directions_short" example="S">%2$s</xliff:g></string>  <!-- e.g. 180°S -->
 
     <!-- cardinal directions -->
     <string-array name="directions_short">  <!-- one-to-one with directions_long -->
@@ -1377,6 +1381,8 @@
     <string name="security_dialog_title">Security Alert</string>
     <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
     <string name="feature_not_supported_by_api">This feature is not supported by API %1$s.</string>
+    <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>  <!-- TODO -->
+    <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>  <!-- TODO -->
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
@@ -1428,5 +1434,6 @@
     <string name="def_app_alarms_hardwarebuttons_action" translatable="false">suntimeswidget.alarm.snooze</string>
     <string name="def_app_alarms_autoenable" translatable="false">false</string>   <!-- automatically enable new alarms (false) -->
     <string name="def_app_alarms_allringtones" translatable="false">false</string>   <!-- show all ringtones during selection (ignore ringtone type) -->
+    <string name="def_app_alarms_showlauncher" translatable="false">true</string>   <!-- show alarm clock launcher icon in app tray -->
 
 </resources>
