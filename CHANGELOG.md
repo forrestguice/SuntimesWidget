@@ -1,5 +1,12 @@
 ### ~
 
+### v0.11.2 (2019-04-08)
+* adds an option to disable the alarm clock launcher icon (#305).
+* adds translation to Brazilian Portuguese (pt-br) (contributed by Neto Silva) (#304).
+* updates translations to Polish (pl) and Esperanto (eo) (#307 by Verdulo).
+* misc. widget layout fixes. Widgets now ignore the "large text" accessibility setting (#306). Use a custom theme to increase text size.
+* fixes app crash (world map dialog)  (#309).
+
 ### v0.11.1 (2019-03-28)
 * updates translations to Spanish (es-es) and Catalan (ca) (#301 by Raulvo).
 * updates translations to Polish (pl) and Esperanto (eo) (#302 by Verdulo).
