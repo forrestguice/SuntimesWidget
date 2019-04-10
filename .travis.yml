@@ -18,7 +18,7 @@ before_install:
   - cp ./google-licenses/* "$ANDROID_HOME/licenses/"
 
 before_script:
-  - echo no | android create avd --force -n test -t android-22 --abi x86
+  - echo no | android create avd --force -n test -t android-22 --abi default/x86
   - emulator -avd test -no-audio -no-window -no-accel -gpu swiftshader &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
