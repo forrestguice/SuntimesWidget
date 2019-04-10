@@ -9,6 +9,8 @@ android:
     - android-25
     - extra-android-support
     - extra-android-m2repository
+
+    - android-22
     - sys-img-armeabi-v7a-android-22
 
 before_install:
