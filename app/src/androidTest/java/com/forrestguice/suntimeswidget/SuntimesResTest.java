@@ -115,16 +115,17 @@ public class SuntimesResTest extends SuntimesActivityTestBase
         for (String languageTag : locales)
         {
             AppSettings.loadLocale(context, languageTag);
+
             verify_pluralFormat("units_feet_long", R.plurals.units_feet_long, values, displayValues);
             verify_pluralFormat("units_meters_long", R.plurals.units_meters_long, values, displayValues);
 
-            //R.plurals.units_hours;          // TODO
-            //R.plurals.units_minutes;
-            //R.plurals.units_seconds;
-            //R.plurals.themePlural;
-            //R.plurals.offset_before_plural;
-            //R.plurals.offset_after_plural;
-            //R.plurals.offset_at_plural;
+            verify_pluralFormatI("units_hours", R.plurals.units_hours, values);
+            verify_pluralFormatI("units_minutes", R.plurals.units_minutes, values);
+            verify_pluralFormatI("units_seconds", R.plurals.units_seconds, values);
+            verify_pluralFormatI("themePlural", R.plurals.themePlural, values);
+            verify_pluralFormatI("offset_before_plural", R.plurals.offset_before_plural, values);
+            verify_pluralFormatI("offset_after_plural", R.plurals.offset_after_plural, values);
+            verify_pluralFormatI("offset_at_plural", R.plurals.offset_at_plural, values);
         }
     }
 
@@ -145,11 +146,33 @@ public class SuntimesResTest extends SuntimesActivityTestBase
                 r[i] = false;
             }
         }
-
         boolean allTrue = true;
         for (boolean b : r) {
             allTrue &= b;
         }
         assertTrue("The format of " + tag1 + " is INVALID! locale: " + AppSettings.getLocale().toString(), allTrue);
     }
+
+    public void verify_pluralFormatI(String tag1, int pluralID, double value[])
+    {
+        Context context = activityRule.getActivity();
+        boolean[] r = new boolean[value.length];
+        for (int i=0; i<value.length; i++)
+        {
+            try {
+                context.getResources().getQuantityString(pluralID, (int)value[i], (int)value[i]);
+                r[i] = true;
+
+            } catch (Exception e) {
+                Log.e("verify_pluralFormat", "The format of " + tag1 + " (" + value[i] + ") is INVALID! locale: " + AppSettings.getLocale().toString());
+                r[i] = false;
+            }
+        }
+        boolean allTrue = true;
+        for (boolean b : r) {
+            allTrue &= b;
+        }
+        assertTrue("The format of " + tag1 + " is INVALID! locale: " + AppSettings.getLocale().toString(), allTrue);
+    }
+
 }
