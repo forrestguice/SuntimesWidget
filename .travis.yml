@@ -18,8 +18,21 @@ before_install:
   - cp ./google-licenses/* "$ANDROID_HOME/licenses/"
 
 before_script:
+
+  - rm -rf $ANDROID_HOME/emulator
+  - cd $ANDROID_HOME
+
+   if [ $TRAVIS_OS_NAME == "osx" ]; then
+      wget -q "https://dl.google.com/android/repository/emulator-darwin-5346014.zip" -O emulator.zip
+    else
+      sudo apt-get install -y libunwind8 libc++1
+      wget -q "https://dl.google.com/android/repository/emulator-linux-5346014.zip" -O emulator.zip
+    fi
+  - unzip -q emulator.zip
+  - cd -
+
   - echo no | android create avd --force -n test -k "system-images;android-22;default;x86_64"
-  - emulator -avd test -no-audio -no-window &
+  - emulator-headless -avd test -no-boot-anim -gpu off -no-audio -no-accel &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
 
