@@ -10,16 +10,16 @@ android:
     - extra-android-support
     - extra-android-m2repository
 
-    - android-22
-    - sys-img-x86_64-google_apis-22
+    - android-16
+    - sys-img-armeabi-v7a-android-16
 
 before_install:
   - mkdir "$ANDROID_HOME/licenses" || true
   - cp ./google-licenses/* "$ANDROID_HOME/licenses/"
 
 before_script:
-  - echo no | android create avd --force -n test -t android-22 --abi default/x86
-  - emulator -avd test -no-audio -no-window -no-accel -gpu swiftshader &
+  - echo no | android create avd --force -n test -t android-16 --abi armeabi-v7a
+  - emulator -avd test -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
 
