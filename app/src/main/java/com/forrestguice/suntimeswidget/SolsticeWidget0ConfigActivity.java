@@ -75,7 +75,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
     @Override
     protected int getAboutIconID()
     {
-        return R.mipmap.ic_suntimes2;
+        return R.mipmap.ic_launcher;
     }
 
     @Override
