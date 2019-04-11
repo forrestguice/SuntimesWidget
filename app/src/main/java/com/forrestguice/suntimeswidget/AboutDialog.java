@@ -78,8 +78,12 @@ public class AboutDialog extends DialogFragment
             public void onShow(DialogInterface dialog) {
                 dialogContent.post(new Runnable() {
                     @Override
-                    public void run() {
-                        AppSettings.checkCustomPermissions(getContext());
+                    public void run()
+                    {
+                        Context context = getContext();
+                        if (context != null) {
+                            AppSettings.checkCustomPermissions(context);
+                        }
                     }
                 });
             }
