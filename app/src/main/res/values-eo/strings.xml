@@ -659,7 +659,11 @@
         <item quantity="one">%d sekundo</item>
         <item quantity="other">%d sekundoj</item>
     </plurals>
-
+    
+    <string name="configLabel_alarmMisc">Diversaj</string>  <!-- TODO -->
+    <string name="configLabel_alarms_showlauncher">Piktogramo en lanĉilo</string>  <!-- TODO -->
+    <string name="configLabel_alarms_showlauncher_summary">Montri la piktogramon “Suntempoj: alarmoj” en la aplikaĵa lanĉilo.</string> <!-- TODO -->
+    
     <!--
          APP SETTINGS
     -->
