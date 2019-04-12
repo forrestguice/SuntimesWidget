@@ -847,10 +847,10 @@
 
     
     <string name="degrees_format"><xliff:g example="45" id="value">%1$s</xliff:g>°</string>  
-    <string name="elevation_format"><xliff:g example="45" id="degrees">%1$s</xliff:g><xliff:g example="∠" id="altSymbol">%2$s</xliff:g></string>  
-    <string name="declination_format"><xliff:g example="45" id="degrees">%1$s</xliff:g> <xliff:g example="δ" id="decSymbol">%2$s</xliff:g></string>  
-    <string name="rightascension_format"><xliff:g example="45" id="degrees">%1$s</xliff:g> <xliff:g example="δ" id="raSymbol">%2$s</xliff:g></string>  
-    <string name="direction_format"><xliff:g example="180°" id="degrees">%1$s</xliff:g> <xliff:g example="S" id="directions_short">%2$s</xliff:g></string>  
+    <!--<string name="elevation_format"><xliff:g example="45" id="degrees">%1$s</xliff:g><xliff:g example="∠" id="altSymbol">%2$s</xliff:g></string>-->
+    <!--<string name="declination_format"><xliff:g example="45" id="degrees">%1$s</xliff:g> <xliff:g example="δ" id="decSymbol">%2$s</xliff:g></string>-->
+    <!--<string name="rightascension_format"><xliff:g example="45" id="degrees">%1$s</xliff:g> <xliff:g example="δ" id="raSymbol">%2$s</xliff:g></string>-->
+    <!--<string name="direction_format"><xliff:g example="180°" id="degrees">%1$s</xliff:g> <xliff:g example="S" id="directions_short">%2$s</xliff:g></string>-->
 
     
     <string-array name="directions_short">  

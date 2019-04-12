@@ -24,7 +24,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -46,7 +45,9 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
@@ -66,9 +67,11 @@ public class WorldMapDialog extends DialogFragment
 
     private TextView dialogTitle;
     private WorldMapView worldmap;
+    private TextView empty;
     private View dialogContent = null;
     private TextView utcTime;
     private Spinner mapSelector;
+    private View radioGroup;
     private ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode> mapAdapter;
     private WorldMapWidgetSettings.WorldMapWidgetMode mapMode = null;
 
@@ -165,6 +168,7 @@ public class WorldMapDialog extends DialogFragment
     {
         dialogTitle = (TextView)dialogView.findViewById(R.id.worldmapdialog_title);
         utcTime = (TextView)dialogView.findViewById(R.id.info_time_utc);
+        empty = (TextView)dialogView.findViewById(R.id.txt_empty);
         worldmap = (WorldMapView)dialogView.findViewById(R.id.info_time_worldmap);
         worldmap.setOnLongClickListener(new View.OnLongClickListener()
         {
@@ -193,6 +197,7 @@ public class WorldMapDialog extends DialogFragment
         WorldMapTask.WorldMapOptions options = worldmap.getOptions();
         updateOptions(getContext());
 
+        radioGroup = dialogView.findViewById(R.id.radio_group);
         RadioButton option_sun = (RadioButton)dialogView.findViewById(R.id.radio_sun);
         RadioButton option_moon = (RadioButton)dialogView.findViewById(R.id.radio_moon);
         RadioButton option_sunmoon = (RadioButton)dialogView.findViewById(R.id.radio_sunmoon);
@@ -253,7 +258,15 @@ public class WorldMapDialog extends DialogFragment
     protected void updateViews( @NonNull SuntimesRiseSetDataset data )
     {
         stopUpdateTask();
-        worldmap.updateViews(data);
+
+        SuntimesCalculatorDescriptor calculatorDescriptor = data.calculatorMode();
+        boolean featureSupported = calculatorDescriptor != null && calculatorDescriptor.hasRequestedFeature(SuntimesCalculator.FEATURE_POSITION);
+
+        showEmptyView(!featureSupported);
+        if (featureSupported) {
+            worldmap.updateViews(data);
+        }
+
         startUpdateTask();
     }
 
@@ -309,6 +322,13 @@ public class WorldMapDialog extends DialogFragment
         }
     };
 
+    private void showEmptyView( boolean show )
+    {
+        empty.setVisibility(show ? View.VISIBLE : View.GONE);
+        worldmap.setVisibility(show ? View.GONE : View.VISIBLE);
+        mapSelector.setVisibility(show ? View.GONE : View.VISIBLE);
+        radioGroup.setVisibility(show ? View.GONE : View.VISIBLE);
+    }
 
     protected boolean showShareMenu(Context context, View view)
     {
