@@ -563,7 +563,7 @@
 
     <string name="alarmAction_dismiss">Silentigi</string>                <!-- notification action button -->
     <string name="alarmAction_snooze">Prokrasti</string>                  <!-- notification action button -->
-    <string name="alarmAction_timeout">Silentiĝis</string>                  <!-- notification action button -->  <!-- TODO -->
+    <string name="alarmAction_timeout">Silentigi</string>                  <!-- notification action button -->  <!-- TODO -->
 
     <string name="alarmAction_playingMsg"><xliff:g id="label">%1$s</xliff:g></string>          <!-- toast message -->
     <string name="alarmAction_silencedMsg">Silentigis alarmon</string>          <!-- toast message -->
@@ -618,10 +618,10 @@
     <string name="configLabel_alarms_optWhiteList_listed">Ne optimumigita (konsilinde)</string>
     <string name="configLabel_alarms_optWhiteList_unlisted">Aktiva optimumigo de pilo.\nAlarmoj povas prokrastĝi maksimume je 15 minutoj.</string>
 
-    <string name="configLabel_alarms_silenceAfter">Silentiĝi post</string> <!-- TODO -->
+    <string name="configLabel_alarms_silenceAfter">Silentiĝi (ne-malaktivigi) post</string> <!-- TODO -->
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutoj">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_timeoutAfter">Silentiĝi post</string> <!-- TODO -->
+    <string name="configLabel_alarms_timeoutAfter">Silentiĝi post</string>
     <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutoj">%s</xliff:g></string>
 
     <string name="configLabel_alarms_snooze">Dormeti por</string>
@@ -632,8 +632,8 @@
 
     <string name="configLabel_alarms_hardwarebuttons">Fizikaj butonoj</string>
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Dormeti">%s</xliff:g></string>
-    <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->  <!-- TODO -->
-        <item>Silentigi</item>
+    <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->
+        <item>Malaktivigi</item>
         <item>Silentigi</item>
         <item>Dormeti</item>
         <item>Fari nenion</item>
@@ -659,7 +659,11 @@
         <item quantity="one">%d sekundo</item>
         <item quantity="other">%d sekundoj</item>
     </plurals>
-
+    
+    <string name="configLabel_alarmMisc">Diversaj</string>
+    <string name="configLabel_alarms_showlauncher">Piktogramo en lanĉilo</string>
+    <string name="configLabel_alarms_showlauncher_summary">Montri la piktogramon “Suntempoj: alarmoj” en aplikaĵa lanĉilo.</string>
+    
     <!--
          APP SETTINGS
     -->
@@ -875,7 +879,7 @@
         <item>Eŭska</item>
         <item>Norvega</item>
         <item>Ĉina tradicia</item>
-        <item>Portuguese</item>  <!-- TODO -->
+        <item>Portugala</item>
     </string-array>
 
     <!-- position formats -->
@@ -1144,6 +1148,8 @@
     <string name="security_dialog_title">Sekureca averto</string>
     <string name="security_duplicate_permissions">La permeso, kiu apartenas al la programo Suntempoj:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nestas ankaŭ difinita de: <xliff:g id="packageName" example="iu.alia.aplikajho">%2$s</xliff:g></string>
     <string name="feature_not_supported_by_api">Tiu ĉi eblaĵo ne estas subtenata per API %1$s.</string>
+    <string name="feature_not_supported_by_source">Tiu ĉi eblaĵo ne estas subtenata per la nuna datum‑fonto.</string>
+    <string name="reboot_required_message">Restarto povas esti bezonata por apliki ŝanĝojn.</string>
 
     <!-- calculator implemenations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
