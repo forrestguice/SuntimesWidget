@@ -80,6 +80,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.IllegalFormatConversionException;
 import java.util.Locale;
 
 public class SuntimesUtils
@@ -106,7 +107,7 @@ public class SuntimesUtils
     protected static String strRaSymbol = "α";
     protected static String strDecSymbol = "δ";
     protected static String strDegreesFormat = "%1$s\u00B0";
-    protected static String strDirectionFormat = "%1$s %2$s";
+    protected static String strDirectionFormat = "%1$s\u00A0%2$s";
     protected static String strElevationFormat = "%1$s%2$s";
     protected static String strDeclinationFormat = "%1$s %2$s";
     protected static String strRaFormat = "%1$s %2$s";
@@ -958,7 +959,14 @@ public class SuntimesUtils
         NumberFormat formatter = NumberFormat.getInstance();
         formatter.setMinimumFractionDigits(0);
         formatter.setMaximumFractionDigits(places);
-        return context.getResources().getQuantityString(stringID, h, formatter.format(value));
+
+        try {
+            return context.getResources().getQuantityString(stringID, h, formatter.format(value));
+
+        } catch (IllegalFormatConversionException e) {
+            Log.e("formatAsHeight", "ignoring invalid format in stringID: " + stringID);
+            return String.valueOf(value);
+        }
     }
 
     public static TimeDisplayText formatAsHeight(Context context, double meters, WidgetSettings.LengthUnit units, int places, boolean shortForm)

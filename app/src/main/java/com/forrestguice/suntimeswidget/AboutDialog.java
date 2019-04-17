@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -34,6 +34,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -78,8 +79,12 @@ public class AboutDialog extends DialogFragment
             public void onShow(DialogInterface dialog) {
                 dialogContent.post(new Runnable() {
                     @Override
-                    public void run() {
-                        AppSettings.checkCustomPermissions(getContext());
+                    public void run()
+                    {
+                        Context context = getContext();
+                        if (context != null) {
+                            AppSettings.checkCustomPermissions(context);
+                        }
                     }
                 });
             }
@@ -138,9 +143,9 @@ public class AboutDialog extends DialogFragment
                 openLink(WEBSITE_URL);
             }
         });
-        if (Build.VERSION.SDK_INT >= 17)
-            nameView.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(context, param_iconID), null, null, null);
-        else nameView.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context, param_iconID), null, null, null);
+
+        ImageView iconView = (ImageView) dialogContent.findViewById(R.id.txt_about_icon);
+        iconView.setImageDrawable(ContextCompat.getDrawable(context, param_iconID));
 
         TextView versionView = (TextView) dialogContent.findViewById(R.id.txt_about_version);
         versionView.setMovementMethod(LinkMovementMethod.getInstance());

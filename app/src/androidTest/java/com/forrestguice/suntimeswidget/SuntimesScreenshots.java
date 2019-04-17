@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -65,6 +65,7 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
         config.put("pl", new ScreenshotConfig(new Location("Warszawa", "52.2319", "21.0067", "143"), "Poland", true));
         config.put("nb", new ScreenshotConfig(new Location("Oslo", "59.8937", "10.6450", "0"), "Europe/Oslo", true));
         config.put("zh_TW", new ScreenshotConfig(new Location("Taiwan", "23.5491", "119.8998", "0"), "Asia/Taipei", false));
+        config.put("pt_BR", new ScreenshotConfig(new Location("São Paulo", "-23.6821", "-46.8754", "815"), "Brazil/East", true));
 
         if (!version.startsWith("v"))
             version = "v" + version;

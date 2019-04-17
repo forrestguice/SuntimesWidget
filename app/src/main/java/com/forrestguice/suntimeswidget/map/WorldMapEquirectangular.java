@@ -108,13 +108,18 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
             c.drawLine(0, polarY1, w, polarY1, p);
         }
 
-        if (data != null)
+        drawData: if (data != null)
         {
             Calendar now = data.nowThen(data.calendar());
             SuntimesCalculator calculator = data.calculator();
             SuntimesCalculator.SunPosition sunPos = calculator.getSunPosition(now);
             SuntimesCalculator.MoonPosition moonPos = calculator.getMoonPosition(now);
             Location location = data.location();
+
+            if (sunPos == null || moonPos == null) {
+                Log.e(WorldMapView.LOGTAG, "not supported by this data source");
+                break drawData;
+            }
 
             long gmtMillis = now.getTimeInMillis() + (long)(WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.get(Calendar.MONTH)) * 60 * 1000);
             double gmtHours = (((gmtMillis / 1000d) / 60d) / 60d) % 24d;
