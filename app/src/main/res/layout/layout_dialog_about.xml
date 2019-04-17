@@ -37,7 +37,8 @@
                 android:layout_width="48dp" android:layout_height="48dp"
                 android:layout_margin="@dimen/aboutIcon_margin"
                 android:scaleType="fitCenter"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/ic_launcher"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/txt_about_name"

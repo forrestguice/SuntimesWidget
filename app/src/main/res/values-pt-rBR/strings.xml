@@ -10,7 +10,6 @@
     <!-- MAIN ACTIVITY -->
 
     <!-- Action Bar
-         The text that appears in the overflow menu / menuItem contentDescription.
     -->
     <string name="configAction_refreshLocation">Atualizar</string>
     <string name="configAction_addLocation">Local</string>
@@ -111,7 +110,7 @@
     <string name="length_delimiter">|</string>
 
     <!-- Field: moon illumination (as seen in moon widget) -->
-    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> illuminated</string>  <!-- used in 2x1 widget -->  <!-- TODO -->
+    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> iluminada</string>  <!-- used in 2x1 widget -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- used in 1x1 widget -->
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
@@ -153,27 +152,27 @@
     <!-- NoteBody: sunset/sunrise/twilight string
          The note body text; appears next to the prefix (layout/info_time_note.xml)
     -->
-    <string name="until_astroTwilight">crepúsculo astronômico</string>
-    <string name="until_civilTwilight">crepúsculo civil</string>
-    <string name="until_nauticalTwilight">crepúsculo náutico</string>
-    <string name="until_sunrise">nascer do sol</string>
-    <string name="until_noon">tarde solar</string>
-    <string name="until_sunset">pôr do sol</string>
-    <string name="untilEnd_civilTwilight">crepúsculo civil</string>
-    <string name="untilEnd_nauticalTwilight">crepúsculo náutico</string>
-    <string name="untilEnd_astroTwilight">crepúsculo astronômico</string>
-    <string name="until_goldhour">hora dourada</string>
-    <string name="untilEnd_goldhour">hora dourada</string>
-    <string name="until_bluehour">hora azul</string>
-    <string name="untilEnd_bluehour">hora azul</string>
-    <string name="until_moonrise">nascer da lua</string>
-    <string name="until_moonset">pôr da lua</string>
+    <string name="until_astroTwilight">Crepúsculo Astronômico</string>
+    <string name="until_civilTwilight">Crepúsculo Civil</string>
+    <string name="until_nauticalTwilight">Crepúsculo Náutico</string>
+    <string name="until_sunrise">Nascer do Sol</string>
+    <string name="until_noon">Tarde Solar</string>
+    <string name="until_sunset">Pôr do Sol</string>
+    <string name="untilEnd_civilTwilight">Crepúsculo Civil</string>
+    <string name="untilEnd_nauticalTwilight">Crepúsculo Náutico</string>
+    <string name="untilEnd_astroTwilight">Crepúsculo Astronômico</string>
+    <string name="until_goldhour">Hora Dourada</string>
+    <string name="untilEnd_goldhour">Hora Dourada</string>
+    <string name="until_bluehour">Hora Azul</string>
+    <string name="untilEnd_bluehour">Hora Azul</string>
+    <string name="until_moonrise">Nascer da Lua</string>
+    <string name="until_moonset">Pôr da Lua</string>
 
     <!-- Table -->
-    <string name="sunrise">nascer do sol</string>                             <!-- contentDescription -->
-    <string name="sunrise_short">nascer do sol</string>                          <!-- table title -->
-    <string name="sunset">pôr do sol</string>                               <!-- contentDescription -->
-    <string name="sunset_short">pôr do sol</string>                            <!-- table title -->
+    <string name="sunrise">Nascer do Sol</string>                             <!-- contentDescription -->
+    <string name="sunrise_short">Nascer do Sol</string>                          <!-- table title -->
+    <string name="sunset">Pôr do Sol</string>                               <!-- contentDescription -->
+    <string name="sunset_short">Pôr do Sol</string>                            <!-- table title -->
     <string name="moonrise">Nascer da Lua</string>                             <!-- contentDescription -->
     <string name="moonrise_short">Nascer da Lua</string>                             <!-- table title -->
     <string name="moonset">Pôr da Lua</string>                             <!-- contentDescription -->
@@ -365,7 +364,7 @@
 
     <string name="widgetMode_sunPosMap_simplerectangular">Básico</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polar</string>     <!-- setting -->
-    <string name="widgetMode_sunPosMap_bluemarble">Mármore Azul</string>    <!-- setting -->
+    <string name="widgetMode_sunPosMap_bluemarble">Mármore</string>    <!-- setting -->
 
     <string name="widgetMode1x1_moonriseset">pôr da lua &amp; pôr da lua</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Fase da lua &amp; iluminação</string>     <!-- setting -->
@@ -447,7 +446,7 @@
     <string name="configLabel_general_showComparison">Mostrar Comparação</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_closest">Evento + Próximo</string>                 <!-- setting -->
+    <string name="trackingMode_closest">Evento Mais Próximo</string>                 <!-- setting -->
     <string name="trackingMode_soonest">Próximo Evento</string>                <!-- setting -->
     <string name="configLabel_general_trackingMode">Mapa:</string>            <!-- spinner label -->
 
@@ -489,7 +488,7 @@
     <string name="edittheme_flag_default">padrão</string>  <!-- content description -->
 
     <string name="deletetheme_dialog_title">Apagar Tema</string>        <!-- dialog title -->
-    <string name="deletetheme_dialog_message">Está certo disso? (mah ôe) <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
+    <string name="deletetheme_dialog_message">Está certo disso? <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
     <string name="deletetheme_dialog_ok">Sim</string>        <!-- button -->
     <string name="deletetheme_dialog_cancel">Não</string>    <!-- button -->
 
@@ -616,12 +615,12 @@
     <string name="configAction_alarmMenu">Menu do Alarme</string>         <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">Ignorar</string>                <!-- notification action button -->
-    <string name="alarmAction_snooze">Silenciar</string>                  <!-- notification action button -->
+    <string name="alarmAction_snooze">Cochilar</string>                  <!-- notification action button -->
     <string name="alarmAction_timeout">Finalizar</string>                  <!-- notification action button -->
 
     <string name="alarmAction_playingMsg"><xliff:g id="label">%1$s</xliff:g></string>          <!-- toast message -->
     <string name="alarmAction_silencedMsg">Alarme silenciado</string>          <!-- toast message -->
-    <string name="alarmAction_snoozeMsg">Silenciar por <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->
+    <string name="alarmAction_snoozeMsg">Cochilo de <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->
     <string name="alarmAction_timeoutMsg">Alarme finalizado.</string>     <!-- notification msg -->
     <string name="alarmAction_upcomingMsg">Próximo Alarme</string>     <!-- notification msg -->
 
@@ -638,13 +637,13 @@
     <string name="alarmOption_repeat_all">Todo Dia</string>         <!-- label text; an alarm that repeats every day -->
 
     <string name="deletealarm_dialog_title">Apagar</string>        <!-- dialog title -->
-    <string name="deletealarm_dialog_message">Está certo disso? (mah ôe) <xliff:g id="type">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg -->
+    <string name="deletealarm_dialog_message">Está certo disso? <xliff:g id="type">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg -->
     <string name="deletealarm_dialog_ok">Sim</string>        <!-- button -->
     <string name="deletealarm_dialog_cancel">Não</string>    <!-- button -->
     <string name="deletealarm_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) apagado.</string> <!-- toast msg -->
 
     <string name="clearalarms_dialog_title">Limpar Alarmes</string>        <!-- dialog title -->
-    <string name="clearalarms_dialog_message">Está certo disso? (mah ôe)</string>   <!-- dialog msg -->
+    <string name="clearalarms_dialog_message">Está certo disso?</string>   <!-- dialog msg -->
     <string name="clearalarms_dialog_ok">Sim</string>        <!-- button -->
     <string name="clearalarms_dialog_cancel">Não</string>    <!-- button -->
     <string name="clearalarms_toast_success">Lista limpa.</string> <!-- toast msg -->
@@ -670,7 +669,7 @@
 
     <string name="configLabel_alarms_optWhiteList">Otimização da bateria</string>
     <string name="configLabel_alarms_optWhiteList_listed">Não otimizado (recomendado)</string>
-    <string name="configLabel_alarms_optWhiteList_unlisted">Otimizar uso da bateria.\nPode ser atrazado em 15 minutos.</string>
+    <string name="configLabel_alarms_optWhiteList_unlisted">Otimizar uso da bateria.\nPode ter um atrazo de até 15 minutos.</string>
 
     <string name="configLabel_alarms_silenceAfter">Silenciar após</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
@@ -678,7 +677,7 @@
     <string name="configLabel_alarms_timeoutAfter">Finalizar após</string>
     <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_snooze">Silenciar por</string>
+    <string name="configLabel_alarms_snooze">Cochilo de</string>
     <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
     <string name="configLabel_alarms_upcoming">Lembrar em</string>
@@ -739,16 +738,16 @@
     <string name="configLabel_ui">Interface do Usuário</string>                       <!-- group title -->
 
     <!-- App Setting: Verbose Accessibility -->
-    <string name="configLabel_accessibility_verbose">Verbose TalkBack</string>  <!-- TODO -->
-    <string name="configLabel_accessibility_verbose_summary">Announce automated changes to the UI.</string>  <!-- TODO -->
+    <string name="configLabel_accessibility_verbose">Anúncio(s)</string>
+    <string name="configLabel_accessibility_verbose_summary">Anunciar mudanças automatizadas na Interface.</string>
 
     <!-- App Setting: UI Warnings -->
     <string name="configLabel_ui_showWarnings">Mostrar Avisos</string>
     <string name="configLabel_ui_showWarnings_summary">Mostrar configurações de avisos.</string>
 
     <!-- App Setting: Show Lightmap -->
-    <string name="configLabel_ui_showLightmap">Mostrar mapa branco</string>
-    <string name="configLabel_ui_showLightmap_summary">Show a stacked bar chart of day, night, and twilight periods.</string>
+    <string name="configLabel_ui_showLightmap">Mostrar mapa em barra</string>
+    <string name="configLabel_ui_showLightmap_summary">Mostra uma barra com detalhes do dia, noite e crepúsculos na tela principal.</string>
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Mostrar Lua</string>
@@ -782,7 +781,7 @@
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
         <item>@string/appThemes_lightTheme</item>
         <item>@string/appThemes_darkTheme</item>
-        <item>Light Theme / Dark Theme (Night&#160;Mode)</item>  <!-- TODO: nbsp -->
+        <item>Claro / Escuro (Modo&#160;Noite)</item>  <!-- TODO: nbsp -->
     </string-array>
 
     <!-- App Setting: time format -->
@@ -800,28 +799,28 @@
 
     <!-- App Setting: Date "on tap" action -->
     <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
-        <item>Do nothing</item>
-        <item>Swap cards (today/tomorrow)</item>
-        <item>Show calendar app</item>
-        <item>Set custom date</item>
-    </string-array>  <!-- TODO -->
+        <item>Nada</item>
+        <item>Inverter (hoje/amanhã)</item>
+        <item>Abrir app Calendário</item>
+        <item>Def. data</item>
+    </string-array>
 
     <!-- App Setting: Clock UI "on tap" action -->
     <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
-        <item>Do nothing</item>
+        <item>Nada</item>
         <item>@string/configAction_setAlarm</item>
         <item>@string/configAction_setTimeZone</item>
-        <item>Show next note</item>
-        <item>Show previous note</item>
-    </string-array>  <!-- TODO -->
+        <item>Mostrar próxima nota</item>
+        <item>Mostrar nota anterior</item>
+    </string-array>
 
     <!-- App Setting: Note UI "on tap" action -->
     <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
-        <item>Do nothing</item>
-        <item>Set alarm for note</item>
-        <item>Show next note</item>
-        <item>Show previous note</item>
-    </string-array>  <!-- TODO -->
+        <item>Nada</item>
+        <item>Def. alarme para a nota</item>
+        <item>Mostrar próxima nota</item>
+        <item>Mostrar nota anterior</item>
+    </string-array>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">by offset</string>  <!-- TODO -->
@@ -865,41 +864,41 @@
     </string-array>  <!-- TODO -->
 
     <!-- App Setting: calendars -->
-    <string name="configLabel_calendars">Calendars</string>   <!-- group title -->  <!-- TODO -->
-    <string name="configLabel_calendars_enabled">Calendar Integration</string>  <!-- TODO -->
+    <string name="configLabel_calendars">Calendário</string>   <!-- group title -->
+    <string name="configLabel_calendars_enabled">Integração</string>
 
     <!-- App Setting: passive location mode -->
     <string name="configLabel_getFix_passiveMode">Passive Location</string>  <!-- TODO -->
     <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string>  <!-- TODO -->
 
     <!-- App Setting: locale mode -->
-    <string name="configLabel_locale">Language Settings</string>   <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_locale">Idiomas Disponíveis</string>   <!-- group title -->
 
-    <string name="configLabel_localeMode">Mode</string>  <!-- TODO -->
+    <string name="configLabel_localeMode">Modo</string>
     <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
     <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
-        <item>System</item>
-        <item>User Defined</item>
-    </string-array>  <!-- TODO -->
+        <item>Sistema</item>
+        <item>Definição do Usuário</item>
+    </string-array>
 
     <!-- App Setting: custom Locale -->
-    <string name="configLabel_localeSelect">Language</string>  <!-- TODO -->
+    <string name="configLabel_localeSelect">Idioma</string>
     <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
     <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
-        <item>English</item>
+        <item>Inglês</item>
         <item>Esperanto</item>
-        <item>French</item>
-        <item>German</item>
-        <item>Hungarian</item>
-        <item>Italian</item>
-        <item>Polish</item>
-        <item>Spanish</item>
-        <item>Catalan</item>
-        <item>Basque</item>
-        <item>Norwegian</item>
-        <item>Traditional Chinese</item>
+        <item>Francês</item>
+        <item>Alemão</item>
+        <item>Húngaro</item>
+        <item>Italiano</item>
+        <item>Polonês</item>
+        <item>Espanhol</item>
+        <item>Catalão</item>
+        <item>Basco</item>
+        <item>Norueguês</item>
+        <item>Chinês Tradicional</item>
         <item>Português</item>
-    </string-array>  <!-- TODO: these should be language names as understood in portuguese -->
+    </string-array>
 
     <!-- position formats -->
     <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
@@ -911,21 +910,21 @@
     <!-- cardinal directions -->
     <string-array name="directions_short">  <!-- one-to-one with directions_long -->
         <item>N</item>
-        <item>NNE</item>
-        <item>NE</item>
-        <item>ENE</item>
-        <item>E</item>
-        <item>ESE</item>
-        <item>SE</item>
-        <item>SSE</item>
+        <item>NNd</item>
+        <item>Nd</item>
+        <item>LNd</item>
+        <item>L</item>
+        <item>LSd</item>
+        <item>Sd</item>
+        <item>SSd</item>
         <item>S</item>
-        <item>SSW</item>
-        <item>SW</item>
-        <item>WSW</item>
-        <item>W</item>
-        <item>WNW</item>
-        <item>NW</item>
-        <item>NNW</item>
+        <item>SSo</item>
+        <item>So</item>
+        <item>OSo</item>
+        <item>O</item>
+        <item>ONo</item>
+        <item>No</item>
+        <item>NNo</item>
         <item>N</item>
     </string-array>
     <string-array name="directions_long">   <!-- one-to-one with directions_short -->
@@ -1049,7 +1048,7 @@
 
     <!-- Dialog: Clear Places -->
     <string name="locationclear_dialog_title">Limpar Lugares?</string>
-    <string name="locationclear_dialog_message">Está certo disso? (mah ôe)</string>
+    <string name="locationclear_dialog_message">Está certo disso?</string>
     <string name="locationclear_dialog_ok">Sim</string>
     <string name="locationclear_dialog_cancel">Não</string>
 
@@ -1107,7 +1106,7 @@
     <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Mostrar horário da luz do sol e da lua.</string>
     <string name="app_support_url"><![CDATA[
-        <b>Support:</b> visit the
+        <b>Support:</b> visite
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> to submit a request.
     ]]></string>
     <string name="app_url"><xliff:g id="url"><![CDATA[
@@ -1120,6 +1119,7 @@
     ]]></string>
     <string name="app_legal2"><![CDATA[
         <b>Traduções:</b><br/>
+        Tradução para o Português Brasileiro por <a href=https://github.com/NetoSilva15>Neto Silva</a>. <br />
         German translation by Henrik "HerHde" Hüttemann and Wolkenschieber. <br />
         Polish and Esperanto translation by Verdulo. <br />
         French translation by Jej & Aloha. <br />
@@ -1128,8 +1128,7 @@
         Basque translation by beriain. <br />
         Norwegian translation by FTno. <br />
         Italian translation by Matteo Caoduro. <br />
-        Traditional Chinese translation by <a href=https://github.com/pggdt>ft42</a>. <br />
-        Brazilian Portuguese translation by <a href=https://github.com/NetoSilva15>Neto Silva</a>.
+        Traditional Chinese translation by <a href=https://github.com/pggdt>ft42</a>.
     ]]></string>
     <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
@@ -1194,9 +1193,9 @@
 
     <string name="help_general_timeMode"><![CDATA[
           <b>Tempo Atual:</b> O sol está no horizonte, esse é basicamente o período aproximado entre o nascer e pôr do sol.<br/><br/>
-          <b>Crepúsculo Civil:</b> O sol está 6 graus abaixo do horizonte; as estrelas mais brilhantes estão visíveis. Há luz suficiente pra maioria das atividades sem a necessidade de iluminação extra.<br/><br/>
-          <b>Crepúsculo Náutico:</b> O sol está 12 graus abaixo do horizonte. Não há luz suficiente pra maioria das atividades sem a necessidade de iluminação extra..<br/><br/>
-          <b>Crepúsculo Astronômico:</b> O sol está 18 graus abaixo do horizonte. Breu total.<br/>
+          <b>Crepúsculo Civil:</b> O sol está 6 graus abaixo do horizonte; as estrelas mais brilhantes estão visíveis. Há luz suficiente para maioria das atividades externas sem a necessidade de iluminação extra.<br/><br/>
+          <b>Crepúsculo Náutico:</b> O sol está 12 graus abaixo do horizonte. Não há luz suficiente para maioria das atividades externas sem a necessidade de iluminação extra..<br/><br/>
+          <b>Crepúsculo Astronômico:</b> O sol está 18 graus abaixo do horizonte. Totalmente sem condições de qualquer atividade externa sem o auxílio de luz extra.<br/>
     ]]></string>
 
     <string name="help_general_timeMode2"><![CDATA[
@@ -1230,8 +1229,8 @@
 
     ]]></string> <!-- TODO -->
     <string name="help_general_daylength"><![CDATA[
-        <b>Length of day:</b> O tempo entre o nascer e pôr do sol.<br/><br/>
-        <b>Usable light:</b> O tempo entre o crepúsculo civil da manhã e da noite.<br/>
+        <b>Duração do dia:</b> O tempo entre o nascer e pôr do sol.<br/><br/>
+        <b>Luz útil:</b> O tempo entre o crepúsculo civil da manhã e da noite.<br/>
     ]]></string>
     <string name="help_general_moonillum"><![CDATA[
         <b>Iluminação da Lua:</b> The moon widgets and main page display the moon\'s illumination at lunar noon (the midpoint between moonrise and moonset), while the moon dialog displays the moon\'s current illumination.<br/><br/>
@@ -1259,16 +1258,16 @@
           The [Icon Default] temas nativos não podem ser modificados.
     </string>
 
-    <string name="help_calendar"><![CDATA[Supply events to the Calendar app (moon phases, solstices, and equinoxes).<br />
+    <string name="help_calendar"><![CDATA[Calendário (fases da lua, solstícios e equinócios).<br />
         <br />
         <u><b><font color="#ff9900">Integração com calendário foi removida.</font></b></u><br />
         <br />
-        Agora é uma função disponível como <a href="moreInfoLink">app separado</a>.
+        Agora é uma função disponível como <a href="moreInfoLink">aplicativo separado</a>.
     ]]></string>
 
-    <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. <br/><br/>The app is configured from location data. This information (and other configuration data used by the app) is stored locally and does not leave the device.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
-    <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string>
-    <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string>
+    <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes não coleta, estoca ou distribui dados pessoais. Não possui: <b>propagandas</b>, <b>ferramentas para análises</b>, <b>rastreadores</b>, e <b>exigência de permissões desnecessárias</b>. <br/><br/> Seus dados é estocado localmente e não sai de seu aparelho.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
+    <string name="privacy_permission_location"><![CDATA[Suntimes pode pedir a permissão <b>localizar</b> para determinar a sua localidade.<br/><br/> Permissão opcional; o local é definido manualmente por padrão.]]></string>
+    <string name="privacy_permission_storage"><![CDATA[Suntimes pode pedir a permissão <b>armazenamento</b> para realizar backup e/ou exportar dados de/para um arquivo (temas, por exemplo).]]></string>
     <string name="privacy_permissiondialog_title">Permissões</string>
     <string name="privacy_url"><xliff:g id="url"><![CDATA[
         <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Privacy">github.com/forrestguice/SuntimesWidget/wiki/Privacy</a>
