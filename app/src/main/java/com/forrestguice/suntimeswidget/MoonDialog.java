@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -33,6 +33,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 public class MoonDialog extends DialogFragment
@@ -51,6 +53,7 @@ public class MoonDialog extends DialogFragment
     private MoonRiseSetView moonriseset;
     private MoonPhaseView currentphase;
     private MoonPhasesView moonphases;
+    private TextView moondistance;
 
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -99,6 +102,7 @@ public class MoonDialog extends DialogFragment
         moonriseset = (MoonRiseSetView) dialogView.findViewById(R.id.moonriseset_view);
         currentphase = (MoonPhaseView) dialogView.findViewById(R.id.moonphase_view);
         moonphases = (MoonPhasesView) dialogView.findViewById(R.id.moonphases_view);
+        moondistance = (TextView) dialogView.findViewById(R.id.moonapsis_current_distance);
 
         Context context = dialogView.getContext();
         if (context != null) {
@@ -114,6 +118,7 @@ public class MoonDialog extends DialogFragment
             moonriseset.themeViews(context, themeOverride);
             currentphase.themeViews(context, themeOverride);
             moonphases.themeViews(context, themeOverride);
+            moondistance.setTextColor(themeOverride.getTimeColor());
         }
     }
 
@@ -135,7 +140,27 @@ public class MoonDialog extends DialogFragment
         moonriseset.updateViews(context, data);
         currentphase.updateViews(context, data);
         moonphases.updateViews(context, data);
+        updateMoonDistance();
         startUpdateTask();
+    }
+
+    private void updateMoonDistance()
+    {
+        Context context = getContext();
+        if (context != null && data != null && data.isCalculated())
+        {
+            SuntimesCalculator calculator = data.calculator();
+            SuntimesCalculator.MoonPosition position = calculator.getMoonPosition(data.nowThen(data.calendar()));
+            if (position != null)
+            {
+                WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+                moondistance.setText(SuntimesUtils.formatAsDistance(context, position.distance, units, 2, true).toString());
+                return;
+            }
+        }
+
+        // reaching this line means... null context, null data, or null position
+        moondistance.setText("");
     }
 
     /**@Override

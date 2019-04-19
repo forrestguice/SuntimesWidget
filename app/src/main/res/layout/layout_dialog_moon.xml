@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -58,6 +58,13 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
     </android.support.constraint.ConstraintLayout>
+
+    <View style="@style/SunsetTimeHorizontalRule"
+        android:layout_width="match_parent" android:layout_height="1dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"/>
+
+    <include layout="@layout/info_time_moonapsis" />
 
     <View style="@style/SunsetTimeHorizontalRule"
         android:layout_width="match_parent" android:layout_height="1dp"
