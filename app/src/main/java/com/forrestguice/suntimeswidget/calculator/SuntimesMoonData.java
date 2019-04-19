@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
+import android.util.Pair;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
@@ -171,6 +172,22 @@ public class SuntimesMoonData extends SuntimesData
         midnight.add(Calendar.DAY_OF_MONTH, 1);
         return new Calendar[] { moonriseCalendarYesterday(), moonriseCalendarToday(), moonriseCalendarTomorrow(),
                                 moonsetCalendarYesterday(), moonsetCalendarToday(), moonsetCalendarTomorrow(), midnight };
+    }
+
+    /**
+     * @return the date and distance of the upcoming lunar apogee.
+     */
+    public Pair<Calendar, Double> getMoonApogee()
+    {
+        return new Pair<>(Calendar.getInstance(), 400123d);  // TODO
+    }
+
+    /**
+     * @return the date and distance of the upcoming lunar perigee.
+     */
+    public Pair<Calendar, Double> getMoonPerigee()
+    {
+        return new Pair<>(Calendar.getInstance(), 350123d);  // TODO
     }
 
     /**
