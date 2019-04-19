@@ -22,11 +22,14 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,8 +40,12 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
+import java.util.Calendar;
+
 public class MoonDialog extends DialogFragment
 {
+    private SuntimesUtils utils = new SuntimesUtils();
+
     private SuntimesMoonData data;
     public void setData( SuntimesMoonData data )
     {
@@ -53,7 +60,13 @@ public class MoonDialog extends DialogFragment
     private MoonRiseSetView moonriseset;
     private MoonPhaseView currentphase;
     private MoonPhasesView moonphases;
+
     private TextView moondistance;
+    private TextView apogee_date, perigee_date;
+    private TextView apogee_note, perigee_note;
+    private TextView apogee_distance, perigee_distance;
+
+    private int timeColor;
 
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -102,7 +115,14 @@ public class MoonDialog extends DialogFragment
         moonriseset = (MoonRiseSetView) dialogView.findViewById(R.id.moonriseset_view);
         currentphase = (MoonPhaseView) dialogView.findViewById(R.id.moonphase_view);
         moonphases = (MoonPhasesView) dialogView.findViewById(R.id.moonphases_view);
+
         moondistance = (TextView) dialogView.findViewById(R.id.moonapsis_current_distance);
+        apogee_date = (TextView) dialogView.findViewById(R.id.moonapsis_apogee_date);
+        apogee_note = (TextView) dialogView.findViewById(R.id.moonapsis_apogee_note);
+        apogee_distance = (TextView) dialogView.findViewById(R.id.moonapsis_apogee_distance);
+        perigee_date = (TextView) dialogView.findViewById(R.id.moonapsis_perigee_date);
+        perigee_note = (TextView) dialogView.findViewById(R.id.moonapsis_perigee_note);
+        perigee_distance = (TextView) dialogView.findViewById(R.id.moonapsis_perigee_distance);
 
         Context context = dialogView.getContext();
         if (context != null) {
@@ -114,11 +134,28 @@ public class MoonDialog extends DialogFragment
     {
         if (themeOverride != null)
         {
+            timeColor = themeOverride.getTimeColor();
+            int textColor = themeOverride.getTextColor();
+
             dialogTitle.setTextColor(themeOverride.getTitleColor());
             moonriseset.themeViews(context, themeOverride);
             currentphase.themeViews(context, themeOverride);
             moonphases.themeViews(context, themeOverride);
-            moondistance.setTextColor(themeOverride.getTimeColor());
+
+            moondistance.setTextColor(timeColor);
+            apogee_distance.setTextColor(timeColor);
+            apogee_date.setTextColor(timeColor);
+            apogee_note.setTextColor(textColor);
+            perigee_distance.setTextColor(timeColor);
+            perigee_date.setTextColor(timeColor);
+            perigee_note.setTextColor(textColor);
+
+        } else {
+            int[] colorAttrs = { android.R.attr.textColorPrimary };
+            TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+            int def = R.color.transparent;
+            timeColor = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
+            typedArray.recycle();
         }
     }
 
@@ -140,27 +177,54 @@ public class MoonDialog extends DialogFragment
         moonriseset.updateViews(context, data);
         currentphase.updateViews(context, data);
         moonphases.updateViews(context, data);
-        updateMoonDistance();
+        updateMoonApsis();
         startUpdateTask();
     }
 
-    private void updateMoonDistance()
+    private void updateMoonApsis()
     {
         Context context = getContext();
         if (context != null && data != null && data.isCalculated())
         {
+            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+            boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
+            boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
+            boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, 0);
+            boolean showHours = WidgetSettings.loadShowHoursPref(context, 0);
+
+            Pair<Calendar, Double> apogee = data.getMoonApogee();
+            apogee_date.setText(utils.calendarDateTimeDisplayString(context, apogee.first, showTime, showSeconds).getValue());
+            apogee_note.setText(createApsisNote(context, apogee.first, showWeeks, showHours, timeColor));
+            apogee_distance.setText(SuntimesUtils.formatAsDistance(context, apogee.second, units, 2, true).toString());
+
+            Pair<Calendar, Double> perigee = data.getMoonPerigee();
+            perigee_date.setText(utils.calendarDateTimeDisplayString(context, perigee.first, showTime, showSeconds).getValue());
+            perigee_note.setText(createApsisNote(context, perigee.first, showWeeks, showHours, timeColor));
+            perigee_distance.setText(SuntimesUtils.formatAsDistance(context, perigee.second, units, 2, true).toString());
+
             SuntimesCalculator calculator = data.calculator();
             SuntimesCalculator.MoonPosition position = calculator.getMoonPosition(data.nowThen(data.calendar()));
             if (position != null)
-            {
-                WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
                 moondistance.setText(SuntimesUtils.formatAsDistance(context, position.distance, units, 2, true).toString());
-                return;
-            }
-        }
+            else moondistance.setText("");
 
-        // reaching this line means... null context, null data, or null position
-        moondistance.setText("");
+        } else {
+            moondistance.setText("");
+            perigee_date.setText("");
+            perigee_note.setText("");
+            perigee_distance.setText("");
+            apogee_date.setText("");
+            apogee_note.setText("");
+            apogee_distance.setText("");
+        }
+    }
+
+    private CharSequence createApsisNote(Context context, Calendar dateTime, boolean showWeeks, boolean showHours, int noteColor)
+    {
+        Calendar now = Calendar.getInstance();
+        String noteText = (dateTime == null ? "" : utils.timeDeltaDisplayString(now.getTime(), dateTime.getTime(), showWeeks, showHours).toString());
+        String noteString = now.after(dateTime) ? context.getString(R.string.ago, noteText) : context.getString(R.string.hence, noteText);
+        return SuntimesUtils.createBoldColorSpan(null, noteString, noteText, noteColor);
     }
 
     /**@Override
