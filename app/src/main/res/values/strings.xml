@@ -370,6 +370,17 @@
     <string name="timeMode_moon_waningcrescent_short">Waning Crescent</string>               <!-- label -->
     <string name="timeMode_moon_waningcrescent">Waning Crescent</string>                     <!-- label -->
 
+    <string name="timeMode_moon_super">Supermoon</string>               <!-- label -->    <!-- TODO -->
+    <string name="timeMode_moon_micro">Micromoon</string>               <!-- label -->    <!-- TODO -->
+    <string name="timeMode_moon_superfull">Super Full Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_moon_superfull_short">@string/timeMode_moon_super</string>     <!-- label -->
+    <string name="timeMode_moon_supernew">Super New Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_moon_supernew_short">@string/timeMode_moon_super</string>     <!-- label -->
+    <string name="timeMode_moon_microfull">Micro Full Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_moon_microfull_short">@string/timeMode_moon_micro</string>     <!-- label -->
+    <string name="timeMode_moon_micronew">Micro New Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_moon_micronew_short">@string/timeMode_moon_micro</string>     <!-- label -->
+
     <string name="configLabel_general_timeMode">Mode:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: layout mode -->

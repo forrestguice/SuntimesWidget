@@ -172,10 +172,36 @@ public class MoonPhasesView extends LinearLayout
             boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
             boolean showHours = WidgetSettings.loadShowHoursPref(context, 0);
             boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
-            phaseNew.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.NEW), showWeeks, showTime, showHours, showSeconds);
-            phaseFirst.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FIRST_QUARTER), showWeeks, showTime, showHours, showSeconds);
-            phaseFull.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FULL), showWeeks, showTime, showHours, showSeconds);
-            phaseLast.updateField(context, data.now(), data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.THIRD_QUARTER), showWeeks, showTime, showHours, showSeconds);
+
+            Calendar newMoonDate = data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.NEW);
+            Calendar firstQuarterDate = data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FIRST_QUARTER);
+            Calendar fullMoonDate = data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FULL);
+            Calendar thirdQuarterDate = data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.THIRD_QUARTER);
+
+            SuntimesCalculator.MoonPosition newMoonPosition = data.calculator().getMoonPosition(newMoonDate);
+            SuntimesCalculator.MoonPosition fullMoonPosition = data.calculator().getMoonPosition(fullMoonDate);
+
+            phaseNew.updateField(context, data.now(), newMoonDate, showWeeks, showTime, showHours, showSeconds);
+            phaseFirst.updateField(context, data.now(), firstQuarterDate, showWeeks, showTime, showHours, showSeconds);
+            phaseFull.updateField(context, data.now(), fullMoonDate, showWeeks, showTime, showHours, showSeconds);
+            phaseLast.updateField(context, data.now(), thirdQuarterDate, showWeeks, showTime, showHours, showSeconds);
+
+            if (newMoonPosition != null) {
+                if (SuntimesMoonData.isSuperMoon(newMoonPosition)) {
+                    phaseNew.setLabel(context.getString(R.string.timeMode_moon_supernew));
+                } else if (SuntimesMoonData.isMicroMoon(newMoonPosition)) {
+                    phaseNew.setLabel(context.getString(R.string.timeMode_moon_micronew));
+                } else phaseNew.setLabel(context.getString(R.string.timeMode_moon_new));
+            } else phaseNew.setLabel(context.getString(R.string.timeMode_moon_new));
+
+            if (fullMoonPosition != null) {
+                if (SuntimesMoonData.isSuperMoon(fullMoonPosition)) {
+                    phaseFull.setLabel(context.getString(R.string.timeMode_moon_superfull));
+                } else if (SuntimesMoonData.isMicroMoon(fullMoonPosition)) {
+                    phaseFull.setLabel(context.getString(R.string.timeMode_moon_microfull));
+                } else phaseFull.setLabel(context.getString(R.string.timeMode_moon_full));
+            } else phaseFull.setLabel(context.getString(R.string.timeMode_moon_full));
+
             reorderLayout(data.nextPhase(data.midnight()));
 
         } else {
@@ -289,6 +315,11 @@ public class MoonPhasesView extends LinearLayout
                 note.setText(SuntimesUtils.createBoldColorSpan(null, noteString, noteText, noteColor));
                 note.setVisibility(View.VISIBLE);
             }
+        }
+
+        public void setLabel(CharSequence text)
+        {
+            label.setText(text);
         }
 
         public void showLabel(boolean value)

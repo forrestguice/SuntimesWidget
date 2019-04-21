@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Pair;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -464,6 +465,16 @@ public class SuntimesMoonData extends SuntimesData
             case FULL:
             default: return MoonPhaseDisplay.WANING_GIBBOUS;
         }
+    }
+
+    public static boolean isSuperMoon( @NonNull SuntimesCalculator.MoonPosition position )
+    {
+        return position.distance < 360000;
+    }
+
+    public static boolean isMicroMoon( @NonNull SuntimesCalculator.MoonPosition position)
+    {
+        return position.distance > 405000;
     }
 
 }
