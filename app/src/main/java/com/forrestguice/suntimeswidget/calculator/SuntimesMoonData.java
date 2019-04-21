@@ -181,7 +181,9 @@ public class SuntimesMoonData extends SuntimesData
      */
     public Pair<Calendar, Double> getMoonApogee()
     {
-        return new Pair<>(Calendar.getInstance(), 400123d);  // TODO
+        Calendar date = Calendar.getInstance();
+        date.add(Calendar.HOUR_OF_DAY, 1);
+        return new Pair<>(date, 400123d);  // TODO
     }
 
     /**
@@ -189,7 +191,9 @@ public class SuntimesMoonData extends SuntimesData
      */
     public Pair<Calendar, Double> getMoonPerigee()
     {
-        return new Pair<>(Calendar.getInstance(), 350123d);  // TODO
+        Calendar date = Calendar.getInstance();
+        date.add(Calendar.DAY_OF_YEAR, 1);
+        return new Pair<>(date, 350123d);  // TODO
     }
 
     /**

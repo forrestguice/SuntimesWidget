@@ -17,20 +17,42 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <TextView android:id="@+id/moonapsis_current_distance"
-        style="@style/SunsetTimeTextView2"
-        tools:text="400,000 km"
-        android:layout_margin="4dp" android:layout_gravity="top"
-        android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@+id/moonapsis_current_layout"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="8dp" android:layout_marginRight="16dp"
+        android:layout_marginStart="8dp" android:layout_marginEnd="16dp">
+
+        <TextView android:id="@+id/moonapsis_current_label"
+            style="@style/SunsetTimeTextView2" android:layout_margin="0dp"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+        <TextView android:id="@+id/moonapsis_current_distance"
+            style="@style/SunsetTimeTextView2" android:layout_margin="0dp"
+            tools:text="400,000 km"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+        <TextView android:id="@+id/moonapsis_current_note"
+            style="@style/SunsetTimeTextView2" android:layout_margin="0dp"
+            tools:text="Micromoon" android:textStyle="bold"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/moonapsis_perigee_layout"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="4dp">
+        android:layout_marginLeft="8dp" android:layout_marginRight="8dp">
+
+        <TextView android:id="@+id/moonapsis_perigee_label"
+            style="@style/SunsetTimeTextView2" android:layout_margin="0dp"
+            android:text="Perigee"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
         <TextView android:id="@+id/moonapsis_perigee_distance"
             style="@style/SunsetTimeTextView2" android:layout_margin="0dp"
@@ -53,7 +75,12 @@
         android:id="@+id/moonapsis_apogee_layout"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="4dp">
+        android:layout_marginLeft="8dp" android:layout_marginRight="8dp">
+
+        <TextView android:id="@+id/moonapsis_apogee_label"
+            style="@style/SunsetTimeTextView2" android:layout_margin="0dp"
+            android:text="Apogee"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
         <TextView android:id="@+id/moonapsis_apogee_distance"
             style="@style/SunsetTimeTextView2" android:layout_margin="0dp"

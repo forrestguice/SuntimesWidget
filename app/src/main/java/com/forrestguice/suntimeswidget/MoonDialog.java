@@ -61,12 +61,13 @@ public class MoonDialog extends DialogFragment
     private MoonPhaseView currentphase;
     private MoonPhasesView moonphases;
 
-    private TextView moondistance;
+    private TextView moondistance, moondistance_label, moondistance_note;
+    private TextView apogee_label, perigee_label;
     private TextView apogee_date, perigee_date;
     private TextView apogee_note, perigee_note;
     private TextView apogee_distance, perigee_distance;
 
-    private int timeColor;
+    private int riseColor, setColor, timeColor;
 
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -117,12 +118,16 @@ public class MoonDialog extends DialogFragment
         moonphases = (MoonPhasesView) dialogView.findViewById(R.id.moonphases_view);
 
         moondistance = (TextView) dialogView.findViewById(R.id.moonapsis_current_distance);
+        moondistance_label = (TextView) dialogView.findViewById(R.id.moonapsis_current_label);
+        moondistance_note = (TextView) dialogView.findViewById(R.id.moonapsis_current_note);
         apogee_date = (TextView) dialogView.findViewById(R.id.moonapsis_apogee_date);
         apogee_note = (TextView) dialogView.findViewById(R.id.moonapsis_apogee_note);
         apogee_distance = (TextView) dialogView.findViewById(R.id.moonapsis_apogee_distance);
+        apogee_label = (TextView) dialogView.findViewById(R.id.moonapsis_apogee_label);
         perigee_date = (TextView) dialogView.findViewById(R.id.moonapsis_perigee_date);
         perigee_note = (TextView) dialogView.findViewById(R.id.moonapsis_perigee_note);
         perigee_distance = (TextView) dialogView.findViewById(R.id.moonapsis_perigee_distance);
+        perigee_label = (TextView) dialogView.findViewById(R.id.moonapsis_perigee_label);
 
         Context context = dialogView.getContext();
         if (context != null) {
@@ -134,20 +139,30 @@ public class MoonDialog extends DialogFragment
     {
         if (themeOverride != null)
         {
+            int titleColor = themeOverride.getTitleColor();
             timeColor = themeOverride.getTimeColor();
             int textColor = themeOverride.getTextColor();
+            riseColor = themeOverride.getMoonriseTextColor();
+            setColor = themeOverride.getMoonsetTextColor();
 
-            dialogTitle.setTextColor(themeOverride.getTitleColor());
+            dialogTitle.setTextColor(titleColor);
             moonriseset.themeViews(context, themeOverride);
             currentphase.themeViews(context, themeOverride);
             moonphases.themeViews(context, themeOverride);
 
-            moondistance.setTextColor(timeColor);
-            apogee_distance.setTextColor(timeColor);
+            moondistance_label.setTextColor(titleColor);
+            apogee_label.setTextColor(titleColor);
+            perigee_label.setTextColor(titleColor);
+
+            moondistance.setTextColor(textColor);
+            apogee_distance.setTextColor(setColor);
+            perigee_distance.setTextColor(riseColor);
+
+            moondistance_note.setTextColor(timeColor);
             apogee_date.setTextColor(timeColor);
-            apogee_note.setTextColor(textColor);
-            perigee_distance.setTextColor(timeColor);
             perigee_date.setTextColor(timeColor);
+
+            apogee_note.setTextColor(textColor);
             perigee_note.setTextColor(textColor);
 
         } else {
@@ -205,11 +220,21 @@ public class MoonDialog extends DialogFragment
             SuntimesCalculator calculator = data.calculator();
             SuntimesCalculator.MoonPosition position = calculator.getMoonPosition(data.nowThen(data.calendar()));
             if (position != null)
-                moondistance.setText(SuntimesUtils.formatAsDistance(context, position.distance, units, 2, true).toString());
-            else moondistance.setText("");
+            {
+                SuntimesUtils.TimeDisplayText distance = SuntimesUtils.formatAsDistance(context, position.distance, units, 2, true);
+                moondistance.setText(SuntimesUtils.createColorSpan(null, distance.toString(), distance.getValue(), timeColor));
+
+                if (SuntimesMoonData.isSuperMoon(position))
+                    moondistance_note.setText(context.getString(R.string.timeMode_moon_super));
+                else if (SuntimesMoonData.isMicroMoon(position))
+                    moondistance_note.setText(context.getString(R.string.timeMode_moon_micro));
+                else moondistance_note.setText("");
+
+            } else moondistance.setText("");
 
         } else {
             moondistance.setText("");
+            moondistance_note.setText("");
             perigee_date.setText("");
             perigee_note.setText("");
             perigee_distance.setText("");
