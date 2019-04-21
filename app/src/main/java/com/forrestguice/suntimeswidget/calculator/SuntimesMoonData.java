@@ -22,6 +22,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Pair;
 
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import java.util.ArrayList;
@@ -475,6 +476,25 @@ public class SuntimesMoonData extends SuntimesData
     public static boolean isMicroMoon( @NonNull SuntimesCalculator.MoonPosition position)
     {
         return position.distance > 405000;
+    }
+
+    public CharSequence getMoonPhaseLabel(Context context, SuntimesCalculator.MoonPhase majorPhase)
+    {
+        Calendar phaseDate = moonPhaseCalendar(majorPhase);
+        if (majorPhase == SuntimesCalculator.MoonPhase.FULL || majorPhase == SuntimesCalculator.MoonPhase.NEW)
+        {
+            SuntimesCalculator.MoonPosition phasePosition = calculator.getMoonPosition(phaseDate);
+
+            if (SuntimesMoonData.isSuperMoon(phasePosition)) {
+                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? context.getString(R.string.timeMode_moon_supernew)
+                        : context.getString(R.string.timeMode_moon_superfull);
+
+            } else if (SuntimesMoonData.isMicroMoon(phasePosition)) {
+                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? context.getString(R.string.timeMode_moon_micronew)
+                        : context.getString(R.string.timeMode_moon_microfull);
+
+            } else return SuntimesMoonData.toPhase(majorPhase).getLongDisplayString();
+        } else return SuntimesMoonData.toPhase(majorPhase).getLongDisplayString();
     }
 
 }

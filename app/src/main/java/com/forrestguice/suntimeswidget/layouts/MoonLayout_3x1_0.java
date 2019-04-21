@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2018 Forrest Guice
+   Copyright (C) 2018-2019 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -66,6 +66,7 @@ public class MoonLayout_3x1_0 extends MoonLayout
 
         SuntimesUtils.TimeDisplayText newMoonString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.NEW), showTimeDate, showSeconds);
         views.setTextViewText(R.id.moonphase_new_date, newMoonString.getValue());
+        views.setTextViewText(R.id.moonphase_new_label, data.getMoonPhaseLabel(context, SuntimesCalculator.MoonPhase.NEW));
         views.setViewVisibility(R.id.moonphase_new_label, (showLabels ? View.VISIBLE : View.GONE));
 
         SuntimesUtils.TimeDisplayText firstQuarterMoonString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FIRST_QUARTER), showTimeDate, showSeconds);
@@ -74,6 +75,7 @@ public class MoonLayout_3x1_0 extends MoonLayout
 
         SuntimesUtils.TimeDisplayText fullMoonString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FULL), showTimeDate, showSeconds);
         views.setTextViewText(R.id.moonphase_full_date, fullMoonString.getValue());
+        views.setTextViewText(R.id.moonphase_full_label, data.getMoonPhaseLabel(context, SuntimesCalculator.MoonPhase.FULL));
         views.setViewVisibility(R.id.moonphase_full_label, (showLabels ? View.VISIBLE : View.GONE));
 
         SuntimesUtils.TimeDisplayText thirdQuarterMoonString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.THIRD_QUARTER), showTimeDate, showSeconds);

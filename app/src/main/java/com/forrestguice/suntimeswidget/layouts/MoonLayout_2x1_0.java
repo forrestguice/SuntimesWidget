@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2018 Forrest Guice
+   Copyright (C) 2018-2019 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -28,6 +28,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
@@ -73,7 +74,11 @@ public class MoonLayout_2x1_0 extends MoonLayout
         MoonPhaseDisplay phase = data.getMoonPhaseToday();
         if (phase != null)
         {
-            views.setTextViewText(R.id.text_info_moonphase, phase.getLongDisplayString());
+            if (phase == MoonPhaseDisplay.FULL || phase == MoonPhaseDisplay.NEW) {
+                SuntimesCalculator.MoonPhase majorPhase = (phase == MoonPhaseDisplay.FULL ? SuntimesCalculator.MoonPhase.FULL : SuntimesCalculator.MoonPhase.NEW);
+                views.setTextViewText(R.id.text_info_moonphase, data.getMoonPhaseLabel(context, majorPhase));
+            } else views.setTextViewText(R.id.text_info_moonphase, phase.getLongDisplayString());
+
             views.setViewVisibility(R.id.text_info_moonphase, (showLabels ? View.VISIBLE : View.GONE));
             views.setViewVisibility(phase.getView(), View.VISIBLE);
 
