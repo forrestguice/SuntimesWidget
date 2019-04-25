@@ -1117,7 +1117,7 @@
         Direitos Reservados a &#169 2014-2019 Forrest Guice <br />
         Código Aberto disponível sob GPLv3.
     ]]></string>
-    <string name="app_legal2"><![CDATA[
+    <!--<string name="app_legal2"><![CDATA[
         <b>Traduções:</b><br/>
         Tradução para o Português Brasileiro por <a href=https://github.com/NetoSilva15>Neto Silva</a>. <br />
         German translation by Henrik "HerHde" Hüttemann and Wolkenschieber. <br />
@@ -1129,7 +1129,7 @@
         Norwegian translation by FTno. <br />
         Italian translation by Matteo Caoduro. <br />
         Traditional Chinese translation by <a href=https://github.com/pggdt>ft42</a>.
-    ]]></string>
+    ]]></string>-->
     <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
     <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>

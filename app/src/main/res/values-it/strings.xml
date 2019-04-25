@@ -1082,7 +1082,7 @@
         Copyright &#169 2014-2019 Forrest Guice <br />
         Codice sorgente disponibile con licenza GPLv3.
     ]]></string>
-    <string name="app_legal2"><![CDATA[
+    <!--<string name="app_legal2"><![CDATA[
         <b>Traduzioni:</b><br/>
         Traduzione in italiano di Matteo Caoduro. <br />
         Traduzione in tedesco di Henrik "HerHde" Hüttemann e Wolkenschieber. <br />
@@ -1092,7 +1092,7 @@
         Traduzioni in spagnolo e catalano di <a href="https://github.com/Raulvo">Raulvo</a>. <br />
         Traduzione in Basco di beriain. <br />
         Traduzione in norvegese di FTno.
-    ]]></string>
+    ]]></string>-->
     <string name="app_legal3"><![CDATA[ <b>Librerie:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
     <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>

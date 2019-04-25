@@ -1075,7 +1075,7 @@
         Copyright &#169 2014-2019 Forrest Guice <br />
         Iturburu kodea GPLv3 lizentziapean eskuragarri dago.
     ]]></string>
-    <string name="app_legal2"><![CDATA[
+    <!--<string name="app_legal2"><![CDATA[
         <b>Itzulpenak:</b><br/>
         Alemanezko itzulpena Henrik "HerHde" Hüttemann eta Wolkenschieberek egina. <br />
         Polonierazko eta esperantozko itzulpenak Verdulok eginak. <br />
@@ -1083,7 +1083,7 @@
         Hungarierazko itzulpena Ercik egina. <br />
         Gaztelerazko eta katalanazko itzulpenak <a href=https://github.com/Raulvo>Raulvo</a>k eginak.
         Euskarazko itzulpena beriainek egina.
-    ]]></string>
+    ]]></string>-->
     <string name="app_legal3"><![CDATA[ <b>Liburutegiak:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
     <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>

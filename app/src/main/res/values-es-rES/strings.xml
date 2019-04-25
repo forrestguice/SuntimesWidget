@@ -1057,14 +1057,14 @@
     Copyright &#169 2014-2019 Forrest Guice <br />
     Código fuente disponible bajo GPLv3.
 ]]></string>
-    <string name="app_legal2"><![CDATA[
+    <!--<string name="app_legal2"><![CDATA[
     <b>Traducciones:</b> <br/>
     Traducción en alemán por Henrik "HerHde" Hüttemann. <br />
     Traducción en polaco y esperanto por verdulería. <br />
     Traducción en francés para Jej. <br />
     Traducción en húngaro para Ercis. <br />
     Traducción en español y catalán por <a href=https://github.com/Raulvo>Raulvo</a>.
-]]></string>
+]]></string>-->
     <string name="app_legal3"><![CDATA[
     <b>Bibliotecas:</b> <br/>
     github.com/MenoData/Time4A <br />

@@ -40,6 +40,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 public class AboutActivity extends AppCompatActivity
 {
     private AboutPagerAdapter pagerAdapter;
@@ -214,7 +217,8 @@ public class AboutActivity extends AppCompatActivity
             TextView legalView2 = (TextView) dialogContent.findViewById(R.id.txt_about_legal2);
             if (legalView2 != null) {
                 legalView2.setMovementMethod(LinkMovementMethod.getInstance());
-                legalView2.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_legal2)));
+                //legalView2.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_legal2)));
+                legalView2.setText(SuntimesUtils.fromHtml(initTranslationCredits(getActivity())));
             }
 
             TextView legalView3 = (TextView) dialogContent.findViewById(R.id.txt_about_legal3);
@@ -269,4 +273,56 @@ public class AboutActivity extends AppCompatActivity
             }
         }
     }
+
+    private static String initTranslationCredits(Activity activity)
+    {
+        final String[] localeValues = activity.getResources().getStringArray(R.array.locale_values);
+        final String[] localeCredits = activity.getResources().getStringArray(R.array.locale_credits);
+        final String[] localeDisplay = activity.getResources().getStringArray(R.array.locale_display);
+
+        Integer[] index = new Integer[localeDisplay.length];    // sort alphabetical (localized)
+        for (int i=0; i < index.length; i++) {
+            index[i] = i;
+        }
+        Arrays.sort(index, new Comparator<Integer>() {
+            public int compare(Integer i1, Integer i2) {
+                return localeDisplay[i1].compareTo(localeDisplay[i2]);
+            }
+        });
+
+        StringBuilder credits = new StringBuilder();
+        for (int i=0; i<index.length; i++)
+        {
+            int j = index[i];
+
+            String localeCredits_j = (localeCredits.length > j ? localeCredits[j] : "");
+            if (!localeCredits[j].isEmpty())
+            {
+                String localeDisplay_j = (localeDisplay.length > j ? localeDisplay[j] : localeValues[j]);
+                String[] authorList = localeCredits_j.split("\\|");
+
+                String authors = "";
+                if (authorList.length < 2) {
+                    authors = authorList[0];
+
+                } else if (authorList.length == 2) {
+                    authors = activity.getString(R.string.authorListFormat_n, authorList[0], authorList[1]);
+
+                } else {
+                    for (int k=0; k<authorList.length-1; k++)
+                    {
+                        if (authors.isEmpty())
+                            authors = authorList[k];
+                        else authors = activity.getString(R.string.authorListFormat_i, authors, authorList[k]);
+                    }
+                    authors = activity.getString(R.string.authorListFormat_n, authors, authorList[authorList.length-1]);
+                }
+
+                String line = activity.getString(R.string.translationCreditsFormat, localeDisplay_j, authors);
+                credits.append(line);
+            }
+        }
+        return activity.getString(R.string.app_legal2, credits.toString());
+    }
+
 }
