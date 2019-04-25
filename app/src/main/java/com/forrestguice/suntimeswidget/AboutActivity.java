@@ -290,13 +290,18 @@ public class AboutActivity extends AppCompatActivity
         final String[] localeCredits = activity.getResources().getStringArray(R.array.locale_credits);
         final String[] localeDisplay = activity.getResources().getStringArray(R.array.locale_display);
 
+        final String currentLanguage = AppSettings.getLocale().getLanguage();
         Integer[] index = new Integer[localeDisplay.length];    // sort alphabetical (localized)
         for (int i=0; i < index.length; i++) {
             index[i] = i;
         }
         Arrays.sort(index, new Comparator<Integer>() {
             public int compare(Integer i1, Integer i2) {
-                return localeDisplay[i1].compareTo(localeDisplay[i2]);
+                if (localeValues[i1].startsWith(currentLanguage)) {
+                    return -1;
+                } else if (localeValues[i2].startsWith(currentLanguage)) {
+                    return 1;
+                } else return localeDisplay[i1].compareTo(localeDisplay[i2]);
             }
         });
 
