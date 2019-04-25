@@ -40,6 +40,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.settings.AppSettings;
+
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -47,6 +49,14 @@ public class AboutActivity extends AppCompatActivity
 {
     private AboutPagerAdapter pagerAdapter;
     private ViewPager viewPager;
+    private AppSettings.LocaleInfo localeInfo;
+
+    @Override
+    protected void attachBaseContext(Context newBase)
+    {
+        Context context = AppSettings.initLocale(newBase, localeInfo = new AppSettings.LocaleInfo());
+        super.attachBaseContext(context);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
