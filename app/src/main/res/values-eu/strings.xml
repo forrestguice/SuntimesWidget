@@ -1075,15 +1075,12 @@
         Copyright &#169 2014-2019 Forrest Guice <br />
         Iturburu kodea GPLv3 lizentziapean eskuragarri dago.
     ]]></string>
-    <!--<string name="app_legal2"><![CDATA[
-        <b>Itzulpenak:</b><br/>
-        Alemanezko itzulpena Henrik "HerHde" Hüttemann eta Wolkenschieberek egina. <br />
-        Polonierazko eta esperantozko itzulpenak Verdulok eginak. <br />
-        Frantsesezko itzulpena Jejek egina. <br />
-        Hungarierazko itzulpena Ercik egina. <br />
-        Gaztelerazko eta katalanazko itzulpenak <a href=https://github.com/Raulvo>Raulvo</a>k eginak.
-        Euskarazko itzulpena beriainek egina.
-    ]]></string>-->
+
+    <string name="app_legal2"><![CDATA[<big><b>Itzulpenak:</b></big><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>  <!-- TODO: review -->
+    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> :: <xliff:g id="authorList">%2$s</xliff:g>.<br/>]]></string>   <!-- TODO: review -->
+    <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
+    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, eta <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
+
     <string name="app_legal3"><![CDATA[ <b>Liburutegiak:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
     <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
