@@ -88,11 +88,11 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
     /**
      * Make a complete set of screenshots (for each locale + theme); this takes several minutes.
      */
-    @Test
+    /**@Test
     public void makeScreenshots()
     {
         makeScreenshots(true);
-    }
+    }*/
 
     /**
      * @param complete true make complete set of screenshots, false main screenshot only
