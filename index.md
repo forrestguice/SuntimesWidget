@@ -1,7 +1,7 @@
 <a href="https://github.com/forrestguice/SuntimesWidget/releases"><img src="https://img.shields.io/github/release/forrestguice/SuntimesWidget.svg" alt="GitHub release" /></a>&nbsp; Displays sunrise and sunset, twilights, blue and golden hour, solstices and equinoxes, moonrise and moonset, moon phases and illumination.
 
   <img align="left" src="images/ic_launcher_alarms.png" hspace="8" height="64" />  <br/><u>Suntimes Alarms</u><br />An alarm clock with support for daily repeating alarms and notifications.
- <br /> <br /><br /><br />
+ <br /> <br />
   <a href="https://f-droid.org/en/packages/com.forrestguice.suntimescalendars/"><img align="left" src="images/ic_launcher.png" hspace="8" height="64" /></a>  <br/>[Suntimes Calendars](https://f-droid.org/en/packages/com.forrestguice.suntimescalendars/) <br />A calendar provider add-on.
  <br /> <br />
 
