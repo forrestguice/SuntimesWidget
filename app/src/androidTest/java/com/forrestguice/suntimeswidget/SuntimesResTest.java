@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget;
 import android.content.Context;
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -68,6 +69,8 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_stringArrayLength("timeFormatMode_values", R.array.timeFormatMode_values, "timeFormatMode_display", R.array.timeFormatMode_display);
             verify_stringArrayLength("timeFormatMode_display", R.array.timeFormatMode_display, "TimeFormatMode (ENUM)", WidgetSettings.TimeFormatMode.values());
 
+            verify_stringArrayLength("lengthUnits_values", R.array.lengthUnits_values, "lengthUnits_display", R.array.lengthUnits_display);
+            verify_stringArrayLength("alarm_hardwarebutton_actions_values", R.array.alarm_hardwarebutton_actions_values, "alarm_hardwarebutton_actions_display", R.array.alarm_hardwarebutton_actions_display);
             verify_stringArrayLength("getFix_maxAge_values", R.array.getFix_maxAge_values, "getFix_maxAge_display", R.array.getFix_maxAge_display);
             verify_stringArrayLength("getFix_maxElapse_values", R.array.getFix_maxElapse_values, "getFix_maxElapse_display", R.array.getFix_maxElapse_display);
             verify_stringArrayLength("noteTapActions_values", R.array.noteTapActions_values, "noteTapActions_display", R.array.noteTapActions_display);
@@ -103,5 +106,75 @@ public class SuntimesResTest extends SuntimesActivityTestBase
                 a1.length == a2.length);
     }
 
+    @Test
+    public void test_plurals()
+    {
+        double[] values = new double[]        {   0,   0.25,   1,   1.83,   2,   3,   10 };   // trying to capture; one, none, few, many, other, ...
+        String[] displayValues = new String[] { "0", "0.25", "1", "1.83", "2", "3", "10" };
+
+        Context context = activityRule.getActivity();
+        String[] locales = context.getResources().getStringArray(R.array.locale_values);
+        for (String languageTag : locales)
+        {
+            AppSettings.loadLocale(context, languageTag);
+
+            verify_pluralFormat("units_feet_long", R.plurals.units_feet_long, values, displayValues);
+            verify_pluralFormat("units_meters_long", R.plurals.units_meters_long, values, displayValues);
+
+            verify_pluralFormatI("units_hours", R.plurals.units_hours, values);
+            verify_pluralFormatI("units_minutes", R.plurals.units_minutes, values);
+            verify_pluralFormatI("units_seconds", R.plurals.units_seconds, values);
+            verify_pluralFormatI("themePlural", R.plurals.themePlural, values);
+            verify_pluralFormatI("offset_before_plural", R.plurals.offset_before_plural, values);
+            verify_pluralFormatI("offset_after_plural", R.plurals.offset_after_plural, values);
+            verify_pluralFormatI("offset_at_plural", R.plurals.offset_at_plural, values);
+        }
+    }
+
+    public void verify_pluralFormat(String tag1, int pluralID, double value[], String displayValue[])
+    {
+        Context context = activityRule.getActivity();
+        assertTrue("value[] and displayValue[] must have the same dimension!", value.length == displayValue.length);
+
+        boolean[] r = new boolean[value.length];
+        for (int i=0; i<value.length; i++)
+        {
+            try {
+                context.getResources().getQuantityString(pluralID, (int)value[i], displayValue[i]);
+                r[i] = true;
+
+            } catch (Exception e) {
+                Log.e("verify_pluralFormat", "The format of " + tag1 + " (" + value[i] + ") is INVALID! locale: " + AppSettings.getLocale().toString());
+                r[i] = false;
+            }
+        }
+        boolean allTrue = true;
+        for (boolean b : r) {
+            allTrue &= b;
+        }
+        assertTrue("The format of " + tag1 + " is INVALID! locale: " + AppSettings.getLocale().toString(), allTrue);
+    }
+
+    public void verify_pluralFormatI(String tag1, int pluralID, double value[])
+    {
+        Context context = activityRule.getActivity();
+        boolean[] r = new boolean[value.length];
+        for (int i=0; i<value.length; i++)
+        {
+            try {
+                context.getResources().getQuantityString(pluralID, (int)value[i], (int)value[i]);
+                r[i] = true;
+
+            } catch (Exception e) {
+                Log.e("verify_pluralFormat", "The format of " + tag1 + " (" + value[i] + ") is INVALID! locale: " + AppSettings.getLocale().toString());
+                r[i] = false;
+            }
+        }
+        boolean allTrue = true;
+        for (boolean b : r) {
+            allTrue &= b;
+        }
+        assertTrue("The format of " + tag1 + " is INVALID! locale: " + AppSettings.getLocale().toString(), allTrue);
+    }
 
 }

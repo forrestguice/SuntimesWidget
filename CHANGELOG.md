@@ -1,5 +1,23 @@
 ### ~
 
+### v0.11.3 (2019-04-17)
+* fixes crash when opening general settings (Esperanto) (#315).
+* adds "rise/set order" help button to the widget configuration activity.
+* misc. layout and icon changes (Widget List, About).
+* updates translations to Polish (pl) and Esperanto (eo) (#317 by Verdulo).
+* updates translations to Brazilian Portuguese (pt-br) (#319 by Neto Silva).
+
+### v0.11.2 (2019-04-08)
+* adds an option to disable the alarm clock launcher icon (#305).
+* adds translation to Brazilian Portuguese (pt-br) (contributed by Neto Silva) (#304).
+* updates translations to Polish (pl) and Esperanto (eo) (#307 by Verdulo).
+* misc. widget layout fixes. Widgets now ignore the "large text" accessibility setting (#306). Use a custom theme to increase text size.
+* fixes app crash (world map dialog)  (#309).
+
+### v0.11.1 (2019-03-28)
+* updates translations to Spanish (es-es) and Catalan (ca) (#301 by Raulvo).
+* updates translations to Polish (pl) and Esperanto (eo) (#302 by Verdulo).
+
 ### v0.11.0 (2019-03-12)
 * adds "Suntimes Alarms", an Alarm Clock (#140, #250, #261) with support for daily repeating alarms and notifications.
 * adds a clock widget (#154, #260); displays solar time (Local Mean Time, Apparent Solar Time), or the time in a given timezone.

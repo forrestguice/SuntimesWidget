@@ -48,7 +48,7 @@ public abstract class PositionLayout extends SuntimesLayout
     protected static SpannableString styleAzimuthText(SuntimesUtils.TimeDisplayText azimuthDisplay, int valueColor, int suffixColor, boolean boldTime)
     {
         String azimuthSymbol = azimuthDisplay.getSuffix();
-        String azimuthString = utils.formatAsDirection(azimuthDisplay.getValue(), azimuthSymbol);
+        String azimuthString = azimuthDisplay.getValue() + azimuthSymbol;
         SpannableString azimuth = SuntimesUtils.createColorSpan(null, azimuthString, azimuthDisplay.getValue(), valueColor, boldTime);
         azimuth = SuntimesUtils.createBoldColorSpan(azimuth, azimuthString, azimuthSymbol, suffixColor);
         azimuth = SuntimesUtils.createRelativeSpan(azimuth, azimuthString, azimuthSymbol, SYMBOL_RELATIVE_SIZE);

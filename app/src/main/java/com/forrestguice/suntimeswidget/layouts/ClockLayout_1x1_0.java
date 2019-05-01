@@ -77,8 +77,8 @@ public class ClockLayout_1x1_0 extends ClockLayout
                 float maxSp = ClockLayout.CLOCKFACE_MAX_SP;  // ((category == AppWidgetProviderInfo.WIDGET_CATEGORY_KEYGUARD) ? CLOCKFACE_MAX_SP : -1);
                 float[] adjustedSizeSp = adjustTextSize(context, maxDimensionsDp, paddingDp, "sans-serif", boldTime,"00:00", timeSizeSp, maxSp, "MM", suffixSizeSp);
                 if (adjustedSizeSp[0] != timeSizeSp) {
-                    views.setTextViewTextSize(R.id.text_time, TypedValue.COMPLEX_UNIT_SP, adjustedSizeSp[0]);
-                    views.setTextViewTextSize(R.id.text_time_suffix, TypedValue.COMPLEX_UNIT_SP, adjustedSizeSp[1]);
+                    views.setTextViewTextSize(R.id.text_time, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+                    views.setTextViewTextSize(R.id.text_time_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
                 }
             }
         }
@@ -149,9 +149,9 @@ public class ClockLayout_1x1_0 extends ClockLayout
             timeSizeSp = theme.getTimeSizeSp();
             suffixSizeSp = theme.getTimeSuffixSizeSp();
 
-            views.setTextViewTextSize(R.id.text_time, TypedValue.COMPLEX_UNIT_SP, timeSizeSp);
-            views.setTextViewTextSize(R.id.text_time_suffix, TypedValue.COMPLEX_UNIT_SP, suffixSizeSp);
-            views.setTextViewTextSize(R.id.text_time_extras, TypedValue.COMPLEX_UNIT_SP, theme.getTextSizeSp());
+            views.setTextViewTextSize(R.id.text_time, TypedValue.COMPLEX_UNIT_DIP, timeSizeSp);
+            views.setTextViewTextSize(R.id.text_time_suffix, TypedValue.COMPLEX_UNIT_DIP, suffixSizeSp);
+            views.setTextViewTextSize(R.id.text_time_extras, TypedValue.COMPLEX_UNIT_DIP, theme.getTextSizeSp());
         }
     }
 

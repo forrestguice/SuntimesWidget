@@ -105,6 +105,22 @@
     <string name="until">barru</string>
     <string name="until_end">barru amaituko da</string>
 
+    <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. the time component is shown on the next line -->
+        <item quantity="one">at</item>
+        <item quantity="other">at</item>
+    </plurals>  <!-- TODO -->
+    <plurals name="offset_before_plural">      <!-- e.g. "30m before \n 5:30PM" .. the time component is shown on the next line -->
+        <item quantity="one">%1$s before</item>
+        <item quantity="other">%1$s before</item>
+    </plurals>  <!-- TODO -->
+    <plurals name="offset_after_plural">      <!-- e.g. "30m after \n 5:30PM" .. the time component is shown on the next line -->
+        <item quantity="one">%1$s after</item>
+        <item quantity="other">%1$s after</item>
+    </plurals>  <!-- TODO -->
+
+    <string name="offset_button_before">before</string>    <!-- button label; [1h] [5m] [before] (-) -->  <!-- TODO -->
+    <string name="offset_button_after">after</string>      <!-- button label; [1h] [5m] [after] (+) -->  <!-- TODO -->
+
     <!-- NoteBody: sunset/sunrise/twilight string
          The note body text; appears next to the prefix (layout/info_time_note.xml)
     -->
@@ -204,6 +220,8 @@
     <string name="configLabel_general_calculator_sun">Eguzkiaren datuen jatorria</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Ilargiaren datuen jatorria</string>         <!-- preference label -->
 
+    <string name="configLabel_general_timeFormatMode">Time Format:</string>         <!-- spinner label -->  <!-- TODO -->
+
     <string name="configLabel_general_altitude_enabled">Altitudea erabili</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Altitudean oinarritutako hobekuntzak erabili.</string>        <!-- checkbox label -->
 
@@ -239,6 +257,11 @@
     <string name="configLabel_appearance_showTitle">Izenburua erakutsi</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Izenburua:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
+
+    <!-- Widget Setting: riseSetOrder -->
+    <string name="configLabel_general_riseSetOrder">Order:</string>     <!-- label -->  <!-- TODO -->
+    <string name="risesetorder_today">Today</string>                    <!-- setting -->  <!-- TODO -->
+    <string name="risesetorder_lastnext">Last / Next</string>           <!-- setting -->  <!-- TODO -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Eguerdia</string>                    <!-- setting -->
@@ -320,10 +343,10 @@
 
     <string name="configLabel_action">Ekintzen ezarpenak</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Ukitzerakoan:</string>                    <!-- spinner label -->
-    <string name="configLabel_action_onClockTap">Erlojua ukitzerakoan:</string>         <!-- spinner label -->
-    <string name="configLabel_action_onNoteTap">Oharra ukitzerakoan:</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap">Data ukitzerakoan:</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap1">Data luze ukitzerakoan:</string>   <!-- spinner label -->
+    <string name="configLabel_action_onClockTap">Erlojua ukitzerakoan</string>         <!-- spinner label -->
+    <string name="configLabel_action_onNoteTap">Oharra ukitzerakoan</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap">Data ukitzerakoan</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap1">Data luze ukitzerakoan</string>   <!-- spinner label -->
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Oraingoa (azken ezaguna)</string>  <!-- setting -->
@@ -450,6 +473,7 @@
     <string name="configLabel_themeColorFall">Udazkenaren kolorea</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Neguaren kolorea</string> <!-- color label -->
 
+    <string name="configLabel_themeColorAccent">Accent</string> <!-- color label -->  <!-- TODO -->
     <string name="configLabel_themeColorAction">Ekintza</string> <!-- color label -->
 
     <string name="configLabel_themeColorMapBackground">Maparen atzealdea</string> <!-- color label -->
@@ -527,6 +551,125 @@
     <string name="widgetLabel_declination">Deklinazioa</string>           <!-- label -->
     <string name="widgetLabel_declination_short">Dek</string>           <!-- label -->
     <string name="widgetLabel_declination_symbol">δ</string>           <!-- label/suffix -->
+
+    <!--
+         ALARM CLOCK
+    -->
+    <string name="configLabel_alarmClock">Alarms</string>            <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_alarmClock_emptyMsg">No Alarms</string>     <!-- a label that is displayed in place of an empty listview -->  <!-- TODO -->
+    <string name="configAction_addAlarm">Set Alarm</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_addNotification">Set Notification</string> <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_deleteAlarm">Delete</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_clearAlarms">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="configAction_clearOffset">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="configAction_setAlarmOffset">Set Offset</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_setAlarmType">Set Type</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_setAlarmLabel">Set Label</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_setAlarmLocation">Set Location</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_setAlarmRepeat">Set Repeating</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_setAlarmEvent">Set Event</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_setAlarmTime">Override Time</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_setAlarmSound">Set Sound</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_alarmMenu">Alarm Menu</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+
+    <string name="alarmAction_dismiss">Dismiss</string>                <!-- notification action button -->  <!-- TODO -->
+    <string name="alarmAction_snooze">Snooze</string>                  <!-- notification action button -->  <!-- TODO -->
+    <string name="alarmAction_timeout">Timeout</string>                  <!-- notification action button -->  <!-- TODO -->
+
+    <string name="alarmAction_playingMsg"><xliff:g id="label">%1$s</xliff:g></string>          <!-- toast message -->  <!-- TODO -->
+    <string name="alarmAction_silencedMsg">Alarm silenced</string>          <!-- toast message -->  <!-- TODO -->
+    <string name="alarmAction_snoozeMsg">Snoozing for <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->  <!-- TODO -->
+    <string name="alarmAction_timeoutMsg">The alarm timed out.</string>     <!-- notification msg -->  <!-- TODO -->
+    <string name="alarmAction_upcomingMsg">Upcoming Alarm</string>     <!-- notification msg -->  <!-- TODO -->
+
+    <string name="alarmMode_alarm">Alarm</string>                <!-- alarm type (setting) -->  <!-- TODO -->
+    <string name="alarmMode_notification">Notification</string>                <!-- alarm type (setting) -->  <!-- TODO -->
+
+    <string name="alarmOption_vibrate">Vibrate</string>                <!-- checkbox text -->  <!-- TODO -->
+    <string name="alarmOption_ringtone_none">No Sound</string>          <!-- ringtone label (none) -->  <!-- TODO -->
+    <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->  <!-- TODO -->
+    <string name="alarmOption_solarevent_none">Clock Time</string>          <!-- ringtone label (none) -->  <!-- TODO -->
+
+    <string name="alarmOption_repeat">Repeat</string>                <!-- checkbox text; an alarm that repeats -->  <!-- TODO -->
+    <string name="alarmOption_repeat_none">No Repeat</string>         <!-- label text; an alarm that does not repeat (occurs once) -->  <!-- TODO -->
+    <string name="alarmOption_repeat_all">Every Day</string>         <!-- label text; an alarm that repeats every day -->  <!-- TODO -->
+
+    <string name="deletealarm_dialog_title">Delete</string>        <!-- dialog title -->  <!-- TODO -->
+    <string name="deletealarm_dialog_message">Are you sure you want to delete <xliff:g id="type">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg --> <!-- TODO -->
+    <string name="deletealarm_dialog_ok">Delete</string>        <!-- button --> <!-- TODO -->
+    <string name="deletealarm_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
+    <string name="deletealarm_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) was deleted.</string> <!-- toast msg --> <!-- TODO -->
+
+    <string name="clearalarms_dialog_title">Clear Alarms</string>        <!-- dialog title -->  <!-- TODO -->
+    <string name="clearalarms_dialog_message">Are you sure you want to delete all alarms?</string>   <!-- dialog msg --> <!-- TODO -->
+    <string name="clearalarms_dialog_ok">Clear</string>        <!-- button --> <!-- TODO -->
+    <string name="clearalarms_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
+    <string name="clearalarms_toast_success">Alarms cleared.</string> <!-- toast msg --> <!-- TODO -->
+
+    <string name="alarmlabel_dialog_title">Label</string>        <!-- dialog title -->  <!-- TODO -->
+    <string name="alarmlabel_dialog_ok">Apply</string>        <!-- button --> <!-- TODO -->
+    <string name="alarmlabel_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
+
+    <string name="alarmrepeat_dialog_title">Repeat Alarm</string>        <!-- dialog title -->  <!-- TODO -->
+    <string name="alarmrepeat_dialog_ok">Apply</string>        <!-- button --> <!-- TODO -->
+    <string name="alarmrepeat_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
+
+    <string name="alarmtime_dialog_title">Alarm Time</string>        <!-- dialog title -->  <!-- TODO -->
+    <string name="alarmtime_dialog_ok">Override</string>        <!-- button --> <!-- TODO -->
+    <string name="alarmtime_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
+    <string name="alarmtime_dialog_message">Override the alarm time?\n\nThis alarm will no longer be scheduled by event.</string>   <!-- dialog msg --> <!-- TODO -->
+
+    <string name="alarmoffset_dialog_title">Alarm Offset</string>        <!-- dialog title -->  <!-- TODO -->
+    <string name="alarmoffset_dialog_ok">Apply</string>        <!-- button --> <!-- TODO -->
+    <string name="alarmoffset_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
+
+    <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> set for <xliff:g id="duration" example="8h">%2$s</xliff:g> from now.</string> <!-- toast msg --> <!-- TODO -->
+
+    <string name="configLabel_alarms_optWhiteList">Battery optimization</string>  <!-- TODO -->
+    <string name="configLabel_alarms_optWhiteList_listed">Not optimized (recommended)</string>  <!-- TODO -->
+    <string name="configLabel_alarms_optWhiteList_unlisted">Optimizing battery use.\nAlarms may be delayed up to 15 minutes.</string>  <!-- TODO -->
+
+    <string name="configLabel_alarms_silenceAfter">Go silent after</string>  <!-- TODO -->
+    <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
+
+    <string name="configLabel_alarms_timeoutAfter">Timeout after</string>  <!-- TODO -->
+    <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
+
+    <string name="configLabel_alarms_snooze">Snooze for</string>  <!-- TODO -->
+    <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
+
+    <string name="configLabel_alarms_upcoming">Reminder within</string>  <!-- TODO -->
+    <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
+
+    <string name="configLabel_alarms_hardwarebuttons">Hardware Buttons</string>  <!-- TODO -->
+    <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>  <!-- TODO -->
+    <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->  <!-- TODO -->
+        <item>Dismiss</item>
+        <item>Silence</item>
+        <item>Snooze</item>
+        <item>Do Nothing</item>
+    </string-array>
+
+    <string name="configLabel_alarmSounds">Sounds</string>            <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_alarms_allRingtones">Show all ringtones</string>  <!-- TODO -->
+    <string name="configLabel_alarms_allRingtones_summary">Show all system sounds during selection (ignore ringtone type).</string>  <!-- TODO -->
+
+    <string name="no_reminder">Never</string> <!-- TODO -->
+
+    <plurals name="units_hours">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>  <!-- TODO -->
+
+    <plurals name="units_minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>  <!-- TODO -->
+
+    <plurals name="units_seconds">
+        <item quantity="one">%d second</item>
+        <item quantity="other">%d seconds</item>
+    </plurals>  <!-- TODO -->
 
     <!--
          APP SETTINGS
@@ -712,14 +855,15 @@
         <item>Euskara</item>
         <item>Norvegiera</item>
         <item>Txinera tradizionala</item>
+        <item>Portuguese</item>  <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
     <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
-    <string name="elevation_format"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="altSymbol" example="∠">%2$s</xliff:g></string>  <!-- e.g. 45°∠ -->
-    <string name="declination_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° δ -->
-    <string name="rightascension_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° α -->
-    <string name="direction_format"><xliff:g id="degrees" example="180°">%1$s</xliff:g> <xliff:g id="directions_short" example="S">%2$s</xliff:g></string>  <!-- e.g. 180°S -->
+    <!--<string name="elevation_format"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="altSymbol" example="∠">%2$s</xliff:g></string>-->  <!-- e.g. 45°∠ -->
+    <!--<string name="declination_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>-->  <!-- e.g. 5° δ -->
+    <!--<string name="rightascension_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>-->  <!-- e.g. 5° α -->
+    <!--<string name="direction_format"><xliff:g id="degrees" example="180°">%1$s</xliff:g> <xliff:g id="directions_short" example="S">%2$s</xliff:g></string>-->  <!-- e.g. 180°S -->
 
     <!-- cardinal directions -->
     <string-array name="directions_short">  <!-- one-to-one with directions_long -->
@@ -770,9 +914,11 @@
     <string name="worldmap_dialog_option_sunlight">Eguzkiaren argia</string>
     <string name="worldmap_dialog_option_moonlight">Ilargiaren argia</string>
     <string name="worldmap_dialog_option_all">Biak</string>
+    <string name="configAction_shareMap">Share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->  <!-- TODO -->
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Alarma bat programatu honetarako</string>
+    <string name="configLabel_schednotify_mode">Schedule a notification for</string>  <!-- TODO -->
     <string name="schedalarm_dialog_title">Alarma ezarri</string>
     <string name="schedalarm_dialog_ok">Alarma ezarri</string>
     <string name="schedalarm_dialog_cancel">Utzi</string>
@@ -908,9 +1054,11 @@
     <!-- Dialog: About -->
     <string name="about_dialog_title">Honi buruz</string>
     <string name="app_name">Suntimes</string>
+    <string name="app_name_alarmclock">Suntimes Alarms</string>  <!-- TODO -->
     <string name="app_name_widget0">Suntimes widgeta</string>
     <string name="app_name_widget1">Suntimes Widgeta (aldagarria)</string>
     <string name="app_name_widget2">Eguzkiaren kokapenaren widgeta</string>
+    <string name="app_name_clockwidget0">Clock Widget</string>  <!-- TODO -->
     <string name="app_name_solsticewidget0">Solstizioaren widgeta</string>
     <string name="app_name_moonwidget0">Ilargiaren widgeta</string>
     <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
@@ -1045,6 +1193,10 @@
     <string name="privacy_permission_location"><![CDATA[Suntimes aplikazioak <b>kokapen</b> baimena behar du zure uneko longitudea eta latitudea zehazteko.<br/><br/>Baimen hau hautazkoa da; kokapena eskuz ezartzen da modu lehenetsian.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes aplikazioak <b>kanpoko biltegirako</b> baimenak behar ditu datuen babes kopiak egiteko eta esportatzeko (adib. tokiak, gaiak).]]></string>
     <string name="privacy_permissiondialog_title">Baimenak</string>
+
+    <string name="security_dialog_title">Security Alert</string>  <!-- TODO -->
+    <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  <!-- TODO -->
+    <string name="feature_not_supported_by_api">This feature is not supported by API %1$s.</string>  <!-- TODO -->
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

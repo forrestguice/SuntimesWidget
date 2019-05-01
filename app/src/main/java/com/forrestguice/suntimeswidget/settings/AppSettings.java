@@ -702,7 +702,7 @@ public class AppSettings
      *
      * @param context a Context
      */
-    public static void checkCustomPermissions(Context context)
+    public static void checkCustomPermissions(@NonNull Context context)
     {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
         {

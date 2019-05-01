@@ -562,13 +562,20 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         }
 
         // offset (before / after)
-        if (item.offset == 0) {
-            view.option_offset.setText(context.getString(R.string.offset_at));
+
+        Calendar alarmTime = Calendar.getInstance();
+        alarmTime.setTimeInMillis(item.timestamp);
+        int alarmHour = SuntimesUtils.is24() ? alarmTime.get(Calendar.HOUR_OF_DAY) : alarmTime.get(Calendar.HOUR);
+
+        if (item.offset == 0)
+        {
+            String offsetDisplay = context.getResources().getQuantityString(R.plurals.offset_at_plural, alarmHour);
+            view.option_offset.setText(offsetDisplay);
 
         } else {
             boolean isBefore = (item.offset <= 0);
             String offsetText = utils.timeDeltaLongDisplayString(0, item.offset).getValue();
-            String offsetDisplay = context.getString((isBefore ? R.string.offset_before : R.string.offset_after) , offsetText);
+            String offsetDisplay = context.getResources().getQuantityString((isBefore ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), alarmHour, offsetText);
             Spannable offsetSpan = SuntimesUtils.createBoldSpan(null, offsetDisplay, offsetText);
             view.option_offset.setText(offsetSpan);
         }

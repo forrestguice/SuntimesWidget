@@ -61,4 +61,6 @@
 
     <integer name="widget_updateInterval">0</integer>
 
+    <dimen name="aboutIcon_margin">0dip</dimen>
+
 </resources>

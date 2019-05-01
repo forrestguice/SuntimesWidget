@@ -92,11 +92,11 @@ public class SunLayout_1x1_0 extends SunLayout
             float timeSize = theme.getTimeSizeSp();
             float suffSize = theme.getTimeSuffixSizeSp();
 
-            views.setTextViewTextSize(R.id.text_time_rise_suffix, TypedValue.COMPLEX_UNIT_SP, suffSize);
-            views.setTextViewTextSize(R.id.text_time_rise, TypedValue.COMPLEX_UNIT_SP, timeSize);
+            views.setTextViewTextSize(R.id.text_time_rise_suffix, TypedValue.COMPLEX_UNIT_DIP, suffSize);
+            views.setTextViewTextSize(R.id.text_time_rise, TypedValue.COMPLEX_UNIT_DIP, timeSize);
 
-            views.setTextViewTextSize(R.id.text_time_set, TypedValue.COMPLEX_UNIT_SP, timeSize);
-            views.setTextViewTextSize(R.id.text_time_set_suffix, TypedValue.COMPLEX_UNIT_SP, suffSize);
+            views.setTextViewTextSize(R.id.text_time_set, TypedValue.COMPLEX_UNIT_DIP, timeSize);
+            views.setTextViewTextSize(R.id.text_time_set_suffix, TypedValue.COMPLEX_UNIT_DIP, suffSize);
         }
 
         Bitmap sunriseIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_sunrise0, theme.getSunriseIconColor(), theme.getSunriseIconStrokeColor(), theme.getSunriseIconStrokePixels(context));
