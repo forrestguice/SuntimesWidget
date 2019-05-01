@@ -169,8 +169,8 @@
     <string name="until_moonset">Pôr da Lua</string>
 
     <!-- Table -->
-    <string name="sunrise">Nascer do Sol</string>                             <!-- contentDescription -->
-    <string name="sunrise_short">Nascer do Sol</string>                          <!-- table title -->
+    <string name="sunrise">Nascer</string>                             <!-- contentDescription -->
+    <string name="sunrise_short">Nascer</string>                          <!-- table title -->
     <string name="sunset">Pôr do Sol</string>                               <!-- contentDescription -->
     <string name="sunset_short">Pôr do Sol</string>                            <!-- table title -->
     <string name="moonrise">Nascer da Lua</string>                             <!-- contentDescription -->
@@ -281,7 +281,7 @@
     <string name="configLabel_general_showHours_summary">Exibir horas e minutos em períodos maiores que um dia.</string>    <!-- checkbox label -->
 
     <string name="configLabel_general_observerheight">Sombra de Objeto</string>        <!-- checkbox label -->
-    <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
+    <string name="configLabel_general_observerheight_summary">Exibir a duração das sombras projetadas por um objeto com uma altura de <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">Opções Avançadas</string>                        <!-- group title -->
@@ -802,7 +802,7 @@
         <item>Nada</item>
         <item>Inverter (hoje/amanhã)</item>
         <item>Abrir app Calendário</item>
-        <item>Def. data</item>
+        <item>Definir data</item>
     </string-array>
 
     <!-- App Setting: Clock UI "on tap" action -->
@@ -817,7 +817,7 @@
     <!-- App Setting: Note UI "on tap" action -->
     <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
         <item>Nada</item>
-        <item>Def. alarme para a nota</item>
+        <item>Definir alarme para a nota</item>
         <item>Mostrar próxima nota</item>
         <item>Mostrar nota anterior</item>
     </string-array>
@@ -837,30 +837,30 @@
     <string name="timezone_sort_msg">Time zones sorted (%1$s).</string>      <!-- toast msg -->  <!-- TODO -->
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">GPS time limit</string>    <!-- TODO -->
-    <string name="configLabel_getFix_maxElapse_summary">Give up after <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>    <!-- TODO -->
+    <string name="configLabel_getFix_maxElapse">Tempo limite do GPS</string>    <!-- TODO -->
+    <string name="configLabel_getFix_maxElapse_summary">Desistir após <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>    <!-- TODO -->
     <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
-        <item>15 seconds</item>
-        <item>30 seconds</item>
-        <item>1 minute</item>
-        <item>5 minutes</item>
-        <item>10 minutes</item>
+        <item>15 segundos</item>
+        <item>30 segundos</item>
+        <item>1 minuto</item>
+        <item>5 minutos</item>
+        <item>10 minutos</item>
     </string-array>  <!-- TODO -->
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">GPS recent max age</string>  <!-- TODO -->
-    <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> considered recent</string>  <!-- TODO -->
+    <string name="configLabel_getFix_maxAge">Atualizar dados do GPS após</string>  <!-- TODO -->
+    <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> considerado recente</string>  <!-- TODO -->
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
-        <item>1 minute</item>
-        <item>5 minutes</item>
-        <item>15 minutes</item>
-        <item>1 hour</item>
-        <item>4 hours</item>
-        <item>12 hours</item>
-        <item>one day (24 hours)</item>
-        <item>two days (48 hours)</item>
-        <item>one week (168 hours)</item>
-        <item>one month (672 hours)</item>
+        <item>1 minuto</item>
+        <item>5 minutos</item>
+        <item>15 minutos</item>
+        <item>1 hora</item>
+        <item>4 horas</item>
+        <item>12 horas</item>
+        <item>um dia (24 horas)</item>
+        <item>dois dias (48 horas)</item>
+        <item>uma semana (168 horas)</item>
+        <item>um mês (672 horas)</item>
     </string-array>  <!-- TODO -->
 
     <!-- App Setting: calendars -->
@@ -868,8 +868,8 @@
     <string name="configLabel_calendars_enabled">Integração</string>
 
     <!-- App Setting: passive location mode -->
-    <string name="configLabel_getFix_passiveMode">Passive Location</string>  <!-- TODO -->
-    <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string>  <!-- TODO -->
+    <string name="configLabel_getFix_passiveMode">Localização Passiva</string>  <!-- TODO -->
+    <string name="configLabel_getFix_passiveMode_summary">Usar provedor de localização passiva.</string>  <!-- TODO -->
 
     <!-- App Setting: locale mode -->
     <string name="configLabel_locale">Idiomas Disponíveis</string>   <!-- group title -->
