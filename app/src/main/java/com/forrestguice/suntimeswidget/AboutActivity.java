@@ -71,6 +71,7 @@ public class AboutActivity extends AppCompatActivity
         if (actionBar != null) {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_action_suntimes);
         }
 
         pagerAdapter = new AboutPagerAdapter(getSupportFragmentManager());
@@ -212,6 +213,12 @@ public class AboutActivity extends AppCompatActivity
                 urlView.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_url)));
             }
 
+            TextView urlView1 = (TextView) dialogContent.findViewById(R.id.txt_about_url1);
+            if (urlView1 != null) {
+                urlView1.setMovementMethod(LinkMovementMethod.getInstance());
+                urlView1.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_source_url)));
+            }
+
             TextView supportView = (TextView) dialogContent.findViewById(R.id.txt_about_support);
             if (supportView != null) {
                 supportView.setMovementMethod(LinkMovementMethod.getInstance());
@@ -334,6 +341,10 @@ public class AboutActivity extends AppCompatActivity
                 }
 
                 String line = activity.getString(R.string.translationCreditsFormat, localeDisplay_j, authors);
+                if (i != index.length-1) {
+                    if (!line.endsWith("<br/>") && !line.endsWith("<br />"))
+                        line = line + "<br/>";
+                }
                 credits.append(line);
             }
         }
