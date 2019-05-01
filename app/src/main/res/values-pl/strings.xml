@@ -1049,7 +1049,7 @@
     <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014–2019 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>
 
     <string name="app_legal2"><![CDATA[<big><b>Tłumaczenia do:</b></big><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>  <!-- TODO: review -->
-    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b>: <xliff:g id="authorList">%2$s</xliff:g>.<br/>]]></string>   <!-- TODO: review -->
+    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b>: <xliff:g id="authorList">%2$s</xliff:g>.]]></string>   <!-- TODO: review -->
     <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
     <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, i <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
 
