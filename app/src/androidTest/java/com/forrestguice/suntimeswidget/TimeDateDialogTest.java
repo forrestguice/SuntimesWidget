@@ -30,21 +30,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.pressBack;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
 
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.CoreMatchers.allOf;
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
 
 /**
  * Automated UI tests for the TimeDateDialog.
@@ -68,23 +61,7 @@ public class TimeDateDialogTest extends SuntimesActivityTestBase
         captureScreenshot(activityRule.getActivity(), "suntimes-dialog-date0");
 
         rotateDevice(activityRule);
-        verifyDateDialog();
-
-        if (getDateDialog_mode() == WidgetSettings.DateMode.CURRENT_DATE)
-        {
-            inputDateDialog_mode(WidgetSettings.DateMode.CUSTOM_DATE);  // swap the mode
-            rotateDevice(activityRule);                                             // rotate and re-verify state
-            verifyDateDialog_modeCustom();
-            inputDateDialog_mode(WidgetSettings.DateMode.CURRENT_DATE); // repeated swaps
-            inputDateDialog_mode(WidgetSettings.DateMode.CUSTOM_DATE);
-
-        } else {
-            inputDateDialog_mode(WidgetSettings.DateMode.CURRENT_DATE);
-            rotateDevice(activityRule);
-            verifyDateDialog_modeCurrent();
-            inputDateDialog_mode(WidgetSettings.DateMode.CUSTOM_DATE);
-            inputDateDialog_mode(WidgetSettings.DateMode.CURRENT_DATE);
-        }
+        verifyDateDialog(activityRule.getActivity());
 
         cancelDateDialog();
     }
@@ -99,58 +76,33 @@ public class TimeDateDialogTest extends SuntimesActivityTestBase
         openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
         onView(withText(actionDateText)).perform(click());
         if (verify) {
-            verifyDateDialog();
+            verifyDateDialog(context);
         }
     }
 
-    public static void verifyDateDialog()
+    public static void verifyDateDialog(Context context)
     {
-        onView(withId(R.id.appwidget_date_mode)).check(assertEnabled);
         onView(withId(R.id.appwidget_date_custom)).check(assertShown);
 
-        if (getDateDialog_mode() == WidgetSettings.DateMode.CURRENT_DATE)
+        WidgetSettings.DateMode mode = WidgetSettings.loadDateModePref(context, 0);
+        if (mode == WidgetSettings.DateMode.CURRENT_DATE)
             verifyDateDialog_modeCurrent();
         else verifyDateDialog_modeCustom();
     }
 
     public static void verifyDateDialog_modeCurrent()
     {
-        onView(withId(R.id.appwidget_date_mode)).check(matches(withSpinnerText(WidgetSettings.DateMode.CURRENT_DATE.toString())));
-        onView(withId(R.id.appwidget_date_custom)).check(assertDisabled);  // custom date area is disabled
+        // TODO
     }
 
     public static void verifyDateDialog_modeCustom()
     {
-        onView(withId(R.id.appwidget_date_mode)).check(matches(withSpinnerText(WidgetSettings.DateMode.CUSTOM_DATE.toString())));
-        onView(withId(R.id.appwidget_date_custom)).check(assertEnabled);   // custom date area is enabled
+        // TODO
     }
 
-    public static WidgetSettings.DateMode getDateDialog_mode()
+    public static WidgetSettings.DateMode getDateDialog_mode(Context context)
     {
-        if (spinnerDisplaysText(R.id.appwidget_date_mode, WidgetSettings.DateMode.CURRENT_DATE.toString()))
-            return WidgetSettings.DateMode.CURRENT_DATE;
-        else if (spinnerDisplaysText(R.id.appwidget_date_mode, WidgetSettings.DateMode.CUSTOM_DATE.toString()))
-            return WidgetSettings.DateMode.CUSTOM_DATE;
-        else
-            return null;   // unrecognized mode; fail with a null
-    }
-
-    public static void inputDateDialog_mode()
-    {
-        if (getDateDialog_mode() == WidgetSettings.DateMode.CURRENT_DATE)
-            inputDateDialog_mode(WidgetSettings.DateMode.CUSTOM_DATE);
-        else inputDateDialog_mode(WidgetSettings.DateMode.CURRENT_DATE);    // swap the mode
-    }
-
-    public static void inputDateDialog_mode( WidgetSettings.DateMode mode )
-    {
-        onView(withId(R.id.appwidget_date_mode)).perform(click());
-        onData(allOf(is(instanceOf(WidgetSettings.DateMode.class)), is(mode)))
-              .inRoot(isPlatformPopup()).perform(click());
-
-        if (mode == WidgetSettings.DateMode.CURRENT_DATE)
-            verifyDateDialog_modeCurrent();
-        else verifyDateDialog_modeCustom();
+        return WidgetSettings.loadDateModePref(context, 0);
     }
 
     public static void inputDateDialog_date( int year, int month, int day )
@@ -168,8 +120,8 @@ public class TimeDateDialogTest extends SuntimesActivityTestBase
 
     public static void cancelDateDialog()
     {
-        onView(withId(R.id.appwidget_date_mode)).perform(pressBack());
-        onView(withId(R.id.appwidget_date_mode)).check(doesNotExist());
+        onView(withId(R.id.appwidget_date_custom)).perform(pressBack());
+        onView(withId(R.id.appwidget_date_custom)).check(doesNotExist());
     }
 
 }

@@ -75,7 +75,6 @@ import static com.forrestguice.suntimeswidget.SuntimesSettingsActivityTest.verif
 import static com.forrestguice.suntimeswidget.TimeDateDialogTest.applyDateDialog;
 import static com.forrestguice.suntimeswidget.TimeDateDialogTest.cancelDateDialog;
 import static com.forrestguice.suntimeswidget.TimeDateDialogTest.inputDateDialog_date;
-import static com.forrestguice.suntimeswidget.TimeDateDialogTest.inputDateDialog_mode;
 import static com.forrestguice.suntimeswidget.TimeDateDialogTest.showDateDialog;
 import static com.forrestguice.suntimeswidget.TimeDateDialogTest.verifyDateDialog;
 import static junit.framework.Assert.assertTrue;
@@ -422,7 +421,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         AppSettings.DateTapAction tapAction = AppSettings.loadDateTapActionPref(activityRule.getActivity());
         if (tapAction == AppSettings.DateTapAction.CONFIG_DATE)
         {
-            verifyDateDialog();
+            verifyDateDialog(activityRule.getActivity());
             cancelDateDialog();
 
         } else if (tapAction == AppSettings.DateTapAction.SWAP_CARD) {
@@ -457,7 +456,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
 
         // open the date dialog, and set to "custom date"
         showDateDialog(activityRule.getActivity());
-        inputDateDialog_mode(WidgetSettings.DateMode.CUSTOM_DATE);
+        //inputDateDialog_mode(WidgetSettings.DateMode.CUSTOM_DATE);
         inputDateDialog_date(TESTDATE_0_YEAR, TESTDATE_0_MONTH, TESTDATE_0_DAY);
         applyDateDialog(activityRule.getActivity());
 
