@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2018 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -23,6 +23,7 @@ import android.support.test.espresso.IdlingPolicies;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.filters.LargeTest;
 
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 import android.view.View;
@@ -35,6 +36,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import org.hamcrest.Matcher;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -85,6 +87,9 @@ import static org.hamcrest.CoreMatchers.not;
 @RunWith(AndroidJUnit4.class)
 public class SuntimesActivityTest extends SuntimesActivityTestBase
 {
+    @Rule
+    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+
     /**
      * UI Test
      *
@@ -94,13 +99,13 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     public void test_activity()
     {
         verifyActivity();
-        captureScreenshot("suntimes-activity-main0");
+        captureScreenshot(activityRule.getActivity(), "suntimes-activity-main0");
 
         swapCard(false);
         verifyTimeCard();
-        captureScreenshot("suntimes-activity-main1");
+        captureScreenshot(activityRule.getActivity(), "suntimes-activity-main1");
 
-        rotateDevice();
+        rotateDevice(activityRule);
         verifyActivity();
     }
 

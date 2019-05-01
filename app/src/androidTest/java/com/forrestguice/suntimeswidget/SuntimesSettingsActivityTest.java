@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,7 +18,6 @@
 
 package com.forrestguice.suntimeswidget;
 
-
 import android.app.Activity;
 import android.content.Context;
 import android.preference.Preference;
@@ -27,6 +26,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.DataInteraction;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.filters.LargeTest;
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
 import android.widget.CheckBox;
@@ -38,6 +38,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import org.hamcrest.Matcher;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -62,6 +63,9 @@ import static org.hamcrest.CoreMatchers.is;
 @RunWith(AndroidJUnit4.class)
 public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
 {
+    @Rule
+    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+
     /**
      * UI Test
      * test_showSettingsActivity
@@ -70,26 +74,26 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
     public void test_showSettingsActivity()
     {
         showSettingsActivity(activityRule.getActivity());
-        captureScreenshot("suntimes-activity-settings0");
+        captureScreenshot(activityRule.getActivity(), "suntimes-activity-settings0");
 
         showGeneralSettings(activityRule.getActivity());
-        captureScreenshot("suntimes-activity-settings-general0");
+        captureScreenshot(activityRule.getActivity(), "suntimes-activity-settings-general0");
         onView(isRoot()).perform(pressBack());
 
         showLocaleSettings(activityRule.getActivity());
-        captureScreenshot("suntimes-activity-settings-locale0");
+        captureScreenshot(activityRule.getActivity(), "suntimes-activity-settings-locale0");
         onView(isRoot()).perform(pressBack());
 
         showPlacesSettings(activityRule.getActivity());
-        captureScreenshot("suntimes-activity-settings-places0");
+        captureScreenshot(activityRule.getActivity(), "suntimes-activity-settings-places0");
         onView(isRoot()).perform(pressBack());
 
         showUISettings(activityRule.getActivity());
-        captureScreenshot("suntimes-activity-settings-ui0");
+        captureScreenshot(activityRule.getActivity(), "suntimes-activity-settings-ui0");
         onView(isRoot()).perform(pressBack());
 
         showWidgetSettings(activityRule.getActivity());
-        captureScreenshot("suntimes-activity-settings-widgets0");
+        captureScreenshot(activityRule.getActivity(), "suntimes-activity-settings-widgets0");
         onView(isRoot()).perform(pressBack());
 
         onView(isRoot()).perform(pressBack());

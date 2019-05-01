@@ -25,6 +25,7 @@ import android.preference.PreferenceManager;
 import android.support.test.espresso.IdlingPolicies;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.filters.LargeTest;
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -32,6 +33,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -50,6 +52,9 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
 
     private HashMap<String, ScreenshotConfig> config;
     private ScreenshotConfig defaultConfig = new ScreenshotConfig(new Location("Phoenix", "33.45579", "-111.94580", "385"), "US/Arizona", false);
+
+    @Rule
+    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
 
     @Before
     public void initScreenshots()
@@ -121,7 +126,7 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
         IdlingPolicies.setIdlingResourceTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
         registerIdlingResources(waitForResource);
 
-        captureScreenshot(version + "/" + languageTag, "activity-main0-" + theme);
+        captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "activity-main0-" + theme);
 
         unregisterIdlingResources(waitForResource);
     }
@@ -138,43 +143,43 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
         registerIdlingResources(waitForResource);
 
         // main activity
-        captureScreenshot(version + "/" + languageTag, "activity-main0-" + theme);
+        captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "activity-main0-" + theme);
 
         // dialogs
         DialogTest.showAboutDialog(context, false);
-        captureScreenshot(version + "/" + languageTag, "dialog-about-" + theme);
+        captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-about-" + theme);
         DialogTest.cancelAboutDialog();
 
         DialogTest.showHelpDialog(context, false);
-        captureScreenshot(version + "/" + languageTag, "dialog-help-" + theme);
+        captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-help-" + theme);
         DialogTest.cancelHelpDialog();
 
         DialogTest.showEquinoxDialog(context, false);
-        captureScreenshot(version + "/" + languageTag, "dialog-equinox-" + theme);
+        captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-equinox-" + theme);
         DialogTest.cancelEquinoxDialog();
 
         DialogTest.showLightmapDialog(context, false);
-        captureScreenshot(version + "/" + languageTag, "dialog-lightmap-" + theme);
+        captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-lightmap-" + theme);
         DialogTest.cancelLightmapDialog();
 
         TimeZoneDialogTest.showTimezoneDialog(activityRule.getActivity(), false);
-        captureScreenshot(version + "/" + languageTag, "dialog-timezone0-" + theme);
+        captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-timezone0-" + theme);
         TimeZoneDialogTest.inputTimezoneDialog_mode(context, WidgetSettings.TimezoneMode.SOLAR_TIME);
-        captureScreenshot(version + "/" + languageTag, "dialog-timezone1-" + theme);
+        captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-timezone1-" + theme);
         TimeZoneDialogTest.cancelTimezoneDialog();
 
         AlarmDialogTest.showAlarmDialog(context, false);
-        captureScreenshot(version + "/" + languageTag, "dialog-alarm-" + theme);
+        captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-alarm-" + theme);
         AlarmDialogTest.cancelAlarmDialog();
 
         TimeDateDialogTest.showDateDialog(context, false);
-        captureScreenshot(version + "/" + languageTag, "dialog-date-" + theme);
+        captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-date-" + theme);
         TimeDateDialogTest.cancelDateDialog();
 
         LocationDialogTest.showLocationDialog(false);
-        captureScreenshot(version + "/" + languageTag, "dialog-location0-" + theme);
+        captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-location0-" + theme);
         LocationDialogTest.editLocationDialog(false);
-        captureScreenshot(version + "/" + languageTag, "dialog-location1-" + theme);
+        captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "dialog-location1-" + theme);
         LocationDialogTest.cancelLocationDialog(context);
     }
 

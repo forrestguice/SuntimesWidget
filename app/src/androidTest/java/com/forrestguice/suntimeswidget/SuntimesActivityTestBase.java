@@ -98,23 +98,23 @@ public abstract class SuntimesActivityTestBase
     protected static ViewAssertion assertChecked = matches(isChecked());
     protected static ViewAssertion assertNotChecked = matches(isNotChecked());
 
-    @Rule
-    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+    //@Rule
+    //public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
 
     /**
      * Rotate the device to landscape and back.
      */
-    public void rotateDevice()
+    public void rotateDevice(ActivityTestRule activityRule)
     {
-        rotateDevice(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        rotateDevice(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        rotateDevice(activityRule, ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        rotateDevice(activityRule, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     /**
      * Rotate to given orientation.
      * @param orientation ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE | ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
      */
-    public void rotateDevice( int orientation )
+    public void rotateDevice(ActivityTestRule activityRule, int orientation )
     {
         activityRule.getActivity().setRequestedOrientation(orientation);
     }
@@ -147,18 +147,6 @@ public abstract class SuntimesActivityTestBase
                          && (resourceNameMatcher.matches(view.getResources().getResourceName(id))));
             }
         };
-    }
-
-    /**
-     * @param name screenshot name
-     */
-    public void captureScreenshot(String name)
-    {
-        SuntimesActivityTestBase.captureScreenshot(activityRule.getActivity(), name);
-    }
-    public void captureScreenshot(String subdir, String name)
-    {
-        SuntimesActivityTestBase.captureScreenshot(activityRule.getActivity(), subdir, name);
     }
 
     /**

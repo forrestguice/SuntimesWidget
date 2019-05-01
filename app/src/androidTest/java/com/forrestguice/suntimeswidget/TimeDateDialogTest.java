@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,10 +21,12 @@ package com.forrestguice.suntimeswidget;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -51,6 +53,9 @@ import static org.hamcrest.CoreMatchers.is;
 @RunWith(AndroidJUnit4.class)
 public class TimeDateDialogTest extends SuntimesActivityTestBase
 {
+    @Rule
+    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+
     /**
      * UI Test
      * Show the date dialog, rotate, swap modes, rotate again, repeatedly swap modes,
@@ -60,22 +65,22 @@ public class TimeDateDialogTest extends SuntimesActivityTestBase
     public void test_showDateDialog()
     {
         showDateDialog(activityRule.getActivity());
-        captureScreenshot("suntimes-dialog-date0");
+        captureScreenshot(activityRule.getActivity(), "suntimes-dialog-date0");
 
-        rotateDevice();
+        rotateDevice(activityRule);
         verifyDateDialog();
 
         if (getDateDialog_mode() == WidgetSettings.DateMode.CURRENT_DATE)
         {
             inputDateDialog_mode(WidgetSettings.DateMode.CUSTOM_DATE);  // swap the mode
-            rotateDevice();                                             // rotate and re-verify state
+            rotateDevice(activityRule);                                             // rotate and re-verify state
             verifyDateDialog_modeCustom();
             inputDateDialog_mode(WidgetSettings.DateMode.CURRENT_DATE); // repeated swaps
             inputDateDialog_mode(WidgetSettings.DateMode.CUSTOM_DATE);
 
         } else {
             inputDateDialog_mode(WidgetSettings.DateMode.CURRENT_DATE);
-            rotateDevice();
+            rotateDevice(activityRule);
             verifyDateDialog_modeCurrent();
             inputDateDialog_mode(WidgetSettings.DateMode.CUSTOM_DATE);
             inputDateDialog_mode(WidgetSettings.DateMode.CURRENT_DATE);
