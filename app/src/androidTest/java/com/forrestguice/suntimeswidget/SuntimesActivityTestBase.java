@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,10 +19,13 @@
 package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 
 import android.media.MediaScannerConnection;
 //import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.test.espresso.FailureHandler;
 import android.support.test.espresso.ViewAssertion;
 import android.support.test.espresso.ViewInteraction;
@@ -32,6 +35,9 @@ import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 import android.view.View;
 
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.jraska.falcon.Falcon;
 
 import org.hamcrest.Description;
@@ -41,6 +47,7 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+import java.util.HashMap;
 
 import static android.os.Environment.DIRECTORY_PICTURES;
 import static android.support.test.espresso.Espresso.onView;
@@ -97,9 +104,6 @@ public abstract class SuntimesActivityTestBase
     protected static ViewAssertion assertSelected = matches(isSelected());
     protected static ViewAssertion assertChecked = matches(isChecked());
     protected static ViewAssertion assertNotChecked = matches(isNotChecked());
-
-    //@Rule
-    //public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
 
     /**
      * Rotate the device to landscape and back.
@@ -252,4 +256,82 @@ public abstract class SuntimesActivityTestBase
         }).check(matches(withSpinnerText(text)));
         return displaysText[0];
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * SuntimesTestConfig
+     */
+    public static class SuntimesTestConfig
+    {
+        public Location location;
+        public String timezoneID;
+        public WidgetSettings.TimeFormatMode timeformat;
+
+        public SuntimesTestConfig(Location location, String timezoneID, boolean format24)
+        {
+            this.location = location;
+            this.timezoneID = timezoneID;
+            this.timeformat = (format24 ? WidgetSettings.TimeFormatMode.MODE_24HR : WidgetSettings.TimeFormatMode.MODE_12HR);
+        }
+    }
+
+    protected static String version = BuildConfig.VERSION_NAME;
+    protected HashMap<String, SuntimesTestConfig> config;
+    protected SuntimesTestConfig defaultConfig = new SuntimesTestConfig(new Location("Phoenix", "33.45579", "-111.94580", "385"), "US/Arizona", false);
+
+    public void initConfigurations()
+    {
+        config = new HashMap<String, SuntimesTestConfig>();
+        config.put("ca", new SuntimesTestConfig(new Location("Barcelona", "41.3825", "2.1769", "31"), "CET", true));
+        config.put("de", new SuntimesTestConfig(new Location("Berlin", "52.5243", "13.4105", "40"), "Europe/Berlin", true));
+        config.put("es_ES", new SuntimesTestConfig(new Location("Madrid", "40.4378", "-3.8196", "681"), "Europe/Madrid", false));
+        config.put("eu", new SuntimesTestConfig(new Location("Euskal Herriko erdigunea", "42.883008", "-1.935491", "1258"), "CET", true));
+        config.put("fr", new SuntimesTestConfig(new Location("Paris", "48.8566", "2.3518", "41"), "Europe/Paris", true));
+        config.put("hu", new SuntimesTestConfig(new Location("Budapest", "47.4811", "18.9902", "225"), "Europe/Budapest", true));
+        config.put("it", new SuntimesTestConfig(new Location("Roma", "41.9099", "12.3959", "79"), "CET", false));
+        config.put("pl", new SuntimesTestConfig(new Location("Warszawa", "52.2319", "21.0067", "143"), "Poland", true));
+        config.put("nb", new SuntimesTestConfig(new Location("Oslo", "59.8937", "10.6450", "0"), "Europe/Oslo", true));
+        config.put("zh_TW", new SuntimesTestConfig(new Location("Taiwan", "23.5491", "119.8998", "0"), "Asia/Taipei", false));
+        config.put("pt_BR", new SuntimesTestConfig(new Location("São Paulo", "-23.6821", "-46.8754", "815"), "Brazil/East", true));
+
+        if (!version.startsWith("v"))
+            version = "v" + version;
+    }
+
+    protected void configureAppForTesting(Activity context)
+    {
+        WidgetSettings.saveDateModePref(context, 0, WidgetSettings.DateMode.CURRENT_DATE);
+        WidgetSettings.saveTrackingModePref(context, 0, WidgetSettings.TrackingMode.SOONEST);
+        WidgetSettings.saveShowSecondsPref(context, 0, false);
+        WidgetSettings.saveLocationAltitudeEnabledPref(context, 0, true);
+
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWWARNINGS, false);
+        prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWLIGHTMAP, true);
+        prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWDATASOURCE, false);
+        prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWEQUINOX, true);
+        prefs.putInt(AppSettings.PREF_KEY_UI_SHOWFIELDS, AppSettings.PREF_DEF_UI_SHOWFIELDS);
+        prefs.apply();
+    }
+
+    protected void configureAppForTesting(Context context, String languageTag, SuntimesTestConfig configuration, String theme)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putString(AppSettings.PREF_KEY_LOCALE_MODE, AppSettings.LocaleMode.CUSTOM_LOCALE.name());
+        prefs.putString(AppSettings.PREF_KEY_LOCALE, languageTag);
+        prefs.putString(AppSettings.PREF_KEY_APPEARANCE_THEME, theme);
+        prefs.apply();
+
+        WidgetSettings.saveTimeFormatModePref(context, 0, configuration.timeformat);
+
+        WidgetSettings.saveLocationModePref(context, 0, WidgetSettings.LocationMode.CUSTOM_LOCATION);
+        WidgetSettings.saveLocationPref(context, 0, configuration.location);
+
+        WidgetSettings.saveTimezoneModePref(context, 0, WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
+        WidgetSettings.saveTimezonePref(context, 0, configuration.timezoneID);
+    }
+
+
 }
