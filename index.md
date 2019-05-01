@@ -1,12 +1,13 @@
 <a href="https://github.com/forrestguice/SuntimesWidget/releases"><img src="https://img.shields.io/github/release/forrestguice/SuntimesWidget.svg" alt="GitHub release" /></a>&nbsp; Displays sunrise and sunset, twilights, blue and golden hour, solstices and equinoxes, moonrise and moonset, moon phases and illumination.
 
-  <img align="left" src="images/ic_launcher_alarms.png" hspace="8" />  <br/><u>Suntimes Alarms</u><br />An Alarm Clock with support for daily repeating alarms and notifications.
+  <img align="left" src="images/ic_launcher_alarms.png" hspace="8" />  <br/><u>Suntimes Alarms</u><br />An alarm clock with support for daily repeating alarms and notifications.
  <br /> <br />
-  <a href="https://f-droid.org/en/packages/com.forrestguice.suntimescalendars/"><img align="left" src="images/ic_launcher.png" hspace="8" /></a>  <br/>[Suntimes Calendars](https://f-droid.org/en/packages/com.forrestguice.suntimescalendars/) <br />A calendar provider add-on.
+  <a href="https://f-droid.org/en/packages/com.forrestguice.suntimescalendars/"><img align="right" src="images/ic_launcher.png" hspace="8" /></a>  <br/>[Suntimes Calendars](https://f-droid.org/en/packages/com.forrestguice.suntimescalendars/) <br />A calendar provider add-on.
  <br /> <br />
 
 ## Donations
-Do you find value in this app? `Please pay what you want.` [![paypal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-rect-paypal-26px.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2) 
+Do you find value in this app? `Please pay what you want.` 
+[![paypal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-rect-paypal-26px.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2) 
 &nbsp;[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=forrestguice&url=https://github.com/forrestguice/SuntimesWidget&title=Suntimes&tags=github&category=software)
 
 <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Screenshots"><img alt="screenshot1" src='./images/activity-main0-light.png' width="260px" alt="screenshot" /></a>
