@@ -1674,8 +1674,9 @@ public class SuntimesActivity extends AppCompatActivity
      */
     protected void showAbout()
     {
-        AboutDialog aboutDialog = new AboutDialog();
-        aboutDialog.show(getSupportFragmentManager(), DIALOGTAG_ABOUT);
+        //AboutDialog aboutDialog = new AboutDialog();
+        //aboutDialog.show(getSupportFragmentManager(), DIALOGTAG_ABOUT);
+        startActivity(new Intent(this, AboutActivity.class));
     }
 
 
