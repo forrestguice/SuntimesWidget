@@ -292,7 +292,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
         WidgetSettings.deleteSolarTimeModePref(context, appWidgetId);
         WidgetSettings.SolarTimeMode mode0 = WidgetSettings.loadSolarTimeModePref(context, appWidgetId);
-        assertTrue("mode should be default (LOCAL_MEAN_TIME) but was " + mode0, mode0 == WidgetSettings.SolarTimeMode.LOCAL_MEAN_TIME && mode0 == WidgetSettings.PREF_DEF_TIMEZONE_SOLARMODE);
+        assertTrue("mode should be default (LOCAL_MEAN_TIME) but was " + mode0, mode0 == WidgetSettings.SolarTimeMode.APPARENT_SOLAR_TIME && mode0 == WidgetSettings.PREF_DEF_TIMEZONE_SOLARMODE);
     }
 
     ///////////////////////////////////////////////////////////////////////////
