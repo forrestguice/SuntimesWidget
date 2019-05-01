@@ -137,6 +137,7 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
     public static void verifyGeneralSettings(Context context)
     {
         verifyGeneralSettings_dataSource(context);
+        verifyUISettings_timeFormatMode(context);
     }
 
     public static void verifyGeneralSettings_dataSource(Context context)
@@ -288,7 +289,6 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
         verifyUISettings_noteTap(context);
         verifyUISettings_lightmap(context);
         verifyUISettings_uiWarnings(context);
-        verifyUISettings_timeFormatMode(context);
     }
 
     public static void inputUISettings_lightmap(Context context, boolean checked)
