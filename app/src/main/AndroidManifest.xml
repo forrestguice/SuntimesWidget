@@ -125,6 +125,18 @@
             android:launchMode="singleTop">
 
             <intent-filter>
+                <action android:name="android.intent.action.SET_ALARM" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
+
+        <activity-alias
+            android:name=".alarmclock.ui.AlarmClockActivityLauncher"
+            android:targetActivity=".alarmclock.ui.AlarmClockActivity"
+            android:enabled="true">
+
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -132,12 +144,7 @@
             <meta-data android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts_alarms" />
 
-            <intent-filter>
-                <action android:name="android.intent.action.SET_ALARM" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
-        </activity>
+        </activity-alias>
 
         <activity
             android:name=".alarmclock.ui.AlarmDismissActivity"
@@ -170,7 +177,8 @@
         <!-- Widget 0_1x1: Resizable (falls back to static 1x1 for api less than 14) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <receiver android:name=".SuntimesWidget0"
-                  android:label="@string/app_name_widget0">
+                  android:label="@string/app_name_widget0"
+                  android:icon="@mipmap/ic_launcher">
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -195,7 +203,8 @@
         <!-- Widget 0_2x1: Resizable (falls back to static 2x1 for api less than 14) -->
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <receiver android:name=".SuntimesWidget0_2x1"
-                  android:label="@string/app_name_widget0">
+                  android:label="@string/app_name_widget0"
+                  android:icon="@mipmap/ic_launcher">
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -222,7 +231,8 @@
         <receiver
             android:name=".SuntimesWidget1"
             android:enabled="@bool/api_post_14"
-            android:label="@string/app_name_widget1">
+            android:label="@string/app_name_widget1"
+            android:icon="@mipmap/ic_launcher">   <!-- TODO: icon -->
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -309,7 +319,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <receiver android:name=".SuntimesWidget2_3x2"
             android:label="@string/app_name_widget2"
-            android:icon="@drawable/ic_action_map">
+            android:icon="@drawable/ic_action_map">    <!-- TODO: theme neutral icon -->
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -336,7 +346,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <receiver android:name=".SolsticeWidget0"
                   android:label="@string/app_name_solsticewidget0"
-                  android:icon="@mipmap/ic_suntimes2">
+                  android:icon="@drawable/ic_launcher_foreground">
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -363,7 +373,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <receiver android:name=".MoonWidget0"
             android:label="@string/app_name_moonwidget0"
-            android:icon="@mipmap/ic_moontimes">
+            android:icon="@drawable/ic_moon">
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -389,7 +399,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <receiver android:name=".MoonWidget0_2x1"
             android:label="@string/app_name_moonwidget0"
-            android:icon="@mipmap/ic_moontimes">
+            android:icon="@drawable/ic_moon">
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -415,7 +425,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <receiver android:name=".MoonWidget0_3x1"
             android:label="@string/app_name_moonwidget0"
-            android:icon="@mipmap/ic_moontimes">
+            android:icon="@drawable/ic_moon">
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -442,7 +452,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <receiver android:name=".ClockWidget0"
             android:label="@string/app_name_clockwidget0"
-            android:icon="@mipmap/ic_suntimes2">  <!-- TODO: icon -->
+            android:icon="@mipmap/ic_launcher_alarms">
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -468,7 +478,7 @@
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
         <receiver android:name=".ClockWidget0_3x1"
             android:label="@string/app_name_clockwidget0"
-            android:icon="@mipmap/ic_suntimes2">  <!-- TODO: icon -->
+            android:icon="@mipmap/ic_launcher_alarms">
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

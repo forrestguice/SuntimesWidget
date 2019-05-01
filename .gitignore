@@ -43,3 +43,5 @@ proguard/
 .idea/assetWizardSettings.xml
 .idea/codeStyles/Project.xml
 .idea/caches/build_file_checksums.ser
+*.gz
+*.zip

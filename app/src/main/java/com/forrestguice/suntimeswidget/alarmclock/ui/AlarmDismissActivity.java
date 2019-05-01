@@ -530,10 +530,14 @@ public class AlarmDismissActivity extends AppCompatActivity
         } else alarmSubtitle.setVisibility(View.GONE);
 
         Spannable offsetSpan = new SpannableString("");
-        if (item.offset != 0) {
+        if (item.offset != 0)
+        {
+            Calendar alarmTime = Calendar.getInstance();
+            alarmTime.setTimeInMillis(item.timestamp);
+            int alarmHour = alarmTime.get( SuntimesUtils.is24() ? Calendar.HOUR_OF_DAY : Calendar.HOUR );
             boolean isBefore = (item.offset <= 0);
             String offsetText = utils.timeDeltaLongDisplayString(0, item.offset).getValue();
-            String offsetDisplay = context.getString((isBefore ? R.string.offset_before : R.string.offset_after) , offsetText);
+            String offsetDisplay = context.getResources().getQuantityString((isBefore ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), alarmHour, offsetText);
             offsetSpan = SuntimesUtils.createBoldSpan(null, offsetDisplay, offsetText);
         }
         offsetText.setText(offsetSpan);

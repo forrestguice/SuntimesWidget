@@ -100,6 +100,28 @@
     <string name="until">do</string>
     <string name="until_end">do</string>
 
+    <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. the time component is shown on the next line -->
+        <item quantity="one">o</item>
+        <item quantity="few">o</item>
+        <item quantity="many">o</item>
+        <item quantity="other">o</item>
+    </plurals>
+    <plurals name="offset_before_plural">      <!-- e.g. "30m before \n 5:30PM" .. the time component is shown on the next line -->
+        <item quantity="one">%1$s przed</item>
+        <item quantity="few">%1$s przed</item>
+        <item quantity="many">%1$s przed</item>
+        <item quantity="other">%1$s przed</item>
+    </plurals>
+    <plurals name="offset_after_plural">      <!-- e.g. "30m after \n 5:30PM" .. the time component is shown on the next line -->
+        <item quantity="one">%1$s po</item>
+        <item quantity="few">%1$s po</item>
+        <item quantity="many">%1$s po</item>
+        <item quantity="other">%1$s po</item>
+    </plurals>
+
+    <string name="offset_button_before">przed</string>    <!-- button label; [1h] [5m] [before] (-) -->
+    <string name="offset_button_after">po</string>      <!-- button label; [1h] [5m] [after] (+) -->
+
     <!-- NoteBody: sunset/sunrise/twilight string
          The note body text; appears next to the prefix (layout/info_time_note.xml)
     -->
@@ -182,10 +204,10 @@
     <string name="configAction_addWidget">Dodaj widżet</string>                   <!-- Button: Add -->
     <string name="configAction_reconfigWidget_short">Edytuj</string>       <!-- Button: Reconfigure -->
     <string name="configAction_reconfigWidget">Edytuj widżet</string>      <!-- used as title when reconfiguring -->
-    <string name="configLabel_title0">Zmierzchy i Świty Widżet</string>                  <!-- used as title when adding -->
+    <string name="configLabel_title0">@string/app_name_widget0</string>                  <!-- used as title when adding -->
     <string name="configLabel_title1">Przełączalny widżet</string>                 <!-- used as title when adding -->
     <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->
-    <string name="configLabel_solsticewidget0">Widżet przesilenia</string>                  <!-- used as title when adding -->
+    <string name="configLabel_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding -->
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
@@ -193,6 +215,8 @@
     <string name="configLabel_general_calculator">Źródło danych:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Źródło danych słonecznych</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Źródło danych księżycowych</string>         <!-- preference label -->
+
+    <string name="configLabel_general_timeFormatMode">Format czasu:</string>         <!-- spinner label -->
 
     <string name="configLabel_general_altitude_enabled">Użyj wysokości</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Zastosuj poprawki uwzględniające wysokość n.p.m.</string>        <!-- checkbox label -->
@@ -217,7 +241,7 @@
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">Zaawansowane ustawienia</string>                        <!-- group title -->
     <string name="configLabel_experimental">Eksperymentalne ustawienia</string>                <!-- group title -->
-    <string name="configLabel_general_scanPlugins">Wtyczki żródeł danych</string>                                <!-- checkbox label -->
+    <string name="configLabel_general_scanPlugins">Wtyczki źródeł danych</string>                                <!-- checkbox label -->
     <string name="configLabel_general_scanPlugins_summary">Skanuj i załaduj zewnętrzne wtyczki.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
@@ -229,6 +253,11 @@
     <string name="configLabel_appearance_showTitle">Wyświetl tytuł</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Tytuł:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
+
+    <!-- Widget Setting: riseSetOrder -->
+    <string name="configLabel_general_riseSetOrder">Który:</string>     <!-- label -->
+    <string name="risesetorder_today">dzisiejszy</string>                    <!-- setting -->
+    <string name="risesetorder_lastnext">poprzedni / następny</string>           <!-- setting -->
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Kulminacja</string>                    <!-- setting -->
@@ -286,7 +315,7 @@
     <string name="widgetMode1x1_both_2">Wschód i zachód (2)</string>  <!-- setting -->
 
     <string name="widgetMode1x1_altaz">Wysokość i azymut</string>     <!-- setting -->
-    <string name="widgetMode1x1_decright">Deklinacja i rekascensja</string>     <!-- setting -->
+    <string name="widgetMode1x1_decright">Deklinacja i rektascensja</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Zwykła</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Biegunowa</string>     <!-- setting -->
@@ -310,10 +339,10 @@
 
     <string name="configLabel_action">Ustawienia akcji</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Przy kliknięciu:</string>                    <!-- spinner label -->
-    <string name="configLabel_action_onClockTap">Przy kliknięciu zegara:</string>         <!-- spinner label -->
-    <string name="configLabel_action_onNoteTap">Przy kliknięciu notatki:</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap">Przy kliknięciu daty:</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap1">Przy przytrzymaniu daty:</string>   <!-- spinner label -->
+    <string name="configLabel_action_onClockTap">Przy kliknięciu zegara</string>         <!-- spinner label -->
+    <string name="configLabel_action_onNoteTap">Przy kliknięciu notatki</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap">Przy kliknięciu daty</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap1">Przy przytrzymaniu daty</string>   <!-- spinner label -->
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Obecna (ostatnia znana)</string>  <!-- setting -->
@@ -339,8 +368,8 @@
     <string name="timezoneMode_current">Systemowa</string>                         <!-- setting -->
     <string name="timezoneMode_custom">Użytkownika</string>                    <!-- setting -->
 
-    <string name="solartime_localMean">Średni lokalny czas słoneczny</string>                 <!-- setting / custom timezone id -->
-    <string name="solartime_apparent">Prawdziwy lokalny czas słoneczny</string>              <!-- setting / custom timezone id -->
+    <string name="solartime_localMean">średni czas słoneczny</string>                 <!-- setting / custom timezone id -->
+    <string name="solartime_apparent">prawdziwy czas słoneczny</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
@@ -377,7 +406,7 @@
     <string name="configLabel_general_trackingMode">Śledź:</string>            <!-- spinner label -->
 
     <!-- Widget Setting: timeMode override -->
-    <string name="configLabel_general_timeMode_override">Śledzenie pomija trybT</string>     <!-- checkbox label -->
+    <string name="configLabel_general_timeMode_override">Śledzenie pomija tryb</string>     <!-- checkbox label -->
 
     <!-- Widget Settings: noon -->
     <string name="configLabel_general_showNoon">Pokaż górowanie Słońca</string>        <!-- checkbox label -->
@@ -440,6 +469,7 @@
     <string name="configLabel_themeColorFall">Jesienny kolor</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Zimowy kolor</string> <!-- color label -->
 
+    <string name="configLabel_themeColorAccent">Akcentów</string> <!-- color label -->
     <string name="configLabel_themeColorAction">Akcja</string> <!-- color label -->
 
     <string name="configLabel_themeColorMapBackground">Tło mapy</string> <!-- color label -->
@@ -515,6 +545,135 @@
     <string name="widgetLabel_declination">Deklinacja</string>           <!-- label -->
     <string name="widgetLabel_declination_short">Dek.</string>           <!-- label -->
 
+    <!--
+         ALARM CLOCK
+    -->
+    <string name="configLabel_alarmClock">Alarmy</string>            <!-- group title -->
+    <string name="configLabel_alarmClock_emptyMsg">Brak alarmów</string>     <!-- a label that is displayed in place of an empty listview -->
+    <string name="configAction_addAlarm">Ustaw alarm</string>               <!-- button (contentDescription) -->
+    <string name="configAction_addNotification">Ustaw powiadomienie</string> <!-- button (contentDescription) -->
+    <string name="configAction_deleteAlarm">Usuń</string>               <!-- button (contentDescription) -->
+    <string name="configAction_clearAlarms">Usuń wszystkie</string>                <!-- action button / menu item -->
+    <string name="configAction_clearOffset">Usuń</string>                <!-- action button / menu item -->
+    <string name="configAction_setAlarmOffset">Ustaw przesunięcie</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmType">Ustaw typ</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmLabel">Ustaw etykietę</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmLocation">Ustaw lokalizację</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmRepeat">Ustaw powtarzanie</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmEvent">Ustaw wydarzenie</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmTime">Ustaw stały czas</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmSound">Ustaw dźwięk</string>         <!-- button (contentDescription) -->
+    <string name="configAction_alarmMenu">Menu alarmu</string>         <!-- button (contentDescription) -->
+
+    <string name="alarmAction_dismiss">Wycisz</string>                <!-- notification action button -->
+    <string name="alarmAction_snooze">Drzemka</string>                  <!-- notification action button -->
+    <string name="alarmAction_timeout">Wycisz</string>                  <!-- notification action button --> <!-- TODO -->
+
+    <string name="alarmAction_playingMsg"><xliff:g id="label">%1$s</xliff:g></string>          <!-- toast message -->
+    <string name="alarmAction_silencedMsg">Alarm wyłączył się</string>          <!-- toast message -->
+    <string name="alarmAction_snoozeMsg">Drzemka do <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->
+    <string name="alarmAction_timeoutMsg">Przegapiono alarm.</string>     <!-- notification msg -->
+    <string name="alarmAction_upcomingMsg">Nadchodzący alarm</string>     <!-- notification msg -->
+
+    <string name="alarmMode_alarm">alarm</string>                <!-- alarm type (setting) -->
+    <string name="alarmMode_notification">powiadomienie</string>                <!-- alarm type (setting) -->
+
+    <string name="alarmOption_vibrate">Wibruj</string>                <!-- checkbox text -->
+    <string name="alarmOption_ringtone_none">Bez dźwięku</string>          <!-- ringtone label (none) -->
+    <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
+    <string name="alarmOption_solarevent_none">stała godzina</string>          <!-- ringtone label (none) -->
+
+    <string name="alarmOption_repeat">powtarzaj</string>                <!-- checkbox text; an alarm that repeats -->
+    <string name="alarmOption_repeat_none">jednorazowo</string>         <!-- label text; an alarm that does not repeat (occurs once) -->
+    <string name="alarmOption_repeat_all">codziennie</string>         <!-- label text; an alarm that repeats every day -->
+
+    <string name="deletealarm_dialog_title">Usuń</string>        <!-- dialog title -->
+    <string name="deletealarm_dialog_message">Czy na pewno chcesz usunąć <xliff:g id="type">%1$s</xliff:g> z <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg -->
+    <string name="deletealarm_dialog_ok">Usuń</string>        <!-- button -->
+    <string name="deletealarm_dialog_cancel">Anuluj</string>    <!-- button -->
+    <string name="deletealarm_toast_success">Usunięto <xliff:g id="type" example="powiadomienie">%1$s</xliff:g> z <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>).</string> <!-- toast msg -->
+
+    <string name="clearalarms_dialog_title">Usuń wszystkie alarmy</string>        <!-- dialog title -->
+    <string name="clearalarms_dialog_message">Czy na pewno chcesz usunąć wszystkie alarmy?</string>   <!-- dialog msg -->
+    <string name="clearalarms_dialog_ok">Usuń</string>        <!-- button -->
+    <string name="clearalarms_dialog_cancel">Anuluj</string>    <!-- button -->
+    <string name="clearalarms_toast_success">Usunięto wszystkie alarmy.</string> <!-- toast msg -->
+
+    <string name="alarmlabel_dialog_title">Etykieta</string>        <!-- dialog title -->
+    <string name="alarmlabel_dialog_ok">Zastosuj</string>        <!-- button -->
+    <string name="alarmlabel_dialog_cancel">Anuluj</string>    <!-- button -->
+
+    <string name="alarmrepeat_dialog_title">Powtórz alarm</string>        <!-- dialog title -->
+    <string name="alarmrepeat_dialog_ok">Zastosuj</string>        <!-- button -->
+    <string name="alarmrepeat_dialog_cancel">Anuluj</string>    <!-- button -->
+
+    <string name="alarmtime_dialog_title">Stała godzina</string>        <!-- dialog title -->
+    <string name="alarmtime_dialog_ok">Ustaw</string>        <!-- button -->
+    <string name="alarmtime_dialog_cancel">Anuluj</string>    <!-- button -->
+    <string name="alarmtime_dialog_message">Czy ustawić alarm na stałą godzinę?\n\nTen alarm nie będzie już zależeć od wydarzenia.</string>   <!-- dialog msg -->
+
+    <string name="alarmoffset_dialog_title">Przesunięcie alarmu</string>        <!-- dialog title -->
+    <string name="alarmoffset_dialog_ok">Zastosuj</string>        <!-- button -->
+    <string name="alarmoffset_dialog_cancel">Anuluj</string>    <!-- button -->
+
+    <string name="alarmenabled_toast">Ustawiono <xliff:g id="alarmType" example="powiadomienie">%1$s</xliff:g> za <xliff:g id="duration" example="8h">%2$s</xliff:g> od teraz.</string> <!-- toast msg -->
+
+    <string name="configLabel_alarms_optWhiteList">Optymalizacja baterii</string>
+    <string name="configLabel_alarms_optWhiteList_listed">Bez optymalizacji (zalecane)</string>
+    <string name="configLabel_alarms_optWhiteList_unlisted">Włączona optymalizacja baterii.\nAlarmy mogą zostać opóźnione o maksymalnie 15 minut.</string>
+
+    <string name="configLabel_alarms_silenceAfter">Wycisz (ale nie wyłączaj) po</string>
+    <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minut">%s</xliff:g></string>
+
+    <string name="configLabel_alarms_timeoutAfter">Wycisz po</string>
+    <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minut">%s</xliff:g></string>
+
+    <string name="configLabel_alarms_snooze">Długość drzemki</string>
+    <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minut">%s</xliff:g></string>
+
+    <string name="configLabel_alarms_upcoming">Przypomnienie</string>
+    <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minut">%s</xliff:g> przed</string>
+
+    <string name="configLabel_alarms_hardwarebuttons">Fizyczne przyciski</string>
+    <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Drzemka">%s</xliff:g></string>
+    <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->
+        <item>Wyłącz</item>
+        <item>Wycisz</item>
+        <item>Drzemka</item>
+        <item>Nie rób nic</item>
+    </string-array>
+
+    <string name="configLabel_alarmSounds">Dźwięki</string>            <!-- group title -->
+    <string name="configLabel_alarms_allRingtones">Pokaż wszystkie dzwonki</string>
+    <string name="configLabel_alarms_allRingtones_summary">Pokaż wszystkie dźwięki systemowe podczas podczas wyboru (ignoruj typ dzwonka).</string>
+
+    <string name="no_reminder">nigdy</string>
+
+    <plurals name="units_hours">
+        <item quantity="one">%d godzina</item>
+        <item quantity="few">%d godziny</item>
+        <item quantity="many">%d godzin</item>
+        <item quantity="other">%d godzin</item>
+    </plurals>
+
+    <plurals name="units_minutes">
+        <item quantity="one">%d minuta</item>
+        <item quantity="few">%d minuty</item>
+        <item quantity="many">%d minut</item>
+        <item quantity="other">%d minut</item>
+    </plurals>
+
+    <plurals name="units_seconds">
+        <item quantity="one">%d sekunda</item>
+        <item quantity="few">%d sekundy</item>
+        <item quantity="many">%d sekund</item>
+        <item quantity="other">%d sekund</item>
+    </plurals>
+
+    <string name="configLabel_alarmMisc">Inne</string>
+    <string name="configLabel_alarms_showlauncher">Ikona na ekranie startowym</string>
+    <string name="configLabel_alarms_showlauncher_summary">Pokaż ikonę „Czasy Słońca: alarmy” na ekranie startowym.</string>
+    
     <!--
          APP SETTINGS
     -->
@@ -677,14 +836,15 @@
         <item>Baskijski</item>
         <item>Norweski</item>
         <item>Chiński tradycyjny</item>
+        <item>Portugalski</item>
     </string-array>
 
     <!-- position formats -->
     <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
-    <string name="elevation_format"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="altSymbol" example="∠">%2$s</xliff:g></string>  <!-- e.g. 45°∠ -->
-    <string name="declination_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° δ -->
-    <string name="rightascension_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° α -->
-    <string name="direction_format"><xliff:g id="degrees" example="180°">%1$s</xliff:g> <xliff:g id="directions_short" example="S">%2$s</xliff:g></string>  <!-- e.g. 180°S -->
+    <!--<string name="elevation_format"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="altSymbol" example="∠">%2$s</xliff:g></string>-->  <!-- e.g. 45°∠ -->
+    <!--<string name="declination_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>-->  <!-- e.g. 5° δ -->
+    <!--<string name="rightascension_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>-->  <!-- e.g. 5° α -->
+    <!--<string name="direction_format"><xliff:g id="degrees" example="180°">%1$s</xliff:g> <xliff:g id="directions_short" example="S">%2$s</xliff:g></string>-->  <!-- e.g. 180°S -->
 
     <!-- cardinal directions -->
     <string-array name="directions_short">  <!-- one-to-one with directions_long -->
@@ -735,9 +895,11 @@
     <string name="worldmap_dialog_option_sunlight">Słońce</string>
     <string name="worldmap_dialog_option_moonlight">Księżyc</string>
     <string name="worldmap_dialog_option_all">Oba</string>
+    <string name="configAction_shareMap">Udostępnij</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Ustaw alarm na</string>
+    <string name="configLabel_schednotify_mode">Ustaw powiadomienie na</string>
     <string name="schedalarm_dialog_title">Ustaw alarm</string>
     <string name="schedalarm_dialog_ok">Ustaw alarm</string>
     <string name="schedalarm_dialog_cancel">Anuluj</string>
@@ -772,7 +934,7 @@
         <item>poranna błękitna godzina (koniec)</item>
         <item>wschód Słońca</item>
         <item>poranna złota godzina (koniec)</item>
-        <item>kulminację Słońca</item>
+        <item>kulminacja Słońca</item>
         <item>wieczorna złota godzina (początek)</item>
         <item>zachód Słońca</item>
         <item>wieczorna błękitna godzina (początek)</item>
@@ -842,6 +1004,10 @@
     <string name="locationexport_dialog_title">Eksport miejsc</string>
     <string name="locationexport_dialog_message">Eksportowanie bazy danych do pliku csv.</string>
 
+    <!-- Dialog: Export Themes -->
+    <string name="themesexport_dialog_title">Eksport skórek</string>
+    <string name="themesexport_dialog_message">Eksportowanie skórek do pliku.</string>        
+        
     <!-- Dialog: Export -->
     <string name="msg_export_success">Tymczasowo skopiowano do <xliff:g id="filepath">%s</xliff:g></string>
     <string name="msg_export_failure">Eksport do <xliff:g id="filepath">%s</xliff:g> nieudany!</string>
@@ -869,12 +1035,14 @@
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">O programie</string>
-    <string name="app_name">Zmierzchy i Świty</string>
-    <string name="app_name_widget0">Zmierzchy/Świty Widżet</string>
-    <string name="app_name_widget1">Zmierzchy/Świty Widżet (przełączalny)</string>
-    <string name="app_name_widget2">Pozycja Słońca Widżet</string>
-    <string name="app_name_solsticewidget0">Zmierzchy/Świty Widżet Przesilenia</string>
-    <string name="app_name_moonwidget0">Księżycowy Widżet</string>
+    <string name="app_name">Czasy Słońca</string>
+    <string name="app_name_alarmclock">Czasy Słońca: alarm</string>
+    <string name="app_name_widget0">Czasy Słońca</string>
+    <string name="app_name_widget1">Czasy Słońca (przełączalny)</string>
+    <string name="app_name_widget2">Czasy Słońca: pozycja Sł.</string>
+    <string name="app_name_clockwidget0">Czasy Słońca: zegar</string>
+    <string name="app_name_solsticewidget0">Czasy Słońca: przesilenia</string>
+    <string name="app_name_moonwidget0">Czasy Słońca: Księżyc</string>
     <string name="app_version"><![CDATA[<b>Wersja:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Wyświetla czasy świecenia Słońca i Księżyca.</string>
     <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="https://github.com/forrestguice/SuntimesWidget/issues">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
@@ -932,6 +1100,22 @@
           <b>Świt/zmierzch żeglarski:</b> Słońce znajduje się 12 stopni pod horyzontem, kontury obiektów i linia horyzontu są praktycznie niewidoczne. Jest zbyt ciemno na wykonywanie większości czynności na dworze bez sztucznego oświetlenia.<br/><br/>
           <b>Świt/zmierzch astronomiczny: </b> Słońce znajduje się 18 stopni pod horyzontem. Praktycznie czarne niebo.<br/>
     ]]></string>
+        
+<string name="help_general_solartime"><![CDATA[
+          <b>Prawdziwy czas słoneczny:</b> czas określony przez śledzenie pozornego ruchu Słońca dla danej długości i szerokości geograficznej.<br/><br/>
+          Pozorny ruch Słońca nie jest stały. Ulega tymczasowym wahaniom na skutek nachylenia ekliptyki i ekscentryczności orbity Ziemi. Długość rzeczywistej doby (czasu pomiędzy dwoma górowaniami Słońca) może być nieco krótsza lub dłuższa niż 24 godziny (maksymalnie do 30s).
+          Te małe wahania akumulują się z każdym dniem (i zerują w ciągu roku).<br/><br/>
+          <b>Średni czas słoneczny:</b> czas określony na podstawie średniej pozycji Słońca dla danej długości geograficznej.<br/><br/>
+          Średni ruch Słońca zawiera poprawki na nachylenie ekliptyki i ekscentryczność orbity, jest jednorodny.
+          Długość każdego średniego dnia słonecznego wynosi dokładnie 24 godziny.<br/><br/>
+          <b>Równanie czasu:</b> różnica między średnim czasem słonecznym i prawdziwym czasem słonecznym.
+          Powstaje na skutek kumulacji różnic prawdziwego czasu słonecznego.<br/><br/>
+          Prawdziwy czas słoneczny może się różnić od czasu średniego o maksymalnie 16 minut w zależności od pory roku.<br/><br/>
+          <i>Ta aplikacja korzysta z algorytmu do obliczenia równania czasu (i wyprowadzenia prawdziwego czasu słonecznego).
+          Twoje położenie jest wykorzystywane do obliczenia średniego czasu słonecznego.</i>
+          <br/><br/>
+    ]]></string>
+        
     <string name="help_general_daylength"><![CDATA[
         <b>Długość dnia:</b> czas pomiędzy wschodem i zachodem Słońca.<br/><br/>
         <b>Okres użytecznego światła:</b> czas pomiędzy cywilnym świtem i zmierzchem.<br/><br/>
@@ -967,11 +1151,17 @@
         Ta funkcja jest teraz dostępna jako <a href="moreInfoLink">osobna aplikacja</a>.
     ]]></string>
 
-    <string name="privacy_policy"><![CDATA[<b>Prywatność:</b><br/>Aplikacja Zmierzchy i Świty nie zbiera, przechowuje i przesyła osobistych danych użytkownika. Ta aplikacja nie zawiera reklam, narzędzi analitycznych i zbędnych uprawnień.<br/><br/>Aplikacja konfiguruje się używając danych lokalizacji; te dane (i inne używane przez program) są zapisywane lokalnie i nie opuszczają urządzenia.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
+    <string name="privacy_policy"><![CDATA[<b>Prywatność:</b><br/>Aplikacja Czasy Słońca nie zbiera, przechowuje i przesyła osobistych danych użytkownika. Ta aplikacja nie zawiera reklam, narzędzi analitycznych i zbędnych uprawnień.<br/><br/>Aplikacja konfiguruje się używając danych lokalizacji; te dane (i inne używane przez program) są zapisywane lokalnie i nie opuszczają urządzenia.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Uprawnienie <b>określenia lokalizacji</b> jest używane do ustalenia bieżącej szerokości i długości geograficznej. To uprawnienie jest opcjonalne; położenie domyślnie jest wpisywane ręcznie.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Uprawnienie <b>dostępu do pamięci zewnętrznej</b> jest wymagane do wyeksportowania danych do pliku (np. miejsc, skórek).]]></string>
     <string name="privacy_permissiondialog_title">Uprawnienia</string>
 
+    <string name="security_dialog_title">Ostrzeżenie</string>
+    <string name="security_duplicate_permissions">Uprawnienie należące do aplikacji Czasy Słońca:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\njest także zdefiniowane przez aplikację: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
+    <string name="feature_not_supported_by_api">Ta funkcja nie jest wspierana przez API %1$s.</string>
+    <string name="feature_not_supported_by_source">Ta funkcja nie jest wspierana przez obecne źródło danych.</string>
+    <string name="reboot_required_message">Restart może być wymagany, aby zmiany zostały zastosowane.</string>
+    
     <!-- calculator implemenations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
     <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
