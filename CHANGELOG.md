@@ -1,11 +1,14 @@
 ### ~
 
+### v0.11.4 (2019-05-06)
+* updates translation to Brazilian Portuguese (pt-br) (#320 by Neto Silva).
+
 ### v0.11.3 (2019-04-17)
 * fixes crash when opening general settings (Esperanto) (#315).
 * adds "rise/set order" help button to the widget configuration activity.
 * misc. layout and icon changes (Widget List, About).
 * updates translations to Polish (pl) and Esperanto (eo) (#317 by Verdulo).
-* updates translations to Brazilian Portuguese (pt-br) (#319 by Neto Silva).
+* updates translation to Brazilian Portuguese (pt-br) (#319 by Neto Silva).
 
 ### v0.11.2 (2019-04-08)
 * adds an option to disable the alarm clock launcher icon (#305).
