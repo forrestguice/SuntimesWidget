@@ -9,8 +9,9 @@ Do you find value in this app? `Please pay what you want.`<br/><br/>
 [![paypal](https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_150x38.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2) 
 <hr />
 <hr />
-<a href="https://github.com/forrestguice/SuntimesWidget/wiki/Screenshots"><img alt="screenshot1" src='./images/activity-main0-dark.png' width="260px" alt="screenshot" /></a>&nbsp;&nbsp;
-<a href="https://github.com/forrestguice/SuntimesWidget/wiki/Screenshots"><img alt="screenshot2" src='./images/activity-alarms0-dark.png' width="260px" alt="screenshot" /></a>
+<a href="https://github.com/forrestguice/SuntimesWidget/wiki/Screenshots"><img alt="screenshot1" src='./doc/screenshots/v0.9.5/en/activity-main0-dark.png' width="260px" alt="screenshot1" /></a>&nbsp;&nbsp;
+<a href="https://github.com/forrestguice/SuntimesWidget/wiki/Screenshots"><img alt="screenshot2" src='./doc/screenshots/v0.11.3/en/activity-alarms0-dark.png' width="260px" alt="screenshot2" /></a>&nbsp;&nbsp;
+<a href="https://github.com/forrestguice/SuntimesWidget/wiki/Screenshots"><img alt="screenshot3" src='./doc/screenshots/suntimescalendars/v0.3.1/activity-calendars0.png' width="260px" alt="screenshot3" /></a>
 
 ## Philosophy
 To create an application that is:
