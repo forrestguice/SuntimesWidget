@@ -567,6 +567,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (locationConfig != null)
         {
             locationConfig.setAutoAllowed(false);
+            locationConfig.setHideMode(true);
             locationConfig.init(this, false, this.appWidgetId);
         }
 
