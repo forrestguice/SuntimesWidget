@@ -7,7 +7,7 @@
 
 ## Donations
 Do you find value in this app? `Please pay what you want.`<br/>
-[![paypal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-rect-paypal-26px.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2) 
+[![paypal](https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_150x38.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2) 
 &nbsp;&nbsp;[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=forrestguice&url=https://github.com/forrestguice/SuntimesWidget&title=Suntimes&tags=github&category=software)
 
 <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Screenshots"><img alt="screenshot1" src='./images/activity-main0-dark.png' width="260px" alt="screenshot" /></a>&nbsp;&nbsp;
