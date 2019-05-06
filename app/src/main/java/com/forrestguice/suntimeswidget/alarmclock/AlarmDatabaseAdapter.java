@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.alarmclock;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -30,6 +31,8 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class AlarmDatabaseAdapter
 {
@@ -456,15 +459,23 @@ public class AlarmDatabaseAdapter
 
         protected void onPostExecute( AlarmClockItem item )
         {
-            if (taskListener != null) {
-                taskListener.onItemLoaded(item);
+            for (int i=0; i<taskListeners.size(); i++)
+            {
+                AlarmItemTaskListener taskListener = taskListeners.get(i);
+                if (taskListener != null) {
+                    taskListener.onItemLoaded(item);
+                }
             }
         }
 
-        private AlarmItemTaskListener taskListener = null;
-        public void setAlarmItemTaskListener( AlarmItemTaskListener listener )
+        private List<AlarmItemTaskListener> taskListeners = new ArrayList<>();
+        public void addAlarmItemTaskListener(AlarmItemTaskListener listener )
         {
-            this.taskListener = listener;
+            this.taskListeners.add(listener);
+        }
+        public void clearAlarmItemTaskListeners()
+        {
+            taskListeners.clear();
         }
 
         public static abstract class AlarmItemTaskListener

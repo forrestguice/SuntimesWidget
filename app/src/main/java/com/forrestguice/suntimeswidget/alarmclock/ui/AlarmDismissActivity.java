@@ -45,7 +45,6 @@ import android.text.SpannableString;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
@@ -486,7 +485,7 @@ public class AlarmDismissActivity extends AppCompatActivity
     public void setAlarmID(final Context context, long alarmID)
     {
         AlarmDatabaseAdapter.AlarmItemTask task = new AlarmDatabaseAdapter.AlarmItemTask(context);
-        task.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener() {
+        task.addAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener() {
             @Override
             public void onItemLoaded(AlarmClockItem item)
             {

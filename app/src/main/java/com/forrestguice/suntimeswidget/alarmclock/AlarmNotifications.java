@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -62,6 +63,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class AlarmNotifications extends BroadcastReceiver
 {
@@ -655,7 +657,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     }
 
                     AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
-                    itemTask.setAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), action));
+                    itemTask.addAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), action));
                     itemTask.execute(ContentUris.parseId(data));
 
                 } else {
@@ -671,7 +673,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 for (long id : ids)
                                 {
                                     AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
-                                    itemTask.setAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), AlarmNotifications.ACTION_RESCHEDULE));
+                                    itemTask.addAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), AlarmNotifications.ACTION_RESCHEDULE));
                                     itemTask.execute(id);
                                 }
                             }
