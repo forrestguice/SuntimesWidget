@@ -1239,4 +1239,24 @@ public class AlarmNotifications extends BroadcastReceiver
         return eventTime;
     }
 
+    /**
+     * based on solutions at https://stackoverflow.com/questions/6452466/how-to-determine-if-an-android-service-is-running-in-the-foreground
+     */
+    private static boolean isForegroundService(Context context, @NonNull Class<?> service)
+    {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        if (activityManager != null)
+        {
+            String className = service.getName();
+            List<ActivityManager.RunningServiceInfo> services = activityManager.getRunningServices(Integer.MAX_VALUE);
+            for (ActivityManager.RunningServiceInfo s : services)
+            {
+                if (className.equals(s.service.getClassName())) {
+                    return s.foreground;
+                }
+            }
+        }
+        return false;
+    }
+
 }
