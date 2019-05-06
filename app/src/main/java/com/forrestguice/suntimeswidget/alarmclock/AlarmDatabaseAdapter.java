@@ -751,5 +751,50 @@ public class AlarmDatabaseAdapter
         }
     }
 
+    /**
+     * AlarmListObserver
+     */
+    public static class AlarmListObserver
+    {
+        private HashMap<Long, Boolean> items;
+
+        @SuppressLint("UseSparseArrays")
+        public AlarmListObserver(Long[] alarmList, AlarmListObserverListener listener)
+        {
+            this.observerListener = listener;
+            items = new HashMap<>();
+            for (Long alarmId : alarmList) {
+                items.put(alarmId, false);
+            }
+        }
+
+        public void notify(Long alarmId)
+        {
+            items.put(alarmId, true);
+            if (observerListener != null)
+            {
+                observerListener.onObservedItem(alarmId);
+                if (observedAll()) {
+                    observerListener.onObservedAll();
+                }
+            }
+        }
+
+        public boolean observedAll()
+        {
+            boolean retValue = true;
+            for (Boolean value : items.values()) {
+                retValue = retValue && value;
+            }
+            return retValue;
+        }
+
+        private AlarmListObserverListener observerListener;
+        public static abstract class AlarmListObserverListener
+        {
+            public void onObservedItem( Long id ) {}
+            public void onObservedAll() {}
+        }
+    }
 
 }
