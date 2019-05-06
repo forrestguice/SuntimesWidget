@@ -614,7 +614,7 @@ public class AlarmNotifications extends BroadcastReceiver
         public static final String TAG = "AlarmReceiverService";
 
         @Override
-        public int onStartCommand(Intent intent, int flags, int startId)
+        public int onStartCommand(final Intent intent, int flags, int startId)
         {
             super.onStartCommand(intent, flags, startId);
             if (intent != null)
@@ -670,10 +670,36 @@ public class AlarmNotifications extends BroadcastReceiver
                             @Override
                             public void onItemsLoaded(Long[] ids)
                             {
+                                final AlarmDatabaseAdapter.AlarmListObserver observer = new AlarmDatabaseAdapter.AlarmListObserver(ids, new AlarmDatabaseAdapter.AlarmListObserver.AlarmListObserverListener()
+                                {
+                                    @Override
+                                    public void onObservedAll() {
+                                        if (!isForegroundService(NotificationService.this, AlarmNotifications.NotificationService.class))
+                                        {
+                                            Log.d(TAG, "schedule all completed! stopping service...");
+                                            Intent serviceIntent = getServiceIntent(NotificationService.this);
+                                            stopService(serviceIntent);
+                                        } else Log.d(TAG, "schedule all completed! the foreground service still running.");
+                                    }
+                                });
+
+                                if (ids.length == 0) {
+                                    observer.notify(null);
+                                    return;
+                                }
+
+                                AlarmDatabaseAdapter.AlarmItemTaskListener notifyObserver = new AlarmDatabaseAdapter.AlarmItemTaskListener()
+                                {
+                                    @Override
+                                    public void onFinished(Boolean result, AlarmClockItem item) {
+                                        Log.d(TAG, "schedule " + item.rowID + " completed!");
+                                        observer.notify(item.rowID);
+                                    }
+                                };
                                 for (long id : ids)
                                 {
                                     AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
-                                    itemTask.addAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), AlarmNotifications.ACTION_RESCHEDULE));
+                                    itemTask.addAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), AlarmNotifications.ACTION_RESCHEDULE, notifyObserver));
                                     itemTask.execute(id);
                                 }
                             }
