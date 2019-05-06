@@ -722,6 +722,10 @@ public class AlarmNotifications extends BroadcastReceiver
          */
         private AlarmDatabaseAdapter.AlarmItemTaskListener createAlarmOnReceiveListener(final Context context, final String action)
         {
+            return createAlarmOnReceiveListener(context, action, null);
+        }
+        private AlarmDatabaseAdapter.AlarmItemTaskListener createAlarmOnReceiveListener(final Context context, final String action, final @Nullable AlarmDatabaseAdapter.AlarmItemTaskListener chained)
+        {
             return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
                 @Override
@@ -848,14 +852,14 @@ public class AlarmNotifications extends BroadcastReceiver
                                     if (verySoon)
                                     {
                                         Log.i(TAG, "Scheduling: " + item.rowID + " :: very soon");
-                                        onScheduledState = onScheduledSoonState(context);
+                                        onScheduledState = onScheduledSoonState(context, chained);
                                     } else {
                                         Log.i(TAG, "Scheduling: " + item.rowID + " :: distant");
-                                        onScheduledState = onScheduledDistantState(context);
+                                        onScheduledState = onScheduledDistantState(context, chained);
                                     }
                                 } else {
                                     Log.i(TAG, "Scheduling: " + item.rowID);
-                                    onScheduledState = onScheduledNotification(context);
+                                    onScheduledState = onScheduledNotification(context, chained);
                                 }
 
                                 if (AlarmState.transitionState(item.state, nextState))
@@ -1068,7 +1072,7 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmItemTaskListener onScheduledNotification(final Context context)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener onScheduledNotification(final Context context, @Nullable final AlarmDatabaseAdapter.AlarmItemTaskListener chained)
         {
             return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
@@ -1080,11 +1084,14 @@ public class AlarmNotifications extends BroadcastReceiver
                         Log.d(TAG, "State Saved (onScheduledNotification)");
                         addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);
                     }
+                    if (chained != null) {
+                        chained.onFinished(true, item);
+                    }
                 }
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmItemTaskListener onScheduledDistantState(final Context context)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener onScheduledDistantState(final Context context, @Nullable final AlarmDatabaseAdapter.AlarmItemTaskListener chained)
         {
             return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
@@ -1099,11 +1106,14 @@ public class AlarmNotifications extends BroadcastReceiver
                         //context.startActivity(getAlarmListIntent(context, item.rowID));   // open the alarm list
                         dismissNotification(context, (int)item.rowID);
                     }
+                    if (chained != null) {
+                        chained.onFinished(true, item);
+                    }
                 }
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmItemTaskListener onScheduledSoonState(final Context context)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener onScheduledSoonState(final Context context, final @Nullable AlarmDatabaseAdapter.AlarmItemTaskListener chained)
         {
             return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
@@ -1117,6 +1127,9 @@ public class AlarmNotifications extends BroadcastReceiver
                         if (AlarmSettings.loadPrefAlarmUpcoming(context) > 0) {
                             showNotification(context, item, true);             // show upcoming reminder
                         }
+                    }
+                    if (chained != null) {
+                        chained.onFinished(true, item);
                     }
                 }
             };
