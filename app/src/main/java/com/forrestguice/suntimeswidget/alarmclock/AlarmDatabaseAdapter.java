@@ -463,7 +463,7 @@ public class AlarmDatabaseAdapter
             {
                 AlarmItemTaskListener taskListener = taskListeners.get(i);
                 if (taskListener != null) {
-                    taskListener.onItemLoaded(item);
+                    taskListener.onFinished(true, item);
                 }
             }
         }
@@ -476,11 +476,6 @@ public class AlarmDatabaseAdapter
         public void clearAlarmItemTaskListeners()
         {
             taskListeners.clear();
-        }
-
-        public static abstract class AlarmItemTaskListener
-        {
-            public void onItemLoaded( AlarmClockItem item ) {}
         }
     }
 
@@ -545,16 +540,16 @@ public class AlarmDatabaseAdapter
                 listener.onFinished(result, lastItem);
         }
 
-        protected AlarmClockUpdateTaskListener listener = null;
-        public void setTaskListener( AlarmClockUpdateTaskListener l )
+        protected AlarmItemTaskListener listener = null;
+        public void setTaskListener( AlarmItemTaskListener l )
         {
             listener = l;
         }
+    }
 
-        public static abstract class AlarmClockUpdateTaskListener
-        {
-            public void onFinished(Boolean result, AlarmClockItem item) {}
-        }
+    public static abstract class AlarmItemTaskListener
+    {
+        public void onFinished(Boolean result, AlarmClockItem item) {}
     }
 
     /**
@@ -614,7 +609,7 @@ public class AlarmDatabaseAdapter
     /**
      * AlarmStateTask
      */
-    public static class AlarmStateTask extends AsyncTask<Long, Void, AlarmState>
+    /**public static class AlarmStateTask extends AsyncTask<Long, Void, AlarmState>
     {
         protected AlarmDatabaseAdapter db;
 
@@ -660,12 +655,12 @@ public class AlarmDatabaseAdapter
         {
             public void onStateLoaded( AlarmState state ) {}
         }
-    }
+    }*/
 
     /**
      * AlarmStateUpdateTask
      */
-    public static class AlarmStateUpdateTask extends AsyncTask<AlarmState, Void, Boolean>
+    /**public static class AlarmStateUpdateTask extends AsyncTask<AlarmState, Void, Boolean>
     {
         public static final String TAG = "AlarmReceiverStateTask";
 
@@ -709,7 +704,7 @@ public class AlarmDatabaseAdapter
         {
             public void onFinished(Boolean result) {}
         }
-    }
+    }*/
 
     /**
      * AlarmListTask

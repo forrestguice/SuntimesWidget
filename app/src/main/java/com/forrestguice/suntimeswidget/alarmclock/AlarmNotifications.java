@@ -720,12 +720,12 @@ public class AlarmNotifications extends BroadcastReceiver
 
         /**
          */
-        private AlarmDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener createAlarmOnReceiveListener(final Context context, final String action)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener createAlarmOnReceiveListener(final Context context, final String action)
         {
-            return new AlarmDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener()
+            return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
                 @Override
-                public void onItemLoaded(final AlarmClockItem item)
+                public void onFinished(final Boolean result, final AlarmClockItem item)
                 {
                     if (context == null) {
                         return;
@@ -839,7 +839,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 }
 
                                 int nextState = AlarmState.STATE_SCHEDULED_DISTANT;
-                                AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onScheduledState;
+                                AlarmDatabaseAdapter.AlarmItemTaskListener onScheduledState;
                                 if (item.type == AlarmClockItem.AlarmType.ALARM)
                                 {
                                     long reminderWithin = AlarmSettings.loadPrefAlarmUpcoming(context);
@@ -919,9 +919,9 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onDismissedState(final Context context, final String nextAction, final Uri data)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener onDismissedState(final Context context, final String nextAction, final Uri data)
         {
-            return new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+            return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
                 @Override
                 public void onFinished(Boolean result, AlarmClockItem item)
@@ -944,9 +944,9 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onSnoozeState(final Context context)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener onSnoozeState(final Context context)
         {
-            return new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+            return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
                 @Override
                 public void onFinished(Boolean result, AlarmClockItem item)
@@ -964,9 +964,9 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onTimeoutState(final Context context)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener onTimeoutState(final Context context)
         {
-            return new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+            return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
                 @Override
                 public void onFinished(Boolean result, AlarmClockItem item)
@@ -984,9 +984,9 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onShowState(final Context context)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener onShowState(final Context context)
         {
-            return new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+            return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
                 @Override
                 public void onFinished(Boolean result, AlarmClockItem item)
@@ -1001,9 +1001,9 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onDisabledState(final Context context)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener onDisabledState(final Context context)
         {
-            return new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+            return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
                 @Override
                 public void onFinished(Boolean result, AlarmClockItem item)
@@ -1068,9 +1068,9 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onScheduledNotification(final Context context)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener onScheduledNotification(final Context context)
         {
-            return new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+            return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
                 @Override
                 public void onFinished(Boolean result, AlarmClockItem item)
@@ -1084,9 +1084,9 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onScheduledDistantState(final Context context)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener onScheduledDistantState(final Context context)
         {
-            return new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+            return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
                 @Override
                 public void onFinished(Boolean result, AlarmClockItem item)
@@ -1103,9 +1103,9 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener onScheduledSoonState(final Context context)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener onScheduledSoonState(final Context context)
         {
-            return new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+            return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
                 @Override
                 public void onFinished(Boolean result, AlarmClockItem item)

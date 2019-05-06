@@ -485,9 +485,9 @@ public class AlarmDismissActivity extends AppCompatActivity
     public void setAlarmID(final Context context, long alarmID)
     {
         AlarmDatabaseAdapter.AlarmItemTask task = new AlarmDatabaseAdapter.AlarmItemTask(context);
-        task.addAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmItemTask.AlarmItemTaskListener() {
+        task.addAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener() {
             @Override
-            public void onItemLoaded(AlarmClockItem item)
+            public void onFinished(Boolean result, AlarmClockItem item)
             {
                 if (item != null) {
                     setAlarmItem(context, item);
