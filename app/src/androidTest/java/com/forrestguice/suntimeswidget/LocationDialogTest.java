@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,10 +20,12 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.support.test.filters.LargeTest;
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -48,6 +50,9 @@ import static org.hamcrest.CoreMatchers.is;
 @RunWith(AndroidJUnit4.class)
 public class LocationDialogTest extends SuntimesActivityTestBase
 {
+    @Rule
+    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+
     /**
      * UI Test
      * Set the location using the location dialog.
@@ -99,17 +104,17 @@ public class LocationDialogTest extends SuntimesActivityTestBase
     public void test_showLocationDialog()
     {
         showLocationDialog();
-        captureScreenshot("suntimes-dialog-location0");
+        captureScreenshot(activityRule.getActivity(), "suntimes-dialog-location0");
 
         if (getLocationDialog_mode() == WidgetSettings.LocationMode.CURRENT_LOCATION)
         {
             // testing "current" mode
             verifyLocationDialogMode_current();        // should be in "current" mode
-            rotateDevice();                            // rotate
+            rotateDevice(activityRule);                            // rotate
             verifyLocationDialogMode_current();        // should still be "current" mode
 
             inputLocationDialog_mode(WidgetSettings.LocationMode.CUSTOM_LOCATION);  // swap modes to "custom"
-            rotateDevice();                               // rotate
+            rotateDevice(activityRule);                               // rotate
             verifyLocationDialogMode_custom();            // should still be in "custom" mode
 
             inputLocationDialog_mode(WidgetSettings.LocationMode.CURRENT_LOCATION);  // repeatedly swap
@@ -118,11 +123,11 @@ public class LocationDialogTest extends SuntimesActivityTestBase
         } else {
             // testing "custom" mode
             verifyLocationDialogState_select();         // should start in "select" state
-            rotateDevice();                             // rotate
+            rotateDevice(activityRule);                             // rotate
             verifyLocationDialogState_select();         // should still be in select state
 
             inputLocationDialog_mode(WidgetSettings.LocationMode.CURRENT_LOCATION);  // swap modes to "current"
-            rotateDevice();                               // rotate
+            rotateDevice(activityRule);                               // rotate
             verifyLocationDialogMode_current();           // should still be in "current" mode
 
             inputLocationDialog_mode(WidgetSettings.LocationMode.CUSTOM_LOCATION);  // repeatedly swap
@@ -211,12 +216,12 @@ public class LocationDialogTest extends SuntimesActivityTestBase
     {
         // click on the `edit` button
         editLocationDialog();                                        // click edit
-        rotateDevice();
+        rotateDevice(activityRule);
         verifyLocationDialogState_edit();
 
         // fill in form fields
         inputLocationDialog_edit(name, latitude, longitude);         // input values
-        rotateDevice();
+        rotateDevice(activityRule);
         onView(withId(R.id.appwidget_location_lat)).check(matches(withText(latitude)));    // lat, lon fields match inputs
         onView(withId(R.id.appwidget_location_lon)).check(matches(withText(longitude)));
 
