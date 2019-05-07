@@ -2,7 +2,7 @@
 Android app (and widget collection) that displays sunlight and moonlight times for a given location. 
 
 <a href="https://f-droid.org/repository/browse/?fdid=com.forrestguice.suntimeswidget" target="_blank">
-<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="68" align="left" /></a><br /><br />
+<img src="https://forrestguice.github.io/SuntimesWidget/images/get-it-on-fdroid.png" alt="Get it on F-Droid" height="68" align="left" /></a><br /><br />
 
 [![F-Droid](https://img.shields.io/f-droid/v/com.forrestguice.suntimeswidget.svg)](https://f-droid.org/en/packages/com.forrestguice.suntimeswidget/)
 [![GitHub release](https://img.shields.io/github/release/forrestguice/SuntimesWidget.svg)](https://github.com/forrestguice/SuntimesWidget/releases)
