@@ -762,7 +762,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         item.modified = true;
 
         AlarmDatabaseAdapter.AlarmUpdateTask enableTask = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, false);
-        enableTask.setTaskListener(new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+        enableTask.setTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener()
         {
             @Override
             public void onFinished(Boolean result, AlarmClockItem item)

@@ -122,7 +122,7 @@
             android:label="@string/app_name_alarmclock"
             android:icon="@mipmap/ic_launcher_alarms"
             android:taskAffinity=".alarmclock.ui.AlarmClockActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTask">
 
             <intent-filter>
                 <action android:name="android.intent.action.SET_ALARM" />
