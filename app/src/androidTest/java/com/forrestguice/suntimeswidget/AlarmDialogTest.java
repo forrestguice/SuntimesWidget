@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,10 +21,12 @@ package com.forrestguice.suntimeswidget;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -45,6 +47,9 @@ import static org.hamcrest.CoreMatchers.is;
 @RunWith(AndroidJUnit4.class)
 public class AlarmDialogTest extends SuntimesActivityTestBase
 {
+    @Rule
+    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+
     /**
      * UI Test
      *
@@ -54,9 +59,9 @@ public class AlarmDialogTest extends SuntimesActivityTestBase
     public void test_showAlarmDialog()
     {
         showAlarmDialog(activityRule.getActivity());
-        captureScreenshot("suntimes-dialog-alarm0");
+        captureScreenshot(activityRule.getActivity(), "suntimes-dialog-alarm0");
 
-        rotateDevice();
+        rotateDevice(activityRule);
         verifyAlarmDialog();
         cancelAlarmDialog();
     }

@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.alarmclock;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -30,6 +31,8 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class AlarmDatabaseAdapter
 {
@@ -456,20 +459,23 @@ public class AlarmDatabaseAdapter
 
         protected void onPostExecute( AlarmClockItem item )
         {
-            if (taskListener != null) {
-                taskListener.onItemLoaded(item);
+            for (int i=0; i<taskListeners.size(); i++)
+            {
+                AlarmItemTaskListener taskListener = taskListeners.get(i);
+                if (taskListener != null) {
+                    taskListener.onFinished(true, item);
+                }
             }
         }
 
-        private AlarmItemTaskListener taskListener = null;
-        public void setAlarmItemTaskListener( AlarmItemTaskListener listener )
+        private List<AlarmItemTaskListener> taskListeners = new ArrayList<>();
+        public void addAlarmItemTaskListener(AlarmItemTaskListener listener )
         {
-            this.taskListener = listener;
+            this.taskListeners.add(listener);
         }
-
-        public static abstract class AlarmItemTaskListener
+        public void clearAlarmItemTaskListeners()
         {
-            public void onItemLoaded( AlarmClockItem item ) {}
+            taskListeners.clear();
         }
     }
 
@@ -534,16 +540,16 @@ public class AlarmDatabaseAdapter
                 listener.onFinished(result, lastItem);
         }
 
-        protected AlarmClockUpdateTaskListener listener = null;
-        public void setTaskListener( AlarmClockUpdateTaskListener l )
+        protected AlarmItemTaskListener listener = null;
+        public void setTaskListener( AlarmItemTaskListener l )
         {
             listener = l;
         }
+    }
 
-        public static abstract class AlarmClockUpdateTaskListener
-        {
-            public void onFinished(Boolean result, AlarmClockItem item) {}
-        }
+    public static abstract class AlarmItemTaskListener
+    {
+        public void onFinished(Boolean result, AlarmClockItem item) {}
     }
 
     /**
@@ -603,7 +609,7 @@ public class AlarmDatabaseAdapter
     /**
      * AlarmStateTask
      */
-    public static class AlarmStateTask extends AsyncTask<Long, Void, AlarmState>
+    /**public static class AlarmStateTask extends AsyncTask<Long, Void, AlarmState>
     {
         protected AlarmDatabaseAdapter db;
 
@@ -649,12 +655,12 @@ public class AlarmDatabaseAdapter
         {
             public void onStateLoaded( AlarmState state ) {}
         }
-    }
+    }*/
 
     /**
      * AlarmStateUpdateTask
      */
-    public static class AlarmStateUpdateTask extends AsyncTask<AlarmState, Void, Boolean>
+    /**public static class AlarmStateUpdateTask extends AsyncTask<AlarmState, Void, Boolean>
     {
         public static final String TAG = "AlarmReceiverStateTask";
 
@@ -698,7 +704,7 @@ public class AlarmDatabaseAdapter
         {
             public void onFinished(Boolean result) {}
         }
-    }
+    }*/
 
     /**
      * AlarmListTask
@@ -751,5 +757,50 @@ public class AlarmDatabaseAdapter
         }
     }
 
+    /**
+     * AlarmListObserver
+     */
+    public static class AlarmListObserver
+    {
+        private HashMap<Long, Boolean> items;
+
+        @SuppressLint("UseSparseArrays")
+        public AlarmListObserver(Long[] alarmList, AlarmListObserverListener listener)
+        {
+            this.observerListener = listener;
+            items = new HashMap<>();
+            for (Long alarmId : alarmList) {
+                items.put(alarmId, false);
+            }
+        }
+
+        public void notify(Long alarmId)
+        {
+            items.put(alarmId, true);
+            if (observerListener != null)
+            {
+                observerListener.onObservedItem(alarmId);
+                if (observedAll()) {
+                    observerListener.onObservedAll();
+                }
+            }
+        }
+
+        public boolean observedAll()
+        {
+            boolean retValue = true;
+            for (Boolean value : items.values()) {
+                retValue = retValue && value;
+            }
+            return retValue;
+        }
+
+        private AlarmListObserverListener observerListener;
+        public static abstract class AlarmListObserverListener
+        {
+            public void onObservedItem( Long id ) {}
+            public void onObservedAll() {}
+        }
+    }
 
 }
