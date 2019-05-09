@@ -6,7 +6,7 @@
  <br /> <br />
 <hr />
 Do you find value in this app? `Please pay what you want.`<br/><br/>
-[![paypal](https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_150x38.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2) 
+[![paypal](images/PP_logo_h_150x38.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2) 
 <hr />
 <hr />
 <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Screenshots"><img alt="screenshot1" src='./doc/screenshots/v0.9.5/en/activity-main0-dark.png' width="260px" alt="screenshot1" /></a>&nbsp;&nbsp;
