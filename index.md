@@ -2,16 +2,19 @@
 
   <img align="left" src="images/ic_launcher_alarms.png" hspace="8" height="64" />  <br/><u>Suntimes Alarms</u><br />An alarm clock with support for daily repeating alarms and notifications.
  <br /> <br />
-  <a href="https://f-droid.org/en/packages/com.forrestguice.suntimescalendars/"><img align="left" src="images/ic_launcher.png" hspace="8" height="64" /></a>  <br/>[Suntimes Calendars](https://f-droid.org/en/packages/com.forrestguice.suntimescalendars/) <br />A calendar provider add-on.
+  <a href="https://f-droid.org/en/packages/com.forrestguice.suntimescalendars/"><img align="left" src="images/ic_launcher.png" hspace="8" height="64" /></a>  <br/>[Suntimes Calendars](https://f-droid.org/en/packages/com.forrestguice.suntimescalendars/) <br />An add-on that supplies events to the Calendar app.
  <br /> <br />
 <hr />
-Do you find value in this app? `Please pay what you want.`<br/><br/>
-[![paypal](images/PP_logo_h_150x38.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2) 
+<hr />
+{% include_relative donate.md %}
 <hr />
 <hr />
-<a href="https://github.com/forrestguice/SuntimesWidget/wiki/Screenshots"><img alt="screenshot1" src='./doc/screenshots/v0.9.5/en/activity-main0-dark.png' width="260px" alt="screenshot1" /></a>&nbsp;&nbsp;
-<a href="https://github.com/forrestguice/SuntimesWidget/wiki/Screenshots"><img alt="screenshot2" src='./doc/screenshots/v0.11.3/en/activity-alarms0-dark.png' width="260px" alt="screenshot2" /></a>&nbsp;&nbsp;
-<a href="https://github.com/forrestguice/SuntimesWidget/wiki/Screenshots"><img alt="screenshot3" src='./doc/screenshots/suntimescalendars/v0.3.1/en/activity-calendars0.png' width="260px" alt="screenshot3" /></a>
+## Translations
+<p>Suntimes is available in over <a href="gallery">a dozen languages</a> thanks to user contributions.</p>
+{% assign screenshot_width = '200px' %}
+<a href="gallery"><img alt="screenshot1" src='./doc/screenshots/v0.9.5/en/activity-main0-dark.png' width="{{ screenshot_width }}" alt="screenshot1" /></a>&nbsp;&nbsp;
+<a href="gallery"><img alt="screenshot2" src='./doc/screenshots/v0.11.3/en/activity-alarms0-dark.png' width="{{ screenshot_width }}" alt="screenshot2" /></a>&nbsp;&nbsp;
+<a href="gallery"><img alt="screenshot3" src='./doc/screenshots/suntimescalendars/v0.3.1/en/activity-calendars0.png' width="{{ screenshot_width }}" alt="screenshot3" /></a>
 
 ## Philosophy
 To create an application that is:
