@@ -783,11 +783,11 @@
     <string name="configLabel_ui_showdatasource_summary">Show a label indicating the current configuration.</string>
 
     <!-- App Setting: show golden hour -->
-    <string name="configLabel_ui_showgoldhour">Show Golden Hour</string>
+    <string name="configLabel_ui_showgoldhour">Golden Hour</string>    <!-- TODO -->
     <string name="configLabel_ui_showgoldhour_summary">Show golden hour times.</string>
 
     <!-- App Setting: show blue hour -->
-    <string name="configLabel_ui_showbluehour">Show Blue Hour</string>
+    <string name="configLabel_ui_showbluehour">Blue Hour</string>  <!-- TODO -->
     <string name="configLabel_ui_showbluehour_summary">Show blue hour times.</string>
 
     <!-- App Setting: UI Theme -->
@@ -1230,15 +1230,13 @@
         <b>Support:</b> visit the
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> to submit a request.
     ]]></string>
-    <string name="app_source_url"><xliff:g id="url"><![CDATA[
-        <a href="https://github.com/forrestguice/SuntimesWidget/">github.com/forrestguice/SuntimesWidget/</a>
-    ]]></xliff:g></string>
     <string name="app_url"><xliff:g id="url"><![CDATA[
         <a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget</a>
     ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
-        <b>Copyright &#169 2014-2019 Forrest Guice</b> <br />
-        Source code available under <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GPLv3</a>.
+        <b>Source Code:</b><br />
+        Copyright &#169 2014-2019 Forrest Guice <br />
+        Source code available under GPLv3.
     ]]></string>
 
     <string name="app_legal2"><![CDATA[<b>Translations to:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
@@ -1252,7 +1250,6 @@
     <![CDATA[ github.com/caarmen/SunriseSunset ]]> <![CDATA[ <br /> ]]>
     <![CDATA[ github.com/QuadFlask/colorpicker ]]>
     </string>
-    <string name="creditsTab">Credits</string>   <!-- TODO -->
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Help</string>
@@ -1386,8 +1383,7 @@
         This feature is now available as a <a href="moreInfoLink">separate app</a>.
     ]]></string>
 
-    <string name="privacyTab">Privacy</string>   <!-- TODO -->
-    <string name="privacy_policy"><![CDATA[Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. <br/><br/>The app is configured from location data. This information (and other configuration data used by the app) is stored locally and does not leave the device.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
+    <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. <br/><br/>The app is configured from location data. This information (and other configuration data used by the app) is stored locally and does not leave the device.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string>
     <string name="privacy_permissiondialog_title">Permissions</string>
