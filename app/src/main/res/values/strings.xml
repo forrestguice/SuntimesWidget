@@ -960,7 +960,7 @@
     <!-- App Setting: custom Locale -->
     <string name="configLabel_localeSelect">Language</string>
     <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
-    <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
+    <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits -->
         <item>English</item>
         <item>Esperanto</item>
         <item>French</item>

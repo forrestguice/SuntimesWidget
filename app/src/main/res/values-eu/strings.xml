@@ -842,7 +842,7 @@
     <!-- App Setting: custom Locale -->
     <string name="configLabel_localeSelect">Hizkuntza</string>
     <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
-    <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
+    <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits  -->
         <item>Ingelesa</item>
         <item>Esperantoa</item>
         <item>Frantsesa</item>
@@ -1076,7 +1076,7 @@
         Iturburu kodea GPLv3 lizentziapean eskuragarri dago.
     ]]></string>
 
-    <string name="app_legal2"><![CDATA[<big><b>Itzulpenak:</b></big><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>  <!-- TODO: review -->
+    <string name="app_legal2"><![CDATA[<b>Itzulpenak:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>  <!-- TODO: review -->
     <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> :: <xliff:g id="authorList">%2$s</xliff:g>.]]></string>   <!-- TODO: review -->
     <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
     <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, eta <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
