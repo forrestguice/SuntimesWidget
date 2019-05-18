@@ -825,9 +825,9 @@
         <item>Catalan</item>
         <item>Basque</item>
         <item>Norvégien</item>
-        <item>Traditional Chinese</item>
+        <item>Traditional Chinese</item> <!-- TODO -->
         <item>Portuguese</item>  <!-- TODO -->
-    </string-array>  <!-- TODO -->
+    </string-array>
 
     <!-- position formats -->
     <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
@@ -1038,14 +1038,12 @@
         Copyright &#169 2014-2019 Forrest Guice <br />
         Code source disponible sous licence GPLv3.
     ]]></string>
-    <string name="app_legal2"><![CDATA[
-        <b>Traductions :</b><br/>
-        Traduction allemande par Henrik "HerHde" Hüttemann. <br />
-        Traduction polonnaise et espéranto par Verdulo. <br />
-        Traduction française par Jejc & Aloha <br />
-        Traduction hongrois par Erci. <br />
-        Traduction espagnol et catalan par <a href=https://github.com/Raulvo>Raulvo</a>.
-    ]]></string>
+
+    <string name="app_legal2"><![CDATA[<big><b>Traductions en:</b></big><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>  <!-- TODO: review -->
+    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> par <xliff:g id="authorList">%2$s</xliff:g>.]]></string>   <!-- TODO: review -->
+    <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
+    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, et <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
+
     <string name="app_legal3"><![CDATA[ <b>Bibliothèques:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
     <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>

@@ -1117,19 +1117,16 @@
         Direitos Reservados a &#169 2014-2019 Forrest Guice <br />
         Código Aberto disponível sob GPLv3.
     ]]></string>
-    <string name="app_legal2"><![CDATA[
+
+    <string name="app_legal2"><![CDATA[<big><b>Traduções para:</b></big><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>  <!-- TODO: review -->
+    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> por <xliff:g id="authorList">%2$s</xliff:g>.]]></string>   <!-- TODO: review -->
+    <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
+    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, e <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
+    <!--<string name="app_legal2"><![CDATA[
         <b>Traduções:</b><br/>
         Tradução para o Português Brasileiro por <a href=https://github.com/NetoSilva15>Neto Silva</a>. <br />
-        German translation by Henrik "HerHde" Hüttemann and Wolkenschieber. <br />
-        Polish and Esperanto translation by Verdulo. <br />
-        French translation by Jej & Aloha. <br />
-        Hungarian translation by Erci. <br />
-        Spanish and Catalan translation by <a href=https://github.com/Raulvo>Raulvo</a>. <br />
-        Basque translation by beriain. <br />
-        Norwegian translation by FTno. <br />
-        Italian translation by Matteo Caoduro. <br />
-        Traditional Chinese translation by <a href=https://github.com/pggdt>ft42</a>.
-    ]]></string>
+    ]]></string>-->
+
     <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
     <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>

@@ -1058,14 +1058,12 @@
     Copyright &#169 2014-2019 Forrest Guice <br />
     Código fuente disponible bajo GPLv3.
 ]]></string>
-    <string name="app_legal2"><![CDATA[
-    <b>Traducciones:</b> <br/>
-    Traducción en alemán por Henrik "HerHde" Hüttemann. <br />
-    Traducción en polaco y esperanto por verdulería. <br />
-    Traducción en francés para Jej. <br />
-    Traducción en húngaro para Ercis. <br />
-    Traducción en español y catalán por <a href=https://github.com/Raulvo>Raulvo</a>.
-]]></string>
+
+    <string name="app_legal2"><![CDATA[<big><b>Traducciones a:</b></big><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>  <!-- TODO: review -->
+    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> por <xliff:g id="authorList">%2$s</xliff:g>.]]></string>   <!-- TODO: review -->
+    <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
+    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, y <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
+
     <string name="app_legal3"><![CDATA[
     <b>Bibliotecas:</b> <br/>
     github.com/MenoData/Time4A <br />
