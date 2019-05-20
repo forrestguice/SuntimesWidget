@@ -1,0 +1,11 @@
+{% assign locale0 = include.current_locale | split: " " %}
+<span id="screenshot_nav">
+{{ site.title }} has been translated into the following languages:<br/>
+| {% for localeEntry in site.app_locales %}{% assign locale = localeEntry | split: " " %}
+      {% if locale.first contains locale0.first %}
+      <b> {{ locale.first | slice: 0, 2 }} </b> |
+      {% else %}
+      <a href="{{include.gallery_root}}{{ locale.first }}"> {{ locale.first | slice: 0, 2 }} </a> |
+      {% endif %}
+{% endfor %}
+</span>

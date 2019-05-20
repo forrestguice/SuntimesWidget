@@ -3,18 +3,23 @@ title: Suntimes
 show_downloads: false
 fdroid_link: https://f-droid.org/en/packages/com.forrestguice.suntimeswidget/
 app_locales: 
- - en
- - ca
- - de
- - eo
- - es_ES
- - eu
- - fr
- - hu
- - it
- - nb
- - pl
- - pt_BR
- - zh_TW
+ - en English
+ - ca Catalan
+ - de German
+ - eo Esperanto
+ - es_ES Spanish
+ - eu Basque
+ - fr French
+ - hu Hungarian
+ - it Italian
+ - nb Norwegian
+ - pl Polish
+ - pt_BR Portuguese
+ - zh_TW Chinese
+app_versions:
+ - v0.9.5
+ - v0.11.3
+app_versions1:
+ - v0.3.1
 plugins:
   - jekyll-seo-tag

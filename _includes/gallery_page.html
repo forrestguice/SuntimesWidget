@@ -1,0 +1,12 @@
+<div>{% include gallery_nav.html current_locale = include.gallery_locale %}</div>
+<hr />
+{% capture versions %}{% for version in site.app_versions %}{{ version }}|{% endfor %}{% endcapture %}
+{% capture versions1 %}{% for version1 in site.app_versions1 %}{{ version1 }}|{% endfor %}{% endcapture %}
+{% include gallery.html 
+	screenshot_locales=include.gallery_locale
+        screenshot_versions=versions screenshot_versions1=versions1
+	screenshot_width=include.gallery_image_width screenshot_suffix=include.gallery_image_suffix %}
+<hr />
+<hr />
+{% include donate.html %}
+<hr />

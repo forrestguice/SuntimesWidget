@@ -1,0 +1,34 @@
+<div id="gallery">
+{% assign locales = include.screenshot_locales | strip | strip_newlines | split: "|" %}
+{% assign versions = include.screenshot_versions | strip | strip_newlines | split: "|" %}
+{% assign versions1 = include.screenshot_versions1 | strip | strip_newlines | split: "|" %}
+
+{% assign version1 = versions1.first %}
+{% for localeEntry in locales %}
+  {% assign locale = localeEntry | split: " " %}
+  {% assign sectionID = locale.first %}
+  {% assign screenshot_alt = 'screenshot-' | append: locale.first %}
+  <div id="{{ sectionID }}">
+	  <a name="#{{ sectionID }}"><h2>{{ locale[1] }} <small>({{ locale.first }})</small></h2></a>
+
+  {% for version in versions %}
+      <span>
+      {% assign screenshot_path = 'doc/screenshots/' | append: version | append: '/' | append: locale.first %}
+      {% for image in site.static_files %}
+          {% if image.path contains screenshot_path and image.path contains include.screenshot_suffix %}
+              <a href="{{ site.baseurl }}{{ image.path }}"><img src="{{ site.baseurl }}{{ image.path }}" alt="{{ screenshot_alt }}" width="{{ include.screenshot_width }}" /></a>
+          {% endif %}
+      {% endfor %}
+      </span>
+  {% endfor %}
+
+  {% assign screenshot_path1 = 'doc/screenshots/suntimescalendars/' | append: version1 | append: '/' | append: locale.first %}
+  {% for image in site.static_files %}
+      {% if image.path contains screenshot_path1 %}
+          <a href="{{ site.baseurl }}{{ image.path }}"><img src="{{ site.baseurl }}{{ image.path }}" alt="{{ screenshot_alt }}" width="{{ include.screenshot_width }}" /></a>&nbsp;&nbsp;
+      {% endif %}
+  {% endfor %}
+  </div>
+
+{% endfor %}
+</div>
