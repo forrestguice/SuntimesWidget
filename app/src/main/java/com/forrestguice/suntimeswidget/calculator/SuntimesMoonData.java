@@ -177,23 +177,29 @@ public class SuntimesMoonData extends SuntimesData
     }
 
     /**
-     * @return the date and distance of the upcoming lunar apogee.
+     * @return the date and position (Pair) of the upcoming lunar apogee.
      */
-    public Pair<Calendar, Double> getMoonApogee()
+    public Pair<Calendar, SuntimesCalculator.MoonPosition> getMoonApogee()
     {
-        Calendar date = Calendar.getInstance();
-        date.add(Calendar.HOUR_OF_DAY, 1);
-        return new Pair<>(date, 400123d);  // TODO
+        Calendar apogeeDate = calculator.getMoonApogeeNextDate(nowThen(todaysCalendar));
+        if (apogeeDate != null)
+        {
+            SuntimesCalculator.MoonPosition apogeePosition = calculator.getMoonPosition(apogeeDate);
+            return new Pair<>(apogeeDate, apogeePosition);
+        } else return null;
     }
 
     /**
-     * @return the date and distance of the upcoming lunar perigee.
+     * @return the date and position (Pair) of the upcoming lunar perigee.
      */
-    public Pair<Calendar, Double> getMoonPerigee()
+    public Pair<Calendar, SuntimesCalculator.MoonPosition> getMoonPerigee()
     {
-        Calendar date = Calendar.getInstance();
-        date.add(Calendar.DAY_OF_YEAR, 1);
-        return new Pair<>(date, 350123d);  // TODO
+        Calendar perigeeDate = calculator.getMoonPerigeeNextDate(nowThen(todaysCalendar));
+        if (perigeeDate != null)
+        {
+            SuntimesCalculator.MoonPosition perigeePosition = calculator.getMoonPosition(perigeeDate);
+            return new Pair<>(perigeeDate, perigeePosition);
+        } else return null;
     }
 
     /**

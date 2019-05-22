@@ -207,15 +207,43 @@ public class MoonDialog extends DialogFragment
             boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, 0);
             boolean showHours = WidgetSettings.loadShowHoursPref(context, 0);
 
-            Pair<Calendar, Double> apogee = data.getMoonApogee();
-            apogee_date.setText(utils.calendarDateTimeDisplayString(context, apogee.first, showTime, showSeconds).getValue());
-            apogee_note.setText(createApsisNote(context, apogee.first, showWeeks, showHours, timeColor));
-            apogee_distance.setText(SuntimesUtils.formatAsDistance(context, apogee.second, units, 2, true).toString());
+            Pair<Calendar, SuntimesCalculator.MoonPosition> apogee = data.getMoonApogee();
+            if (apogee != null)
+            {
+                apogee_date.setText(utils.calendarDateTimeDisplayString(context, apogee.first, showTime, showSeconds).getValue());
+                apogee_note.setText(createApsisNote(context, apogee.first, showWeeks, showHours, timeColor));
+                apogee_distance.setText(SuntimesUtils.formatAsDistance(context, apogee.second.distance, units, 2, true).toString());
 
-            Pair<Calendar, Double> perigee = data.getMoonPerigee();
-            perigee_date.setText(utils.calendarDateTimeDisplayString(context, perigee.first, showTime, showSeconds).getValue());
-            perigee_note.setText(createApsisNote(context, perigee.first, showWeeks, showHours, timeColor));
-            perigee_distance.setText(SuntimesUtils.formatAsDistance(context, perigee.second, units, 2, true).toString());
+                apogee_date.setVisibility(View.VISIBLE);
+                apogee_note.setVisibility(View.VISIBLE);
+                apogee_distance.setVisibility(View.VISIBLE);
+                apogee_label.setVisibility(View.VISIBLE);
+
+            } else {
+                apogee_date.setVisibility(View.GONE);
+                apogee_note.setVisibility(View.GONE);
+                apogee_distance.setVisibility(View.GONE);
+                apogee_label.setVisibility(View.GONE);
+            }
+
+            Pair<Calendar, SuntimesCalculator.MoonPosition> perigee = data.getMoonPerigee();
+            if (perigee != null)
+            {
+                perigee_date.setText(utils.calendarDateTimeDisplayString(context, perigee.first, showTime, showSeconds).getValue());
+                perigee_note.setText(createApsisNote(context, perigee.first, showWeeks, showHours, timeColor));
+                perigee_distance.setText(SuntimesUtils.formatAsDistance(context, perigee.second.distance, units, 2, true).toString());
+
+                perigee_date.setVisibility(View.VISIBLE);
+                perigee_note.setVisibility(View.VISIBLE);
+                perigee_distance.setVisibility(View.VISIBLE);
+                perigee_label.setVisibility(View.VISIBLE);
+
+            } else {
+                perigee_date.setVisibility(View.GONE);
+                perigee_note.setVisibility(View.GONE);
+                perigee_distance.setVisibility(View.GONE);
+                perigee_label.setVisibility(View.GONE);
+            }
 
             SuntimesCalculator calculator = data.calculator();
             SuntimesCalculator.MoonPosition position = calculator.getMoonPosition(data.nowThen(data.calendar()));
@@ -230,17 +258,18 @@ public class MoonDialog extends DialogFragment
                     moondistance_note.setText(context.getString(R.string.timeMode_moon_micro));
                 else moondistance_note.setText("");
 
-            } else moondistance.setText("");
+                moondistance.setVisibility(View.VISIBLE);
+            } else moondistance.setVisibility(View.GONE);
 
         } else {
-            moondistance.setText("");
-            moondistance_note.setText("");
-            perigee_date.setText("");
-            perigee_note.setText("");
-            perigee_distance.setText("");
-            apogee_date.setText("");
-            apogee_note.setText("");
-            apogee_distance.setText("");
+            moondistance.setVisibility(View.GONE);
+            moondistance_note.setVisibility(View.GONE);
+            perigee_date.setVisibility(View.GONE);
+            perigee_note.setVisibility(View.GONE);
+            perigee_distance.setVisibility(View.GONE);
+            apogee_date.setVisibility(View.GONE);
+            apogee_note.setVisibility(View.GONE);
+            apogee_distance.setVisibility(View.GONE);
         }
     }
 
