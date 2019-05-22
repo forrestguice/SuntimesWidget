@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.calculator.core;
 
 /**
  * CalculatorProviderContract
- * @version 1 (0.2.0)
+ * @version 2 (0.3.0)
  *
  * Supported URIs have the form: "content://AUTHORITY/query"
  * ..where [AUTHORITY] is "suntimeswidget.calculator.provider"
@@ -89,6 +89,7 @@ package com.forrestguice.suntimeswidget.calculator.core;
  *   The result will be one row containing:
  *       COLUMN_MOONPOS_AZ, COLUMN_MOONPOS_ALT,
  *       COLUMN_MOONPOS_RA, COLUMN_MOONPOS_DEC,
+ *       COLUMN_MOON_PERIGEE, COLUMN_MOON_APOGEE, COLUMN_MOON_DISTANCE
  *       COLUMN_MOONPOS_ILLUMINATION,
  *       COLUMN_MOONPOS_DATE
  * ------------------------------------------------------------------------------------------------*
@@ -207,8 +208,8 @@ public interface CalculatorProviderContract
 {
     String AUTHORITY = "suntimeswidget.calculator.provider";
     String READ_PERMISSION = "suntimes.permission.READ_CALCULATOR";
-    String VERSION_NAME = "v0.2.0";
-    int VERSION_CODE = 1;
+    String VERSION_NAME = "v0.3.0";
+    int VERSION_CODE = 2;
 
     /**
      * CONFIG
@@ -308,10 +309,15 @@ public interface CalculatorProviderContract
     String COLUMN_MOONPOS_ILLUMINATION = "moonpos_illum";  // double [0,1]
     String COLUMN_MOONPOS_DATE = "moonpos_date";           // long (timestamp)
 
+    String COLUMN_MOONPOS_PERIGEE = "moonpos_perigee";     // long (timestamp)
+    String COLUMN_MOONPOS_APOGEE = "moonpos_apogee";       // long (timestamp)
+    String COLUMN_MOONPOS_DISTANCE = "moonpos_distance";   // double (kilometers)
+
     String QUERY_MOONPOS = "moonpos";
     String[] QUERY_MOONPOS_PROJECTION = new String[] {
             COLUMN_MOONPOS_AZ, COLUMN_MOONPOS_ALT,
             COLUMN_MOONPOS_RA, COLUMN_MOONPOS_DEC,
+            COLUMN_MOONPOS_PERIGEE, COLUMN_MOONPOS_APOGEE, COLUMN_MOONPOS_DISTANCE,
             COLUMN_MOONPOS_ILLUMINATION, COLUMN_MOONPOS_DATE
     };
 
