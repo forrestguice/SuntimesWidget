@@ -396,5 +396,17 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
         return SolarTime.equationOfTime(moment, solarTime.getCalculator().name());
     }
 
+    @Override
+    public Calendar getMoonPerigeeNextDate(Calendar date)
+    {
+        return Calendar.getInstance();  // TODO
+    }
+
+    @Override
+    public Calendar getMoonApogeeNextDate(Calendar date)
+    {
+        return Calendar.getInstance();  // TODO
+    }
+
 }
 
