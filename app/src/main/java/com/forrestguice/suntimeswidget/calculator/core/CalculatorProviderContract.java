@@ -324,14 +324,22 @@ public interface CalculatorProviderContract
     /**
      * MOONPHASE
      */
-    String COLUMN_MOON_NEW = "moonphase_new";               // long (timestamp)
-    String COLUMN_MOON_FIRST = "moonphase_first";           // long (timestamp)
-    String COLUMN_MOON_FULL = "moonphase_full";             // long (timestamp)
-    String COLUMN_MOON_THIRD = "moonphase_third";           // long (timestamp)
+    String COLUMN_MOON_NEW = "moonphase_new";                        // long (timestamp)
+    String COLUMN_MOON_NEW_DISTANCE = "moonphase_new_distance";      // double (km)
+
+    String COLUMN_MOON_FIRST = "moonphase_first";                    // long (timestamp)
+    String COLUMN_MOON_FIRST_DISTANCE = "moonphase_first_distance";  // double (km)
+
+    String COLUMN_MOON_FULL = "moonphase_full";                      // long (timestamp)
+    String COLUMN_MOON_FULL_DISTANCE = "moonphase_full_distance";    // double (km)
+
+    String COLUMN_MOON_THIRD = "moonphase_third";                    // long (timestamp)
+    String COLUMN_MOON_THIRD_DISTANCE = "moonphase_third_distance";  // double (km)
 
     String QUERY_MOONPHASE = "moonphases";
     String[] QUERY_MOONPHASE_PROJECTION = new String[] {
-            COLUMN_MOON_NEW, COLUMN_MOON_FIRST, COLUMN_MOON_FULL, COLUMN_MOON_THIRD
+            COLUMN_MOON_NEW, COLUMN_MOON_FIRST, COLUMN_MOON_FULL, COLUMN_MOON_THIRD,
+            COLUMN_MOON_NEW_DISTANCE, COLUMN_MOON_FIRST_DISTANCE, COLUMN_MOON_FULL_DISTANCE, COLUMN_MOON_THIRD_DISTANCE
     };
 
     /**

@@ -75,11 +75,15 @@ import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProvider
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_PERIGEE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_RA;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_FIRST;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_FIRST_DISTANCE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_FULL;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_FULL_DISTANCE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_NEW;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_NEW_DISTANCE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_RISE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_SET;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_THIRD;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_THIRD_DISTANCE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_AUTUMN;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_SUMMER;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SEASON_VERNAL;
@@ -654,6 +658,10 @@ public class CalculatorProviderTest
         assertTrue("default projection contains COLUMN_MOON_FIRST", projection.contains(COLUMN_MOON_FIRST));
         assertTrue("default projection contains COLUMN_MOON_FULL", projection.contains(COLUMN_MOON_FULL));
         assertTrue("default projection contains COLUMN_MOON_THIRD", projection.contains(COLUMN_MOON_THIRD));
+        assertTrue("default projection contains COLUMN_MOON_NEW_DISTANCE", projection.contains(COLUMN_MOON_NEW_DISTANCE));
+        assertTrue("default projection contains COLUMN_MOON_FIRST_DISTANCE", projection.contains(COLUMN_MOON_FIRST_DISTANCE));
+        assertTrue("default projection contains COLUMN_MOON_FULL_DISTANCE", projection.contains(COLUMN_MOON_FULL_DISTANCE));
+        assertTrue("default projection contains COLUMN_MOON_THIRD_DISTANCE", projection.contains(COLUMN_MOON_THIRD_DISTANCE));
         test_projectionHasUniqueColumns(QUERY_MOONPHASE_PROJECTION);
     }
 
