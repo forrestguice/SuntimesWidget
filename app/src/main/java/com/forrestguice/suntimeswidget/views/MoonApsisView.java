@@ -103,6 +103,7 @@ public class MoonApsisView extends LinearLayout
             return;
         }
 
+        clearLayout();
         if (data != null && data.isCalculated())
         {
             boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
@@ -111,13 +112,23 @@ public class MoonApsisView extends LinearLayout
             boolean showHours = WidgetSettings.loadShowHoursPref(context, 0);
             WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
 
-            perigeeField.updateField(context, data.getMoonPerigee(), showTime, showWeeks, showHours, showSeconds, units);
-            apogeeField.updateField(context, data.getMoonApogee(), showTime, showWeeks, showHours, showSeconds, units);
+            Pair<Calendar, SuntimesCalculator.MoonPosition> perigee = data.getMoonPerigee();
+            perigeeField.updateField(context, perigee, showTime, showWeeks, showHours, showSeconds, units);
 
-            //reorderLayout(perigeeField, apogeeField);
+            Pair<Calendar, SuntimesCalculator.MoonPosition> apogee = data.getMoonApogee();
+            apogeeField.updateField(context, apogee, showTime, showWeeks, showHours, showSeconds, units);
 
-        } else {
-            clearLayout();
+            if (perigee.first != null)    // reorder layouts
+            {
+                if (perigee.first.before(apogee.first))
+                {
+                    perigeeField.addToLayout(content);
+                    apogeeField.addToLayout(content);
+                } else {
+                    apogeeField.addToLayout(content);
+                    perigeeField.addToLayout(content);
+                }
+            }
         }
     }
 
