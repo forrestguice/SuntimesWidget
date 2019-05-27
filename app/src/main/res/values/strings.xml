@@ -381,6 +381,11 @@
     <string name="timeMode_moon_micronew">Micro New Moon</string>                             <!-- setting -->    <!-- TODO -->
     <string name="timeMode_moon_micronew_short">@string/timeMode_moon_micro</string>     <!-- label -->
 
+    <string name="timeMode_moon_perigee">@string/label_perigee</string>                             <!-- label -->
+    <string name="timeMode_moon_apogee">@string/label_apogee</string>                             <!-- label -->
+    <string name="label_apogee">Apogee</string>      <!-- TODO -->
+    <string name="label_perigee">Perigee</string>    <!-- TODO -->
+
     <string name="configLabel_general_timeMode">Mode:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: layout mode -->
