@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -123,6 +124,7 @@ public class MoonDialog extends DialogFragment
         }
     }
 
+    @SuppressLint("ResourceType")
     public void themeViews(Context context)
     {
         if (themeOverride != null)
@@ -144,10 +146,11 @@ public class MoonDialog extends DialogFragment
             moondistance_note.setTextColor(timeColor);
 
         } else {
-            int[] colorAttrs = { android.R.attr.textColorPrimary };
+            int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.moonriseColor, R.attr.moonsetColor };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
-            int def = R.color.transparent;
-            timeColor = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
+            timeColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.transparent));
+            riseColor = ContextCompat.getColor(context, typedArray.getResourceId(1, timeColor));
+            setColor = ContextCompat.getColor(context, typedArray.getResourceId(2, timeColor));
             typedArray.recycle();
         }
     }
@@ -187,7 +190,7 @@ public class MoonDialog extends DialogFragment
             if (position != null)
             {
                 SuntimesUtils.TimeDisplayText distance = SuntimesUtils.formatAsDistance(context, position.distance, units, 2, true);
-                moondistance.setText(SuntimesUtils.createColorSpan(null, distance.toString(), distance.getValue(), timeColor));
+                moondistance.setText(SuntimesUtils.createColorSpan(null, distance.toString(), distance.getValue(), (moonapsis.isRising() ? riseColor : setColor)));
 
                 if (SuntimesMoonData.isSuperMoon(position))
                     moondistance_note.setText(context.getString(R.string.timeMode_moon_super));
@@ -196,8 +199,8 @@ public class MoonDialog extends DialogFragment
                 else moondistance_note.setText("");
 
                 moondistance.setVisibility(View.VISIBLE);
-            } else moondistance.setVisibility(View.GONE);
 
+            } else moondistance.setVisibility(View.GONE);
         } else {
             moondistance.setVisibility(View.GONE);
             moondistance_note.setVisibility(View.GONE);

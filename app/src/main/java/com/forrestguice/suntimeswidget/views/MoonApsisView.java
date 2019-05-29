@@ -124,12 +124,20 @@ public class MoonApsisView extends LinearLayout
                 {
                     perigeeField.addToLayout(content);
                     apogeeField.addToLayout(content);
+                    isRising = false;
+
                 } else {
                     apogeeField.addToLayout(content);
                     perigeeField.addToLayout(content);
+                    isRising = true;
                 }
             }
         }
+    }
+
+    private boolean isRising = true;
+    public boolean isRising() {
+        return isRising;
     }
 
     public void setOnClickListener( OnClickListener listener )
