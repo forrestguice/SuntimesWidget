@@ -115,6 +115,7 @@ public class MoonDialog extends DialogFragment
         moondistance = (TextView) dialogView.findViewById(R.id.moonapsis_current_distance);
         moondistance_label = (TextView) dialogView.findViewById(R.id.moonapsis_current_label);
         moondistance_note = (TextView) dialogView.findViewById(R.id.moonapsis_current_note);
+        moondistance_note.setVisibility(View.GONE);
 
         Context context = dialogView.getContext();
         if (context != null) {

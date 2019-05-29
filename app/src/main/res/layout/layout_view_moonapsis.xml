@@ -24,8 +24,9 @@
 
         <LinearLayout
             android:id="@+id/moonapsis_perigee_layout"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" android:gravity="center"
             android:layout_marginLeft="8dp" android:layout_marginRight="8dp">
 
             <TextView android:id="@+id/moonapsis_perigee_label"
@@ -40,20 +41,21 @@
 
             <TextView android:id="@+id/moonapsis_perigee_date"
                 style="@style/SunsetTimeTextView" android:layout_margin="0dp"
-                tools:text="April 19, 2019, 3:30 PM"
+                tools:text="April 19, 2019, 3:30 PM" android:gravity="start"
                 android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
             <TextView android:id="@+id/moonapsis_perigee_note"
                 style="@style/SunsetTimeTextView2" android:layout_margin="0dp"
-                tools:text="xd xm from now"
+                tools:text="xd xm from now" android:gravity="start"
                 android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/moonapsis_apogee_layout"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" android:gravity="center"
             android:layout_marginLeft="8dp" android:layout_marginRight="8dp">
 
             <TextView android:id="@+id/moonapsis_apogee_label"
@@ -68,12 +70,12 @@
 
             <TextView android:id="@+id/moonapsis_apogee_date"
                 style="@style/SunsetTimeTextView" android:layout_margin="0dp"
-                tools:text="April 19, 2019, 3:30 PM"
+                tools:text="April 19, 2019, 3:30 PM" android:gravity="start"
                 android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
             <TextView android:id="@+id/moonapsis_apogee_note"
                 style="@style/SunsetTimeTextView2" android:layout_margin="0dp"
-                tools:text="xd xm ago"
+                tools:text="xd xm ago" android:gravity="start"
                 android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
         </LinearLayout>
