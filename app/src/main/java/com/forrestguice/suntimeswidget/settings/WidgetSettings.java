@@ -35,6 +35,7 @@ import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_3;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_4;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_5;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_6;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_7;
 import com.forrestguice.suntimeswidget.layouts.SunLayout;
 import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_0;
 import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_1;
@@ -406,7 +407,8 @@ public class WidgetSettings
         MODE1x1_ILLUM("Moon illumination only", R.layout.layout_widget_moon_1x1_3),
         MODE1x1_PHASENEXT("Next major phase", R.layout.layout_widget_moon_1x1_4),
         MODE1x1_ALTAZ("Altitude & Azimuth", R.layout.layout_widget_moon_1x1_5),
-        MODE1x1_DECRIGHT("Declination & Right Ascension", R.layout.layout_widget_moon_1x1_6);
+        MODE1x1_DECRIGHT("Declination & Right Ascension", R.layout.layout_widget_moon_1x1_6),
+        MODE1x1_DISTANCE("Current distance", R.layout.layout_widget_moon_1x1_7);
 
         private final int layoutID;
         private String displayString;
@@ -446,6 +448,7 @@ public class WidgetSettings
             MODE1x1_PHASENEXT.setDisplayString(context.getString(R.string.widgetMode1x1_moonphasenext));
             MODE1x1_ALTAZ.setDisplayString(context.getString(R.string.widgetMode1x1_altaz));
             MODE1x1_DECRIGHT.setDisplayString(context.getString(R.string.widgetMode1x1_decright));
+            MODE1x1_DISTANCE.setDisplayString(context.getString(R.string.widgetMode1x1_distance));
         }
     }
 
@@ -1216,6 +1219,10 @@ public class WidgetSettings
         WidgetModeMoon1x1 mode = loadMoon1x1ModePref(context, appWidgetId);
         switch (mode)
         {
+            case MODE1x1_DISTANCE:
+                layout = new MoonLayout_1x1_7();
+                break;
+
             case MODE1x1_DECRIGHT:
                 layout = new MoonLayout_1x1_6();
                 break;
