@@ -91,12 +91,12 @@ public class MoonLayout_1x1_5 extends MoonLayout
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
             float textSize = theme.getTextSizeSp();
-            views.setTextViewTextSize(R.id.info_moon_azimuth_current_label, TypedValue.COMPLEX_UNIT_SP, textSize);
-            views.setTextViewTextSize(R.id.info_moon_elevation_current_label, TypedValue.COMPLEX_UNIT_SP, textSize);
+            views.setTextViewTextSize(R.id.info_moon_azimuth_current_label, TypedValue.COMPLEX_UNIT_DIP, textSize);
+            views.setTextViewTextSize(R.id.info_moon_elevation_current_label, TypedValue.COMPLEX_UNIT_DIP, textSize);
 
             float timeSize = theme.getTimeSizeSp();
-            views.setTextViewTextSize(R.id.info_moon_azimuth_current, TypedValue.COMPLEX_UNIT_SP, timeSize);
-            views.setTextViewTextSize(R.id.info_moon_elevation_current, TypedValue.COMPLEX_UNIT_SP, timeSize);
+            views.setTextViewTextSize(R.id.info_moon_azimuth_current, TypedValue.COMPLEX_UNIT_DIP, timeSize);
+            views.setTextViewTextSize(R.id.info_moon_elevation_current, TypedValue.COMPLEX_UNIT_DIP, timeSize);
         }
     }
 
