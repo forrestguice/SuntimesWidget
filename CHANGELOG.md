@@ -1,5 +1,9 @@
 ### ~
 
+### v0.11.5 (2019-05-31)
+* improves language resolution for Spanish locales (#147).
+* improves the About Dialog (better translation credits).
+
 ### v0.11.4 (2019-05-07)
 * fixes bug "NotificationService is always running" (#323, #324).
 * fixes bug "AlarmClockActivity started multiple times" (#325, #324).
