@@ -397,6 +397,7 @@
     <string name="widgetMode1x1_altaz">Altitude &amp; Azimuth</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Declination &amp; Right Ascension</string>     <!-- setting -->
     <string name="widgetMode1x1_distance">Current distance</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode1x1_apsis">Next apogee or perigee</string>     <!-- setting -->    <!-- TODO -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polar</string>     <!-- setting -->
