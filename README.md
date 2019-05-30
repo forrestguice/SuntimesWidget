@@ -2,7 +2,7 @@
 Android app (and widget collection) that displays sunlight and moonlight times for a given location. 
 
 <a href="https://f-droid.org/repository/browse/?fdid=com.forrestguice.suntimeswidget" target="_blank">
-<img src="https://forrestguice.github.io/SuntimesWidget/images/get-it-on-fdroid.png" alt="Get it on F-Droid" height="68" align="left" /></a><br /><br />
+<img src="https://forrestguice.github.io/SuntimesWidget/assets/images/get-it-on-fdroid.png" alt="Get it on F-Droid" height="68" align="left" /></a><br /><br />
 
 [![F-Droid](https://img.shields.io/f-droid/v/com.forrestguice.suntimeswidget.svg)](https://f-droid.org/en/packages/com.forrestguice.suntimeswidget/)
 [![GitHub release](https://img.shields.io/github/release/forrestguice/SuntimesWidget.svg)](https://github.com/forrestguice/SuntimesWidget/releases)
@@ -16,10 +16,10 @@ Android app (and widget collection) that displays sunlight and moonlight times f
 
 Displays sunrise and sunset, twilights (civil / nautical / astronomical), blue and golden hour, solstices and equinoxes, moonrise and moonset, moon phases and illumination. 
     
-<a href="https://forrestguice.github.io/SuntimesWidget/" target="_blank"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/images/ic_launcher_alarms.png" height="64" /></a> Suntimes Alarms<br />
+<a href="https://forrestguice.github.io/SuntimesWidget/" target="_blank"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/assets/images/ic_launcher_alarms.png" height="64" /></a> Suntimes Alarms<br />
 An alarm clock for Suntimes.<br/><br />
 
-<a href="https://github.com/forrestguice/SuntimesCalendars/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/images/ic_launcher.png" height="64" /></a> <a href="https://github.com/forrestguice/SuntimesCalendars/">Suntimes Calendars</a> <br />
+<a href="https://github.com/forrestguice/SuntimesCalendars/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/assets/images/ic_launcher.png" height="64" /></a> <a href="https://github.com/forrestguice/SuntimesCalendars/">Suntimes Calendars</a> <br />
 A calendar provider add-on for Suntimes.<br/><br />        
     
 The app:
