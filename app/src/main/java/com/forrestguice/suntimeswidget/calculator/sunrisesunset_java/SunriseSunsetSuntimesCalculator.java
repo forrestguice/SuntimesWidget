@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -266,6 +266,18 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public double equationOfTime(Calendar dateTime)
     {
         return Double.POSITIVE_INFINITY;
+    }
+
+    @Override
+    public Calendar getMoonPerigeeNextDate(Calendar date)
+    {
+        return null;
+    }
+
+    @Override
+    public Calendar getMoonApogeeNextDate(Calendar date)
+    {
+        return null;
     }
 }
 

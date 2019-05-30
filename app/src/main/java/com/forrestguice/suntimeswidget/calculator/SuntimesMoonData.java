@@ -19,7 +19,10 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.util.Pair;
 
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import java.util.ArrayList;
@@ -171,6 +174,32 @@ public class SuntimesMoonData extends SuntimesData
         midnight.add(Calendar.DAY_OF_MONTH, 1);
         return new Calendar[] { moonriseCalendarYesterday(), moonriseCalendarToday(), moonriseCalendarTomorrow(),
                                 moonsetCalendarYesterday(), moonsetCalendarToday(), moonsetCalendarTomorrow(), midnight };
+    }
+
+    /**
+     * @return the date and position (Pair) of the upcoming lunar apogee.
+     */
+    public Pair<Calendar, SuntimesCalculator.MoonPosition> getMoonApogee()
+    {
+        Calendar apogeeDate = calculator.getMoonApogeeNextDate(nowThen(todaysCalendar));
+        if (apogeeDate != null)
+        {
+            SuntimesCalculator.MoonPosition apogeePosition = calculator.getMoonPosition(apogeeDate);
+            return new Pair<>(apogeeDate, apogeePosition);
+        } else return null;
+    }
+
+    /**
+     * @return the date and position (Pair) of the upcoming lunar perigee.
+     */
+    public Pair<Calendar, SuntimesCalculator.MoonPosition> getMoonPerigee()
+    {
+        Calendar perigeeDate = calculator.getMoonPerigeeNextDate(nowThen(todaysCalendar));
+        if (perigeeDate != null)
+        {
+            SuntimesCalculator.MoonPosition perigeePosition = calculator.getMoonPosition(perigeeDate);
+            return new Pair<>(perigeeDate, perigeePosition);
+        } else return null;
     }
 
     /**
@@ -447,6 +476,35 @@ public class SuntimesMoonData extends SuntimesData
             case FULL:
             default: return MoonPhaseDisplay.WANING_GIBBOUS;
         }
+    }
+
+    public static boolean isSuperMoon( @NonNull SuntimesCalculator.MoonPosition position )
+    {
+        return position.distance < 360000;
+    }
+
+    public static boolean isMicroMoon( @NonNull SuntimesCalculator.MoonPosition position)
+    {
+        return position.distance > 405000;
+    }
+
+    public CharSequence getMoonPhaseLabel(Context context, SuntimesCalculator.MoonPhase majorPhase)
+    {
+        Calendar phaseDate = moonPhaseCalendar(majorPhase);
+        if (majorPhase == SuntimesCalculator.MoonPhase.FULL || majorPhase == SuntimesCalculator.MoonPhase.NEW)
+        {
+            SuntimesCalculator.MoonPosition phasePosition = calculator.getMoonPosition(phaseDate);
+
+            if (SuntimesMoonData.isSuperMoon(phasePosition)) {
+                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? context.getString(R.string.timeMode_moon_supernew)
+                        : context.getString(R.string.timeMode_moon_superfull);
+
+            } else if (SuntimesMoonData.isMicroMoon(phasePosition)) {
+                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? context.getString(R.string.timeMode_moon_micronew)
+                        : context.getString(R.string.timeMode_moon_microfull);
+
+            } else return SuntimesMoonData.toPhase(majorPhase).getLongDisplayString();
+        } else return SuntimesMoonData.toPhase(majorPhase).getLongDisplayString();
     }
 
 }

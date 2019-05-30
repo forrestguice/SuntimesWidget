@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,13 +18,16 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,10 +36,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.MoonApsisView;
 
 public class MoonDialog extends DialogFragment
 {
+    private SuntimesUtils utils = new SuntimesUtils();
+
     private SuntimesMoonData data;
     public void setData( SuntimesMoonData data )
     {
@@ -51,6 +59,10 @@ public class MoonDialog extends DialogFragment
     private MoonRiseSetView moonriseset;
     private MoonPhaseView currentphase;
     private MoonPhasesView moonphases;
+    private MoonApsisView moonapsis;
+    private TextView moondistance, moondistance_label, moondistance_note;
+
+    private int riseColor, setColor, timeColor;
 
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -100,20 +112,46 @@ public class MoonDialog extends DialogFragment
         currentphase = (MoonPhaseView) dialogView.findViewById(R.id.moonphase_view);
         moonphases = (MoonPhasesView) dialogView.findViewById(R.id.moonphases_view);
 
+        moonapsis = (MoonApsisView) dialogView.findViewById(R.id.moonapsis_view);
+        moondistance = (TextView) dialogView.findViewById(R.id.moonapsis_current_distance);
+        moondistance_label = (TextView) dialogView.findViewById(R.id.moonapsis_current_label);
+        moondistance_note = (TextView) dialogView.findViewById(R.id.moonapsis_current_note);
+        moondistance_note.setVisibility(View.GONE);
+
         Context context = dialogView.getContext();
         if (context != null) {
             currentphase.adjustColumnWidth(context.getResources().getDimensionPixelSize(R.dimen.moonphase_column0_width));
         }
     }
 
+    @SuppressLint("ResourceType")
     public void themeViews(Context context)
     {
         if (themeOverride != null)
         {
-            dialogTitle.setTextColor(themeOverride.getTitleColor());
+            int titleColor = themeOverride.getTitleColor();
+            timeColor = themeOverride.getTimeColor();
+            int textColor = themeOverride.getTextColor();
+            riseColor = themeOverride.getMoonriseTextColor();
+            setColor = themeOverride.getMoonsetTextColor();
+
+            dialogTitle.setTextColor(titleColor);
             moonriseset.themeViews(context, themeOverride);
             currentphase.themeViews(context, themeOverride);
             moonphases.themeViews(context, themeOverride);
+            moonapsis.themeViews(context, themeOverride);
+
+            moondistance_label.setTextColor(titleColor);
+            moondistance.setTextColor(textColor);
+            moondistance_note.setTextColor(timeColor);
+
+        } else {
+            int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.moonriseColor, R.attr.moonsetColor };
+            TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+            timeColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.transparent));
+            riseColor = ContextCompat.getColor(context, typedArray.getResourceId(1, timeColor));
+            setColor = ContextCompat.getColor(context, typedArray.getResourceId(2, timeColor));
+            typedArray.recycle();
         }
     }
 
@@ -135,7 +173,38 @@ public class MoonDialog extends DialogFragment
         moonriseset.updateViews(context, data);
         currentphase.updateViews(context, data);
         moonphases.updateViews(context, data);
+        moonapsis.updateViews(context, data);
+        updateMoonApsis();
         startUpdateTask();
+    }
+
+    private void updateMoonApsis()
+    {
+        Context context = getContext();
+        if (context != null && data != null && data.isCalculated())
+        {
+            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+
+            SuntimesCalculator calculator = data.calculator();
+            SuntimesCalculator.MoonPosition position = calculator.getMoonPosition(data.nowThen(data.calendar()));
+            if (position != null)
+            {
+                SuntimesUtils.TimeDisplayText distance = SuntimesUtils.formatAsDistance(context, position.distance, units, 2, true);
+                moondistance.setText(SuntimesUtils.createColorSpan(null, distance.toString(), distance.getValue(), (moonapsis.isRising() ? riseColor : setColor)));
+
+                if (SuntimesMoonData.isSuperMoon(position))
+                    moondistance_note.setText(context.getString(R.string.timeMode_moon_super));
+                else if (SuntimesMoonData.isMicroMoon(position))
+                    moondistance_note.setText(context.getString(R.string.timeMode_moon_micro));
+                else moondistance_note.setText("");
+
+                moondistance.setVisibility(View.VISIBLE);
+
+            } else moondistance.setVisibility(View.GONE);
+        } else {
+            moondistance.setVisibility(View.GONE);
+            moondistance_note.setVisibility(View.GONE);
+        }
     }
 
     /**@Override
