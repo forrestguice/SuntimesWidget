@@ -1261,10 +1261,10 @@
     <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes não coleta, estoca ou distribui dados pessoais. Não possui: <b>propagandas</b>, <b>ferramentas para análises</b>, <b>rastreadores</b>, e <b>exigência de permissões desnecessárias</b>. <br/><br/> Seus dados é estocado localmente e não sai de seu aparelho.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes pode pedir a permissão <b>localizar</b> para determinar a sua localidade.<br/><br/> Permissão opcional; o local é definido manualmente por padrão.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes pode pedir a permissão <b>armazenamento</b> para realizar backup e/ou exportar dados de/para um arquivo (temas, por exemplo).]]></string>
+    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>    <!-- TODO -->
+    <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>    <!-- TODO -->
+    <string name="privacy_permissiondialog_ignore">Ignore</string>    <!-- TODO -->
     <string name="privacy_permissiondialog_title">Permissões</string>
-    <string name="privacy_url"><xliff:g id="url"><![CDATA[
-        <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Privacy">github.com/forrestguice/SuntimesWidget/wiki/Privacy</a>
-    ]]></xliff:g></string>
 
     <string name="security_dialog_title">Alerta de Segurança</string>
     <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>

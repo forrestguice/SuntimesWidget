@@ -1135,6 +1135,9 @@
     <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. <br/><br/>The app is configured from location data. This information (and other configuration data used by the app) is stored locally and does not leave the device.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string> <!-- TODO -->
     <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string> <!-- TODO -->
     <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string> <!-- TODO -->
+    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>    <!-- TODO -->
+    <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>    <!-- TODO -->
+    <string name="privacy_permissiondialog_ignore">Ignore</string>    <!-- TODO -->
     <string name="privacy_permissiondialog_title">Permissions</string> <!-- TODO -->
 
     <string name="security_dialog_title">Security Alert</string>  <!-- TODO -->
