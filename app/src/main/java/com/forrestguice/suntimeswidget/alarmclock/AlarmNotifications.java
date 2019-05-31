@@ -361,32 +361,47 @@ public class AlarmNotifications extends BroadcastReceiver
         Uri soundUri = ((alarm.ringtoneURI != null && !alarm.ringtoneURI.isEmpty()) ? Uri.parse(alarm.ringtoneURI) : null);
         if (soundUri != null)
         {
-            final boolean isAlarm = (alarm.type == AlarmClockItem.AlarmType.ALARM);
-            final int streamType = (isAlarm ? AudioManager.STREAM_ALARM : AudioManager.STREAM_NOTIFICATION);
-            player.setAudioStreamType(streamType);
-
             try {
-                player.setDataSource(context, soundUri);
-                player.setOnPreparedListener(new MediaPlayer.OnPreparedListener()
-                {
-                    @Override
-                    public void onPrepared(MediaPlayer mediaPlayer)
-                    {
-                        mediaPlayer.setLooping(isAlarm);
-                        if (Build.VERSION.SDK_INT >= 16) {
-                            mediaPlayer.setNextMediaPlayer(null);
-                        }
-                        if (audioManager != null) {
-                            audioManager.requestAudioFocus(null, streamType, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-                        }
-                        mediaPlayer.start();
-                    }
-                });
-                player.prepareAsync();
+                startAlert(context, soundUri, (alarm.type == AlarmClockItem.AlarmType.ALARM));
 
-            } catch (IOException e) {
-                Log.e(TAG, "startAlert: Failed to setDataSource! " + soundUri.toString());
+            } catch (IOException e) {    // fallback to default
+                Uri defaultUri = AlarmSettings.getDefaultRingtoneUri(context, alarm.type);
+                try {
+                    startAlert(context, defaultUri, (alarm.type == AlarmClockItem.AlarmType.ALARM));
+                } catch (IOException e1) {
+                    Log.e(TAG, "startAlert: failed to setDataSource to default! " + defaultUri.toString());
+                }
             }
+        }
+    }
+
+    private static void startAlert(Context context, @NonNull Uri soundUri, final boolean isAlarm) throws IOException
+    {
+        final int streamType = (isAlarm ? AudioManager.STREAM_ALARM : AudioManager.STREAM_NOTIFICATION);
+        player.setAudioStreamType(streamType);
+
+        try {
+            player.setDataSource(context, soundUri);
+            player.setOnPreparedListener(new MediaPlayer.OnPreparedListener()
+            {
+                @Override
+                public void onPrepared(MediaPlayer mediaPlayer)
+                {
+                    mediaPlayer.setLooping(isAlarm);
+                    if (Build.VERSION.SDK_INT >= 16) {
+                        mediaPlayer.setNextMediaPlayer(null);
+                    }
+                    if (audioManager != null) {
+                        audioManager.requestAudioFocus(null, streamType, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+                    }
+                    mediaPlayer.start();
+                }
+            });
+            player.prepareAsync();
+
+        } catch (IOException e) {
+            Log.e(TAG, "startAlert: failed to setDataSource! " + soundUri.toString());
+            throw e;
         }
     }
 
