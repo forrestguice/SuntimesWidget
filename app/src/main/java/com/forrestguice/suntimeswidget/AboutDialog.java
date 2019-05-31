@@ -179,6 +179,7 @@ public class AboutDialog extends DialogFragment
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             permissionsExplained += "<br/><br/>" + context.getString(R.string.privacy_permission_storage);
         }
+        permissionsExplained += "<br/><br/>" + context.getString(R.string.privacy_permission_storage1);
         String privacy = context.getString(R.string.privacy_policy, permissionsExplained);
         legalView4.setText(SuntimesUtils.fromHtml(privacy));
 
