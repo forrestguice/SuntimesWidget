@@ -1,9 +1,9 @@
 ### ~
 
 ### v0.11.5 (2019-05-31)
-* now supports playing alarm sounds from the file system (mp3, ogg, etc). [Selecting files requires a file manager app with support for ringtone selection.] 
+* adds support for playing alarm sounds from the file system (mp3, ogg, etc). [Selecting files requires a file manager app with support for ringtone selection.] 
 * fixes bug "alarm sound fails to play from external storage" (#326); alarm notifications will fallback to the default ringtone if the selected sound cannot be played.
-* adds permission READ_EXTERNAL_STORAGE; this permission is needed to play sounds located on the SD card (#326). [PERMISSION]
+* new permission: READ_EXTERNAL_STORAGE. This permission is needed to play sounds located on the SD card (#326). [PERMISSION]
 * improves language resolution for Spanish locales (#147).
 * improves the About Dialog (better translation credits).
 
