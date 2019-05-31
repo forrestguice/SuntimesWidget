@@ -1085,6 +1085,8 @@ public class AlarmClockActivity extends AppCompatActivity
                     AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(this, false, false);
                     task.setTaskListener(onUpdateItem);
                     task.execute(item);
+                } else {
+                    Log.d(TAG, "onActivityResult: bad result: " + resultCode + ", " + item + ", " + data);
                 }
                 break;
         }
