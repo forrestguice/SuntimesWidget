@@ -51,6 +51,7 @@ public class SuntimesResTest extends SuntimesActivityTestBase
         {
             AppSettings.loadLocale(context, languageTag);
             verify_stringArrayLength("locale_values", R.array.locale_values, "locale_display", R.array.locale_display);
+            verify_stringArrayLength("locale_credits", R.array.locale_credits, "locale_display", R.array.locale_display);
             verify_stringArrayLength("appThemes_values", R.array.appThemes_values, "appThemes_display", R.array.appThemes_display);
 
             verify_stringArrayLength("localeMode_values", R.array.localeMode_values, "localeMode_display", R.array.localeMode_display);

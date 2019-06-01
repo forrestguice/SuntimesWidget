@@ -849,7 +849,7 @@
     <!-- App Setting: custom Locale -->
     <string name="configLabel_localeSelect">Lingua</string>
     <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English" >%s</xliff:g></string>
-    <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
+    <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits  -->
         <item>English</item>
         <item>Esperanto</item>
         <item>French</item>
@@ -1082,17 +1082,12 @@
         Copyright &#169 2014-2019 Forrest Guice <br />
         Codice sorgente disponibile con licenza GPLv3.
     ]]></string>
-    <string name="app_legal2"><![CDATA[
-        <b>Traduzioni:</b><br/>
-        Traduzione in italiano di Matteo Caoduro. <br />
-        Traduzione in tedesco di Henrik "HerHde" Hüttemann e Wolkenschieber. <br />
-        Traduzioni in polacco ed esperanto di Verdulo <br/>
-        Traduzione in francese di Jej &amp; Aloha. <br />
-        Traduzione in ungherese di Erci. <br />
-        Traduzioni in spagnolo e catalano di <a href="https://github.com/Raulvo">Raulvo</a>. <br />
-        Traduzione in Basco di beriain. <br />
-        Traduzione in norvegese di FTno.
-    ]]></string>
+
+    <string name="app_legal2"><![CDATA[<b>Traduzioni a:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>  <!-- TODO: review -->
+    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> di <xliff:g id="authorList">%2$s</xliff:g>.]]></string>   <!-- TODO: review -->
+    <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
+    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, e <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
+    
     <string name="app_legal3"><![CDATA[ <b>Librerie:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
     <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
@@ -1201,10 +1196,10 @@
     <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes non raccoglie, memorizza, né trasmette dati personali dell\'utente. Non contiene <b>nessuna pubblicità</b>, <b>nessuna analitica</b>, <b>nessun tracker</b>, e <b>nessun permesso superfluo</b>. <br/><br/>L\'applicazione si configura in base alla località.  Queste informazioni (e altri dati di configurazione utilizzati dall\'applicazione) sono memorizzate localmente e non vengono trasmesse altrove.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes utilizza il permesso di accesso alla <b>posizione</b> per determinare la tua latitudine e longitudine correnti.<br/><br/> Questo permesso è opzionale; la posizione viene configurata manualmente di default.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes utilizza il permesso di accesso alla <b>memoria esterna</b> per effettuare backup e esportare dati su file (e.g. località, temi).]]></string>
+    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>    <!-- TODO -->
+    <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>    <!-- TODO -->
+    <string name="privacy_permissiondialog_ignore">Ignore</string>    <!-- TODO -->
     <string name="privacy_permissiondialog_title">Permessi</string>
-    <string name="privacy_url"><xliff:g id="url" ><![CDATA[
-        <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Privacy">github.com/forrestguice/SuntimesWidget/wiki/Privacy</a>
-    ]]></xliff:g></string>
 
     <string name="security_dialog_title">Security Alert</string>  <!-- TODO -->
     <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  <!-- TODO -->
