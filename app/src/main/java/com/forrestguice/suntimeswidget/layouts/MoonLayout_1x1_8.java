@@ -93,8 +93,8 @@ public class MoonLayout_1x1_8 extends MoonLayout
     protected void updateApogeePerigee(Context context, int appWidgetId, RemoteViews views, Calendar now,
                                        Pair<Calendar, SuntimesCalculator.MoonPosition> apogee, Pair<Calendar, SuntimesCalculator.MoonPosition> perigee)
     {
-        boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, appWidgetId);
-        boolean showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
+        //boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, appWidgetId);
+        //boolean showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
         boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
         WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
@@ -103,7 +103,7 @@ public class MoonLayout_1x1_8 extends MoonLayout
         {
             SuntimesUtils.TimeDisplayText apogeeString = utils.calendarDateTimeDisplayString(context, apogee.first, showTimeDate, showSeconds);
             views.setTextViewText(R.id.moonapsis_apogee_date, apogeeString.getValue());
-            views.setTextViewText(R.id.moonapsis_apogee_note, noteSpan(context, now, apogee.first, showWeeks, showHours));
+            //views.setTextViewText(R.id.moonapsis_apogee_note, noteSpan(context, now, apogee.first, showWeeks, showHours));
             if (apogee.second != null) {
                 views.setTextViewText(R.id.moonapsis_apogee_distance, distanceSpan(context, apogee.second.distance, units, settingColor));
             }
@@ -115,7 +115,7 @@ public class MoonLayout_1x1_8 extends MoonLayout
         {
             SuntimesUtils.TimeDisplayText perigeeString = utils.calendarDateTimeDisplayString(context, perigee.first, showTimeDate, showSeconds);
             views.setTextViewText(R.id.moonapsis_perigee_date, perigeeString.getValue());
-            views.setTextViewText(R.id.moonapsis_perigee_note, noteSpan(context, now, perigee.first, showWeeks, showHours));
+            //views.setTextViewText(R.id.moonapsis_perigee_note, noteSpan(context, now, perigee.first, showWeeks, showHours));
             if (perigee.second != null) {
                 views.setTextViewText(R.id.moonapsis_perigee_distance, distanceSpan(context, perigee.second.distance, units, risingColor));
             }
@@ -140,12 +140,12 @@ public class MoonLayout_1x1_8 extends MoonLayout
         return distanceSpan;
     }
 
-    protected SpannableString noteSpan(Context context, @NonNull Calendar now, @NonNull Calendar event, boolean showWeeks, boolean showHours)
+    /**protected SpannableString noteSpan(Context context, @NonNull Calendar now, @NonNull Calendar event, boolean showWeeks, boolean showHours)
     {
         String noteTime = utils.timeDeltaDisplayString(now.getTime(), event.getTime(), showWeeks, showHours).toString();
         String noteString = context.getString((event.before(now) ? R.string.ago : R.string.hence), noteTime);
         return (boldTime ? SuntimesUtils.createBoldColorSpan(null, noteString, noteTime, timeColor) : SuntimesUtils.createColorSpan(null, noteString, noteTime, timeColor));
-    }
+    }*/
 
     protected int suffixColor = Color.GRAY;
     protected int timeColor = Color.WHITE;
