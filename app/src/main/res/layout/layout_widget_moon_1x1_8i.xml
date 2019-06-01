@@ -55,7 +55,7 @@
             <TextView android:id="@+id/moonapsis_perigee_note"
                 style="@style/SunsetTimeTextView2" android:layout_margin="0dp"
                 tools:text="xd xm from now" android:gravity="start"
-                android:layout_width="wrap_content" android:layout_height="wrap_content" android:visibility="gone" />
+                android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -84,7 +84,7 @@
             <TextView android:id="@+id/moonapsis_apogee_note"
                 style="@style/SunsetTimeTextView2" android:layout_margin="0dp"
                 tools:text="xd xm ago" android:gravity="start"
-                android:layout_width="wrap_content" android:layout_height="wrap_content" android:visibility="gone" />
+                android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
         </LinearLayout>
 
