@@ -1,8 +1,11 @@
 ### ~
 
 ##
+* adds moon apogee, perigee, and distance information to the moon dialog and calculator provider (#296).
+* adds supermoon and micromoon labels for upcoming new and full moons (#296).
 * adds 1x1 moon apogee / perigee widget (#296).
 * adds 1x1 moon position widgets; azimuth & elevation, right ascension & declination, and current distance.
+* adds 3x2 moon widget that.. TODO.
 
 ### v0.11.5 (2019-05-31)
 * adds support for playing alarm sounds from the file system (mp3, ogg, etc). [Selecting files requires a file manager app with support for ringtone selection.] 
