@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent" android:layout_height="wrap_content"
+        android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
+        android:layout_marginEnd="5dp" android:layout_marginRight="5dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="12dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/txt_about_icon"
+                android:layout_width="48dp" android:layout_height="48dp"
+                android:layout_margin="@dimen/aboutIcon_margin"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/ic_launcher"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/txt_about_name"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                android:text="@string/app_name"
+                android:gravity="center"
+                android:textColor="@drawable/btn_datetxt_dark" android:textStyle="bold"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_about_desc"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/app_shortdesc" />
+
+        <TextView
+            android:id="@+id/txt_about_version"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_gravity="start"
+            android:text="@string/app_version"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+        <TextView
+            android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:id="@+id/txt_about_support"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/app_support_url" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp" android:background="?attr/hrColor" android:layout_marginTop="4dp" android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/txt_about_url"
+            android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="0dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/app_url"
+            android:autoLink="web" />
+
+    </LinearLayout>
+</ScrollView>
