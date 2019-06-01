@@ -813,7 +813,7 @@
     <!-- App Setting: custom Locale -->
     <string name="configLabel_localeSelect">Langue</string>
     <string name="configLabel_localeSelect_summary"><xliff:g example="English" id="locale_display">%s</xliff:g></string>
-    <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
+    <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits  -->
         <item>Anglais</item>
         <item>Espéranto</item>
         <item>Français</item>
@@ -825,9 +825,9 @@
         <item>Catalan</item>
         <item>Basque</item>
         <item>Norvégien</item>
-        <item>Traditional Chinese</item>
+        <item>Traditional Chinese</item> <!-- TODO -->
         <item>Portuguese</item>  <!-- TODO -->
-    </string-array>  <!-- TODO -->
+    </string-array>
 
     <!-- position formats -->
     <string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>  <!-- e.g. 45° -->
@@ -1038,14 +1038,12 @@
         Copyright &#169 2014-2019 Forrest Guice <br />
         Code source disponible sous licence GPLv3.
     ]]></string>
-    <string name="app_legal2"><![CDATA[
-        <b>Traductions :</b><br/>
-        Traduction allemande par Henrik "HerHde" Hüttemann. <br />
-        Traduction polonnaise et espéranto par Verdulo. <br />
-        Traduction française par Jejc & Aloha <br />
-        Traduction hongrois par Erci. <br />
-        Traduction espagnol et catalan par <a href=https://github.com/Raulvo>Raulvo</a>.
-    ]]></string>
+
+    <string name="app_legal2"><![CDATA[<b>Traductions en:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>  <!-- TODO: review -->
+    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> par <xliff:g id="authorList">%2$s</xliff:g>.]]></string>   <!-- TODO: review -->
+    <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
+    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, et <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
+
     <string name="app_legal3"><![CDATA[ <b>Bibliothèques:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
     <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
@@ -1132,6 +1130,9 @@
     <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. <br/><br/>The app is configured from location data. This information (and other configuration data used by the app) is stored locally and does not leave the device.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string> <!-- TODO -->
     <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string> <!-- TODO -->
     <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string> <!-- TODO -->
+    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>    <!-- TODO -->
+    <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>    <!-- TODO -->
+    <string name="privacy_permissiondialog_ignore">Ignore</string>    <!-- TODO -->
     <string name="privacy_permissiondialog_title">Permissions</string> <!-- TODO -->
 
     <string name="security_dialog_title">Security Alert</string>  <!-- TODO -->

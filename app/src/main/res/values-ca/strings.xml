@@ -833,7 +833,7 @@
     <!-- App Setting: custom Locale -->
     <string name="configLabel_localeSelect">Idioma</string>
     <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
-    <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
+    <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits  -->
         <item>Anglès</item>
         <item>Esperanto</item>
         <item>Francès</item>
@@ -1062,15 +1062,12 @@
     Copyright &#169 2014-2019 Forrest Guice <br />
     Codi font disponible sota GPLv3.
 ]]></string>
-    <string name="app_legal2"><![CDATA[
-    <b>Traduccions:</b><br/>
-    Traducció a alemany per Henrik "HerHde" Hüttemann. <br />
-    Traducció a polonès i esperanto per Verdulo. <br />
-    Traducció a francès per Jej. <br />
-    Traducció a hongarès per Erci. <br />
-    Traducció a espanyol i català per <a href=https://github.com/Raulvo>Raulvo</a>.
 
-]]></string>
+    <string name="app_legal2"><![CDATA[<b>Traduccions a:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>  <!-- TODO: review -->
+    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> per <xliff:g id="authorList">%2$s</xliff:g>.]]></string>   <!-- TODO: review -->
+    <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
+    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, i <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
+    
     <string name="app_legal3"><![CDATA[ <b>Biblioteques:</b><br/> ]]>
 <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
 <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
@@ -1164,6 +1161,9 @@
     <string name="privacy_policy"><![CDATA[<b>Privadesa:</b><br/>Suntimes no coŀlecta, emmagatzema, o transmet dades personals. <b>No contè anuncis</b>, <b>càlculs estadístics</b>, <b>rastrejadors</b>, i <b>no utilitza permissos innecessaris</b>. <br/><br/>L\'aplicació es configura amb dades de localització. Aquesta informació (i qualsevol altra dada configurada emprada per l\'aplicació) s\'emmagatzema localment i no surt del dispositiu.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes utilitza el permís de <b>localització</b> per determinar la teva longitud i latitud.<br/><br/>Aquest permís és opcional; la localització es configura manualment per defecte.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes utilitza el permís d\'<b>emmagatzematge extern</b> per fer una còpia de seguretat o exportar dades a un arxiu (p. ex. llocs, temes).]]></string>
+    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>    <!-- TODO -->
+    <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>    <!-- TODO -->
+    <string name="privacy_permissiondialog_ignore">Ignore</string>    <!-- TODO -->
     <string name="privacy_permissiondialog_title">Permissos</string>
 
     <string name="security_dialog_title">Alerta de seguretat</string>  

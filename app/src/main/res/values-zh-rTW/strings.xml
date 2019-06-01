@@ -849,7 +849,7 @@
     <!-- App Setting: custom Locale -->
     <string name="configLabel_localeSelect">語言</string>
     <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
-    <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
+    <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits -->
         <item>English</item>
         <item>Esperanto</item>
         <item>French</item>
@@ -1082,18 +1082,12 @@
         Copyright &#169 2014-2019 Forrest Guice <br />
         Source code available under GPLv3.
     ]]></string>
-    <string name="app_legal2"><![CDATA[
-        <b>Translations:</b><br/>
-        German translation by Henrik "HerHde" Hüttemann and Wolkenschieber. <br />
-        Polish and Esperanto translation by Verdulo. <br />
-        French translation by Jej & Aloha. <br />
-        Hungarian translation by Erci. <br />
-        Spanish and Catalan translation by <a href=https://github.com/Raulvo>Raulvo</a>. <br />
-        Basque translation by beriain. <br />
-        Norwegian translation by FTno. <br />
-        Italian translation by Matteo Caoduro. <br />
-        Traditional Chinese translation by <a href=https://github.com/pggdt>ft42</a>. <br />
-    ]]></string>
+
+    <string name="app_legal2"><![CDATA[<b>Translations to:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>  <!-- TODO -->
+    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> by <xliff:g id="authorList">%2$s</xliff:g>.]]></string>   <!-- TODO -->
+    <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
+    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, and <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO -->
+
     <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
     <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
@@ -1202,10 +1196,10 @@
     <string name="privacy_policy"><![CDATA[<b>隱私：</b><br/>Suntimes不會蒐集、儲存、傳輸個人用戶數據。它<b>沒有廣告</b>, <b>沒有用戶分析</b>, <b>沒有跟蹤器</b>，並且<b>不使用不必要的權限</b>。<br/><br/>本應用使用位置信息來配置。位置信息（和其他用來配置本應用的數據）保存在本機並且不會離開本機。<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string>
+    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>    <!-- TODO -->
+    <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>    <!-- TODO -->
+    <string name="privacy_permissiondialog_ignore">Ignore</string>    <!-- TODO -->
     <string name="privacy_permissiondialog_title">Permissions</string>
-    <string name="privacy_url"><xliff:g id="url"><![CDATA[
-        <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Privacy">github.com/forrestguice/SuntimesWidget/wiki/Privacy</a>
-    ]]></xliff:g></string>
 
     <string name="security_dialog_title">Security Alert</string>  <!-- TODO -->
     <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  <!-- TODO -->
