@@ -81,7 +81,7 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
     @Override
     protected int getAboutIconID()
     {
-        return R.mipmap.ic_suntimes2;       // TODO: icon
+        return R.mipmap.ic_launcher_alarms;
     }
 
     @Override

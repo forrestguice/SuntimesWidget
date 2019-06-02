@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -22,10 +22,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -51,6 +53,9 @@ import static org.hamcrest.CoreMatchers.is;
 @RunWith(AndroidJUnit4.class)
 public class TimeZoneDialogTest extends SuntimesActivityTestBase
 {
+    @Rule
+    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+
     /**
      * UI Test
      */
@@ -59,17 +64,17 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
     {
         showTimezoneDialog(activityRule.getActivity());
         verifyTimezoneDialog(activityRule.getActivity());
-        captureScreenshot("suntimes-dialog-timezone0");
+        captureScreenshot(activityRule.getActivity(), "suntimes-dialog-timezone0");
 
         inputTimezoneDialog_mode(activityRule.getActivity(), WidgetSettings.TimezoneMode.CURRENT_TIMEZONE);
-        captureScreenshot("suntimes-dialog-timezone-system0");
+        captureScreenshot(activityRule.getActivity(), "suntimes-dialog-timezone-system0");
 
         inputTimezoneDialog_mode(activityRule.getActivity(), WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
-        captureScreenshot("suntimes-dialog-timezone-custom0");
+        captureScreenshot(activityRule.getActivity(), "suntimes-dialog-timezone-custom0");
 
         inputTimezoneDialog_mode(activityRule.getActivity(), WidgetSettings.TimezoneMode.SOLAR_TIME);
-        captureScreenshot("suntimes-dialog-timezone-solar0");
-        rotateDevice();
+        captureScreenshot(activityRule.getActivity(), "suntimes-dialog-timezone-solar0");
+        rotateDevice(activityRule);
         verifyTimezoneDialog_solar(activityRule.getActivity());
 
         cancelTimezoneDialog();

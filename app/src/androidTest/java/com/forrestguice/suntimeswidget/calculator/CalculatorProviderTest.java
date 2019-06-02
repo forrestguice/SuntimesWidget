@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -135,10 +135,10 @@ public class CalculatorProviderTest
         mockContext = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
 
         TEST_DATE0 = Calendar.getInstance();
-        TEST_DATE0.set(2018, 0, 0, 0, 0, 0);
+        TEST_DATE0.set(2018, 0, 1, 0, 0, 0);
 
         TEST_DATE1 = Calendar.getInstance();
-        TEST_DATE1.set(2019, 0, 0, 0, 0, 0);
+        TEST_DATE1.set(2019, 0, 1, 0, 0, 0);
 
         sunCalculator = getCalculator("");
         moonCalculator = getCalculator("moon");

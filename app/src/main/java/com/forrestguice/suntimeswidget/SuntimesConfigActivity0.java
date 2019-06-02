@@ -94,6 +94,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_useAltitude;
 
     protected Spinner spinner_riseSetOrder;
+    protected ImageButton button_riseSetOrderHelp;
 
     protected Spinner spinner_onTap;
     protected EditText text_launchActivity;
@@ -444,6 +445,21 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             spinner_riseSetOrder.setAdapter(createAdapter_riseSetOrder());
         }
 
+        button_riseSetOrderHelp = (ImageButton) findViewById(R.id.appwidget_general_riseSetOrder_helpButton);
+        if (button_riseSetOrderHelp != null)
+        {
+            button_riseSetOrderHelp.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    HelpDialog helpDialog = new HelpDialog();
+                    helpDialog.setContent(getString(R.string.help_general_riseSetOrder));
+                    helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
+                }
+            });
+        }
+
         //
         // widget: timezone / solartime
         //
@@ -551,6 +567,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (locationConfig != null)
         {
             locationConfig.setAutoAllowed(false);
+            locationConfig.setHideMode(true);
             locationConfig.init(this, false, this.appWidgetId);
         }
 
