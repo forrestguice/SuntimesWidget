@@ -1048,10 +1048,10 @@
     <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="https://github.com/forrestguice/SuntimesWidget/issues">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
     <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014–2019 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>
 
-    <string name="app_legal2"><![CDATA[<b>Tłumaczenia do:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>  <!-- TODO: review -->
-    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b>: <xliff:g id="authorList">%2$s</xliff:g>.]]></string>   <!-- TODO: review -->
+    <string name="app_legal2"><![CDATA[<b>Tłumaczenia na:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
+    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b>: <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
     <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
-    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, i <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
+    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g> i <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
 
     <string name="app_legal3"><![CDATA[ <b>Biblioteki:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
@@ -1153,9 +1153,9 @@
     <string name="privacy_policy"><![CDATA[<b>Prywatność:</b><br/>Aplikacja Czasy Słońca nie zbiera, przechowuje i przesyła osobistych danych użytkownika. Ta aplikacja nie zawiera reklam, narzędzi analitycznych i zbędnych uprawnień.<br/><br/>Aplikacja konfiguruje się używając danych lokalizacji; te dane (i inne używane przez program) są zapisywane lokalnie i nie opuszczają urządzenia.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Uprawnienie <b>określenia lokalizacji</b> jest używane do ustalenia bieżącej szerokości i długości geograficznej. To uprawnienie jest opcjonalne; położenie domyślnie jest wpisywane ręcznie.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Uprawnienie <b>dostępu do pamięci zewnętrznej</b> jest wymagane do wyeksportowania danych do pliku (np. miejsc, skórek).]]></string>
-    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>    <!-- TODO -->
-    <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>    <!-- TODO -->
-    <string name="privacy_permissiondialog_ignore">Ignore</string>    <!-- TODO -->
+    <string name="privacy_permission_storage1"><![CDATA[Uprawnienie <b>odczytu zawartości karty SD</b> jest wymagane do odczytu plików dźwiękowych znajdujących się na karcie SD.<br/><br/>To uprawnienie jest opcjonalne; w przypadku odmowy udzielenia, będzie odtworzony domyślny dźwięk. To uprawnienie nie jest potrzebne dla dźwięków systemowych (przechowywanie multimediów).]]></string>
+    <string name="privacy_permissiondialog_prompt"><![CDATA[Czy udzielić uprawnień teraz?]]></string>
+    <string name="privacy_permissiondialog_ignore">Ignoruj</string>
     <string name="privacy_permissiondialog_title">Uprawnienia</string>
 
     <string name="security_dialog_title">Ostrzeżenie</string>
