@@ -33,6 +33,7 @@ public class AlarmSettings
 {
     public static final String PREF_KEY_ALARM_CATEGORY = "app_alarms_category";
     public static final String PREF_KEY_ALARM_BATTERYOPT = "app_alarms_batterytopt";
+    public static final String PREF_KEY_ALARM_NOTIFICATIONS = "app_alarms_notifications";
 
     public static final String PREF_KEY_ALARM_HARDAREBUTTON_ACTION = "app_alarms_hardwarebutton_action";
     public static final String PREF_DEF_ALARM_HARDAREBUTTON_ACTION = AlarmNotifications.ACTION_SNOOZE;

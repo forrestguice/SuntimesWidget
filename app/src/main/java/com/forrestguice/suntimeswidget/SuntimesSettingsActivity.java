@@ -42,6 +42,8 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.text.SpannableString;
@@ -1366,32 +1368,47 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     private static void initPref_alarms(final PreferenceFragment fragment)
     {
         final Context context = fragment.getActivity();
+        if (context == null) {
+            return;
+        }
+
+        int[] colorAttrs = { R.attr.tagColor_warning };
+        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+        int colorWarning = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.warningTag_dark));
+        typedArray.recycle();
+
         Preference batteryOptimization = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_BATTERYOPT);
-        if (batteryOptimization != null && context != null)
+        if (batteryOptimization != null)
         {
             if (Build.VERSION.SDK_INT >= 23)
             {
                 batteryOptimization.setOnPreferenceClickListener(onBatteryOptimizationClicked(context));
-
-                int[] colorAttrs = { R.attr.text_accentColor, R.attr.tagColor_warning };
-                TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
-                int colorListed = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.text_accent_dark));
-                int colorUnlisted = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.warningTag_dark));
-                typedArray.recycle();
-
                 if (isIgnoringBatteryOptimizations(fragment.getContext()))
                 {
                     String listed = context.getString(R.string.configLabel_alarms_optWhiteList_listed);
-                    batteryOptimization.setSummary(SuntimesUtils.createColorSpan(null, listed, listed, colorListed));
-
+                    batteryOptimization.setSummary(listed);
                 } else {
                     String unlisted = context.getString(R.string.configLabel_alarms_optWhiteList_unlisted);
-                    batteryOptimization.setSummary(SuntimesUtils.createColorSpan(null, unlisted, unlisted, colorUnlisted));
+                    batteryOptimization.setSummary(SuntimesUtils.createColorSpan(null, unlisted, unlisted, colorWarning));
                 }
                 
             } else {
                 PreferenceCategory alarmsCategory = (PreferenceCategory)fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_CATEGORY);
                 removePrefFromCategory(batteryOptimization, alarmsCategory);  // battery optimization is api 23+
+            }
+        }
+
+        Preference notificationPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_NOTIFICATIONS);
+        if (notificationPrefs != null)
+        {
+            notificationPrefs.setOnPreferenceClickListener(onNotificationPrefsClicked(context));
+            if (NotificationManagerCompat.from(context).areNotificationsEnabled())
+            {
+                String enabledString = context.getString(R.string.configLabel_alarms_notifications_on);
+                notificationPrefs.setSummary(enabledString);
+            } else {
+                String disabledString = context.getString(R.string.configLabel_alarms_notifications_off);
+                notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, disabledString, disabledString, colorWarning));
             }
         }
 
@@ -1423,6 +1440,40 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         if (pref != null && category != null) {
             category.removePreference(pref);
         }
+    }
+
+    private static Preference.OnPreferenceClickListener onNotificationPrefsClicked(final Context context)
+    {
+        return new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference)
+            {
+                openNotificationSettings(context);
+                return false;
+            }
+        };
+    }
+
+    /**
+     * https://stackoverflow.com/questions/32366649/any-way-to-link-to-the-android-notification-settings-for-my-app
+     * @param context
+     */
+    public static void openNotificationSettings(@NonNull Context context)
+    {
+        Intent intent = new Intent();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
+            intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+            intent.putExtra("app_package", context.getPackageName());                           // Android 5-7
+            intent.putExtra("app_uid", context.getApplicationInfo().uid);                       // Android 5-7
+            intent.putExtra("android.provider.extra.APP_PACKAGE", context.getPackageName());    // Android 8+
+
+        } else {
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            intent.setData(Uri.parse("package:" + context.getPackageName()));
+        }
+        context.startActivity(intent);
     }
 
     private static Preference.OnPreferenceClickListener onBatteryOptimizationClicked(final Context context)

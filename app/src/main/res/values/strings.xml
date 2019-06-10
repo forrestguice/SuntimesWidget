@@ -676,6 +676,10 @@
     <string name="configLabel_alarms_optWhiteList_listed">Not optimized (recommended)</string>
     <string name="configLabel_alarms_optWhiteList_unlisted">Optimizing battery use.\nAlarms may be delayed up to 15 minutes.</string>
 
+    <string name="configLabel_alarms_notifications">Notifications</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_on">On</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_off">Off</string>    <!-- TODO -->
+
     <string name="configLabel_alarms_silenceAfter">Go silent after</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
