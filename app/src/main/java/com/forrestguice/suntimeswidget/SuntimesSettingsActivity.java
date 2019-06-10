@@ -1374,7 +1374,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
         int[] colorAttrs = { R.attr.tagColor_warning };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
-        int colorWarning = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.warningTag_dark));
+        int colorWarning = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.warningTag_dark));
         typedArray.recycle();
 
         Preference batteryOptimization = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_BATTERYOPT);
