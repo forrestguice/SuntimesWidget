@@ -42,6 +42,7 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
@@ -1401,11 +1402,21 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         Preference notificationPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_NOTIFICATIONS);
         if (notificationPrefs != null)
         {
-            notificationPrefs.setOnPreferenceClickListener(onNotificationPrefsClicked(context));
-            if (NotificationManagerCompat.from(context).areNotificationsEnabled())
+            boolean notificationsEnabled = NotificationManagerCompat.from(context).areNotificationsEnabled();
+            boolean onLockScreen = notificationsOnLockScreen(context);
+            notificationPrefs.setOnPreferenceClickListener(onNotificationPrefsClicked(context, onLockScreen));
+
+            if (notificationsEnabled)
             {
                 String enabledString = context.getString(R.string.configLabel_alarms_notifications_on);
-                notificationPrefs.setSummary(enabledString);
+                if (!onLockScreen)
+                {
+                    String disabledString = context.getString(R.string.configLabel_alarms_notifications_off);
+                    String summaryString = context.getString(R.string.configLabel_alarms_notifications_summary1, disabledString);
+                    notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, summaryString, disabledString, colorWarning));
+                } else {
+                    notificationPrefs.setSummary(context.getString(R.string.configLabel_alarms_notifications_summary0, enabledString));
+                }
             } else {
                 String disabledString = context.getString(R.string.configLabel_alarms_notifications_off);
                 notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, disabledString, disabledString, colorWarning));
@@ -1442,13 +1453,32 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
     }
 
-    private static Preference.OnPreferenceClickListener onNotificationPrefsClicked(final Context context)
+    /***
+     * Android 4 and under can enable/disable notifications per app .. the setting is located in App details.
+     * Android 5 adds the ability to display notifications on the lock screen (global) .. global lock screen setting is in "Sound Settings".
+     * Android 7 extends the ability to display notifications on the lock screen (per app) .. app lock screen setting is in App details.
+     * Android 8 adds the ability to enable/disable notifications per channel. .. TODO
+     */
+    private static Preference.OnPreferenceClickListener onNotificationPrefsClicked(final Context context, final boolean notificationsOnLockScreen)
     {
         return new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference)
             {
-                openNotificationSettings(context);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                {
+                    openNotificationSettings(context);
+
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    if (!notificationsOnLockScreen) {
+                        openGlobalNotificationSettings(context);
+                    } else {
+                        openNotificationSettings(context);
+                    }
+
+                } else {
+                    openNotificationSettings(context);
+                }
                 return false;
             }
         };
@@ -1474,6 +1504,31 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             intent.setData(Uri.parse("package:" + context.getPackageName()));
         }
         context.startActivity(intent);
+    }
+
+    public static void openGlobalNotificationSettings(@NonNull Context context)
+    {
+        Intent intent = new Intent();
+        intent.setAction("android.settings.SOUND_SETTINGS");
+        context.startActivity(intent);
+    }
+
+    /**
+     * https://stackoverflow.com/questions/43438978/get-status-of-setting-control-notifications-on-your-lock-screen
+     * @param context
+     * @return true notifications allowed on lock screen (global setting)
+     */
+    public static boolean notificationsOnLockScreen(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {                  // per app "on lock screen" setting introduce in Android7
+            return (Settings.Secure.getInt(context.getContentResolver(), "lock_screen_show_notifications", -1) > 0);    // TODO
+
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {    // global "on lock screen" setting introduced in Android5
+            return (Settings.Secure.getInt(context.getContentResolver(), "lock_screen_show_notifications", -1) > 0);
+
+        } else {
+            return true;
+        }
     }
 
     private static Preference.OnPreferenceClickListener onBatteryOptimizationClicked(final Context context)
