@@ -710,6 +710,7 @@
     </string-array>
 
     <string name="configLabel_alarmSounds">Sounds</string>            <!-- group title -->
+    <string name="configLabel_alarms_volumes">Volumes</string>    <!-- TODO -->
     <string name="configLabel_alarms_allRingtones">Show all ringtones</string>
     <string name="configLabel_alarms_allRingtones_summary">Show all system sounds during selection (ignore ringtone type).</string>
 

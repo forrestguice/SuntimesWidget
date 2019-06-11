@@ -55,6 +55,11 @@
     <PreferenceCategory
         android:title="@string/configLabel_alarmSounds" >
 
+        <Preference
+            android:key="app_alarms_volumes"
+            android:title="@string/configLabel_alarms_volumes"
+            android:summary="" />
+
         <CheckBoxPreference
             android:key="app_alarms_allringtones"
             android:title="@string/configLabel_alarms_allRingtones"

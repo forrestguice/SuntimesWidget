@@ -1423,6 +1423,11 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             }
         }
 
+        Preference volumesPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_VOLUMES);
+        if (volumesPrefs != null) {
+            volumesPrefs.setOnPreferenceClickListener(onVolumesPrefsClicked(context));
+        }
+
         Preference showLauncher = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_SHOWLAUNCHER);
         if (showLauncher != null)
         {
@@ -1471,7 +1476,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
                 } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     if (!notificationsOnLockScreen) {
-                        openGlobalNotificationSettings(context);
+                        openSoundSettings(context);
                     } else {
                         openNotificationSettings(context);
                     }
@@ -1506,7 +1511,19 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         context.startActivity(intent);
     }
 
-    public static void openGlobalNotificationSettings(@NonNull Context context)
+    private static Preference.OnPreferenceClickListener onVolumesPrefsClicked(final Context context)
+    {
+        return new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference)
+            {
+                openSoundSettings(context);
+                return false;
+            }
+        };
+    }
+
+    public static void openSoundSettings(@NonNull Context context)
     {
         Intent intent = new Intent();
         intent.setAction("android.settings.SOUND_SETTINGS");
