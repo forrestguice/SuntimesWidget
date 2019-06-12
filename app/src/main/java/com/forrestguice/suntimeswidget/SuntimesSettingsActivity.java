@@ -22,6 +22,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.KeyguardManager;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -42,7 +43,6 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
@@ -1403,13 +1403,12 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         if (notificationPrefs != null)
         {
             boolean notificationsEnabled = NotificationManagerCompat.from(context).areNotificationsEnabled();
-            boolean onLockScreen = notificationsOnLockScreen(context);
-            notificationPrefs.setOnPreferenceClickListener(onNotificationPrefsClicked(context, onLockScreen));
+            notificationPrefs.setOnPreferenceClickListener(onNotificationPrefsClicked(context));
 
             if (notificationsEnabled)
             {
                 String enabledString = context.getString(R.string.configLabel_alarms_notifications_on);
-                if (!onLockScreen)
+                if (isDeviceSecure(context) && !notificationsOnLockScreen(context))
                 {
                     String disabledString = context.getString(R.string.configLabel_alarms_notifications_off);
                     String summaryString = context.getString(R.string.configLabel_alarms_notifications_summary1, disabledString);
@@ -1464,8 +1463,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
      * Android 7 extends the ability to display notifications on the lock screen (per app) .. app lock screen setting is in App details.
      * Android 8 adds the ability to enable/disable notifications per channel. .. TODO
      */
-    private static Preference.OnPreferenceClickListener onNotificationPrefsClicked(final Context context, final boolean notificationsOnLockScreen)
+    private static Preference.OnPreferenceClickListener onNotificationPrefsClicked(final Context context)
     {
+        final boolean notificationsOnLockScreen = notificationsOnLockScreen(context);
         return new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference)
@@ -1568,6 +1568,21 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         if (powerManager != null)
             return powerManager.isIgnoringBatteryOptimizations(context.getPackageName());
         else return false;
+    }
+
+    protected static boolean isDeviceSecure(Context context)
+    {
+        KeyguardManager keyguard = (KeyguardManager)context.getSystemService(Context.KEYGUARD_SERVICE);
+        if (keyguard != null)
+        {
+            if (Build.VERSION.SDK_INT >= 23) {
+                return keyguard.isDeviceSecure();
+
+            } else if (Build.VERSION.SDK_INT >= 16) {
+                return keyguard.isKeyguardSecure();
+
+            } else return false;
+        } else return false;
     }
 
     //////////////////////////////////////////////////
