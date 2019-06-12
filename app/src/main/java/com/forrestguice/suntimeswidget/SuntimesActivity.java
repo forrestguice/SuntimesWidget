@@ -838,7 +838,10 @@ public class SuntimesActivity extends AppCompatActivity
     private void initWarnings(Context context, Bundle savedState)
     {
         timezoneWarning = new SuntimesWarning(WARNINGID_TIMEZONE);
+        timezoneWarning.setWarningListener(warningListener);
+
         dateWarning = new SuntimesWarning(WARNINGID_DATE);
+        dateWarning.setWarningListener(warningListener);
 
         warnings = new ArrayList<SuntimesWarning>();
         warnings.add(timezoneWarning);
@@ -846,6 +849,12 @@ public class SuntimesActivity extends AppCompatActivity
 
         restoreWarnings(savedState);
     }
+    private SuntimesWarning.SuntimesWarningListener warningListener = new SuntimesWarning.SuntimesWarningListener() {
+        @Override
+        public void onShowNextWarning() {
+            showWarnings();
+        }
+    };
 
     /**
      * initialize the actionbar
@@ -2109,7 +2118,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         if (showWarnings && timezoneWarning.shouldShow && !timezoneWarning.wasDismissed)
         {
-            timezoneWarning.initWarning(this, txt_timezone, getString(R.string.timezoneWarning));
+            timezoneWarning.initWarning(this, txt_timezone, getString(R.string.timezoneWarning), txt_date.getTextSize());
             timezoneWarning.snackbar.setAction(getString(R.string.configAction_setTimeZone), new View.OnClickListener()
             {
                 @Override
@@ -2124,7 +2133,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         if (showWarnings && dateWarning.shouldShow && !dateWarning.wasDismissed)
         {
-            dateWarning.initWarning(this, card_flipper, getString(R.string.dateWarning));
+            dateWarning.initWarning(this, card_flipper, getString(R.string.dateWarning), txt_date.getTextSize());
             dateWarning.snackbar.setAction(getString(R.string.configAction_setDate), new View.OnClickListener()
             {
                 @Override
@@ -2897,7 +2906,7 @@ public class SuntimesActivity extends AppCompatActivity
     /**
      * SuntimesWarning; wraps a Snackbar and some flags.
      */
-    private class SuntimesWarning
+    public static class SuntimesWarning
     {
         public static final int ANNOUNCE_DELAY_MS = 500;
         public static final String KEY_WASDISMISSED = "userDismissedWarning";
@@ -2915,15 +2924,15 @@ public class SuntimesActivity extends AppCompatActivity
         protected String contentDescription = null;
         protected View parentView = null;
 
-        public void initWarning(@NonNull Context context, View view, String msg)
+        public void initWarning(@NonNull Context context, View view, String msg, float textSize)
         {
             this.parentView = view;
-            ImageSpan warningIcon = SuntimesUtils.createWarningSpan(context, txt_date.getTextSize());
-            SpannableStringBuilder message = SuntimesUtils.createSpan(SuntimesActivity.this, msg, SuntimesUtils.SPANTAG_WARNING, warningIcon);
+            ImageSpan warningIcon = SuntimesUtils.createWarningSpan(context, textSize);
+            SpannableStringBuilder message = SuntimesUtils.createSpan(context, msg, SuntimesUtils.SPANTAG_WARNING, warningIcon);
             this.contentDescription = msg.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), context.getString(R.string.spanTag_warning));
 
             wasDismissed = false;
-            snackbar = Snackbar.make(card_flipper, message, Snackbar.LENGTH_INDEFINITE);
+            snackbar = Snackbar.make(parentView, message, Snackbar.LENGTH_INDEFINITE);
             snackbar.addCallback(snackbarListener);
             setContentDescription(contentDescription);
             themeWarning(context, snackbar);
@@ -2968,7 +2977,9 @@ public class SuntimesActivity extends AppCompatActivity
 
         private void showNextWarning()
         {
-            showWarnings();
+            if (warningListener != null) {
+                warningListener.onShowNextWarning();
+            }
         }
 
         public boolean isShown()
@@ -2978,8 +2989,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         public void show()
         {
-            if (snackbar != null)
-            {
+            if (snackbar != null) {
                 snackbar.show();
             }
             announceWarning();
@@ -2987,8 +2997,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         public void dismiss()
         {
-            if (isShown())
-            {
+            if (isShown()) {
                 snackbar.dismiss();
             }
         }
@@ -3038,6 +3047,14 @@ public class SuntimesActivity extends AppCompatActivity
             {
                 wasDismissed = savedState.getBoolean(KEY_WASDISMISSED + id, false);
             }
+        }
+
+        public SuntimesWarningListener warningListener = null;
+        public void setWarningListener(SuntimesWarningListener listener) {
+            warningListener = listener;
+        }
+        public static abstract class SuntimesWarningListener {
+            public abstract void onShowNextWarning();
         }
     }
 
