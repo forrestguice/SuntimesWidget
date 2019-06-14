@@ -430,7 +430,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                         widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
                         data = data0;
 
-                    } else if (widgetClass ==ClockWidget0.class || widgetClass == ClockWidget0_3x1.class) {
+                    } else if (widgetClass == ClockWidget0.class || widgetClass == ClockWidget0_3x1.class) {
                         SuntimesClockData data0 = new SuntimesClockData(context, id);
                         widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
                         data = data0;
@@ -467,6 +467,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2.class, titlePattern1));
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2_3x1.class, titlePattern1));
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2_3x2.class, titlePattern1));
+            items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2_3x3.class, titlePattern1));
             items.addAll(createWidgetListItems(context, widgetManager, ClockWidget0.class, titlePattern1));
             items.addAll(createWidgetListItems(context, widgetManager, ClockWidget0_3x1.class, titlePattern1));
 
@@ -504,6 +505,9 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
             if (widgetClass == SuntimesWidget2_3x2.class)
                 return context.getString(R.string.app_name_widget2) + " (3x2)";
+
+            if (widgetClass == SuntimesWidget2_3x3.class)
+                return context.getString(R.string.app_name_widget2) + " (3x3)";
 
             if (widgetClass == SuntimesWidget0_2x1.class)
                 return context.getString(R.string.app_name_widget0) + " (2x1)";

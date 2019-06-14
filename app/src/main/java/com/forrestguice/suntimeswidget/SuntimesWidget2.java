@@ -27,6 +27,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_0;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X2_0;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X3_0;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
@@ -103,11 +104,13 @@ public class SuntimesWidget2 extends SuntimesWidget0
         SunPosLayout layout;
         if (WidgetSettings.loadAllowResizePref(context, appWidgetId))
         {
-            int minWidth_x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp3x1);
-            int minHeight_x2 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
-            if (mustFitWithinDp[0] >= minWidth_x3)
+            int minDimen_x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp3x1);
+            int minDimen_x2 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
+            if (mustFitWithinDp[0] >= minDimen_x3)
             {
-                if (mustFitWithinDp[1] >= minHeight_x2)
+                if (mustFitWithinDp[1] >= minDimen_x3)
+                    layout = new SunPosLayout_3X3_0();
+                else if (mustFitWithinDp[1] >= minDimen_x2)
                     layout = new SunPosLayout_3X2_0();
                 else layout = new SunPosLayout_3X1_0();
 

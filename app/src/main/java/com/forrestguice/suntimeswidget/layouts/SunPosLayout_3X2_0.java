@@ -111,8 +111,8 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
         //}
     }
 
-    private WorldMapTask.WorldMapOptions options;
-    private int dpWidth = 512, dpHeight = 256;
+    protected WorldMapTask.WorldMapOptions options;
+    protected int dpWidth = 512, dpHeight = 256;
 
     @SuppressLint("ResourceType")
     @Override
