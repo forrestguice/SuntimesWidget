@@ -187,7 +187,7 @@ public class WorldMapDialog extends DialogFragment
         mapSelector = (Spinner)dialogView.findViewById(R.id.worldmap_selector);
         mapSelector.setAdapter(mapAdapter);
 
-        mapMode = WorldMapWidgetSettings.loadSunPosMapModePref(context, 0);
+        mapMode = WorldMapWidgetSettings.loadSunPosMapModePref(context, 0, WorldMapWidgetSettings.MAPTAG_DEF);
         int modePosition = mapAdapter.getPosition(mapMode);
         mapSelector.setSelection((modePosition >= 0) ? modePosition : 0);
         worldmap.setMapMode(context, (WorldMapWidgetSettings.WorldMapWidgetMode) mapSelector.getSelectedItem());
@@ -280,7 +280,7 @@ public class WorldMapDialog extends DialogFragment
             if (context != null && mode != mapMode)
             {
                 mapMode = mode;
-                WorldMapWidgetSettings.saveSunPosMapModePref(context, 0, mapMode);
+                WorldMapWidgetSettings.saveSunPosMapModePref(context, 0, mapMode, WorldMapWidgetSettings.MAPTAG_DEF);
                 worldmap.setMapMode(context, mapMode);
                 Log.d(WorldMapView.LOGTAG, "onMapSelected: mapMode changed so triggering update...");
                 updateViews();

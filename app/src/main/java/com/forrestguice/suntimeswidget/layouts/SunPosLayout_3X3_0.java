@@ -19,17 +19,11 @@
 package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimeswidget.map.WorldMapEquiazimuthal;
-import com.forrestguice.suntimeswidget.map.WorldMapTask;
+import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 
 /**
  * A 3x3 layout with world map.
@@ -59,18 +53,8 @@ public class SunPosLayout_3X3_0 extends SunPosLayout_3X2_0
     }
 
     @Override
-    public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetDataset dataset)
-    {
-        super.updateViews(context, appWidgetId, views, dataset);
-
-        options.map = ContextCompat.getDrawable(context, R.drawable.worldmap2);
-        WorldMapTask.WorldMapProjection projection = new WorldMapEquiazimuthal();
-
-        Bitmap bitmap = projection.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options);
-        if (bitmap != null) {
-            views.setImageViewBitmap(R.id.info_time_worldmap, bitmap);
-            Log.d("DEBUG", "map is " + bitmap.getWidth() + " x " + bitmap.getHeight());
-        }
+    public WorldMapWidgetSettings.WorldMapWidgetMode getMapMode(Context context, int appWidgetId) {
+        return WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId, WorldMapWidgetSettings.MAPTAG_3x3);
     }
 
 }

@@ -537,17 +537,17 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_sunPosMapModePref()
     {
-        WorldMapWidgetSettings.saveSunPosMapModePref(context, appWidgetId, WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE);
-        WorldMapWidgetSettings.WorldMapWidgetMode pref2 = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId);
+        WorldMapWidgetSettings.saveSunPosMapModePref(context, appWidgetId, WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE, WorldMapWidgetSettings.MAPTAG_3x2);
+        WorldMapWidgetSettings.WorldMapWidgetMode pref2 = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId, WorldMapWidgetSettings.MAPTAG_3x2);
         assertTrue("pref should be EQUIAZIMUTHAL_SIMPLE but was " + pref2, pref2.equals(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE));
 
-        WorldMapWidgetSettings.saveSunPosMapModePref(context, appWidgetId,WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE);
-        WorldMapWidgetSettings.WorldMapWidgetMode pref1 = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId);
+        WorldMapWidgetSettings.saveSunPosMapModePref(context, appWidgetId,WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE, WorldMapWidgetSettings.MAPTAG_3x2);
+        WorldMapWidgetSettings.WorldMapWidgetMode pref1 = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId, WorldMapWidgetSettings.MAPTAG_3x2);
         assertTrue("pref should be EQUIRECTANGULAR_BLUEMARBLE but was " + pref1, pref1.equals(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE));
 
-        WorldMapWidgetSettings.deleteSunPosMapModePref(context, appWidgetId);
-        WorldMapWidgetSettings.WorldMapWidgetMode pref0 = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId);
-        assertTrue("pref should be default (EQUIRECTANGULAR_SIMPLE) but was " + pref0, pref0.equals(WorldMapWidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_WORLDMAP) && pref0.equals(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE));
+        WorldMapWidgetSettings.deleteSunPosMapModePref(context, appWidgetId, WorldMapWidgetSettings.MAPTAG_3x2);
+        WorldMapWidgetSettings.WorldMapWidgetMode pref0 = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId, WorldMapWidgetSettings.MAPTAG_3x2);
+        assertTrue("pref should be default (EQUIRECTANGULAR_SIMPLE) but was " + pref0, pref0.equals(WorldMapWidgetSettings.defaultSunPosMapMode(WorldMapWidgetSettings.MAPTAG_3x2)) && pref0.equals(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE));
     }
 
     @Test

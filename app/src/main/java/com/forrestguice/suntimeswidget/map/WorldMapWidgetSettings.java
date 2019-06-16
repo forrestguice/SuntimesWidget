@@ -29,6 +29,11 @@ public class WorldMapWidgetSettings
 
     public static final String PREF_KEY_APPEARANCE_WIDGETMODE_WORLDMAP = "widgetmode_sunposmap";
     public static final WorldMapWidgetMode PREF_DEF_APPEARANCE_WIDGETMODE_WORLDMAP = WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE;
+    public static final WorldMapWidgetMode PREF_DEF_APPEARANCE_WIDGETMODE_WORLDMAP1 = WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE1;
+
+    public static final String MAPTAG_3x2 = "";    // EMPTY
+    public static final String MAPTAG_3x3 = "1";
+    public static final String MAPTAG_DEF = MAPTAG_3x2;
 
     /**
      * WorldMapWidgetMode
@@ -74,37 +79,42 @@ public class WorldMapWidgetSettings
     }
 
 
-    public static void saveSunPosMapModePref(Context context, int appWidgetId, WorldMapWidgetMode mode)
+    public static void saveSunPosMapModePref(Context context, int appWidgetId, WorldMapWidgetMode mode, String mapTag)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE;
-        prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_WORLDMAP, mode.name());
+        prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_WORLDMAP + mapTag, mode.name());
         prefs.apply();
     }
-    public static WorldMapWidgetMode loadSunPosMapModePref(Context context, int appWidgetId)
+    public static WorldMapWidgetMode loadSunPosMapModePref(Context context, int appWidgetId, String mapTag)
     {
         SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE;
-        String modeString = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_WORLDMAP, PREF_DEF_APPEARANCE_WIDGETMODE_WORLDMAP.name());
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_WORLDMAP + mapTag, defaultSunPosMapMode(mapTag).name());
 
         WorldMapWidgetMode widgetMode;
         try {
             widgetMode = WorldMapWidgetMode.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
-            widgetMode = PREF_DEF_APPEARANCE_WIDGETMODE_WORLDMAP;
-            Log.w("loadSunPosMapModePref", "Failed to load value '" + modeString + "'; using default '" + PREF_DEF_APPEARANCE_WIDGETMODE_WORLDMAP.name() + "'.");
+            widgetMode = defaultSunPosMapMode(mapTag);
+            Log.w("loadSunPosMapModePref", "Failed to load value '" + modeString + "'; using default '" + widgetMode.name() + "'.");
         }
         return widgetMode;
     }
-    public static void deleteSunPosMapModePref(Context context, int appWidgetId)
+    public static void deleteSunPosMapModePref(Context context, int appWidgetId, String mapTag)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE;
-        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_WORLDMAP);
+        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_WORLDMAP + mapTag);
         prefs.apply();
     }
-
+    public static WorldMapWidgetMode defaultSunPosMapMode(String mapTag)
+    {
+        if (mapTag.equals(MAPTAG_3x3)) {
+            return PREF_DEF_APPEARANCE_WIDGETMODE_WORLDMAP1;
+        } else return PREF_DEF_APPEARANCE_WIDGETMODE_WORLDMAP;
+    }
 
     /**
      * @param context
@@ -120,7 +130,8 @@ public class WorldMapWidgetSettings
      */
     public static void deletePrefs(Context context, int appWidgetId)
     {
-        deleteSunPosMapModePref(context, appWidgetId);
+        deleteSunPosMapModePref(context, appWidgetId, MAPTAG_3x2);
+        deleteSunPosMapModePref(context, appWidgetId, MAPTAG_3x3);
     }
 
 }

@@ -22,6 +22,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
@@ -29,7 +30,6 @@ import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * ConfigActivity for SunPosition widgets (SuntimesWidget2)
@@ -53,6 +53,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         showOptionShowNoon(false);
         showOptionLabels(true);
         showOption3x2LayoutMode(true);
+        showOption3x3LayoutMode(true);
     }
 
     @Override
@@ -122,8 +123,11 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     @Override
     protected void loadWidgetMode1x1(Context context)
     {
-        WidgetSettings.WidgetModeSunPos1x1 mode1x1 = WidgetSettings.loadSunPos1x1ModePref(context, appWidgetId);
-        spinner_1x1mode.setSelection(mode1x1.ordinal());
+        WidgetSettings.WidgetModeSunPos1x1 mode = WidgetSettings.loadSunPos1x1ModePref(context, appWidgetId);
+        int pos = searchForIndex(spinner_1x1mode, mode);
+        if (pos >= 0) {
+            spinner_1x1mode.setSelection(pos);
+        }
     }
 
     @Override
@@ -131,8 +135,9 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     {
         if (spinner_3x2mode != null)
         {
-            ArrayList<WorldMapWidgetSettings.WorldMapWidgetMode> modes = new ArrayList<>(Arrays.asList(WorldMapWidgetSettings.WorldMapWidgetMode.values()));
-            modes.remove(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE);
+            ArrayList<WorldMapWidgetSettings.WorldMapWidgetMode> modes = new ArrayList<>();
+            modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE);
+            modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE);
             ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode> adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, modes);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_3x2mode.setAdapter(adapter);
@@ -145,7 +150,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         if (spinner_3x2mode != null)
         {
             WorldMapWidgetSettings.WorldMapWidgetMode mode = (WorldMapWidgetSettings.WorldMapWidgetMode) spinner_3x2mode.getSelectedItem();
-            WorldMapWidgetSettings.saveSunPosMapModePref(context, appWidgetId, mode);
+            WorldMapWidgetSettings.saveSunPosMapModePref(context, appWidgetId, mode, WorldMapWidgetSettings.MAPTAG_3x2);
         }
     }
 
@@ -154,8 +159,58 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     {
         if (spinner_3x2mode != null)
         {
-            WorldMapWidgetSettings.WorldMapWidgetMode mode = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId);
-            spinner_3x2mode.setSelection(mode.ordinal());
+            WorldMapWidgetSettings.WorldMapWidgetMode mode = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId, WorldMapWidgetSettings.MAPTAG_3x2);
+            int pos = searchForIndex(spinner_3x2mode, mode);
+            if (pos >= 0) {
+                spinner_3x2mode.setSelection(pos);
+            }
+        }
+    }
+
+    private static int searchForIndex(Spinner spinner, Object enumValue)
+    {
+        for (int i=0; i<spinner.getAdapter().getCount(); i++) {
+            if (spinner.getAdapter().getItem(i) == enumValue) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    protected void initWidgetMode3x3(Context context)
+    {
+        if (spinner_3x3mode != null)
+        {
+            ArrayList<WorldMapWidgetSettings.WorldMapWidgetMode> modes = new ArrayList<>();
+            modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE);
+            modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE1);
+            ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode> adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, modes);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner_3x3mode.setAdapter(adapter);
+        }
+    }
+
+    @Override
+    protected void saveWidgetMode3x3(Context context)
+    {
+        if (spinner_3x3mode != null)
+        {
+            WorldMapWidgetSettings.WorldMapWidgetMode mode = (WorldMapWidgetSettings.WorldMapWidgetMode) spinner_3x3mode.getSelectedItem();
+            WorldMapWidgetSettings.saveSunPosMapModePref(context, appWidgetId, mode, WorldMapWidgetSettings.MAPTAG_3x3);
+        }
+    }
+
+    @Override
+    protected void loadWidgetMode3x3(Context context)
+    {
+        if (spinner_3x3mode != null)
+        {
+            WorldMapWidgetSettings.WorldMapWidgetMode mode = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId, WorldMapWidgetSettings.MAPTAG_3x3);
+            int pos = searchForIndex(spinner_3x3mode, mode);
+            if (pos >= 0) {
+                spinner_3x3mode.setSelection(pos);
+            }
         }
     }
 
