@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -37,7 +37,8 @@ public class WorldMapWidgetSettings
     {
         EQUIRECTANGULAR_SIMPLE("Simple", R.layout.layout_widget_sunpos_3x2_0),
         EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", R.layout.layout_widget_sunpos_3x2_0),
-        EQUIAZIMUTHAL_SIMPLE("Polar", R.layout.layout_widget_sunpos_3x2_0);
+        EQUIAZIMUTHAL_SIMPLE("Polar [north]", R.layout.layout_widget_sunpos_3x3_0),
+        EQUIAZIMUTHAL_SIMPLE1("Polar [south]", R.layout.layout_widget_sunpos_3x3_0);
 
         private final int layoutID;
         private String displayString;
@@ -66,6 +67,7 @@ public class WorldMapWidgetSettings
         public static void initDisplayStrings( Context context )
         {
             EQUIAZIMUTHAL_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simpleazimuthal));
+            EQUIAZIMUTHAL_SIMPLE1.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simpleazimuthal_south));
             EQUIRECTANGULAR_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simplerectangular));
             EQUIRECTANGULAR_BLUEMARBLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_bluemarble));
         }

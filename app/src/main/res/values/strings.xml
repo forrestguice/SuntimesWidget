@@ -368,7 +368,8 @@
     <string name="widgetMode1x1_decright">Declination &amp; Right Ascension</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [north]</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [south]</string>     <!-- setting -->  <!-- TODO -->
     <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->
 
     <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->

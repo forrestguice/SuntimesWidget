@@ -98,6 +98,11 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 options.foregroundColor = foregroundColor;
                 break;
 
+            case EQUIAZIMUTHAL_SIMPLE1:
+                options.map = ContextCompat.getDrawable(context, R.drawable.worldmap3);
+                options.foregroundColor = foregroundColor;
+                break;
+
             case EQUIRECTANGULAR_BLUEMARBLE:
                 options.map = ContextCompat.getDrawable(context, R.drawable.land_shallow_topo_1024);
                 options.foregroundColor = Color.TRANSPARENT;
@@ -230,9 +235,10 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         switch (mode)
         {
             case EQUIAZIMUTHAL_SIMPLE:
+            case EQUIAZIMUTHAL_SIMPLE1:
 
                 //int orientation = getResources().getConfiguration().orientation;
-                projection = new WorldMapEquiazimuthal();
+                projection = (mode == WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE1 ? new WorldMapEquiazimuthal1() : new WorldMapEquiazimuthal());  // TODO
                 //w = h = (orientation == Configuration.ORIENTATION_PORTRAIT) ? Math.max(getWidth(), getHeight()) : Math.min(getWidth(), getHeight());
                 if (w > 0)
                 {

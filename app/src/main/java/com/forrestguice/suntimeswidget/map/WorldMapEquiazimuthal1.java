@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -26,48 +26,27 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.Calendar;
 
 /**
  * WorldMapEquiazimuthal
- * An azimuthal projection centered on north pole.
+ * An azimuthal projection centered on south pole.
  */
-public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
+public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
 {
-    /**
-     * point (angle, distance) from north pole
-     *   angle = longitude
-     *   distance = (PI / 2) - lat
-     * @param lat [-90,90] north
-     * @param lon [-180,180] east
-     * @return [angleRads][distanceOfPI]
-     */
+    @Override
     protected double[] toPolar(double lat, double lon)
     {
         double[] polar = new double[2];
-        polar[0] = lon;
-        polar[1] = 90 - lat;
+        polar[0] = 360 - lon;
+        polar[1] = -90 - lat;
         //Log.d(WorldMapView.LOGTAG, "toPolar: [" + lat + ", " + lon + "] -> [" + polar[0] + ", " + polar[1] + "]");
         return polar;
-    }
-
-    /**
-     * x = distance * sin(angle)  ..  y = -1 * distance * cos(angle)
-     * @param polar [angleDegrees][distance]
-     * @return cartesian point [x,y]
-     */
-    protected double[] toCartesian(double[] polar)
-    {
-        double[] point = new double[2];
-        point[0] = polar[1] * Math.sin(Math.toRadians(polar[0]));
-        point[1] = -1d * polar[1] * Math.cos(Math.toRadians(polar[0]));
-        //Log.d(WorldMapView.LOGTAG, "toCartesian: [" + polar[0] + ", " + polar[1] + "] -> [" + point[0] + ", " + point[1] + "]");
-        return point;
     }
 
     @Override
@@ -96,51 +75,6 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         {
             drawMap(c, w, h, p, options);
         }
-
-        ////////////////
-        // draw grid
-        /**if (options.showGrid)
-        {
-            p.setColor(options.gridXColor);
-            for (int i=0; i < 180; i = i + 15)
-            {
-                double offset = (i / 180d) * mid[0];
-                int eastX = (int)(mid[0] + offset);
-                int westX = (int)(mid[0] - offset);
-                c.drawLine(eastX, 0, eastX, h, p);
-                c.drawLine(westX, 0, westX, h, p);
-            }
-
-            p.setColor(options.gridYColor);
-            for (int i=0; i < 90; i = i + 15)
-            {
-                double offset = (i / 90d) * mid[1];
-                int northY = (int)(mid[1] + offset);
-                int southY = (int)(mid[1] - offset);
-                c.drawLine(0, northY, w, northY, p);
-                c.drawLine(0, southY, w, southY, p);
-            }
-        }*/
-
-        /**if (options.showMajorLatitudes)
-        {
-            p.setColor(options.latitudeColors[0]);                    // equator
-            c.drawLine(0, (int)mid[1], w, (int)mid[1], p);
-
-            double tropics = (23.439444 / 90d) * mid[1];
-            int tropicsY0 = (int)(mid[1] + tropics);
-            int tropicsY1 = (int)(mid[1] - tropics);
-            p.setColor(options.latitudeColors[1]);                    // tropics
-            c.drawLine(0, tropicsY0, w, tropicsY0, p);
-            c.drawLine(0, tropicsY1, w, tropicsY1, p);
-
-            double polar = (66.560833 / 90d) * mid[1];
-            int polarY0 = (int)(mid[1] + polar);
-            int polarY1 = (int)(mid[1] - polar);
-            p.setColor(options.latitudeColors[2]);                    // polar
-            c.drawLine(0, polarY0, w, polarY0, p);
-            c.drawLine(0, polarY1, w, polarY1, p);
-        }*/
 
         drawData: if (data != null)
         {
@@ -206,11 +140,12 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
                 paintMoonlight.setColor(options.moonLightColor);
                 paintMoonlight.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
 
-                double radLon, cosLon, sinLon;
+                double radLon, cosLon, sinLon, sinLat;
                 double radLat, cosLat;
                 double[] v = new double[3];
                 double sunIntensity, moonIntensity;
                 double squareR = (0.5 * w0 + 1) * (0.5 * w0 + 1);
+                double negPiOver2 = -0.5 * Math.PI;
                 double[] polar = new double[2];
 
                 double x, y;
@@ -221,26 +156,31 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
                     if (x == 0) {
                         x += 0.0001;
                     }
+
                     for (int j = 0; j < h0; j++)
                     {
                         y = ((double)(h0 - j) * ih0) - 180d;   // [-180,180]
-                        if ((squareX + y*y) > squareR)
+                        double squareP = squareX + (y * y);
+                        if (squareP > squareR)
                             continue;
                         //Log.d("DEBUG", "pX: " + x + ", pY: " + y);
 
-                        polar[0] = -1 * Math.atan(x / y);
+                        polar[0] = Math.atan(x / y);                     // theta
+                        polar[1] = Math.toRadians(Math.sqrt(squareP));   // p
+
                         radLon = polar[0];
-                        sinLon = Math.sin(radLon);
-                        polar[1] = x / sinLon;
+                        radLat = (y < 0) ? negPiOver2 - polar[1]
+                                         : Math.asin(-1 * Math.cos(polar[1]));
                         //Log.d("DEBUG", "angle: " + polar[0] + ", dist: " + polar[1]);
 
-                        radLat = Math.toRadians(90 - polar[1]);
                         cosLat = Math.cos(radLat);
                         cosLon = Math.cos(radLon);
+                        sinLat = Math.sin(radLat);
+                        sinLon = Math.sin(radLon);
 
                         v[0] = cosLon * cosLat;
                         v[1] = sinLon * cosLat;
-                        v[2] = Math.sin(radLat);
+                        v[2] = sinLat;
 
                         if (options.showSunShadow)
                         {
@@ -299,7 +239,5 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         Log.d(WorldMapView.LOGTAG, "make equiazimuthal world map :: " + ((bench_end - bench_start) / 1000000.0) + " ms; " + w + ", " + h);
         return b;
     }
-
-
 
 }
