@@ -103,7 +103,7 @@ public class WidgetSettings
     public static final TimeMode PREF_DEF_GENERAL_TIMEMODE = TimeMode.OFFICIAL;
 
     public static final String PREF_KEY_GENERAL_TIMEMODE2 = "timemode2";
-    public static final SolsticeEquinoxMode PREF_DEF_GENERAL_TIMEMODE2 = SolsticeEquinoxMode.EQUINOX_VERNAL;
+    public static final SolsticeEquinoxMode PREF_DEF_GENERAL_TIMEMODE2 = SolsticeEquinoxMode.EQUINOX_SPRING;
 
     public static final String PREF_KEY_GENERAL_TIMEMODE2_OVERRIDE = "timemode2override";
     public static final boolean PREF_DEF_GENERAL_TIMEMODE2_OVERRIDE = true;
@@ -758,7 +758,7 @@ public class WidgetSettings
      */
     public static enum SolsticeEquinoxMode
     {
-        EQUINOX_VERNAL("Equinox", "Vernal Equinox"),
+        EQUINOX_SPRING("Equinox", "Spring Equinox"),
         SOLSTICE_SUMMER("Solstice", "Summer Solstice"),
         EQUINOX_AUTUMNAL("Equinox", "Autumnal Equinox"),
         SOLSTICE_WINTER("Solstice", "Winter Solstice");
@@ -799,7 +799,7 @@ public class WidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
-            EQUINOX_VERNAL.setDisplayStrings(context.getString(R.string.timeMode_equinox_vernal_short),
+            EQUINOX_SPRING.setDisplayStrings(context.getString(R.string.timeMode_equinox_vernal_short),
                     context.getString(R.string.timeMode_equinox_vernal));
 
             SOLSTICE_SUMMER.setDisplayStrings( context.getString(R.string.timeMode_solstice_summer_short),

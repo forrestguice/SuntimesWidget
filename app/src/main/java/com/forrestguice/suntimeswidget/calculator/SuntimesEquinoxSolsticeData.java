@@ -172,9 +172,9 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
 
         switch (timeMode)
         {
-            case EQUINOX_VERNAL:
-                eventCalendarThisYear = calculator.getVernalEquinoxForYear(todaysCalendar);
-                eventCalendarOtherYear = calculator.getVernalEquinoxForYear(otherCalendar);
+            case EQUINOX_SPRING:
+                eventCalendarThisYear = calculator.getSpringEquinoxForYear(todaysCalendar);
+                eventCalendarOtherYear = calculator.getSpringEquinoxForYear(otherCalendar);
                 break;
 
             case SOLSTICE_SUMMER:

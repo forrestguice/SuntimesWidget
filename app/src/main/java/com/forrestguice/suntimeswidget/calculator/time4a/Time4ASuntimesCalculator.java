@@ -236,6 +236,12 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     @Override
     public Calendar getVernalEquinoxForYear(Calendar date)
     {
+        return getSpringEquinoxForYear(date);
+    }
+
+    @Override
+    public Calendar getSpringEquinoxForYear(Calendar date)
+    {
         AstronomicalSeason vernalEquinox = adjustSeasonToHemisphere(AstronomicalSeason.VERNAL_EQUINOX);
         Moment moment = vernalEquinox.inYear(date.get(Calendar.YEAR));
         return momentToCalendar(moment);
