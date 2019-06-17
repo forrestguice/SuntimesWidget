@@ -43,6 +43,11 @@
     <attr name="moonsetIcon" format="reference" />
     <attr name="moonsetColor" format="reference" />
 
+    <attr name="moonPhaseIcon0" format="reference" />
+    <attr name="moonPhaseIcon1" format="reference" />
+    <attr name="moonPhaseIcon2" format="reference" />
+    <attr name="moonPhaseIcon3" format="reference" />
+
     <attr name="springColor" format="reference" />
     <attr name="summerColor" format="reference" />
     <attr name="fallColor" format="reference" />
