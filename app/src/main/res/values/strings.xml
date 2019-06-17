@@ -1116,6 +1116,10 @@
         <item>astronomical twilight</item>
         <item>moonrise</item>
         <item>moonset</item>
+        <item>new moon</item>  <!-- TODO -->
+        <item>first quarter</item>  <!-- TODO -->
+        <item>full moon</item>  <!-- TODO -->
+        <item>third quarter</item>  <!-- TODO -->
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>morning astronomical twilight (start)</item>
@@ -1135,6 +1139,10 @@
         <item>evening astronomical twilight (end)</item>
         <item>moonrise</item>
         <item>moonset</item>
+        <item>new moon</item>  <!-- TODO -->
+        <item>first quarter</item>  <!-- TODO -->
+        <item>full moon</item>  <!-- TODO -->
+        <item>third quarter</item>  <!-- TODO -->
     </string-array>
 
     <!-- Dialog: Enable GPS? -->

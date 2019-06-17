@@ -33,6 +33,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,8 +57,12 @@ public enum SolarEvents
     EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.attr.sunsetIconLarge, 0, false),              // 13
     EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.attr.sunsetIconLarge, 0, false),  // 14
     MOONRISE("moonrise", "moonrise", R.attr.moonriseIcon, 1, true),                                               // 15
-    MOONSET("moonset", "mooonset", R.attr.moonsetIcon, 1, false);                                                 // 16
-                                                                                                        // .. R.array.solarevents_short/_long req same length/order
+    MOONSET("moonset", "mooonset", R.attr.moonsetIcon, 1, false),                                                 // 16
+    NEWMOON("new moon", "new moon", R.attr.moonPhaseIcon0, 1, true),                                             // 17
+    FIRSTQUARTER("first quarter", "first quarter", R.attr.moonPhaseIcon1, 1, true),                              // 18
+    FULLMOON("full moon", "full moon", R.attr.moonPhaseIcon2, 1, false),                                         // 19
+    THIRDQUARTER("third quarter", "third quarter", R.attr.moonPhaseIcon3, 1, false)                              // 20
+    ;                                                                                                    // .. R.array.solarevents_short/_long req same length/order
 
     private int iconResource;
     private String shortDisplayString, longDisplayString;
@@ -280,6 +285,11 @@ public enum SolarEvents
         return toTimeMode(this);
     }
 
+    public SuntimesCalculator.MoonPhase toMoonPhase()
+    {
+        return toMoonPhase(this);
+    }
+
     /**
      * toTimeMode
      * @param event SolarEvents enum
@@ -311,6 +321,23 @@ public enum SolarEvents
 
             case SUNSET:
             case SUNRISE: return WidgetSettings.TimeMode.OFFICIAL;
+        }
+        return null;
+    }
+
+    /**
+     * toMoonPhaseMode
+     * @param event SolarEvents enum
+     * @return a MoonPhaseMode (or null if not applicable)
+     */
+    public static SuntimesCalculator.MoonPhase toMoonPhase(SolarEvents event)
+    {
+        switch (event)
+        {
+            case NEWMOON: return SuntimesCalculator.MoonPhase.NEW;
+            case FIRSTQUARTER: return SuntimesCalculator.MoonPhase.FIRST_QUARTER;
+            case FULLMOON: return SuntimesCalculator.MoonPhase.FULL;
+            case THIRDQUARTER: return SuntimesCalculator.MoonPhase.THIRD_QUARTER;
         }
         return null;
     }
