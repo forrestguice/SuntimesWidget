@@ -1120,6 +1120,10 @@
         <item>first quarter</item>  <!-- TODO -->
         <item>full moon</item>  <!-- TODO -->
         <item>third quarter</item>  <!-- TODO -->
+        <item>spring equinox</item>    <!-- TODO -->
+        <item>summer solstice</item>   <!-- TODO -->
+        <item>autumn equinox</item>   <!-- TODO -->
+        <item>winter solstice</item>   <!-- TODO -->
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>morning astronomical twilight (start)</item>
@@ -1143,6 +1147,10 @@
         <item>first quarter</item>  <!-- TODO -->
         <item>full moon</item>  <!-- TODO -->
         <item>third quarter</item>  <!-- TODO -->
+        <item>spring equinox</item>    <!-- TODO -->
+        <item>summer solstice</item>   <!-- TODO -->
+        <item>autumn equinox</item>   <!-- TODO -->
+        <item>winter solstice</item>   <!-- TODO -->
     </string-array>
 
     <!-- Dialog: Enable GPS? -->

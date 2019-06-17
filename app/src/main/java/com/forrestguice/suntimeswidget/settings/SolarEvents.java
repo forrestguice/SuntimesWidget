@@ -57,12 +57,16 @@ public enum SolarEvents
     EVENING_BLUE8("blue hour", "evening blue hour", R.attr.sunsetIconLarge, 0, false),                                 // 12
     EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.attr.sunsetIconLarge, 0, false),              // 13
     EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.attr.sunsetIconLarge, 0, false),  // 14
-    MOONRISE("moonrise", "moonrise", R.attr.moonriseIcon, 1, true),                                               // 15
-    MOONSET("moonset", "mooonset", R.attr.moonsetIcon, 1, false),                                                 // 16
+    MOONRISE("moonrise", "moonrise", R.attr.moonriseIcon, 1, true),                                                 // 15
+    MOONSET("moonset", "mooonset", R.attr.moonsetIcon, 1, false),                                                   // 16
     NEWMOON("new moon", "new moon", R.attr.moonPhaseIcon0, 1, true),                                             // 17
     FIRSTQUARTER("first quarter", "first quarter", R.attr.moonPhaseIcon1, 1, true),                              // 18
     FULLMOON("full moon", "full moon", R.attr.moonPhaseIcon2, 1, false),                                         // 19
-    THIRDQUARTER("third quarter", "third quarter", R.attr.moonPhaseIcon3, 1, false)                              // 20
+    THIRDQUARTER("third quarter", "third quarter", R.attr.moonPhaseIcon3, 1, false),                             // 20
+    EQUINOX_SPRING("equinox", "spring equinox", R.attr.springColor, 0, true),                                         // 21
+    SOLSTICE_SUMMER("solstice", "summer solstice", R.attr.summerColor, 0, false),                                     // 22
+    EQUINOX_AUTUMNAL("equinox", "autumnal equinox", R.attr.fallColor, 0, false),                                      // 23
+    SOLSTICE_WINTER("solstice", "winter solstice", R.attr.winterColor, 0, true)                                       // 24
     ;                                                                                                    // .. R.array.solarevents_short/_long req same length/order
 
     private int iconResource;
@@ -171,18 +175,12 @@ public enum SolarEvents
     {
         private final Context context;
         private final ArrayList<SolarEvents> choices;
-        private int resID_noonIcon;
 
         public SolarEventsAdapter(Context context, ArrayList<SolarEvents> choices)
         {
             super(context, R.layout.layout_listitem_solarevent, choices);
             this.context = context;
             this.choices = choices;
-
-            int[] iconAttr = { R.attr.sunnoonIcon };
-            TypedArray typedArray = context.obtainStyledAttributes(iconAttr);
-            resID_noonIcon = typedArray.getResourceId(0, R.drawable.ic_noon_large);
-            typedArray.recycle();
         }
 
         static int[] getIconDimen(Resources resources, SolarEvents event)
@@ -200,6 +198,13 @@ public enum SolarEvents
                 case THIRDQUARTER:
                     height = (int)resources.getDimension(R.dimen.sunIconLarge_width);
                     width = height / 2;
+                    break;
+
+                case EQUINOX_SPRING:
+                case SOLSTICE_SUMMER:
+                case EQUINOX_AUTUMNAL:
+                case SOLSTICE_WINTER:
+                    width = height = (int)resources.getDimension(R.dimen.sunIconLarge_width) / 2;
                     break;
 
                 default:
@@ -320,6 +325,11 @@ public enum SolarEvents
         return toMoonPhase(this);
     }
 
+    public WidgetSettings.SolsticeEquinoxMode toSolsticeEquinoxMode()
+    {
+        return toSolsticeEquinoxMode(this);
+    }
+
     /**
      * toTimeMode
      * @param event SolarEvents enum
@@ -368,6 +378,23 @@ public enum SolarEvents
             case FIRSTQUARTER: return SuntimesCalculator.MoonPhase.FIRST_QUARTER;
             case FULLMOON: return SuntimesCalculator.MoonPhase.FULL;
             case THIRDQUARTER: return SuntimesCalculator.MoonPhase.THIRD_QUARTER;
+        }
+        return null;
+    }
+
+    /**
+     * toSolsticeEquinoxMode
+     * @param event SolarEvents enum
+     * @return a SolsticeEquinoxMode (or null if not applicable)
+     */
+    public static WidgetSettings.SolsticeEquinoxMode toSolsticeEquinoxMode(SolarEvents event)
+    {
+        switch (event)
+        {
+            case EQUINOX_SPRING: return WidgetSettings.SolsticeEquinoxMode.EQUINOX_SPRING;
+            case SOLSTICE_SUMMER: return WidgetSettings.SolsticeEquinoxMode.SOLSTICE_SUMMER;
+            case EQUINOX_AUTUMNAL: return WidgetSettings.SolsticeEquinoxMode.EQUINOX_AUTUMNAL;
+            case SOLSTICE_WINTER: return WidgetSettings.SolsticeEquinoxMode.SOLSTICE_WINTER;
         }
         return null;
     }
