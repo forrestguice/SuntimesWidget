@@ -25,6 +25,7 @@ import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -184,6 +185,31 @@ public enum SolarEvents
             typedArray.recycle();
         }
 
+        static int[] getIconDimen(Resources resources, SolarEvents event)
+        {
+            int width, height;
+            switch (event)
+            {
+                case NEWMOON:
+                case FULLMOON:
+                case NOON:
+                    width = height = (int)resources.getDimension(R.dimen.sunIconLarge_width);
+                    break;
+
+                case FIRSTQUARTER:
+                case THIRDQUARTER:
+                    height = (int)resources.getDimension(R.dimen.sunIconLarge_width);
+                    width = height / 2;
+                    break;
+
+                default:
+                    width = (int)resources.getDimension(R.dimen.sunIconLarge_width);
+                    height = (int)resources.getDimension(R.dimen.sunIconLarge_height);
+                    break;
+            }
+            return new int[] {width, height};
+        }
+
         @Override
         @NonNull
         public View getView(int position, View convertView, @NonNull ViewGroup parent)
@@ -213,28 +239,32 @@ public enum SolarEvents
             typedArray.recycle();
 
             ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
-            adjustIcon(iconResource, icon);
+            SolarEvents event = choices.get(position);
+            adjustIcon(iconResource, icon, event);
 
             TextView text = (TextView) view.findViewById(android.R.id.text1);
-            text.setText(choices.get(position).getLongDisplayString());
+            text.setText(event.getLongDisplayString());
 
             return view;
         }
 
-        private void adjustIcon(int iconResource, ImageView icon)
+        private void adjustIcon(int iconResource, ImageView icon, SolarEvents event)
         {
             Resources resources = icon.getContext().getResources();
-            int iconWidth = (int)resources.getDimension(R.dimen.sunIconLarge_width);
-            int iconHeight = (int)resources.getDimension(R.dimen.sunIconLarge_height);
-            if (iconResource == resID_noonIcon)
-            {
-                //noinspection SuspiciousNameCombination
-                iconHeight = iconWidth;
-            }
+            int defWidth = (int)resources.getDimension(R.dimen.sunIconLarge_width);
+            int[] dimen = getIconDimen(resources, event);
 
             ViewGroup.LayoutParams iconParams = icon.getLayoutParams();
-            iconParams.width = iconWidth;
-            iconParams.height = iconHeight;
+            iconParams.width = dimen[0];
+            iconParams.height = dimen[1];
+
+            if (iconParams instanceof ViewGroup.MarginLayoutParams)
+            {
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) iconParams;
+                float vertMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, resources.getDisplayMetrics());
+                float horizMargin = (vertMargin + (defWidth - dimen[0])) / 2f;
+                params.setMargins((int)horizMargin, (int)vertMargin, (int)horizMargin, (int)vertMargin);
+            }
 
             icon.setImageDrawable(null);
             icon.setBackgroundResource(iconResource);
