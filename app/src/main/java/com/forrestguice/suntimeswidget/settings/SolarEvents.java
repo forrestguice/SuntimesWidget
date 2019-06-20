@@ -57,16 +57,19 @@ public enum SolarEvents
     EVENING_BLUE8("blue hour", "evening blue hour", R.attr.sunsetIconLarge, 0, false),                                 // 12
     EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.attr.sunsetIconLarge, 0, false),              // 13
     EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.attr.sunsetIconLarge, 0, false),  // 14
+
     MOONRISE("moonrise", "moonrise", R.attr.moonriseIcon, 1, true),                                                 // 15
     MOONSET("moonset", "mooonset", R.attr.moonsetIcon, 1, false),                                                   // 16
-    NEWMOON("new moon", "new moon", R.attr.moonPhaseIcon0, 1, true),                                             // 17
-    FIRSTQUARTER("first quarter", "first quarter", R.attr.moonPhaseIcon1, 1, true),                              // 18
-    FULLMOON("full moon", "full moon", R.attr.moonPhaseIcon2, 1, false),                                         // 19
-    THIRDQUARTER("third quarter", "third quarter", R.attr.moonPhaseIcon3, 1, false),                             // 20
-    EQUINOX_SPRING("equinox", "spring equinox", R.attr.springColor, 0, true),                                         // 21
-    SOLSTICE_SUMMER("solstice", "summer solstice", R.attr.summerColor, 0, false),                                     // 22
-    EQUINOX_AUTUMNAL("equinox", "autumnal equinox", R.attr.fallColor, 0, false),                                      // 23
-    SOLSTICE_WINTER("solstice", "winter solstice", R.attr.winterColor, 0, true)                                       // 24
+
+    NEWMOON("new moon", "new moon", R.attr.moonPhaseIcon0, 2, true),                                             // 17
+    FIRSTQUARTER("first quarter", "first quarter", R.attr.moonPhaseIcon1, 2, true),                              // 18
+    FULLMOON("full moon", "full moon", R.attr.moonPhaseIcon2, 2, false),                                         // 19
+    THIRDQUARTER("third quarter", "third quarter", R.attr.moonPhaseIcon3, 2, false),                             // 20
+
+    EQUINOX_SPRING("equinox", "spring equinox", R.attr.springColor, 3, true),                                         // 21
+    SOLSTICE_SUMMER("solstice", "summer solstice", R.attr.summerColor, 3, false),                                     // 22
+    EQUINOX_AUTUMNAL("equinox", "autumnal equinox", R.attr.fallColor, 3, false),                                      // 23
+    SOLSTICE_WINTER("solstice", "winter solstice", R.attr.winterColor, 3, true)                                       // 24
     ;                                                                                                    // .. R.array.solarevents_short/_long req same length/order
 
     private int iconResource;
@@ -74,8 +77,10 @@ public enum SolarEvents
     public int type;
     public boolean rising;
 
-    public static final int TYPE_SUN = 0;
-    public static final int TYPE_MOON = 1;
+    public static final int TYPE_SUN = 0;         // sunrise, sunset, twilight (converted using toTimeMode)
+    public static final int TYPE_MOON = 1;        // moonrise, moonset
+    public static final int TYPE_MOONPHASE = 2;   // major phases (converted using toMoonPhase)
+    public static final int TYPE_SEASON = 3;      // solstices & equinoxes (converted using toSolsticeEquinoxMode)
 
     private SolarEvents(String shortDisplayString, String longDisplayString, int iconResource, int type, boolean rising)
     {
