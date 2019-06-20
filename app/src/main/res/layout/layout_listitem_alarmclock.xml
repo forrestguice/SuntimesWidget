@@ -45,9 +45,8 @@
             android:id="@+id/layout_header"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:gravity="center_vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@android:id/text2"
             android:layout_marginLeft="6dp" android:layout_marginRight="6dp" android:layout_marginTop="6dp" android:layout_marginBottom="0dp">
 
             <ImageButton
@@ -117,6 +116,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/text_location_label"
             app:layout_constraintTop_toBottomOf="@+id/layout_header"
+            app:layout_constraintBottom_toTopOf="@+id/text_location_label"
             tools:text="Nautical Twilight (end)" />
 
         <TextView
@@ -134,7 +134,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1"
             app:layout_constraintStart_toEndOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@android:id/text2" />
+            app:layout_constraintTop_toBottomOf="@android:id/text2"
+            app:layout_constraintBottom_toTopOf="@+id/text_date"
+            />
 
         <TextView
             android:id="@+id/option_offset"
@@ -150,6 +152,18 @@
             app:layout_constraintTop_toBottomOf="@+id/layout_header"
             app:layout_constraintBottom_toTopOf="@+id/text_datetime" />
 
+        <TextView
+            android:id="@+id/text_date" android:visibility="visible"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:text="June 21, 2019"
+            android:layout_marginTop="8dp"
+            android:gravity="start"
+            android:textSize="12sp" android:maxLines="1" android:ellipsize="end" android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/layout_options"
+            app:layout_constraintStart_toStartOf="@android:id/text2"
+            app:layout_constraintEnd_toEndOf="@+id/text_location_label"
+            app:layout_constraintTop_toBottomOf="@+id/text_location_label" />
+
         <LinearLayout
             android:id="@+id/layout_options"
             android:layout_width="0dp"
@@ -159,9 +173,9 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_location_label"
+            app:layout_constraintTop_toBottomOf="@+id/text_date"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginLeft="4dp" android:layout_marginRight="4dp" android:layout_marginTop="8dp" android:layout_marginBottom="4dp">
+            android:layout_marginLeft="4dp" android:layout_marginRight="4dp" android:layout_marginTop="0dp" android:layout_marginBottom="4dp">
 
             <TextView
                 android:id="@+id/option_repeat"
