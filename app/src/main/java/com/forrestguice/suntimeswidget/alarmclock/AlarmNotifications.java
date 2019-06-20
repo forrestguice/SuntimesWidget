@@ -1332,7 +1332,7 @@ public class AlarmNotifications extends BroadcastReceiver
         data.setTodayIs(day);
         data.calculate();
 
-        Calendar eventTime = data.eventCalendarUpcoming(now);
+        Calendar eventTime = data.eventCalendarUpcoming(day);
         eventTime.set(Calendar.SECOND, 0);
         alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
 
@@ -1340,10 +1340,10 @@ public class AlarmNotifications extends BroadcastReceiver
                 // || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))    // does it make sense to enforce repeatingDays for seasons? probably not.
         {
             Log.w("AlarmReceiverItem", "updateAlarmTime: seasonEvent advancing..");
-            day.setTimeInMillis(eventTime.getTimeInMillis() + 1000);
+            day.setTimeInMillis(eventTime.getTimeInMillis() + 1000 * 60 * 60 * 24);
             data.setTodayIs(day);
             data.calculate();
-            eventTime = data.eventCalendarUpcoming(now);
+            eventTime = data.eventCalendarUpcoming(day);
             eventTime.set(Calendar.SECOND, 0);
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
         }
