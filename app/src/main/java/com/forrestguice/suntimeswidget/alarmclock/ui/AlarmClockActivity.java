@@ -963,7 +963,9 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         if (Build.VERSION.SDK_INT >= 11)
         {
+            int eventType = item.event != null ? item.event.getType() : -1;
             AlarmOffsetDialog offsetDialog = new AlarmOffsetDialog();
+            offsetDialog.setShowDays(eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON);
             offsetDialog.setOffset(item.offset);
             offsetDialog.setOnAcceptedListener(onOffsetChanged);
             t_selectedItem = item.rowID;
