@@ -67,6 +67,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
+import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
@@ -553,6 +554,12 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
                 : noRepeat
                 ? context.getString(R.string.alarmOption_repeat_none)
                 : AlarmRepeatDialog.getDisplayString(context, item.repeatingDays);
+
+        int eventType = item.event == null ? -1 : item.event.getType();
+        if (item.repeating && (eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON)) {
+            repeatText = context.getString(R.string.alarmOption_repeat);
+        }
+
         view.option_repeat.setText( isSelected || !noRepeat ? repeatText : "" );
 
         if (!isSelected || item.enabled) {
