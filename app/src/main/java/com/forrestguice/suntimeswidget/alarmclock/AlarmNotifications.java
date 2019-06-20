@@ -54,9 +54,11 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity;
+import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -1203,6 +1205,14 @@ public class AlarmNotifications extends BroadcastReceiver
                     eventTime = updateAlarmTime_moonEvent(context, item.event, item.location, item.offset, item.repeating, item.repeatingDays);
                     break;
 
+                case SolarEvents.TYPE_MOONPHASE:
+                    eventTime = updateAlarmTime_moonPhaseEvent(context, item.event, item.location, item.offset, item.repeating, item.repeatingDays);
+                    break;
+
+                case SolarEvents.TYPE_SEASON:
+                    eventTime = updateAlarmTime_seasonEvent(context, item.event, item.location, item.offset, item.repeating, item.repeatingDays);
+                    break;
+
                 case SolarEvents.TYPE_SUN:
                     eventTime = updateAlarmTime_sunEvent(context, item.event, item.location, item.offset, item.repeating, item.repeatingDays);
                     break;
@@ -1271,6 +1281,69 @@ public class AlarmNotifications extends BroadcastReceiver
             moonData.setTodayIs(day);
             moonData.calculate();
             eventTime = (event.isRising() ? moonData.moonriseCalendarToday() : moonData.moonsetCalendarToday());
+            eventTime.set(Calendar.SECOND, 0);
+            alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+        }
+        return eventTime;
+    }
+
+    private static Calendar updateAlarmTime_moonPhaseEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays)
+    {
+        SuntimesCalculator.MoonPhase phase = event.toMoonPhase();
+        SuntimesMoonData moonData = new SuntimesMoonData(context, 0);
+        moonData.setLocation(location);
+
+        Calendar now = Calendar.getInstance();
+        Calendar alarmTime = Calendar.getInstance();
+
+        Calendar day = Calendar.getInstance();
+        moonData.setTodayIs(day);
+        moonData.calculate();
+
+        Calendar eventTime = moonData.moonPhaseCalendar(phase);
+        eventTime.set(Calendar.SECOND, 0);
+        alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+
+        while (now.after(alarmTime))
+                //|| (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))    // does it make sense to enforce repeatingDays for moon phases? probably not.
+        {
+            Log.w("AlarmReceiverItem", "updateAlarmTime: moonPhaseEvent advancing to next cycle..");
+            day.setTimeInMillis(eventTime.getTimeInMillis() + 1000);
+            moonData.setTodayIs(day);
+            moonData.calculate();
+            eventTime = moonData.moonPhaseCalendar(phase);
+            eventTime.set(Calendar.SECOND, 0);
+            alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+        }
+        return eventTime;
+    }
+
+    private static Calendar updateAlarmTime_seasonEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays)
+    {
+        WidgetSettings.SolsticeEquinoxMode season = event.toSolsticeEquinoxMode();
+        SuntimesEquinoxSolsticeData data = new SuntimesEquinoxSolsticeData(context, 0);
+        data.setTimeMode(season);
+        data.setLocation(location);
+
+        Calendar now = Calendar.getInstance();
+        Calendar alarmTime = Calendar.getInstance();
+
+        Calendar day = Calendar.getInstance();
+        data.setTodayIs(day);
+        data.calculate();
+
+        Calendar eventTime = data.eventCalendarUpcoming(now);
+        eventTime.set(Calendar.SECOND, 0);
+        alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+
+        while (now.after(alarmTime))
+                // || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))    // does it make sense to enforce repeatingDays for seasons? probably not.
+        {
+            Log.w("AlarmReceiverItem", "updateAlarmTime: seasonEvent advancing..");
+            day.setTimeInMillis(eventTime.getTimeInMillis() + 1000);
+            data.setTodayIs(day);
+            data.calculate();
+            eventTime = data.eventCalendarUpcoming(now);
             eventTime.set(Calendar.SECOND, 0);
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
         }
