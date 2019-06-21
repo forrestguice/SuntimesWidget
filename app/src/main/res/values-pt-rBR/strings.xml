@@ -1255,9 +1255,6 @@
           Pra <b>adicionar</b> ou <b>apagar</b> um widget, você deve fazer isso na tela inicial do sistema.<br/><br/>
           Pra <b>reconfigurar</b> um widget existente, você pode fazer isso selecionando da seguinte lista.<br/>
     ]]></string>
-    <string name="help_alarmclock"><![CDATA[
-          TODO
-    ]]></string> <!-- TODO -->
     <string name="help_themelist">
           [Icon Add] Adicionar um tema ou [Icon Copy] copiar a partir de um tema existente.\n
           \n
