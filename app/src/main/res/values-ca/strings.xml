@@ -662,7 +662,11 @@
     <plurals name="units_seconds">
         <item quantity="one">%d segon</item>
         <item quantity="other">%d segons</item>
-    </plurals>  
+    </plurals>
+
+    <string name="configLabel_alarmMisc">Miscellaneous</string>  <!-- TODO -->
+    <string name="configLabel_alarms_showlauncher">Launcher Icon</string>  <!-- TODO -->
+    <string name="configLabel_alarms_showlauncher_summary">Show alarm clock icon in the app tray.</string>  <!-- TODO -->
 
     <!--
          APP SETTINGS
@@ -702,12 +706,10 @@
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Mostrar la Lluna</string>
     <string name="configLabel_ui_showmoon_summary">Mostra els moments de sortida i posta, fase i iŀluminació.</string>
-    <string name="configLabel_ui_showmoon_notImplemented">La Lluna no està implementada per aquesta font de dades.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Mostrar solstici / equinocci</string>
     <string name="configLabel_ui_showEquinox_summary">Mostrar temps fins pròxim solstici o equinocci.</string>
-    <string name="configLabel_ui_showEquinox_notImplemented">solstici i equinocci no implementats per aquesta font de dades.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Seguiment de solstici</string>
@@ -1123,6 +1125,10 @@
       <b>equinocci de tardor:</b> TODO.<br/><br/>
       <b>solstici d\'hivern:</b> TODO.<br/>
 ]]></string>
+    <string name="help_general_riseSetOrder"><![CDATA[
+          <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
+          <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
+    ]]></string>  <!-- TODO -->
     <string name="help_general_daylength"><![CDATA[
     <b>Duració del dia:</b> la quantitat de temps entre la sortida i la posta de Sol.<br/><br/>
     <b>Llum usable:</b> la quantitat de temps entre el crepuscle civil diürn i el nocturn.</br>
@@ -1168,7 +1174,9 @@
 
     <string name="security_dialog_title">Alerta de seguretat</string>  
     <string name="security_duplicate_permissions">Un permís que pertany a Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\ntambé està definit per: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  
-    <string name="feature_not_supported_by_api">Aquesta caracteristica no està suportada per l\'API %1$s.</string>  
+    <string name="feature_not_supported_by_api">Aquesta caracteristica no està suportada per l\'API %1$s.</string>
+    <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>  <!-- TODO -->
+    <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>  <!-- TODO -->
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

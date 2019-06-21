@@ -678,6 +678,10 @@
         <item quantity="other">%d seconds</item>
     </plurals>  <!-- TODO -->
 
+    <string name="configLabel_alarmMisc">Miscellaneous</string>  <!-- TODO -->
+    <string name="configLabel_alarms_showlauncher">Launcher Icon</string>  <!-- TODO -->
+    <string name="configLabel_alarms_showlauncher_summary">Show alarm clock icon in the app tray.</string>  <!-- TODO -->
+
     <!--
          APP SETTINGS
     -->
@@ -717,12 +721,10 @@
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Mostra la luna</string>
     <string name="configLabel_ui_showmoon_summary">Mostra orari di alba, tramonto, fase, e illuminazione.</string>
-    <string name="configLabel_ui_showmoon_notImplemented">Dati sulla luna non presenti in questa fonte.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Mostra Solstizio / Equinozio</string>
     <string name="configLabel_ui_showEquinox_summary">Mostra tempo mancante al prossimo solstizio o equinozio.</string>
-    <string name="configLabel_ui_showEquinox_notImplemented">Solstizio e equinozio non presenti in questa fonte di dati.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Tracciamento solstizio</string>
@@ -1152,6 +1154,10 @@
         <b>Crepuscolo nautico:</b> Il sole è 12 gradi al di sotto dell\'orizzonte; è sempre più difficoltoso discernere i bordi degli oggetti e l\'orizzonte. Non c\'è abbastanza luce per la maggior parte delle attività all\'aperto, senza l\'utilizzo di una fonte luminosa.<br/><br/>
         <b>Crepuscolo astronomico:</b> Il sole è 18 gradi al di sotto dell\'orizzonte. Pressoché il buio della notte.<br/>
     ]]></string>
+    <string name="help_general_riseSetOrder"><![CDATA[
+          <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
+          <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
+    ]]></string>  <!-- TODO -->
     <string name="help_general_timeMode2"><![CDATA[
         <b>Equinozio di primavera:</b> TODO.<br/><br/>
         <b>Solstizio d\'estate:</b> TODO.<br/><br/>
@@ -1204,6 +1210,8 @@
     <string name="security_dialog_title">Security Alert</string>  <!-- TODO -->
     <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  <!-- TODO -->
     <string name="feature_not_supported_by_api">This feature is not supported by API %1$s.</string>  <!-- TODO -->
+    <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>  <!-- TODO -->
+    <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>  <!-- TODO -->
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

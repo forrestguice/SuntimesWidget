@@ -678,6 +678,10 @@
         <item quantity="other">%d seconds</item>
     </plurals>  <!-- TODO -->
 
+    <string name="configLabel_alarmMisc">Miscellaneous</string>  <!-- TODO -->
+    <string name="configLabel_alarms_showlauncher">Launcher Icon</string>  <!-- TODO -->
+    <string name="configLabel_alarms_showlauncher_summary">Show alarm clock icon in the app tray.</string>  <!-- TODO -->
+
     <!--
          APP SETTINGS
     -->
@@ -717,12 +721,10 @@
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">顯示月亮的信息</string>
     <string name="configLabel_ui_showmoon_summary">顯示月出月落的時間，月相和月光時段。</string>
-    <string name="configLabel_ui_showmoon_notImplemented">Moon not implemented by this data source.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">顯示夏冬至/春秋分</string>
     <string name="configLabel_ui_showEquinox_summary">顯示到下一次夏冬至/春秋分的時間。</string>
-    <string name="configLabel_ui_showEquinox_notImplemented">這個數據源里沒有夏冬至/春秋分數據。</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">夏冬至追蹤</string>
@@ -1152,6 +1154,10 @@
           <b>航海曙暮光：</b> 太陽到達地平線下12度；地平線和物體的輪廓非常模糊。對於大多數戶外運動來說光照不足。<br/><br/>
           <b>天文曙暮光：</b> 太陽到達地平線下18度；跟夜裡差不多。<br/>
     ]]></string>
+    <string name="help_general_riseSetOrder"><![CDATA[
+          <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
+          <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
+    ]]></string>  <!-- TODO -->
 
     <string name="help_general_timeMode2"><![CDATA[
           <b>春分：</b>待完成。可參閱<a href="https://zh.wikipedia.org/wiki/%E6%98%A5%E5%88%86">維基百科：春分</a><br/><br/>
@@ -1199,11 +1205,13 @@
     <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>    <!-- TODO -->
     <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>    <!-- TODO -->
     <string name="privacy_permissiondialog_ignore">Ignore</string>    <!-- TODO -->
-    <string name="privacy_permissiondialog_title">Permissions</string>
+    <string name="privacy_permissiondialog_title">Permissions</string> <!-- TODO -->
 
     <string name="security_dialog_title">Security Alert</string>  <!-- TODO -->
     <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  <!-- TODO -->
     <string name="feature_not_supported_by_api">This feature is not supported by API %1$s.</string>  <!-- TODO -->
+    <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>  <!-- TODO -->
+    <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>  <!-- TODO -->
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

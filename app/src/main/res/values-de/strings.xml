@@ -668,6 +668,10 @@
     <item quantity="other">%d seconds</item>
   </plurals>  <!-- TODO -->
 
+  <string name="configLabel_alarmMisc">Miscellaneous</string>  <!-- TODO -->
+  <string name="configLabel_alarms_showlauncher">Launcher Icon</string>  <!-- TODO -->
+  <string name="configLabel_alarms_showlauncher_summary">Show alarm clock icon in the app tray.</string>  <!-- TODO -->
+
   <!--
        APP SETTINGS
   -->
@@ -706,13 +710,10 @@
   <!-- App Setting: Show Moon -->
   <string name="configLabel_ui_showmoon">Zeige Mond</string>
   <string name="configLabel_ui_showmoon_summary">Zeige Aufgangs- und Untergangszeiten, Mondphasen und Illumination.</string>
-  <string name="configLabel_ui_showmoon_notImplemented">Mond wird von dieser Datenquelle nicht unterstützt.</string>
 
   <!-- App Setting: Show Equinox / Solstice -->
   <string name="configLabel_ui_showEquinox">Zeige Sonnenwende / Tag-Nacht-Gleiche</string>
   <string name="configLabel_ui_showEquinox_summary">Zeige Zeit bis zur nächsten Sonnenwende oder Tag-Nacht-Gleiche.</string>
-  <string name="configLabel_ui_showEquinox_notImplemented">Sonnenwende und Tag-Nacht-Gleiche werden von dieser
-      Datenquelle nicht unterstützt.</string>
 
   <!-- App Setting: Solstice Tracking Mode -->
   <string name="configLabel_ui_solsticeTrackingMode">Sonnenwende verfolgen</string>
@@ -1061,6 +1062,10 @@
         <b>Nautische Dämmerung:</b> Die Sonne steht 12 Grad unter dem Horizont; Der nautische Horizont (Kimmlinie) ist gerade noch zu erkennen, einige wenige, für die nautische Navigation notwendige, Sterne, sind bereits zu erkennen. Die meisten Aktivitäten unter freiem Himmel sind nur noch mit Beleuchtung möglich.<br/><br/>
         <b>Astronomische Dämmerung:</b> Die Sonne steht 18 Grad unter dem Horizont; Die astronomische Nacht beginnt und mit ihr die tiefste Dunkelheit, sofern der Himmel nicht von meist künstlichen Lichtquellen erhellt wird (Lichtverschmutzung).<br/>
   ]]></string>
+  <string name="help_general_riseSetOrder"><![CDATA[
+          <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
+          <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
+    ]]></string>  <!-- TODO -->
   <string name="help_general_daylength"><![CDATA[
       <b>Lichter Tag:</b> Zeit zwischen Sonnenaufgang und Sonnenuntergang.<br/><br/>
       <b>Nutzbares Licht:</b> Zeit zwischen bürgerlicher Morgen- und Abenddämmerung.</br>
@@ -1107,6 +1112,8 @@
   <string name="security_dialog_title">Security Alert</string>  <!-- TODO -->
   <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  <!-- TODO -->
   <string name="feature_not_supported_by_api">This feature is not supported by API %1$s.</string>  <!-- TODO -->
+  <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>  <!-- TODO -->
+  <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>  <!-- TODO -->
 
   <!-- calculator implemenations -->
   <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
