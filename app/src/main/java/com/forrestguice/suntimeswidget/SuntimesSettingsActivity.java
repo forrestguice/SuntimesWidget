@@ -22,6 +22,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.KeyguardManager;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -42,6 +43,8 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.text.SpannableString;
@@ -1366,33 +1369,62 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     private static void initPref_alarms(final PreferenceFragment fragment)
     {
         final Context context = fragment.getActivity();
+        if (context == null) {
+            return;
+        }
+
+        int[] colorAttrs = { R.attr.tagColor_warning };
+        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+        int colorWarning = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.warningTag_dark));
+        typedArray.recycle();
+
         Preference batteryOptimization = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_BATTERYOPT);
-        if (batteryOptimization != null && context != null)
+        if (batteryOptimization != null)
         {
             if (Build.VERSION.SDK_INT >= 23)
             {
                 batteryOptimization.setOnPreferenceClickListener(onBatteryOptimizationClicked(context));
-
-                int[] colorAttrs = { R.attr.text_accentColor, R.attr.tagColor_warning };
-                TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
-                int colorListed = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.text_accent_dark));
-                int colorUnlisted = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.warningTag_dark));
-                typedArray.recycle();
-
                 if (isIgnoringBatteryOptimizations(fragment.getContext()))
                 {
                     String listed = context.getString(R.string.configLabel_alarms_optWhiteList_listed);
-                    batteryOptimization.setSummary(SuntimesUtils.createColorSpan(null, listed, listed, colorListed));
-
+                    batteryOptimization.setSummary(listed);
                 } else {
                     String unlisted = context.getString(R.string.configLabel_alarms_optWhiteList_unlisted);
-                    batteryOptimization.setSummary(SuntimesUtils.createColorSpan(null, unlisted, unlisted, colorUnlisted));
+                    batteryOptimization.setSummary(SuntimesUtils.createColorSpan(null, unlisted, unlisted, colorWarning));
                 }
                 
             } else {
                 PreferenceCategory alarmsCategory = (PreferenceCategory)fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_CATEGORY);
                 removePrefFromCategory(batteryOptimization, alarmsCategory);  // battery optimization is api 23+
             }
+        }
+
+        Preference notificationPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_NOTIFICATIONS);
+        if (notificationPrefs != null)
+        {
+            boolean notificationsEnabled = NotificationManagerCompat.from(context).areNotificationsEnabled();
+            notificationPrefs.setOnPreferenceClickListener(onNotificationPrefsClicked(context));
+
+            if (notificationsEnabled)
+            {
+                String enabledString = context.getString(R.string.configLabel_alarms_notifications_on);
+                if (isDeviceSecure(context) && !notificationsOnLockScreen(context))
+                {
+                    String disabledString = context.getString(R.string.configLabel_alarms_notifications_off);
+                    String summaryString = context.getString(R.string.configLabel_alarms_notifications_summary1, disabledString);
+                    notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, summaryString, disabledString, colorWarning));
+                } else {
+                    notificationPrefs.setSummary(context.getString(R.string.configLabel_alarms_notifications_summary0, enabledString));
+                }
+            } else {
+                String disabledString = context.getString(R.string.configLabel_alarms_notifications_off);
+                notificationPrefs.setSummary(SuntimesUtils.createColorSpan(null, disabledString, disabledString, colorWarning));
+            }
+        }
+
+        Preference volumesPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_VOLUMES);
+        if (volumesPrefs != null) {
+            volumesPrefs.setOnPreferenceClickListener(onVolumesPrefsClicked(context));
         }
 
         Preference showLauncher = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_SHOWLAUNCHER);
@@ -1425,6 +1457,97 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
     }
 
+    /***
+     * Android 4 and under can enable/disable notifications per app .. the setting is located in App details.
+     * Android 5 adds the ability to display notifications on the lock screen (global) .. global lock screen setting is in "Sound Settings".
+     * Android 7 extends the ability to display notifications on the lock screen (per app) .. app lock screen setting is in App details.
+     * Android 8 adds the ability to enable/disable notifications per channel. .. TODO
+     */
+    private static Preference.OnPreferenceClickListener onNotificationPrefsClicked(final Context context)
+    {
+        final boolean notificationsOnLockScreen = notificationsOnLockScreen(context);
+        return new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference)
+            {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                {
+                    openNotificationSettings(context);
+
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    if (!notificationsOnLockScreen) {
+                        openSoundSettings(context);
+                    } else {
+                        openNotificationSettings(context);
+                    }
+
+                } else {
+                    openNotificationSettings(context);
+                }
+                return false;
+            }
+        };
+    }
+
+    /**
+     * https://stackoverflow.com/questions/32366649/any-way-to-link-to-the-android-notification-settings-for-my-app
+     * @param context
+     */
+    public static void openNotificationSettings(@NonNull Context context)
+    {
+        Intent intent = new Intent();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
+            intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+            intent.putExtra("app_package", context.getPackageName());                           // Android 5-7
+            intent.putExtra("app_uid", context.getApplicationInfo().uid);                       // Android 5-7
+            intent.putExtra("android.provider.extra.APP_PACKAGE", context.getPackageName());    // Android 8+
+
+        } else {
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            intent.setData(Uri.parse("package:" + context.getPackageName()));
+        }
+        context.startActivity(intent);
+    }
+
+    private static Preference.OnPreferenceClickListener onVolumesPrefsClicked(final Context context)
+    {
+        return new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference)
+            {
+                openSoundSettings(context);
+                return false;
+            }
+        };
+    }
+
+    public static void openSoundSettings(@NonNull Context context)
+    {
+        Intent intent = new Intent();
+        intent.setAction("android.settings.SOUND_SETTINGS");
+        context.startActivity(intent);
+    }
+
+    /**
+     * https://stackoverflow.com/questions/43438978/get-status-of-setting-control-notifications-on-your-lock-screen
+     * @param context
+     * @return true notifications allowed on lock screen (global setting)
+     */
+    public static boolean notificationsOnLockScreen(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {                  // per app "on lock screen" setting introduce in Android7
+            return (Settings.Secure.getInt(context.getContentResolver(), "lock_screen_show_notifications", -1) > 0);    // TODO
+
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {    // global "on lock screen" setting introduced in Android5
+            return (Settings.Secure.getInt(context.getContentResolver(), "lock_screen_show_notifications", -1) > 0);
+
+        } else {
+            return true;
+        }
+    }
+
     private static Preference.OnPreferenceClickListener onBatteryOptimizationClicked(final Context context)
     {
        return new Preference.OnPreferenceClickListener() {
@@ -1445,6 +1568,21 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         if (powerManager != null)
             return powerManager.isIgnoringBatteryOptimizations(context.getPackageName());
         else return false;
+    }
+
+    protected static boolean isDeviceSecure(Context context)
+    {
+        KeyguardManager keyguard = (KeyguardManager)context.getSystemService(Context.KEYGUARD_SERVICE);
+        if (keyguard != null)
+        {
+            if (Build.VERSION.SDK_INT >= 23) {
+                return keyguard.isDeviceSecure();
+
+            } else if (Build.VERSION.SDK_INT >= 16) {
+                return keyguard.isKeyguardSecure();
+
+            } else return false;
+        } else return false;
     }
 
     //////////////////////////////////////////////////
