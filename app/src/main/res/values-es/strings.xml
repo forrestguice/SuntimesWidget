@@ -619,7 +619,14 @@
 
     <string name="configLabel_alarms_optWhiteList">Optimización de batería</string>  
     <string name="configLabel_alarms_optWhiteList_listed">Sin optimizar (recomendado)</string>  
-    <string name="configLabel_alarms_optWhiteList_unlisted">Optimizando el uso de batería.\nLas alarmas se pueden retrasar hasta 15 minutos.</string>  
+    <string name="configLabel_alarms_optWhiteList_unlisted">Optimizando el uso de batería.\nLas alarmas se pueden retrasar hasta 15 minutos.</string>
+
+    <string name="configLabel_alarms_notifications">Notifications</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_on">On</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_off">Off.\nAlarms may fail to display correctly.</string>    <!-- TODO -->
+    <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="configLabel_alarms_notifications_summary1">On lock screen: %1$s</string>    <!-- "On lock screen: Off -->     <!-- TODO -->
+    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Notifications are off. Alarms may fail to display correctly.</string>  <!-- snackbar message -->    <!-- TODO -->
 
     <string name="configLabel_alarms_silenceAfter">Silenciar tras</string>  
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  
@@ -642,7 +649,8 @@
         <item>No hacer nada</item>
     </string-array>
 
-    <string name="configLabel_alarmSounds">Sonidos</string>            <!-- group title -->  
+    <string name="configLabel_alarmSounds">Sonidos</string>            <!-- group title -->
+    <string name="configLabel_alarms_volumes">Volumes</string>    <!-- TODO -->
     <string name="configLabel_alarms_allRingtones">Mostrar todos los tonos de llamada</string>  
     <string name="configLabel_alarms_allRingtones_summary">Mostrar todos los sonidos durante la selección (ignorar el tipo de tono de llamada).</string>  
 

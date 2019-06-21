@@ -626,6 +626,13 @@
   <string name="configLabel_alarms_optWhiteList_listed">Not optimized (recommended)</string>  <!-- TODO -->
   <string name="configLabel_alarms_optWhiteList_unlisted">Optimizing battery use.\nAlarms may be delayed up to 15 minutes.</string>  <!-- TODO -->
 
+  <string name="configLabel_alarms_notifications">Notifications</string>    <!-- TODO -->
+  <string name="configLabel_alarms_notifications_on">On</string>    <!-- TODO -->
+  <string name="configLabel_alarms_notifications_off">Off.\nAlarms may fail to display correctly.</string>    <!-- TODO -->
+  <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
+  <string name="configLabel_alarms_notifications_summary1">On lock screen: %1$s</string>    <!-- "On lock screen: Off -->     <!-- TODO -->
+  <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Notifications are off. Alarms may fail to display correctly.</string>  <!-- snackbar message -->    <!-- TODO -->
+
   <string name="configLabel_alarms_silenceAfter">Go silent after</string>  <!-- TODO -->
   <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
 
@@ -648,6 +655,7 @@
   </string-array>
 
   <string name="configLabel_alarmSounds">Sounds</string>            <!-- group title -->  <!-- TODO -->
+  <string name="configLabel_alarms_volumes">Volumes</string>    <!-- TODO -->
   <string name="configLabel_alarms_allRingtones">Show all ringtones</string>  <!-- TODO -->
   <string name="configLabel_alarms_allRingtones_summary">Show all system sounds during selection (ignore ringtone type).</string>  <!-- TODO -->
 

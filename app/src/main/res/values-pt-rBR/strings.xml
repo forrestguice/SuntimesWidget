@@ -671,6 +671,13 @@
     <string name="configLabel_alarms_optWhiteList_listed">Não otimizado (recomendado)</string>
     <string name="configLabel_alarms_optWhiteList_unlisted">Otimizar uso da bateria.\nPode ter um atrazo de até 15 minutos.</string>
 
+    <string name="configLabel_alarms_notifications">Notifications</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_on">On</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_off">Off.\nAlarms may fail to display correctly.</string>    <!-- TODO -->
+    <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="configLabel_alarms_notifications_summary1">On lock screen: %1$s</string>    <!-- "On lock screen: Off -->     <!-- TODO -->
+    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Notifications are off. Alarms may fail to display correctly.</string>  <!-- snackbar message -->    <!-- TODO -->
+
     <string name="configLabel_alarms_silenceAfter">Silenciar após</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
@@ -693,6 +700,7 @@
     </string-array>
 
     <string name="configLabel_alarmSounds">Áudio</string>            <!-- group title -->
+    <string name="configLabel_alarms_volumes">Volumes</string>    <!-- TODO -->
     <string name="configLabel_alarms_allRingtones">Mostrar todos os áudios</string>
     <string name="configLabel_alarms_allRingtones_summary">Mostrar todos os áudios do sistema (ignorar os formatos).</string>
 

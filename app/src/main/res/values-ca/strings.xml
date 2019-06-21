@@ -620,7 +620,14 @@
 
     <string name="configLabel_alarms_optWhiteList">Optimització de bateria</string>  
     <string name="configLabel_alarms_optWhiteList_listed">Sense optimitzar (recomanat)</string>  
-    <string name="configLabel_alarms_optWhiteList_unlisted">Optimitzant l\'ús de la bateria.\nLes alarmes es poden endarrerir fins a 15 minuts.</string>  
+    <string name="configLabel_alarms_optWhiteList_unlisted">Optimitzant l\'ús de la bateria.\nLes alarmes es poden endarrerir fins a 15 minuts.</string>
+
+    <string name="configLabel_alarms_notifications">Notifications</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_on">On</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_off">Off.\nAlarms may fail to display correctly.</string>    <!-- TODO -->
+    <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="configLabel_alarms_notifications_summary1">On lock screen: %1$s</string>    <!-- "On lock screen: Off -->     <!-- TODO -->
+    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Notifications are off. Alarms may fail to display correctly.</string>  <!-- snackbar message -->    <!-- TODO -->
 
     <string name="configLabel_alarms_silenceAfter">Silenciar desprès de</string>  
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  
@@ -643,7 +650,8 @@
         <item>No facis res</item>
     </string-array>
 
-    <string name="configLabel_alarmSounds">Sons</string>            <!-- group title -->  
+    <string name="configLabel_alarmSounds">Sons</string>            <!-- group title -->
+    <string name="configLabel_alarms_volumes">Volumes</string>    <!-- TODO -->
     <string name="configLabel_alarms_allRingtones">Mostra tots els tons de trucada</string>  
     <string name="configLabel_alarms_allRingtones_summary">Mostra tots els sons del sistema durant la selecció (ignora el tipus de to de trucada).</string>  
 
