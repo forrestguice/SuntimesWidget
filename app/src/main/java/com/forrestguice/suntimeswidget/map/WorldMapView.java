@@ -29,6 +29,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.Toast;
@@ -172,7 +173,9 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         options.moonLightColor = ContextCompat.getColor(context, R.color.map_moonlight);
         options.gridXColor = options.moonLightColor;
         options.gridYColor = options.moonLightColor;
-        options.showMajorLatitudes = false;
+        options.latitudeColors[0] = ColorUtils.setAlphaComponent(options.sunShadowColor, 255);
+        options.latitudeColors[1] = ColorUtils.setAlphaComponent(options.moonLightColor, 255);
+        options.latitudeColors[2] = ColorUtils.setAlphaComponent(options.moonLightColor, 255);
 
         int[] colorAttrs = {
                 R.attr.graphColor_pointFill,            // 0
@@ -198,6 +201,9 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         options.moonLightColor = theme.getMapHighlightColor();
         options.gridXColor = options.moonLightColor;
         options.gridYColor = options.moonLightColor;
+        options.latitudeColors[0] = ColorUtils.setAlphaComponent(options.sunShadowColor, 255);
+        options.latitudeColors[1] = ColorUtils.setAlphaComponent(options.moonLightColor, 255);
+        options.latitudeColors[2] = ColorUtils.setAlphaComponent(options.moonLightColor, 255);
         options.sunFillColor = theme.getNoonIconColor();
         options.sunStrokeColor = theme.getNoonIconStrokeColor();
         options.moonFillColor = theme.getMoonFullColor();

@@ -135,7 +135,7 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
         public int gridYColor = Color.WHITE;
 
         public boolean showMajorLatitudes = false;
-        public int[] latitudeColors = { Color.BLACK, Color.BLUE, Color.BLUE };
+        public int[] latitudeColors = { Color.DKGRAY, Color.WHITE, Color.LTGRAY };    // equator, tropics, polar circle
 
         public boolean showSunPosition = true;
         public int sunFillColor = Color.YELLOW;

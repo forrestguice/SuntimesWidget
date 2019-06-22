@@ -71,9 +71,12 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
         // draw background
         p.setColor(options.backgroundColor);
         c.drawCircle((float)mid[0], (float)mid[1], (float)mid[0] - 2, p);
-        if (options.map != null)
-        {
+
+        if (options.map != null) {
             drawMap(c, w, h, p, options);
+        }
+        if (options.showMajorLatitudes) {
+            drawMajorLatitudes(c, w, h, p, options);
         }
 
         drawData: if (data != null)

@@ -58,54 +58,15 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         // draw background
         p.setColor(options.backgroundColor);
         c.drawRect(0, 0, w, h, p);
-        if (options.map != null)
-        {
+
+        if (options.map != null) {
             drawMap(c, w, h, p, options);
         }
-
-        ////////////////
-        // draw grid
-        if (options.showGrid)
-        {
-            p.setColor(options.gridXColor);
-            for (int i=0; i < 180; i = i + 15)
-            {
-                double offset = (i / 180d) * mid[0];
-                int eastX = (int)(mid[0] + offset);
-                int westX = (int)(mid[0] - offset);
-                c.drawLine(eastX, 0, eastX, h, p);
-                c.drawLine(westX, 0, westX, h, p);
-            }
-
-            p.setColor(options.gridYColor);
-            for (int i=0; i < 90; i = i + 15)
-            {
-                double offset = (i / 90d) * mid[1];
-                int northY = (int)(mid[1] + offset);
-                int southY = (int)(mid[1] - offset);
-                c.drawLine(0, northY, w, northY, p);
-                c.drawLine(0, southY, w, southY, p);
-            }
+        if (options.showMajorLatitudes) {
+            drawMajorLatitudes(c, w, h, p, options);
         }
-
-        if (options.showMajorLatitudes)
-        {
-            p.setColor(options.latitudeColors[0]);                    // equator
-            c.drawLine(0, (int)mid[1], w, (int)mid[1], p);
-
-            double tropics = (23.439444 / 90d) * mid[1];
-            int tropicsY0 = (int)(mid[1] + tropics);
-            int tropicsY1 = (int)(mid[1] - tropics);
-            p.setColor(options.latitudeColors[1]);                    // tropics
-            c.drawLine(0, tropicsY0, w, tropicsY0, p);
-            c.drawLine(0, tropicsY1, w, tropicsY1, p);
-
-            double polar = (66.560833 / 90d) * mid[1];
-            int polarY0 = (int)(mid[1] + polar);
-            int polarY1 = (int)(mid[1] - polar);
-            p.setColor(options.latitudeColors[2]);                    // polar
-            c.drawLine(0, polarY0, w, polarY0, p);
-            c.drawLine(0, polarY1, w, polarY1, p);
+        if (options.showGrid) {
+            drawGrid(c, w, h, p, options);
         }
 
         drawData: if (data != null)
@@ -238,5 +199,56 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         long bench_end = System.nanoTime();
         Log.d(WorldMapView.LOGTAG, "make equirectangular world map :: " + ((bench_end - bench_start) / 1000000.0) + " ms; " + w + ", " + h);
         return b;
+    }
+
+    protected void drawGrid(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options)
+    {
+        double[] mid = new double[2];
+        mid[0] = w/2d;
+        mid[1] = h/2d;
+
+        p.setColor(options.gridXColor);
+        for (int i=0; i < 180; i = i + 15)
+        {
+            double offset = (i / 180d) * mid[0];
+            int eastX = (int)(mid[0] + offset);
+            int westX = (int)(mid[0] - offset);
+            c.drawLine(eastX, 0, eastX, h, p);
+            c.drawLine(westX, 0, westX, h, p);
+        }
+
+        p.setColor(options.gridYColor);
+        for (int i=0; i < 90; i = i + 15)
+        {
+            double offset = (i / 90d) * mid[1];
+            int northY = (int)(mid[1] + offset);
+            int southY = (int)(mid[1] - offset);
+            c.drawLine(0, northY, w, northY, p);
+            c.drawLine(0, southY, w, southY, p);
+        }
+    }
+
+    protected void drawMajorLatitudes(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options)
+    {
+        double[] mid = new double[2];
+        mid[0] = w/2d;
+        mid[1] = h/2d;
+
+        p.setColor(options.latitudeColors[0]);                    // equator
+        c.drawLine(0, (int)mid[1], w, (int)mid[1], p);
+
+        double tropics = (23.439444 / 90d) * mid[1];
+        int tropicsY0 = (int)(mid[1] + tropics);
+        int tropicsY1 = (int)(mid[1] - tropics);
+        p.setColor(options.latitudeColors[1]);                    // tropics
+        c.drawLine(0, tropicsY0, w, tropicsY0, p);
+        c.drawLine(0, tropicsY1, w, tropicsY1, p);
+
+        double polar = (66.560833 / 90d) * mid[1];
+        int polarY0 = (int)(mid[1] + polar);
+        int polarY1 = (int)(mid[1] - polar);
+        p.setColor(options.latitudeColors[2]);                    // polar
+        c.drawLine(0, polarY0, w, polarY0, p);
+        c.drawLine(0, polarY1, w, polarY1, p);
     }
 }
