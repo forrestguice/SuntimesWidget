@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -30,6 +30,9 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -413,10 +416,12 @@ public class AlarmDatabaseAdapter
      */
     public static class AlarmItemTask extends AsyncTask<Long, Void, AlarmClockItem>
     {
+        private WeakReference<Context> contextRef;
         protected AlarmDatabaseAdapter db;
 
         public AlarmItemTask(Context context)
         {
+            contextRef = new WeakReference<>(context);
             db = new AlarmDatabaseAdapter(context.getApplicationContext());
         }
 
@@ -435,7 +440,7 @@ public class AlarmDatabaseAdapter
                     {
                         ContentValues itemValues = new ContentValues();
                         DatabaseUtils.cursorRowToContentValues(cursor0, itemValues);
-                        item = new AlarmClockItem(itemValues);
+                        item = new AlarmClockItem(contextRef.get(), itemValues);
 
                         Cursor cursor1 = db.getAlarmState(rowIDs[0]);
                         if (cursor1 != null)

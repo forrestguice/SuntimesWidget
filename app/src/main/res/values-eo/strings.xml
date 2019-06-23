@@ -618,6 +618,13 @@
     <string name="configLabel_alarms_optWhiteList_listed">Ne optimumigita (konsilinde)</string>
     <string name="configLabel_alarms_optWhiteList_unlisted">Aktiva optimumigo de pilo.\nAlarmoj povas prokrastĝi maksimume je 15 minutoj.</string>
 
+    <string name="configLabel_alarms_notifications">Notifications</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_on">On</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_off">Off.\nAlarms may fail to display correctly.</string>    <!-- TODO -->
+    <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="configLabel_alarms_notifications_summary1">On lock screen: %1$s</string>    <!-- "On lock screen: Off -->     <!-- TODO -->
+    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Notifications are off. Alarms may fail to display correctly.</string>  <!-- snackbar message -->    <!-- TODO -->
+
     <string name="configLabel_alarms_silenceAfter">Silentiĝi (ne-malaktivigi) post</string> <!-- TODO -->
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutoj">%s</xliff:g></string>
 
@@ -640,6 +647,7 @@
     </string-array>
 
     <string name="configLabel_alarmSounds">Sonoj</string>            <!-- group title -->
+    <string name="configLabel_alarms_volumes">Volumes</string>    <!-- TODO -->
     <string name="configLabel_alarms_allRingtones">Montri ĉiujn voksonojn</string>
     <string name="configLabel_alarms_allRingtones_summary">Montri ĉiujn sistemajn sonojn dum elekti (ignori tipon de voksono).</string>
 
@@ -701,12 +709,10 @@
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Montri lunajn informojn</string>
     <string name="configLabel_ui_showmoon_summary">Montri tempojn de lun-leviĝo, lun-subiro, fazon kaj prilumecon.</string>
-    <string name="configLabel_ui_showmoon_notImplemented">Lunaj informoj ne subtenataj de tiu ĉi datum-fonto.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Montri sunekstremon / tagnoktegalecon</string>
     <string name="configLabel_ui_showEquinox_summary">Montri tempon ĝis la sekvanta sunekstremo aŭ tagnoktegaleco.</string>
-    <string name="configLabel_ui_showEquinox_notImplemented">Sunekstremo kaj tagnoktegaleco ne estas ankoraŭ subtenataj de tiu ĉi datum-fonto.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Spuri sunekstremon / tagnoktegalecon</string>
@@ -1088,6 +1094,11 @@
           <b>Naŭtika krepusko:</b> la Suno estas 12 gradoj sub la horizonto, konturoj de objektoj kaj la horizonto estas kvazaŭ nevideblaj. Lumo mankas por plejparte da agadoj eksterdome sen artefarita prilumado.<br/><br/>
           <b>Astronomia krepusko:</b> la Suno estas 18 gradoj sub la horizonto. Preskaŭ nigra nokto.<br/>
     ]]></string>
+    <string name="help_general_riseSetOrder"><![CDATA[
+          <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
+          <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
+    ]]></string>  <!-- TODO -->
+
         <string name="help_general_solartime"><![CDATA[
           <b>Ŝajna suntempo:</b> tempo determinita per spuri movon de ŝajna Suno al la agordita longitudo kaj latitudo.<br/><br/>
           Ŝajna movo de Suno ne estas konstanta. Ĝi ŝanĝiĝas laŭ sezonoj pro aksa kliniĝo de ekliptiko kaj pro discentreco de Tera orbito.

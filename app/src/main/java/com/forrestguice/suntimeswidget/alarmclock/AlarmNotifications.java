@@ -1039,8 +1039,15 @@ public class AlarmNotifications extends BroadcastReceiver
                     Log.d(TAG, "State Saved (onShow)");
                     if (item.type == AlarmClockItem.AlarmType.ALARM)
                     {
-                        showAlarmPlayingToast(getApplicationContext(), item);
-                        context.sendBroadcast(getFullscreenBroadcast(item.getUri()));   // update fullscreen activity
+                        if (!NotificationManagerCompat.from(context).areNotificationsEnabled())
+                        {
+                            // when notifications are disabled, fallback to directly starting the fullscreen activity
+                            startActivity(getFullscreenIntent(context, item.getUri()));
+
+                        } else {
+                            showAlarmPlayingToast(getApplicationContext(), item);
+                            context.sendBroadcast(getFullscreenBroadcast(item.getUri()));   // update fullscreen activity
+                        }
                     }
                 }
             };
