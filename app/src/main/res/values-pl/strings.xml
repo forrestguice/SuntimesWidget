@@ -567,7 +567,7 @@
 
     <string name="alarmAction_dismiss">Wycisz</string>                <!-- notification action button -->
     <string name="alarmAction_snooze">Drzemka</string>                  <!-- notification action button -->
-    <string name="alarmAction_timeout">Wycisz</string>                  <!-- notification action button --> <!-- TODO -->
+    <string name="alarmAction_timeout">Wycisz</string>                  <!-- notification action button -->
 
     <string name="alarmAction_playingMsg"><xliff:g id="label">%1$s</xliff:g></string>          <!-- toast message -->
     <string name="alarmAction_silencedMsg">Alarm wyłączył się</string>          <!-- toast message -->
@@ -622,12 +622,12 @@
     <string name="configLabel_alarms_optWhiteList_listed">Bez optymalizacji (zalecane)</string>
     <string name="configLabel_alarms_optWhiteList_unlisted">Włączona optymalizacja baterii.\nAlarmy mogą zostać opóźnione o maksymalnie 15 minut.</string>
 
-    <string name="configLabel_alarms_notifications">Notifications</string>    <!-- TODO -->
-    <string name="configLabel_alarms_notifications_on">On</string>    <!-- TODO -->
-    <string name="configLabel_alarms_notifications_off">Off.\nAlarms may fail to display correctly.</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications">Powiadomienia</string>
+    <string name="configLabel_alarms_notifications_on">Włączone</string>
+    <string name="configLabel_alarms_notifications_off">Wyłączone.\nAlarmy mogą nie wyświetlić się poprawnie.</string>
     <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
-    <string name="configLabel_alarms_notifications_summary1">On lock screen: %1$s</string>    <!-- "On lock screen: Off -->     <!-- TODO -->
-    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Notifications are off. Alarms may fail to display correctly.</string>  <!-- snackbar message -->    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_summary1">Na ekranie blokady: %1$s</string>    <!-- "On lock screen: Off -->
+    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Powiadomienia są wyłączone. Alarmy mogą nie wyświetlić się poprawnie.</string>  <!-- snackbar message -->
 
     <string name="configLabel_alarms_silenceAfter">Wycisz (ale nie wyłączaj) po</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minut">%s</xliff:g></string>
@@ -651,7 +651,7 @@
     </string-array>
 
     <string name="configLabel_alarmSounds">Dźwięki</string>            <!-- group title -->
-    <string name="configLabel_alarms_volumes">Volumes</string>    <!-- TODO -->
+    <string name="configLabel_alarms_volumes">Głośność</string>
     <string name="configLabel_alarms_allRingtones">Pokaż wszystkie dzwonki</string>
     <string name="configLabel_alarms_allRingtones_summary">Pokaż wszystkie dźwięki systemowe podczas podczas wyboru (ignoruj typ dzwonka).</string>
 
@@ -1107,9 +1107,9 @@
     ]]></string>
 
     <string name="help_general_riseSetOrder"><![CDATA[
-          <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
-          <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
-    ]]></string>  <!-- TODO -->
+          <b>Dzisiaj:</b> czasy wschodu i zachodu dla dziesiejszej daty.<br/><br/>
+          <b>Poprzedni / następny:</b> czasy poprzedniego i następnego wydarzenia.<br/>
+    ]]></string>
 
 <string name="help_general_solartime"><![CDATA[
           <b>Prawdziwy czas słoneczny:</b> czas określony przez śledzenie pozornego ruchu Słońca dla danej długości i szerokości geograficznej.<br/><br/>
