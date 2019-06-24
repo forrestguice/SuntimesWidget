@@ -1330,7 +1330,9 @@ public class AlarmClockActivity extends AppCompatActivity
                 DatabaseUtils.cursorRowToContentValues(cursor, entryValues);
 
                 AlarmClockItem item = new AlarmClockItem(contextRef.get(), entryValues);
-                AlarmNotifications.updateAlarmTime(contextRef.get(), item);
+                if (!item.enabled) {
+                    AlarmNotifications.updateAlarmTime(contextRef.get(), item);
+                }
                 items.add(item);
                 publishProgress(item);
 
