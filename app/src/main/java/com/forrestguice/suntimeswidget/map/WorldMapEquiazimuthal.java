@@ -20,8 +20,10 @@ package com.forrestguice.suntimeswidget.map;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.DashPathEffect;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PathEffect;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.util.Log;
@@ -264,6 +266,10 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
 
     protected void drawMajorLatitudes(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options)
     {
+        Paint.Style prevStyle = p.getStyle();
+        PathEffect prevEffect = p.getPathEffect();
+        float prevStrokeWidth = p.getStrokeWidth();
+
         double[] mid = new double[2];
         mid[0] = w/2d;
         mid[1] = h/2d;
@@ -272,21 +278,29 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         double tropics = mid[1] * (23.439444 / 180d);
         double polar = mid[1] * (66.560833 / 180d);
 
-        Paint.Style prevStyle = p.getStyle();
+        float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
+        p.setStrokeWidth(strokeWidth);
         p.setStyle(Paint.Style.STROKE);
+        p.setStrokeCap(Paint.Cap.ROUND);
 
         p.setColor(options.latitudeColors[0]);
+        p.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
+
         c.drawCircle((int)mid[0], (int)mid[1], (int)equator, p);
 
         p.setColor(options.latitudeColors[1]);
+        p.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
         c.drawCircle((int)mid[0], (int)mid[1], (int)(equator + tropics), p);
         c.drawCircle((int)mid[0], (int)mid[1], (int)(equator - tropics), p);
 
         p.setColor(options.latitudeColors[2]);
+        p.setPathEffect((options.latitudeLinePatterns[2][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[2], 0) : null);
         c.drawCircle((int)mid[0], (int)mid[1], (int)(equator + polar), p);
         c.drawCircle((int)mid[0], (int)mid[1], (int)(equator - polar), p);
 
         p.setStyle(prevStyle);
+        p.setPathEffect(prevEffect);
+        p.setStrokeWidth(prevStrokeWidth);
     }
 
 }

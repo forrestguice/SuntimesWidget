@@ -20,7 +20,9 @@ package com.forrestguice.suntimeswidget.map;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.DashPathEffect;
 import android.graphics.Paint;
+import android.graphics.PathEffect;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.util.Log;
@@ -235,17 +237,26 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
 
     protected void drawMajorLatitudes(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options)
     {
+        Paint.Style prevStyle = p.getStyle();
+        PathEffect prevEffect = p.getPathEffect();
+        float prevStrokeWidth = p.getStrokeWidth();
+
         double[] mid = new double[2];
         mid[0] = w/2d;
         mid[1] = h/2d;
 
+        float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
+        p.setStrokeWidth(strokeWidth);
+
         p.setColor(options.latitudeColors[0]);                    // equator
+        p.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
         c.drawLine(0, (int)mid[1], w, (int)mid[1], p);
 
         double tropics = (23.439444 / 90d) * mid[1];
         int tropicsY0 = (int)(mid[1] + tropics);
         int tropicsY1 = (int)(mid[1] - tropics);
         p.setColor(options.latitudeColors[1]);                    // tropics
+        p.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
         c.drawLine(0, tropicsY0, w, tropicsY0, p);
         c.drawLine(0, tropicsY1, w, tropicsY1, p);
 
@@ -253,7 +264,12 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         int polarY0 = (int)(mid[1] + polar);
         int polarY1 = (int)(mid[1] - polar);
         p.setColor(options.latitudeColors[2]);                    // polar
+        p.setPathEffect((options.latitudeLinePatterns[2][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[2], 0) : null);
         c.drawLine(0, polarY0, w, polarY0, p);
         c.drawLine(0, polarY1, w, polarY1, p);
+
+        p.setStyle(prevStyle);
+        p.setPathEffect(prevEffect);
+        p.setStrokeWidth(prevStrokeWidth);
     }
 }

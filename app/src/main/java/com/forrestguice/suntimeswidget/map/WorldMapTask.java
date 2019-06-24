@@ -136,7 +136,9 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
         public int gridYColor = Color.WHITE;
 
         public boolean showMajorLatitudes = false;
-        public int[] latitudeColors = { Color.DKGRAY, Color.WHITE, Color.LTGRAY };    // equator, tropics, polar circle
+        public int[] latitudeColors = { Color.DKGRAY, Color.WHITE, Color.DKGRAY };    // equator, tropics, polar circle
+        float[][] latitudeLinePatterns = new float[][] {{ 0, 0 }, {5, 10}, {10, 5}};    // {dash-on, dash-off} .. for equator, tropics, and polar circle .. dash-on 0 for a solid line
+        public float latitudeLineScale = 0.5f;
 
         public boolean showSunPosition = true;
         public int sunFillColor = Color.YELLOW;
@@ -239,10 +241,20 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
             }
         }
 
-        protected void drawSun(Canvas c, int x, int y, Paint p, WorldMapTask.WorldMapOptions options)
+        protected double sunRadius(Canvas c, WorldMapTask.WorldMapOptions options)
         {
             double sunDiameter = (int)Math.ceil(c.getWidth() / (double)options.sunScale);
-            int sunRadius = (int)Math.ceil(sunDiameter / 2d);
+            return (int)Math.ceil(sunDiameter / 2d);
+        }
+
+        protected int sunStroke(Canvas c, WorldMapTask.WorldMapOptions options)
+        {
+            return (int)Math.ceil(sunRadius(c, options) / (double)options.sunStrokeScale);
+        }
+
+        protected void drawSun(Canvas c, int x, int y, Paint p, WorldMapTask.WorldMapOptions options)
+        {
+            int sunRadius = (int)sunRadius(c, options);
             int sunStroke = (int)Math.ceil(sunRadius / (double)options.sunStrokeScale);
 
             p.setStyle(Paint.Style.FILL);

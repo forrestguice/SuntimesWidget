@@ -179,7 +179,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         options.gridYColor = options.moonLightColor;
         options.latitudeColors[0] = ColorUtils.setAlphaComponent(options.sunShadowColor, 255);
         options.latitudeColors[1] = ColorUtils.setAlphaComponent(options.moonLightColor, 255);
-        options.latitudeColors[2] = ColorUtils.setAlphaComponent(options.moonLightColor, 255);
+        options.latitudeColors[2] = ColorUtils.setAlphaComponent(options.sunShadowColor, 255);
 
         int[] colorAttrs = {
                 R.attr.graphColor_pointFill,            // 0
