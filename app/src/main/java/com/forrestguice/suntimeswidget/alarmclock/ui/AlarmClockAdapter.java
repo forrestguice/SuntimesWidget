@@ -802,6 +802,9 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
                 if (result) {
                     context.sendBroadcast( enabled ? AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, item.getUri())
                                                    : AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISABLE, item.getUri()) );
+                    if (!enabled) {
+                        AlarmNotifications.updateAlarmTime(context, item);
+                    }
                     updateView(itemView, item);
 
                 } else Log.e("AlarmClockActivity", "enableAlarm: failed to save state!");
