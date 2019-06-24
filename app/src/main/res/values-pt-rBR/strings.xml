@@ -671,6 +671,13 @@
     <string name="configLabel_alarms_optWhiteList_listed">Não otimizado (recomendado)</string>
     <string name="configLabel_alarms_optWhiteList_unlisted">Otimizar uso da bateria.\nPode ter um atrazo de até 15 minutos.</string>
 
+    <string name="configLabel_alarms_notifications">Notifications</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_on">On</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_off">Off.\nAlarms may fail to display correctly.</string>    <!-- TODO -->
+    <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="configLabel_alarms_notifications_summary1">On lock screen: %1$s</string>    <!-- "On lock screen: Off -->     <!-- TODO -->
+    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Notifications are off. Alarms may fail to display correctly.</string>  <!-- snackbar message -->    <!-- TODO -->
+
     <string name="configLabel_alarms_silenceAfter">Silenciar após</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
@@ -693,6 +700,7 @@
     </string-array>
 
     <string name="configLabel_alarmSounds">Áudio</string>            <!-- group title -->
+    <string name="configLabel_alarms_volumes">Volumes</string>    <!-- TODO -->
     <string name="configLabel_alarms_allRingtones">Mostrar todos os áudios</string>
     <string name="configLabel_alarms_allRingtones_summary">Mostrar todos os áudios do sistema (ignorar os formatos).</string>
 
@@ -712,6 +720,10 @@
         <item quantity="one">%d segundo</item>
         <item quantity="other">%d segundos</item>
     </plurals>
+
+    <string name="configLabel_alarmMisc">Miscellaneous</string>  <!-- TODO -->
+    <string name="configLabel_alarms_showlauncher">Launcher Icon</string>  <!-- TODO -->
+    <string name="configLabel_alarms_showlauncher_summary">Show alarm clock icon in the app tray.</string>  <!-- TODO -->
 
     <!--
          APP SETTINGS
@@ -752,12 +764,10 @@
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Mostrar Lua</string>
     <string name="configLabel_ui_showmoon_summary">Mostrar horário do nascer e pôr, fases e iluminação.</string>
-    <string name="configLabel_ui_showmoon_notImplemented">Lua não implementada nesse banco de dados.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Mostrar solstícios / equinócios</string>
     <string name="configLabel_ui_showEquinox_summary">Mostrar tempo restante pro próximo solstício e/ou equinócio.</string>
-    <string name="configLabel_ui_showEquinox_notImplemented">Solstício e equinócio não implementados nesse banco de dados.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Procurar Solstício</string>
@@ -1190,6 +1200,10 @@
           <b>Crepúsculo Náutico:</b> O sol está 12 graus abaixo do horizonte. Não há luz suficiente para maioria das atividades externas sem a necessidade de iluminação extra..<br/><br/>
           <b>Crepúsculo Astronômico:</b> O sol está 18 graus abaixo do horizonte. Totalmente sem condições de qualquer atividade externa sem o auxílio de luz extra.<br/>
     ]]></string>
+    <string name="help_general_riseSetOrder"><![CDATA[
+          <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
+          <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
+    ]]></string>  <!-- TODO -->
 
     <string name="help_general_timeMode2"><![CDATA[
           <b>Equinócio de Primavera:</b> TODO.<br/><br/>
@@ -1241,9 +1255,6 @@
           Pra <b>adicionar</b> ou <b>apagar</b> um widget, você deve fazer isso na tela inicial do sistema.<br/><br/>
           Pra <b>reconfigurar</b> um widget existente, você pode fazer isso selecionando da seguinte lista.<br/>
     ]]></string>
-    <string name="help_alarmclock"><![CDATA[
-          TODO
-    ]]></string> <!-- TODO -->
     <string name="help_themelist">
           [Icon Add] Adicionar um tema ou [Icon Copy] copiar a partir de um tema existente.\n
           \n
@@ -1269,6 +1280,8 @@
     <string name="security_dialog_title">Alerta de Segurança</string>
     <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
     <string name="feature_not_supported_by_api">Isso não é suportado pelo aparelho %1$s.</string>
+    <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>  <!-- TODO -->
+    <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>  <!-- TODO -->
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

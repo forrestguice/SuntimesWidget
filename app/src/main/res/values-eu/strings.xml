@@ -629,6 +629,13 @@
     <string name="configLabel_alarms_optWhiteList_listed">Not optimized (recommended)</string>  <!-- TODO -->
     <string name="configLabel_alarms_optWhiteList_unlisted">Optimizing battery use.\nAlarms may be delayed up to 15 minutes.</string>  <!-- TODO -->
 
+    <string name="configLabel_alarms_notifications">Notifications</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_on">On</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_off">Off.\nAlarms may fail to display correctly.</string>    <!-- TODO -->
+    <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="configLabel_alarms_notifications_summary1">On lock screen: %1$s</string>    <!-- "On lock screen: Off -->     <!-- TODO -->
+    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Notifications are off. Alarms may fail to display correctly.</string>  <!-- snackbar message -->    <!-- TODO -->
+
     <string name="configLabel_alarms_silenceAfter">Go silent after</string>  <!-- TODO -->
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
 
@@ -651,6 +658,7 @@
     </string-array>
 
     <string name="configLabel_alarmSounds">Sounds</string>            <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_alarms_volumes">Volumes</string>    <!-- TODO -->
     <string name="configLabel_alarms_allRingtones">Show all ringtones</string>  <!-- TODO -->
     <string name="configLabel_alarms_allRingtones_summary">Show all system sounds during selection (ignore ringtone type).</string>  <!-- TODO -->
 
@@ -670,6 +678,10 @@
         <item quantity="one">%d second</item>
         <item quantity="other">%d seconds</item>
     </plurals>  <!-- TODO -->
+
+    <string name="configLabel_alarmMisc">Miscellaneous</string>  <!-- TODO -->
+    <string name="configLabel_alarms_showlauncher">Launcher Icon</string>  <!-- TODO -->
+    <string name="configLabel_alarms_showlauncher_summary">Show alarm clock icon in the app tray.</string>  <!-- TODO -->
 
     <!--
          APP SETTINGS
@@ -710,12 +722,10 @@
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Ilargia erakutsi</string>
     <string name="configLabel_ui_showmoon_summary">Irteera, ezkutatze, ilargialdi eta argiztapena erakutsi.</string>
-    <string name="configLabel_ui_showmoon_notImplemented">Datuen jatorri honetan ez dago ilargia inplementatuta.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Solstizioa / Ekinokzioa erakutsi</string>
     <string name="configLabel_ui_showEquinox_summary">Hurrengo solstizioa edo ekinokzioa heldu arte falta den denbora erakutsi.</string>
-    <string name="configLabel_ui_showEquinox_notImplemented">Solstizioa eta ekinokzioa ez daude inplementatuta datu iturri honetan.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Solstizioaren jarraipena</string>
@@ -1145,6 +1155,10 @@
           <b>Itsas krepuskulua:</b> Eguzkia 8 gradu zeruertzaren azpitik dago; objektuen ingerada eta zeruertza gero eta bereizezinagoak dira. Ez dago argi nahikorik kanpoko jarduera gehienetarako argi bat erabili behar gabe.<br/><br/>
           <b>Krepuskulu astronomikoa:</b> Eguzkia 18 gradu zeruertzaren azpitik dago. Gauaren iluntasunetik hurbil.<br/>
     ]]></string>
+    <string name="help_general_riseSetOrder"><![CDATA[
+          <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
+          <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
+    ]]></string>  <!-- TODO -->
 
     <string name="help_general_timeMode2"><![CDATA[
           <b>Udaberriko ekinokzioa:</b> TODO.<br/><br/>
@@ -1197,6 +1211,8 @@
     <string name="security_dialog_title">Security Alert</string>  <!-- TODO -->
     <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  <!-- TODO -->
     <string name="feature_not_supported_by_api">This feature is not supported by API %1$s.</string>  <!-- TODO -->
+    <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>  <!-- TODO -->
+    <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>  <!-- TODO -->
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

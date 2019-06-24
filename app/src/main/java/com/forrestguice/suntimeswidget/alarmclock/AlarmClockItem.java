@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -23,6 +23,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
@@ -69,7 +70,7 @@ public class AlarmClockItem
 
     public AlarmClockItem() {}
 
-    public AlarmClockItem(ContentValues alarm)
+    public AlarmClockItem(@Nullable Context context, ContentValues alarm)
     {
         rowID = alarm.getAsLong(AlarmDatabaseAdapter.KEY_ROWID);
         type = AlarmType.valueOf(alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_TYPE), AlarmType.ALARM);
@@ -92,6 +93,11 @@ public class AlarmClockItem
             String locLabel = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_PLACELABEL);
             String locAlt = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_ALTITUDE);
             location = new Location(locLabel, locLat, locLon, locAlt);
+
+            if (context != null) {
+                location.setUseAltitude(WidgetSettings.loadLocationAltitudeEnabledPref(context, 0));
+            }
+
         } else location = null;
 
         String eventString = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_SOLAREVENT);
