@@ -6,6 +6,22 @@
         android:title="@string/configLabel_alarmClock"
         android:key="app_alarms_category">
 
+        <Preference
+            android:key="app_alarms_batterytopt" android:persistent="false"
+            android:title="@string/configLabel_alarms_optWhiteList"
+            android:summary="@string/configLabel_alarms_optWhiteList_unlisted" />
+
+        <Preference
+            android:key="app_alarms_notifications" android:persistent="false"
+            android:title="@string/configLabel_alarms_notifications"
+            android:summary="@string/configLabel_alarms_notifications_on" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/configLabel_alarmClock"
+        android:key="app_alarms_category1">
+
         <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
             android:key="app_alarms_upcomingMillis"
             android:title="@string/configLabel_alarms_upcoming"
@@ -40,15 +56,15 @@
             android:entryValues="@array/alarm_hardwarebutton_actions_values"
             android:entries="@array/alarm_hardwarebutton_actions_display" />-->
 
-        <Preference
-            android:key="app_alarms_batterytopt" android:persistent="false"
-            android:title="@string/configLabel_alarms_optWhiteList"
-            android:summary="@string/configLabel_alarms_optWhiteList_unlisted" />
-
     </PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/configLabel_alarmSounds" >
+
+        <Preference
+            android:key="app_alarms_volumes"
+            android:title="@string/configLabel_alarms_volumes"
+            android:summary="" />
 
         <CheckBoxPreference
             android:key="app_alarms_allringtones"

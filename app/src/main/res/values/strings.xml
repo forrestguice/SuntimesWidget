@@ -709,6 +709,13 @@
     <string name="configLabel_alarms_optWhiteList_listed">Not optimized (recommended)</string>
     <string name="configLabel_alarms_optWhiteList_unlisted">Optimizing battery use.\nAlarms may be delayed up to 15 minutes.</string>
 
+    <string name="configLabel_alarms_notifications">Notifications</string>
+    <string name="configLabel_alarms_notifications_on">On</string>
+    <string name="configLabel_alarms_notifications_off">Off.\nAlarms may fail to display correctly.</string>
+    <string name="configLabel_alarms_notifications_summary0">%1$s</string>                    <!-- "On", "Off" -->
+    <string name="configLabel_alarms_notifications_summary1">On lock screen: %1$s</string>    <!-- "On lock screen: Off -->
+    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Notifications are off. Alarms may fail to display correctly.</string>  <!-- snackbar message -->
+
     <string name="configLabel_alarms_silenceAfter">Go silent after</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
@@ -737,6 +744,7 @@
     </string-array>
 
     <string name="configLabel_alarmSounds">Sounds</string>            <!-- group title -->
+    <string name="configLabel_alarms_volumes">Volumes</string>
     <string name="configLabel_alarms_allRingtones">Show all ringtones</string>
     <string name="configLabel_alarms_allRingtones_summary">Show all system sounds during selection (ignore ringtone type).</string>
 
@@ -757,9 +765,9 @@
         <item quantity="other">%d seconds</item>
     </plurals>
 
-    <string name="configLabel_alarmMisc">Miscellaneous</string>  <!-- TODO -->
-    <string name="configLabel_alarms_showlauncher">Launcher Icon</string>  <!-- TODO -->
-    <string name="configLabel_alarms_showlauncher_summary">Show alarm clock icon in the app tray.</string>  <!-- TODO -->
+    <string name="configLabel_alarmMisc">Miscellaneous</string>
+    <string name="configLabel_alarms_showlauncher">Launcher Icon</string>
+    <string name="configLabel_alarms_showlauncher_summary">Show alarm clock icon in the app tray.</string>
 
     <!--
          APP SETTINGS
@@ -800,12 +808,10 @@
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Show Moon</string>
     <string name="configLabel_ui_showmoon_summary">Show rise and set times, phase, and illumination.</string>
-    <string name="configLabel_ui_showmoon_notImplemented">Moon not implemented by this data source.</string>   <!-- TODO: remove -->
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Show Solstice / Equinox</string>
     <string name="configLabel_ui_showEquinox_summary">Show time until next solstice or equinox.</string>
-    <string name="configLabel_ui_showEquinox_notImplemented">Solstice and equinox not implemented by this data source.</string>     <!-- TODO: remove -->
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Solstice Tracking</string>
@@ -1347,7 +1353,7 @@
     <string name="help_general_riseSetOrder"><![CDATA[
           <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
           <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
-    ]]></string>  <!-- TODO -->
+    ]]></string>
 
     <string name="help_general_timeMode2"><![CDATA[
           <b>Spring Equinox:</b> TODO.<br/><br/>
@@ -1399,9 +1405,7 @@
           To <b>add</b> or <b>remove</b> a widget you must navigate to the home screen.<br/><br/>
           To <b>reconfigure</b> an existing widget you can select from the following list.<br/>
     ]]></string>
-    <string name="help_alarmclock"><![CDATA[
-          TODO
-    ]]></string> <!-- TODO -->
+    <!--<string name="help_alarmclock" />-->
     <string name="help_themelist">
           [Icon Add] Add a new theme or [Icon Copy] copy from an existing theme.\n
           \n
@@ -1419,9 +1423,9 @@
     <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. <br/><br/>The app is configured from location data. This information (and other configuration data used by the app) is stored locally and does not leave the device.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string>
-    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>    <!-- TODO -->
-    <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>    <!-- TODO -->
-    <string name="privacy_permissiondialog_ignore">Ignore</string>    <!-- TODO -->
+    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>
+    <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>
+    <string name="privacy_permissiondialog_ignore">Ignore</string>
     <string name="privacy_permissiondialog_title">Permissions</string>
     <string name="privacy_url"><xliff:g id="url"><![CDATA[
         <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Privacy">github.com/forrestguice/SuntimesWidget/wiki/Privacy</a>
@@ -1430,8 +1434,8 @@
     <string name="security_dialog_title">Security Alert</string>
     <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
     <string name="feature_not_supported_by_api">This feature is not supported by API %1$s.</string>
-    <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>  <!-- TODO -->
-    <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>  <!-- TODO -->
+    <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>
+    <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

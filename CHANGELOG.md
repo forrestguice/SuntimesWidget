@@ -7,6 +7,16 @@
 * adds 1x1 moon position widgets; azimuth & elevation, right ascension & declination, and current distance.
 * adds 3x2 moon widget that.. TODO.
 
+### v0.11.6 (2019-06-24)
+* fixes bug "Suntimes Alarms uses elevation even if unchecked" (#336).
+* fixes bug "worldmap dialog fails to apply themed foreground color" (#337).
+* fixes bug "unable to dismiss alarm when notifications are disabled" (#333); now falls back to directly triggering the fullscreen activity.
+* adds a "Notifications" warning to the AlarmClock activity that is shown if notifications are disabled. Notifications are required for alarms to display correctly (#333).
+* adds a "Notifications" preference to the Alarm settings. This preference warns when notifications are disabled, or configured to not show on the lock screen (#332, #333).
+* adds a "Volumes" preference to the Alarm settings (navigates to system Sound settings).
+* optimizes basemaps and preview pngs; size reduced by ~50% using pngquant.
+* updates translations to Polish (pl) and Esperanto (eo) (#330, #339 by Verdulo).
+
 ### v0.11.5 (2019-05-31)
 * adds support for playing alarm sounds from the file system (mp3, ogg, etc). [Selecting files requires a file manager app with support for ringtone selection.] 
 * fixes bug "alarm sound fails to play from external storage" (#326); alarm notifications will fallback to the default ringtone if the selected sound cannot be played.
