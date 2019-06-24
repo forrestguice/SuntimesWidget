@@ -567,7 +567,7 @@
 
     <string name="alarmAction_dismiss">Wycisz</string>                <!-- notification action button -->
     <string name="alarmAction_snooze">Drzemka</string>                  <!-- notification action button -->
-    <string name="alarmAction_timeout">Wycisz</string>                  <!-- notification action button --> <!-- TODO -->
+    <string name="alarmAction_timeout">Wycisz</string>                  <!-- notification action button -->
 
     <string name="alarmAction_playingMsg"><xliff:g id="label">%1$s</xliff:g></string>          <!-- toast message -->
     <string name="alarmAction_silencedMsg">Alarm wyłączył się</string>          <!-- toast message -->
@@ -622,6 +622,13 @@
     <string name="configLabel_alarms_optWhiteList_listed">Bez optymalizacji (zalecane)</string>
     <string name="configLabel_alarms_optWhiteList_unlisted">Włączona optymalizacja baterii.\nAlarmy mogą zostać opóźnione o maksymalnie 15 minut.</string>
 
+    <string name="configLabel_alarms_notifications">Powiadomienia</string>
+    <string name="configLabel_alarms_notifications_on">Włączone</string>
+    <string name="configLabel_alarms_notifications_off">Wyłączone.\nAlarmy mogą nie wyświetlić się poprawnie.</string>
+    <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="configLabel_alarms_notifications_summary1">Na ekranie blokady: %1$s</string>    <!-- "On lock screen: Off -->
+    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Powiadomienia są wyłączone. Alarmy mogą nie wyświetlić się poprawnie.</string>  <!-- snackbar message -->
+
     <string name="configLabel_alarms_silenceAfter">Wycisz (ale nie wyłączaj) po</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minut">%s</xliff:g></string>
 
@@ -644,6 +651,7 @@
     </string-array>
 
     <string name="configLabel_alarmSounds">Dźwięki</string>            <!-- group title -->
+    <string name="configLabel_alarms_volumes">Głośność</string>
     <string name="configLabel_alarms_allRingtones">Pokaż wszystkie dzwonki</string>
     <string name="configLabel_alarms_allRingtones_summary">Pokaż wszystkie dźwięki systemowe podczas podczas wyboru (ignoruj typ dzwonka).</string>
 
@@ -711,12 +719,10 @@
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Pokaż dane Księżyca</string>
     <string name="configLabel_ui_showmoon_summary">Wyświetla czasu wschodu i zachodu Księżyca, fazę i oświetlenie.</string>
-    <string name="configLabel_ui_showmoon_notImplemented">Dane Księżyca nie są wspierane przez to źródło danych.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Pokaż przesilenie / równonoc</string>
     <string name="configLabel_ui_showEquinox_summary">Wyświetl czas do następnego przesilenia lub równonocy.</string>
-    <string name="configLabel_ui_showEquinox_notImplemented">Przesilenie i równonoc nie są jeszcze wspierane przez to źródło danych.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Śledź przesilenie</string>
@@ -1099,7 +1105,12 @@
           <b>Świt/zmierzch żeglarski:</b> Słońce znajduje się 12 stopni pod horyzontem, kontury obiektów i linia horyzontu są praktycznie niewidoczne. Jest zbyt ciemno na wykonywanie większości czynności na dworze bez sztucznego oświetlenia.<br/><br/>
           <b>Świt/zmierzch astronomiczny: </b> Słońce znajduje się 18 stopni pod horyzontem. Praktycznie czarne niebo.<br/>
     ]]></string>
-        
+
+    <string name="help_general_riseSetOrder"><![CDATA[
+          <b>Dzisiaj:</b> czasy wschodu i zachodu dla dziesiejszej daty.<br/><br/>
+          <b>Poprzedni / następny:</b> czasy poprzedniego i następnego wydarzenia.<br/>
+    ]]></string>
+
 <string name="help_general_solartime"><![CDATA[
           <b>Prawdziwy czas słoneczny:</b> czas określony przez śledzenie pozornego ruchu Słońca dla danej długości i szerokości geograficznej.<br/><br/>
           Pozorny ruch Słońca nie jest stały. Ulega tymczasowym wahaniom na skutek nachylenia ekliptyki i ekscentryczności orbity Ziemi. Długość rzeczywistej doby (czasu pomiędzy dwoma górowaniami Słońca) może być nieco krótsza lub dłuższa niż 24 godziny (maksymalnie do 30s).

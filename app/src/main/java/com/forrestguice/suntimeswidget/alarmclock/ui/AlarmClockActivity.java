@@ -41,6 +41,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -48,6 +49,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -65,6 +67,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.SuntimesWarning;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
@@ -82,6 +85,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * AlarmClockActivity
@@ -116,10 +120,15 @@ public class AlarmClockActivity extends AppCompatActivity
     private static final String KEY_LISTVIEW_TOP = "alarmlisttop";
     private static final String KEY_LISTVIEW_INDEX = "alarmlistindex";
 
+    public static final String WARNINGID_NOTIFICATIONS = "NotificationsWarning";
+
     private ActionBar actionBar;
     private ListView alarmList;
     private View emptyView;
     private FloatingActionButton addAlarmButton, addNotificationButton;
+
+    private SuntimesWarning notificationWarning;
+    private List<SuntimesWarning> warnings;
 
     private AlarmClockAdapter adapter = null;
     private Long t_selectedItem = null;
@@ -145,16 +154,17 @@ public class AlarmClockActivity extends AppCompatActivity
 
     /**
      * OnCreate: the Activity initially created
-     * @param icicle a Bundle containing saved state
+     * @param savedState a Bundle containing saved state
      */
     @Override
-    public void onCreate(Bundle icicle)
+    public void onCreate(Bundle savedState)
     {
         initTheme();
-        super.onCreate(icicle);
+        super.onCreate(savedState);
         initLocale(this);
         setContentView(R.layout.layout_activity_alarmclock);
         initViews(this);
+        initWarnings(this, savedState);
         handleIntent(getIntent());
     }
 
@@ -172,6 +182,59 @@ public class AlarmClockActivity extends AppCompatActivity
             Log.i("initTheme", "Overriding \"" + appTheme + "\" using: " + themeName);
             appThemeOverride = WidgetThemes.loadTheme(this, themeName);
         }
+    }
+
+    private void initWarnings(Context context, Bundle savedState)
+    {
+        notificationWarning = new SuntimesWarning(WARNINGID_NOTIFICATIONS);
+        warnings = new ArrayList<SuntimesWarning>();
+        warnings.add(notificationWarning);
+        restoreWarnings(savedState);
+    }
+    private SuntimesWarning.SuntimesWarningListener warningListener = new SuntimesWarning.SuntimesWarningListener() {
+        @Override
+        public void onShowNextWarning() {
+            showWarnings();
+        }
+    };
+    private void saveWarnings( Bundle outState )
+    {
+        for (SuntimesWarning warning : warnings) {
+            warning.save(outState);
+        }
+    }
+    private void restoreWarnings(Bundle savedState)
+    {
+        for (SuntimesWarning warning : warnings) {
+            warning.restore(savedState);
+            warning.setWarningListener(warningListener);
+        }
+    }
+    private void showWarnings()
+    {
+        boolean showWarnings = AppSettings.loadShowWarningsPref(this);
+        if (showWarnings && notificationWarning.shouldShow() && !notificationWarning.wasDismissed())
+        {
+            float iconSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
+            notificationWarning.initWarning(this, alarmList, getString(R.string.notificationsWarning), iconSize);
+            notificationWarning.getSnackbar().setAction(getString(R.string.configLabel_alarms_notifications), new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view) {
+                    SuntimesSettingsActivity.openNotificationSettings(AlarmClockActivity.this);
+                }
+            });
+            notificationWarning.show();
+            return;
+        }
+
+        // no warnings shown; clear previous (stale) messages
+        notificationWarning.dismiss();
+    }
+    private void checkWarnings()
+    {
+        notificationWarning.setShouldShow(!NotificationManagerCompat.from(this).areNotificationsEnabled());
+        showWarnings();
     }
 
     @Override
@@ -342,6 +405,8 @@ public class AlarmClockActivity extends AppCompatActivity
                 offsetDialog.setOnAcceptedListener(onOffsetChanged);
             }
         } // else // TODO
+
+        checkWarnings();
     }
 
     @Override
@@ -367,6 +432,7 @@ public class AlarmClockActivity extends AppCompatActivity
     public void onSaveInstanceState( Bundle outState )
     {
         super.onSaveInstanceState(outState);
+        saveWarnings(outState);
         saveListViewPosition(outState);
 
         if (adapter != null) {
@@ -382,6 +448,7 @@ public class AlarmClockActivity extends AppCompatActivity
     public void onRestoreInstanceState(@NonNull Bundle savedState)
     {
         super.onRestoreInstanceState(savedState);
+        restoreWarnings(savedState);
         restoreListViewPosition(savedState);
 
         String idString = savedState.getString(KEY_SELECTED_ROWID);
@@ -1262,8 +1329,10 @@ public class AlarmClockActivity extends AppCompatActivity
                 ContentValues entryValues = new ContentValues();
                 DatabaseUtils.cursorRowToContentValues(cursor, entryValues);
 
-                AlarmClockItem item = new AlarmClockItem(entryValues);
-                AlarmNotifications.updateAlarmTime(contextRef.get(), item);
+                AlarmClockItem item = new AlarmClockItem(contextRef.get(), entryValues);
+                if (!item.enabled) {
+                    AlarmNotifications.updateAlarmTime(contextRef.get(), item);
+                }
                 items.add(item);
                 publishProgress(item);
 

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,7 +18,6 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -45,7 +44,6 @@ import android.os.Parcelable;
 import android.preference.PreferenceActivity;
 import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -846,6 +844,12 @@ public class SuntimesActivity extends AppCompatActivity
 
         restoreWarnings(savedState);
     }
+    private SuntimesWarning.SuntimesWarningListener warningListener = new SuntimesWarning.SuntimesWarningListener() {
+        @Override
+        public void onShowNextWarning() {
+            showWarnings();
+        }
+    };
 
     /**
      * initialize the actionbar
@@ -1778,8 +1782,8 @@ public class SuntimesActivity extends AppCompatActivity
 
         verboseAccessibility = AppSettings.loadVerboseAccessibilityPref(this);
         showWarnings = AppSettings.loadShowWarningsPref(this);
-        dateWarning.shouldShow = false;
-        timezoneWarning.shouldShow = false;
+        dateWarning.setShouldShow(false);
+        timezoneWarning.setShouldShow(false);
 
         location = WidgetSettings.loadLocationPref(context, AppWidgetManager.INVALID_APPWIDGET_ID);
         String locationTitle = location.getLabel();
@@ -2001,18 +2005,18 @@ public class SuntimesActivity extends AppCompatActivity
                 {
                     thisString = getString(R.string.future_today);
                     otherString = getString(R.string.future_tomorrow);
-                    dateWarning.shouldShow = true;
+                    dateWarning.setShouldShow(true);
 
                 } else if (data_date.before(time)) {
                     thisString = getString(R.string.past_today);
                     otherString = getString(R.string.past_tomorrow);
-                    dateWarning.shouldShow = true;
+                    dateWarning.setShouldShow(true);
                 }
             }
         }
 
         // date fields
-        ImageSpan dateWarningIcon = (showWarnings && dateWarning.shouldShow) ? SuntimesUtils.createWarningSpan(this, txt_date.getTextSize()) : null;
+        ImageSpan dateWarningIcon = (showWarnings && dateWarning.shouldShow()) ? SuntimesUtils.createWarningSpan(this, txt_date.getTextSize()) : null;
         String dateString = getString(R.string.dateField, thisString, dateFormat.format(data_date));
         SpannableStringBuilder dateSpan = SuntimesUtils.createSpan(this, dateString, SuntimesUtils.SPANTAG_WARNING, dateWarningIcon);
         txt_date.setText(dateSpan);
@@ -2025,8 +2029,8 @@ public class SuntimesActivity extends AppCompatActivity
 
         // timezone field
         TimeZone timezone = dataset.timezone();
-        timezoneWarning.shouldShow = WidgetTimezones.isProbablyNotLocal(timezone, dataset.location(), dataset.date());
-        ImageSpan timezoneWarningIcon = (showWarnings && timezoneWarning.shouldShow) ? SuntimesUtils.createWarningSpan(this, txt_timezone.getTextSize()) : null;
+        timezoneWarning.setShouldShow( WidgetTimezones.isProbablyNotLocal(timezone, dataset.location(), dataset.date()) );
+        ImageSpan timezoneWarningIcon = (showWarnings && timezoneWarning.shouldShow()) ? SuntimesUtils.createWarningSpan(this, txt_timezone.getTextSize()) : null;
 
         boolean useDST = showWarnings && (Build.VERSION.SDK_INT < 24 ? timezone.useDaylightTime()
                                                                      : timezone.observesDaylightTime());
@@ -2107,10 +2111,10 @@ public class SuntimesActivity extends AppCompatActivity
 
     private void showWarnings()
     {
-        if (showWarnings && timezoneWarning.shouldShow && !timezoneWarning.wasDismissed)
+        if (showWarnings && timezoneWarning.shouldShow() && !timezoneWarning.wasDismissed())
         {
-            timezoneWarning.initWarning(this, txt_timezone, getString(R.string.timezoneWarning));
-            timezoneWarning.snackbar.setAction(getString(R.string.configAction_setTimeZone), new View.OnClickListener()
+            timezoneWarning.initWarning(this, txt_timezone, getString(R.string.timezoneWarning), txt_date.getTextSize());
+            timezoneWarning.getSnackbar().setAction(getString(R.string.configAction_setTimeZone), new View.OnClickListener()
             {
                 @Override
                 public void onClick(View view)
@@ -2122,10 +2126,10 @@ public class SuntimesActivity extends AppCompatActivity
             return;
         }
 
-        if (showWarnings && dateWarning.shouldShow && !dateWarning.wasDismissed)
+        if (showWarnings && dateWarning.shouldShow() && !dateWarning.wasDismissed())
         {
-            dateWarning.initWarning(this, card_flipper, getString(R.string.dateWarning));
-            dateWarning.snackbar.setAction(getString(R.string.configAction_setDate), new View.OnClickListener()
+            dateWarning.initWarning(this, card_flipper, getString(R.string.dateWarning), txt_date.getTextSize());
+            dateWarning.getSnackbar().setAction(getString(R.string.configAction_setDate), new View.OnClickListener()
             {
                 @Override
                 public void onClick(View view)
@@ -2895,153 +2899,6 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     /**
-     * SuntimesWarning; wraps a Snackbar and some flags.
-     */
-    private class SuntimesWarning
-    {
-        public static final int ANNOUNCE_DELAY_MS = 500;
-        public static final String KEY_WASDISMISSED = "userDismissedWarning";
-
-        public SuntimesWarning(String id)
-        {
-            this.id = id;
-        }
-        protected String id = "";
-
-        protected Snackbar snackbar = null;
-        protected boolean shouldShow = false;
-        protected boolean wasDismissed = false;
-
-        protected String contentDescription = null;
-        protected View parentView = null;
-
-        public void initWarning(@NonNull Context context, View view, String msg)
-        {
-            this.parentView = view;
-            ImageSpan warningIcon = SuntimesUtils.createWarningSpan(context, txt_date.getTextSize());
-            SpannableStringBuilder message = SuntimesUtils.createSpan(SuntimesActivity.this, msg, SuntimesUtils.SPANTAG_WARNING, warningIcon);
-            this.contentDescription = msg.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), context.getString(R.string.spanTag_warning));
-
-            wasDismissed = false;
-            snackbar = Snackbar.make(card_flipper, message, Snackbar.LENGTH_INDEFINITE);
-            snackbar.addCallback(snackbarListener);
-            setContentDescription(contentDescription);
-            themeWarning(context, snackbar);
-        }
-
-        @SuppressLint("ResourceType")
-        private void themeWarning(@NonNull Context context, @NonNull Snackbar snackbarWarning)
-        {
-            int[] colorAttrs = { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor };
-            TypedArray a = context.obtainStyledAttributes(colorAttrs);
-            int textColor = ContextCompat.getColor(context, a.getResourceId(0, android.R.color.primary_text_dark));
-            int accentColor = ContextCompat.getColor(context, a.getResourceId(1, R.color.text_accent_dark));
-            int backgroundColor = ContextCompat.getColor(context, a.getResourceId(2, R.color.card_bg_dark));
-            a.recycle();
-
-            View snackbarView = snackbarWarning.getView();
-            snackbarView.setBackgroundColor(backgroundColor);
-            snackbarWarning.setActionTextColor(accentColor);
-
-            TextView snackbarText = (TextView)snackbarView.findViewById(android.support.design.R.id.snackbar_text);
-            if (snackbarText != null) {
-                snackbarText.setTextColor(textColor);
-                snackbarText.setMaxLines(5);
-            }
-        }
-
-        private Snackbar.Callback snackbarListener = new Snackbar.Callback()
-        {
-            @Override
-            public void onDismissed(Snackbar snackbar, int event)
-            {
-                super.onDismissed(snackbar, event);
-                switch (event)
-                {
-                    case DISMISS_EVENT_SWIPE:
-                        wasDismissed = true;
-                        showNextWarning();
-                        break;
-                }
-            }
-        };
-
-        private void showNextWarning()
-        {
-            showWarnings();
-        }
-
-        public boolean isShown()
-        {
-            return (snackbar != null && snackbar.isShown());
-        }
-
-        public void show()
-        {
-            if (snackbar != null)
-            {
-                snackbar.show();
-            }
-            announceWarning();
-        }
-
-        public void dismiss()
-        {
-            if (isShown())
-            {
-                snackbar.dismiss();
-            }
-        }
-
-        public void reset()
-        {
-            wasDismissed = false;
-            shouldShow = false;
-        }
-
-        public void setContentDescription( String value )
-        {
-            this.contentDescription = value;
-            TextView snackText = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-            if (snackText != null)
-            {
-                snackText.setContentDescription(contentDescription);
-            }
-        }
-
-        public void announceWarning()
-        {
-            if (parentView != null && contentDescription != null)
-            {
-                parentView.postDelayed(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        SuntimesUtils.announceForAccessibility(parentView, contentDescription);
-                    }
-                }, ANNOUNCE_DELAY_MS);
-            }
-        }
-
-        public void save( Bundle outState )
-        {
-            if (outState != null)
-            {
-                outState.putBoolean(KEY_WASDISMISSED + id, wasDismissed);
-            }
-        }
-
-        public void restore( Bundle savedState )
-        {
-            if (savedState != null)
-            {
-                wasDismissed = savedState.getBoolean(KEY_WASDISMISSED + id, false);
-            }
-        }
-    }
-
-    /**
      * Save the state of warning objects to Bundle.
      * @param outState a Bundle to save state to
      */
@@ -3062,6 +2919,7 @@ public class SuntimesActivity extends AppCompatActivity
         for (SuntimesWarning warning : warnings)
         {
             warning.restore(savedState);
+            warning.setWarningListener(warningListener);
         }
     }
     

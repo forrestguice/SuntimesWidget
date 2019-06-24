@@ -199,7 +199,6 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     private int foregroundColor;
     public void themeViews(Context context, SuntimesTheme theme)
     {
-        foregroundColor = theme.getMapForegroundColor();
         options.backgroundColor = theme.getMapBackgroundColor();
         options.sunShadowColor = theme.getMapShadowColor();
         options.moonLightColor = theme.getMapHighlightColor();
@@ -212,6 +211,9 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         options.sunStrokeColor = theme.getNoonIconStrokeColor();
         options.moonFillColor = theme.getMoonFullColor();
         options.moonStrokeColor = theme.getMoonWaningColor();
+
+        foregroundColor = theme.getMapForegroundColor();
+        setMapMode(context, mode);    // options.foregroundColor is assigned with the mapMode
     }
 
     /**
