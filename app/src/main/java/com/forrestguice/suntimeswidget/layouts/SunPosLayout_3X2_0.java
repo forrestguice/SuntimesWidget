@@ -75,16 +75,19 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
         {
             case EQUIAZIMUTHAL_SIMPLE:
                 options.map = ContextCompat.getDrawable(context, R.drawable.worldmap2);
+                options.hasTransparentBaseMap = true;
                 projection = new WorldMapEquiazimuthal();
                 break;
 
             case EQUIAZIMUTHAL_SIMPLE1:
                 options.map = ContextCompat.getDrawable(context, R.drawable.worldmap3);
+                options.hasTransparentBaseMap = true;
                 projection = new WorldMapEquiazimuthal1();
                 break;
 
             case EQUIRECTANGULAR_BLUEMARBLE:
                 options.map = ContextCompat.getDrawable(context, R.drawable.land_shallow_topo_1024);
+                options.hasTransparentBaseMap = false;
                 options.foregroundColor = Color.TRANSPARENT;
                 projection = new WorldMapEquirectangular();
                 break;
@@ -92,6 +95,7 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
             case EQUIRECTANGULAR_SIMPLE:
             default:
                 options.map = ContextCompat.getDrawable(context, R.drawable.worldmap);
+                options.hasTransparentBaseMap = true;
                 projection = new WorldMapEquirectangular();
                 break;
         }

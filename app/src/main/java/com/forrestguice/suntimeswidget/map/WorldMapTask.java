@@ -129,6 +129,7 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
         public Drawable map = null;
         public int backgroundColor = Color.BLUE;
         public int foregroundColor = Color.TRANSPARENT;
+        public boolean hasTransparentBaseMap = true;
 
         public boolean showGrid = false;
         public int gridXColor = Color.LTGRAY;
@@ -223,16 +224,19 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
 
         protected void drawMap(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options)
         {
-            Bitmap mapBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-            Canvas mapCanvas = new Canvas(mapBitmap);
-            options.map.setBounds(0, 0, mapCanvas.getWidth(), mapCanvas.getHeight());
-            options.map.draw(mapCanvas);
+            if (options.map != null)
+            {
+                Bitmap mapBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+                Canvas mapCanvas = new Canvas(mapBitmap);
+                options.map.setBounds(0, 0, mapCanvas.getWidth(), mapCanvas.getHeight());
+                options.map.draw(mapCanvas);
 
-            if (options.foregroundColor != Color.TRANSPARENT) {
-                mapBitmap = SuntimesUtils.tintBitmap(mapBitmap, options.foregroundColor);
+                if (options.foregroundColor != Color.TRANSPARENT) {
+                    mapBitmap = SuntimesUtils.tintBitmap(mapBitmap, options.foregroundColor);
+                }
+                c.drawBitmap(mapBitmap, 0, 0, p);
+                mapBitmap.recycle();
             }
-            c.drawBitmap(mapBitmap, 0, 0, p);
-            mapBitmap.recycle();
         }
 
         protected void drawSun(Canvas c, int x, int y, Paint p, WorldMapTask.WorldMapOptions options)

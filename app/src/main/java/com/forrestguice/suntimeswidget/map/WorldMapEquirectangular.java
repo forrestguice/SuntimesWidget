@@ -59,12 +59,17 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         p.setColor(options.backgroundColor);
         c.drawRect(0, 0, w, h, p);
 
-        if (options.map != null) {
-            drawMap(c, w, h, p, options);
+        if (options.showMajorLatitudes)
+        {
+            if (options.hasTransparentBaseMap) {
+                drawMajorLatitudes(c, w, h, p, options);
+                drawMap(c, w, h, p, options);
+            } else {
+                drawMap(c, w, h, p, options);
+                drawMajorLatitudes(c, w, h, p, options);
+            }
         }
-        if (options.showMajorLatitudes) {
-            drawMajorLatitudes(c, w, h, p, options);
-        }
+
         if (options.showGrid) {
             drawGrid(c, w, h, p, options);
         }
