@@ -551,9 +551,9 @@
     <string name="configLabel_alarmClock_emptyMsg">Sin alarmas</string>     <!-- a label that is displayed in place of an empty listview -->  
     <string name="configAction_addAlarm">Poner alarma</string>               <!-- button (contentDescription) -->  
     <string name="configAction_addNotification">Poner notificación</string> <!-- button (contentDescription) -->  
-    <string name="configAction_deleteAlarm">Borrar</string>               <!-- button (contentDescription) -->  
-    <string name="configAction_clearAlarms">Vaciar</string>                <!-- action button / menu item -->  
-    <string name="configAction_clearOffset">Borrar retardo</string>                <!-- action button / menu item -->  
+    <string name="configAction_deleteAlarm">Eliminar</string>               <!-- button (contentDescription) -->  
+    <string name="configAction_clearAlarms">Quitar alarmas</string>                <!-- action button / menu item -->  
+    <string name="configAction_clearOffset">Quitar retardo</string>                <!-- action button / menu item -->  
     <string name="configAction_setAlarmOffset">Poner retardo</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmType">Poner tipo</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmLabel">Poner etiqueta</string>         <!-- button (contentDescription) -->  
