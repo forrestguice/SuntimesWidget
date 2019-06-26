@@ -48,6 +48,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
@@ -244,6 +245,7 @@ public class WorldMapDialog extends DialogFragment
             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
             options.showSunShadow = pref.getBoolean(PREF_KEY_UI_MAP_SUNSHADOW, PREF_DEF_UI_MAP_SUNSHADOW);
             options.showMoonLight = pref.getBoolean(PREF_KEY_UI_MAP_MOONLIGHT, PREF_DEF_UI_MAP_MOONLIGHT);
+            options.showMajorLatitudes = WorldMapWidgetSettings.loadShowMajorLatitudesPref(context, 0, WorldMapWidgetSettings.MAPTAG_3x2);
             options.modified = true;
         }
     }
@@ -330,11 +332,16 @@ public class WorldMapDialog extends DialogFragment
         radioGroup.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 
-    protected boolean showContextMenu(Context context, View view)
+    protected boolean showContextMenu(final Context context, View view)
     {
         PopupMenu menu = new PopupMenu(context, view);
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.mapmenu, menu.getMenu());
+
+        MenuItem option_latitudes = menu.getMenu().findItem(R.id.mapOption_majorLatitudes);
+        if (option_latitudes != null) {
+            option_latitudes.setChecked(WorldMapWidgetSettings.loadShowMajorLatitudesPref(context, 0, WorldMapWidgetSettings.MAPTAG_3x2));
+        }
 
         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {
@@ -347,6 +354,13 @@ public class WorldMapDialog extends DialogFragment
 
                     case R.id.shareMap:
                         worldmap.shareBitmap();
+                        return true;
+
+                    case R.id.mapOption_majorLatitudes:
+                        boolean toggledValue = !WorldMapWidgetSettings.loadShowMajorLatitudesPref(context, 0, WorldMapWidgetSettings.MAPTAG_3x2);
+                        WorldMapWidgetSettings.saveShowMajorLatitudesPref(context, 0, toggledValue, WorldMapWidgetSettings.MAPTAG_3x2);
+                        item.setChecked(toggledValue);
+                        updateViews();
                         return true;
 
                     default:
