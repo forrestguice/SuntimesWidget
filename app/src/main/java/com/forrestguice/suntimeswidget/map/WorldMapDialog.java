@@ -245,7 +245,7 @@ public class WorldMapDialog extends DialogFragment
             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
             options.showSunShadow = pref.getBoolean(PREF_KEY_UI_MAP_SUNSHADOW, PREF_DEF_UI_MAP_SUNSHADOW);
             options.showMoonLight = pref.getBoolean(PREF_KEY_UI_MAP_MOONLIGHT, PREF_DEF_UI_MAP_MOONLIGHT);
-            options.showMajorLatitudes = WorldMapWidgetSettings.loadShowMajorLatitudesPref(context, 0, WorldMapWidgetSettings.MAPTAG_3x2);
+            options.showMajorLatitudes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
             options.modified = true;
         }
     }
@@ -340,7 +340,7 @@ public class WorldMapDialog extends DialogFragment
 
         MenuItem option_latitudes = menu.getMenu().findItem(R.id.mapOption_majorLatitudes);
         if (option_latitudes != null) {
-            option_latitudes.setChecked(WorldMapWidgetSettings.loadShowMajorLatitudesPref(context, 0, WorldMapWidgetSettings.MAPTAG_3x2));
+            option_latitudes.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2));
         }
 
         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
@@ -357,8 +357,8 @@ public class WorldMapDialog extends DialogFragment
                         return true;
 
                     case R.id.mapOption_majorLatitudes:
-                        boolean toggledValue = !WorldMapWidgetSettings.loadShowMajorLatitudesPref(context, 0, WorldMapWidgetSettings.MAPTAG_3x2);
-                        WorldMapWidgetSettings.saveShowMajorLatitudesPref(context, 0, toggledValue, WorldMapWidgetSettings.MAPTAG_3x2);
+                        boolean toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
+                        WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
                         item.setChecked(toggledValue);
                         updateViews();
                         return true;

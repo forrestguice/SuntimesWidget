@@ -553,16 +553,16 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_showMajorLatitudesPref()
     {
-        WorldMapWidgetSettings.saveShowMajorLatitudesPref(context, appWidgetId, false, WorldMapWidgetSettings.MAPTAG_3x2);
-        boolean pref2 = WorldMapWidgetSettings.loadShowMajorLatitudesPref(context, appWidgetId, WorldMapWidgetSettings.MAPTAG_3x2);
+        WorldMapWidgetSettings.saveWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2, false);
+        boolean pref2 = WorldMapWidgetSettings.loadWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
         assertTrue("pref should be false but was true", !pref2);
 
-        WorldMapWidgetSettings.saveShowMajorLatitudesPref(context, appWidgetId, true, WorldMapWidgetSettings.MAPTAG_3x2);
-        boolean pref1 = WorldMapWidgetSettings.loadShowMajorLatitudesPref(context, appWidgetId, WorldMapWidgetSettings.MAPTAG_3x2);
+        WorldMapWidgetSettings.saveWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2, true);
+        boolean pref1 = WorldMapWidgetSettings.loadWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
         assertTrue("pref should be true but was false", pref1);
 
-        WorldMapWidgetSettings.deleteShowMajorLatitudesPref(context, appWidgetId,WorldMapWidgetSettings.MAPTAG_3x2);
-        boolean pref0 = WorldMapWidgetSettings.loadShowMajorLatitudesPref(context, appWidgetId, WorldMapWidgetSettings.MAPTAG_3x2);
+        WorldMapWidgetSettings.deleteWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
+        boolean pref0 = WorldMapWidgetSettings.loadWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
         assertTrue("pref should be false (default) but was true", !pref0);
     }
 
