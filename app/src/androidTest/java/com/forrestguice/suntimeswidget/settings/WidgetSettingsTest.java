@@ -551,6 +551,22 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     }
 
     @Test
+    public void test_showMajorLatitudesPref()
+    {
+        WorldMapWidgetSettings.saveShowMajorLatitudesPref(context, appWidgetId, false, WorldMapWidgetSettings.MAPTAG_3x2);
+        boolean pref2 = WorldMapWidgetSettings.loadShowMajorLatitudesPref(context, appWidgetId, WorldMapWidgetSettings.MAPTAG_3x2);
+        assertTrue("pref should be false but was true", !pref2);
+
+        WorldMapWidgetSettings.saveShowMajorLatitudesPref(context, appWidgetId, true, WorldMapWidgetSettings.MAPTAG_3x2);
+        boolean pref1 = WorldMapWidgetSettings.loadShowMajorLatitudesPref(context, appWidgetId, WorldMapWidgetSettings.MAPTAG_3x2);
+        assertTrue("pref should be true but was false", pref1);
+
+        WorldMapWidgetSettings.deleteShowMajorLatitudesPref(context, appWidgetId,WorldMapWidgetSettings.MAPTAG_3x2);
+        boolean pref0 = WorldMapWidgetSettings.loadShowMajorLatitudesPref(context, appWidgetId, WorldMapWidgetSettings.MAPTAG_3x2);
+        assertTrue("pref should be false (default) but was true", !pref0);
+    }
+
+    @Test
     public void test_1x1MoonModePref()
     {
         WidgetSettings.saveMoon1x1ModePref(context, appWidgetId, WidgetSettings.WidgetModeMoon1x1.MODE1x1_RISESET);

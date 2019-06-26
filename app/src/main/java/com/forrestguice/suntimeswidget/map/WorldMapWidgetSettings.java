@@ -31,6 +31,9 @@ public class WorldMapWidgetSettings
     public static final WorldMapWidgetMode PREF_DEF_APPEARANCE_WIDGETMODE_WORLDMAP = WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE;
     public static final WorldMapWidgetMode PREF_DEF_APPEARANCE_WIDGETMODE_WORLDMAP1 = WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE1;
 
+    public static final String PREF_KEY_APPEARANCE_WORLDMAP_MAJORLATITUDES = "sunposmap_majorlatitudes";
+    public static final boolean PREF_DEF_APPEARANCE_WORLDMAP_MAJORLATITUDES = false;
+
     public static final String MAPTAG_3x2 = "";    // EMPTY
     public static final String MAPTAG_3x3 = "1";
     public static final String MAPTAG_DEF = MAPTAG_3x2;
@@ -116,6 +119,27 @@ public class WorldMapWidgetSettings
         } else return PREF_DEF_APPEARANCE_WIDGETMODE_WORLDMAP;
     }
 
+    public static void saveShowMajorLatitudesPref(Context context, int appWidgetId, boolean value, String mapTag)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
+        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_APPEARANCE_WORLDMAP_MAJORLATITUDES + mapTag, value);
+        prefs.apply();
+    }
+    public static boolean loadShowMajorLatitudesPref(Context context, int appWidgetId, String mapTag)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
+        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_APPEARANCE_WORLDMAP_MAJORLATITUDES + mapTag, PREF_DEF_APPEARANCE_WORLDMAP_MAJORLATITUDES);
+    }
+    public static void deleteShowMajorLatitudesPref(Context context, int appWidgetId, String mapTag)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
+        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE;
+        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_WORLDMAP_MAJORLATITUDES + mapTag);
+        prefs.apply();
+    }
+
     /**
      * @param context
      */
@@ -131,7 +155,10 @@ public class WorldMapWidgetSettings
     public static void deletePrefs(Context context, int appWidgetId)
     {
         deleteSunPosMapModePref(context, appWidgetId, MAPTAG_3x2);
+        deleteShowMajorLatitudesPref(context, appWidgetId, MAPTAG_3x2);
+
         deleteSunPosMapModePref(context, appWidgetId, MAPTAG_3x3);
+        deleteShowMajorLatitudesPref(context, appWidgetId, MAPTAG_3x3);
     }
 
 }
