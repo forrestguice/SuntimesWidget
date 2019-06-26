@@ -174,7 +174,7 @@ public class WorldMapDialog extends DialogFragment
         {
             @Override
             public boolean onLongClick(View view) {
-                return showShareMenu(context, view);
+                return showContextMenu(context, view);
             }
         });
 
@@ -330,11 +330,11 @@ public class WorldMapDialog extends DialogFragment
         radioGroup.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 
-    protected boolean showShareMenu(Context context, View view)
+    protected boolean showContextMenu(Context context, View view)
     {
         PopupMenu menu = new PopupMenu(context, view);
         MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.mapshare, menu.getMenu());
+        inflater.inflate(R.menu.mapmenu, menu.getMenu());
 
         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {

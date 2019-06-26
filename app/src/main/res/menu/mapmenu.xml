@@ -9,4 +9,13 @@
               app:showAsAction="never" />
 
     </group>
+
+    <group>
+
+        <item android:id="@+id/mapOption_majorLatitudes"
+            android:title="Major Latitudes"
+            android:checkable="true"
+            app:showAsAction="never" />
+
+    </group>
 </menu>
