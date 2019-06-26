@@ -104,6 +104,8 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
                 drawMap(c, w, h, p, options);
                 drawMajorLatitudes(c, w, h, p, options);
             }
+        } else {
+            drawMap(c, w, h, p, options);
         }
 
         drawData: if (data != null)

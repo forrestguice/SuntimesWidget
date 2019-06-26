@@ -81,6 +81,8 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
                 drawMap(c, w, h, p, options);
                 drawMajorLatitudes(c, w, h, p, options);
             }
+        } else {
+            drawMap(c, w, h, p, options);
         }
 
         drawData: if (data != null)
