@@ -80,7 +80,7 @@
     <string name="length_light"><xliff:g example="12h 50m" id="timeSpan">%1$s</xliff:g> de luz útil</string>
 
     <!-- Field: moon illumination (as seen in moon widget) -->
-    <string name="moon_illumination"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g> iluminada</string>
+    <string name="moon_illumination">Iluminada al <xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g></string>
     <string name="moon_illumination_short"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g></string>
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
@@ -116,8 +116,8 @@
         <item quantity="other">%1$s después de las</item>
     </plurals>
 
-    <string name="offset_button_before">before</string>    <!-- button label; [1h] [5m] [before] (-) --> <!-- TODO -->
-    <string name="offset_button_after">after</string>      <!-- button label; [1h] [5m] [after] (+) -->  <!-- TODO -->
+    <string name="offset_button_before">antes</string>    <!-- button label; [1h] [5m] [before] (-) --> <!-- TODO -->
+    <string name="offset_button_after">después</string>      <!-- button label; [1h] [5m] [after] (+) -->  <!-- TODO -->
 
     <!-- NoteBody: sunset/sunrise/twilight string
          The note body text; appears next to the prefix (layout/info_time_note.xml)
@@ -157,8 +157,8 @@
     <string name="delta_minutes">m</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
 
-    <string name="hence"><xliff:g id="timeSpan">%1$s</xliff:g> contando desde ahora</string>
-    <string name="ago"><xliff:g id="timeSpan">%1$s</xliff:g>  atrás</string>
+    <string name="hence">Dentro de <xliff:g id="timeSpan">%1$s</xliff:g></string>
+    <string name="ago">Hace <xliff:g id="timeSpan">%1$s</xliff:g></string>
 
     <!-- misc time values: might be displayed in a timeField in place of an actual time -->
     <string name="time_none">ninguno</string>  <!-- no time / time does not occur -->
@@ -168,8 +168,8 @@
     <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  
     <string name="time_format_24hr_veryshort_withseconds"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  
 
-    <string name="date_format_short"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           
-    <string name="date_format_long"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  
+    <string name="date_format_short"><xliff:g id="patternDay">d</xliff:g> <xliff:g id="preposition">"'de'"</xliff:g> <xliff:g id="patternMonth">MMMM</xliff:g></string>                                           
+    <string name="date_format_long"><xliff:g id="patternDay">d</xliff:g> <xliff:g id="preposition">"'de'"</xliff:g> <xliff:g id="patternMonth">MMMM</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  
     <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           
     <string name="datetime_format_long"><xliff:g id="monthYear">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>        
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>
@@ -195,7 +195,7 @@
          WIDGET CONFIG
     -->
 
-    <string name="configAction_restoreDefaults">Recupera parámetros por defecto</string>
+    <string name="configAction_restoreDefaults">Restituye configuración por defecto</string>
 
     <string name="configLabel_tagDefault">[predeterminado]</string>
     <string name="configLabel_tagPlugin">[complemento]</string>
@@ -370,7 +370,7 @@
     <string name="solartime_localMean">Hora local</string>                 
     <string name="solartime_apparent">Horario solar aparente</string>              
     <string name="timezoneCustom_line1"><xliff:g example="US/Arizona" id="timezoneID">%1$s</xliff:g></string>                                                                     
-    <string name="timezoneCustom_line2">El<xliff:g example="-7" id="utmOffset">%1$s</xliff:g>] <xliff:g example="Mountain Standard Time" id="timezoneName">%2$s</xliff:g></string> 
+    <string name="timezoneCustom_line2">El <xliff:g example="-7" id="utmOffset">%1$s</xliff:g>] <xliff:g example="Mountain Standard Time" id="timezoneName">%2$s</xliff:g></string> 
 
     <string name="configLabel_timezone">Opciones de zona horaria</string>             
     <string name="configLabel_timezone_mode">Modo:</string>                     
@@ -539,8 +539,8 @@
     <string name="widgetLabel_altitude">Altitud</string>               
     <string name="widgetLabel_altitude_short">Alt</string>
 
-    <string name="widgetLabel_rightAscension">Ascensión correcta</string>    
-    <string name="widgetLabel_rightAscension_short">AC</string>    
+    <string name="widgetLabel_rightAscension">Ascensión recta</string>    
+    <string name="widgetLabel_rightAscension_short">AR</string>    
     <string name="widgetLabel_declination">Inclinación</string>
     <string name="widgetLabel_declination_short">Inc</string>
 
@@ -551,9 +551,9 @@
     <string name="configLabel_alarmClock_emptyMsg">Sin alarmas</string>     <!-- a label that is displayed in place of an empty listview -->  
     <string name="configAction_addAlarm">Poner alarma</string>               <!-- button (contentDescription) -->  
     <string name="configAction_addNotification">Poner notificación</string> <!-- button (contentDescription) -->  
-    <string name="configAction_deleteAlarm">Borrar</string>               <!-- button (contentDescription) -->  
-    <string name="configAction_clearAlarms">Vaciar</string>                <!-- action button / menu item -->  
-    <string name="configAction_clearOffset">Vaciar</string>                <!-- action button / menu item -->  
+    <string name="configAction_deleteAlarm">Eliminar</string>               <!-- button (contentDescription) -->  
+    <string name="configAction_clearAlarms">Quitar alarmas</string>                <!-- action button / menu item -->  
+    <string name="configAction_clearOffset">Quitar retardo</string>                <!-- action button / menu item -->  
     <string name="configAction_setAlarmOffset">Poner retardo</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmType">Poner tipo</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmLabel">Poner etiqueta</string>         <!-- button (contentDescription) -->  
@@ -853,7 +853,7 @@
         <item>Vasco</item>
         <item>Noruego</item>
         <item>Chino tradicional</item>
-        <item>Portuguese</item>  <!-- TODO -->
+        <item>Portugués</item>
     </string-array>
 
     
@@ -922,7 +922,7 @@
     <string name="schedalarm_dialog_cancel">Cancelar</string>
     <string name="schedalarm_dialog_error">No se configuró la alarma…</string>
     <string name="schedalarm_dialog_error2">La alarma no se puede configurar…</string>
-    <string name="schedalarm_dialog_note">Cerca de <xliff:g example="6h 30m" id="timetext">%s</xliff:g> contando desde ahora.</string>
+    <string name="schedalarm_dialog_note">Dentro de <xliff:g example="6h 30m" id="timetext">%s</xliff:g>, aproximadamente.</string>
     <string name="schedalarm_dialog_note2"><xliff:g example="nautical twilight" id="solarevent">%s</xliff:g> no pasa.</string>
     <string-array name="solarevents_short">  
         <item>Amanecer astronómico</item>
@@ -1129,7 +1129,7 @@
           <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
     ]]></string>  <!-- TODO -->
     <string name="help_general_timeMode2"><![CDATA[
-    <b>Equinoccio primaveral:</b> TODO. <br/> 
+    <b>Equinoccio de primavera:</b> TODO. <br/> 
     <b>Solsticio de verano:</b> TODO. <br/> 
     <b>Equinoccio de otoño:</b> TODO. <br/> 
     <b>Solsticio de invierno:</b> TODO. <br/>
@@ -1174,7 +1174,7 @@
     <string name="privacy_permission_storage"><![CDATA[Suntimes utiliza el permiso de <b>almacenamiento externo</b> para hacer una copia de seguridad o exportar datos a un archivo (p. Ej. Lugares, temas).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>    <!-- TODO -->
     <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>    <!-- TODO -->
-    <string name="privacy_permissiondialog_ignore">Ignore</string>    <!-- TODO -->
+    <string name="privacy_permissiondialog_ignore">Ignorar</string>    <!-- TODO -->
     <string name="privacy_permissiondialog_title">Permisos</string>
 
     <string name="security_dialog_title">Alerta de seguridad</string>  
