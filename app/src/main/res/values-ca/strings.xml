@@ -21,7 +21,7 @@
     <string name="configAction_setTimeZone">Configurar zona horària</string>
     <string name="configAction_setDate">Configurar data</string>
     <string name="configAction_sunDialog">Posició del Sol</string>
-    <string name="configAction_equinoxDialog">solstici / equinocci</string>
+    <string name="configAction_equinoxDialog">Solstici / equinocci</string>
     <string name="configAction_worldMap">Mapa del món</string>
     <string name="configAction_moon">Lluna</string>
     <string name="configAction_help">Ajuda</string>
@@ -78,7 +78,7 @@
     <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> de llum útil</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
 
     <!-- Field: moon illumination (as seen in moon widget) -->
-    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> iŀluminada</string>  <!-- "50% illuminated" .. used in 2x1 widget -->
+    <string name="moon_illumination">Iŀluminada al <xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50% illuminated" .. used in 2x1 widget -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50%" .. used in 1x1 widget -->
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
@@ -155,8 +155,8 @@
     <string name="delta_minutes">m</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
 
-    <string name="hence"><xliff:g id="timeSpan">%1$s</xliff:g> comptant des d\'ara</string>  <!-- e.g. 15d 23h from now -->
-    <string name="ago"><xliff:g id="timeSpan">%1$s</xliff:g>  enrere</string>         <!-- e.g. 1y 15d 12h ago -->
+    <string name="hence">D\'aquí a <xliff:g id="timeSpan">%1$s</xliff:g></string>  <!-- e.g. 15d 23h from now -->
+    <string name="ago">Fa <xliff:g id="timeSpan">%1$s</xliff:g></string>         <!-- e.g. 1y 15d 12h ago -->
 
     <!-- misc time values: might be displayed in a timeField in place of an actual time -->
     <string name="time_none">cap</string>  <!-- no time / time does not occur -->
@@ -166,8 +166,8 @@
     <string name="time_format_24hr_veryshort"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- 24hr time format -->
     <string name="time_format_24hr_veryshort_withseconds"><xliff:g id="patternHours">HH</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- 24hr time format (w/ seconds) -->
 
-    <string name="date_format_short"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g></string>                                           <!-- MMMM d ... e.g. December 3 -->
-    <string name="date_format_long"><xliff:g id="patternMonth">MMMM</xliff:g> <xliff:g id="patternDay">d</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
+    <string name="date_format_short"><xliff:g id="patternDay">d</xliff:g> <xliff:g id="patternMonth">MMMM</xliff:g></string> <!-- MMMM d ... e.g. December 3 -->
+    <string name="date_format_long"><xliff:g id="patternDay">d</xliff:g> <xliff:g id="patternMonth">MMMM</xliff:g>, <xliff:g id="patternYear">yyyy</xliff:g></string>  <!-- MMMM d, yyyy ... e.g. December 3, 2017 -->
     <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           <!-- longDate, time ... e.g. December 3, 2017, 11:00 am -->
     <string name="datetime_format_long"><xliff:g id="monthYear">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>        <!-- shortDate, time ... e.g. December 3, 11:00 am -->
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
@@ -245,8 +245,8 @@
     <string name="configLabel_general_scanPlugins_summary">Cerca i carrega complements de tercers.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_appearance">Opcions d\'apariència</string>           <!-- group title -->
-    <string name="configLabel_appearance_mode">Apariència</string>                  <!-- spinner label -->  
+    <string name="configLabel_appearance">Opcions d\'aparença</string>           <!-- group title -->
+    <string name="configLabel_appearance_mode">Aparença</string>                  <!-- spinner label -->  
     <string name="configLabel_appearance_theme">Tema:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Creix amb l\'espai disponible (reescalable)</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_showLabels">Mostra etiquetes</string>          <!-- checkbox label -->
@@ -322,9 +322,9 @@
     <string name="widgetMode_sunPosMap_bluemarble">Bola blava</string>    <!-- setting -->
 
     <string name="widgetMode1x1_moonriseset">Sortida i posta de la Lluna</string>     <!-- setting -->
-    <string name="widgetMode1x1_moonphaseillum">Fase llunar i iŀluminació</string>     <!-- setting -->
-    <string name="widgetMode1x1_moonphase">Només fase llunar</string>     <!-- setting -->
-    <string name="widgetMode1x1_moonillum">Només iŀluminació llunar</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphaseillum">Fase lunar i iŀluminació</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphase">Només fase lunar</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonillum">Només iŀluminació lunar</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphasenext">Següent fase</string>     <!-- setting -->
 
     <string name="configLabel_appearance_1x1mode">Disseny 1x1:</string>     <!-- spinner label -->
@@ -342,7 +342,7 @@
     <string name="configLabel_action_onClockTap">Al prèmer el rellotge</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">Al prèmer una nota</string>           <!-- spinner label -->
     <string name="configLabel_action_onDateTap">Al prèmer la data</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap1">Al mantenir polsat en la data</string>   <!-- spinner label -->
+    <string name="configLabel_action_onDateTap1">Al mantenir premuda la data</string>   <!-- spinner label -->
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">Actual (última coneguda)</string>  <!-- setting -->
@@ -465,9 +465,9 @@
     <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
 
     <string name="configLabel_themeColorSpring">Color de primavera</string> <!-- color label -->
-    <string name="configLabel_themeColorSummer">Color de estiu</string> <!-- color label -->
+    <string name="configLabel_themeColorSummer">Color d\'estiu</string> <!-- color label -->
     <string name="configLabel_themeColorFall">Color de tardor</string> <!-- color label -->
-    <string name="configLabel_themeColorWinter">Color de hivern</string> <!-- color label -->
+    <string name="configLabel_themeColorWinter">Color d\'hivern</string> <!-- color label -->
 
     <string name="configLabel_themeColorAccent">Accent</string> <!-- color label -->  
     <string name="configLabel_themeColorAction">Acció</string> <!-- color label -->  
@@ -523,7 +523,7 @@
 
     <string name="configLabel_themeBoldTime">Negreta</string>          <!-- checkbox label -->
 
-    <string name="configLabel_themeSizeSuffix">Tamany del sufixe:</string> <!-- edit label -->
+    <string name="configLabel_themeSizeSuffix">Tamany del sufix:</string> <!-- edit label -->
     <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
 
     <string name="configLabel_themePadding">Espaiat:</string>            <!-- edit label -->
@@ -540,8 +540,8 @@
     <string name="widgetLabel_altitude">Altitud</string>               <!-- label -->
     <string name="widgetLabel_altitude_short">Alt</string>               <!-- label -->
 
-    <string name="widgetLabel_rightAscension">Ascensió correcta</string>    <!-- label -->
-    <string name="widgetLabel_rightAscension_short">AC</string>    <!-- label -->
+    <string name="widgetLabel_rightAscension">Ascensió recta</string>    <!-- label -->
+    <string name="widgetLabel_rightAscension_short">AR</string>    <!-- label -->
     <string name="widgetLabel_declination">Inclinació</string>           <!-- label -->
     <string name="widgetLabel_declination_short">Inc</string>           <!-- label -->
 
@@ -554,7 +554,7 @@
     <string name="configAction_addNotification">Posar notificatió</string> <!-- button (contentDescription) -->  
     <string name="configAction_deleteAlarm">Esborrar</string>               <!-- button (contentDescription) -->  
     <string name="configAction_clearAlarms">Elimina tot</string>                <!-- action button / menu item -->  
-    <string name="configAction_clearOffset">Elimina tot</string>                <!-- action button / menu item -->  
+    <string name="configAction_clearOffset">Treu retard</string>                <!-- action button / menu item -->  
     <string name="configAction_setAlarmOffset">Posar retard</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmType">Posar tipus</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmLabel">Posar etiqueta</string>         <!-- button (contentDescription) -->  
@@ -856,7 +856,7 @@
         <item>Basc</item>
         <item>Noruec</item>
         <item>Xinès tradicional</item>
-        <item>Portuguese</item>  <!-- TODO -->
+        <item>Portuguès</item>  <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
@@ -925,7 +925,7 @@
     <string name="schedalarm_dialog_cancel">Canceŀla</string>
     <string name="schedalarm_dialog_error">No es va configurar l\'alarma</string>
     <string name="schedalarm_dialog_error2">L\'alarma no és pot configurar…</string>
-    <string name="schedalarm_dialog_note">Prop de <xliff:g id="timetext" example="6h 30m">%s</xliff:g> comptant des d\'ara.</string>
+    <string name="schedalarm_dialog_note">En <xliff:g id="timetext" example="6h 30m">%s</xliff:g>, aproximadament.</string>
     <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g> no passa.</string>
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
         <item>alba astrònomic</item>
@@ -1165,7 +1165,7 @@
           Els [Icon Default] temes per defecte no es poden modificar.
     </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  --> 
 
-    <string name="help_calendar"><![CDATA[Proporciona events a l\'aplicació Calendari (fases llunars, solsticis, i equinoccis).<br />
+    <string name="help_calendar"><![CDATA[Proporciona events a l\'aplicació Calendari (fases lunars, solsticis, i equinoccis).<br />
         <br />
         <u><b><font color="#ff9900">Els permisos de Calendari s\'han eliminat.</font></b></u><br />
         <br />
@@ -1177,7 +1177,7 @@
     <string name="privacy_permission_storage"><![CDATA[Suntimes utilitza el permís d\'<b>emmagatzematge extern</b> per fer una còpia de seguretat o exportar dades a un arxiu (p. ex. llocs, temes).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>    <!-- TODO -->
     <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>    <!-- TODO -->
-    <string name="privacy_permissiondialog_ignore">Ignore</string>    <!-- TODO -->
+    <string name="privacy_permissiondialog_ignore">Ignorar</string>    <!-- TODO -->
     <string name="privacy_permissiondialog_title">Permissos</string>
 
     <string name="security_dialog_title">Alerta de seguretat</string>  
