@@ -23,9 +23,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -48,7 +46,6 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
@@ -58,12 +55,6 @@ import java.util.TimeZone;
 
 public class WorldMapDialog extends DialogFragment
 {
-    public static final String PREF_KEY_UI_MAP_SUNSHADOW = "map_showsunshadow";
-    public static final boolean PREF_DEF_UI_MAP_SUNSHADOW = true;
-
-    public static final String PREF_KEY_UI_MAP_MOONLIGHT = "map_showmoonlight";
-    public static final boolean PREF_DEF_UI_MAP_MOONLIGHT = true;
-
     public static final String LOGTAG = "WorldMapDialog";
 
     private TextView dialogTitle;
@@ -242,9 +233,8 @@ public class WorldMapDialog extends DialogFragment
         if (context != null)
         {
             WorldMapTask.WorldMapOptions options = worldmap.getOptions();
-            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-            options.showSunShadow = pref.getBoolean(PREF_KEY_UI_MAP_SUNSHADOW, PREF_DEF_UI_MAP_SUNSHADOW);
-            options.showMoonLight = pref.getBoolean(PREF_KEY_UI_MAP_MOONLIGHT, PREF_DEF_UI_MAP_MOONLIGHT);
+            options.showSunShadow = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SUNSHADOW, WorldMapWidgetSettings.MAPTAG_3x2);
+            options.showMoonLight = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MOONLIGHT, WorldMapWidgetSettings.MAPTAG_3x2);
             options.showMajorLatitudes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
             options.modified = true;
         }
@@ -298,27 +288,26 @@ public class WorldMapDialog extends DialogFragment
         @Override
         public void onClick(View v)
         {
-            SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
             //boolean checked = ((RadioButton) view).isChecked();
+            Context context = getContext();
             switch(v.getId())
             {
                 case R.id.radio_sun:
-                    pref.putBoolean(PREF_KEY_UI_MAP_SUNSHADOW, true);
-                    pref.putBoolean(PREF_KEY_UI_MAP_MOONLIGHT, false);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SUNSHADOW, WorldMapWidgetSettings.MAPTAG_3x2, true);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MOONLIGHT, WorldMapWidgetSettings.MAPTAG_3x2,false);
                     break;
 
                 case R.id.radio_moon:
-                    pref.putBoolean(PREF_KEY_UI_MAP_SUNSHADOW, false);
-                    pref.putBoolean(PREF_KEY_UI_MAP_MOONLIGHT, true);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SUNSHADOW, WorldMapWidgetSettings.MAPTAG_3x2, false);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MOONLIGHT, WorldMapWidgetSettings.MAPTAG_3x2,true);
                     break;
 
                 case R.id.radio_sunmoon:
                 default:
-                    pref.putBoolean(PREF_KEY_UI_MAP_SUNSHADOW, true);
-                    pref.putBoolean(PREF_KEY_UI_MAP_MOONLIGHT, true);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SUNSHADOW, WorldMapWidgetSettings.MAPTAG_3x2, true);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MOONLIGHT, WorldMapWidgetSettings.MAPTAG_3x2,true);
                     break;
             }
-            pref.apply();
             Log.d(WorldMapView.LOGTAG, "onOptionSelected: sunlight/moonlight option changed so triggering update...");
             updateViews();
         }
