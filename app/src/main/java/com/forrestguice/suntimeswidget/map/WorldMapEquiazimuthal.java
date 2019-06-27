@@ -73,6 +73,20 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
     }
 
     @Override
+    public int[] toBitmapCoords(int w, int h, double lat, double lon)
+    {
+        double[] m = new double[2];
+        m[0] = w/2d;
+        m[1] = h/2d;
+
+        double[] point = toCartesian(toPolar(lat, lon));
+        int[] r = new int[2];
+        r[0] = (int)(m[0] + ((point[0] / 180d) * m[0]));
+        r[1] = (int)(m[1] - ((point[1] / 180d) * m[1]));
+        return r;
+    }
+
+    @Override
     public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options)
     {
         long bench_start = System.nanoTime();
@@ -252,6 +266,12 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
                 drawMoon(c, moonX, moonY, p, options);
             }
 
+            ////////////////
+            // draw locations
+            if (options.locations != null) {
+                drawLocations(c, w, h, p, options);
+            }
+
             if (options.translateToLocation)
             {
                 Matrix rotateMatrix = new Matrix();
@@ -266,7 +286,8 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         return b;
     }
 
-    protected void drawMajorLatitudes(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options)
+    @Override
+    public void drawMajorLatitudes(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options)
     {
         Paint.Style prevStyle = p.getStyle();
         PathEffect prevEffect = p.getPathEffect();

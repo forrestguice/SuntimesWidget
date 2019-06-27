@@ -159,6 +159,10 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
         public int moonLightColor = Color.LTGRAY;
 
         public boolean translateToLocation = false;
+
+        public double[][] locations = null;  // a list of locations {{lat, lon}, {lat, lon}, ...} or null
+        public int locationFillColor = Color.MAGENTA;
+        public int locationScale = 192;
     }
 
     /**
@@ -166,6 +170,7 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
      */
     public static abstract class WorldMapProjection
     {
+        public abstract int[] toBitmapCoords(int w, int h, double lat, double lon);
         public abstract Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options);
 
         /**
@@ -283,5 +288,30 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
             c.drawCircle(x, y, moonRadius, p);
         }
 
+        public void drawMajorLatitudes(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options) { /* EMPTY */ }
+        public void drawLocations(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options)
+        {
+            if (options.locations != null && options.locations.length > 0)
+            {
+                for (int i=0; i<options.locations.length; i++)
+                {
+                    int[] point = toBitmapCoords(w, h, options.locations[i][0], options.locations[i][1]);
+                    drawLocation(c, point[0], point[1], p, options);
+                    Log.d("DEBUG", "drawLocations: " + options.locations[i][0] + ", " + options.locations[i][1]);
+                }
+            }
+        }
+
+        protected void drawLocation(Canvas c, int x, int y, Paint p, WorldMapTask.WorldMapOptions options)
+        {
+            double pointDiameter = (int)Math.ceil(c.getWidth() / (double)options.locationScale);
+            int pointRadius = (int)Math.ceil(pointDiameter / 2d);
+
+            p.setStyle(Paint.Style.FILL);
+            p.setColor(options.locationFillColor);
+            c.drawCircle(x, y, pointRadius, p);
+        }
+
     }
+
 }

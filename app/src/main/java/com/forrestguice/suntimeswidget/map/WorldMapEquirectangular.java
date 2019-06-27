@@ -39,6 +39,20 @@ import java.util.Calendar;
  */
 public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
 {
+    @Override
+    public int[] toBitmapCoords(int w, int h, double lat, double lon)
+    {
+        double[] m = new double[2];
+        m[0] = w/2d;
+        m[1] = h/2d;
+
+        int[] r = new int[2];
+        r[0] = (int) (m[0] + ((lon / 180d) * m[0]));
+        r[1] = (int) (m[1] - ((lat / 90d) * m[1]));
+        return r;
+    }
+
+    @Override
     public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options)
     {
         long bench_start = System.nanoTime();
@@ -203,6 +217,12 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
                 int moonY = (int) (mid[1] - ((moonPos2[1] / 90d) * mid[1]));
                 drawMoon(c, moonX, moonY, p, options);
             }
+
+            ////////////////
+            // draw locations
+            if (options.locations != null) {
+                drawLocations(c, w, h, p, options);
+            }
         }
 
         long bench_end = System.nanoTime();
@@ -237,7 +257,8 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         }
     }
 
-    protected void drawMajorLatitudes(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options)
+    @Override
+    public void drawMajorLatitudes(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options)
     {
         Paint.Style prevStyle = p.getStyle();
         PathEffect prevEffect = p.getPathEffect();

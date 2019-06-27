@@ -18,7 +18,6 @@
 
 package com.forrestguice.suntimeswidget.layouts;
 
-import android.content.Context;
 import android.os.Build;
 
 import com.forrestguice.suntimeswidget.R;
@@ -53,8 +52,8 @@ public class SunPosLayout_3X3_0 extends SunPosLayout_3X2_0
     }
 
     @Override
-    public WorldMapWidgetSettings.WorldMapWidgetMode getMapMode(Context context, int appWidgetId) {
-        return WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId, WorldMapWidgetSettings.MAPTAG_3x3);
+    public String getMapTag() {
+        return WorldMapWidgetSettings.MAPTAG_3x3;
     }
 
 }

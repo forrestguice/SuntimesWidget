@@ -30,6 +30,7 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.map.WorldMapEquiazimuthal;
 import com.forrestguice.suntimeswidget.map.WorldMapEquiazimuthal1;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
@@ -100,6 +101,12 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
                 break;
         }
 
+        boolean showLocation = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, getMapTag());
+        if (showLocation) {
+            Location location = dataset.location();
+            options.locations = new double[][] {{location.getLatitudeAsDouble(), location.getLongitudeAsDouble()}};
+        }
+
         Bitmap bitmap = projection.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options);
         if (bitmap != null) {
             views.setImageViewBitmap(R.id.info_time_worldmap, bitmap);
@@ -134,7 +141,12 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
     }
 
     public WorldMapWidgetSettings.WorldMapWidgetMode getMapMode(Context context, int appWidgetId) {
-        return WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId, WorldMapWidgetSettings.MAPTAG_3x2);
+        return WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId, getMapTag());
+    }
+
+    public String getMapTag()
+    {
+        return WorldMapWidgetSettings.MAPTAG_3x2;
     }
 
 }

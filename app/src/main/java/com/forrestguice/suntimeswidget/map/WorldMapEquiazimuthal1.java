@@ -235,6 +235,12 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
                 drawMoon(c, moonX, moonY, p, options);
             }
 
+            ////////////////
+            // draw locations
+            if (options.locations != null) {
+                drawLocations(c, w, h, p, options);
+            }
+
             if (options.translateToLocation)
             {
                 Matrix rotateMatrix = new Matrix();
