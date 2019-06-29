@@ -175,6 +175,7 @@
     <!-- distances (meters, feet, etc) -->
     <string name="lengthUnits_metric">Mètric</string>
     <string name="lengthUnits_imperial">Imperial</string>
+    <string name="lengthUnits_usc">Costum dels EUA</string>
 
     <string name="units_feet">peus</string>
     <string name="units_feet_short">ft</string>
@@ -622,12 +623,11 @@
     <string name="configLabel_alarms_optWhiteList_listed">Sense optimitzar (recomanat)</string>  
     <string name="configLabel_alarms_optWhiteList_unlisted">Optimitzant l\'ús de la bateria.\nLes alarmes es poden endarrerir fins a 15 minuts.</string>
 
-    <string name="configLabel_alarms_notifications">Notifications</string>    <!-- TODO -->
-    <string name="configLabel_alarms_notifications_on">On</string>    <!-- TODO -->
-    <string name="configLabel_alarms_notifications_off">Off.\nAlarms may fail to display correctly.</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications">Notificacions</string>
+    <string name="configLabel_alarms_notifications_on">Activades</string>
+    <string name="configLabel_alarms_notifications_off">Desactivades. Les alarmes poden no mostrar-se correctament</string>
     <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
-    <string name="configLabel_alarms_notifications_summary1">On lock screen: %1$s</string>    <!-- "On lock screen: Off -->     <!-- TODO -->
-    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Notifications are off. Alarms may fail to display correctly.</string>  <!-- snackbar message -->    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_summary1">En la pantalla de bloqueig: %1$s</string>
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Les notificacions estan desactivades. Les alarmes poden no mostrar-se correctament.</string>
 
     <string name="configLabel_alarms_silenceAfter">Silenciar després de</string>  
@@ -652,7 +652,7 @@
     </string-array>
 
     <string name="configLabel_alarmSounds">Sons</string>            <!-- group title -->
-    <string name="configLabel_alarms_volumes">Volumes</string>    <!-- TODO -->
+    <string name="configLabel_alarms_volumes">Volums</string>
     <string name="configLabel_alarms_allRingtones">Mostra tots els tons de trucada</string>  
     <string name="configLabel_alarms_allRingtones_summary">Mostra tots els sons del sistema durant la selecció (ignora el tipus de to de trucada).</string>  
 
@@ -673,9 +673,9 @@
         <item quantity="other">%d segons</item>
     </plurals>
 
-    <string name="configLabel_alarmMisc">Miscellaneous</string>  <!-- TODO -->
-    <string name="configLabel_alarms_showlauncher">Launcher Icon</string>  <!-- TODO -->
-    <string name="configLabel_alarms_showlauncher_summary">Show alarm clock icon in the app tray.</string>  <!-- TODO -->
+    <string name="configLabel_alarmMisc">Misceŀlani</string>
+    <string name="configLabel_alarms_showlauncher">Icona del llançador</string>
+    <string name="configLabel_alarms_showlauncher_summary">Mostra icona del rellotge d\\\'alarma a la barra de notificacions.</string>
 
     <!--
          APP SETTINGS
@@ -1180,16 +1180,12 @@
     <string name="privacy_permissiondialog_prompt"><![CDATA[Demanar permisos ara?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignorar</string>
     <string name="privacy_permissiondialog_title">Permisos</string>
-    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>    <!-- TODO -->
-    <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>    <!-- TODO -->
-    <string name="privacy_permissiondialog_ignore">Ignorar</string>    <!-- TODO -->
-    <string name="privacy_permissiondialog_title">Permissos</string>
 
     <string name="security_dialog_title">Alerta de seguretat</string>  
     <string name="security_duplicate_permissions">Un permís que pertany a Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\ntambé està definit per: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  
     <string name="feature_not_supported_by_api">Aquesta caracteristica no està suportada per l\'API %1$s.</string>
-    <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>  <!-- TODO -->
-    <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>  <!-- TODO -->
+    <string name="feature_not_supported_by_source">Aquesta caracteristica no està suportada per la font de dades actual.</string>
+    <string name="reboot_required_message">És possible que es necessiti reiniciar per fer efectius els canvis.</string>
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
@@ -1199,16 +1195,5 @@
     <string name="calculator_displayString_time4a_cc">Segueix algoritmes publicats per Dershowitz/Reingold en el seu llibre "Calendrical Calculations" (tercera edició).</string>
     <string name="calculator_displayString_time4a_4j">Basat en càlculs astrònomics publicats per Jean Meeus en el seu llibre "Astronomical Algorithms" (segona edició).</string>
     <string name="configAction_shareTheme">Compartir</string>
-    <string name="configLabel_alarms_notifications">Notificacions</string>
-    <string name="configLabel_alarms_notifications_on">Activades</string>
-    <string name="configLabel_alarms_notifications_off">Desactivades. Les alarmes poden no mostrar-se correctament</string>
-    <string name="configLabel_alarms_notifications_summary1">En la pantalla de bloqueig: %1$s</string>
-    <string name="configLabel_alarms_volumes">Volums</string>
-    <string name="configLabel_alarmMisc">Misceŀlani</string>
-    <string name="configLabel_alarms_showlauncher">Icona del llançador</string>
-    <string name="configLabel_alarms_showlauncher_summary">Mostra icona del rellotge d\\\'alarma a la barra de notificacions.</string>
-    <string name="feature_not_supported_by_source">Aquesta caracteristica no està suportada per la font de dades actual.</string>
-    <string name="reboot_required_message">És possible que es necessiti reiniciar per fer efectius els canvis.</string>
-    <string name="lengthUnits_usc">Costum dels EUA</string>
 
 </resources>
