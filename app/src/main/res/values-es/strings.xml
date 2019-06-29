@@ -548,6 +548,7 @@
     -->
     <string name="configLabel_alarmClock">Alarmas</string>            <!-- group title -->  
     <string name="configLabel_alarmClock_emptyMsg">Sin alarmas</string>     <!-- a label that is displayed in place of an empty listview -->  
+
     <string name="configAction_addAlarm">Añadir alarma</string>               <!-- button (contentDescription) -->  
     <string name="configAction_addNotification">Añadir notificación</string> <!-- button (contentDescription) -->  
     <string name="configAction_deleteAlarm">Suprimir</string>               <!-- button (contentDescription) -->  
@@ -561,6 +562,7 @@
     <string name="configAction_setAlarmEvent">Evento</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmTime">Hora</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmSound">Sonido</string>         <!-- button (contentDescription) -->  
+
     <string name="configAction_alarmMenu">Menú de alarma</string>         <!-- button (contentDescription) -->  
 
     <string name="alarmAction_dismiss">Ignorar</string>                <!-- notification action button -->  
@@ -618,7 +620,14 @@
 
     <string name="configLabel_alarms_optWhiteList">Optimización de batería</string>  
     <string name="configLabel_alarms_optWhiteList_listed">Sin optimizar (recomendado)</string>  
-    <string name="configLabel_alarms_optWhiteList_unlisted">Optimizando el uso de batería.\nLas alarmas se pueden retrasar hasta 15 minutos.</string>  
+    <string name="configLabel_alarms_optWhiteList_unlisted">Optimizando el uso de batería.\nLas alarmas se pueden retrasar hasta 15 minutos.</string>
+
+    <string name="configLabel_alarms_notifications">Notifications</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_on">On</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_off">Off.\nAlarms may fail to display correctly.</string>    <!-- TODO -->
+    <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="configLabel_alarms_notifications_summary1">On lock screen: %1$s</string>    <!-- "On lock screen: Off -->     <!-- TODO -->
+    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Notifications are off. Alarms may fail to display correctly.</string>  <!-- snackbar message -->    <!-- TODO -->
 
     <string name="configLabel_alarms_silenceAfter">Silenciar tras</string>  
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  
@@ -641,7 +650,8 @@
         <item>No hacer nada</item>
     </string-array>
 
-    <string name="configLabel_alarmSounds">Sonidos</string>            <!-- group title -->  
+    <string name="configLabel_alarmSounds">Sonidos</string>            <!-- group title -->
+    <string name="configLabel_alarms_volumes">Volumes</string>    <!-- TODO -->
     <string name="configLabel_alarms_allRingtones">Mostrar todos los tonos de llamada</string>  
     <string name="configLabel_alarms_allRingtones_summary">Mostrar todos los sonidos durante la selección (ignorar el tipo de tono de llamada).</string>  
 
@@ -665,6 +675,7 @@
     <string name="configLabel_alarmMisc">Misceláneo</string>
     <string name="configLabel_alarms_showlauncher">Icono del lanzador</string>
     <string name="configLabel_alarms_showlauncher_summary">Mostrar icono de la alarma en la barra de notificaciones.</string>
+
 
     <!--
          APP SETTINGS
@@ -704,12 +715,10 @@
     
     <string name="configLabel_ui_showmoon">Mostrar la Luna</string>
     <string name="configLabel_ui_showmoon_summary">Muestra los momentos de salida y puesta, fase e iluminación.</string>
-    <string name="configLabel_ui_showmoon_notImplemented">La Luna no está implementada por esta fuente de datos.</string>
 
     
     <string name="configLabel_ui_showEquinox">Mostrar solsticio / equinoccio</string>
     <string name="configLabel_ui_showEquinox_summary">Mostrar tiempo hasta próximo solsticio o equinoccio.</string>
-    <string name="configLabel_ui_showEquinox_notImplemented">solsticio y equinoccio no implementados por esta fuente de datos.</string>
 
     
     <string name="configLabel_ui_solsticeTrackingMode">Seguimiento de solsticio</string>
@@ -916,7 +925,9 @@
     <string name="schedalarm_dialog_error">No se configuró la alarma…</string>
     <string name="schedalarm_dialog_error2">La alarma no se puede configurar…</string>
     <string name="schedalarm_dialog_note">Dentro de <xliff:g example="6h 30m" id="timetext">%s</xliff:g>, aproximadamente.</string>
+
     <string name="schedalarm_dialog_note2"><xliff:g example="nautical twilight" id="solarevent">%s</xliff:g> no sucede.</string>
+
     <string-array name="solarevents_short">  
         <item>Amanecer astronómico</item>
         <item>Amanecer náutico</item>
@@ -1117,6 +1128,10 @@
     <b>Crepúsculo náutico:</b> El Sol está 12 grados por debajo del horizonte; las siluetas de los objetos y el horizonte son difíciles de distinguir. No hay suficiente luz para actividades a al aire libre sin linterna. <br/><br/>
     <b>Crepúsculo astronómico:</b> El Sol está 18 grados por debajo del horizonte. Casi la oscuridad de la noche. <br/>
 ]]></string>
+    <string name="help_general_riseSetOrder"><![CDATA[
+          <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
+          <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
+    ]]></string>  <!-- TODO -->
     <string name="help_general_timeMode2"><![CDATA[
     <b>Equinoccio de primavera:</b> TODO. <br/> 
     <b>Solsticio de verano:</b> TODO. <br/> 
@@ -1161,14 +1176,18 @@
     <string name="privacy_policy"><![CDATA[<b>Privacidad:</b> <br /> Suntimes no colectivo, almacena, o transmite datos personales. <b>No contiene anuncios</b>, <b>cálculos estadísticos</b>, <b>rastreadores</b>, y <b>no utiliza permisos innecesarios</b>. <br/><br/> La aplicación se configura con datos de localización. Esta información (y cualquier otro dato configurada empleada por la aplicación) se almacena localmente y no sale del dispositivo. <br/><br/> <xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes utiliza el permiso de <b>localización</b> para determinar tu longitud y latitud. <br /> Este permiso es opcional; la localización se configura manualmente por defecto.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes utiliza el permiso de <b>almacenamiento externo</b> para hacer una copia de seguridad o exportar datos a un archivo (p. Ej. Lugares, temas).]]></string>
+
     <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms utiliza el permiso <b>almacenamiento externo</b> para reproducir sonidos en la tarjeta SD.<br/><br/>Este permiso es opcional; se reproducirá el sonido por defecto si se deniega el acceso. Este permiso no es necesario para los sonidos de sistema. (almacenamiento de medios).]]></string>    <!-- TODO -->
     <string name="privacy_permissiondialog_prompt"><![CDATA[¿Pedir permisos ahora?]]></string>    <!-- TODO -->
+
     <string name="privacy_permissiondialog_ignore">Ignorar</string>    <!-- TODO -->
     <string name="privacy_permissiondialog_title">Permisos</string>
 
     <string name="security_dialog_title">Alerta de seguridad</string>  
     <string name="security_duplicate_permissions">Un permiso que pertenece a Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nestá tambień definido por: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  
-    <string name="feature_not_supported_by_api">Esta característica no está soportada por la API %1$s.</string>  
+    <string name="feature_not_supported_by_api">Esta característica no está soportada por la API %1$s.</string>
+    <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>  <!-- TODO -->
+    <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>  <!-- TODO -->
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
