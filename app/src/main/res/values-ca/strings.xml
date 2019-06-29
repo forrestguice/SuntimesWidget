@@ -628,6 +628,7 @@
     <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
     <string name="configLabel_alarms_notifications_summary1">On lock screen: %1$s</string>    <!-- "On lock screen: Off -->     <!-- TODO -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Notifications are off. Alarms may fail to display correctly.</string>  <!-- snackbar message -->    <!-- TODO -->
+    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Les notificacions estan desactivades. Les alarmes poden no mostrar-se correctament.</string>
 
     <string name="configLabel_alarms_silenceAfter">Silenciar després de</string>  
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  
@@ -1202,7 +1203,6 @@
     <string name="configLabel_alarms_notifications_on">Activades</string>
     <string name="configLabel_alarms_notifications_off">Desactivades. Les alarmes poden no mostrar-se correctament</string>
     <string name="configLabel_alarms_notifications_summary1">En la pantalla de bloqueig: %1$s</string>
-    <string name="notificationsWarning"><ns1:g id="warningTag">[w]</ns1:g> Les notificacions estan desactivades. Les alarmes poden no mostrar-se correctament.</string>
     <string name="configLabel_alarms_volumes">Volums</string>
     <string name="configLabel_alarmMisc">Misceŀlani</string>
     <string name="configLabel_alarms_showlauncher">Icona del llançador</string>
