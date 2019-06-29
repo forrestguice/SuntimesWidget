@@ -626,7 +626,6 @@
     <string name="configLabel_alarms_notifications_on">On</string>    <!-- TODO -->
     <string name="configLabel_alarms_notifications_off">Off.\nAlarms may fail to display correctly.</string>    <!-- TODO -->
     <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
-    <string name="configLabel_alarms_notifications_summary1">On lock screen: %1$s</string>    <!-- "On lock screen: Off -->     <!-- TODO -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Notifications are off. Alarms may fail to display correctly.</string>  <!-- snackbar message -->    <!-- TODO -->
 
     <string name="configLabel_alarms_silenceAfter">Silenciar tras</string>  
@@ -1200,7 +1199,6 @@
     <string name="configLabel_alarms_notifications_on">Activadas</string>
     <string name="configLabel_alarms_notifications_off">Apagadas. Las alarmas pueden no mostrarse correctamente.</string>
     <string name="configLabel_alarms_notifications">Notificaciones</string>
-    <string name="configLabel_alarms_notifications_summary1">En la pantalla de bloqueo: %1%s</string>
     <string name="notificationsWarning"><ns1:g id="warningTag">[w]</ns1:g> Las notificaciones están desactivadas. Las alarmas pueden no mostrarse correctamente.</string>
     <string name="configAction_shareTheme">Compartir</string>
     <string name="lengthUnits_usc">Costumbre de EEUU</string>
