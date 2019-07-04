@@ -180,6 +180,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         options.latitudeColors[0] = ColorUtils.setAlphaComponent(options.sunShadowColor, 255);
         options.latitudeColors[1] = ColorUtils.setAlphaComponent(options.moonLightColor, 255);
         options.latitudeColors[2] = ColorUtils.setAlphaComponent(options.sunShadowColor, 255);
+        options.locationFillColor = ColorUtils.setAlphaComponent(options.latitudeColors[0], 128);
 
         int[] colorAttrs = {
                 R.attr.graphColor_pointFill,            // 0
@@ -207,6 +208,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         options.latitudeColors[0] = ColorUtils.setAlphaComponent(options.sunShadowColor, 255);
         options.latitudeColors[1] = ColorUtils.setAlphaComponent(options.moonLightColor, 255);
         options.latitudeColors[2] = ColorUtils.setAlphaComponent(options.moonLightColor, 255);
+        options.locationFillColor = ColorUtils.setAlphaComponent(options.latitudeColors[0], 128);
         options.sunFillColor = theme.getNoonIconColor();
         options.sunStrokeColor = theme.getNoonIconStrokeColor();
         options.moonFillColor = theme.getMoonFullColor();
