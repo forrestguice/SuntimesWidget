@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.map;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.PathEffect;
@@ -145,16 +146,15 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
                 double iw0 = (1d / w0) * 360d;
                 double ih0 = (1d / h0) * 180d;
 
-                Bitmap lightBitmap = Bitmap.createBitmap(w0, h0, Bitmap.Config.ARGB_8888);
-                Canvas lightCanvas = new Canvas(lightBitmap);
+                Bitmap sunMaskBitmap = Bitmap.createBitmap(w0, h0, Bitmap.Config.ARGB_8888);
+                Canvas sunMaskCanvas = new Canvas(sunMaskBitmap);
 
-                Paint paintShadow = new Paint();
-                paintShadow.setColor(options.sunShadowColor);
-                paintShadow.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+                Bitmap moonMaskBitmap = Bitmap.createBitmap(w0, h0, Bitmap.Config.ARGB_8888);
+                Canvas moonMaskCanvas = new Canvas(moonMaskBitmap);
 
-                Paint paintMoonlight = new Paint();
-                paintMoonlight.setColor(options.moonLightColor);
-                paintMoonlight.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+                Paint paintMask = new Paint();
+                paintMask.setColor(Color.WHITE);
+                paintMask.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
 
                 double radLon, cosLon, sinLon;
                 double radLat, cosLat;
@@ -180,7 +180,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
                         {
                             sunIntensity = (sunUp[0] * v[0]) + (sunUp[1] * v[1]) + (sunUp[2] * v[2]);    // intensity = up.dotProduct(v)
                             if (sunIntensity <= 0) {                                                               // values less equal 0 are in shadow
-                                lightCanvas.drawPoint(i, j, paintShadow);
+                                sunMaskCanvas.drawPoint(i, j, paintMask);
                             }
                         }
 
@@ -188,16 +188,43 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
                         {
                             moonIntensity = (moonUp[0] * v[0]) + (moonUp[1] * v[1]) + (moonUp[2] * v[2]);
                             if (moonIntensity > 0) {
-                                lightCanvas.drawPoint(i, j, paintMoonlight);
+                                moonMaskCanvas.drawPoint(i, j, paintMask);
                             }
                         }
                     }
                 }
 
-                Bitmap scaledLightBitmap = Bitmap.createScaledBitmap(lightBitmap, w, h, true);
-                c.drawBitmap(scaledLightBitmap, 0, 0, p);
-                scaledLightBitmap.recycle();
-                lightBitmap.recycle();
+                // draw sun shadow
+                Paint paintShadow = new Paint();
+                paintShadow.setColor(options.sunShadowColor);
+                paintShadow.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+
+                Bitmap sunMask = Bitmap.createScaledBitmap(sunMaskBitmap, w, h, true);
+                Bitmap sunBitmap = Bitmap.createBitmap(w0, h0, Bitmap.Config.ARGB_8888);
+                Canvas sunCanvas = new Canvas(sunBitmap);
+                sunCanvas.drawBitmap(sunMask, 0, 0, p);
+                sunCanvas.drawPaint(paintShadow);
+
+                c.drawBitmap(sunBitmap, 0, 0, p);
+                sunBitmap.recycle();
+                sunMask.recycle();
+                sunMaskBitmap.recycle();
+
+                // draw moon light
+                Paint paintMoonlight = new Paint();
+                paintMoonlight.setColor(options.moonLightColor);
+                paintMoonlight.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+
+                Bitmap moonMask = Bitmap.createScaledBitmap(moonMaskBitmap, w, h, true);
+                Bitmap moonBitmap = Bitmap.createBitmap(w0, h0, Bitmap.Config.ARGB_8888);
+                Canvas moonCanvas = new Canvas(moonBitmap);
+                moonCanvas.drawBitmap(moonMask, 0, 0, p);
+                moonCanvas.drawPaint(paintMoonlight);
+
+                c.drawBitmap(moonBitmap, 0, 0, p);
+                moonBitmap.recycle();
+                moonMask.recycle();
+                moonMaskBitmap.recycle();
             }
 
             ////////////////
