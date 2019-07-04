@@ -239,7 +239,11 @@ public class WorldMapDialog extends DialogFragment
             options.showSunShadow = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SUNSHADOW, WorldMapWidgetSettings.MAPTAG_3x2);
             options.showMoonLight = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MOONLIGHT, WorldMapWidgetSettings.MAPTAG_3x2);
             options.showMajorLatitudes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
-            options.locations = new double[][] {{location.getLatitudeAsDouble(), location.getLongitudeAsDouble()}};
+
+            if (WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2)) {
+                options.locations = new double[][] {{location.getLatitudeAsDouble(), location.getLongitudeAsDouble()}};
+            } else options.locations = null;
+
             options.modified = true;
         }
     }
@@ -330,40 +334,64 @@ public class WorldMapDialog extends DialogFragment
         PopupMenu menu = new PopupMenu(context, view);
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.mapmenu, menu.getMenu());
+        menu.setOnMenuItemClickListener(onContextMenuClick);
 
+        updateContextMenu(context, menu);
+        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        menu.show();
+        return true;
+    }
+
+    private void updateContextMenu(Context context, PopupMenu menu)
+    {
         MenuItem option_latitudes = menu.getMenu().findItem(R.id.mapOption_majorLatitudes);
         if (option_latitudes != null) {
             option_latitudes.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2));
         }
 
-        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
-        {
-            @Override
-            public boolean onMenuItemClick(MenuItem item)
-            {
-                switch (item.getItemId())
-                {
-                    // TODO: additional share options; e.g. animated over range
-
-                    case R.id.shareMap:
-                        worldmap.shareBitmap();
-                        return true;
-
-                    case R.id.mapOption_majorLatitudes:
-                        boolean toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
-                        WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
-                        item.setChecked(toggledValue);
-                        updateViews();
-                        return true;
-
-                    default:
-                        return false;
-                }
-            }
-        });
-        SuntimesUtils.forceActionBarIcons(menu.getMenu());
-        menu.show();
-        return true;
+        MenuItem option_location = menu.getMenu().findItem(R.id.mapOption_location);
+        if (option_location != null) {
+            option_location.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2));
+        }
     }
+
+    private PopupMenu.OnMenuItemClickListener onContextMenuClick = new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            Context context = getContext();
+            if (context == null) {
+                return false;
+            }
+
+            boolean toggledValue;
+            switch (item.getItemId())
+            {
+                // TODO: additional share options; e.g. animated over range
+
+                case R.id.shareMap:
+                    worldmap.shareBitmap();
+                    return true;
+
+                case R.id.mapOption_location:
+                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
+                    item.setChecked(toggledValue);
+                    updateViews();
+                    return true;
+
+                case R.id.mapOption_majorLatitudes:
+                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
+                    item.setChecked(toggledValue);
+                    updateViews();
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+    };
 
 }

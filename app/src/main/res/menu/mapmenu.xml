@@ -17,5 +17,10 @@
             android:checkable="true"
             app:showAsAction="never" />
 
+        <item android:id="@+id/mapOption_location"
+            android:title="Location"
+            android:checkable="true"
+            app:showAsAction="never" />
+
     </group>
 </menu>
