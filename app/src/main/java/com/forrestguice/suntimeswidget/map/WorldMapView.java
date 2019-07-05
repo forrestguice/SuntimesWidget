@@ -96,18 +96,21 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         {
             case EQUIAZIMUTHAL_SIMPLE:
                 options.map = ContextCompat.getDrawable(context, R.drawable.worldmap2);
+                options.map_night = null;
                 options.foregroundColor = foregroundColor;
                 options.hasTransparentBaseMap = true;
                 break;
 
             case EQUIAZIMUTHAL_SIMPLE1:
                 options.map = ContextCompat.getDrawable(context, R.drawable.worldmap3);
+                options.map_night = null;
                 options.foregroundColor = foregroundColor;
                 options.hasTransparentBaseMap = true;
                 break;
 
             case EQUIRECTANGULAR_BLUEMARBLE:
                 options.map = ContextCompat.getDrawable(context, R.drawable.land_shallow_topo_1024);
+                options.map_night = ContextCompat.getDrawable(context, R.drawable.earth_lights_lrg_1024);
                 options.foregroundColor = Color.TRANSPARENT;
                 options.hasTransparentBaseMap = false;
                 break;
@@ -115,6 +118,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             case EQUIRECTANGULAR_SIMPLE:
             default:
                 options.map = ContextCompat.getDrawable(context, R.drawable.worldmap);
+                options.map_night = null;
                 options.foregroundColor = foregroundColor;
                 options.hasTransparentBaseMap = true;
                 break;

@@ -68,23 +68,14 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
         p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
 
         ////////////////
-        // draw background
-        p.setColor(options.backgroundColor);
-        c.drawCircle((float)mid[0], (float)mid[1], (float)mid[0] - 2, p);
-
-        if (options.showMajorLatitudes)
-        {
-            if (options.hasTransparentBaseMap) {
-                drawMajorLatitudes(c, w, h, p, options);
-                drawMap(c, w, h, p, options);
-            } else {
-                drawMap(c, w, h, p, options);
-                drawMajorLatitudes(c, w, h, p, options);
-            }
-        } else {
-            drawMap(c, w, h, p, options);
+        // draw base map
+        drawMap(c, w, h, p, options);
+        if (options.showMajorLatitudes) {
+            p.setXfermode(new PorterDuffXfermode( options.hasTransparentBaseMap ? PorterDuff.Mode.DST_OVER : PorterDuff.Mode.SRC_OVER ));
+            drawMajorLatitudes(c, w, h, p, options);
         }
 
+        p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
         drawData: if (data != null)
         {
             Calendar now = data.nowThen(data.calendar());
@@ -248,6 +239,15 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
                 b = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(), rotateMatrix, true);
                 b = Bitmap.createBitmap(b, ((b.getWidth() - w) / 2), ((b.getHeight() - h) / 2), w, h);
             }
+        }
+
+        ////////////////
+        // draw background color
+        if (options.hasTransparentBaseMap)
+        {
+            p.setColor(options.backgroundColor);
+            p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
+            c.drawCircle((float)mid[0], (float)mid[1], (float)mid[0] - 2, p);
         }
 
         long bench_end = System.nanoTime();

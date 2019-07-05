@@ -127,6 +127,7 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
         public boolean modified = false;
 
         public Drawable map = null;
+        public Drawable map_night = null;
         public int backgroundColor = Color.BLUE;
         public int foregroundColor = Color.TRANSPARENT;
         public boolean hasTransparentBaseMap = true;
@@ -241,6 +242,7 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
                 if (options.foregroundColor != Color.TRANSPARENT) {
                     mapBitmap = SuntimesUtils.tintBitmap(mapBitmap, options.foregroundColor);
                 }
+                p.setColor(Color.WHITE);
                 c.drawBitmap(mapBitmap, 0, 0, p);
                 mapBitmap.recycle();
             }
