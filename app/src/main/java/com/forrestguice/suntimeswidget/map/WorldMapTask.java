@@ -22,6 +22,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -234,6 +236,10 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
         {
             if (options.map != null)
             {
+                if (p == null) {
+                    p = new Paint(Paint.ANTI_ALIAS_FLAG);
+                }
+
                 Bitmap mapBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
                 Canvas mapCanvas = new Canvas(mapBitmap);
                 options.map.setBounds(0, 0, mapCanvas.getWidth(), mapCanvas.getHeight());
@@ -261,6 +267,10 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
 
         protected void drawSun(Canvas c, int x, int y, Paint p, WorldMapTask.WorldMapOptions options)
         {
+            if (p == null) {
+                p = new Paint(Paint.ANTI_ALIAS_FLAG);
+            }
+
             int sunRadius = (int)sunRadius(c, options);
             int sunStroke = (int)Math.ceil(sunRadius / (double)options.sunStrokeScale);
 
@@ -276,6 +286,10 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
 
         protected void drawMoon(Canvas c, int x, int y, Paint p, WorldMapTask.WorldMapOptions options)
         {
+            if (p == null) {
+                p = new Paint(Paint.ANTI_ALIAS_FLAG);
+            }
+
             double moonDiameter = Math.ceil(c.getWidth() / (double)options.moonScale);
             int moonRadius = (int)Math.ceil(moonDiameter / 2d);
             int moonStroke = (int)Math.ceil(moonRadius / (double)options.moonStrokeScale);
@@ -293,6 +307,10 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
         public void drawMajorLatitudes(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options) { /* EMPTY */ }
         public void drawLocations(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options)
         {
+            if (p == null) {
+                p = new Paint(Paint.ANTI_ALIAS_FLAG);
+            }
+
             if (options.locations != null && options.locations.length > 0)
             {
                 for (int i=0; i<options.locations.length; i++)

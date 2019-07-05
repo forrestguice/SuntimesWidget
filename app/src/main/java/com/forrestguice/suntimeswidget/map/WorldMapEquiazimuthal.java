@@ -102,17 +102,14 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         Bitmap b = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
         Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
-        p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
 
         ////////////////
         // draw base map
-        drawMap(c, w, h, p, options);
+        drawMap(c, w, h, null, options);
         if (options.showMajorLatitudes) {
-            p.setXfermode(new PorterDuffXfermode( options.hasTransparentBaseMap ? PorterDuff.Mode.DST_OVER : PorterDuff.Mode.SRC_OVER ));
-            drawMajorLatitudes(c, w, h, p, options);
+            drawMajorLatitudes(c, w, h, null, options);
         }
 
-        p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
         drawData: if (data != null)
         {
             Calendar now = data.nowThen(data.calendar());
@@ -244,7 +241,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
                 double[] point = toCartesian(toPolar(sunLat, sunLon));
                 int sunX = (int)(mid[0] + ((point[0] / 180d) * mid[0]) );
                 int sunY = (int)(mid[1] - ((point[1] / 180d) * mid[1]) );
-                drawSun(c, sunX, sunY, p, options);
+                drawSun(c, sunX, sunY, null, options);
             }
 
             ////////////////
@@ -254,13 +251,13 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
                 double[] point = toCartesian(toPolar(moonLat, moonLon));
                 int moonX = (int)(mid[0] + ((point[0] / 180d) * mid[0]) );
                 int moonY = (int)(mid[1] - ((point[1] / 180d) * mid[1]) );
-                drawMoon(c, moonX, moonY, p, options);
+                drawMoon(c, moonX, moonY, null, options);
             }
 
             ////////////////
             // draw locations
             if (options.locations != null) {
-                drawLocations(c, w, h, p, options);
+                drawLocations(c, w, h, null, options);
             }
 
             if (options.translateToLocation)
@@ -276,9 +273,10 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         // draw background color
         if (options.hasTransparentBaseMap)
         {
-            p.setColor(options.backgroundColor);
-            p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
-            c.drawCircle((float)mid[0], (float)mid[1], (float)mid[0] - 2, p);
+            Paint paintBackground = new Paint();
+            paintBackground.setColor(options.backgroundColor);
+            paintBackground.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
+            c.drawCircle((float)mid[0], (float)mid[1], (float)mid[0] - 2, paintBackground);
         }
 
         long bench_end = System.nanoTime();
@@ -289,6 +287,11 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
     @Override
     public void drawMajorLatitudes(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options)
     {
+        if (p == null) {
+            p = new Paint(Paint.ANTI_ALIAS_FLAG);
+        }
+        p.setXfermode(new PorterDuffXfermode( options.hasTransparentBaseMap ? PorterDuff.Mode.DST_OVER : PorterDuff.Mode.SRC_OVER ));
+
         Paint.Style prevStyle = p.getStyle();
         PathEffect prevEffect = p.getPathEffect();
         float prevStrokeWidth = p.getStrokeWidth();

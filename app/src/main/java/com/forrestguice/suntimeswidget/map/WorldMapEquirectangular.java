@@ -68,29 +68,13 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
 
         Bitmap b = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
-        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
-        p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
 
-        ////////////////
-        // draw background
-        p.setColor(options.backgroundColor);
-        c.drawRect(0, 0, w, h, p);
-
-        if (options.showMajorLatitudes)
-        {
-            if (options.hasTransparentBaseMap) {
-                drawMajorLatitudes(c, w, h, p, options);
-                drawMap(c, w, h, p, options);
-            } else {
-                drawMap(c, w, h, p, options);
-                drawMajorLatitudes(c, w, h, p, options);
-            }
-        } else {
-            drawMap(c, w, h, p, options);
+        drawMap(c, w, h, null, options);
+        if (options.showMajorLatitudes) {
+            drawMajorLatitudes(c, w, h, null, options);
         }
-
         if (options.showGrid) {
-            drawGrid(c, w, h, p, options);
+            drawGrid(c, w, h, null, options);
         }
 
         drawData: if (data != null)
@@ -147,9 +131,8 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
                 double ih0 = (1d / h0) * 180d;
 
                 Bitmap sunMaskBitmap = Bitmap.createBitmap(w0, h0, Bitmap.Config.ARGB_8888);
-                Canvas sunMaskCanvas = new Canvas(sunMaskBitmap);
-
                 Bitmap moonMaskBitmap = Bitmap.createBitmap(w0, h0, Bitmap.Config.ARGB_8888);
+                Canvas sunMaskCanvas = new Canvas(sunMaskBitmap);
                 Canvas moonMaskCanvas = new Canvas(moonMaskBitmap);
 
                 Paint paintMask = new Paint();
@@ -194,13 +177,17 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
                     }
                 }
 
+                Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+                p.setColor(Color.WHITE);
+                p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+
                 // draw sun shadow
                 Paint paintShadow = new Paint();
                 paintShadow.setColor(options.sunShadowColor);
                 paintShadow.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
 
                 Bitmap sunMask = Bitmap.createScaledBitmap(sunMaskBitmap, w, h, true);
-                Bitmap sunBitmap = Bitmap.createBitmap(w0, h0, Bitmap.Config.ARGB_8888);
+                Bitmap sunBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
                 Canvas sunCanvas = new Canvas(sunBitmap);
                 sunCanvas.drawBitmap(sunMask, 0, 0, p);
                 sunCanvas.drawPaint(paintShadow);
@@ -216,7 +203,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
                 paintMoonlight.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
 
                 Bitmap moonMask = Bitmap.createScaledBitmap(moonMaskBitmap, w, h, true);
-                Bitmap moonBitmap = Bitmap.createBitmap(w0, h0, Bitmap.Config.ARGB_8888);
+                Bitmap moonBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
                 Canvas moonCanvas = new Canvas(moonBitmap);
                 moonCanvas.drawBitmap(moonMask, 0, 0, p);
                 moonCanvas.drawPaint(paintMoonlight);
@@ -233,7 +220,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
             {
                 int sunX = (int) (mid[0] - ((ghaSun180 / 180d) * mid[0]));
                 int sunY = (int) (mid[1] - ((sunPos.declination / 90d) * mid[1]));
-                drawSun(c, sunX, sunY, p, options);
+                drawSun(c, sunX, sunY, null, options);
             }
 
             ////////////////
@@ -242,14 +229,22 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
             {
                 int moonX = (int) (mid[0] - ((moonPos2[0] / 180d) * mid[0]));
                 int moonY = (int) (mid[1] - ((moonPos2[1] / 90d) * mid[1]));
-                drawMoon(c, moonX, moonY, p, options);
+                drawMoon(c, moonX, moonY, null, options);
             }
 
             ////////////////
             // draw locations
             if (options.locations != null) {
-                drawLocations(c, w, h, p, options);
+                drawLocations(c, w, h, null, options);
             }
+        }
+
+        if (options.hasTransparentBaseMap)
+        {
+            Paint backgroundPaint = new Paint();
+            backgroundPaint.setColor(options.backgroundColor);
+            backgroundPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
+            c.drawRect(0, 0, w, h, backgroundPaint);
         }
 
         long bench_end = System.nanoTime();
@@ -259,6 +254,10 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
 
     protected void drawGrid(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options)
     {
+        if (p == null) {
+            p = new Paint(Paint.ANTI_ALIAS_FLAG);
+        }
+
         double[] mid = new double[2];
         mid[0] = w/2d;
         mid[1] = h/2d;
@@ -287,6 +286,11 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
     @Override
     public void drawMajorLatitudes(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options)
     {
+        if (p == null) {
+            p = new Paint(Paint.ANTI_ALIAS_FLAG);
+        }
+        p.setXfermode(new PorterDuffXfermode( options.hasTransparentBaseMap ? PorterDuff.Mode.DST_OVER : PorterDuff.Mode.SRC_OVER ));
+
         Paint.Style prevStyle = p.getStyle();
         PathEffect prevEffect = p.getPathEffect();
         float prevStrokeWidth = p.getStrokeWidth();
@@ -321,5 +325,6 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         p.setStyle(prevStyle);
         p.setPathEffect(prevEffect);
         p.setStrokeWidth(prevStrokeWidth);
+        p.setXfermode(new PorterDuffXfermode( PorterDuff.Mode.SRC_OVER) );
     }
 }
