@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.map;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Matrix;
 import android.graphics.Paint;
@@ -279,9 +280,22 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
             c.drawCircle((float)mid[0], (float)mid[1], (float)mid[0] - 2, paintBackground);
         }
 
+        // mask final image to fit within a circle (fixes fuzzy edges from base maps)
+        Bitmap masked = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        Canvas maskedCanvas = new Canvas(masked);
+        Paint paintMask = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+        paintMask.setColor(Color.WHITE);
+        paintMask.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+        maskedCanvas.drawCircle((float)mid[0], (float)mid[1], (float)mid[0] - 2, paintMask);
+
+        paintMask.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        maskedCanvas.drawBitmap(b, 0, 0, paintMask);
+        b.recycle();
+
         long bench_end = System.nanoTime();
         Log.d(WorldMapView.LOGTAG, "make equiazimuthal world map :: " + ((bench_end - bench_start) / 1000000.0) + " ms; " + w + ", " + h);
-        return b;
+        return masked;
     }
 
     @Override
