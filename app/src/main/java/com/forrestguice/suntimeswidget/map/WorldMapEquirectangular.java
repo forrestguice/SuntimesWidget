@@ -182,18 +182,34 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
                 p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
 
                 // draw sun shadow
-                Paint paintShadow = new Paint();
-                paintShadow.setColor(options.sunShadowColor);
-                paintShadow.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-
                 Bitmap sunMask = Bitmap.createScaledBitmap(sunMaskBitmap, w, h, true);
-                Bitmap sunBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-                Canvas sunCanvas = new Canvas(sunBitmap);
-                sunCanvas.drawBitmap(sunMask, 0, 0, p);
-                sunCanvas.drawPaint(paintShadow);
+                Bitmap shadowBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+                Canvas shadowCanvas = new Canvas(shadowBitmap);
+                shadowCanvas.drawBitmap(sunMask, 0, 0, p);
 
-                c.drawBitmap(sunBitmap, 0, 0, p);
-                sunBitmap.recycle();
+                if (options.map_night != null)
+                {
+                    Paint paintShadow = new Paint();
+                    paintShadow.setColor(Color.WHITE);
+                    paintShadow.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+
+                    Bitmap nightBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+                    Canvas nightCanvas = new Canvas(nightBitmap);
+                    options.map_night.setBounds(0, 0, nightCanvas.getWidth(), nightCanvas.getHeight());
+                    options.map_night.draw(nightCanvas);
+
+                    shadowCanvas.drawBitmap(nightBitmap, 0, 0, paintShadow);
+                    nightBitmap.recycle();
+
+                } else {
+                    Paint paintShadow = new Paint();
+                    paintShadow.setColor(options.sunShadowColor);
+                    paintShadow.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+                    shadowCanvas.drawPaint(paintShadow);
+                }
+
+                c.drawBitmap(shadowBitmap, 0, 0, p);
+                shadowBitmap.recycle();
                 sunMask.recycle();
                 sunMaskBitmap.recycle();
 
