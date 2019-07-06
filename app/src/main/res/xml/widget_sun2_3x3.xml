@@ -12,6 +12,6 @@
     android:updatePeriodMillis="@integer/widget_updateInterval"
     android:configure="com.forrestguice.suntimeswidget.SuntimesConfigActivity2_3x3"
     android:widgetCategory="home_screen|keyguard"
-    android:previewImage="@drawable/sunposwidget0_3x2_preview">  <!-- TODO: preview -->
+    android:previewImage="@drawable/sunposwidget0_3x3_preview">
 
 </appwidget-provider>
