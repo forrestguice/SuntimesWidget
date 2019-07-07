@@ -310,6 +310,10 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                     mapW = result.getWidth();
                     mapH = result.getHeight();
                     setImageBitmap(result);
+
+                    if (mapListener != null) {
+                        mapListener.onFinished(result);
+                    }
                 }
             });
 
@@ -370,7 +374,11 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     {
         public void onFinished( Bitmap result ) {}
     }
-
+    private WorldMapTaskListener mapListener = null;
+    public void setMapTaskListener( WorldMapTaskListener listener )
+    {
+        mapListener = listener;
+    }
 
     @Override
     public void setImageBitmap(Bitmap b)
