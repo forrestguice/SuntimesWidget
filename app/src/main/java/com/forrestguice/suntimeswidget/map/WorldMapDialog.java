@@ -23,13 +23,19 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -37,6 +43,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -47,6 +54,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
@@ -55,7 +63,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-public class WorldMapDialog extends DialogFragment
+public class WorldMapDialog extends BottomSheetDialogFragment
 {
     public static final String LOGTAG = "WorldMapDialog";
 
@@ -77,30 +85,27 @@ public class WorldMapDialog extends DialogFragment
         this.data = data;
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
+    {
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_worldmap, parent, false);
+        WorldMapWidgetSettings.initDisplayStrings(dialogContent.getContext());
+
+        initViews(getContext(), dialogContent);
+        if (savedState != null) {
+            Log.d(LOGTAG, "WorldMapDialog onCreate (restoreState)");
+        }
+        themeViews(dialogContent.getContext());
+
+        return dialogContent;
+    }
+
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
-
-        final Activity myParent = getActivity();
-        WorldMapWidgetSettings.initDisplayStrings(myParent);
-
-        LayoutInflater inflater = myParent.getLayoutInflater();
-        final ViewGroup viewGroup = null;
-        dialogContent = inflater.inflate(R.layout.layout_dialog_worldmap, viewGroup);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
-        builder.setView(dialogContent);
-        AlertDialog dialog = builder.create();
-
-        initViews(getContext(), dialogContent);
-        if (savedInstanceState != null)
-        {
-            Log.d(LOGTAG, "WorldMapDialog onCreate (restoreState)");
-        }
-
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setOnShowListener(onShowDialogListener);
-        themeViews(dialog.getContext());
         return dialog;
     }
 
@@ -114,6 +119,19 @@ public class WorldMapDialog extends DialogFragment
             startUpdateTask();
         }
     };
+
+    private void expandSheet(Dialog dialog)
+    {
+        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
+        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);
+        if (layout != null)
+        {
+            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+            behavior.setHideable(true);
+            behavior.setSkipCollapsed(true);
+            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }
+    }
 
     private void startUpdateTask()
     {
@@ -263,10 +281,17 @@ public class WorldMapDialog extends DialogFragment
         boolean featureSupported = calculatorDescriptor != null && calculatorDescriptor.hasRequestedFeature(SuntimesCalculator.FEATURE_POSITION);
 
         showEmptyView(!featureSupported);
-        if (featureSupported) {
+        if (featureSupported)
+        {
+            worldmap.setMapTaskListener(new WorldMapView.WorldMapTaskListener()
+            {
+                @Override
+                public void onFinished(Bitmap result) {
+                    expandSheet(getDialog());
+                }
+            });
             worldmap.updateViews(data);
         }
-
         startUpdateTask();
     }
 
