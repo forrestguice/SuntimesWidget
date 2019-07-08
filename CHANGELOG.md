@@ -1,5 +1,8 @@
 ### ~
 
+### v0.11.7 (2019-07-08)
+* updates translations to Spanish (es-es) and Catalan (ca) (#340, #343 by Raulvo).
+
 ### v0.11.6 (2019-06-24)
 * fixes bug "Suntimes Alarms uses elevation even if unchecked" (#336).
 * fixes bug "worldmap dialog fails to apply themed foreground color" (#337).
