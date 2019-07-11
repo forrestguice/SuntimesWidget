@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2018-2019 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_height="match_parent" android:layout_width="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="125dp"
+        android:orientation="vertical" android:gravity="start"
+        android:padding="8dp" android:background="?graphColor_background">
+
+        <TextView android:id="@+id/worldmapdialog_title" style="@style/TableHeadTextView"
+            android:text="@string/worldmap_dialog_title"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="0dp"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+        <TextView
+            style="@style/SunsetTimeTextView"
+            android:id="@+id/info_time_utc"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            tools:text="June 3, 6:00 PM UTC" android:gravity="start"
+            android:minWidth="200dp" android:layout_marginLeft="0dp" android:layout_marginRight="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/guideline4" app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintTop_toBottomOf="@+id/worldmapdialog_title" />
+
+        <Spinner
+            android:id="@+id/worldmap_selector"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp" android:layout_marginRight="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/guideline4" app:layout_constraintHorizontal_bias="0"
+            android:layout_marginBottom="4dp" />
+
+        <FrameLayout
+            android:id="@+id/info_time_worldmap_layout"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toEndOf="@+id/guideline4" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.forrestguice.suntimeswidget.map.WorldMapView
+                android:id="@+id/info_time_worldmap" app:matchHeight="true"
+                android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+            <TextView android:id="@+id/txt_empty"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="center" android:layout_gravity="center"
+                android:visibility="gone"
+                android:layout_margin="16dp"
+                android:textSize="12sp"
+                android:text="@string/feature_not_supported_by_source" />
+
+        </FrameLayout>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="150dp" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</ScrollView>

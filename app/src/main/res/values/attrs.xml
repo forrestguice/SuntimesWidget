@@ -100,6 +100,10 @@
     <attr name="icActionGPS_off" format="reference" />
     <attr name="icActionGPS_searching" format="reference" />
 
+    <declare-styleable name="WorldMapView">
+        <attr name="matchHeight" format="boolean" />
+    </declare-styleable>
+
     <declare-styleable name="EquinoxView">
         <attr name="minimized" format="boolean" />
     </declare-styleable>

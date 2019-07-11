@@ -21,21 +21,26 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
@@ -65,7 +70,19 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     public WorldMapView(Context context, AttributeSet attribs)
     {
         super(context, attribs);
+        applyAttributes(context, attribs);
         init(context);
+    }
+
+    private boolean matchHeight = false;
+    private void applyAttributes(Context context, AttributeSet attrs)
+    {
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.WorldMapView, 0, 0);
+        try {
+            matchHeight = a.getBoolean(R.styleable.WorldMapView_matchHeight, false);
+        } finally {
+            a.recycle();
+        }
     }
 
     /**
@@ -235,6 +252,30 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     }
 
     /**
+     * @param context
+     * @return available screen height int pixels
+     */
+    private int getScreenHeight(Context context)
+    {
+        if (Build.VERSION.SDK_INT >= 13)
+        {
+            Configuration config = context.getResources().getConfiguration();
+            return SuntimesUtils.dpToPixels(context, config.screenHeightDp - 32);
+
+        } else {
+            WindowManager windowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+            if (windowManager != null)
+            {
+                Display display = windowManager.getDefaultDisplay();
+                return display.getHeight() - SuntimesUtils.dpToPixels(context, 32);
+
+            } else {
+                return 0;
+            }
+        }
+    }
+
+    /**
      * @param data an instance of SuntimesRiseSetDataset
      */
     public void updateViews(SuntimesRiseSetDataset data)
@@ -254,27 +295,25 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         {
             case EQUIAZIMUTHAL_SIMPLE:
             case EQUIAZIMUTHAL_SIMPLE1:
-
-                //int orientation = getResources().getConfiguration().orientation;
-                projection = (mode == WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE1 ? new WorldMapEquiazimuthal1() : new WorldMapEquiazimuthal());  // TODO
-                //w = h = (orientation == Configuration.ORIENTATION_PORTRAIT) ? Math.max(getWidth(), getHeight()) : Math.min(getWidth(), getHeight());
+                Log.d("DEBUG", "matchHeight: " + matchHeight);
+                projection = (mode == WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE1 ? new WorldMapEquiazimuthal1() : new WorldMapEquiazimuthal());
                 if (w > 0)
                 {
                     if (h > 0)
                     {
-                        // fit smallest
-                        // has width and height, use smallest
-                        //w = h = Math.min(w, h);
-
-                        // fit larger
-                        // has width and height, use larger
-                        w = h = Math.max(w, h);
+                        if (matchHeight) {
+                            w = h = getScreenHeight(getContext());
+                        } else {
+                            w = h = Math.max(w, h);
+                        }
                     } else {
-                        // has width but no height; match width
-                        h = w;
+                        if (matchHeight) {
+                            w = h = getScreenHeight(getContext());
+                        } else {
+                            h = w;
+                        }
                     }
                 } else if (h > 0) {
-                    // has height but no width
                     w = h;
                 }
                 break;
