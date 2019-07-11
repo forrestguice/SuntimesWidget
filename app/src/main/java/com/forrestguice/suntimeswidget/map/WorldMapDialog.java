@@ -190,13 +190,11 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         {
             @Override
             public boolean onLongClick(View view) {
-                return showContextMenu(context, view);
+                return showContextMenu(context, dialogTitle);
             }
         });
 
         ArrayList<WorldMapWidgetSettings.WorldMapWidgetMode> modes = new ArrayList<>(Arrays.asList(WorldMapWidgetSettings.WorldMapWidgetMode.values()));
-        //modes.remove(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE);  // option disabled; TODO: fix layout issues
-
         mapAdapter = new ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode>(context, R.layout.layout_listitem_oneline_alt, modes);
         mapAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
