@@ -122,6 +122,10 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     private void expandSheet(Dialog dialog)
     {
+        if (dialog == null) {
+            return;
+        }
+
         BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
         FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);
         if (layout != null)
@@ -214,15 +218,18 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         RadioButton option_moon = (RadioButton)dialogView.findViewById(R.id.radio_moon);
         RadioButton option_sunmoon = (RadioButton)dialogView.findViewById(R.id.radio_sunmoon);
 
-        if (options.showSunShadow && options.showMoonLight)
-            option_sunmoon.setChecked(true);
-        else if (options.showSunShadow)
-            option_sun.setChecked(true);
-        else option_moon.setChecked(true);
+        if (radioGroup != null && option_sun != null && option_moon != null && option_sunmoon != null)
+        {
+            if (options.showSunShadow && options.showMoonLight)
+                option_sunmoon.setChecked(true);
+            else if (options.showSunShadow)
+                option_sun.setChecked(true);
+            else option_moon.setChecked(true);
 
-        option_sun.setOnClickListener(onRadioButtonClicked);
-        option_moon.setOnClickListener(onRadioButtonClicked);
-        option_sunmoon.setOnClickListener(onRadioButtonClicked);
+            option_sun.setOnClickListener(onRadioButtonClicked);
+            option_moon.setOnClickListener(onRadioButtonClicked);
+            option_sunmoon.setOnClickListener(onRadioButtonClicked);
+        }
     }
 
     @SuppressWarnings("ResourceType")
@@ -348,10 +355,18 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     private void showEmptyView( boolean show )
     {
-        empty.setVisibility(show ? View.VISIBLE : View.GONE);
-        worldmap.setVisibility(show ? View.GONE : View.VISIBLE);
-        mapSelector.setVisibility(show ? View.GONE : View.VISIBLE);
-        radioGroup.setVisibility(show ? View.GONE : View.VISIBLE);
+        if (empty != null) {
+            empty.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
+        if (worldmap != null) {
+            worldmap.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
+        if (mapSelector != null) {
+            mapSelector.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
+        if (radioGroup != null) {
+            radioGroup.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
     }
 
     protected boolean showContextMenu(final Context context, View view)
