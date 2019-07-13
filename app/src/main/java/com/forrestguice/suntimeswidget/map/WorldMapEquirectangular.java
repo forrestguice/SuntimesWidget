@@ -69,7 +69,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         Bitmap b = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
 
-        drawMap(c, w, h, null, options);
+        drawMap(c, w, h, options);
         if (options.showMajorLatitudes) {
             drawMajorLatitudes(c, w, h, null, options);
         }

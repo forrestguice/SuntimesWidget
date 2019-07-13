@@ -21,9 +21,12 @@ package com.forrestguice.suntimeswidget.map;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -130,8 +133,8 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
     {
         public boolean modified = false;
 
-        public Drawable map = null;
-        public Drawable map_night = null;
+        public Drawable map = null;                  // BitmapDrawable
+        public Drawable map_night = null;            // BitmapDrawable
         public int backgroundColor = Color.BLUE;
         public int foregroundColor = Color.TRANSPARENT;
         public boolean hasTransparentBaseMap = true;
@@ -243,25 +246,24 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
             return retValue;
         }
 
-        protected void drawMap(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options)
+        protected void drawMap(Canvas c, int w, int h, WorldMapTask.WorldMapOptions options)
         {
             if (options.map != null)
             {
-                if (p == null) {
-                    p = new Paint(Paint.ANTI_ALIAS_FLAG);
-                }
+                if (options.foregroundColor != Color.TRANSPARENT)
+                {
+                    Bitmap b = ((BitmapDrawable)options.map).getBitmap();
+                    Rect src = new Rect(0,0,b.getWidth()-1, b.getHeight()-1);
+                    Rect dst = new Rect(0,0,w-1, h-1);
 
-                Bitmap mapBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-                Canvas mapCanvas = new Canvas(mapBitmap);
-                options.map.setBounds(0, 0, mapCanvas.getWidth(), mapCanvas.getHeight());
-                options.map.draw(mapCanvas);
+                    Paint paintForeground = new Paint();
+                    paintForeground.setColorFilter(new LightingColorFilter(options.foregroundColor, 0));
+                    c.drawBitmap(b, src, dst, paintForeground);
 
-                if (options.foregroundColor != Color.TRANSPARENT) {
-                    mapBitmap = SuntimesUtils.tintBitmap(mapBitmap, options.foregroundColor);
+                } else {
+                    options.map.setBounds(0, 0, w, h);
+                    options.map.draw(c);
                 }
-                p.setColor(Color.WHITE);
-                c.drawBitmap(mapBitmap, 0, 0, p);
-                mapBitmap.recycle();
             }
         }
 
