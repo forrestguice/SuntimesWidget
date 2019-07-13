@@ -79,7 +79,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
 
         drawData: if (data != null)
         {
-            Calendar now = data.nowThen(data.calendar());
+            Calendar now = mapTime(data, options);
             SuntimesCalculator calculator = data.calculator();
             SuntimesCalculator.SunPosition sunPos = calculator.getSunPosition(now);
             SuntimesCalculator.MoonPosition moonPos = calculator.getMoonPosition(now);

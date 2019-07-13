@@ -34,6 +34,8 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 
+import java.util.Calendar;
+
 /**
  * WorldMapTask
  */
@@ -166,6 +168,8 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
         public double[][] locations = null;  // a list of locations {{lat, lon}, {lat, lon}, ...} or null
         public int locationFillColor = Color.MAGENTA;
         public int locationScale = 192;
+
+        public int offsetMinutes = 0;    // minutes offset from "now" (default 0)
     }
 
     /**
@@ -175,6 +179,13 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
     {
         public abstract int[] toBitmapCoords(int w, int h, double lat, double lon);
         public abstract Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options);
+
+        protected Calendar mapTime(SuntimesRiseSetDataset data, WorldMapTask.WorldMapOptions options)
+        {
+            Calendar mapTime = data.nowThen(data.calendar());    // the current time (maybe on some other day)
+            mapTime.add(Calendar.MINUTE, options.offsetMinutes);    // offset by some minutes
+            return mapTime;
+        }
 
         /**
          * Implemented using algorithm found at

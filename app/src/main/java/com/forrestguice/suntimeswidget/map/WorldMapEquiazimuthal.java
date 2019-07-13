@@ -29,6 +29,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -113,7 +114,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
 
         drawData: if (data != null)
         {
-            Calendar now = data.nowThen(data.calendar());
+            Calendar now = mapTime(data, options);
             SuntimesCalculator calculator = data.calculator();
             SuntimesCalculator.SunPosition sunPos = calculator.getSunPosition(now);
             SuntimesCalculator.MoonPosition moonPos = calculator.getMoonPosition(now);
