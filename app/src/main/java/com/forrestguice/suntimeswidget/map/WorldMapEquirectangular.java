@@ -268,6 +268,53 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         return b;
     }
 
+    @Override
+    public double[] initMatrix()
+    {
+        long bench_start = System.nanoTime();
+
+        int[] size = matrixSize();
+        double[] v = new double[size[0] * size[1] * 3];
+        double iw0 = (1d / size[0]) * 360d;
+        double ih0 = (1d / size[1]) * 180d;
+
+        double radLon, cosLon, sinLon;
+        double radLat, cosLat;
+
+        for (int i = 0; i < size[0]; i++)
+        {
+            radLon = Math.toRadians(((double) i * iw0) - 180d);  // i in [0,w] to [0,360] to [-180,180]
+            cosLon = Math.cos(radLon);
+            sinLon = Math.sin(radLon);
+
+            for (int j = 0; j < size[1]; j++)
+            {
+                radLat = Math.toRadians(-1 * (((double) j * ih0) - 90d));      // j in [0,h] to [0,180] to [-90,90] (inverted to canvas)
+                cosLat = Math.cos(radLat);
+
+                v[i + (size[0] * j)] = cosLon * cosLat;
+                v[i + (size[0] * (size[1] + j))] = sinLon * cosLat;
+                v[i + (size[0] * ((size[1] * 2) + j))] = Math.sin(radLat);
+            }
+        }
+
+        long bench_end = System.nanoTime();
+        Log.d(WorldMapView.LOGTAG, "make equirectangular world map :: initMatrix :: " + ((bench_end - bench_start) / 1000000.0) + " ms; " + size[0] + ", " + size[1]);
+        return v;
+    }
+
+    @Override
+    protected int k(int i, int j, int k)
+    {
+        return i + (720 * ((360 * k) + j));
+    }
+
+    @Override
+    public int[] matrixSize()
+    {
+        return new int[] {720, 360};
+    }
+
     protected void drawGrid(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options)
     {
         if (p == null) {

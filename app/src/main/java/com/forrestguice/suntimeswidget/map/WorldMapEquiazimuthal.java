@@ -300,6 +300,70 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
     }
 
     @Override
+    public int[] matrixSize()
+    {
+        return new int[] {360, 360};
+    }
+
+    @Override
+    public double[] initMatrix()
+    {
+        long bench_start = System.nanoTime();
+
+        int[] size = matrixSize();
+        int w = size[0];
+        int h = size[1];
+        double[] v = new double[w * h * 3];
+
+        double radLon, cosLon, sinLon;
+        double radLat, cosLat;
+
+        double squareR = (0.5 * w + 1) * (0.5 * w + 1);
+        double[] polar = new double[2];
+
+        double x, y;
+        for (int i = 0; i < w; i++)
+        {
+            x = ((double)i) - 180d;   // [-180,180]
+            double squareX = x * x;
+            if (x == 0) {
+                x += 0.0001;
+            }
+            for (int j = 0; j < h; j++)
+            {
+                y = ((double)(h - j)) - 180d;   // [-180,180]
+                if ((squareX + y*y) > squareR)
+                    continue;
+                //Log.d("DEBUG", "pX: " + x + ", pY: " + y);
+
+                polar[0] = -1 * Math.atan(x / y);
+                radLon = polar[0];
+                sinLon = Math.sin(radLon);
+                polar[1] = x / sinLon;
+                //Log.d("DEBUG", "angle: " + polar[0] + ", dist: " + polar[1]);
+
+                radLat = Math.toRadians(90 - polar[1]);
+                cosLat = Math.cos(radLat);
+                cosLon = Math.cos(radLon);
+
+                v[i + (360 * j)] = cosLon * cosLat;
+                v[i + (360 * (360 + j))] = sinLon * cosLat;
+                v[i + (360 * (720 + j))] = Math.sin(radLat);
+            }
+        }
+
+        long bench_end = System.nanoTime();
+        Log.d(WorldMapView.LOGTAG, "make equiazimuthal world map :: initMatrix :: " + ((bench_end - bench_start) / 1000000.0) + " ms; " + w + ", " + h);
+        return v;
+    }
+
+    @Override
+    protected int k(int i, int j, int k)
+    {
+        return i + (360 * ((360 * k) + j));
+    }
+
+    @Override
     public void drawMajorLatitudes(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options)
     {
         if (p == null) {

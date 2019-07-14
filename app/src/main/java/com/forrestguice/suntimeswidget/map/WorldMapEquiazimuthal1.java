@@ -51,6 +51,65 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
     }
 
     @Override
+    public double[] initMatrix()
+    {
+        long bench_start = System.nanoTime();
+
+        int[] size = matrixSize();
+        int w = size[0];
+        int h = size[1];
+        double[] v = new double[w * h * 3];
+
+        double squareR = (0.5 * w + 1) * (0.5 * w + 1);
+        double negPiOver2 = -0.5 * Math.PI;
+        double[] polar = new double[2];
+
+        double x, y;
+        double radLon, cosLon, sinLon, sinLat;
+        double radLat, cosLat;
+
+        double squareP, squareX, squareY;
+        for (int i = 0; i < w; i++)
+        {
+            x = ((double)i) - 180d;   // [-180,180]
+            squareX = x * x;
+            if (x == 0) {
+                x += 0.0001;
+            }
+
+            for (int j = 0; j < h; j++)
+            {
+                y = ((double)(h - j)) - 180d;   // [-180,180]
+                squareY = y * y;
+                squareP = squareX + squareY;
+                if (squareP > squareR)
+                    continue;
+                //Log.d("DEBUG", "pX: " + x + ", pY: " + y);
+
+                polar[0] = Math.atan(x / y);                     // theta
+                polar[1] = Math.toRadians(Math.sqrt(squareP));   // p
+
+                radLon = polar[0];
+                radLat = (y < 0) ? negPiOver2 - polar[1]
+                        : Math.asin(-1 * Math.cos(polar[1]));
+                //Log.d("DEBUG", "angle: " + polar[0] + ", dist: " + polar[1]);
+
+                cosLat = Math.cos(radLat);
+                cosLon = Math.cos(radLon);
+                sinLon = Math.sin(radLon);
+
+                v[i + (360 * j)] = cosLon * cosLat;
+                v[i + (360 * (360 + j))] = sinLon * cosLat;
+                v[i + (360 * (720 + j))] = Math.sin(radLat);
+            }
+        }
+
+        long bench_end = System.nanoTime();
+        Log.d(WorldMapView.LOGTAG, "make equiazimuthal world map :: initMatrix :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+        return v;
+    }
+
+    @Override
     public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options)
     {
         long bench_start = System.nanoTime();

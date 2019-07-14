@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -181,7 +181,14 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
     public static abstract class WorldMapProjection
     {
         public abstract int[] toBitmapCoords(int w, int h, double lat, double lon);
+
+        /**
+         * algorithm described at https://gis.stackexchange.com/questions/17184/method-to-shade-or-overlay-a-raster-map-to-reflect-time-of-day-and-ambient-light
+         */
         public abstract Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options);
+        public abstract double[] initMatrix();            // creates flattened multi-dimensional array; [lon][lat][v(3)]
+        public abstract int[] matrixSize();               // [width(lon), height(lat)]
+        protected abstract int k(int x, int y, int z);    // returns index into flattened array
 
         protected Calendar mapTime(SuntimesRiseSetDataset data, WorldMapTask.WorldMapOptions options)
         {
