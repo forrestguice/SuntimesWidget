@@ -22,11 +22,15 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
+import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PathEffect;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.support.v4.graphics.ColorUtils;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
@@ -92,9 +96,12 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
     public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options)
     {
         long bench_start = System.nanoTime();
-        if (w <= 0 || h <= 0)
-        {
+        if (w <= 0 || h <= 0) {
             return null;
+        }
+
+        if (matrix == null) {
+            matrix = initMatrix();
         }
 
         double[] mid = new double[2];
@@ -156,84 +163,63 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
 
             ////////////////
             // draw sunlight / moonlight
-            // algorithm described at https://gis.stackexchange.com/questions/17184/method-to-shade-or-overlay-a-raster-map-to-reflect-time-of-day-and-ambient-light
+            //
             if (options.showSunPosition || options.showMoonPosition)
             {
-                int w0 = 360;
-                int h0 = 360;
+                int[] size = matrixSize();
+                Bitmap lightBitmap = Bitmap.createBitmap(size[0], size[1], Bitmap.Config.ARGB_8888);
+                int combinedColor = ColorUtils.compositeColors(options.moonLightColor, options.sunShadowColor);
 
-                double iw0 = (1d / w0) * 360d;
-                double ih0 = (1d / h0) * 360d;
-
-                Bitmap lightBitmap = Bitmap.createBitmap(w0, h0, Bitmap.Config.ARGB_8888);
-                Canvas lightCanvas = new Canvas(lightBitmap);
-
-                Paint paintShadow = new Paint();
-                paintShadow.setColor(options.sunShadowColor);
-                paintShadow.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-
-                Paint paintMoonlight = new Paint();
-                paintMoonlight.setColor(options.moonLightColor);
-                paintMoonlight.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-
-                double radLon, cosLon, sinLon;
-                double radLat, cosLat;
-                double[] v = new double[3];
+                int j0, j1, j2;
+                double v0, v1, v2;
                 double sunIntensity, moonIntensity;
-                double squareR = (0.5 * w0 + 1) * (0.5 * w0 + 1);
-                double[] polar = new double[2];
-
-                double x, y;
-                for (int i = 0; i < w0; i++)
+                for (int j = 0; j < size[1]; j++)
                 {
-                    x = ((double)i * iw0) - 180d;   // [-180,180]
-                    double squareX = x * x;
-                    if (x == 0) {
-                        x += 0.0001;
-                    }
-                    for (int j = 0; j < h0; j++)
+                    j0 = (360 * j);
+                    j1 = (360 * (360 + j));
+                    j2 = (360 * (720 + j));
+
+                    for (int i = 0; i < size[0]; i++)
                     {
-                        y = ((double)(h0 - j) * ih0) - 180d;   // [-180,180]
-                        if ((squareX + y*y) > squareR)
-                            continue;
-                        //Log.d("DEBUG", "pX: " + x + ", pY: " + y);
+                        v0 = matrix[i + j0];
+                        v1 = matrix[i + j1];
+                        v2 = matrix[i + j2];
 
-                        polar[0] = -1 * Math.atan(x / y);
-                        radLon = polar[0];
-                        sinLon = Math.sin(radLon);
-                        polar[1] = x / sinLon;
-                        //Log.d("DEBUG", "angle: " + polar[0] + ", dist: " + polar[1]);
-
-                        radLat = Math.toRadians(90 - polar[1]);
-                        cosLat = Math.cos(radLat);
-                        cosLon = Math.cos(radLon);
-
-                        v[0] = cosLon * cosLat;
-                        v[1] = sinLon * cosLat;
-                        v[2] = Math.sin(radLat);
-
-                        if (options.showSunShadow)
+                        if (options.showSunShadow && options.showMoonLight)
                         {
-                            sunIntensity = (sunUp[0] * v[0]) + (sunUp[1] * v[1]) + (sunUp[2] * v[2]);    // intensity = up.dotProduct(v)
-                            if (sunIntensity <= 0) {                                                               // values less equal 0 are in shadow
-                                lightCanvas.drawPoint(i, j, paintShadow);
+                            sunIntensity = (sunUp[0] * v0) + (sunUp[1] * v1) + (sunUp[2] * v2);
+                            moonIntensity = (moonUp[0] * v0) + (moonUp[1] * v1) + (moonUp[2] * v2);
+
+                            if (sunIntensity <= 0 && moonIntensity > 0) {
+                                lightBitmap.setPixel(i, j, combinedColor);
+                            } else if (sunIntensity <= 0) {
+                                lightBitmap.setPixel(i, j, options.sunShadowColor);
+                            } else if (moonIntensity > 0) {
+                                lightBitmap.setPixel(i, j, options.moonLightColor);
                             }
-                        }
 
-                        if (options.showMoonLight)
-                        {
-                            moonIntensity = (moonUp[0] * v[0]) + (moonUp[1] * v[1]) + (moonUp[2] * v[2]);
+                        } else if (options.showSunShadow) {
+                            sunIntensity = (sunUp[0] * v0) + (sunUp[1] * v1) + (sunUp[2] * v2);
+                            if (sunIntensity <= 0) {
+                                lightBitmap.setPixel(i, j, options.sunShadowColor);
+                            }
+
+                        } else if (options.showMoonLight) {
+                            moonIntensity = (moonUp[0] * v0) + (moonUp[1] * v1) + (moonUp[2] * v2);
                             if (moonIntensity > 0) {
-                                lightCanvas.drawPoint(i, j, paintMoonlight);
+                                lightBitmap.setPixel(i, j, options.moonLightColor);
                             }
                         }
                     }
                 }
 
-                Bitmap scaledLightBitmap = Bitmap.createScaledBitmap(lightBitmap, w, h, true);
-                c.drawBitmap(scaledLightBitmap, 0, 0, p);
+                p.setDither(true);
+                p.setAntiAlias(true);
+                p.setFilterBitmap(true);
+                Rect src = new Rect(0,0,size[0]-1, size[1]-1);
+                Rect dst = new Rect(0,0,w-1, h-1);
+                c.drawBitmap(lightBitmap, src, dst, p);
                 lightBitmap.recycle();
-                scaledLightBitmap.recycle();
             }
 
             ////////////////
@@ -298,6 +284,8 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         Log.d(WorldMapView.LOGTAG, "make equiazimuthal world map :: " + ((bench_end - bench_start) / 1000000.0) + " ms; " + w + ", " + h);
         return masked;
     }
+
+    private static double[] matrix = null;    // [x * y * v(3)]
 
     @Override
     public int[] matrixSize()

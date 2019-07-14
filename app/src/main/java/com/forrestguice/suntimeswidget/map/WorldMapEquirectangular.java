@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -57,9 +57,12 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
     public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options)
     {
         long bench_start = System.nanoTime();
-        if (w <= 0 || h <= 0)
-        {
+        if (w <= 0 || h <= 0) {
             return null;
+        }
+
+        if (matrix == null) {
+            matrix = initMatrix();
         }
 
         double[] mid = new double[2];
@@ -124,54 +127,38 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
             // algorithm described at https://gis.stackexchange.com/questions/17184/method-to-shade-or-overlay-a-raster-map-to-reflect-time-of-day-and-ambient-light
             if (options.showSunPosition || options.showMoonPosition)
             {
-                int w0 = (w < 512 ? w : 512);
-                int h0 = w0 / 2;
+                int[] size = matrixSize();
+                Bitmap sunMaskBitmap = Bitmap.createBitmap(size[0], size[1], Bitmap.Config.ARGB_8888);
+                Bitmap moonMaskBitmap = Bitmap.createBitmap(size[0], size[1], Bitmap.Config.ARGB_8888);
 
-                double iw0 = (1d / w0) * 360d;
-                double ih0 = (1d / h0) * 180d;
-
-                Bitmap sunMaskBitmap = Bitmap.createBitmap(w0, h0, Bitmap.Config.ARGB_8888);
-                Bitmap moonMaskBitmap = Bitmap.createBitmap(w0, h0, Bitmap.Config.ARGB_8888);
-                Canvas sunMaskCanvas = new Canvas(sunMaskBitmap);
-                Canvas moonMaskCanvas = new Canvas(moonMaskBitmap);
-
-                Paint paintMask = new Paint();
-                paintMask.setColor(Color.WHITE);
-                paintMask.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-
-                double radLon, cosLon, sinLon;
-                double radLat, cosLat;
-                double[] v = new double[3];
+                int k0, k1, k2;
+                double v0, v1, v2;
                 double sunIntensity, moonIntensity;
-
-                for (int i = 0; i < w0; i++)
+                for (int j = 0; j < size[1]; j++)
                 {
-                    radLon = Math.toRadians( ((double) i * iw0) - 180d );  // i in [0,w] to [0,360] to [-180,180]
-                    cosLon = Math.cos(radLon);
-                    sinLon = Math.sin(radLon);
+                    k0 = size[0] * j;
+                    k1 = size[0] * (size[1] + j);
+                    k2 = size[0] * ((size[1] * 2) + j);
 
-                    for (int j = 0; j < h0; j++)
+                    for (int i = 0; i < size[0]; i++)
                     {
-                        radLat = Math.toRadians( -1 * (((double) j * ih0) - 90d) );      // j in [0,h] to [0,180] to [-90,90] (inverted to canvas)
-                        cosLat = Math.cos(radLat);
-
-                        v[0] = cosLon * cosLat;
-                        v[1] = sinLon * cosLat;
-                        v[2] = Math.sin(radLat);
+                        v0 = matrix[i + k0];
+                        v1 = matrix[i + k1];
+                        v2 = matrix[i + k2];
 
                         if (options.showSunShadow)
                         {
-                            sunIntensity = (sunUp[0] * v[0]) + (sunUp[1] * v[1]) + (sunUp[2] * v[2]);    // intensity = up.dotProduct(v)
+                            sunIntensity = (sunUp[0] * v0) + (sunUp[1] * v1) + (sunUp[2] * v2);    // intensity = up.dotProduct(v)
                             if (sunIntensity <= 0) {                                                               // values less equal 0 are in shadow
-                                sunMaskCanvas.drawPoint(i, j, paintMask);
+                                sunMaskBitmap.setPixel(i, j, Color.WHITE);
                             }
                         }
 
                         if (options.showMoonLight)
                         {
-                            moonIntensity = (moonUp[0] * v[0]) + (moonUp[1] * v[1]) + (moonUp[2] * v[2]);
+                            moonIntensity = (moonUp[0] * v0) + (moonUp[1] * v1) + (moonUp[2] * v2);
                             if (moonIntensity > 0) {
-                                moonMaskCanvas.drawPoint(i, j, paintMask);
+                                moonMaskBitmap.setPixel(i, j, Color.WHITE);
                             }
                         }
                     }
@@ -267,6 +254,8 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         Log.d(WorldMapView.LOGTAG, "make equirectangular world map :: " + ((bench_end - bench_start) / 1000000.0) + " ms; " + w + ", " + h);
         return b;
     }
+
+    private static double[] matrix = null;    // [x * y * v(3)]
 
     @Override
     public double[] initMatrix()
