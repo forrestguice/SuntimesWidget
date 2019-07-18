@@ -22,6 +22,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
+import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.PathEffect;
 import android.graphics.PorterDuff;
@@ -53,6 +54,68 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         return r;
     }
 
+    protected boolean paintInitialized = false;
+    protected Paint paintBackground = null;
+    protected Paint paintForeground = null;
+    protected Paint paintMoonlight = null;
+    protected Paint paintSunshadow = null;
+    protected Paint paintLocation = null;
+    protected Paint paintMask_srcIn = null;
+    protected Paint paintMask_srcOver = null;
+    protected Paint paintMoon_fill = null;
+    protected Paint paintMoon_stroke = null;
+    protected Paint paintSun_fill = null;
+    protected Paint paintSun_stroke = null;
+
+    @Override
+    public void initPaint(WorldMapTask.WorldMapOptions options)
+    {
+        paintBackground = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintBackground.setColor(options.backgroundColor);
+        paintBackground.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
+
+        paintForeground = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintForeground.setColorFilter(new LightingColorFilter(options.foregroundColor, 0));
+
+        paintMask_srcOver = new Paint(Paint.ANTI_ALIAS_FLAG);    // to create a mask
+        paintMask_srcOver.setColor(Color.WHITE);
+        paintMask_srcOver.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+
+        paintMask_srcIn = new Paint(Paint.ANTI_ALIAS_FLAG);      // to apply a mask
+        paintMask_srcIn.setColor(Color.WHITE);
+        paintMask_srcIn.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+
+        paintSunshadow = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintSunshadow.setColor(options.sunShadowColor);
+        paintSunshadow.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+
+        paintMoonlight = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintMoonlight.setColor(options.moonLightColor);
+        paintMoonlight.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+
+        paintLocation = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintLocation.setStyle(Paint.Style.FILL);
+        paintLocation.setColor(options.locationFillColor);
+
+        paintSun_fill = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintSun_fill.setStyle(Paint.Style.FILL);
+        paintSun_fill.setColor(options.sunFillColor);
+
+        paintSun_stroke = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintSun_stroke.setStyle(Paint.Style.STROKE);
+        paintSun_stroke.setColor(options.sunStrokeColor);
+
+        paintMoon_fill = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintMoon_fill.setStyle(Paint.Style.FILL);
+        paintMoon_fill.setColor(options.moonFillColor);
+
+        paintMoon_stroke = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintMoon_stroke.setStyle(Paint.Style.STROKE);
+        paintMoon_stroke.setColor(options.moonStrokeColor);
+
+        paintInitialized = true;
+    }
+
     @Override
     public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options)
     {
@@ -72,9 +135,13 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         Bitmap b = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
 
-        drawMap(c, w, h, options);
+        if (!paintInitialized) {
+            initPaint(options);
+        }
+
+        drawMap(c, w, h, paintForeground, options);
         if (options.showMajorLatitudes) {
-            drawMajorLatitudes(c, w, h, null, options);
+            drawMajorLatitudes(c, w, h, options);
         }
         if (options.showGrid) {
             drawGrid(c, w, h, null, options);
@@ -170,54 +237,39 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
                 sunMaskBitmap.setPixels(sun_pixels, 0, size[0], 0, 0, size[0], size[1]);
                 moonMaskBitmap.setPixels(moon_pixels, 0, size[0], 0, 0, size[0], size[1]);
 
-                Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
-                p.setColor(Color.WHITE);
-                p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-
                 // draw sun shadow
                 Bitmap sunMask = Bitmap.createScaledBitmap(sunMaskBitmap, w, h, true);
                 Bitmap shadowBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
                 Canvas shadowCanvas = new Canvas(shadowBitmap);
-                shadowCanvas.drawBitmap(sunMask, 0, 0, p);
+                shadowCanvas.drawBitmap(sunMask, 0, 0, paintMask_srcOver);
 
                 if (options.map_night != null)
                 {
-                    Paint paintShadow = new Paint();
-                    paintShadow.setColor(Color.WHITE);
-                    paintShadow.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-
                     Bitmap nightBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
                     Canvas nightCanvas = new Canvas(nightBitmap);
                     options.map_night.setBounds(0, 0, nightCanvas.getWidth(), nightCanvas.getHeight());
                     options.map_night.draw(nightCanvas);
 
-                    shadowCanvas.drawBitmap(nightBitmap, 0, 0, paintShadow);
+                    shadowCanvas.drawBitmap(nightBitmap, 0, 0, paintMask_srcIn);
                     nightBitmap.recycle();
 
                 } else {
-                    Paint paintShadow = new Paint();
-                    paintShadow.setColor(options.sunShadowColor);
-                    paintShadow.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-                    shadowCanvas.drawPaint(paintShadow);
+                    shadowCanvas.drawPaint(paintSunshadow);
                 }
 
-                c.drawBitmap(shadowBitmap, 0, 0, p);
+                c.drawBitmap(shadowBitmap, 0, 0, paintMask_srcOver);
                 shadowBitmap.recycle();
                 sunMask.recycle();
                 sunMaskBitmap.recycle();
 
                 // draw moon light
-                Paint paintMoonlight = new Paint();
-                paintMoonlight.setColor(options.moonLightColor);
-                paintMoonlight.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-
                 Bitmap moonMask = Bitmap.createScaledBitmap(moonMaskBitmap, w, h, true);
                 Bitmap moonBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
                 Canvas moonCanvas = new Canvas(moonBitmap);
-                moonCanvas.drawBitmap(moonMask, 0, 0, p);
+                moonCanvas.drawBitmap(moonMask, 0, 0, paintMask_srcOver);
                 moonCanvas.drawPaint(paintMoonlight);
 
-                c.drawBitmap(moonBitmap, 0, 0, p);
+                c.drawBitmap(moonBitmap, 0, 0, paintMask_srcOver);
                 moonBitmap.recycle();
                 moonMask.recycle();
                 moonMaskBitmap.recycle();
@@ -229,7 +281,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
             {
                 int sunX = (int) (mid[0] - ((ghaSun180 / 180d) * mid[0]));
                 int sunY = (int) (mid[1] - ((sunPos.declination / 90d) * mid[1]));
-                drawSun(c, sunX, sunY, null, options);
+                drawSun(c, sunX, sunY, paintSun_fill, paintSun_stroke, options);
             }
 
             ////////////////
@@ -238,22 +290,18 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
             {
                 int moonX = (int) (mid[0] - ((moonPos2[0] / 180d) * mid[0]));
                 int moonY = (int) (mid[1] - ((moonPos2[1] / 90d) * mid[1]));
-                drawMoon(c, moonX, moonY, null, options);
+                drawMoon(c, moonX, moonY, paintMoon_fill, paintMoon_stroke, options);
             }
 
             ////////////////
             // draw locations
             if (options.locations != null) {
-                drawLocations(c, w, h, null, options);
+                drawLocations(c, w, h, paintLocation, options);
             }
         }
 
-        if (options.hasTransparentBaseMap)
-        {
-            Paint backgroundPaint = new Paint();
-            backgroundPaint.setColor(options.backgroundColor);
-            backgroundPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
-            c.drawRect(0, 0, w, h, backgroundPaint);
+        if (options.hasTransparentBaseMap) {
+            c.drawRect(0, 0, w, h, paintBackground);
         }
 
         long bench_end = System.nanoTime();
@@ -346,12 +394,13 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         }
     }
 
+    private static double r_tropics = (23.439444 / 90d);
+    private static double r_polar = (66.560833 / 90d);
+
     @Override
-    public void drawMajorLatitudes(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options)
+    public void drawMajorLatitudes(Canvas c, int w, int h, WorldMapTask.WorldMapOptions options)
     {
-        if (p == null) {
-            p = new Paint(Paint.ANTI_ALIAS_FLAG);
-        }
+        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
         p.setXfermode(new PorterDuffXfermode( options.hasTransparentBaseMap ? PorterDuff.Mode.DST_OVER : PorterDuff.Mode.SRC_OVER ));
 
         Paint.Style prevStyle = p.getStyle();
@@ -369,7 +418,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         p.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
         c.drawLine(0, (int)mid[1], w, (int)mid[1], p);
 
-        double tropics = (23.439444 / 90d) * mid[1];
+        double tropics = r_tropics * mid[1];
         int tropicsY0 = (int)(mid[1] + tropics);
         int tropicsY1 = (int)(mid[1] - tropics);
         p.setColor(options.latitudeColors[1]);                    // tropics
@@ -377,7 +426,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         c.drawLine(0, tropicsY0, w, tropicsY0, p);
         c.drawLine(0, tropicsY1, w, tropicsY1, p);
 
-        double polar = (66.560833 / 90d) * mid[1];
+        double polar = r_polar * mid[1];
         int polarY0 = (int)(mid[1] + polar);
         int polarY1 = (int)(mid[1] - polar);
         p.setColor(options.latitudeColors[2]);                    // polar

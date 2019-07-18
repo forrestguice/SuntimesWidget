@@ -138,17 +138,18 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
 
         Bitmap b = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
-        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
-        p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+
+        if (!paintInitialized) {
+            initPaint(options);
+        }
 
         ////////////////
         // draw base map
-        drawMap(c, w, h, options);
+        drawMap(c, w, h, paintForeground, options);
         if (options.showMajorLatitudes) {
-            drawMajorLatitudes(c, w, h, null, options);
+            drawMajorLatitudes(c, w, h, options);
         }
 
-        p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
         drawData: if (data != null)
         {
             Calendar now = mapTime(data, options);
@@ -201,12 +202,9 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
                 int[] pixels = initPixels(size[0], size[1], sunUp, moonUp, options);
                 lightBitmap.setPixels(pixels, 0, size[0], 0, 0, size[0], size[1]);
 
-                p.setDither(true);
-                p.setAntiAlias(true);
-                p.setFilterBitmap(true);
                 Rect src = new Rect(0,0,size[0]-1, size[1]-1);
                 Rect dst = new Rect(0,0,w-1, h-1);
-                c.drawBitmap(lightBitmap, src, dst, p);
+                c.drawBitmap(lightBitmap, src, dst, paintScaled);
                 lightBitmap.recycle();
             }
 
@@ -217,7 +215,7 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
                 double[] point = toCartesian(toPolar(sunLat, sunLon));
                 int sunX = (int)(mid[0] + ((point[0] / 180d) * mid[0]) );
                 int sunY = (int)(mid[1] - ((point[1] / 180d) * mid[1]) );
-                drawSun(c, sunX, sunY, null, options);
+                drawSun(c, sunX, sunY, paintSun_fill, paintSun_stroke, options);
             }
 
             ////////////////
@@ -227,13 +225,13 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
                 double[] point = toCartesian(toPolar(moonLat, moonLon));
                 int moonX = (int)(mid[0] + ((point[0] / 180d) * mid[0]) );
                 int moonY = (int)(mid[1] - ((point[1] / 180d) * mid[1]) );
-                drawMoon(c, moonX, moonY, null, options);
+                drawMoon(c, moonX, moonY, paintMoon_fill, paintMoon_stroke, options);
             }
 
             ////////////////
             // draw locations
             if (options.locations != null) {
-                drawLocations(c, w, h, null, options);
+                drawLocations(c, w, h, paintLocation, options);
             }
 
             if (options.translateToLocation)
@@ -247,25 +245,15 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
 
         ////////////////
         // draw background color
-        if (options.hasTransparentBaseMap)
-        {
-            Paint paintBackground = new Paint();
-            paintBackground.setColor(options.backgroundColor);
-            paintBackground.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
+        if (options.hasTransparentBaseMap) {
             c.drawCircle((float)mid[0], (float)mid[1], (float)mid[0] - 2, paintBackground);
         }
 
         // mask final image to fit within a circle (fixes fuzzy edges from base maps)
         Bitmap masked = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         Canvas maskedCanvas = new Canvas(masked);
-        Paint paintMask = new Paint(Paint.ANTI_ALIAS_FLAG);
-
-        paintMask.setColor(Color.WHITE);
-        paintMask.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-        maskedCanvas.drawCircle((float)mid[0], (float)mid[1], (float)mid[0] - 2, paintMask);
-
-        paintMask.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        maskedCanvas.drawBitmap(b, 0, 0, paintMask);
+        maskedCanvas.drawCircle((float)mid[0], (float)mid[1], (float)mid[0] - 2, paintMask_srcOver);
+        maskedCanvas.drawBitmap(b, 0, 0, paintMask_srcIn);
         b.recycle();
 
         long bench_end = System.nanoTime();

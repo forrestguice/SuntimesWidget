@@ -205,7 +205,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
 
         public double[][] locations = null;  // a list of locations {{lat, lon}, {lat, lon}, ...} or null
         public int locationFillColor = Color.MAGENTA;
-        public int locationScale = 192;
+        public double locationScale = 1 / 192d;
 
         public int offsetMinutes = 0;    // minutes offset from "now" (default 0)
     }
@@ -221,11 +221,11 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
          * algorithm described at https://gis.stackexchange.com/questions/17184/method-to-shade-or-overlay-a-raster-map-to-reflect-time-of-day-and-ambient-light
          */
         public abstract Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options);
+        public abstract void initPaint(WorldMapTask.WorldMapOptions options);
         public abstract double[] initMatrix();            // creates flattened multi-dimensional array; [lon][lat][v(3)]
         public abstract double[] getMatrix();
         public abstract int[] matrixSize();               // [width(lon), height(lat)]
         protected abstract int k(int x, int y, int z);    // returns index into flattened array
-
 
         protected Calendar mapTime(SuntimesRiseSetDataset data, WorldMapTask.WorldMapOptions options)
         {
@@ -290,7 +290,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
             return retValue;
         }
 
-        protected void drawMap(Canvas c, int w, int h, WorldMapTask.WorldMapOptions options)
+        protected void drawMap(Canvas c, int w, int h, @NonNull Paint paintForeground, WorldMapTask.WorldMapOptions options)
         {
             if (options.map != null)
             {
@@ -299,9 +299,6 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
                     Bitmap b = ((BitmapDrawable)options.map).getBitmap();
                     Rect src = new Rect(0,0,b.getWidth()-1, b.getHeight()-1);
                     Rect dst = new Rect(0,0,w-1, h-1);
-
-                    Paint paintForeground = new Paint();
-                    paintForeground.setColorFilter(new LightingColorFilter(options.foregroundColor, 0));
                     c.drawBitmap(b, src, dst, paintForeground);
 
                 } else {
@@ -314,7 +311,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         protected double sunRadius(Canvas c, WorldMapTask.WorldMapOptions options)
         {
             double sunDiameter = (int)Math.ceil(c.getWidth() / (double)options.sunScale);
-            return (int)Math.ceil(sunDiameter / 2d);
+            return (int)Math.ceil(sunDiameter * 0.5d);
         }
 
         protected int sunStroke(Canvas c, WorldMapTask.WorldMapOptions options)
@@ -322,52 +319,30 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
             return (int)Math.ceil(sunRadius(c, options) / (double)options.sunStrokeScale);
         }
 
-        protected void drawSun(Canvas c, int x, int y, Paint p, WorldMapTask.WorldMapOptions options)
+        protected void drawSun(Canvas c, int x, int y, @NonNull Paint paintFill, @NonNull Paint paintStroke, WorldMapTask.WorldMapOptions options)
         {
-            if (p == null) {
-                p = new Paint(Paint.ANTI_ALIAS_FLAG);
-            }
-
             int sunRadius = (int)sunRadius(c, options);
             int sunStroke = (int)Math.ceil(sunRadius / (double)options.sunStrokeScale);
 
-            p.setStyle(Paint.Style.FILL);
-            p.setColor(options.sunFillColor);
-            c.drawCircle(x, y, sunRadius, p);
-
-            p.setStyle(Paint.Style.STROKE);
-            p.setStrokeWidth(sunStroke);
-            p.setColor(options.sunStrokeColor);
-            c.drawCircle(x, y, sunRadius, p);
+            paintStroke.setStrokeWidth(sunStroke);
+            c.drawCircle(x, y, sunRadius, paintFill);
+            c.drawCircle(x, y, sunRadius, paintStroke);
         }
 
-        protected void drawMoon(Canvas c, int x, int y, Paint p, WorldMapTask.WorldMapOptions options)
+        protected void drawMoon(Canvas c, int x, int y, @NonNull Paint paintFill, @NonNull Paint paintStroke, WorldMapTask.WorldMapOptions options)
         {
-            if (p == null) {
-                p = new Paint(Paint.ANTI_ALIAS_FLAG);
-            }
-
             double moonDiameter = Math.ceil(c.getWidth() / (double)options.moonScale);
-            int moonRadius = (int)Math.ceil(moonDiameter / 2d);
+            int moonRadius = (int)Math.ceil(moonDiameter * 0.5d);
             int moonStroke = (int)Math.ceil(moonRadius / (double)options.moonStrokeScale);
 
-            p.setStyle(Paint.Style.FILL);
-            p.setColor(options.moonFillColor);
-            c.drawCircle(x, y, moonRadius, p);
-
-            p.setStyle(Paint.Style.STROKE);
-            p.setStrokeWidth(moonStroke);
-            p.setColor(options.moonStrokeColor);
-            c.drawCircle(x, y, moonRadius, p);
+            paintStroke.setStrokeWidth(moonStroke);
+            c.drawCircle(x, y, moonRadius, paintFill);
+            c.drawCircle(x, y, moonRadius, paintStroke);
         }
 
-        public void drawMajorLatitudes(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options) { /* EMPTY */ }
-        public void drawLocations(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options)
+        public void drawMajorLatitudes(Canvas c, int w, int h, WorldMapTask.WorldMapOptions options) { /* EMPTY */ }
+        public void drawLocations(Canvas c, int w, int h, @NonNull Paint p, WorldMapTask.WorldMapOptions options)
         {
-            if (p == null) {
-                p = new Paint(Paint.ANTI_ALIAS_FLAG);
-            }
-
             if (options.locations != null && options.locations.length > 0)
             {
                 for (int i=0; i<options.locations.length; i++)
@@ -381,11 +356,8 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
 
         protected void drawLocation(Canvas c, int x, int y, Paint p, WorldMapTask.WorldMapOptions options)
         {
-            double pointDiameter = (int)Math.ceil(c.getWidth() / (double)options.locationScale);
-            int pointRadius = (int)Math.ceil(pointDiameter / 2d);
-
-            p.setStyle(Paint.Style.FILL);
-            p.setColor(options.locationFillColor);
+            double pointDiameter = (int)Math.ceil(c.getWidth() * options.locationScale);
+            int pointRadius = (int)Math.ceil(pointDiameter * 0.5d);
             c.drawCircle(x, y, pointRadius, p);
         }
 
