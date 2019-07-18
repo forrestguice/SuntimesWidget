@@ -26,6 +26,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.support.annotation.Nullable;
 import android.support.v4.graphics.ColorUtils;
 import android.util.Log;
 
@@ -53,6 +54,11 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
     }
 
     private static double[] matrix = null;    // [x * y * v(3)]
+
+    @Override
+    public double[] getMatrix() {
+        return matrix;
+    }
 
     @Override
     public double[] initMatrix()

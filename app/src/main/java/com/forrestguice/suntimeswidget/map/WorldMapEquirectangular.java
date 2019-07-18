@@ -299,6 +299,11 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
     }
 
     @Override
+    public double[] getMatrix() {
+        return matrix;
+    }
+
+    @Override
     public int[] matrixSize()
     {
         return new int[] {720, 360};

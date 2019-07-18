@@ -28,7 +28,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -223,8 +222,10 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
          */
         public abstract Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options);
         public abstract double[] initMatrix();            // creates flattened multi-dimensional array; [lon][lat][v(3)]
+        public abstract double[] getMatrix();
         public abstract int[] matrixSize();               // [width(lon), height(lat)]
         protected abstract int k(int x, int y, int z);    // returns index into flattened array
+
 
         protected Calendar mapTime(SuntimesRiseSetDataset data, WorldMapTask.WorldMapOptions options)
         {

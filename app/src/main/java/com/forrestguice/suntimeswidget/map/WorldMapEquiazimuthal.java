@@ -292,6 +292,11 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
     private static PorterDuffXfermode mode_srcIn = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
 
     @Override
+    public double[] getMatrix() {
+        return matrix;
+    }
+
+    @Override
     public int[] matrixSize()
     {
         return new int[] {360, 360};
