@@ -22,19 +22,15 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
-import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PathEffect;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.support.annotation.Nullable;
 import android.support.v4.graphics.ColorUtils;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -91,6 +87,56 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         r[0] = (int)(m[0] + ((point[0] / 180d) * m[0]));
         r[1] = (int)(m[1] - ((point[1] / 180d) * m[1]));
         return r;
+    }
+
+    protected int[] initPixels(int w, int h, double[] sunUp, double[] moonUp, WorldMapTask.WorldMapOptions options)
+    {
+        int combinedColor = ColorUtils.compositeColors(options.moonLightColor, options.sunShadowColor);
+
+        int z = 0;
+        int j0, j1, j2;
+        double v0, v1, v2;
+        double sunIntensity, moonIntensity;
+        int[] pixels = new int[w * h];
+        double[] m = getMatrix();
+
+        for (int j = 0; j < h; j++)
+        {
+            j0 = (360 * j);
+            j1 = (360 * (360 + j));
+            j2 = (360 * (720 + j));
+
+            for (int i = 0; i < w; i++)
+            {
+                v0 = m[i + j0];
+                v1 = m[i + j1];
+                v2 = m[i + j2];
+
+                if (options.showSunShadow && options.showMoonLight)
+                {
+                    sunIntensity = (sunUp[0] * v0) + (sunUp[1] * v1) + (sunUp[2] * v2);
+                    moonIntensity = (moonUp[0] * v0) + (moonUp[1] * v1) + (moonUp[2] * v2);
+
+                    if (sunIntensity <= 0 && moonIntensity > 0) {
+                        pixels[z] = combinedColor;
+                    } else if (sunIntensity <= 0) {
+                        pixels[z] = options.sunShadowColor;
+                    } else if (moonIntensity > 0) {
+                        pixels[z] = options.moonLightColor;
+                    }
+
+                } else if (options.showSunShadow) {
+                    sunIntensity = (sunUp[0] * v0) + (sunUp[1] * v1) + (sunUp[2] * v2);
+                    pixels[z] = (sunIntensity <= 0) ? options.sunShadowColor : Color.TRANSPARENT;
+
+                } else if (options.showMoonLight) {
+                    moonIntensity = (moonUp[0] * v0) + (moonUp[1] * v1) + (moonUp[2] * v2);
+                    pixels[z] = (moonIntensity > 0) ? options.moonLightColor : Color.TRANSPARENT;
+                }
+                z++;
+            }
+        }
+        return pixels;
     }
 
     @Override
@@ -169,49 +215,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
             {
                 int[] size = matrixSize();
                 Bitmap lightBitmap = Bitmap.createBitmap(size[0], size[1], Bitmap.Config.ARGB_8888);
-                int combinedColor = ColorUtils.compositeColors(options.moonLightColor, options.sunShadowColor);
-
-                int z = 0;
-                int j0, j1, j2;
-                double v0, v1, v2;
-                double sunIntensity, moonIntensity;
-                int[] pixels = new int[size[0] * size[1]];
-                for (int j = 0; j < size[1]; j++)
-                {
-                    j0 = (360 * j);
-                    j1 = (360 * (360 + j));
-                    j2 = (360 * (720 + j));
-
-                    for (int i = 0; i < size[0]; i++)
-                    {
-                        v0 = matrix[i + j0];
-                        v1 = matrix[i + j1];
-                        v2 = matrix[i + j2];
-
-                        if (options.showSunShadow && options.showMoonLight)
-                        {
-                            sunIntensity = (sunUp[0] * v0) + (sunUp[1] * v1) + (sunUp[2] * v2);
-                            moonIntensity = (moonUp[0] * v0) + (moonUp[1] * v1) + (moonUp[2] * v2);
-
-                            if (sunIntensity <= 0 && moonIntensity > 0) {
-                                pixels[z] = combinedColor;
-                            } else if (sunIntensity <= 0) {
-                                pixels[z] = options.sunShadowColor;
-                            } else if (moonIntensity > 0) {
-                                pixels[z] = options.moonLightColor;
-                            }
-
-                        } else if (options.showSunShadow) {
-                            sunIntensity = (sunUp[0] * v0) + (sunUp[1] * v1) + (sunUp[2] * v2);
-                            pixels[z] = (sunIntensity <= 0) ? options.sunShadowColor : Color.TRANSPARENT;
-
-                        } else if (options.showMoonLight) {
-                            moonIntensity = (moonUp[0] * v0) + (moonUp[1] * v1) + (moonUp[2] * v2);
-                            pixels[z] = (moonIntensity > 0) ? options.moonLightColor : Color.TRANSPARENT;
-                        }
-                        z++;
-                    }
-                }
+                int[] pixels = initPixels(size[0], size[1], sunUp, moonUp, options);
                 lightBitmap.setPixels(pixels, 0, size[0], 0, 0, size[0], size[1]);
 
                 p.setDither(true);

@@ -198,50 +198,8 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
             {
                 int[] size = matrixSize();
                 Bitmap lightBitmap = Bitmap.createBitmap(size[0], size[1], Bitmap.Config.ARGB_8888);
-                int combinedColor = ColorUtils.compositeColors(options.moonLightColor, options.sunShadowColor);
-
-                int j0, j1, j2;
-                double v0, v1, v2;
-                double sunIntensity, moonIntensity;
-                for (int j = 0; j < size[1]; j++)
-                {
-                    j0 = (360 * j);
-                    j1 = (360 * (360 + j));
-                    j2 = (360 * (720 + j));
-
-                    for (int i = 0; i < size[0]; i++)
-                    {
-                        v0 = matrix[i + j0];
-                        v1 = matrix[i + j1];
-                        v2 = matrix[i + j2];
-
-                        if (options.showSunShadow && options.showMoonLight)
-                        {
-                            sunIntensity = (sunUp[0] * v0) + (sunUp[1] * v1) + (sunUp[2] * v2);
-                            moonIntensity = (moonUp[0] * v0) + (moonUp[1] * v1) + (moonUp[2] * v2);
-
-                            if (sunIntensity <= 0 && moonIntensity > 0) {
-                                lightBitmap.setPixel(i, j, combinedColor);
-                            } else if (sunIntensity <= 0) {
-                                lightBitmap.setPixel(i, j, options.sunShadowColor);
-                            } else if (moonIntensity > 0) {
-                                lightBitmap.setPixel(i, j, options.moonLightColor);
-                            }
-
-                        } else if (options.showSunShadow) {
-                            sunIntensity = (sunUp[0] * v0) + (sunUp[1] * v1) + (sunUp[2] * v2);
-                            if (sunIntensity <= 0) {
-                                lightBitmap.setPixel(i, j, options.sunShadowColor);
-                            }
-
-                        } else if (options.showMoonLight) {
-                            moonIntensity = (moonUp[0] * v0) + (moonUp[1] * v1) + (moonUp[2] * v2);
-                            if (moonIntensity > 0) {
-                                lightBitmap.setPixel(i, j, options.moonLightColor);
-                            }
-                        }
-                    }
-                }
+                int[] pixels = initPixels(size[0], size[1], sunUp, moonUp, options);
+                lightBitmap.setPixels(pixels, 0, size[0], 0, 0, size[0], size[1]);
 
                 p.setDither(true);
                 p.setAntiAlias(true);
