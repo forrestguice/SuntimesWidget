@@ -341,17 +341,37 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             }
 
             drawTask = new WorldMapTask();
-            drawTask.setListener(new WorldMapTaskListener()
+            drawTask.setListener(new WorldMapTask.WorldMapTaskListener()
             {
                 @Override
-                public void onFinished(Bitmap result)
+                public void onStarted()
                 {
-                    mapW = result.getWidth();
-                    mapH = result.getHeight();
-                    setImageBitmap(result);
+                    if (mapListener != null) {
+                        mapListener.onStarted();
+                    }
+                }
+
+                @Override
+                public void onFrame(Bitmap frame, int offsetMinutes)
+                {
+                    mapW = frame.getWidth();
+                    mapH = frame.getHeight();
+                    setImageBitmap(frame);
 
                     if (mapListener != null) {
-                        mapListener.onFinished(result);
+                        mapListener.onFrame(frame, offsetMinutes);
+                    }
+                }
+
+                @Override
+                public void onFinished(Bitmap frame)
+                {
+                    mapW = frame.getWidth();
+                    mapH = frame.getHeight();
+                    setImageBitmap(frame);
+
+                    if (mapListener != null) {
+                        mapListener.onFinished(frame);
                     }
                 }
             });
@@ -419,10 +439,6 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     }
 
     private Bitmap bitmap;
-    public Bitmap getBitmap()
-    {
-        return bitmap;
-    }
 
     public void shareBitmap()
     {
