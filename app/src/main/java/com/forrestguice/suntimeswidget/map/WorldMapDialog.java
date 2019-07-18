@@ -318,6 +318,12 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             worldmap.setMapTaskListener(new WorldMapTask.WorldMapTaskListener()
             {
                 @Override
+                public void onFrame(Bitmap result, int offsetMinutes)
+                {
+                    expandSheet(getDialog());
+                }
+
+                @Override
                 public void onFinished(Bitmap result) {
                     expandSheet(getDialog());
                 }

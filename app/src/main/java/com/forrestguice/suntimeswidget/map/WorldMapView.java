@@ -60,6 +60,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     private boolean resizable = true;
     private int mapW = 0, mapH = 0;
     private int maxUpdateRate = DEFAULT_MAX_UPDATE_RATE;
+    private boolean animated = false;
 
     public WorldMapView(Context context)
     {
@@ -380,7 +381,12 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             });
 
             Log.w(LOGTAG, "updateViews: " + w + ", " + h );
-            drawTask.execute(data, w, h, options, projection);
+            if (animated) {
+                drawTask.execute(data, w, h, options, projection, 0, 3, 66, options.offsetMinutes); // frames 1 minute apart, each shown for 66 ms
+
+            } else {
+                drawTask.execute(data, w, h, options, projection, 1, 0, 0, options.offsetMinutes);
+            }
             options.modified = false;
             lastUpdate = System.currentTimeMillis();
         }
@@ -437,8 +443,10 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     @Override
     public void setImageBitmap(Bitmap b)
     {
-        this.bitmap = b;
         super.setImageBitmap(b);
+        bitmap = b;
+        postInvalidate();
+        Log.d("WorldMapView", "setImageBitmap");
     }
 
     private Bitmap bitmap;
@@ -536,6 +544,32 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             drawTask.cancel(true);
         }
     }
+
+    public void startAnimation()
+    {
+        animated = true;
+        updateViews(true);
+    }
+
+    public void stopAnimation()
+    {
+        animated = false;
+        if (drawTask != null) {
+            drawTask.cancel(true);
+        }
+    }
+
+    public void resetAnimation()
+    {
+        stopAnimation();
+        options.offsetMinutes = 0;
+        updateViews(true);
+    }
+
+    public void setOffsetMinutes( int offsetMinutes )
+    {
+        options.offsetMinutes = offsetMinutes;
+        updateViews(true);
     }
 
 }

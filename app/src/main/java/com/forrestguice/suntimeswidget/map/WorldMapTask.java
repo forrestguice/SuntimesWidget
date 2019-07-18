@@ -23,7 +23,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -32,7 +31,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -62,6 +60,10 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
     protected Bitmap doInBackground(Object... params)
     {
         int w, h;
+        int numFrames = 1;
+        int frameOffset = 60;
+        long frameDuration = 250000000;    // nanoseconds (250 ms)
+        int initialOffset = 0;
         SuntimesRiseSetDataset data;
         try {
             data = (SuntimesRiseSetDataset)params[0];
@@ -73,12 +75,49 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
             if (params.length > 4) {
                 projection = (WorldMapProjection) params[4];
             }
+            if (params.length > 5) {
+                numFrames = (int)params[5];
+            }
+            if (params.length > 6) {
+                frameOffset = (int)params[6];
+            }
+            if (params.length > 7) {
+                frameDuration = (int)params[7] * 1000000;   // ms to ns
+            }
+            if (params.length > 8) {
+                initialOffset = (int)params[8];
+            }
 
         } catch (ClassCastException e) {
             Log.w("WorldMapTask", "Invalid params; using [null, 0, 0]");
             return null;
         }
-        return makeBitmap(data, w, h, options);
+
+        long time0 = System.nanoTime();
+        Bitmap frame = null;
+        options.offsetMinutes = initialOffset;
+
+        int i = 0;
+        while (i < numFrames || numFrames <= 0)      // loop until canceled if numFrames less than 1
+        {
+            if (isCancelled()) {
+                break;
+            }
+
+            frame = makeBitmap(data, w, h, options);
+
+            long time1 = System.nanoTime();
+            while ((time1 - time0) < frameDuration) {
+                time1 = System.nanoTime();
+            }
+
+            publishProgress(frame);
+            options.offsetMinutes += frameOffset;
+            time0 = System.nanoTime();
+            i++;
+        }
+        options.offsetMinutes -= frameOffset;
+        return frame;
     }
 
     public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapOptions options)
