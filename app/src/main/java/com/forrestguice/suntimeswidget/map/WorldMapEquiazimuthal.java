@@ -30,6 +30,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.support.annotation.Nullable;
 import android.support.v4.graphics.ColorUtils;
 import android.util.Log;
 
@@ -170,9 +171,11 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
                 Bitmap lightBitmap = Bitmap.createBitmap(size[0], size[1], Bitmap.Config.ARGB_8888);
                 int combinedColor = ColorUtils.compositeColors(options.moonLightColor, options.sunShadowColor);
 
+                int z = 0;
                 int j0, j1, j2;
                 double v0, v1, v2;
                 double sunIntensity, moonIntensity;
+                int[] pixels = new int[size[0] * size[1]];
                 for (int j = 0; j < size[1]; j++)
                 {
                     j0 = (360 * j);
@@ -191,27 +194,25 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
                             moonIntensity = (moonUp[0] * v0) + (moonUp[1] * v1) + (moonUp[2] * v2);
 
                             if (sunIntensity <= 0 && moonIntensity > 0) {
-                                lightBitmap.setPixel(i, j, combinedColor);
+                                pixels[z] = combinedColor;
                             } else if (sunIntensity <= 0) {
-                                lightBitmap.setPixel(i, j, options.sunShadowColor);
+                                pixels[z] = options.sunShadowColor;
                             } else if (moonIntensity > 0) {
-                                lightBitmap.setPixel(i, j, options.moonLightColor);
+                                pixels[z] = options.moonLightColor;
                             }
 
                         } else if (options.showSunShadow) {
                             sunIntensity = (sunUp[0] * v0) + (sunUp[1] * v1) + (sunUp[2] * v2);
-                            if (sunIntensity <= 0) {
-                                lightBitmap.setPixel(i, j, options.sunShadowColor);
-                            }
+                            pixels[z] = (sunIntensity <= 0) ? options.sunShadowColor : Color.TRANSPARENT;
 
                         } else if (options.showMoonLight) {
                             moonIntensity = (moonUp[0] * v0) + (moonUp[1] * v1) + (moonUp[2] * v2);
-                            if (moonIntensity > 0) {
-                                lightBitmap.setPixel(i, j, options.moonLightColor);
-                            }
+                            pixels[z] = (moonIntensity > 0) ? options.moonLightColor : Color.TRANSPARENT;
                         }
+                        z++;
                     }
                 }
+                lightBitmap.setPixels(pixels, 0, size[0], 0, 0, size[0], size[1]);
 
                 p.setDither(true);
                 p.setAntiAlias(true);
@@ -259,24 +260,23 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
 
         ////////////////
         // draw background color
+        Paint paintMask = new Paint(Paint.ANTI_ALIAS_FLAG);
         if (options.hasTransparentBaseMap)
         {
-            Paint paintBackground = new Paint();
-            paintBackground.setColor(options.backgroundColor);
-            paintBackground.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
-            c.drawCircle((float)mid[0], (float)mid[1], (float)mid[0] - 2, paintBackground);
+            paintMask.setColor(options.backgroundColor);
+            paintMask.setXfermode(mode_dstOver);
+            c.drawCircle((float)mid[0], (float)mid[1], (float)mid[0] - 2, paintMask);
         }
 
         // mask final image to fit within a circle (fixes fuzzy edges from base maps)
         Bitmap masked = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         Canvas maskedCanvas = new Canvas(masked);
-        Paint paintMask = new Paint(Paint.ANTI_ALIAS_FLAG);
 
         paintMask.setColor(Color.WHITE);
-        paintMask.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+        paintMask.setXfermode(mode_srcOver);
         maskedCanvas.drawCircle((float)mid[0], (float)mid[1], (float)mid[0] - 2, paintMask);
 
-        paintMask.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        paintMask.setXfermode(mode_srcIn);
         maskedCanvas.drawBitmap(b, 0, 0, paintMask);
         b.recycle();
 
@@ -286,6 +286,10 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
     }
 
     private static double[] matrix = null;    // [x * y * v(3)]
+
+    private static PorterDuffXfermode mode_dstOver = new PorterDuffXfermode(PorterDuff.Mode.DST_OVER);
+    private static PorterDuffXfermode mode_srcOver = new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER);
+    private static PorterDuffXfermode mode_srcIn = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
 
     @Override
     public int[] matrixSize()
@@ -357,7 +361,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         if (p == null) {
             p = new Paint(Paint.ANTI_ALIAS_FLAG);
         }
-        p.setXfermode(new PorterDuffXfermode( options.hasTransparentBaseMap ? PorterDuff.Mode.DST_OVER : PorterDuff.Mode.SRC_OVER ));
+        p.setXfermode(options.hasTransparentBaseMap ? mode_dstOver : mode_srcOver);
 
         Paint.Style prevStyle = p.getStyle();
         PathEffect prevEffect = p.getPathEffect();
