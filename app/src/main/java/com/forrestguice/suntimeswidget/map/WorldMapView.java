@@ -405,16 +405,8 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         return true;
     }
 
-    /**
-     * WorldMapTaskListener
-     */
-    @SuppressWarnings("EmptyMethod")
-    public static abstract class WorldMapTaskListener
-    {
-        public void onFinished( Bitmap result ) {}
-    }
-    private WorldMapTaskListener mapListener = null;
-    public void setMapTaskListener( WorldMapTaskListener listener )
+    private WorldMapTask.WorldMapTaskListener mapListener = null;
+    public void setMapTaskListener( WorldMapTask.WorldMapTaskListener listener )
     {
         mapListener = listener;
     }

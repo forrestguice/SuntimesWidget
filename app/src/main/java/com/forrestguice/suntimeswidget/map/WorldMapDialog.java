@@ -288,7 +288,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         showEmptyView(!featureSupported);
         if (featureSupported)
         {
-            worldmap.setMapTaskListener(new WorldMapView.WorldMapTaskListener()
+            worldmap.setMapTaskListener(new WorldMapTask.WorldMapTaskListener()
             {
                 @Override
                 public void onFinished(Bitmap result) {

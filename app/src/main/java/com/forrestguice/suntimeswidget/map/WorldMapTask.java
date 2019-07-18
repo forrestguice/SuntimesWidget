@@ -89,6 +89,9 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
     @Override
     protected void onPreExecute()
     {
+        if (listener != null) {
+            listener.onStarted();
+        }
     }
 
     @Override
@@ -116,14 +119,9 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
         }
     }
 
-    private WorldMapView.WorldMapTaskListener listener = null;
-    public void setListener( WorldMapView.WorldMapTaskListener listener )
-    {
+    private WorldMapTaskListener listener = null;
+    public void setListener( WorldMapTaskListener listener ) {
         this.listener = listener;
-    }
-    public void clearListener()
-    {
-        this.listener = null;
     }
 
     /**
@@ -352,6 +350,17 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
             c.drawCircle(x, y, pointRadius, p);
         }
 
+    }
+
+    /**
+     * WorldMapTaskListener
+     */
+    @SuppressWarnings("EmptyMethod")
+    public static abstract class WorldMapTaskListener
+    {
+        public void onStarted() {}
+        public void onFrame( Bitmap frame, int offsetMinutes ) {}
+        public void onFinished( Bitmap result ) {}
     }
 
 }
