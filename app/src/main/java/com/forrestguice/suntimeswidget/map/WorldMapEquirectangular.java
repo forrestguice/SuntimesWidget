@@ -128,12 +128,15 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
             if (options.showSunPosition || options.showMoonPosition)
             {
                 int[] size = matrixSize();
-                Bitmap sunMaskBitmap = Bitmap.createBitmap(size[0], size[1], Bitmap.Config.ARGB_8888);
-                Bitmap moonMaskBitmap = Bitmap.createBitmap(size[0], size[1], Bitmap.Config.ARGB_8888);
+                Bitmap sunMaskBitmap = Bitmap.createBitmap(size[0], size[1], Bitmap.Config.ARGB_4444);
+                Bitmap moonMaskBitmap = Bitmap.createBitmap(size[0], size[1], Bitmap.Config.ARGB_4444);
 
+                int z = 0;
                 int k0, k1, k2;
                 double v0, v1, v2;
                 double sunIntensity, moonIntensity;
+                int[] sun_pixels = new int[size[0] * size[1]];
+                int[] moon_pixels = new int[size[0] * size[1]];
                 for (int j = 0; j < size[1]; j++)
                 {
                     k0 = size[0] * j;
@@ -149,8 +152,8 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
                         if (options.showSunShadow)
                         {
                             sunIntensity = (sunUp[0] * v0) + (sunUp[1] * v1) + (sunUp[2] * v2);    // intensity = up.dotProduct(v)
-                            if (sunIntensity <= 0) {                                                               // values less equal 0 are in shadow
-                                sunMaskBitmap.setPixel(i, j, Color.WHITE);
+                            if (sunIntensity <= 0) {
+                                sun_pixels[z] = Color.WHITE;
                             }
                         }
 
@@ -158,11 +161,14 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
                         {
                             moonIntensity = (moonUp[0] * v0) + (moonUp[1] * v1) + (moonUp[2] * v2);
                             if (moonIntensity > 0) {
-                                moonMaskBitmap.setPixel(i, j, Color.WHITE);
+                                moon_pixels[z] = Color.WHITE;
                             }
                         }
+                        z++;
                     }
                 }
+                sunMaskBitmap.setPixels(sun_pixels, 0, size[0], 0, 0, size[0], size[1]);
+                moonMaskBitmap.setPixels(moon_pixels, 0, size[0], 0, 0, size[0], size[1]);
 
                 Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
                 p.setColor(Color.WHITE);
