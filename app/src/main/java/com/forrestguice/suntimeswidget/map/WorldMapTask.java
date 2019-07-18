@@ -23,13 +23,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -42,7 +42,7 @@ import java.util.Calendar;
 /**
  * WorldMapTask
  */
-public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
+public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
 {
     private WorldMapProjection projection = new WorldMapEquirectangular();
     private WorldMapOptions options = new WorldMapOptions();
@@ -95,29 +95,28 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
     }
 
     @Override
-    protected void onProgressUpdate( Void... progress )
-    {
-    }
-
-    @Override
-    protected void onPostExecute( Bitmap result )
-    {
-        if (isCancelled())
-        {
-            result = null;
-        }
-        onFinished(result);
-    }
-
-    /////////////////////////////////////////////
-
-    protected void onFinished( Bitmap result )
+    protected void onProgressUpdate( Bitmap... frames )
     {
         if (listener != null)
         {
-            listener.onFinished(result);
+            for (int i=0; i<frames.length; i++) {
+                listener.onFrame(frames[i], options.offsetMinutes);
+            }
         }
     }
+
+    @Override
+    protected void onPostExecute( Bitmap lastFrame )
+    {
+        if (isCancelled()) {
+            lastFrame = null;
+        }
+        if (listener != null) {
+            listener.onFinished(lastFrame);
+        }
+    }
+
+    /////////////////////////////////////////////
 
     private WorldMapTaskListener listener = null;
     public void setListener( WorldMapTaskListener listener ) {
