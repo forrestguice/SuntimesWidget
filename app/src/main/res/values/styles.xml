@@ -99,6 +99,9 @@
         <item name="icActionShare">@drawable/ic_action_share_light</item>
         <item name="icActionSnooze">@drawable/ic_action_snooze_light</item>
 
+        <item name="icActionPlay">@drawable/ic_action_play_light</item>
+        <item name="icActionPause">@drawable/ic_action_pause_light</item>
+
         <item name="windowActionModeOverlay">true</item>
     </style>
     <style name="AppTheme.Light" parent="AppThemeBase.Light">
@@ -200,6 +203,9 @@
         <item name="icActionCancel">@drawable/ic_action_cancel</item>
         <item name="icActionShare">@drawable/ic_action_share</item>
         <item name="icActionSnooze">@drawable/ic_action_snooze</item>
+
+        <item name="icActionPlay">@drawable/ic_action_play</item>
+        <item name="icActionPause">@drawable/ic_action_pause</item>
 
         <item name="windowActionModeOverlay">true</item>
     </style>

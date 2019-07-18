@@ -93,6 +93,9 @@
     <attr name="icActionShare" format="reference" />
     <attr name="icActionSnooze" format="reference" />
 
+    <attr name="icActionPlay" format="reference" />
+    <attr name="icActionPause" format="reference" />
+
     <attr name="icActionNext" format="reference" />
     <attr name="icActionPrevious" format="reference" />
 
