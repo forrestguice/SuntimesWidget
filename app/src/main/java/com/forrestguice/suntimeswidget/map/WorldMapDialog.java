@@ -18,12 +18,15 @@
 
 package com.forrestguice.suntimeswidget.map;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,6 +34,8 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.AlertDialog;
 
 import android.support.v7.widget.PopupMenu;
@@ -77,6 +82,11 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode> mapAdapter;
     private WorldMapWidgetSettings.WorldMapWidgetMode mapMode = null;
 
+    private int color_disabled = Color.DKGRAY;
+    private int color_pressed = Color.BLUE;
+    private int color_normal = Color.WHITE;
+    private int color_accent = Color.GREEN;
+
     private SuntimesUtils utils = new SuntimesUtils();
 
     private SuntimesRiseSetDataset data;
@@ -90,8 +100,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     {
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
         dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_worldmap, parent, false);
-        WorldMapWidgetSettings.initDisplayStrings(dialogContent.getContext());
 
+        initLocale(getContext());
         initViews(getContext(), dialogContent);
         if (savedState != null) {
             Log.d(LOGTAG, "WorldMapDialog onCreate (restoreState)");
@@ -180,6 +190,20 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
     };
 
+    @SuppressLint("ResourceType")
+    private void initLocale(Context context)
+    {
+        WorldMapWidgetSettings.initDisplayStrings(dialogContent.getContext());
+
+        int[] colorAttrs = { R.attr.text_disabledColor, R.attr.buttonPressColor, android.R.attr.textColorPrimary, R.attr.text_accentColor };
+        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+        color_disabled = ContextCompat.getColor(context, typedArray.getResourceId(0, color_disabled));
+        color_pressed = ContextCompat.getColor(context, typedArray.getResourceId(1, color_pressed));
+        color_normal = ContextCompat.getColor(context, typedArray.getResourceId(2, color_normal));
+        color_accent = ContextCompat.getColor(context, typedArray.getResourceId(3, color_accent));
+        typedArray.recycle();
+    }
+
     public void initViews(final Context context, View dialogView)
     {
         dialogTitle = (TextView)dialogView.findViewById(R.id.worldmapdialog_title);
@@ -238,6 +262,9 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             dialogTitle.setTextColor(themeOverride.getTitleColor());
             utcTime.setTextColor(themeOverride.getTimeColor());
             worldmap.themeViews(context, themeOverride);
+            color_pressed = themeOverride.getActionColor();
+            color_normal = themeOverride.getTitleColor();
+            color_accent = themeOverride.getAccentColor();
         }
     }
 
