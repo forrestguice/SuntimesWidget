@@ -283,9 +283,12 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         boolean sameData = (this.data == data);
         this.data = data;
 
+        boolean wasCancelled = false;
         if (drawTask != null && drawTask.getStatus() == AsyncTask.Status.RUNNING)
         {
+            Log.w("WorldMapView", "updateViews: task already running");
             drawTask.cancel(true);
+            wasCancelled = true;
         }
 
         int w = getWidth();
@@ -334,7 +337,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             boolean throttleUpdate = ((System.currentTimeMillis() - lastUpdate) < maxUpdateRate);
 
             boolean skipUpdate = (sameData && sameDimensions && sameOptions && throttleUpdate);
-            if (skipUpdate)
+            if (skipUpdate && !wasCancelled)
             {
                 Log.w(LOGTAG, "updateViews: " + w + ", " + h + " (image is unchanged; skipping)");
                 return;
@@ -518,11 +521,21 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         }
     }
 
+    /**@Override
+    protected void onAttachedToWindow()
+    {
+        super.onAttachedToWindow();
+    }*/
+
     @Override
-    public void onDetachedFromWindow()
+    protected void onDetachedFromWindow()
     {
         super.onDetachedFromWindow();
         dismissProgress();
+        if (drawTask != null) {
+            drawTask.cancel(true);
+        }
+    }
     }
 
 }
