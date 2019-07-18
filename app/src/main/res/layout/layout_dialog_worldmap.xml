@@ -68,10 +68,41 @@
 
     </FrameLayout>
 
+    <LinearLayout android:id="@+id/media_actions"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center_vertical"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/info_time_worldmap_layout">
+
+        <ImageButton
+            android:id="@+id/media_reset_map"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:background="@null"
+            android:src="?attr/icActionTime" />
+
+        <ImageButton
+            android:id="@+id/media_play_map"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:background="@null"  android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+            android:src="?attr/icActionPlay" />
+
+        <ImageButton android:visibility="gone"
+            android:id="@+id/media_pause_map"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:background="@null"  android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+            android:src="?attr/icActionPause" />
+
+        <SeekBar
+            android:id="@+id/seek_map"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.SeekBar.Discrete" />
+
+    </LinearLayout>
+
     <RadioGroup android:id="@+id/radio_group"
         android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="horizontal" android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@+id/info_time_worldmap_layout">
+        android:orientation="horizontal" android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/media_actions">
 
         <RadioButton android:id="@+id/radio_sun"
             android:layout_width="wrap_content"
@@ -91,5 +122,6 @@
             android:layout_weight="1"
             android:text="@string/worldmap_dialog_option_all" />
     </RadioGroup>
+
 
 </android.support.constraint.ConstraintLayout>

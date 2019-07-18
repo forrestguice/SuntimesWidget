@@ -49,7 +49,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.MediaController;
 import android.widget.RadioButton;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -78,6 +81,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private View dialogContent = null;
     private TextView utcTime;
     private Spinner mapSelector;
+    private SeekBar seekbar;
+    private ImageButton playButton, pauseButton, resetButton;
     private View radioGroup;
     private ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode> mapAdapter;
     private WorldMapWidgetSettings.WorldMapWidgetMode mapMode = null;
@@ -252,6 +257,44 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             option_moon.setOnClickListener(onRadioButtonClicked);
             option_sunmoon.setOnClickListener(onRadioButtonClicked);
         }
+
+        seekbar = (SeekBar)dialogView.findViewById(R.id.seek_map);
+        if (seekbar != null)
+        {
+            seekbar.setMax(seek_totalMinutes);
+            seekbar.setProgress(seek_now);
+            seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
+            {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {}
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {}
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    worldmap.setOffsetMinutes(seek_now - seekBar.getProgress());
+                    resetButton.setEnabled(true);
+                }
+            });
+        }
+
+        playButton = (ImageButton)dialogView.findViewById(R.id.media_play_map);
+        if (playButton != null) {
+            playButton.setOnClickListener(playClickListener);
+            ImageViewCompat.setImageTintList(playButton, SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
+        }
+
+        pauseButton = (ImageButton)dialogView.findViewById(R.id.media_pause_map);
+        if (pauseButton != null) {
+            pauseButton.setOnClickListener(pauseClickListener);
+            ImageViewCompat.setImageTintList(pauseButton, SuntimesUtils.colorStateList(color_accent, color_disabled, color_pressed));
+        }
+
+        resetButton = (ImageButton)dialogView.findViewById(R.id.media_reset_map);
+        if (resetButton != null) {
+            resetButton.setOnClickListener(resetClickListener);
+            ImageViewCompat.setImageTintList(resetButton, SuntimesUtils.colorStateList(color_accent, color_disabled, color_pressed));
+            resetButton.setEnabled(false);
+        }
     }
 
     @SuppressWarnings("ResourceType")
@@ -321,6 +364,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                 public void onFrame(Bitmap result, int offsetMinutes)
                 {
                     expandSheet(getDialog());
+                    if (seekbar != null)
+                    {
+                        int progress = seek_now - offsetMinutes;
+                        if (progress > 0 && progress <seek_totalMinutes) {
+                            seekbar.setProgress(progress);
+                        }
+                    }
                 }
 
                 @Override
@@ -464,5 +514,58 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             }
         }
     };
+
+    private int seek_totalMinutes = 12 * 60 * 2;  // +- 12 hours
+    private int seek_now = seek_totalMinutes / 2;     // with "now" at center point
+
+    private View.OnClickListener playClickListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            playMap();
+        }
+    };
+    private void playMap()
+    {
+        if (playButton != null) {
+            playButton.setVisibility(View.GONE);
+        }
+        if (pauseButton != null) {
+            pauseButton.setVisibility(View.VISIBLE);
+        }
+        resetButton.setEnabled(true);
+        worldmap.startAnimation();
+    }
+
+    private View.OnClickListener pauseClickListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            stopMap(false);
+        }
+    };
+    private View.OnClickListener resetClickListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            stopMap(true);
+        }
+    };
+    private void stopMap(boolean reset)
+    {
+        if (pauseButton != null) {
+            pauseButton.setVisibility(View.GONE);
+        }
+        if (playButton != null) {
+            playButton.setVisibility(View.VISIBLE);
+        }
+        if (reset) {
+            worldmap.resetAnimation();
+            resetButton.setEnabled(false);
+
+        } else {
+            worldmap.stopAnimation();
+        }
+    }
 
 }
