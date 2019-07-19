@@ -21,7 +21,6 @@ package com.forrestguice.suntimeswidget.map;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
@@ -97,12 +96,11 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         options.offsetMinutes = initialOffset;
 
         int i = 0;
-        while (i < numFrames || numFrames <= 0)      // loop until canceled if numFrames less than 1
+        while (i < numFrames || numFrames <= 0)
         {
             if (isCancelled()) {
                 break;
             }
-
             frame = makeBitmap(data, w, h, options);
 
             long time1 = System.nanoTime();
@@ -215,8 +213,6 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
      */
     public static abstract class WorldMapProjection
     {
-        public abstract int[] toBitmapCoords(int w, int h, double lat, double lon);
-
         /**
          * algorithm described at https://gis.stackexchange.com/questions/17184/method-to-shade-or-overlay-a-raster-map-to-reflect-time-of-day-and-ambient-light
          */
@@ -226,6 +222,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         public abstract double[] getMatrix();
         public abstract int[] matrixSize();               // [width(lon), height(lat)]
         protected abstract int k(int x, int y, int z);    // returns index into flattened array
+        public abstract int[] toBitmapCoords(int w, int h, double[] mid, double lat, double lon);
 
         protected Calendar mapTime(SuntimesRiseSetDataset data, WorldMapTask.WorldMapOptions options)
         {
@@ -340,14 +337,15 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
             c.drawCircle(x, y, moonRadius, paintStroke);
         }
 
-        public void drawMajorLatitudes(Canvas c, int w, int h, WorldMapTask.WorldMapOptions options) { /* EMPTY */ }
+        public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options) { /* EMPTY */ }
         public void drawLocations(Canvas c, int w, int h, @NonNull Paint p, WorldMapTask.WorldMapOptions options)
         {
             if (options.locations != null && options.locations.length > 0)
             {
+                double[] mid = new double[] { w/2, h/2d };
                 for (int i=0; i<options.locations.length; i++)
                 {
-                    int[] point = toBitmapCoords(w, h, options.locations[i][0], options.locations[i][1]);
+                    int[] point = toBitmapCoords(w, h, mid, options.locations[i][0], options.locations[i][1]);
                     drawLocation(c, point[0], point[1], p, options);
                     Log.d("DEBUG", "drawLocations: " + options.locations[i][0] + ", " + options.locations[i][1]);
                 }

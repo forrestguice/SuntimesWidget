@@ -29,6 +29,7 @@ import android.graphics.PathEffect;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.support.annotation.Nullable;
 import android.support.v4.graphics.ColorUtils;
 import android.util.Log;
 
@@ -77,16 +78,12 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
     }
 
     @Override
-    public int[] toBitmapCoords(int w, int h, double lat, double lon)
+    public int[] toBitmapCoords(int w, int h, double[] mid, double lat, double lon)
     {
-        double[] m = new double[2];
-        m[0] = w/2d;
-        m[1] = h/2d;
-
         double[] point = toCartesian(toPolar(lat, lon));
         int[] r = new int[2];
-        r[0] = (int)(m[0] + ((point[0] / 180d) * m[0]));
-        r[1] = (int)(m[1] - ((point[1] / 180d) * m[1]));
+        r[0] = (int)(mid[0] + ((point[0] / 180d) * mid[0]));
+        r[1] = (int)(mid[1] - ((point[1] / 180d) * mid[1]));
         return r;
     }
 
@@ -225,7 +222,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         // draw base map
         drawMap(c, w, h, paintForeground, options);
         if (options.showMajorLatitudes) {
-            drawMajorLatitudes(c, w, h, options);
+            drawMajorLatitudes(c, w, h, mid, options);
         }
 
         drawData: if (data != null)
@@ -415,7 +412,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
     private static double r_polar = (66.560833 / 180d);
 
     @Override
-    public void drawMajorLatitudes(Canvas c, int w, int h, WorldMapTask.WorldMapOptions options)
+    public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
     {
         Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
         p.setXfermode(options.hasTransparentBaseMap ? new PorterDuffXfermode(PorterDuff.Mode.DST_OVER) : new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
@@ -423,10 +420,6 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         Paint.Style prevStyle = p.getStyle();
         PathEffect prevEffect = p.getPathEffect();
         float prevStrokeWidth = p.getStrokeWidth();
-
-        double[] mid = new double[2];
-        mid[0] = w/2d;
-        mid[1] = h/2d;
 
         double equator = mid[1] * r_equator;
         double tropics = mid[1] * r_tropics;

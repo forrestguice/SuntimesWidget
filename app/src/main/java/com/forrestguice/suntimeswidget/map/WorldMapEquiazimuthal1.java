@@ -147,7 +147,7 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
         // draw base map
         drawMap(c, w, h, paintForeground, options);
         if (options.showMajorLatitudes) {
-            drawMajorLatitudes(c, w, h, options);
+            drawMajorLatitudes(c, w, h, mid, options);
         }
 
         drawData: if (data != null)

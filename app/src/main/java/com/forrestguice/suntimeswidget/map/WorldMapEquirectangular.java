@@ -27,6 +27,7 @@ import android.graphics.Paint;
 import android.graphics.PathEffect;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -42,15 +43,11 @@ import java.util.Calendar;
 public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
 {
     @Override
-    public int[] toBitmapCoords(int w, int h, double lat, double lon)
+    public int[] toBitmapCoords(int w, int h, double[] mid, double lat, double lon)
     {
-        double[] m = new double[2];
-        m[0] = w/2d;
-        m[1] = h/2d;
-
         int[] r = new int[2];
-        r[0] = (int) (m[0] + ((lon / 180d) * m[0]));
-        r[1] = (int) (m[1] - ((lat / 90d) * m[1]));
+        r[0] = (int) (mid[0] + ((lon / 180d) * mid[0]));
+        r[1] = (int) (mid[1] - ((lat / 90d) * mid[1]));
         return r;
     }
 
@@ -141,10 +138,10 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
 
         drawMap(c, w, h, paintForeground, options);
         if (options.showMajorLatitudes) {
-            drawMajorLatitudes(c, w, h, options);
+            drawMajorLatitudes(c, w, h, mid, options);
         }
         if (options.showGrid) {
-            drawGrid(c, w, h, null, options);
+            drawGrid(c, w, h, mid, null, options);
         }
 
         drawData: if (data != null)
@@ -195,8 +192,9 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
             if (options.showSunPosition || options.showMoonPosition)
             {
                 int[] size = matrixSize();
-                Bitmap sunMaskBitmap = Bitmap.createBitmap(size[0], size[1], Bitmap.Config.ARGB_4444);
-                Bitmap moonMaskBitmap = Bitmap.createBitmap(size[0], size[1], Bitmap.Config.ARGB_4444);
+                if (sunMaskBitmap == null || moonMaskBitmap == null) {
+                    initBitmap(size[0], size[1]);
+                }
 
                 int z = 0;
                 int k0, k1, k2;
@@ -260,7 +258,6 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
                 c.drawBitmap(shadowBitmap, 0, 0, paintMask_srcOver);
                 shadowBitmap.recycle();
                 sunMask.recycle();
-                sunMaskBitmap.recycle();
 
                 // draw moon light
                 Bitmap moonMask = Bitmap.createScaledBitmap(moonMaskBitmap, w, h, true);
@@ -272,7 +269,6 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
                 c.drawBitmap(moonBitmap, 0, 0, paintMask_srcOver);
                 moonBitmap.recycle();
                 moonMask.recycle();
-                moonMaskBitmap.recycle();
             }
 
             ////////////////
@@ -346,6 +342,15 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         return v;
     }
 
+    private Bitmap sunMaskBitmap = null;
+    private Bitmap moonMaskBitmap = null;
+
+    private void initBitmap(int w, int h)
+    {
+        sunMaskBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_4444);
+        moonMaskBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_4444);
+    }
+
     @Override
     protected int k(int i, int j, int k)
     {
@@ -363,15 +368,11 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         return new int[] {720, 360};
     }
 
-    protected void drawGrid(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options)
+    protected void drawGrid(Canvas c, int w, int h, double[] mid, Paint p, WorldMapTask.WorldMapOptions options)
     {
         if (p == null) {
             p = new Paint(Paint.ANTI_ALIAS_FLAG);
         }
-
-        double[] mid = new double[2];
-        mid[0] = w/2d;
-        mid[1] = h/2d;
 
         p.setColor(options.gridXColor);
         for (int i=0; i < 180; i = i + 15)
@@ -398,7 +399,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
     private static double r_polar = (66.560833 / 90d);
 
     @Override
-    public void drawMajorLatitudes(Canvas c, int w, int h, WorldMapTask.WorldMapOptions options)
+    public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
     {
         Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
         p.setXfermode(new PorterDuffXfermode( options.hasTransparentBaseMap ? PorterDuff.Mode.DST_OVER : PorterDuff.Mode.SRC_OVER ));
@@ -406,10 +407,6 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         Paint.Style prevStyle = p.getStyle();
         PathEffect prevEffect = p.getPathEffect();
         float prevStrokeWidth = p.getStrokeWidth();
-
-        double[] mid = new double[2];
-        mid[0] = w/2d;
-        mid[1] = h/2d;
 
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
         p.setStrokeWidth(strokeWidth);
