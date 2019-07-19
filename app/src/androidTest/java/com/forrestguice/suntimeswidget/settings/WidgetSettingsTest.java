@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.settings;
 import android.content.Context;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
@@ -28,6 +29,9 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator;
+import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
+import com.forrestguice.suntimeswidget.map.WorldMapTask;
+import com.forrestguice.suntimeswidget.map.WorldMapView;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.defaults.LightTheme;
