@@ -294,8 +294,8 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
                 if (options.foregroundColor != Color.TRANSPARENT)
                 {
                     Bitmap b = ((BitmapDrawable)options.map).getBitmap();
-                    Rect src = new Rect(0,0,b.getWidth()-1, b.getHeight()-1);
-                    Rect dst = new Rect(0,0,w-1, h-1);
+                    Rect src = new Rect(0,0, b.getWidth(), b.getHeight());
+                    Rect dst = new Rect(0,0, w, h);
                     c.drawBitmap(b, src, dst, paintForeground);
 
                 } else {
