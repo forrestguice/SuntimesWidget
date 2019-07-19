@@ -68,36 +68,76 @@
 
     </FrameLayout>
 
-    <LinearLayout android:id="@+id/media_actions"
+    <LinearLayout android:id="@+id/media_seek"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="horizontal" android:gravity="center_vertical"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/info_time_worldmap_layout">
+        app:layout_constraintTop_toBottomOf="@+id/info_time_worldmap_layout"
+        android:layout_marginTop="-10dp">
+
+        <SeekBar
+            android:id="@+id/seek_map"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:progress="50" android:max="100" />
+
+    </LinearLayout>
+
+    <android.support.constraint.ConstraintLayout android:id="@+id/media_actions"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@+id/media_seek">
 
         <ImageButton
             android:id="@+id/media_reset_map"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:background="@null"
+            android:background="@null" android:layout_marginRight="16dp" android:layout_marginEnd="16dp"
             android:src="?attr/icActionTime" />
 
         <ImageButton
             android:id="@+id/media_play_map"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:background="@null"  android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+            android:background="@null"
+            app:layout_constraintStart_toEndOf="@+id/media_reset_map"
             android:src="?attr/icActionPlay" />
 
         <ImageButton android:visibility="gone"
             android:id="@+id/media_pause_map"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:background="@null"  android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+            android:background="@null"
+            app:layout_constraintStart_toEndOf="@+id/media_reset_map"
             android:src="?attr/icActionPause" />
 
-        <SeekBar
-            android:id="@+id/seek_map"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            style="@style/Widget.AppCompat.SeekBar.Discrete" />
+        <ImageButton
+            android:id="@+id/media_prev_map"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:background="@null" android:scaleY="0.75" android:scaleX="0.75"
+            app:layout_constraintEnd_toStartOf="@+id/info_time_offset"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            android:src="?attr/icActionPrevious" />
 
-    </LinearLayout>
+        <TextView
+            style="@style/SunsetTimeTextView"
+            android:id="@+id/info_time_offset"
+            android:layout_width="wrap_content" android:minWidth="50dp" android:maxWidth="60dp" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="30m\nfrom now" android:gravity="center_horizontal" />
+
+        <ImageButton
+            android:id="@+id/media_next_map"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:background="@null" android:scaleY="0.75" android:scaleX="0.75"
+            app:layout_constraintStart_toEndOf="@+id/info_time_offset"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            android:src="?attr/icActionNext" />
+
+        <ImageButton
+            android:id="@+id/map_menu"
+            android:layout_width="24dp" android:layout_height="24dp"
+            android:background="@null"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            style="?attr/actionOverflowButtonStyle" />
+
+    </android.support.constraint.ConstraintLayout>
 
     <RadioGroup android:id="@+id/radio_group"
         android:layout_width="match_parent" android:layout_height="wrap_content"
