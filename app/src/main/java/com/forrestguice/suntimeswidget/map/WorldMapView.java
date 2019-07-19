@@ -382,7 +382,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 
             Log.w(LOGTAG, "updateViews: " + w + ", " + h );
             if (animated) {
-                drawTask.execute(data, w, h, options, projection, 0, 3, 66, options.offsetMinutes); // frames 1 minute apart, each shown for 66 ms
+                drawTask.execute(data, w, h, options, projection, 0, 3, 100, options.offsetMinutes); // frames 1 minute apart, each shown for 66 ms
 
             } else {
                 drawTask.execute(data, w, h, options, projection, 1, 0, 0, options.offsetMinutes);
@@ -445,7 +445,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     {
         super.setImageBitmap(b);
         bitmap = b;
-        postInvalidate();
+        //postInvalidate();
         Log.d("WorldMapView", "setImageBitmap");
     }
 
@@ -570,6 +570,10 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     {
         options.offsetMinutes = offsetMinutes;
         updateViews(true);
+    }
+
+    public int getOffsetMinutes() {
+        return options.offsetMinutes;
     }
 
 }

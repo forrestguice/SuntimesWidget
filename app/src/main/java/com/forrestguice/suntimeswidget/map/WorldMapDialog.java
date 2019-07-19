@@ -79,10 +79,10 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private WorldMapView worldmap;
     private TextView empty;
     private View dialogContent = null;
-    private TextView utcTime;
+    private TextView utcTime, offsetTime;
     private Spinner mapSelector;
     private SeekBar seekbar;
-    private ImageButton playButton, pauseButton, resetButton;
+    private ImageButton playButton, pauseButton, resetButton, nextButton, prevButton, menuButton;
     private View radioGroup;
     private ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode> mapAdapter;
     private WorldMapWidgetSettings.WorldMapWidgetMode mapMode = null;
@@ -213,6 +213,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     {
         dialogTitle = (TextView)dialogView.findViewById(R.id.worldmapdialog_title);
         utcTime = (TextView)dialogView.findViewById(R.id.info_time_utc);
+        offsetTime = (TextView)dialogView.findViewById(R.id.info_time_offset);
         empty = (TextView)dialogView.findViewById(R.id.txt_empty);
         worldmap = (WorldMapView)dialogView.findViewById(R.id.info_time_worldmap);
         worldmap.setOnLongClickListener(new View.OnLongClickListener()
@@ -263,18 +264,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         {
             seekbar.setMax(seek_totalMinutes);
             seekbar.setProgress(seek_now);
-            seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
-            {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {}
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {}
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-                    worldmap.setOffsetMinutes(seek_now - seekBar.getProgress());
-                    resetButton.setEnabled(true);
-                }
-            });
+            seekbar.setOnSeekBarChangeListener(seekBarListener);
         }
 
         playButton = (ImageButton)dialogView.findViewById(R.id.media_play_map);
@@ -294,6 +284,27 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             resetButton.setOnClickListener(resetClickListener);
             ImageViewCompat.setImageTintList(resetButton, SuntimesUtils.colorStateList(color_accent, color_disabled, color_pressed));
             resetButton.setEnabled(false);
+        }
+
+        nextButton = (ImageButton)dialogView.findViewById(R.id.media_next_map);
+        if (nextButton != null)
+        {
+            nextButton.setOnClickListener(nextClickListener);
+            ImageViewCompat.setImageTintList(nextButton, SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
+        }
+
+        prevButton = (ImageButton)dialogView.findViewById(R.id.media_prev_map);
+        if (prevButton != null)
+        {
+            prevButton.setOnClickListener(prevClickListener);
+            ImageViewCompat.setImageTintList(prevButton, SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
+        }
+
+        menuButton = (ImageButton)dialogView.findViewById(R.id.map_menu);
+        if (menuButton != null)
+        {
+            menuButton.setOnClickListener(menuClickListener);
+            ImageViewCompat.setImageTintList(menuButton, SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
         }
     }
 
@@ -358,26 +369,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         showEmptyView(!featureSupported);
         if (featureSupported)
         {
-            worldmap.setMapTaskListener(new WorldMapTask.WorldMapTaskListener()
-            {
-                @Override
-                public void onFrame(Bitmap result, int offsetMinutes)
-                {
-                    expandSheet(getDialog());
-                    if (seekbar != null)
-                    {
-                        int progress = seek_now - offsetMinutes;
-                        if (progress > 0 && progress <seek_totalMinutes) {
-                            seekbar.setProgress(progress);
-                        }
-                    }
-                }
-
-                @Override
-                public void onFinished(Bitmap result) {
-                    expandSheet(getDialog());
-                }
-            });
+            worldmap.setMapTaskListener(onWorldMapUpdate);
             worldmap.updateViews(data);
         }
         startUpdateTask();
@@ -446,7 +438,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             mapSelector.setVisibility(show ? View.GONE : View.VISIBLE);
         }
         if (radioGroup != null) {
-            radioGroup.setVisibility(show ? View.GONE : View.VISIBLE);
+            radioGroup.setVisibility(show ? View.GONE : View.GONE);  // TODO
         }
     }
 
@@ -533,7 +525,6 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         if (pauseButton != null) {
             pauseButton.setVisibility(View.VISIBLE);
         }
-        resetButton.setEnabled(true);
         worldmap.startAnimation();
     }
 
@@ -561,11 +552,75 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
         if (reset) {
             worldmap.resetAnimation();
-            resetButton.setEnabled(false);
-
         } else {
             worldmap.stopAnimation();
         }
     }
+
+    private View.OnClickListener menuClickListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            showContextMenu(getContext(), v);
+        }
+    };
+
+    private View.OnClickListener nextClickListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            worldmap.setOffsetMinutes(worldmap.getOffsetMinutes() + 15);   // advance 1hr
+        }
+    };
+
+    private View.OnClickListener prevClickListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            worldmap.setOffsetMinutes(worldmap.getOffsetMinutes() - 15);   // rewind 1hr
+        }
+    };
+
+    private SeekBar.OnSeekBarChangeListener seekBarListener = new SeekBar.OnSeekBarChangeListener()
+    {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {}
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {}
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            worldmap.setOffsetMinutes(seekBar.getProgress() - seek_now);
+        }
+    };
+
+    private WorldMapTask.WorldMapTaskListener onWorldMapUpdate = new WorldMapTask.WorldMapTaskListener()
+    {
+        @Override
+        public void onFrame(Bitmap result, int offsetMinutes)
+        {
+            expandSheet(getDialog());
+            if (seekbar != null)
+            {
+                int progress = seek_now + offsetMinutes;
+                if (progress > 0 && progress < seek_totalMinutes) {
+                    seekbar.setProgress(progress);
+                }
+
+                SuntimesUtils.TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(0, offsetMinutes * 60 * 1000, false, true, false);
+                offsetText.setSuffix("");
+                String displayString = getContext().getString(( offsetMinutes <= 0 ? R.string.ago : R.string.hence), offsetText.toString() + "\n");
+                offsetTime.setText(displayString);
+
+                resetButton.setEnabled(offsetMinutes != 0);
+            }
+        }
+
+        @Override
+        public void onFinished(Bitmap result) {
+            expandSheet(getDialog());
+        }
+    };
 
 }
