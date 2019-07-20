@@ -205,7 +205,8 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         public int locationFillColor = Color.MAGENTA;
         public double locationScale = 1 / 192d;
 
-        public long offsetMinutes = 0;    // minutes offset from "now" (default 0)
+        public int offsetMinutes = 0;    // minutes offset from "now" (default 0)
+        public long now = -1;            // -1 (current)
     }
 
     /**
@@ -226,7 +227,17 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
 
         protected Calendar mapTime(SuntimesRiseSetDataset data, WorldMapTask.WorldMapOptions options)
         {
-            Calendar mapTime = data.nowThen(data.calendar());    // the current time (maybe on some other day)
+            Calendar mapTime;
+            if (options.now >= 0)
+            {
+                mapTime = Calendar.getInstance();
+                mapTime.setTimeInMillis(options.now);       // preset time
+
+            } else {
+                mapTime = data.nowThen(data.calendar());    // the current time (maybe on some other day)
+                options.now = mapTime.getTimeInMillis();
+            }
+
             mapTime.add(Calendar.MINUTE, options.offsetMinutes);    // offset by some minutes
             return mapTime;
         }
@@ -368,7 +379,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
     public static abstract class WorldMapTaskListener
     {
         public void onStarted() {}
-        public void onFrame(Bitmap frame, long offsetMinutes ) {}
+        public void onFrame(Bitmap frame, int offsetMinutes ) {}
         public void onFinished( Bitmap result ) {}
     }
 

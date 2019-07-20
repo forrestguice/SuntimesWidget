@@ -547,7 +547,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             playButton.setVisibility(View.VISIBLE);
         }
         if (reset) {
-            worldmap.resetAnimation();
+            worldmap.resetAnimation(true);
         } else {
             worldmap.stopAnimation();
         }
@@ -594,7 +594,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private WorldMapTask.WorldMapTaskListener onWorldMapUpdate = new WorldMapTask.WorldMapTaskListener()
     {
         @Override
-        public void onFrame(Bitmap result, long offsetMinutes)
+        public void onFrame(Bitmap result, int offsetMinutes)
         {
             expandSheet(getDialog());
             if (seekbar != null)

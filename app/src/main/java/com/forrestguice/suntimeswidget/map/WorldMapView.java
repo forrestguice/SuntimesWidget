@@ -356,7 +356,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 }
 
                 @Override
-                public void onFrame(Bitmap frame, long offsetMinutes)
+                public void onFrame(Bitmap frame, int offsetMinutes)
                 {
                     mapW = frame.getWidth();
                     mapH = frame.getHeight();
@@ -560,9 +560,13 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     }
 
     public void resetAnimation()
+    public void resetAnimation( boolean updateTime )
     {
         stopAnimation();
         options.offsetMinutes = 0;
+        if (updateTime) {
+            options.now = -1;
+        }
         updateViews(true);
     }
 
