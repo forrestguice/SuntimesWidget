@@ -176,8 +176,15 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             Context context = getContext();
             if (data != null && context != null && !worldmap.isAnimated())
             {
-                updateTimeText();
-                // TODO: periodic update bitmap
+                Calendar now = Calendar.getInstance();
+                long mapTime = worldmap.getNow() + (worldmap.getOffsetMinutes()  * 60 * 1000);
+
+                long timeDiff = Math.abs(now.getTimeInMillis() - mapTime);
+                if (timeDiff > 60 * 1000 && timeDiff < 2 * 60 * 1000) {
+                    worldmap.resetAnimation(true);
+                } else {
+                    updateTimeText();
+                }
             }
             if (dialogContent != null)
                 dialogContent.postDelayed(this, UPDATE_RATE);

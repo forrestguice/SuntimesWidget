@@ -583,5 +583,8 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     public int getOffsetMinutes() {
         return options.offsetMinutes;
     }
+    public long getNow() {
+        return options.now;
+    }
 
 }
