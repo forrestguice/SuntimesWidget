@@ -356,7 +356,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 }
 
                 @Override
-                public void onFrame(Bitmap frame, int offsetMinutes)
+                public void onFrame(Bitmap frame, long offsetMinutes)
                 {
                     mapW = frame.getWidth();
                     mapH = frame.getHeight();

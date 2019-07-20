@@ -205,7 +205,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         public int locationFillColor = Color.MAGENTA;
         public double locationScale = 1 / 192d;
 
-        public int offsetMinutes = 0;    // minutes offset from "now" (default 0)
+        public long offsetMinutes = 0;    // minutes offset from "now" (default 0)
     }
 
     /**
@@ -368,7 +368,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
     public static abstract class WorldMapTaskListener
     {
         public void onStarted() {}
-        public void onFrame( Bitmap frame, int offsetMinutes ) {}
+        public void onFrame(Bitmap frame, long offsetMinutes ) {}
         public void onFinished( Bitmap result ) {}
     }
 
