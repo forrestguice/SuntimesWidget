@@ -173,17 +173,10 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         @Override
         public void run()
         {
-            if (data != null)
+            Context context = getContext();
+            if (data != null && context != null && !worldmap.isAnimated())
             {
-                Context context = getContext();
-                if (utcTime != null && context != null)
-                {
-                    Calendar now = data.nowThen(data.calendar());
-                    Calendar nowUtc = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-                    nowUtc.setTimeInMillis(now.getTimeInMillis());
-                    SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, nowUtc); // utils.calendarTimeShortDisplayString(context, nowUtc);
-                    utcTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), nowUtc.getTimeZone().getID()));
-                }
+                updateTimeText();
                 // TODO: periodic update bitmap
             }
             if (dialogContent != null)
@@ -369,6 +362,30 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             worldmap.updateViews(data);
         }
         startUpdateTask();
+    }
+
+    private void updateTimeText()
+    {
+        Context context = getContext();
+        WorldMapTask.WorldMapOptions options = worldmap.getOptions();
+
+        Calendar now = Calendar.getInstance();
+        long nowMillis = now.getTimeInMillis();
+        long offsetMillis = options.offsetMinutes * 60 * 1000;
+        long mapTimeMillis = options.now + offsetMillis;
+
+        Calendar mapTime = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        mapTime.setTimeInMillis(mapTimeMillis);
+
+        String suffix = "";
+        if (Math.abs(nowMillis - mapTimeMillis) > 60 * 1000) {
+            suffix = (now.after(mapTime)) ? context.getString(R.string.past_today) : context.getString(R.string.future_today);
+        }
+
+        SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, mapTime);
+        if (utcTime != null) {
+            utcTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), mapTime.getTimeZone().getID()) + " " + suffix);
+        }
     }
 
     private AdapterView.OnItemSelectedListener onMapSelected = new AdapterView.OnItemSelectedListener()
@@ -609,6 +626,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                 String displayString = getContext().getString(( offsetMinutes <= 0 ? R.string.ago : R.string.hence), offsetText.toString() + "\n");
                 offsetTime.setText(displayString);
 
+                updateTimeText();
                 resetButton.setEnabled(offsetMinutes != 0);
             }
         }

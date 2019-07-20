@@ -559,7 +559,11 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         }
     }
 
-    public void resetAnimation()
+    public boolean isAnimated()
+    {
+        return animated;
+    }
+
     public void resetAnimation( boolean updateTime )
     {
         stopAnimation();
