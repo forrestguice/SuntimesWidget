@@ -44,9 +44,9 @@
 
         <Spinner
             android:id="@+id/worldmap_selector"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_width="0dp" android:layout_height="wrap_content"
             android:layout_marginLeft="0dp" android:layout_marginRight="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/media_actions"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/guideline4" app:layout_constraintHorizontal_bias="0"
             android:layout_marginBottom="4dp" />
@@ -71,6 +71,91 @@
                 android:text="@string/feature_not_supported_by_source" />
 
         </FrameLayout>
+
+        <LinearLayout android:id="@+id/media_seek"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:orientation="vertical" android:gravity="center_horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/info_time_worldmap_layout"
+            app:layout_constraintTop_toBottomOf="@+id/info_time_utc"
+            android:layout_marginTop="12dp" android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+
+            <SeekBar
+                android:id="@+id/seek_map"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:progress="50" android:max="100" />
+
+            <LinearLayout android:id="@+id/media_actions2"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:gravity="center_vertical" android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/info_time_worldmap_layout"
+                app:layout_constraintTop_toBottomOf="@+id/info_time_utc">
+
+                <ImageButton
+                    android:id="@+id/media_prev_map"
+                    android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+                    android:background="@null" android:scaleY="0.75" android:scaleX="0.75"
+                    android:src="?attr/icActionPrevious" />
+
+                <TextView
+                    style="@style/SunsetTimeTextView"
+                    android:id="@+id/info_time_offset"
+                    android:layout_width="0dp" android:layout_weight="3" android:minWidth="50dp" android:maxWidth="60dp" android:layout_height="wrap_content"
+                    tools:text="30m\nfrom now" android:gravity="center_horizontal" />
+
+                <ImageButton
+                    android:id="@+id/media_next_map"
+                    android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+                    android:background="@null" android:scaleY="0.75" android:scaleX="0.75"
+                    android:src="?attr/icActionNext" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/media_actions"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:gravity="center_vertical" android:orientation="horizontal"
+            android:layout_marginTop="12dp" android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/info_time_worldmap_layout"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageButton
+                android:id="@+id/media_reset_map"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="?attr/icActionTime" />
+
+            <ImageButton
+                android:id="@+id/media_play_map"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_marginLeft="16dp" android:layout_marginStart="16dp"
+                android:layout_marginRight="16dp" android:layout_marginEnd="16dp"
+                android:src="?attr/icActionPlay" />
+
+            <ImageButton android:visibility="gone"
+                android:id="@+id/media_pause_map"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_marginLeft="16dp" android:layout_marginStart="16dp"
+                android:layout_marginRight="16dp" android:layout_marginEnd="16dp"
+                android:src="?attr/icActionPause" />
+
+            <View
+                android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="1dp" android:background="@color/transparent" />
+
+            <ImageButton
+                android:id="@+id/map_menu"
+                android:layout_width="24dp" android:layout_height="24dp"
+                android:background="@null"
+                style="?attr/actionOverflowButtonStyle" />
+
+        </LinearLayout>
+
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline4"
