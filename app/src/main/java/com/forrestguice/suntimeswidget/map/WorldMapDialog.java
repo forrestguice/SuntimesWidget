@@ -385,13 +385,19 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         mapTime.setTimeInMillis(mapTimeMillis);
 
         String suffix = "";
+        boolean nowIsAfter = now.after(mapTime);
         if (Math.abs(nowMillis - mapTimeMillis) > 60 * 1000) {
-            suffix = (now.after(mapTime)) ? context.getString(R.string.past_today) : context.getString(R.string.future_today);
+            suffix = "\n" + ((nowIsAfter) ? context.getString(R.string.past_today) : context.getString(R.string.future_today));
         }
+
+        SuntimesUtils.TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(nowMillis, mapTimeMillis, false, true, false);
+        offsetText.setSuffix("");
+        String displayString = getContext().getString((nowIsAfter ? R.string.ago : R.string.hence), offsetText.toString() + "\n");
+        offsetTime.setText(displayString);
 
         SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, mapTime);
         if (utcTime != null) {
-            utcTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), mapTime.getTimeZone().getID()) + " " + suffix);
+            utcTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), mapTime.getTimeZone().getID()) + suffix);    // TODO
         }
     }
 
@@ -627,11 +633,6 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                 if (progress > 0 && progress < seek_totalMinutes) {
                     seekbar.setProgress(progress);
                 }
-
-                SuntimesUtils.TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(0, offsetMinutes * 60 * 1000, false, true, false);
-                offsetText.setSuffix("");
-                String displayString = getContext().getString(( offsetMinutes <= 0 ? R.string.ago : R.string.hence), offsetText.toString() + "\n");
-                offsetTime.setText(displayString);
 
                 updateTimeText();
                 resetButton.setEnabled(offsetMinutes != 0);
