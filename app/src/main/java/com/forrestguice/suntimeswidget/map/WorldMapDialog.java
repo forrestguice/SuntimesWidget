@@ -303,6 +303,9 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             menuButton.setOnClickListener(menuClickListener);
             ImageViewCompat.setImageTintList(menuButton, SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
         }
+
+        mediaGroup = dialogView.findViewById(R.id.media_actions);
+        seekGroup = dialogView.findViewById(R.id.media_seek);
     }
 
     @SuppressWarnings("ResourceType")
@@ -423,7 +426,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         public void onNothingSelected(AdapterView<?> parent) {}
     };
 
-    private View.OnClickListener onRadioButtonClicked = new View.OnClickListener()
+    /**private View.OnClickListener onRadioButtonClicked = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
@@ -451,7 +454,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             Log.d(WorldMapView.LOGTAG, "onOptionSelected: sunlight/moonlight option changed so triggering update...");
             updateViews();
         }
-    };
+    };*/
 
     private void showEmptyView( boolean show )
     {
@@ -464,9 +467,17 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         if (mapSelector != null) {
             mapSelector.setVisibility(show ? View.GONE : View.VISIBLE);
         }
-        if (radioGroup != null) {
-            radioGroup.setVisibility(show ? View.GONE : View.GONE);  // TODO
+        if (mediaGroup != null) {
+            mediaGroup.setVisibility(show ? View.GONE : View.VISIBLE);
         }
+        if (seekGroup != null) {
+            seekGroup.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
+        /**if (radioGroup != null) {
+            radioGroup.setVisibility(show ? View.GONE : View.GONE);
+        }*/
+
+        expandSheet(getDialog());
     }
 
     protected boolean showContextMenu(final Context context, View view)
