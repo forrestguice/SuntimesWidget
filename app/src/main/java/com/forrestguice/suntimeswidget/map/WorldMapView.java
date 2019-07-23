@@ -248,7 +248,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         long timeSinceLastUpdate = (System.currentTimeMillis() - lastUpdate);
         if (forceUpdate || timeSinceLastUpdate >= maxUpdateRate)
         {
-            updateViews(data);
+            updateViews(data, forceUpdate);
         }
     }
 
@@ -279,7 +279,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     /**
      * @param data an instance of SuntimesRiseSetDataset
      */
-    public void updateViews(SuntimesRiseSetDataset data)
+    public void updateViews(SuntimesRiseSetDataset data, boolean forceUpdate)
     {
         boolean sameData = (this.data == data);
         this.data = data;
@@ -338,7 +338,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             boolean throttleUpdate = ((System.currentTimeMillis() - lastUpdate) < maxUpdateRate);
 
             boolean skipUpdate = (sameData && sameDimensions && sameOptions && throttleUpdate);
-            if (skipUpdate && !wasCancelled)
+            if (skipUpdate && !wasCancelled && !forceUpdate)
             {
                 Log.w(LOGTAG, "updateViews: " + w + ", " + h + " (image is unchanged; skipping)");
                 return;
@@ -453,7 +453,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 
     public void shareBitmap()
     {
-        if (bitmap != null)
+        if (bitmap != null && !animated)
         {
             WorldMapExportTask exportTask = new WorldMapExportTask(getContext(), "SuntimesWorldMap", true, true);
             exportTask.setTaskListener(new ExportTask.TaskListener()

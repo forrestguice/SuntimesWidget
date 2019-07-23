@@ -184,8 +184,12 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                 long timeDiff = Math.abs(now.getTimeInMillis() - mapTime);
                 if (timeDiff > 60 * 1000 && timeDiff < 2 * 60 * 1000) {
                     worldmap.resetAnimation(true);
+
                 } else {
                     updateTimeText();
+                    if (timeDiff >= 2 * 60 * 1000) {
+                        resetButton.setEnabled(true);
+                    }
                 }
             }
             if (dialogContent != null)
@@ -371,7 +375,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         if (featureSupported)
         {
             worldmap.setMapTaskListener(onWorldMapUpdate);
-            worldmap.updateViews(data);
+            worldmap.updateViews(data, false);
         }
         startUpdateTask();
     }
@@ -386,13 +390,16 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         long offsetMillis = options.offsetMinutes * 60 * 1000;
         long mapTimeMillis = options.now + offsetMillis;
 
-        Calendar mapTime = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        mapTime.setTimeInMillis(mapTimeMillis);
-
         String suffix = "";
-        boolean nowIsAfter = now.after(mapTime);
-        if (Math.abs(nowMillis - mapTimeMillis) > 60 * 1000) {
-            suffix = "\n" + ((nowIsAfter) ? context.getString(R.string.past_today) : context.getString(R.string.future_today));
+        boolean nowIsAfter = false;
+        Calendar mapTime = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        if (empty.getVisibility() != View.VISIBLE)
+        {
+            mapTime.setTimeInMillis(mapTimeMillis);
+            nowIsAfter = now.after(mapTime);
+            if (Math.abs(nowMillis - mapTimeMillis) > 60 * 1000) {
+                suffix = "\n" + ((nowIsAfter) ? context.getString(R.string.past_today) : context.getString(R.string.future_today));
+            }
         }
 
         SuntimesUtils.TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(nowMillis, mapTimeMillis, false, true, false);
