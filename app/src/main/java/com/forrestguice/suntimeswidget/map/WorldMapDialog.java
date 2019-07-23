@@ -118,6 +118,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setOnShowListener(onShowDialogListener);
+        expandSheet(dialog);
         return dialog;
     }
 
@@ -676,7 +677,6 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         @Override
         public void onFrame(Bitmap result, int offsetMinutes)
         {
-            expandSheet(getDialog());
             if (seekbar != null)
             {
                 int progress = seek_now + offsetMinutes;
