@@ -39,6 +39,7 @@ import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,7 +48,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -79,7 +79,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private Spinner mapSelector;
     private SeekBar seekbar;
     private ImageButton playButton, pauseButton, resetButton, nextButton, prevButton, menuButton;
-    private View radioGroup;
+    private View mediaGroup, seekGroup;
+    //private View radioGroup;
     private ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode> mapAdapter;
     private WorldMapWidgetSettings.WorldMapWidgetMode mapMode = null;
 
@@ -234,10 +235,10 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
         mapSelector.setOnItemSelectedListener(onMapSelected);
 
-        WorldMapTask.WorldMapOptions options = worldmap.getOptions();
+        //WorldMapTask.WorldMapOptions options = worldmap.getOptions();
         updateOptions(getContext());
 
-        radioGroup = dialogView.findViewById(R.id.radio_group);
+        /**radioGroup = dialogView.findViewById(R.id.radio_group);
         RadioButton option_sun = (RadioButton)dialogView.findViewById(R.id.radio_sun);
         RadioButton option_moon = (RadioButton)dialogView.findViewById(R.id.radio_moon);
         RadioButton option_sunmoon = (RadioButton)dialogView.findViewById(R.id.radio_sunmoon);
@@ -253,7 +254,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             option_sun.setOnClickListener(onRadioButtonClicked);
             option_moon.setOnClickListener(onRadioButtonClicked);
             option_sunmoon.setOnClickListener(onRadioButtonClicked);
-        }
+        }*/
 
         seekbar = (SeekBar)dialogView.findViewById(R.id.seek_map);
         if (seekbar != null)
@@ -483,14 +484,32 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     private void updateContextMenu(Context context, PopupMenu menu)
     {
-        MenuItem option_latitudes = menu.getMenu().findItem(R.id.mapOption_majorLatitudes);
+        Menu m = menu.getMenu();
+        WorldMapTask.WorldMapOptions options = worldmap.getOptions();
+
+        MenuItem option_latitudes = m.findItem(R.id.mapOption_majorLatitudes);
         if (option_latitudes != null) {
             option_latitudes.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2));
         }
 
-        MenuItem option_location = menu.getMenu().findItem(R.id.mapOption_location);
+        MenuItem option_location = m.findItem(R.id.mapOption_location);
         if (option_location != null) {
             option_location.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2));
+        }
+
+        MenuItem action_share = m.findItem(R.id.shareMap);
+        if (action_share != null) {
+            action_share.setEnabled(!worldmap.isAnimated());
+        }
+
+        MenuItem option_sunlight = m.findItem(R.id.mapOption_sunlight);
+        if (option_sunlight != null) {
+            option_sunlight.setChecked(options.showSunShadow);
+        }
+
+        MenuItem option_moonlight = m.findItem(R.id.mapOption_moonlight);
+        if (option_moonlight != null) {
+            option_moonlight.setChecked(options.showMoonLight);
         }
     }
 
@@ -503,6 +522,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             if (context == null) {
                 return false;
             }
+
+            WorldMapTask.WorldMapOptions options = worldmap.getOptions();
 
             boolean toggledValue;
             switch (item.getItemId())
@@ -524,6 +545,24 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
                     WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
                     item.setChecked(toggledValue);
+                    updateViews();
+                    return true;
+
+                case R.id.mapOption_sunlight:
+                    toggledValue = !options.showSunShadow;
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SUNSHADOW, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
+                    if (!toggledValue && !options.showMoonLight) {
+                        WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MOONLIGHT, WorldMapWidgetSettings.MAPTAG_3x2, true);
+                    }
+                    updateViews();
+                    return true;
+
+                case R.id.mapOption_moonlight:
+                    toggledValue = !options.showMoonLight;
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MOONLIGHT, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
+                    if (!toggledValue && !options.showSunShadow) {
+                        WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SUNSHADOW, WorldMapWidgetSettings.MAPTAG_3x2, true);
+                    }
                     updateViews();
                     return true;
 

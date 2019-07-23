@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group>
+    <group android:id="@+id/mapOption_group_misc">
 
         <item android:id="@+id/mapOption_majorLatitudes"
             android:title="@string/worldmap_dialog_option_latitudes"
@@ -16,7 +16,21 @@
 
     </group>
 
-    <group android:checkableBehavior="none">
+    <group android:id="@+id/mapOption_group_light">
+
+        <item android:id="@+id/mapOption_moonlight"
+            android:title="@string/worldmap_dialog_option_moonlight"
+            android:checkable="true"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/mapOption_sunlight"
+            android:title="@string/worldmap_dialog_option_sunlight"
+            android:checkable="true"
+            app:showAsAction="never" />
+
+    </group>
+
+    <group android:id="@+id/mapOption_group_action" android:checkableBehavior="none">
 
         <item android:id="@+id/shareMap"
             android:title="@string/configAction_shareMap"
