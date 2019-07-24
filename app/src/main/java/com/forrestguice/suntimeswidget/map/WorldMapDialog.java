@@ -386,7 +386,21 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         {
             worldmap.setMapTaskListener(onWorldMapUpdate);
             worldmap.updateViews(data, false);
+
+            if (mediaGroup != null)
+            {
+                if (worldmap.isAnimated())
+                {
+                    pauseButton.setVisibility(View.VISIBLE);
+                    playButton.setVisibility(View.GONE);
+
+                } else {
+                    pauseButton.setVisibility(View.GONE);
+                    playButton.setVisibility(View.VISIBLE);
+                }
+            }
         }
+
         startUpdateTask();
     }
 
@@ -402,7 +416,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         Calendar now = Calendar.getInstance();
         long nowMillis = now.getTimeInMillis();
         long offsetMillis = options.offsetMinutes * 60 * 1000;
-        long mapTimeMillis = options.now + offsetMillis;
+        long mapTimeMillis = ((options.now == -1) ? now.getTimeInMillis() : options.now + offsetMillis);
 
         String suffix = "";
         boolean nowIsAfter = false;
@@ -619,10 +633,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     };
     private void playMap()
     {
-        if (playButton != null) {
+        if (mediaGroup != null) {
             playButton.setVisibility(View.GONE);
-        }
-        if (pauseButton != null) {
             pauseButton.setVisibility(View.VISIBLE);
         }
         worldmap.startAnimation();
@@ -644,10 +656,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     };
     private void stopMap(boolean reset)
     {
-        if (pauseButton != null) {
+        if (mediaGroup != null) {
             pauseButton.setVisibility(View.GONE);
-        }
-        if (playButton != null) {
             playButton.setVisibility(View.VISIBLE);
         }
         if (reset) {
