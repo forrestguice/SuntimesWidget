@@ -88,6 +88,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private int color_pressed = Color.BLUE;
     private int color_normal = Color.WHITE;
     private int color_accent = Color.GREEN;
+    private int color_warning = Color.RED;
 
     private SuntimesUtils utils = new SuntimesUtils();
 
@@ -210,12 +211,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     {
         WorldMapWidgetSettings.initDisplayStrings(dialogContent.getContext());
 
-        int[] colorAttrs = { R.attr.text_disabledColor, R.attr.buttonPressColor, android.R.attr.textColorPrimary, R.attr.text_accentColor };
+        int[] colorAttrs = { R.attr.text_disabledColor, R.attr.buttonPressColor, android.R.attr.textColorPrimary, R.attr.text_accentColor, R.attr.tagColor_warning };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         color_disabled = ContextCompat.getColor(context, typedArray.getResourceId(0, color_disabled));
         color_pressed = ContextCompat.getColor(context, typedArray.getResourceId(1, color_pressed));
         color_normal = ContextCompat.getColor(context, typedArray.getResourceId(2, color_normal));
         color_accent = ContextCompat.getColor(context, typedArray.getResourceId(3, color_accent));
+        color_warning = ContextCompat.getColor(context, typedArray.getResourceId(4, color_warning));
         typedArray.recycle();
     }
 
@@ -406,19 +408,21 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             mapTime.setTimeInMillis(mapTimeMillis);
             nowIsAfter = now.after(mapTime);
             if (Math.abs(nowMillis - mapTimeMillis) > 60 * 1000) {
-                suffix = "\n" + ((nowIsAfter) ? context.getString(R.string.past_today) : context.getString(R.string.future_today));
+                suffix = ((nowIsAfter) ? context.getString(R.string.past_today) : context.getString(R.string.future_today));
             }
+        }
+
+        SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, mapTime);
+        if (utcTime != null) {
+            if (suffix.isEmpty())
+                utcTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), mapTime.getTimeZone().getID()));
+            else utcTime.setText(SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), mapTime.getTimeZone().getID(), suffix), suffix, color_warning));
         }
 
         SuntimesUtils.TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(nowMillis, mapTimeMillis, false, true, false);
         offsetText.setSuffix("");
         String displayString = getContext().getString((nowIsAfter ? R.string.ago : R.string.hence), offsetText.toString() + "\n");
         offsetTime.setText(displayString);
-
-        SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, mapTime);
-        if (utcTime != null) {
-            utcTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), mapTime.getTimeZone().getID()) + suffix);    // TODO
-        }
     }
 
     private AdapterView.OnItemSelectedListener onMapSelected = new AdapterView.OnItemSelectedListener()
