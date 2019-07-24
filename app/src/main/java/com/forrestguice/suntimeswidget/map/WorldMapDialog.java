@@ -393,6 +393,10 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private void updateTimeText()
     {
         Context context = getContext();
+        if (context == null) {
+            return;
+        }
+
         WorldMapTask.WorldMapOptions options = worldmap.getOptions();
 
         Calendar now = Calendar.getInstance();
