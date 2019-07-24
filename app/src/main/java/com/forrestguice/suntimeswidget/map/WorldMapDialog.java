@@ -105,8 +105,10 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
         initLocale(getContext());
         initViews(getContext(), dialogContent);
-        if (savedState != null) {
+        if (savedState != null)
+        {
             Log.d(LOGTAG, "WorldMapDialog onCreate (restoreState)");
+            worldmap.loadSettings(getContext(), savedState);
         }
         themeViews(dialogContent.getContext());
 
@@ -114,12 +116,18 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     }
 
     @NonNull @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState)
+    public Dialog onCreateDialog(Bundle savedState)
     {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        Dialog dialog = super.onCreateDialog(savedState);
         dialog.setOnShowListener(onShowDialogListener);
         expandSheet(dialog);
         return dialog;
+    }
+
+    @Override
+    public void onSaveInstanceState( Bundle state )
+    {
+        worldmap.saveSettings(state);
     }
 
     private DialogInterface.OnShowListener onShowDialogListener = new DialogInterface.OnShowListener()

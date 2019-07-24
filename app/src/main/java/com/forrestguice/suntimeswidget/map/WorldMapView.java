@@ -29,6 +29,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.graphics.ColorUtils;
@@ -409,9 +410,12 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
      * @param context a context used to access resources
      * @param bundle a Bundle used to load state
      */
-    protected void loadSettings(Context context, Bundle bundle )
+    protected void loadSettings(Context context, @NonNull Bundle bundle )
     {
         //Log.d("DEBUG", "WorldMapView loadSettings (bundle)");
+        animated = bundle.getBoolean("animated", animated);
+        options.offsetMinutes = bundle.getInt("offsetMinutes", options.offsetMinutes);
+        options.now = bundle.getLong("now", options.now);
     }
 
     /**
@@ -431,6 +435,9 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     protected boolean saveSettings(Bundle bundle)
     {
         //Log.d("DEBUG", "WorldMapView saveSettings (bundle)");
+        bundle.putBoolean("animated", animated);
+        bundle.putInt("offsetMinutes", options.offsetMinutes);
+        bundle.putLong("now", options.now);
         return true;
     }
 
