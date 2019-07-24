@@ -35,10 +35,11 @@
         <TextView
             style="@style/SunsetTimeTextView"
             android:id="@+id/info_time_utc"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_width="0dp" android:layout_height="wrap_content"
             tools:text="June 3, 6:00 PM UTC" android:gravity="start"
-            android:minWidth="200dp" android:layout_marginLeft="0dp" android:layout_marginRight="0dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="0dp" android:layout_marginRight="8dp"
+            android:layout_marginStart="0dp" android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toStartOf="@+id/guideline4"
             app:layout_constraintEnd_toEndOf="@+id/guideline4" app:layout_constraintHorizontal_bias="0"
             app:layout_constraintTop_toBottomOf="@+id/worldmapdialog_title" />
 
@@ -54,7 +55,7 @@
 
         <FrameLayout
             android:id="@+id/info_time_worldmap_layout"
-            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:minHeight="256dp"
             android:layout_marginTop="12dp"
             app:layout_constraintStart_toEndOf="@+id/guideline4" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent">
@@ -77,9 +78,10 @@
             android:layout_width="0dp" android:layout_height="wrap_content"
             android:orientation="vertical" android:gravity="center_horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/info_time_worldmap_layout"
-            app:layout_constraintTop_toBottomOf="@+id/info_time_utc"
-            android:layout_marginTop="12dp" android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
+            app:layout_constraintEnd_toStartOf="@id/guideline4"
+            app:layout_constraintTop_toTopOf="@+id/info_time_worldmap_layout"
+            app:layout_constraintBottom_toBottomOf="@+id/info_time_worldmap_layout"
+            android:layout_marginBottom="12dp" android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
 
             <SeekBar
                 android:id="@+id/seek_map"
@@ -88,10 +90,7 @@
 
             <LinearLayout android:id="@+id/media_actions2"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:gravity="center_vertical" android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/info_time_worldmap_layout"
-                app:layout_constraintTop_toBottomOf="@+id/info_time_utc">
+                android:gravity="center_vertical" android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/media_prev_map"
@@ -120,7 +119,7 @@
             android:gravity="center_vertical" android:orientation="horizontal"
             android:layout_marginTop="12dp" android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/info_time_worldmap_layout"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <ImageButton
