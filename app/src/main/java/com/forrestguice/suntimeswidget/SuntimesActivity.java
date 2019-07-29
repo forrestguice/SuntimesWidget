@@ -73,6 +73,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
@@ -1557,6 +1558,7 @@ public class SuntimesActivity extends AppCompatActivity
             @Override
             public void onClick(DialogInterface dialogInterface, int i)
             {
+                CalculatorProvider.clearCachedConfig(0);
                 calculateData(SuntimesActivity.this);
                 setUpdateAlarms(SuntimesActivity.this);
                 updateActionBar(SuntimesActivity.this);
@@ -1592,6 +1594,7 @@ public class SuntimesActivity extends AppCompatActivity
         public void onClick(DialogInterface dialogInterface, int i)
         {
             timezoneWarning.reset();
+            CalculatorProvider.clearCachedConfig(0);
             calculateData(SuntimesActivity.this);
             setUpdateAlarms(SuntimesActivity.this);
             updateViews(SuntimesActivity.this);
