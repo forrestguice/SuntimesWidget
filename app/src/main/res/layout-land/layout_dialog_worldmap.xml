@@ -55,7 +55,7 @@
 
         <FrameLayout
             android:id="@+id/info_time_worldmap_layout"
-            android:layout_width="0dp" android:layout_height="wrap_content" android:minHeight="256dp"
+            android:layout_width="0dp" android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             app:layout_constraintStart_toEndOf="@+id/guideline4" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent">
