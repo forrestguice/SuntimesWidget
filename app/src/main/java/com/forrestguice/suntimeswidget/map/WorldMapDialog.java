@@ -179,6 +179,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     }
 
     public static final int UPDATE_RATE = 3000;
+    public static final int RESET_THRESHOLD[] = new int[] {60 * 1000, 2 * 60 * 1000 };    // (1m, 2m)
     private Runnable updateTask = new Runnable()
     {
         @Override
@@ -188,15 +189,17 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             if (data != null && context != null && !worldmap.isAnimated())
             {
                 Calendar now = Calendar.getInstance();
-                long mapTime = worldmap.getNow() + (worldmap.getOffsetMinutes()  * 60 * 1000);
+                long mapNow = worldmap.getNow();
+                long mapTime = ((mapNow == -1) ? now.getTimeInMillis()
+                        : mapNow + (worldmap.getOffsetMinutes()  * 60 * 1000));
 
                 long timeDiff = Math.abs(now.getTimeInMillis() - mapTime);
-                if (timeDiff > 60 * 1000 && timeDiff < 2 * 60 * 1000) {
+                if (timeDiff > RESET_THRESHOLD[0] && timeDiff < RESET_THRESHOLD[1]) {
                     worldmap.resetAnimation(true);
 
                 } else {
                     updateTimeText();
-                    if (timeDiff >= 2 * 60 * 1000) {
+                    if (timeDiff >= RESET_THRESHOLD[1]) {
                         resetButton.setEnabled(true);
                     }
                 }
@@ -293,9 +296,9 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
         resetButton = (ImageButton)dialogView.findViewById(R.id.media_reset_map);
         if (resetButton != null) {
-            resetButton.setOnClickListener(resetClickListener);
-            ImageViewCompat.setImageTintList(resetButton, SuntimesUtils.colorStateList(color_accent, color_disabled, color_pressed));
             resetButton.setEnabled(false);
+            resetButton.setOnClickListener(resetClickListener);
+            ImageViewCompat.setImageTintList(resetButton, SuntimesUtils.colorStateList(color_warning, color_disabled, color_pressed));
         }
 
         nextButton = (ImageButton)dialogView.findViewById(R.id.media_next_map);
