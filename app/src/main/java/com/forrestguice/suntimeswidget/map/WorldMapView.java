@@ -203,15 +203,16 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         options.latitudeColors[0] = ColorUtils.setAlphaComponent(options.sunShadowColor, 255);
         options.latitudeColors[1] = ColorUtils.setAlphaComponent(options.moonLightColor, 255);
         options.latitudeColors[2] = ColorUtils.setAlphaComponent(options.sunShadowColor, 255);
-        options.locationFillColor = ColorUtils.setAlphaComponent(options.latitudeColors[0], 128);
+        options.locationFillColor = ContextCompat.getColor(context, R.color.map_location);
 
-        int[] colorAttrs = {
+        int[] attrs = {
                 R.attr.graphColor_pointFill,            // 0
                 R.attr.graphColor_pointStroke,          // 1
                 R.attr.moonriseColor,                   // 2
-                R.attr.moonsetColor                     // 3
+                R.attr.moonsetColor,                    // 3
+                R.attr.icActionPlace                    // 4
         };
-        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs);
         int def = R.color.transparent;
         options.sunFillColor = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
         options.sunStrokeColor = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
@@ -231,7 +232,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         options.latitudeColors[0] = ColorUtils.setAlphaComponent(options.sunShadowColor, 255);
         options.latitudeColors[1] = ColorUtils.setAlphaComponent(options.moonLightColor, 255);
         options.latitudeColors[2] = ColorUtils.setAlphaComponent(options.moonLightColor, 255);
-        options.locationFillColor = ColorUtils.setAlphaComponent(options.latitudeColors[0], 128);
+        options.locationFillColor = Color.RED; // TODO
         options.sunFillColor = theme.getNoonIconColor();
         options.sunStrokeColor = theme.getNoonIconStrokeColor();
         options.moonFillColor = theme.getMoonFullColor();
