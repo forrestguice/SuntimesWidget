@@ -141,7 +141,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
     protected Paint paintScaled = null;
     protected Paint paintBackground = null;
     protected Paint paintForeground = null;
-    protected Paint paintLocation = null;
+    protected Paint paintLocation_fill = null, paintLocation_stroke;
     protected Paint paintMask_srcOver = null;
     protected Paint paintMask_srcIn = null;
     protected Paint paintSun_fill = null;
@@ -172,9 +172,14 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         paintMask_srcIn.setColor(Color.WHITE);
         paintMask_srcIn.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
 
-        paintLocation = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintLocation.setStyle(Paint.Style.FILL);
-        paintLocation.setColor(options.locationFillColor);
+        paintLocation_fill = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintLocation_fill.setStyle(Paint.Style.FILL_AND_STROKE);
+        paintLocation_fill.setColor(options.locationFillColor);
+
+        paintLocation_stroke = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintLocation_stroke.setStyle(Paint.Style.STROKE);
+        paintLocation_stroke.setColor(options.locationStrokeColor);
+        paintLocation_stroke.setStrokeWidth(0.5f);
 
         paintSun_fill = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintSun_fill.setStyle(Paint.Style.FILL);
@@ -306,7 +311,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
             ////////////////
             // draw locations
             if (options.locations != null) {
-                drawLocations(c, w, h, paintLocation, options);
+                drawLocations(c, w, h, paintLocation_fill, paintLocation_stroke, options);
             }
 
             if (options.translateToLocation)

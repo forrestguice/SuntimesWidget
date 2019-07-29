@@ -231,7 +231,7 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
             ////////////////
             // draw locations
             if (options.locations != null) {
-                drawLocations(c, w, h, paintLocation, options);
+                drawLocations(c, w, h, paintLocation_fill, paintLocation_stroke, options);
             }
 
             if (options.translateToLocation)

@@ -27,8 +27,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -203,6 +205,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
 
         public double[][] locations = null;  // a list of locations {{lat, lon}, {lat, lon}, ...} or null
         public int locationFillColor = Color.MAGENTA;
+        public int locationStrokeColor = Color.BLACK;
         public double locationScale = 1 / 192d;
 
         public int offsetMinutes = 0;    // minutes offset from "now" (default 0)
@@ -349,7 +352,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         }
 
         public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options) { /* EMPTY */ }
-        public void drawLocations(Canvas c, int w, int h, @NonNull Paint p, WorldMapTask.WorldMapOptions options)
+        public void drawLocations(Canvas c, int w, int h, Paint p1, Paint p2, WorldMapTask.WorldMapOptions options)
         {
             if (options.locations != null && options.locations.length > 0)
             {
@@ -357,17 +360,23 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
                 for (int i=0; i<options.locations.length; i++)
                 {
                     int[] point = toBitmapCoords(w, h, mid, options.locations[i][0], options.locations[i][1]);
-                    drawLocation(c, point[0], point[1], p, options);
+                    drawLocation(c, point[0], point[1], p1, p2, options);
                     Log.d("DEBUG", "drawLocations: " + options.locations[i][0] + ", " + options.locations[i][1]);
                 }
             }
         }
 
-        protected void drawLocation(Canvas c, int x, int y, Paint p, WorldMapTask.WorldMapOptions options)
+        protected void drawLocation(Canvas c, int x, int y, Paint p1, Paint p2, WorldMapTask.WorldMapOptions options)
         {
             double pointDiameter = (int)Math.ceil(c.getWidth() * options.locationScale);
             int pointRadius = (int)Math.ceil(pointDiameter * 0.5d);
-            c.drawCircle(x, y, pointRadius, p);
+
+            if (p1 != null) {
+                c.drawCircle(x, y, pointRadius, p1);
+            }
+            if (p2 != null) {
+                c.drawCircle(x, y, pointRadius, p2);
+            }
         }
 
     }

@@ -56,7 +56,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
     protected Paint paintForeground = null;
     protected Paint paintMoonlight = null;
     protected Paint paintSunshadow = null;
-    protected Paint paintLocation = null;
+    protected Paint paintLocation_fill = null, paintLocation_stroke = null;
     protected Paint paintMask_srcIn = null;
     protected Paint paintMask_srcOver = null;
     protected Paint paintMoon_fill = null;
@@ -90,9 +90,14 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         paintMoonlight.setColor(options.moonLightColor);
         paintMoonlight.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
 
-        paintLocation = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintLocation.setStyle(Paint.Style.FILL);
-        paintLocation.setColor(options.locationFillColor);
+        paintLocation_fill = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintLocation_fill.setStyle(Paint.Style.FILL);
+        paintLocation_fill.setColor(options.locationFillColor);
+
+        paintLocation_stroke = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintLocation_stroke.setStyle(Paint.Style.STROKE);
+        paintLocation_stroke.setColor(options.locationStrokeColor);
+        paintLocation_stroke.setStrokeWidth(0.5f);
 
         paintSun_fill = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintSun_fill.setStyle(Paint.Style.FILL);
@@ -292,7 +297,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
             ////////////////
             // draw locations
             if (options.locations != null) {
-                drawLocations(c, w, h, paintLocation, options);
+                drawLocations(c, w, h, paintLocation_fill, paintLocation_stroke, options);
             }
         }
 
