@@ -1,5 +1,9 @@
 ### ~
 
+### v0.11.8 (2019-07-30)
+* fixes bug "half hour and 45-minute time zones are listed incorrectly" (#346).
+* fixes bug "content provider uses a stale configuration" (#347).
+
 ### v0.11.7 (2019-07-08)
 * updates translations to Spanish (es-es) and Catalan (ca) (#340, #343 by Raulvo).
 
