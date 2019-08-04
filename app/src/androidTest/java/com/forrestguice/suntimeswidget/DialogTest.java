@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2018 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,10 +21,12 @@ package com.forrestguice.suntimeswidget;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -44,6 +46,9 @@ import static org.hamcrest.CoreMatchers.not;
 @RunWith(AndroidJUnit4.class)
 public class DialogTest extends SuntimesActivityTestBase
 {
+    @Rule
+    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+
     /**
      * UI Test
      *
@@ -56,9 +61,9 @@ public class DialogTest extends SuntimesActivityTestBase
         if (AppSettings.loadShowLightmapPref(context))
         {
             showLightmapDialog(context);
-            captureScreenshot("suntimes-dialog-lightmap0");
+            captureScreenshot(activityRule.getActivity(), "suntimes-dialog-lightmap0");
 
-            rotateDevice();
+            rotateDevice(activityRule);
             verifyLightmapDialog();
             cancelLightmapDialog();
 
@@ -81,13 +86,13 @@ public class DialogTest extends SuntimesActivityTestBase
 
     public static void verifyLightmapDialog()
     {
-        onView(withId(R.id.info_time_lightmap_layout)).check(assertShown);
+        onView(withId(R.id.dialog_lightmap_layout)).check(assertShown);
     }
 
     public static void cancelLightmapDialog()
     {
-        onView(withId(R.id.info_time_lightmap_layout)).perform(pressBack());
-        onView(withId(R.id.info_time_lightmap_layout)).check(doesNotExist());
+        onView(withId(R.id.dialog_lightmap_layout)).perform(pressBack());
+        onView(withId(R.id.dialog_lightmap_layout)).check(doesNotExist());
     }
 
     /**
@@ -102,7 +107,7 @@ public class DialogTest extends SuntimesActivityTestBase
         if (AppSettings.loadShowEquinoxPref(context))
         {
             showEquinoxDialog(context);
-            captureScreenshot("suntimes-dialog-equinox0");
+            captureScreenshot(activityRule.getActivity(), "suntimes-dialog-equinox0");
 
             verifyEquinoxDialog();
             cancelEquinoxDialog();
@@ -146,9 +151,9 @@ public class DialogTest extends SuntimesActivityTestBase
     public void test_showHelpDialog()
     {
         showHelpDialog(activityRule.getActivity());
-        captureScreenshot("suntimes-dialog-help0");
+        captureScreenshot(activityRule.getActivity(), "suntimes-dialog-help0");
 
-        rotateDevice();
+        rotateDevice(activityRule);
         verifyHelpDialog();
         cancelHelpDialog();
     }
@@ -187,9 +192,9 @@ public class DialogTest extends SuntimesActivityTestBase
     public void test_showAboutDialog()
     {
         showAboutDialog(activityRule.getActivity());
-        captureScreenshot("suntimes-dialog-about0");
+        captureScreenshot(activityRule.getActivity(), "suntimes-dialog-about0");
 
-        rotateDevice();
+        rotateDevice(activityRule);
         verifyAboutDialog();
         cancelAboutDialog();
     }

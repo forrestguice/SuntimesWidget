@@ -29,9 +29,9 @@
     <!-- Button: Next/Prev Date
          The next/prev button contentDescription (accessibility).
     -->
-    <string name="nextDay">Sekva tago</string>
+    <string name="nextDay">Sekvanta tago</string>
     <string name="prevDay">Antaŭa tago</string>
-    <string name="nextYear">Sekva jaro</string>
+    <string name="nextYear">Sekvanta jaro</string>
     <string name="prevYear">Antaŭa jaro</string>
 
     <!-- Warnings -->
@@ -314,7 +314,7 @@
     <string name="widgetMode1x1_moonphaseillum">Lunfazo kaj prilumeco</string>    <!-- setting -->
     <string name="widgetMode1x1_moonphase">Nur lunfazo</string>                     <!-- setting -->
     <string name="widgetMode1x1_moonillum">Nur prilumeco de Luno</string>         <!-- setting -->
-    <string name="widgetMode1x1_moonphasenext">Sekva ĉefa fazo</string>             <!-- setting -->
+    <string name="widgetMode1x1_moonphasenext">Sekvanta ĉefa fazo</string>             <!-- setting -->
 
     <string name="configLabel_appearance_1x1mode">Grando 1x1:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_3x2mode">Grando 3x2:</string>     <!-- spinner label -->
@@ -563,7 +563,7 @@
 
     <string name="alarmAction_dismiss">Silentigi</string>                <!-- notification action button -->
     <string name="alarmAction_snooze">Prokrasti</string>                  <!-- notification action button -->
-    <string name="alarmAction_timeout">Silentigi</string>                  <!-- notification action button -->  <!-- TODO -->
+    <string name="alarmAction_timeout">Silentigi</string>                  <!-- notification action button -->
 
     <string name="alarmAction_playingMsg"><xliff:g id="label">%1$s</xliff:g></string>          <!-- toast message -->
     <string name="alarmAction_silencedMsg">Silentigis alarmon</string>          <!-- toast message -->
@@ -618,7 +618,14 @@
     <string name="configLabel_alarms_optWhiteList_listed">Ne optimumigita (konsilinde)</string>
     <string name="configLabel_alarms_optWhiteList_unlisted">Aktiva optimumigo de pilo.\nAlarmoj povas prokrastĝi maksimume je 15 minutoj.</string>
 
-    <string name="configLabel_alarms_silenceAfter">Silentiĝi (ne-malaktivigi) post</string> <!-- TODO -->
+    <string name="configLabel_alarms_notifications">Sciigoj</string>
+    <string name="configLabel_alarms_notifications_on">Aktivaj</string>
+    <string name="configLabel_alarms_notifications_off">Malaktivaj.\nAlarmoj povas ne vidiĝi ĝuste.</string>
+    <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="configLabel_alarms_notifications_summary1">Sur ŝlos‑ekrano: %1$s</string>    <!-- "On lock screen: Off -->
+    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Sciigos estas malaktivaj. Alarmoj povas ne vidiĝi ĝuste.</string>  <!-- snackbar message -->
+
+    <string name="configLabel_alarms_silenceAfter">Silentiĝi (ne-malaktivigi) post</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutoj">%s</xliff:g></string>
 
     <string name="configLabel_alarms_timeoutAfter">Silentiĝi post</string>
@@ -640,6 +647,7 @@
     </string-array>
 
     <string name="configLabel_alarmSounds">Sonoj</string>            <!-- group title -->
+    <string name="configLabel_alarms_volumes">Sonforteco</string>
     <string name="configLabel_alarms_allRingtones">Montri ĉiujn voksonojn</string>
     <string name="configLabel_alarms_allRingtones_summary">Montri ĉiujn sistemajn sonojn dum elekti (ignori tipon de voksono).</string>
 
@@ -701,12 +709,10 @@
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Montri lunajn informojn</string>
     <string name="configLabel_ui_showmoon_summary">Montri tempojn de lun-leviĝo, lun-subiro, fazon kaj prilumecon.</string>
-    <string name="configLabel_ui_showmoon_notImplemented">Lunaj informoj ne subtenataj de tiu ĉi datum-fonto.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Montri sunekstremon / tagnoktegalecon</string>
     <string name="configLabel_ui_showEquinox_summary">Montri tempon ĝis la sekvanta sunekstremo aŭ tagnoktegaleco.</string>
-    <string name="configLabel_ui_showEquinox_notImplemented">Sunekstremo kaj tagnoktegaleco ne estas ankoraŭ subtenataj de tiu ĉi datum-fonto.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Spuri sunekstremon / tagnoktegalecon</string>
@@ -866,7 +872,7 @@
     <!-- App Setting: custom Locale -->
     <string name="configLabel_localeSelect">Lingvo</string>
     <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
-    <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
+    <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits  -->
         <item>Angla</item>
         <item>Esperanto</item>
         <item>Franca</item>
@@ -1034,13 +1040,12 @@
         Kopirajto &#169 2014-2019 Forrest GUICE <br />
         Fontkodo disponebla laŭ la permesilo GPLv3.
     ]]></string>
-    <string name="app_legal2"><![CDATA[
-        Germana traduko de Henrik "HerHde" Hüttemann. <br />
-        Pola kaj Esperanta tradukoj de Verdulo. <br />
-        Franca traduko de Jej. <br />
-        Hungra traduko de Erci. <br />
-        Hispana kaj Kataluna tradukoj de <a href=https://github.com/Raulvo>Raulvo</a>.
-    ]]></string>
+
+    <string name="app_legal2"><![CDATA[<b>Tradukoj al:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
+    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> de <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
+    <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
+    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g> kaj <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
+
     <string name="app_legal3"><![CDATA[ <b>Bibliotekoj:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
     <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
@@ -1089,6 +1094,11 @@
           <b>Naŭtika krepusko:</b> la Suno estas 12 gradoj sub la horizonto, konturoj de objektoj kaj la horizonto estas kvazaŭ nevideblaj. Lumo mankas por plejparte da agadoj eksterdome sen artefarita prilumado.<br/><br/>
           <b>Astronomia krepusko:</b> la Suno estas 18 gradoj sub la horizonto. Preskaŭ nigra nokto.<br/>
     ]]></string>
+    <string name="help_general_riseSetOrder"><![CDATA[
+          <b>Hodiaŭ:</b> tempoj de leviĝo kaj subiro por la hodiaŭa dato.<br/><br/>
+          <b>Antaŭa / sekvanta:</b> tempo de la eksa okazaĵo kaj la sekvanta okazaĵo.<br/>
+    ]]></string>
+
         <string name="help_general_solartime"><![CDATA[
           <b>Ŝajna suntempo:</b> tempo determinita per spuri movon de ŝajna Suno al la agordita longitudo kaj latitudo.<br/><br/>
           Ŝajna movo de Suno ne estas konstanta. Ĝi ŝanĝiĝas laŭ sezonoj pro aksa kliniĝo de ekliptiko kaj pro discentreco de Tera orbito.
@@ -1143,6 +1153,9 @@
     <string name="privacy_policy"><![CDATA[<b>Privateco:</b><br/>La aplikaĵo Suntempoj ne kolektas, konservas aŭ transigas personajn informojn de la uzanto. Ĝi enhavas <b>neniujn reklamojn</b>, <b>neniujn analizilojn</b>, <b>neniujn spurilojn</b> kaj <b>neniujn malnecesajn permesojn</b>. <br/><br/>La aplikaĵo agordiĝas de lokaj datumoj. Tiuj informoj (kaj aliaj agordoj uzataj de la aplikaĵo) estas konservataj loke kaj ne eliras el la aparato.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[La permeso por <b>determini pozicion</b> estas uzata por trovi vian nunan longitudon kaj latitudon. Tiu permeso estas malnepra, pozicio estas implicite agordita permane.]]></string>
     <string name="privacy_permission_storage"><![CDATA[La permeso por aliri <b>eksteran konservejon</b> estas uzato por elpori/sekurkopii datumojn al dosieroj (ekz. lokojn, etosojn).]]></string>
+    <string name="privacy_permission_storage1"><![CDATA[La permeso por <b>legi eksteran konservejon</b> estas uzata por ludi sonojn troviĝantajn en la SD‑karto. <br/><br/>Tiu permeso estas malnepra, la implicita sono estos ludata, se tiu permeso mankas. Tiu permeso ne estas bezonata por ludi sonojn de la sistemo (konservo de aŭdvidaĵoj).]]></string>
+    <string name="privacy_permissiondialog_prompt"><![CDATA[Ĉu peti la permeson nun?]]></string>
+    <string name="privacy_permissiondialog_ignore">Ignori</string>
     <string name="privacy_permissiondialog_title">Permesoj</string>
 
     <string name="security_dialog_title">Sekureca averto</string>

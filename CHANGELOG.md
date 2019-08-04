@@ -1,5 +1,42 @@
 ### ~
 
+### v0.11.8 (2019-07-30)
+* fixes bug "half hour and 45-minute time zones are listed incorrectly" (#346).
+* fixes bug "content provider uses a stale configuration" (#347).
+
+### v0.11.7 (2019-07-08)
+* updates translations to Spanish (es-es) and Catalan (ca) (#340, #343 by Raulvo).
+
+### v0.11.6 (2019-06-24)
+* fixes bug "Suntimes Alarms uses elevation even if unchecked" (#336).
+* fixes bug "worldmap dialog fails to apply themed foreground color" (#337).
+* fixes bug "unable to dismiss alarm when notifications are disabled" (#333); now falls back to directly triggering the fullscreen activity.
+* adds a "Notifications" warning to the AlarmClock activity that is shown if notifications are disabled. Notifications are required for alarms to display correctly (#333).
+* adds a "Notifications" preference to the Alarm settings. This preference warns when notifications are disabled, or configured to not show on the lock screen (#332, #333).
+* adds a "Volumes" preference to the Alarm settings (navigates to system Sound settings).
+* optimizes basemaps and preview pngs; size reduced by ~50% using pngquant.
+* updates translations to Polish (pl) and Esperanto (eo) (#330, #339 by Verdulo).
+
+### v0.11.5 (2019-05-31)
+* adds support for playing alarm sounds from the file system (mp3, ogg, etc). [Selecting files requires a file manager app with support for ringtone selection.] 
+* fixes bug "alarm sound fails to play from external storage" (#326); alarm notifications will fallback to the default ringtone if the selected sound cannot be played.
+* new permission: READ_EXTERNAL_STORAGE. This permission is needed to play sounds located on the SD card (#326). [PERMISSION]
+* improves language resolution for Spanish locales (#147).
+* improves the About Dialog (better translation credits).
+
+### v0.11.4 (2019-05-07)
+* fixes bug "NotificationService is always running" (#323, #324).
+* fixes bug "AlarmClockActivity started multiple times" (#325, #324).
+* removes the "location mode" selector from widget configuration (widgets only support the "user-defined" mode) (#10).
+* updates translation to Brazilian Portuguese (pt-br) (#320 by Neto Silva).
+
+### v0.11.3 (2019-04-17)
+* fixes crash when opening general settings (Esperanto) (#315).
+* adds "rise/set order" help button to the widget configuration activity.
+* misc. layout and icon changes (Widget List, About).
+* updates translations to Polish (pl) and Esperanto (eo) (#317 by Verdulo).
+* updates translation to Brazilian Portuguese (pt-br) (#319 by Neto Silva).
+
 ### v0.11.2 (2019-04-08)
 * adds an option to disable the alarm clock launcher icon (#305).
 * adds translation to Brazilian Portuguese (pt-br) (contributed by Neto Silva) (#304).

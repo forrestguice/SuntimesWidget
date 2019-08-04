@@ -10,6 +10,7 @@
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />      <!-- needed to interact w/ AlarmClock -->
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />  <!-- needed by "export" features (e.g. "export places" to file) -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />    <!-- needed by AlarmClock to play sounds from sdcard -->
 
     <uses-permission android:name="android.permission.VIBRATE" />                 <!-- needed by AlarmClock -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />  <!-- needed by AlarmClock to restore alarms after shutdown/reboot -->
@@ -122,7 +123,7 @@
             android:label="@string/app_name_alarmclock"
             android:icon="@mipmap/ic_launcher_alarms"
             android:taskAffinity=".alarmclock.ui.AlarmClockActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTask">
 
             <intent-filter>
                 <action android:name="android.intent.action.SET_ALARM" />

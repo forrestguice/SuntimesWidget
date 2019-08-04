@@ -762,7 +762,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         item.modified = true;
 
         AlarmDatabaseAdapter.AlarmUpdateTask enableTask = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, false);
-        enableTask.setTaskListener(new AlarmDatabaseAdapter.AlarmUpdateTask.AlarmClockUpdateTaskListener()
+        enableTask.setTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener()
         {
             @Override
             public void onFinished(Boolean result, AlarmClockItem item)
@@ -770,6 +770,9 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
                 if (result) {
                     context.sendBroadcast( enabled ? AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, item.getUri())
                                                    : AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISABLE, item.getUri()) );
+                    if (!enabled) {
+                        AlarmNotifications.updateAlarmTime(context, item);
+                    }
                     updateView(itemView, item);
 
                 } else Log.e("AlarmClockActivity", "enableAlarm: failed to save state!");

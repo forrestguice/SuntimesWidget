@@ -43,6 +43,7 @@ import android.widget.TextView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 
+import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorListAdapter;
@@ -567,6 +568,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (locationConfig != null)
         {
             locationConfig.setAutoAllowed(false);
+            locationConfig.setHideMode(true);
             locationConfig.init(this, false, this.appWidgetId);
         }
 
@@ -1352,6 +1354,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             final Context context = SuntimesConfigActivity0.this;
             saveSettings(context);
             updateWidgets(context,  new int[] {appWidgetId});
+            CalculatorProvider.clearCachedConfig(appWidgetId);
 
             Intent resultValue = new Intent();
             resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);

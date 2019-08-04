@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.support.test.filters.LargeTest;
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
@@ -28,6 +29,7 @@ import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -37,6 +39,9 @@ import static junit.framework.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 public class SuntimesResTest extends SuntimesActivityTestBase
 {
+    @Rule
+    public ActivityTestRule<SuntimesActivity> activityRule = new ActivityTestRule<>(SuntimesActivity.class);
+
     @Test
     public void test_stringArrays()
     {
@@ -46,6 +51,7 @@ public class SuntimesResTest extends SuntimesActivityTestBase
         {
             AppSettings.loadLocale(context, languageTag);
             verify_stringArrayLength("locale_values", R.array.locale_values, "locale_display", R.array.locale_display);
+            verify_stringArrayLength("locale_credits", R.array.locale_credits, "locale_display", R.array.locale_display);
             verify_stringArrayLength("appThemes_values", R.array.appThemes_values, "appThemes_display", R.array.appThemes_display);
 
             verify_stringArrayLength("localeMode_values", R.array.localeMode_values, "localeMode_display", R.array.localeMode_display);

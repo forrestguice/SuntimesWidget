@@ -629,6 +629,13 @@
     <string name="configLabel_alarms_optWhiteList_listed">Not optimized (recommended)</string>  <!-- TODO -->
     <string name="configLabel_alarms_optWhiteList_unlisted">Optimizing battery use.\nAlarms may be delayed up to 15 minutes.</string>  <!-- TODO -->
 
+    <string name="configLabel_alarms_notifications">Notifications</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_on">On</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications_off">Off.\nAlarms may fail to display correctly.</string>    <!-- TODO -->
+    <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
+    <string name="configLabel_alarms_notifications_summary1">On lock screen: %1$s</string>    <!-- "On lock screen: Off -->     <!-- TODO -->
+    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Notifications are off. Alarms may fail to display correctly.</string>  <!-- snackbar message -->    <!-- TODO -->
+
     <string name="configLabel_alarms_silenceAfter">Go silent after</string>  <!-- TODO -->
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
 
@@ -651,6 +658,7 @@
     </string-array>
 
     <string name="configLabel_alarmSounds">Sounds</string>            <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_alarms_volumes">Volumes</string>    <!-- TODO -->
     <string name="configLabel_alarms_allRingtones">Show all ringtones</string>  <!-- TODO -->
     <string name="configLabel_alarms_allRingtones_summary">Show all system sounds during selection (ignore ringtone type).</string>  <!-- TODO -->
 
@@ -670,6 +678,10 @@
         <item quantity="one">%d second</item>
         <item quantity="other">%d seconds</item>
     </plurals>  <!-- TODO -->
+
+    <string name="configLabel_alarmMisc">Miscellaneous</string>  <!-- TODO -->
+    <string name="configLabel_alarms_showlauncher">Launcher Icon</string>  <!-- TODO -->
+    <string name="configLabel_alarms_showlauncher_summary">Show alarm clock icon in the app tray.</string>  <!-- TODO -->
 
     <!--
          APP SETTINGS
@@ -710,12 +722,10 @@
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Ilargia erakutsi</string>
     <string name="configLabel_ui_showmoon_summary">Irteera, ezkutatze, ilargialdi eta argiztapena erakutsi.</string>
-    <string name="configLabel_ui_showmoon_notImplemented">Datuen jatorri honetan ez dago ilargia inplementatuta.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Solstizioa / Ekinokzioa erakutsi</string>
     <string name="configLabel_ui_showEquinox_summary">Hurrengo solstizioa edo ekinokzioa heldu arte falta den denbora erakutsi.</string>
-    <string name="configLabel_ui_showEquinox_notImplemented">Solstizioa eta ekinokzioa ez daude inplementatuta datu iturri honetan.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Solstizioaren jarraipena</string>
@@ -842,7 +852,7 @@
     <!-- App Setting: custom Locale -->
     <string name="configLabel_localeSelect">Hizkuntza</string>
     <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
-    <string-array name="locale_display">                      <!-- one-to-one with locale_values -->
+    <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits  -->
         <item>Ingelesa</item>
         <item>Esperantoa</item>
         <item>Frantsesa</item>
@@ -1075,15 +1085,12 @@
         Copyright &#169 2014-2019 Forrest Guice <br />
         Iturburu kodea GPLv3 lizentziapean eskuragarri dago.
     ]]></string>
-    <string name="app_legal2"><![CDATA[
-        <b>Itzulpenak:</b><br/>
-        Alemanezko itzulpena Henrik "HerHde" Hüttemann eta Wolkenschieberek egina. <br />
-        Polonierazko eta esperantozko itzulpenak Verdulok eginak. <br />
-        Frantsesezko itzulpena Jejek egina. <br />
-        Hungarierazko itzulpena Ercik egina. <br />
-        Gaztelerazko eta katalanazko itzulpenak <a href=https://github.com/Raulvo>Raulvo</a>k eginak.
-        Euskarazko itzulpena beriainek egina.
-    ]]></string>
+
+    <string name="app_legal2"><![CDATA[<b>Itzulpenak:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>  <!-- TODO: review -->
+    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> :: <xliff:g id="authorList">%2$s</xliff:g>.]]></string>   <!-- TODO: review -->
+    <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
+    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, eta <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
+
     <string name="app_legal3"><![CDATA[ <b>Liburutegiak:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
     <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
@@ -1148,6 +1155,10 @@
           <b>Itsas krepuskulua:</b> Eguzkia 8 gradu zeruertzaren azpitik dago; objektuen ingerada eta zeruertza gero eta bereizezinagoak dira. Ez dago argi nahikorik kanpoko jarduera gehienetarako argi bat erabili behar gabe.<br/><br/>
           <b>Krepuskulu astronomikoa:</b> Eguzkia 18 gradu zeruertzaren azpitik dago. Gauaren iluntasunetik hurbil.<br/>
     ]]></string>
+    <string name="help_general_riseSetOrder"><![CDATA[
+          <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
+          <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
+    ]]></string>  <!-- TODO -->
 
     <string name="help_general_timeMode2"><![CDATA[
           <b>Udaberriko ekinokzioa:</b> TODO.<br/><br/>
@@ -1192,11 +1203,16 @@
     <string name="privacy_policy"><![CDATA[<b>Pribatutasuna:</b><br/>Suntimes aplikazioak ez du inolako informazio pertsonalik biltzen, gordetzen, edo bidaltzen. <b>Ez du iragarkirik</b>, <b>ez analisi tresnarik</b>, <b>ez aztarnaririk</b>, ezta <b>beharrezkoa ez den baimenik</b>. <br/><br/>Aplikazioa kokapen datuekin konfiguratuta dago. Informazio hau (eta aplikazioak erabiltzen duen beste konfigurazio datuak) gailuan bertan gordetzen da eta ez du gailua uzten.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes aplikazioak <b>kokapen</b> baimena behar du zure uneko longitudea eta latitudea zehazteko.<br/><br/>Baimen hau hautazkoa da; kokapena eskuz ezartzen da modu lehenetsian.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes aplikazioak <b>kanpoko biltegirako</b> baimenak behar ditu datuen babes kopiak egiteko eta esportatzeko (adib. tokiak, gaiak).]]></string>
+    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>    <!-- TODO -->
+    <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>    <!-- TODO -->
+    <string name="privacy_permissiondialog_ignore">Ignore</string>    <!-- TODO -->
     <string name="privacy_permissiondialog_title">Baimenak</string>
 
     <string name="security_dialog_title">Security Alert</string>  <!-- TODO -->
     <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  <!-- TODO -->
     <string name="feature_not_supported_by_api">This feature is not supported by API %1$s.</string>  <!-- TODO -->
+    <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>  <!-- TODO -->
+    <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>  <!-- TODO -->
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
