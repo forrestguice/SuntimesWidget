@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="http://schemas.android.com/tools">
 
-    <string name="default_location_label">New York City</string>
-    <string name="default_location_latitude">40.68620</string>      <!-- decimal degrees (DD) -->
-    <string name="default_location_longitude">-74.02619</string>   <!-- decimal degrees (DD) -->
-    <string name="default_location_altitude">0</string>         <!-- meters -->
+    <string name="default_location_label">São Paulo</string>
+    <string name="default_location_latitude">-23.6821</string>      <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">-46.8754</string>   <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">815</string>         <!-- meters -->
     <string name="default_units_length">METRIC</string>         <!-- METRIC, IMPERIAL, USC -->
 
     <!-- MAIN ACTIVITY -->
@@ -192,7 +192,7 @@
     <string name="ago"><xliff:g id="timeSpan">%1$s</xliff:g>  atrás</string>         <!-- e.g. 1y 15d 12h ago -->
 
     <!-- misc time values: might be displayed in a timeField in place of an actual time -->
-    <string name="time_none">none</string>  <!-- no time / time does not occur -->
+    <string name="time_none">nada</string>  <!-- no time / time does not occur -->
     <string name="time_loading">…</string>  <!-- calculating / time is loading -->
     <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
     <string name="time_format_12hr_veryshort_withseconds"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- shortest 12hr time format (w/ seconds); should omit am/pm -->
@@ -551,13 +551,13 @@
     <string name="configLabel_themeBorderWidthNoon">Largura da Borda (tarde)</string>         <!-- size label -->
     <string name="configHint_themeBorderWidthNoon">3</string>                             <!-- size hint -->
 
-    <string name="configLabel_themeColorSuffix">Suffix Colour</string>   <!-- color label -->
+    <string name="configLabel_themeColorSuffix">Cor Sufixo</string>   <!-- color label -->
     <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorTime">Text Colour2</string>      <!-- color label -->
+    <string name="configLabel_themeColorTime">Cor do Texto 2</string>      <!-- color label -->
     <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeSizeTitle">Title Size:</string>  <!-- edit label -->
+    <string name="configLabel_themeSizeTitle">Tamanho do Título:</string>  <!-- edit label -->
     <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
 
     <string name="configLabel_themeBoldTitle">Negrito</string>          <!-- checkbox label -->
@@ -570,10 +570,10 @@
 
     <string name="configLabel_themeBoldTime">Negrito</string>          <!-- checkbox label -->
 
-    <string name="configLabel_themeSizeSuffix">Suffix Size:</string> <!-- edit label -->
+    <string name="configLabel_themeSizeSuffix">Tamanho do Sufixo:</string> <!-- edit label -->
     <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themePadding">Padding:</string>            <!-- edit label -->
+    <string name="configLabel_themePadding">Preenchimento:</string>            <!-- edit label -->
     <string name="configHint_themePadding">[left, top, right, bottom]</string> <!-- edit hint -->
 
     <string name="configLabel_themeID">ID:</string>                      <!-- edit label -->
@@ -605,7 +605,7 @@
     <string name="configAction_deleteAlarm">Apagar</string>               <!-- button (contentDescription) -->
     <string name="configAction_clearAlarms">Limpar</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">Limpar</string>                <!-- action button / menu item -->
-    <string name="configAction_setAlarmOffset">Set Offset</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmOffset">Definir Offset</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmType">Definir Tipo</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">Definir Tag</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLocation">Definir Local</string>         <!-- button (contentDescription) -->
@@ -834,9 +834,9 @@
     </string-array>
 
     <!-- App Setting: time zone sort modes -->
-    <string name="timezone_sort_byOffset">by offset</string>
-    <string name="timezone_sort_byId">by id</string>
-    <string name="timezone_sort_byName">by name</string>
+    <string name="timezone_sort_byOffset">by offset</string>  <!-- TODO -->
+    <string name="timezone_sort_byId">by id</string>  <!-- TODO -->
+    <string name="timezone_sort_byName">by name</string>  <!-- TODO -->
 
     <string-array name="timezoneSort_display">  <!-- display values (one-to-one with timezoneSort_values) -->
         <item>@string/timezone_sort_byOffset</item>
@@ -844,12 +844,12 @@
         <item>@string/timezone_sort_byName</item>
     </string-array>
 
-    <string name="timezone_sort_contextAction">Sort zones</string>           <!-- action bar title -->
-    <string name="timezone_sort_msg">Time zones sorted (%1$s).</string>      <!-- toast msg -->
+    <string name="timezone_sort_contextAction">Sort zones</string>           <!-- action bar title -->   <!-- TODO -->
+    <string name="timezone_sort_msg">Time zones sorted (%1$s).</string>      <!-- toast msg -->   <!-- TODO -->
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">GPS time limit</string>
-    <string name="configLabel_getFix_maxElapse_summary">Give up after <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
+    <string name="configLabel_getFix_maxElapse">Tempo limite do GPS</string>
+    <string name="configLabel_getFix_maxElapse_summary">Desistir após <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
     <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 segundos</item>
         <item>30 segundos</item>
@@ -859,8 +859,8 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">GPS recent max age</string>
-    <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> considered recent</string>
+    <string name="configLabel_getFix_maxAge">Atualizar dados do GPS após</string>
+    <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> considerado recente</string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>1 minuto</item>
         <item>5 minutos</item>
@@ -893,7 +893,7 @@
     </string-array>
 
     <!-- App Setting: custom Locale -->
-    <string name="configLabel_localeSelect">Language</string>
+    <string name="configLabel_localeSelect">Idioma</string>
     <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
     <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits -->
         <item>Inglês</item>
@@ -964,10 +964,10 @@
 
     <!-- Dialog: World Map -->
     <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
-    <string name="worldmap_dialog_option_sunlight">Sunlight</string>
-    <string name="worldmap_dialog_option_moonlight">Moonlight</string>
-    <string name="worldmap_dialog_option_all">Both</string>
-    <string name="configAction_shareMap">Share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+    <string name="worldmap_dialog_option_sunlight">Luz do Sol</string>
+    <string name="worldmap_dialog_option_moonlight">Luz da Lua</string>
+    <string name="worldmap_dialog_option_all">Ambos</string>
+    <string name="configAction_shareMap">Compartilhar</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Programar um alarme</string>
@@ -1132,7 +1132,7 @@
     <string name="app_legal2"><![CDATA[<b>Traduções:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
     <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> by <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
     <string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>  <!-- e.g. "name1, name2, name3, ..." -->
-    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, and <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
+    <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, e <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
 
     <string name="app_legal3"><![CDATA[ <b>Bibliotecas:</b><br/> ]]>
 
@@ -1275,7 +1275,7 @@
     <string name="privacy_permission_location"><![CDATA[Suntimes usa a permissão <b>localização</b> para determinar sua atual localização.<br/><br/>Permissão opcional, você pode definir seu local manualmente.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes usa a permissão <b>Armazenamento</b> para guardar/exportar dados para arquivos(lugares e temas).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms usa <b>armazenamento</b> para tocar áudios presentes na memória do aparelho.<br/><br/>Permissão opcional, você pode usar os áudios internos do sistema.]]></string>
-    <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>
+    <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>  <!-- TODO -->
     <string name="privacy_permissiondialog_ignore">Ignorar</string>
     <string name="privacy_permissiondialog_title">Permissões</string>
 
