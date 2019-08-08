@@ -27,10 +27,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -61,7 +59,6 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
     {
         int w, h;
         int numFrames = 1;
-        int frameOffset = 60;
         long frameDuration = 250000000;    // nanoseconds (250 ms)
         int initialOffset = 0;
         SuntimesRiseSetDataset data;
@@ -79,14 +76,9 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
                 numFrames = (int)params[5];
             }
             if (params.length > 6) {
-                frameOffset = (int)params[6];
+                initialOffset = (int)params[6];
             }
-            if (params.length > 7) {
-                frameDuration = (int)params[7] * 1000000;   // ms to ns
-            }
-            if (params.length > 8) {
-                initialOffset = (int)params[8];
-            }
+            frameDuration = options.anim_frameLengthMs * 1000000;   // ms to ns
 
         } catch (ClassCastException e) {
             Log.w("WorldMapTask", "Invalid params; using [null, 0, 0]");
@@ -111,11 +103,11 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
             }
 
             publishProgress(frame);
-            options.offsetMinutes += frameOffset;
+            options.offsetMinutes += options.anim_frameOffsetMinutes;
             time0 = System.nanoTime();
             i++;
         }
-        options.offsetMinutes -= frameOffset;
+        options.offsetMinutes -= options.anim_frameOffsetMinutes;
         return frame;
     }
 
@@ -210,6 +202,9 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
 
         public int offsetMinutes = 0;    // minutes offset from "now" (default 0)
         public long now = -1;            // -1 (current)
+
+        public int anim_frameLengthMs = 100;         // frames shown for 100 ms
+        public int anim_frameOffsetMinutes = 3;      // each frame 3 minutes apart
     }
 
     /**
