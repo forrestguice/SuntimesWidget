@@ -699,12 +699,18 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private SeekBar.OnSeekBarChangeListener seekBarListener = new SeekBar.OnSeekBarChangeListener()
     {
         @Override
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {}
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
+        {
+            if (fromUser) {
+                worldmap.setOffsetMinutes(seekBar.getProgress() - seek_now);
+                updateTimeText();
+            }
+        }
         @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {}
+        public void onStartTrackingTouch(SeekBar seekBar) {
+        }
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-            worldmap.setOffsetMinutes(seekBar.getProgress() - seek_now);
         }
     };
 
