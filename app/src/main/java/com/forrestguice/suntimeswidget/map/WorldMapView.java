@@ -367,6 +367,9 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                     if (mapListener != null) {
                         mapListener.onFrame(frame, offsetMinutes);
                     }
+                    if (exportTask != null && !exportTask.isCancelled()) {
+                        exportTask.addBitmap(frame);
+                    }
                 }
 
                 @Override
@@ -378,6 +381,9 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 
                     if (mapListener != null) {
                         mapListener.onFinished(frame);
+                    }
+                    if (exportTask != null && !exportTask.isCancelled()) {
+                        exportTask.setWaitForFrames(false);
                     }
                 }
             });
@@ -458,12 +464,20 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     }
 
     private Bitmap bitmap;
+    private WorldMapExportTask exportTask = null;
 
     public void shareBitmap()
     {
-        if (bitmap != null && !animated)
+        if (exportTask != null && !exportTask.isCancelled())
         {
-            WorldMapExportTask exportTask = new WorldMapExportTask(getContext(), "SuntimesWorldMap", true, true);
+            Log.w(LOGTAG, "shareBitmap already in progress; triggering stop.");
+            exportTask.setWaitForFrames(false);
+            return;
+        }
+
+        if (bitmap != null)
+        {
+            exportTask = new WorldMapExportTask(getContext(), "SuntimesWorldMap", true, true);
             exportTask.setTaskListener(new ExportTask.TaskListener()
             {
                 @Override
@@ -507,9 +521,12 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                             Toast.makeText(context.getApplicationContext(), context.getString(R.string.msg_export_failure, path), Toast.LENGTH_LONG).show();
                         }
                     }
+                    exportTask = null;
                 }
             });
             exportTask.setBitmaps(new Bitmap[] { bitmap });
+            exportTask.setWaitForFrames(animated);
+            exportTask.setZippedOutput(animated);
             exportTask.execute();
 
         } else Log.w(LOGTAG, "shareBitmap: null!");
@@ -564,6 +581,9 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         animated = false;
         if (drawTask != null) {
             drawTask.cancel(true);
+        }
+        if (exportTask != null) {
+            exportTask.setWaitForFrames(false);
         }
     }
 

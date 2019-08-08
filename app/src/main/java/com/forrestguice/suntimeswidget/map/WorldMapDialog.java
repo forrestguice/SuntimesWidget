@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -549,11 +549,6 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             option_location.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2));
         }
 
-        MenuItem action_share = m.findItem(R.id.shareMap);
-        if (action_share != null) {
-            action_share.setEnabled(!worldmap.isAnimated());
-        }
-
         MenuItem option_sunlight = m.findItem(R.id.mapOption_sunlight);
         if (option_sunlight != null) {
             option_sunlight.setChecked(options.showSunShadow);
@@ -580,8 +575,6 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             boolean toggledValue;
             switch (item.getItemId())
             {
-                // TODO: additional share options; e.g. animated over range
-
                 case R.id.shareMap:
                     worldmap.shareBitmap();
                     return true;
