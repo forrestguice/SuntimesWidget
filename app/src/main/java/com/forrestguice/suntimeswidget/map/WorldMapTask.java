@@ -60,7 +60,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         int w, h;
         int numFrames = 1;
         long frameDuration = 250000000;    // nanoseconds (250 ms)
-        int initialOffset = 0;
+        long initialOffset = 0;
         SuntimesRiseSetDataset data;
         try {
             data = (SuntimesRiseSetDataset)params[0];
@@ -76,7 +76,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
                 numFrames = (int)params[5];
             }
             if (params.length > 6) {
-                initialOffset = (int)params[6];
+                initialOffset = (long)params[6];
             }
             frameDuration = options.anim_frameLengthMs * 1000000;   // ms to ns
 
@@ -200,7 +200,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         public int locationStrokeColor = Color.BLACK;
         public double locationScale = 1 / 192d;
 
-        public int offsetMinutes = 0;    // minutes offset from "now" (default 0)
+        public long offsetMinutes = 0;    // minutes offset from "now" (default 0)
         public long now = -1;            // -1 (current)
 
         public int anim_frameLengthMs = 100;         // frames shown for 100 ms
@@ -236,7 +236,17 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
                 options.now = mapTime.getTimeInMillis();
             }
 
-            mapTime.add(Calendar.MINUTE, options.offsetMinutes);    // offset by some minutes
+            long minutes = options.offsetMinutes;
+            while (minutes > Integer.MAX_VALUE) {
+                minutes = minutes - Integer.MAX_VALUE;
+                mapTime.add(Calendar.MINUTE, Integer.MAX_VALUE);
+            }
+            while (minutes < Integer.MIN_VALUE) {
+                minutes = minutes + Integer.MIN_VALUE;
+                mapTime.add(Calendar.MINUTE, Integer.MIN_VALUE);
+            }
+            mapTime.add(Calendar.MINUTE, (int)minutes);    // remaining minutes
+
             return mapTime;
         }
 
@@ -383,7 +393,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
     public static abstract class WorldMapTaskListener
     {
         public void onStarted() {}
-        public void onFrame(Bitmap frame, int offsetMinutes ) {}
+        public void onFrame(Bitmap frame, long offsetMinutes ) {}
         public void onFinished( Bitmap result ) {}
     }
 

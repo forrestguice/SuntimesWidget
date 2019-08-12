@@ -358,7 +358,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 }
 
                 @Override
-                public void onFrame(Bitmap frame, int offsetMinutes)
+                public void onFrame(Bitmap frame, long offsetMinutes)
                 {
                     mapW = frame.getWidth();
                     mapH = frame.getHeight();
@@ -389,12 +389,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             });
 
             Log.w(LOGTAG, "updateViews: " + w + ", " + h );
-            if (animated) {
-                drawTask.execute(data, w, h, options, projection, 0, options.offsetMinutes);
-
-            } else {
-                drawTask.execute(data, w, h, options, projection, 1, options.offsetMinutes);
-            }
+            drawTask.execute(data, w, h, options, projection, (animated ? 0 : 1), options.offsetMinutes);
             options.modified = false;
             lastUpdate = System.currentTimeMillis();
         }
@@ -421,7 +416,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     {
         //Log.d("DEBUG", "WorldMapView loadSettings (bundle)");
         animated = bundle.getBoolean("animated", animated);
-        options.offsetMinutes = bundle.getInt("offsetMinutes", options.offsetMinutes);
+        options.offsetMinutes = bundle.getLong("offsetMinutes", options.offsetMinutes);
         options.now = bundle.getLong("now", options.now);
     }
 
@@ -443,7 +438,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     {
         //Log.d("DEBUG", "WorldMapView saveSettings (bundle)");
         bundle.putBoolean("animated", animated);
-        bundle.putInt("offsetMinutes", options.offsetMinutes);
+        bundle.putLong("offsetMinutes", options.offsetMinutes);
         bundle.putLong("now", options.now);
         return true;
     }
@@ -602,13 +597,13 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         updateViews(true);
     }
 
-    public void setOffsetMinutes( int offsetMinutes )
+    public void setOffsetMinutes( long offsetMinutes )
     {
         options.offsetMinutes = offsetMinutes;
         updateViews(true);
     }
 
-    public int getOffsetMinutes() {
+    public long getOffsetMinutes() {
         return options.offsetMinutes;
     }
     public long getNow() {

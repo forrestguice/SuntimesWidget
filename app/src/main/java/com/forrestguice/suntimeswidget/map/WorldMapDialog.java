@@ -722,13 +722,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private WorldMapTask.WorldMapTaskListener onWorldMapUpdate = new WorldMapTask.WorldMapTaskListener()
     {
         @Override
-        public void onFrame(Bitmap result, int offsetMinutes)
+        public void onFrame(Bitmap result, long offsetMinutes)
         {
             if (seekbar != null)
             {
-                int progress = seek_now + offsetMinutes;
+                long progress = seek_now + offsetMinutes;
                 if (progress > 0 && progress < seek_totalMinutes) {
-                    seekbar.setProgress(progress);
+                    seekbar.setProgress((int)progress);
                 }
 
                 updateTimeText();
