@@ -742,4 +742,14 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
     };
 
+    private WorldMapDialogListener dialogListener = null;
+    public void setDialogListener(WorldMapDialogListener listener) {
+        dialogListener = listener;
+    }
+
+    public static class WorldMapDialogListener
+    {
+        public void onConfigDate( long suggestedDate ) {}
+    }
+
 }
