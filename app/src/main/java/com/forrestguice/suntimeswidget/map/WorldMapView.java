@@ -367,7 +367,12 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                     if (mapListener != null) {
                         mapListener.onFrame(frame, offsetMinutes);
                     }
-                    if (exportTask != null && !exportTask.isCancelled()) {
+                }
+
+                @Override
+                public void afterFrame(Bitmap frame, long offsetMinutes)
+                {
+                    if (isRecording()) {
                         exportTask.addBitmap(frame);
                     }
                 }
@@ -382,7 +387,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                     if (mapListener != null) {
                         mapListener.onFinished(frame);
                     }
-                    if (exportTask != null && !exportTask.isCancelled()) {
+                    if (exportTask != null) {
                         exportTask.setWaitForFrames(false);
                     }
                 }
@@ -461,64 +466,16 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     private Bitmap bitmap;
     private WorldMapExportTask exportTask = null;
 
+    public boolean isRecording() {
+        return (exportTask != null && !exportTask.isCancelled() && exportTask.getStatus() != AsyncTask.Status.FINISHED);
+    }
+
     public void shareBitmap()
     {
-        if (exportTask != null && !exportTask.isCancelled())
-        {
-            Log.w(LOGTAG, "shareBitmap already in progress; triggering stop.");
-            exportTask.setWaitForFrames(false);
-            return;
-        }
-
         if (bitmap != null)
         {
             exportTask = new WorldMapExportTask(getContext(), "SuntimesWorldMap", true, true);
-            exportTask.setTaskListener(new ExportTask.TaskListener()
-            {
-                @Override
-                public void onStarted()
-                {
-                    showProgress();
-                }
-
-                @Override
-                public void onFinished(ExportTask.ExportResult result)
-                {
-                    dismissProgress();
-
-                    Context context = getContext();
-                    if (context != null)
-                    {
-                        if (result.getResult())
-                        {
-                            Intent shareIntent = new Intent();
-                            shareIntent.setAction(Intent.ACTION_SEND);
-                            shareIntent.setType(result.getMimeType());
-                            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-                            try {
-                                Uri shareURI = FileProvider.getUriForFile(context, "com.forrestguice.suntimeswidget.fileprovider", result.getExportFile());
-                                shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
-
-                                String successMessage = context.getString(R.string.msg_export_success, result.getExportFile().getAbsolutePath());
-                                Toast.makeText(context.getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
-
-                                context.startActivity(Intent.createChooser(shareIntent, context.getResources().getText(R.string.msg_export_to)));
-                                return;   // successful export ends here...
-
-                            } catch (Exception e) {
-                                Log.e(LOGTAG, "Failed to share file URI! " + e);
-                            }
-
-                        } else {
-                            File file = result.getExportFile();
-                            String path = ((file != null) ? file.getAbsolutePath() : "<path>");
-                            Toast.makeText(context.getApplicationContext(), context.getString(R.string.msg_export_failure, path), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                    exportTask = null;
-                }
-            });
+            exportTask.setTaskListener(exportListener);
             exportTask.setBitmaps(new Bitmap[] { bitmap });
             exportTask.setWaitForFrames(animated);
             exportTask.setZippedOutput(animated);
@@ -526,6 +483,55 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 
         } else Log.w(LOGTAG, "shareBitmap: null!");
     }
+
+    private ExportTask.TaskListener exportListener = new ExportTask.TaskListener()
+    {
+        @Override
+        public void onStarted()
+        {
+            if (!animated) {
+                showProgress();
+            }
+        }
+
+        @Override
+        public void onFinished(ExportTask.ExportResult result)
+        {
+            dismissProgress();
+
+            Context context = getContext();
+            if (context != null)
+            {
+                if (result.getResult())
+                {
+                    Intent shareIntent = new Intent();
+                    shareIntent.setAction(Intent.ACTION_SEND);
+                    shareIntent.setType(result.getMimeType());
+                    shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                    try {
+                        Uri shareURI = FileProvider.getUriForFile(context, "com.forrestguice.suntimeswidget.fileprovider", result.getExportFile());
+                        shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
+
+                        String successMessage = context.getString(R.string.msg_export_success, result.getExportFile().getAbsolutePath());
+                        Toast.makeText(context.getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
+
+                        context.startActivity(Intent.createChooser(shareIntent, context.getResources().getText(R.string.msg_export_to)));
+                        return;   // successful export ends here...
+
+                    } catch (Exception e) {
+                        Log.e(LOGTAG, "Failed to share file URI! " + e);
+                    }
+
+                } else {
+                    File file = result.getExportFile();
+                    String path = ((file != null) ? file.getAbsolutePath() : "<path>");
+                    Toast.makeText(context.getApplicationContext(), context.getString(R.string.msg_export_failure, path), Toast.LENGTH_LONG).show();
+                }
+            }
+            exportTask = null;
+        }
+    };
 
     private ProgressDialog progressDialog;
     private void showProgress()
@@ -549,11 +555,16 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         }
     }
 
-    /**@Override
+    @Override
     protected void onAttachedToWindow()
     {
         super.onAttachedToWindow();
-    }*/
+
+        if (exportTask != null && exportTask.isPaused()) {
+            exportTask.setTaskListener(exportListener);
+            exportTask.resumeTask();
+        }
+    }
 
     @Override
     protected void onDetachedFromWindow()
@@ -562,6 +573,9 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         dismissProgress();
         if (drawTask != null) {
             drawTask.cancel(true);
+        }
+        if (exportTask != null) {
+            exportTask.pauseTask();
         }
     }
 
@@ -577,8 +591,12 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         if (drawTask != null) {
             drawTask.cancel(true);
         }
-        if (exportTask != null) {
+        if (exportTask != null)
+        {
             exportTask.setWaitForFrames(false);
+            if (isRecording()) {
+                showProgress();
+            }
         }
     }
 

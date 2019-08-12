@@ -78,7 +78,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private TextView utcTime, offsetTime;
     private Spinner mapSelector;
     private SeekBar seekbar;
-    private ImageButton playButton, pauseButton, resetButton, nextButton, prevButton, menuButton;
+    private ImageButton playButton, pauseButton, recordButton, resetButton, nextButton, prevButton, menuButton;
     private TextView speedButton;
     private View mediaGroup, seekGroup;
     //private View radioGroup;
@@ -307,6 +307,12 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             ImageViewCompat.setImageTintList(pauseButton, SuntimesUtils.colorStateList(color_accent, color_disabled, color_pressed));
         }
 
+        recordButton = (ImageButton)dialogView.findViewById(R.id.media_record_map);
+        if (recordButton != null) {
+            recordButton.setOnClickListener(pauseClickListener);   // stop-record is same as pause
+            ImageViewCompat.setImageTintList(recordButton, SuntimesUtils.colorStateList(color_warning, color_disabled, color_pressed));
+        }
+
         resetButton = (ImageButton)dialogView.findViewById(R.id.media_reset_map);
         if (resetButton != null) {
             resetButton.setEnabled(false);
@@ -411,22 +417,36 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         {
             worldmap.setMapTaskListener(onWorldMapUpdate);
             worldmap.updateViews(data, false);
-
-            if (mediaGroup != null)
-            {
-                if (worldmap.isAnimated())
-                {
-                    pauseButton.setVisibility(View.VISIBLE);
-                    playButton.setVisibility(View.GONE);
-
-                } else {
-                    pauseButton.setVisibility(View.GONE);
-                    playButton.setVisibility(View.VISIBLE);
-                }
-            }
+            updateMediaButtons();
         }
 
         startUpdateTask();
+    }
+    private void updateMediaButtons()
+    {
+        if (mediaGroup != null)
+        {
+            if (worldmap.isAnimated())
+            {
+                if (worldmap.isRecording())
+                {
+                    pauseButton.setVisibility(View.GONE);
+                    playButton.setVisibility(View.GONE);
+                    recordButton.setVisibility(View.VISIBLE);
+
+                } else {
+                    pauseButton.setVisibility(View.VISIBLE);
+                    playButton.setVisibility(View.GONE);
+                    recordButton.setVisibility(View.GONE);
+                }
+
+            } else {
+                pauseButton.setVisibility(View.GONE);
+                playButton.setVisibility(View.VISIBLE);
+                recordButton.setVisibility(View.GONE);
+            }
+        }
+
         Context context = getContext();
         if (speedButton != null && context != null)
         {
@@ -681,7 +701,10 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     return true;
 
                 case R.id.shareMap:
-                    worldmap.shareBitmap();
+                    if (!worldmap.isRecording()) {
+                        worldmap.shareBitmap();
+                    } else worldmap.stopAnimation();
+                    updateMediaButtons();
                     return true;
 
                 case R.id.mapOption_location:
@@ -734,11 +757,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     };
     private void playMap()
     {
-        if (mediaGroup != null) {
-            playButton.setVisibility(View.GONE);
-            pauseButton.setVisibility(View.VISIBLE);
-        }
         worldmap.startAnimation();
+        updateMediaButtons();
     }
 
     private View.OnClickListener pauseClickListener = new View.OnClickListener()
@@ -757,15 +777,12 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     };
     private void stopMap(boolean reset)
     {
-        if (mediaGroup != null) {
-            pauseButton.setVisibility(View.GONE);
-            playButton.setVisibility(View.VISIBLE);
-        }
         if (reset) {
             worldmap.resetAnimation(true);
         } else {
             worldmap.stopAnimation();
         }
+        updateMediaButtons();
     }
 
     private View.OnClickListener menuClickListener = new View.OnClickListener()

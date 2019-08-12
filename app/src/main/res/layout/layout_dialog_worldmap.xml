@@ -106,6 +106,13 @@
             app:layout_constraintStart_toEndOf="@+id/media_reset_map"
             android:src="?attr/icActionPause" />
 
+        <ImageButton android:visibility="gone"
+            android:id="@+id/media_record_map"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:background="@null"
+            app:layout_constraintStart_toEndOf="@+id/media_reset_map"
+            android:src="?attr/icActionRecord" />
+
         <ImageButton
             android:id="@+id/media_prev_map"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
