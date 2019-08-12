@@ -32,6 +32,11 @@
 
     <group android:id="@+id/mapOption_group_action" android:checkableBehavior="none">
 
+        <item android:id="@+id/setDate"
+            android:title="@string/configAction_setDate"
+            android:icon="?attr/icActionTime"
+            app:showAsAction="never" />
+
         <item android:id="@+id/shareMap"
             android:title="@string/configAction_shareMap"
             android:icon="?attr/icActionShare"

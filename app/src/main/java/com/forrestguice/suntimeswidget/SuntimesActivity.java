@@ -426,6 +426,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             worldMapDialog.themeViews(this, appThemeOverride);
             worldMapDialog.setData(dataset);
+            worldMapDialog.setDialogListener(worldMapListener);
             worldMapDialog.updateViews();
             //Log.d("DEBUG", "WorldMapDialog updated on restore.");
         }
@@ -2577,8 +2578,22 @@ public class SuntimesActivity extends AppCompatActivity
         WorldMapDialog worldMapDialog = new WorldMapDialog();
         worldMapDialog.themeViews(this, appThemeOverride);
         worldMapDialog.setData(dataset);
+        worldMapDialog.setDialogListener(worldMapListener);
         worldMapDialog.show(getSupportFragmentManager(), DIALOGTAG_WORLDMAP);
     }
+    private WorldMapDialog.WorldMapDialogListener worldMapListener = new WorldMapDialog.WorldMapDialogListener()
+    {
+        @Override
+        public void onConfigDate(long suggested)
+        {
+            WidgetSettings.DateInfo dateInfo = new WidgetSettings.DateInfo(suggested);
+            WidgetSettings.saveDateModePref(SuntimesActivity.this, 0,
+                    WidgetSettings.DateInfo.isToday(dateInfo) ? WidgetSettings.DateMode.CURRENT_DATE
+                                                              : WidgetSettings.DateMode.CUSTOM_DATE );
+            WidgetSettings.saveDatePref(SuntimesActivity.this, 0, dateInfo);
+            afterConfigDate();
+        }
+    };
 
     protected void showEquinoxView( boolean value )
     {

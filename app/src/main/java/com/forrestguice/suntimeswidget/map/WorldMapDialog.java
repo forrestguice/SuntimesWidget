@@ -570,6 +570,11 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         if (option_moonlight != null) {
             option_moonlight.setChecked(options.showMoonLight);
         }
+
+        MenuItem action_date = m.findItem(R.id.setDate);
+        if (action_date != null) {
+            action_date.setEnabled( !WidgetSettings.DateInfo.isToday(getMapDate()) );
+        }
     }
 
     private PopupMenu.OnMenuItemClickListener onContextMenuClick = new PopupMenu.OnMenuItemClickListener()
