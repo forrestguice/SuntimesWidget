@@ -1510,10 +1510,7 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(DialogInterface dialogInterface, int i)
         {
-            dateWarning.reset();
-            calculateData(SuntimesActivity.this);
-            setUpdateAlarms(SuntimesActivity.this);
-            updateViews(SuntimesActivity.this);
+            afterConfigDate();
         }
     };
     DialogInterface.OnClickListener onCancelDate = new DialogInterface.OnClickListener()
@@ -1524,6 +1521,14 @@ public class SuntimesActivity extends AppCompatActivity
             showWarnings();
         }
     };
+    private void afterConfigDate()
+    {
+        dateWarning.reset();
+        calculateData(SuntimesActivity.this);
+        setUpdateAlarms(SuntimesActivity.this);
+        updateViews(SuntimesActivity.this);
+        Log.d("DEBUG", "afterConfigDate");
+    }
 
     /**
      * Refresh location (current location mode).
