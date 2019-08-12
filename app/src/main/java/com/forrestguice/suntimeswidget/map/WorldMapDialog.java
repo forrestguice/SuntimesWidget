@@ -231,11 +231,23 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         offsetTime = (TextView)dialogView.findViewById(R.id.info_time_offset);
         empty = (TextView)dialogView.findViewById(R.id.txt_empty);
         worldmap = (WorldMapView)dialogView.findViewById(R.id.info_time_worldmap);
+
+        worldmap.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                stopMap(false);
+            }
+        });
+
         worldmap.setOnLongClickListener(new View.OnLongClickListener()
         {
             @Override
             public boolean onLongClick(View view) {
-                return showContextMenu(context, dialogTitle);
+                if (worldmap.isAnimated())
+                    stopMap(false);
+                else playMap();
+                return true;
             }
         });
 
