@@ -103,6 +103,9 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
             }
 
             publishProgress(frame);
+            if (listener != null) {
+                listener.afterFrame(frame, options.offsetMinutes);
+            }
             options.offsetMinutes += options.anim_frameOffsetMinutes;
             time0 = System.nanoTime();
             i++;
@@ -394,6 +397,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
     {
         public void onStarted() {}
         public void onFrame(Bitmap frame, long offsetMinutes ) {}
+        public void afterFrame(Bitmap frame, long offsetMinutes ) {}
         public void onFinished( Bitmap result ) {}
     }
 
