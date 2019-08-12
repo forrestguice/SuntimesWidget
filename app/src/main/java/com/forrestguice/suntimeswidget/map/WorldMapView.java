@@ -289,7 +289,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         boolean wasCancelled = false;
         if (drawTask != null && drawTask.getStatus() == AsyncTask.Status.RUNNING)
         {
-            Log.w("WorldMapView", "updateViews: task already running");
+            Log.w(LOGTAG, "updateViews: task already running");
             drawTask.cancel(true);
             wasCancelled = true;
         }
@@ -347,51 +347,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             }
 
             drawTask = new WorldMapTask();
-            drawTask.setListener(new WorldMapTask.WorldMapTaskListener()
-            {
-                @Override
-                public void onStarted()
-                {
-                    if (mapListener != null) {
-                        mapListener.onStarted();
-                    }
-                }
-
-                @Override
-                public void onFrame(Bitmap frame, long offsetMinutes)
-                {
-                    mapW = frame.getWidth();
-                    mapH = frame.getHeight();
-                    setImageBitmap(frame);
-
-                    if (mapListener != null) {
-                        mapListener.onFrame(frame, offsetMinutes);
-                    }
-                }
-
-                @Override
-                public void afterFrame(Bitmap frame, long offsetMinutes)
-                {
-                    if (isRecording()) {
-                        exportTask.addBitmap(frame);
-                    }
-                }
-
-                @Override
-                public void onFinished(Bitmap frame)
-                {
-                    mapW = frame.getWidth();
-                    mapH = frame.getHeight();
-                    setImageBitmap(frame);
-
-                    if (mapListener != null) {
-                        mapListener.onFinished(frame);
-                    }
-                    if (exportTask != null) {
-                        exportTask.setWaitForFrames(false);
-                    }
-                }
-            });
+            drawTask.setListener(drawListener);
 
             Log.w(LOGTAG, "updateViews: " + w + ", " + h );
             drawTask.execute(data, w, h, options, projection, (animated ? 0 : 1), options.offsetMinutes);
@@ -399,6 +355,52 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             lastUpdate = System.currentTimeMillis();
         }
     }
+
+    private WorldMapTask.WorldMapTaskListener drawListener = new WorldMapTask.WorldMapTaskListener()
+    {
+        @Override
+        public void onStarted()
+        {
+            if (mapListener != null) {
+                mapListener.onStarted();
+            }
+        }
+
+        @Override
+        public void onFrame(Bitmap frame, long offsetMinutes)
+        {
+            mapW = frame.getWidth();
+            mapH = frame.getHeight();
+            setImageBitmap(frame);
+
+            if (mapListener != null) {
+                mapListener.onFrame(frame, offsetMinutes);
+            }
+        }
+
+        @Override
+        public void afterFrame(Bitmap frame, long offsetMinutes)
+        {
+            if (isRecording()) {
+                exportTask.addBitmap(frame);
+            }
+        }
+
+        @Override
+        public void onFinished(Bitmap frame)
+        {
+            mapW = frame.getWidth();
+            mapH = frame.getHeight();
+            setImageBitmap(frame);
+
+            if (mapListener != null) {
+                mapListener.onFinished(frame);
+            }
+            if (exportTask != null && !drawTask.isCancelled()) {
+                exportTask.setWaitForFrames(false);
+            }
+        }
+    };
 
     /**
      * @param context a context used to access shared prefs
