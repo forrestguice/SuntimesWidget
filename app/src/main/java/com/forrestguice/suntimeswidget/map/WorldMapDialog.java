@@ -298,6 +298,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         playButton = (ImageButton)dialogView.findViewById(R.id.media_play_map);
         if (playButton != null) {
             playButton.setOnClickListener(playClickListener);
+            playButton.setOnLongClickListener(playLongClickListener);
             ImageViewCompat.setImageTintList(playButton, SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
         }
 
@@ -678,6 +679,14 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
     }
 
+    private void shareMap()
+    {
+        if (!worldmap.isRecording()) {
+            worldmap.shareBitmap();
+        } else worldmap.stopAnimation();
+        updateMediaButtons();
+    }
+
     private PopupMenu.OnMenuItemClickListener onContextMenuClick = new PopupMenu.OnMenuItemClickListener()
     {
         @Override
@@ -701,10 +710,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     return true;
 
                 case R.id.shareMap:
-                    if (!worldmap.isRecording()) {
-                        worldmap.shareBitmap();
-                    } else worldmap.stopAnimation();
-                    updateMediaButtons();
+                    shareMap();
                     return true;
 
                 case R.id.mapOption_location:
@@ -753,6 +759,21 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         @Override
         public void onClick(View v) {
             playMap();
+        }
+    };
+    private View.OnLongClickListener playLongClickListener = new View.OnLongClickListener()
+    {
+        @Override
+        public boolean onLongClick(View v)
+        {
+            if (worldmap.isAnimated()) {
+                stopMap(false);
+
+            } else {
+                playMap();
+                shareMap();
+            }
+            return true;
         }
     };
     private void playMap()
