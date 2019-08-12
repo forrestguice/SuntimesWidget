@@ -79,6 +79,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private Spinner mapSelector;
     private SeekBar seekbar;
     private ImageButton playButton, pauseButton, resetButton, nextButton, prevButton, menuButton;
+    private TextView speedButton;
     private View mediaGroup, seekGroup;
     //private View radioGroup;
     private ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode> mapAdapter;
@@ -334,6 +335,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             ImageViewCompat.setImageTintList(menuButton, SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
         }
 
+        speedButton = (TextView)dialogView.findViewById(R.id.map_speed);
+        if (speedButton != null)
+        {
+            speedButton.setOnClickListener(speedClickListener);
+            speedButton.setTextColor(SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
+        }
+
         mediaGroup = dialogView.findViewById(R.id.media_actions);
         seekGroup = dialogView.findViewById(R.id.media_seek);
     }
@@ -373,6 +381,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             options.showSunShadow = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SUNSHADOW, WorldMapWidgetSettings.MAPTAG_3x2);
             options.showMoonLight = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MOONLIGHT, WorldMapWidgetSettings.MAPTAG_3x2);
             options.showMajorLatitudes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
+            options.anim_frameOffsetMinutes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2)
+                    ? 24 * 60 : 3;
 
             if (WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2)) {
                 options.locations = new double[][] {{location.getLatitudeAsDouble(), location.getLongitudeAsDouble()}};
@@ -417,6 +427,12 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
 
         startUpdateTask();
+        Context context = getContext();
+        if (speedButton != null && context != null)
+        {
+            boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
+            speedButton.setText( context.getString(speed_1d ? R.string.worldmap_dialog_speed_1d : R.string.worldmap_dialog_speed_15m));
+        }
     }
 
     private void updateTimeText()
@@ -532,6 +548,64 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
         expandSheet(getDialog());
     }
+
+    protected boolean showSpeedMenu(final Context context, View view)
+    {
+        PopupMenu menu = new PopupMenu(context, view);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.mapmenu_speed, menu.getMenu());
+        menu.setOnMenuItemClickListener(onSpeedMenuClick);
+
+        updateSpeedMenu(context, menu);
+        menu.show();
+        return true;
+    }
+
+    private void updateSpeedMenu(Context context, PopupMenu menu)
+    {
+        Menu m = menu.getMenu();
+        boolean is1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
+
+        MenuItem speed_15m = m.findItem(R.id.mapSpeed_15m);
+        if (speed_15m != null) {
+            speed_15m.setChecked(!is1d);
+        }
+
+        MenuItem speed_1d = m.findItem(R.id.mapSpeed_1d);
+        if (speed_1d != null) {
+            speed_1d.setChecked(is1d);
+        }
+    }
+
+    private PopupMenu.OnMenuItemClickListener onSpeedMenuClick = new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            Context context = getContext();
+            if (context == null) {
+                return false;
+            }
+
+            switch (item.getItemId())
+            {
+                case R.id.mapSpeed_1d:
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2, true);
+                    item.setChecked(true);
+                    updateViews();
+                    return true;
+
+                case R.id.mapSpeed_15m:
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2, false);
+                    item.setChecked(true);
+                    updateViews();
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+    };
 
     protected boolean showContextMenu(final Context context, View view)
     {
@@ -688,12 +762,24 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
     };
 
+    private View.OnClickListener speedClickListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            showSpeedMenu(getContext(), v);
+        }
+    };
+
     private View.OnClickListener nextClickListener = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
         {
-            worldmap.setOffsetMinutes(worldmap.getOffsetMinutes() + 15);   // advance 1hr
+            Context context = getContext();
+            if (context != null) {
+                boolean speed1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
+                worldmap.setOffsetMinutes(worldmap.getOffsetMinutes() + (speed1d ? 24 * 60 : 15));
+            }
         }
     };
 
@@ -702,7 +788,11 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         @Override
         public void onClick(View v)
         {
-            worldmap.setOffsetMinutes(worldmap.getOffsetMinutes() - 15);   // rewind 1hr
+            Context context = getContext();
+            if (context != null) {
+                boolean speed1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
+                worldmap.setOffsetMinutes(worldmap.getOffsetMinutes() - (speed1d ? 24 * 60 : 15));
+            }
         }
     };
 

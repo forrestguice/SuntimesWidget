@@ -1088,6 +1088,8 @@
     <string name="worldmap_dialog_option_all">Both</string>
     <string name="worldmap_dialog_option_location">Location</string>    <!-- TODO -->
     <string name="worldmap_dialog_option_latitudes">Latitudes</string>    <!-- TODO -->
+    <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- TODO -->
+    <string name="worldmap_dialog_speed_1d">&#215; 1d</string>    <!-- TODO -->
     <string name="configAction_shareMap">Share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <!-- Dialog: Set Alarm -->
