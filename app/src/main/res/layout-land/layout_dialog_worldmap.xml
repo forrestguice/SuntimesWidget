@@ -126,7 +126,7 @@
                 android:id="@+id/media_reset_map"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:background="@null"
-                android:src="?attr/icActionTime" />
+                android:src="?attr/icActionTimeReset" />
 
             <ImageButton
                 android:id="@+id/media_play_map"

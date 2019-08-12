@@ -96,6 +96,7 @@
     <attr name="icActionPlay" format="reference" />
     <attr name="icActionPause" format="reference" />
     <attr name="icActionRecord" format="reference" />
+    <attr name="icActionTimeReset" format="reference" />
 
     <attr name="icActionNext" format="reference" />
     <attr name="icActionPrevious" format="reference" />

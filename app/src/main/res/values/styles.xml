@@ -102,6 +102,7 @@
         <item name="icActionPlay">@drawable/ic_action_play_light</item>
         <item name="icActionPause">@drawable/ic_action_pause_light</item>
         <item name="icActionRecord">@drawable/ic_action_record_light</item>
+        <item name="icActionTimeReset">@drawable/ic_action_timereset_light</item>
 
         <item name="windowActionModeOverlay">true</item>
     </style>
@@ -208,6 +209,7 @@
         <item name="icActionPlay">@drawable/ic_action_play</item>
         <item name="icActionPause">@drawable/ic_action_pause</item>
         <item name="icActionRecord">@drawable/ic_action_record</item>
+        <item name="icActionTimeReset">@drawable/ic_action_timereset</item>
 
         <item name="windowActionModeOverlay">true</item>
     </style>
