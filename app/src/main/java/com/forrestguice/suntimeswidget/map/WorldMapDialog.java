@@ -435,6 +435,16 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
     }
 
+    private WidgetSettings.DateInfo getMapDate() {
+        return new WidgetSettings.DateInfo(getMapTime(Calendar.getInstance().getTimeInMillis()));
+    }
+    private long getMapTime(long now)
+    {
+        WorldMapTask.WorldMapOptions options = worldmap.getOptions();
+        long offsetMillis = options.offsetMinutes * 60 * 1000;
+        return ((options.now == -1) ? now : options.now + offsetMillis);
+    }
+
     private void updateTimeText()
     {
         Context context = getContext();
@@ -442,12 +452,9 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             return;
         }
 
-        WorldMapTask.WorldMapOptions options = worldmap.getOptions();
-
         Calendar now = Calendar.getInstance();
         long nowMillis = now.getTimeInMillis();
-        long offsetMillis = options.offsetMinutes * 60 * 1000;
-        long mapTimeMillis = ((options.now == -1) ? now.getTimeInMillis() : options.now + offsetMillis);
+        long mapTimeMillis = getMapTime(nowMillis);
 
         String suffix = "";
         boolean nowIsAfter = false;
@@ -666,6 +673,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             boolean toggledValue;
             switch (item.getItemId())
             {
+                case R.id.setDate:
+                    if (dialogListener != null) {
+                        dialogListener.onConfigDate(getMapTime(Calendar.getInstance().getTimeInMillis()));
+                        dismiss();
+                    }
+                    return true;
+
                 case R.id.shareMap:
                     worldmap.shareBitmap();
                     return true;
