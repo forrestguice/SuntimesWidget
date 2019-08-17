@@ -56,7 +56,6 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     private long lastUpdate = 0;
     private boolean resizable = true;
 
-
     public LightMapView(Context context)
     {
         super(context);
@@ -334,10 +333,13 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 }
 
                 // draw now marker
-                int pointRadius = Math.min( (int)Math.ceil(c.getWidth() / 96d),      // a circle that is 1/2 hr wide
-                                            (int)Math.ceil(c.getHeight() / 4d) );    // a circle that is 1/2 the height of the graph
-                int pointStroke = (int)Math.ceil(pointRadius / 3d);
-                drawPoint(data.now(), pointRadius, pointStroke, c, p);
+                if (colors.option_drawNow)
+                {
+                    int pointRadius = Math.min( (int)Math.ceil(c.getWidth() / 96d),      // a circle that is 1/2 hr wide
+                            (int)Math.ceil(c.getHeight() / 4d) );    // a circle that is 1/2 the height of the graph
+                    int pointStroke = (int)Math.ceil(pointRadius / 3d);
+                    drawPoint(data.now(), pointRadius, pointStroke, c, p);
+                }
             }
 
             return b;
@@ -483,6 +485,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     {
         public int colorDay, colorCivil, colorNautical, colorAstro, colorNight;
         public int colorPointFill, colorPointStroke;
+        public boolean option_drawNow = true;
 
         public LightMapColors() {}
 
