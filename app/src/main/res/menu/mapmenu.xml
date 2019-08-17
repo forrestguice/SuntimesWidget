@@ -34,7 +34,7 @@
 
         <item android:id="@+id/setDate"
             android:title="@string/configAction_setDate"
-            android:icon="?attr/icActionTime"
+            android:icon="?attr/icActionTimeReset"
             app:showAsAction="never" />
 
         <item android:id="@+id/shareMap"
