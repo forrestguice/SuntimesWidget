@@ -297,7 +297,7 @@ public class SuntimesActivity extends AppCompatActivity
                 showEquinoxDialog();
 
             } else {
-                if (data != null) {
+                if (data != null && LocationConfigView.SCHEME_GEO.equals(data.getScheme())) {
                     configLocation(data);
                 }
             }
