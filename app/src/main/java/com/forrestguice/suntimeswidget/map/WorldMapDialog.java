@@ -26,6 +26,13 @@ import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -38,6 +45,7 @@ import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -52,6 +60,7 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.LightMapView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
@@ -90,6 +99,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private int color_normal = Color.WHITE;
     private int color_accent = Color.GREEN;
     private int color_warning = Color.RED;
+    private int color_sun = Color.RED;
 
     private SuntimesUtils utils = new SuntimesUtils();
 
@@ -215,13 +225,14 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     {
         WorldMapWidgetSettings.initDisplayStrings(dialogContent.getContext());
 
-        int[] colorAttrs = { R.attr.text_disabledColor, R.attr.buttonPressColor, android.R.attr.textColorPrimary, R.attr.text_accentColor, R.attr.tagColor_warning };
+        int[] colorAttrs = { R.attr.text_disabledColor, R.attr.buttonPressColor, android.R.attr.textColorPrimary, R.attr.text_accentColor, R.attr.tagColor_warning, R.attr.graphColor_pointFill };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         color_disabled = ContextCompat.getColor(context, typedArray.getResourceId(0, color_disabled));
         color_pressed = ContextCompat.getColor(context, typedArray.getResourceId(1, color_pressed));
         color_normal = ContextCompat.getColor(context, typedArray.getResourceId(2, color_normal));
         color_accent = ContextCompat.getColor(context, typedArray.getResourceId(3, color_accent));
         color_warning = ContextCompat.getColor(context, typedArray.getResourceId(4, color_warning));
+        color_sun = ContextCompat.getColor(context, typedArray.getResourceId(5, color_sun));
         typedArray.recycle();
     }
 
@@ -293,6 +304,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             seekbar.setMax(seek_totalMinutes);
             seekbar.setProgress(seek_now);
             seekbar.setOnSeekBarChangeListener(seekBarListener);
+            updateSeekbarDrawables(context);
         }
 
         playButton = (ImageButton)dialogView.findViewById(R.id.media_play_map);
@@ -351,6 +363,29 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
         mediaGroup = dialogView.findViewById(R.id.media_actions);
         seekGroup = dialogView.findViewById(R.id.media_seek);
+    }
+
+    private void updateSeekbarDrawables(Context context)
+    {
+        LightMapView.LightMapTask lightMapTask = new LightMapView.LightMapTask();
+        LightMapView.LightMapColors colors = new LightMapView.LightMapColors();
+        colors.initDefaultDark(context);
+        colors.option_drawNow = false;
+        Bitmap lightmap = lightMapTask.makeBitmap(data, worldmap.getWidth(), 1, colors);
+        BitmapDrawable lightmapDrawable = new BitmapDrawable(context.getResources(), lightmap);
+
+        Drawable secondaryProgress = new ColorDrawable(Color.TRANSPARENT);
+        Drawable primaryProgress = new ScaleDrawable(new ColorDrawable(Color.TRANSPARENT), Gravity.START, 1, -1);
+
+        LayerDrawable progressDrawable = new LayerDrawable(new Drawable[] { lightmapDrawable, secondaryProgress, primaryProgress });
+        progressDrawable.setId(0, android.R.id.background);
+        progressDrawable.setId(1, android.R.id.secondaryProgress);
+        progressDrawable.setId(2, android.R.id.progress);
+
+        Rect bounds = seekbar.getProgressDrawable().getBounds();
+        seekbar.setProgressDrawable(progressDrawable);
+        seekbar.getProgressDrawable().setBounds(bounds);
+        seekbar.getThumb().setColorFilter(color_sun, PorterDuff.Mode.SRC_IN);
     }
 
     @SuppressWarnings("ResourceType")
@@ -884,8 +919,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
 
         @Override
-        public void onFinished(Bitmap result) {
+        public void onFinished(Bitmap result)
+        {
             expandSheet(getDialog());
+
+            if (seekbar != null) {
+                updateSeekbarDrawables(getContext());
+            }
         }
     };
 
