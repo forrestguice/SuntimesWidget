@@ -1,5 +1,9 @@
 ### ~
 
+### v0.11.9 (2019-08-22)
+* fixes app crash when supplied with invalid data (bad URI, alarmID, or widgetID) ("Intent resolution bugs"; #353).
+* updates translation to Brazilian Portuguese (pt-br) (#350 by Neto Silva).
+
 ### v0.11.8 (2019-07-30)
 * fixes bug "half hour and 45-minute time zones are listed incorrectly" (#346).
 * fixes bug "content provider uses a stale configuration" (#347).
