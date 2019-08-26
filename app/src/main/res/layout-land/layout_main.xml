@@ -121,6 +121,14 @@
 
             </android.support.constraint.ConstraintLayout>
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/info_time_flipper1"
+                android:layout_width="fill_parent" android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                style="@style/SunsetTimeCard"
+                android:elevation="5dp" />  <!-- TODO -->
+
             <ViewFlipper
                 android:id="@+id/info_time_flipper"
                 android:layout_width="fill_parent" android:layout_height="wrap_content"

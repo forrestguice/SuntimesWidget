@@ -109,8 +109,16 @@
 
             </android.support.constraint.ConstraintLayout>
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/info_time_flipper1"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:elevation="5dp">   <!-- TODO -->
+
+            </android.support.v7.widget.RecyclerView>
+
             <!-- Flipper: Time Card -->
-            <ViewFlipper
+            <ViewFlipper android:visibility="gone"
                 android:id="@+id/info_time_flipper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
