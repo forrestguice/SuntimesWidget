@@ -50,11 +50,17 @@ import android.support.v7.app.ActionBar;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSmoothScroller;
+import android.support.v7.widget.PagerSnapHelper;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ImageSpan;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -80,6 +86,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.cards.CardAdapter;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.map.WorldMapDialog;
@@ -171,6 +178,10 @@ public class SuntimesActivity extends AppCompatActivity
     private TextView txt_time1_note3,   txt_time2_note3;
 
     // time card views
+    private RecyclerView card_view;
+    private LinearLayoutManager card_layout;
+    private LinearSmoothScroller card_scroller;
+    private CardAdapter card_adapter;
     private ViewFlipper card_flipper;
     private Animation anim_card_inPrev, anim_card_inNext;
     private Animation anim_card_outPrev, anim_card_outNext;
@@ -742,6 +753,7 @@ public class SuntimesActivity extends AppCompatActivity
             txt_altitude.setTextColor(timeColor);
 
             themeCardViews(context, appThemeOverride);
+            card_adapter.setThemeOverride(appThemeOverride);
             card_equinoxSolstice.themeViews(context, appThemeOverride);
             lightmap.themeViews(context, appThemeOverride);
         }
@@ -1126,7 +1138,33 @@ public class SuntimesActivity extends AppCompatActivity
             card_flipper.setOnTouchListener(timeCardTouchListener);
         } else {
             Log.w("initCardViews", "Failed to set touchListener; card_flipper was null!");
-        }
+        }  // TODO: remove flipper
+
+        card_layout = new LinearLayoutManager(this);
+        card_layout.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        card_adapter = new CardAdapter(context, WidgetSettings.loadCalculatorModePref(context, 0, "sun"));
+        card_adapter.setTimeFields(timeFields);
+        card_adapter.setCardAdapterListener(cardAdapterListener);
+
+        card_view = (RecyclerView) findViewById(R.id.info_time_flipper1);
+        card_view.setHasFixedSize(true);
+        card_view.setLayoutManager(card_layout);
+        //card_view.addItemDecoration(card_adapter.getDecorator());
+        card_view.setAdapter(card_adapter);
+        card_view.scrollToPosition(CardAdapter.TODAY_POSITION);
+
+        SnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(card_view);
+        card_scroller = new LinearSmoothScroller(this)
+        {
+            private static final float MILLISECONDS_PER_INCH = 125f;
+
+            @Override
+            protected float calculateSpeedPerPixel(DisplayMetrics displayMetrics) {
+                return MILLISECONDS_PER_INCH / displayMetrics.densityDpi;
+            }
+        };
 
         // Today's times
         View viewToday = findViewById(R.id.info_time_all_today);
@@ -1744,6 +1782,7 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initData( Context context )
     {
+        card_adapter.initData(context);
         dataset = new SuntimesRiseSetDataset(context);
         dataset2 = (AppSettings.loadShowEquinoxPref(context) ? new SuntimesEquinoxSolsticeDataset(context) : null);
         dataset3 = (AppSettings.loadShowMoonPref(context) ? new SuntimesMoonData(context, 0, "moon") : null);
@@ -2197,6 +2236,87 @@ public class SuntimesActivity extends AppCompatActivity
         notes.updateNote(context, now);
         lightmap.updateViews(false);
     }
+
+    private CardAdapter.CardAdapterListener cardAdapterListener = new CardAdapter.CardAdapterListener()
+    {
+        @Override
+        public void onDateClick(CardAdapter adapter, int position)
+        {
+            AppSettings.DateTapAction action = AppSettings.loadDateTapActionPref(SuntimesActivity.this);
+            onDateTapAction(action, position != 0);
+        }
+        @Override
+        public boolean onDateLongClick(CardAdapter adapter, int position)
+        {
+            AppSettings.DateTapAction action = AppSettings.loadDateTapAction1Pref(SuntimesActivity.this);
+            onDateTapAction(action, position != 0);
+            return true;
+        }
+
+        @Override
+        public void onSunriseHeaderClick(CardAdapter adapter, int position)
+        {
+            setUserSwappedCard(false, "onSunriseClick");
+            notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNRISE));
+            NoteData note = notes.getNote();
+            highlightTimeField1(new SolarEvents.SolarEventField(note.noteMode, note.tomorrow));
+        }
+        @Override
+        public boolean onSunriseHeaderLongClick(CardAdapter adapter, int position) {
+            setUserSwappedCard(false, "onSunriseClick");
+            notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNRISE));
+            NoteData note = notes.getNote();
+            highlightTimeField1(new SolarEvents.SolarEventField(note.noteMode, note.tomorrow));
+            return true;
+        }
+
+        @Override
+        public void onSunsetHeaderClick(CardAdapter adapter, int position)
+        {
+            setUserSwappedCard(false, "onSunsetClick");
+            notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNSET));
+            NoteData note = notes.getNote();
+            highlightTimeField1(new SolarEvents.SolarEventField(note.noteMode, note.tomorrow));
+        }
+        @Override
+        public boolean onSunsetHeaderLongClick(CardAdapter adapter, int position)
+        {
+            setUserSwappedCard(false, "onSunsetClick");
+            notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNSET));
+            NoteData note = notes.getNote();
+            highlightTimeField1(new SolarEvents.SolarEventField(note.noteMode, note.tomorrow));
+            return true;
+        }
+
+        @Override
+        public void onMoonHeaderClick(CardAdapter adapter, int position) {
+            showMoonDialog();
+        }
+        @Override
+        public boolean onMoonHeaderLongClick(CardAdapter adapter, int position) {
+            showMoonDialog();
+            return true;
+        }
+
+        @Override
+        public void onNextClick(CardAdapter adapter, int position)
+        {
+            int nextPosition = (position + 1);
+            if (nextPosition < card_adapter.getItemCount()) {
+                card_scroller.setTargetPosition(nextPosition);
+                card_layout.startSmoothScroll(card_scroller);
+            }
+        }
+        @Override
+        public void onPrevClick(CardAdapter adapter, int position)
+        {
+            int prevPosition = (position - 1);
+            if (prevPosition >= 0) {
+                card_scroller.setTargetPosition(prevPosition);
+                card_layout.startSmoothScroll(card_scroller);
+            }
+        }
+    };
 
     /**
      * onTouch swipe between the prev/next items in the view_flipper
@@ -2662,6 +2782,7 @@ public class SuntimesActivity extends AppCompatActivity
 
             case SWAP_CARD:
             default:
+                // TODO: w/ recyclerview
                 if (tomorrow)
                 {
                     setUserSwappedCard( showPreviousCard(), "onDateTapClick (prevCard)" );
@@ -2692,6 +2813,40 @@ public class SuntimesActivity extends AppCompatActivity
                 notes.showNote(event);
             }
         };
+    }
+
+    public static final int HIGHLIGHT_SCROLLING_ITEMS = 4;   // scroll over at most 4 items (otherwise jump straight to target)
+    public void highlightTimeField1( SolarEvents.SolarEventField highlightField )
+    {
+        int highlightPosition = -1;
+        for (SolarEvents.SolarEventField field : timeFields.keySet())
+        {
+            TextView txtField = timeFields.get(field);
+            if (txtField != null && txtField.getVisibility() == View.VISIBLE)
+            {
+                if (field.equals(highlightField))
+                {
+                    txtField.setTypeface(txtField.getTypeface(), Typeface.BOLD);
+                    txtField.setPaintFlags(txtField.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                    highlightPosition = (field.tomorrow ? CardAdapter.TODAY_POSITION + 1 : CardAdapter.TODAY_POSITION);
+
+                } else {
+                    txtField.setTypeface(Typeface.create(txtField.getTypeface(), Typeface.NORMAL), Typeface.NORMAL);
+                    txtField.setPaintFlags(txtField.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
+                }
+            }
+        }
+
+        if (highlightPosition != -1)
+        {
+            int firstPosition = card_layout.findFirstVisibleItemPosition();
+            if (Math.abs(firstPosition - highlightPosition) > HIGHLIGHT_SCROLLING_ITEMS) {
+                card_view.scrollToPosition(highlightPosition);
+            } else {
+                card_scroller.setTargetPosition(highlightPosition);
+                card_layout.startSmoothScroll(card_scroller);
+            }
+        }
     }
 
     public void highlightTimeField( SolarEvents.SolarEventField highlightField )
@@ -2826,6 +2981,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
 
         highlightTimeField(new SolarEvents.SolarEventField(note.noteMode, note.tomorrow));
+        highlightTimeField1(new SolarEvents.SolarEventField(note.noteMode, note.tomorrow));
     }
 
     /**
@@ -2925,7 +3081,7 @@ public class SuntimesActivity extends AppCompatActivity
             warning.setWarningListener(warningListener);
         }
     }
-    
+
     private void setUserSwappedCard( boolean value, String tag )
     {
         userSwappedCard = value;
