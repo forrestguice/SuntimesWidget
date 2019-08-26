@@ -267,6 +267,13 @@ public class SuntimesRiseSetDataset
         }
     }
 
+    public void setTodayIs(Calendar date)
+    {
+        for (SuntimesRiseSetData data : dataset ) {
+            data.setTodayIs(date);
+        }
+    }
+
     public TimeZone timezone()
     {
         return dataActual.timezone();
