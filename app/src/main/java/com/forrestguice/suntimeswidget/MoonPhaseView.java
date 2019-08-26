@@ -176,7 +176,7 @@ public class MoonPhaseView extends LinearLayout
         MoonPhaseDisplay.initDisplayStrings(context);
     }
 
-    protected void updateViews( Context context, SuntimesMoonData data )
+    public void updateViews(Context context, SuntimesMoonData data)
     {
         int positionVisibility = (showPosition ? View.VISIBLE : View.GONE);
         azimuthText.setVisibility(positionVisibility);

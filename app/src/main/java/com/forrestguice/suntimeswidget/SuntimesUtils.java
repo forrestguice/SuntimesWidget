@@ -95,13 +95,13 @@ public class SuntimesUtils
     protected static String strTimeShorter = "shorter";
     protected static String strTimeLonger = "longer";
     protected static String strSpace = "\u00A0";
-    protected static String strEmpty = "";
+    public static String strEmpty = "";
     protected static String strYears = "y";
     protected static String strWeeks = "w";
     protected static String strDays = "d";
-    protected static String strHours = "h";
-    protected static String strMinutes = "m";
-    protected static String strSeconds = "s";
+    public static String strHours = "h";
+    public static String strMinutes = "m";
+    public static String strSeconds = "s";
 
     protected static String strAltSymbol = "∠";
     protected static String strRaSymbol = "α";
@@ -112,7 +112,7 @@ public class SuntimesUtils
     protected static String strDeclinationFormat = "%1$s %2$s";
     protected static String strRaFormat = "%1$s %2$s";
 
-    protected static String strTimeDeltaFormat = "%1$s"  + strEmpty + "%2$s";
+    public static String strTimeDeltaFormat = "%1$s"  + strEmpty + "%2$s";
     protected static String strTimeShortFormat12 = "h:mm\u00A0a";
     protected static String strTimeShortFormat12s = "h:mm:ss\u00A0a";
     protected static String strTimeVeryShortFormat12 = "h:mm";
