@@ -140,7 +140,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         sun.calculateData();
         sunData.put(position, sun);
 
-        SuntimesMoonData moon = new SuntimesMoonData(context, 0);
+        SuntimesMoonData moon = new SuntimesMoonData(context, 0, "moon");
         moon.setTodayIs(date);
         moon.calculate();
         moonData.put(position, moon);
