@@ -1165,6 +1165,16 @@ public class SuntimesActivity extends AppCompatActivity
                 return MILLISECONDS_PER_INCH / displayMetrics.densityDpi;
             }
         };
+        card_view.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+            {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState ==  RecyclerView.SCROLL_STATE_DRAGGING) {
+                    setUserSwappedCard(true, "onScrollStateChanged");
+                }
+            }
+        });
 
         // Today's times
         View viewToday = findViewById(R.id.info_time_all_today);
@@ -2303,6 +2313,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             int nextPosition = (position + 1);
             if (nextPosition < card_adapter.getItemCount()) {
+                setUserSwappedCard(true, "onNextClick");
                 card_scroller.setTargetPosition(nextPosition);
                 card_layout.startSmoothScroll(card_scroller);
             }
@@ -2312,6 +2323,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             int prevPosition = (position - 1);
             if (prevPosition >= 0) {
+                setUserSwappedCard(true, "onPrevClick");
                 card_scroller.setTargetPosition(prevPosition);
                 card_layout.startSmoothScroll(card_scroller);
             }
@@ -2816,7 +2828,7 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     public static final int HIGHLIGHT_SCROLLING_ITEMS = 4;   // scroll over at most 4 items (otherwise jump straight to target)
-    public void highlightTimeField1( SolarEvents.SolarEventField highlightField )
+    public void highlightTimeField1( SolarEvents.SolarEventField highlightField)
     {
         int highlightPosition = -1;
         for (SolarEvents.SolarEventField field : timeFields.keySet())
@@ -2837,7 +2849,7 @@ public class SuntimesActivity extends AppCompatActivity
             }
         }
 
-        if (highlightPosition != -1)
+        if (highlightPosition != -1 && !userSwappedCard)
         {
             int firstPosition = card_layout.findFirstVisibleItemPosition();
             if (Math.abs(firstPosition - highlightPosition) > HIGHLIGHT_SCROLLING_ITEMS) {
@@ -3085,7 +3097,7 @@ public class SuntimesActivity extends AppCompatActivity
     private void setUserSwappedCard( boolean value, String tag )
     {
         userSwappedCard = value;
-        //Log.d("DEBUG", "userSwappedCard set " + value + " (" + tag + " )");
+        Log.d("DEBUG", "userSwappedCard set " + value + " (" + tag + " )");
     }
 
     /**
