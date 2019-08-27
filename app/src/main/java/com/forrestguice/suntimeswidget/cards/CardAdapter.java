@@ -18,10 +18,10 @@
 
 package com.forrestguice.suntimeswidget.cards;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.InsetDrawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -429,28 +429,21 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MOONSET, tomorrow), holder.moonrise.getTimeViews(SolarEvents.MOONSET)[0]);
     }
 
-    /**private class CardViewDecorator extends RecyclerView.ItemDecoration
+    public static class CardViewDecorator extends RecyclerView.ItemDecoration
     {
-        private int margin = 8;
+        private int marginPx = 8;
+
+        public CardViewDecorator( Context context ) {
+            marginPx = (int)context.getResources().getDimension(R.dimen.activity_margin);
+        }
 
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
         {
-            LinearLayoutManager layoutManager = (LinearLayoutManager) parent.getLayoutManager();
-            if (layoutManager.isViewPartiallyVisible(view, true, true))
-            {
-                outRect.left = 0;
-                outRect.right = 0;
-
-            } else {
-                outRect.left = margin;
-                outRect.right = margin;
-            }
+            outRect.left = outRect.right = marginPx;
+            outRect.top = outRect.bottom = 0;
         }
     }
-    public CardViewDecorator getDecorator() {
-        return new CardViewDecorator();
-    }*/
 
     private SuntimesTheme themeOverride = null;
     public void setThemeOverride(@NonNull SuntimesTheme theme) {

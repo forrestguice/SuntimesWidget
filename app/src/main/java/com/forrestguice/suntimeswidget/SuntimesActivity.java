@@ -1150,7 +1150,7 @@ public class SuntimesActivity extends AppCompatActivity
         card_view = (RecyclerView) findViewById(R.id.info_time_flipper1);
         card_view.setHasFixedSize(true);
         card_view.setLayoutManager(card_layout);
-        //card_view.addItemDecoration(card_adapter.getDecorator());
+        card_view.addItemDecoration(new CardAdapter.CardViewDecorator(this));
         card_view.setAdapter(card_adapter);
         card_view.scrollToPosition(CardAdapter.TODAY_POSITION);
 
