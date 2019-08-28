@@ -78,13 +78,11 @@ import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
-import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.cards.CardAdapter;
-import com.forrestguice.suntimeswidget.cards.CardViewHolder;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.map.WorldMapDialog;
@@ -121,6 +119,7 @@ public class SuntimesActivity extends AppCompatActivity
     public static final String ACTION_VIEW_SOLSTICE = "com.forrestguice.suntimeswidget.VIEW_SOLSTICE";
 
     public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedCard";
+    public static final String KEY_UI_CARDPOSITION = "cardPosition";
 
     public static final String WARNINGID_DATE = "Date";
     public static final String WARNINGID_TIMEZONE = "Timezone";
@@ -577,6 +576,7 @@ public class SuntimesActivity extends AppCompatActivity
         super.onSaveInstanceState(outState);
         saveWarnings(outState);
         outState.putBoolean(KEY_UI_USERSWAPPEDCARD, userSwappedCard);
+        outState.putInt(KEY_UI_CARDPOSITION, ((card_layout.findFirstVisibleItemPosition() + card_layout.findLastVisibleItemPosition()) / 2));
         card_equinoxSolstice.saveState(outState);
     }
 
@@ -587,6 +587,13 @@ public class SuntimesActivity extends AppCompatActivity
         restoreWarnings(savedInstanceState);
         setUserSwappedCard(savedInstanceState.getBoolean(KEY_UI_USERSWAPPEDCARD, false), "onRestoreInstanceState");
         card_equinoxSolstice.loadState(savedInstanceState);
+
+        int cardPosition = savedInstanceState.getInt(KEY_UI_CARDPOSITION, CardAdapter.TODAY_POSITION);
+        if (cardPosition == RecyclerView.NO_POSITION) {
+            cardPosition = CardAdapter.TODAY_POSITION;
+        }
+        card_view.scrollToPosition(cardPosition);
+        card_view.smoothScrollBy(1, 0);  // triggers a snap
     }
 
     /**
