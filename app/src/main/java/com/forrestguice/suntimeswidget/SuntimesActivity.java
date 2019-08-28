@@ -2064,7 +2064,29 @@ public class SuntimesActivity extends AppCompatActivity
     }
 
     public static final int HIGHLIGHT_SCROLLING_ITEMS = 4;   // scroll over at most 4 items (otherwise jump straight to target)
-    public void highlightTimeField1( SolarEvents.SolarEventField highlightField)
+    public void highlightTimeField1(SolarEvents.SolarEventField highlightField)
+    {
+        int highlightPosition = highlightTimeField1Position(highlightField);
+        if (highlightPosition != -1)
+        {
+            if (!userSwappedCard)
+            {
+                Log.d("DEBUG", "scrolling to highlighted");
+                int firstPosition = card_layout.findFirstVisibleItemPosition();
+                if (Math.abs(firstPosition - highlightPosition) > HIGHLIGHT_SCROLLING_ITEMS) {
+                    card_view.scrollToPosition(highlightPosition);
+                } else {
+                    card_scroller.setTargetPosition(highlightPosition);
+                    card_layout.startSmoothScroll(card_scroller);
+                }
+            }
+        } else {
+            card_view.scrollToPosition(CardAdapter.TODAY_POSITION);
+            card_view.scrollToPosition(highlightTimeField1Position(highlightField));
+            Log.w("DEBUG", "highlight position is -1");
+        }
+    }
+    public int highlightTimeField1Position(SolarEvents.SolarEventField highlightField)
     {
         int highlightPosition = -1;
         for (SolarEvents.SolarEventField field : timeFields.keySet())
@@ -2084,17 +2106,7 @@ public class SuntimesActivity extends AppCompatActivity
                 }
             }
         }
-
-        if (highlightPosition != -1 && !userSwappedCard)
-        {
-            int firstPosition = card_layout.findFirstVisibleItemPosition();
-            if (Math.abs(firstPosition - highlightPosition) > HIGHLIGHT_SCROLLING_ITEMS) {
-                card_view.scrollToPosition(highlightPosition);
-            } else {
-                card_scroller.setTargetPosition(highlightPosition);
-                card_layout.startSmoothScroll(card_scroller);
-            }
-        }
+        return highlightPosition;
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
