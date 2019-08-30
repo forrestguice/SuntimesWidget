@@ -1,5 +1,9 @@
 ### ~
 
+### v0.11.10 (2019-09-02)
+* fixes app layout problems for Brazilian Portuguese (pt-br) and Norwegian (nb) translations (#356).
+* updates translation to Brazilian Portuguese (pt-br) (#357 by naoliv).
+
 ### v0.11.9 (2019-08-22)
 * fixes app crash when supplied with invalid data (bad URI, alarmID, or widgetID) ("Intent resolution bugs"; #353).
 * updates translation to Brazilian Portuguese (pt-br) (#350 by Neto Silva).

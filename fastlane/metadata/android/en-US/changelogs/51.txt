@@ -1,0 +1,2 @@
+* fixes app layout problems for Brazilian Portuguese and Norwegian translations (#356).
+* updates translation to Brazilian Portuguese (pt-br) (#357).
