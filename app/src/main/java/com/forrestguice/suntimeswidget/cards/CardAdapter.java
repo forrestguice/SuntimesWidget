@@ -273,38 +273,17 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             DateFormat dateFormat = android.text.format.DateFormat.getMediumDateFormat(context.getApplicationContext());   // Apr 11, 2016
             dateFormat.setTimeZone(sun.timezone());
 
-            boolean showDateWarning = false;
-            String thisString = context.getString(R.string.today);
-            if (sun.dataActual.todayIsNotToday())
-            {
-                int diffDays = (int)((data_date.getTime() - now.getTimeInMillis()) / 1000L / 60L / 60L / 24L);
-                if (diffDays != 0)
-                {
-                    if (diffDays > 1 || diffDays < -1)
-                    {
-                        if (data_date.after(now.getTime())) {
-                            thisString = context.getString(R.string.future_n, Integer.toString(diffDays + 1));
-                            showDateWarning = true;
-
-                        } else if (data_date.before(now.getTime())) {
-                            thisString = context.getString(R.string.past_n, Integer.toString(Math.abs(diffDays)));
-                            showDateWarning = true;
-                        }
-
-                    } else {
-                        if (diffDays > 0) {
-                            thisString = context.getString(R.string.tomorrow);
-                            showDateWarning = false;
-                        } else {
-                            thisString = context.getString(R.string.yesterday);
-                            showDateWarning = false;
-                        }
-                    }
-                }
+            int i = 0;
+            int diffDays = (int)((data_date.getTime() - now.getTimeInMillis()) / 1000L / 60L / 60L / 24L);
+            if (data_date.after(now.getTime())) {
+                i = diffDays + 1;
+            } else if (data_date.before(now.getTime())) {
+                i = diffDays;
             }
 
+            boolean showDateWarning = (dateMode != WidgetSettings.DateMode.CURRENT_DATE && (i > 1 || i < -1));
             ImageSpan dateWarningIcon = (showWarnings && showDateWarning) ? SuntimesUtils.createWarningSpan(context, holder.txt_date.getTextSize()) : null;
-            String dateString = context.getString(R.string.dateField, thisString, dateFormat.format(data_date));
+            String dateString = context.getString(R.string.dateField, getCardLabel(context, i), dateFormat.format(data_date));
             SpannableStringBuilder dateSpan = SuntimesUtils.createSpan(context, dateString, SuntimesUtils.SPANTAG_WARNING, dateWarningIcon);
             holder.txt_date.setText(dateSpan);
             holder.txt_date.setContentDescription(dateString.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), ""));
@@ -334,9 +313,28 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         attachClickListeners(holder, position);
     }
 
+    /**
+     * @param context used to getStrings from resources
+     * @param i position relative to TODAY
+     * @return display string; today / tomorrow / yesterday / past (-n) / future (+n)
+     */
+    public String getCardLabel(Context context, int i )
+    {
+        String label = context.getString(R.string.today);
+        if (i == 1) {
+            label = context.getString(R.string.tomorrow);
+        } else if (i == -1) {
+            label = context.getString(R.string.yesterday);
+        } else if (i > 0) {
+            label = context.getString(R.string.future_n, Integer.toString(i));
+        } else if (i < 0) {
+            label = context.getString(R.string.past_n, Integer.toString(Math.abs(i)));
+        }
+        return label;
+    }
+
     @Override
     public void onViewRecycled(CardViewHolder holder) {
-
         detachClickListeners(holder);
     }
 
