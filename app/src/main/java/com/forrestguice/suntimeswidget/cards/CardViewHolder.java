@@ -30,6 +30,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.MoonPhaseView;
 import com.forrestguice.suntimeswidget.MoonRiseSetView;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.settings.SolarEvents;
 
 import java.util.ArrayList;
 
@@ -148,13 +149,23 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
         public void resetHighlight()
         {
-            for (int i=0; i<fields.length; i++)
-            {
+            for (int i=0; i<fields.length; i++) {
                 if (fields[i] != null) {
-                    fields[i].setTypeface(Typeface.create(fields[i].getTypeface(), Typeface.NORMAL), Typeface.NORMAL);
-                    fields[i].setPaintFlags(fields[i].getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
+                    resetHighlight(fields[i]);
                 }
             }
+        }
+
+        public static void highlight(TextView textView)
+        {
+            textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+            textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        }
+
+        public static void resetHighlight(TextView textView)
+        {
+            textView.setTypeface(Typeface.create(textView.getTypeface(), Typeface.NORMAL), Typeface.NORMAL);
+            textView.setPaintFlags(textView.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
         }
 
         public void updateFields( String ...values )

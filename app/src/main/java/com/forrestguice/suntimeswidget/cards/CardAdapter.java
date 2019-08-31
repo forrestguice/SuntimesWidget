@@ -429,6 +429,21 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MOONSET, tomorrow), holder.moonrise.getTimeViews(SolarEvents.MOONSET)[0]);
     }
 
+    public void highlightField(SolarEvents.SolarEventField highlightField)
+    {
+        for (SolarEvents.SolarEventField field : timeFields.keySet())
+        {
+            TextView txtField = timeFields.get(field);
+            if (txtField != null && txtField.getVisibility() == View.VISIBLE)
+            {
+                if (field.equals(highlightField)) {
+                    CardViewHolder.TimeFieldRow.highlight(txtField);
+                } else {
+                    CardViewHolder.TimeFieldRow.resetHighlight(txtField);
+                }
+            }
+        }
+    }
     public static class CardViewDecorator extends RecyclerView.ItemDecoration
     {
         private int marginPx = 8;

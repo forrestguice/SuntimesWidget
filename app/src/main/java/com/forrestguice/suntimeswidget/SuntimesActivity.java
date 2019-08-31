@@ -2066,47 +2066,21 @@ public class SuntimesActivity extends AppCompatActivity
     public static final int HIGHLIGHT_SCROLLING_ITEMS = 4;   // scroll over at most 4 items (otherwise jump straight to target)
     public void highlightTimeField1(SolarEvents.SolarEventField highlightField)
     {
-        int highlightPosition = highlightTimeField1Position(highlightField);
-        if (highlightPosition != -1)
-        {
-            if (!userSwappedCard)
-            {
-                Log.d("DEBUG", "scrolling to highlighted");
-                int firstPosition = card_layout.findFirstVisibleItemPosition();
-                if (Math.abs(firstPosition - highlightPosition) > HIGHLIGHT_SCROLLING_ITEMS) {
-                    card_view.scrollToPosition(highlightPosition);
-                } else {
-                    card_scroller.setTargetPosition(highlightPosition);
-                    card_layout.startSmoothScroll(card_scroller);
-                }
-            }
-        } else {
-            card_view.scrollToPosition(CardAdapter.TODAY_POSITION);
-            card_view.scrollToPosition(highlightTimeField1Position(highlightField));
-            Log.w("DEBUG", "highlight position is -1");
+        if (!userSwappedCard) {
+            scrollTo(CardAdapter.TODAY_POSITION);  //(highlightField.tomorrow ? CardAdapter.TODAY_POSITION + 1 : CardAdapter.TODAY_POSITION);
         }
+        card_adapter.highlightField(highlightField);
     }
-    public int highlightTimeField1Position(SolarEvents.SolarEventField highlightField)
-    {
-        int highlightPosition = -1;
-        for (SolarEvents.SolarEventField field : timeFields.keySet())
-        {
-            TextView txtField = timeFields.get(field);
-            if (txtField != null && txtField.getVisibility() == View.VISIBLE)
-            {
-                if (field.equals(highlightField))
-                {
-                    txtField.setTypeface(txtField.getTypeface(), Typeface.BOLD);
-                    txtField.setPaintFlags(txtField.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-                    highlightPosition = (field.tomorrow ? CardAdapter.TODAY_POSITION + 1 : CardAdapter.TODAY_POSITION);
 
-                } else {
-                    txtField.setTypeface(Typeface.create(txtField.getTypeface(), Typeface.NORMAL), Typeface.NORMAL);
-                    txtField.setPaintFlags(txtField.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
-                }
-            }
+    private void scrollTo( int position )
+    {
+        int firstPosition = card_layout.findFirstVisibleItemPosition();
+        if (Math.abs(firstPosition - position) > HIGHLIGHT_SCROLLING_ITEMS) {
+            card_view.scrollToPosition(position);        // far; jump straight to item
+        } else {
+            card_scroller.setTargetPosition(position);   // near; animated scroll to item
+            card_layout.startSmoothScroll(card_scroller);
         }
-        return highlightPosition;
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
