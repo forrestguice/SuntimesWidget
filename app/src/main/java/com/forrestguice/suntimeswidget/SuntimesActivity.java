@@ -395,6 +395,7 @@ public class SuntimesActivity extends AppCompatActivity
         TimeDateDialog dateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE);
         if (dateDialog != null)
         {
+            dateDialog.setTimezone(dataset.timezone());
             dateDialog.setOnAcceptedListener(onConfigDate);
             dateDialog.setOnCanceledListener(onCancelDate);
             //Log.d("DEBUG", "TimeDateDialog listeners restored.");
@@ -1502,6 +1503,7 @@ public class SuntimesActivity extends AppCompatActivity
     private void configDate()
     {
         final TimeDateDialog datePicker = new TimeDateDialog();
+        datePicker.setTimezone(dataset.timezone());
         datePicker.setOnAcceptedListener(onConfigDate);
         datePicker.setOnCanceledListener(onCancelDate);
         datePicker.show(getSupportFragmentManager(), DIALOGTAG_DATE);
