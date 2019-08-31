@@ -194,7 +194,6 @@ public class SuntimesActivity extends AppCompatActivity
 
     private boolean isRtl = false;
     private boolean userSwappedCard = false;
-    private HashMap<SolarEvents.SolarEventField, TextView> timeFields;
 
     private boolean showWarnings = false;
     private SuntimesWarning timezoneWarning;
@@ -1023,10 +1022,7 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initCardViews(Context context)
     {
-        timeFields = new HashMap<SolarEvents.SolarEventField, TextView>();
-
-        card_adapter = new CardAdapter(context, WidgetSettings.loadCalculatorModePref(context, 0, "sun"));
-        card_adapter.setTimeFields(timeFields);
+        card_adapter = new CardAdapter(context);
         card_adapter.setCardAdapterListener(cardAdapterListener);
 
         card_view = (RecyclerView) findViewById(R.id.info_time_flipper1);
@@ -1034,30 +1030,14 @@ public class SuntimesActivity extends AppCompatActivity
         card_view.setItemViewCacheSize(14);
         card_view.setLayoutManager(card_layout = new CardLayoutManager(this));
         card_view.addItemDecoration(new CardAdapter.CardViewDecorator(this));
+
         card_view.setAdapter(card_adapter);
         card_view.scrollToPosition(CardAdapter.TODAY_POSITION);
 
         SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(card_view);
-        card_scroller = new LinearSmoothScroller(this)
-        {
-            private static final float MILLISECONDS_PER_INCH = 125f;
-
-            @Override
-            protected float calculateSpeedPerPixel(DisplayMetrics displayMetrics) {
-                return MILLISECONDS_PER_INCH / displayMetrics.densityDpi;
-            }
-        };
-        card_view.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState)
-            {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (newState ==  RecyclerView.SCROLL_STATE_DRAGGING) {
-                    setUserSwappedCard(true, "onScrollStateChanged");
-                }
-            }
-        });
+        card_scroller = new CardAdapter.CardViewScroller(context);
+        card_view.setOnScrollListener(onCardScrollListener);
     }
 
     /**
@@ -1751,14 +1731,14 @@ public class SuntimesActivity extends AppCompatActivity
             setUserSwappedCard(false, "onSunriseClick");
             notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNRISE));
             NoteData note = notes.getNote();
-            highlightTimeField1(new SolarEvents.SolarEventField(note.noteMode, note.tomorrow));
+            highlightTimeField1(note.noteMode);
         }
         @Override
         public boolean onSunriseHeaderLongClick(CardAdapter adapter, int position) {
             setUserSwappedCard(false, "onSunriseClick");
             notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNRISE));
             NoteData note = notes.getNote();
-            highlightTimeField1(new SolarEvents.SolarEventField(note.noteMode, note.tomorrow));
+            highlightTimeField1(note.noteMode);
             return true;
         }
 
@@ -1768,7 +1748,7 @@ public class SuntimesActivity extends AppCompatActivity
             setUserSwappedCard(false, "onSunsetClick");
             notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNSET));
             NoteData note = notes.getNote();
-            highlightTimeField1(new SolarEvents.SolarEventField(note.noteMode, note.tomorrow));
+            highlightTimeField1(note.noteMode);
         }
         @Override
         public boolean onSunsetHeaderLongClick(CardAdapter adapter, int position)
@@ -1776,7 +1756,7 @@ public class SuntimesActivity extends AppCompatActivity
             setUserSwappedCard(false, "onSunsetClick");
             notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNSET));
             NoteData note = notes.getNote();
-            highlightTimeField1(new SolarEvents.SolarEventField(note.noteMode, note.tomorrow));
+            highlightTimeField1(note.noteMode);
             return true;
         }
 
@@ -2064,15 +2044,15 @@ public class SuntimesActivity extends AppCompatActivity
         }
     }
 
-    public static final int HIGHLIGHT_SCROLLING_ITEMS = 4;   // scroll over at most 4 items (otherwise jump straight to target)
-    public void highlightTimeField1(SolarEvents.SolarEventField highlightField)
+    public void highlightTimeField1(SolarEvents event)
     {
-        if (!userSwappedCard) {
-            scrollTo(CardAdapter.TODAY_POSITION);  //(highlightField.tomorrow ? CardAdapter.TODAY_POSITION + 1 : CardAdapter.TODAY_POSITION);
+        int cardPosition = card_adapter.highlightField(event);
+        if (!userSwappedCard && cardPosition != -1) {
+            scrollTo(cardPosition);
         }
-        card_adapter.highlightField(highlightField);
     }
 
+    public static final int HIGHLIGHT_SCROLLING_ITEMS = 4;   // scroll over at most 4 items (otherwise jump straight to target)
     private void scrollTo( int position )
     {
         int firstPosition = card_layout.findFirstVisibleItemPosition();
@@ -2083,6 +2063,17 @@ public class SuntimesActivity extends AppCompatActivity
             card_layout.startSmoothScroll(card_scroller);
         }
     }
+    private RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
+    {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+        {
+            super.onScrollStateChanged(recyclerView, newState);
+            if (newState ==  RecyclerView.SCROLL_STATE_DRAGGING) {
+                setUserSwappedCard(true, "onScrollStateChanged");
+            }
+        }
+    };
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void showCalendar(boolean tomorrow)
@@ -2159,7 +2150,7 @@ public class SuntimesActivity extends AppCompatActivity
             SuntimesUtils.announceForAccessibility(note_flipper, announcement);
         }
 
-        highlightTimeField1(new SolarEvents.SolarEventField(note.noteMode, note.tomorrow));
+        highlightTimeField1(note.noteMode);
     }
 
     /**

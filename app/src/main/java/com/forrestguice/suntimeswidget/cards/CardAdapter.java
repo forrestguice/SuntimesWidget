@@ -26,9 +26,11 @@ import android.graphics.drawable.InsetDrawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
+import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,8 +63,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     private static SuntimesUtils utils = new SuntimesUtils();
 
     private WeakReference<Context> contextRef;
-    private SuntimesRiseSetDataset sunSeed;
-    private SuntimesMoonData moonSeed;
 
     private WidgetSettings.DateMode dateMode = WidgetSettings.DateMode.CURRENT_DATE;
     private WidgetSettings.DateInfo dateInfo = null;
@@ -83,7 +83,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
     private int color_textTimeDelta, color_enabled, color_disabled, color_pressed;
 
-    public CardAdapter(Context context, SuntimesCalculatorDescriptor calculatorDesc) {
+    private int highlightPosition = -1;
+    private SolarEvents highlightEvent = null;
+
+    public CardAdapter(Context context) {
         initTheme(context);
     }
 
@@ -110,8 +113,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
     public void initData(Context context, SuntimesRiseSetDataset sunSeed, SuntimesMoonData moonSeed)
     {
-        this.sunSeed = sunSeed;
-        this.moonSeed = moonSeed;
         initOptions(context, sunSeed, moonSeed);
 
         sunData.clear();
@@ -165,6 +166,21 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         showBlue = showFields[AppSettings.FIELD_BLUE] && supportsGoldBlue;
     }
 
+    /**
+     * onViewRecycled
+     * @param holder
+     */
+    @Override
+    public void onViewRecycled(CardViewHolder holder) {
+        detachClickListeners(holder);
+    }
+
+    /**
+     * onCreateViewHolder
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
@@ -173,6 +189,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         return new CardViewHolder(view);
     }
 
+    /**
+     * onBindViewHolder
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position)
     {
@@ -212,8 +233,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         holder.row_gold.setVisible(showGold);
 
         holder.resetHighlight();
-        if (timeFields != null && (position == TODAY_POSITION || position == TODAY_POSITION + 1)) {
-            initTimeFields(timeFields, holder, position != TODAY_POSITION);
+        if (highlightEvent != null && highlightPosition == position) {
+            holder.highlightField(highlightEvent);
         }
 
         // sun fields
@@ -310,6 +331,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         holder.moonphase.updateViews(context, moon);
         holder.moonrise.updateViews(context, moon);
 
+        // listeners
         attachClickListeners(holder, position);
     }
 
@@ -331,11 +353,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             label = context.getString(R.string.past_n, Integer.toString(Math.abs(i)));
         }
         return label;
-    }
-
-    @Override
-    public void onViewRecycled(CardViewHolder holder) {
-        detachClickListeners(holder);
     }
 
     private void updateDayLengthViews(Context context, TextView textView, long dayLength, int labelID)
@@ -415,68 +432,45 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         holder.moonlabel.setTextColor(labelColor);
     }
 
-    public void initTimeFields(HashMap<SolarEvents.SolarEventField, TextView> timeFields, CardViewHolder holder, boolean tomorrow)
-    {
-        timeFields.put(new SolarEvents.SolarEventField(SolarEvents.SUNRISE, tomorrow), holder.row_actual.getField(0));
-        timeFields.put(new SolarEvents.SolarEventField(SolarEvents.SUNSET, tomorrow), holder.row_actual.getField(1));
-
-        timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_CIVIL, tomorrow), holder.row_civil.getField(0));
-        timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_CIVIL, tomorrow), holder.row_civil.getField(1));
-
-        timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_NAUTICAL, tomorrow), holder.row_nautical.getField(0));
-        timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_NAUTICAL, tomorrow), holder.row_nautical.getField(1));
-
-        timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_ASTRONOMICAL, tomorrow), holder.row_astro.getField(0));
-        timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_ASTRONOMICAL, tomorrow), holder.row_astro.getField(1));
-
-        timeFields.put(new SolarEvents.SolarEventField(SolarEvents.NOON, tomorrow), holder.row_solarnoon.getField(0));
-
-        timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_GOLDEN, tomorrow), holder.row_gold.getField(0));
-        timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_GOLDEN, tomorrow), holder.row_gold.getField(1));
-
-        timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_BLUE8, tomorrow), holder.row_blue8.getField(0));
-        timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_BLUE8, tomorrow), holder.row_blue8.getField(1));
-
-        timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MORNING_BLUE4, tomorrow), holder.row_blue4.getField(0));
-        timeFields.put(new SolarEvents.SolarEventField(SolarEvents.EVENING_BLUE4, tomorrow), holder.row_blue4.getField(1));
-
-        timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MOONRISE, tomorrow), holder.moonrise.getTimeViews(SolarEvents.MOONRISE)[0]);
-        timeFields.put(new SolarEvents.SolarEventField(SolarEvents.MOONSET, tomorrow), holder.moonrise.getTimeViews(SolarEvents.MOONSET)[0]);
-    }
-
-    public void highlightField(SolarEvents.SolarEventField highlightField)
-    {
-        for (SolarEvents.SolarEventField field : timeFields.keySet())
-        {
-            TextView txtField = timeFields.get(field);
-            if (txtField != null && txtField.getVisibility() == View.VISIBLE)
-            {
-                if (field.equals(highlightField)) {
-                    CardViewHolder.TimeFieldRow.highlight(txtField);
-                } else {
-                    CardViewHolder.TimeFieldRow.resetHighlight(txtField);
-                }
-            }
-        }
-    }
-
     /**
-     * CardViewDecorator
+     * Highlight next occurring event (and removes any previous highlight).
+     * @param event SolarEvents enum
+     * @return the event's card position if event was found and highlighted, -1 otherwise
      */
-    public static class CardViewDecorator extends RecyclerView.ItemDecoration
+    public int highlightField(SolarEvents event)
     {
-        private int marginPx;
+        highlightEvent = null;
+        highlightPosition = -1;
 
-        public CardViewDecorator( Context context ) {
-            marginPx = (int)context.getResources().getDimension(R.dimen.activity_margin);
-        }
+        Calendar[] eventCalendars;
+        int position = TODAY_POSITION;
+        do {
+            SuntimesMoonData moon = moonData.get(position);
+            SuntimesRiseSetDataset sun = sunData.get(position);
+            Calendar now = sun.now();
 
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
-        {
-            outRect.left = outRect.right = marginPx;
-            outRect.top = outRect.bottom = 0;
-        }
+            boolean found;
+            switch (event) {
+                case MOONRISE: case MOONSET:
+                    eventCalendars = moon.getRiseSetEvents(event);  // { yesterday, today, tomorrow }
+                    found = now.before(eventCalendars[1]) && now.after(eventCalendars[0]);
+                    break;
+                default:
+                    eventCalendars = sun.getRiseSetEvents(event);  // { today, tomorrow }
+                    found = now.before(eventCalendars[0]);
+                    break;
+            }
+
+            if (found) {
+                highlightEvent = event;
+                highlightPosition = position;
+                break;
+            }
+            position++;
+        } while (position < TODAY_POSITION + 2);
+
+        notifyDataSetChanged();
+        return highlightPosition;
     }
 
     private SuntimesTheme themeOverride = null;
@@ -484,15 +478,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         themeOverride = theme;
     }
 
-    private HashMap<SolarEvents.SolarEventField, TextView> timeFields;
-    public void setTimeFields(HashMap<SolarEvents.SolarEventField, TextView> fields) {
-        this.timeFields = fields;
-    }
-
-    private CardAdapterListener adapterListener = new CardAdapterListener();
+    /**
+     * setCardAdapterListener
+     * @param listener
+     */
     public void setCardAdapterListener( @NonNull CardAdapterListener listener ) {
         adapterListener = listener;
     }
+    private CardAdapterListener adapterListener = new CardAdapterListener();
 
     private void attachClickListeners(@NonNull CardViewHolder holder, int position)
     {
@@ -637,6 +630,42 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
         public void onNextClick(CardAdapter adapter, int position) {}
         public void onPrevClick(CardAdapter adapter, int position) {}
+    }
+
+    /**
+     * CardViewDecorator
+     */
+    public static class CardViewDecorator extends RecyclerView.ItemDecoration
+    {
+        private int marginPx;
+
+        public CardViewDecorator( Context context ) {
+            marginPx = (int)context.getResources().getDimension(R.dimen.activity_margin);
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
+        {
+            outRect.left = outRect.right = marginPx;
+            outRect.top = outRect.bottom = 0;
+        }
+    }
+
+    /**
+     * CardViewScroller
+     */
+    public static class CardViewScroller extends LinearSmoothScroller
+    {
+        private static final float MILLISECONDS_PER_INCH = 125f;
+
+        public CardViewScroller(Context context) {
+            super(context);
+        }
+
+        @Override
+        protected float calculateSpeedPerPixel(DisplayMetrics displayMetrics) {
+            return MILLISECONDS_PER_INCH / displayMetrics.densityDpi;
+        }
     }
 }
 

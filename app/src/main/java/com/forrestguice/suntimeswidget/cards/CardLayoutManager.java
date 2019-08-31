@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget.cards;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
 public class CardLayoutManager extends LinearLayoutManager
@@ -47,14 +46,9 @@ public class CardLayoutManager extends LinearLayoutManager
         setItemPrefetchEnabled(true);
     }
 
-    @Override
+    /**@Override
     protected int getExtraLayoutSpace(RecyclerView.State state)
     {
-        //int current = (this.findLastVisibleItemPosition() + this.findFirstVisibleItemPosition()) / 2;
-        //int diff = Math.abs(CardAdapter.TODAY_POSITION - current);
-        //if (diff > 1)
-            //return diff * getWidth();
-        //else
-            return super.getExtraLayoutSpace(state);
-    }
+        return super.getExtraLayoutSpace(state);
+    }*/
 }
