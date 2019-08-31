@@ -1236,6 +1236,7 @@ public class SuntimesActivity extends AppCompatActivity
             calculateData(SuntimesActivity.this);
             setUpdateAlarms(SuntimesActivity.this);
             updateViews(SuntimesActivity.this);
+            scrollTo(CardAdapter.TODAY_POSITION);
         }
     };
     DialogInterface.OnClickListener onCancelDate = new DialogInterface.OnClickListener()
