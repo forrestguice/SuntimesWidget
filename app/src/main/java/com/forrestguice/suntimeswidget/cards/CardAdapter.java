@@ -323,6 +323,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         attachClickListeners(holder, position);
     }
 
+    @Override
+    public void onViewRecycled(CardViewHolder holder) {
+
+        detachClickListeners(holder);
+    }
+
     private void updateDayLengthViews(Context context, TextView textView, long dayLength, int labelID)
     {
         SuntimesUtils.TimeDisplayText dayLengthDisplay;
@@ -444,9 +450,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             }
         }
     }
+
+    /**
+     * CardViewDecorator
+     */
     public static class CardViewDecorator extends RecyclerView.ItemDecoration
     {
-        private int marginPx = 8;
+        private int marginPx;
 
         public CardViewDecorator( Context context ) {
             marginPx = (int)context.getResources().getDimension(R.dimen.activity_margin);
@@ -479,18 +489,28 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     {
         holder.txt_date.setOnClickListener(onDateClick(position));
         holder.txt_date.setOnLongClickListener(onDateLongClick(position));
-
         holder.sunriseHeader.setOnClickListener(onSunriseHeaderClick(position));
         holder.sunriseHeader.setOnLongClickListener(onSunriseHeaderLongClick(position));
-
         holder.sunsetHeader.setOnClickListener(onSunsetHeaderClick(position));
         holder.sunsetHeader.setOnLongClickListener(onSunsetHeaderLongClick(position));
-
         holder.moonClickArea.setOnClickListener(onMoonHeaderClick(position));
         holder.moonClickArea.setOnLongClickListener(onMoonHeaderLongClick(position));
-
         holder.btn_flipperNext.setOnClickListener(onNextClick(position));
         holder.btn_flipperPrev.setOnClickListener(onPrevClick(position));
+    }
+
+    private void detachClickListeners(@NonNull CardViewHolder holder)
+    {
+        holder.txt_date.setOnClickListener(null);
+        holder.txt_date.setOnLongClickListener(null);
+        holder.sunriseHeader.setOnClickListener(null);
+        holder.sunriseHeader.setOnLongClickListener(null);
+        holder.sunsetHeader.setOnClickListener(null);
+        holder.sunsetHeader.setOnLongClickListener(null);
+        holder.moonClickArea.setOnClickListener(null);
+        holder.moonClickArea.setOnLongClickListener(null);
+        holder.btn_flipperNext.setOnClickListener(null);
+        holder.btn_flipperPrev.setOnClickListener(null);
     }
 
     private View.OnClickListener onDateClick(final int position) {
