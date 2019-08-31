@@ -1733,13 +1733,13 @@ public class SuntimesActivity extends AppCompatActivity
         public void onDateClick(CardAdapter adapter, int position)
         {
             AppSettings.DateTapAction action = AppSettings.loadDateTapActionPref(SuntimesActivity.this);
-            onDateTapAction(action, position != 0);
+            onDateTapAction(action, position != CardAdapter.TODAY_POSITION);
         }
         @Override
         public boolean onDateLongClick(CardAdapter adapter, int position)
         {
             AppSettings.DateTapAction action = AppSettings.loadDateTapAction1Pref(SuntimesActivity.this);
-            onDateTapAction(action, position != 0);
+            onDateTapAction(action, position != CardAdapter.TODAY_POSITION);
             return true;
         }
 
@@ -2051,14 +2051,12 @@ public class SuntimesActivity extends AppCompatActivity
 
             case SWAP_CARD:
             default:
-                // TODO: w/ recyclerview
-                if (tomorrow)
-                {
-                    // TODO
-                    //setUserSwappedCard( showPreviousCard(), "onDateTapClick (prevCard)" );
+                if (tomorrow) {
+                    scrollTo(CardAdapter.TODAY_POSITION);
+                    setUserSwappedCard( true, "onDateTapClick (prevCard)" );
                 } else {
-                    // TODO
-                    //setUserSwappedCard( showNextCard(), "onDateTapClick (nextCard)" );
+                    scrollTo(CardAdapter.TODAY_POSITION + 1);
+                    setUserSwappedCard( true, "onDateTapClick (nextCard)" );
                 }
                 break;
         }
