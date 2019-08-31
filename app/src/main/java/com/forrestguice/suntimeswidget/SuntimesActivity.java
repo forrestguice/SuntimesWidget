@@ -83,6 +83,8 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.cards.CardAdapter;
+import com.forrestguice.suntimeswidget.cards.CardLayoutManager;
+import com.forrestguice.suntimeswidget.cards.CardViewHolder;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.map.WorldMapDialog;
@@ -174,7 +176,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     // time card views
     private RecyclerView card_view;
-    private LinearLayoutManager card_layout;
+    private CardLayoutManager card_layout;
     private LinearSmoothScroller card_scroller;
     private CardAdapter card_adapter;
 
@@ -1022,16 +1024,14 @@ public class SuntimesActivity extends AppCompatActivity
     {
         timeFields = new HashMap<SolarEvents.SolarEventField, TextView>();
 
-        card_layout = new LinearLayoutManager(this);
-        card_layout.setOrientation(LinearLayoutManager.HORIZONTAL);
-
         card_adapter = new CardAdapter(context, WidgetSettings.loadCalculatorModePref(context, 0, "sun"));
         card_adapter.setTimeFields(timeFields);
         card_adapter.setCardAdapterListener(cardAdapterListener);
 
         card_view = (RecyclerView) findViewById(R.id.info_time_flipper1);
         card_view.setHasFixedSize(true);
-        card_view.setLayoutManager(card_layout);
+        card_view.setItemViewCacheSize(14);
+        card_view.setLayoutManager(card_layout = new CardLayoutManager(this));
         card_view.addItemDecoration(new CardAdapter.CardViewDecorator(this));
         card_view.setAdapter(card_adapter);
         card_view.scrollToPosition(CardAdapter.TODAY_POSITION);
