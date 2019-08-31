@@ -40,6 +40,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -52,6 +53,7 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.TimeZone;
 import java.util.regex.Pattern;
 
 public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
@@ -59,6 +61,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     private static SuntimesUtils utils = new SuntimesUtils();
 
     private WeakReference<Context> contextRef;
+
+    private WidgetSettings.DateInfo dateInfo = null;
+    private TimeZone timezone = null;
+
     private boolean supportsGoldBlue = false;
     private boolean showSeconds = false;
     private boolean showWarnings = false;
@@ -122,26 +128,36 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     {
         sunData.clear();
         moonData.clear();
-        WidgetSettings.DateInfo dateInfo = WidgetSettings.loadDatePref(context, 0);
-        for (int i = TODAY_POSITION - INITIAL_POSITION_WINDOW; i < TODAY_POSITION + INITIAL_POSITION_WINDOW + 1; i++) {
-            initData(context, dateInfo, i);
+
+        SuntimesData data = new SuntimesRiseSetData(context, 0);
+        timezone = data.timezone();
+        dateInfo = WidgetSettings.loadDatePref(context, 0);
+
+        for (int i = TODAY_POSITION - INITIAL_POSITION_WINDOW; i < TODAY_POSITION + INITIAL_POSITION_WINDOW; i++) {
+            initData(context, i);
         }
         notifyDataSetChanged();
     }
 
-    protected void initData(Context context, WidgetSettings.DateInfo dateInfo, int position)
+    protected void initData(Context context, int position)
     {
-        Calendar date = Calendar.getInstance();
-        date.set(dateInfo.getYear(), dateInfo.getMonth(), dateInfo.getDay());
-        date.add(Calendar.DAY_OF_YEAR, position - TODAY_POSITION);
-
         SuntimesRiseSetDataset sun = new SuntimesRiseSetDataset(context);
-        sun.setTodayIs(date);
+        SuntimesMoonData moon = new SuntimesMoonData(context, 0, "moon");
+
+        int relativePosition = position - TODAY_POSITION;
+        //if (relativePosition != 0)
+        //{
+            Calendar date = Calendar.getInstance();
+            date.set(dateInfo.getYear(), dateInfo.getMonth(), dateInfo.getDay());
+            date.add(Calendar.DAY_OF_MONTH, relativePosition);
+
+            sun.setTodayIs(date);
+            moon.setTodayIs(date);
+        //}
+
         sun.calculateData();
         sunData.put(position, sun);
 
-        SuntimesMoonData moon = new SuntimesMoonData(context, 0, "moon");
-        moon.setTodayIs(date);
         moon.calculate();
         moonData.put(position, moon);
     }
@@ -151,25 +167,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     {
         LayoutInflater layout = LayoutInflater.from(parent.getContext());
         View view = layout.inflate(R.layout.info_time_card1, parent, false);
-        CardViewHolder holder = new CardViewHolder(view);
-
-        holder.row_actual.setVisible(showActual);
-        holder.row_civil.setVisible(showCivil);
-        holder.row_nautical.setVisible(showNautical);
-        holder.row_astro.setVisible(showAstro);
-        holder.row_solarnoon.setVisible(showNoon);
-
-        showGold = showGold && supportsGoldBlue;
-        showBlue = showBlue && supportsGoldBlue;
-        holder.row_blue8.setVisible(showBlue);
-        holder.row_blue4.setVisible(showBlue);
-        holder.row_gold.setVisible(showGold);
-
-        Context context = contextRef.get();
-        if (themeOverride != null && context != null) {
-            themeCardViews(context, themeOverride, holder);
-        }
-        return holder;
+        return new CardViewHolder(view);
     }
 
     @Override
@@ -189,12 +187,27 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         SuntimesMoonData moon = moonData.get(position);
         if (sun == null || moon == null)
         {
-            initData(context, WidgetSettings.loadDatePref(context, 0), position);
+            initData(context, position);
             sun = sunData.get(position);
             moon = moonData.get(position);
         }
 
+        if (themeOverride != null) {
+            themeCardViews(context, themeOverride, holder);
+        }
         themeCardViews(context, holder);
+
+        holder.row_actual.setVisible(showActual);
+        holder.row_civil.setVisible(showCivil);
+        holder.row_nautical.setVisible(showNautical);
+        holder.row_astro.setVisible(showAstro);
+        holder.row_solarnoon.setVisible(showNoon);
+
+        showGold = showGold && supportsGoldBlue;
+        showBlue = showBlue && supportsGoldBlue;
+        holder.row_blue8.setVisible(showBlue);
+        holder.row_blue4.setVisible(showBlue);
+        holder.row_gold.setVisible(showGold);
 
         holder.resetHighlight();
         if (timeFields != null && (position == TODAY_POSITION || position == TODAY_POSITION + 1)) {
