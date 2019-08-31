@@ -23,6 +23,7 @@ import android.content.Context;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.ArrayList;
@@ -460,6 +461,29 @@ public class SuntimesRiseSetDataset
                 return (position.azimuth > noonPosition.azimuth && position.azimuth <= 180);
             else return (position.azimuth > noonPosition.azimuth) || (position.azimuth <= 90);
         }
+    }
+
+    public Calendar[] getRiseSetEvents(SolarEvents event)
+    {
+        switch (event) {
+            case NOON:
+                return dataNoon.getEvents(event);
+            case SUNRISE: case SUNSET:
+                return dataActual.getEvents(event);
+            case MORNING_CIVIL: case EVENING_CIVIL:
+                return dataCivil.getEvents(event);
+            case MORNING_NAUTICAL: case EVENING_NAUTICAL:
+                return dataNautical.getEvents(event);
+            case MORNING_ASTRONOMICAL: case EVENING_ASTRONOMICAL:
+                return dataAstro.getEvents(event);
+            case MORNING_GOLDEN: case EVENING_GOLDEN:
+                return dataGold.getEvents(event);
+            case MORNING_BLUE4: case EVENING_BLUE4:
+                return dataBlue4.getEvents(event);
+            case MORNING_BLUE8: case EVENING_BLUE8:
+                return dataBlue8.getEvents(event);
+        }
+        return null;
     }
 
 }

@@ -22,6 +22,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
@@ -161,6 +162,13 @@ public class SuntimesRiseSetData extends SuntimesData
         Calendar midnight = midnight();
         midnight.add(Calendar.DAY_OF_MONTH,  1);
         return new Calendar[] { sunriseCalendarToday, sunsetCalendarToday, sunriseCalendarOther, sunsetCalendarOther, midnight };
+    }
+
+    public Calendar[] getEvents(SolarEvents event)
+    {
+        if (event.isRising())
+            return new Calendar[] { sunriseCalendarToday, sunriseCalendarOther };
+        else return new Calendar[] { sunsetCalendarToday, sunsetCalendarOther };
     }
 
     /**
