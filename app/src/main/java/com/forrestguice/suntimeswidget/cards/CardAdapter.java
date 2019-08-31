@@ -61,6 +61,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     private static SuntimesUtils utils = new SuntimesUtils();
 
     private WeakReference<Context> contextRef;
+    private SuntimesRiseSetDataset sunSeed;
+    private SuntimesMoonData moonSeed;
 
     private WidgetSettings.DateInfo dateInfo = null;
     private TimeZone timezone = null;
@@ -82,7 +84,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
     public CardAdapter(Context context, SuntimesCalculatorDescriptor calculatorDesc) {
         initTheme(context);
-        initOptions(context, calculatorDesc);
     }
 
     private void initTheme(Context context)
@@ -96,46 +97,31 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         a.recycle();
     }
 
-    public void initOptions(Context context, SuntimesCalculatorDescriptor calculatorDesc)
-    {
-        contextRef = new WeakReference<>(context);
-        supportsGoldBlue = calculatorDesc.hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);
-        showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
-        showWarnings = AppSettings.loadShowWarningsPref(context);
-
-        showFields = AppSettings.loadShowFieldsPref(context);
-        showActual = showFields[AppSettings.FIELD_ACTUAL];
-        showCivil = showFields[AppSettings.FIELD_CIVIL];
-        showNautical = showFields[AppSettings.FIELD_NAUTICAL];
-        showAstro = showFields[AppSettings.FIELD_ASTRO];
-        showNoon = showFields[AppSettings.FIELD_NOON];
-        showGold = showFields[AppSettings.FIELD_GOLD];
-        showBlue = showFields[AppSettings.FIELD_BLUE];
-    }
-
-    public static final int MAX_POSITIONS = 365;                       // 365 slots [today - 182, today + 182]
-    public static final int TODAY_POSITION = (MAX_POSITIONS / 2) + 1;  // middle position is today
-    public static final int INITIAL_POSITION_WINDOW = 2;               // initial data window; today +- 2 days
-    private HashMap<Integer, SuntimesRiseSetDataset> sunData = new HashMap<>(MAX_POSITIONS);
-    private HashMap<Integer, SuntimesMoonData> moonData = new HashMap<>(MAX_POSITIONS);
+    public static final int MAX_POSITIONS = 2000;
+    public static final int TODAY_POSITION = (MAX_POSITIONS / 2);      // middle position is today
+    private HashMap<Integer, SuntimesRiseSetDataset> sunData = new HashMap<>();
+    private HashMap<Integer, SuntimesMoonData> moonData = new HashMap<>();
 
     @Override
     public int getItemCount() {
         return MAX_POSITIONS;
     }
 
-    public void initData(Context context)
+    public void initData(Context context, SuntimesRiseSetDataset sunSeed, SuntimesMoonData moonSeed)
     {
+        this.sunSeed = sunSeed;
+        this.moonSeed = moonSeed;
+        initOptions(context, sunSeed.calculatorMode());
+        timezone = sunSeed.timezone();
+        dateInfo = WidgetSettings.loadDatePref(context, 0);
+
         sunData.clear();
         moonData.clear();
 
-        SuntimesData data = new SuntimesRiseSetData(context, 0);
-        timezone = data.timezone();
-        dateInfo = WidgetSettings.loadDatePref(context, 0);
+        initData(context, TODAY_POSITION + 1);
+        initData(context, TODAY_POSITION);
+        initData(context, TODAY_POSITION - 1);
 
-        for (int i = TODAY_POSITION - INITIAL_POSITION_WINDOW; i < TODAY_POSITION + INITIAL_POSITION_WINDOW; i++) {
-            initData(context, i);
-        }
         notifyDataSetChanged();
     }
 
@@ -160,6 +146,23 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
         moon.calculate();
         moonData.put(position, moon);
+    }
+
+    public void initOptions(Context context, SuntimesCalculatorDescriptor calculatorDesc)
+    {
+        contextRef = new WeakReference<>(context);
+        supportsGoldBlue = calculatorDesc.hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);
+        showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
+        showWarnings = AppSettings.loadShowWarningsPref(context);
+
+        showFields = AppSettings.loadShowFieldsPref(context);
+        showActual = showFields[AppSettings.FIELD_ACTUAL];
+        showCivil = showFields[AppSettings.FIELD_CIVIL];
+        showNautical = showFields[AppSettings.FIELD_NAUTICAL];
+        showAstro = showFields[AppSettings.FIELD_ASTRO];
+        showNoon = showFields[AppSettings.FIELD_NOON];
+        showGold = showFields[AppSettings.FIELD_GOLD];
+        showBlue = showFields[AppSettings.FIELD_BLUE];
     }
 
     @Override
@@ -275,24 +278,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             String thisString = context.getString(R.string.today);
             if (sun.dataActual.todayIsNotToday())
             {
-                WidgetSettings.DateInfo nowInfo = new WidgetSettings.DateInfo(now);
-                WidgetSettings.DateInfo dataInfo = new WidgetSettings.DateInfo(sun.dataActual.calendar());
-                if (!nowInfo.equals(dataInfo))
+                int diffDays = (int)((data_date.getTime() - now.getTimeInMillis()) / 1000L / 60L / 60L / 24L);
+                if (diffDays != 0)
                 {
-                    WidgetSettings.DateInfo diff = dataInfo.diff(nowInfo);
-                    if (diff.getYear() == 0 && diff.getMonth() == 0 && (diff.getDay() == 1 || diff.getDay() == -1))
+                    if (diffDays > 1 || diffDays < -1)
                     {
-                        if (diff.getDay() == 1) {
-                            thisString = context.getString(R.string.tomorrow);
-                            showDateWarning = false;
-
-                        } else {
-                            thisString = context.getString(R.string.yesterday);
-                            showDateWarning = false;
-                        }
-
-                    } else {
-                        int diffDays = (int)((data_date.getTime() - now.getTimeInMillis()) / 1000L / 60L / 60L / 24L);
                         if (data_date.after(now.getTime())) {
                             thisString = context.getString(R.string.future_n, Integer.toString(diffDays + 1));
                             showDateWarning = true;
@@ -300,6 +290,15 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
                         } else if (data_date.before(now.getTime())) {
                             thisString = context.getString(R.string.past_n, Integer.toString(Math.abs(diffDays)));
                             showDateWarning = true;
+                        }
+
+                    } else {
+                        if (diffDays > 0) {
+                            thisString = context.getString(R.string.tomorrow);
+                            showDateWarning = false;
+                        } else {
+                            thisString = context.getString(R.string.yesterday);
+                            showDateWarning = false;
                         }
                     }
                 }

@@ -1466,10 +1466,10 @@ public class SuntimesActivity extends AppCompatActivity
      */
     private void initData( Context context )
     {
-        card_adapter.initData(context);
         dataset = new SuntimesRiseSetDataset(context);
         dataset2 = (AppSettings.loadShowEquinoxPref(context) ? new SuntimesEquinoxSolsticeDataset(context) : null);
         dataset3 = (AppSettings.loadShowMoonPref(context) ? new SuntimesMoonData(context, 0, "moon") : null);
+        card_adapter.initData(context, dataset, dataset3);
     }
 
     protected void calculateData( Context context )
