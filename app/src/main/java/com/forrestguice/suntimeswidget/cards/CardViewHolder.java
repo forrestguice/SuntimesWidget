@@ -18,9 +18,16 @@
 
 package com.forrestguice.suntimeswidget.cards;
 
+import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.InsetDrawable;
+import android.support.annotation.NonNull;
+import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
+import android.util.Pair;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -30,13 +37,25 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.MoonPhaseView;
 import com.forrestguice.suntimeswidget.MoonRiseSetView;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 public class CardViewHolder extends RecyclerView.ViewHolder
 {
+    protected static SuntimesUtils utils = new SuntimesUtils();
+
     public ImageButton btn_flipperNext;
     public ImageButton btn_flipperPrev;
 
@@ -121,6 +140,223 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
         btn_flipperNext = (ImageButton)view.findViewById(R.id.info_time_nextbtn);
         btn_flipperPrev = (ImageButton)view.findViewById(R.id.info_time_prevbtn);
+    }
+
+    public void bindDataToPosition(@NonNull Context context, int position, @NonNull Pair<SuntimesRiseSetDataset, SuntimesMoonData> data, CardAdapter.CardAdapterOptions options)
+    {
+        this.position = position;
+        SuntimesRiseSetDataset sun = data.first;
+        SuntimesMoonData moon = data.second;
+
+        if (options.themeOverride != null) {
+            themeCardViews(context, options.themeOverride, options);
+        }
+        themeCardViews(context, options);
+
+        row_actual.setVisible(options.showActual);
+        row_civil.setVisible(options.showCivil);
+        row_nautical.setVisible(options.showNautical);
+        row_astro.setVisible(options.showAstro);
+        row_solarnoon.setVisible(options.showNoon);
+        row_blue8.setVisible(options.showBlue);
+        row_blue4.setVisible(options.showBlue);
+        row_gold.setVisible(options.showGold);
+
+        resetHighlight();
+        if (options.highlightEvent != null && options.highlightPosition == position) {
+            highlightField(options.highlightEvent);
+        }
+
+        // sun fields
+        if (sun != null && sun.isCalculated())
+        {
+            if (options.showActual) {
+                SuntimesUtils.TimeDisplayText sunriseString_actualTime = utils.calendarTimeShortDisplayString(context, sun.dataActual.sunriseCalendarToday(), options.showSeconds);
+                SuntimesUtils.TimeDisplayText sunsetString_actualTime = utils.calendarTimeShortDisplayString(context, sun.dataActual.sunsetCalendarToday(), options.showSeconds);
+                row_actual.updateFields(sunriseString_actualTime.toString(), sunsetString_actualTime.toString());
+            }
+
+            if (options.showCivil) {
+                SuntimesUtils.TimeDisplayText sunriseString_civilTime = utils.calendarTimeShortDisplayString(context, sun.dataCivil.sunriseCalendarToday(), options.showSeconds);
+                SuntimesUtils.TimeDisplayText sunsetString_civilTime = utils.calendarTimeShortDisplayString(context, sun.dataCivil.sunsetCalendarToday(), options.showSeconds);
+                row_civil.updateFields(sunriseString_civilTime.toString(), sunsetString_civilTime.toString());
+            }
+
+            if (options.showNautical) {
+                SuntimesUtils.TimeDisplayText sunriseString_nauticalTime = utils.calendarTimeShortDisplayString(context, sun.dataNautical.sunriseCalendarToday(), options.showSeconds);
+                SuntimesUtils.TimeDisplayText sunsetString_nauticalTime = utils.calendarTimeShortDisplayString(context, sun.dataNautical.sunsetCalendarToday(), options.showSeconds);
+                row_nautical.updateFields(sunriseString_nauticalTime.toString(), sunsetString_nauticalTime.toString());
+            }
+
+            if (options.showAstro) {
+                SuntimesUtils.TimeDisplayText sunriseString_astroTime = utils.calendarTimeShortDisplayString(context, sun.dataAstro.sunriseCalendarToday(), options.showSeconds);
+                SuntimesUtils.TimeDisplayText sunsetString_astroTime = utils.calendarTimeShortDisplayString(context, sun.dataAstro.sunsetCalendarToday(), options.showSeconds);
+                row_astro.updateFields(sunriseString_astroTime.toString(), sunsetString_astroTime.toString());
+            }
+
+            if (options.showNoon) {
+                SuntimesUtils.TimeDisplayText noonString = utils.calendarTimeShortDisplayString(context, sun.dataNoon.sunriseCalendarToday(), options.showSeconds);
+                row_solarnoon.updateFields(noonString.toString());
+            }
+
+            if (options.showBlue) {
+                String sunriseString_blue8 = utils.calendarTimeShortDisplayString(context, sun.dataBlue8.sunriseCalendarToday(), options.showSeconds).toString();
+                String sunsetString_blue8 = utils.calendarTimeShortDisplayString(context, sun.dataBlue8.sunsetCalendarToday(), options.showSeconds).toString();
+                row_blue8.updateFields(sunriseString_blue8, sunsetString_blue8);
+
+                String sunriseString_blue4 = utils.calendarTimeShortDisplayString(context, sun.dataBlue4.sunriseCalendarToday(), options.showSeconds).toString();
+                String sunsetString_blue4 = utils.calendarTimeShortDisplayString(context, sun.dataBlue4.sunsetCalendarToday(), options.showSeconds).toString();
+                row_blue4.updateFields(sunriseString_blue4, sunsetString_blue4);
+            }
+
+            if (options.showGold) {
+                String sunriseString_gold = utils.calendarTimeShortDisplayString(context, sun.dataGold.sunriseCalendarToday(), options.showSeconds).toString();
+                String sunsetString_gold = utils.calendarTimeShortDisplayString(context, sun.dataGold.sunsetCalendarToday(), options.showSeconds).toString();
+                row_gold.updateFields(sunriseString_gold, sunsetString_gold);
+            }
+
+            updateDayLengthViews(context, txt_daylength, sun.dataActual.dayLengthToday(), R.string.length_day, options.showSeconds, options.color_textTimeDelta);
+            updateDayLengthViews(context, txt_lightlength, sun.dataCivil.dayLengthToday(), R.string.length_light, options.showSeconds, options.color_textTimeDelta);
+
+            // date field
+            Calendar now = sun.now();
+            Date data_date = sun.dataActual.date();
+            DateFormat dateFormat = android.text.format.DateFormat.getMediumDateFormat(context.getApplicationContext());   // Apr 11, 2016
+            dateFormat.setTimeZone(sun.timezone());
+
+            int i = 0;
+            int diffDays = (int)((data_date.getTime() - now.getTimeInMillis()) / 1000L / 60L / 60L / 24L);
+            if (data_date.after(now.getTime())) {
+                i = diffDays + 1;
+            } else if (data_date.before(now.getTime())) {
+                i = diffDays;
+            }
+
+            boolean showDateWarning = (options.dateMode != WidgetSettings.DateMode.CURRENT_DATE && (i > 1 || i < -1));
+            ImageSpan dateWarningIcon = (options.showWarnings && showDateWarning) ? SuntimesUtils.createWarningSpan(context, txt_date.getTextSize()) : null;
+            String dateString = context.getString(R.string.dateField, getCardLabel(context, i), dateFormat.format(data_date));
+            SpannableStringBuilder dateSpan = SuntimesUtils.createSpan(context, dateString, SuntimesUtils.SPANTAG_WARNING, dateWarningIcon);
+            txt_date.setText(dateSpan);
+            txt_date.setContentDescription(dateString.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), ""));
+
+        } else {
+            String notCalculated = context.getString(R.string.time_loading);
+            row_solarnoon.updateFields(notCalculated);
+            row_actual.updateFields(notCalculated, notCalculated);
+            row_civil.updateFields(notCalculated, notCalculated);
+            row_nautical.updateFields(notCalculated, notCalculated);
+            row_astro.updateFields(notCalculated, notCalculated);
+            row_gold.updateFields(notCalculated, notCalculated);
+            row_blue8.updateFields(notCalculated, notCalculated);
+            row_blue4.updateFields(notCalculated, notCalculated);
+            txt_daylength.setText("");
+            txt_lightlength.setText("");
+            txt_date.setText("\n\n");
+        }
+
+        // moon fields
+        sunsetHeader.measure(0, 0);      // adjust moonrise/moonset columns to match width of sunrise/sunset columns
+        int sunsetHeaderWidth = sunsetHeader.getMeasuredWidth();
+        moonrise.adjustColumnWidth(context, sunsetHeaderWidth);
+        moonphase.updateViews(context, moon);
+        moonrise.updateViews(context, moon);
+    }
+
+    protected void themeCardViews(Context context, CardAdapter.CardAdapterOptions options)
+    {
+        if (options.themeOverride != null) {
+            themeCardViews(context, options.themeOverride, options);
+        }
+        ImageViewCompat.setImageTintList(btn_flipperNext, SuntimesUtils.colorStateList(options.color_enabled, options.color_disabled, options.color_pressed));
+        ImageViewCompat.setImageTintList(btn_flipperPrev, SuntimesUtils.colorStateList(options.color_enabled, options.color_disabled, options.color_pressed));
+    }
+
+    protected void themeCardViews(Context context, @NonNull SuntimesTheme theme, CardAdapter.CardAdapterOptions options)
+    {
+        options.color_textTimeDelta = theme.getTimeColor();
+        options.color_pressed = theme.getActionColor();
+        int color_text = theme.getTextColor();
+        int color_sunrise = theme.getSunriseTextColor();
+        int color_sunset = theme.getSunsetTextColor();
+        int color_action = theme.getActionColor();
+
+        txt_daylength.setTextColor(color_text);
+        txt_lightlength.setTextColor(color_text);
+
+        row_actual.getField(0).setTextColor(color_sunrise);
+        row_civil.getField(0).setTextColor(color_sunrise);
+        row_nautical.getField(0).setTextColor(color_sunrise);
+        row_astro.getField(0).setTextColor(color_sunrise);
+        row_gold.getField(1).setTextColor(color_sunrise);
+        row_blue8.getField(0).setTextColor(color_sunrise);
+        row_blue4.getField(0).setTextColor(color_sunset);
+
+        row_actual.getField(1).setTextColor(color_sunset);
+        row_civil.getField(1).setTextColor(color_sunset);
+        row_nautical.getField(1).setTextColor(color_sunset);
+        row_astro.getField(1).setTextColor(color_sunset);
+        row_solarnoon.getField(0).setTextColor(color_sunset);
+        row_gold.getField(0).setTextColor(color_sunset);
+        row_blue8.getField(1).setTextColor(color_sunset);
+        row_blue4.getField(1).setTextColor(color_sunrise);
+
+        int labelColor = theme.getTitleColor();
+        for (CardViewHolder.TimeFieldRow row : rows) {
+            row.label.setTextColor(labelColor);
+        }
+
+        txt_date.setTextColor(SuntimesUtils.colorStateList(labelColor, options.color_disabled, color_action));
+
+        int sunriseIconColor = theme.getSunriseIconColor();
+        int sunriseIconColor2 = theme.getSunriseIconStrokeColor();
+        int sunriseIconStrokeWidth = theme.getSunriseIconStrokePixels(context);
+        SuntimesUtils.tintDrawable((InsetDrawable)icon_sunrise.getBackground(), sunriseIconColor, sunriseIconColor2, sunriseIconStrokeWidth);
+        header_sunrise.setTextColor(color_sunrise);
+
+        int sunsetIconColor = theme.getSunsetIconColor();
+        int sunsetIconColor2 = theme.getSunsetIconStrokeColor();
+        int sunsetIconStrokeWidth = theme.getSunsetIconStrokePixels(context);
+        SuntimesUtils.tintDrawable((InsetDrawable)icon_sunset.getBackground(), sunsetIconColor, sunsetIconColor2, sunsetIconStrokeWidth);
+        header_sunset.setTextColor(color_sunset);
+
+        moonrise.themeViews(context, theme);
+        moonphase.themeViews(context, theme);
+        moonlabel.setTextColor(labelColor);
+    }
+
+    /**
+     * @param context used to getStrings from resources
+     * @param i position relative to TODAY
+     * @return display string; today / tomorrow / yesterday / past (-n) / future (+n)
+     */
+    private String getCardLabel(Context context, int i)
+    {
+        String label = context.getString(R.string.today);
+        if (i == 1) {
+            label = context.getString(R.string.tomorrow);
+        } else if (i == -1) {
+            label = context.getString(R.string.yesterday);
+        } else if (i > 0) {
+            label = context.getString(R.string.future_n, Integer.toString(i));
+        } else if (i < 0) {
+            label = context.getString(R.string.past_n, Integer.toString(Math.abs(i)));
+        }
+        return label;
+    }
+
+    private void updateDayLengthViews(Context context, TextView textView, long dayLength, int labelID, boolean showSeconds, int highlightColor)
+    {
+        SuntimesUtils.TimeDisplayText dayLengthDisplay;
+        if (dayLength <= 0)
+            dayLengthDisplay = new SuntimesUtils.TimeDisplayText(String.format(SuntimesUtils.strTimeDeltaFormat, 0, (showSeconds ? SuntimesUtils.strSeconds : SuntimesUtils.strMinutes)), SuntimesUtils.strEmpty, SuntimesUtils.strEmpty);
+        else if (dayLength >= SuntimesData.DAY_MILLIS)
+            dayLengthDisplay = new SuntimesUtils.TimeDisplayText(String.format(SuntimesUtils.strTimeDeltaFormat, 24, SuntimesUtils.strHours), SuntimesUtils.strEmpty, SuntimesUtils.strEmpty);
+        else dayLengthDisplay = utils.timeDeltaLongDisplayString(0, dayLength, showSeconds);
+
+        dayLengthDisplay.setSuffix("");
+        String dayLengthStr = dayLengthDisplay.toString();
+        String dayLength_label = context.getString(labelID, dayLengthStr);
+        textView.setText(SuntimesUtils.createBoldColorSpan(null, dayLength_label, dayLengthStr, highlightColor));
     }
 
     public void highlightField( SolarEvents highlightEvent )
@@ -233,7 +469,4 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         }
 
     }
-
 }
-
-
