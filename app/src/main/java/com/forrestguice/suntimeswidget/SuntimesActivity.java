@@ -122,6 +122,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedCard";
     public static final String KEY_UI_CARDPOSITION = "cardPosition";
+    public static final String KEY_UI_RESETNOTE = "resetNote";
 
     public static final String WARNINGID_DATE = "Date";
     public static final String WARNINGID_TIMEZONE = "Timezone";
@@ -315,12 +316,6 @@ public class SuntimesActivity extends AppCompatActivity
         registerReceivers(SuntimesActivity.this);
         setUpdateAlarms(SuntimesActivity.this);
 
-        if (onStart_resetNoteIndex)
-        {
-            notes.resetNoteIndex();
-            onStart_resetNoteIndex = false;
-        }
-
         updateViews(SuntimesActivity.this);
     }
     private boolean onStart_resetNoteIndex = false;
@@ -334,6 +329,11 @@ public class SuntimesActivity extends AppCompatActivity
         super.onResume();
         updateActionBar(this);
         getFixHelper.onResume();
+
+        if (onStart_resetNoteIndex) {
+            notes.resetNoteIndex();
+            onStart_resetNoteIndex = false;
+        }
 
         // restore open dialogs
         updateDialogs(this);
@@ -579,6 +579,7 @@ public class SuntimesActivity extends AppCompatActivity
         saveWarnings(outState);
         outState.putBoolean(KEY_UI_USERSWAPPEDCARD, userSwappedCard);
         outState.putInt(KEY_UI_CARDPOSITION, ((card_layout.findFirstVisibleItemPosition() + card_layout.findLastVisibleItemPosition()) / 2));
+        outState.putBoolean(KEY_UI_RESETNOTE, onStart_resetNoteIndex);
         card_equinoxSolstice.saveState(outState);
     }
 
@@ -587,6 +588,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         super.onRestoreInstanceState(savedInstanceState);
         restoreWarnings(savedInstanceState);
+        onStart_resetNoteIndex = savedInstanceState.getBoolean(KEY_UI_RESETNOTE, onStart_resetNoteIndex);
         setUserSwappedCard(savedInstanceState.getBoolean(KEY_UI_USERSWAPPEDCARD, false), "onRestoreInstanceState");
         card_equinoxSolstice.loadState(savedInstanceState);
 
