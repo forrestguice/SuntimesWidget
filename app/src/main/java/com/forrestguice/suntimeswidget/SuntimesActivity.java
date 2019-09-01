@@ -623,7 +623,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         super.onRestoreInstanceState(savedInstanceState);
         restoreWarnings(savedInstanceState);
-        //onStart_resetNoteIndex = savedInstanceState.getBoolean(KEY_UI_RESETNOTE, onStart_resetNoteIndex);
+        onStart_resetNoteIndex = savedInstanceState.getBoolean(KEY_UI_RESETNOTE, onStart_resetNoteIndex);
         setUserSwappedCard(savedInstanceState.getBoolean(KEY_UI_USERSWAPPEDCARD, false), "onRestoreInstanceState");
         boolean cardIsTomorrow = savedInstanceState.getBoolean(KEY_UI_CARDISTOMORROW, false);
         card_flipper.setDisplayedChild((cardIsTomorrow ? 1 : 0));
