@@ -64,6 +64,8 @@ public class CardViewHolder extends RecyclerView.ViewHolder
     public MoonRiseSetView moonrise;
     public View moonClickArea;
 
+    public int position = RecyclerView.NO_POSITION;
+
     public CardViewHolder(View view)
     {
         super(view);

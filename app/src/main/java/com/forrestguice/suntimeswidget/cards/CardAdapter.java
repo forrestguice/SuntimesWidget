@@ -32,6 +32,7 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,10 +40,8 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -103,8 +102,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
     public static final int MAX_POSITIONS = 2000;
     public static final int TODAY_POSITION = (MAX_POSITIONS / 2);      // middle position is today
-    private HashMap<Integer, SuntimesRiseSetDataset> sunData = new HashMap<>();
-    private HashMap<Integer, SuntimesMoonData> moonData = new HashMap<>();
+    private HashMap<Integer, Pair<SuntimesRiseSetDataset, SuntimesMoonData>> data = new HashMap<>();
 
     @Override
     public int getItemCount() {
@@ -113,19 +111,26 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
     public void initData(Context context, SuntimesRiseSetDataset sunSeed, SuntimesMoonData moonSeed)
     {
+        data.clear();
         initOptions(context, sunSeed, moonSeed);
-
-        sunData.clear();
-        moonData.clear();
-
-        initData(context, TODAY_POSITION + 1);
-        initData(context, TODAY_POSITION);
         initData(context, TODAY_POSITION - 1);
-
+        initData(context, TODAY_POSITION);
+        initData(context, TODAY_POSITION + 1);
+        initData(context, TODAY_POSITION + 2);
         notifyDataSetChanged();
     }
 
-    protected void initData(Context context, int position)
+    protected Pair<SuntimesRiseSetDataset, SuntimesMoonData> initData(Context context, int position)
+    {
+        Pair<SuntimesRiseSetDataset, SuntimesMoonData> dataPair = data.get(position);
+        if (dataPair == null) {
+            data.put(position, dataPair = createData(context, position));   // data is removed in onViewRecycled
+            Log.d("DEBUG", "add data " + position);
+        }
+        return dataPair;
+    }
+
+    protected Pair<SuntimesRiseSetDataset, SuntimesMoonData> createData(Context context, int position)
     {
         Calendar date = Calendar.getInstance(timezone);
         if (dateMode != WidgetSettings.DateMode.CURRENT_DATE) {
@@ -136,12 +141,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         SuntimesRiseSetDataset sun = new SuntimesRiseSetDataset(context);
         sun.setTodayIs(date);
         sun.calculateData();
-        sunData.put(position, sun);
 
         SuntimesMoonData moon = new SuntimesMoonData(context, 0, "moon");
         moon.setTodayIs(date);
         moon.calculate();
-        moonData.put(position, moon);
+
+        return new Pair<>(sun, moon);
     }
 
     public void initOptions(Context context, SuntimesRiseSetDataset sunSeed, SuntimesMoonData moonSeed)
@@ -171,8 +176,15 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
      * @param holder
      */
     @Override
-    public void onViewRecycled(CardViewHolder holder) {
+    public void onViewRecycled(CardViewHolder holder)
+    {
         detachClickListeners(holder);
+        if (holder.position >= 0 && (holder.position < TODAY_POSITION - 1 || holder.position > TODAY_POSITION + 2))
+        {
+            data.remove(holder.position);
+            Log.d("DEBUG", "remove data " + holder.position);
+        } else
+        holder.position = RecyclerView.NO_POSITION;
     }
 
     /**
@@ -206,15 +218,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             Log.w("CardAdapter", "onBindViewHolder: null view holder!");
             return;
         }
+        holder.position = position;
 
-        SuntimesRiseSetDataset sun = sunData.get(position);
-        SuntimesMoonData moon = moonData.get(position);
-        if (sun == null || moon == null)
-        {
-            initData(context, position);
-            sun = sunData.get(position);
-            moon = moonData.get(position);
-        }
+        Pair<SuntimesRiseSetDataset, SuntimesMoonData> dataPair = initData(context, position);
+        SuntimesRiseSetDataset sun = dataPair.first;
+        SuntimesMoonData moon = dataPair.second;
 
         if (themeOverride != null) {
             themeCardViews(context, themeOverride, holder);
@@ -226,8 +234,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         holder.row_nautical.setVisible(showNautical);
         holder.row_astro.setVisible(showAstro);
         holder.row_solarnoon.setVisible(showNoon);
-
-
         holder.row_blue8.setVisible(showBlue);
         holder.row_blue4.setVisible(showBlue);
         holder.row_gold.setVisible(showGold);
@@ -437,7 +443,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
      * @param event SolarEvents enum
      * @return the event's card position if event was found and highlighted, -1 otherwise
      */
-    public int highlightField(SolarEvents event)
+    public int highlightField(Context context, SolarEvents event)
     {
         highlightEvent = null;
         highlightPosition = -1;
@@ -445,8 +451,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         Calendar[] eventCalendars;
         int position = TODAY_POSITION;
         do {
-            SuntimesMoonData moon = moonData.get(position);
-            SuntimesRiseSetDataset sun = sunData.get(position);
+            Pair<SuntimesRiseSetDataset, SuntimesMoonData> dataPair = initData(context, position);
+            SuntimesRiseSetDataset sun = dataPair.first;
+            SuntimesMoonData moon = dataPair.second;
             Calendar now = sun.now();
 
             boolean found;

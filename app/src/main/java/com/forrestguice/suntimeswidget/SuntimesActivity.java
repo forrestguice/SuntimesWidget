@@ -1027,7 +1027,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         card_view = (RecyclerView) findViewById(R.id.info_time_flipper1);
         card_view.setHasFixedSize(true);
-        card_view.setItemViewCacheSize(14);
+        card_view.setItemViewCacheSize(7);
         card_view.setLayoutManager(card_layout = new CardLayoutManager(this));
         card_view.addItemDecoration(new CardAdapter.CardViewDecorator(this));
 
@@ -2046,7 +2046,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     public void highlightTimeField1(SolarEvents event)
     {
-        int cardPosition = card_adapter.highlightField(event);
+        int cardPosition = card_adapter.highlightField(this, event);
         if (!userSwappedCard && cardPosition != -1) {
             scrollTo(cardPosition);
         }
