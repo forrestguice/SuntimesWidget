@@ -25,6 +25,7 @@ import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,17 +57,30 @@ public enum SolarEvents
     EVENING_BLUE8("blue hour", "evening blue hour", R.attr.sunsetIconLarge, 0, false),                                 // 12
     EVENING_NAUTICAL("nautical twilight", "evening nautical twilight", R.attr.sunsetIconLarge, 0, false),              // 13
     EVENING_ASTRONOMICAL("astronomical twilight", "evening astronomical twilight", R.attr.sunsetIconLarge, 0, false),  // 14
-    MOONRISE("moonrise", "moonrise", R.attr.moonriseIcon, 1, true),                                               // 15
-    MOONSET("moonset", "mooonset", R.attr.moonsetIcon, 1, false);                                                 // 16
-                                                                                                        // .. R.array.solarevents_short/_long req same length/order
+
+    MOONRISE("moonrise", "moonrise", R.attr.moonriseIcon, 1, true),                                                 // 15
+    MOONSET("moonset", "mooonset", R.attr.moonsetIcon, 1, false),                                                   // 16
+
+    NEWMOON("new moon", "new moon", R.attr.moonPhaseIcon0, 2, true),                                             // 17
+    FIRSTQUARTER("first quarter", "first quarter", R.attr.moonPhaseIcon1, 2, true),                              // 18
+    FULLMOON("full moon", "full moon", R.attr.moonPhaseIcon2, 2, false),                                         // 19
+    THIRDQUARTER("third quarter", "third quarter", R.attr.moonPhaseIcon3, 2, false),                             // 20
+
+    EQUINOX_SPRING("equinox", "spring equinox", R.attr.springColor, 3, true),                                         // 21
+    SOLSTICE_SUMMER("solstice", "summer solstice", R.attr.summerColor, 3, false),                                     // 22
+    EQUINOX_AUTUMNAL("equinox", "autumnal equinox", R.attr.fallColor, 3, false),                                      // 23
+    SOLSTICE_WINTER("solstice", "winter solstice", R.attr.winterColor, 3, true)                                       // 24
+    ;                                                                                                    // .. R.array.solarevents_short/_long req same length/order
 
     private int iconResource;
     private String shortDisplayString, longDisplayString;
     public int type;
     public boolean rising;
 
-    public static final int TYPE_SUN = 0;
-    public static final int TYPE_MOON = 1;
+    public static final int TYPE_SUN = 0;         // sunrise, sunset, twilight (converted using toTimeMode)
+    public static final int TYPE_MOON = 1;        // moonrise, moonset
+    public static final int TYPE_MOONPHASE = 2;   // major phases (converted using toMoonPhase)
+    public static final int TYPE_SEASON = 3;      // solstices & equinoxes (converted using toSolsticeEquinoxMode)
 
     private SolarEvents(String shortDisplayString, String longDisplayString, int iconResource, int type, boolean rising)
     {
@@ -165,18 +180,44 @@ public enum SolarEvents
     {
         private final Context context;
         private final ArrayList<SolarEvents> choices;
-        private int resID_noonIcon;
 
         public SolarEventsAdapter(Context context, ArrayList<SolarEvents> choices)
         {
             super(context, R.layout.layout_listitem_solarevent, choices);
             this.context = context;
             this.choices = choices;
+        }
 
-            int[] iconAttr = { R.attr.sunnoonIcon };
-            TypedArray typedArray = context.obtainStyledAttributes(iconAttr);
-            resID_noonIcon = typedArray.getResourceId(0, R.drawable.ic_noon_large);
-            typedArray.recycle();
+        static int[] getIconDimen(Resources resources, SolarEvents event)
+        {
+            int width, height;
+            switch (event)
+            {
+                case NEWMOON:
+                case FULLMOON:
+                case NOON:
+                    width = height = (int)resources.getDimension(R.dimen.sunIconLarge_width);
+                    break;
+
+                case FIRSTQUARTER:
+                case THIRDQUARTER:
+                    height = (int)resources.getDimension(R.dimen.sunIconLarge_width);
+                    width = height / 2;
+                    break;
+
+                case EQUINOX_SPRING:
+                case SOLSTICE_SUMMER:
+                case EQUINOX_AUTUMNAL:
+                case SOLSTICE_WINTER:
+                    width = height = (int)resources.getDimension(R.dimen.sunIconLarge_width) / 2;
+                    break;
+
+                default:
+                    width = (int)resources.getDimension(R.dimen.sunIconLarge_width);
+                    height = (int)resources.getDimension(R.dimen.sunIconLarge_height);
+                    break;
+            }
+            return new int[] {width, height};
         }
 
         @Override
@@ -208,28 +249,32 @@ public enum SolarEvents
             typedArray.recycle();
 
             ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
-            adjustIcon(iconResource, icon);
+            SolarEvents event = choices.get(position);
+            adjustIcon(iconResource, icon, event);
 
             TextView text = (TextView) view.findViewById(android.R.id.text1);
-            text.setText(choices.get(position).getLongDisplayString());
+            text.setText(event.getLongDisplayString());
 
             return view;
         }
 
-        private void adjustIcon(int iconResource, ImageView icon)
+        private void adjustIcon(int iconResource, ImageView icon, SolarEvents event)
         {
             Resources resources = icon.getContext().getResources();
-            int iconWidth = (int)resources.getDimension(R.dimen.sunIconLarge_width);
-            int iconHeight = (int)resources.getDimension(R.dimen.sunIconLarge_height);
-            if (iconResource == resID_noonIcon)
-            {
-                //noinspection SuspiciousNameCombination
-                iconHeight = iconWidth;
-            }
+            int defWidth = (int)resources.getDimension(R.dimen.sunIconLarge_width);
+            int[] dimen = getIconDimen(resources, event);
 
             ViewGroup.LayoutParams iconParams = icon.getLayoutParams();
-            iconParams.width = iconWidth;
-            iconParams.height = iconHeight;
+            iconParams.width = dimen[0];
+            iconParams.height = dimen[1];
+
+            if (iconParams instanceof ViewGroup.MarginLayoutParams)
+            {
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) iconParams;
+                float vertMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, resources.getDisplayMetrics());
+                float horizMargin = (vertMargin + (defWidth - dimen[0])) / 2f;
+                params.setMargins((int)horizMargin, (int)vertMargin, (int)horizMargin, (int)vertMargin);
+            }
 
             icon.setImageDrawable(null);
             icon.setBackgroundResource(iconResource);
@@ -280,6 +325,16 @@ public enum SolarEvents
         return toTimeMode(this);
     }
 
+    public SuntimesCalculator.MoonPhase toMoonPhase()
+    {
+        return toMoonPhase(this);
+    }
+
+    public WidgetSettings.SolsticeEquinoxMode toSolsticeEquinoxMode()
+    {
+        return toSolsticeEquinoxMode(this);
+    }
+
     /**
      * toTimeMode
      * @param event SolarEvents enum
@@ -311,6 +366,40 @@ public enum SolarEvents
 
             case SUNSET:
             case SUNRISE: return WidgetSettings.TimeMode.OFFICIAL;
+        }
+        return null;
+    }
+
+    /**
+     * toMoonPhaseMode
+     * @param event SolarEvents enum
+     * @return a MoonPhaseMode (or null if not applicable)
+     */
+    public static SuntimesCalculator.MoonPhase toMoonPhase(SolarEvents event)
+    {
+        switch (event)
+        {
+            case NEWMOON: return SuntimesCalculator.MoonPhase.NEW;
+            case FIRSTQUARTER: return SuntimesCalculator.MoonPhase.FIRST_QUARTER;
+            case FULLMOON: return SuntimesCalculator.MoonPhase.FULL;
+            case THIRDQUARTER: return SuntimesCalculator.MoonPhase.THIRD_QUARTER;
+        }
+        return null;
+    }
+
+    /**
+     * toSolsticeEquinoxMode
+     * @param event SolarEvents enum
+     * @return a SolsticeEquinoxMode (or null if not applicable)
+     */
+    public static WidgetSettings.SolsticeEquinoxMode toSolsticeEquinoxMode(SolarEvents event)
+    {
+        switch (event)
+        {
+            case EQUINOX_SPRING: return WidgetSettings.SolsticeEquinoxMode.EQUINOX_SPRING;
+            case SOLSTICE_SUMMER: return WidgetSettings.SolsticeEquinoxMode.SOLSTICE_SUMMER;
+            case EQUINOX_AUTUMNAL: return WidgetSettings.SolsticeEquinoxMode.EQUINOX_AUTUMNAL;
+            case SOLSTICE_WINTER: return WidgetSettings.SolsticeEquinoxMode.SOLSTICE_WINTER;
         }
         return null;
     }

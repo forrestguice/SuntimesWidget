@@ -830,8 +830,8 @@ public class CalculatorProvider extends ContentProvider
                             row[i] = year.get(Calendar.YEAR);
                             break;
 
-                        case COLUMN_SEASON_VERNAL:
-                            row[i] = calculator.getVernalEquinoxForYear(year).getTimeInMillis();
+                        case COLUMN_SEASON_VERNAL:  // TODO: SPRING
+                            row[i] = calculator.getSpringEquinoxForYear(year).getTimeInMillis();
                             break;
 
                         case COLUMN_SEASON_SUMMER:

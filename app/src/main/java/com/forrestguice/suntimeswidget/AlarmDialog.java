@@ -51,6 +51,7 @@ import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
+import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
@@ -103,15 +104,16 @@ public class AlarmDialog extends DialogFragment
      */
     private SuntimesRiseSetDataset dataset;
     private SuntimesMoonData moondata;
+    private SuntimesEquinoxSolsticeDataset equinoxdata;
     public SuntimesRiseSetDataset getData() { return dataset; }
-    public SuntimesMoonData getMoonData()
-    {
-        return moondata;
-    }
-    public void setData(Context context, SuntimesRiseSetDataset dataset, SuntimesMoonData moondata)
+    public SuntimesMoonData getMoonData() { return moondata; }
+    public SuntimesEquinoxSolsticeDataset getEquinoxData() { return equinoxdata; }
+
+    public void setData(Context context, SuntimesRiseSetDataset dataset, SuntimesMoonData moondata, SuntimesEquinoxSolsticeDataset equinoxdata)
     {
         this.dataset = dataset;
         this.moondata = moondata;
+        this.equinoxdata = equinoxdata;
         updateAdapter(context);
         setChoice(choice);
     }
@@ -137,6 +139,19 @@ public class AlarmDialog extends DialogFragment
             {
                 adapter.remove(SolarEvents.MOONRISE);
                 adapter.remove(SolarEvents.MOONSET);
+                adapter.remove(SolarEvents.NEWMOON);
+                adapter.remove(SolarEvents.FIRSTQUARTER);
+                adapter.remove(SolarEvents.FULLMOON);
+                adapter.remove(SolarEvents.THIRDQUARTER);
+            }
+
+            boolean supportsSolstice = dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_SOLSTICE);
+            if (!supportsSolstice)
+            {
+                adapter.remove(SolarEvents.EQUINOX_SPRING);
+                adapter.remove(SolarEvents.SOLSTICE_SUMMER);
+                adapter.remove(SolarEvents.EQUINOX_AUTUMNAL);
+                adapter.remove(SolarEvents.SOLSTICE_WINTER);
             }
         }
 
@@ -459,6 +474,46 @@ public class AlarmDialog extends DialogFragment
         Calendar calendar = null;
         switch (choice)
         {
+            case EQUINOX_SPRING:
+                if (equinoxdata != null) {
+                    calendar = equinoxdata.dataEquinoxSpring.eventCalendarThisYear();
+                    if (calendar == null || time.after(calendar.getTime())) {
+                        calendar = equinoxdata.dataEquinoxSpring.eventCalendarOtherYear();
+                    }
+                }
+                break;
+            case SOLSTICE_SUMMER:
+                if (equinoxdata != null) {
+                    calendar = equinoxdata.dataSolsticeSummer.eventCalendarThisYear();
+                    if (calendar == null || time.after(calendar.getTime())) {
+                        calendar = equinoxdata.dataSolsticeSummer.eventCalendarOtherYear();
+                    }
+                }
+                break;
+            case EQUINOX_AUTUMNAL:
+                if (equinoxdata != null) {
+                    calendar = equinoxdata.dataEquinoxAutumnal.eventCalendarThisYear();
+                    if (calendar == null || time.after(calendar.getTime())) {
+                        calendar = equinoxdata.dataEquinoxAutumnal.eventCalendarOtherYear();
+                    }
+                }
+                break;
+            case SOLSTICE_WINTER:
+                if (equinoxdata != null) {
+                    calendar = equinoxdata.dataSolsticeWinter.eventCalendarThisYear();
+                    if (calendar == null || time.after(calendar.getTime())) {
+                        calendar = equinoxdata.dataSolsticeWinter.eventCalendarOtherYear();
+                    }
+                }
+                break;
+            case NEWMOON:
+            case FIRSTQUARTER:
+            case FULLMOON:
+            case THIRDQUARTER:
+                if (moondata != null) {
+                    calendar = moondata.moonPhaseCalendar(choice.toMoonPhase());
+                }
+                break;
             case MOONRISE:
                 if (moondata != null) {
                     calendar = moondata.moonriseCalendarToday();

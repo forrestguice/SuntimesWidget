@@ -795,7 +795,7 @@ public class SuntimesTheme
                 return getFallColor();
             case SOLSTICE_SUMMER:
                 return getSummerColor();
-            case EQUINOX_VERNAL:
+            case EQUINOX_SPRING:
             default:
                 return getSpringColor();
         }

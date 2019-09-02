@@ -73,6 +73,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
+import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -841,15 +842,18 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         SuntimesRiseSetDataset sunData = new SuntimesRiseSetDataset(this, 0);
         SuntimesMoonData moonData = new SuntimesMoonData(this, 0);
+        SuntimesEquinoxSolsticeDataset equinoxData = new SuntimesEquinoxSolsticeDataset(this, 0);
 
         if (forLocation != null) {
             sunData.setLocation(forLocation);
             moonData.setLocation(forLocation);
+            equinoxData.setLocation(forLocation);
         }
 
         sunData.calculateData();
         moonData.calculate();
-        dialog.setData(this, sunData, moonData);
+        equinoxData.calculateData();
+        dialog.setData(this, sunData, moonData, equinoxData);
     }
 
     /**
@@ -958,7 +962,9 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         if (Build.VERSION.SDK_INT >= 11)
         {
+            int eventType = item.event != null ? item.event.getType() : -1;
             AlarmOffsetDialog offsetDialog = new AlarmOffsetDialog();
+            offsetDialog.setShowDays(eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON);
             offsetDialog.setOffset(item.offset);
             offsetDialog.setOnAcceptedListener(onOffsetChanged);
             t_selectedItem = item.rowID;

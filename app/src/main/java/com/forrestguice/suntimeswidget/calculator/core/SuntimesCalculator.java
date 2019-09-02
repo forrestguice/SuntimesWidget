@@ -157,28 +157,38 @@ public interface SuntimesCalculator
 
     /**
      * @param date a Calendar representing a given date
-     * @return a Calendar for vernal equinox for the year of the given date
+     * @return a Calendar for spring equinox (adjusted to hemisphere) for the year of the given date
      * @since 1.2.0 (FEATURE_SOLSTICE)
+     * @deprecated since 1.5.1 (use getSpringEquinoxForYear instead).
      */
+    @Deprecated
     Calendar getVernalEquinoxForYear( Calendar date );
 
     /**
      * @param date a Calendar representing a given date
-     * @return a Calendar for summer solstice for the year of the given date
+     * @return a Calendar for spring equinox (adjusted to hemisphere) for the year of the given date
+     * @since 1.5.1
+     */
+    Calendar getSpringEquinoxForYear( Calendar date );
+
+
+    /**
+     * @param date a Calendar representing a given date
+     * @return a Calendar for summer solstice (adjusted to hemisphere) for the year of the given date
      * @since 1.2.0 (FEATURE_SOLSTICE)
      */
     Calendar getSummerSolsticeForYear( Calendar date );
 
     /**
      * @param date a Calendar representing a given date
-     * @return a Calendar for autumnal equinox for the year of the given date
+     * @return a Calendar for autumnal equinox (adjusted to hemisphere) for the year of the given date
      * @since 1.2.0 (FEATURE_SOLSTICE)
      */
     Calendar getAutumnalEquinoxForYear( Calendar date );
 
     /**
      * @param date a Calendar representing a given date
-     * @return a Calendar for winter soltice for the year of the given date
+     * @return a Calendar for winter soltice (adjusted to hemisphere) for the year of the given date
      * @since 1.2.0 (FEATURE_SOLSTICE)
      */
     Calendar getWinterSolsticeForYear( Calendar date );

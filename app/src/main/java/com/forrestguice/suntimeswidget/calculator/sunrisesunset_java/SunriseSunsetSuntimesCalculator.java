@@ -158,6 +158,12 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     }
 
     @Override
+    public Calendar getSpringEquinoxForYear(Calendar date)
+    {
+        return null;
+    }
+
+    @Override
     public Calendar getSummerSolsticeForYear(Calendar date)
     {
         return null;

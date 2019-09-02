@@ -19,7 +19,6 @@ package com.forrestguice.suntimeswidget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -400,21 +399,21 @@ public class EquinoxView extends LinearLayout
 
         if (data.isCalculated() && data.isImplemented())
         {
-            SuntimesUtils.TimeDisplayText thisYear = utils.calendarDateYearDisplayString(context, data.dataEquinoxVernal.eventCalendarThisYear());
+            SuntimesUtils.TimeDisplayText thisYear = utils.calendarDateYearDisplayString(context, data.dataEquinoxSpring.eventCalendarThisYear());
             titleThisYear.setText(thisYear.toString());
 
-            SuntimesUtils.TimeDisplayText nextYear = utils.calendarDateYearDisplayString(context, data.dataEquinoxVernal.eventCalendarOtherYear());
+            SuntimesUtils.TimeDisplayText nextYear = utils.calendarDateYearDisplayString(context, data.dataEquinoxSpring.eventCalendarOtherYear());
             titleNextYear.setText(nextYear.toString());
 
             boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
             boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
 
-            note_equinox_vernal.updateDate(context, data.dataEquinoxVernal.eventCalendarThisYear(), showTime, showSeconds);
+            note_equinox_vernal.updateDate(context, data.dataEquinoxSpring.eventCalendarThisYear(), showTime, showSeconds);
             note_equinox_autumnal.updateDate(context, data.dataEquinoxAutumnal.eventCalendarThisYear(), showTime, showSeconds);
             note_solstice_summer.updateDate(context, data.dataSolsticeSummer.eventCalendarThisYear(), showTime, showSeconds);
             note_solstice_winter.updateDate(context, data.dataSolsticeWinter.eventCalendarThisYear(), showTime, showSeconds);
 
-            note_equinox_vernal2.updateDate(context, data.dataEquinoxVernal.eventCalendarOtherYear(), showTime, showSeconds);
+            note_equinox_vernal2.updateDate(context, data.dataEquinoxSpring.eventCalendarOtherYear(), showTime, showSeconds);
             note_equinox_autumnal2.updateDate(context, data.dataEquinoxAutumnal.eventCalendarOtherYear(), showTime, showSeconds);
             note_solstice_summer2.updateDate(context, data.dataSolsticeSummer.eventCalendarOtherYear(), showTime, showSeconds);
             note_solstice_winter2.updateDate(context, data.dataSolsticeWinter.eventCalendarOtherYear(), showTime, showSeconds);
