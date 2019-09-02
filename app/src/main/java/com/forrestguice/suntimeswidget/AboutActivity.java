@@ -47,6 +47,8 @@ import java.util.Comparator;
 
 public class AboutActivity extends AppCompatActivity
 {
+    public static final String EXTRA_ICONID = "iconResourceID";
+
     private AboutPagerAdapter pagerAdapter;
     private ViewPager viewPager;
     private AppSettings.LocaleInfo localeInfo;
@@ -68,11 +70,17 @@ public class AboutActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        int icon = R.drawable.ic_action_suntimes;
+        Intent intent = getIntent();
+        if (intent != null) {
+            icon = intent.getIntExtra(EXTRA_ICONID, icon);
+        }
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_action_suntimes);
+            actionBar.setHomeAsUpIndicator(icon);
         }
 
         pagerAdapter = new AboutPagerAdapter(getSupportFragmentManager());
