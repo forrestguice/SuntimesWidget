@@ -524,6 +524,10 @@ public class WidgetSettings
             hash = hash * 37 + (Integer.valueOf(day).hashCode());
             return hash;
         }
+
+        public DateInfo diff(DateInfo other) {
+            return new DateInfo(getYear() - other.getYear(), getMonth() - other.getMonth(), getDay() - other.getDay() );
+        }
     }
 
     /**

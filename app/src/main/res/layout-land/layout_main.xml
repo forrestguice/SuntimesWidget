@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -121,31 +121,13 @@
 
             </android.support.constraint.ConstraintLayout>
 
-            <ViewFlipper
-                android:id="@+id/info_time_flipper"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/info_time_flipper1"
                 android:layout_width="fill_parent" android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-                android:elevation="5dp"
-                tools:ignore="UnusedAttribute">
-
-                <!-- Times for Today -->
-                <RelativeLayout android:id="@+id/info_time_all_today"
-                                style="@style/SunsetTimeCard"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                    <include layout="@layout/info_time_card"/>
-                </RelativeLayout>
-
-                <!-- Times for Tomorrow -->
-                <RelativeLayout android:id="@+id/info_time_all_tomorrow"
-                                style="@style/SunsetTimeCard"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                    <include layout="@layout/info_time_card"/>
-                </RelativeLayout>
-
-            </ViewFlipper>
+                style="@style/SunsetTimeCard"
+                android:elevation="5dp" />  <!-- TODO: margins -->
 
         </LinearLayout>
 

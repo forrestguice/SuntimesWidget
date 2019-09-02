@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.calculator;
 import android.content.Context;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.settings.SolarEvents;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -171,6 +172,17 @@ public class SuntimesMoonData extends SuntimesData
         midnight.add(Calendar.DAY_OF_MONTH, 1);
         return new Calendar[] { moonriseCalendarYesterday(), moonriseCalendarToday(), moonriseCalendarTomorrow(),
                                 moonsetCalendarYesterday(), moonsetCalendarToday(), moonsetCalendarTomorrow(), midnight };
+    }
+
+    public Calendar[] getRiseSetEvents(SolarEvents event)
+    {
+        switch (event) {
+            case MOONRISE:
+                return new Calendar[] { moonriseCalendarYesterday(), moonriseCalendarToday(), moonriseCalendarTomorrow() };
+            case MOONSET:
+                return new Calendar[] { moonsetCalendarYesterday(), moonsetCalendarToday(), moonsetCalendarTomorrow() };
+        }
+        return null;
     }
 
     /**
