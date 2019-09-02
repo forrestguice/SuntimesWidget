@@ -24,6 +24,7 @@ import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.util.AttributeSet;
@@ -42,11 +43,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -64,13 +67,15 @@ public class EquinoxView extends LinearLayout
     private TextView empty;
     private ViewFlipper flipper;           // flip between thisYear, nextYear
     private Animation anim_card_outNext, anim_card_inNext, anim_card_outPrev, anim_card_inPrev;
-    private ImageButton btn_flipperNext_thisYear, btn_flipperPrev_thisYear;
+
+    private EquinoxViewHolder holder_thisYear, holder_nextYear;
+    /**private ImageButton btn_flipperNext_thisYear, btn_flipperPrev_thisYear;
     private ImageButton btn_flipperNext_nextYear, btn_flipperPrev_nextYear;
 
     private TextView titleThisYear, titleNextYear;
 
     private EquinoxNote note_equinox_vernal, note_solstice_summer, note_equinox_autumnal, note_solstice_winter;  // this year
-    private EquinoxNote note_equinox_vernal2, note_solstice_summer2, note_equinox_autumnal2, note_solstice_winter2;  // and next year
+    private EquinoxNote note_equinox_vernal2, note_solstice_summer2, note_equinox_autumnal2, note_solstice_winter2;  // and next year*/
     private ArrayList<EquinoxNote> notes;
 
     public EquinoxView(Context context)
@@ -118,83 +123,20 @@ public class EquinoxView extends LinearLayout
         RelativeLayout thisYear = (RelativeLayout)findViewById(R.id.info_equinoxsolstice_thisyear);
         if (thisYear != null)
         {
-            btn_flipperNext_thisYear = (ImageButton)thisYear.findViewById(R.id.info_time_nextbtn);
-            btn_flipperNext_thisYear.setOnClickListener(onNextCardClick);
-
-            btn_flipperPrev_thisYear = (ImageButton)thisYear.findViewById(R.id.info_time_prevbtn);
-            btn_flipperPrev_thisYear.setVisibility(View.GONE);
-
-            titleThisYear = (TextView) thisYear.findViewById(R.id.text_title);
-
-            TextView txt_equinox_vernal_label = (TextView) thisYear.findViewById(R.id.text_date_equinox_vernal_label);
-            TextView txt_equinox_vernal = (TextView) thisYear.findViewById(R.id.text_date_equinox_vernal);
-            TextView txt_equinox_vernal_note = (TextView) thisYear.findViewById(R.id.text_date_equinox_vernal_note);
-            note_equinox_vernal = addNote(txt_equinox_vernal_label, txt_equinox_vernal, txt_equinox_vernal_note, 0, options.seasonColors[0]);
-
-            TextView txt_solstice_summer_label = (TextView) thisYear.findViewById(R.id.text_date_solstice_summer_label);
-            TextView txt_solstice_summer = (TextView) thisYear.findViewById(R.id.text_date_solstice_summer);
-            TextView txt_solstice_summer_note = (TextView) thisYear.findViewById(R.id.text_date_solstice_summer_note);
-            note_solstice_summer = addNote(txt_solstice_summer_label, txt_solstice_summer, txt_solstice_summer_note, 0, options.seasonColors[1]);
-
-            TextView txt_equinox_autumnal_label = (TextView) thisYear.findViewById(R.id.text_date_equinox_autumnal_label);
-            TextView txt_equinox_autumnal = (TextView) thisYear.findViewById(R.id.text_date_equinox_autumnal);
-            TextView txt_equinox_autumnal_note = (TextView) thisYear.findViewById(R.id.text_date_equinox_autumnal_note);
-            note_equinox_autumnal = addNote(txt_equinox_autumnal_label, txt_equinox_autumnal, txt_equinox_autumnal_note, 0, options.seasonColors[2]);
-
-            TextView txt_solstice_winter_label = (TextView) thisYear.findViewById(R.id.text_date_solstice_winter_label);
-            TextView txt_solstice_winter = (TextView) thisYear.findViewById(R.id.text_date_solstice_winter);
-            TextView txt_solstice_winter_note = (TextView) thisYear.findViewById(R.id.text_date_solstice_winter_note);
-            note_solstice_winter = addNote(txt_solstice_winter_label, txt_solstice_winter, txt_solstice_winter_note, 0, options.seasonColors[3]);
-
-            if (options.centered)
-            {
-                FrameLayout.LayoutParams lpThisYear = (FrameLayout.LayoutParams)thisYear.getLayoutParams();
-                lpThisYear.gravity = Gravity.CENTER_HORIZONTAL;
-                thisYear.setLayoutParams(lpThisYear);
-            }
+            EquinoxViewHolder holder = holder_thisYear = new EquinoxViewHolder(thisYear, options);
+            holder.btn_flipperNext.setOnClickListener(onNextCardClick);
+            holder.btn_flipperPrev.setVisibility(View.GONE);
         }
 
         RelativeLayout nextYear = (RelativeLayout)findViewById(R.id.info_equinoxsolstice_nextyear);
         if (nextYear != null)
         {
-            btn_flipperNext_nextYear = (ImageButton)nextYear.findViewById(R.id.info_time_nextbtn);
-            btn_flipperNext_nextYear.setVisibility(View.GONE);
-
-            btn_flipperPrev_nextYear = (ImageButton)nextYear.findViewById(R.id.info_time_prevbtn);
-            btn_flipperPrev_nextYear.setOnClickListener(onPrevCardClick);
-
-            titleNextYear = (TextView) nextYear.findViewById(R.id.text_title);
-
-            TextView txt_equinox_vernal2_label = (TextView) nextYear.findViewById(R.id.text_date_equinox_vernal_label);
-            TextView txt_equinox_vernal2 = (TextView) nextYear.findViewById(R.id.text_date_equinox_vernal);
-            TextView txt_equinox_vernal2_note = (TextView) nextYear.findViewById(R.id.text_date_equinox_vernal_note);
-            note_equinox_vernal2 = addNote(txt_equinox_vernal2_label, txt_equinox_vernal2, txt_equinox_vernal2_note, 1, options.seasonColors[0]);
-
-            TextView txt_solstice_summer2_label = (TextView) nextYear.findViewById(R.id.text_date_solstice_summer_label);
-            TextView txt_solstice_summer2 = (TextView) nextYear.findViewById(R.id.text_date_solstice_summer);
-            TextView txt_solstice_summer2_note = (TextView) nextYear.findViewById(R.id.text_date_solstice_summer_note);
-            note_solstice_summer2 = addNote(txt_solstice_summer2_label, txt_solstice_summer2, txt_solstice_summer2_note, 1, options.seasonColors[1]);
-
-            TextView txt_equinox_autumnal2_label = (TextView) nextYear.findViewById(R.id.text_date_equinox_autumnal_label);
-            TextView txt_equinox_autumnal2 = (TextView) nextYear.findViewById(R.id.text_date_equinox_autumnal);
-            TextView txt_equinox_autumnal2_note = (TextView) nextYear.findViewById(R.id.text_date_equinox_autumnal_note);
-            note_equinox_autumnal2 = addNote(txt_equinox_autumnal2_label, txt_equinox_autumnal2, txt_equinox_autumnal2_note, 1, options.seasonColors[2]);
-
-            TextView txt_solstice_winter2_label = (TextView) nextYear.findViewById(R.id.text_date_solstice_winter_label);
-            TextView txt_solstice_winter2 = (TextView) nextYear.findViewById(R.id.text_date_solstice_winter);
-            TextView txt_solstice_winter2_note = (TextView) nextYear.findViewById(R.id.text_date_solstice_winter_note);
-            note_solstice_winter2 = addNote(txt_solstice_winter2_label, txt_solstice_winter2, txt_solstice_winter2_note, 1, options.seasonColors[3]);
-
-            if (options.centered)
-            {
-                FrameLayout.LayoutParams lpNextYear = (FrameLayout.LayoutParams)nextYear.getLayoutParams();
-                lpNextYear.gravity = Gravity.CENTER_HORIZONTAL;
-                nextYear.setLayoutParams(lpNextYear);
-            }
+            EquinoxViewHolder holder = holder_nextYear = new EquinoxViewHolder(nextYear, options);
+            holder.btn_flipperPrev.setOnClickListener(onPrevCardClick);
+            holder.btn_flipperNext.setVisibility(View.GONE);
         }
 
-        if (isInEditMode())
-        {
+        if (isInEditMode()) {
             updateViews(context, null);
         }
     }
@@ -211,25 +153,8 @@ public class EquinoxView extends LinearLayout
         if (theme != null)
         {
             options.init(theme);
-
-            if (note_equinox_vernal != null)
-            {
-                int titleColor = theme.getTitleColor();
-                titleThisYear.setTextColor(SuntimesUtils.colorStateList(titleColor, options.disabledColor, options.pressedColor));
-                titleNextYear.setTextColor(SuntimesUtils.colorStateList(titleColor, options.disabledColor, options.pressedColor));
-
-                note_equinox_vernal.themeViews(options.labelColor, options.seasonColors[0], options.textColor);
-                note_equinox_vernal2.themeViews(options.labelColor, options.seasonColors[0], options.textColor);
-
-                note_solstice_summer.themeViews(options.labelColor, options.seasonColors[1], options.textColor);
-                note_solstice_summer2.themeViews(options.labelColor, options.seasonColors[1], options.textColor);
-
-                note_equinox_autumnal.themeViews(options.labelColor, options.seasonColors[2], options.textColor);
-                note_equinox_autumnal2.themeViews(options.labelColor, options.seasonColors[2], options.textColor);
-
-                note_solstice_winter.themeViews(options.labelColor, options.seasonColors[3], options.textColor);
-                note_solstice_winter2.themeViews(options.labelColor, options.seasonColors[3], options.textColor);
-            }
+            holder_thisYear.themeViews(theme, options);
+            holder_nextYear.themeViews(theme, options);
         }
     }
 
@@ -311,23 +236,23 @@ public class EquinoxView extends LinearLayout
     {
         if (show)
         {
-            btn_flipperNext_thisYear.setVisibility(View.VISIBLE);
-            btn_flipperPrev_thisYear.setVisibility(View.GONE);
-            btn_flipperNext_nextYear.setVisibility(View.GONE);
-            btn_flipperPrev_nextYear.setVisibility(View.VISIBLE);
+            holder_thisYear.btn_flipperNext.setVisibility(View.VISIBLE);
+            holder_thisYear.btn_flipperPrev.setVisibility(View.GONE);
+            holder_nextYear.btn_flipperNext.setVisibility(View.GONE);
+            holder_nextYear.btn_flipperPrev.setVisibility(View.VISIBLE);
 
         } else {
-            btn_flipperNext_thisYear.setVisibility(View.GONE);
-            btn_flipperPrev_thisYear.setVisibility(View.GONE);
-            btn_flipperNext_nextYear.setVisibility(View.GONE);
-            btn_flipperPrev_nextYear.setVisibility(View.GONE);
+            holder_thisYear.btn_flipperNext.setVisibility(View.GONE);
+            holder_thisYear.btn_flipperPrev.setVisibility(View.GONE);
+            holder_nextYear.btn_flipperNext.setVisibility(View.GONE);
+            holder_nextYear.btn_flipperPrev.setVisibility(View.GONE);
         }
     }
 
     private void showTitle( boolean show )
     {
-        titleThisYear.setVisibility(show ? View.VISIBLE : View.GONE);
-        titleNextYear.setVisibility(show ? View.VISIBLE : View.GONE);
+        holder_thisYear.title.setVisibility(show ? View.VISIBLE : View.GONE);
+        holder_nextYear.title.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     private void showEmptyView( boolean show )
@@ -374,23 +299,23 @@ public class EquinoxView extends LinearLayout
         if (data.isCalculated() && data.isImplemented())
         {
             SuntimesUtils.TimeDisplayText thisYear = utils.calendarDateYearDisplayString(context, data.dataEquinoxVernal.eventCalendarThisYear());
-            titleThisYear.setText(thisYear.toString());
+            holder_thisYear.title.setText(thisYear.toString());
 
             SuntimesUtils.TimeDisplayText nextYear = utils.calendarDateYearDisplayString(context, data.dataEquinoxVernal.eventCalendarOtherYear());
-            titleNextYear.setText(nextYear.toString());
+            holder_nextYear.title.setText(nextYear.toString());
 
             boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
             boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
 
-            note_equinox_vernal.updateDate(context, data.dataEquinoxVernal.eventCalendarThisYear(), showTime, showSeconds);
-            note_equinox_autumnal.updateDate(context, data.dataEquinoxAutumnal.eventCalendarThisYear(), showTime, showSeconds);
-            note_solstice_summer.updateDate(context, data.dataSolsticeSummer.eventCalendarThisYear(), showTime, showSeconds);
-            note_solstice_winter.updateDate(context, data.dataSolsticeWinter.eventCalendarThisYear(), showTime, showSeconds);
+            holder_thisYear.note_equinox_vernal.updateDate(context, data.dataEquinoxVernal.eventCalendarThisYear(), showTime, showSeconds);
+            holder_thisYear.note_equinox_autumnal.updateDate(context, data.dataEquinoxAutumnal.eventCalendarThisYear(), showTime, showSeconds);
+            holder_thisYear.note_solstice_summer.updateDate(context, data.dataSolsticeSummer.eventCalendarThisYear(), showTime, showSeconds);
+            holder_thisYear.note_solstice_winter.updateDate(context, data.dataSolsticeWinter.eventCalendarThisYear(), showTime, showSeconds);
 
-            note_equinox_vernal2.updateDate(context, data.dataEquinoxVernal.eventCalendarOtherYear(), showTime, showSeconds);
-            note_equinox_autumnal2.updateDate(context, data.dataEquinoxAutumnal.eventCalendarOtherYear(), showTime, showSeconds);
-            note_solstice_summer2.updateDate(context, data.dataSolsticeSummer.eventCalendarOtherYear(), showTime, showSeconds);
-            note_solstice_winter2.updateDate(context, data.dataSolsticeWinter.eventCalendarOtherYear(), showTime, showSeconds);
+            holder_nextYear.note_equinox_vernal.updateDate(context, data.dataEquinoxVernal.eventCalendarOtherYear(), showTime, showSeconds);
+            holder_nextYear.note_equinox_autumnal.updateDate(context, data.dataEquinoxAutumnal.eventCalendarOtherYear(), showTime, showSeconds);
+            holder_nextYear.note_solstice_summer.updateDate(context, data.dataSolsticeSummer.eventCalendarOtherYear(), showTime, showSeconds);
+            holder_nextYear.note_solstice_winter.updateDate(context, data.dataSolsticeWinter.eventCalendarOtherYear(), showTime, showSeconds);
 
             boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, 0);
             boolean showHours = WidgetSettings.loadShowHoursPref(context, 0);
@@ -755,6 +680,110 @@ public class EquinoxView extends LinearLayout
         public Calendar getTime()
         {
             return time;
+        }
+    }
+
+    /**
+     * EquinoxViewHolder
+     */
+    public static class EquinoxViewHolder extends RecyclerView.ViewHolder
+    {
+        public int position = RecyclerView.NO_POSITION;
+
+        public TextView title;
+        public ImageButton btn_flipperNext, btn_flipperPrev;
+        public EquinoxNote note_equinox_vernal, note_solstice_summer, note_equinox_autumnal, note_solstice_winter;
+        public ArrayList<EquinoxNote> notes = new ArrayList<>();
+
+        public EquinoxViewHolder(View view, EquinoxViewOptions options)
+        {
+            super(view);
+
+            title = (TextView)view.findViewById(R.id.text_title);
+            btn_flipperNext = (ImageButton)view.findViewById(R.id.info_time_nextbtn);
+            btn_flipperPrev = (ImageButton)view.findViewById(R.id.info_time_prevbtn);
+            //btn_flipperNext.setOnClickListener(onNextCardClick);
+
+            TextView txt_equinox_vernal_label = (TextView)view.findViewById(R.id.text_date_equinox_vernal_label);
+            TextView txt_equinox_vernal = (TextView)view.findViewById(R.id.text_date_equinox_vernal);
+            TextView txt_equinox_vernal_note = (TextView)view.findViewById(R.id.text_date_equinox_vernal_note);
+            note_equinox_vernal = addNote(txt_equinox_vernal_label, txt_equinox_vernal, txt_equinox_vernal_note, 0, options.seasonColors[0], options);
+
+            TextView txt_solstice_summer_label = (TextView)view.findViewById(R.id.text_date_solstice_summer_label);
+            TextView txt_solstice_summer = (TextView)view.findViewById(R.id.text_date_solstice_summer);
+            TextView txt_solstice_summer_note = (TextView)view.findViewById(R.id.text_date_solstice_summer_note);
+            note_solstice_summer = addNote(txt_solstice_summer_label, txt_solstice_summer, txt_solstice_summer_note, 0, options.seasonColors[1], options);
+
+            TextView txt_equinox_autumnal_label = (TextView)view.findViewById(R.id.text_date_equinox_autumnal_label);
+            TextView txt_equinox_autumnal = (TextView)view.findViewById(R.id.text_date_equinox_autumnal);
+            TextView txt_equinox_autumnal_note = (TextView)view.findViewById(R.id.text_date_equinox_autumnal_note);
+            note_equinox_autumnal = addNote(txt_equinox_autumnal_label, txt_equinox_autumnal, txt_equinox_autumnal_note, 0, options.seasonColors[2], options);
+
+            TextView txt_solstice_winter_label = (TextView)view.findViewById(R.id.text_date_solstice_winter_label);
+            TextView txt_solstice_winter = (TextView)view.findViewById(R.id.text_date_solstice_winter);
+            TextView txt_solstice_winter_note = (TextView)view.findViewById(R.id.text_date_solstice_winter_note);
+            note_solstice_winter = addNote(txt_solstice_winter_label, txt_solstice_winter, txt_solstice_winter_note, 0, options.seasonColors[3], options);
+
+            if (options.centered)
+            {
+                FrameLayout.LayoutParams lpThisYear = (FrameLayout.LayoutParams)view.getLayoutParams();
+                lpThisYear.gravity = Gravity.CENTER_HORIZONTAL;
+                view.setLayoutParams(lpThisYear);
+            }
+        }
+
+        private EquinoxNote addNote(TextView labelView, TextView timeView, TextView noteView, int pageIndex, Integer timeColor, EquinoxViewOptions options)
+        {
+            EquinoxNote note = new EquinoxNote(labelView, timeView, noteView, pageIndex, options);
+            if (timeColor != null) {
+                note.themeViews(options.labelColor, timeColor, options.textColor);
+            }
+            notes.add(note);
+            return note;
+        }
+
+        public void bindDataToPosition(@NonNull Context context, @NonNull SuntimesEquinoxSolsticeData data, int position, EquinoxViewOptions options)
+        {
+            this.position = position;
+        }
+
+        public void showTitle( boolean show ) {
+            title.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
+
+        public void showNextPrevButtons( boolean show )
+        {
+            if (show) {
+                btn_flipperNext.setVisibility(View.VISIBLE);
+                btn_flipperPrev.setVisibility(View.GONE);
+            } else {
+                btn_flipperNext.setVisibility(View.GONE);
+                btn_flipperPrev.setVisibility(View.GONE);
+            }
+        }
+
+        public void adjustColumnWidth(Context context, int columnWidthPx)
+        {
+            for (EquinoxNote note : notes) {
+                note.adjustLabelWidth(columnWidthPx);
+            }
+        }
+
+        public void themeViews(SuntimesTheme theme, EquinoxViewOptions options)
+        {
+            if (theme != null)
+            {
+                if (note_equinox_vernal != null)
+                {
+                    int titleColor = theme.getTitleColor();
+                    title.setTextColor(SuntimesUtils.colorStateList(titleColor, options.disabledColor, options.pressedColor));
+
+                    note_equinox_vernal.themeViews(options.labelColor, options.seasonColors[0], options.textColor);
+                    note_solstice_summer.themeViews(options.labelColor, options.seasonColors[1], options.textColor);
+                    note_equinox_autumnal.themeViews(options.labelColor, options.seasonColors[2], options.textColor);
+                    note_solstice_winter.themeViews(options.labelColor, options.seasonColors[3], options.textColor);
+                }
+            }
         }
     }
 
