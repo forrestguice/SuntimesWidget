@@ -273,7 +273,7 @@ public class AboutActivity extends AppCompatActivity
 
         public String htmlVersionString()
         {
-            String buildString = anchor(AboutDialog.COMMIT_URL + BuildConfig.GIT_HASH, BuildConfig.GIT_HASH) + "@" + BuildConfig.BUILD_TIME.getTime();
+            String buildString = anchor(AboutDialog.COMMIT_URL + BuildConfig.GIT_HASH, BuildConfig.GIT_HASH);
             String versionString = anchor(AboutDialog.CHANGELOG_URL, BuildConfig.VERSION_NAME) + " " + smallText("(" + buildString + ")");
             if (BuildConfig.DEBUG)
             {

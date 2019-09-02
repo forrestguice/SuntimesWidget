@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -37,6 +37,7 @@ import android.widget.DatePicker;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 
 @SuppressWarnings("Convert2Diamond")
 public class TimeDateDialog extends DialogFragment
@@ -44,6 +45,11 @@ public class TimeDateDialog extends DialogFragment
     public static final String KEY_TIMEDATE_APPWIDGETID = "appwidgetid";
 
     private DatePicker picker;
+
+    private TimeZone timezone = Calendar.getInstance().getTimeZone();
+    public void setTimezone(TimeZone timezone) {
+        this.timezone = timezone;
+    }
 
     public void init(Calendar date)
     {
@@ -138,7 +144,7 @@ public class TimeDateDialog extends DialogFragment
                     public void onClick(View view)
                     {
                         boolean alreadyToday = isToday();
-                        init(Calendar.getInstance());
+                        init(Calendar.getInstance(timezone));
                         if (alreadyToday) {
                             ((AlertDialog) dialog).getButton(DialogInterface.BUTTON_POSITIVE).performClick();
                         }
@@ -188,7 +194,7 @@ public class TimeDateDialog extends DialogFragment
         WidgetSettings.DateMode mode = WidgetSettings.loadDateModePref(context, appWidgetId);
         if (mode == WidgetSettings.DateMode.CURRENT_DATE)
         {
-            init(Calendar.getInstance());
+            init(Calendar.getInstance(timezone));
 
         } else {
             WidgetSettings.DateInfo dateInfo = WidgetSettings.loadDatePref(context, appWidgetId);
@@ -250,7 +256,7 @@ public class TimeDateDialog extends DialogFragment
 
     public boolean isToday()
     {
-        Calendar date = Calendar.getInstance();
+        Calendar date = Calendar.getInstance(timezone);
         return isToday(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH));
     }
 
