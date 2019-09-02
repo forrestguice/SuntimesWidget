@@ -1,2 +1,4 @@
-* fixes app layout problems for Brazilian Portuguese and Norwegian translations (#356).
+* fixes app layout issues for Brazilian Portuguese and Norwegian translations (#356).
+* fixes bug "date dialog fails to respect timezone setting" (#358).
+* fixes bug "note selection lost on orientation change" (#359).
 * updates translation to Brazilian Portuguese (pt-br) (#357).
