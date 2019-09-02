@@ -25,6 +25,7 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:tabGravity="fill"
             android:background="?attr/dialogBackground">
 
             <android.support.design.widget.TabItem
@@ -50,10 +51,9 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?attr/timeCardBackground"
-        android:layout_margin="8dp"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:layout_marginTop="4dp" android:layout_marginBottom="4dp"
+        android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>
