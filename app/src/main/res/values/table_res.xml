@@ -45,6 +45,7 @@
     <dimen name="table_heading_label_fontsize">14sp</dimen>
     <integer name="table_heading_label_maxlines">1</integer>
     <dimen name="table_heading_label_maxdim">84dp</dimen>
+    <dimen name="table_heading_label_iconSpacing">2dp</dimen>
 
     <dimen name="table_heading_iconsize">24dp</dimen>
 
@@ -60,6 +61,7 @@
         <item name="android:maxLines">@integer/table_heading_label_maxlines</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/table_heading_label_iconSpacing</item>
     </style>
 
     <!-- lightmap -->
