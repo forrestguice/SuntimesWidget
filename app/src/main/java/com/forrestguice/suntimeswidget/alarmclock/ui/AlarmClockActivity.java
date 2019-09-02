@@ -59,7 +59,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.forrestguice.suntimeswidget.AboutDialog;
+import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.AlarmDialog;
 import com.forrestguice.suntimeswidget.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.Manifest;
@@ -113,7 +113,6 @@ public class AlarmClockActivity extends AppCompatActivity
     private static final String DIALOGTAG_OFFSET = "alarmoffset";
     private static final String DIALOGTAG_LOCATION = "alarmlocation";
     private static final String DIALOGTAG_HELP = "help";
-    private static final String DIALOGTAG_ABOUT = "about";
 
     private static final String KEY_SELECTED_ROWID = "selectedID";
     private static final String KEY_SELECTED_LOCATION = "selectedLocation";
@@ -1287,10 +1286,9 @@ public class AlarmClockActivity extends AppCompatActivity
      */
     protected void showAbout()
     {
-        AboutDialog aboutDialog = new AboutDialog();
-        aboutDialog.setIconID(R.mipmap.ic_launcher_alarms);
-        aboutDialog.setAppName(R.string.app_name_alarmclock);
-        aboutDialog.show(getSupportFragmentManager(), DIALOGTAG_ABOUT);
+        Intent about = new Intent(this, AboutActivity.class);
+        about.putExtra(AboutActivity.EXTRA_ICONID, R.mipmap.ic_launcher_alarms_round);
+        startActivity(about);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
