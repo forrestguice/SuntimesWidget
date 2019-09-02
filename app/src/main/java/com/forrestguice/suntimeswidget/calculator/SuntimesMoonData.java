@@ -185,7 +185,7 @@ public class SuntimesMoonData extends SuntimesData
             case MOONSET:
                 return new Calendar[] { moonsetCalendarYesterday(), moonsetCalendarToday(), moonsetCalendarTomorrow() };
         }
-        return null;
+        return new Calendar[] { null, null, null };
     }
 
     /**

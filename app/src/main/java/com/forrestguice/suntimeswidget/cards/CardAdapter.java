@@ -193,13 +193,15 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             SuntimesMoonData moon = dataPair.second;
             Calendar now = sun.now();
 
-            boolean found;
+            boolean found = false;
             switch (event) {
                 case MOONRISE: case MOONSET:
                     eventCalendars = moon.getRiseSetEvents(event);  // { yesterday, today, tomorrow }
                     found = now.before(eventCalendars[1]) && now.after(eventCalendars[0]);
                     break;
-                default:
+                case SUNRISE: case SUNSET: case NOON:
+                case MORNING_CIVIL: case EVENING_CIVIL: case MORNING_NAUTICAL: case EVENING_NAUTICAL: case MORNING_ASTRONOMICAL: case EVENING_ASTRONOMICAL:
+                case MORNING_BLUE4: case EVENING_BLUE4: case MORNING_BLUE8: case EVENING_BLUE8: case MORNING_GOLDEN: case EVENING_GOLDEN:
                     eventCalendars = sun.getRiseSetEvents(event);  // { today, tomorrow }
                     found = now.before(eventCalendars[0]);
                     break;
