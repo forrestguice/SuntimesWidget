@@ -118,6 +118,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     public static final String KEY_UI_CARDISTOMORROW = "cardIsTomorrow";
     public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedCard";
+    public static final String KEY_UI_RESETNOTE = "resetNote";
 
     public static final String WARNINGID_DATE = "Date";
     public static final String WARNINGID_TIMEZONE = "Timezone";
@@ -350,12 +351,6 @@ public class SuntimesActivity extends AppCompatActivity
         registerReceivers(SuntimesActivity.this);
         setUpdateAlarms(SuntimesActivity.this);
 
-        if (onStart_resetNoteIndex)
-        {
-            notes.resetNoteIndex();
-            onStart_resetNoteIndex = false;
-        }
-
         updateViews(SuntimesActivity.this);
     }
     private boolean onStart_resetNoteIndex = false;
@@ -369,6 +364,11 @@ public class SuntimesActivity extends AppCompatActivity
         super.onResume();
         updateActionBar(this);
         getFixHelper.onResume();
+
+        if (onStart_resetNoteIndex) {
+            notes.resetNoteIndex();
+            onStart_resetNoteIndex = false;
+        }
 
         // restore open dialogs
         updateDialogs(this);
@@ -395,6 +395,7 @@ public class SuntimesActivity extends AppCompatActivity
         TimeDateDialog dateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE);
         if (dateDialog != null)
         {
+            dateDialog.setTimezone(dataset.timezone());
             dateDialog.setOnAcceptedListener(onConfigDate);
             dateDialog.setOnCanceledListener(onCancelDate);
             //Log.d("DEBUG", "TimeDateDialog listeners restored.");
@@ -613,6 +614,7 @@ public class SuntimesActivity extends AppCompatActivity
         saveWarnings(outState);
         outState.putBoolean(KEY_UI_USERSWAPPEDCARD, userSwappedCard);
         outState.putBoolean(KEY_UI_CARDISTOMORROW, (card_flipper.getDisplayedChild() != 0));
+        outState.putBoolean(KEY_UI_RESETNOTE, onStart_resetNoteIndex);
         card_equinoxSolstice.saveState(outState);
     }
 
@@ -621,6 +623,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         super.onRestoreInstanceState(savedInstanceState);
         restoreWarnings(savedInstanceState);
+        onStart_resetNoteIndex = savedInstanceState.getBoolean(KEY_UI_RESETNOTE, onStart_resetNoteIndex);
         setUserSwappedCard(savedInstanceState.getBoolean(KEY_UI_USERSWAPPEDCARD, false), "onRestoreInstanceState");
         boolean cardIsTomorrow = savedInstanceState.getBoolean(KEY_UI_CARDISTOMORROW, false);
         card_flipper.setDisplayedChild((cardIsTomorrow ? 1 : 0));
@@ -1502,6 +1505,7 @@ public class SuntimesActivity extends AppCompatActivity
     private void configDate()
     {
         final TimeDateDialog datePicker = new TimeDateDialog();
+        datePicker.setTimezone(dataset.timezone());
         datePicker.setOnAcceptedListener(onConfigDate);
         datePicker.setOnCanceledListener(onCancelDate);
         datePicker.show(getSupportFragmentManager(), DIALOGTAG_DATE);
