@@ -65,6 +65,8 @@ import java.util.regex.Pattern;
 
 public class LocationConfigView extends LinearLayout
 {
+    public static final String SCHEME_GEO = "geo";
+
     public static final String KEY_DIALOGMODE = "dialogmode";
     public static final String KEY_LOCATION_MODE = "locationMode";
     public static final String KEY_LOCATION_LATITUDE = "locationLatitude";
@@ -740,7 +742,7 @@ public class LocationConfigView extends LinearLayout
         String lon = "";
         String alt = "";
 
-        if (data.getScheme().equals("geo"))
+        if (data != null && SCHEME_GEO.equals(data.getScheme()))
         {
             String dataString = data.getSchemeSpecificPart();
             String[] dataParts = dataString.split(Pattern.quote("?"));

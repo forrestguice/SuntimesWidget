@@ -173,6 +173,10 @@ public class SuntimesUtils
         strTimeNone = context.getString(R.string.time_none);
         strTimeLoading = context.getString(R.string.time_loading);
 
+        strDateYearFormat = context.getString(R.string.dateyear_format_short);
+        strDateShortFormat = context.getString(R.string.date_format_short);
+        strDateLongFormat = context.getString(R.string.date_format_long);
+
         strTimeShortFormat12 = context.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12, strTimeSuffixFormat);
         String timeFormat = (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12);
         strDateTimeShortFormat = context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormat);
@@ -182,10 +186,6 @@ public class SuntimesUtils
         String timeFormatSec = (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s);
         strDateTimeShortFormatSec = context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormatSec);
         strDateTimeLongFormatSec = context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormatSec);
-
-        strDateYearFormat = context.getString(R.string.dateyear_format_short);
-        strDateShortFormat = context.getString(R.string.date_format_short);
-        strDateLongFormat = context.getString(R.string.date_format_long);
 
         CardinalDirection.initDisplayStrings(context);
 
