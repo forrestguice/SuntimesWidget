@@ -61,6 +61,7 @@ public class AboutActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        setTheme(AppSettings.loadTheme(this));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_activity_about);
 
