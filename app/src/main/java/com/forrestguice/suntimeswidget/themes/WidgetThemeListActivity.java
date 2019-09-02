@@ -57,7 +57,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.forrestguice.suntimeswidget.AboutDialog;
+import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
@@ -76,7 +76,6 @@ import static com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity.E
 
 public class WidgetThemeListActivity extends AppCompatActivity
 {
-    public static final String DIALOGTAG_ABOUT = "about";
     private static final String DIALOGTAG_HELP = "help";
 
     public static final int WALLPAPER_DELAY = 1000;
@@ -903,8 +902,8 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
     protected void showAbout()
     {
-        AboutDialog aboutDialog = new AboutDialog();
-        aboutDialog.show(getSupportFragmentManager(), DIALOGTAG_ABOUT);
+        Intent about = new Intent(this, AboutActivity.class);
+        startActivity(about);
     }
 
     @SuppressWarnings("RestrictedApi")

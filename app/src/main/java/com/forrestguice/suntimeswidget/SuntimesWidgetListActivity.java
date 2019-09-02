@@ -59,7 +59,6 @@ import java.util.ArrayList;
 public class SuntimesWidgetListActivity extends AppCompatActivity
 {
     private static final String DIALOGTAG_HELP = "help";
-    private static final String DIALOGTAG_ABOUT = "about";
 
     private static final String KEY_LISTVIEW_TOP = "widgetlisttop";
     private static final String KEY_LISTVIEW_INDEX = "widgetlistindex";
@@ -253,8 +252,8 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
      */
     protected void showAbout()
     {
-        AboutDialog aboutDialog = new AboutDialog();
-        aboutDialog.show(getSupportFragmentManager(), DIALOGTAG_ABOUT);
+        Intent about = new Intent(this, AboutActivity.class);
+        startActivity(about);
     }
 
     /**

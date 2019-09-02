@@ -125,7 +125,6 @@ public class SuntimesActivity extends AppCompatActivity
 
     private static final String DIALOGTAG_TIMEZONE = "timezone";
     private static final String DIALOGTAG_ALARM = "alarm";
-    private static final String DIALOGTAG_ABOUT = "about";
     private static final String DIALOGTAG_HELP = "help";
     private static final String DIALOGTAG_LOCATION = "location";
     private static final String DIALOGTAG_DATE = "dateselect";
@@ -1685,8 +1684,8 @@ public class SuntimesActivity extends AppCompatActivity
      */
     protected void showAbout()
     {
-        AboutDialog aboutDialog = new AboutDialog();
-        aboutDialog.show(getSupportFragmentManager(), DIALOGTAG_ABOUT);
+        Intent about = new Intent(this, AboutActivity.class);
+        startActivity(about);
     }
 
 
