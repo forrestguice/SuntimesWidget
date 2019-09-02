@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ import java.util.TimeZone;
  * An interface used when calculating sunrise and sunset times. Implementations
  * of this interface are intended to be thin wrappers around third party code.
  *
- * @version 1.5.0
+ * @version 1.6.0
  */
 public interface SuntimesCalculator
 {
@@ -271,7 +271,7 @@ public interface SuntimesCalculator
 
 
     //
-    // 1.4.0 sun, moon position (FEATURE_POSITION)
+    // 1.4.0+ sun, moon position (FEATURE_POSITION)
     //
 
     /**
@@ -316,5 +316,22 @@ public interface SuntimesCalculator
      * @since 1.5.0 FEATURE_POSITION, FEATURE_RISESET
      */
     double equationOfTime( Calendar dateTime );
+
+    /**
+     * Get the date of the next lunar perigee.
+     * @param date a Calendar representing a given date
+     * @return a Calendar for next perigee (occurring on or after date).
+     * @since 1.6.0 FEATURE_POSITION, FEATURE_MOON
+     */
+    Calendar getMoonPerigeeNextDate(Calendar date);
+
+    /**
+     * Get the date of the next lunar apogee.
+     * @param date a Calendar representing a given date
+     * @return a Calendar for next apogee (occurring on or after date).
+     * @since 1.6.0 FEATURE_POSITION, FEATURE_MOON
+     */
+    Calendar getMoonApogeeNextDate(Calendar date);
+
 
 }

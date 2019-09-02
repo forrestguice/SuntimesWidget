@@ -234,12 +234,26 @@
         <item quantity="other">%s feet</item>
     </plurals>
 
+    <string name="units_miles">miles</string>    <!-- TODO -->
+    <string name="units_miles_short">mi</string>    <!-- TODO -->
+    <plurals name="units_miles_long">
+        <item quantity="one">%s mile</item>
+        <item quantity="other">%s miles</item>
+    </plurals>                                     <!-- TODO -->
+
     <string name="units_meters">meters</string>
     <string name="units_meters_short">m</string>
     <plurals name="units_meters_long">
         <item quantity="one">%s meter</item>
         <item quantity="other">%s meters</item>
     </plurals>
+
+    <string name="units_kilometers">kilometers</string>    <!-- TODO -->
+    <string name="units_kilometers_short">km</string>    <!-- TODO -->
+    <plurals name="units_kilometers_long">
+        <item quantity="one">%s kilometer</item>
+        <item quantity="other">%s kilometers</item>
+    </plurals>                                            <!-- TODO -->
 
     <!--
          WIDGET CONFIG
@@ -357,6 +371,22 @@
     <string name="timeMode_moon_thirdquarter_short">Third Quarter</string>           <!-- setting -->
     <string name="timeMode_moon_waningcrescent_short">Waning Crescent</string>               <!-- label -->
     <string name="timeMode_moon_waningcrescent">Waning Crescent</string>                     <!-- label -->
+
+    <string name="timeMode_moon_super">Supermoon</string>               <!-- label -->    <!-- TODO -->
+    <string name="timeMode_moon_micro">Micromoon</string>               <!-- label -->    <!-- TODO -->
+    <string name="timeMode_moon_superfull">Super Full Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_moon_superfull_short">@string/timeMode_moon_super</string>     <!-- label -->
+    <string name="timeMode_moon_supernew">Super New Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_moon_supernew_short">@string/timeMode_moon_super</string>     <!-- label -->
+    <string name="timeMode_moon_microfull">Micro Full Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_moon_microfull_short">@string/timeMode_moon_micro</string>     <!-- label -->
+    <string name="timeMode_moon_micronew">Micro New Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_moon_micronew_short">@string/timeMode_moon_micro</string>     <!-- label -->
+
+    <string name="timeMode_moon_perigee">@string/label_perigee</string>                             <!-- label -->
+    <string name="timeMode_moon_apogee">@string/label_apogee</string>                             <!-- label -->
+    <string name="label_apogee">Apogee</string>      <!-- TODO -->
+    <string name="label_perigee">Perigee</string>    <!-- TODO -->
 
     <string name="configLabel_general_timeMode">Mode:</string>          <!-- spinner label -->
 

@@ -994,6 +994,31 @@ public class SuntimesUtils
         return new TimeDisplayText(formatter.format(value), unitsString, "");
     }
 
+    public static TimeDisplayText formatAsDistance(Context context, double kilometers, WidgetSettings.LengthUnit units, int places, boolean shortForm)
+    {
+        double value;
+        String unitsString;
+        switch (units)
+        {
+            case USC:
+            case IMPERIAL:
+                value = WidgetSettings.LengthUnit.kilometersToMiles(kilometers);
+                unitsString = (shortForm ? context.getString(R.string.units_miles_short) : context.getString(R.string.units_miles));
+                break;
+
+            case METRIC:
+            default:
+                value = kilometers;
+                unitsString = (shortForm ? context.getString(R.string.units_kilometers_short) : context.getString(R.string.units_kilometers));
+                break;
+        }
+
+        NumberFormat formatter = NumberFormat.getInstance();
+        formatter.setMinimumFractionDigits(0);
+        formatter.setMaximumFractionDigits(places);
+        return new TimeDisplayText(formatter.format(value), unitsString, "");
+    }
+
     /**
      * Creates a title string from a given "title pattern".
      *

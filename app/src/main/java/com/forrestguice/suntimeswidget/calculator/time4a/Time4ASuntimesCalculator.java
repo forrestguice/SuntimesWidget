@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2018 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -394,6 +394,22 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     {
         Moment moment = TemporalType.JAVA_UTIL_DATE.translate(dateTime.getTime());
         return SolarTime.equationOfTime(moment, solarTime.getCalculator().name());
+    }
+
+    @Override
+    public Calendar getMoonPerigeeNextDate(Calendar dateTime)
+    {
+        Moment moment = TemporalType.JAVA_UTIL_DATE.translate(dateTime.getTime());
+        Moment apogeeMoment = net.time4j.calendar.astro.MoonPosition.inNextPerigeeAfter(moment);
+        return momentToCalendar(apogeeMoment);
+    }
+
+    @Override
+    public Calendar getMoonApogeeNextDate(Calendar dateTime)
+    {
+        Moment moment = TemporalType.JAVA_UTIL_DATE.translate(dateTime.getTime());
+        Moment apogeeMoment = net.time4j.calendar.astro.MoonPosition.inNextApogeeAfter(moment);
+        return momentToCalendar(apogeeMoment);
     }
 
 }

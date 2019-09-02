@@ -238,6 +238,10 @@ public class WidgetSettings
         public static double feetToMeters(double feet) {
             return (feet * (1d / 3.28084d) );
         }
+
+        public static double kilometersToMiles(double kilometers) {
+            return 0.62137 * kilometers;
+        }
     }
 
     /**

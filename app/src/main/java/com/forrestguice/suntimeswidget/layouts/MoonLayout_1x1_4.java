@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2018 Forrest Guice
+   Copyright (C) 2018-2019 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -31,6 +31,8 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+
+import java.util.Calendar;
 
 /**
  * Moon Primary Phase (1x1)
@@ -74,7 +76,7 @@ public class MoonLayout_1x1_4 extends MoonLayout
 
             SuntimesUtils.TimeDisplayText phaseString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(majorPhase), showTimeDate, showSeconds);
             views.setTextViewText(R.id.moonphase_major_date, phaseString.getValue());
-            views.setTextViewText(R.id.moonphase_major_label, nextPhase.getLongDisplayString());
+            views.setTextViewText(R.id.moonphase_major_label, data.getMoonPhaseLabel(context, majorPhase));
             views.setViewVisibility(R.id.moonphase_major_label, (showLabels ? View.VISIBLE : View.GONE));
         }
     }
