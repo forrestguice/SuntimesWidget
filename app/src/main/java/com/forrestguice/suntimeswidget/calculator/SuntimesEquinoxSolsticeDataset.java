@@ -165,10 +165,8 @@ public class SuntimesEquinoxSolsticeDataset
         dataSolsticeWinter.invalidateCalculation();
     }
 
-    public boolean isImplemented()
-    {
-        SuntimesCalculatorDescriptor calculatorDesc = dataEquinoxVernal.calculatorMode();
-        return calculatorDesc.hasRequestedFeature(SuntimesCalculator.FEATURE_SOLSTICE);
+    public boolean isImplemented() {
+        return dataEquinoxVernal.isImplemented();
     }
 
     public Calendar todayIs()
