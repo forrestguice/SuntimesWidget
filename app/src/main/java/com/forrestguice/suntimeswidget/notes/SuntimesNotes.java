@@ -150,6 +150,10 @@ public class SuntimesNotes
                 continue;
             else if (!enabledActual && (event.equals(SolarEvents.SUNSET) || event.equals(SolarEvents.SUNRISE)))
                 continue;
+            else if (event.equals(SolarEvents.FULLMOON) || event.equals(SolarEvents.NEWMOON) || event.equals(SolarEvents.FIRSTQUARTER) || event.equals(SolarEvents.THIRDQUARTER))
+                continue;
+            else if (event.equals(SolarEvents.EQUINOX_SPRING) || event.equals(SolarEvents.SOLSTICE_SUMMER) || event.equals(SolarEvents.EQUINOX_AUTUMNAL) || event.equals(SolarEvents.SOLSTICE_WINTER))
+                continue;
 
             NoteData note = createNote(event);
             notesList.add(note);
