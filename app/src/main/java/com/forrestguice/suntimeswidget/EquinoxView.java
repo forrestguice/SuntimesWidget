@@ -57,12 +57,9 @@ public class EquinoxView extends LinearLayout
     public static final String KEY_UI_CARDISNEXTYEAR = "equinoxCardIsNextYear";
     public static final String KEY_UI_MINIMIZED = "equinoxIsMinimized";
 
-    private SuntimesUtils utils = new SuntimesUtils();
+    private static SuntimesUtils utils = new SuntimesUtils();
     private boolean userSwappedCard = false;
-    private boolean isRtl = false;
-    private boolean minimized = false;
-    private boolean centered = false;
-    private WidgetSettings.TrackingMode trackingMode = WidgetSettings.TrackingMode.SOONEST;
+
 
     private TextView empty;
     private ViewFlipper flipper;           // flip between thisYear, nextYear
@@ -108,7 +105,7 @@ public class EquinoxView extends LinearLayout
         if (attrs != null)
         {
             LinearLayout.LayoutParams lp = generateLayoutParams(attrs);
-            centered = ((lp.gravity == Gravity.CENTER) || (lp.gravity == Gravity.CENTER_HORIZONTAL));
+            options.centered = ((lp.gravity == Gravity.CENTER) || (lp.gravity == Gravity.CENTER_HORIZONTAL));
         }
 
         empty = (TextView)findViewById(R.id.txt_empty);
@@ -132,24 +129,24 @@ public class EquinoxView extends LinearLayout
             TextView txt_equinox_vernal_label = (TextView) thisYear.findViewById(R.id.text_date_equinox_vernal_label);
             TextView txt_equinox_vernal = (TextView) thisYear.findViewById(R.id.text_date_equinox_vernal);
             TextView txt_equinox_vernal_note = (TextView) thisYear.findViewById(R.id.text_date_equinox_vernal_note);
-            note_equinox_vernal = addNote(txt_equinox_vernal_label, txt_equinox_vernal, txt_equinox_vernal_note, 0, seasonColors[0]);
+            note_equinox_vernal = addNote(txt_equinox_vernal_label, txt_equinox_vernal, txt_equinox_vernal_note, 0, options.seasonColors[0]);
 
             TextView txt_solstice_summer_label = (TextView) thisYear.findViewById(R.id.text_date_solstice_summer_label);
             TextView txt_solstice_summer = (TextView) thisYear.findViewById(R.id.text_date_solstice_summer);
             TextView txt_solstice_summer_note = (TextView) thisYear.findViewById(R.id.text_date_solstice_summer_note);
-            note_solstice_summer = addNote(txt_solstice_summer_label, txt_solstice_summer, txt_solstice_summer_note, 0, seasonColors[1]);
+            note_solstice_summer = addNote(txt_solstice_summer_label, txt_solstice_summer, txt_solstice_summer_note, 0, options.seasonColors[1]);
 
             TextView txt_equinox_autumnal_label = (TextView) thisYear.findViewById(R.id.text_date_equinox_autumnal_label);
             TextView txt_equinox_autumnal = (TextView) thisYear.findViewById(R.id.text_date_equinox_autumnal);
             TextView txt_equinox_autumnal_note = (TextView) thisYear.findViewById(R.id.text_date_equinox_autumnal_note);
-            note_equinox_autumnal = addNote(txt_equinox_autumnal_label, txt_equinox_autumnal, txt_equinox_autumnal_note, 0, seasonColors[2]);
+            note_equinox_autumnal = addNote(txt_equinox_autumnal_label, txt_equinox_autumnal, txt_equinox_autumnal_note, 0, options.seasonColors[2]);
 
             TextView txt_solstice_winter_label = (TextView) thisYear.findViewById(R.id.text_date_solstice_winter_label);
             TextView txt_solstice_winter = (TextView) thisYear.findViewById(R.id.text_date_solstice_winter);
             TextView txt_solstice_winter_note = (TextView) thisYear.findViewById(R.id.text_date_solstice_winter_note);
-            note_solstice_winter = addNote(txt_solstice_winter_label, txt_solstice_winter, txt_solstice_winter_note, 0, seasonColors[3]);
+            note_solstice_winter = addNote(txt_solstice_winter_label, txt_solstice_winter, txt_solstice_winter_note, 0, options.seasonColors[3]);
 
-            if (centered)
+            if (options.centered)
             {
                 FrameLayout.LayoutParams lpThisYear = (FrameLayout.LayoutParams)thisYear.getLayoutParams();
                 lpThisYear.gravity = Gravity.CENTER_HORIZONTAL;
@@ -171,24 +168,24 @@ public class EquinoxView extends LinearLayout
             TextView txt_equinox_vernal2_label = (TextView) nextYear.findViewById(R.id.text_date_equinox_vernal_label);
             TextView txt_equinox_vernal2 = (TextView) nextYear.findViewById(R.id.text_date_equinox_vernal);
             TextView txt_equinox_vernal2_note = (TextView) nextYear.findViewById(R.id.text_date_equinox_vernal_note);
-            note_equinox_vernal2 = addNote(txt_equinox_vernal2_label, txt_equinox_vernal2, txt_equinox_vernal2_note, 1, seasonColors[0]);
+            note_equinox_vernal2 = addNote(txt_equinox_vernal2_label, txt_equinox_vernal2, txt_equinox_vernal2_note, 1, options.seasonColors[0]);
 
             TextView txt_solstice_summer2_label = (TextView) nextYear.findViewById(R.id.text_date_solstice_summer_label);
             TextView txt_solstice_summer2 = (TextView) nextYear.findViewById(R.id.text_date_solstice_summer);
             TextView txt_solstice_summer2_note = (TextView) nextYear.findViewById(R.id.text_date_solstice_summer_note);
-            note_solstice_summer2 = addNote(txt_solstice_summer2_label, txt_solstice_summer2, txt_solstice_summer2_note, 1, seasonColors[1]);
+            note_solstice_summer2 = addNote(txt_solstice_summer2_label, txt_solstice_summer2, txt_solstice_summer2_note, 1, options.seasonColors[1]);
 
             TextView txt_equinox_autumnal2_label = (TextView) nextYear.findViewById(R.id.text_date_equinox_autumnal_label);
             TextView txt_equinox_autumnal2 = (TextView) nextYear.findViewById(R.id.text_date_equinox_autumnal);
             TextView txt_equinox_autumnal2_note = (TextView) nextYear.findViewById(R.id.text_date_equinox_autumnal_note);
-            note_equinox_autumnal2 = addNote(txt_equinox_autumnal2_label, txt_equinox_autumnal2, txt_equinox_autumnal2_note, 1, seasonColors[2]);
+            note_equinox_autumnal2 = addNote(txt_equinox_autumnal2_label, txt_equinox_autumnal2, txt_equinox_autumnal2_note, 1, options.seasonColors[2]);
 
             TextView txt_solstice_winter2_label = (TextView) nextYear.findViewById(R.id.text_date_solstice_winter_label);
             TextView txt_solstice_winter2 = (TextView) nextYear.findViewById(R.id.text_date_solstice_winter);
             TextView txt_solstice_winter2_note = (TextView) nextYear.findViewById(R.id.text_date_solstice_winter_note);
-            note_solstice_winter2 = addNote(txt_solstice_winter2_label, txt_solstice_winter2, txt_solstice_winter2_note, 1, seasonColors[3]);
+            note_solstice_winter2 = addNote(txt_solstice_winter2_label, txt_solstice_winter2, txt_solstice_winter2_note, 1, options.seasonColors[3]);
 
-            if (centered)
+            if (options.centered)
             {
                 FrameLayout.LayoutParams lpNextYear = (FrameLayout.LayoutParams)nextYear.getLayoutParams();
                 lpNextYear.gravity = Gravity.CENTER_HORIZONTAL;
@@ -202,54 +199,36 @@ public class EquinoxView extends LinearLayout
         }
     }
 
-    private int noteColor, disabledColor, pressedColor;
-    private Integer[] seasonColors = new Integer[4];
-    private Integer labelColor, textColor;
-    private int resID_buttonPressColor;
+    private EquinoxViewOptions options = new EquinoxViewOptions();
 
     @SuppressLint("ResourceType")
-    private void themeViews(Context context)
-    {
-        int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.text_disabledColor, R.attr.buttonPressColor };
-        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
-        noteColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.transparent));
-        disabledColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.text_disabled_dark));
-        resID_buttonPressColor = typedArray.getResourceId(2, R.color.btn_tint_pressed_dark);
-        pressedColor = ContextCompat.getColor(context, resID_buttonPressColor);
-        labelColor = textColor = seasonColors[0] = seasonColors[1] = seasonColors[2] = seasonColors[3] = null;
-        typedArray.recycle();
+    private void themeViews(Context context) {
+        options.init(context);
     }
 
     public void themeViews(Context context, SuntimesTheme theme)
     {
         if (theme != null)
         {
-            noteColor = theme.getTimeColor();
-            labelColor = theme.getTitleColor();
-            textColor = theme.getTextColor();
-            pressedColor = theme.getActionColor();
-            seasonColors[0] = theme.getSpringColor();
-            seasonColors[1] = theme.getSummerColor();
-            seasonColors[2] = theme.getFallColor();
-            seasonColors[3] = theme.getWinterColor();
+            options.init(theme);
 
             if (note_equinox_vernal != null)
             {
                 int titleColor = theme.getTitleColor();
-                titleThisYear.setTextColor(SuntimesUtils.colorStateList(titleColor, disabledColor, pressedColor));
-                titleNextYear.setTextColor(SuntimesUtils.colorStateList(titleColor, disabledColor, pressedColor));
+                titleThisYear.setTextColor(SuntimesUtils.colorStateList(titleColor, options.disabledColor, options.pressedColor));
+                titleNextYear.setTextColor(SuntimesUtils.colorStateList(titleColor, options.disabledColor, options.pressedColor));
 
-                note_equinox_vernal.themeViews(labelColor, seasonColors[0], textColor);
-                note_equinox_vernal2.themeViews(labelColor, seasonColors[0], textColor);
+                note_equinox_vernal.themeViews(options.labelColor, options.seasonColors[0], options.textColor);
+                note_equinox_vernal2.themeViews(options.labelColor, options.seasonColors[0], options.textColor);
 
-                note_solstice_summer.themeViews(labelColor, seasonColors[1], textColor);
-                note_solstice_summer2.themeViews(labelColor, seasonColors[1], textColor);
+                note_solstice_summer.themeViews(options.labelColor, options.seasonColors[1], options.textColor);
+                note_solstice_summer2.themeViews(options.labelColor, options.seasonColors[1], options.textColor);
 
-                note_equinox_autumnal.themeViews(labelColor, seasonColors[2], textColor);
-                note_equinox_autumnal2.themeViews(labelColor, seasonColors[2], textColor);
+                note_equinox_autumnal.themeViews(options.labelColor, options.seasonColors[2], options.textColor);
+                note_equinox_autumnal2.themeViews(options.labelColor, options.seasonColors[2], options.textColor);
 
-                note_solstice_winter.themeViews(labelColor, seasonColors[3], textColor);
-                note_solstice_winter2.themeViews(labelColor, seasonColors[3], textColor);
+                note_solstice_winter.themeViews(options.labelColor, options.seasonColors[3], options.textColor);
+                note_solstice_winter2.themeViews(options.labelColor, options.seasonColors[3], options.textColor);
             }
         }
     }
@@ -257,7 +236,7 @@ public class EquinoxView extends LinearLayout
     public void initLocale(Context context)
     {
         SuntimesUtils.initDisplayStrings(context);
-        isRtl = AppSettings.isLocaleRtl(context);
+        options.isRtl = AppSettings.isLocaleRtl(context);
         initAnimations(context);
     }
 
@@ -272,38 +251,32 @@ public class EquinoxView extends LinearLayout
 
     private EquinoxNote addNote(TextView labelView, TextView timeView, TextView noteView, int pageIndex, Integer timeColor)
     {
-        EquinoxNote note = new EquinoxNote(labelView, timeView, noteView, pageIndex);
+        EquinoxNote note = new EquinoxNote(labelView, timeView, noteView, pageIndex, options);
         if (timeColor != null) {
-            note.themeViews(labelColor, timeColor, textColor);
+            note.themeViews(options.labelColor, timeColor, options.textColor);
         }
         notes.add(note);
         return note;
     }
 
-    public void setTrackingMode(WidgetSettings.TrackingMode mode)
-    {
-        trackingMode = mode;
+    public void setTrackingMode(WidgetSettings.TrackingMode mode) {
+        options.trackingMode = mode;
     }
-    public WidgetSettings.TrackingMode getTrackingMode()
-    {
-        return trackingMode;
+    public WidgetSettings.TrackingMode getTrackingMode() {
+        return options.trackingMode;
     }
 
-    public void setMinimized( boolean value )
-    {
-        this.minimized = value;
+    public void setMinimized( boolean value ) {
+        options.minimized = value;
     }
-    public boolean isMinimized()
-    {
-        return minimized;
+    public boolean isMinimized() {
+        return options.minimized;
     }
 
-    private EquinoxNote findSoonestNote(Calendar now)
-    {
+    private EquinoxNote findSoonestNote(Calendar now) {
         return findClosestNote(now, true);
     }
-    private EquinoxNote findClosestNote(Calendar now)
-    {
+    private EquinoxNote findClosestNote(Calendar now) {
         return findClosestNote(now, false);
     }
     private EquinoxNote findClosestNote(Calendar now, boolean upcoming)
@@ -365,13 +338,13 @@ public class EquinoxView extends LinearLayout
 
     protected void updateViews( Context context, SuntimesEquinoxSolsticeDataset data )
     {
-        showTitle(!minimized);
-        showNextPrevButtons(!minimized);
+        showTitle(!options.minimized);
+        showNextPrevButtons(!options.minimized);
         showEmptyView(false);
 
         if (isInEditMode())
         {
-            if (minimized)
+            if (options.minimized)
             {
                 for (int i = 1; i < notes.size(); i++)
                 {
@@ -390,7 +363,7 @@ public class EquinoxView extends LinearLayout
                 note.updateDate(context, null);
                 note.updateNote(context, null);
 
-                if (minimized)
+                if (options.minimized)
                 {
                     note.setVisible(false);
                 }
@@ -425,10 +398,10 @@ public class EquinoxView extends LinearLayout
             {
                 note.setEnabled();
                 note.updateNote(context, data.now(), showWeeks, showHours);
-                note.setVisible(!minimized);
+                note.setVisible(!options.minimized);
             }
 
-            EquinoxNote nextNote = (trackingMode == WidgetSettings.TrackingMode.SOONEST ? findSoonestNote(data.now())
+            EquinoxNote nextNote = (options.trackingMode == WidgetSettings.TrackingMode.SOONEST ? findSoonestNote(data.now())
                                                                                         : findClosestNote(data.now()));
             if (nextNote == null)
             {
@@ -443,7 +416,7 @@ public class EquinoxView extends LinearLayout
             nextNote.setHighlighted(true);
 
         } else {
-            if (minimized)
+            if (options.minimized)
             {
                 for (EquinoxNote note : notes)
                 {
@@ -460,8 +433,8 @@ public class EquinoxView extends LinearLayout
         boolean cardIsNextYear = (flipper.getDisplayedChild() != 0);
         bundle.putBoolean(EquinoxView.KEY_UI_CARDISNEXTYEAR, cardIsNextYear);
         bundle.putBoolean(EquinoxView.KEY_UI_USERSWAPPEDCARD, userSwappedCard);
-        bundle.putBoolean(EquinoxView.KEY_UI_MINIMIZED, minimized);
-        Log.d("DEBUG", "EquinoxView saveState :: nextyear:" + cardIsNextYear + " :: swapped:" + userSwappedCard + " :: minimized:" + minimized);
+        bundle.putBoolean(EquinoxView.KEY_UI_MINIMIZED, options.minimized);
+        Log.d("DEBUG", "EquinoxView saveState :: nextyear:" + cardIsNextYear + " :: swapped:" + userSwappedCard + " :: minimized:" + options.minimized);
         return true;
     }
 
@@ -470,8 +443,8 @@ public class EquinoxView extends LinearLayout
         boolean cardIsNextYear = bundle.getBoolean(EquinoxView.KEY_UI_CARDISNEXTYEAR, false);
         flipper.setDisplayedChild((cardIsNextYear ? 1 : 0));
         userSwappedCard = bundle.getBoolean(EquinoxView.KEY_UI_USERSWAPPEDCARD, false);
-        minimized = bundle.getBoolean(EquinoxView.KEY_UI_MINIMIZED, minimized);
-        Log.d("DEBUG", "EquinoxView loadState :: nextyear: " + cardIsNextYear + " :: swapped:" + userSwappedCard + " :: minimized:" + minimized);
+        options.minimized = bundle.getBoolean(EquinoxView.KEY_UI_MINIMIZED, options.minimized);
+        Log.d("DEBUG", "EquinoxView loadState :: nextyear: " + cardIsNextYear + " :: swapped:" + userSwappedCard + " :: minimized:" + options.minimized);
     }
 
     public boolean showNextCard()
@@ -550,7 +523,7 @@ public class EquinoxView extends LinearLayout
         @Override
         public boolean onTouch(View view, MotionEvent event)
         {
-            if (minimized)
+            if (options.minimized)
                 return false;
 
             switch (event.getAction())
@@ -564,11 +537,11 @@ public class EquinoxView extends LinearLayout
                     secondTouchX = event.getX();
                     if ((secondTouchX - firstTouchX) > FLING_SENSITIVITY)
                     {   // swipe right; back to previous view
-                        userSwappedCard = (isRtl ? showNextCard() : showPreviousCard());
+                        userSwappedCard = (options.isRtl ? showNextCard() : showPreviousCard());
 
                     } else if (firstTouchX - secondTouchX > FLING_SENSITIVITY) {
                         // swipe left; advance to next view
-                        userSwappedCard = (isRtl ? showPreviousCard() : showNextCard());
+                        userSwappedCard = (options.isRtl ? showPreviousCard() : showNextCard());
 
                     } else {
                         // swipe cancel; reset current view
@@ -586,7 +559,7 @@ public class EquinoxView extends LinearLayout
                     int currentIndex = flipper.getDisplayedChild();
 
                     int otherIndex;
-                    if (isRtl)
+                    if (options.isRtl)
                     {
                         otherIndex = (isSwipeRight ? currentIndex + 1 : currentIndex - 1);
                     } else
@@ -629,19 +602,21 @@ public class EquinoxView extends LinearLayout
     /**
      * EquinoxNote
      */
-    protected class EquinoxNote
+    public static class EquinoxNote
     {
         protected TextView labelView, timeView, noteView;
         protected Calendar time, now;
         protected boolean highlighted;
         protected int pageIndex = 0;
+        private EquinoxViewOptions options;
 
-        public EquinoxNote(TextView labelView, TextView timeView, TextView noteView, int pageIndex)
+        public EquinoxNote(TextView labelView, TextView timeView, TextView noteView, int pageIndex, EquinoxViewOptions options)
         {
             this.labelView = labelView;
             this.timeView = timeView;
             this.noteView = noteView;
             this.pageIndex = pageIndex;
+            this.options = options;
 
             if (this.timeView != null)
             {
@@ -650,9 +625,10 @@ public class EquinoxView extends LinearLayout
                     @Override
                     public void onClick(View v)
                     {
-                        if (minimized)
+                        if (EquinoxNote.this.options.minimized)
                         {
-                            flipper.performClick();
+                            //flipper.performClick();
+                            // TODO: restore
                         }
                     }
                 });
@@ -669,15 +645,15 @@ public class EquinoxView extends LinearLayout
         public void themeViews(Integer labelColor, Integer timeColor, Integer textColor)
         {
             if (labelColor != null) {
-                labelView.setTextColor(SuntimesUtils.colorStateList(labelColor, disabledColor));
+                labelView.setTextColor(SuntimesUtils.colorStateList(labelColor, options.disabledColor));
             } else Log.e("EquinoxView", "themeViews: null color, ignoring...");
 
             if (timeColor != null) {
-                timeView.setTextColor(SuntimesUtils.colorStateList(timeColor, disabledColor));
+                timeView.setTextColor(SuntimesUtils.colorStateList(timeColor, options.disabledColor));
             } else Log.e("EquinoxView", "themeViews: null color, ignoring...");
 
             if (textColor != null) {
-                noteView.setTextColor(SuntimesUtils.colorStateList(textColor, disabledColor));
+                noteView.setTextColor(SuntimesUtils.colorStateList(textColor, options.disabledColor));
             } else Log.e("EquinoxView", "themeViews: null color, ignoring...");
         }
 
@@ -711,13 +687,13 @@ public class EquinoxView extends LinearLayout
                     if (time.before(Calendar.getInstance()))
                     {
                         String noteString = context.getString(R.string.ago, noteText);
-                        SpannableString noteSpan = (noteView.isEnabled() ? SuntimesUtils.createBoldColorSpan(null, noteString, noteText, noteColor)
+                        SpannableString noteSpan = (noteView.isEnabled() ? SuntimesUtils.createBoldColorSpan(null, noteString, noteText, options.noteColor)
                                                                          : SuntimesUtils.createBoldSpan(null, noteString, noteText));
                         noteView.setText(noteSpan);
 
                     } else {
                         String noteString = context.getString(R.string.hence, noteText);
-                        SpannableString noteSpan = (noteView.isEnabled() ? SuntimesUtils.createBoldColorSpan(null, noteString, noteText, noteColor)
+                        SpannableString noteSpan = (noteView.isEnabled() ? SuntimesUtils.createBoldColorSpan(null, noteString, noteText, options.noteColor)
                                                                          : SuntimesUtils.createBoldSpan(null, noteString, noteText));
                         noteView.setText(noteSpan);
                     }
@@ -779,6 +755,53 @@ public class EquinoxView extends LinearLayout
         public Calendar getTime()
         {
             return time;
+        }
+    }
+
+    /**
+     * EquinoxViewOptions
+     */
+    public static class EquinoxViewOptions
+    {
+        public boolean isRtl = false;
+        public boolean minimized = false;
+        public boolean centered = false;
+
+        public WidgetSettings.TrackingMode trackingMode = WidgetSettings.TrackingMode.SOONEST;
+
+        public int titleColor, noteColor, disabledColor, pressedColor;
+        public Integer[] seasonColors = new Integer[4];
+        public Integer labelColor, textColor;
+        public int resID_buttonPressColor;
+
+        @SuppressLint("ResourceType")
+        public void init(Context context)
+        {
+            int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.text_disabledColor, R.attr.buttonPressColor };
+            TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+            noteColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.transparent));
+            titleColor = noteColor;
+            disabledColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.text_disabled_dark));
+            resID_buttonPressColor = typedArray.getResourceId(2, R.color.btn_tint_pressed_dark);
+            pressedColor = ContextCompat.getColor(context, resID_buttonPressColor);
+            labelColor = textColor = seasonColors[0] = seasonColors[1] = seasonColors[2] = seasonColors[3] = null;
+            typedArray.recycle();
+        }
+
+        public void init(SuntimesTheme theme)
+        {
+            if (theme != null)
+            {
+                titleColor = theme.getTitleColor();
+                noteColor = theme.getTimeColor();
+                labelColor = theme.getTitleColor();
+                textColor = theme.getTextColor();
+                pressedColor = theme.getActionColor();
+                seasonColors[0] = theme.getSpringColor();
+                seasonColors[1] = theme.getSummerColor();
+                seasonColors[2] = theme.getFallColor();
+                seasonColors[3] = theme.getWinterColor();
+            }
         }
     }
 
