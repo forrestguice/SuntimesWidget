@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -43,12 +43,12 @@ import android.widget.TextView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 
+import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorListAdapter;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 
-import com.forrestguice.suntimeswidget.layouts.SunLayout;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
@@ -163,7 +163,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID)
         {
-            Log.w("CONFIG", "Invalid widget ID! returning early.");
+            Log.w("onCreate", "Invalid widget ID! returning early.");
             finish();
             return;
         }
@@ -188,7 +188,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     @Override
     public void onDestroy()
     {
-        locationConfig.cancelGetFix();
+        if (locationConfig != null) {           // null if onCreate finishes early
+            locationConfig.cancelGetFix();
+        }
         super.onDestroy();
     }
 
@@ -1353,6 +1355,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             final Context context = SuntimesConfigActivity0.this;
             saveSettings(context);
             updateWidgets(context,  new int[] {appWidgetId});
+            CalculatorProvider.clearCachedConfig(appWidgetId);
 
             Intent resultValue = new Intent();
             resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);

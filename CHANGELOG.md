@@ -7,6 +7,17 @@
 * adds 1x1 moon position widgets; azimuth & elevation, right ascension & declination, and current distance.
 * adds 3x2 moon widget that.. TODO.
 
+### v0.11.9 (2019-08-22)
+* fixes app crash when supplied with invalid data (bad URI, alarmID, or widgetID) ("Intent resolution bugs"; #353).
+* updates translation to Brazilian Portuguese (pt-br) (#350 by Neto Silva).
+
+### v0.11.8 (2019-07-30)
+* fixes bug "half hour and 45-minute time zones are listed incorrectly" (#346).
+* fixes bug "content provider uses a stale configuration" (#347).
+
+### v0.11.7 (2019-07-08)
+* updates translations to Spanish (es-es) and Catalan (ca) (#340, #343 by Raulvo).
+
 ### v0.11.6 (2019-06-24)
 * fixes bug "Suntimes Alarms uses elevation even if unchecked" (#336).
 * fixes bug "worldmap dialog fails to apply themed foreground color" (#337).

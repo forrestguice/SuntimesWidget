@@ -897,6 +897,7 @@ public class CalculatorProvider extends ContentProvider
                         : WidgetSettings.loadCalculatorModePref(context, appWidgetID, calculatorName));
             }
             SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
+            //Log.d("CalculatorProvider", "initCalculator: " + location.getLabel() + " :: " + location.toString());
             return factory.createCalculator(location, timezone);
         }
     }
@@ -905,13 +906,15 @@ public class CalculatorProvider extends ContentProvider
     private static SuntimesCalculator initSunCalculator(Context context, int appWidgetID)
     {
         SuntimesCalculator retValue = sunSource.get(appWidgetID);   // lazy init
-        if (retValue == null) {
+        if (retValue == null)
+        {
             Location location = WidgetSettings.loadLocationPref(context, appWidgetID);
             TimeZone timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
             SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(context, appWidgetID);
             SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
             sunSource.put(appWidgetID, (retValue = factory.createCalculator(location, timezone)));
-        }
+            //Log.d("CalculatorProvider", "initSunCalculator: " + location.getLabel() + " :: " + location.toString());
+        } //else Log.d("CalculatorProvider", "initSunCalculator: using pre-existing calculator");
         return retValue;
     }
     private SuntimesCalculator initSunCalculator(Context context, HashMap<String,String> selection) {
@@ -929,11 +932,18 @@ public class CalculatorProvider extends ContentProvider
             SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(context, 0, "moon");      // always use app calculator (0)
             SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
             moonSource.put(appWidgetID, (retValue = factory.createCalculator(location, timezone)));
-        }
+            //Log.d("CalculatorProvider", "initMoonCalculator: " + location.getLabel() + " :: " + location.toString());
+        } //else Log.d("CalculatorProvider", "initMoonCalculator: using pre-existing calculator");
         return retValue;
     }
     private SuntimesCalculator initMoonCalculator(Context context, HashMap<String,String> selection) {
         return initCalculator(context, selection, "moon");
+    }
+
+    public static void clearCachedConfig(int appWidgetID)
+    {
+        sunSource.remove(appWidgetID);
+        moonSource.remove(appWidgetID);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
