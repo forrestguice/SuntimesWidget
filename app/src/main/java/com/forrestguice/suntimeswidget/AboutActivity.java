@@ -49,6 +49,7 @@ public class AboutActivity extends AppCompatActivity
 {
     public static final String EXTRA_ICONID = "iconResourceID";
 
+    private TabLayout tabs;
     private AboutPagerAdapter pagerAdapter;
     private ViewPager viewPager;
     private AppSettings.LocaleInfo localeInfo;
@@ -87,7 +88,7 @@ public class AboutActivity extends AppCompatActivity
         viewPager = (ViewPager) findViewById(R.id.container);
         viewPager.setAdapter(pagerAdapter);
 
-        TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
+        tabs = (TabLayout) findViewById(R.id.tabs);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
         tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
     }
@@ -125,8 +126,8 @@ public class AboutActivity extends AppCompatActivity
                     return AboutAppFragment.newInstance( AboutAppFragment.LAYOUT_CONTRIBUTIONS );
                 case 2:
                     return AboutAppFragment.newInstance( AboutAppFragment.LAYOUT_PRIVACY );
-                case 3:
-                    return AboutAppFragment.newInstance( AboutAppFragment.LAYOUT_BUSKING );
+                //case 3:
+                //    return AboutAppFragment.newInstance( AboutAppFragment.LAYOUT_BUSKING );
                 case 0:
                 default:
                     return AboutAppFragment.newInstance( AboutAppFragment.LAYOUT_APP );
@@ -136,7 +137,7 @@ public class AboutActivity extends AppCompatActivity
         @Override
         public int getCount()
         {
-            return 4;
+            return 3;
         }
     }
 
@@ -150,7 +151,7 @@ public class AboutActivity extends AppCompatActivity
         public static final int LAYOUT_APP = 0;
         public static final int LAYOUT_CONTRIBUTIONS = 1;
         public static final int LAYOUT_PRIVACY = 2;
-        public static final int LAYOUT_BUSKING = 3;
+        //public static final int LAYOUT_BUSKING = 3;
 
         public AboutAppFragment()
         {
@@ -179,9 +180,9 @@ public class AboutActivity extends AppCompatActivity
                     view = inflater.inflate(R.layout.layout_about_contributions, container, false);
                     break;
 
-                case LAYOUT_BUSKING:
-                    view = inflater.inflate(R.layout.layout_about_busking, container, false);
-                    break;
+                //case LAYOUT_BUSKING:
+                //    view = inflater.inflate(R.layout.layout_about_busking, container, false);
+                //    break;
 
                 case LAYOUT_APP:
                 default:
