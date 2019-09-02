@@ -483,7 +483,7 @@ public class SuntimesRiseSetDataset
             case MORNING_BLUE8: case EVENING_BLUE8:
                 return dataBlue8.getEvents(event);
         }
-        return null;
+        return new Calendar[] { null, null };
     }
 
 }
