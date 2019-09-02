@@ -73,6 +73,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
@@ -117,6 +118,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     public static final String KEY_UI_CARDISTOMORROW = "cardIsTomorrow";
     public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedCard";
+    public static final String KEY_UI_RESETNOTE = "resetNote";
 
     public static final String WARNINGID_DATE = "Date";
     public static final String WARNINGID_TIMEZONE = "Timezone";
@@ -296,7 +298,7 @@ public class SuntimesActivity extends AppCompatActivity
                 showEquinoxDialog();
 
             } else {
-                if (data != null) {
+                if (data != null && LocationConfigView.SCHEME_GEO.equals(data.getScheme())) {
                     configLocation(data);
                 }
             }
@@ -349,12 +351,6 @@ public class SuntimesActivity extends AppCompatActivity
         registerReceivers(SuntimesActivity.this);
         setUpdateAlarms(SuntimesActivity.this);
 
-        if (onStart_resetNoteIndex)
-        {
-            notes.resetNoteIndex();
-            onStart_resetNoteIndex = false;
-        }
-
         updateViews(SuntimesActivity.this);
     }
     private boolean onStart_resetNoteIndex = false;
@@ -368,6 +364,11 @@ public class SuntimesActivity extends AppCompatActivity
         super.onResume();
         updateActionBar(this);
         getFixHelper.onResume();
+
+        if (onStart_resetNoteIndex) {
+            notes.resetNoteIndex();
+            onStart_resetNoteIndex = false;
+        }
 
         // restore open dialogs
         updateDialogs(this);
@@ -394,6 +395,7 @@ public class SuntimesActivity extends AppCompatActivity
         TimeDateDialog dateDialog = (TimeDateDialog) fragments.findFragmentByTag(DIALOGTAG_DATE);
         if (dateDialog != null)
         {
+            dateDialog.setTimezone(dataset.timezone());
             dateDialog.setOnAcceptedListener(onConfigDate);
             dateDialog.setOnCanceledListener(onCancelDate);
             //Log.d("DEBUG", "TimeDateDialog listeners restored.");
@@ -613,6 +615,7 @@ public class SuntimesActivity extends AppCompatActivity
         saveWarnings(outState);
         outState.putBoolean(KEY_UI_USERSWAPPEDCARD, userSwappedCard);
         outState.putBoolean(KEY_UI_CARDISTOMORROW, (card_flipper.getDisplayedChild() != 0));
+        outState.putBoolean(KEY_UI_RESETNOTE, onStart_resetNoteIndex);
         card_equinoxSolstice.saveState(outState);
     }
 
@@ -621,6 +624,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         super.onRestoreInstanceState(savedInstanceState);
         restoreWarnings(savedInstanceState);
+        onStart_resetNoteIndex = savedInstanceState.getBoolean(KEY_UI_RESETNOTE, onStart_resetNoteIndex);
         setUserSwappedCard(savedInstanceState.getBoolean(KEY_UI_USERSWAPPEDCARD, false), "onRestoreInstanceState");
         boolean cardIsTomorrow = savedInstanceState.getBoolean(KEY_UI_CARDISTOMORROW, false);
         card_flipper.setDisplayedChild((cardIsTomorrow ? 1 : 0));
@@ -1502,6 +1506,7 @@ public class SuntimesActivity extends AppCompatActivity
     private void configDate()
     {
         final TimeDateDialog datePicker = new TimeDateDialog();
+        datePicker.setTimezone(dataset.timezone());
         datePicker.setOnAcceptedListener(onConfigDate);
         datePicker.setOnCanceledListener(onCancelDate);
         datePicker.show(getSupportFragmentManager(), DIALOGTAG_DATE);
@@ -1563,6 +1568,7 @@ public class SuntimesActivity extends AppCompatActivity
             @Override
             public void onClick(DialogInterface dialogInterface, int i)
             {
+                CalculatorProvider.clearCachedConfig(0);
                 calculateData(SuntimesActivity.this);
                 setUpdateAlarms(SuntimesActivity.this);
                 updateActionBar(SuntimesActivity.this);
@@ -1598,6 +1604,7 @@ public class SuntimesActivity extends AppCompatActivity
         public void onClick(DialogInterface dialogInterface, int i)
         {
             timezoneWarning.reset();
+            CalculatorProvider.clearCachedConfig(0);
             calculateData(SuntimesActivity.this);
             setUpdateAlarms(SuntimesActivity.this);
             updateViews(SuntimesActivity.this);
