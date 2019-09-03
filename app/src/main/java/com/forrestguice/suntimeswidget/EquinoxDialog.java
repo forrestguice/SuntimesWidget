@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -31,22 +31,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 public class EquinoxDialog extends DialogFragment
 {
     private EquinoxView equinoxView;
-
-    private SuntimesEquinoxSolsticeDataset data;
-    public void setData( SuntimesEquinoxSolsticeDataset data )
-    {
-        if (data != null && !data.isCalculated() && data.isImplemented())
-        {
-            data.calculateData();
-        }
-        this.data = data;
-    }
 
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -64,6 +54,7 @@ public class EquinoxDialog extends DialogFragment
         AlertDialog dialog = builder.create();
 
         equinoxView = (EquinoxView) dialogContent.findViewById(R.id.info_time_equinox);
+        equinoxView.setTrackingMode(WidgetSettings.loadTrackingModePref(getContext(), 0));
         if (savedInstanceState != null)
         {
             Log.d("DEBUG", "EquinoxDialog onCreate (restoreState)");
@@ -79,9 +70,8 @@ public class EquinoxDialog extends DialogFragment
         @Override
         public void onShow(DialogInterface dialogInterface) {
             Context context = getContext();
-            if (context != null)
-            {
-                equinoxView.updateViews(getContext(), data);
+            if (context != null) {
+                equinoxView.updateViews(getContext());
             } else Log.w("EquinoxDialog.onShow", "null context! skipping update");
         }
     };
@@ -106,9 +96,8 @@ public class EquinoxDialog extends DialogFragment
 
     public void updateViews()
     {
-        if (equinoxView != null)
-        {
-            equinoxView.updateViews(getContext(), data);
+        if (equinoxView != null) {
+            equinoxView.updateViews(getContext());
             Log.d("DEBUG", "EquinoxDialog updated");
         }
     }

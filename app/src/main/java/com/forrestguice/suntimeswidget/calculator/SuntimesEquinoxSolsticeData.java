@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
 
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
@@ -195,6 +196,12 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
         }
 
         super.calculate();
+    }
+
+    public boolean isImplemented()
+    {
+        SuntimesCalculatorDescriptor calculatorDesc = calculatorMode();
+        return calculatorDesc.hasRequestedFeature(SuntimesCalculator.FEATURE_SOLSTICE);
     }
 }
 

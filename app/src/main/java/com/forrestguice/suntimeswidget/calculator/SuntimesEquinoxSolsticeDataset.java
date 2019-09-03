@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2018 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -174,10 +174,16 @@ public class SuntimesEquinoxSolsticeDataset
         dataSolsticeWinter.invalidateCalculation();
     }
 
-    public boolean isImplemented()
+    public boolean isImplemented() {
+        return dataEquinoxSpring.isImplemented();
+    }
+
+    public void setTodayIs(Calendar date)
     {
-        SuntimesCalculatorDescriptor calculatorDesc = dataEquinoxSpring.calculatorMode();
-        return calculatorDesc.hasRequestedFeature(SuntimesCalculator.FEATURE_SOLSTICE);
+        dataEquinoxSpring.setTodayIs(date);
+        dataEquinoxAutumnal.setTodayIs(date);
+        dataSolsticeSummer.setTodayIs(date);
+        dataSolsticeWinter.setTodayIs(date);
     }
 
     public Calendar todayIs()

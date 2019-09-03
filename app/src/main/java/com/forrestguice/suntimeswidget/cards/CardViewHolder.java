@@ -374,6 +374,14 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         for (TimeFieldRow row : rows) {
             row.resetHighlight();
         }
+        TextView[] views0 = moonrise.getTimeViews(SolarEvents.MOONRISE);
+        for (TextView view : views0) {
+            TimeFieldRow.resetHighlight(view);
+        }
+        TextView[] views1 = moonrise.getTimeViews(SolarEvents.MOONSET);
+        for (TextView view : views1) {
+            TimeFieldRow.resetHighlight(view);
+        }
     }
 
     /**
