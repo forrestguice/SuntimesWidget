@@ -23,32 +23,34 @@ import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
+
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.ImageViewCompat;
+import android.support.v7.widget.PagerSnapHelper;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.text.SpannableString;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.ViewFlipper;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
+import com.forrestguice.suntimeswidget.cards.CardAdapter;
+import com.forrestguice.suntimeswidget.cards.CardLayoutManager;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -57,19 +59,17 @@ import java.util.HashMap;
 public class EquinoxView extends LinearLayout
 {
     public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedEquinoxCard";
-    public static final String KEY_UI_CARDISNEXTYEAR = "equinoxCardIsNextYear";
+    public static final String KEY_UI_CARDPOSITION = "equinoxCardPosition";
     public static final String KEY_UI_MINIMIZED = "equinoxIsMinimized";
 
     private static SuntimesUtils utils = new SuntimesUtils();
     private boolean userSwappedCard = false;
 
-
     private TextView empty;
-    private ViewFlipper flipper;           // flip between thisYear, nextYear
-    private Animation anim_card_outNext, anim_card_inNext, anim_card_outPrev, anim_card_inPrev;
-
-    private EquinoxViewHolder holder_thisYear, holder_nextYear;
-    private ArrayList<EquinoxNote> notes;
+    private RecyclerView card_view;
+    private CardLayoutManager card_layout;
+    private EquinoxViewAdapter card_adapter;
+    private CardAdapter.CardViewScroller card_scroller;
 
     public EquinoxView(Context context)
     {
@@ -108,31 +108,29 @@ public class EquinoxView extends LinearLayout
 
         empty = (TextView)findViewById(R.id.txt_empty);
 
-        flipper = (ViewFlipper)findViewById(R.id.info_equinoxsolstice_flipper);
-        flipper.setOnTouchListener(cardTouchListener);
+        card_view = (RecyclerView)findViewById(R.id.info_equinoxsolstice_flipper1);
+        card_view.setHasFixedSize(true);
+        card_view.setItemViewCacheSize(7);
+        card_view.setLayoutManager(card_layout = new CardLayoutManager(context));
+        //card_view.addItemDecoration(new CardAdapter.CardViewDecorator(context));
 
-        notes = new ArrayList<EquinoxNote>();
+        card_adapter = new EquinoxViewAdapter(context, options);
+        card_adapter.setEquinoxViewListener(cardListener);
+        card_view.setAdapter(card_adapter);
+        card_view.scrollToPosition(EquinoxViewAdapter.CENTER_POSITION);
 
-        RelativeLayout thisYear = (RelativeLayout)findViewById(R.id.info_equinoxsolstice_thisyear);
-        if (thisYear != null)
-        {
-            EquinoxViewHolder holder = holder_thisYear = new EquinoxViewHolder(thisYear, options);
-            holder.btn_flipperNext.setOnClickListener(onNextCardClick);
-            holder.btn_flipperPrev.setVisibility(View.GONE);
-            notes.addAll(holder_thisYear.notes);
+        SnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(card_view);
+        card_scroller = new CardAdapter.CardViewScroller(context);
+
+        boolean minimized = isMinimized();
+        if (!minimized) {
+            card_view.setOnScrollListener(onCardScrollListener);
         }
-
-        RelativeLayout nextYear = (RelativeLayout)findViewById(R.id.info_equinoxsolstice_nextyear);
-        if (nextYear != null)
-        {
-            EquinoxViewHolder holder = holder_nextYear = new EquinoxViewHolder(nextYear, options);
-            holder.btn_flipperPrev.setOnClickListener(onPrevCardClick);
-            holder.btn_flipperNext.setVisibility(View.GONE);
-            notes.addAll(holder_nextYear.notes);
-        }
+        card_view.setLayoutFrozen(minimized);
 
         if (isInEditMode()) {
-            updateViews(context, null);
+            updateViews(context);
         }
     }
 
@@ -148,8 +146,7 @@ public class EquinoxView extends LinearLayout
         if (theme != null)
         {
             options.init(theme);
-            holder_thisYear.themeViews(theme, options);
-            holder_nextYear.themeViews(theme, options);
+            card_adapter.setThemeOverride(theme);
         }
     }
 
@@ -157,26 +154,6 @@ public class EquinoxView extends LinearLayout
     {
         SuntimesUtils.initDisplayStrings(context);
         options.isRtl = AppSettings.isLocaleRtl(context);
-        initAnimations(context);
-    }
-
-    private void initAnimations(Context context)
-    {
-        anim_card_inNext = AnimationUtils.loadAnimation(context, R.anim.fade_in);
-        anim_card_inPrev = AnimationUtils.loadAnimation(context, R.anim.fade_in);
-
-        anim_card_outNext = AnimationUtils.loadAnimation(context, R.anim.fade_out);
-        anim_card_outPrev = AnimationUtils.loadAnimation(context, R.anim.fade_out);
-    }
-
-    private EquinoxNote addNote(TextView labelView, TextView timeView, TextView noteView, int pageIndex, Integer timeColor)
-    {
-        EquinoxNote note = new EquinoxNote(labelView, timeView, noteView, pageIndex, options);
-        if (timeColor != null) {
-            note.themeViews(options.labelColor, timeColor, options.textColor);
-        }
-        notes.add(note);
-        return note;
     }
 
     public void setTrackingMode(WidgetSettings.TrackingMode mode) {
@@ -193,294 +170,185 @@ public class EquinoxView extends LinearLayout
         return options.minimized;
     }
 
-    private void showNextPrevButtons( boolean show )
-    {
-        if (show)
-        {
-            holder_thisYear.btn_flipperNext.setVisibility(View.VISIBLE);
-            holder_thisYear.btn_flipperPrev.setVisibility(View.GONE);
-            holder_nextYear.btn_flipperNext.setVisibility(View.GONE);
-            holder_nextYear.btn_flipperPrev.setVisibility(View.VISIBLE);
-
-        } else {
-            holder_thisYear.btn_flipperNext.setVisibility(View.GONE);
-            holder_thisYear.btn_flipperPrev.setVisibility(View.GONE);
-            holder_nextYear.btn_flipperNext.setVisibility(View.GONE);
-            holder_nextYear.btn_flipperPrev.setVisibility(View.GONE);
-        }
-    }
-
-    private void showTitle( boolean show )
-    {
-        holder_thisYear.title.setVisibility(show ? View.VISIBLE : View.GONE);
-        holder_nextYear.title.setVisibility(show ? View.VISIBLE : View.GONE);
-    }
-
     private void showEmptyView( boolean show )
     {
         empty.setVisibility(show ? View.VISIBLE : View.GONE);
-        flipper.setVisibility(show ? View.GONE : View.VISIBLE);
+        card_view.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 
-    protected void updateViews( Context context, SuntimesEquinoxSolsticeDataset data )
+    protected void updateViews(Context context) {
+        SuntimesEquinoxSolsticeDataset data = card_adapter.initData(context, EquinoxViewAdapter.CENTER_POSITION);
+        showEmptyView(data == null || !data.isImplemented());
+
+        int position = card_adapter.highlightNote(context);
+        if (position != -1) {
+            card_view.setLayoutFrozen(false);
+            card_view.scrollToPosition(position);
+            card_view.setLayoutFrozen(isMinimized());
+        }
+    }
+
+    public boolean isImplemented(Context context)
     {
-        showTitle(!options.minimized);
-        showNextPrevButtons(!options.minimized);
-        showEmptyView(false);
-
-        if (isInEditMode())
-        {
-            if (options.minimized)
-            {
-                for (int i = 1; i < notes.size(); i++)
-                {
-                    EquinoxNote note = notes.get(i);
-                    note.setVisible(false);
-                }
-            }
-            return;
-        }
-
-        if (data == null)
-        {
-            for (EquinoxNote note : notes)
-            {
-                note.setEnabled(false);
-                note.updateDate(context, null);
-                note.updateNote(context, null);
-
-                if (options.minimized)
-                {
-                    note.setVisible(false);
-                }
-            }
-            return;
-        }
-
-        if (data.isCalculated() && data.isImplemented())
-        {
-            SuntimesUtils.TimeDisplayText thisYear = utils.calendarDateYearDisplayString(context, data.dataEquinoxVernal.eventCalendarThisYear());
-            holder_thisYear.title.setText(thisYear.toString());
-
-            SuntimesUtils.TimeDisplayText nextYear = utils.calendarDateYearDisplayString(context, data.dataEquinoxVernal.eventCalendarOtherYear());
-            holder_nextYear.title.setText(nextYear.toString());
-
-            boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
-            boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
-
-            holder_thisYear.note_equinox_vernal.updateDate(context, data.dataEquinoxVernal.eventCalendarThisYear(), showTime, showSeconds);
-            holder_thisYear.note_equinox_autumnal.updateDate(context, data.dataEquinoxAutumnal.eventCalendarThisYear(), showTime, showSeconds);
-            holder_thisYear.note_solstice_summer.updateDate(context, data.dataSolsticeSummer.eventCalendarThisYear(), showTime, showSeconds);
-            holder_thisYear.note_solstice_winter.updateDate(context, data.dataSolsticeWinter.eventCalendarThisYear(), showTime, showSeconds);
-
-            holder_nextYear.note_equinox_vernal.updateDate(context, data.dataEquinoxVernal.eventCalendarOtherYear(), showTime, showSeconds);
-            holder_nextYear.note_equinox_autumnal.updateDate(context, data.dataEquinoxAutumnal.eventCalendarOtherYear(), showTime, showSeconds);
-            holder_nextYear.note_solstice_summer.updateDate(context, data.dataSolsticeSummer.eventCalendarOtherYear(), showTime, showSeconds);
-            holder_nextYear.note_solstice_winter.updateDate(context, data.dataSolsticeWinter.eventCalendarOtherYear(), showTime, showSeconds);
-
-            boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, 0);
-            boolean showHours = WidgetSettings.loadShowHoursPref(context, 0);
-            for (EquinoxNote note : notes)
-            {
-                note.setEnabled();
-                note.updateNote(context, data.now(), showWeeks, showHours);
-                note.setVisible(!options.minimized);
-            }
-
-            EquinoxNote nextNote = (options.trackingMode == WidgetSettings.TrackingMode.SOONEST ? EquinoxViewHolder.findSoonestNote(data.now(), notes)
-                                                                                        : EquinoxViewHolder.findClosestNote(data.now(), notes));
-            if (nextNote == null)
-            {
-                nextNote = notes.get(0);
-            }
-
-            if (!userSwappedCard)
-            {
-                flipper.setDisplayedChild(nextNote.pageIndex);
-            }
-            nextNote.setVisible(true);
-            nextNote.setHighlighted(true);
-
-        } else {
-            if (options.minimized)
-            {
-                for (EquinoxNote note : notes)
-                {
-                    note.setVisible(false);
-                }
-            } else {
-                showEmptyView(true);
-            }
-        }
+        SuntimesEquinoxSolsticeDataset data = card_adapter.initData(context, EquinoxViewAdapter.CENTER_POSITION);
+        return (data != null && data.isImplemented());
     }
 
     public boolean saveState(Bundle bundle)
     {
-        boolean cardIsNextYear = (flipper.getDisplayedChild() != 0);
-        bundle.putBoolean(EquinoxView.KEY_UI_CARDISNEXTYEAR, cardIsNextYear);
+        bundle.putInt(EquinoxView.KEY_UI_CARDPOSITION, ((card_layout.findFirstVisibleItemPosition() + card_layout.findLastVisibleItemPosition()) / 2));
         bundle.putBoolean(EquinoxView.KEY_UI_USERSWAPPEDCARD, userSwappedCard);
         bundle.putBoolean(EquinoxView.KEY_UI_MINIMIZED, options.minimized);
-        Log.d("DEBUG", "EquinoxView saveState :: nextyear:" + cardIsNextYear + " :: swapped:" + userSwappedCard + " :: minimized:" + options.minimized);
         return true;
     }
 
     public void loadState(Bundle bundle)
     {
-        boolean cardIsNextYear = bundle.getBoolean(EquinoxView.KEY_UI_CARDISNEXTYEAR, false);
-        flipper.setDisplayedChild((cardIsNextYear ? 1 : 0));
         userSwappedCard = bundle.getBoolean(EquinoxView.KEY_UI_USERSWAPPEDCARD, false);
         options.minimized = bundle.getBoolean(EquinoxView.KEY_UI_MINIMIZED, options.minimized);
-        Log.d("DEBUG", "EquinoxView loadState :: nextyear: " + cardIsNextYear + " :: swapped:" + userSwappedCard + " :: minimized:" + options.minimized);
+
+        int cardPosition = bundle.getInt(EquinoxView.KEY_UI_CARDPOSITION, EquinoxViewAdapter.CENTER_POSITION);
+        if (cardPosition == RecyclerView.NO_POSITION) {
+            cardPosition = CardAdapter.TODAY_POSITION;
+        }
+        card_view.scrollToPosition(cardPosition);
+        card_view.smoothScrollBy(1, 0);  // triggers a snap
     }
 
-    public boolean showNextCard()
+    public boolean showNextCard(int position)
     {
-        if (hasNextCard())
-        {
-            flipper.setOutAnimation(anim_card_outNext);
-            flipper.setInAnimation(anim_card_inNext);
-            flipper.showNext();
+        int nextPosition = (position + 1);
+        if (nextPosition < card_adapter.getItemCount()) {
+            userSwappedCard = true;
+            card_scroller.setTargetPosition(nextPosition);
+            card_layout.startSmoothScroll(card_scroller);
         }
         return true;
     }
 
-    public boolean hasNextCard()
+    public boolean showPreviousCard(int position)
     {
-        int current = flipper.getDisplayedChild();
-        return ((current + 1) < flipper.getChildCount());
-    }
-
-    public boolean showPreviousCard()
-    {
-        if (hasPreviousCard())
-        {
-            flipper.setOutAnimation(anim_card_outPrev);
-            flipper.setInAnimation(anim_card_inPrev);
-            flipper.showPrevious();
+        int prevPosition = (position - 1);
+        if (prevPosition >= 0) {
+            userSwappedCard = true;
+            card_scroller.setTargetPosition(prevPosition);
+            card_layout.startSmoothScroll(card_scroller);
         }
         return true;
     }
 
-    public boolean hasPreviousCard()
-    {
-        int current = flipper.getDisplayedChild();
-        int prev = current - 1;
-        return (prev >= 0);
+    private View.OnClickListener onClickListener;
+    public void setOnClickListener( View.OnClickListener listener ) {
+        onClickListener = listener;
     }
 
-    public void setOnClickListener( View.OnClickListener listener )
-    {
-        flipper.setOnClickListener(listener);
+    private View.OnLongClickListener onLongClickListener;
+    public void setOnLongClickListener( View.OnLongClickListener listener) {
+        onLongClickListener = listener;
     }
 
-    public void setOnLongClickListener( View.OnLongClickListener listener)
-    {
-        flipper.setOnLongClickListener(listener);
-    }
-
-    private View.OnClickListener onNextCardClick = new View.OnClickListener()
+    private RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
     {
         @Override
-        public void onClick(View view)
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState)
         {
-            userSwappedCard = showNextCard();
-        }
-    };
-
-    private View.OnClickListener onPrevCardClick = new View.OnClickListener()
-    {
-
-        @Override
-        public void onClick(View view)
-        {
-            userSwappedCard = showPreviousCard();
-        }
-    };
-
-    /**
-     *
-     */
-    private View.OnTouchListener cardTouchListener = new View.OnTouchListener()
-    {
-        public int MOVE_SENSITIVITY = 150;
-        public int FLING_SENSITIVITY = 25;
-        public float firstTouchX, secondTouchX;
-
-        @Override
-        public boolean onTouch(View view, MotionEvent event)
-        {
-            if (options.minimized)
-                return false;
-
-            switch (event.getAction())
-            {
-                case MotionEvent.ACTION_DOWN:
-                    firstTouchX = event.getX();
-                    performClick();
-                    break;
-
-                case MotionEvent.ACTION_UP:
-                    secondTouchX = event.getX();
-                    if ((secondTouchX - firstTouchX) > FLING_SENSITIVITY)
-                    {   // swipe right; back to previous view
-                        userSwappedCard = (options.isRtl ? showNextCard() : showPreviousCard());
-
-                    } else if (firstTouchX - secondTouchX > FLING_SENSITIVITY) {
-                        // swipe left; advance to next view
-                        userSwappedCard = (options.isRtl ? showPreviousCard() : showNextCard());
-
-                    } else {
-                        // swipe cancel; reset current view
-                        final View currentView = flipper.getCurrentView();
-                        currentView.layout(0, currentView.getTop(), currentView.getWidth(), currentView.getBottom());
-                    }
-                    break;
-
-                case MotionEvent.ACTION_MOVE:
-                    float currentTouchX = event.getX();
-                    int moveDelta = (int) (currentTouchX - firstTouchX);
-                    boolean isSwipeRight = (moveDelta > 0);
-
-                    final View currentView = flipper.getCurrentView();
-                    int currentIndex = flipper.getDisplayedChild();
-
-                    int otherIndex;
-                    if (options.isRtl)
-                    {
-                        otherIndex = (isSwipeRight ? currentIndex + 1 : currentIndex - 1);
-                    } else
-                    {
-                        otherIndex = (isSwipeRight ? currentIndex - 1 : currentIndex + 1);
-                    }
-
-                    if (otherIndex >= 0 && otherIndex < flipper.getChildCount())
-                    {
-                        // in-between child views; flip between them
-                        currentView.layout(moveDelta, currentView.getTop(),
-                                moveDelta + currentView.getWidth(), currentView.getBottom());
-
-                        // extended movement; manually trigger swipe/fling
-                        if (moveDelta > MOVE_SENSITIVITY || moveDelta < MOVE_SENSITIVITY * -1)
-                        {
-                            event.setAction(MotionEvent.ACTION_UP);
-                            return onTouch(view, event);
-                        }
-
-                    } //else {
-                        // at-a-boundary (the first/last view);
-                        // TODO: animate somehow to let user know there aren't additional views
-                    //}
-                    break;
+            super.onScrollStateChanged(recyclerView, newState);
+            if (newState ==  RecyclerView.SCROLL_STATE_DRAGGING) {
+                userSwappedCard = true;
             }
-
-            return false;
         }
     };
 
-    public void adjustColumnWidth(Context context, int columnWidthPx)
+    private EquinoxViewListener cardListener = new EquinoxViewListener()
     {
-        holder_thisYear.adjustColumnWidth(context, columnWidthPx);
-        holder_nextYear.adjustColumnWidth(context, columnWidthPx);
+        @Override
+        public void onClick( int position ) {
+            if (onClickListener != null) {
+                onClickListener.onClick(EquinoxView.this);
+            }
+        }
+        @Override
+        public boolean onLongClick( int position ) {
+            if (onLongClickListener != null) {
+                return onLongClickListener.onLongClick(EquinoxView.this);
+            } else return false;
+        }
+        @Override
+        public void onTitleClick( int position ) {
+            if (Math.abs(position - EquinoxViewAdapter.CENTER_POSITION) > SuntimesActivity.HIGHLIGHT_SCROLLING_ITEMS) {
+                card_view.scrollToPosition(EquinoxViewAdapter.CENTER_POSITION);
+            } else {
+                card_scroller.setTargetPosition(EquinoxViewAdapter.CENTER_POSITION);
+                card_layout.startSmoothScroll(card_scroller);
+            }
+        }
+        @Override
+        public void onNextClick( int position ) {
+            userSwappedCard = showNextCard(position);
+        }
+        @Override
+        public void onPrevClick( int position ) {
+            userSwappedCard = showPreviousCard(position);
+        }
+    };
+
+    public void adjustColumnWidth(int columnWidthPx)
+    {
+        options.columnWidthPx = columnWidthPx;
+        card_adapter.notifyDataSetChanged();
+    }
+
+    public static EquinoxNote findClosestNote(Calendar now, boolean upcoming, ArrayList<EquinoxNote> notes)
+    {
+        if (notes == null || now == null) {
+            return null;
+        }
+
+        EquinoxNote closest = null;
+        long timeDeltaMin = Long.MAX_VALUE;
+        for (EquinoxNote note : notes)
+        {
+            Calendar noteTime = note.getTime();
+            if (noteTime != null)
+            {
+                if (upcoming && !noteTime.after(now))
+                    continue;
+
+                long timeDelta = Math.abs(noteTime.getTimeInMillis() - now.getTimeInMillis());
+                if (timeDelta < timeDeltaMin)
+                {
+                    timeDeltaMin = timeDelta;
+                    closest = note;
+                }
+            }
+        }
+        return closest;
+    }
+    public static int findClosestPage(Calendar now, boolean upcoming, ArrayList<Pair<Integer, Calendar>> notes)
+    {
+        if (notes == null || now == null) {
+            return -1;
+        }
+
+        Integer closest = null;
+        long timeDeltaMin = Long.MAX_VALUE;
+        for (Pair<Integer, Calendar> note : notes)
+        {
+            Calendar noteTime = note.second;
+            if (noteTime != null)
+            {
+                if (upcoming && !noteTime.after(now))
+                    continue;
+
+                long timeDelta = Math.abs(noteTime.getTimeInMillis() - now.getTimeInMillis());
+                if (timeDelta < timeDeltaMin)
+                {
+                    timeDeltaMin = timeDelta;
+                    closest = note.first;
+                }
+            }
+        }
+        return closest != null ? closest : -1;
     }
 
     /**
@@ -489,9 +357,9 @@ public class EquinoxView extends LinearLayout
     public static class EquinoxNote
     {
         protected TextView labelView, timeView, noteView;
-        protected Calendar time, now;
+        protected Calendar time;
         protected boolean highlighted;
-        protected int pageIndex = 0;
+        protected int pageIndex;
         private EquinoxViewOptions options;
 
         public EquinoxNote(TextView labelView, TextView timeView, TextView noteView, int pageIndex, EquinoxViewOptions options)
@@ -501,22 +369,6 @@ public class EquinoxView extends LinearLayout
             this.noteView = noteView;
             this.pageIndex = pageIndex;
             this.options = options;
-
-            if (this.timeView != null)
-            {
-                this.timeView.setOnClickListener( new View.OnClickListener()
-                {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        if (EquinoxNote.this.options.minimized)
-                        {
-                            //flipper.performClick();
-                            // TODO: restore
-                        }
-                    }
-                });
-            }
         }
 
         public void adjustLabelWidth( int labelWidthPx )
@@ -555,13 +407,8 @@ public class EquinoxView extends LinearLayout
             }
         }
 
-        public void updateNote( Context context, Calendar now )
-        {
-            updateDate(context, now, true, false);
-        }
         public void updateNote( Context context, Calendar now, boolean showWeeks, boolean showHours )
         {
-            this.now = now;
             if (noteView != null)
             {
                 if (now != null && time != null)
@@ -571,7 +418,7 @@ public class EquinoxView extends LinearLayout
                     if (time.before(Calendar.getInstance()))
                     {
                         String noteString = context.getString(R.string.ago, noteText);
-                        SpannableString noteSpan = (noteView.isEnabled() ? SuntimesUtils.createBoldColorSpan(null, noteString, noteText, options.noteColor)
+                        SpannableString noteSpan = (noteView.isEnabled() ? SuntimesUtils.createBoldColorSpan(null, noteString, noteText, (options.minimized || highlighted ? options.noteColor : options.disabledColor))
                                                                          : SuntimesUtils.createBoldSpan(null, noteString, noteText));
                         noteView.setText(noteSpan);
 
@@ -593,6 +440,7 @@ public class EquinoxView extends LinearLayout
             //highlight(labelView, highlighted);
             highlight(timeView, highlighted);
             setEnabled(true);
+            setVisible(true);
         }
 
         private void highlight( TextView view, boolean value )
@@ -649,7 +497,7 @@ public class EquinoxView extends LinearLayout
     {
         public static final int MAX_POSITIONS = 200;
         public static final int CENTER_POSITION = 100;
-        private HashMap<Integer, SuntimesEquinoxSolsticeData> data = new HashMap<>();
+        private HashMap<Integer, SuntimesEquinoxSolsticeDataset> data = new HashMap<>();
 
         private WeakReference<Context> contextRef;
         private EquinoxViewOptions options;
@@ -664,7 +512,7 @@ public class EquinoxView extends LinearLayout
         public EquinoxViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
             LayoutInflater layout = LayoutInflater.from(parent.getContext());
-            View view = layout.inflate(R.layout.info_time_solsticequinox, parent, false);
+            View view = layout.inflate(R.layout.info_time_solsticequinox1, parent, false);
             return new EquinoxViewHolder(view, options);
         }
 
@@ -680,7 +528,21 @@ public class EquinoxView extends LinearLayout
                 Log.w("EquinoxViewAdapter", "onBindViewHolder: null view holder!");
                 return;
             }
-            holder.bindDataToPosition(context, initData(context, position), position, options);
+            SuntimesEquinoxSolsticeDataset dataset = initData(context, position);
+            holder.bindDataToPosition(context, dataset, position, options);
+
+            if (dataset.isCalculated() && dataset.isImplemented())
+            {
+                holder.enableNotes(!options.minimized);
+                if (position == options.highlightPosition || options.minimized)
+                {
+                    EquinoxNote nextNote = findClosestNote(dataset.now(), options.trackingMode == WidgetSettings.TrackingMode.SOONEST, holder.notes);
+                    if (nextNote != null) {
+                        nextNote.setHighlighted(true);
+                    }
+                }
+            }
+
             attachListeners(holder, position);
         }
 
@@ -702,9 +564,9 @@ public class EquinoxView extends LinearLayout
             return MAX_POSITIONS;
         }
 
-        public SuntimesEquinoxSolsticeData initData(Context context, int position)
+        public SuntimesEquinoxSolsticeDataset initData(Context context, int position)
         {
-            SuntimesEquinoxSolsticeData retValue = data.get(position);
+            SuntimesEquinoxSolsticeDataset retValue = data.get(position);
             if (retValue == null) {
                 data.put(position, retValue = createData(context, position));   // data is removed in onViewRecycled
                 Log.d("DEBUG", "add data " + position);
@@ -712,15 +574,39 @@ public class EquinoxView extends LinearLayout
             return retValue;
         }
 
-        protected SuntimesEquinoxSolsticeData createData(Context context, int position)
+        protected SuntimesEquinoxSolsticeDataset createData(Context context, int position)
         {
             Calendar date = Calendar.getInstance();
             date.add(Calendar.YEAR, position - CENTER_POSITION);
 
-            SuntimesEquinoxSolsticeData retValue = new SuntimesEquinoxSolsticeData(context, 0);
+            SuntimesEquinoxSolsticeDataset retValue = new SuntimesEquinoxSolsticeDataset(context, 0);
             retValue.setTodayIs(date);
-            retValue.calculate();
+            retValue.calculateData();
             return retValue;
+        }
+
+        public int highlightNote(Context context)
+        {
+            ArrayList<Pair<Integer,Calendar>> pageInfo = new ArrayList<>();
+            int position = CENTER_POSITION - 1;
+            do {
+                SuntimesEquinoxSolsticeDataset dataset1 = initData(context, position);
+                pageInfo.add(new Pair<Integer,Calendar>(position, dataset1.dataEquinoxVernal.eventCalendarThisYear()));
+                pageInfo.add(new Pair<Integer,Calendar>(position, dataset1.dataEquinoxAutumnal.eventCalendarThisYear()));
+                pageInfo.add(new Pair<Integer,Calendar>(position, dataset1.dataSolsticeSummer.eventCalendarThisYear()));
+                pageInfo.add(new Pair<Integer,Calendar>(position, dataset1.dataSolsticeWinter.eventCalendarThisYear()));
+                position++;
+            } while (position < CENTER_POSITION + 2);
+
+            SuntimesEquinoxSolsticeDataset dataset = initData(context, CENTER_POSITION);
+            options.highlightPosition = findClosestPage(dataset.now(), options.trackingMode == WidgetSettings.TrackingMode.SOONEST, pageInfo);
+
+            notifyDataSetChanged();
+            return options.highlightPosition;
+        }
+
+        public void setThemeOverride( SuntimesTheme theme ) {
+            options.themeOverride = theme;
         }
 
         private EquinoxViewListener viewListener;
@@ -730,18 +616,23 @@ public class EquinoxView extends LinearLayout
 
         private void attachListeners(EquinoxViewHolder holder, int position)
         {
-            holder.title.setOnClickListener(onClick(position));
-            holder.title.setOnLongClickListener(onLongClick(position));
+            holder.title.setOnClickListener(onTitleClick(position));
             holder.btn_flipperNext.setOnClickListener(onNextClick(position));
             holder.btn_flipperPrev.setOnClickListener(onPrevClick(position));
+
+            if (options.minimized) {
+                holder.clickArea.setOnClickListener(onClick(position));
+                holder.clickArea.setOnLongClickListener(onLongClick(position));
+            }
         }
 
         private void detachListeners(EquinoxViewHolder holder)
         {
             holder.title.setOnClickListener(null);
-            holder.title.setOnLongClickListener(null);
             holder.btn_flipperNext.setOnClickListener(null);
             holder.btn_flipperPrev.setOnClickListener(null);
+            holder.clickArea.setOnClickListener(null);
+            holder.clickArea.setOnLongClickListener(null);
         }
 
         private View.OnClickListener onClick( final int position ) {
@@ -761,6 +652,16 @@ public class EquinoxView extends LinearLayout
                     if (viewListener != null) {
                         return viewListener.onLongClick(position);
                     } else return false;
+                }
+            };
+        }
+        private View.OnClickListener onTitleClick( final int position ) {
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (viewListener != null) {
+                        viewListener.onTitleClick(position);
+                    }
                 }
             };
         }
@@ -793,6 +694,8 @@ public class EquinoxView extends LinearLayout
     {
         public int position = RecyclerView.NO_POSITION;
 
+        public View clickArea;
+        public View container;
         public TextView title;
         public ImageButton btn_flipperNext, btn_flipperPrev;
         public EquinoxNote note_equinox_vernal, note_solstice_summer, note_equinox_autumnal, note_solstice_winter;
@@ -801,6 +704,12 @@ public class EquinoxView extends LinearLayout
         public EquinoxViewHolder(View view, EquinoxViewOptions options)
         {
             super(view);
+
+            container = view.findViewById(R.id.card_content);
+            clickArea = view.findViewById(R.id.clickArea);
+            if (!options.minimized) {
+                clickArea.setVisibility(View.GONE);
+            }
 
             title = (TextView)view.findViewById(R.id.text_title);
             btn_flipperNext = (ImageButton)view.findViewById(R.id.info_time_nextbtn);
@@ -826,12 +735,16 @@ public class EquinoxView extends LinearLayout
             TextView txt_solstice_winter_note = (TextView)view.findViewById(R.id.text_date_solstice_winter_note);
             note_solstice_winter = addNote(txt_solstice_winter_label, txt_solstice_winter, txt_solstice_winter_note, 0, options.seasonColors[3], options);
 
-            if (options.centered)
-            {
-                FrameLayout.LayoutParams lpThisYear = (FrameLayout.LayoutParams)view.getLayoutParams();
-                lpThisYear.gravity = Gravity.CENTER_HORIZONTAL;
-                view.setLayoutParams(lpThisYear);
+            if (options.columnWidthPx >= 0) {
+                adjustColumnWidth(options.columnWidthPx);
             }
+
+            /**if (options.centered)  // TODO
+            {
+                FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)view.getLayoutParams();
+                params.gravity = Gravity.CENTER_HORIZONTAL;
+                view.setLayoutParams(params);
+            }*/
         }
 
         private EquinoxNote addNote(TextView labelView, TextView timeView, TextView noteView, int pageIndex, Integer timeColor, EquinoxViewOptions options)
@@ -844,73 +757,75 @@ public class EquinoxView extends LinearLayout
             return note;
         }
 
-        public void bindDataToPosition(@NonNull Context context, SuntimesEquinoxSolsticeData data, int position, EquinoxViewOptions options)
+        public void disableNotes(Context context, EquinoxViewOptions options)
+        {
+            for (EquinoxNote note : notes)
+            {
+                note.setHighlighted(false);
+                note.setEnabled(false);
+                note.updateDate(context, null);
+                note.updateNote(context, null, false, false);
+
+                if (options.minimized) {
+                    note.setVisible(false);
+                }
+            }
+        }
+        public void enableNotes(boolean visible)
+        {
+            for (EquinoxNote note : notes)
+            {
+                note.setEnabled();
+                note.setVisible(visible);
+            }
+        }
+
+        public void bindDataToPosition(@NonNull Context context, SuntimesEquinoxSolsticeDataset data, int position, EquinoxViewOptions options)
         {
             this.position = position;
+            for (EquinoxNote note : notes) {
+                note.pageIndex = position;
+            }
+
+            if (options.themeOverride != null) {
+                applyTheme(options.themeOverride, options);
+            }
+            themeViews(options);
 
             showTitle(!options.minimized);
             showNextPrevButtons(!options.minimized);
 
-            if (data == null)
-            {
-                for (EquinoxNote note : notes)
-                {
-                    note.setEnabled(false);
-                    note.updateDate(context, null);
-                    note.updateNote(context, null);
-
-                    if (options.minimized) {
-                        note.setVisible(false);
-                    }
-                }
+            if (data == null) {
+                disableNotes(context, options);
                 return;
             }
 
-            if (data.isCalculated() && data.isImplemented())
+            if (data.isImplemented() && data.isCalculated())
             {
-                SuntimesUtils.TimeDisplayText titleText = utils.calendarDateYearDisplayString(context, data.eventCalendarThisYear());
+                SuntimesUtils.TimeDisplayText titleText = utils.calendarDateYearDisplayString(context, data.dataEquinoxVernal.eventCalendarThisYear());
                 title.setText(titleText.toString());
 
                 boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
                 boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
 
-                note_equinox_vernal.updateDate(context, data.eventCalendarThisYear(), showTime, showSeconds);
-                note_equinox_autumnal.updateDate(context, data.eventCalendarThisYear(), showTime, showSeconds);
-                note_solstice_summer.updateDate(context, data.eventCalendarThisYear(), showTime, showSeconds);
-                note_solstice_winter.updateDate(context, data.eventCalendarThisYear(), showTime, showSeconds);
+                note_equinox_vernal.updateDate(context, data.dataEquinoxVernal.eventCalendarThisYear(), showTime, showSeconds);
+                note_equinox_autumnal.updateDate(context, data.dataEquinoxAutumnal.eventCalendarThisYear(), showTime, showSeconds);
+                note_solstice_summer.updateDate(context, data.dataSolsticeSummer.eventCalendarThisYear(), showTime, showSeconds);
+                note_solstice_winter.updateDate(context, data.dataSolsticeWinter.eventCalendarThisYear(), showTime, showSeconds);
 
                 boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, 0);
                 boolean showHours = WidgetSettings.loadShowHoursPref(context, 0);
-                for (EquinoxNote note : notes)
-                {
-                    note.setEnabled();
+                for (EquinoxNote note : notes) {
+                    note.setHighlighted(false);
                     note.updateNote(context, data.now(), showWeeks, showHours);
-                    note.setVisible(!options.minimized);
                 }
-
-                EquinoxNote nextNote = (options.trackingMode == WidgetSettings.TrackingMode.SOONEST ? findSoonestNote(data.now(), notes)
-                                                                                                    : findClosestNote(data.now(), notes));
-                if (nextNote == null) {
-                    nextNote = notes.get(0);
-                }
-
-                // TODO
-                /**if (!userSwappedCard)
-                {
-                    flipper.setDisplayedChild(nextNote.pageIndex);
-                }*/
-                nextNote.setVisible(true);
-                nextNote.setHighlighted(true);
 
             } else {
-                if (options.minimized)
-                {
-                    for (EquinoxNote note : notes) {
-                        note.setVisible(false);
-                    }
-                } /** else {
-                    showEmptyView(true);
-                }*/
+                disableNotes(context, options);
+            }
+
+            if (options.columnWidthPx >= 0) {
+                adjustColumnWidth(options.columnWidthPx);
             }
         }
 
@@ -922,69 +837,44 @@ public class EquinoxView extends LinearLayout
         {
             if (show) {
                 btn_flipperNext.setVisibility(View.VISIBLE);
-                btn_flipperPrev.setVisibility(View.GONE);
+                btn_flipperPrev.setVisibility(View.VISIBLE);
             } else {
                 btn_flipperNext.setVisibility(View.GONE);
                 btn_flipperPrev.setVisibility(View.GONE);
             }
         }
 
-        public void adjustColumnWidth(Context context, int columnWidthPx)
+        public void adjustColumnWidth(int columnWidthPx)
         {
             for (EquinoxNote note : notes) {
                 note.adjustLabelWidth(columnWidthPx);
             }
         }
 
-        public void themeViews(SuntimesTheme theme, EquinoxViewOptions options)
+        public void applyTheme(SuntimesTheme theme, EquinoxViewOptions options)
         {
             if (theme != null)
             {
-                if (note_equinox_vernal != null)
-                {
-                    int titleColor = theme.getTitleColor();
-                    title.setTextColor(SuntimesUtils.colorStateList(titleColor, options.disabledColor, options.pressedColor));
-
-                    note_equinox_vernal.themeViews(options.labelColor, options.seasonColors[0], options.textColor);
-                    note_solstice_summer.themeViews(options.labelColor, options.seasonColors[1], options.textColor);
-                    note_equinox_autumnal.themeViews(options.labelColor, options.seasonColors[2], options.textColor);
-                    note_solstice_winter.themeViews(options.labelColor, options.seasonColors[3], options.textColor);
-                }
+                options.titleColor = theme.getTitleColor();
+                options.textColor = theme.getTextColor();
+                options.pressedColor = theme.getActionColor();
+                options.seasonColors[0] = theme.getSpringColor();
+                options.seasonColors[1] = theme.getSummerColor();
+                options.seasonColors[2] = theme.getFallColor();
+                options.seasonColors[3] = theme.getWinterColor();
             }
         }
-
-        public static EquinoxNote findSoonestNote(Calendar now, ArrayList<EquinoxNote> notes) {
-            return findClosestNote(now, true, notes);
-        }
-        public static EquinoxNote findClosestNote(Calendar now, ArrayList<EquinoxNote> notes) {
-            return findClosestNote(now, false, notes);
-        }
-        public static EquinoxNote findClosestNote(Calendar now, boolean upcoming, ArrayList<EquinoxNote> notes)
+        public void themeViews( EquinoxViewOptions options )
         {
-            if (notes == null || now == null)
-            {
-                return null;
-            }
+            title.setTextColor(SuntimesUtils.colorStateList(options.titleColor, options.disabledColor, options.pressedColor));
 
-            EquinoxNote closest = null;
-            long timeDeltaMin = Long.MAX_VALUE;
-            for (EquinoxNote note : notes)
-            {
-                Calendar noteTime = note.getTime();
-                if (noteTime != null)
-                {
-                    if (upcoming && !noteTime.after(now))
-                        continue;
+            ImageViewCompat.setImageTintList(btn_flipperNext, SuntimesUtils.colorStateList(options.titleColor, options.disabledColor, options.pressedColor));
+            ImageViewCompat.setImageTintList(btn_flipperPrev, SuntimesUtils.colorStateList(options.titleColor, options.disabledColor, options.pressedColor));
 
-                    long timeDelta = Math.abs(noteTime.getTimeInMillis() - now.getTimeInMillis());
-                    if (timeDelta < timeDeltaMin)
-                    {
-                        timeDeltaMin = timeDelta;
-                        closest = note;
-                    }
-                }
-            }
-            return closest;
+            note_equinox_vernal.themeViews(options.labelColor, options.seasonColors[0], options.textColor);
+            note_solstice_summer.themeViews(options.labelColor, options.seasonColors[1], options.textColor);
+            note_equinox_autumnal.themeViews(options.labelColor, options.seasonColors[2], options.textColor);
+            note_solstice_winter.themeViews(options.labelColor, options.seasonColors[3], options.textColor);
         }
     }
 
@@ -996,6 +886,8 @@ public class EquinoxView extends LinearLayout
         public boolean isRtl = false;
         public boolean minimized = false;
         public boolean centered = false;
+        public int columnWidthPx = -1;
+        public int highlightPosition = -1;
 
         public WidgetSettings.TrackingMode trackingMode = WidgetSettings.TrackingMode.SOONEST;
 
@@ -1003,6 +895,8 @@ public class EquinoxView extends LinearLayout
         public Integer[] seasonColors = new Integer[4];
         public Integer labelColor, textColor;
         public int resID_buttonPressColor;
+
+        private SuntimesTheme themeOverride = null;
 
         @SuppressLint("ResourceType")
         public void init(Context context)
@@ -1042,6 +936,7 @@ public class EquinoxView extends LinearLayout
     {
         public void onClick( int position ) {}
         public boolean onLongClick( int position ) { return false; }
+        public void onTitleClick( int position ) {}
         public void onNextClick( int position ) {}
         public void onPrevClick( int position ) {}
     }
