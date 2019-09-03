@@ -51,6 +51,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 @SuppressWarnings("Convert2Diamond")
 public class EquinoxView extends LinearLayout
@@ -642,6 +643,150 @@ public class EquinoxView extends LinearLayout
     }
 
     /**
+     * EquinoxViewAdapter
+     */
+    public static class EquinoxViewAdapter extends RecyclerView.Adapter<EquinoxViewHolder>
+    {
+        public static final int MAX_POSITIONS = 200;
+        public static final int CENTER_POSITION = 100;
+        private HashMap<Integer, SuntimesEquinoxSolsticeData> data = new HashMap<>();
+
+        private WeakReference<Context> contextRef;
+        private EquinoxViewOptions options;
+
+        public EquinoxViewAdapter(Context context, EquinoxViewOptions options)
+        {
+            this.contextRef = new WeakReference<>(context);
+            this.options = options;
+        }
+
+        @Override
+        public EquinoxViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+        {
+            LayoutInflater layout = LayoutInflater.from(parent.getContext());
+            View view = layout.inflate(R.layout.info_time_solsticequinox, parent, false);
+            return new EquinoxViewHolder(view, options);
+        }
+
+        @Override
+        public void onBindViewHolder(EquinoxViewHolder holder, int position)
+        {
+            Context context = (contextRef != null ? contextRef.get() : null);
+            if (context == null) {
+                Log.w("EquinoxViewAdapter", "onBindViewHolder: null context!");
+                return;
+            }
+            if (holder == null) {
+                Log.w("EquinoxViewAdapter", "onBindViewHolder: null view holder!");
+                return;
+            }
+            holder.bindDataToPosition(context, initData(context, position), position, options);
+            attachListeners(holder, position);
+        }
+
+        @Override
+        public void onViewRecycled(EquinoxViewHolder holder)
+        {
+            detachListeners(holder);
+
+            if (holder.position >= 0 && (holder.position < CENTER_POSITION - 1 || holder.position > CENTER_POSITION + 2))
+            {
+                data.remove(holder.position);
+                Log.d("DEBUG", "remove data " + holder.position);
+            }
+            holder.position = RecyclerView.NO_POSITION;
+        }
+
+        @Override
+        public int getItemCount() {
+            return MAX_POSITIONS;
+        }
+
+        public SuntimesEquinoxSolsticeData initData(Context context, int position)
+        {
+            SuntimesEquinoxSolsticeData retValue = data.get(position);
+            if (retValue == null) {
+                data.put(position, retValue = createData(context, position));   // data is removed in onViewRecycled
+                Log.d("DEBUG", "add data " + position);
+            }
+            return retValue;
+        }
+
+        protected SuntimesEquinoxSolsticeData createData(Context context, int position)
+        {
+            Calendar date = Calendar.getInstance();
+            date.add(Calendar.YEAR, position - CENTER_POSITION);
+
+            SuntimesEquinoxSolsticeData retValue = new SuntimesEquinoxSolsticeData(context, 0);
+            retValue.setTodayIs(date);
+            retValue.calculate();
+            return retValue;
+        }
+
+        private EquinoxViewListener viewListener;
+        public void setEquinoxViewListener( EquinoxViewListener listener ) {
+            viewListener = listener;
+        }
+
+        private void attachListeners(EquinoxViewHolder holder, int position)
+        {
+            holder.title.setOnClickListener(onClick(position));
+            holder.title.setOnLongClickListener(onLongClick(position));
+            holder.btn_flipperNext.setOnClickListener(onNextClick(position));
+            holder.btn_flipperPrev.setOnClickListener(onPrevClick(position));
+        }
+
+        private void detachListeners(EquinoxViewHolder holder)
+        {
+            holder.title.setOnClickListener(null);
+            holder.title.setOnLongClickListener(null);
+            holder.btn_flipperNext.setOnClickListener(null);
+            holder.btn_flipperPrev.setOnClickListener(null);
+        }
+
+        private View.OnClickListener onClick( final int position ) {
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (viewListener != null) {
+                        viewListener.onClick(position);
+                    }
+                }
+            };
+        }
+        private View.OnLongClickListener onLongClick( final int position ) {
+            return new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (viewListener != null) {
+                        return viewListener.onLongClick(position);
+                    } else return false;
+                }
+            };
+        }
+        private View.OnClickListener onNextClick( final int position ) {
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (viewListener != null) {
+                        viewListener.onNextClick(position);
+                    }
+                }
+            };
+        }
+        private View.OnClickListener onPrevClick( final int position ) {
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (viewListener != null) {
+                        viewListener.onPrevClick(position);
+                    }
+                }
+            };
+        }
+    }
+
+    /**
      * EquinoxViewHolder
      */
     public static class EquinoxViewHolder extends RecyclerView.ViewHolder
@@ -660,7 +805,6 @@ public class EquinoxView extends LinearLayout
             title = (TextView)view.findViewById(R.id.text_title);
             btn_flipperNext = (ImageButton)view.findViewById(R.id.info_time_nextbtn);
             btn_flipperPrev = (ImageButton)view.findViewById(R.id.info_time_prevbtn);
-            //btn_flipperNext.setOnClickListener(onNextCardClick);
 
             TextView txt_equinox_vernal_label = (TextView)view.findViewById(R.id.text_date_equinox_vernal_label);
             TextView txt_equinox_vernal = (TextView)view.findViewById(R.id.text_date_equinox_vernal);
