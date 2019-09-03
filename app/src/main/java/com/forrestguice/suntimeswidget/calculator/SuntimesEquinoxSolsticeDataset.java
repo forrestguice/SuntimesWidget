@@ -169,6 +169,14 @@ public class SuntimesEquinoxSolsticeDataset
         return dataEquinoxVernal.isImplemented();
     }
 
+    public void setTodayIs(Calendar date)
+    {
+        dataEquinoxVernal.setTodayIs(date);
+        dataEquinoxAutumnal.setTodayIs(date);
+        dataSolsticeSummer.setTodayIs(date);
+        dataSolsticeWinter.setTodayIs(date);
+    }
+
     public Calendar todayIs()
     {
         return dataEquinoxVernal.todayIs();
