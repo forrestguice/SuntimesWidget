@@ -123,7 +123,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         return new Pair<>(sun, moon);
     }
 
-
     /**
      * onViewRecycled
      * @param holder
@@ -136,7 +135,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         {
             data.remove(holder.position);
             Log.d("DEBUG", "remove data " + holder.position);
-        } else
+        }
         holder.position = RecyclerView.NO_POSITION;
     }
 
