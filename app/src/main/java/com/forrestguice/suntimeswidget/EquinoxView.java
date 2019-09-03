@@ -50,7 +50,6 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.lang.ref.WeakReference;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -554,7 +553,7 @@ public class EquinoxView extends LinearLayout
             if (holder.position >= 0 && (holder.position < CENTER_POSITION - 1 || holder.position > CENTER_POSITION + 2))
             {
                 data.remove(holder.position);
-                Log.d("DEBUG", "remove data " + holder.position);
+                //Log.d("DEBUG", "remove data " + holder.position);
             }
             holder.position = RecyclerView.NO_POSITION;
         }
@@ -569,7 +568,7 @@ public class EquinoxView extends LinearLayout
             SuntimesEquinoxSolsticeDataset retValue = data.get(position);
             if (retValue == null) {
                 data.put(position, retValue = createData(context, position));   // data is removed in onViewRecycled
-                Log.d("DEBUG", "add data " + position);
+                //Log.d("DEBUG", "add data " + position);
             }
             return retValue;
         }
