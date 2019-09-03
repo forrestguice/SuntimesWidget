@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2018 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,7 +19,6 @@ package com.forrestguice.suntimeswidget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -69,13 +68,6 @@ public class EquinoxView extends LinearLayout
     private Animation anim_card_outNext, anim_card_inNext, anim_card_outPrev, anim_card_inPrev;
 
     private EquinoxViewHolder holder_thisYear, holder_nextYear;
-    /**private ImageButton btn_flipperNext_thisYear, btn_flipperPrev_thisYear;
-    private ImageButton btn_flipperNext_nextYear, btn_flipperPrev_nextYear;
-
-    private TextView titleThisYear, titleNextYear;
-
-    private EquinoxNote note_equinox_vernal, note_solstice_summer, note_equinox_autumnal, note_solstice_winter;  // this year
-    private EquinoxNote note_equinox_vernal2, note_solstice_summer2, note_equinox_autumnal2, note_solstice_winter2;  // and next year*/
     private ArrayList<EquinoxNote> notes;
 
     public EquinoxView(Context context)
@@ -126,6 +118,7 @@ public class EquinoxView extends LinearLayout
             EquinoxViewHolder holder = holder_thisYear = new EquinoxViewHolder(thisYear, options);
             holder.btn_flipperNext.setOnClickListener(onNextCardClick);
             holder.btn_flipperPrev.setVisibility(View.GONE);
+            notes.addAll(holder_thisYear.notes);
         }
 
         RelativeLayout nextYear = (RelativeLayout)findViewById(R.id.info_equinoxsolstice_nextyear);
@@ -134,6 +127,7 @@ public class EquinoxView extends LinearLayout
             EquinoxViewHolder holder = holder_nextYear = new EquinoxViewHolder(nextYear, options);
             holder.btn_flipperPrev.setOnClickListener(onPrevCardClick);
             holder.btn_flipperNext.setVisibility(View.GONE);
+            notes.addAll(holder_nextYear.notes);
         }
 
         if (isInEditMode()) {
@@ -196,40 +190,6 @@ public class EquinoxView extends LinearLayout
     }
     public boolean isMinimized() {
         return options.minimized;
-    }
-
-    private EquinoxNote findSoonestNote(Calendar now) {
-        return findClosestNote(now, true);
-    }
-    private EquinoxNote findClosestNote(Calendar now) {
-        return findClosestNote(now, false);
-    }
-    private EquinoxNote findClosestNote(Calendar now, boolean upcoming)
-    {
-        if (notes == null || now == null)
-        {
-            return null;
-        }
-
-        EquinoxNote closest = null;
-        long timeDeltaMin = Long.MAX_VALUE;
-        for (EquinoxNote note : notes)
-        {
-            Calendar noteTime = note.getTime();
-            if (noteTime != null)
-            {
-                if (upcoming && !noteTime.after(now))
-                    continue;
-
-                long timeDelta = Math.abs(noteTime.getTimeInMillis() - now.getTimeInMillis());
-                if (timeDelta < timeDeltaMin)
-                {
-                    timeDeltaMin = timeDelta;
-                    closest = note;
-                }
-            }
-        }
-        return closest;
     }
 
     private void showNextPrevButtons( boolean show )
@@ -326,8 +286,8 @@ public class EquinoxView extends LinearLayout
                 note.setVisible(!options.minimized);
             }
 
-            EquinoxNote nextNote = (options.trackingMode == WidgetSettings.TrackingMode.SOONEST ? findSoonestNote(data.now())
-                                                                                        : findClosestNote(data.now()));
+            EquinoxNote nextNote = (options.trackingMode == WidgetSettings.TrackingMode.SOONEST ? EquinoxViewHolder.findSoonestNote(data.now(), notes)
+                                                                                        : EquinoxViewHolder.findClosestNote(data.now(), notes));
             if (nextNote == null)
             {
                 nextNote = notes.get(0);
@@ -518,10 +478,8 @@ public class EquinoxView extends LinearLayout
 
     public void adjustColumnWidth(Context context, int columnWidthPx)
     {
-        for (EquinoxNote note : notes)
-        {
-            note.adjustLabelWidth(columnWidthPx);
-        }
+        holder_thisYear.adjustColumnWidth(context, columnWidthPx);
+        holder_nextYear.adjustColumnWidth(context, columnWidthPx);
     }
 
     /**
@@ -742,9 +700,74 @@ public class EquinoxView extends LinearLayout
             return note;
         }
 
-        public void bindDataToPosition(@NonNull Context context, @NonNull SuntimesEquinoxSolsticeData data, int position, EquinoxViewOptions options)
+        public void bindDataToPosition(@NonNull Context context, SuntimesEquinoxSolsticeData data, int position, EquinoxViewOptions options)
         {
             this.position = position;
+
+            showTitle(!options.minimized);
+            showNextPrevButtons(!options.minimized);
+
+            if (data == null)
+            {
+                for (EquinoxNote note : notes)
+                {
+                    note.setEnabled(false);
+                    note.updateDate(context, null);
+                    note.updateNote(context, null);
+
+                    if (options.minimized) {
+                        note.setVisible(false);
+                    }
+                }
+                return;
+            }
+
+            if (data.isCalculated() && data.isImplemented())
+            {
+                SuntimesUtils.TimeDisplayText titleText = utils.calendarDateYearDisplayString(context, data.eventCalendarThisYear());
+                title.setText(titleText.toString());
+
+                boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
+                boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
+
+                note_equinox_vernal.updateDate(context, data.eventCalendarThisYear(), showTime, showSeconds);
+                note_equinox_autumnal.updateDate(context, data.eventCalendarThisYear(), showTime, showSeconds);
+                note_solstice_summer.updateDate(context, data.eventCalendarThisYear(), showTime, showSeconds);
+                note_solstice_winter.updateDate(context, data.eventCalendarThisYear(), showTime, showSeconds);
+
+                boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, 0);
+                boolean showHours = WidgetSettings.loadShowHoursPref(context, 0);
+                for (EquinoxNote note : notes)
+                {
+                    note.setEnabled();
+                    note.updateNote(context, data.now(), showWeeks, showHours);
+                    note.setVisible(!options.minimized);
+                }
+
+                EquinoxNote nextNote = (options.trackingMode == WidgetSettings.TrackingMode.SOONEST ? findSoonestNote(data.now(), notes)
+                                                                                                    : findClosestNote(data.now(), notes));
+                if (nextNote == null) {
+                    nextNote = notes.get(0);
+                }
+
+                // TODO
+                /**if (!userSwappedCard)
+                {
+                    flipper.setDisplayedChild(nextNote.pageIndex);
+                }*/
+                nextNote.setVisible(true);
+                nextNote.setHighlighted(true);
+
+            } else {
+                if (options.minimized)
+                {
+                    for (EquinoxNote note : notes) {
+                        note.setVisible(false);
+                    }
+                } /** else {
+                    showEmptyView(true);
+                }*/
+            }
         }
 
         public void showTitle( boolean show ) {
@@ -784,6 +807,40 @@ public class EquinoxView extends LinearLayout
                     note_solstice_winter.themeViews(options.labelColor, options.seasonColors[3], options.textColor);
                 }
             }
+        }
+
+        public static EquinoxNote findSoonestNote(Calendar now, ArrayList<EquinoxNote> notes) {
+            return findClosestNote(now, true, notes);
+        }
+        public static EquinoxNote findClosestNote(Calendar now, ArrayList<EquinoxNote> notes) {
+            return findClosestNote(now, false, notes);
+        }
+        public static EquinoxNote findClosestNote(Calendar now, boolean upcoming, ArrayList<EquinoxNote> notes)
+        {
+            if (notes == null || now == null)
+            {
+                return null;
+            }
+
+            EquinoxNote closest = null;
+            long timeDeltaMin = Long.MAX_VALUE;
+            for (EquinoxNote note : notes)
+            {
+                Calendar noteTime = note.getTime();
+                if (noteTime != null)
+                {
+                    if (upcoming && !noteTime.after(now))
+                        continue;
+
+                    long timeDelta = Math.abs(noteTime.getTimeInMillis() - now.getTimeInMillis());
+                    if (timeDelta < timeDeltaMin)
+                    {
+                        timeDeltaMin = timeDelta;
+                        closest = note;
+                    }
+                }
+            }
+            return closest;
         }
     }
 
