@@ -181,7 +181,7 @@ public class EquinoxView extends LinearLayout
         showEmptyView(data == null || !data.isImplemented());
 
         int position = card_adapter.highlightNote(context);
-        if (position != -1) {
+        if (position != -1 && !userSwappedCard) {
             card_view.setLayoutFrozen(false);
             card_view.scrollToPosition(position);
             card_view.setLayoutFrozen(isMinimized());
@@ -209,7 +209,7 @@ public class EquinoxView extends LinearLayout
 
         int cardPosition = bundle.getInt(EquinoxView.KEY_UI_CARDPOSITION, EquinoxViewAdapter.CENTER_POSITION);
         if (cardPosition == RecyclerView.NO_POSITION) {
-            cardPosition = CardAdapter.TODAY_POSITION;
+            cardPosition = EquinoxViewAdapter.CENTER_POSITION;
         }
         card_view.scrollToPosition(cardPosition);
         card_view.smoothScrollBy(1, 0);  // triggers a snap
