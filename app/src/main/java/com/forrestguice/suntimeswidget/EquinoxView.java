@@ -834,4 +834,15 @@ public class EquinoxView extends LinearLayout
         }
     }
 
+    /**
+     * EquinoxViewClickListener
+     */
+    public static class EquinoxViewListener
+    {
+        public void onClick( int position ) {}
+        public boolean onLongClick( int position ) { return false; }
+        public void onNextClick( int position ) {}
+        public void onPrevClick( int position ) {}
+    }
+
 }
