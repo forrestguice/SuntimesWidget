@@ -1,5 +1,11 @@
 ### ~
 
+### v0.11.10 (2019-09-03)
+* fixes app layout issues for Brazilian Portuguese (pt-br) and Norwegian (nb) translations (#356).
+* fixes bug "date dialog fails to respect timezone setting" (#358).
+* fixes bug "note selection lost on orientation change" (#359).
+* updates translation to Brazilian Portuguese (pt-br) (#357 by naoliv).
+
 ### v0.11.9 (2019-08-22)
 * fixes app crash when supplied with invalid data (bad URI, alarmID, or widgetID) ("Intent resolution bugs"; #353).
 * updates translation to Brazilian Portuguese (pt-br) (#350 by Neto Silva).
