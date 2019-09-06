@@ -58,7 +58,7 @@ public class MoonDialog extends DialogFragment
     private TextView dialogTitle;
     private MoonRiseSetView moonriseset;
     private MoonPhaseView currentphase;
-    private MoonPhasesView moonphases;
+    private MoonPhasesView1 moonphases;
     private MoonApsisView moonapsis;
     private TextView moondistance, moondistance_label, moondistance_note;
 
@@ -110,7 +110,7 @@ public class MoonDialog extends DialogFragment
         dialogTitle = (TextView) dialogView.findViewById(R.id.moondialog_title);
         moonriseset = (MoonRiseSetView) dialogView.findViewById(R.id.moonriseset_view);
         currentphase = (MoonPhaseView) dialogView.findViewById(R.id.moonphase_view);
-        moonphases = (MoonPhasesView) dialogView.findViewById(R.id.moonphases_view);
+        moonphases = (MoonPhasesView1) dialogView.findViewById(R.id.moonphases_view);
 
         moonapsis = (MoonApsisView) dialogView.findViewById(R.id.moonapsis_view);
         moondistance = (TextView) dialogView.findViewById(R.id.moonapsis_current_distance);
