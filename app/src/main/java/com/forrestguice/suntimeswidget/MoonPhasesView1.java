@@ -25,7 +25,7 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PagerSnapHelper;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.util.AttributeSet;
@@ -113,7 +113,7 @@ public class MoonPhasesView1 extends LinearLayout
         card_view.setAdapter(card_adapter);
         card_view.scrollToPosition(PhaseAdapter.CENTER_POSITION);
 
-        SnapHelper snapHelper = new PagerSnapHelper();
+        SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(card_view);
 
         //card_scroller = new CardAdapter.CardViewScroller(context);
