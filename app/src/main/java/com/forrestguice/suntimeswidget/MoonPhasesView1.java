@@ -290,11 +290,11 @@ public class MoonPhasesView1 extends LinearLayout
                 phaseOrdinal = phaseOrdinal + 4;
             }
             holder.phase = SuntimesCalculator.MoonPhase.values()[phaseOrdinal];
+
             themeViews(context, holder);
 
             SuntimesMoonData moon = initData(context, position);
             holder.bindDataToPosition(context, moon, holder.phase, position);
-
         }
 
         @Override
@@ -321,9 +321,12 @@ public class MoonPhasesView1 extends LinearLayout
         {
             int offset = (position - CENTER_POSITION) % 4;
             int firstPosition = position;
-            if (offset != 0) {
-                firstPosition -= offset;
+            if (offset > 0) {
+                firstPosition = position - (offset);
+            } else if (offset < 0) {
+                firstPosition = position - (4 + (offset));
             }
+            Log.d("DEBUG", "position: + " + position + ", firstPosition: " + firstPosition);
 
             SuntimesMoonData moon = data.get(firstPosition);
             if (moon == null)
@@ -340,7 +343,16 @@ public class MoonPhasesView1 extends LinearLayout
         {
             SuntimesMoonData moon = new SuntimesMoonData(context, 0, "moon");
             Calendar date = Calendar.getInstance(moon.timezone());
-            date.add(Calendar.DATE, (int)(((position - CENTER_POSITION) / 4d) * 30d));  // 29.51 + 1
+
+            if (position < CENTER_POSITION) {
+                SuntimesMoonData moon0 = initData(context, CENTER_POSITION);
+                date.setTimeInMillis(moon0.moonPhaseCalendar(moon0.nextPhase(moon.now())).getTimeInMillis());
+            }
+
+            int hours = (int)(((position - CENTER_POSITION) / 4d) * 29.53d * 24d);
+            date.add(Calendar.HOUR, hours);  // 29.51 + 1
+            //Log.d("DEBUG", "createData: " + hours);
+
             moon.setTodayIs(date);
             moon.calculate();
             return moon;
