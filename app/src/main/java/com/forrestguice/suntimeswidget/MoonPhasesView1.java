@@ -19,6 +19,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -70,19 +71,8 @@ public class MoonPhasesView1 extends LinearLayout
     public MoonPhasesView1(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-        //applyAttributes(context, attrs);
         init(context, attrs);
     }
-
-    /**private void applyAttributes(Context context, AttributeSet attrs)
-    {
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.EquinoxView, 0, 0);
-        try {
-            setMinimized(a.getBoolean(R.styleable.EquinoxView_minimized, false));
-        } finally {
-            a.recycle();
-        }
-    }*/
 
     private void init(Context context, AttributeSet attrs)
     {
@@ -108,7 +98,7 @@ public class MoonPhasesView1 extends LinearLayout
         //card_view.addItemDecoration(new CardAdapter.CardViewDecorator(this));
 
         card_adapter = new PhaseAdapter(context);
-        card_adapter.setItemWidth(getWidth() / 4);
+        card_adapter.setItemWidth(Resources.getSystem().getDisplayMetrics().widthPixels / 4);  // initial width; reassigned later in onSizeChanged
 
         card_view.setAdapter(card_adapter);
         card_view.scrollToPosition(PhaseAdapter.CENTER_POSITION);
@@ -174,7 +164,8 @@ public class MoonPhasesView1 extends LinearLayout
     {
         super.onSizeChanged(w, h, oldWidth, oldHeight);
         if (card_adapter != null) {
-            card_adapter.setItemWidth(w / 4);
+            int margin = 8;
+            card_adapter.setItemWidth((w - (margin * 2)) / 4);
         }
     }
 
