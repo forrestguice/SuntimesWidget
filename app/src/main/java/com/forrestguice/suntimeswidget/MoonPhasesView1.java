@@ -146,11 +146,12 @@ public class MoonPhasesView1 extends LinearLayout
     @SuppressLint("ResourceType")
     protected void initTheme(Context context)
     {
-        int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.buttonPressColor };
+        int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.buttonPressColor, R.attr.text_disabledColor };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = R.color.transparent;
         colorEnabled = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
         colorPressed = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
+        colorDisabled = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
         typedArray.recycle();
 
         ImageViewCompat.setImageTintList(forwardButton, SuntimesUtils.colorStateList(colorEnabled, colorDisabled, colorPressed));
@@ -245,7 +246,7 @@ public class MoonPhasesView1 extends LinearLayout
         private HashMap<Integer, SuntimesMoonData> data = new HashMap<>();
         private SuntimesCalculator.MoonPhase nextPhase = SuntimesCalculator.MoonPhase.FULL;
 
-        private int colorNote, colorTitle, colorTime, colorText, colorWaxing, colorWaning, colorFull, colorNew;
+        private int colorNote, colorTitle, colorTime, colorText, colorWaxing, colorWaning, colorFull, colorNew, colorDisabled;
         private float strokePixelsNew, strokePixelsFull;
 
         public PhaseAdapter(Context context) {
@@ -291,9 +292,11 @@ public class MoonPhasesView1 extends LinearLayout
             }
             holder.phase = SuntimesCalculator.MoonPhase.values()[phaseOrdinal];
 
-            themeViews(context, holder);
-
             SuntimesMoonData moon = initData(context, position);
+            Calendar phaseDate = moon.moonPhaseCalendar(holder.phase);
+            boolean isAgo = moon.now().after(phaseDate);
+            themeViews(context, holder, isAgo);
+
             holder.bindDataToPosition(context, moon, holder.phase, position);
         }
 
@@ -342,18 +345,15 @@ public class MoonPhasesView1 extends LinearLayout
         protected SuntimesMoonData createData( Context context, int position )
         {
             SuntimesMoonData moon = new SuntimesMoonData(context, 0, "moon");
-            Calendar date = Calendar.getInstance(moon.timezone());
-
-            if (position < CENTER_POSITION) {
+            if (position != CENTER_POSITION)
+            {
                 SuntimesMoonData moon0 = initData(context, CENTER_POSITION);
+
+                Calendar date = Calendar.getInstance(moon.timezone());
                 date.setTimeInMillis(moon0.moonPhaseCalendar(moon0.nextPhase(moon.now())).getTimeInMillis());
+                date.add(Calendar.HOUR, (int)(((position - CENTER_POSITION) / 4d) * 29.53d * 24d));
+                moon.setTodayIs(date);
             }
-
-            int hours = (int)(((position - CENTER_POSITION) / 4d) * 29.53d * 24d);
-            date.add(Calendar.HOUR, hours);  // 29.51 + 1
-            //Log.d("DEBUG", "createData: " + hours);
-
-            moon.setTodayIs(date);
             moon.calculate();
             return moon;
         }
@@ -361,11 +361,12 @@ public class MoonPhasesView1 extends LinearLayout
         @SuppressLint("ResourceType")
         protected void initTheme(Context context)
         {
-            int[] colorAttrs = { android.R.attr.textColorPrimary, android.R.attr.textColorSecondary };
+            int[] colorAttrs = { android.R.attr.textColorPrimary, android.R.attr.textColorSecondary, R.attr.text_disabledColor };
             TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
             int def = R.color.transparent;
             colorNote = colorTitle = colorTime = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
             colorText = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
+            colorDisabled = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
             typedArray.recycle();
 
             strokePixelsFull = strokePixelsNew = context.getResources().getDimension(R.dimen.moonIcon_stroke_full);
@@ -389,7 +390,7 @@ public class MoonPhasesView1 extends LinearLayout
             strokePixelsFull = theme.getMoonFullStrokePixels(context);
         }
 
-        protected void themeViews(Context context, @NonNull PhaseField holder)
+        protected void themeViews(Context context, @NonNull PhaseField holder, boolean isAgo)
         {
             Bitmap bitmap;
             switch (holder.phase)
@@ -400,7 +401,12 @@ public class MoonPhasesView1 extends LinearLayout
                 case FULL: default: bitmap = SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.FULL.getIcon(), colorFull, colorWaning, (int)strokePixelsFull); break;
             }
             holder.noteColor = colorNote;
-            holder.themeViews(colorTitle, colorTime, colorText, bitmap);
+            PhaseField.disabledColor = colorDisabled;
+
+            int titleColor = isAgo ? colorDisabled : colorTitle;
+            int timeColor = isAgo ? colorDisabled : colorTime;
+            int textColor = isAgo ? colorDisabled : colorText;
+            holder.themeViews(titleColor, timeColor, textColor, bitmap);
         }
     }
 
@@ -416,6 +422,7 @@ public class MoonPhasesView1 extends LinearLayout
         public ImageView icon;
 
         public int noteColor = Color.WHITE;
+        public static int disabledColor = Color.GRAY;
 
         public int position = RecyclerView.NO_POSITION;
         public SuntimesCalculator.MoonPhase phase = SuntimesCalculator.MoonPhase.FULL;
@@ -497,9 +504,10 @@ public class MoonPhasesView1 extends LinearLayout
 
             if (note != null)
             {
+                boolean isAgo = now.after(dateTime);
                 String noteText = (dateTime == null ? "" : utils.timeDeltaDisplayString(now.getTime(), dateTime.getTime(), showWeeks, showHours).toString());
-                String noteString = now.after(dateTime) ? context.getString(R.string.ago, noteText) : context.getString(R.string.hence, noteText);
-                note.setText(SuntimesUtils.createBoldColorSpan(null, noteString, noteText, noteColor));
+                String noteString = isAgo ? context.getString(R.string.ago, noteText) : context.getString(R.string.hence, noteText);
+                note.setText(SuntimesUtils.createBoldColorSpan(null, noteString, noteText, (isAgo ? disabledColor : noteColor)));
                 note.setVisibility(View.VISIBLE);
             }
         }
