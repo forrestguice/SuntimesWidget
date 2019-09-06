@@ -25,6 +25,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +36,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -60,7 +62,10 @@ public class MoonPhasesView1 extends LinearLayout
     private RecyclerView card_view;
     private PhaseAdapter card_adapter;
     private LinearLayoutManager card_layout;
+    private ImageButton forwardButton, backButton;
     private TextView empty;
+
+    private int colorEnabled = Color.WHITE, colorDisabled = Color.GRAY, colorPressed = Color.BLUE;
 
     public MoonPhasesView1(Context context)
     {
@@ -88,14 +93,12 @@ public class MoonPhasesView1 extends LinearLayout
         empty = (TextView)findViewById(R.id.txt_empty);
         card_view = (RecyclerView)findViewById(R.id.moonphases_card);
 
-
         card_layout = new LinearLayoutManager(context);
         card_layout.setOrientation(LinearLayoutManager.HORIZONTAL);
 
         card_view.setHasFixedSize(true);
         card_view.setItemViewCacheSize(7);
         card_view.setLayoutManager(card_layout);
-        //card_view.addItemDecoration(new CardAdapter.CardViewDecorator(this));
 
         card_adapter = new PhaseAdapter(context);
         card_adapter.setItemWidth(Resources.getSystem().getDisplayMetrics().widthPixels / 4);  // initial width; reassigned later in onSizeChanged
@@ -109,13 +112,57 @@ public class MoonPhasesView1 extends LinearLayout
         //card_scroller = new CardAdapter.CardViewScroller(context);
         //card_view.setOnScrollListener(onCardScrollListener);
 
+        forwardButton = (ImageButton)findViewById(R.id.info_time_nextbtn);
+        forwardButton.setOnClickListener(onResetClick1);
+        forwardButton.setVisibility(GONE);
+
+        backButton = (ImageButton)findViewById(R.id.info_time_prevbtn);
+        backButton.setOnClickListener(onResetClick0);
+        backButton.setVisibility(GONE);
+
+        card_view.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                super.onScrolled(recyclerView, dx, dy);
+
+                int[] position = new int[] { card_layout.findFirstVisibleItemPosition(), card_layout.findLastVisibleItemPosition() };
+                if (position[0] < PhaseAdapter.CENTER_POSITION) {
+                    forwardButton.setVisibility(View.VISIBLE);
+                    backButton.setVisibility(View.GONE);
+                } else if (position[1] > PhaseAdapter.CENTER_POSITION + 4) {
+                    forwardButton.setVisibility(View.GONE);
+                    backButton.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        initTheme(context);
         if (isInEditMode()) {
             updateViews(context, null);
         }
     }
 
-    public void themeViews(Context context, SuntimesTheme theme) {
+    @SuppressLint("ResourceType")
+    protected void initTheme(Context context)
+    {
+        int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.buttonPressColor };
+        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+        int def = R.color.transparent;
+        colorEnabled = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
+        colorPressed = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
+        typedArray.recycle();
+
+        ImageViewCompat.setImageTintList(forwardButton, SuntimesUtils.colorStateList(colorEnabled, colorDisabled, colorPressed));
+        ImageViewCompat.setImageTintList(backButton, SuntimesUtils.colorStateList(colorEnabled, colorDisabled, colorPressed));
+    }
+
+    public void themeViews(Context context, SuntimesTheme theme)
+    {
         card_adapter.applyTheme(context, theme);
+        colorPressed = theme.getActionColor();
+        ImageViewCompat.setImageTintList(forwardButton, SuntimesUtils.colorStateList(colorEnabled, colorDisabled, colorPressed));
+        ImageViewCompat.setImageTintList(backButton, SuntimesUtils.colorStateList(colorEnabled, colorDisabled, colorPressed));
     }
 
     public void initLocale(Context context)
@@ -124,6 +171,16 @@ public class MoonPhasesView1 extends LinearLayout
         SuntimesUtils.initDisplayStrings(context);
         WidgetSettings.MoonPhaseMode.initDisplayStrings(context);
         MoonPhaseDisplay.initDisplayStrings(context);
+    }
+
+    @Override
+    public void onSizeChanged( int w, int h, int oldWidth, int oldHeight )
+    {
+        super.onSizeChanged(w, h, oldWidth, oldHeight);
+        if (card_adapter != null) {
+            int margin = 8;
+            card_adapter.setItemWidth((w - (margin * 2)) / 4);
+        }
     }
 
     private void showEmptyView( boolean show )
@@ -147,6 +204,23 @@ public class MoonPhasesView1 extends LinearLayout
         }
     }
 
+    private OnClickListener onResetClick0 = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            card_view.scrollToPosition(PhaseAdapter.CENTER_POSITION);
+            forwardButton.setVisibility(View.GONE);
+            backButton.setVisibility(View.GONE);
+        }
+    };
+    private OnClickListener onResetClick1 = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            card_view.scrollToPosition(PhaseAdapter.CENTER_POSITION + 3);
+            forwardButton.setVisibility(View.GONE);
+            backButton.setVisibility(View.GONE);
+        }
+    };
+
     public void setOnClickListener( OnClickListener listener )
     {
         // TODO
@@ -157,16 +231,6 @@ public class MoonPhasesView1 extends LinearLayout
     {
         // TODO
         //content.setOnLongClickListener(listener);
-    }
-
-    @Override
-    public void onSizeChanged( int w, int h, int oldWidth, int oldHeight )
-    {
-        super.onSizeChanged(w, h, oldWidth, oldHeight);
-        if (card_adapter != null) {
-            int margin = 8;
-            card_adapter.setItemWidth((w - (margin * 2)) / 4);
-        }
     }
 
     /**
