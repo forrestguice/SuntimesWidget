@@ -45,23 +45,23 @@ public abstract class PositionLayout extends SuntimesLayout
         suffixColor = theme.getTimeSuffixColor();
     }
 
-    protected SpannableString styleAzimuthText(SuntimesUtils.TimeDisplayText azimuthDisplay, int color)
+    protected static SpannableString styleAzimuthText(SuntimesUtils.TimeDisplayText azimuthDisplay, int valueColor, int suffixColor, boolean boldTime)
     {
         String azimuthSymbol = azimuthDisplay.getSuffix();
         String azimuthString = azimuthDisplay.getValue() + azimuthSymbol;
-        SpannableString azimuth = SuntimesUtils.createColorSpan(null, azimuthString, azimuthDisplay.getValue(), color, boldTime);
+        SpannableString azimuth = SuntimesUtils.createColorSpan(null, azimuthString, azimuthDisplay.getValue(), valueColor, boldTime);
         azimuth = SuntimesUtils.createBoldColorSpan(azimuth, azimuthString, azimuthSymbol, suffixColor);
         azimuth = SuntimesUtils.createRelativeSpan(azimuth, azimuthString, azimuthSymbol, SYMBOL_RELATIVE_SIZE);
         //azimuth = SuntimesUtils.createAbsoluteSpan(azimuth, azimuthString, azimuthDisplay.getSuffix(), SuntimesUtils.spToPixels(context, suffixSp));
         return azimuth;
     }
 
-    protected SpannableString styleElevationText(double value, int color)
+    protected static SpannableString styleElevationText(double value, int valueColor, int suffixColor, boolean boldValue)
     {
         SuntimesUtils.TimeDisplayText elevationDisplay = utils.formatAsElevation(value, DECIMAL_PLACES);
         String elevationSymbol = elevationDisplay.getSuffix();
         String elevationString = utils.formatAsElevation(elevationDisplay.getValue(), elevationSymbol);
-        SpannableString elevation = SuntimesUtils.createColorSpan(null, elevationString, elevationString, color, boldTime);
+        SpannableString elevation = SuntimesUtils.createColorSpan(null, elevationString, elevationString, valueColor, boldValue);
         elevation = SuntimesUtils.createBoldColorSpan(elevation, elevationString, elevationSymbol, suffixColor);
         elevation = SuntimesUtils.createRelativeSpan(elevation, elevationString, elevationSymbol, SYMBOL_RELATIVE_SIZE);
         return elevation;

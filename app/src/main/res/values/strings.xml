@@ -398,6 +398,8 @@
 
     <string name="widgetMode1x1_altaz">Altitude &amp; Azimuth</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Declination &amp; Right Ascension</string>     <!-- setting -->
+    <string name="widgetMode1x1_distance">Current distance</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode1x1_apsis">Next apogee or perigee</string>     <!-- setting -->    <!-- TODO -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polar</string>     <!-- setting -->
@@ -630,6 +632,7 @@
     <string name="widgetLabel_declination">Declination</string>           <!-- label -->
     <string name="widgetLabel_declination_short">Dec</string>           <!-- label -->
     <string name="widgetLabel_declination_symbol">δ</string>           <!-- label/suffix -->
+    <string name="widgetLabel_distance">Distance</string>           <!-- label -->    <!-- TODO -->
 
     <!--
          ALARM CLOCK
@@ -1306,7 +1309,8 @@
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
     <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
     <![CDATA[ github.com/caarmen/SunriseSunset ]]> <![CDATA[ <br /> ]]>
-    <![CDATA[ github.com/QuadFlask/colorpicker ]]>
+    <![CDATA[ github.com/QuadFlask/colorpicker ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/rubensousa/GravitySnapHelper ]]>
     </string>
 
     <!-- Dialog: Help -->

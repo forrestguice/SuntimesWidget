@@ -146,7 +146,8 @@ Libraries used:
 * Time4A [Apache License 2.0] (http://github.com/MenoData/Time4A) 
 * ca.rmen.sunrisesunset [LGPL-2.1] (http://github.com/caarmen/SunriseSunset)
 * sunrisesunsetlib-java [Apache License 2.0] (http://mikereedell.github.io/sunrisesunsetlib-java/) 
-* QuadFlask/colorpicker [Apache License 2.0] (https://github.com/QuadFlask/colorpicker) 
+* QuadFlask/colorpicker [Apache License 2.0] (https://github.com/QuadFlask/colorpicker)
+* GravitySnapHelper [Apache License 2.0] (https://github.com/rubensousa/GravitySnapHelper) 
 
 ## Project Contributions
 

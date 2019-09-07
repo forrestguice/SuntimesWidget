@@ -1,5 +1,12 @@
 ### ~
 
+##
+* adds moon apogee, perigee, and distance information to the moon dialog and calculator provider (#296).
+* adds supermoon and micromoon labels for upcoming new and full moons (#296).
+* adds 1x1 moon apogee / perigee widget (#296).
+* adds 1x1 moon position widgets; azimuth & elevation, right ascension & declination, and current distance.
+* adds 3x2 moon widget that.. TODO.
+
 ### v0.11.9 (2019-08-22)
 * fixes app crash when supplied with invalid data (bad URI, alarmID, or widgetID) ("Intent resolution bugs"; #353).
 * updates translation to Brazilian Portuguese (pt-br) (#350 by Neto Silva).

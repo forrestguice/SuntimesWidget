@@ -30,6 +30,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_2x1_0;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_3x1_0;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_3x2_0;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -78,21 +79,23 @@ public class MoonWidget0 extends SuntimesWidget0
 
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, data);
-
         appWidgetManager.updateAppWidget(appWidgetId, views);
 
-        WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
-        if (order == WidgetSettings.RiseSetOrder.TODAY) {
-            WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, -1);
-            Log.d(TAG, "saveNextSuggestedUpdate: -1");
+        if (!layout.saveNextSuggestedUpdate(context, appWidgetId))
+        {
+            WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+            if (order == WidgetSettings.RiseSetOrder.TODAY) {
+                WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, -1);
+                Log.d(TAG, "saveNextSuggestedUpdate: -1");
 
-        } else {
-            long soonest = SuntimesData.findSoonest(Calendar.getInstance(), data.getRiseSetEvents());
-            if (soonest != -1) {
-                soonest += 5000;   // +5s
+            } else {
+                long soonest = SuntimesData.findSoonest(Calendar.getInstance(), data.getRiseSetEvents());
+                if (soonest != -1) {
+                    soonest += 5000;   // +5s
+                }
+                WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, soonest);
+                Log.d(TAG, "saveNextSuggestedUpdate: " + utils.calendarDateTimeDisplayString(context, soonest).toString());
             }
-            WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, soonest);
-            Log.d(TAG, "saveNextSuggestedUpdate: " + utils.calendarDateTimeDisplayString(context, soonest).toString());
         }
     }
 
@@ -104,7 +107,9 @@ public class MoonWidget0 extends SuntimesWidget0
         {
             int minWidth3x1 = context.getResources().getInteger(R.integer.widget_size_minWidthDp3x1);
             int minWidth2x1 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
-            layout = (mustFitWithinDp[0] >= minWidth3x1) ? new MoonLayout_3x1_0()
+            layout = (mustFitWithinDp[0] >= minWidth3x1) &&
+                     (mustFitWithinDp[1] >= minWidth2x1) ? new MoonLayout_3x2_0()
+                   : (mustFitWithinDp[0] >= minWidth3x1) ? new MoonLayout_3x1_0()
                    : (mustFitWithinDp[0] >= minWidth2x1) ? new MoonLayout_2x1_0()
                    : WidgetSettings.loadMoon1x1ModePref_asLayout(context, appWidgetId);
         } else {
