@@ -23,8 +23,11 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.ColorUtils;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
@@ -65,7 +68,7 @@ public class MoonPhasesView1 extends LinearLayout
     private ImageButton forwardButton, backButton;
     private TextView empty;
 
-    private int colorEnabled = Color.WHITE, colorDisabled = Color.GRAY, colorPressed = Color.BLUE;
+    private int colorEnabled = Color.WHITE, colorDisabled = Color.GRAY, colorPressed = Color.BLUE, colorBackground = Color.BLACK;
 
     public MoonPhasesView1(Context context)
     {
@@ -146,24 +149,32 @@ public class MoonPhasesView1 extends LinearLayout
     @SuppressLint("ResourceType")
     protected void initTheme(Context context)
     {
-        int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.buttonPressColor, R.attr.text_disabledColor };
+        int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.buttonPressColor, R.attr.text_disabledColor, R.attr.colorBackgroundFloating };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = R.color.transparent;
         colorEnabled = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
         colorPressed = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
         colorDisabled = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
+        colorBackground = ColorUtils.setAlphaComponent(ContextCompat.getColor(context, typedArray.getResourceId(3, def)), (int)(9d * (254d / 10d)));
         typedArray.recycle();
 
-        ImageViewCompat.setImageTintList(forwardButton, SuntimesUtils.colorStateList(colorEnabled, colorDisabled, colorPressed));
-        ImageViewCompat.setImageTintList(backButton, SuntimesUtils.colorStateList(colorEnabled, colorDisabled, colorPressed));
+        themeDrawables();
     }
 
     public void themeViews(Context context, SuntimesTheme theme)
     {
         card_adapter.applyTheme(context, theme);
         colorPressed = theme.getActionColor();
+        themeDrawables();
+    }
+
+    private void themeDrawables()
+    {
         ImageViewCompat.setImageTintList(forwardButton, SuntimesUtils.colorStateList(colorEnabled, colorDisabled, colorPressed));
+        SuntimesUtils.colorizeImageView(forwardButton, colorBackground);
+
         ImageViewCompat.setImageTintList(backButton, SuntimesUtils.colorStateList(colorEnabled, colorDisabled, colorPressed));
+        SuntimesUtils.colorizeImageView(backButton, colorBackground);
     }
 
     public void initLocale(Context context)
@@ -195,6 +206,8 @@ public class MoonPhasesView1 extends LinearLayout
         if (isInEditMode()) {
             return;
         }
+        showEmptyView(data != null && !data.isCalculated());
+    }
 
         if (data == null) {
             return;

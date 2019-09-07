@@ -26,10 +26,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <!-- next/prev buttons -->
         <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:orientation="horizontal" android:layout_gravity="end|bottom">
-            <include layout="@layout/info_time_nextprev" />
+            android:orientation="horizontal" android:layout_gravity="end|bottom" android:elevation="8dp">
+            <ImageButton
+                android:id="@+id/info_time_prevbtn"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:src="?attr/icActionPrevious"
+                android:background="@drawable/ic_colortab"
+                android:padding="8dp"
+                android:contentDescription="@string/today" />
+
+            <ImageButton
+                android:id="@+id/info_time_nextbtn"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:src="?attr/icActionNext"
+                android:background="@drawable/ic_colortab"
+                android:padding="8dp"
+                android:contentDescription="@string/today" />
         </LinearLayout>
 
         <TextView android:id="@+id/txt_empty"
