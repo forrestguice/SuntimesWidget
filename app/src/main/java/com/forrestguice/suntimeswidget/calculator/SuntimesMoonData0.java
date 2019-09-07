@@ -59,12 +59,10 @@ public class SuntimesMoonData0 extends SuntimesData
     {
         return new SuntimesCalculatorFactory(context, calculatorMode)
         {
-            public SuntimesCalculator fallbackCalculator()
-            {
+            public SuntimesCalculator fallbackCalculator() {
                 return new com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator();
             }
-            public SuntimesCalculatorDescriptor fallbackCalculatorDescriptor()
-            {
+            public SuntimesCalculatorDescriptor fallbackCalculatorDescriptor() {
                 return com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator.getDescriptor();
             }
         };
@@ -76,8 +74,7 @@ public class SuntimesMoonData0 extends SuntimesData
     public Pair<Calendar, SuntimesCalculator.MoonPosition> getMoonApogee()
     {
         Calendar apogeeDate = calculator.getMoonApogeeNextDate(todaysCalendar);
-        if (apogeeDate != null)
-        {
+        if (apogeeDate != null) {
             SuntimesCalculator.MoonPosition apogeePosition = calculator.getMoonPosition(apogeeDate);
             return new Pair<>(apogeeDate, apogeePosition);
         } else return null;
@@ -89,8 +86,7 @@ public class SuntimesMoonData0 extends SuntimesData
     public Pair<Calendar, SuntimesCalculator.MoonPosition> getMoonPerigee()
     {
         Calendar perigeeDate = calculator.getMoonPerigeeNextDate(todaysCalendar);
-        if (perigeeDate != null)
-        {
+        if (perigeeDate != null) {
             SuntimesCalculator.MoonPosition perigeePosition = calculator.getMoonPosition(perigeeDate);
             return new Pair<>(perigeeDate, perigeePosition);
         } else return null;
