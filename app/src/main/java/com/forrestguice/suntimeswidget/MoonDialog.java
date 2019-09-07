@@ -173,7 +173,7 @@ public class MoonDialog extends DialogFragment
         moonriseset.updateViews(context, data);
         currentphase.updateViews(context, data);
         moonphases.updateViews(context, data);
-        moonapsis.updateViews(context, data);
+        moonapsis.updateViews(context);
         updateMoonApsis();
         startUpdateTask();
     }

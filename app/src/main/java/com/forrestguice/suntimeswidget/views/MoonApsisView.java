@@ -92,7 +92,7 @@ public class MoonApsisView extends LinearLayout
 
         initTheme(context);
         if (isInEditMode()) {
-            updateViews(context, null);
+            updateViews(context);
         }
     }
 
@@ -123,10 +123,11 @@ public class MoonApsisView extends LinearLayout
         card_adapter.applyTheme(context, theme);
     }
 
-    public void updateViews( Context context, SuntimesMoonData data )
     {
         // EMPTY
     }
+
+    public void updateViews( Context context ) { /* EMPTY */ }
 
     public boolean isRising() {
         return card_adapter.isRising();
