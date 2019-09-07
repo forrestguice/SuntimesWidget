@@ -252,11 +252,19 @@ public class MoonApsisView extends LinearLayout
                 {
                     Calendar date = Calendar.getInstance(moon.timezone());
                     date.setTimeInMillis(isRising ? apogee.first.getTimeInMillis() : perigee.first.getTimeInMillis());
+                    date.add(Calendar.DATE, -7);
 
+                    double anomalisticMinutes = 27.55455d * 24d * 60d;  // may be up to 2 to 3 days longer than actual
                     int rawOffset = position - CENTER_POSITION;
-                    date.add(Calendar.MINUTE, (int)((rawOffset / 2) * 27.55455d * 24d * 60d));
-                    date.add(Calendar.HOUR, -1);
+                    double minuteOffset = (rawOffset / 2) * anomalisticMinutes;
+                    date.add(Calendar.MINUTE, (int)minuteOffset);
                     moon.setTodayIs(date);
+
+                    // e.g. on 2019-9-7 there is a 36 hr difference from mean
+                    //double minuteOffset0 = (isRising ? perigee.first.getTimeInMillis() - apogee.first.getTimeInMillis()
+                    //                                : apogee.first.getTimeInMillis() - perigee.first.getTimeInMillis()) / 1000d / 60d;
+                    //double minuteOffset2 = 0.5d * 2 * 27.55455d * 24d * 60d;
+                    //Log.d("DEBUG", "minuteOffset: " + minuteOffset2 / 60d + " (" + minuteOffset0 / 60d + ", " + ((minuteOffset0 - minuteOffset2) / 60d) + ")");
                 }
             }
             moon.calculate();
