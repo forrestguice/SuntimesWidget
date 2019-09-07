@@ -254,8 +254,8 @@ public class MoonApsisView extends LinearLayout
                     date.setTimeInMillis(isRising ? apogee.first.getTimeInMillis() : perigee.first.getTimeInMillis());
 
                     int rawOffset = position - CENTER_POSITION;
-                    date.add(Calendar.HOUR, (int)((rawOffset / 2d) * 27.56d * 24d));
-                    date.add(Calendar.DATE, -1);
+                    date.add(Calendar.MINUTE, (int)((rawOffset / 2) * 27.55455d * 24d * 60d));
+                    date.add(Calendar.HOUR, -1);
                     moon.setTodayIs(date);
                 }
             }
