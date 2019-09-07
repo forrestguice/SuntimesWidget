@@ -122,22 +122,7 @@ public class MoonPhasesView1 extends LinearLayout
         backButton.setOnClickListener(onResetClick0);
         backButton.setVisibility(GONE);
 
-        card_view.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
-                super.onScrolled(recyclerView, dx, dy);
-
-                int[] position = new int[] { card_layout.findFirstVisibleItemPosition(), card_layout.findLastVisibleItemPosition() };
-                if (position[0] < PhaseAdapter.CENTER_POSITION) {
-                    forwardButton.setVisibility(View.VISIBLE);
-                    backButton.setVisibility(View.GONE);
-                } else if (position[1] > PhaseAdapter.CENTER_POSITION + 4) {
-                    forwardButton.setVisibility(View.GONE);
-                    backButton.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+        card_view.setOnScrollListener(onScrollChanged);
 
         initTheme(context);
         if (isInEditMode()) {
@@ -208,43 +193,59 @@ public class MoonPhasesView1 extends LinearLayout
         showEmptyView(data != null && !data.isCalculated());
     }
 
-        if (data == null) {
-            return;
-        }
+    private RecyclerView.OnScrollListener onScrollChanged = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+        {
+            super.onScrollStateChanged(recyclerView, newState);
+            int position = card_layout.findFirstVisibleItemPosition();
 
-        if (!data.isCalculated()) {
-            showEmptyView(true);
+            if (position < PhaseAdapter.CENTER_POSITION)
+            {
+                forwardButton.setVisibility(View.VISIBLE);
+                backButton.setVisibility(View.GONE);
+
+            } else if (position > PhaseAdapter.CENTER_POSITION) {
+                forwardButton.setVisibility(View.GONE);
+                backButton.setVisibility(View.VISIBLE);
+
+            } else {
+                forwardButton.setVisibility(View.GONE);
+                backButton.setVisibility(View.GONE);
+            }
         }
-    }
+    };
 
     private OnClickListener onResetClick0 = new OnClickListener() {
         @Override
-        public void onClick(View v) {
+        public void onClick(View v) {      // back to position; scrolling from right-to-left
             card_view.scrollToPosition(PhaseAdapter.CENTER_POSITION);
-            forwardButton.setVisibility(View.GONE);
-            backButton.setVisibility(View.GONE);
+            card_view.smoothScrollBy(1, 0); // triggers a snap
         }
     };
     private OnClickListener onResetClick1 = new OnClickListener() {
         @Override
-        public void onClick(View v) {
-            card_view.scrollToPosition(PhaseAdapter.CENTER_POSITION + 3);
-            forwardButton.setVisibility(View.GONE);
-            backButton.setVisibility(View.GONE);
+        public void onClick(View v) {      // forward to position; scrolling from left-to-right
+            card_view.scrollToPosition(PhaseAdapter.CENTER_POSITION + 2);
+            card_view.smoothScrollBy(1, 0); // triggers a snap
         }
     };
 
+    /**@Override
     public void setOnClickListener( OnClickListener listener )
     {
+        super.setOnClickListener(listener);
         // TODO
         //content.setOnClickListener(listener);
-    }
+    }*/
 
+    /**@Override
     public void setOnLongClickListener( OnLongClickListener listener)
     {
+        super.setOnLongClickListener(listener);
         // TODO
         //content.setOnLongClickListener(listener);
-    }
+    }*/
 
     /**
      * PhaseAdapter
