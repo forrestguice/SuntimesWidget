@@ -29,24 +29,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
-public class SuntimesMoonData extends SuntimesData
+public class SuntimesMoonData extends SuntimesMoonData0
 {
-    private Context context;
     private SuntimesCalculator.MoonTimes[] riseSet = new SuntimesCalculator.MoonTimes[3];  // [0] yesterday, [1] today, and [2] tomorrow
 
-    public SuntimesMoonData(Context context, int appWidgetId)
-    {
-        this.context = context;
-        initFromSettings(context, appWidgetId);
+    public SuntimesMoonData(Context context, int appWidgetId) {
+        super(context, appWidgetId);
     }
-    public SuntimesMoonData(Context context, int appWidgetId, String calculatorName)
-    {
-        this.context = context;
-        initFromSettings(context, appWidgetId, calculatorName);
+    public SuntimesMoonData(Context context, int appWidgetId, String calculatorName) {
+        super(context, appWidgetId, calculatorName);
     }
-    public SuntimesMoonData(SuntimesMoonData other)
-    {
-        this.context = other.context;
+    public SuntimesMoonData(SuntimesMoonData other) {
+        super(other);
         initFromOther(other);
     }
 
@@ -177,32 +171,6 @@ public class SuntimesMoonData extends SuntimesData
     }
 
     /**
-     * @return the date and position (Pair) of the upcoming lunar apogee.
-     */
-    public Pair<Calendar, SuntimesCalculator.MoonPosition> getMoonApogee()
-    {
-        Calendar apogeeDate = calculator.getMoonApogeeNextDate(nowThen(todaysCalendar));
-        if (apogeeDate != null)
-        {
-            SuntimesCalculator.MoonPosition apogeePosition = calculator.getMoonPosition(apogeeDate);
-            return new Pair<>(apogeeDate, apogeePosition);
-        } else return null;
-    }
-
-    /**
-     * @return the date and position (Pair) of the upcoming lunar perigee.
-     */
-    public Pair<Calendar, SuntimesCalculator.MoonPosition> getMoonPerigee()
-    {
-        Calendar perigeeDate = calculator.getMoonPerigeeNextDate(nowThen(todaysCalendar));
-        if (perigeeDate != null)
-        {
-            SuntimesCalculator.MoonPosition perigeePosition = calculator.getMoonPosition(perigeeDate);
-            return new Pair<>(perigeeDate, perigeePosition);
-        } else return null;
-    }
-
-    /**
      * init from other SuntimesEquinoxSolsticeData object
      * @param other another SuntimesEquinoxSolsticeData obj
      */
@@ -216,38 +184,9 @@ public class SuntimesMoonData extends SuntimesData
     }
 
     /**
-     * @return true the calculator has features needed to calculate the data, false otherwise
-     */
-    public boolean isImplemented()
-    {
-        return calculatorMode.hasRequestedFeature(SuntimesCalculator.FEATURE_MOON);
-    }
-
-
-    public void initCalculator()
-    {
-        initCalculator(context);
-    }
-
-    @Override
-    public SuntimesCalculatorFactory initFactory(Context context)
-    {
-        return new SuntimesCalculatorFactory(context, calculatorMode)
-        {
-            public SuntimesCalculator fallbackCalculator()
-            {
-                return new com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator();
-            }
-            public SuntimesCalculatorDescriptor fallbackCalculatorDescriptor()
-            {
-                return com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator.getDescriptor();
-            }
-        };
-    }
-
-    /**
      * calculate
      */
+    @Override
     public void calculate()
     {
         initCalculator(context);
@@ -476,16 +415,6 @@ public class SuntimesMoonData extends SuntimesData
             case FULL:
             default: return MoonPhaseDisplay.WANING_GIBBOUS;
         }
-    }
-
-    public static boolean isSuperMoon( @NonNull SuntimesCalculator.MoonPosition position )
-    {
-        return position.distance < 360000;
-    }
-
-    public static boolean isMicroMoon( @NonNull SuntimesCalculator.MoonPosition position)
-    {
-        return position.distance > 405000;
     }
 
     public CharSequence getMoonPhaseLabel(Context context, SuntimesCalculator.MoonPhase majorPhase)
