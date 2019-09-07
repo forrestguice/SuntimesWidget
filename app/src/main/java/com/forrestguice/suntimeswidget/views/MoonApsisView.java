@@ -24,14 +24,18 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.ColorUtils;
+import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.Pair;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -42,6 +46,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData0;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -57,6 +62,8 @@ public class MoonApsisView extends LinearLayout
     private RecyclerView card_view;
     private MoonApsisAdapter card_adapter;
     private LinearLayoutManager card_layout;
+    private ImageButton forwardButton, backButton;
+    private int colorEnabled, colorPressed, colorDisabled, colorBackground;
 
     public MoonApsisView(Context context)
     {
@@ -90,6 +97,19 @@ public class MoonApsisView extends LinearLayout
         card_view.setAdapter(card_adapter);
         card_view.scrollToPosition(MoonApsisAdapter.CENTER_POSITION);
 
+        GravitySnapHelper snapHelper = new GravitySnapHelper(Gravity.START); // new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(card_view);
+
+        forwardButton = (ImageButton)findViewById(R.id.info_time_nextbtn);
+        forwardButton.setOnClickListener(onResetClick1);
+        forwardButton.setVisibility(GONE);
+
+        backButton = (ImageButton)findViewById(R.id.info_time_prevbtn);
+        backButton.setOnClickListener(onResetClick0);
+        backButton.setVisibility(GONE);
+
+        card_view.setOnScrollListener(onScrollChanged);
+
         initTheme(context);
         if (isInEditMode()) {
             updateViews(context);
@@ -106,25 +126,70 @@ public class MoonApsisView extends LinearLayout
         }
     }
 
+    private RecyclerView.OnScrollListener onScrollChanged = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+        {
+            super.onScrollStateChanged(recyclerView, newState);
+            int position = card_layout.findFirstVisibleItemPosition();
+
+            if (position < MoonApsisAdapter.CENTER_POSITION)
+            {
+                forwardButton.setVisibility(View.VISIBLE);
+                backButton.setVisibility(View.GONE);
+
+            } else if (position > MoonApsisAdapter.CENTER_POSITION) {
+                forwardButton.setVisibility(View.GONE);
+                backButton.setVisibility(View.VISIBLE);
+
+            } else {
+                forwardButton.setVisibility(View.GONE);
+                backButton.setVisibility(View.GONE);
+            }
+        }
+    };
+
+    private OnClickListener onResetClick0 = new OnClickListener() {
+        @Override
+        public void onClick(View v) {      // back to position; scrolling from right-to-left
+            card_view.scrollToPosition(MoonApsisAdapter.CENTER_POSITION);
+            card_view.smoothScrollBy(1, 0); // triggers a snap
+        }
+    };
+    private OnClickListener onResetClick1 = new OnClickListener() {
+        @Override
+        public void onClick(View v) {      // forward to position; scrolling from left-to-right
+            card_view.scrollToPosition(MoonApsisAdapter.CENTER_POSITION + 1);
+            card_view.smoothScrollBy(1, 0); // triggers a snap
+        }
+    };
+
+    @SuppressLint("ResourceType")
     public void initTheme(Context context)
     {
-        /**int[] colorAttrs = { android.R.attr.textColorPrimary };
+        int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.buttonPressColor, R.attr.text_disabledColor, R.attr.colorBackgroundFloating };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = R.color.transparent;
-        int timeColor = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
+        colorEnabled = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
+        colorPressed = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
+        colorDisabled = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
+        colorBackground = ColorUtils.setAlphaComponent(ContextCompat.getColor(context, typedArray.getResourceId(3, def)), (int)(9d * (254d / 10d)));
         typedArray.recycle();
-
-        for (MoonApsisField field : f) {
-            field.themeView(timeColor);
-        }*/
+        themeDrawables();
     }
 
     public void themeViews(Context context, SuntimesTheme theme) {
         card_adapter.applyTheme(context, theme);
+        themeDrawables();
     }
 
+    private void themeDrawables()
     {
-        // EMPTY
+        ImageViewCompat.setImageTintList(forwardButton, SuntimesUtils.colorStateList(colorEnabled, colorDisabled, colorPressed));
+        SuntimesUtils.colorizeImageView(forwardButton, colorBackground);
+
+        ImageViewCompat.setImageTintList(backButton, SuntimesUtils.colorStateList(colorEnabled, colorDisabled, colorPressed));
+        SuntimesUtils.colorizeImageView(backButton, colorBackground);
     }
 
     public void updateViews( Context context ) { /* EMPTY */ }
@@ -253,9 +318,10 @@ public class MoonApsisView extends LinearLayout
                 {
                     Calendar date = Calendar.getInstance(moon.timezone());
                     date.setTimeInMillis(isRising ? apogee.first.getTimeInMillis() : perigee.first.getTimeInMillis());
-                    date.add(Calendar.DATE, -7);
 
                     double anomalisticMinutes = 27.55455d * 24d * 60d;  // may be up to 2 to 3 days longer than actual
+                    date.add(Calendar.DATE, -7);                   // so offset 1 week
+
                     int rawOffset = position - CENTER_POSITION;
                     double minuteOffset = (rawOffset / 2) * anomalisticMinutes;
                     date.add(Calendar.MINUTE, (int)minuteOffset);
