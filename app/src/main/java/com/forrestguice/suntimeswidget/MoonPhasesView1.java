@@ -30,9 +30,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -50,6 +48,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
@@ -109,7 +108,7 @@ public class MoonPhasesView1 extends LinearLayout
         card_view.setAdapter(card_adapter);
         card_view.scrollToPosition(PhaseAdapter.CENTER_POSITION);
 
-        SnapHelper snapHelper = new LinearSnapHelper();
+        GravitySnapHelper snapHelper = new GravitySnapHelper(Gravity.START); // new LinearSnapHelper();
         snapHelper.attachToRecyclerView(card_view);
 
         //card_scroller = new CardAdapter.CardViewScroller(context);
