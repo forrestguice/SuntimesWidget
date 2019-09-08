@@ -69,6 +69,8 @@ public class TimeZoneDialog extends DialogFragment
 
     private static final String DIALOGTAG_HELP = "timezone_help";
 
+    public static final String SLOT_CUSTOM0 = "custom0";
+
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     private String customTimezoneID;
 
@@ -394,6 +396,9 @@ public class TimeZoneDialog extends DialogFragment
                 spinner_solartime.setOnItemSelectedListener(onSolarTimeSelected);
             else spinner_timezone.setOnItemSelectedListener(onTimeZoneSelected);
 
+            if (timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE) {
+                customTimezoneID = WidgetSettings.loadTimezonePref(getContext(), appWidgetId, SLOT_CUSTOM0);
+            }
             setUseCustomTimezone((timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE));
             setUseSolarTime((timezoneMode == WidgetSettings.TimezoneMode.SOLAR_TIME));
 
@@ -539,7 +544,7 @@ public class TimeZoneDialog extends DialogFragment
         WidgetSettings.TimezoneMode timezoneMode = WidgetSettings.loadTimezoneModePref(context, appWidgetId);
         spinner_timezoneMode.setSelection(timezoneMode.ordinal());
 
-        customTimezoneID = WidgetSettings.loadTimezonePref(context, appWidgetId);
+        customTimezoneID = WidgetSettings.loadTimezonePref(context, appWidgetId, (timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE ? SLOT_CUSTOM0 : ""));
         WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
 
         WidgetSettings.SolarTimeMode solartimeMode = WidgetSettings.loadSolarTimeModePref(context, appWidgetId);
@@ -589,9 +594,11 @@ public class TimeZoneDialog extends DialogFragment
         WidgetSettings.TimezoneMode timezoneMode = timezoneModes[spinner_timezoneMode.getSelectedItemPosition()];
         WidgetSettings.saveTimezoneModePref(context, appWidgetId, timezoneMode);
 
-        // save: custom timezone
-        WidgetTimezones.TimeZoneItem customTimezone = (WidgetTimezones.TimeZoneItem) spinner_timezone.getSelectedItem();
-        WidgetSettings.saveTimezonePref(context, appWidgetId, customTimezone.getID());
+        WidgetTimezones.TimeZoneItem tz = (WidgetTimezones.TimeZoneItem) spinner_timezone.getSelectedItem();
+        WidgetSettings.saveTimezonePref(context, appWidgetId, tz.getID());
+        if (timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE) {
+            WidgetSettings.saveTimezonePref(context, appWidgetId, tz.getID(), SLOT_CUSTOM0);
+        }
 
         // save: solar timemode
         WidgetSettings.SolarTimeMode[] solarTimeModes = WidgetSettings.SolarTimeMode.values();

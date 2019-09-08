@@ -180,6 +180,7 @@ public class WidgetSettings
 
     public static final String PREF_KEY_TIMEZONE_CUSTOM = "timezone";
     public static final String PREF_DEF_TIMEZONE_CUSTOM = "US/Arizona";
+    public static final String[][] PREF_DEF_TIMEZONES = new String[][] { new String[] {"", PREF_DEF_TIMEZONE_CUSTOM} };
 
     public static final String PREF_KEY_TIMEZONE_SOLARMODE = "solarmode";
     public static final SolarTimeMode PREF_DEF_TIMEZONE_SOLARMODE = SolarTimeMode.APPARENT_SOLAR_TIME;
@@ -1933,25 +1934,67 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveTimezonePref(Context context, int appWidgetId, String timezone)
+    public static void saveTimezonePref(Context context, int appWidgetId, String timezone) {
+        saveTimezonePref(context, appWidgetId, timezone, "");
+    }
+    public static void saveTimezonePref(Context context, int appWidgetId, String timezone, String slotName)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
-        prefs.putString(prefs_prefix + PREF_KEY_TIMEZONE_CUSTOM, timezone);
+        String key = keyTimezonePref(appWidgetId, slotName);
+        prefs.putString(key, timezone);
         prefs.apply();
     }
-    public static String loadTimezonePref(Context context, int appWidgetId)
+
+    public static String loadTimezonePref(Context context, int appWidgetId) {
+        return loadTimezonePref(context, appWidgetId, "");
+    }
+    public static String loadTimezonePref(Context context, int appWidgetId, @NonNull String slotName)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
-        return prefs.getString(prefs_prefix + PREF_KEY_TIMEZONE_CUSTOM, PREF_DEF_TIMEZONE_CUSTOM);
+        String key = keyTimezonePref(appWidgetId, slotName);
+        String defaultValue = defaultTimezonePref(context, appWidgetId, slotName);
+        return prefs.getString(key, defaultValue);
     }
-    public static void deleteTimezonePref(Context context, int appWidgetId)
+
+    public static void deleteTimezonePref(Context context, int appWidgetId) {
+        deleteTimezonePref(context, appWidgetId, "");
+    }
+    public static void deleteTimezonePref(Context context, int appWidgetId, @NonNull String slotName)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
-        prefs.remove(prefs_prefix + PREF_KEY_TIMEZONE_CUSTOM);
+        String key = keyTimezonePref(appWidgetId, slotName);
+        prefs.remove(key);
         prefs.apply();
+    }
+
+    public static String keyTimezonePref(int appWidgetId, @NonNull String slotName)
+    {
+        slotName = slotName.toLowerCase(Locale.US).trim();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
+        if (slotName.isEmpty())
+            return prefs_prefix + PREF_KEY_TIMEZONE_CUSTOM;
+        else return prefs_prefix + PREF_KEY_TIMEZONE_CUSTOM + "_" + slotName;
+    }
+    public static String defaultTimezonePref(Context context, int appWidgetId, @NonNull String slotName)
+    {
+        slotName = slotName.toLowerCase(Locale.US).trim();
+        if (!slotName.isEmpty())
+        {
+            for (String[] defaultTimezone : PREF_DEF_TIMEZONES)
+            {
+                if (defaultTimezone == null) {
+                    Log.e("defaultTimezonePref", "Bad default mapping! null. skipping...");
+                    continue;
+                } else if (defaultTimezone.length != 2) {
+                    Log.e("defaultTimezonePref", "Bad default mapping! incorrect length " + defaultTimezone.length + ". skipping...");
+                    continue;
+                } else if (defaultTimezone[0].equals(slotName)) {
+                    return defaultTimezone[1];
+                }
+            }
+            Log.w("defaultTimezone", "default for :: " + slotName + " :: was not found!");
+        }
+        return PREF_DEF_TIMEZONE_CUSTOM;
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

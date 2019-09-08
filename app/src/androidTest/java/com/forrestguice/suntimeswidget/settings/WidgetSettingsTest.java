@@ -263,6 +263,11 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_timezonePref()
     {
+        String tzid3 = TESTTZID_0;
+        WidgetSettings.saveTimezonePref(context, appWidgetId, tzid3, "test");
+        String pref3 = WidgetSettings.loadTimezonePref(context, appWidgetId, "test");
+        assertTrue("timezone should be " + tzid3 +  " but was " + pref3, pref3.equals(tzid3));
+
         String tzid2 = TESTTZID_0;
         WidgetSettings.saveTimezonePref(context, appWidgetId, tzid2);
         String pref2 = WidgetSettings.loadTimezonePref(context, appWidgetId);
