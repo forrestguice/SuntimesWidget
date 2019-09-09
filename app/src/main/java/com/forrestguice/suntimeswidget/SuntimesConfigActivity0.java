@@ -171,6 +171,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             Log.w("onCreate", "Invalid widget ID! returning early.");
             finish();
+            overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);
             return;
         }
 
@@ -1382,6 +1383,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
             setResult(RESULT_OK, resultValue);
             finish();
+            overridePendingTransition(R.anim.transition_ok_in, R.anim.transition_ok_out);
         }
     }
 
@@ -1765,6 +1767,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         Intent configThemesIntent = themeEditorIntent(context);
         startActivityForResult(configThemesIntent, PICK_THEME_REQUEST);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
     @Override
@@ -1805,6 +1808,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         SuntimesUtils.forceActionBarIcons(menu);
         return super.onPrepareOptionsPanel(view, menu);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);
     }
 
 }

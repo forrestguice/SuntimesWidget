@@ -1698,6 +1698,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         Intent settingsIntent = new Intent(this, SuntimesSettingsActivity.class);
         startActivityForResult(settingsIntent, SUNTIMES_SETTINGS_REQUEST);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
     protected void showGeneralSettings()
     {
@@ -1711,6 +1712,7 @@ public class SuntimesActivity extends AppCompatActivity
             settingsIntent.setAction(SuntimesSettingsActivity.ACTION_PREFS_GENERAL);
         }
         startActivity(settingsIntent);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
     /**

@@ -200,6 +200,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 Intent intent = new Intent(this, SuntimesWidgetListActivity.class);
                 startActivity(intent);
                 finish();
+                overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
 
             } else {
                 Log.w(LOG_TAG, "initLegacyPrefs: unhandled action: " + action);
@@ -517,6 +518,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         } else {
             finish();
             startActivity(getIntent());
+            overridePendingTransition(R.anim.transition_restart_in, R.anim.transition_restart_out);
         }
     }
 
@@ -678,6 +680,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 try {
                     startActivity(calendarIntent);
                     getActivity().finish();
+                    getActivity().overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
                     return;
 
                 } catch (Exception e) {
@@ -701,6 +704,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(AboutDialog.ADDONS_URL));
                             if (intent.resolveActivity(activity.getPackageManager()) != null) {
                                 activity.startActivity(intent);
+                                activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
                             }
                         }
                         return false;
@@ -1275,6 +1279,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 configThemesIntent.putExtra(WidgetThemeListActivity.PARAM_NOSELECT, false);
                 configThemesIntent.putExtra(WidgetThemeListActivity.PARAM_SELECTED, selectedTheme);
                 activity.startActivityForResult(configThemesIntent, requestCode);
+                activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
             }
         };
     }
@@ -1769,5 +1774,17 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);
+    }
+
+    @Override
+    public void onHeaderClick(PreferenceActivity.Header header, int position)
+    {
+        super.onHeaderClick(header, position);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+    }
 
 }
