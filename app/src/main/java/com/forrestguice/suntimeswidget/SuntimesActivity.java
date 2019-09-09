@@ -1387,6 +1387,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         Intent about = new Intent(this, AboutActivity.class);
         startActivity(about);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
 

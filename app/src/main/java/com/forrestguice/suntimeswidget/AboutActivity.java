@@ -107,6 +107,12 @@ public class AboutActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);
+    }
+
     /**
      * AboutPagerAdapter
      */
