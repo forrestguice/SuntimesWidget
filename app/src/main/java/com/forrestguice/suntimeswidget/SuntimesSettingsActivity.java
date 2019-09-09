@@ -261,6 +261,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         {
             String prevTheme = icicle.getString(AppSettings.PREF_KEY_APPEARANCE_THEME);
             if (prevTheme == null) {
+                prevTheme = getIntent().getStringExtra(AppSettings.PREF_KEY_APPEARANCE_THEME);
+            }
+            if (prevTheme == null) {
                 prevTheme = appTheme;
             }
             themeChanged = !prevTheme.equals(appTheme);
@@ -269,6 +272,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
         {
             if (themeChanged) {
+                Log.d("DEBUG", "theme changed: " + themeChanged);
                 invalidateHeaders();
             }
         }
@@ -279,6 +283,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     {
         super.onSaveInstanceState(outState);
         outState.putString(AppSettings.PREF_KEY_APPEARANCE_THEME, appTheme);
+        Log.d("DEBUG", "onSaveInstanceState: " + appTheme);
     }
 
     /**
@@ -513,11 +518,12 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
         {
             invalidateHeaders();
-            recreate();
+            recreate();   //  jagged transition (but acts as a configuration change within lifecycle)
+            // TODO: smooth transition
 
         } else {
             finish();
-            startActivity(getIntent());
+            startActivity(getIntent());  // smooth transition (but does not trigger onSaveInstanceState)
             overridePendingTransition(R.anim.transition_restart_in, R.anim.transition_restart_out);
         }
     }

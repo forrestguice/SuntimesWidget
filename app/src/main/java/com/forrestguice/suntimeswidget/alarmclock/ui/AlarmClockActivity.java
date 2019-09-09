@@ -1275,6 +1275,7 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         Intent settingsIntent = new Intent(this, SuntimesSettingsActivity.class);
         startActivityForResult(settingsIntent, REQUEST_SETTINGS);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
     /**
@@ -1295,6 +1296,7 @@ public class AlarmClockActivity extends AppCompatActivity
         Intent about = new Intent(this, AboutActivity.class);
         about.putExtra(AboutActivity.EXTRA_ICONID, R.mipmap.ic_launcher_alarms_round);
         startActivity(about);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1445,6 +1447,7 @@ public class AlarmClockActivity extends AppCompatActivity
         Intent intent = new Intent(this, SuntimesActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        overridePendingTransition(R.anim.transition_swap_in, R.anim.transition_swap_out);
     }
 
     @SuppressWarnings("RestrictedApi")
