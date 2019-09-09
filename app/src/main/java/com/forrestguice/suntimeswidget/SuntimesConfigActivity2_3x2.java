@@ -65,11 +65,11 @@ public class SuntimesConfigActivity2_3x2 extends SuntimesConfigActivity2
     }
 
     @Override
-    protected void launchThemeEditor(Context context)
+    protected Intent themeEditorIntent(Context context)
     {
-        Intent configThemesIntent = themeEditorIntent(context);
-        configThemesIntent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_SUNPOS_3x2);
-        startActivityForResult(configThemesIntent, PICK_THEME_REQUEST);
+        Intent intent = super.themeEditorIntent(context);
+        intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_SUNPOS_3x2);
+        return intent;
     }
 
 }

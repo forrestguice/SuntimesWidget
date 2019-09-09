@@ -26,8 +26,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -76,6 +81,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     protected boolean reconfigure = false;
 
+    private ActionBar actionBar;
     protected TextView text_appWidgetID;
 
     protected Spinner spinner_calculatorMode;
@@ -165,6 +171,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             Log.w("onCreate", "Invalid widget ID! returning early.");
             finish();
+            overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);
             return;
         }
 
@@ -317,6 +324,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void initViews(final Context context)
     {
+        initToolbar(context);
+
         text_appWidgetID = (TextView) findViewById(R.id.text_appwidgetid);
         if (text_appWidgetID != null)
         {
@@ -699,6 +708,19 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (button_aboutWidget != null)
         {
             button_aboutWidget.setOnClickListener(onAboutButtonClickListener);
+        }
+    }
+
+    protected void initToolbar(final Context context)
+    {
+        Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
+        setSupportActionBar(menuBar);
+        actionBar = getSupportActionBar();
+        if (actionBar != null)
+        {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(getString(reconfigure ? R.string.configAction_reconfigWidget_short : R.string.configAction_addWidget));
         }
     }
 
@@ -1361,6 +1383,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
             setResult(RESULT_OK, resultValue);
             finish();
+            overridePendingTransition(R.anim.transition_ok_in, R.anim.transition_ok_out);
         }
     }
 
@@ -1405,11 +1428,16 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         @Override
         public void onClick(View v)
         {
-            AboutDialog aboutDialog = new AboutDialog();
-            aboutDialog.show(getSupportFragmentManager(), DIALOGTAG_ABOUT);
-            aboutDialog.setIconID(getAboutIconID());
+            showAbout();
         }
     };
+
+    protected void showAbout()
+    {
+        AboutDialog aboutDialog = new AboutDialog();
+        aboutDialog.show(getSupportFragmentManager(), DIALOGTAG_ABOUT);
+        aboutDialog.setIconID(getAboutIconID());
+    }
 
     /**
      * @param requestCode  the request code that was passed to requestPermissions
@@ -1739,6 +1767,53 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         Intent configThemesIntent = themeEditorIntent(context);
         startActivityForResult(configThemesIntent, PICK_THEME_REQUEST);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.widgetconfig, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.action_about:
+                showAbout();
+                return true;
+
+            case R.id.action_save:
+                addWidget();
+                return true;
+
+            case android.R.id.home:
+                if (reconfigure) {
+                    onBackPressed();
+                }
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @SuppressWarnings("RestrictedApi")
+    @Override
+    protected boolean onPrepareOptionsPanel(View view, Menu menu)
+    {
+        SuntimesUtils.forceActionBarIcons(menu);
+        return super.onPrepareOptionsPanel(view, menu);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);
     }
 
 }

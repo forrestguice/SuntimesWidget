@@ -264,6 +264,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         Intent configThemesIntent = new Intent(context, WidgetThemeListActivity.class);
         configThemesIntent.putExtra(WidgetThemeListActivity.PARAM_NOSELECT, true);
         startActivity(configThemesIntent);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
     /**
@@ -276,6 +277,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         configIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         configIntent.putExtra(WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(), true);
         startActivity(configIntent);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
     /**
@@ -557,5 +559,12 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         SuntimesUtils.forceActionBarIcons(menu);
         return super.onPrepareOptionsPanel(view, menu);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);
+    }
+
 
 }

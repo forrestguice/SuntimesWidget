@@ -261,6 +261,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
             intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
         }
         startActivityForResult(intent, ADD_THEME_REQUEST);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
     protected void editTheme( SuntimesTheme theme )
@@ -278,6 +279,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
                 intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
             }
             startActivityForResult(intent, EDIT_THEME_REQUEST);
+            overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
         }
     }
 
@@ -291,6 +293,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
             intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
         }
         startActivityForResult(intent, ADD_THEME_REQUEST);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
     protected void deleteTheme(final SuntimesTheme theme)
@@ -328,6 +331,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         intent.putExtra(ADAPTER_MODIFIED, adapterModified);
         setResult(Activity.RESULT_OK, intent);
         finish();
+        overridePendingTransition(R.anim.transition_ok_in, R.anim.transition_ok_out);
     }
 
     /**
@@ -524,6 +528,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         intent.putExtra(ADAPTER_MODIFIED, adapterModified);
         setResult(((adapterModified) ? Activity.RESULT_OK : Activity.RESULT_CANCELED), intent);
         finish();
+        overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);
     }
 
     @Override
