@@ -146,11 +146,11 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
-    protected void launchThemeEditor(Context context)
+    protected Intent themeEditorIntent(Context context)
     {
-        Intent configThemesIntent = themeEditorIntent(context);
-        configThemesIntent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_MOON_2x1);
-        startActivityForResult(configThemesIntent, PICK_THEME_REQUEST);
+        Intent intent = super.themeEditorIntent(context);
+        intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_MOON_2x1);
+        return intent;
     }
 
 }
