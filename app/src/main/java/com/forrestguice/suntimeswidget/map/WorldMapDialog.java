@@ -367,7 +367,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     private void updateSeekbarDrawables(Context context)
     {
-        LightMapView.LightMapTask lightMapTask = new LightMapView.LightMapTask();
+        /**LightMapView.LightMapTask lightMapTask = new LightMapView.LightMapTask();
         LightMapView.LightMapColors colors = new LightMapView.LightMapColors();
         colors.initDefaultDark(context);
         colors.option_drawNow = false;
@@ -385,7 +385,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         Rect bounds = seekbar.getProgressDrawable().getBounds();
         seekbar.setProgressDrawable(progressDrawable);
         seekbar.getProgressDrawable().setBounds(bounds);
-        seekbar.getThumb().setColorFilter(color_sun, PorterDuff.Mode.SRC_IN);
+        seekbar.getThumb().setColorFilter(color_sun, PorterDuff.Mode.SRC_IN);*/
     }
 
     @SuppressWarnings("ResourceType")
