@@ -26,13 +26,6 @@ import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.ScaleDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -45,7 +38,6 @@ import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -60,7 +52,6 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.LightMapView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
@@ -86,7 +77,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private View dialogContent = null;
     private TextView utcTime, offsetTime;
     private Spinner mapSelector;
-    private SeekBar seekbar;
+    private WorldMapSeekBar seekbar;
     private ImageButton playButton, pauseButton, recordButton, resetButton, nextButton, prevButton, menuButton;
     private TextView speedButton;
     private View mediaGroup, seekGroup;
@@ -298,7 +289,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             option_sunmoon.setOnClickListener(onRadioButtonClicked);
         }*/
 
-        seekbar = (SeekBar)dialogView.findViewById(R.id.seek_map);
+        seekbar = (WorldMapSeekBar)dialogView.findViewById(R.id.seek_map);
         if (seekbar != null)
         {
             seekbar.setMax(seek_totalMinutes);
@@ -372,20 +363,11 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         colors.initDefaultDark(context);
         colors.option_drawNow = false;
         Bitmap lightmap = lightMapTask.makeBitmap(data, worldmap.getWidth(), 1, colors);
-        BitmapDrawable lightmapDrawable = new BitmapDrawable(context.getResources(), lightmap);
+        BitmapDrawable lightmapDrawable = new BitmapDrawable(context.getResources(), lightmap);*/
 
-        Drawable secondaryProgress = new ColorDrawable(Color.TRANSPARENT);
-        Drawable primaryProgress = new ScaleDrawable(new ColorDrawable(Color.TRANSPARENT), Gravity.START, 1, -1);
-
-        LayerDrawable progressDrawable = new LayerDrawable(new Drawable[] { lightmapDrawable, secondaryProgress, primaryProgress });
-        progressDrawable.setId(0, android.R.id.background);
-        progressDrawable.setId(1, android.R.id.secondaryProgress);
-        progressDrawable.setId(2, android.R.id.progress);
-
-        Rect bounds = seekbar.getProgressDrawable().getBounds();
-        seekbar.setProgressDrawable(progressDrawable);
-        seekbar.getProgressDrawable().setBounds(bounds);
-        seekbar.getThumb().setColorFilter(color_sun, PorterDuff.Mode.SRC_IN);*/
+        //seekbar.getThumb().setColorFilter(color_sun, PorterDuff.Mode.SRC_IN);
+        seekbar.setTrackColor(color_accent);
+        seekbar.setTickColor(color_accent, color_accent, color_accent);
     }
 
     @SuppressWarnings("ResourceType")
@@ -393,12 +375,16 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     {
         if (themeOverride != null)
         {
-            dialogTitle.setTextColor(themeOverride.getTitleColor());
-            utcTime.setTextColor(themeOverride.getTimeColor());
-            worldmap.themeViews(context, themeOverride);
             color_pressed = themeOverride.getActionColor();
             color_normal = themeOverride.getTitleColor();
             color_accent = themeOverride.getAccentColor();
+
+            seekbar.setTrackColor(color_accent);
+            seekbar.setTickColor(color_accent, color_accent, color_accent);
+
+            dialogTitle.setTextColor(themeOverride.getTitleColor());
+            utcTime.setTextColor(themeOverride.getTimeColor());
+            worldmap.themeViews(context, themeOverride);
         }
     }
 

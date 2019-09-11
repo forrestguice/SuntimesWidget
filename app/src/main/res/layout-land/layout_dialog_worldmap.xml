@@ -83,7 +83,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/info_time_worldmap_layout"
             android:layout_marginBottom="12dp" android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
 
-            <SeekBar
+            <com.forrestguice.suntimeswidget.map.WorldMapSeekBar
                 android:id="@+id/seek_map"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:progress="50" android:max="100" />
