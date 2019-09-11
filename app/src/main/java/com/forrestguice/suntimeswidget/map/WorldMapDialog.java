@@ -26,6 +26,7 @@ import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -302,54 +303,42 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         if (playButton != null) {
             playButton.setOnClickListener(playClickListener);
             playButton.setOnLongClickListener(playLongClickListener);
-            ImageViewCompat.setImageTintList(playButton, SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
         }
 
         pauseButton = (ImageButton)dialogView.findViewById(R.id.media_pause_map);
         if (pauseButton != null) {
             pauseButton.setOnClickListener(pauseClickListener);
-            ImageViewCompat.setImageTintList(pauseButton, SuntimesUtils.colorStateList(color_accent, color_disabled, color_pressed));
         }
 
         recordButton = (ImageButton)dialogView.findViewById(R.id.media_record_map);
         if (recordButton != null) {
             recordButton.setOnClickListener(pauseClickListener);   // stop-record is same as pause
-            ImageViewCompat.setImageTintList(recordButton, SuntimesUtils.colorStateList(color_warning, color_disabled, color_pressed));
         }
 
         resetButton = (ImageButton)dialogView.findViewById(R.id.media_reset_map);
         if (resetButton != null) {
             resetButton.setEnabled(false);
             resetButton.setOnClickListener(resetClickListener);
-            ImageViewCompat.setImageTintList(resetButton, SuntimesUtils.colorStateList(color_warning, color_disabled, color_pressed));
         }
 
         nextButton = (ImageButton)dialogView.findViewById(R.id.media_next_map);
-        if (nextButton != null)
-        {
+        if (nextButton != null) {
             nextButton.setOnClickListener(nextClickListener);
-            ImageViewCompat.setImageTintList(nextButton, SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
         }
 
         prevButton = (ImageButton)dialogView.findViewById(R.id.media_prev_map);
-        if (prevButton != null)
-        {
+        if (prevButton != null) {
             prevButton.setOnClickListener(prevClickListener);
-            ImageViewCompat.setImageTintList(prevButton, SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
         }
 
         menuButton = (ImageButton)dialogView.findViewById(R.id.map_menu);
-        if (menuButton != null)
-        {
+        if (menuButton != null) {
             menuButton.setOnClickListener(menuClickListener);
-            ImageViewCompat.setImageTintList(menuButton, SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
         }
 
         speedButton = (TextView)dialogView.findViewById(R.id.map_speed);
-        if (speedButton != null)
-        {
+        if (speedButton != null) {
             speedButton.setOnClickListener(speedClickListener);
-            speedButton.setTextColor(SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
         }
 
         mediaGroup = dialogView.findViewById(R.id.media_actions);
@@ -375,16 +364,31 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     {
         if (themeOverride != null)
         {
-            color_pressed = themeOverride.getActionColor();
+            color_pressed = color_warning = themeOverride.getActionColor();
             color_normal = themeOverride.getTitleColor();
             color_accent = themeOverride.getAccentColor();
-
-            seekbar.setTrackColor(color_accent);
-            seekbar.setTickColor(color_accent, color_accent, color_accent);
 
             dialogTitle.setTextColor(themeOverride.getTitleColor());
             utcTime.setTextColor(themeOverride.getTimeColor());
             worldmap.themeViews(context, themeOverride);
+        }
+
+        if (seekbar != null) {
+            seekbar.setTrackColor(color_accent);
+            seekbar.setTickColor(color_accent, color_accent, color_accent);
+            seekbar.getThumb().setColorFilter(color_accent, PorterDuff.Mode.SRC_IN);
+        }
+
+        ImageViewCompat.setImageTintList(playButton, SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
+        ImageViewCompat.setImageTintList(resetButton, SuntimesUtils.colorStateList(color_warning, color_disabled, color_pressed));
+        ImageViewCompat.setImageTintList(recordButton, SuntimesUtils.colorStateList(color_warning, color_disabled, color_pressed));
+        ImageViewCompat.setImageTintList(pauseButton, SuntimesUtils.colorStateList(color_accent, color_disabled, color_pressed));
+        ImageViewCompat.setImageTintList(nextButton, SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
+        ImageViewCompat.setImageTintList(prevButton, SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
+        ImageViewCompat.setImageTintList(menuButton, SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
+
+        if (speedButton != null) {
+            speedButton.setTextColor(SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
         }
     }
 
