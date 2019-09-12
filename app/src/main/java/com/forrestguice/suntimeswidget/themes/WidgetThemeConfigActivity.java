@@ -729,13 +729,13 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             int dpHeight = 64;
             WorldMapTask.WorldMapProjection projection = new WorldMapEquirectangular();
             WorldMapTask drawTask = new WorldMapTask();
-            drawTask.setListener(new WorldMapView.WorldMapTaskListener()
+            drawTask.setListener(new WorldMapTask.WorldMapTaskListener()
             {
                 @Override
-                public void onFinished(Bitmap result)
+                public void onFinished(Bitmap lastFrame)
                 {
-                    super.onFinished(result);
-                    view.setImageBitmap(result);
+                    super.onFinished(lastFrame);
+                    view.setImageBitmap(lastFrame);
                 }
             });
             drawTask.execute(data0,  SuntimesUtils.dpToPixels(this, dpWidth), SuntimesUtils.dpToPixels(this, dpHeight), options, projection);

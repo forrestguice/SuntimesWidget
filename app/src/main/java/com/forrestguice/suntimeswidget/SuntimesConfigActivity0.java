@@ -109,7 +109,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     private WidgetThemes.ThemeListAdapter spinner_themeAdapter;
     protected Spinner spinner_theme;
 
-    protected Spinner spinner_1x1mode, spinner_3x2mode;
+    protected Spinner spinner_1x1mode, spinner_3x2mode, spinner_3x3mode;
     protected CheckBox checkbox_allowResize;
     protected CheckBox checkbox_showTitle;
     protected TextView label_titleText;
@@ -591,6 +591,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         spinner_3x2mode = (Spinner) findViewById(R.id.appwidget_appearance_3x2mode);
         initWidgetMode3x2(context);
 
+        spinner_3x3mode = (Spinner) findViewById(R.id.appwidget_appearance_3x3mode);
+        initWidgetMode3x3(context);
+
         //
         // widget: title text
         //
@@ -809,6 +812,21 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      * @param context a context used to access resources
      */
     protected void loadWidgetMode3x2(Context context)
+    {
+        // EMPTY
+    }
+
+    protected void initWidgetMode3x3(Context context)
+    {
+        // EMPTY
+    }
+
+    protected void saveWidgetMode3x3(Context context)
+    {
+        // EMPTY
+    }
+
+    protected void loadWidgetMode3x3(Context context)
     {
         // EMPTY
     }
@@ -1055,9 +1073,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected void saveAppearanceSettings(Context context)
     {
-        // save: widgetmode_1x1, 3x2
+        // save: widgetmode_1x1, 3x2, 3x3
         saveWidgetMode1x1(context);
         saveWidgetMode3x2(context);
+        saveWidgetMode3x3(context);
 
         // save: theme
         ThemeDescriptor theme = (ThemeDescriptor)spinner_theme.getSelectedItem();
@@ -1088,9 +1107,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected void loadAppearanceSettings(Context context)
     {
-        // load: widgetmode_1x1, 3x2
+        // load: widgetmode_1x1, 3x2, 3x3
         loadWidgetMode1x1(context);
         loadWidgetMode3x2(context);
+        loadWidgetMode3x3(context);
 
         // load: theme
         SuntimesTheme theme = WidgetSettings.loadThemePref(context, appWidgetId);
@@ -1638,10 +1658,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected void hideOption1x1LayoutMode()
     {
-        View layout_1x1mode = findViewById(R.id.appwidget_appearance_1x1mode_layout);
-        if (layout_1x1mode != null)
-        {
-            layout_1x1mode.setVisibility(View.GONE);
+        View layout_mode = findViewById(R.id.appwidget_appearance_1x1mode_layout);
+        if (layout_mode != null) {
+            layout_mode.setVisibility(View.GONE);
         }
     }
 
@@ -1651,10 +1670,17 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected void showOption3x2LayoutMode(boolean show)
     {
-        View layout_1x1mode = findViewById(R.id.appwidget_appearance_3x2mode_layout);
-        if (layout_1x1mode != null)
-        {
-            layout_1x1mode.setVisibility(show ? View.VISIBLE : View.GONE);
+        View layout_mode = findViewById(R.id.appwidget_appearance_3x2mode_layout);
+        if (layout_mode != null) {
+            layout_mode.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    protected void showOption3x3LayoutMode(boolean show)
+    {
+        View layout_mode = findViewById(R.id.appwidget_appearance_3x3mode_layout);
+        if (layout_mode != null) {
+            layout_mode.setVisibility(show ? View.VISIBLE : View.GONE);
         }
     }
 

@@ -511,6 +511,14 @@ public class WidgetSettings
             this.month = month;
             this.day = day;
         }
+        public DateInfo(long timestamp)
+        {
+            Calendar date = Calendar.getInstance();
+            date.setTimeInMillis(timestamp);
+            this.year = date.get(Calendar.YEAR);
+            this.month = date.get(Calendar.MONTH);
+            this.day = date.get(Calendar.DAY_OF_MONTH);
+        }
 
         public int getYear() { return year; }
         public int getMonth() { return month; }
@@ -542,8 +550,10 @@ public class WidgetSettings
             return hash;
         }
 
-        public DateInfo diff(DateInfo other) {
-            return new DateInfo(getYear() - other.getYear(), getMonth() - other.getMonth(), getDay() - other.getDay() );
+        public static boolean isToday(WidgetSettings.DateInfo date)
+        {
+            WidgetSettings.DateInfo now = new WidgetSettings.DateInfo(Calendar.getInstance());
+            return now.equals(date);
         }
     }
 

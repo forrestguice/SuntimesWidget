@@ -554,7 +554,7 @@
     <string name="configAction_addAlarm">Afegir alarma</string>               <!-- button (contentDescription) -->  
     <string name="configAction_addNotification">Afegir notificació</string> <!-- button (contentDescription) -->  
     <string name="configAction_deleteAlarm">Elimina</string>               <!-- button (contentDescription) -->  
-    <string name="configAction_clearAlarms">Elimina tot</string>                <!-- action button / menu item -->  
+    <string name="configAction_clearAlarms">Elimina tot</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">Elimina</string>                <!-- action button / menu item -->  
     <string name="configAction_setAlarmOffset">Retard</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmType">Tipus</string>         <!-- button (contentDescription) -->  
@@ -563,7 +563,7 @@
     <string name="configAction_setAlarmRepeat">Repetició</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmEvent">Event</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmTime">Hora</string>         <!-- button (contentDescription) -->  
-    <string name="configAction_setAlarmSound">So</string>         <!-- button (contentDescription) -->  
+    <string name="configAction_setAlarmSound">So</string>         <!-- button (contentDescription) -->
     <string name="configAction_alarmMenu">Menú d\'alarmes</string>         <!-- button (contentDescription) -->  
 
     <string name="alarmAction_dismiss">Ignorar</string>                <!-- notification action button -->  
@@ -928,6 +928,7 @@
     <string name="schedalarm_dialog_error2">L\'alarma no és pot configurar…</string>
     <string name="schedalarm_dialog_note">En <xliff:g id="timetext" example="6h 30m">%s</xliff:g>, aproximadament.</string>
     <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g> no succeïx.</string>
+
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
         <item>alba astrònomic</item>
         <item>alba nàutic</item>

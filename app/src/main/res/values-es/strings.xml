@@ -549,7 +549,7 @@
          ALARM CLOCK
     -->
     <string name="configLabel_alarmClock">Alarmas</string>            <!-- group title -->  
-    <string name="configLabel_alarmClock_emptyMsg">Sin alarmas</string>     <!-- a label that is displayed in place of an empty listview -->  
+    <string name="configLabel_alarmClock_emptyMsg">Sin alarmas</string>     <!-- a label that is displayed in place of an empty listview -->
 
     <string name="configAction_addAlarm">Añadir alarma</string>               <!-- button (contentDescription) -->  
     <string name="configAction_addNotification">Añadir notificación</string> <!-- button (contentDescription) -->  
@@ -1181,7 +1181,7 @@
 
     <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms utiliza el permiso <b>almacenamiento externo</b> para reproducir sonidos en la tarjeta SD.<br/><br/>Este permiso es opcional; se reproducirá el sonido por defecto si se deniega el acceso. Este permiso no es necesario para los sonidos de sistema. (almacenamiento de medios).]]></string>    <!-- TODO -->
     <string name="privacy_permissiondialog_prompt"><![CDATA[¿Pedir permisos ahora?]]></string>    <!-- TODO -->
-
+    
     <string name="privacy_permissiondialog_ignore">Ignorar</string>    <!-- TODO -->
     <string name="privacy_permissiondialog_title">Permisos</string>
 

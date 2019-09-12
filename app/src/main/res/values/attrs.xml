@@ -98,12 +98,21 @@
     <attr name="icActionShare" format="reference" />
     <attr name="icActionSnooze" format="reference" />
 
+    <attr name="icActionPlay" format="reference" />
+    <attr name="icActionPause" format="reference" />
+    <attr name="icActionRecord" format="reference" />
+    <attr name="icActionTimeReset" format="reference" />
+
     <attr name="icActionNext" format="reference" />
     <attr name="icActionPrevious" format="reference" />
 
     <attr name="icActionGPS" format="reference" />
     <attr name="icActionGPS_off" format="reference" />
     <attr name="icActionGPS_searching" format="reference" />
+
+    <declare-styleable name="WorldMapView">
+        <attr name="matchHeight" format="boolean" />
+    </declare-styleable>
 
     <declare-styleable name="EquinoxView">
         <attr name="minimized" format="boolean" />

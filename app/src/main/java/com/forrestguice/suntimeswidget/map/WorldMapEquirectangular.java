@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,9 +20,14 @@ package com.forrestguice.suntimeswidget.map;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.DashPathEffect;
+import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
+import android.graphics.PathEffect;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -37,12 +42,92 @@ import java.util.Calendar;
  */
 public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
 {
+    @Override
+    public int[] toBitmapCoords(int w, int h, double[] mid, double lat, double lon)
+    {
+        int[] r = new int[2];
+        r[0] = (int) (mid[0] + ((lon / 180d) * mid[0]));
+        r[1] = (int) (mid[1] - ((lat / 90d) * mid[1]));
+        return r;
+    }
+
+    protected boolean paintInitialized = false;
+    protected Paint paintBackground = null;
+    protected Paint paintForeground = null;
+    protected Paint paintMoonlight = null;
+    protected Paint paintSunshadow = null;
+    protected Paint paintLocation_fill = null, paintLocation_stroke = null;
+    protected Paint paintMask_srcIn = null;
+    protected Paint paintMask_srcOver = null;
+    protected Paint paintMoon_fill = null;
+    protected Paint paintMoon_stroke = null;
+    protected Paint paintSun_fill = null;
+    protected Paint paintSun_stroke = null;
+
+    @Override
+    public void initPaint(WorldMapTask.WorldMapOptions options)
+    {
+        paintBackground = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintBackground.setColor(options.backgroundColor);
+        paintBackground.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
+
+        paintForeground = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintForeground.setColorFilter(new LightingColorFilter(options.foregroundColor, 0));
+
+        paintMask_srcOver = new Paint(Paint.ANTI_ALIAS_FLAG);    // to create a mask
+        paintMask_srcOver.setColor(Color.WHITE);
+        paintMask_srcOver.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+
+        paintMask_srcIn = new Paint(Paint.ANTI_ALIAS_FLAG);      // to apply a mask
+        paintMask_srcIn.setColor(Color.WHITE);
+        paintMask_srcIn.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+
+        paintSunshadow = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintSunshadow.setColor(options.sunShadowColor);
+        paintSunshadow.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+
+        paintMoonlight = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintMoonlight.setColor(options.moonLightColor);
+        paintMoonlight.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+
+        paintLocation_fill = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintLocation_fill.setStyle(Paint.Style.FILL);
+        paintLocation_fill.setColor(options.locationFillColor);
+
+        paintLocation_stroke = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintLocation_stroke.setStyle(Paint.Style.STROKE);
+        paintLocation_stroke.setColor(options.locationStrokeColor);
+        paintLocation_stroke.setStrokeWidth(0.5f);
+
+        paintSun_fill = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintSun_fill.setStyle(Paint.Style.FILL);
+        paintSun_fill.setColor(options.sunFillColor);
+
+        paintSun_stroke = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintSun_stroke.setStyle(Paint.Style.STROKE);
+        paintSun_stroke.setColor(options.sunStrokeColor);
+
+        paintMoon_fill = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintMoon_fill.setStyle(Paint.Style.FILL);
+        paintMoon_fill.setColor(options.moonFillColor);
+
+        paintMoon_stroke = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintMoon_stroke.setStyle(Paint.Style.STROKE);
+        paintMoon_stroke.setColor(options.moonStrokeColor);
+
+        paintInitialized = true;
+    }
+
+    @Override
     public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options)
     {
         long bench_start = System.nanoTime();
-        if (w <= 0 || h <= 0)
-        {
+        if (w <= 0 || h <= 0) {
             return null;
+        }
+
+        if (matrix == null) {
+            matrix = initMatrix();
         }
 
         double[] mid = new double[2];
@@ -51,66 +136,22 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
 
         Bitmap b = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
-        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
-        p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
 
-        ////////////////
-        // draw background
-        p.setColor(options.backgroundColor);
-        c.drawRect(0, 0, w, h, p);
-        if (options.map != null)
-        {
-            drawMap(c, w, h, p, options);
+        if (!paintInitialized) {
+            initPaint(options);
         }
 
-        ////////////////
-        // draw grid
-        if (options.showGrid)
-        {
-            p.setColor(options.gridXColor);
-            for (int i=0; i < 180; i = i + 15)
-            {
-                double offset = (i / 180d) * mid[0];
-                int eastX = (int)(mid[0] + offset);
-                int westX = (int)(mid[0] - offset);
-                c.drawLine(eastX, 0, eastX, h, p);
-                c.drawLine(westX, 0, westX, h, p);
-            }
-
-            p.setColor(options.gridYColor);
-            for (int i=0; i < 90; i = i + 15)
-            {
-                double offset = (i / 90d) * mid[1];
-                int northY = (int)(mid[1] + offset);
-                int southY = (int)(mid[1] - offset);
-                c.drawLine(0, northY, w, northY, p);
-                c.drawLine(0, southY, w, southY, p);
-            }
+        drawMap(c, w, h, paintForeground, options);
+        if (options.showMajorLatitudes) {
+            drawMajorLatitudes(c, w, h, mid, options);
         }
-
-        if (options.showMajorLatitudes)
-        {
-            p.setColor(options.latitudeColors[0]);                    // equator
-            c.drawLine(0, (int)mid[1], w, (int)mid[1], p);
-
-            double tropics = (23.439444 / 90d) * mid[1];
-            int tropicsY0 = (int)(mid[1] + tropics);
-            int tropicsY1 = (int)(mid[1] - tropics);
-            p.setColor(options.latitudeColors[1]);                    // tropics
-            c.drawLine(0, tropicsY0, w, tropicsY0, p);
-            c.drawLine(0, tropicsY1, w, tropicsY1, p);
-
-            double polar = (66.560833 / 90d) * mid[1];
-            int polarY0 = (int)(mid[1] + polar);
-            int polarY1 = (int)(mid[1] - polar);
-            p.setColor(options.latitudeColors[2]);                    // polar
-            c.drawLine(0, polarY0, w, polarY0, p);
-            c.drawLine(0, polarY1, w, polarY1, p);
+        if (options.showGrid) {
+            drawGrid(c, w, h, mid, null, options);
         }
 
         drawData: if (data != null)
         {
-            Calendar now = data.nowThen(data.calendar());
+            Calendar now = mapTime(data, options);
             SuntimesCalculator calculator = data.calculator();
             SuntimesCalculator.SunPosition sunPos = calculator.getSunPosition(now);
             SuntimesCalculator.MoonPosition moonPos = calculator.getMoonPosition(now);
@@ -155,65 +196,84 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
             // algorithm described at https://gis.stackexchange.com/questions/17184/method-to-shade-or-overlay-a-raster-map-to-reflect-time-of-day-and-ambient-light
             if (options.showSunPosition || options.showMoonPosition)
             {
-                int w0 = (w < 512 ? w : 512);
-                int h0 = w0 / 2;
+                int[] size = matrixSize();
+                if (sunMaskBitmap == null || moonMaskBitmap == null) {
+                    initBitmap(size[0], size[1]);
+                }
 
-                double iw0 = (1d / w0) * 360d;
-                double ih0 = (1d / h0) * 180d;
-
-                Bitmap lightBitmap = Bitmap.createBitmap(w0, h0, Bitmap.Config.ARGB_8888);
-                Canvas lightCanvas = new Canvas(lightBitmap);
-
-                Paint paintShadow = new Paint();
-                paintShadow.setColor(options.sunShadowColor);
-                paintShadow.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-
-                Paint paintMoonlight = new Paint();
-                paintMoonlight.setColor(options.moonLightColor);
-                paintMoonlight.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-
-                double radLon, cosLon, sinLon;
-                double radLat, cosLat;
-                double[] v = new double[3];
+                int z = 0;
+                int k0, k1, k2;
+                double v0, v1, v2;
                 double sunIntensity, moonIntensity;
-
-                for (int i = 0; i < w0; i++)
+                int[] sun_pixels = new int[size[0] * size[1]];
+                int[] moon_pixels = new int[size[0] * size[1]];
+                for (int j = 0; j < size[1]; j++)
                 {
-                    radLon = Math.toRadians( ((double) i * iw0) - 180d );  // i in [0,w] to [0,360] to [-180,180]
-                    cosLon = Math.cos(radLon);
-                    sinLon = Math.sin(radLon);
+                    k0 = size[0] * j;
+                    k1 = size[0] * (size[1] + j);
+                    k2 = size[0] * ((size[1] * 2) + j);
 
-                    for (int j = 0; j < h0; j++)
+                    for (int i = 0; i < size[0]; i++)
                     {
-                        radLat = Math.toRadians( -1 * (((double) j * ih0) - 90d) );      // j in [0,h] to [0,180] to [-90,90] (inverted to canvas)
-                        cosLat = Math.cos(radLat);
-
-                        v[0] = cosLon * cosLat;
-                        v[1] = sinLon * cosLat;
-                        v[2] = Math.sin(radLat);
+                        v0 = matrix[i + k0];
+                        v1 = matrix[i + k1];
+                        v2 = matrix[i + k2];
 
                         if (options.showSunShadow)
                         {
-                            sunIntensity = (sunUp[0] * v[0]) + (sunUp[1] * v[1]) + (sunUp[2] * v[2]);    // intensity = up.dotProduct(v)
-                            if (sunIntensity <= 0) {                                                               // values less equal 0 are in shadow
-                                lightCanvas.drawPoint(i, j, paintShadow);
+                            sunIntensity = (sunUp[0] * v0) + (sunUp[1] * v1) + (sunUp[2] * v2);    // intensity = up.dotProduct(v)
+                            if (sunIntensity <= 0) {
+                                sun_pixels[z] = Color.WHITE;
                             }
                         }
 
                         if (options.showMoonLight)
                         {
-                            moonIntensity = (moonUp[0] * v[0]) + (moonUp[1] * v[1]) + (moonUp[2] * v[2]);
+                            moonIntensity = (moonUp[0] * v0) + (moonUp[1] * v1) + (moonUp[2] * v2);
                             if (moonIntensity > 0) {
-                                lightCanvas.drawPoint(i, j, paintMoonlight);
+                                moon_pixels[z] = Color.WHITE;
                             }
                         }
+                        z++;
                     }
                 }
+                sunMaskBitmap.setPixels(sun_pixels, 0, size[0], 0, 0, size[0], size[1]);
+                moonMaskBitmap.setPixels(moon_pixels, 0, size[0], 0, 0, size[0], size[1]);
 
-                Bitmap scaledLightBitmap = Bitmap.createScaledBitmap(lightBitmap, w, h, true);
-                c.drawBitmap(scaledLightBitmap, 0, 0, p);
-                scaledLightBitmap.recycle();
-                lightBitmap.recycle();
+                // draw sun shadow
+                Bitmap sunMask = Bitmap.createScaledBitmap(sunMaskBitmap, w, h, true);
+                Bitmap shadowBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+                Canvas shadowCanvas = new Canvas(shadowBitmap);
+                shadowCanvas.drawBitmap(sunMask, 0, 0, paintMask_srcOver);
+
+                if (options.map_night != null)
+                {
+                    Bitmap nightBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+                    Canvas nightCanvas = new Canvas(nightBitmap);
+                    options.map_night.setBounds(0, 0, nightCanvas.getWidth(), nightCanvas.getHeight());
+                    options.map_night.draw(nightCanvas);
+
+                    shadowCanvas.drawBitmap(nightBitmap, 0, 0, paintMask_srcIn);
+                    nightBitmap.recycle();
+
+                } else {
+                    shadowCanvas.drawPaint(paintSunshadow);
+                }
+
+                c.drawBitmap(shadowBitmap, 0, 0, paintMask_srcOver);
+                shadowBitmap.recycle();
+                sunMask.recycle();
+
+                // draw moon light
+                Bitmap moonMask = Bitmap.createScaledBitmap(moonMaskBitmap, w, h, true);
+                Bitmap moonBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+                Canvas moonCanvas = new Canvas(moonBitmap);
+                moonCanvas.drawBitmap(moonMask, 0, 0, paintMask_srcOver);
+                moonCanvas.drawPaint(paintMoonlight);
+
+                c.drawBitmap(moonBitmap, 0, 0, paintMask_srcOver);
+                moonBitmap.recycle();
+                moonMask.recycle();
             }
 
             ////////////////
@@ -222,7 +282,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
             {
                 int sunX = (int) (mid[0] - ((ghaSun180 / 180d) * mid[0]));
                 int sunY = (int) (mid[1] - ((sunPos.declination / 90d) * mid[1]));
-                drawSun(c, sunX, sunY, p, options);
+                drawSun(c, sunX, sunY, paintSun_fill, paintSun_stroke, options);
             }
 
             ////////////////
@@ -231,12 +291,154 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
             {
                 int moonX = (int) (mid[0] - ((moonPos2[0] / 180d) * mid[0]));
                 int moonY = (int) (mid[1] - ((moonPos2[1] / 90d) * mid[1]));
-                drawMoon(c, moonX, moonY, p, options);
+                drawMoon(c, moonX, moonY, paintMoon_fill, paintMoon_stroke, options);
             }
+
+            ////////////////
+            // draw locations
+            if (options.locations != null) {
+                drawLocations(c, w, h, paintLocation_fill, paintLocation_stroke, options);
+            }
+        }
+
+        if (options.hasTransparentBaseMap) {
+            c.drawRect(0, 0, w, h, paintBackground);
         }
 
         long bench_end = System.nanoTime();
         Log.d(WorldMapView.LOGTAG, "make equirectangular world map :: " + ((bench_end - bench_start) / 1000000.0) + " ms; " + w + ", " + h);
         return b;
+    }
+
+    private static double[] matrix = null;    // [x * y * v(3)]
+
+    @Override
+    public double[] initMatrix()
+    {
+        long bench_start = System.nanoTime();
+
+        int[] size = matrixSize();
+        double[] v = new double[size[0] * size[1] * 3];
+        double iw0 = (1d / size[0]) * 360d;
+        double ih0 = (1d / size[1]) * 180d;
+
+        double radLon, cosLon, sinLon;
+        double radLat, cosLat;
+
+        for (int i = 0; i < size[0]; i++)
+        {
+            radLon = Math.toRadians(((double) i * iw0) - 180d);  // i in [0,w] to [0,360] to [-180,180]
+            cosLon = Math.cos(radLon);
+            sinLon = Math.sin(radLon);
+
+            for (int j = 0; j < size[1]; j++)
+            {
+                radLat = Math.toRadians(-1 * (((double) j * ih0) - 90d));      // j in [0,h] to [0,180] to [-90,90] (inverted to canvas)
+                cosLat = Math.cos(radLat);
+
+                v[i + (size[0] * j)] = cosLon * cosLat;
+                v[i + (size[0] * (size[1] + j))] = sinLon * cosLat;
+                v[i + (size[0] * ((size[1] * 2) + j))] = Math.sin(radLat);
+            }
+        }
+
+        long bench_end = System.nanoTime();
+        Log.d(WorldMapView.LOGTAG, "make equirectangular world map :: initMatrix :: " + ((bench_end - bench_start) / 1000000.0) + " ms; " + size[0] + ", " + size[1]);
+        return v;
+    }
+
+    private Bitmap sunMaskBitmap = null;
+    private Bitmap moonMaskBitmap = null;
+
+    private void initBitmap(int w, int h)
+    {
+        sunMaskBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_4444);
+        moonMaskBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_4444);
+    }
+
+    @Override
+    protected int k(int i, int j, int k)
+    {
+        return i + (720 * ((360 * k) + j));
+    }
+
+    @Override
+    public double[] getMatrix() {
+        return matrix;
+    }
+
+    @Override
+    public int[] matrixSize()
+    {
+        return new int[] {720, 360};
+    }
+
+    protected void drawGrid(Canvas c, int w, int h, double[] mid, Paint p, WorldMapTask.WorldMapOptions options)
+    {
+        if (p == null) {
+            p = new Paint(Paint.ANTI_ALIAS_FLAG);
+        }
+
+        p.setColor(options.gridXColor);
+        for (int i=0; i < 180; i = i + 15)
+        {
+            double offset = (i / 180d) * mid[0];
+            int eastX = (int)(mid[0] + offset);
+            int westX = (int)(mid[0] - offset);
+            c.drawLine(eastX, 0, eastX, h, p);
+            c.drawLine(westX, 0, westX, h, p);
+        }
+
+        p.setColor(options.gridYColor);
+        for (int i=0; i < 90; i = i + 15)
+        {
+            double offset = (i / 90d) * mid[1];
+            int northY = (int)(mid[1] + offset);
+            int southY = (int)(mid[1] - offset);
+            c.drawLine(0, northY, w, northY, p);
+            c.drawLine(0, southY, w, southY, p);
+        }
+    }
+
+    private static double r_tropics = (23.439444 / 90d);
+    private static double r_polar = (66.560833 / 90d);
+
+    @Override
+    public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    {
+        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+        p.setXfermode(new PorterDuffXfermode( options.hasTransparentBaseMap ? PorterDuff.Mode.DST_OVER : PorterDuff.Mode.SRC_OVER ));
+
+        Paint.Style prevStyle = p.getStyle();
+        PathEffect prevEffect = p.getPathEffect();
+        float prevStrokeWidth = p.getStrokeWidth();
+
+        float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
+        p.setStrokeWidth(strokeWidth);
+
+        p.setColor(options.latitudeColors[0]);                    // equator
+        p.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
+        c.drawLine(0, (int)mid[1], w, (int)mid[1], p);
+
+        double tropics = r_tropics * mid[1];
+        int tropicsY0 = (int)(mid[1] + tropics);
+        int tropicsY1 = (int)(mid[1] - tropics);
+        p.setColor(options.latitudeColors[1]);                    // tropics
+        p.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
+        c.drawLine(0, tropicsY0, w, tropicsY0, p);
+        c.drawLine(0, tropicsY1, w, tropicsY1, p);
+
+        double polar = r_polar * mid[1];
+        int polarY0 = (int)(mid[1] + polar);
+        int polarY1 = (int)(mid[1] - polar);
+        p.setColor(options.latitudeColors[2]);                    // polar
+        p.setPathEffect((options.latitudeLinePatterns[2][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[2], 0) : null);
+        c.drawLine(0, polarY0, w, polarY0, p);
+        c.drawLine(0, polarY1, w, polarY1, p);
+
+        p.setStyle(prevStyle);
+        p.setPathEffect(prevEffect);
+        p.setStrokeWidth(prevStrokeWidth);
+        p.setXfermode(new PorterDuffXfermode( PorterDuff.Mode.SRC_OVER) );
     }
 }
