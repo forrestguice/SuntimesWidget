@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -23,12 +23,60 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/dialogBackground">
+        android:orientation="vertical">
 
-        <include layout="@layout/layout_settings_location" />
+        <LinearLayout
+            android:background="?attr/dialogFrame"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical|start"
+            android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
+            android:paddingTop="16dp" android:paddingBottom="16dp">
+
+            <TextView
+                android:id="@+id/dialog_title"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="center"
+                style="@style/Base.DialogWindowTitle.AppCompat"
+                android:text="@string/location_dialog_title" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/dialogBackground">
+
+            <com.forrestguice.suntimeswidget.LocationConfigView
+                android:id="@+id/locationConfig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="?attr/dialogFrame"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical|end"
+            android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
+            android:paddingTop="8dp" android:paddingBottom="8dp">
+
+            <Button
+                style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+                android:id="@+id/dialog_button_cancel"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/location_dialog_cancel" />
+
+            <Button
+                style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+                android:id="@+id/dialog_button_accept"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/location_dialog_ok" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
 
 </ScrollView>
 
