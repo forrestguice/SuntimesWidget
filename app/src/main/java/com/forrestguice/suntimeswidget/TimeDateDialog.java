@@ -31,6 +31,7 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
@@ -239,17 +240,20 @@ public class TimeDateDialog extends BottomSheetDialogFragment
         }
     };
 
-    private View.OnClickListener onDialogCancelClick = new View.OnClickListener()
-    {
+    private View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
         @Override
-        public void onClick(View v)
-        {
-            dismiss();
-            if (onCanceled != null) {
-                onCanceled.onClick(getDialog(), 0);
-            }
+        public void onClick(View v) {
+            getDialog().cancel();
         }
     };
+
+    @Override
+    public void onCancel(DialogInterface dialog)
+    {
+        if (onCanceled != null) {
+            onCanceled.onClick(getDialog(), 0);
+        }
+    }
 
     private View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
     {

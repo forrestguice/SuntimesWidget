@@ -36,6 +36,7 @@ import android.text.style.ImageSpan;
 
 import android.support.annotation.NonNull;
 
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -634,17 +635,20 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         }
     };
 
-    private View.OnClickListener onDialogCancelClick = new View.OnClickListener()
-    {
+    private View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
         @Override
-        public void onClick(View v)
-        {
-            dismiss();
-            if (onCanceled != null) {
-                onCanceled.onClick(getDialog(), 0);
-            }
+        public void onClick(View v) {
+            getDialog().cancel();
         }
     };
+
+    @Override
+    public void onCancel(DialogInterface dialog)
+    {
+        if (onCanceled != null) {
+            onCanceled.onClick(getDialog(), 0);
+        }
+    }
 
     private View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
     {

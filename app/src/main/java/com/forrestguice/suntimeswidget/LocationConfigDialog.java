@@ -283,18 +283,22 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         }
     };
 
-    private View.OnClickListener onDialogCancelClick = new View.OnClickListener()
-    {
+    private View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
         @Override
-        public void onClick(View v)
-        {
-            dialogContent.cancelGetFix();
-            dismiss();
-            if (onCanceled != null) {
-                onCanceled.onClick(getDialog(), 0);
-            }
+        public void onClick(View v) {
+            getDialog().cancel();
         }
     };
+
+    @Override
+    public void onCancel(DialogInterface dialog)
+    {
+        dialogContent.cancelGetFix();
+        dismiss();
+        if (onCanceled != null) {
+            onCanceled.onClick(getDialog(), 0);
+        }
+    }
 
     private View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
     {
