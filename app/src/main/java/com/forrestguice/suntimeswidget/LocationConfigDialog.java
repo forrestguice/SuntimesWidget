@@ -333,7 +333,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         if (layout != null)
         {
             BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-            behavior.setHideable(true);
+            behavior.setHideable(false);
             behavior.setSkipCollapsed(true);
             behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
