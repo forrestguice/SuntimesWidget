@@ -482,6 +482,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         {
             boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
             speedButton.setText( context.getString(speed_1d ? R.string.worldmap_dialog_speed_1d : R.string.worldmap_dialog_speed_15m));
+            speedButton.setTextColor( speed_1d ? color_warning : color_accent );
         }
     }
 
