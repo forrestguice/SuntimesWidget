@@ -156,7 +156,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         if (layout != null)
         {
             BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-            behavior.setHideable(true);
+            behavior.setHideable(false);
             behavior.setSkipCollapsed(true);
             behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
@@ -354,9 +354,11 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         Bitmap lightmap = lightMapTask.makeBitmap(data, worldmap.getWidth(), 1, colors);
         BitmapDrawable lightmapDrawable = new BitmapDrawable(context.getResources(), lightmap);*/
 
-        //seekbar.getThumb().setColorFilter(color_sun, PorterDuff.Mode.SRC_IN);
-        seekbar.setTrackColor(color_accent);
-        seekbar.setTickColor(color_accent, color_accent, color_accent);
+        boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(getContext(), 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
+        int color = speed_1d ? color_warning : color_accent;
+        seekbar.setTrackColor(color);
+        seekbar.setTickColor(color, color, color);
+        seekbar.getThumb().setColorFilter(color, PorterDuff.Mode.SRC_IN);
     }
 
     @SuppressWarnings("ResourceType")
@@ -427,8 +429,10 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     public void updateViews()
     {
         updateOptions(getContext());
-        if (data != null)
+        if (data != null) {
             updateViews(data);
+        }
+        updateSeekbarDrawables(getContext());
     }
 
     protected void updateViews( @NonNull SuntimesRiseSetDataset data )
@@ -478,6 +482,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         {
             boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
             speedButton.setText( context.getString(speed_1d ? R.string.worldmap_dialog_speed_1d : R.string.worldmap_dialog_speed_15m));
+            speedButton.setTextColor( speed_1d ? color_warning : color_accent );
         }
     }
 
@@ -776,7 +781,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
     };
 
-    private int seek_totalMinutes = 12 * 60 * 2;  // +- 12 hours
+    public static final int SEEK_TOTALMINUTES_15m = 12 * 2 * 60;   // +- 12 hours
+    public static final int SEEK_STEPSIZE_15m = 15;
+
+    public static final int SEEK_TOTALMINUTES_1d = 364 * 24 * 60;  // +- 182 days
+    public static final int SEEK_STEPSIZE_1d = 24 * 60;
+
+    private int seek_totalMinutes = SEEK_TOTALMINUTES_15m;
     private int seek_now = seek_totalMinutes / 2;     // with "now" at center point
 
     private View.OnClickListener playClickListener = new View.OnClickListener()
@@ -855,7 +866,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             Context context = getContext();
             if (context != null) {
                 boolean speed1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
-                worldmap.setOffsetMinutes(worldmap.getOffsetMinutes() + (speed1d ? 24 * 60 : 15));
+                worldmap.setOffsetMinutes(worldmap.getOffsetMinutes() + (speed1d ? SEEK_STEPSIZE_1d : SEEK_STEPSIZE_15m));
             }
         }
     };
@@ -868,20 +879,31 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             Context context = getContext();
             if (context != null) {
                 boolean speed1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
-                worldmap.setOffsetMinutes(worldmap.getOffsetMinutes() - (speed1d ? 24 * 60 : 15));
+                worldmap.setOffsetMinutes(worldmap.getOffsetMinutes() - (speed1d ? SEEK_STEPSIZE_1d : SEEK_STEPSIZE_15m));
             }
         }
     };
 
+    private int t_prevProgress = -1;
     private SeekBar.OnSeekBarChangeListener seekBarListener = new SeekBar.OnSeekBarChangeListener()
     {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
         {
-            if (fromUser) {
-                worldmap.setOffsetMinutes(seekBar.getProgress() - seek_now);
+            if (t_prevProgress == -1) {
+                t_prevProgress = seek_now;
+            }
+
+            if (fromUser)
+            {
+                long offset = progress - t_prevProgress;
+                boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(getContext(), 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
+                long scaledOffset = (speed_1d ? ((offset * ((SEEK_TOTALMINUTES_1d) / seek_totalMinutes)) / SEEK_STEPSIZE_1d) * SEEK_STEPSIZE_1d : offset);
+                worldmap.setOffsetMinutes(worldmap.getOffsetMinutes() + scaledOffset);
                 updateTimeText();
             }
+
+            t_prevProgress = progress;
         }
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
@@ -898,11 +920,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         {
             if (seekbar != null)
             {
-                long progress = seek_now + offsetMinutes;
-                if (progress > 0 && progress < seek_totalMinutes) {
-                    seekbar.setProgress((int)progress);
-                }
-
+                setSeekProgress(offsetMinutes);
                 updateTimeText();
                 resetButton.setEnabled(offsetMinutes != 0);
             }
@@ -918,6 +936,23 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             }
         }
     };
+
+    private void setSeekProgress( long offsetMinutes )
+    {
+        boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(getContext(), 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
+        long offsetMinutes1 = (speed_1d ? offsetMinutes / ((SEEK_TOTALMINUTES_1d) / seek_totalMinutes) : offsetMinutes);
+
+        //long offset = progress - t_prevProgress;
+
+        long progress = seek_now + offsetMinutes1;
+        if (progress > seek_totalMinutes) {
+            seekbar.setProgress(!speed_1d ? seek_now : seek_totalMinutes);
+        } else if (progress < 0) {
+            seekbar.setProgress(!speed_1d ? seek_now : 0);
+        } else {
+            seekbar.setProgress((int)progress);
+        }
+    }
 
     private WorldMapDialogListener dialogListener = null;
     public void setDialogListener(WorldMapDialogListener listener) {

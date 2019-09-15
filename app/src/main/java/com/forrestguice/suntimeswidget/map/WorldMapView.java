@@ -232,7 +232,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         options.latitudeColors[0] = ColorUtils.setAlphaComponent(options.sunShadowColor, 255);
         options.latitudeColors[1] = ColorUtils.setAlphaComponent(options.moonLightColor, 255);
         options.latitudeColors[2] = ColorUtils.setAlphaComponent(options.moonLightColor, 255);
-        options.locationFillColor = Color.RED; // TODO
+        options.locationFillColor = theme.getActionColor();
         options.sunFillColor = theme.getNoonIconColor();
         options.sunStrokeColor = theme.getNoonIconStrokeColor();
         options.moonFillColor = theme.getMoonFullColor();
