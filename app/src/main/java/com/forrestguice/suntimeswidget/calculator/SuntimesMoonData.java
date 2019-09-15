@@ -193,6 +193,12 @@ public class SuntimesMoonData extends SuntimesMoonData0
         this.moonIlluminationToday = other.moonIlluminationToday;
         this.moonPhases = new HashMap<>(other.moonPhases);
         this.moonPhaseToday = other.moonPhaseToday;
+        this.flag_fromMidnight = other.flag_fromMidnight;
+    }
+
+    private boolean flag_fromMidnight = true;
+    public void setFlag_fromMidnight(boolean flag) {
+        flag_fromMidnight = flag;
     }
 
     /**
@@ -265,14 +271,13 @@ public class SuntimesMoonData extends SuntimesMoonData0
             this.moonIlluminationTomorrow = moonIllumination1;
         }
 
-        Calendar midnight = midnight();
-        for (SuntimesCalculator.MoonPhase phase : SuntimesCalculator.MoonPhase.values())
-        {
-            moonPhases.put(phase, calculator.getMoonPhaseNextDate(phase, midnight));
+        Calendar after = (Calendar)(flag_fromMidnight ? midnight() : todaysCalendar.clone());
+        for (SuntimesCalculator.MoonPhase phase : SuntimesCalculator.MoonPhase.values()) {
+            moonPhases.put(phase, calculator.getMoonPhaseNextDate(phase, after));
         }
-        moonPhaseToday = findPhaseOf(midnight, true);
+        moonPhaseToday = findPhaseOf(after, true);
 
-        Calendar midnight1 = (Calendar)midnight.clone();
+        Calendar midnight1 = (Calendar)after.clone();
         midnight1.add(Calendar.DAY_OF_MONTH, 1);
         moonPhaseTomorrow = findPhaseOf(midnight1);
 

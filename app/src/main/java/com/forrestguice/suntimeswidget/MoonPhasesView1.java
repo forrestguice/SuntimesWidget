@@ -358,15 +358,19 @@ public class MoonPhasesView1 extends LinearLayout
         protected SuntimesMoonData createData( Context context, int position )
         {
             SuntimesMoonData moon = new SuntimesMoonData(context, 0, "moon");
+            moon.setFlag_fromMidnight(false);
+
             if (position != CENTER_POSITION)
             {
                 SuntimesMoonData moon0 = initData(context, CENTER_POSITION);
 
                 Calendar date = Calendar.getInstance(moon.timezone());
                 date.setTimeInMillis(moon0.moonPhaseCalendar(moon0.nextPhase(moon.now())).getTimeInMillis());
-                date.add(Calendar.HOUR, (int)(((position - CENTER_POSITION) / 4d) * 29.53d * 24d));
+                date.add(Calendar.HOUR, (int)(((position - CENTER_POSITION) / 4d) * 29.53d * 24d));   // avg length of synodic month (28.53) may vary ~ +-6 hr
+                date.add(Calendar.HOUR, (int)(-24 * 3.5));                                            // so offset several days to overcome potential drift
                 moon.setTodayIs(date);
             }
+
             moon.calculate();
             return moon;
         }
