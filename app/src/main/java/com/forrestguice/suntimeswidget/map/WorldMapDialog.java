@@ -354,9 +354,11 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         Bitmap lightmap = lightMapTask.makeBitmap(data, worldmap.getWidth(), 1, colors);
         BitmapDrawable lightmapDrawable = new BitmapDrawable(context.getResources(), lightmap);*/
 
-        //seekbar.getThumb().setColorFilter(color_sun, PorterDuff.Mode.SRC_IN);
-        seekbar.setTrackColor(color_accent);
-        seekbar.setTickColor(color_accent, color_accent, color_accent);
+        boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(getContext(), 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
+        int color = speed_1d ? color_warning : color_accent;
+        seekbar.setTrackColor(color);
+        seekbar.setTickColor(color, color, color);
+        seekbar.getThumb().setColorFilter(color, PorterDuff.Mode.SRC_IN);
     }
 
     @SuppressWarnings("ResourceType")
@@ -427,8 +429,10 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     public void updateViews()
     {
         updateOptions(getContext());
-        if (data != null)
+        if (data != null) {
             updateViews(data);
+        }
+        updateSeekbarDrawables(getContext());
     }
 
     protected void updateViews( @NonNull SuntimesRiseSetDataset data )
