@@ -43,6 +43,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData1;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -126,7 +127,7 @@ public class MoonPhasesView1 extends LinearLayout
 
         initTheme(context);
         if (isInEditMode()) {
-            updateViews(context, null);
+            updateViews(context);
         }
     }
 
@@ -185,12 +186,18 @@ public class MoonPhasesView1 extends LinearLayout
         card_view.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 
-    protected void updateViews( Context context, SuntimesMoonData1 data )
+    protected void updateViews( Context context )
     {
         if (isInEditMode()) {
             return;
         }
-        showEmptyView(data != null && !data.isCalculated());
+
+        boolean hasSupport = false;
+        if (card_adapter != null) {
+            SuntimesMoonData1 data = card_adapter.initData(context, PhaseAdapter.CENTER_POSITION);
+            hasSupport = (data != null && data.isCalculated());
+        }
+        showEmptyView( !hasSupport );
     }
 
     private RecyclerView.OnScrollListener onScrollChanged = new RecyclerView.OnScrollListener() {
