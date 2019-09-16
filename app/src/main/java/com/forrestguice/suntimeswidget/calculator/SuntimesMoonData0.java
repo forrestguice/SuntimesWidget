@@ -25,6 +25,7 @@ import android.util.Pair;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class SuntimesMoonData0 extends SuntimesData
 {
@@ -122,6 +123,81 @@ public class SuntimesMoonData0 extends SuntimesData
     public static boolean isMicroMoon( @NonNull SuntimesCalculator.MoonPosition position)
     {
         return position.distance > 405000;
+    }
+
+    /**
+     * @param input major phase
+     * @return corresponding MoonPhaseDisplay enum (direct map)
+     */
+    public static MoonPhaseDisplay toPhase( SuntimesCalculator.MoonPhase input )
+    {
+        switch (input) {
+            case NEW: return MoonPhaseDisplay.NEW;
+            case FIRST_QUARTER: return MoonPhaseDisplay.FIRST_QUARTER;
+            case THIRD_QUARTER: return MoonPhaseDisplay.THIRD_QUARTER;
+            case FULL:
+            default: return MoonPhaseDisplay.FULL;
+        }
+    }
+
+    /**
+     * @param input major phase
+     * @return the minor phase comes before
+     */
+    public static MoonPhaseDisplay prevMinorPhase(SuntimesCalculator.MoonPhase input)
+    {
+        switch (input)
+        {
+            case NEW: return MoonPhaseDisplay.WANING_CRESCENT;
+            case FIRST_QUARTER: return MoonPhaseDisplay.WAXING_CRESCENT;
+            case THIRD_QUARTER: return MoonPhaseDisplay.WANING_GIBBOUS;
+            case FULL:
+            default: return MoonPhaseDisplay.WAXING_GIBBOUS;
+        }
+    }
+
+    /**
+     * @param input major phase
+     * @return the minor phase that comes after
+     */
+    public static MoonPhaseDisplay nextMinorPhase(SuntimesCalculator.MoonPhase input)
+    {
+        switch (input)
+        {
+            case NEW: return MoonPhaseDisplay.WAXING_CRESCENT;
+            case FIRST_QUARTER: return MoonPhaseDisplay.WAXING_GIBBOUS;
+            case THIRD_QUARTER: return MoonPhaseDisplay.WANING_CRESCENT;
+            case FULL:
+            default: return MoonPhaseDisplay.WANING_GIBBOUS;
+        }
+    }
+
+    /**
+     * Find the next major phase from date.
+     * @param moonPhases a HashMap containing major phases and their dates
+     * @param calendar a date/time to compare against
+     * @return the next major phase occurring after the supplied date/time
+     */
+    public static SuntimesCalculator.MoonPhase nextPhase(HashMap<SuntimesCalculator.MoonPhase, Calendar> moonPhases, Calendar calendar)
+    {
+        SuntimesCalculator.MoonPhase result = SuntimesCalculator.MoonPhase.FULL;
+        long date = calendar.getTimeInMillis();
+
+        long least = Long.MAX_VALUE;
+        for (SuntimesCalculator.MoonPhase phase : moonPhases.keySet())
+        {
+            Calendar phaseDate = moonPhases.get(phase);
+            if (phaseDate != null)
+            {
+                long delta = phaseDate.getTimeInMillis() - date;
+                if (delta >= 0 && delta < least)
+                {
+                    least = delta;
+                    result = phase;
+                }
+            }
+        }
+        return result;
     }
 
 }
