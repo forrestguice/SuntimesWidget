@@ -1791,6 +1791,14 @@ public class SuntimesActivity extends AppCompatActivity
                 card_layout.startSmoothScroll(card_scroller);
             }
         }
+        @Override
+        public void onCenterClick(CardAdapter adapter, int position)
+        {
+            setUserSwappedCard(false, "onCenterClick");
+            notes.resetNoteIndex();
+            NoteData note = notes.getNote();
+            highlightTimeField1(note.noteMode);
+        }
     };
 
     /**
