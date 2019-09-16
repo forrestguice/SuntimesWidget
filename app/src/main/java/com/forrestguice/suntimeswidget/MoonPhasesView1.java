@@ -23,8 +23,6 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
@@ -43,7 +41,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
-import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData1;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -126,7 +124,7 @@ public class MoonPhasesView1 extends LinearLayout
 
         initTheme(context);
         if (isInEditMode()) {
-            updateViews(context, null);
+            updateViews(context);
         }
     }
 
@@ -185,12 +183,18 @@ public class MoonPhasesView1 extends LinearLayout
         card_view.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 
-    protected void updateViews( Context context, SuntimesMoonData data )
+    protected void updateViews( Context context )
     {
         if (isInEditMode()) {
             return;
         }
-        showEmptyView(data != null && !data.isCalculated());
+
+        boolean hasSupport = false;
+        if (card_adapter != null) {
+            SuntimesMoonData1 data = card_adapter.initData(context, PhaseAdapter.CENTER_POSITION);
+            hasSupport = (data != null && data.isCalculated());
+        }
+        showEmptyView( !hasSupport );
     }
 
     private RecyclerView.OnScrollListener onScrollChanged = new RecyclerView.OnScrollListener() {
@@ -256,7 +260,7 @@ public class MoonPhasesView1 extends LinearLayout
         public static final int CENTER_POSITION = 100;
 
         private WeakReference<Context> contextRef;
-        private HashMap<Integer, SuntimesMoonData> data = new HashMap<>();
+        private HashMap<Integer, SuntimesMoonData1> data = new HashMap<>();
         private SuntimesCalculator.MoonPhase nextPhase = SuntimesCalculator.MoonPhase.FULL;
 
         private int colorNote, colorTitle, colorTime, colorText, colorWaxing, colorWaning, colorFull, colorNew, colorDisabled;
@@ -305,7 +309,7 @@ public class MoonPhasesView1 extends LinearLayout
             }
             holder.phase = SuntimesCalculator.MoonPhase.values()[phaseOrdinal];
 
-            SuntimesMoonData moon = initData(context, position);
+            SuntimesMoonData1 moon = initData(context, position);
             Calendar phaseDate = moon.moonPhaseCalendar(holder.phase);
             boolean isAgo = moon.now().after(phaseDate);
             themeViews(context, holder, isAgo);
@@ -329,11 +333,11 @@ public class MoonPhasesView1 extends LinearLayout
         }
 
         protected void initData( Context context ) {
-            SuntimesMoonData moon = initData(context, CENTER_POSITION);
+            SuntimesMoonData1 moon = initData(context, CENTER_POSITION);
             nextPhase = moon.nextPhase(moon.calendar());
         }
 
-        protected SuntimesMoonData initData( Context context, int position )
+        protected SuntimesMoonData1 initData( Context context, int position )
         {
             int offset = (position - CENTER_POSITION) % 4;
             int firstPosition = position;
@@ -344,7 +348,7 @@ public class MoonPhasesView1 extends LinearLayout
             }
             Log.d("DEBUG", "position: + " + position + ", firstPosition: " + firstPosition);
 
-            SuntimesMoonData moon = data.get(firstPosition);
+            SuntimesMoonData1 moon = data.get(firstPosition);
             if (moon == null)
             {
                 moon = createData(context, firstPosition);
@@ -355,14 +359,13 @@ public class MoonPhasesView1 extends LinearLayout
             return moon;
         }
 
-        protected SuntimesMoonData createData( Context context, int position )
+        protected SuntimesMoonData1 createData(Context context, int position )
         {
-            SuntimesMoonData moon = new SuntimesMoonData(context, 0, "moon");
-            moon.setFlag_fromMidnight(false);
+            SuntimesMoonData1 moon = new SuntimesMoonData1(context, 0, "moon");
 
             if (position != CENTER_POSITION)
             {
-                SuntimesMoonData moon0 = initData(context, CENTER_POSITION);
+                SuntimesMoonData1 moon0 = initData(context, CENTER_POSITION);
 
                 Calendar date = Calendar.getInstance(moon.timezone());
                 date.setTimeInMillis(moon0.moonPhaseCalendar(moon0.nextPhase(moon.now())).getTimeInMillis());
@@ -464,7 +467,7 @@ public class MoonPhasesView1 extends LinearLayout
             icon = (ImageView)parent.findViewById(imageViewID);
         }
 
-        public void bindDataToPosition(Context context, SuntimesMoonData data, SuntimesCalculator.MoonPhase phase, int position)
+        public void bindDataToPosition(Context context, SuntimesMoonData1 data, SuntimesCalculator.MoonPhase phase, int position)
         {
             this.position = position;
             this.phase = phase;
@@ -485,16 +488,16 @@ public class MoonPhasesView1 extends LinearLayout
             boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
 
             Calendar phaseDate = data.moonPhaseCalendar(phase);
-            MoonPhaseDisplay phaseDisplay = SuntimesMoonData.toPhase(phase);
+            MoonPhaseDisplay phaseDisplay = SuntimesMoonData1.toPhase(phase);
             String phaseLabel = phaseDisplay.getLongDisplayString();
             if (phase == SuntimesCalculator.MoonPhase.FULL || phase == SuntimesCalculator.MoonPhase.NEW)
             {
                 SuntimesCalculator.MoonPosition phasePosition = data.calculator().getMoonPosition(phaseDate);
                 if (phasePosition != null)
                 {
-                    if (SuntimesMoonData.isSuperMoon(phasePosition)) {
+                    if (SuntimesMoonData1.isSuperMoon(phasePosition)) {
                         phaseLabel = context.getString(phase == SuntimesCalculator.MoonPhase.FULL ? R.string.timeMode_moon_superfull : R.string.timeMode_moon_supernew);
-                    } else if (SuntimesMoonData.isMicroMoon(phasePosition)) {
+                    } else if (SuntimesMoonData1.isMicroMoon(phasePosition)) {
                         phaseLabel = context.getString(phase == SuntimesCalculator.MoonPhase.FULL ? R.string.timeMode_moon_microfull : R.string.timeMode_moon_micronew);
                     }
                 }

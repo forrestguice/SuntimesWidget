@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,10 +19,7 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.util.Pair;
 
-import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 
@@ -193,12 +190,6 @@ public class SuntimesMoonData extends SuntimesMoonData0
         this.moonIlluminationToday = other.moonIlluminationToday;
         this.moonPhases = new HashMap<>(other.moonPhases);
         this.moonPhaseToday = other.moonPhaseToday;
-        this.flag_fromMidnight = other.flag_fromMidnight;
-    }
-
-    private boolean flag_fromMidnight = true;
-    public void setFlag_fromMidnight(boolean flag) {
-        flag_fromMidnight = flag;
     }
 
     /**
@@ -207,8 +198,7 @@ public class SuntimesMoonData extends SuntimesMoonData0
     @Override
     public void calculate()
     {
-        initCalculator(context);
-        initTimezone(context);
+        super.calculate();
 
         todaysCalendar = Calendar.getInstance(timezone);
         otherCalendar = Calendar.getInstance(timezone);
@@ -271,7 +261,7 @@ public class SuntimesMoonData extends SuntimesMoonData0
             this.moonIlluminationTomorrow = moonIllumination1;
         }
 
-        Calendar after = (Calendar)(flag_fromMidnight ? midnight() : todaysCalendar.clone());
+        Calendar after = midnight();
         for (SuntimesCalculator.MoonPhase phase : SuntimesCalculator.MoonPhase.values()) {
             moonPhases.put(phase, calculator.getMoonPhaseNextDate(phase, after));
         }
@@ -280,8 +270,6 @@ public class SuntimesMoonData extends SuntimesMoonData0
         Calendar midnight1 = (Calendar)after.clone();
         midnight1.add(Calendar.DAY_OF_MONTH, 1);
         moonPhaseTomorrow = findPhaseOf(midnight1);
-
-        super.calculate();
     }
 
     /**
@@ -318,43 +306,12 @@ public class SuntimesMoonData extends SuntimesMoonData0
     }
 
     /**
-     * @param c1 a start time
-     * @param c2 an end time (with difference from start no greater than 48 days)
-     * @return the midpoint between start and end.
-     */
-    private Calendar midpoint(Calendar c1, Calendar c2)
-    {
-        int midpoint = (int)((c2.getTimeInMillis() - c1.getTimeInMillis()) / 2);   // int: capacity ~24 days
-        Calendar retValue = (Calendar)c1.clone();
-        retValue.add(Calendar.MILLISECOND, midpoint);
-        return retValue;
-    }
-
-    /**
      * Find the next major phase from date; calculate() needs to be called first.
      * @param calendar a date/time
      * @return the next major phase occurring after the supplied date/time
      */
-    public SuntimesCalculator.MoonPhase nextPhase(Calendar calendar)
-    {
-        SuntimesCalculator.MoonPhase result = SuntimesCalculator.MoonPhase.FULL;
-        long date = calendar.getTimeInMillis();
-
-        long least = Long.MAX_VALUE;
-        for (SuntimesCalculator.MoonPhase phase : moonPhases.keySet())
-        {
-            Calendar phaseDate = moonPhases.get(phase);
-            if (phaseDate != null)
-            {
-                long delta = phaseDate.getTimeInMillis() - date;
-                if (delta >= 0 && delta < least)
-                {
-                    least = delta;
-                    result = phase;
-                }
-            }
-        }
-        return result;
+    public SuntimesCalculator.MoonPhase nextPhase(Calendar calendar) {
+        return nextPhase(moonPhases, calendar);
     }
 
     /**
@@ -363,8 +320,7 @@ public class SuntimesMoonData extends SuntimesMoonData0
      * @param calendar a date/time
      * @return a MoonPhaseDisplay enum
      */
-    public MoonPhaseDisplay findPhaseOf(Calendar calendar)
-    {
+    public MoonPhaseDisplay findPhaseOf(Calendar calendar) {
         return findPhaseOf(calendar, false);
     }
 
@@ -387,70 +343,8 @@ public class SuntimesMoonData extends SuntimesMoonData0
         return (nextPhaseIsToday ? toPhase(nextPhase) : prevMinorPhase(nextPhase));
     }
 
-    /**
-     * @param input major phase
-     * @return corresponding MoonPhaseDisplay enum (direct map)
-     */
-    public static MoonPhaseDisplay toPhase( SuntimesCalculator.MoonPhase input )
-    {
-        switch (input) {
-            case NEW: return MoonPhaseDisplay.NEW;
-            case FIRST_QUARTER: return MoonPhaseDisplay.FIRST_QUARTER;
-            case THIRD_QUARTER: return MoonPhaseDisplay.THIRD_QUARTER;
-            case FULL:
-            default: return MoonPhaseDisplay.FULL;
-        }
-    }
-
-    /**
-     * @param input major phase
-     * @return the minor phase comes before
-     */
-    public static MoonPhaseDisplay prevMinorPhase(SuntimesCalculator.MoonPhase input)
-    {
-        switch (input)
-        {
-            case NEW: return MoonPhaseDisplay.WANING_CRESCENT;
-            case FIRST_QUARTER: return MoonPhaseDisplay.WAXING_CRESCENT;
-            case THIRD_QUARTER: return MoonPhaseDisplay.WANING_GIBBOUS;
-            case FULL:
-            default: return MoonPhaseDisplay.WAXING_GIBBOUS;
-        }
-    }
-
-    /**
-     * @param input major phase
-     * @return the minor phase that comes after
-     */
-    public static MoonPhaseDisplay nextMinorPhase(SuntimesCalculator.MoonPhase input)
-    {
-        switch (input)
-        {
-            case NEW: return MoonPhaseDisplay.WAXING_CRESCENT;
-            case FIRST_QUARTER: return MoonPhaseDisplay.WAXING_GIBBOUS;
-            case THIRD_QUARTER: return MoonPhaseDisplay.WANING_CRESCENT;
-            case FULL:
-            default: return MoonPhaseDisplay.WANING_GIBBOUS;
-        }
-    }
-
-    public CharSequence getMoonPhaseLabel(Context context, SuntimesCalculator.MoonPhase majorPhase)
-    {
-        Calendar phaseDate = moonPhaseCalendar(majorPhase);
-        if (majorPhase == SuntimesCalculator.MoonPhase.FULL || majorPhase == SuntimesCalculator.MoonPhase.NEW)
-        {
-            SuntimesCalculator.MoonPosition phasePosition = calculator.getMoonPosition(phaseDate);
-
-            if (SuntimesMoonData.isSuperMoon(phasePosition)) {
-                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? context.getString(R.string.timeMode_moon_supernew)
-                        : context.getString(R.string.timeMode_moon_superfull);
-
-            } else if (SuntimesMoonData.isMicroMoon(phasePosition)) {
-                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? context.getString(R.string.timeMode_moon_micronew)
-                        : context.getString(R.string.timeMode_moon_microfull);
-
-            } else return SuntimesMoonData.toPhase(majorPhase).getLongDisplayString();
-        } else return SuntimesMoonData.toPhase(majorPhase).getLongDisplayString();
+    public CharSequence getMoonPhaseLabel(Context context, SuntimesCalculator.MoonPhase majorPhase) {
+        return getMoonPhaseLabel(context, majorPhase, moonPhaseCalendar(majorPhase));
     }
 
 }
