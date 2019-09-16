@@ -26,7 +26,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 /**
- * An alternate version of SuntimesMoonData that only calculates major phases.
+ * An alternate version of SuntimesMoonData optimized to calculate major phases only.
  */
 public class SuntimesMoonData1 extends SuntimesMoonData0
 {
@@ -69,25 +69,12 @@ public class SuntimesMoonData1 extends SuntimesMoonData0
     @Override
     public void calculate()
     {
-        initCalculator(context);
-        initTimezone(context);
-
-        todaysCalendar = Calendar.getInstance(timezone);
-        otherCalendar = Calendar.getInstance(timezone);
-        if (todayIsNotToday())
-        {
-            todaysCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
-            otherCalendar.set(todayIs.get(Calendar.YEAR), todayIs.get(Calendar.MONTH), todayIs.get(Calendar.DAY_OF_MONTH));
-        }
-        date = todaysCalendar.getTime();
-        dateOther = otherCalendar.getTime();
+        super.calculate();
 
         Calendar after = (Calendar)todaysCalendar.clone();
         for (SuntimesCalculator.MoonPhase phase : SuntimesCalculator.MoonPhase.values()) {
             moonPhases.put(phase, calculator.getMoonPhaseNextDate(phase, after));
         }
-
-        super.calculate();
     }
 
     /**
@@ -96,7 +83,7 @@ public class SuntimesMoonData1 extends SuntimesMoonData0
      * @return the next major phase occurring after the supplied date/time
      */
     public SuntimesCalculator.MoonPhase nextPhase(Calendar calendar) {
-        return SuntimesMoonData0.nextPhase(moonPhases, calendar);
+        return nextPhase(moonPhases, calendar);
     }
 
 }

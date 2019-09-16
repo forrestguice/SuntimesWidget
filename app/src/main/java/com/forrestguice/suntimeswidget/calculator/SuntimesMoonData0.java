@@ -22,6 +22,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Pair;
 
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import java.util.Calendar;
@@ -124,6 +125,19 @@ public class SuntimesMoonData0 extends SuntimesData
     {
         return position.distance > 405000;
     }
+    /**
+     *
+     * @param c1 a start time
+     * @param c2 an end time (with difference from start no greater than 48 days)
+     * @return the midpoint between start and end.
+     */
+    protected Calendar midpoint(Calendar c1, Calendar c2)
+    {
+        int midpoint = (int)((c2.getTimeInMillis() - c1.getTimeInMillis()) / 2);   // int: capacity ~24 days
+        Calendar retValue = (Calendar)c1.clone();
+        retValue.add(Calendar.MILLISECOND, midpoint);
+        return retValue;
+    }
 
     /**
      * @param input major phase
@@ -178,7 +192,7 @@ public class SuntimesMoonData0 extends SuntimesData
      * @param calendar a date/time to compare against
      * @return the next major phase occurring after the supplied date/time
      */
-    public static SuntimesCalculator.MoonPhase nextPhase(HashMap<SuntimesCalculator.MoonPhase, Calendar> moonPhases, Calendar calendar)
+    public SuntimesCalculator.MoonPhase nextPhase(HashMap<SuntimesCalculator.MoonPhase, Calendar> moonPhases, Calendar calendar)
     {
         SuntimesCalculator.MoonPhase result = SuntimesCalculator.MoonPhase.FULL;
         long date = calendar.getTimeInMillis();
@@ -198,6 +212,24 @@ public class SuntimesMoonData0 extends SuntimesData
             }
         }
         return result;
+    }
+
+    public CharSequence getMoonPhaseLabel(Context context, SuntimesCalculator.MoonPhase majorPhase, Calendar phaseDate)
+    {
+        if (majorPhase == SuntimesCalculator.MoonPhase.FULL || majorPhase == SuntimesCalculator.MoonPhase.NEW)
+        {
+            SuntimesCalculator.MoonPosition phasePosition = calculator.getMoonPosition(phaseDate);
+
+            if (SuntimesMoonData.isSuperMoon(phasePosition)) {
+                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? context.getString(R.string.timeMode_moon_supernew)
+                        : context.getString(R.string.timeMode_moon_superfull);
+
+            } else if (SuntimesMoonData.isMicroMoon(phasePosition)) {
+                return (majorPhase == SuntimesCalculator.MoonPhase.NEW) ? context.getString(R.string.timeMode_moon_micronew)
+                        : context.getString(R.string.timeMode_moon_microfull);
+
+            } else return SuntimesMoonData.toPhase(majorPhase).getLongDisplayString();
+        } else return SuntimesMoonData.toPhase(majorPhase).getLongDisplayString();
     }
 
 }
