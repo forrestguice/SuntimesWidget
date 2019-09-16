@@ -41,6 +41,12 @@ public class SuntimesMoonData1 extends SuntimesMoonData0
         initFromOther(other);
     }
 
+    private void initFromOther( SuntimesMoonData1 other )
+    {
+        super.initFromOther(other);
+        this.moonPhases = new HashMap<>(other.moonPhases);
+    }
+
     /**
      * result: major phases (date of next: new moon, first quarter, full moon, third quarter)
      */
@@ -51,16 +57,6 @@ public class SuntimesMoonData1 extends SuntimesMoonData0
             return moonPhases.get(phase);
         }
         return null;
-    }
-
-    /**
-     * init from other SuntimesEquinoxSolsticeData object
-     * @param other another SuntimesEquinoxSolsticeData obj
-     */
-    private void initFromOther( SuntimesMoonData1 other )
-    {
-        super.initFromOther(other);
-        this.moonPhases = new HashMap<>(other.moonPhases);
     }
 
     /**
