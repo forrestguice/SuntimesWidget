@@ -489,6 +489,10 @@ public class EquinoxView extends LinearLayout
         }
     }
 
+    public EquinoxViewAdapter getAdapter() {
+         return card_adapter;
+    }
+
     /**
      * EquinoxViewAdapter
      */
@@ -563,6 +567,25 @@ public class EquinoxView extends LinearLayout
             return MAX_POSITIONS;
         }
 
+        /**
+         * Clear existing data and initialize the center position.
+         * @param context Context
+         * @return data for the center position
+         */
+        public SuntimesEquinoxSolsticeDataset initData(Context context)
+        {
+            data.clear();
+            SuntimesEquinoxSolsticeDataset retValue = initData(context, CENTER_POSITION);
+            notifyDataSetChanged();
+            return retValue;
+        }
+
+        /**
+         * Initialize data at position (returns cached data if it already exists).
+         * @param context
+         * @param position
+         * @return
+         */
         public SuntimesEquinoxSolsticeDataset initData(Context context, int position)
         {
             SuntimesEquinoxSolsticeDataset retValue = data.get(position);

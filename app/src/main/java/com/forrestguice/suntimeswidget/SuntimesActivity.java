@@ -32,8 +32,6 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
@@ -49,7 +47,6 @@ import android.support.v7.app.ActionBar;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -59,8 +56,8 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ImageSpan;
-import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.Pair;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -84,7 +81,6 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.cards.CardAdapter;
 import com.forrestguice.suntimeswidget.cards.CardLayoutManager;
-import com.forrestguice.suntimeswidget.cards.CardViewHolder;
 import com.forrestguice.suntimeswidget.getfix.GetFixHelper;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 import com.forrestguice.suntimeswidget.map.WorldMapDialog;
@@ -103,7 +99,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
@@ -151,8 +146,8 @@ public class SuntimesActivity extends AppCompatActivity
     private com.forrestguice.suntimeswidget.calculator.core.Location location;
     protected SuntimesNotes notes;
     protected SuntimesRiseSetDataset dataset;
-    protected SuntimesEquinoxSolsticeDataset dataset2;
-    protected SuntimesMoonData dataset3;
+    protected SuntimesEquinoxSolsticeDataset dataset_equinox;
+    protected SuntimesMoonData dataset_moon;
 
     private int color_textTimeDelta;
     private int resID_noonIcon;
@@ -373,7 +368,7 @@ public class SuntimesActivity extends AppCompatActivity
         AlarmDialog alarmDialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_ALARM);
         if (alarmDialog != null)
         {
-            alarmDialog.setData(this, dataset, dataset3, dataset2);
+            alarmDialog.setData(this, dataset, dataset_moon, dataset_equinox);
             alarmDialog.setOnAcceptedListener(alarmDialog.scheduleAlarmClickListener);
             //Log.d("DEBUG", "AlarmDialog listeners restored.");
         }
@@ -409,7 +404,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (moonDialog != null)
         {
             moonDialog.themeViews(this, appThemeOverride);
-            moonDialog.setData((dataset3 != null) ? dataset3 : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
+            moonDialog.setData((dataset_moon != null) ? dataset_moon : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
             moonDialog.updateViews();
             //Log.d("DEBUG", "MoonDialog updated on restore.");
         }
@@ -1092,7 +1087,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         notes = new SuntimesNotes();
         notes.themeViews(this, appThemeOverride);
-        notes.init(this, dataset, dataset3);
+        notes.init(this, dataset, dataset_moon);
         notes.setOnChangedListener(new NoteChangedListener()
         {
             @Override
@@ -1434,7 +1429,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (dataset.isCalculated())
         {
             AlarmDialog alarmDialog = new AlarmDialog();
-            alarmDialog.setData(this, dataset, dataset3, dataset2);
+            alarmDialog.setData(this, dataset, dataset_moon, dataset_equinox);
             alarmDialog.setChoice(selected);
             alarmDialog.setOnAcceptedListener(alarmDialog.scheduleAlarmClickListener);
             alarmDialog.show(getSupportFragmentManager(), DIALOGTAG_ALARM);
@@ -1451,45 +1446,22 @@ public class SuntimesActivity extends AppCompatActivity
         scheduleAlarm(notes.getNote().noteMode);
     }
 
-    /**
-     *
-     * @param context a context used to access shared prefs
-     */
-    private void initData( Context context )
-    {
-        dataset = new SuntimesRiseSetDataset(context);
-        dataset2 = (AppSettings.loadShowEquinoxPref(context) ? new SuntimesEquinoxSolsticeDataset(context) : null);
-        dataset3 = (AppSettings.loadShowMoonPref(context) ? new SuntimesMoonData(context, 0, "moon") : null);
-        card_adapter.initData(context, dataset, dataset3);
-    }
-
     protected void calculateData( Context context )
     {
-        initData(context);
+        card_adapter.initData(context);
+        Pair<SuntimesRiseSetDataset, SuntimesMoonData> cardData = card_adapter.initData(context, CardAdapter.TODAY_POSITION);
+        dataset = cardData.first;
+        dataset_moon =  cardData.second;
 
-        if (dataset != null)
-            dataset.calculateData();
-
-        if (dataset2 != null)
-            dataset2.calculateData();
-
-        if (dataset3 != null)
-            dataset3.calculate();
+        EquinoxView.EquinoxViewAdapter card_adapter1 = (card_equinoxSolstice != null ? card_equinoxSolstice.getAdapter() : null);
+        dataset_equinox = (card_adapter1 != null ? card_adapter1.initData(context) : null);
 
         initNotes();
     }
 
     protected void invalidateData( Context context )
     {
-        if (dataset != null)
-            dataset.invalidateCalculation();
-
-        if (dataset2 != null)
-            dataset2.invalidateCalculation();
-
-        if (dataset3 != null)
-            dataset3.invalidateCalculation();
-
+        // TODO
         updateViews(context);
     }
 
@@ -1528,7 +1500,7 @@ public class SuntimesActivity extends AppCompatActivity
             actionBar.setSubtitle(locationSubtitle);
         }
 
-        boolean supportsMoon = (dataset3 != null);
+        boolean supportsMoon = (dataset_moon != null);
         showMoon = supportsMoon && AppSettings.loadShowMoonPref(context);
         showMoonrise(showMoon);
 
@@ -2023,7 +1995,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         MoonDialog moonDialog = new MoonDialog();
         moonDialog.themeViews(this, appThemeOverride);
-        moonDialog.setData((dataset3 != null) ? dataset3 : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
+        moonDialog.setData((dataset_moon != null) ? dataset_moon : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
         moonDialog.show(getSupportFragmentManager(), DIALOGTAG_MOON);
     }
 

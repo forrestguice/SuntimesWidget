@@ -35,7 +35,10 @@ import android.view.ViewGroup;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -83,18 +86,20 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         return MAX_POSITIONS;
     }
 
-    public void initData(Context context, SuntimesRiseSetDataset sunSeed, SuntimesMoonData moonSeed)
+    public Pair<SuntimesRiseSetDataset, SuntimesMoonData> initData(Context context)
     {
+        Pair<SuntimesRiseSetDataset, SuntimesMoonData> retValue;
         data.clear();
-        options.init(context, sunSeed, moonSeed);
+        options.init(context);
         initData(context, TODAY_POSITION - 1);
-        initData(context, TODAY_POSITION);
+        retValue = initData(context, TODAY_POSITION);
         initData(context, TODAY_POSITION + 1);
         initData(context, TODAY_POSITION + 2);
         notifyDataSetChanged();
+        return retValue;
     }
 
-    protected Pair<SuntimesRiseSetDataset, SuntimesMoonData> initData(Context context, int position)
+    public Pair<SuntimesRiseSetDataset, SuntimesMoonData> initData(Context context, int position)
     {
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> dataPair = data.get(position);
         if (dataPair == null) {
@@ -444,13 +449,17 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         public int highlightPosition = -1;
         public SolarEvents highlightEvent = null;
 
-        public void init(Context context, SuntimesRiseSetDataset sunSeed, SuntimesMoonData moonSeed)
+        public void init(Context context)
         {
             dateMode = WidgetSettings.loadDateModePref(context, 0);
             dateInfo = WidgetSettings.loadDatePref(context, 0);
-            timezone = sunSeed.timezone();
 
-            supportsGoldBlue = sunSeed.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);
+            SuntimesRiseSetData data0 = new SuntimesRiseSetData(context, 0);
+            data0.initCalculator(context);
+            data0.initTimezone(context);
+            timezone = data0.timezone();
+
+            supportsGoldBlue = data0.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);
             showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
             showWarnings = AppSettings.loadShowWarningsPref(context);
 

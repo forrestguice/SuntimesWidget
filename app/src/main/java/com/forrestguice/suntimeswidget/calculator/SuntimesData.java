@@ -226,7 +226,7 @@ public class SuntimesData
         }
     }
 
-    protected void initTimezone(Context context)
+    public void initTimezone(Context context)
     {
         switch (timezoneMode)
         {
