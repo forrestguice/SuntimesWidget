@@ -33,6 +33,7 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
@@ -282,18 +283,22 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         }
     };
 
-    private View.OnClickListener onDialogCancelClick = new View.OnClickListener()
-    {
+    private View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
         @Override
-        public void onClick(View v)
-        {
-            dialogContent.cancelGetFix();
-            dismiss();
-            if (onCanceled != null) {
-                onCanceled.onClick(getDialog(), 0);
-            }
+        public void onClick(View v) {
+            getDialog().cancel();
         }
     };
+
+    @Override
+    public void onCancel(DialogInterface dialog)
+    {
+        dialogContent.cancelGetFix();
+        dismiss();
+        if (onCanceled != null) {
+            onCanceled.onClick(getDialog(), 0);
+        }
+    }
 
     private View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
     {
@@ -333,9 +338,25 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         if (layout != null)
         {
             BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-            behavior.setHideable(true);
+            behavior.setHideable(false);
             behavior.setSkipCollapsed(true);
             behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState)
+    {
+        super.onActivityCreated(savedInstanceState);
+        disableTouchOutsideBehavior();
+    }
+
+    private void disableTouchOutsideBehavior()
+    {
+        Window window = getDialog().getWindow();
+        if (window != null) {
+            View decorView = window.getDecorView().findViewById(android.support.design.R.id.touch_outside);
+            decorView.setOnClickListener(null);
         }
     }
 
