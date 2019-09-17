@@ -33,7 +33,7 @@
     <group android:id="@+id/mapOption_group_action" android:checkableBehavior="none">
 
         <item android:id="@+id/setDate"
-            android:title="@string/configAction_setDate"
+            android:title="@string/configAction_viewDate"
             android:icon="?attr/icActionTimeReset"
             app:showAsAction="never" />
 
