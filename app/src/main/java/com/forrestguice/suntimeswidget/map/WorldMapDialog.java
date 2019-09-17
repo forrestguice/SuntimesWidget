@@ -72,6 +72,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 {
     public static final String LOGTAG = "WorldMapDialog";
 
+    private View dialogHeader;
     private TextView dialogTitle;
     private WorldMapView worldmap;
     private TextView empty;
@@ -158,7 +159,26 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
             behavior.setHideable(false);
             behavior.setSkipCollapsed(true);
+            behavior.setPeekHeight((int)(dialogHeader.getHeight() + getResources().getDimension(R.dimen.dialog_margin) * 2));
             behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }
+    }
+
+    private void collapseSheet(Dialog dialog)
+    {
+        if (dialog == null) {
+            return;
+        }
+
+        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
+        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);
+        if (layout != null)
+        {
+            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+            behavior.setHideable(false);
+            behavior.setSkipCollapsed(false);
+            behavior.setPeekHeight((int)(dialogHeader.getHeight() + getResources().getDimension(R.dimen.dialog_margin) * 2));
+            behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         }
     }
 
@@ -230,6 +250,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     public void initViews(final Context context, View dialogView)
     {
+        dialogHeader = dialogView.findViewById(R.id.worldmapdialog_header);
         dialogTitle = (TextView)dialogView.findViewById(R.id.worldmapdialog_title);
         utcTime = (TextView)dialogView.findViewById(R.id.info_time_utc);
         offsetTime = (TextView)dialogView.findViewById(R.id.info_time_offset);
@@ -735,7 +756,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                 case R.id.setDate:
                     if (dialogListener != null) {
                         dialogListener.onConfigDate(getMapTime(Calendar.getInstance().getTimeInMillis()));
-                        dismiss();
+                        collapseSheet(getDialog());
                     }
                     return true;
 
