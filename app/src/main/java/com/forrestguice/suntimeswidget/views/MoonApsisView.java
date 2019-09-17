@@ -49,7 +49,6 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -63,7 +62,7 @@ public class MoonApsisView extends LinearLayout
     private MoonApsisAdapter card_adapter;
     private LinearLayoutManager card_layout;
     private ImageButton forwardButton, backButton;
-    private int colorEnabled, colorPressed, colorDisabled, colorBackground;
+    private int colorEnabled, colorPressed, colorAccent, colorDisabled, colorBackground;
 
     public MoonApsisView(Context context)
     {
@@ -167,28 +166,31 @@ public class MoonApsisView extends LinearLayout
     @SuppressLint("ResourceType")
     public void initTheme(Context context)
     {
-        int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.buttonPressColor, R.attr.text_disabledColor, R.attr.colorBackgroundFloating };
+        int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.buttonPressColor, R.attr.text_disabledColor, R.attr.colorBackgroundFloating, R.attr.text_accentColor };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = R.color.transparent;
         colorEnabled = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
         colorPressed = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
         colorDisabled = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
         colorBackground = ColorUtils.setAlphaComponent(ContextCompat.getColor(context, typedArray.getResourceId(3, def)), (int)(9d * (254d / 10d)));
+        colorAccent = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
         typedArray.recycle();
         themeDrawables();
     }
 
-    public void themeViews(Context context, SuntimesTheme theme) {
+    public void themeViews(Context context, SuntimesTheme theme)
+    {
+        colorPressed = theme.getActionColor();
+        colorAccent = theme.getAccentColor();
         card_adapter.applyTheme(context, theme);
         themeDrawables();
     }
 
     private void themeDrawables()
     {
-        ImageViewCompat.setImageTintList(forwardButton, SuntimesUtils.colorStateList(colorEnabled, colorDisabled, colorPressed));
         SuntimesUtils.colorizeImageView(forwardButton, colorBackground);
 
-        ImageViewCompat.setImageTintList(backButton, SuntimesUtils.colorStateList(colorEnabled, colorDisabled, colorPressed));
+        ImageViewCompat.setImageTintList(backButton, SuntimesUtils.colorStateList(colorAccent, colorDisabled, colorPressed));
         SuntimesUtils.colorizeImageView(backButton, colorBackground);
     }
 

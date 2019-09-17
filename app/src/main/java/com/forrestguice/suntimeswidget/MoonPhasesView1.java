@@ -65,7 +65,7 @@ public class MoonPhasesView1 extends LinearLayout
     private ImageButton forwardButton, backButton;
     private TextView empty;
 
-    private int colorEnabled = Color.WHITE, colorDisabled = Color.GRAY, colorPressed = Color.BLUE, colorBackground = Color.BLACK;
+    private int colorEnabled = Color.WHITE, colorDisabled = Color.GRAY, colorPressed = Color.GREEN, colorAccent = Color.BLUE, colorBackground = Color.BLACK;
 
     public MoonPhasesView1(Context context)
     {
@@ -131,13 +131,14 @@ public class MoonPhasesView1 extends LinearLayout
     @SuppressLint("ResourceType")
     protected void initTheme(Context context)
     {
-        int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.buttonPressColor, R.attr.text_disabledColor, R.attr.colorBackgroundFloating };
+        int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.buttonPressColor, R.attr.text_disabledColor, R.attr.colorBackgroundFloating, R.attr.text_accentColor };
         TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
         int def = R.color.transparent;
         colorEnabled = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
         colorPressed = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
         colorDisabled = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
         colorBackground = ColorUtils.setAlphaComponent(ContextCompat.getColor(context, typedArray.getResourceId(3, def)), (int)(9d * (254d / 10d)));
+        colorAccent = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
         typedArray.recycle();
 
         themeDrawables();
@@ -147,15 +148,16 @@ public class MoonPhasesView1 extends LinearLayout
     {
         card_adapter.applyTheme(context, theme);
         colorPressed = theme.getActionColor();
+        colorAccent = theme.getAccentColor();
         themeDrawables();
     }
 
     private void themeDrawables()
     {
-        ImageViewCompat.setImageTintList(forwardButton, SuntimesUtils.colorStateList(colorEnabled, colorDisabled, colorPressed));
+        ImageViewCompat.setImageTintList(forwardButton, SuntimesUtils.colorStateList(colorAccent, colorDisabled, colorPressed));
         SuntimesUtils.colorizeImageView(forwardButton, colorBackground);
 
-        ImageViewCompat.setImageTintList(backButton, SuntimesUtils.colorStateList(colorEnabled, colorDisabled, colorPressed));
+        ImageViewCompat.setImageTintList(backButton, SuntimesUtils.colorStateList(colorAccent, colorDisabled, colorPressed));
         SuntimesUtils.colorizeImageView(backButton, colorBackground);
     }
 
