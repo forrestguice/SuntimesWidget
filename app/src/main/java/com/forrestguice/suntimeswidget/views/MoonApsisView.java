@@ -105,7 +105,13 @@ public class MoonApsisView extends LinearLayout
 
         backButton = (ImageButton)findViewById(R.id.info_time_prevbtn);
         backButton.setOnClickListener(onResetClick0);
-        backButton.setVisibility(GONE);
+        backButton.setVisibility(VISIBLE);
+        backButton.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ViewUtils.fadeOutButton(backButton, ViewUtils.ANIM_VERYLONG);
+            }
+        }, 1200);
 
         card_view.setOnScrollListener(onScrollChanged);
 
@@ -134,16 +140,16 @@ public class MoonApsisView extends LinearLayout
 
             if (position < MoonApsisAdapter.CENTER_POSITION)
             {
-                forwardButton.setVisibility(View.VISIBLE);
+                ViewUtils.fadeInButton(forwardButton, ViewUtils.ANIM_VERYLONG);
                 backButton.setVisibility(View.GONE);
 
             } else if (position > MoonApsisAdapter.CENTER_POSITION) {
                 forwardButton.setVisibility(View.GONE);
-                backButton.setVisibility(View.VISIBLE);
+                ViewUtils.fadeInButton(backButton, ViewUtils.ANIM_VERYLONG);
 
             } else {
-                forwardButton.setVisibility(View.GONE);
-                backButton.setVisibility(View.GONE);
+                ViewUtils.fadeOutButton(forwardButton, ViewUtils.ANIM_LONG);
+                ViewUtils.fadeOutButton(backButton, ViewUtils.ANIM_LONG);
             }
         }
     };
@@ -188,6 +194,7 @@ public class MoonApsisView extends LinearLayout
 
     private void themeDrawables()
     {
+        ImageViewCompat.setImageTintList(forwardButton, SuntimesUtils.colorStateList(colorAccent, colorDisabled, colorPressed));
         SuntimesUtils.colorizeImageView(forwardButton, colorBackground);
 
         ImageViewCompat.setImageTintList(backButton, SuntimesUtils.colorStateList(colorAccent, colorDisabled, colorPressed));

@@ -46,6 +46,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 import com.github.rubensousa.gravitysnaphelper.GravitySnapHelper;
 
 import java.lang.ref.WeakReference;
@@ -118,7 +119,13 @@ public class MoonPhasesView1 extends LinearLayout
 
         backButton = (ImageButton)findViewById(R.id.info_time_prevbtn);
         backButton.setOnClickListener(onResetClick0);
-        backButton.setVisibility(GONE);
+        backButton.setVisibility(VISIBLE);
+        backButton.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ViewUtils.fadeOutButton(backButton, ViewUtils.ANIM_VERYLONG);
+            }
+        }, 1200);
 
         card_view.setOnScrollListener(onScrollChanged);
 
@@ -165,6 +172,7 @@ public class MoonPhasesView1 extends LinearLayout
     {
         isRtl = AppSettings.isLocaleRtl(context);
         SuntimesUtils.initDisplayStrings(context);
+        ViewUtils.initUtils(context);
         WidgetSettings.MoonPhaseMode.initDisplayStrings(context);
         MoonPhaseDisplay.initDisplayStrings(context);
     }
@@ -208,16 +216,16 @@ public class MoonPhasesView1 extends LinearLayout
 
             if (position < PhaseAdapter.CENTER_POSITION)
             {
-                forwardButton.setVisibility(View.VISIBLE);
+                ViewUtils.fadeInButton(forwardButton, ViewUtils.ANIM_VERYLONG);
                 backButton.setVisibility(View.GONE);
 
             } else if (position > PhaseAdapter.CENTER_POSITION) {
                 forwardButton.setVisibility(View.GONE);
-                backButton.setVisibility(View.VISIBLE);
+                ViewUtils.fadeInButton(backButton, ViewUtils.ANIM_VERYLONG);
 
             } else {
-                forwardButton.setVisibility(View.GONE);
-                backButton.setVisibility(View.GONE);
+                ViewUtils.fadeOutButton(forwardButton, ViewUtils.ANIM_LONG);
+                ViewUtils.fadeOutButton(backButton, ViewUtils.ANIM_LONG);
             }
         }
     };
