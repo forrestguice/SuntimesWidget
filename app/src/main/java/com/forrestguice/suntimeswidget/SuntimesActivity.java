@@ -1978,12 +1978,18 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onConfigDate(long suggested)
         {
-            WidgetSettings.DateInfo dateInfo = new WidgetSettings.DateInfo(suggested);
+            /**WidgetSettings.DateInfo dateInfo = new WidgetSettings.DateInfo(suggested);
             WidgetSettings.saveDateModePref(SuntimesActivity.this, 0,
                     WidgetSettings.DateInfo.isToday(dateInfo) ? WidgetSettings.DateMode.CURRENT_DATE
                                                               : WidgetSettings.DateMode.CUSTOM_DATE );
             WidgetSettings.saveDatePref(SuntimesActivity.this, 0, dateInfo);
-            afterConfigDate();
+            afterConfigDate();*/
+
+            int position = card_adapter.findPositionForDate(SuntimesActivity.this, suggested);
+            if (position >= 0 && position < CardAdapter.MAX_POSITIONS) {
+                setUserSwappedCard(true, "onConfigDate");
+                card_view.scrollToPosition(position);
+            }
         }
     };
 

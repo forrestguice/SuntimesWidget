@@ -130,6 +130,15 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         return new Pair<>(sun, moon);
     }
 
+    public int findPositionForDate(Context context, long dateMillis)
+    {
+        Pair<SuntimesRiseSetDataset, SuntimesMoonData> data_today = initData(context, TODAY_POSITION);
+        Calendar today = data_today.first.calendar();
+
+        int diff = (int)((dateMillis - today.getTimeInMillis()) / (1000L * 60L * 60L * 24L));
+        return CardAdapter.TODAY_POSITION + diff;
+    }
+
     /**
      * onViewRecycled
      * @param holder
