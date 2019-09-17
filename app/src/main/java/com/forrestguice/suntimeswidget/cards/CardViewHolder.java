@@ -58,6 +58,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
     public ImageButton btn_flipperNext;
     public ImageButton btn_flipperPrev;
+    public ImageButton btn_flipperCenter;
 
     public View sunriseHeader;
     public TextView header_sunrise;
@@ -140,6 +141,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
         btn_flipperNext = (ImageButton)view.findViewById(R.id.info_time_nextbtn);
         btn_flipperPrev = (ImageButton)view.findViewById(R.id.info_time_prevbtn);
+        btn_flipperCenter = (ImageButton)view.findViewById(R.id.info_time_centerbtn);
     }
 
     public void bindDataToPosition(@NonNull Context context, int position, @NonNull Pair<SuntimesRiseSetDataset, SuntimesMoonData> data, CardAdapter.CardAdapterOptions options)
@@ -151,7 +153,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         if (options.themeOverride != null) {
             themeCardViews(context, options.themeOverride, options);
         }
-        themeCardViews(context, options);
+        themeCardViews(context, options, position);
 
         row_actual.setVisible(options.showActual);
         row_civil.setVisible(options.showCivil);
@@ -262,19 +264,25 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         moonrise.updateViews(context, moon);
     }
 
-    protected void themeCardViews(Context context, CardAdapter.CardAdapterOptions options)
+    protected void themeCardViews(Context context, CardAdapter.CardAdapterOptions options, int position)
     {
         if (options.themeOverride != null) {
             themeCardViews(context, options.themeOverride, options);
         }
         ImageViewCompat.setImageTintList(btn_flipperNext, SuntimesUtils.colorStateList(options.color_enabled, options.color_disabled, options.color_pressed));
         ImageViewCompat.setImageTintList(btn_flipperPrev, SuntimesUtils.colorStateList(options.color_enabled, options.color_disabled, options.color_pressed));
+
+        int offset = Math.abs(position - CardAdapter.TODAY_POSITION);
+        int centerEnabledColor = (offset >= 2 ? options.color_accent : options.color_enabled);
+        ImageViewCompat.setImageTintList(btn_flipperCenter, SuntimesUtils.colorStateList(centerEnabledColor, options.color_disabled, options.color_pressed));
     }
 
     protected void themeCardViews(Context context, @NonNull SuntimesTheme theme, CardAdapter.CardAdapterOptions options)
     {
         options.color_textTimeDelta = theme.getTimeColor();
         options.color_pressed = theme.getActionColor();
+        options.color_warning = theme.getActionColor();
+        options.color_accent = theme.getAccentColor();
         int color_text = theme.getTextColor();
         int color_sunrise = theme.getSunriseTextColor();
         int color_sunset = theme.getSunsetTextColor();

@@ -68,12 +68,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
     private void initTheme(Context context)
     {
-        int[] attrs = new int[] { android.R.attr.textColorPrimary, R.attr.buttonPressColor, R.attr.text_disabledColor };
+        int[] attrs = new int[] { android.R.attr.textColorPrimary, R.attr.buttonPressColor, R.attr.text_disabledColor, R.attr.tagColor_warning, R.attr.text_accentColor };
         TypedArray a = context.obtainStyledAttributes(attrs);
         options.color_textTimeDelta = ContextCompat.getColor(context, a.getResourceId(0, Color.WHITE));
         options.color_enabled = options.color_textTimeDelta;
         options.color_pressed = ContextCompat.getColor(context, a.getResourceId(1, R.color.btn_tint_pressed_dark));
         options.color_disabled = ContextCompat.getColor(context, a.getResourceId(2, R.color.text_disabled_dark));
+        options.color_warning = ContextCompat.getColor(context, a.getResourceId(3, R.color.warningTag_dark));
+        options.color_accent = ContextCompat.getColor(context, a.getResourceId(4, R.color.text_accent_dark));
         a.recycle();
     }
 
@@ -252,6 +254,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         holder.moonClickArea.setOnLongClickListener(onMoonHeaderLongClick(position));
         holder.btn_flipperNext.setOnClickListener(onNextClick(position));
         holder.btn_flipperPrev.setOnClickListener(onPrevClick(position));
+        holder.btn_flipperCenter.setOnClickListener(onCenterClick(position));
     }
 
     private void detachClickListeners(@NonNull CardViewHolder holder)
@@ -266,6 +269,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         holder.moonClickArea.setOnLongClickListener(null);
         holder.btn_flipperNext.setOnClickListener(null);
         holder.btn_flipperPrev.setOnClickListener(null);
+        holder.btn_flipperCenter.setOnClickListener(null);
     }
 
     private View.OnClickListener onDateClick(final int position) {
@@ -351,6 +355,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             }
         };
     }
+    private View.OnClickListener onCenterClick(final int position) {
+        return  new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapterListener.onCenterClick(CardAdapter.this, position);
+            }
+        };
+    }
 
     /**
      * CardAdapterListener
@@ -383,6 +395,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
         public void onNextClick(CardAdapter adapter, int position) {}
         public void onPrevClick(CardAdapter adapter, int position) {}
+        public void onCenterClick(CardAdapter adapter, int position) {}
     }
 
     /**
@@ -444,7 +457,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         public boolean showBlue = false;
 
         public SuntimesTheme themeOverride = null;
-        public int color_textTimeDelta, color_enabled, color_disabled, color_pressed;
+        public int color_textTimeDelta, color_enabled, color_disabled, color_pressed, color_warning, color_accent;
 
         public int highlightPosition = -1;
         public SolarEvents highlightEvent = null;
