@@ -1441,7 +1441,7 @@
           [Icon Add] Add a new theme or [Icon Copy] copy from an existing theme.\n
           \n
           [Icon Edit] Edit or [Icon Delete] delete themes.\n
-          The [Icon Default] default themes cannot be modified.
+          The [Icon Default] default themes cannot be modified.\n
     </string>
 
     <string name="help_calendar"><![CDATA[Supply events to the Calendar app (moon phases, solstices, and equinoxes).<br />

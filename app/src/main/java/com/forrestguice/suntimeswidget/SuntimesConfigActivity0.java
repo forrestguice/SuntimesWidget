@@ -26,6 +26,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -77,6 +78,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 {
     protected static final String DIALOGTAG_ABOUT = "about";
     protected static final String DIALOGTAG_HELP = "help";
+
+    protected static final String HELPTAG_LAUNCH = "action_launch";
 
     protected int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     protected boolean reconfigure = false;
@@ -206,10 +209,15 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         super.onResume();
 
-        /**FragmentManager fragments = getSupportFragmentManager();
+        FragmentManager fragments = getSupportFragmentManager();
         HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
-        if (helpDialog != null){   // TODO: restore listeners
-        }*/
+        if (helpDialog != null)
+        {
+            String tag = helpDialog.getListenerTag();
+            if (tag != null && tag.equals(HELPTAG_LAUNCH)) {
+                helpDialog.setNeutralButtonListener(helpDialogListener_launchApp, HELPTAG_LAUNCH);
+            }
+        }
     }
 
     /**
@@ -374,7 +382,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                     HelpDialog helpDialog = new HelpDialog();
                     helpDialog.setContent(getString(R.string.help_action_launch));
                     helpDialog.setShowNeutralButton(getString(R.string.configAction_restoreDefaults));
-                    helpDialog.setOnShowListener(helpDialogListener_launchApp);
+                    helpDialog.setNeutralButtonListener(helpDialogListener_launchApp, HELPTAG_LAUNCH);
                     helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
                 }
             });
@@ -730,25 +738,22 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     /**
      * HelpDialog onShow (launch App)
      */
-    private DialogInterface.OnShowListener helpDialogListener_launchApp = new DialogInterface.OnShowListener()
+    private View.OnClickListener helpDialogListener_launchApp = new View.OnClickListener()
     {
         @Override
-        public void onShow(final DialogInterface dialog)
+        public void onClick(View v)
         {
-            Button neutralButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEUTRAL);
-            neutralButton.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View view)
-                {
-                    if (text_launchActivity != null) {
-                        text_launchActivity.setText(WidgetSettings.PREF_DEF_ACTION_LAUNCH);
-                        text_launchActivity.selectAll();
-                        text_launchActivity.requestFocus();
-                    }
-                    dialog.dismiss();
-                }
-            });
+            if (text_launchActivity != null) {
+                text_launchActivity.setText(WidgetSettings.PREF_DEF_ACTION_LAUNCH);
+                text_launchActivity.selectAll();
+                text_launchActivity.requestFocus();
+            }
+
+            FragmentManager fragments = getSupportFragmentManager();
+            HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+            if (helpDialog != null) {
+                helpDialog.dismiss();
+            }
         }
     };
 
