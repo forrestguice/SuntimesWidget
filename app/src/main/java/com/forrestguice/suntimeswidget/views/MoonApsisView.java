@@ -109,7 +109,10 @@ public class MoonApsisView extends LinearLayout
         backButton.postDelayed(new Runnable() {
             @Override
             public void run() {
-                ViewUtils.fadeOutButton(backButton, ViewUtils.ANIM_VERYLONG);
+                int position = card_layout.findFirstVisibleItemPosition();
+                if (position == MoonApsisAdapter.CENTER_POSITION) {
+                    ViewUtils.fadeOutButton(backButton, ViewUtils.ANIM_VERYLONG);
+                }
             }
         }, 1200);
 
