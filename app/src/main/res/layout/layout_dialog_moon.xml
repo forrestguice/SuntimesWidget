@@ -17,11 +17,10 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/moondialog_layout"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical" android:background="?attr/dialogBackground"
     android:padding="8dp">
 
     <TextView android:id="@+id/moondialog_title" style="@style/TableHeadTextView"
@@ -63,7 +62,8 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <View style="@style/SunsetTimeHorizontalRule"
+    <View android:id="@+id/divider1"
+        style="@style/SunsetTimeHorizontalRule"
         android:layout_width="match_parent" android:layout_height="1dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="8dp"/>
@@ -72,7 +72,8 @@
         android:id="@+id/moonphases_view"
         android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
-    <View style="@style/SunsetTimeHorizontalRule"
+    <View android:id="@+id/divider2"
+        style="@style/SunsetTimeHorizontalRule"
         android:layout_width="match_parent" android:layout_height="1dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="8dp"/>
