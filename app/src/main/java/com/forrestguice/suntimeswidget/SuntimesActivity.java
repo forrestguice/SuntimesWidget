@@ -1604,6 +1604,18 @@ public class SuntimesActivity extends AppCompatActivity
         }
     };
 
+    private void updateEquinoxDialogColumnWidth(EquinoxDialog equinoxDialog)
+    {
+        View card = findViewById(R.id.info_time_all_today);
+        if (card != null && equinoxDialog != null)
+        {
+            View column = card.findViewById(R.id.header_column);
+            if (column != null) {
+                equinoxDialog.adjustColumnWidth(column.getMeasuredWidth());
+            }
+        }
+    }
+
     private void showWarnings()
     {
         if (showWarnings && timezoneWarning.shouldShow() && !timezoneWarning.wasDismissed())
@@ -2000,7 +2012,8 @@ public class SuntimesActivity extends AppCompatActivity
 
     protected void showEquinoxDialog()
     {
-        EquinoxDialog equinoxDialog = new EquinoxDialog();
+        final EquinoxDialog equinoxDialog = new EquinoxDialog();
+        updateEquinoxDialogColumnWidth(equinoxDialog);
         equinoxDialog.themeViews(this, appThemeOverride);
         equinoxDialog.show(getSupportFragmentManager(), DIALOGTAG_EQUINOX);
     }

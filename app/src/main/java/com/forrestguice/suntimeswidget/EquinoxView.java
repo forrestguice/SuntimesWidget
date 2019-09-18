@@ -761,12 +761,12 @@ public class EquinoxView extends LinearLayout
                 adjustColumnWidth(options.columnWidthPx);
             }
 
-            /**if (options.centered)  // TODO
+            if (options.centered)
             {
-                FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)view.getLayoutParams();
-                params.gravity = Gravity.CENTER_HORIZONTAL;
+                RecyclerView.LayoutParams params = (RecyclerView.LayoutParams)view.getLayoutParams();
+                //params.gravity = Gravity.CENTER_HORIZONTAL;
                 view.setLayoutParams(params);
-            }*/
+            }
         }
 
         private EquinoxNote addNote(TextView labelView, TextView timeView, TextView noteView, int pageIndex, Integer timeColor, EquinoxViewOptions options)
@@ -812,7 +812,7 @@ public class EquinoxView extends LinearLayout
             if (options.themeOverride != null) {
                 applyTheme(options.themeOverride, options);
             }
-            themeViews(options);
+            themeViews(options, position);
 
             showTitle(!options.minimized);
             showNextPrevButtons(!options.minimized);
@@ -886,9 +886,9 @@ public class EquinoxView extends LinearLayout
                 options.seasonColors[3] = theme.getWinterColor();
             }
         }
-        public void themeViews( EquinoxViewOptions options )
+        public void themeViews( EquinoxViewOptions options, int position )
         {
-            title.setTextColor(SuntimesUtils.colorStateList(options.titleColor, options.disabledColor, options.pressedColor));
+            title.setTextColor(SuntimesUtils.colorStateList((position  < EquinoxViewAdapter.CENTER_POSITION ? options.disabledColor : options.titleColor), options.disabledColor, options.pressedColor));
 
             ImageViewCompat.setImageTintList(btn_flipperNext, SuntimesUtils.colorStateList(options.titleColor, options.disabledColor, options.pressedColor));
             ImageViewCompat.setImageTintList(btn_flipperPrev, SuntimesUtils.colorStateList(options.titleColor, options.disabledColor, options.pressedColor));

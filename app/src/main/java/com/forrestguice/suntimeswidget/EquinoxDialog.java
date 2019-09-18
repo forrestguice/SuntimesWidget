@@ -61,9 +61,14 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         if (savedState != null)
         {
             Log.d("DEBUG", "EquinoxDialog onCreate (restoreState)");
+            overrideColumnWidthPx = savedState.getInt("overrideColumnWidthPx", overrideColumnWidthPx);
             equinoxView.loadState(savedState);
         }
         themeViews(getContext());
+
+        if (overrideColumnWidthPx >= 0) {
+            equinoxView.adjustColumnWidth(overrideColumnWidthPx);
+        }
 
         return dialogContent;
     }
@@ -131,6 +136,12 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     public void onSaveInstanceState( Bundle outState )
     {
         equinoxView.saveState(outState);
+        outState.putInt("overrideColumnWidthPx", overrideColumnWidthPx);
         super.onSaveInstanceState(outState);
+    }
+
+    private int overrideColumnWidthPx = -1;
+    public void adjustColumnWidth(int columnWidthPx) {
+        overrideColumnWidthPx = columnWidthPx;
     }
 }
