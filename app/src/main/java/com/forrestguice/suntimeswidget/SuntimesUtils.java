@@ -25,6 +25,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.InsetDrawable;
@@ -1221,6 +1222,20 @@ public class SuntimesUtils
         {
             int end = start + toBold.length();
             span.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return span;
+    }
+
+    public static SpannableString createItalicSpan(SpannableString span, String text, String toBold)
+    {
+        if (span == null) {
+            span = new SpannableString(text);
+        }
+        int start = text.indexOf(toBold);
+        if (start >= 0)
+        {
+            int end = start + toBold.length();
+            span.setSpan(new android.text.style.StyleSpan(Typeface.ITALIC), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         return span;
     }

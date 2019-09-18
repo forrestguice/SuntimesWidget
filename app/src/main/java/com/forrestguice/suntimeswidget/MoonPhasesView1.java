@@ -502,16 +502,22 @@ public class MoonPhasesView1 extends LinearLayout
 
             Calendar phaseDate = data.moonPhaseCalendar(phase);
             MoonPhaseDisplay phaseDisplay = SuntimesMoonData1.toPhase(phase);
-            String phaseLabel = phaseDisplay.getLongDisplayString();
+            CharSequence phaseLabel = phaseDisplay.getLongDisplayString();
             if (phase == SuntimesCalculator.MoonPhase.FULL || phase == SuntimesCalculator.MoonPhase.NEW)
             {
                 SuntimesCalculator.MoonPosition phasePosition = data.calculator().getMoonPosition(phaseDate);
                 if (phasePosition != null)
                 {
                     if (SuntimesMoonData1.isSuperMoon(phasePosition)) {
-                        phaseLabel = context.getString(phase == SuntimesCalculator.MoonPhase.FULL ? R.string.timeMode_moon_superfull : R.string.timeMode_moon_supernew);
+                        String labelText = context.getString(phase == SuntimesCalculator.MoonPhase.FULL ? R.string.timeMode_moon_superfull : R.string.timeMode_moon_supernew);
+
+                        if (phase == SuntimesCalculator.MoonPhase.FULL)
+                            phaseLabel = SuntimesUtils.createBoldSpan(null, labelText, labelText);
+                        else phaseLabel = SuntimesUtils.createItalicSpan(null, labelText, labelText);
+
                     } else if (SuntimesMoonData1.isMicroMoon(phasePosition)) {
-                        phaseLabel = context.getString(phase == SuntimesCalculator.MoonPhase.FULL ? R.string.timeMode_moon_microfull : R.string.timeMode_moon_micronew);
+                        String labelText = context.getString(phase == SuntimesCalculator.MoonPhase.FULL ? R.string.timeMode_moon_microfull : R.string.timeMode_moon_micronew);
+                        phaseLabel = SuntimesUtils.createItalicSpan(null, labelText, labelText);
                     }
                 }
             }
