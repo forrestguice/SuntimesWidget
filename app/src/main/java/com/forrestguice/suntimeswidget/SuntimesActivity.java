@@ -1426,8 +1426,20 @@ public class SuntimesActivity extends AppCompatActivity
     {
         if (dataset.isCalculated())
         {
+            SuntimesMoonData moonData = dataset_moon;
+            if (moonData == null) {
+                moonData = new SuntimesMoonData(SuntimesActivity.this, 0, "moon");
+                moonData.calculate();
+            }
+
+            SuntimesEquinoxSolsticeDataset equinoxData = dataset_equinox;
+            if (equinoxData == null) {
+                equinoxData = new SuntimesEquinoxSolsticeDataset(SuntimesActivity.this, 0);
+                equinoxData.calculateData();
+            }
+
             AlarmDialog alarmDialog = new AlarmDialog();
-            alarmDialog.setData(this, dataset, dataset_moon, dataset_equinox);
+            alarmDialog.setData(this, dataset, moonData, equinoxData);
             alarmDialog.setChoice(selected);
             alarmDialog.setOnAcceptedListener(alarmDialog.scheduleAlarmClickListener);
             alarmDialog.show(getSupportFragmentManager(), DIALOGTAG_ALARM);
@@ -1451,8 +1463,11 @@ public class SuntimesActivity extends AppCompatActivity
         dataset = cardData.first;
         dataset_moon = cardData.second;
 
-        EquinoxView.EquinoxViewAdapter card_adapter1 = (card_equinoxSolstice != null ? card_equinoxSolstice.getAdapter() : null);
-        dataset_equinox = (card_adapter1 != null ? card_adapter1.initData(context) : null);
+        dataset_equinox = null;
+        if (AppSettings.loadShowEquinoxPref(context)) {
+            EquinoxView.EquinoxViewAdapter card_adapter1 = (card_equinoxSolstice != null ? card_equinoxSolstice.getAdapter() : null);
+            dataset_equinox = (card_adapter1 != null ? card_adapter1.initData(context) : null);
+        }
 
         initNotes();
     }

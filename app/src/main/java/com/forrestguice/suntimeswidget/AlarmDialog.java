@@ -149,7 +149,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
                 adapter.remove(SolarEvents.THIRDQUARTER);
             }
 
-            boolean supportsSolstice = dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_SOLSTICE);
+            boolean supportsSolstice = equinoxdata != null && equinoxdata.dataEquinoxSpring.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_SOLSTICE);
             if (!supportsSolstice)
             {
                 adapter.remove(SolarEvents.EQUINOX_SPRING);
