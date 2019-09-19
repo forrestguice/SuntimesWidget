@@ -550,6 +550,7 @@ public class AlarmClockActivity extends AppCompatActivity
             {
                 int pos = alarmList.pointToPosition((int)event.getX(), (int)event.getY());
                 if ((event.getAction() == MotionEvent.ACTION_DOWN) && pos == -1) {
+                    collapseFabMenu();
                     setSelectedItem(-1);
                 }
                 return false;
@@ -1491,13 +1492,17 @@ public class AlarmClockActivity extends AppCompatActivity
         fabMenuExpanded = false;
     }
 
+    private void toggleFabMenu()
+    {
+        if (fabMenuExpanded)
+            collapseFabMenu();
+        else expandFabMenu();
+    }
+
     private View.OnClickListener onFabMenuClick = new View.OnClickListener() {
         @Override
-        public void onClick(View v)
-        {
-            if (fabMenuExpanded)
-                collapseFabMenu();
-            else expandFabMenu();
+        public void onClick(View v) {
+            toggleFabMenu();
         }
     };
 
