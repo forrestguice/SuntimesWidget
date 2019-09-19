@@ -123,9 +123,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         sun.setTodayIs(date);
         sun.calculateData();
 
-        SuntimesMoonData moon = new SuntimesMoonData(context, 0, "moon");
-        moon.setTodayIs(date);
-        moon.calculate();
+        SuntimesMoonData moon = null;
+        if (options.showMoon)
+        {
+            moon = new SuntimesMoonData(context, 0, "moon");
+            moon.setTodayIs(date);
+            moon.calculate();
+        }
 
         return new Pair<>(sun, moon);
     }
@@ -455,6 +459,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         public boolean supportsGoldBlue = false;
         public boolean showSeconds = false;
         public boolean showWarnings = false;
+        public boolean showMoon = true;
 
         public boolean[] showFields = null;
         public boolean showActual = true;
@@ -484,6 +489,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             supportsGoldBlue = data0.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);
             showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
             showWarnings = AppSettings.loadShowWarningsPref(context);
+            showMoon = AppSettings.loadShowMoonPref(context);
 
             showFields = AppSettings.loadShowFieldsPref(context);
             showActual = showFields[AppSettings.FIELD_ACTUAL];

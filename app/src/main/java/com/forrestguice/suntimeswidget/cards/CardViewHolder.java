@@ -41,6 +41,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -257,11 +258,21 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         }
 
         // moon fields
-        sunsetHeader.measure(0, 0);      // adjust moonrise/moonset columns to match width of sunrise/sunset columns
-        int sunsetHeaderWidth = sunsetHeader.getMeasuredWidth();
-        moonrise.adjustColumnWidth(context, sunsetHeaderWidth);
-        moonphase.updateViews(context, moon);
-        moonrise.updateViews(context, moon);
+        boolean supportsMoon = (moon != null);
+        int visibility = (supportsMoon && options.showMoon ? View.VISIBLE : View.GONE);
+        moonClickArea.setVisibility(visibility);
+        moonlabel.setVisibility(visibility);
+        moonrise.setVisibility(visibility);
+        moonphase.setVisibility(visibility);
+
+        if (options.showMoon)
+        {
+            sunsetHeader.measure(0, 0);      // adjust moonrise/moonset columns to match width of sunrise/sunset columns
+            int sunsetHeaderWidth = sunsetHeader.getMeasuredWidth();
+            moonrise.adjustColumnWidth(context, sunsetHeaderWidth);
+            moonphase.updateViews(context, moon);
+            moonrise.updateViews(context, moon);
+        }
     }
 
     protected void themeCardViews(Context context, CardAdapter.CardAdapterOptions options, int position)
@@ -272,9 +283,9 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         ImageViewCompat.setImageTintList(btn_flipperNext, SuntimesUtils.colorStateList(options.color_enabled, options.color_disabled, options.color_pressed));
         ImageViewCompat.setImageTintList(btn_flipperPrev, SuntimesUtils.colorStateList(options.color_enabled, options.color_disabled, options.color_pressed));
 
-        int offset = Math.abs(position - CardAdapter.TODAY_POSITION);
-        int centerEnabledColor = (offset >= 2 ? options.color_accent : options.color_enabled);
-        ImageViewCompat.setImageTintList(btn_flipperCenter, SuntimesUtils.colorStateList(centerEnabledColor, options.color_disabled, options.color_pressed));
+        //int offset = Math.abs(position - CardAdapter.TODAY_POSITION);
+        //int centerEnabledColor = (offset >= 2 ? options.color_warning : options.color_enabled);
+        ImageViewCompat.setImageTintList(btn_flipperCenter, SuntimesUtils.colorStateList(options.color_enabled, options.color_disabled, options.color_pressed));
     }
 
     protected void themeCardViews(Context context, @NonNull SuntimesTheme theme, CardAdapter.CardAdapterOptions options)
@@ -485,4 +496,5 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         }
 
     }
+
 }

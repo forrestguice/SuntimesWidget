@@ -195,8 +195,6 @@ public class SuntimesActivity extends AppCompatActivity
     private SuntimesWarning dateWarning;
     private List<SuntimesWarning> warnings;
 
-    private boolean showSeconds = WidgetSettings.PREF_DEF_GENERAL_SHOWSECONDS;
-    private boolean showMoon = AppSettings.PREF_DEF_UI_SHOWMOON;
     private boolean verboseAccessibility = AppSettings.PREF_DEF_ACCESSIBILITY_VERBOSE;
 
     public SuntimesActivity()
@@ -1451,7 +1449,7 @@ public class SuntimesActivity extends AppCompatActivity
         card_adapter.initData(context);
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> cardData = card_adapter.initData(context, CardAdapter.TODAY_POSITION);
         dataset = cardData.first;
-        dataset_moon =  cardData.second;
+        dataset_moon = cardData.second;
 
         EquinoxView.EquinoxViewAdapter card_adapter1 = (card_equinoxSolstice != null ? card_equinoxSolstice.getAdapter() : null);
         dataset_equinox = (card_adapter1 != null ? card_adapter1.initData(context) : null);
@@ -1499,12 +1497,6 @@ public class SuntimesActivity extends AppCompatActivity
             actionBar.setTitle(locationTitle);
             actionBar.setSubtitle(locationSubtitle);
         }
-
-        boolean supportsMoon = (dataset_moon != null);
-        showMoon = supportsMoon && AppSettings.loadShowMoonPref(context);
-        showMoonrise(showMoon);
-
-        showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
 
         //
         // equinox and solstice
@@ -1927,25 +1919,6 @@ public class SuntimesActivity extends AppCompatActivity
         // TODO
         //layout_daylength.setVisibility( (value ? View.VISIBLE : View.INVISIBLE) );
         //layout_daylength2.setVisibility( (value ? View.VISIBLE : View.INVISIBLE) );
-    }
-
-    /**
-     * @param value
-     */
-    protected void showMoonrise( boolean value )
-    {
-        int visibility = (value ? View.VISIBLE : View.GONE);
-
-        // TODO
-        /**moonClickArea.setVisibility(visibility);
-        moonlabel.setVisibility(visibility);
-        moonrise.setVisibility(visibility);
-        moonphase.setVisibility(visibility);
-
-        moonClickArea2.setVisibility(visibility);
-        moonlabel2.setVisibility(visibility);
-        moonrise2.setVisibility(visibility);
-        moonphase2.setVisibility(visibility);*/
     }
 
     /**
