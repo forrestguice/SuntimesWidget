@@ -1680,14 +1680,14 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onDateClick(CardAdapter adapter, int position)
         {
-            AppSettings.DateTapAction action = AppSettings.loadDateTapActionPref(SuntimesActivity.this);
-            onDateTapAction(action, position != CardAdapter.TODAY_POSITION);
+            AppSettings.TapAction action = AppSettings.loadDateTapActionPref(SuntimesActivity.this);
+            onTapAction(action, position != CardAdapter.TODAY_POSITION);
         }
         @Override
         public boolean onDateLongClick(CardAdapter adapter, int position)
         {
-            AppSettings.DateTapAction action = AppSettings.loadDateTapAction1Pref(SuntimesActivity.this);
-            onDateTapAction(action, position != CardAdapter.TODAY_POSITION);
+            AppSettings.TapAction action = AppSettings.loadDateTapAction1Pref(SuntimesActivity.this);
+            onTapAction(action, position != CardAdapter.TODAY_POSITION);
             return true;
         }
 
@@ -1810,29 +1810,15 @@ public class SuntimesActivity extends AppCompatActivity
                         else notes.showPrevNote();   // swipe left: prev
 
                     } else {                    // click: user defined
-                        AppSettings.ClockTapAction action = AppSettings.loadNoteTapActionPref(SuntimesActivity.this);
+                        AppSettings.TapAction action = AppSettings.loadNoteTapActionPref(SuntimesActivity.this);
                         switch (action)
                         {
-                            case NOTHING:
-                                break;
-
-                            case TIMEZONE:
-                                configTimeZone();
-                                break;
-
                             case ALARM:
                                 scheduleAlarmFromNote();
                                 break;
 
-                            case PREV_NOTE:
-                                setUserSwappedCard(false, "noteTouchListener (tap prev)");
-                                notes.showPrevNote();
-                                break;
-
-                            case NEXT_NOTE:
                             default:
-                                setUserSwappedCard(false, "noteTouchListener (tap next)");
-                                notes.showNextNote();
+                                onTapAction(action, false);
                                 break;
                         }
                     }
@@ -1865,41 +1851,64 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(View view)
         {
-            AppSettings.ClockTapAction action = AppSettings.loadClockTapActionPref(SuntimesActivity.this);
-            if (action == AppSettings.ClockTapAction.NOTHING)
-            {
-                return;
-            }
-
-            if (action == AppSettings.ClockTapAction.ALARM)
-            {
-                scheduleAlarm();
-                return;
-            }
-
-            if (action == AppSettings.ClockTapAction.TIMEZONE)
-            {
-                configTimeZone();
-                return;
-            }
-
-            if (action == AppSettings.ClockTapAction.NEXT_NOTE)
-            {
-                setUserSwappedCard( false, "onClockClick (nextNote)" );
-                notes.showNextNote();
-                return;
-            }
-
-            if (action == AppSettings.ClockTapAction.PREV_NOTE)
-            {
-                setUserSwappedCard( false, "onClockClick (prevNote)" );
-                notes.showPrevNote();
-                return;
-            }
-
-            Log.w("SuntimesActivity", "Unrecognized ClockTapAction (so doing nothing)" );
+            AppSettings.TapAction action = AppSettings.loadClockTapActionPref(SuntimesActivity.this);
+            onTapAction(action, false);
         }
     };
+
+    private void onTapAction( AppSettings.TapAction action, boolean tomorrow )
+    {
+        switch (action)
+        {
+            case NOTHING:
+                break;
+
+            case ALARM:
+                scheduleAlarm();
+                break;
+
+            case TIMEZONE:
+                configTimeZone();
+                break;
+
+            case NEXT_NOTE:
+                setUserSwappedCard( false, "onClockClick (nextNote)" );
+                notes.showNextNote();
+                break;
+
+            case PREV_NOTE:
+                setUserSwappedCard( false, "onClockClick (prevNote)" );
+                notes.showPrevNote();
+                break;
+
+            case RESET_NOTE:
+                setUserSwappedCard(false, "onClockClick (resetNote)");
+                notes.resetNoteIndex();
+                NoteData note = notes.getNote();
+                highlightTimeField1(note.noteMode);
+                break;
+
+            case CONFIG_DATE:
+                configDate();
+                break;
+
+            case SHOW_CALENDAR:
+                showCalendar(tomorrow);
+                break;
+
+            case SWAP_CARD:
+            default:
+                if (tomorrow) {
+                    scrollTo(CardAdapter.TODAY_POSITION);
+                    setUserSwappedCard( true, "onDateTapClick (prevCard)" );
+                } else {
+                    scrollTo(CardAdapter.TODAY_POSITION + 1);
+                    setUserSwappedCard( true, "onDateTapClick (nextCard)" );
+                }
+                break;
+        }
+    }
+
 
     /**
      * Toggle day length visibility.
@@ -1989,34 +1998,6 @@ public class SuntimesActivity extends AppCompatActivity
         if (layout_datasource != null)
         {
             layout_datasource.setVisibility((value ? View.VISIBLE : View.GONE));
-        }
-    }
-
-    private void onDateTapAction( AppSettings.DateTapAction action, boolean tomorrow )
-    {
-        switch (action)
-        {
-            case NOTHING:
-                break;
-
-            case CONFIG_DATE:
-                configDate();
-                break;
-
-            case SHOW_CALENDAR:
-                showCalendar(tomorrow);
-                break;
-
-            case SWAP_CARD:
-            default:
-                if (tomorrow) {
-                    scrollTo(CardAdapter.TODAY_POSITION);
-                    setUserSwappedCard( true, "onDateTapClick (prevCard)" );
-                } else {
-                    scrollTo(CardAdapter.TODAY_POSITION + 1);
-                    setUserSwappedCard( true, "onDateTapClick (nextCard)" );
-                }
-                break;
         }
     }
 

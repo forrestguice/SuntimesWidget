@@ -67,16 +67,16 @@ public class AppSettings
     public static final String PREF_DEF_LOCALE = "en";
 
     public static final String PREF_KEY_UI_DATETAPACTION = "app_ui_datetapaction";
-    public static final DateTapAction PREF_DEF_UI_DATETAPACTION = DateTapAction.CONFIG_DATE;
+    public static final TapAction PREF_DEF_UI_DATETAPACTION = TapAction.CONFIG_DATE;
 
     public static final String PREF_KEY_UI_DATETAPACTION1 = "app_ui_datetapaction1";
-    public static final DateTapAction PREF_DEF_UI_DATETAPACTION1 = DateTapAction.SHOW_CALENDAR;
+    public static final TapAction PREF_DEF_UI_DATETAPACTION1 = TapAction.SHOW_CALENDAR;
 
     public static final String PREF_KEY_UI_CLOCKTAPACTION = "app_ui_clocktapaction";
-    public static final ClockTapAction PREF_DEF_UI_CLOCKTAPACTION = ClockTapAction.ALARM;
+    public static final TapAction PREF_DEF_UI_CLOCKTAPACTION = TapAction.ALARM;
 
     public static final String PREF_KEY_UI_NOTETAPACTION = "app_ui_notetapaction";
-    public static final ClockTapAction PREF_DEF_UI_NOTETAPACTION = ClockTapAction.NEXT_NOTE;
+    public static final TapAction PREF_DEF_UI_NOTETAPACTION = TapAction.NEXT_NOTE;
 
     public static final String PREF_KEY_UI_SHOWWARNINGS = "app_ui_showwarnings";
     public static final boolean PREF_DEF_UI_SHOWWARNINGS = true;
@@ -293,62 +293,23 @@ public class AppSettings
     }
 
     /**
-     * Actions that can be performed when the clock is clicked.
+     * Actions that can be performed when a UI element is clicked.
      */
-    public static enum ClockTapAction
-    {
-        NOTHING("Do Nothing"),
-        ALARM("Set an Alarm"),
-        TIMEZONE("Set Time Zone"),
-        NEXT_NOTE("Show next note"),
-        PREV_NOTE("Show previous note");
-
-        private String displayString;
-
-        private ClockTapAction(String displayString)
-        {
-            this.displayString = displayString;
-        }
-
-        public String toString()
-        {
-            return displayString;
-        }
-
-        public String getDisplayString()
-        {
-            return displayString;
-        }
-
-        public void setDisplayString( String displayString )
-        {
-            this.displayString = displayString;
-        }
-
-        public static void initDisplayStrings( Context context )
-        {
-            String[] labels = context.getResources().getStringArray(R.array.clockTapActions_display);
-            NOTHING.setDisplayString(labels[0]);
-            ALARM.setDisplayString(labels[1]);
-            TIMEZONE.setDisplayString(labels[2]);
-            NEXT_NOTE.setDisplayString(labels[3]);
-            PREV_NOTE.setDisplayString(labels[4]);
-        }
-    }
-
-    /**
-     * Actions that can be performed when the date field is clicked.
-     */
-    public static enum DateTapAction
+    public static enum TapAction
     {
         NOTHING("Do Nothing"),
         SWAP_CARD("Swap Cards"),
         SHOW_CALENDAR("Show Calendar"),
-        CONFIG_DATE("Set Custom Date");
+        CONFIG_DATE("Set Custom Date"),
+        ALARM("Set an Alarm"),
+        TIMEZONE("Set Time Zone"),
+        NEXT_NOTE("Show next note"),
+        PREV_NOTE("Show previous note"),
+        RESET_NOTE("Reset note");
 
         private String displayString;
 
-        private DateTapAction(String displayString)
+        private TapAction(String displayString)
         {
             this.displayString = displayString;
         }
@@ -370,11 +331,13 @@ public class AppSettings
 
         public static void initDisplayStrings( Context context )
         {
-            String[] labels = context.getResources().getStringArray(R.array.dateTapActions_display);
-            NOTHING.setDisplayString(labels[0]);
-            SWAP_CARD.setDisplayString(labels[1]);
-            SHOW_CALENDAR.setDisplayString(labels[2]);
-            CONFIG_DATE.setDisplayString(labels[3]);
+            TapAction[] actions = TapAction.values();
+            String[] labels = context.getResources().getStringArray(R.array.clockTapActions_display);
+            for (int i=0; i<labels.length; i++) {
+                if (i < actions.length) {
+                    actions[i].setDisplayString(labels[i]);
+                }
+            }
         }
     }
 
@@ -484,14 +447,14 @@ public class AppSettings
     /**
      * Preference: the action that is performed when the clock ui is clicked/tapped
      */
-    public static ClockTapAction loadClockTapActionPref( Context context )
+    public static TapAction loadClockTapActionPref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         String modeString = pref.getString(PREF_KEY_UI_CLOCKTAPACTION, PREF_DEF_UI_CLOCKTAPACTION.name());
 
-        ClockTapAction actionMode;
+        TapAction actionMode;
         try {
-            actionMode = ClockTapAction.valueOf(modeString);
+            actionMode = TapAction.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             actionMode = PREF_DEF_UI_CLOCKTAPACTION;
@@ -502,14 +465,14 @@ public class AppSettings
     /**
      * Preference: the action that is performed when the date field is clicked/tapped
      */
-    public static DateTapAction loadDateTapActionPref( Context context )
+    public static TapAction loadDateTapActionPref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         String modeString = pref.getString(PREF_KEY_UI_DATETAPACTION, PREF_DEF_UI_DATETAPACTION.name());
 
-        DateTapAction actionMode;
+        TapAction actionMode;
         try {
-            actionMode = DateTapAction.valueOf(modeString);
+            actionMode = TapAction.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             actionMode = PREF_DEF_UI_DATETAPACTION;
@@ -520,14 +483,14 @@ public class AppSettings
     /**
      * Preference: the action that is performed when the date field is long-clicked
      */
-    public static DateTapAction loadDateTapAction1Pref( Context context )
+    public static TapAction loadDateTapAction1Pref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         String modeString = pref.getString(PREF_KEY_UI_DATETAPACTION1, PREF_DEF_UI_DATETAPACTION1.name());
 
-        DateTapAction actionMode;
+        TapAction actionMode;
         try {
-            actionMode = DateTapAction.valueOf(modeString);
+            actionMode = TapAction.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             actionMode = PREF_DEF_UI_DATETAPACTION1;
@@ -538,14 +501,14 @@ public class AppSettings
     /**
      * Preference: the action that is performed when the note ui is clicked/tapped
      */
-    public static ClockTapAction loadNoteTapActionPref( Context context )
+    public static TapAction loadNoteTapActionPref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         String modeString = pref.getString(PREF_KEY_UI_NOTETAPACTION, PREF_DEF_UI_NOTETAPACTION.name());
-        ClockTapAction actionMode;
+        TapAction actionMode;
 
         try {
-            actionMode = ClockTapAction.valueOf(modeString);
+            actionMode = TapAction.valueOf(modeString);
 
         } catch (IllegalArgumentException e) {
             actionMode = PREF_DEF_UI_NOTETAPACTION;
@@ -688,7 +651,7 @@ public class AppSettings
     public static void initDisplayStrings( Context context )
     {
         LocaleMode.initDisplayStrings(context);
-        ClockTapAction.initDisplayStrings(context);
+        TapAction.initDisplayStrings(context);
     }
 
     /**
