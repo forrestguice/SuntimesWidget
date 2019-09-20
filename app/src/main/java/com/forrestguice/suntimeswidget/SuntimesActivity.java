@@ -178,9 +178,6 @@ public class SuntimesActivity extends AppCompatActivity
     private EquinoxView card_equinoxSolstice;
     private View equinoxLayout;
 
-    private LightMapView lightmap;
-    private View lightmapLayout;
-
     private TextView txt_datasource;
     private View layout_datasource;
     private AppCompatCheckBox check_altitude;
@@ -709,7 +706,6 @@ public class SuntimesActivity extends AppCompatActivity
             color_textTimeDelta = appThemeOverride.getTimeColor();
             card_adapter.setThemeOverride(appThemeOverride);
             card_equinoxSolstice.themeViews(context, appThemeOverride);
-            lightmap.themeViews(context, appThemeOverride);
         }
     }
 
@@ -724,7 +720,6 @@ public class SuntimesActivity extends AppCompatActivity
         initNoteViews(context);
         initCardViews(context);
         initEquinoxViews(context);
-        initLightMap(context);
         initMisc(context);
     }
 
@@ -757,31 +752,6 @@ public class SuntimesActivity extends AppCompatActivity
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
         actionBar = getSupportActionBar();
-    }
-
-    private void initLightMap(Context context)
-    {
-        lightmap = (LightMapView) findViewById(R.id.info_time_lightmap);
-        lightmapLayout = findViewById(R.id.info_time_lightmap_layout);
-
-        lightmapLayout.setClickable(true);
-        lightmapLayout.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                showLightMapDialog();
-            }
-        });
-        lightmapLayout.setOnLongClickListener( new View.OnLongClickListener()
-        {
-            @Override
-            public boolean onLongClick(View view)
-            {
-                showLightMapDialog();
-                return true;
-            }
-        });
     }
 
     private void initMisc(final Context context)
@@ -1583,12 +1553,6 @@ public class SuntimesActivity extends AppCompatActivity
             layout_altitude.setVisibility(supportsAltitude ? View.VISIBLE : View.INVISIBLE);
         }
         showDatasourceUI(AppSettings.loadDatasourceUIPref(this));
-
-        // "light map"
-        boolean enableLightMap = AppSettings.loadShowLightmapPref(this);
-        showLightMap(enableLightMap);
-        lightmap.updateViews(enableLightMap ? dataset : null);
-
         showDayLength(dataset.isCalculated());
         showNotes(dataset.isCalculated());
         showWarnings();
@@ -1706,7 +1670,9 @@ public class SuntimesActivity extends AppCompatActivity
         txt_time.setText(timeText.getValue());
         txt_time_suffix.setText(timeText.getSuffix());
         notes.updateNote(context, now);
-        lightmap.updateViews(false);
+
+        // TODO: commented during refactor ..restore this update
+        //lightmap.updateViews(false);
     }
 
     private CardAdapter.CardAdapterListener cardAdapterListener = new CardAdapter.CardAdapterListener()
@@ -1767,6 +1733,16 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public boolean onMoonHeaderLongClick(CardAdapter adapter, int position) {
             showMoonDialog();
+            return true;
+        }
+
+        @Override
+        public void onLightmapClick(CardAdapter adapter, int position) {
+            showLightMapDialog();
+        }
+        @Override
+        public boolean onLightmapLongClick(CardAdapter adapter, int position) {
+            showLightMapDialog();
             return true;
         }
 
@@ -1943,15 +1919,6 @@ public class SuntimesActivity extends AppCompatActivity
     protected void showNotes( boolean value )
     {
         note_flipper.setVisibility( (value ? View.VISIBLE : View.INVISIBLE) );
-    }
-
-    /**
-     * Toggle lightmap visibility.
-     * @param value true show lightmap ui, false hide lightmap ui
-     */
-    protected void showLightMap( boolean value )
-    {
-        lightmapLayout.setVisibility((value ? View.VISIBLE : View.GONE));
     }
 
     /**

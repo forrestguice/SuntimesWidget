@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/info_time_all_today"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <!-- card scroller -->
+    <com.forrestguice.suntimeswidget.SuntimesCardScroll android:id="@+id/cardContent"
+                                                        android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout style="@style/SunsetTimeCard"
+                android:layout_width="match_parent"
+                android:paddingBottom="8dp" android:paddingLeft="10dp" android:paddingRight="10dp" android:paddingTop="4dp">
+
+                <!-- rise/set table -->
+                <include layout="@layout/info_time_all" />
+
+                <!-- day length -->
+                <LinearLayout android:id="@+id/layout_daylength"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="7dp">
+
+                    <include layout="@layout/info_time_daylength" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Lightmap -->
+            <LinearLayout
+                android:id="@+id/info_time_lightmap_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lightmap_clickable_height"
+                android:layout_marginTop="6dp" android:layout_marginBottom="-4dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true" android:focusable="true"
+                android:orientation="vertical">
+
+                <com.forrestguice.suntimeswidget.LightMapView
+                    android:id="@+id/info_time_lightmap"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/lightmap_height"
+                    android:layout_gravity="top"
+                    android:contentDescription="@string/configAction_sunDialog" />
+
+            </LinearLayout>
+
+            <View android:id="@+id/info_time_lightmap_spacer"
+                android:layout_width="wrap_content"
+                android:layout_height="6dp" android:background="@null" />
+
+        </LinearLayout>
+
+    </com.forrestguice.suntimeswidget.SuntimesCardScroll>
+
+    <!-- next/prev buttons -->
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:orientation="horizontal" android:layout_gravity="end"
+                  android:layout_alignBottom="@id/cardContent"
+                  android:layout_alignRight="@id/cardContent" android:layout_alignEnd="@id/cardContent" android:layout_marginBottom="32dp">
+
+        <include layout="@layout/info_time_nextprev" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -34,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.LightMapView;
 import com.forrestguice.suntimeswidget.MoonPhaseView;
 import com.forrestguice.suntimeswidget.MoonRiseSetView;
 import com.forrestguice.suntimeswidget.R;
@@ -84,6 +85,9 @@ public class CardViewHolder extends RecyclerView.ViewHolder
     public MoonPhaseView moonphase;
     public MoonRiseSetView moonrise;
     public View moonClickArea;
+
+    public LightMapView lightmap;
+    public View lightmapLayout;
 
     public int position = RecyclerView.NO_POSITION;
 
@@ -139,6 +143,11 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         timeFields.put(SolarEvents.EVENING_BLUE4, row_blue4.getField(1));
         timeFields.put(SolarEvents.MOONRISE, moonrise.getTimeViews(SolarEvents.MOONRISE)[0]);
         timeFields.put(SolarEvents.MOONSET, moonrise.getTimeViews(SolarEvents.MOONSET)[0]);
+
+        lightmap = (LightMapView) view.findViewById(R.id.info_time_lightmap);
+
+        lightmapLayout = view.findViewById(R.id.info_time_lightmap_layout);
+        lightmapLayout.setClickable(true);
 
         btn_flipperNext = (ImageButton)view.findViewById(R.id.info_time_nextbtn);
         btn_flipperPrev = (ImageButton)view.findViewById(R.id.info_time_prevbtn);
@@ -273,6 +282,10 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             moonphase.updateViews(context, moon);
             moonrise.updateViews(context, moon);
         }
+
+        // lightmap
+        lightmapLayout.setVisibility(options.showLightmap ? View.VISIBLE : View.GONE);
+        lightmap.updateViews(options.showLightmap ? sun : null);
     }
 
     protected void themeCardViews(Context context, CardAdapter.CardAdapterOptions options, int position)
@@ -341,6 +354,8 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         moonrise.themeViews(context, theme);
         moonphase.themeViews(context, theme);
         moonlabel.setTextColor(labelColor);
+
+        lightmap.themeViews(context, theme);
     }
 
     /**

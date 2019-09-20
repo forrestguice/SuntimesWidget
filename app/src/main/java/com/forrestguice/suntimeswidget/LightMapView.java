@@ -251,6 +251,8 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 return null;
             }
 
+            //long bench_start = System.nanoTime();
+
             this.colors = colors;
             Bitmap b = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
             Canvas c = new Canvas(b);
@@ -342,6 +344,8 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 }
             }
 
+            //long bench_end = System.nanoTime();
+            //Log.d("BENCH", "make lightmap :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
             return b;
         }
 

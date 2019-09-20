@@ -169,7 +169,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     public CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         LayoutInflater layout = LayoutInflater.from(parent.getContext());
-        View view = layout.inflate(R.layout.info_time_card1, parent, false);
+        View view = layout.inflate(R.layout.info_time_card1b, parent, false);
         return new CardViewHolder(view);
     }
 
@@ -265,6 +265,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         holder.sunsetHeader.setOnLongClickListener(onSunsetHeaderLongClick(position));
         holder.moonClickArea.setOnClickListener(onMoonHeaderClick(position));
         holder.moonClickArea.setOnLongClickListener(onMoonHeaderLongClick(position));
+        holder.lightmapLayout.setOnClickListener(onLightmapClick(position));
+        holder.lightmapLayout.setOnLongClickListener(onLightmapLongClick(position));
         holder.btn_flipperNext.setOnClickListener(onNextClick(position));
         holder.btn_flipperPrev.setOnClickListener(onPrevClick(position));
         holder.btn_flipperCenter.setOnClickListener(onCenterClick(position));
@@ -280,6 +282,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         holder.sunsetHeader.setOnLongClickListener(null);
         holder.moonClickArea.setOnClickListener(null);
         holder.moonClickArea.setOnLongClickListener(null);
+        holder.lightmapLayout.setOnClickListener(null);
+        holder.lightmapLayout.setOnLongClickListener(null);
         holder.btn_flipperNext.setOnClickListener(null);
         holder.btn_flipperPrev.setOnClickListener(null);
         holder.btn_flipperCenter.setOnClickListener(null);
@@ -352,6 +356,23 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             }
         };
     }
+    private View.OnClickListener onLightmapClick(final int position) {
+        return  new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapterListener.onLightmapClick(CardAdapter.this, position);
+            }
+        };
+    }
+    private View.OnLongClickListener onLightmapLongClick(final int position)
+    {
+        return new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return adapterListener.onLightmapLongClick(CardAdapter.this, position);
+            }
+        };
+    }
     private View.OnClickListener onNextClick(final int position) {
         return  new View.OnClickListener() {
             @Override
@@ -402,6 +423,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
         public void onMoonHeaderClick(CardAdapter adapter, int position) {}
         public boolean onMoonHeaderLongClick(CardAdapter adapter, int position)
+        {
+            return false;
+        }
+
+        public void onLightmapClick(CardAdapter adapter, int position) {}
+        public boolean onLightmapLongClick(CardAdapter adapter, int position)
         {
             return false;
         }
@@ -458,8 +485,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
         public boolean supportsGoldBlue = false;
         public boolean showSeconds = false;
-        public boolean showWarnings = false;
-        public boolean showMoon = true;
+        public boolean showWarnings = AppSettings.PREF_DEF_UI_SHOWWARNINGS;
+        public boolean showMoon = AppSettings.PREF_DEF_UI_SHOWMOON;
+        public boolean showLightmap = AppSettings.PREF_DEF_UI_SHOWLIGHTMAP;
 
         public boolean[] showFields = null;
         public boolean showActual = true;
@@ -490,6 +518,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
             showWarnings = AppSettings.loadShowWarningsPref(context);
             showMoon = AppSettings.loadShowMoonPref(context);
+            showLightmap = AppSettings.loadShowLightmapPref(context);
 
             showFields = AppSettings.loadShowFieldsPref(context);
             showActual = showFields[AppSettings.FIELD_ACTUAL];
