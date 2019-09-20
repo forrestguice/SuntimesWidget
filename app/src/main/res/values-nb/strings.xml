@@ -751,31 +751,14 @@
         <item>@string/appThemes_darkTheme</item>
         <item>Lyst tema / Mørkt tema (nattmodus)</item>
     </string-array>
-    
-    <!-- App Setting: Date "on tap" action -->
-    <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
-        <item>Ikke gjør noe</item>
-        <item>Bytt visning (i dag / i morgen)</item>
-        <item>Vis kalender-app</item>
-        <item>Still inn dato</item>
-    </string-array>
 
-    <!-- App Setting: Clock UI "on tap" action -->
-    <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
-        <item>Ikke gjør noe</item>
-        <item>@string/configAction_setAlarm</item>
-        <item>@string/configAction_setTimeZone</item>
-        <item>Vis neste notis</item>
-        <item>Vis forrige notis</item>
-    </string-array>
-
-    <!-- App Setting: Note UI "on tap" action -->
-    <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
-        <item>Ikke gjør noe</item>
-        <item>Still inn alarm for notis</item>
-        <item>Vis neste notis</item>
-        <item>Vis forrige notis</item>
-    </string-array>
+    <string name="configAction_doNothing">Ikke gjør noe</string>
+    <string name="configAction_nextNote">Vis neste notis</string>
+    <string name="configAction_prevNote">Vis forrige notis</string>
+    <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
+    <string name="configAction_showCalendar">Vis kalender-app</string>
+    <string name="configAction_swapCards">Bytt visning (i dag / i morgen)</string>
+    <string name="configAction_setAlarmForNote">Still inn alarm for notis</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">by offset</string>

@@ -757,30 +757,15 @@
         <item>@string/trackingMode_closest</item>
         <item>@string/trackingMode_soonest</item>
     </string-array>
-    
-    <string-array name="dateTapActions_display"> 
-        <item>No hacer nada</item>
-        <item>Intercambiar tarjetas (hoy/mañana)</item>
-        <item>Muestra aplicación de calendario</item>
-        <item>Poner fecha personalizada</item>
-    </string-array>
 
-    
-    <string-array name="clockTapActions_display"> 
-        <item>No hacer nada</item>
-        <item>Poner una alarma</item>
-        <item>@string/configAction_setTimeZone</item>
-        <item>Mostrar nota siguiente</item>
-        <item>Mostrar nota anterior</item>
-    </string-array>
 
-    
-    <string-array name="noteTapActions_display">  
-        <item>No hacer nada</item>
-        <item>Añadir alarma a la nota</item>
-        <item>Mostrar nota siguiente</item>
-        <item>Mostrar nota anterior</item>
-    </string-array>
+    <string name="configAction_doNothing">No hacer nada</string>
+    <string name="configAction_nextNote">Mostrar nota siguiente</string>
+    <string name="configAction_prevNote">Mostrar nota anterior</string>
+    <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
+    <string name="configAction_showCalendar">Muestra aplicación de calendario</string>
+    <string name="configAction_swapCards">Intercambiar tarjetas (hoy/mañana)</string>
+    <string name="configAction_setAlarmForNote">Añadir alarma a la nota</string>
 
     
     <string name="timezone_sort_byOffset">por desfase</string>

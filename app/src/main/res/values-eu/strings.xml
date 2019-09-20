@@ -765,30 +765,13 @@
         <item>@string/trackingMode_soonest</item>
     </string-array>
 
-    <!-- App Setting: Date "on tap" action -->
-    <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
-        <item>Ez egin ezer</item>
-        <item>Fitxak alderantzikatu (gaur/bihar)</item>
-        <item>Egutegiaren aplikazioa erakutsi</item>
-        <item>Data pertsonalizatua ezarri</item>
-    </string-array>
-
-    <!-- App Setting: Clock UI "on tap" action -->
-    <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
-        <item>Ez egin ezer</item>
-        <item>@string/configAction_setAlarm</item>
-        <item>@string/configAction_setTimeZone</item>
-        <item>Hurrengo oharra erakutsi</item>
-        <item>Aurreko oharra erakutsi</item>
-    </string-array>
-
-    <!-- App Setting: Note UI "on tap" action -->
-    <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
-        <item>Ez egin ezer</item>
-        <item>Alarma ezarri oharrarentzako</item>
-        <item>Hurrengo oharra erakutsi</item>
-        <item>Aurreko oharra erakutsi</item>
-    </string-array>
+    <string name="configAction_doNothing">Ez egin ezer</string>
+    <string name="configAction_nextNote">Hurrengo oharra erakutsi</string>
+    <string name="configAction_prevNote">Aurreko oharra erakutsi</string>
+    <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
+    <string name="configAction_showCalendar">Egutegiaren aplikazioa erakutsi</string>
+    <string name="configAction_swapCards">Fitxak alderantzikatu (gaur/bihar)</string>
+    <string name="configAction_setAlarmForNote">Alarma ezarri oharrarentzako</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">konpentsazioaren arabera</string>

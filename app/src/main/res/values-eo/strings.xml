@@ -739,30 +739,13 @@
         <item>Hela (tage) / malhela (nokte)</item>
     </string-array>
 
-    <!-- App Setting: Date "on tap" action -->
-    <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
-        <item>Fari nenion</item>
-        <item>Baskuli langetojn (hodiaŭ/morgaŭ)</item>
-        <item>Montri aplikaĵon de kalendaro</item>
-        <item>Agordi propran daton</item>
-    </string-array>
-
-    <!-- App Setting: Clock UI "on tap" action -->
-    <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
-        <item>Fari nenion</item>
-        <item>Agordi averton</item>
-        <item>@string/configAction_setTimeZone</item>
-        <item>Montri sekvan noton</item>
-        <item>Montri antaŭan noton</item>
-    </string-array>
-
-    <!-- App Setting: Note UI "on tap" action -->
-    <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
-        <item>Fari nenion</item>
-        <item>Agordi averton pri noto</item>
-        <item>Montri sekvan noton</item>
-        <item>Montri antaŭan noton</item>
-    </string-array>
+    <string name="configAction_doNothing">Fari nenion</string>
+    <string name="configAction_nextNote">Montri sekvan noton</string>
+    <string name="configAction_prevNote">Montri antaŭan noton</string>
+    <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
+    <string name="configAction_showCalendar">Montri aplikaĵon de kalendaro</string>
+    <string name="configAction_swapCards">Baskuli langetojn (hodiaŭ/morgaŭ)</string>
+    <string name="configAction_setAlarmForNote">Agordi averton pri noto</string>
 
     <!-- App Setting: GPS fix time limit -->
     <string name="configLabel_getFix_maxElapse">Tempolimo de GPS</string>

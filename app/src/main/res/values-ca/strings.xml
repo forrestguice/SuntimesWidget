@@ -757,30 +757,14 @@
         <item>@string/trackingMode_closest</item>
         <item>@string/trackingMode_soonest</item>
     </string-array>
-    <!-- App Setting: Date "on tap" action -->
-    <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
-        <item>No fer res</item>
-        <item>Intercanviar targetes (avui/demà)</item>
-        <item>Mostra aplicació de calendari</item>
-        <item>Posar data personalitzada</item>
-    </string-array>
 
-    <!-- App Setting: Clock UI "on tap" action -->
-    <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
-        <item>No fer res</item>
-        <item>Posar una alarma</item>
-        <item>@string/configAction_setTimeZone</item>
-        <item>Mostrar nota següent</item>
-        <item>Mostrar nota anterior</item>
-    </string-array>
-
-    <!-- App Setting: Note UI "on tap" action -->
-    <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
-        <item>No fer res</item>
-        <item>Posar una alarma a la nota</item>
-        <item>Mostrar nota següent</item>
-        <item>Mostrar nota anterior</item>
-    </string-array>
+    <string name="configAction_doNothing">No fer res</string>
+    <string name="configAction_nextNote">Mostrar nota següent</string>
+    <string name="configAction_prevNote">Mostrar nota anterior</string>
+    <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
+    <string name="configAction_showCalendar">Mostra aplicació de calendari</string>
+    <string name="configAction_swapCards">Intercanviar targetes (avui/demà)</string>
+    <string name="configAction_setAlarmForNote">Posar una alarma a la nota</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">per desfase</string>

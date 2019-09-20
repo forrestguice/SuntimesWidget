@@ -741,30 +741,13 @@
         <item>@string/timeFormatMode_24hr</item>
     </string-array>
 
-    <!-- App Setting: Date "on tap" action -->
-    <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
-        <item>Semmit se tesz</item>
-        <item>Vált (ma/holnap között)</item>
-        <item>Mutassa a naptárat</item>
-        <item>Tetszőleges dátum beállítása</item>
-    </string-array>
-
-    <!-- App Setting: Clock UI "on tap" action -->
-    <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
-        <item>Semmit se tesz</item>
-        <item>Emlékeztető beállítása</item>
-        <item>@string/configAction_setTimeZone</item>
-        <item>Mutasd a következő bejegyzést</item>
-        <item>Mutasd az előző bejegyzést</item>
-    </string-array>
-
-    <!-- App Setting: Note UI "on tap" action -->
-    <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
-        <item>Semmit se tesz</item>
-        <item>Emlékeztető beállítása a bejegyzéshez</item>
-        <item>Mutasd a következő bejegyzést</item>
-        <item>Mutasd az előző bejegyzést</item>
-    </string-array>
+    <string name="configAction_doNothing">Semmit se tesz</string>
+    <string name="configAction_nextNote">Mutasd a következő bejegyzést</string>
+    <string name="configAction_prevNote">Mutasd az előző bejegyzést</string>
+    <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
+    <string name="configAction_showCalendar">Mutassa a naptárat</string>
+    <string name="configAction_swapCards">Vált (ma/holnap között)</string>
+    <string name="configAction_setAlarmForNote">Emlékeztető beállítása a bejegyzéshez</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">Időeltolódás szerint</string>

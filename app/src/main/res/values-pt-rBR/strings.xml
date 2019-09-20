@@ -808,30 +808,13 @@
         <item>@string/trackingMode_soonest</item>
     </string-array>
 
-    <!-- App Setting: Date "on tap" action -->
-    <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
-        <item>Fazer nada</item>
-        <item>Inverter (hoje/amanhã)</item>
-        <item>Mostrar app de calendário</item>
-        <item>Definir data personalizada</item>
-    </string-array>
-
-    <!-- App Setting: Clock UI "on tap" action -->
-    <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
-        <item>Fazer nada</item>
-        <item>@string/configAction_setAlarm</item>
-        <item>@string/configAction_setTimeZone</item>
-        <item>Exibir próxima nota</item>
-        <item>Exibir nota anterior</item>
-    </string-array>
-
-    <!-- App Setting: Note UI "on tap" action -->
-    <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
-        <item>Fazer nada</item>
-        <item>Definir alarme para a nota</item>
-        <item>Exibir próxima nota</item>
-        <item>Exibir nota anterior</item>
-    </string-array>
+    <string name="configAction_doNothing">Fazer nada</string>
+    <string name="configAction_nextNote">Exibir próxima nota</string>
+    <string name="configAction_prevNote">Exibir nota anterior</string>
+    <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
+    <string name="configAction_showCalendar">Mostrar app de calendário</string>
+    <string name="configAction_swapCards">Inverter (hoje/amanhã)</string>
+    <string name="configAction_setAlarmForNote">Definir alarme para a nota</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">por offset</string>  <!-- TODO -->

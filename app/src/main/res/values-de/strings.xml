@@ -748,30 +748,13 @@
     <item>Helles Thema / dunkles Thema (Nachtmodus)</item>
   </string-array>
 
-  <!-- App Setting: Date "on tap" action -->
-  <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
-      <item>Nichts tun</item>
-      <item>Ansicht tauschen (heute/morgen)</item>
-      <item>Öffne Kalender-App</item>
-      <item>Benutzerdefiniertes Datum einstellen</item>
-  </string-array>
-
-  <!-- App Setting: Clock UI "on tap" action -->
-  <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
-      <item>Nichts tun</item>
-      <item>Alarm einstellen</item>
-      <item>@string/configAction_setTimeZone</item>
-      <item>Nächste Kurzinfo anzeigen</item>
-      <item>Vorherige Kurzinfo anzeigen</item>
-  </string-array>
-
-  <!-- App Setting: Note UI "on tap" action -->
-  <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
-      <item>Nichts tun</item>
-      <item>Alarm basierend auf Kurzinfo einstellen</item>
-      <item>Nächste Kurzinfo anzeigen</item>
-      <item>Vorherige Kurzinfo anzeigen</item>
-  </string-array>
+  <string name="configAction_doNothing">Nichts tun</string>
+  <string name="configAction_nextNote">Nächste Kurzinfo anzeigen</string>
+  <string name="configAction_prevNote">Vorherige Kurzinfo anzeigen</string>
+  <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
+  <string name="configAction_showCalendar">Öffne Kalender-App</string>
+  <string name="configAction_swapCards">Ansicht tauschen (heute/morgen)</string>
+  <string name="configAction_setAlarmForNote">Alarm basierend auf Kurzinfo einstellen</string>
 
   <!-- App Setting: time zone sort -->
   <string name="timezone_sort_byOffset">nach Versatz</string>

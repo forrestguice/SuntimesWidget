@@ -772,30 +772,13 @@
         <item>@string/trackingMode_soonest</item>
     </string-array>
 
-    <!-- App Setting: Date "on tap" action -->
-    <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
-        <item>Do nothing</item>
-        <item>Swap cards (today/tomorrow)</item>
-        <item>Show calendar app</item>
-        <item>Set custom date</item>
-    </string-array> <!-- TODO -->
-
-    <!-- App Setting: Clock UI "on tap" action -->
-    <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
-        <item>Do nothing</item>
-        <item>@string/configAction_setAlarm</item>
-        <item>@string/configAction_setTimeZone</item>
-        <item>Show next note</item>
-        <item>Show previous note</item>
-    </string-array> <!-- TODO -->
-
-    <!-- App Setting: Note UI "on tap" action -->
-    <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
-        <item>Do nothing</item>
-        <item>Set alarm for note</item>
-        <item>Show next note</item>
-        <item>Show previous note</item>
-    </string-array>
+    <string name="configAction_doNothing">Do nothing</string>  <!-- TODO -->
+    <string name="configAction_nextNote">Show next note</string>  <!-- TODO -->
+    <string name="configAction_prevNote">Show previous note</string>  <!-- TODO -->
+    <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
+    <string name="configAction_showCalendar">Show calendar app</string>  <!-- TODO -->
+    <string name="configAction_swapCards">Swap cards (today/tomorrow)</string>  <!-- TODO -->
+    <string name="configAction_setAlarmForNote">Set alarm for note</string>  <!-- TODO -->
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">per compensazione</string>

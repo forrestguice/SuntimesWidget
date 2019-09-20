@@ -749,30 +749,13 @@
         <item>Jasna skórka (dzień) / Ciemna skórka (noc)</item>
     </string-array>
 
-    <!-- App Setting: Date "on tap" action -->
-    <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
-        <item>Nie rób nic</item>
-        <item>Przełącz karty (dziś/jutro)</item>
-        <item>Uruchom aplikację Kalendarz</item>
-        <item>Ustaw własną datę</item>
-    </string-array>
-
-    <!-- App Setting: Clock UI "on tap" action -->
-    <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
-        <item>Nie rób nic</item>
-        <item>Ustaw alarm</item>
-        <item>@string/configAction_setTimeZone</item>
-        <item>Pokaż następną notatkę</item>
-        <item>Pokaż poprzednią notatkę</item>
-    </string-array>
-
-    <!-- App Setting: Note UI "on tap" action -->
-    <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
-        <item>Nie rób nic</item>
-        <item>Ustaw alarm dla notatki</item>
-        <item>Pokaż następną notatkę</item>
-        <item>Pokaż poprzednią notatkę</item>
-    </string-array>
+    <string name="configAction_doNothing">Nie rób nic</string>
+    <string name="configAction_nextNote">Pokaż następną notatkę</string>
+    <string name="configAction_prevNote">Pokaż poprzednią notatkę</string>
+    <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
+    <string name="configAction_showCalendar">Uruchom aplikację Kalendarz</string>
+    <string name="configAction_swapCards">Przełącz karty (dziś/jutro)</string>
+    <string name="configAction_setAlarmForNote">Ustaw alarm dla notatki</string>
 
     <!-- App Setting: time zone sort -->
     <string name="timezone_sort_byOffset">wg przesunięcia</string>

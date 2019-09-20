@@ -736,30 +736,13 @@
         <item>Automatique (jour/nuit)</item>
     </string-array>
 
-    <!-- App Setting: Date "on tap" action -->
-    <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
-        <item>Ne rien faire</item>
-        <item>Inverser (aujourd\'hui/demain)</item>
-        <item>Afficher le calendrier</item>
-        <item>Choisir la date</item>
-    </string-array>
-
-    <!-- App Setting: Clock UI "on tap" action -->
-    <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
-        <item>Ne rien faire</item>
-        <item>Régler l\'alarme</item>
-        <item>@string/configAction_setTimeZone</item>
-        <item>Affichage suivant</item>
-        <item>Affichage précédent</item>
-    </string-array>
-
-    <!-- App Setting: Note UI "on tap" action -->
-    <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
-        <item>Ne rien faire</item>
-        <item>Régler l\'alarme</item>
-        <item>Affichage suivant</item>
-        <item>Affichage précédent</item>
-    </string-array>
+    <string name="configAction_doNothing">Ne rien faire</string>
+    <string name="configAction_nextNote">Affichage suivant</string>
+    <string name="configAction_prevNote">Affichage précédent</string>
+    <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
+    <string name="configAction_showCalendar">Afficher le calendrier</string>
+    <string name="configAction_swapCards">Inverser (aujourd\'hui/demain)</string>
+    <string name="configAction_setAlarmForNote">Régler l\'alarme</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">par décalage</string>
