@@ -85,9 +85,8 @@
     <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> A data está definida para dia diferente de hoje.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
-    <string name="past_yesterday">Passado (-1)</string>
     <string name="past_today">Passado</string>
-    <string name="past_tomorrow">Passado (+1)</string>
+    <string name="past_n">Passado (%1$s)</string>
 
     <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
     <string name="yesterday">Ontem</string>
@@ -95,9 +94,8 @@
     <string name="tomorrow">Amanhã</string>
 
     <!-- DateDesc: some day in the future (appears in dateField) -->
-    <string name="future_yesterday">Futuro (-1)</string>
     <string name="future_today">Futuro</string>
-    <string name="future_tomorrow">Futuro (+1)</string>
+    <string name="future_n">Futuro (%1$s)</string>
 
     <!-- Field: length of day
          The hours in the day field(s) that appears below the table (main activity)

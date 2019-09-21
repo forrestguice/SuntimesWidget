@@ -56,9 +56,8 @@
     <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> Data gaur ez den egun batean ezarri da.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
-    <string name="past_yesterday">Iragana (-1)</string>
     <string name="past_today">Iragana</string>
-    <string name="past_tomorrow">Iragana (+1)</string>
+    <string name="past_n">Iragana (%1$s)</string>
 
     <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
     <string name="yesterday">Atzo</string>
@@ -66,9 +65,8 @@
     <string name="tomorrow">Bihar</string>
 
     <!-- DateDesc: some day in the future (appears in dateField) -->
-    <string name="future_yesterday">Geroa (-1)</string>
     <string name="future_today">Geroa</string>
-    <string name="future_tomorrow">Geroa (+1)</string>
+    <string name="future_n">Geroa (%1$s)</string>
 
     <!-- Field: length of day
          The hours in the day field(s) that appears below the table (main activity)

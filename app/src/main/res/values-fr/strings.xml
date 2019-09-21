@@ -56,9 +56,8 @@
     <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> Date réglée manuellement</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
-    <string name="past_yesterday">Passé (-1)</string>
     <string name="past_today">Passé</string>
-    <string name="past_tomorrow">Passé (+1)</string>
+    <string name="past_n">Passé (%1$s)</string>
 
     <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
     <string name="yesterday">Hier</string>
@@ -66,9 +65,8 @@
     <string name="tomorrow">Demain</string>
 
     <!-- DateDesc: some day in the future (appears in dateField) -->
-    <string name="future_yesterday">Futur (-1)</string>
     <string name="future_today">Futur</string>
-    <string name="future_tomorrow">Futur (+1)</string>
+    <string name="future_n">Futur (%1$s)</string>
 
     <!-- Field: length of day
          The hours in the day field(s) that appears below the table (main activity).

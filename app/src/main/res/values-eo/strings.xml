@@ -55,9 +55,8 @@
     <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> La dato estas agordita al alia tago ol hodiaŭ.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
-    <string name="past_yesterday">Pasinteco (-1)</string>
     <string name="past_today">Pasinteco</string>
-    <string name="past_tomorrow">Pasinteco (+1)</string>
+    <string name="past_n">Pasinteco (%1$s)</string>
 
     <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
     <string name="yesterday">Hieraŭ</string>
@@ -65,9 +64,8 @@
     <string name="tomorrow">Morgaŭ</string>
 
     <!-- DateDesc: some day in the future (appears in dateField) -->
-    <string name="future_yesterday">Estonteco (-1)</string>
     <string name="future_today">Estonteco</string>
-    <string name="future_tomorrow">Estonteco (+1)</string>
+    <string name="future_n">Estonteco (%1$s)</string>
 
     <!-- Field: length of day
          The hours in the day field(s) that appears below the table (main activity).

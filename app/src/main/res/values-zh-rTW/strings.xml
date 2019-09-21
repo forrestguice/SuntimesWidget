@@ -56,9 +56,8 @@
     <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> 日期已設置為今天外的另一天。</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
-    <string name="past_yesterday">過去 (-1)</string>
     <string name="past_today">過去</string>
-    <string name="past_tomorrow">過去 (+1)</string>
+    <string name="past_n">過去 (%1$s)</string>
 
     <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
     <string name="yesterday">昨日</string>
@@ -66,9 +65,8 @@
     <string name="tomorrow">明日</string>
 
     <!-- DateDesc: some day in the future (appears in dateField) -->
-    <string name="future_yesterday">將來 (-1)</string>
     <string name="future_today">將來</string>
-    <string name="future_tomorrow">將來 (+1)</string>
+    <string name="future_n">將來 (%1$s)</string>
 
     <!-- Field: length of day
          The hours in the day field(s) that appears below the table (main activity)

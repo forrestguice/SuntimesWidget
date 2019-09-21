@@ -56,9 +56,8 @@
     <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> Data jest ustawiona na inny dzień niż dzisiaj.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
-    <string name="past_yesterday">Przeszłość (-1)</string>
     <string name="past_today">Przeszłość</string>
-    <string name="past_tomorrow">Przeszłość (+1)</string>
+    <string name="past_n">Przeszłość (%1$s)</string>
 
     <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
     <string name="yesterday">Wczoraj</string>
@@ -66,9 +65,8 @@
     <string name="tomorrow">Jutro</string>
 
     <!-- DateDesc: some day in the future (appears in dateField) -->
-    <string name="future_yesterday">Przyszłość (-1)</string>
     <string name="future_today">Przyszłość</string>
-    <string name="future_tomorrow">Przyszłość (+1)</string>
+    <string name="future_n">Przyszłość (%1$s)</string>
 
     <!-- Field: length of day
          The hours in the day field(s) that appears below the table (main activity).

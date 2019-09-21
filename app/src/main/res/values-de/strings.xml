@@ -58,9 +58,8 @@
     gesetzt.</string>  <!-- snackbar message -->
 
   <!-- DateDesc: some day in the past (appears in dateField) -->
-  <string name="past_yesterday">Vergangenheit (-1)</string>
   <string name="past_today">Vergangenheit</string>
-  <string name="past_tomorrow">Vergangenheit (+1)</string>
+  <string name="past_n">Vergangenheit (%1$s)</string>
 
   <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
   <string name="yesterday">Gestern</string>
@@ -68,9 +67,8 @@
   <string name="tomorrow">Morgen</string>
 
   <!-- DateDesc: some day in the future (appears in dateField) -->
-  <string name="future_yesterday">Zukunft (-1)</string>
   <string name="future_today">Zukunft</string>
-  <string name="future_tomorrow">Zukunft (+1)</string>
+  <string name="future_n">Zukunft (%1$s)</string>
 
   <!-- Field: length of day
        The hours in the day field(s) that appears below the table (main activity).

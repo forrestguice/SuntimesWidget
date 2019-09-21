@@ -56,9 +56,8 @@
     <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> A beállított dátum és a mai dátum eltérnek.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
-    <string name="past_yesterday">Múlt (-1)</string>
     <string name="past_today">Múlt</string>
-    <string name="past_tomorrow">Múlt (+1)</string>
+    <string name="past_n">Múlt (%1$s)</string>
 
     <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
     <string name="yesterday">Tegnap</string>
@@ -66,9 +65,8 @@
     <string name="tomorrow">Holnap</string>
 
     <!-- DateDesc: some day in the future (appears in dateField) -->
-    <string name="future_yesterday">Jövő (-1)</string>
     <string name="future_today">Jövő</string>
-    <string name="future_tomorrow">Jövő (+1)</string>
+    <string name="future_n">Jövő (%1$s)</string>
 
     <!-- Field: length of day
          The hours in the day field(s) that appears below the table (main activity)-->

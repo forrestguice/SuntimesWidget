@@ -59,9 +59,8 @@
     <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> La fecha no se corresponde con la de hoy.</string>
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
-    <string name="past_yesterday">Pasado (-1)</string>
     <string name="past_today">Pasado</string>
-    <string name="past_tomorrow">Pasado (1)</string>
+    <string name="past_n">Pasado (%1$s)</string>
 
     <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
     <string name="yesterday">Ayer</string>
@@ -69,9 +68,8 @@
     <string name="tomorrow">Mañana</string>
 
     <!-- DateDesc: some day in the future (appears in dateField) -->
-    <string name="future_yesterday">Futuro (-1)</string>
     <string name="future_today">Futuro</string>
-    <string name="future_tomorrow">Futuro (1)</string>
+    <string name="future_n">Futuro (%1$s)</string>
 
     <!-- Field: length of day
          The hours in the day field(s) that appears below the table (main activity)

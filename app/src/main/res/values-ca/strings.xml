@@ -57,9 +57,8 @@
     <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> La data no es correspon amb la d\'avui.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
-    <string name="past_yesterday">Passat (-1)</string>
     <string name="past_today">Passat</string>
-    <string name="past_tomorrow">Passat (+1)</string>
+    <string name="past_n">Passat (%1$s)</string>
 
     <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
     <string name="yesterday">Ahir</string>
@@ -67,9 +66,8 @@
     <string name="tomorrow">Demà</string>
 
     <!-- DateDesc: some day in the future (appears in dateField) -->
-    <string name="future_yesterday">Futur (-1)</string>
     <string name="future_today">Futur</string>
-    <string name="future_tomorrow">Futur (+1)</string>
+    <string name="future_n">Futur (%1$s)</string>
 
     <!-- Field: length of day
          The hours in the day field(s) that appears below the table (main activity)

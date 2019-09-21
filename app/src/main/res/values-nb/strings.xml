@@ -56,9 +56,8 @@
     <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> Datoen er satt til en annen dag enn i dag.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
-    <string name="past_yesterday">Fortid (-1)</string>
     <string name="past_today">Fortid</string>
-    <string name="past_tomorrow">Fortid (+1)</string>
+    <string name="past_n">Fortid (%1$s)</string>
 
     <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
     <string name="yesterday">I går</string>
@@ -66,9 +65,8 @@
     <string name="tomorrow">I morgen</string>
 
     <!-- DateDesc: some day in the future (appears in dateField) -->
-    <string name="future_yesterday">Framtid (-1)</string>
     <string name="future_today">Framtid</string>
-    <string name="future_tomorrow">Framtid (+1)</string>
+    <string name="future_n">Framtid (%1$s)</string>
 
     <!-- Field: length of day
          The hours in the day field(s) that appears below the table (main activity)
