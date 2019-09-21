@@ -67,13 +67,13 @@ public class AppSettings
     public static final String PREF_DEF_LOCALE = "en";
 
     public static final String PREF_KEY_UI_DATETAPACTION = "app_ui_datetapaction";
-    public static final TapAction PREF_DEF_UI_DATETAPACTION = TapAction.CONFIG_DATE;
+    public static final TapAction PREF_DEF_UI_DATETAPACTION = TapAction.SWAP_CARD;
 
     public static final String PREF_KEY_UI_DATETAPACTION1 = "app_ui_datetapaction1";
     public static final TapAction PREF_DEF_UI_DATETAPACTION1 = TapAction.SHOW_CALENDAR;
 
     public static final String PREF_KEY_UI_CLOCKTAPACTION = "app_ui_clocktapaction";
-    public static final TapAction PREF_DEF_UI_CLOCKTAPACTION = TapAction.ALARM;
+    public static final TapAction PREF_DEF_UI_CLOCKTAPACTION = TapAction.RESET_NOTE;
 
     public static final String PREF_KEY_UI_NOTETAPACTION = "app_ui_notetapaction";
     public static final TapAction PREF_DEF_UI_NOTETAPACTION = TapAction.NEXT_NOTE;
@@ -300,12 +300,12 @@ public class AppSettings
         NOTHING("Do Nothing"),
         SWAP_CARD("Swap Cards"),
         SHOW_CALENDAR("Show Calendar"),
-        CONFIG_DATE("Set Custom Date"),
-        ALARM("Set an Alarm"),
+        CONFIG_DATE("Set Date"),
+        ALARM("Set Alarm"),
         TIMEZONE("Set Time Zone"),
         NEXT_NOTE("Show next note"),
         PREV_NOTE("Show previous note"),
-        RESET_NOTE("Reset note");
+        RESET_NOTE("Show upcoming event");
 
         private String displayString;
 
