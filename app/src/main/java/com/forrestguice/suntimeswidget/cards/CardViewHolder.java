@@ -25,6 +25,7 @@ import android.graphics.drawable.InsetDrawable;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Pair;
@@ -246,9 +247,11 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
             boolean showDateWarning = (options.dateMode != WidgetSettings.DateMode.CURRENT_DATE && (i > 1 || i < -1));
             ImageSpan dateWarningIcon = (options.showWarnings && showDateWarning) ? SuntimesUtils.createWarningSpan(context, txt_date.getTextSize()) : null;
-            String dateString = context.getString(R.string.dateField, getCardLabel(context, i), dateFormat.format(data_date));
+
+            Pair<String,String> label = getCardLabel(context, i, options);
+            String dateString = context.getString(R.string.dateField, label.first, dateFormat.format(data_date));
             SpannableStringBuilder dateSpan = SuntimesUtils.createSpan(context, dateString, SuntimesUtils.SPANTAG_WARNING, dateWarningIcon);
-            txt_date.setText(dateSpan);
+            txt_date.setText((label.second == null) ? dateSpan : SuntimesUtils.createColorSpan(SpannableString.valueOf(dateSpan), dateString, label.second, options.color_warning));
             txt_date.setContentDescription(dateString.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), ""));
 
         } else {
@@ -363,19 +366,20 @@ public class CardViewHolder extends RecyclerView.ViewHolder
      * @param i position relative to TODAY
      * @return display string; today / tomorrow / yesterday / past (-n) / future (+n)
      */
-    private String getCardLabel(Context context, int i)
+    private Pair<String,String> getCardLabel(Context context, int i, CardAdapter.CardAdapterOptions options)
     {
+        String dayOffset = ((i < 0) ? "-" : "+") + Integer.toString(Math.abs(i));
         String label = context.getString(R.string.today);
         if (i == 1) {
-            label = context.getString(R.string.tomorrow);
+            return new Pair<>(context.getString(R.string.tomorrow), null);
         } else if (i == -1) {
-            label = context.getString(R.string.yesterday);
+            return new Pair<>(context.getString(R.string.yesterday), null);
         } else if (i > 0) {
-            label = context.getString(R.string.future_n, Integer.toString(i));
+            return new Pair<>(context.getString(R.string.future_n, dayOffset), dayOffset);
         } else if (i < 0) {
-            label = context.getString(R.string.past_n, Integer.toString(Math.abs(i)));
+            return new Pair<>(context.getString(R.string.past_n, dayOffset), dayOffset);
         }
-        return label;
+        return new Pair<>(label, null);
     }
 
     private void updateDayLengthViews(Context context, TextView textView, long dayLength, int labelID, boolean showSeconds, int highlightColor)

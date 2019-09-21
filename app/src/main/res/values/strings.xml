@@ -89,7 +89,7 @@
     <string name="past_yesterday">Past (-1)</string>
     <string name="past_today">Past</string>
     <string name="past_tomorrow">Past (+1)</string>
-    <string name="past_n">Past (-%1$s)</string>  <!-- TODO -->
+    <string name="past_n">Past (%1$s)</string>  <!-- TODO -->
 
     <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
     <string name="yesterday">Yesterday</string>
@@ -100,7 +100,7 @@
     <string name="future_yesterday">Future (-1)</string>
     <string name="future_today">Future</string>
     <string name="future_tomorrow">Future (+1)</string>
-    <string name="future_n">Future (+%1$s)</string>  <!-- TODO -->
+    <string name="future_n">Future (%1$s)</string>  <!-- TODO -->
 
     <!-- Field: length of day
          The hours in the day field(s) that appears below the table (main activity)
