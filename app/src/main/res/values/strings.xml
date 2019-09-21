@@ -874,20 +874,25 @@
     <!-- App Setting: Date "on tap" action -->
     <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
         <item>@string/configAction_doNothing</item>
-        <item>@string/configAction_swapCards</item>
         <item>@string/configAction_showCalendar</item>
+        <item>@string/configAction_setAlarm</item>
         <item>@string/configAction_setDate</item>
+        <item>@string/configAction_swapCards</item>
+        <item>@string/configAction_resetNote</item>
     </string-array>
     <string-array name="dateTapActions_values" translatable="false"> <!-- config values (one-to-one with dateTapActions_display) -->
         <item>NOTHING</item>
-        <item>SWAP_CARD</item>
         <item>SHOW_CALENDAR</item>
+        <item>ALARM</item>
         <item>CONFIG_DATE</item>
+        <item>SWAP_CARD</item>
+        <item>RESET_NOTE</item>
     </string-array>
 
     <!-- App Setting: Clock UI "on tap" action -->
     <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
         <item>@string/configAction_doNothing</item>
+        <item>@string/configAction_showCalendar</item>
         <item>@string/configAction_setAlarm</item>
         <item>@string/configAction_setTimeZone</item>
         <item>@string/configAction_nextNote</item>
@@ -896,10 +901,12 @@
     </string-array>
     <string-array name="clockTapActions_values" translatable="false">  <!-- config values (one-to-one with clockTapActions_display) -->
         <item>NOTHING</item>
+        <item>SHOW_CALENDAR</item>
         <item>ALARM</item>
         <item>TIMEZONE</item>
         <item>NEXT_NOTE</item>
         <item>PREV_NOTE</item>
+        <item>RESET_NOTE</item>
     </string-array>
 
     <!-- App Setting: Note UI "on tap" action -->
@@ -908,22 +915,23 @@
         <item>@string/configAction_setAlarmForNote</item>
         <item>@string/configAction_nextNote</item>
         <item>@string/configAction_prevNote</item>
+        <item>@string/configAction_resetNote</item>
     </string-array>
     <string-array name="noteTapActions_values" translatable="false">   <!-- config values (one-to-one with noteTapActions_display) -->
         <item>NOTHING</item>
         <item>ALARM</item>
         <item>NEXT_NOTE</item>
         <item>PREV_NOTE</item>
+        <item>RESET_NOTE</item>
     </string-array>
 
-
-    <string name="configAction_doNothing">Do nothing</string>  <!-- TODO -->
-    <string name="configAction_nextNote">Show next note</string>  <!-- TODO -->
-    <string name="configAction_prevNote">Show previous note</string>  <!-- TODO -->
-    <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
-    <string name="configAction_showCalendar">Show calendar app</string>  <!-- TODO -->
-    <string name="configAction_swapCards">Swap cards (today/tomorrow)</string>  <!-- TODO -->
-    <string name="configAction_setAlarmForNote">Set alarm for note</string>  <!-- TODO -->
+    <string name="configAction_doNothing">Do nothing</string>
+    <string name="configAction_nextNote">Show next note</string>
+    <string name="configAction_prevNote">Show previous note</string>
+    <string name="configAction_resetNote">Show upcoming event</string>
+    <string name="configAction_showCalendar">Open calendar</string>
+    <string name="configAction_swapCards">Swap cards (today/tomorrow)</string>
+    <string name="configAction_setAlarmForNote">Set alarm for note</string>
 
     <string-array name="tapActions_display">    <!-- must be in same order as enum TapActions -->
         <item>@string/configAction_doNothing</item>
