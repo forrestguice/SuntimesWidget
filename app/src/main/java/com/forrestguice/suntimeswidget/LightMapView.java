@@ -21,6 +21,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 //import android.os.Bundle;
@@ -114,12 +116,18 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         }
     }
 
+    public LightMapColors getColors() {
+        return colors;
+    }
+
     /**
      * themeViews
      */
     public void themeViews( Context context, @NonNull SuntimesTheme theme )
     {
-        colors = new LightMapColors();
+        if (colors == null) {
+            colors = new LightMapColors();
+        }
         colors.colorNight = theme.getNightColor();
         colors.colorDay = theme.getDayColor();
         colors.colorAstro = theme.getAstroColor();
@@ -335,12 +343,23 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 }
 
                 // draw now marker
-                if (colors.option_drawNow)
+                if (colors.option_drawNow > 0)
                 {
                     int pointRadius = Math.min( (int)Math.ceil(c.getWidth() / 96d),      // a circle that is 1/2 hr wide
                             (int)Math.ceil(c.getHeight() / 4d) );    // a circle that is 1/2 the height of the graph
                     int pointStroke = (int)Math.ceil(pointRadius / 3d);
-                    drawPoint(data.now(), pointRadius, pointStroke, c, p);
+
+                    switch (colors.option_drawNow) {
+                        case LightMapColors.DRAW_SUN2:
+                            DashPathEffect dashed = new DashPathEffect(new float[] {4, 2}, 0);
+                            drawPoint(data.now(), pointRadius, pointStroke, c, p, Color.TRANSPARENT, colors.colorPointStroke, dashed);
+                            break;
+
+                        case LightMapColors.DRAW_SUN1:
+                        default:
+                            drawPoint(data.now(), pointRadius, pointStroke, c, p, colors.colorPointFill, colors.colorPointStroke, null);
+                            break;
+                    }
                 }
             }
 
@@ -431,7 +450,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             return true;
         }
 
-        protected void drawPoint( Calendar calendar, int radius, int strokeWidth, Canvas c, Paint p )
+        protected void drawPoint(Calendar calendar, int radius, int strokeWidth, Canvas c, Paint p, int fillColor, int strokeColor, DashPathEffect strokeEffect)
         {
             if (calendar != null)
             {
@@ -443,12 +462,17 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 int y = h / 2;
 
                 p.setStyle(Paint.Style.FILL);
-                p.setColor(colors.colorPointFill);
+                p.setColor(fillColor);
                 c.drawCircle(x, y, radius, p);
 
                 p.setStyle(Paint.Style.STROKE);
                 p.setStrokeWidth(strokeWidth);
-                p.setColor(colors.colorPointStroke);
+                p.setColor(strokeColor);
+
+                if (strokeEffect != null) {
+                    p.setPathEffect(strokeEffect);
+                }
+
                 c.drawCircle(x, y, radius, p);
             }
         }
@@ -487,9 +511,13 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     @SuppressWarnings("WeakerAccess")
     public static class LightMapColors
     {
+        public static final int DRAW_NONE = 0;
+        public static final int DRAW_SUN1 = 1;
+        public static final int DRAW_SUN2 = 2;
+
         public int colorDay, colorCivil, colorNautical, colorAstro, colorNight;
         public int colorPointFill, colorPointStroke;
-        public boolean option_drawNow = true;
+        public int option_drawNow = DRAW_SUN1;
 
         public LightMapColors() {}
 

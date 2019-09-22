@@ -147,7 +147,7 @@
         <item name="graphColor_nautical">@color/graphColor_nautical_dark</item>
         <item name="graphColor_astronomical">@color/graphColor_astronomical_dark</item>
         <item name="graphColor_pointFill">@color/sunIcon_color_setting_dark</item>
-        <item name="graphColor_pointStroke">@color/grey_800</item>
+        <item name="graphColor_pointStroke">@color/sunIcon_color_noon_light</item>
 
         <item name="sunriseIconSmall">@drawable/ic_sunrise</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large</item>

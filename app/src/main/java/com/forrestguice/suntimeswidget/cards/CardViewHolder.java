@@ -302,6 +302,8 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         //int offset = Math.abs(position - CardAdapter.TODAY_POSITION);
         //int centerEnabledColor = (offset >= 2 ? options.color_warning : options.color_enabled);
         ImageViewCompat.setImageTintList(btn_flipperCenter, SuntimesUtils.colorStateList(options.color_enabled, options.color_disabled, options.color_pressed));
+
+        lightmap.getColors().option_drawNow = (position == CardAdapter.TODAY_POSITION) ? LightMapView.LightMapColors.DRAW_SUN1 : LightMapView.LightMapColors.DRAW_SUN2;
     }
 
     protected void themeCardViews(Context context, @NonNull SuntimesTheme theme, CardAdapter.CardAdapterOptions options)
