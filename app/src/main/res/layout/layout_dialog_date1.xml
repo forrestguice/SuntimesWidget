@@ -75,7 +75,8 @@
                 android:id="@+id/dialog_button_cancel"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/timedate_dialog_cancel" />
+                android:text="@string/timedate_dialog_cancel"
+                tools:ignore="ButtonOrder" />
 
             <Button
                 style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
