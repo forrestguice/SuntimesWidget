@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.views;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
+import android.os.Build;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -40,13 +41,20 @@ public class ViewUtils
 
     public static void fadeInButton(final ImageButton button, final int duration)
     {
-        button.clearAnimation();
-        if (button.getVisibility() != View.VISIBLE) {
-            button.setAlpha(0f);
+        if (Build.VERSION.SDK_INT >= 12)
+        {
+            button.clearAnimation();
+
+            if (button.getVisibility() != View.VISIBLE) {
+                button.setAlpha(0f);
+                button.setVisibility(View.VISIBLE);
+            }
+            if (button.getAlpha() != 1f) {
+                button.animate().setDuration(duration).alpha(1f);
+            }
+
+        } else {
             button.setVisibility(View.VISIBLE);
-        }
-        if (button.getAlpha() != 1f) {
-            button.animate().setDuration(duration).alpha(1f);
         }
     }
 
@@ -54,23 +62,34 @@ public class ViewUtils
     {
         if (button.getVisibility() != View.GONE)
         {
-            button.clearAnimation();
-            if (button.getAlpha() == 0f) {
-                button.setVisibility(View.GONE);
+            if (Build.VERSION.SDK_INT >= 12)
+            {
+                button.clearAnimation();
+                if (button.getAlpha() == 0f) {
+                    button.setVisibility(View.GONE);
+
+                } else {
+                    button.setAlpha(1f);
+                    button.animate().setDuration(duration).alpha(0f).setListener(new AnimatorListenerAdapter()
+                    {
+                        @Override
+                        public void onAnimationEnd(Animator animation)
+                        {
+                            super.onAnimationEnd(animation);
+                            button.setVisibility(View.GONE);
+                            //noinspection ConstantConditions
+                            if (Build.VERSION.SDK_INT >= 12)
+                            {
+                                button.setAlpha(1f);
+                                button.animate().setListener(null);
+                                button.clearAnimation();
+                            }
+                        }
+                    });
+                }
 
             } else {
-                button.setAlpha(1f);
-                button.animate().setDuration(duration).alpha(0f).setListener(new AnimatorListenerAdapter()
-                {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        button.setVisibility(View.GONE);
-                        button.setAlpha(1f);
-                        button.animate().setListener(null);
-                        button.clearAnimation();
-                    }
-                });
+                button.setVisibility(View.GONE);
             }
         }
     }
