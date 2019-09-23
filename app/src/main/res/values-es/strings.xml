@@ -22,6 +22,7 @@
     <string name="configAction_setAlarm">Configurar alarma</string>
     <string name="configAction_setTimeZone">Configurar zona horaria</string>
     <string name="configAction_setDate">Configurar fecha</string>
+    <string name="configAction_viewDate">View Date</string>    <!-- TODO -->
     <string name="configAction_sunDialog">Posición del Sol</string>
     <string name="configAction_equinoxDialog">Solsticio / Equinoccio</string>
     <string name="configAction_worldMap">Mapa del mundo</string>
@@ -976,6 +977,14 @@
         <item>Ocaso astronómico</item>
         <item>Salida lunar</item>
         <item>Puesta lunar</item>
+        <item>new moon</item>  <!-- TODO -->
+        <item>first quarter</item>  <!-- TODO -->
+        <item>full moon</item>  <!-- TODO -->
+        <item>third quarter</item>  <!-- TODO -->
+        <item>spring equinox</item>    <!-- TODO -->
+        <item>summer solstice</item>   <!-- TODO -->
+        <item>autumn equinox</item>   <!-- TODO -->
+        <item>winter solstice</item>   <!-- TODO -->
     </string-array>
     <string-array name="solarevents_long">   
         <item>Amanecer astronómico</item>
@@ -995,6 +1004,14 @@
         <item>Atardecer astronómico</item>
         <item>Salida lunar</item>
         <item>Puesta lunar</item>
+        <item>new moon</item>  <!-- TODO -->
+        <item>first quarter</item>  <!-- TODO -->
+        <item>full moon</item>  <!-- TODO -->
+        <item>third quarter</item>  <!-- TODO -->
+        <item>spring equinox</item>    <!-- TODO -->
+        <item>summer solstice</item>   <!-- TODO -->
+        <item>autumn equinox</item>   <!-- TODO -->
+        <item>winter solstice</item>   <!-- TODO -->
     </string-array>
 
     <!-- Dialog: Enable GPS? -->

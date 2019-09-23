@@ -19,6 +19,7 @@
     <string name="configAction_setAlarm">Alarm</string>
     <string name="configAction_setTimeZone">Tidssone</string>
     <string name="configAction_setDate">Dato</string>
+    <string name="configAction_viewDate">View Date</string>    <!-- TODO -->
     <string name="configAction_sunDialog">Solens posisjon</string>
     <string name="configAction_equinoxDialog">Solverv / Jevndøgn</string>
     <string name="configAction_worldMap">Verdenskart</string>
@@ -968,6 +969,14 @@
         <item>astronomisk tussmørke</item>
         <item>måneoppgang</item>
         <item>månenedgang</item>
+        <item>new moon</item>  <!-- TODO -->
+        <item>first quarter</item>  <!-- TODO -->
+        <item>full moon</item>  <!-- TODO -->
+        <item>third quarter</item>  <!-- TODO -->
+        <item>spring equinox</item>    <!-- TODO -->
+        <item>summer solstice</item>   <!-- TODO -->
+        <item>autumn equinox</item>   <!-- TODO -->
+        <item>winter solstice</item>   <!-- TODO -->
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>astronomisk tussmørke morgen (start)</item>
@@ -987,6 +996,14 @@
         <item>astronomisk tussmørke kveld (slutt)</item>
         <item>måneoppgang</item>
         <item>månenedgang</item>
+        <item>new moon</item>  <!-- TODO -->
+        <item>first quarter</item>  <!-- TODO -->
+        <item>full moon</item>  <!-- TODO -->
+        <item>third quarter</item>  <!-- TODO -->
+        <item>spring equinox</item>    <!-- TODO -->
+        <item>summer solstice</item>   <!-- TODO -->
+        <item>autumn equinox</item>   <!-- TODO -->
+        <item>winter solstice</item>   <!-- TODO -->
     </string-array>
 
     <!-- Dialog: Enable GPS? -->

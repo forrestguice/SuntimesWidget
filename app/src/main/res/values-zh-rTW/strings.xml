@@ -19,6 +19,7 @@
     <string name="configAction_setAlarm">設置鬧鐘</string>
     <string name="configAction_setTimeZone">設置時區</string>
     <string name="configAction_setDate">設置日期</string>
+    <string name="configAction_viewDate">View Date</string>    <!-- TODO -->
     <string name="configAction_sunDialog">太陽位置</string>
     <string name="configAction_equinoxDialog">夏冬至/春秋分</string>
     <string name="configAction_worldMap">世界地圖</string>
@@ -988,6 +989,14 @@
         <item>天文暮光</item>
         <item>月出</item>
         <item>月落</item>
+        <item>new moon</item>  <!-- TODO -->
+        <item>first quarter</item>  <!-- TODO -->
+        <item>full moon</item>  <!-- TODO -->
+        <item>third quarter</item>  <!-- TODO -->
+        <item>spring equinox</item>    <!-- TODO -->
+        <item>summer solstice</item>   <!-- TODO -->
+        <item>autumn equinox</item>   <!-- TODO -->
+        <item>winter solstice</item>   <!-- TODO -->
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>天文曙光</item>
@@ -1007,6 +1016,14 @@
         <item>天文暮光</item>
         <item>月出</item>
         <item>月落</item>
+        <item>new moon</item>  <!-- TODO -->
+        <item>first quarter</item>  <!-- TODO -->
+        <item>full moon</item>  <!-- TODO -->
+        <item>third quarter</item>  <!-- TODO -->
+        <item>spring equinox</item>    <!-- TODO -->
+        <item>summer solstice</item>   <!-- TODO -->
+        <item>autumn equinox</item>   <!-- TODO -->
+        <item>winter solstice</item>   <!-- TODO -->
     </string-array>
 
     <!-- Dialog: Enable GPS? -->

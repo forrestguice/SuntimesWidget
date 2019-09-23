@@ -19,6 +19,7 @@
   <string name="configAction_setAlarm">Alarm</string>
   <string name="configAction_setTimeZone">Zeitzone</string>
   <string name="configAction_setDate">Datum</string>
+  <string name="configAction_viewDate">View Date</string>    <!-- TODO -->
   <string name="configAction_sunDialog">Sonnenstand</string>
   <string name="configAction_equinoxDialog">Sonnenwende / Tag-Nacht-Gleiche</string>
   <string name="configAction_worldMap">World Map</string>  <!-- TODO -->
@@ -909,6 +910,14 @@
       <item>Astron. Abend</item>
       <item>Mondaufgang</item>
       <item>Monduntergang</item>
+    <item>new moon</item>  <!-- TODO -->
+    <item>first quarter</item>  <!-- TODO -->
+    <item>full moon</item>  <!-- TODO -->
+    <item>third quarter</item>  <!-- TODO -->
+    <item>spring equinox</item>    <!-- TODO -->
+    <item>summer solstice</item>   <!-- TODO -->
+    <item>autumn equinox</item>   <!-- TODO -->
+    <item>winter solstice</item>   <!-- TODO -->
   </string-array>
   <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
       <item>Astronomische Morgendämmerung (Beginn)</item>
@@ -928,6 +937,14 @@
       <item>Astronomische Abenddämmerung (Ende)</item>
       <item>Mondaufgang</item>
       <item>Monduntergang</item>
+    <item>new moon</item>  <!-- TODO -->
+    <item>first quarter</item>  <!-- TODO -->
+    <item>full moon</item>  <!-- TODO -->
+    <item>third quarter</item>  <!-- TODO -->
+    <item>spring equinox</item>    <!-- TODO -->
+    <item>summer solstice</item>   <!-- TODO -->
+    <item>autumn equinox</item>   <!-- TODO -->
+    <item>winter solstice</item>   <!-- TODO -->
   </string-array>
 
   <!-- Dialog: Enable GPS? -->

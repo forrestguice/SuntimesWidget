@@ -19,6 +19,7 @@
     <string name="configAction_setAlarm">Régler l\'alarme</string>
     <string name="configAction_setTimeZone">Choisir le fuseau horaire</string>
     <string name="configAction_setDate">Choisir la date</string>
+    <string name="configAction_viewDate">View Date</string>    <!-- TODO -->
     <string name="configAction_sunDialog">Position du soleil</string>
     <string name="configAction_equinoxDialog">Solstice / Équinoxe</string>
     <string name="configAction_worldMap">World Map</string>  <!-- TODO -->
@@ -950,7 +951,15 @@
         <item>crépuscule nautique</item>
         <item>crépuscule astronomique</item>
         <item>lever de la lune</item>                         
-        <item>coucher de la lune</item>                          
+        <item>coucher de la lune</item>
+        <item>new moon</item>  <!-- TODO -->
+        <item>first quarter</item>  <!-- TODO -->
+        <item>full moon</item>  <!-- TODO -->
+        <item>third quarter</item>  <!-- TODO -->
+        <item>spring equinox</item>    <!-- TODO -->
+        <item>summer solstice</item>   <!-- TODO -->
+        <item>autumn equinox</item>   <!-- TODO -->
+        <item>winter solstice</item>   <!-- TODO -->
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>crépuscule astronomique du matin</item>
@@ -969,7 +978,15 @@
         <item>crépuscule nautique du soir</item>
         <item>crépuscule astronomique du soir</item>
         <item>lever de la lune</item>    
-        <item>coucher de la lune</item>     
+        <item>coucher de la lune</item>
+        <item>new moon</item>  <!-- TODO -->
+        <item>first quarter</item>  <!-- TODO -->
+        <item>full moon</item>  <!-- TODO -->
+        <item>third quarter</item>  <!-- TODO -->
+        <item>spring equinox</item>    <!-- TODO -->
+        <item>summer solstice</item>   <!-- TODO -->
+        <item>autumn equinox</item>   <!-- TODO -->
+        <item>winter solstice</item>   <!-- TODO -->
     </string-array>
 
     <!-- Dialog: Enable GPS? -->

@@ -20,7 +20,7 @@
     <string name="configAction_setAlarm">Set Alarm</string>
     <string name="configAction_setTimeZone">Set Time Zone</string>
     <string name="configAction_setDate">Set Date</string>
-    <string name="configAction_viewDate">View Date</string>    <!-- TODO -->
+    <string name="configAction_viewDate">View Date</string>
     <string name="configAction_sunDialog">Sun Position</string>
     <string name="configAction_equinoxDialog">Solstice / Equinox</string>
     <string name="configAction_worldMap">World Map</string>
@@ -1191,14 +1191,14 @@
         <item>astronomical twilight</item>
         <item>moonrise</item>
         <item>moonset</item>
-        <item>new moon</item>  <!-- TODO -->
-        <item>first quarter</item>  <!-- TODO -->
-        <item>full moon</item>  <!-- TODO -->
-        <item>third quarter</item>  <!-- TODO -->
-        <item>spring equinox</item>    <!-- TODO -->
-        <item>summer solstice</item>   <!-- TODO -->
-        <item>autumn equinox</item>   <!-- TODO -->
-        <item>winter solstice</item>   <!-- TODO -->
+        <item>new moon</item>
+        <item>first quarter</item>
+        <item>full moon</item>
+        <item>third quarter</item>
+        <item>spring equinox</item>
+        <item>summer solstice</item>
+        <item>autumn equinox</item>
+        <item>winter solstice</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>morning astronomical twilight (start)</item>
@@ -1218,14 +1218,14 @@
         <item>evening astronomical twilight (end)</item>
         <item>moonrise</item>
         <item>moonset</item>
-        <item>new moon</item>  <!-- TODO -->
-        <item>first quarter</item>  <!-- TODO -->
-        <item>full moon</item>  <!-- TODO -->
-        <item>third quarter</item>  <!-- TODO -->
-        <item>spring equinox</item>    <!-- TODO -->
-        <item>summer solstice</item>   <!-- TODO -->
-        <item>autumn equinox</item>   <!-- TODO -->
-        <item>winter solstice</item>   <!-- TODO -->
+        <item>new moon</item>
+        <item>first quarter</item>
+        <item>full moon</item>
+        <item>third quarter</item>
+        <item>spring equinox</item>
+        <item>summer solstice</item>
+        <item>autumn equinox</item>
+        <item>winter solstice</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->

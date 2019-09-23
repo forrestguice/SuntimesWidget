@@ -19,6 +19,7 @@
     <string name="configAction_setAlarm">Emlékeztető beállítása</string>
     <string name="configAction_setTimeZone">Időzóna beállítása</string>
     <string name="configAction_setDate">Dátum beállítása</string>
+    <string name="configAction_viewDate">View Date</string>    <!-- TODO -->
     <string name="configAction_sunDialog">Sun Position</string>   <!-- TODO -->
     <string name="configAction_equinoxDialog">Solstice / Equinox</string> <!-- TODO -->
     <string name="configAction_worldMap">World Map</string>  <!-- TODO -->
@@ -956,6 +957,14 @@
         <item>csillagászati szürkület</item>
         <item>moonrise</item>                         <!-- TODO -->
         <item>moonset</item>                          <!-- TODO -->
+        <item>new moon</item>  <!-- TODO -->
+        <item>first quarter</item>  <!-- TODO -->
+        <item>full moon</item>  <!-- TODO -->
+        <item>third quarter</item>  <!-- TODO -->
+        <item>spring equinox</item>    <!-- TODO -->
+        <item>summer solstice</item>   <!-- TODO -->
+        <item>autumn equinox</item>   <!-- TODO -->
+        <item>winter solstice</item>   <!-- TODO -->
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>reggel csillagászati szürkület (kezdete)</item>
@@ -975,6 +984,14 @@
         <item>este csillagászati szürkület (vége)</item>
         <item>moonrise</item>    <!-- TODO -->
         <item>moonset</item>     <!-- TODO -->
+        <item>new moon</item>  <!-- TODO -->
+        <item>first quarter</item>  <!-- TODO -->
+        <item>full moon</item>  <!-- TODO -->
+        <item>third quarter</item>  <!-- TODO -->
+        <item>spring equinox</item>    <!-- TODO -->
+        <item>summer solstice</item>   <!-- TODO -->
+        <item>autumn equinox</item>   <!-- TODO -->
+        <item>winter solstice</item>   <!-- TODO -->
     </string-array>
 
     <!-- Dialog: Enable GPS? -->

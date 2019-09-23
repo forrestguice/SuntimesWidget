@@ -20,6 +20,7 @@
     <string name="configAction_setAlarm">Definir Alarme</string>
     <string name="configAction_setTimeZone">Definir Fuso Horário</string>
     <string name="configAction_setDate">Definir Data</string>
+    <string name="configAction_viewDate">View Date</string>    <!-- TODO -->
     <string name="configAction_sunDialog">Posição do Sol</string>
     <string name="configAction_equinoxDialog">Solstício / Equinócio</string>
     <string name="configAction_worldMap">Mapa Mundial</string>
@@ -1024,6 +1025,14 @@
         <item>crepúsculo astronômico</item>
         <item>nascer da lua</item>
         <item>pôr da lua</item>
+        <item>new moon</item>  <!-- TODO -->
+        <item>first quarter</item>  <!-- TODO -->
+        <item>full moon</item>  <!-- TODO -->
+        <item>third quarter</item>  <!-- TODO -->
+        <item>spring equinox</item>    <!-- TODO -->
+        <item>summer solstice</item>   <!-- TODO -->
+        <item>autumn equinox</item>   <!-- TODO -->
+        <item>winter solstice</item>   <!-- TODO -->
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>crepúsculo astronômico da manhã (início)</item>
@@ -1043,6 +1052,14 @@
         <item>crepúsculo astronômico da tarde (fim)</item>
         <item>nascer da lua</item>
         <item>pôr da lua</item>
+        <item>new moon</item>  <!-- TODO -->
+        <item>first quarter</item>  <!-- TODO -->
+        <item>full moon</item>  <!-- TODO -->
+        <item>third quarter</item>  <!-- TODO -->
+        <item>spring equinox</item>    <!-- TODO -->
+        <item>summer solstice</item>   <!-- TODO -->
+        <item>autumn equinox</item>   <!-- TODO -->
+        <item>winter solstice</item>   <!-- TODO -->
     </string-array>
 
     <!-- Dialog: Enable GPS? -->

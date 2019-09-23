@@ -19,6 +19,7 @@
     <string name="configAction_setAlarm">Alarma ezarri</string>
     <string name="configAction_setTimeZone">Ordu eremua ezarri</string>
     <string name="configAction_setDate">Data ezarri</string>
+    <string name="configAction_viewDate">View Date</string>    <!-- TODO -->
     <string name="configAction_sunDialog">Eguzkiaren kokapena</string>
     <string name="configAction_equinoxDialog">Solstizioak / Ekinokzioak</string>
     <string name="configAction_worldMap">Munduko mapa</string>
@@ -981,6 +982,14 @@
         <item>krepuskulu astronomikoa</item>
         <item>ilargiaren irteera</item>
         <item>ilargia ezkutatzea</item>
+        <item>new moon</item>  <!-- TODO -->
+        <item>first quarter</item>  <!-- TODO -->
+        <item>full moon</item>  <!-- TODO -->
+        <item>third quarter</item>  <!-- TODO -->
+        <item>spring equinox</item>    <!-- TODO -->
+        <item>summer solstice</item>   <!-- TODO -->
+        <item>autumn equinox</item>   <!-- TODO -->
+        <item>winter solstice</item>   <!-- TODO -->
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>goizeko krepuskulu astronomikoa (hasiera)</item>
@@ -1000,6 +1009,14 @@
         <item>arratsaldeko krepuskulu astronomikoa (amaiera)</item>
         <item>ilargiaren irteera</item>
         <item>ilargia ezkutatzea</item>
+        <item>new moon</item>  <!-- TODO -->
+        <item>first quarter</item>  <!-- TODO -->
+        <item>full moon</item>  <!-- TODO -->
+        <item>third quarter</item>  <!-- TODO -->
+        <item>spring equinox</item>    <!-- TODO -->
+        <item>summer solstice</item>   <!-- TODO -->
+        <item>autumn equinox</item>   <!-- TODO -->
+        <item>winter solstice</item>   <!-- TODO -->
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
