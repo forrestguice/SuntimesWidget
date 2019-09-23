@@ -232,12 +232,12 @@
         <item quantity="other">%s feet</item>
     </plurals>
 
-    <string name="units_miles">miles</string>    <!-- TODO -->
-    <string name="units_miles_short">mi</string>    <!-- TODO -->
+    <string name="units_miles">miles</string>
+    <string name="units_miles_short">mi</string>
     <plurals name="units_miles_long">
         <item quantity="one">%s mile</item>
         <item quantity="other">%s miles</item>
-    </plurals>                                     <!-- TODO -->
+    </plurals>
 
     <string name="units_meters">meters</string>
     <string name="units_meters_short">m</string>
@@ -246,12 +246,12 @@
         <item quantity="other">%s meters</item>
     </plurals>
 
-    <string name="units_kilometers">kilometers</string>    <!-- TODO -->
-    <string name="units_kilometers_short">km</string>    <!-- TODO -->
+    <string name="units_kilometers">kilometers</string>
+    <string name="units_kilometers_short">km</string>
     <plurals name="units_kilometers_long">
         <item quantity="one">%s kilometer</item>
         <item quantity="other">%s kilometers</item>
-    </plurals>                                            <!-- TODO -->
+    </plurals>
 
     <!--
          WIDGET CONFIG

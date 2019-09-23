@@ -181,14 +181,28 @@
     <plurals name="units_feet_long">
         <item quantity="one">%s pie</item>
         <item quantity="other">%s pies</item>
-    </plurals>  
+    </plurals>
+
+    <string name="units_miles">miles</string>    <!-- TODO -->
+    <string name="units_miles_short">mi</string>    <!-- TODO -->
+    <plurals name="units_miles_long">
+        <item quantity="one">%s mile</item>
+        <item quantity="other">%s miles</item>
+    </plurals>                                     <!-- TODO -->
 
     <string name="units_meters">metros</string>
     <string name="units_meters_short">m</string>
     <plurals name="units_meters_long">
         <item quantity="one">%s metro</item>
         <item quantity="other">%s metros</item>
-    </plurals>  
+    </plurals>
+
+    <string name="units_kilometers">kilometers</string>    <!-- TODO -->
+    <string name="units_kilometers_short">km</string>    <!-- TODO -->
+    <plurals name="units_kilometers_long">
+        <item quantity="one">%s kilometer</item>
+        <item quantity="other">%s kilometers</item>
+    </plurals>                                            <!-- TODO -->
 
     <!--
          WIDGET CONFIG
