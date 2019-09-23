@@ -229,6 +229,7 @@ public class MoonApsisView extends LinearLayout
         public static final int CENTER_POSITION = 100;
 
         private WeakReference<Context> contextRef;
+        @SuppressLint("UseSparseArrays")
         private HashMap<Integer, SuntimesMoonData0> data = new HashMap<>();
         private boolean isRising = false;
 

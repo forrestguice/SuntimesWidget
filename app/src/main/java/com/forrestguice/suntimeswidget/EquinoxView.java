@@ -500,6 +500,7 @@ public class EquinoxView extends LinearLayout
     {
         public static final int MAX_POSITIONS = 200;
         public static final int CENTER_POSITION = 100;
+        @SuppressLint("UseSparseArrays")
         private HashMap<Integer, SuntimesEquinoxSolsticeDataset> data = new HashMap<>();
 
         private WeakReference<Context> contextRef;

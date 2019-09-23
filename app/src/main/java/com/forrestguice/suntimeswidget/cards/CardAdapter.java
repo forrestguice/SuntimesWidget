@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.cards;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -83,6 +84,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
     public static final int MAX_POSITIONS = 2000;
     public static final int TODAY_POSITION = (MAX_POSITIONS / 2);      // middle position is today
+    @SuppressLint("UseSparseArrays")
     private HashMap<Integer, Pair<SuntimesRiseSetDataset, SuntimesMoonData>> data = new HashMap<>();
 
     @Override

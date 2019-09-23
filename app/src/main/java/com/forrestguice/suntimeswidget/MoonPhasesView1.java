@@ -273,6 +273,7 @@ public class MoonPhasesView1 extends LinearLayout
         public static final int CENTER_POSITION = 100;
 
         private WeakReference<Context> contextRef;
+        @SuppressLint("UseSparseArrays")
         private HashMap<Integer, SuntimesMoonData1> data = new HashMap<>();
         private SuntimesCalculator.MoonPhase nextPhase = SuntimesCalculator.MoonPhase.FULL;
 
