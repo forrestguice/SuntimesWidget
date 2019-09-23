@@ -350,6 +350,22 @@
     <string name="timeMode_moon_waningcrescent_short">Minguante</string>               <!-- label -->
     <string name="timeMode_moon_waningcrescent">Lua Minguante</string>                     <!-- label -->
 
+    <string name="timeMode_moon_super">Supermoon</string>               <!-- label -->    <!-- TODO -->
+    <string name="timeMode_moon_micro">Micromoon</string>               <!-- label -->    <!-- TODO -->
+    <string name="timeMode_moon_superfull">Super Full Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <!--<string name="timeMode_moon_superfull_short">@string/timeMode_moon_super</string>-->     <!-- label -->
+    <string name="timeMode_moon_supernew">Super New Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <!--<string name="timeMode_moon_supernew_short">@string/timeMode_moon_super</string>-->     <!-- label -->
+    <string name="timeMode_moon_microfull">Micro Full Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <!--<string name="timeMode_moon_microfull_short">@string/timeMode_moon_micro</string>-->     <!-- label -->
+    <string name="timeMode_moon_micronew">Micro New Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <!--<string name="timeMode_moon_micronew_short">@string/timeMode_moon_micro</string>-->     <!-- label -->
+
+    <!--<string name="timeMode_moon_perigee">@string/label_perigee</string>-->                             <!-- label -->
+    <!--<string name="timeMode_moon_apogee">@string/label_apogee</string>-->                             <!-- label -->
+    <string name="label_apogee">Apogee</string>      <!-- TODO -->
+    <string name="label_perigee">Perigee</string>    <!-- TODO -->
+
     <string name="configLabel_general_timeMode">Modo:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: layout mode -->
@@ -360,9 +376,12 @@
 
     <string name="widgetMode1x1_altaz">Altitude &amp; Azimute</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Declinação &amp; Ascensão Reta</string>     <!-- setting -->
+    <string name="widgetMode1x1_distance">Current distance</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode1x1_apsis">Next apogee or perigee</string>     <!-- setting -->    <!-- TODO -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Básico</string>  <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [north]</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [south]</string>     <!-- setting -->  <!-- TODO -->
     <string name="widgetMode_sunPosMap_bluemarble">Bola Azul</string>    <!-- setting -->
 
     <string name="widgetMode1x1_moonriseset">Nascer da Lua&amp; Pôr da Lua</string>     <!-- setting -->
