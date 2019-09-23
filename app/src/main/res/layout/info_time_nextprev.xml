@@ -12,14 +12,6 @@
         android:contentDescription="@string/prevDay" />
 
     <ImageButton
-        android:id="@+id/info_time_centerbtn"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:src="?attr/icActionTimeReset"
-        android:background="@drawable/ic_transparent"
-        android:contentDescription="@string/today" />
-
-    <ImageButton
         android:id="@+id/info_time_nextbtn"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="end"

@@ -61,7 +61,6 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
     public ImageButton btn_flipperNext;
     public ImageButton btn_flipperPrev;
-    public ImageButton btn_flipperCenter;
 
     public View sunriseHeader;
     public TextView header_sunrise;
@@ -92,7 +91,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
     public int position = RecyclerView.NO_POSITION;
 
-    public CardViewHolder(View view)
+    public CardViewHolder(View view, CardAdapter.CardAdapterOptions options)
     {
         super(view);
 
@@ -152,7 +151,8 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
         btn_flipperNext = (ImageButton)view.findViewById(R.id.info_time_nextbtn);
         btn_flipperPrev = (ImageButton)view.findViewById(R.id.info_time_prevbtn);
-        btn_flipperCenter = (ImageButton)view.findViewById(R.id.info_time_centerbtn);
+
+        themeCardViews(view.getContext(), options);
     }
 
     public void bindDataToPosition(@NonNull Context context, int position, @NonNull Pair<SuntimesRiseSetDataset, SuntimesMoonData> data, CardAdapter.CardAdapterOptions options)
@@ -160,11 +160,6 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         this.position = position;
         SuntimesRiseSetDataset sun = data.first;
         SuntimesMoonData moon = data.second;
-
-        if (options.themeOverride != null) {
-            themeCardViews(context, options.themeOverride, options);
-        }
-        themeCardViews(context, options, position);
 
         row_actual.setVisible(options.showActual);
         row_civil.setVisible(options.showCivil);
@@ -288,22 +283,31 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
         // lightmap
         lightmapLayout.setVisibility(options.showLightmap ? View.VISIBLE : View.GONE);
+        lightmap.getColors().option_drawNow = (position == CardAdapter.TODAY_POSITION) ? LightMapView.LightMapColors.DRAW_SUN1 : LightMapView.LightMapColors.DRAW_SUN2;
         lightmap.updateViews(options.showLightmap ? sun : null);
+
+        toggleNextPrevButtons(position);
     }
 
-    protected void themeCardViews(Context context, CardAdapter.CardAdapterOptions options, int position)
+    public void toggleNextPrevButtons(int position)
+    {
+        int offset = (position - CardAdapter.TODAY_POSITION);
+        if (offset > 1 || offset < -1) {
+            btn_flipperNext.setVisibility(offset > 0 ? View.GONE : View.VISIBLE);
+            btn_flipperPrev.setVisibility(offset < 0 ? View.GONE : View.VISIBLE);
+        } else {
+            btn_flipperNext.setVisibility(View.GONE);
+            btn_flipperPrev.setVisibility(View.GONE);
+        }
+    }
+
+    protected void themeCardViews(Context context, CardAdapter.CardAdapterOptions options)
     {
         if (options.themeOverride != null) {
             themeCardViews(context, options.themeOverride, options);
         }
-        ImageViewCompat.setImageTintList(btn_flipperNext, SuntimesUtils.colorStateList(options.color_enabled, options.color_disabled, options.color_pressed));
-        ImageViewCompat.setImageTintList(btn_flipperPrev, SuntimesUtils.colorStateList(options.color_enabled, options.color_disabled, options.color_pressed));
-
-        //int offset = Math.abs(position - CardAdapter.TODAY_POSITION);
-        //int centerEnabledColor = (offset >= 2 ? options.color_warning : options.color_enabled);
-        ImageViewCompat.setImageTintList(btn_flipperCenter, SuntimesUtils.colorStateList(options.color_enabled, options.color_disabled, options.color_pressed));
-
-        lightmap.getColors().option_drawNow = (position == CardAdapter.TODAY_POSITION) ? LightMapView.LightMapColors.DRAW_SUN1 : LightMapView.LightMapColors.DRAW_SUN2;
+        ImageViewCompat.setImageTintList(btn_flipperNext, SuntimesUtils.colorStateList(options.color_accent, options.color_disabled, options.color_pressed));
+        ImageViewCompat.setImageTintList(btn_flipperPrev, SuntimesUtils.colorStateList(options.color_accent, options.color_disabled, options.color_pressed));
     }
 
     protected void themeCardViews(Context context, @NonNull SuntimesTheme theme, CardAdapter.CardAdapterOptions options)

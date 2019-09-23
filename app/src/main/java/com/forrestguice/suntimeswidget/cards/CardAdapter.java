@@ -24,6 +24,7 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -68,7 +69,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
     private void initTheme(Context context)
     {
-        int[] attrs = new int[] { android.R.attr.textColorPrimary, R.attr.buttonPressColor, R.attr.text_disabledColor, R.attr.tagColor_warning, R.attr.text_accentColor };
+        int[] attrs = new int[] { android.R.attr.textColorPrimary, R.attr.buttonPressColor, R.attr.text_disabledColor, R.attr.tagColor_warning, R.attr.text_accentColor, R.attr.colorBackgroundFloating };
         TypedArray a = context.obtainStyledAttributes(attrs);
         options.color_textTimeDelta = ContextCompat.getColor(context, a.getResourceId(0, Color.WHITE));
         options.color_enabled = options.color_textTimeDelta;
@@ -76,6 +77,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         options.color_disabled = ContextCompat.getColor(context, a.getResourceId(2, R.color.text_disabled_dark));
         options.color_warning = ContextCompat.getColor(context, a.getResourceId(3, R.color.warningTag_dark));
         options.color_accent = ContextCompat.getColor(context, a.getResourceId(4, R.color.text_accent_dark));
+        options.color_background = ColorUtils.setAlphaComponent(ContextCompat.getColor(context, a.getResourceId(5, R.color.transparent)), (int)(9d * (254d / 10d)));
         a.recycle();
     }
 
@@ -170,7 +172,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     {
         LayoutInflater layout = LayoutInflater.from(parent.getContext());
         View view = layout.inflate(R.layout.info_time_card1b, parent, false);
-        return new CardViewHolder(view);
+        return new CardViewHolder(view, options);
     }
 
     /**
@@ -269,7 +271,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         holder.lightmapLayout.setOnLongClickListener(onLightmapLongClick(position));
         holder.btn_flipperNext.setOnClickListener(onNextClick(position));
         holder.btn_flipperPrev.setOnClickListener(onPrevClick(position));
-        holder.btn_flipperCenter.setOnClickListener(onCenterClick(position));
     }
 
     private void detachClickListeners(@NonNull CardViewHolder holder)
@@ -286,7 +287,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         holder.lightmapLayout.setOnLongClickListener(null);
         holder.btn_flipperNext.setOnClickListener(null);
         holder.btn_flipperPrev.setOnClickListener(null);
-        holder.btn_flipperCenter.setOnClickListener(null);
     }
 
     private View.OnClickListener onDateClick(final int position) {
@@ -377,7 +377,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         return  new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapterListener.onNextClick(CardAdapter.this, position);
+                //adapterListener.onNextClick(CardAdapter.this, position);
+                onCenterClick(position).onClick(v);
             }
         };
     }
@@ -385,7 +386,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         return  new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapterListener.onPrevClick(CardAdapter.this, position);
+                //adapterListener.onPrevClick(CardAdapter.this, position);
+                onCenterClick(position).onClick(v);
             }
         };
     }
@@ -499,7 +501,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         public boolean showBlue = false;
 
         public SuntimesTheme themeOverride = null;
-        public int color_textTimeDelta, color_enabled, color_disabled, color_pressed, color_warning, color_accent;
+        public int color_textTimeDelta, color_enabled, color_disabled, color_pressed, color_warning, color_accent, color_background;
 
         public int highlightPosition = -1;
         public SolarEvents highlightEvent = null;
