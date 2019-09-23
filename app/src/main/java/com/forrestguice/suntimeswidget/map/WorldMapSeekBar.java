@@ -82,6 +82,19 @@ public class WorldMapSeekBar extends AppCompatSeekBar
     }
 
     @Override
+    public void setThumb(Drawable drawable)
+    {
+        super.setThumb(drawable);
+        thumb = drawable;
+    }
+
+    @Override
+    public Drawable getThumb() {
+        return thumb;
+    }
+    private Drawable thumb;
+
+    @Override
     protected void onDraw(Canvas canvas)
     {
         super.onDraw(canvas);
