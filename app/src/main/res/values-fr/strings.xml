@@ -534,6 +534,7 @@
     <string name="widgetLabel_rightAscension_short">AD</string>    <!-- label -->  
     <string name="widgetLabel_declination">Déclination</string>           <!-- label -->  
     <string name="widgetLabel_declination_short">Dec</string>           <!-- label -->
+    <string name="widgetLabel_distance">Distance</string>           <!-- label -->    <!-- TODO -->
 
     <!--
          ALARM CLOCK
@@ -873,9 +874,20 @@
 
     <!-- Dialog: World Map -->
     <string name="worldmap_dialog_title">@string/configAction_worldMap</string>   <!-- TODO -->
+    <string name="worldmap_dialog_action_play">Play</string>       <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_pause">Pause</string>     <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_record">Record</string>   <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_next">Next</string>       <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_prev">Previous</string>   <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_reset">Reset</string>     <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_menu">Options</string>       <!-- button (contentDescription) --> <!-- TODO -->
     <string name="worldmap_dialog_option_sunlight">Sunlight</string>              <!-- TODO -->
     <string name="worldmap_dialog_option_moonlight">Moonlight</string>            <!-- TODO -->
     <string name="worldmap_dialog_option_all">Both</string>                       <!-- TODO -->
+    <string name="worldmap_dialog_option_location">Location</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_latitudes">Latitudes</string>    <!-- TODO -->
+    <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- TODO -->
+    <string name="worldmap_dialog_speed_1d">&#215; 1d</string>    <!-- TODO -->
     <string name="configAction_shareMap">Share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->  <!-- TODO -->
 
     <!-- Dialog: Set Alarm -->
@@ -1034,6 +1046,7 @@
     <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> par <xliff:g id="authorList">%2$s</xliff:g>.]]></string>   <!-- TODO: review -->
     <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
     <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, et <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
+    <string name="creditsTab">Credits</string>   <!-- TODO -->
 
     <string name="app_legal3"><![CDATA[ <b>Bibliothèques:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
@@ -1129,6 +1142,7 @@
     <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>    <!-- TODO -->
     <string name="privacy_permissiondialog_ignore">Ignore</string>    <!-- TODO -->
     <string name="privacy_permissiondialog_title">Permissions</string> <!-- TODO -->
+    <string name="privacyTab">Privacy</string>   <!-- TODO -->
 
     <string name="security_dialog_title">Security Alert</string>  <!-- TODO -->
     <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  <!-- TODO -->
