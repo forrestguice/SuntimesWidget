@@ -1146,6 +1146,13 @@
 
     <!-- Dialog: World Map -->
     <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
+    <string name="worldmap_dialog_action_play">Play</string>       <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_pause">Pause</string>     <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_record">Record</string>   <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_next">Next</string>       <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_prev">Previous</string>   <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_reset">Reset</string>     <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_menu">Menu</string>       <!-- button (contentDescription) --> <!-- TODO -->
     <string name="worldmap_dialog_option_sunlight">Sunlight</string>
     <string name="worldmap_dialog_option_moonlight">Moonlight</string>
     <string name="worldmap_dialog_option_all">Both</string>

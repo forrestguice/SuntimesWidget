@@ -101,6 +101,7 @@
                     android:id="@+id/media_prev_map"
                     android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
                     android:background="@null" android:scaleY="0.75" android:scaleX="0.75"
+                    android:contentDescription="@string/worldmap_dialog_action_prev"
                     android:src="?attr/icActionPrevious" />
 
                 <TextView
@@ -113,6 +114,7 @@
                     android:id="@+id/media_next_map"
                     android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
                     android:background="@null" android:scaleY="0.75" android:scaleX="0.75"
+                    android:contentDescription="@string/worldmap_dialog_action_next"
                     android:src="?attr/icActionNext" />
 
             </LinearLayout>
@@ -131,6 +133,7 @@
                 android:id="@+id/media_reset_map"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:background="@null"
+                android:contentDescription="@string/worldmap_dialog_action_reset"
                 android:src="?attr/icActionTimeReset" />
 
             <ImageButton
@@ -139,6 +142,7 @@
                 android:background="@null"
                 android:layout_marginLeft="16dp" android:layout_marginStart="16dp"
                 android:layout_marginRight="16dp" android:layout_marginEnd="16dp"
+                android:contentDescription="@string/worldmap_dialog_action_play"
                 android:src="?attr/icActionPlay" />
 
             <ImageButton android:visibility="gone"
@@ -147,6 +151,7 @@
                 android:background="@null"
                 android:layout_marginLeft="16dp" android:layout_marginStart="16dp"
                 android:layout_marginRight="16dp" android:layout_marginEnd="16dp"
+                android:contentDescription="@string/worldmap_dialog_action_pause"
                 android:src="?attr/icActionPause" />
 
             <ImageButton android:visibility="gone"
@@ -155,6 +160,7 @@
                 android:background="@null"
                 android:layout_marginLeft="16dp" android:layout_marginStart="16dp"
                 android:layout_marginRight="16dp" android:layout_marginEnd="16dp"
+                android:contentDescription="@string/worldmap_dialog_action_record"
                 android:src="?attr/icActionRecord" />
 
             <View
@@ -165,6 +171,7 @@
                 android:id="@+id/map_menu"
                 android:layout_width="24dp" android:layout_height="24dp"
                 android:background="@null"
+                android:contentDescription="@string/worldmap_dialog_action_menu"
                 style="?attr/actionOverflowButtonStyle" />
 
         </LinearLayout>

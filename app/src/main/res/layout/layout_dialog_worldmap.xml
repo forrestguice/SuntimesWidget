@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -97,6 +97,7 @@
             android:id="@+id/media_reset_map"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:background="@null" android:layout_marginRight="16dp" android:layout_marginEnd="16dp"
+            android:contentDescription="@string/worldmap_dialog_action_reset"
             android:src="?attr/icActionTimeReset" />
 
         <ImageButton
@@ -104,6 +105,7 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:background="@null"
             app:layout_constraintStart_toEndOf="@+id/media_reset_map"
+            android:contentDescription="@string/worldmap_dialog_action_play"
             android:src="?attr/icActionPlay" />
 
         <ImageButton android:visibility="gone"
@@ -111,6 +113,7 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:background="@null"
             app:layout_constraintStart_toEndOf="@+id/media_reset_map"
+            android:contentDescription="@string/worldmap_dialog_action_pause"
             android:src="?attr/icActionPause" />
 
         <ImageButton android:visibility="gone"
@@ -118,6 +121,7 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:background="@null"
             app:layout_constraintStart_toEndOf="@+id/media_reset_map"
+            android:contentDescription="@string/worldmap_dialog_action_record"
             android:src="?attr/icActionRecord" />
 
         <ImageButton
@@ -126,6 +130,7 @@
             android:background="@null" android:scaleY="0.75" android:scaleX="0.75"
             app:layout_constraintEnd_toStartOf="@+id/info_time_offset"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="@string/worldmap_dialog_action_prev"
             android:src="?attr/icActionPrevious" />
 
         <TextView
@@ -142,6 +147,7 @@
             android:background="@null" android:scaleY="0.75" android:scaleX="0.75"
             app:layout_constraintStart_toEndOf="@+id/info_time_offset"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="@string/worldmap_dialog_action_next"
             android:src="?attr/icActionNext" />
 
         <TextView
@@ -156,6 +162,7 @@
             android:layout_width="24dp" android:layout_height="24dp"
             android:background="@null"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="@string/worldmap_dialog_action_menu"
             style="?attr/actionOverflowButtonStyle" />
 
     </android.support.constraint.ConstraintLayout>
