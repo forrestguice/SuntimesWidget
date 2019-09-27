@@ -29,6 +29,7 @@ import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -441,7 +442,10 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
 
     public static void verifyWidgetSettings(Context context)
     {
-        onView(withId(R.id.widgetList)).check(assertEnabled);
+        ArrayAdapter widgetAdapter = SuntimesWidgetListActivity.WidgetListAdapter.createWidgetListAdapter(context);
+        if (widgetAdapter.isEmpty())
+            onView(withId(android.R.id.empty)).check(assertEnabled);
+        else onView(withId(R.id.widgetList)).check(assertEnabled);
     }
 
     /**

@@ -33,6 +33,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
+
 import static junit.framework.Assert.assertTrue;
 
 @LargeTest
@@ -67,10 +69,10 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_stringArrayLength("timezoneSort_display", R.array.timezoneSort_display, "TimeZoneSort (ENUM)", WidgetTimezones.TimeZoneSort.values());
 
             verify_stringArrayLength("clockTapActions_values", R.array.clockTapActions_values, "clockTapActions_display", R.array.clockTapActions_display);
-            verify_stringArrayLength("clockTapActions_display", R.array.clockTapActions_display, "ClockTapAction (ENUM)", AppSettings.TapAction.values());
+            verify_enumTapActions("clockTapActions_values", R.array.clockTapActions_values);
 
             verify_stringArrayLength("dateTapActions_values", R.array.dateTapActions_values, "dateTapActions_display", R.array.dateTapActions_display);
-            verify_stringArrayLength("dateTapActions_display", R.array.dateTapActions_display, "DateTapAction (ENUM)", AppSettings.TapAction.values());
+            verify_enumTapActions("dateTapActions_values", R.array.dateTapActions_values);
 
             verify_stringArrayLength("timeFormatMode_values", R.array.timeFormatMode_values, "timeFormatMode_display", R.array.timeFormatMode_display);
             verify_stringArrayLength("timeFormatMode_display", R.array.timeFormatMode_display, "TimeFormatMode (ENUM)", WidgetSettings.TimeFormatMode.values());
@@ -82,6 +84,29 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_stringArrayLength("noteTapActions_values", R.array.noteTapActions_values, "noteTapActions_display", R.array.noteTapActions_display);
             verify_stringArrayLength("solsticeTrackingMode_values", R.array.solsticeTrackingMode_values, "solsticeTrackingMode_display", R.array.solsticeTrackingMode_display);
         }
+    }
+
+    public void verify_enumTapActions(String tag1, int array1Id)
+    {
+        Context context = activityRule.getActivity();
+        String[] values = context.getResources().getStringArray(array1Id);
+        ArrayList<String> badValues = new ArrayList<>();
+        StringBuilder badValuesString = new StringBuilder();
+
+        for (String value : values)
+        {
+            try {
+                AppSettings.TapAction action = AppSettings.TapAction.valueOf(value);
+
+            } catch (IllegalArgumentException e) {
+                badValues.add(value);
+                badValuesString.append(value);
+                badValuesString.append(",");
+            }
+        }
+
+        assertTrue("The array + (" + tag1 + ") contains invalid enum values: " + badValuesString,
+                badValues.size() == 0);
     }
 
     public void verify_stringArrayLength(String tag1, int array1Id, String tag2, int array2Id)

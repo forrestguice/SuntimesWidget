@@ -150,7 +150,8 @@ public class TimeZoneDialogTest extends SuntimesActivityTestBase
         onView(withId(R.id.appwidget_timezone_custom_label)).check(assertEnabled);
         onView(withId(R.id.appwidget_timezone_custom_label)).check(assertClickable);
 
-        String timezoneId = WidgetSettings.loadTimezonePref(context, 0);
+        WidgetSettings.TimezoneMode timezoneMode = WidgetSettings.loadTimezoneModePref(context, 0);
+        String timezoneId = WidgetSettings.loadTimezonePref(context, 0, (timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE ? TimeZoneDialog.SLOT_CUSTOM0 : ""));
         onView(withId(R.id.appwidget_timezone_custom)).check(matches(withSpinnerText( containsString(timezoneId) )));
         onView(withId(R.id.appwidget_timezone_custom)).check(assertEnabled);
     }
