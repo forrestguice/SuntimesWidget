@@ -105,15 +105,15 @@
     <string name="until_end">為止</string>
 
     <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. the time component is shown on the next line -->
-        <item quantity="one">at</item>
+        <!--<item quantity="one">at</item>-->
         <item quantity="other">at</item>
     </plurals>  <!-- TODO -->
     <plurals name="offset_before_plural">      <!-- e.g. "30m before \n 5:30PM" .. the time component is shown on the next line -->
-        <item quantity="one">%1$s before</item>
+        <!--<item quantity="one">%1$s before</item>-->
         <item quantity="other">%1$s before</item>
     </plurals>  <!-- TODO -->
     <plurals name="offset_after_plural">      <!-- e.g. "30m after \n 5:30PM" .. the time component is shown on the next line -->
-        <item quantity="one">%1$s after</item>
+        <!--<item quantity="one">%1$s after</item>-->
         <item quantity="other">%1$s after</item>
     </plurals>  <!-- TODO -->
 
@@ -189,28 +189,28 @@
     <string name="units_feet">英尺</string>
     <string name="units_feet_short">ft</string>
     <plurals name="units_feet_long">
-        <item quantity="one">%s 英尺</item>
+        <!--<item quantity="one">%s 英尺</item>-->
         <item quantity="other">%s 英尺</item>
     </plurals>
 
     <string name="units_miles">miles</string>    <!-- TODO -->
     <string name="units_miles_short">mi</string>    <!-- TODO -->
     <plurals name="units_miles_long">
-        <item quantity="one">%s mile</item>
+        <!--<item quantity="one">%s mile</item>-->
         <item quantity="other">%s miles</item>
     </plurals>                                     <!-- TODO -->
 
     <string name="units_meters">米</string>
     <string name="units_meters_short">m</string>
     <plurals name="units_meters_long">
-        <item quantity="one">%s 米</item>
+        <!--<item quantity="one">%s 米</item>-->
         <item quantity="other">%s 米</item>
     </plurals>
 
     <string name="units_kilometers">kilometers</string>    <!-- TODO -->
     <string name="units_kilometers_short">km</string>    <!-- TODO -->
     <plurals name="units_kilometers_long">
-        <item quantity="one">%s kilometer</item>
+        <!--<item quantity="one">%s kilometer</item>-->
         <item quantity="other">%s kilometers</item>
     </plurals>                                            <!-- TODO -->
 
@@ -705,17 +705,17 @@
     <string name="no_reminder">Never</string> <!-- TODO -->
 
     <plurals name="units_hours">
-        <item quantity="one">%d hour</item>
+        <!--<item quantity="one">%d hour</item>-->
         <item quantity="other">%d hours</item>
     </plurals>  <!-- TODO -->
 
     <plurals name="units_minutes">
-        <item quantity="one">%d minute</item>
+        <!--<item quantity="one">%d minute</item>-->
         <item quantity="other">%d minutes</item>
     </plurals>  <!-- TODO -->
 
     <plurals name="units_seconds">
-        <item quantity="one">%d second</item>
+        <!--<item quantity="one">%d second</item>-->
         <item quantity="other">%d seconds</item>
     </plurals>  <!-- TODO -->
 
