@@ -393,18 +393,6 @@ public class AppSettings
         return pref.getBoolean(PREF_KEY_UI_SHOWDATASOURCE, PREF_DEF_UI_SHOWDATASOURCE);
     }
 
-    /**public static boolean loadBlueHourPref( Context context )
-    {
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getBoolean(PREF_KEY_UI_SHOWBLUEHOUR, PREF_DEF_UI_SHOWBLUEHOUR);
-    }
-
-    public static boolean loadGoldHourPref( Context context )
-    {
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return pref.getBoolean(PREF_KEY_UI_SHOWGOLDHOUR, PREF_DEF_UI_SHOWGOLDHOUR);
-    }*/
-
     public static boolean[] loadShowFieldsPref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);

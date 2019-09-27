@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2018 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -93,15 +93,20 @@ public class AppSettingsTest extends SuntimesActivityTestBase
     }
 
     @Test
-    public void test_showBlueHourPref()
+    public void test_showFieldsPref()
     {
-        assertTrue("STUB: TODO", true == false);
+        verify_showFields(false);
+        verify_showFields(true);
     }
 
-    @Test
-    public void test_showGoldHourPref()
+    private void verify_showFields(boolean value)
     {
-        assertTrue("STUB: TODO", true == false);
+        for (int i=0; i<AppSettings.NUM_FIELDS; i++)
+        {
+            AppSettings.saveShowFieldsPref(context, i, value);
+            boolean[] showFields = AppSettings.loadShowFieldsPref(context);
+            assertTrue("field " + i + " should be + " + value, showFields[i] == value);
+        }
     }
 
     @Test
