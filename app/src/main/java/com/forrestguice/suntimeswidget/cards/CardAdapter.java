@@ -96,6 +96,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     {
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> retValue;
         data.clear();
+        invalidated = false;
         options.init(context);
         initData(context, TODAY_POSITION - 1);
         retValue = initData(context, TODAY_POSITION);
@@ -108,7 +109,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     public Pair<SuntimesRiseSetDataset, SuntimesMoonData> initData(Context context, int position)
     {
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> dataPair = data.get(position);
-        if (dataPair == null) {
+        if (dataPair == null && !invalidated) {
             data.put(position, dataPair = createData(context, position));   // data is removed in onViewRecycled
             Log.d("DEBUG", "add data " + position);
         }
@@ -212,21 +213,27 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         int position = TODAY_POSITION;
         do {
             Pair<SuntimesRiseSetDataset, SuntimesMoonData> dataPair = initData(context, position);
-            SuntimesRiseSetDataset sun = dataPair.first;
-            SuntimesMoonData moon = dataPair.second;
-            Calendar now = sun.now();
+            SuntimesRiseSetDataset sun = ((dataPair == null) ? null : dataPair.first);
+            SuntimesMoonData moon = ((dataPair == null) ? null : dataPair.second);
+            Calendar now;
 
             boolean found = false;
             switch (event) {
                 case MOONRISE: case MOONSET:
-                    eventCalendars = moon.getRiseSetEvents(event);  // { yesterday, today, tomorrow }
-                    found = now.before(eventCalendars[1]) && now.after(eventCalendars[0]);
+                    if (moon != null) {
+                        now = moon.now();
+                        eventCalendars = moon.getRiseSetEvents(event);  // { yesterday, today, tomorrow }
+                        found = now.before(eventCalendars[1]) && now.after(eventCalendars[0]);
+                    }
                     break;
                 case SUNRISE: case SUNSET: case NOON:
                 case MORNING_CIVIL: case EVENING_CIVIL: case MORNING_NAUTICAL: case EVENING_NAUTICAL: case MORNING_ASTRONOMICAL: case EVENING_ASTRONOMICAL:
                 case MORNING_BLUE4: case EVENING_BLUE4: case MORNING_BLUE8: case EVENING_BLUE8: case MORNING_GOLDEN: case EVENING_GOLDEN:
-                    eventCalendars = sun.getRiseSetEvents(event);  // { today, tomorrow }
-                    found = now.before(eventCalendars[0]);
+                    if (sun != null) {
+                        now = sun.now();
+                        eventCalendars = sun.getRiseSetEvents(event);  // { today, tomorrow }
+                        found = now.before(eventCalendars[0]);
+                    }
                     break;
             }
 
@@ -240,6 +247,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
         notifyDataSetChanged();
         return options.highlightPosition;
+    }
+
+    private boolean invalidated = false;
+    public void invalidateData()
+    {
+        invalidated = true;
+        data.clear();
+        notifyDataSetChanged();
     }
 
     /**

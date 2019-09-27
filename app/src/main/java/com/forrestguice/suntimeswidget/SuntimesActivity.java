@@ -1444,7 +1444,10 @@ public class SuntimesActivity extends AppCompatActivity
 
     protected void invalidateData( Context context )
     {
-        // TODO
+        dataset.invalidateCalculation();
+        dataset_moon.invalidateCalculation();
+        dataset_equinox.invalidateCalculation();
+        card_adapter.invalidateData();
         updateViews(context);
     }
 
