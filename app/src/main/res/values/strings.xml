@@ -1045,7 +1045,7 @@
         <item>Basque</item>
         <item>Norwegian</item>
         <item>Traditional Chinese</item>
-        <item>Portuguese</item>  <!-- TODO -->
+        <item>Portuguese</item>
     </string-array>
     <string-array name="locale_display_native" translatable="false">             <!-- one-to-one with locale_values -->
         <item>English</item>
@@ -1060,7 +1060,7 @@
         <item>Euskara</item>
         <item>Norsk</item>
         <item>正體中文</item>
-        <item>Português</item>
+        <item>Português Brasileiro</item>
     </string-array>
     <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
         <item>en</item>
