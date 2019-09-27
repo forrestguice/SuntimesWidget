@@ -1,13 +1,14 @@
-<p>O app mostra o tempo da luz do sol e da lua, alÈm de ser um despertador e um kid de widgets.</p>
-<p>Saiba o momento do nascer e pÙr do sol, crep˙sculos (civil, n·utico e astronÙmico), hora dourada e azul, os solstÌcios e equinÛcios, nascer, pÙr, fases e iluminaÁ„o da lua. O alarme pode programar repetiÁıes di·rias (ou notificaÁıes) para nascer e pÙr do sol e outros eventos.</p>
-<p>Os tempos mostrados pelo app s„o estimativos. N„o h· qualquer necessidade de conex„o com a internet. GPS È opcional.</p>
-O app pode solicitar as seguintes permissıes:
+<p>O app mostra o tempo da luz do sol e da lua, al√©m de ser um despertador e um kid de widgets.</p>
+<p>Saiba o momento do nascer e p√¥r do sol, crep√∫sculos (civil, n√°utico e astron√¥mico), hora dourada e azul, os solst√≠cios e equin√≥cios, nascer, p√¥r, fases e ilumina√ß√£o da lua. O alarme pode programar repeti√ß√µes di√°rias (ou notifica√ß√µes) para nascer e p√¥r do sol e outros eventos.</p>
+<p>Os tempos mostrados pelo app s√£o estimativos. N√£o h√° qualquer necessidade de conex√£o com a internet. GPS √© opcional.</p>
+O app pode solicitar as seguintes permiss√µes:
 
 <ul>
-<li><small><u>ACCESS_FINE_LOCATION</u></small> para obter a atual localizaÁ„o (latitude, longitude e altitude).</li>
-<li><small><u>BOOT_COMPLETED</u></small> para restaurar alarmes ativos apÛs iniciar o sistema.</li>
+<li><small><u>ACCESS_FINE_LOCATION</u></small> para obter a atual localiza√ß√£o (latitude, longitude e altitude).</li>
+<li><small><u>BOOT_COMPLETED</u></small> para restaurar alarmes ativos ap√≥s iniciar o sistema.</li>
 <li><small><u>SET_ALARM</u></small> para programar alarmes usando o app de despertador.</li>
 <li><small><u>VIBRATE</u></small> usado para notificar alarme.</li>
 <li><small><u>WRITE_EXTERNAL_STORAGE</u></small> para realizar backup para arquivos (locais, temas, etc)<small>(api<=apenas 18)</small>.</li>
 </ul>
-<p>ObservaÁ„o: A "IntegraÁ„o com Calend·rio" e permissıes adicionadas na vers„o 0.9.0 foram removidos na ediÁ„o posterior. Agora a funÁ„o est· disponÌvel atravÈs de um app separado: o <a href="https://f-droid.org/en/packages/com.forrestguice.suntimescalendars">Calend·rio Suntimes</a>.</p>
+<p>Observa√ß√£o: A "Integra√ß√£o com Calend√°rio" e permiss√µes adicionadas na vers√£o 0.9.0 foram removidos na edi√ß√£o posterior. Agora a fun√ß√£o est√° dispon√≠vel atrav√©s de um app separado: o <a href="https://f-droid.org/en/packages/com.forrestguice.suntimescalendars">Calend√°rio Suntimes</a>.</p>
+
