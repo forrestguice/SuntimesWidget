@@ -300,16 +300,16 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
 
     public static void verifyOnClockClick(SuntimesActivity activity, int noteIndex)
     {
-        AppSettings.ClockTapAction tapAction = AppSettings.loadClockTapActionPref(activity);
-        if (tapAction == AppSettings.ClockTapAction.ALARM)
+        AppSettings.TapAction tapAction = AppSettings.loadClockTapActionPref(activity);
+        if (tapAction == AppSettings.TapAction.ALARM)
         {
             verifyAlarmDialog();
             cancelAlarmDialog();
 
-        } else if (tapAction == AppSettings.ClockTapAction.PREV_NOTE) {
+        } else if (tapAction == AppSettings.TapAction.PREV_NOTE) {
             verifyOnNotePrev(activity, noteIndex);
 
-        } else if (tapAction == AppSettings.ClockTapAction.NEXT_NOTE) {
+        } else if (tapAction == AppSettings.TapAction.NEXT_NOTE) {
             verifyOnNoteNext(activity, noteIndex);
 
         } /**else {
@@ -349,16 +349,16 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
 
     public static void verifyOnNoteClick(SuntimesActivity activity, int noteIndex)
     {
-        AppSettings.ClockTapAction tapAction = AppSettings.loadNoteTapActionPref(activity);
-        if (tapAction == AppSettings.ClockTapAction.ALARM)
+        AppSettings.TapAction tapAction = AppSettings.loadNoteTapActionPref(activity);
+        if (tapAction == AppSettings.TapAction.ALARM)
         {
             verifyAlarmDialog();
             cancelAlarmDialog();
 
-        } else if (tapAction == AppSettings.ClockTapAction.NEXT_NOTE) {
+        } else if (tapAction == AppSettings.TapAction.NEXT_NOTE) {
             verifyOnNoteNext(activity, noteIndex);
 
-        } else if (tapAction == AppSettings.ClockTapAction.PREV_NOTE) {
+        } else if (tapAction == AppSettings.TapAction.PREV_NOTE) {
             verifyOnNotePrev(activity, noteIndex);
 
         } /**else {
@@ -411,23 +411,19 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     {
         // click on the date field
         boolean showingToday = viewIsDisplayed(R.id.info_time_all_today);
-        Matcher<View> dateField = (showingToday
-                  ? allOf(withId(R.id.text_date), isDescendantOfA(withId(R.id.info_time_all_today)))
-                  : allOf(withId(R.id.text_date), isDescendantOfA(withId(R.id.info_time_all_tomorrow))) );
+        Matcher<View> dateField = allOf(withId(R.id.text_date), isDescendantOfA(withId(R.id.info_time_all_today)));
         onView(dateField).perform(click());
         showingToday = !showingToday;
 
         // verify the action
-        AppSettings.DateTapAction tapAction = AppSettings.loadDateTapActionPref(activityRule.getActivity());
-        if (tapAction == AppSettings.DateTapAction.CONFIG_DATE)
+        AppSettings.TapAction tapAction = AppSettings.loadDateTapActionPref(activityRule.getActivity());
+        if (tapAction == AppSettings.TapAction.CONFIG_DATE)
         {
             verifyDateDialog(activityRule.getActivity());
             cancelDateDialog();
 
-        } else if (tapAction == AppSettings.DateTapAction.SWAP_CARD) {
-            if (showingToday)
-                verifyTimeCard_today();
-            else verifyTimeCard_tomorrow();
+        } else if (tapAction == AppSettings.TapAction.SWAP_CARD) {
+            verifyTimeCard_today();
 
         } /**else if (tapAction == AppSettings.DateTapAction.SHOW_CALENDAR) {
             // TODO
@@ -500,15 +496,13 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
 
     private void userSwappedCard(boolean useSwipe)
     {
-        Matcher<View> cardFlipper = withId(R.id.info_time_flipper);
+        Matcher<View> cardFlipper = withId(R.id.info_time_flipper1);
         onView(cardFlipper).check(assertShown);   // flipper should be visible
 
         boolean cardSetToToday = viewIsDisplayed(R.id.info_time_all_today);
 
         // pre-click checks
-        if (cardSetToToday)
-            verifyTimeCard_today();
-        else verifyTimeCard_tomorrow();
+        verifyTimeCard_today();
 
         // click the next/prev button
         if (cardSetToToday)
@@ -518,9 +512,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         cardSetToToday = !cardSetToToday;
 
         // post-click checks
-        if (cardSetToToday)
-            verifyTimeCard_today();
-        else verifyTimeCard_tomorrow();
+        verifyTimeCard_today();
 
         // wait a minute (and check again)
         long waitTime = 60 * 1000;
@@ -532,11 +524,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         // the app will update the clock and note area at least once
 
         registerIdlingResources(waitForResource);       // afterward...
-
-        if (cardSetToToday)
-            verifyTimeCard_today();
-        else verifyTimeCard_tomorrow();                 // should still show tomorrow
-
+        verifyTimeCard_today();
         unregisterIdlingResources(waitForResource);
     }
 
@@ -551,7 +539,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     {
         if (useSwipe)
         {
-            Matcher<View> cardFlipper = withId(R.id.info_time_flipper);
+            Matcher<View> cardFlipper = withId(R.id.info_time_flipper1);
             onView(cardFlipper).perform(swipeLeft());
 
         } else {
@@ -565,11 +553,11 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     {
         if (useSwipe)
         {
-            Matcher<View> cardFlipper = withId(R.id.info_time_flipper);
+            Matcher<View> cardFlipper = withId(R.id.info_time_flipper1);
             onView(cardFlipper).perform(swipeRight());
 
         } else {
-            Matcher<View> todayCard = withId(R.id.info_time_all_tomorrow);
+            Matcher<View> todayCard = withId(R.id.info_time_all_today);
             Matcher<View> prevButton = allOf(withId(R.id.info_time_prevbtn), isDescendantOfA(todayCard));
             onView(prevButton).perform(click());
         }
@@ -577,11 +565,8 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
 
     public void verifyTimeCard()
     {
-        onView(withId(R.id.info_time_flipper)).check(assertShown);
-
-        if (viewIsDisplayed(R.id.info_time_all_today))
-            verifyTimeCard_today();
-        else verifyTimeCard_tomorrow();
+        onView(withId(R.id.info_time_flipper1)).check(assertShown);
+        verifyTimeCard_today();
     }
 
     public void verifyTimeCard(int cardId)
@@ -608,16 +593,6 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         Matcher<View> nextButton = allOf(withId(R.id.info_time_nextbtn), isDescendantOfA(todayCard));
         onView(nextButton).check(assertEnabled);    // "next" should be visible
         onView(nextButton).check(assertClickable);
-    }
-
-    public void verifyTimeCard_tomorrow()
-    {
-        verifyTimeCard(R.id.info_time_all_tomorrow);
-
-        Matcher<View> tomorrowCard = withId(R.id.info_time_all_tomorrow);
-        Matcher<View> prevButton = allOf(withId(R.id.info_time_prevbtn), isDescendantOfA(tomorrowCard));
-        onView(prevButton).check(assertEnabled);    // "prev" should be visible
-        onView(prevButton).check(assertClickable);
     }
 
     public ArrayList<Matcher<View>> timeFields(int cardId)

@@ -67,10 +67,10 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_stringArrayLength("timezoneSort_display", R.array.timezoneSort_display, "TimeZoneSort (ENUM)", WidgetTimezones.TimeZoneSort.values());
 
             verify_stringArrayLength("clockTapActions_values", R.array.clockTapActions_values, "clockTapActions_display", R.array.clockTapActions_display);
-            verify_stringArrayLength("clockTapActions_display", R.array.clockTapActions_display, "ClockTapAction (ENUM)", AppSettings.ClockTapAction.values());
+            verify_stringArrayLength("clockTapActions_display", R.array.clockTapActions_display, "ClockTapAction (ENUM)", AppSettings.TapAction.values());
 
             verify_stringArrayLength("dateTapActions_values", R.array.dateTapActions_values, "dateTapActions_display", R.array.dateTapActions_display);
-            verify_stringArrayLength("dateTapActions_display", R.array.dateTapActions_display, "DateTapAction (ENUM)", AppSettings.DateTapAction.values());
+            verify_stringArrayLength("dateTapActions_display", R.array.dateTapActions_display, "DateTapAction (ENUM)", AppSettings.TapAction.values());
 
             verify_stringArrayLength("timeFormatMode_values", R.array.timeFormatMode_values, "timeFormatMode_display", R.array.timeFormatMode_display);
             verify_stringArrayLength("timeFormatMode_display", R.array.timeFormatMode_display, "TimeFormatMode (ENUM)", WidgetSettings.TimeFormatMode.values());

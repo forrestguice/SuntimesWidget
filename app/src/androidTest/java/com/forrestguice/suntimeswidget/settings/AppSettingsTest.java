@@ -141,7 +141,7 @@ public class AppSettingsTest extends SuntimesActivityTestBase
         String defaultValue1 = context.getResources().getString(R.string.def_app_ui_clocktapaction);
         assertTrue("defaults should match", defaultValue0.equals(defaultValue1));
 
-        AppSettings.ClockTapAction value = AppSettings.loadClockTapActionPref(context);
+        AppSettings.TapAction value = AppSettings.loadClockTapActionPref(context);
     }
 
     @Test
@@ -151,7 +151,7 @@ public class AppSettingsTest extends SuntimesActivityTestBase
         String defaultValue1 = context.getResources().getString(R.string.def_app_ui_datetapaction);
         assertTrue("defaults should match", defaultValue0.equals(defaultValue1));
 
-        AppSettings.DateTapAction value = AppSettings.loadDateTapActionPref(context);
+        AppSettings.TapAction value = AppSettings.loadDateTapActionPref(context);
     }
 
     @Test
@@ -161,7 +161,7 @@ public class AppSettingsTest extends SuntimesActivityTestBase
         String defaultValue1 = context.getResources().getString(R.string.def_app_ui_notetapaction);
         assertTrue("defaults should match", defaultValue0.equals(defaultValue1));
 
-        AppSettings.ClockTapAction value = AppSettings.loadNoteTapActionPref(context);
+        AppSettings.TapAction value = AppSettings.loadNoteTapActionPref(context);
     }
 
     ///////////////////////////////////////////////////////////////////////////
