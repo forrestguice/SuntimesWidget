@@ -37,13 +37,13 @@
             style="@style/ColorEdit" android:visibility="gone"
             android:fontFamily="monospace"
             android:text="" tools:text="#hex"
-            tools:ignore="UnusedAttribute" />
+            tools:ignore="LabelFor,UnusedAttribute" />
 
         <TextView android:labelFor="@+id/edit_color" android:id="@+id/editLabel_color"
             style="@style/ColorEditLabel"
             android:paddingStart="4dp" android:paddingEnd="4dp"
             tools:text="label"
-            tools:ignore="UnusedAttribute" />
+            tools:ignore="LabelFor,UnusedAttribute" />
 
     </LinearLayout>
 

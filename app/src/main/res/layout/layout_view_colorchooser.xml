@@ -30,14 +30,14 @@
             style="@style/ColorEditLabel"
             android:paddingStart="8dp" android:paddingEnd="8dp"
             tools:text="label"
-            tools:ignore="UnusedAttribute" />
+            tools:ignore="LabelFor,UnusedAttribute" />
 
         <EditText
             android:id="@+id/edit_color"
             style="@style/ColorEdit" android:visibility="gone"
             android:fontFamily="monospace"
             android:text="" tools:text="#hex"
-            tools:ignore="UnusedAttribute" />
+            tools:ignore="LabelFor,UnusedAttribute" />
 
         <ImageButton
             android:id="@+id/editButton_color"
