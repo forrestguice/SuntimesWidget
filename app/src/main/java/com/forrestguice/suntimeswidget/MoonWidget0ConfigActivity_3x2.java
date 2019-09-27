@@ -18,7 +18,7 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.appwidget.AppWidgetManager;
+/**import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -71,4 +71,4 @@ public class MoonWidget0ConfigActivity_3x2 extends MoonWidget0ConfigActivity
         configThemesIntent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_MOON_3x1);  // TODO: add another preview
         startActivityForResult(configThemesIntent, PICK_THEME_REQUEST);
     }
-}
+}*/
