@@ -28,7 +28,7 @@ public class MoonWidget0_3x2 extends MoonWidget0
     @Override
     protected Class getConfigClass()
     {
-        return MoonWidget0ConfigActivity_3x2.class;
+        return MoonWidget0ConfigActivity_3x1.class;
     }
 
     @Override
