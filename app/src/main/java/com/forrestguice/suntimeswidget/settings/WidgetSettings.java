@@ -1592,7 +1592,7 @@ public class WidgetSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE2, PREF_DEF_GENERAL_TIMEMODE3.name());
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE3, PREF_DEF_GENERAL_TIMEMODE3.name());
 
         MoonPhaseMode timeMode;
         try
