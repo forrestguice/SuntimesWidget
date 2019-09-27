@@ -150,7 +150,10 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             AppSettings.loadLocale(context, languageTag);
 
             verify_pluralFormat("units_feet_long", R.plurals.units_feet_long, values, displayValues);
+            verify_pluralFormat("units_miles_long", R.plurals.units_miles_long, values, displayValues);
+
             verify_pluralFormat("units_meters_long", R.plurals.units_meters_long, values, displayValues);
+            verify_pluralFormat("units_kilometers_long", R.plurals.units_kilometers_long, values, displayValues);
 
             verify_pluralFormatI("units_hours", R.plurals.units_hours, values);
             verify_pluralFormatI("units_minutes", R.plurals.units_minutes, values);
