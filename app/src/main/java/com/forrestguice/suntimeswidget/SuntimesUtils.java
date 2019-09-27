@@ -1566,10 +1566,12 @@ public class SuntimesUtils
 
         } catch (ClassCastException e) {
             try {
+                //noinspection ConstantConditions
                 d = tintDrawable((LayerDrawable)drawable, fillColor, strokeColor, strokePixels);
 
             } catch (ClassCastException e2) {
                 try {
+                    //noinspection ConstantConditions
                     d = tintDrawable((GradientDrawable)drawable, fillColor, strokeColor, strokePixels);
 
                 } catch (ClassCastException e3) {
