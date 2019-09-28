@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2019 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:background="?attr/dialogFrame"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical|start"
+            android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
+            android:paddingTop="16dp" android:paddingBottom="16dp">
+
+            <TextView
+                android:id="@+id/dialog_title"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="center"
+                style="@style/Base.DialogWindowTitle.AppCompat"
+                android:text="@string/color_dialog_msg" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" style="@style/SunsetTimeWidget_dark"
+            android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
+            android:paddingTop="6dp" android:paddingBottom="10dp"
+            android:background="?attr/dialogBackground">
+
+            <com.flask.colorpicker.ColorPickerView
+                android:id="@+id/color_picker"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:lightnessSlider="true" app:alphaSlider="true"
+                app:lightnessSliderView="@+id/color_lightness" app:alphaSliderView="@+id/color_alpha"
+                app:density="12" app:wheelType="FLOWER" />
+
+            <com.flask.colorpicker.slider.LightnessSlider
+                android:id="@+id/color_lightness"
+                android:layout_width="match_parent" android:layout_height="48dp" />
+
+            <com.flask.colorpicker.slider.AlphaSlider
+                android:id="@+id/color_alpha"
+                android:layout_width="match_parent" android:layout_height="48dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="?attr/dialogFrame"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical|end"
+            android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
+            android:paddingTop="8dp" android:paddingBottom="8dp">
+
+            <Button
+                style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+                android:id="@+id/dialog_button_cancel"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/color_dialog_cancel" />
+
+            <Button
+                style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+                android:id="@+id/dialog_button_accept"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/color_dialog_ok" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
+

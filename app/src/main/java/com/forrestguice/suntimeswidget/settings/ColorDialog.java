@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,26 +18,33 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
+import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.BottomSheetDialogFragment;
+import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
 
 import com.flask.colorpicker.ColorPickerView;
-import com.flask.colorpicker.OnColorSelectedListener;
-import com.flask.colorpicker.builder.ColorPickerClickListener;
-import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
+import com.flask.colorpicker.OnColorChangedListener;
+import com.flask.colorpicker.slider.AlphaSlider;
 import com.forrestguice.suntimeswidget.R;
 
-public class ColorDialog extends DialogFragment
+public class ColorDialog extends BottomSheetDialogFragment
 {
     public ColorDialog() {}
+
+    private ColorPickerView colorPicker;
+    private AlphaSlider alphaSlider;
 
     private int color = Color.WHITE;
     public int getColor()
@@ -55,65 +62,20 @@ public class ColorDialog extends DialogFragment
         this.showAlpha = value;
     }
 
-    @NonNull
     @Override
-    public Dialog onCreateDialog(Bundle savedState)
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        super.onCreate(savedState);
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_colors, parent, false);
+
         if (savedState != null)
         {
             setColor(savedState.getInt("color", getColor()));
             showAlpha = savedState.getBoolean("showAlpha", showAlpha);
         }
+        initViews(getActivity(), dialogContent);
 
-        Context context = getContext();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-        {
-            ColorPickerDialogBuilder builder = ColorPickerDialogBuilder.with(context)
-                .setTitle(context.getString(R.string.color_dialog_msg))
-                .initialColor(color)
-                .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
-                .density(12)
-                .setOnColorSelectedListener(new OnColorSelectedListener()
-                {
-                    @Override
-                    public void onColorSelected(int selectedColor)
-                    {
-                        setColor(selectedColor);
-                    }
-                })
-                .setPositiveButton(context.getString(R.string.color_dialog_ok), new ColorPickerClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors)
-                    {
-                        setColor(selectedColor);
-                        signalColorChange(getColor());
-                    }
-                })
-                .setNegativeButton(context.getString(R.string.color_dialog_cancel), new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {}
-                });
-
-            builder = (showAlpha ? builder.showLightnessSlider(true).showAlphaSlider(true)
-                                 : builder.lightnessSliderOnly());
-
-            return builder.build();
-
-        }  else {
-            AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-            alertDialog.setTitle("STUB: TODO");
-            alertDialog.setMessage("Not currently supported for api < 14");
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-            return alertDialog;
-        }
+        return dialogContent;
     }
 
     @Override
@@ -122,6 +84,69 @@ public class ColorDialog extends DialogFragment
         super.onSaveInstanceState(outState);
         outState.putInt("color", getColor());
         outState.putBoolean("showAlpha", showAlpha);
+    }
+
+    private void initViews(Context context, View dialogContent)
+    {
+        colorPicker = (ColorPickerView)dialogContent.findViewById(R.id.color_picker);
+        colorPicker.setColor(color, false);
+        colorPicker.addOnColorChangedListener(new OnColorChangedListener() {
+            @Override
+            public void onColorChanged(int color) {
+                setColor(color);
+            }
+        });
+
+        alphaSlider = (AlphaSlider)dialogContent.findViewById(R.id.color_alpha);
+        alphaSlider.setVisibility(showAlpha ? View.VISIBLE : View.GONE);
+
+        Button btn_cancel = (Button) dialogContent.findViewById(R.id.dialog_button_cancel);
+        btn_cancel.setOnClickListener(onDialogCancelClick);
+
+        Button btn_accept = (Button) dialogContent.findViewById(R.id.dialog_button_accept);
+        btn_accept.setOnClickListener(onDialogAcceptClick);
+    }
+
+    private View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            getDialog().cancel();
+        }
+    };
+
+    private View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            dismiss();
+            if (colorChangeListener != null) {
+                colorChangeListener.onColorChanged(getColor());
+            }
+        }
+    };
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        expandSheet(getDialog());
+    }
+
+    private void expandSheet(DialogInterface dialog)
+    {
+        if (dialog == null) {
+            return;
+        }
+
+        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
+        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+        if (layout != null)
+        {
+            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+            behavior.setHideable(false);
+            behavior.setSkipCollapsed(true);
+            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }
     }
 
     /**
@@ -135,14 +160,6 @@ public class ColorDialog extends DialogFragment
     public void setColorChangeListener( ColorChangeListener listener )
     {
         this.colorChangeListener = listener;
-    }
-
-    private void signalColorChange(int color)
-    {
-        if (colorChangeListener != null)
-        {
-            colorChangeListener.onColorChanged(color);
-        }
     }
 
 }
