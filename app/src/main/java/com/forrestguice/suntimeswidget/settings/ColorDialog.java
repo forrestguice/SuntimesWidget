@@ -86,6 +86,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         {
             setColor(savedState.getInt("color", getColor()));
             showAlpha = savedState.getBoolean("showAlpha", showAlpha);
+            setRecentColors(savedState.getIntegerArrayList("recentColors"));
         }
         initViews(getActivity(), dialogContent);
 
@@ -98,6 +99,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         super.onSaveInstanceState(outState);
         outState.putInt("color", getColor());
         outState.putBoolean("showAlpha", showAlpha);
+        outState.putIntegerArrayList("recentColors", recentColors_list);
     }
 
     private void initViews(Context context, View dialogContent)

@@ -139,6 +139,11 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
         }
     }
 
+    private ArrayList<Integer> recentColors;
+    public void setRecentColors(ArrayList<Integer> colors) {
+        recentColors = colors;
+    }
+
     /**
      * @return a key that identifies this chooser's value
      */
@@ -396,11 +401,6 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
 
     private void showColorPicker(Context context)
     {
-        ArrayList<Integer> recentColors = new ArrayList<>();
-        recentColors.add(Color.RED);
-        recentColors.add(Color.WHITE);
-        recentColors.add(Color.BLUE);
-
         ColorDialog colorDialog = new ColorDialog();
         colorDialog.setRecentColors(recentColors);
         colorDialog.setShowAlpha(showAlpha);

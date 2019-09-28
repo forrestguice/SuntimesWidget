@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -550,6 +551,15 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ColorChooser createColorChooser(Context context, TextView label, EditText edit, ImageButton button, String id)
     {
         ColorChooser chooser = new ColorChooser(context, label, edit, button, id);
+
+        // TODO
+        ArrayList<Integer> recentColors = new ArrayList<>();
+        recentColors.add(Color.DKGRAY);
+        recentColors.add(Color.BLACK);
+        recentColors.add(Color.GREEN);
+        recentColors.add(Color.MAGENTA);
+        chooser.setRecentColors(recentColors);
+
         colorChoosers.add(chooser);
         return chooser;
     }
