@@ -22,22 +22,32 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.OnColorChangedListener;
 import com.flask.colorpicker.slider.AlphaSlider;
 import com.forrestguice.suntimeswidget.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ColorDialog extends BottomSheetDialogFragment
 {
@@ -45,6 +55,10 @@ public class ColorDialog extends BottomSheetDialogFragment
 
     private ColorPickerView colorPicker;
     private AlphaSlider alphaSlider;
+
+    private RecyclerView recentColors;
+    private ColorsAdapter recentColors_adapter;
+    private LinearLayoutManager recentColors_layout;
 
     private int color = Color.WHITE;
     public int getColor()
@@ -88,6 +102,9 @@ public class ColorDialog extends BottomSheetDialogFragment
 
     private void initViews(Context context, View dialogContent)
     {
+        alphaSlider = (AlphaSlider)dialogContent.findViewById(R.id.color_alpha);
+        alphaSlider.setVisibility(showAlpha ? View.VISIBLE : View.GONE);
+
         colorPicker = (ColorPickerView)dialogContent.findViewById(R.id.color_picker);
         colorPicker.setColor(color, false);
         colorPicker.addOnColorChangedListener(new OnColorChangedListener() {
@@ -97,8 +114,27 @@ public class ColorDialog extends BottomSheetDialogFragment
             }
         });
 
-        alphaSlider = (AlphaSlider)dialogContent.findViewById(R.id.color_alpha);
-        alphaSlider.setVisibility(showAlpha ? View.VISIBLE : View.GONE);
+        recentColors_adapter = new ColorsAdapter(recentColors_list);
+        recentColors_adapter.setOnColorButtonClickListener(new ColorChangeListener() {
+            @Override
+            public void onColorChanged(int color) {
+                colorPicker.setColor(color, false);
+                setColor(color);
+            }
+        });
+
+        recentColors_layout = new LinearLayoutManager(context);
+        recentColors_layout.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        recentColors = (RecyclerView)dialogContent.findViewById(R.id.color_recent);
+        recentColors.setHasFixedSize(true);
+        recentColors.setItemViewCacheSize(16);
+        recentColors.setLayoutManager(recentColors_layout);
+        recentColors.setAdapter(recentColors_adapter);
+        recentColors.scrollToPosition(0);
+
+        SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(recentColors);
 
         Button btn_cancel = (Button) dialogContent.findViewById(R.id.dialog_button_cancel);
         btn_cancel.setOnClickListener(onDialogCancelClick);
@@ -149,6 +185,17 @@ public class ColorDialog extends BottomSheetDialogFragment
         }
     }
 
+    private ArrayList<Integer> recentColors_list = new ArrayList<>();
+    public void setRecentColors(ArrayList<Integer> colors)
+    {
+        recentColors_list.clear();
+        recentColors_list.addAll(colors);
+
+        if (recentColors_adapter != null) {
+            recentColors_adapter.setColors(colors);
+        }
+    }
+
     /**
      * ColorChangeListener
      */
@@ -160,6 +207,94 @@ public class ColorDialog extends BottomSheetDialogFragment
     public void setColorChangeListener( ColorChangeListener listener )
     {
         this.colorChangeListener = listener;
+    }
+
+    /**
+     * ColorsAdapter
+     */
+    public static class ColorsAdapter extends RecyclerView.Adapter<ColorViewHolder>
+    {
+        private ArrayList<Integer> colors = new ArrayList<>();
+
+        public ColorsAdapter(List<Integer> colors) {
+            this.colors.addAll(colors);
+        }
+
+        public void setColors(List<Integer> colors)
+        {
+            this.colors.clear();
+            this.colors.addAll(colors);
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public ColorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            LayoutInflater layout = LayoutInflater.from(parent.getContext());
+            View view = layout.inflate(R.layout.layout_listitem_color, parent, false);
+            return new ColorViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(ColorViewHolder holder, int position)
+        {
+            Integer color = (position >= 0 && position < colors.size()) ? colors.get(position) : null;
+            holder.bindColorToView(color);
+            holder.colorButton.setOnClickListener(color != null ? onColorButtonClick(color) : null);
+        }
+
+        @Override
+        public int getItemCount() {
+            return colors.size();
+        }
+
+
+        private View.OnClickListener onColorButtonClick(final int color)
+        {
+            return new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v) {
+                    if (onColorChangeListener != null) {
+                        onColorChangeListener.onColorChanged(color);
+                    }
+                }
+            };
+        }
+
+        private ColorChangeListener onColorChangeListener;
+        public void setOnColorButtonClickListener( ColorChangeListener listener ) {
+            onColorChangeListener = listener;
+        }
+    }
+
+    /**
+     * ColorViewHolder
+     */
+    public static class ColorViewHolder extends RecyclerView.ViewHolder
+    {
+        public Integer color;
+        public ImageButton colorButton;
+
+        public ColorViewHolder(View itemView) {
+            super(itemView);
+            colorButton = (ImageButton)itemView.findViewById(R.id.colorButton);
+        }
+
+        public void bindColorToView(Integer color)
+        {
+            this.color = color;
+
+            if (color != null)
+            {
+                Drawable d = colorButton.getDrawable();
+                if (d != null) {
+                    GradientDrawable g = (GradientDrawable) d.mutate();
+                    g.setColor(color);
+                    g.invalidateSelf();
+                }
+            }
+            colorButton.setVisibility(color != null ? View.VISIBLE : View.GONE);
+        }
     }
 
 }
