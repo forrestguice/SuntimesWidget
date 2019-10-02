@@ -1,5 +1,28 @@
 ### ~
 
+### v0.12.0 (2019-10-07)
+* enhances the main table to allow scrolling future and past days (#173, #352).
+* enhances the moon dialog to allow scrolling future and past months.
+* enhances the solstice dialog to allow scrolling future and past years.
+* adds moon apogee, perigee, and distance information to the moon dialog (#296).
+* adds supermoon and micromoon labels for upcoming new and full moons (#296).
+* adds 1x1 moon apogee/perigee widget (#296).
+* adds 1x1 moon position widgets; azimuth & elevation, right ascension & declination, or current distance.
+* enhances the World Map dialog to animate over time; play/pause or step forward/back to show changes over a span of hours or days (#284).
+* adds world map projection "Polar [south]" (#284).
+* adds 3x3 sun position widget; Polar [north], Polar [south] map projections (#284).
+* enhances the Blue Marble map; the shadow area now displays "Earth's City Lights" imagery.
+* enhances the World Map dialog; adds "major latitudes" and "location" options.
+* enhances the World Map share action; using "share" while playing saves the animation to zip.
+* adds events to Suntimes Alarms; now includes the moon phases ("full moon alarm"; #327) and solstices and equinoxes.
+* replaces multiple "floating action buttons" with "floating action menu" UI.
+* replaces most "alert dialogs" with "bottom sheet" UI.
+* adds animations when transitioning between related activities.
+* fixes the time zone dialog so that it retains user-defined settings when toggling between modes.
+* improves the Widget Config activities (ActionBar).
+* improves the About Dialog (adds tabbed activity).
+* updates dependency (Time4A 4.4.2-2019c).
+
 ### v0.11.10 (2019-09-03)
 * fixes app layout issues for Brazilian Portuguese (pt-br) and Norwegian (nb) translations (#356).
 * fixes bug "date dialog fails to respect timezone setting" (#358).
