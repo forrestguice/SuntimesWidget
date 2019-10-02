@@ -20,6 +20,7 @@
     <string name="configAction_setAlarm">Set Alarm</string>
     <string name="configAction_setTimeZone">Set Time Zone</string>
     <string name="configAction_setDate">Set Date</string>
+    <string name="configAction_viewDate">View Date</string>
     <string name="configAction_sunDialog">Sun Position</string>
     <string name="configAction_equinoxDialog">Solstice / Equinox</string>
     <string name="configAction_worldMap">World Map</string>
@@ -85,9 +86,8 @@
     <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> The date is set to a day other than today.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
-    <string name="past_yesterday">Past (-1)</string>
     <string name="past_today">Past</string>
-    <string name="past_tomorrow">Past (+1)</string>
+    <string name="past_n">Past (%1$s)</string>
 
     <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
     <string name="yesterday">Yesterday</string>
@@ -95,9 +95,8 @@
     <string name="tomorrow">Tomorrow</string>
 
     <!-- DateDesc: some day in the future (appears in dateField) -->
-    <string name="future_yesterday">Future (-1)</string>
     <string name="future_today">Future</string>
-    <string name="future_tomorrow">Future (+1)</string>
+    <string name="future_n">Future (%1$s)</string>
 
     <!-- Field: length of day
          The hours in the day field(s) that appears below the table (main activity)
@@ -204,6 +203,7 @@
     <string name="datetime_format_short"><xliff:g id="month">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>           <!-- shortDate, time ... e.g. December 3, 11:00 am -->
     <string name="datetime_format_long"><xliff:g id="monthYear">%1$s</xliff:g>, <xliff:g id="time">%2$s</xliff:g></string>        <!-- longDate, time ... e.g. December 3, 2017, 11:00 am -->
     <string name="datetime_format_verylong"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g id="tzID" example="UTC">%2$s</xliff:g>]</string>  <!-- datetime_format and timezone -->
+    <string name="datetime_format_verylong1"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g id="tzID" example="UTC">%2$s</xliff:g>] [<xliff:g id="suffix" example="Future">%3$s</xliff:g>]</string>  <!-- datetime_format and timezone (+suffix) -->
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
 
     <!-- location display formats -->
@@ -232,11 +232,25 @@
         <item quantity="other">%s feet</item>
     </plurals>
 
+    <string name="units_miles">miles</string>
+    <string name="units_miles_short">mi</string>
+    <plurals name="units_miles_long">
+        <item quantity="one">%s mile</item>
+        <item quantity="other">%s miles</item>
+    </plurals>
+
     <string name="units_meters">meters</string>
     <string name="units_meters_short">m</string>
     <plurals name="units_meters_long">
         <item quantity="one">%s meter</item>
         <item quantity="other">%s meters</item>
+    </plurals>
+
+    <string name="units_kilometers">kilometers</string>
+    <string name="units_kilometers_short">km</string>
+    <plurals name="units_kilometers_long">
+        <item quantity="one">%s kilometer</item>
+        <item quantity="other">%s kilometers</item>
     </plurals>
 
     <!--
@@ -356,6 +370,22 @@
     <string name="timeMode_moon_waningcrescent_short">Waning Crescent</string>               <!-- label -->
     <string name="timeMode_moon_waningcrescent">Waning Crescent</string>                     <!-- label -->
 
+    <string name="timeMode_moon_super">Supermoon</string>               <!-- label -->
+    <string name="timeMode_moon_micro">Micromoon</string>               <!-- label -->
+    <string name="timeMode_moon_superfull">Super Full Moon</string>                             <!-- setting -->
+    <string name="timeMode_moon_superfull_short">@string/timeMode_moon_super</string>     <!-- label -->
+    <string name="timeMode_moon_supernew">Super New Moon</string>                             <!-- setting -->
+    <string name="timeMode_moon_supernew_short">@string/timeMode_moon_super</string>     <!-- label -->
+    <string name="timeMode_moon_microfull">Micro Full Moon</string>                             <!-- setting -->
+    <string name="timeMode_moon_microfull_short">@string/timeMode_moon_micro</string>     <!-- label -->
+    <string name="timeMode_moon_micronew">Micro New Moon</string>                             <!-- setting -->
+    <string name="timeMode_moon_micronew_short">@string/timeMode_moon_micro</string>     <!-- label -->
+
+    <string name="timeMode_moon_perigee">@string/label_perigee</string>                             <!-- label -->
+    <string name="timeMode_moon_apogee">@string/label_apogee</string>                             <!-- label -->
+    <string name="label_apogee">Apogee</string>
+    <string name="label_perigee">Perigee</string>
+
     <string name="configLabel_general_timeMode">Mode:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: layout mode -->
@@ -366,9 +396,12 @@
 
     <string name="widgetMode1x1_altaz">Altitude &amp; Azimuth</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Declination &amp; Right Ascension</string>     <!-- setting -->
+    <string name="widgetMode1x1_distance">Current distance</string>     <!-- setting -->
+    <string name="widgetMode1x1_apsis">Next apogee or perigee</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [north]</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [south]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->
 
     <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->
@@ -379,6 +412,7 @@
 
     <string name="configLabel_appearance_1x1mode">1x1 Layout:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_3x2mode">3x2 Layout:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x3mode">3x3 Layout:</string>     <!-- spinner label -->  <!-- TODO -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Do Nothing</string>           <!-- setting -->
@@ -598,6 +632,7 @@
     <string name="widgetLabel_declination">Declination</string>           <!-- label -->
     <string name="widgetLabel_declination_short">Dec</string>           <!-- label -->
     <string name="widgetLabel_declination_symbol">δ</string>           <!-- label/suffix -->
+    <string name="widgetLabel_distance">Distance</string>           <!-- label -->
 
     <!--
          ALARM CLOCK
@@ -834,47 +869,78 @@
 
     <!-- App Setting: Date "on tap" action -->
     <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
-        <item>Do nothing</item>
-        <item>Swap cards (today/tomorrow)</item>
-        <item>Show calendar app</item>
-        <item>Set custom date</item>
+        <item>@string/configAction_doNothing</item>
+        <item>@string/configAction_showCalendar</item>
+        <item>@string/configAction_setAlarm</item>
+        <item>@string/configAction_setDate</item>
+        <item>@string/configAction_swapCards</item>
+        <item>@string/configAction_resetNote</item>
     </string-array>
     <string-array name="dateTapActions_values" translatable="false"> <!-- config values (one-to-one with dateTapActions_display) -->
         <item>NOTHING</item>
-        <item>SWAP_CARD</item>
         <item>SHOW_CALENDAR</item>
+        <item>ALARM</item>
         <item>CONFIG_DATE</item>
+        <item>SWAP_CARD</item>
+        <item>RESET_NOTE</item>
     </string-array>
 
     <!-- App Setting: Clock UI "on tap" action -->
     <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
-        <item>Do nothing</item>
+        <item>@string/configAction_doNothing</item>
+        <item>@string/configAction_showCalendar</item>
         <item>@string/configAction_setAlarm</item>
         <item>@string/configAction_setTimeZone</item>
-        <item>Show next note</item>
-        <item>Show previous note</item>
+        <item>@string/configAction_nextNote</item>
+        <item>@string/configAction_prevNote</item>
+        <item>@string/configAction_resetNote</item>
     </string-array>
     <string-array name="clockTapActions_values" translatable="false">  <!-- config values (one-to-one with clockTapActions_display) -->
         <item>NOTHING</item>
+        <item>SHOW_CALENDAR</item>
         <item>ALARM</item>
         <item>TIMEZONE</item>
         <item>NEXT_NOTE</item>
         <item>PREV_NOTE</item>
+        <item>RESET_NOTE</item>
     </string-array>
 
     <!-- App Setting: Note UI "on tap" action -->
     <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
-        <item>Do nothing</item>
-        <item>Set alarm for note</item>
-        <item>Show next note</item>
-        <item>Show previous note</item>
+        <item>@string/configAction_doNothing</item>
+        <item>@string/configAction_setAlarmForNote</item>
+        <item>@string/configAction_nextNote</item>
+        <item>@string/configAction_prevNote</item>
+        <item>@string/configAction_resetNote</item>
     </string-array>
     <string-array name="noteTapActions_values" translatable="false">   <!-- config values (one-to-one with noteTapActions_display) -->
         <item>NOTHING</item>
         <item>ALARM</item>
         <item>NEXT_NOTE</item>
         <item>PREV_NOTE</item>
+        <item>RESET_NOTE</item>
     </string-array>
+
+    <string name="configAction_doNothing">Do nothing</string>
+    <string name="configAction_nextNote">Show next note</string>
+    <string name="configAction_prevNote">Show previous note</string>
+    <string name="configAction_resetNote">Show upcoming event</string>
+    <string name="configAction_showCalendar">Open calendar</string>
+    <string name="configAction_swapCards">Swap cards (today/tomorrow)</string>
+    <string name="configAction_setAlarmForNote">Set alarm for note</string>
+
+    <string-array name="tapActions_display">    <!-- must be in same order as enum TapActions -->
+        <item>@string/configAction_doNothing</item>
+        <item>@string/configAction_swapCards</item>
+        <item>@string/configAction_showCalendar</item>
+        <item>@string/configAction_setDate</item>
+        <item>@string/configAction_setAlarm</item>
+        <item>@string/configAction_setTimeZone</item>
+        <item>@string/configAction_nextNote</item>
+        <item>@string/configAction_prevNote</item>
+        <item>@string/configAction_resetNote</item>
+    </string-array>
+
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">by offset</string>
@@ -979,7 +1045,7 @@
         <item>Basque</item>
         <item>Norwegian</item>
         <item>Traditional Chinese</item>
-        <item>Portuguese</item>  <!-- TODO -->
+        <item>Portuguese</item>
     </string-array>
     <string-array name="locale_display_native" translatable="false">             <!-- one-to-one with locale_values -->
         <item>English</item>
@@ -994,7 +1060,7 @@
         <item>Euskara</item>
         <item>Norsk</item>
         <item>正體中文</item>
-        <item>Português</item>
+        <item>Português Brasileiro</item>
     </string-array>
     <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
         <item>en</item>
@@ -1080,9 +1146,20 @@
 
     <!-- Dialog: World Map -->
     <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
+    <string name="worldmap_dialog_action_play">Play</string>       <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_pause">Pause</string>     <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_record">Record</string>   <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_next">Next</string>       <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_prev">Previous</string>   <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_reset">Reset</string>     <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_menu">Options</string>       <!-- button (contentDescription) -->
     <string name="worldmap_dialog_option_sunlight">Sunlight</string>
     <string name="worldmap_dialog_option_moonlight">Moonlight</string>
     <string name="worldmap_dialog_option_all">Both</string>
+    <string name="worldmap_dialog_option_location">Location</string>
+    <string name="worldmap_dialog_option_latitudes">Latitudes</string>
+    <string name="worldmap_dialog_speed_15m">&#215; 15m</string>
+    <string name="worldmap_dialog_speed_1d">&#215; 1d</string>
     <string name="configAction_shareMap">Share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <!-- Dialog: Set Alarm -->
@@ -1114,6 +1191,14 @@
         <item>astronomical twilight</item>
         <item>moonrise</item>
         <item>moonset</item>
+        <item>new moon</item>
+        <item>first quarter</item>
+        <item>full moon</item>
+        <item>third quarter</item>
+        <item>spring equinox</item>
+        <item>summer solstice</item>
+        <item>autumn equinox</item>
+        <item>winter solstice</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>morning astronomical twilight (start)</item>
@@ -1133,6 +1218,14 @@
         <item>evening astronomical twilight (end)</item>
         <item>moonrise</item>
         <item>moonset</item>
+        <item>new moon</item>
+        <item>first quarter</item>
+        <item>full moon</item>
+        <item>third quarter</item>
+        <item>spring equinox</item>
+        <item>summer solstice</item>
+        <item>autumn equinox</item>
+        <item>winter solstice</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
@@ -1236,6 +1329,9 @@
         <b>Support:</b> visit the
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> to submit a request.
     ]]></string>
+    <string name="app_source_url"><xliff:g id="url"><![CDATA[
+        <a href="https://github.com/forrestguice/SuntimesWidget/">github.com/forrestguice/SuntimesWidget/</a>
+    ]]></xliff:g></string>
     <string name="app_url"><xliff:g id="url"><![CDATA[
         <a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget</a>
     ]]></xliff:g></string>
@@ -1249,12 +1345,14 @@
     <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> by <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
     <string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>  <!-- e.g. "name1, name2, name3, ..." -->
     <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, and <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
+    <string name="creditsTab">Credits</string>
 
     <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
     <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
     <![CDATA[ github.com/caarmen/SunriseSunset ]]> <![CDATA[ <br /> ]]>
-    <![CDATA[ github.com/QuadFlask/colorpicker ]]>
+    <![CDATA[ github.com/QuadFlask/colorpicker ]]> <![CDATA[ <br /> ]]>
+    <![CDATA[ github.com/rubensousa/GravitySnapHelper ]]>
     </string>
 
     <!-- Dialog: Help -->
@@ -1377,7 +1475,7 @@
           [Icon Add] Add a new theme or [Icon Copy] copy from an existing theme.\n
           \n
           [Icon Edit] Edit or [Icon Delete] delete themes.\n
-          The [Icon Default] default themes cannot be modified.
+          The [Icon Default] default themes cannot be modified.\n
     </string>
 
     <string name="help_calendar"><![CDATA[Supply events to the Calendar app (moon phases, solstices, and equinoxes).<br />
@@ -1397,6 +1495,7 @@
     <string name="privacy_url"><xliff:g id="url"><![CDATA[
         <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Privacy">github.com/forrestguice/SuntimesWidget/wiki/Privacy</a>
     ]]></xliff:g></string>
+    <string name="privacyTab">Privacy</string>
 
     <string name="security_dialog_title">Security Alert</string>
     <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
@@ -1440,10 +1539,10 @@
     <string name="def_app_ui_showgoldhour" translatable="false">true</string>
     <string name="def_app_ui_showbluehour" translatable="false">false</string>
     <string name="def_app_ui_showdatasource" translatable="false">true</string>
-    <string name="def_app_ui_datetapaction" translatable="false">CONFIG_DATE</string>
+    <string name="def_app_ui_datetapaction" translatable="false">SWAP_CARD</string>
     <string name="def_app_ui_datetapaction1" translatable="false">SHOW_CALENDAR</string>
     <string name="def_app_ui_notetapaction" translatable="false">NEXT_NOTE</string>
-    <string name="def_app_ui_clocktapaction" translatable="false">ALARM</string>
+    <string name="def_app_ui_clocktapaction" translatable="false">RESET_NOTE</string>
     <string name="def_app_appearance_theme" translatable="false">dark</string>
     <string name="def_app_accessibility_verbose" translatable="false">false</string>
 

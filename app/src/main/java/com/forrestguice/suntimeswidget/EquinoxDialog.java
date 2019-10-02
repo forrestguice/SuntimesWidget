@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,70 +18,90 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
+import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
-import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
-public class EquinoxDialog extends DialogFragment
+public class EquinoxDialog extends BottomSheetDialogFragment
 {
     private EquinoxView equinoxView;
-
-    private SuntimesEquinoxSolsticeDataset data;
-    public void setData( SuntimesEquinoxSolsticeDataset data )
-    {
-        if (data != null && !data.isCalculated() && data.isImplemented())
-        {
-            data.calculateData();
-        }
-        this.data = data;
-    }
 
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.setOnShowListener(onShowListener);
+        return dialog;
+    }
 
-        final Activity myParent = getActivity();
-        LayoutInflater inflater = myParent.getLayoutInflater();
-
-        final ViewGroup viewGroup = null;
-        View dialogContent = inflater.inflate(R.layout.layout_dialog_equinox, viewGroup);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
-        builder.setView(dialogContent);
-        AlertDialog dialog = builder.create();
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
+    {
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_equinox, parent, false);
 
         equinoxView = (EquinoxView) dialogContent.findViewById(R.id.info_time_equinox);
-        if (savedInstanceState != null)
+        equinoxView.setTrackingMode(WidgetSettings.loadTrackingModePref(getContext(), 0));
+        if (savedState != null)
         {
             Log.d("DEBUG", "EquinoxDialog onCreate (restoreState)");
-            equinoxView.loadState(savedInstanceState);
+            overrideColumnWidthPx = savedState.getInt("overrideColumnWidthPx", overrideColumnWidthPx);
+            equinoxView.loadState(savedState);
+        }
+        themeViews(getContext());
+
+        if (overrideColumnWidthPx >= 0) {
+            equinoxView.adjustColumnWidth(overrideColumnWidthPx);
         }
 
-        dialog.setOnShowListener(onShowListener);
-        themeViews(getContext());
-        return dialog;
+        return dialogContent;
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        expandSheet(getDialog());
+    }
+
+    private void expandSheet(DialogInterface dialog)
+    {
+        if (dialog != null)
+        {
+            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
+            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+            if (layout != null)
+            {
+                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+                behavior.setHideable(true);
+                behavior.setSkipCollapsed(true);
+                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+        }
     }
 
     private DialogInterface.OnShowListener onShowListener = new DialogInterface.OnShowListener() {
         @Override
         public void onShow(DialogInterface dialogInterface) {
             Context context = getContext();
-            if (context != null)
-            {
-                equinoxView.updateViews(getContext(), data);
+            if (context != null) {
+                equinoxView.updateViews(getContext());
             } else Log.w("EquinoxDialog.onShow", "null context! skipping update");
         }
     };
@@ -106,9 +126,8 @@ public class EquinoxDialog extends DialogFragment
 
     public void updateViews()
     {
-        if (equinoxView != null)
-        {
-            equinoxView.updateViews(getContext(), data);
+        if (equinoxView != null) {
+            equinoxView.updateViews(getContext());
             Log.d("DEBUG", "EquinoxDialog updated");
         }
     }
@@ -117,6 +136,12 @@ public class EquinoxDialog extends DialogFragment
     public void onSaveInstanceState( Bundle outState )
     {
         equinoxView.saveState(outState);
+        outState.putInt("overrideColumnWidthPx", overrideColumnWidthPx);
         super.onSaveInstanceState(outState);
+    }
+
+    private int overrideColumnWidthPx = -1;
+    public void adjustColumnWidth(int columnWidthPx) {
+        overrideColumnWidthPx = columnWidthPx;
     }
 }

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,21 +20,28 @@ package com.forrestguice.suntimeswidget;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
+import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AlertDialog;
 
-import android.util.TypedValue;
+import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.FrameLayout;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
-public class LocationConfigDialog extends DialogFragment
+public class LocationConfigDialog extends BottomSheetDialogFragment
 {
     public static final String KEY_LOCATION_HIDETITLE = "hidetitle";
     public static final String KEY_LOCATION_HIDEMODE = "hidemode";
@@ -181,6 +188,37 @@ public class LocationConfigDialog extends DialogFragment
         {
             dialogContent.onResume();
         }
+        expandSheet(getDialog());
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState)
+    {
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        View view = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_location, parent, false);
+        final FragmentActivity myParent = getActivity();
+
+        dialogContent = (LocationConfigView) view.findViewById(R.id.locationConfig);
+        dialogContent.setHideTitle(hideTitle);
+        dialogContent.setHideMode(hideMode);
+        dialogContent.init(myParent, false);
+
+        Button btn_cancel = (Button) view.findViewById(R.id.dialog_button_cancel);
+        btn_cancel.setOnClickListener(onDialogCancelClick);
+
+        Button btn_accept = (Button) view.findViewById(R.id.dialog_button_accept);
+        btn_accept.setOnClickListener(onDialogAcceptClick);
+
+        if (savedInstanceState != null) {
+            loadSettings(savedInstanceState);
+
+        } else if (presetData != null) {
+            dialogContent.loadSettings(myParent, presetData);
+
+        } else if (presetLocation != null) {
+            setLocation(getContext(), presetLocation);
+        }
+        return view;
     }
 
     /**
@@ -191,93 +229,8 @@ public class LocationConfigDialog extends DialogFragment
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        super.onCreateDialog(savedInstanceState);
-
-        final FragmentActivity myParent = getActivity();
-        dialogContent = new com.forrestguice.suntimeswidget.LocationConfigView(myParent);
-        dialogContent.setHideTitle(hideTitle);
-        dialogContent.setHideMode(hideMode);
-        dialogContent.init(myParent, true);
-
-        Resources r = getResources();
-        int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, r.getDisplayMetrics());
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
-        builder.setTitle(myParent.getString(R.string.location_dialog_title));
-        builder.setView(dialogContent, 0, padding, 0, 0);
-
-        final AlertDialog dialog = builder.create();
-        dialog.setCanceledOnTouchOutside(false);
-
-        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.location_dialog_cancel),
-                new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        dialogContent.cancelGetFix();
-                        dialog.dismiss();
-
-                        if (onCanceled != null)
-                        {
-                            onCanceled.onClick(dialog, which);
-                        }
-                    }
-                }
-        );
-
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.location_dialog_ok), new DialogInterface.OnClickListener()
-        {
-            @Override public void onClick(DialogInterface dialogInterface, int i) {/** EMPTY */}
-        });
-
-        dialog.setOnShowListener(new DialogInterface.OnShowListener()
-        {
-            @Override
-            public void onShow(DialogInterface dialogInterface)
-            {
-                // set the dialog's onAccept listener /after/ the dialog is shown; explicit call to `dismiss` req.
-                // http://stackoverflow.com/questions/2620444/how-to-prevent-a-dialog-from-closing-when-a-button-is-clicked
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener( new View.OnClickListener()
-                {
-                    @Override
-                    public void onClick(View view)
-                    {
-                        dialogContent.cancelGetFix();
-                        if (dialogListener != null &&
-                                dialogListener.saveSettings(myParent, dialogContent.getLocationMode(), dialogContent.getLocation()))
-                        {
-                            LocationConfigView.LocationViewMode mode = dialogContent.getMode();
-                            switch (mode)
-                            {
-                                case MODE_CUSTOM_ADD:
-                                case MODE_CUSTOM_EDIT:
-                                    dialogContent.setMode(LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT);
-                                    dialogContent.populateLocationList();  // triggers 'add place'
-                                    break;
-                            }
-
-                            dialog.dismiss();
-                            if (onAccepted != null)
-                            {
-                                onAccepted.onClick(dialog, 0);
-                            }
-                        }
-                    }
-                });
-            }
-        });
-
-        if (savedInstanceState != null)
-        {
-            loadSettings(savedInstanceState);
-
-        } else if (presetData != null) {
-            dialogContent.loadSettings(myParent, presetData);
-
-        } else if (presetLocation != null) {
-            setLocation(getContext(), presetLocation);
-        }
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.setOnShowListener(onDialogShow);
         return dialog;
     }
 
@@ -320,6 +273,90 @@ public class LocationConfigDialog extends DialogFragment
 
         if (dialogContent != null) {
             dialogContent.loadSettings(getActivity(), bundle);
+        }
+    }
+
+    private DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener() {
+        @Override
+        public void onShow(DialogInterface dialogInterface) {
+            // EMPTY; placeholder
+        }
+    };
+
+    private View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            getDialog().cancel();
+        }
+    };
+
+    @Override
+    public void onCancel(DialogInterface dialog)
+    {
+        dialogContent.cancelGetFix();
+        dismiss();
+        if (onCanceled != null) {
+            onCanceled.onClick(getDialog(), 0);
+        }
+    }
+
+    private View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            dialogContent.cancelGetFix();
+            if (dialogListener != null &&
+                    dialogListener.saveSettings(getActivity(), dialogContent.getLocationMode(), dialogContent.getLocation()))
+            {
+                LocationConfigView.LocationViewMode mode = dialogContent.getMode();
+                switch (mode)
+                {
+                    case MODE_CUSTOM_ADD:
+                    case MODE_CUSTOM_EDIT:
+                        dialogContent.setMode(LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT);
+                        dialogContent.populateLocationList();  // triggers 'add place'
+                        break;
+                }
+
+                dismiss();
+                if (onAccepted != null) {
+                    onAccepted.onClick(getDialog(), 0);
+                }
+            }
+        }
+    };
+
+    private void expandSheet(DialogInterface dialog)
+    {
+        if (dialog == null) {
+            return;
+        }
+
+        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
+        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+        if (layout != null)
+        {
+            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+            behavior.setHideable(false);
+            behavior.setSkipCollapsed(true);
+            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState)
+    {
+        super.onActivityCreated(savedInstanceState);
+        disableTouchOutsideBehavior();
+    }
+
+    private void disableTouchOutsideBehavior()
+    {
+        Window window = getDialog().getWindow();
+        if (window != null) {
+            View decorView = window.getDecorView().findViewById(android.support.design.R.id.touch_outside);
+            decorView.setOnClickListener(null);
         }
     }
 

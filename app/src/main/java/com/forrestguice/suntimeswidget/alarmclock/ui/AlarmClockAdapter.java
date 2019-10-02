@@ -67,6 +67,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
+import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
@@ -308,6 +309,20 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
             }
         });
 
+        view.text_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                if (isSelected) {
+                    if (item.enabled) {
+                        AlarmNotifications.showTimeUntilToast(context, v, item);
+                    }
+                } else {
+                    setSelectedItem(item.rowID);
+                }
+            }
+        });
+
         // location
         view.text_location.setOnClickListener(new View.OnClickListener()
         {
@@ -445,6 +460,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
      */
     private void updateView(AlarmClockItemView view, @NonNull final AlarmClockItem item)
     {
+        int eventType = item.event == null ? -1 : item.event.getType();
         final boolean isSelected = (item.rowID == selectedItem);
         view.cardBackdrop.setBackgroundColor( isSelected ? ColorUtils.setAlphaComponent(alarmSelectedColor, 170) : Color.TRANSPARENT );  // 66% alpha
 
@@ -510,6 +526,17 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
             view.text_datetime.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
         }
 
+        // date
+        view.text_date.setText(getAlarmDate(context, item));
+        view.text_date.setVisibility((eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON) ? View.VISIBLE : View.GONE);
+        if (!isSelected && !item.enabled) {
+            view.text_date.setTextColor(disabledColor);
+        } else if (item.enabled){
+            view.text_date.setTextColor(SuntimesUtils.colorStateList(alarmEnabledColor, alarmEnabledColor, pressedColor));
+        } else {
+            view.text_date.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+        }
+
         // location
         view.text_location.setVisibility(item.event == null ? View.INVISIBLE : View.VISIBLE);
         AlarmDialog.updateLocationLabel(context, view.text_location, item.location);
@@ -553,6 +580,11 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
                 : noRepeat
                 ? context.getString(R.string.alarmOption_repeat_none)
                 : AlarmRepeatDialog.getDisplayString(context, item.repeatingDays);
+
+        if (item.repeating && (eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON)) {
+            repeatText = context.getString(R.string.alarmOption_repeat);
+        }
+
         view.option_repeat.setText( isSelected || !noRepeat ? repeatText : "" );
 
         if (!isSelected || item.enabled) {
@@ -827,6 +859,23 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         return alarmDesc;
     }
 
+    private static CharSequence getAlarmDate(Context context, AlarmClockItem item)
+    {
+        Calendar alarmTime = Calendar.getInstance();
+        alarmTime.setTimeInMillis(item.timestamp);
+
+        CharSequence alarmDesc;
+        SuntimesUtils.TimeDisplayText timeText = utils.calendarDateDisplayString(context, alarmTime, true);
+        if (SuntimesUtils.is24()) {
+            alarmDesc = timeText.getValue();
+
+        } else {
+            String timeString = timeText.getValue() + " " + timeText.getSuffix();
+            alarmDesc = SuntimesUtils.createRelativeSpan(null, timeString, " " + timeText.getSuffix(), 0.40f);
+        }
+        return alarmDesc;
+    }
+
     /**
      * confirmDeleteAlarm
      * @param item AlarmClockItem
@@ -909,6 +958,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         public ImageButton typeButton;
         public TextView text;
         public TextView text2;
+        public TextView text_date;
         public TextView text_datetime;
         public TextView text_location;
         public TextView text_ringtone;
@@ -927,6 +977,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
             typeButton = (ImageButton) view.findViewById(R.id.type_menu);
             text = (TextView) view.findViewById(android.R.id.text1);
             text2 = (TextView) view.findViewById(android.R.id.text2);
+            text_date = (TextView) view.findViewById(R.id.text_date);
             text_datetime = (TextView) view.findViewById(R.id.text_datetime);
             text_location = (TextView) view.findViewById(R.id.text_location_label);
             text_ringtone = (TextView) view.findViewById(R.id.text_ringtone);

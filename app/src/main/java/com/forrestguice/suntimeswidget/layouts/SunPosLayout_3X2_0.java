@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2018 Forrest Guice
+   Copyright (C) 2018-2019 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -30,7 +30,9 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.map.WorldMapEquiazimuthal;
+import com.forrestguice.suntimeswidget.map.WorldMapEquiazimuthal1;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
@@ -45,11 +47,6 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
     {
         super();
     }
-
-    /**public SunPosLayout_3X1_0(int layoutID )
-    {
-        this.layoutID = layoutID;
-    }*/
 
     @Override
     public void initLayoutID()
@@ -73,18 +70,28 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetDataset dataset)
     {
         super.updateViews(context, appWidgetId, views, dataset);
-
+        WorldMapWidgetSettings.WorldMapWidgetMode mapMode = getMapMode(context, appWidgetId);
         WorldMapTask.WorldMapProjection projection;
-        WorldMapWidgetSettings.WorldMapWidgetMode mapMode = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId);
         switch (mapMode)
         {
             case EQUIAZIMUTHAL_SIMPLE:
                 options.map = ContextCompat.getDrawable(context, R.drawable.worldmap2);
+                options.map_night = null;
+                options.hasTransparentBaseMap = true;
                 projection = new WorldMapEquiazimuthal();
+                break;
+
+            case EQUIAZIMUTHAL_SIMPLE1:
+                options.map = ContextCompat.getDrawable(context, R.drawable.worldmap3);
+                options.map_night = null;
+                options.hasTransparentBaseMap = true;
+                projection = new WorldMapEquiazimuthal1();
                 break;
 
             case EQUIRECTANGULAR_BLUEMARBLE:
                 options.map = ContextCompat.getDrawable(context, R.drawable.land_shallow_topo_1024);
+                options.map_night = ContextCompat.getDrawable(context, R.drawable.earth_lights_lrg_1024);
+                options.hasTransparentBaseMap = false;
                 options.foregroundColor = Color.TRANSPARENT;
                 projection = new WorldMapEquirectangular();
                 break;
@@ -92,27 +99,27 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
             case EQUIRECTANGULAR_SIMPLE:
             default:
                 options.map = ContextCompat.getDrawable(context, R.drawable.worldmap);
+                options.map_night = null;
+                options.hasTransparentBaseMap = true;
                 projection = new WorldMapEquirectangular();
                 break;
         }
 
-        //boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
-        //int labelVisibility = (showLabels ? View.VISIBLE : View.GONE);
-        //views.setViewVisibility(R.id.info_time_worldmap_labels, visibility);   // TODO
+        boolean showLocation = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, getMapTag());
+        if (showLocation) {
+            Location location = dataset.location();
+            options.locations = new double[][] {{location.getLatitudeAsDouble(), location.getLongitudeAsDouble()}};
+        }
 
         Bitmap bitmap = projection.makeBitmap(dataset, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options);
         if (bitmap != null) {
             views.setImageViewBitmap(R.id.info_time_worldmap, bitmap);
             Log.d("DEBUG", "map is " + bitmap.getWidth() + " x " + bitmap.getHeight());
         }
-        //if (Build.VERSION.SDK_INT >= 15) {
-            //views.setContentDescription(R.id.info_time_worldmap, buildContentDescription(context, now, sunPosition));
-            // TODO
-        //}
     }
 
-    private WorldMapTask.WorldMapOptions options;
-    private int dpWidth = 512, dpHeight = 256;
+    protected WorldMapTask.WorldMapOptions options;
+    protected int dpWidth = 512, dpHeight = 256;
 
     @SuppressLint("ResourceType")
     @Override
@@ -135,6 +142,15 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
 
         options.showMoonLight = true;
         options.showMajorLatitudes = false;
+    }
+
+    public WorldMapWidgetSettings.WorldMapWidgetMode getMapMode(Context context, int appWidgetId) {
+        return WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId, getMapTag());
+    }
+
+    public String getMapTag()
+    {
+        return WorldMapWidgetSettings.MAPTAG_3x2;
     }
 
 }

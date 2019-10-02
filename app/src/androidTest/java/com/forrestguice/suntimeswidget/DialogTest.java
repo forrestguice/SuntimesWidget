@@ -225,9 +225,9 @@ public class DialogTest extends SuntimesActivityTestBase
         onView(withId(R.id.txt_about_support)).check(assertShown);
         onView(withId(R.id.txt_about_support)).check(matches(hasLinks()));
 
-        onView(withId(R.id.txt_about_legal1)).check(assertShown);
-        onView(withId(R.id.txt_about_legal2)).check(assertShown);
-        onView(withId(R.id.txt_about_legal3)).check(assertShown);
+        //onView(withId(R.id.txt_about_legal1)).check(assertShown);
+        //onView(withId(R.id.txt_about_legal2)).check(assertShown);
+        //onView(withId(R.id.txt_about_legal3)).check(assertShown);
     }
 
     public static void cancelAboutDialog()

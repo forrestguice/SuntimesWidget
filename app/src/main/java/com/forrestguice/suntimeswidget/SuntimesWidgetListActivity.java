@@ -59,7 +59,6 @@ import java.util.ArrayList;
 public class SuntimesWidgetListActivity extends AppCompatActivity
 {
     private static final String DIALOGTAG_HELP = "help";
-    private static final String DIALOGTAG_ABOUT = "about";
 
     private static final String KEY_LISTVIEW_TOP = "widgetlisttop";
     private static final String KEY_LISTVIEW_INDEX = "widgetlistindex";
@@ -253,8 +252,9 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
      */
     protected void showAbout()
     {
-        AboutDialog aboutDialog = new AboutDialog();
-        aboutDialog.show(getSupportFragmentManager(), DIALOGTAG_ABOUT);
+        Intent about = new Intent(this, AboutActivity.class);
+        startActivity(about);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
     /**
@@ -265,6 +265,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         Intent configThemesIntent = new Intent(context, WidgetThemeListActivity.class);
         configThemesIntent.putExtra(WidgetThemeListActivity.PARAM_NOSELECT, true);
         startActivity(configThemesIntent);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
     /**
@@ -277,6 +278,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         configIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         configIntent.putExtra(WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(), true);
         startActivity(configIntent);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
     /**
@@ -425,12 +427,12 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                         widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
                         data = data0;
 
-                    } else if (widgetClass == MoonWidget0.class || widgetClass == MoonWidget0_2x1.class || widgetClass == MoonWidget0_3x1.class) {
+                    } else if (widgetClass == MoonWidget0.class || widgetClass == MoonWidget0_2x1.class || widgetClass == MoonWidget0_3x1.class || widgetClass == MoonWidget0_3x2.class) {
                         SuntimesMoonData data0 =  new SuntimesMoonData(context, id, "moon");
                         widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
                         data = data0;
 
-                    } else if (widgetClass ==ClockWidget0.class || widgetClass == ClockWidget0_3x1.class) {
+                    } else if (widgetClass == ClockWidget0.class || widgetClass == ClockWidget0_3x1.class) {
                         SuntimesClockData data0 = new SuntimesClockData(context, id);
                         widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
                         data = data0;
@@ -464,9 +466,11 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             items.addAll(createWidgetListItems(context, widgetManager, MoonWidget0.class, titlePattern1));
             items.addAll(createWidgetListItems(context, widgetManager, MoonWidget0_2x1.class, titlePattern1));
             items.addAll(createWidgetListItems(context, widgetManager, MoonWidget0_3x1.class, titlePattern1));
+            items.addAll(createWidgetListItems(context, widgetManager, MoonWidget0_3x2.class, titlePattern1));
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2.class, titlePattern1));
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2_3x1.class, titlePattern1));
             items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2_3x2.class, titlePattern1));
+            items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2_3x3.class, titlePattern1));
             items.addAll(createWidgetListItems(context, widgetManager, ClockWidget0.class, titlePattern1));
             items.addAll(createWidgetListItems(context, widgetManager, ClockWidget0_3x1.class, titlePattern1));
 
@@ -493,6 +497,9 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             if (widgetClass == MoonWidget0_3x1.class)
                 return context.getString(R.string.app_name_moonwidget0) + " (3x1)";
 
+            if (widgetClass == MoonWidget0_3x2.class)
+                return context.getString(R.string.app_name_moonwidget0) + " (3x2)";
+
             if (widgetClass == SuntimesWidget1.class)
                 return context.getString(R.string.app_name_widget1);
 
@@ -504,6 +511,9 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
             if (widgetClass == SuntimesWidget2_3x2.class)
                 return context.getString(R.string.app_name_widget2) + " (3x2)";
+
+            if (widgetClass == SuntimesWidget2_3x3.class)
+                return context.getString(R.string.app_name_widget2) + " (3x3)";
 
             if (widgetClass == SuntimesWidget0_2x1.class)
                 return context.getString(R.string.app_name_widget0) + " (2x1)";
@@ -554,5 +564,12 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         SuntimesUtils.forceActionBarIcons(menu);
         return super.onPrepareOptionsPanel(view, menu);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);
+    }
+
 
 }

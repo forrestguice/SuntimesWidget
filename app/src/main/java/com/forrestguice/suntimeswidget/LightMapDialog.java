@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2018 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,32 +18,38 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.InsetDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.text.SpannableString;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -51,7 +57,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class LightMapDialog extends DialogFragment
+public class LightMapDialog extends BottomSheetDialogFragment
 {
     private static SuntimesUtils utils = new SuntimesUtils();
 
@@ -81,28 +87,69 @@ public class LightMapDialog extends DialogFragment
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.setOnShowListener(onShowDialogListener);
+        return dialog;
+    }
 
-        final Activity myParent = getActivity();
-        LayoutInflater inflater = myParent.getLayoutInflater();
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
+    {
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_lightmap, parent, false);
 
-        final ViewGroup viewGroup = null;
-        dialogContent = inflater.inflate(R.layout.layout_dialog_lightmap, viewGroup);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
-        builder.setView(dialogContent);
-        AlertDialog dialog = builder.create();
-
-        SuntimesUtils.initDisplayStrings(myParent);
+        SuntimesUtils.initDisplayStrings(getActivity());
         initViews(dialogContent);
-        if (savedInstanceState != null)
-        {
+        if (savedState != null) {
             Log.d("DEBUG", "LightMapDialog onCreate (restoreState)");
         }
+        themeViews(getContext());
+        return dialogContent;
+    }
 
-        dialog.setOnShowListener(onShowDialogListener);
-        themeViews(dialog.getContext());
-        return dialog;
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        expandSheet(getDialog());
+    }
+
+    private void expandSheet(DialogInterface dialog)
+    {
+        if (dialog != null) {
+            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
+            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+            if (layout != null) {
+                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+                behavior.setHideable(false);
+                behavior.setSkipCollapsed(true);
+                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+        }
+    }
+
+    private void initPeekHeight(DialogInterface dialog)
+    {
+        if (dialog != null) {
+            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
+            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+            if (layout != null)
+            {
+                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+                ViewGroup dialogLayout = (ViewGroup) bottomSheet.findViewById(R.id.dialog_lightmap_layout);
+                View divider1 = bottomSheet.findViewById(R.id.info_time_lightmap);
+                if (dialogLayout != null && divider1 != null)
+                {
+                    Rect headerBounds = new Rect();
+                    divider1.getDrawingRect(headerBounds);
+                    dialogLayout.offsetDescendantRectToMyCoords(divider1, headerBounds);
+                    behavior.setPeekHeight(headerBounds.bottom + (int)getResources().getDimension(R.dimen.dialog_margin));
+
+                } else {
+                    behavior.setPeekHeight(-1);
+                }
+            }
+        }
     }
 
     private DialogInterface.OnShowListener onShowDialogListener = new DialogInterface.OnShowListener()
@@ -111,6 +158,12 @@ public class LightMapDialog extends DialogFragment
         public void onShow(DialogInterface dialog)
         {
             startUpdateTask();
+            dialogTitle.post(new Runnable() {
+                @Override
+                public void run() {
+                    initPeekHeight(getDialog());
+                }
+            });
         }
     };
 

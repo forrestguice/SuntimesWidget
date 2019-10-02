@@ -108,7 +108,7 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
         }
     }
 
-    private WidgetSettings.SolsticeEquinoxMode timeMode = WidgetSettings.SolsticeEquinoxMode.EQUINOX_VERNAL;
+    private WidgetSettings.SolsticeEquinoxMode timeMode = WidgetSettings.SolsticeEquinoxMode.EQUINOX_SPRING;
     private int timeColor = Color.WHITE;
     private boolean boldTime = false;
 

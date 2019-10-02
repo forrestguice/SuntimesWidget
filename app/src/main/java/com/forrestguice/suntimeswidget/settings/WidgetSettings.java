@@ -33,6 +33,10 @@ import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_1;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_2;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_3;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_4;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_5;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_6;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_7;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_8;
 import com.forrestguice.suntimeswidget.layouts.SunLayout;
 import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_0;
 import com.forrestguice.suntimeswidget.layouts.SunLayout_1x1_1;
@@ -103,7 +107,7 @@ public class WidgetSettings
     public static final TimeMode PREF_DEF_GENERAL_TIMEMODE = TimeMode.OFFICIAL;
 
     public static final String PREF_KEY_GENERAL_TIMEMODE2 = "timemode2";
-    public static final SolsticeEquinoxMode PREF_DEF_GENERAL_TIMEMODE2 = SolsticeEquinoxMode.EQUINOX_VERNAL;
+    public static final SolsticeEquinoxMode PREF_DEF_GENERAL_TIMEMODE2 = SolsticeEquinoxMode.EQUINOX_SPRING;
 
     public static final String PREF_KEY_GENERAL_TIMEMODE2_OVERRIDE = "timemode2override";
     public static final boolean PREF_DEF_GENERAL_TIMEMODE2_OVERRIDE = true;
@@ -176,6 +180,7 @@ public class WidgetSettings
 
     public static final String PREF_KEY_TIMEZONE_CUSTOM = "timezone";
     public static final String PREF_DEF_TIMEZONE_CUSTOM = "US/Arizona";
+    public static final String[][] PREF_DEF_TIMEZONES = new String[][] { new String[] {"", PREF_DEF_TIMEZONE_CUSTOM} };
 
     public static final String PREF_KEY_TIMEZONE_SOLARMODE = "solarmode";
     public static final SolarTimeMode PREF_DEF_TIMEZONE_SOLARMODE = SolarTimeMode.APPARENT_SOLAR_TIME;
@@ -237,6 +242,10 @@ public class WidgetSettings
         }
         public static double feetToMeters(double feet) {
             return (feet * (1d / 3.28084d) );
+        }
+
+        public static double kilometersToMiles(double kilometers) {
+            return 0.62137 * kilometers;
         }
     }
 
@@ -398,7 +407,11 @@ public class WidgetSettings
         MODE1x1_PHASEILLUM("Moon phase & illumination", R.layout.layout_widget_moon_1x1_1),
         MODE1x1_PHASE("Moon phase only", R.layout.layout_widget_moon_1x1_2),
         MODE1x1_ILLUM("Moon illumination only", R.layout.layout_widget_moon_1x1_3),
-        MODE1x1_PHASENEXT("Next major phase", R.layout.layout_widget_moon_1x1_4);
+        MODE1x1_PHASENEXT("Next major phase", R.layout.layout_widget_moon_1x1_4),
+        MODE1x1_ALTAZ("Altitude & Azimuth", R.layout.layout_widget_moon_1x1_5),
+        MODE1x1_DECRIGHT("Declination & Right Ascension", R.layout.layout_widget_moon_1x1_6),
+        MODE1x1_DISTANCE("Current distance", R.layout.layout_widget_moon_1x1_7),
+        MODE1x1_APSIS("Next apogee / perigee", R.layout.layout_widget_moon_1x1_8);
 
         private final int layoutID;
         private String displayString;
@@ -436,6 +449,10 @@ public class WidgetSettings
             MODE1x1_PHASE.setDisplayString(context.getString(R.string.widgetMode1x1_moonphase));
             MODE1x1_ILLUM.setDisplayString(context.getString(R.string.widgetMode1x1_moonillum));
             MODE1x1_PHASENEXT.setDisplayString(context.getString(R.string.widgetMode1x1_moonphasenext));
+            MODE1x1_ALTAZ.setDisplayString(context.getString(R.string.widgetMode1x1_altaz));
+            MODE1x1_DECRIGHT.setDisplayString(context.getString(R.string.widgetMode1x1_decright));
+            MODE1x1_DISTANCE.setDisplayString(context.getString(R.string.widgetMode1x1_distance));
+            MODE1x1_APSIS.setDisplayString(context.getString(R.string.widgetMode1x1_apsis));
         }
     }
 
@@ -494,6 +511,14 @@ public class WidgetSettings
             this.month = month;
             this.day = day;
         }
+        public DateInfo(long timestamp)
+        {
+            Calendar date = Calendar.getInstance();
+            date.setTimeInMillis(timestamp);
+            this.year = date.get(Calendar.YEAR);
+            this.month = date.get(Calendar.MONTH);
+            this.day = date.get(Calendar.DAY_OF_MONTH);
+        }
 
         public int getYear() { return year; }
         public int getMonth() { return month; }
@@ -523,6 +548,12 @@ public class WidgetSettings
             hash = hash * 37 + (Integer.valueOf(month).hashCode());
             hash = hash * 37 + (Integer.valueOf(day).hashCode());
             return hash;
+        }
+
+        public static boolean isToday(WidgetSettings.DateInfo date)
+        {
+            WidgetSettings.DateInfo now = new WidgetSettings.DateInfo(Calendar.getInstance());
+            return now.equals(date);
         }
     }
 
@@ -758,7 +789,7 @@ public class WidgetSettings
      */
     public static enum SolsticeEquinoxMode
     {
-        EQUINOX_VERNAL("Equinox", "Vernal Equinox"),
+        EQUINOX_SPRING("Equinox", "Spring Equinox"),
         SOLSTICE_SUMMER("Solstice", "Summer Solstice"),
         EQUINOX_AUTUMNAL("Equinox", "Autumnal Equinox"),
         SOLSTICE_WINTER("Solstice", "Winter Solstice");
@@ -799,7 +830,7 @@ public class WidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
-            EQUINOX_VERNAL.setDisplayStrings(context.getString(R.string.timeMode_equinox_vernal_short),
+            EQUINOX_SPRING.setDisplayStrings(context.getString(R.string.timeMode_equinox_vernal_short),
                     context.getString(R.string.timeMode_equinox_vernal));
 
             SOLSTICE_SUMMER.setDisplayStrings( context.getString(R.string.timeMode_solstice_summer_short),
@@ -1206,6 +1237,22 @@ public class WidgetSettings
         WidgetModeMoon1x1 mode = loadMoon1x1ModePref(context, appWidgetId);
         switch (mode)
         {
+            case MODE1x1_APSIS:
+                layout = new MoonLayout_1x1_8();
+                break;
+
+            case MODE1x1_DISTANCE:
+                layout = new MoonLayout_1x1_7();
+                break;
+
+            case MODE1x1_DECRIGHT:
+                layout = new MoonLayout_1x1_6();
+                break;
+
+            case MODE1x1_ALTAZ:
+                layout = new MoonLayout_1x1_5();
+                break;
+
             case MODE1x1_PHASENEXT:
                 layout = new MoonLayout_1x1_4();
                 break;
@@ -1545,7 +1592,7 @@ public class WidgetSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE2, PREF_DEF_GENERAL_TIMEMODE3.name());
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_GENERAL_TIMEMODE3, PREF_DEF_GENERAL_TIMEMODE3.name());
 
         MoonPhaseMode timeMode;
         try
@@ -1897,25 +1944,67 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveTimezonePref(Context context, int appWidgetId, String timezone)
+    public static void saveTimezonePref(Context context, int appWidgetId, String timezone) {
+        saveTimezonePref(context, appWidgetId, timezone, "");
+    }
+    public static void saveTimezonePref(Context context, int appWidgetId, String timezone, String slotName)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
-        prefs.putString(prefs_prefix + PREF_KEY_TIMEZONE_CUSTOM, timezone);
+        String key = keyTimezonePref(appWidgetId, slotName);
+        prefs.putString(key, timezone);
         prefs.apply();
     }
-    public static String loadTimezonePref(Context context, int appWidgetId)
+
+    public static String loadTimezonePref(Context context, int appWidgetId) {
+        return loadTimezonePref(context, appWidgetId, "");
+    }
+    public static String loadTimezonePref(Context context, int appWidgetId, @NonNull String slotName)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
-        return prefs.getString(prefs_prefix + PREF_KEY_TIMEZONE_CUSTOM, PREF_DEF_TIMEZONE_CUSTOM);
+        String key = keyTimezonePref(appWidgetId, slotName);
+        String defaultValue = defaultTimezonePref(context, appWidgetId, slotName);
+        return prefs.getString(key, defaultValue);
     }
-    public static void deleteTimezonePref(Context context, int appWidgetId)
+
+    public static void deleteTimezonePref(Context context, int appWidgetId) {
+        deleteTimezonePref(context, appWidgetId, "");
+    }
+    public static void deleteTimezonePref(Context context, int appWidgetId, @NonNull String slotName)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
-        prefs.remove(prefs_prefix + PREF_KEY_TIMEZONE_CUSTOM);
+        String key = keyTimezonePref(appWidgetId, slotName);
+        prefs.remove(key);
         prefs.apply();
+    }
+
+    public static String keyTimezonePref(int appWidgetId, @NonNull String slotName)
+    {
+        slotName = slotName.toLowerCase(Locale.US).trim();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_TIMEZONE;
+        if (slotName.isEmpty())
+            return prefs_prefix + PREF_KEY_TIMEZONE_CUSTOM;
+        else return prefs_prefix + PREF_KEY_TIMEZONE_CUSTOM + "_" + slotName;
+    }
+    public static String defaultTimezonePref(Context context, int appWidgetId, @NonNull String slotName)
+    {
+        slotName = slotName.toLowerCase(Locale.US).trim();
+        if (!slotName.isEmpty())
+        {
+            for (String[] defaultTimezone : PREF_DEF_TIMEZONES)
+            {
+                if (defaultTimezone == null) {
+                    Log.e("defaultTimezonePref", "Bad default mapping! null. skipping...");
+                    continue;
+                } else if (defaultTimezone.length != 2) {
+                    Log.e("defaultTimezonePref", "Bad default mapping! incorrect length " + defaultTimezone.length + ". skipping...");
+                    continue;
+                } else if (defaultTimezone[0].equals(slotName)) {
+                    return defaultTimezone[1];
+                }
+            }
+            Log.w("defaultTimezone", "default for :: " + slotName + " :: was not found!");
+        }
+        return PREF_DEF_TIMEZONE_CUSTOM;
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

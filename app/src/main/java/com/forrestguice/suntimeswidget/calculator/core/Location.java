@@ -46,7 +46,7 @@ public class Location implements Parcelable
      */
     public Location(String latitude, String longitude )
     {
-        this(null, latitude, longitude, null, true);
+        this(null, latitude, longitude, "0", true);
     }
 
     /**
@@ -56,7 +56,7 @@ public class Location implements Parcelable
      */
     public Location(String label, String latitude, String longitude )
     {
-        this(label, latitude, longitude, null, true);
+        this(label, latitude, longitude, "0", true);
     }
 
     public Location(String label, String latitude, String longitude, String altitude )
@@ -193,8 +193,7 @@ public class Location implements Parcelable
     public Uri getUri()
     {
         String uriString = "geo:" + latitude + "," + longitude;
-        if (!altitude.isEmpty())
-        {
+        if (altitude != null && !altitude.isEmpty()) {
             uriString += "," + altitude;
         }
         return Uri.parse(uriString);

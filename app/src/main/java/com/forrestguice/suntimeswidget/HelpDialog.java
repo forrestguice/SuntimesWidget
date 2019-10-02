@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,24 +18,28 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
+import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.BottomSheetDialogFragment;
 
-//import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
-public class HelpDialog extends DialogFragment
+import com.forrestguice.suntimeswidget.settings.AppSettings;
+
+public class HelpDialog extends BottomSheetDialogFragment
 {
     public static final String KEY_HELPTEXT = "helpText";
     public static final String KEY_NEUTRALTEXT = "neutralText";
+    public static final String KEY_NEUTRALTAG = "neutralTag";
 
     /**
      * The text content displayed by the help dialog.
@@ -62,48 +66,74 @@ public class HelpDialog extends DialogFragment
      * @param savedInstanceState a previously saved state (or null)
      * @return a Dialog object ready to be displayed
      */
-    @NonNull @Override
+    /**@NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
-        if (savedInstanceState != null)
-        {
-            neutralButtonMsg = savedInstanceState.getString(KEY_NEUTRALTEXT);
-        }
-
-        final Activity myParent = getActivity();
-        LayoutInflater inflater = myParent.getLayoutInflater();
-        @SuppressLint("InflateParams")
-        View dialogContent = inflater.inflate(R.layout.layout_dialog_help, null);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
-        builder.setView(dialogContent);
-
-        if (neutralButtonMsg != null) {
-            builder.setNeutralButton(neutralButtonMsg, null);
-        }
-
-        AlertDialog dialog = builder.create();
-        initViews(dialogContent);
-        if (savedInstanceState != null)
-        {
-            //Log.d("DEBUG", "HelpDialog onCreate (restoreState)");
-            rawContent = savedInstanceState.getCharSequence(KEY_HELPTEXT);
-        }
-        setContent(rawContent);
-        if (onShowListener != null) {
-            dialog.setOnShowListener(onShowListener);
-        }
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
         return dialog;
+    }*/
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
+    {
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_help, parent, false);
+
+        initViews(dialogContent);
+        if (savedState != null) {
+            rawContent = savedState.getCharSequence(KEY_HELPTEXT);
+            neutralButtonMsg = savedState.getString(KEY_NEUTRALTEXT);
+            listenerTag = savedState.getString(KEY_NEUTRALTAG);
+        }
+        return dialogContent;
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        updateViews();
+        expandSheet(getDialog());
+    }
+
+    private void expandSheet(DialogInterface dialog)
+    {
+        if (dialog != null) {
+            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
+            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+            if (layout != null) {
+                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+                behavior.setHideable(false);
+                behavior.setSkipCollapsed(false);
+                behavior.setPeekHeight(200);
+                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+        }
     }
 
     /**
      *
      */
+    private View buttonFrame;
     private TextView txtView;
+    private Button neutralButton;
     public void initViews(View dialogView)
     {
         txtView = (TextView) dialogView.findViewById(R.id.txt_help_content);
+        buttonFrame = dialogView.findViewById(R.id.dialog_buttons);
+        neutralButton = (Button)dialogView.findViewById(R.id.dialog_button_neutral);
+    }
+
+    public void updateViews()
+    {
+        txtView.setText(getContent());
+        if (buttonFrame != null) {
+            buttonFrame.setVisibility(neutralButtonMsg != null ? View.VISIBLE : View.GONE);
+        }
+        if (neutralButton != null && neutralButtonMsg != null) {
+            neutralButton.setText(neutralButtonMsg);
+            neutralButton.setOnClickListener(onNeutralButtonClick);
+        }
     }
 
     @Override
@@ -111,27 +141,29 @@ public class HelpDialog extends DialogFragment
     {
         //Log.d("DEBUG", "HelpDialog onSaveInstanceState");
         outState.putCharSequence(KEY_HELPTEXT, rawContent);
-        //outState.putString(KEY_NEUTRALTEXT, neutralButtonMsg);
+        outState.putString(KEY_NEUTRALTEXT, neutralButtonMsg);
+        outState.putString(KEY_NEUTRALTAG, listenerTag);
         super.onSaveInstanceState(outState);
     }
 
     /**
-     * @param listener listener to be triggered when dialog is shown
-     */
-    public void setOnShowListener( DialogInterface.OnShowListener listener )
-    {
-        onShowListener = listener;
-    }
-    private DialogInterface.OnShowListener onShowListener;
-
-    /**
-     * Show/hide the neutral button; the click listener should be assigned in the dialogs onShowListener.
+     * Show/hide the neutral button.
      * @param msg neutral button text (null hides button, default is null)
      */
-    public void setShowNeutralButton( String msg )
-    {
+    public void setShowNeutralButton( String msg ) {
         neutralButtonMsg = msg;
     }
     private String neutralButtonMsg = null;
 
+    private View.OnClickListener onNeutralButtonClick = null;
+    public void setNeutralButtonListener( View.OnClickListener listener, String tag )
+    {
+        onNeutralButtonClick = listener;
+        listenerTag = tag;
+    }
+
+    private String listenerTag = "";
+    public String getListenerTag() {
+        return listenerTag;
+    }
 }

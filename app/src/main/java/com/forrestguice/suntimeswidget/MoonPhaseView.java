@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,7 +19,6 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-//import android.os.Bundle;
 import android.graphics.Bitmap;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
@@ -176,7 +175,7 @@ public class MoonPhaseView extends LinearLayout
         MoonPhaseDisplay.initDisplayStrings(context);
     }
 
-    protected void updateViews( Context context, SuntimesMoonData data )
+    public void updateViews(Context context, SuntimesMoonData data)
     {
         int positionVisibility = (showPosition ? View.VISIBLE : View.GONE);
         azimuthText.setVisibility(positionVisibility);
@@ -195,7 +194,10 @@ public class MoonPhaseView extends LinearLayout
             MoonPhaseDisplay phase = (tomorrowMode ? data.getMoonPhaseTomorrow() : data.getMoonPhaseToday());
             if (phase != null)
             {
-                phaseText.setText(phase.getLongDisplayString());
+                if (phase == MoonPhaseDisplay.FULL || phase == MoonPhaseDisplay.NEW) {
+                    SuntimesCalculator.MoonPhase majorPhase = (phase == MoonPhaseDisplay.FULL ? SuntimesCalculator.MoonPhase.FULL : SuntimesCalculator.MoonPhase.NEW);
+                    phaseText.setText(data.getMoonPhaseLabel(context, majorPhase));
+                } else phaseText.setText(phase.getLongDisplayString());
 
                 View phaseIcon = findViewById(phase.getView());
                 if (phaseIcon != null) {

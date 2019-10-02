@@ -57,7 +57,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.forrestguice.suntimeswidget.AboutDialog;
+import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
@@ -76,7 +76,6 @@ import static com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity.E
 
 public class WidgetThemeListActivity extends AppCompatActivity
 {
-    public static final String DIALOGTAG_ABOUT = "about";
     private static final String DIALOGTAG_HELP = "help";
 
     public static final int WALLPAPER_DELAY = 1000;
@@ -262,6 +261,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
             intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
         }
         startActivityForResult(intent, ADD_THEME_REQUEST);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
     protected void editTheme( SuntimesTheme theme )
@@ -279,6 +279,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
                 intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
             }
             startActivityForResult(intent, EDIT_THEME_REQUEST);
+            overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
         }
     }
 
@@ -292,6 +293,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
             intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
         }
         startActivityForResult(intent, ADD_THEME_REQUEST);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
     protected void deleteTheme(final SuntimesTheme theme)
@@ -329,6 +331,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         intent.putExtra(ADAPTER_MODIFIED, adapterModified);
         setResult(Activity.RESULT_OK, intent);
         finish();
+        overridePendingTransition(R.anim.transition_ok_in, R.anim.transition_ok_out);
     }
 
     /**
@@ -525,6 +528,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         intent.putExtra(ADAPTER_MODIFIED, adapterModified);
         setResult(((adapterModified) ? Activity.RESULT_OK : Activity.RESULT_CANCELED), intent);
         finish();
+        overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);
     }
 
     @Override
@@ -903,8 +907,9 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
     protected void showAbout()
     {
-        AboutDialog aboutDialog = new AboutDialog();
-        aboutDialog.show(getSupportFragmentManager(), DIALOGTAG_ABOUT);
+        Intent about = new Intent(this, AboutActivity.class);
+        startActivity(about);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
     @SuppressWarnings("RestrictedApi")

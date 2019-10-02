@@ -20,6 +20,7 @@
     <string name="configAction_setAlarm">Configurar alarma</string>
     <string name="configAction_setTimeZone">Configurar zona horària</string>
     <string name="configAction_setDate">Configurar data</string>
+    <string name="configAction_viewDate">View Date</string>    <!-- TODO -->
     <string name="configAction_sunDialog">Posició del Sol</string>
     <string name="configAction_equinoxDialog">Solstici / equinocci</string>
     <string name="configAction_worldMap">Mapa del món</string>
@@ -57,9 +58,8 @@
     <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> La data no es correspon amb la d\'avui.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
-    <string name="past_yesterday">Passat (-1)</string>
     <string name="past_today">Passat</string>
-    <string name="past_tomorrow">Passat (+1)</string>
+    <string name="past_n">Passat (%1$s)</string>
 
     <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
     <string name="yesterday">Ahir</string>
@@ -67,9 +67,8 @@
     <string name="tomorrow">Demà</string>
 
     <!-- DateDesc: some day in the future (appears in dateField) -->
-    <string name="future_yesterday">Futur (-1)</string>
     <string name="future_today">Futur</string>
-    <string name="future_tomorrow">Futur (+1)</string>
+    <string name="future_n">Futur (%1$s)</string>
 
     <!-- Field: length of day
          The hours in the day field(s) that appears below the table (main activity)
@@ -184,12 +183,26 @@
         <item quantity="other">%s peus</item>
     </plurals>
 
+    <string name="units_miles">miles</string>    <!-- TODO -->
+    <string name="units_miles_short">mi</string>    <!-- TODO -->
+    <plurals name="units_miles_long">
+        <item quantity="one">%s mile</item>
+        <item quantity="other">%s miles</item>
+    </plurals>                                     <!-- TODO -->
+
     <string name="units_meters">metres</string>
     <string name="units_meters_short">m</string>
     <plurals name="units_meters_long">
         <item quantity="one">%s metre</item>
         <item quantity="other">%s metres</item>
     </plurals>
+
+    <string name="units_kilometers">kilometers</string>    <!-- TODO -->
+    <string name="units_kilometers_short">km</string>    <!-- TODO -->
+    <plurals name="units_kilometers_long">
+        <item quantity="one">%s kilometer</item>
+        <item quantity="other">%s kilometers</item>
+    </plurals>                                            <!-- TODO -->
 
     <!--
          WIDGET CONFIG
@@ -307,6 +320,22 @@
     <string name="timeMode_moon_waningcrescent_short">Minvant</string>               <!-- label -->
     <string name="timeMode_moon_waningcrescent">Lluna minvant</string>                     <!-- label -->
 
+    <string name="timeMode_moon_super">Supermoon</string>               <!-- label -->    <!-- TODO -->
+    <string name="timeMode_moon_micro">Micromoon</string>               <!-- label -->    <!-- TODO -->
+    <string name="timeMode_moon_superfull">Super Full Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <!--<string name="timeMode_moon_superfull_short">@string/timeMode_moon_super</string>-->     <!-- label -->
+    <string name="timeMode_moon_supernew">Super New Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <!--<string name="timeMode_moon_supernew_short">@string/timeMode_moon_super</string>-->     <!-- label -->
+    <string name="timeMode_moon_microfull">Micro Full Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <!--<string name="timeMode_moon_microfull_short">@string/timeMode_moon_micro</string>-->     <!-- label -->
+    <string name="timeMode_moon_micronew">Micro New Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <!--<string name="timeMode_moon_micronew_short">@string/timeMode_moon_micro</string>-->     <!-- label -->
+
+    <!--<string name="timeMode_moon_perigee">@string/label_perigee</string>-->                             <!-- label -->
+    <!--<string name="timeMode_moon_apogee">@string/label_apogee</string>-->                             <!-- label -->
+    <string name="label_apogee">Apogee</string>      <!-- TODO -->
+    <string name="label_perigee">Perigee</string>    <!-- TODO -->
+
     <string name="configLabel_general_timeMode">Mode:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: layout mode -->
@@ -317,9 +346,12 @@
 
     <string name="widgetMode1x1_altaz">Altitud i Azimut</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Inclinació i ascensió correcta</string>     <!-- setting -->
+    <string name="widgetMode1x1_distance">Current distance</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode1x1_apsis">Next apogee or perigee</string>     <!-- setting -->    <!-- TODO -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Bàsic</string>  <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [north]</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [south]</string>     <!-- setting -->  <!-- TODO -->
     <string name="widgetMode_sunPosMap_bluemarble">Bola blava</string>    <!-- setting -->
 
     <string name="widgetMode1x1_moonriseset">Sortida i posta de la Lluna</string>     <!-- setting -->
@@ -545,6 +577,7 @@
     <string name="widgetLabel_rightAscension_short">AR</string>    <!-- label -->
     <string name="widgetLabel_declination">Inclinació</string>           <!-- label -->
     <string name="widgetLabel_declination_short">Inc</string>           <!-- label -->
+    <string name="widgetLabel_distance">Distance</string>           <!-- label -->    <!-- TODO -->
 
     <!--
         ALARM CLOCK
@@ -554,7 +587,7 @@
     <string name="configAction_addAlarm">Afegir alarma</string>               <!-- button (contentDescription) -->  
     <string name="configAction_addNotification">Afegir notificació</string> <!-- button (contentDescription) -->  
     <string name="configAction_deleteAlarm">Elimina</string>               <!-- button (contentDescription) -->  
-    <string name="configAction_clearAlarms">Elimina tot</string>                <!-- action button / menu item -->  
+    <string name="configAction_clearAlarms">Elimina tot</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">Elimina</string>                <!-- action button / menu item -->  
     <string name="configAction_setAlarmOffset">Retard</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmType">Tipus</string>         <!-- button (contentDescription) -->  
@@ -563,7 +596,7 @@
     <string name="configAction_setAlarmRepeat">Repetició</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmEvent">Event</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmTime">Hora</string>         <!-- button (contentDescription) -->  
-    <string name="configAction_setAlarmSound">So</string>         <!-- button (contentDescription) -->  
+    <string name="configAction_setAlarmSound">So</string>         <!-- button (contentDescription) -->
     <string name="configAction_alarmMenu">Menú d\'alarmes</string>         <!-- button (contentDescription) -->  
 
     <string name="alarmAction_dismiss">Ignorar</string>                <!-- notification action button -->  
@@ -757,30 +790,14 @@
         <item>@string/trackingMode_closest</item>
         <item>@string/trackingMode_soonest</item>
     </string-array>
-    <!-- App Setting: Date "on tap" action -->
-    <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
-        <item>No fer res</item>
-        <item>Intercanviar targetes (avui/demà)</item>
-        <item>Mostra aplicació de calendari</item>
-        <item>Posar data personalitzada</item>
-    </string-array>
 
-    <!-- App Setting: Clock UI "on tap" action -->
-    <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
-        <item>No fer res</item>
-        <item>Posar una alarma</item>
-        <item>@string/configAction_setTimeZone</item>
-        <item>Mostrar nota següent</item>
-        <item>Mostrar nota anterior</item>
-    </string-array>
-
-    <!-- App Setting: Note UI "on tap" action -->
-    <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
-        <item>No fer res</item>
-        <item>Posar una alarma a la nota</item>
-        <item>Mostrar nota següent</item>
-        <item>Mostrar nota anterior</item>
-    </string-array>
+    <string name="configAction_doNothing">No fer res</string>
+    <string name="configAction_nextNote">Mostrar nota següent</string>
+    <string name="configAction_prevNote">Mostrar nota anterior</string>
+    <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
+    <string name="configAction_showCalendar">Mostra aplicació de calendari</string>
+    <string name="configAction_swapCards">Intercanviar targetes (avui/demà)</string>
+    <string name="configAction_setAlarmForNote">Posar una alarma a la nota</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">per desfase</string>
@@ -913,9 +930,20 @@
 
     <!-- Dialog: World Map -->
     <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
+    <string name="worldmap_dialog_action_play">Play</string>       <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_pause">Pause</string>     <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_record">Record</string>   <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_next">Next</string>       <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_prev">Previous</string>   <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_reset">Reset</string>     <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_menu">Options</string>       <!-- button (contentDescription) --> <!-- TODO -->
     <string name="worldmap_dialog_option_sunlight">Llum solar</string>
     <string name="worldmap_dialog_option_moonlight">Llum lunar</string>
     <string name="worldmap_dialog_option_all">Ambdòs</string>
+    <string name="worldmap_dialog_option_location">Location</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_latitudes">Latitudes</string>    <!-- TODO -->
+    <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- TODO -->
+    <string name="worldmap_dialog_speed_1d">&#215; 1d</string>    <!-- TODO -->
     <string name="configAction_shareMap">Comparteix</string>   <!-- button (contentDescription) -->  <!-- export (share) -->  
 
     <!-- Dialog: Set Alarm -->
@@ -928,6 +956,7 @@
     <string name="schedalarm_dialog_error2">L\'alarma no és pot configurar…</string>
     <string name="schedalarm_dialog_note">En <xliff:g id="timetext" example="6h 30m">%s</xliff:g>, aproximadament.</string>
     <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g> no succeïx.</string>
+
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
         <item>alba astrònomic</item>
         <item>alba nàutic</item>
@@ -946,6 +975,14 @@
         <item>ocàs astrònomic</item>
         <item>sortida lunar</item>
         <item>posta lunar</item>
+        <item>new moon</item>  <!-- TODO -->
+        <item>first quarter</item>  <!-- TODO -->
+        <item>full moon</item>  <!-- TODO -->
+        <item>third quarter</item>  <!-- TODO -->
+        <item>spring equinox</item>    <!-- TODO -->
+        <item>summer solstice</item>   <!-- TODO -->
+        <item>autumn equinox</item>   <!-- TODO -->
+        <item>winter solstice</item>   <!-- TODO -->
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>sortida de sol astronòmica</item>
@@ -965,6 +1002,14 @@
         <item>posta de sol astronòmica</item>
         <item>sortida lunar</item>
         <item>posta lunar</item>
+        <item>new moon</item>  <!-- TODO -->
+        <item>first quarter</item>  <!-- TODO -->
+        <item>full moon</item>  <!-- TODO -->
+        <item>third quarter</item>  <!-- TODO -->
+        <item>spring equinox</item>    <!-- TODO -->
+        <item>summer solstice</item>   <!-- TODO -->
+        <item>autumn equinox</item>   <!-- TODO -->
+        <item>winter solstice</item>   <!-- TODO -->
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
@@ -1078,6 +1123,7 @@
     <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> per <xliff:g id="authorList">%2$s</xliff:g>.]]></string>   <!-- TODO: review -->
     <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
     <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, i <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
+    <string name="creditsTab">Credits</string>   <!-- TODO -->
     
     <string name="app_legal3"><![CDATA[ <b>Biblioteques:</b><br/> ]]>
 <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
@@ -1180,6 +1226,7 @@
     <string name="privacy_permissiondialog_prompt"><![CDATA[Demanar permisos ara?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignorar</string>
     <string name="privacy_permissiondialog_title">Permisos</string>
+    <string name="privacyTab">Privacy</string>   <!-- TODO -->
 
     <string name="security_dialog_title">Alerta de seguretat</string>  
     <string name="security_duplicate_permissions">Un permís que pertany a Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\ntambé està definit per: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  
