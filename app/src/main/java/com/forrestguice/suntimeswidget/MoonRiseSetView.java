@@ -162,7 +162,7 @@ public class MoonRiseSetView extends LinearLayout
         }
     }
 
-    protected void updateViews( Context context, SuntimesMoonData data )
+    public void updateViews(Context context, SuntimesMoonData data)
     {
         if (isInEditMode())
         {

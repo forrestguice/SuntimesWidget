@@ -756,7 +756,7 @@ public class WidgetTimezones
             for (int i = 0; i < allTimezoneValues.length; i++)
             {
                 TimeZone timezone = TimeZone.getTimeZone(allTimezoneValues[i]);
-                double offsetHr = timezone.getRawOffset() / (1000 * 60 * 60);
+                double offsetHr = timezone.getRawOffset() / (double)(1000 * 60 * 60);
                 timezones.add(new TimeZoneItem(timezone.getID(), timezone.getDisplayName(), offsetHr));
             }
 

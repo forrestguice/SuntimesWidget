@@ -23,10 +23,9 @@ android
         minSdkVersion 10
         //noinspection OldTargetApi
         targetSdkVersion 25
-        versionCode 46
-        versionName "0.11.5"
+        versionCode 51
+        versionName "0.11.10"
 
-        buildConfigField "java.util.Date", "BUILD_TIME", "new java.util.Date(" + getDateAsMillis() + "L)"
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -52,10 +51,12 @@ dependencies
 {
     compile 'com.android.support:design:25.4.0'
     compile 'com.android.support:appcompat-v7:25.4.0'
+    compile 'com.android.support:recyclerview-v7:25.4.0'
+    compile 'com.android.support:cardview-v7:25.4.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.github.forrestguice:sunrisesunsetlib-java:SunriseSunsetCalculator-1.2-p0-fixdst'
     compile 'com.github.caarmen.SunriseSunset:lib-sunrise-sunset:1.1.0'
-    compile group: 'net.time4j', name: 'time4j-android', version: '4.2-2018g'
+    compile group: 'net.time4j', name: 'time4j-android', version: '4.4.2-2019c'
 
     compile 'com.github.QuadFlask:colorpicker:0.0.13'
 
@@ -69,12 +70,6 @@ dependencies
 
 configurations.all {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-}
-
-static def getDateAsMillis()
-{
-    def Calendar cal = Calendar.getInstance();
-    return cal.getTimeInMillis().toString()
 }
 
 def getGitHash()

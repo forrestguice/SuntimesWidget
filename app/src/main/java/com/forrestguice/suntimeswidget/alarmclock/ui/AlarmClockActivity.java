@@ -59,10 +59,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.forrestguice.suntimeswidget.AboutDialog;
+import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.AlarmDialog;
 import com.forrestguice.suntimeswidget.LocationConfigDialog;
-import com.forrestguice.suntimeswidget.Manifest;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
@@ -73,6 +72,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
+import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -113,7 +113,6 @@ public class AlarmClockActivity extends AppCompatActivity
     private static final String DIALOGTAG_OFFSET = "alarmoffset";
     private static final String DIALOGTAG_LOCATION = "alarmlocation";
     private static final String DIALOGTAG_HELP = "help";
-    private static final String DIALOGTAG_ABOUT = "about";
 
     private static final String KEY_SELECTED_ROWID = "selectedID";
     private static final String KEY_SELECTED_LOCATION = "selectedLocation";
@@ -125,7 +124,9 @@ public class AlarmClockActivity extends AppCompatActivity
     private ActionBar actionBar;
     private ListView alarmList;
     private View emptyView;
-    private FloatingActionButton addAlarmButton, addNotificationButton;
+
+    private FloatingActionButton addButton, addAlarmButton, addNotificationButton;
+    private View addAlarmButtonLayout, addNotificationButtonLayout;
 
     private SuntimesWarning notificationWarning;
     private List<SuntimesWarning> warnings;
@@ -139,6 +140,7 @@ public class AlarmClockActivity extends AppCompatActivity
     private AppSettings.LocaleInfo localeInfo;
 
     private int colorAlarmEnabled, colorOn, colorOff, colorEnabled, colorDisabled, colorPressed;
+    private int resAddIcon, resCloseIcon;
 
     public AlarmClockActivity()
     {
@@ -329,13 +331,15 @@ public class AlarmClockActivity extends AppCompatActivity
         SuntimesUtils.initDisplayStrings(context);
         SolarEvents.initDisplayStrings(context);
 
-        int[] attrs = { R.attr.alarmColorEnabled, android.R.attr.textColorPrimary, R.attr.text_disabledColor, R.attr.buttonPressColor, android.R.attr.textColor };
+        int[] attrs = { R.attr.alarmColorEnabled, android.R.attr.textColorPrimary, R.attr.text_disabledColor, R.attr.buttonPressColor, android.R.attr.textColor, R.attr.icActionNew, R.attr.icActionClose };
         TypedArray a = context.obtainStyledAttributes(attrs);
         colorAlarmEnabled = colorOn = ContextCompat.getColor(context, a.getResourceId(0, R.color.alarm_enabled_dark));
         colorEnabled = ContextCompat.getColor(context, a.getResourceId(1, android.R.color.primary_text_dark));
         colorDisabled = ContextCompat.getColor(context, a.getResourceId(2, R.color.text_disabled_dark));
         colorPressed = ContextCompat.getColor(context, a.getResourceId(3, R.color.sunIcon_color_setting_dark));
         colorOff = ContextCompat.getColor(context, a.getResourceId(4, R.color.grey_600));
+        resAddIcon = a.getResourceId(5, R.drawable.ic_action_new);
+        resCloseIcon = a.getResourceId(6, R.drawable.ic_action_close);
         a.recycle();
 
         if (appThemeOverride != null) {
@@ -518,15 +522,24 @@ public class AlarmClockActivity extends AppCompatActivity
             }
         }
 
+        addButton = (FloatingActionButton) findViewById(R.id.btn_add);
+        addButton.setBackgroundTintList(SuntimesUtils.colorStateList(colorAlarmEnabled, colorDisabled, colorPressed));
+        addButton.setRippleColor(Color.TRANSPARENT);
+        addButton.setOnClickListener(onFabMenuClick);
+
+        addAlarmButtonLayout = findViewById(R.id.layout_btn_addAlarm);
         addAlarmButton = (FloatingActionButton) findViewById(R.id.btn_addAlarm);
         addAlarmButton.setBackgroundTintList(SuntimesUtils.colorStateList(colorPressed, colorDisabled, colorAlarmEnabled));
         addAlarmButton.setRippleColor(Color.TRANSPARENT);
         addAlarmButton.setOnClickListener(onAddAlarmButtonClick);
 
+        addNotificationButtonLayout = findViewById(R.id.layout_btn_addNotification);
         addNotificationButton = (FloatingActionButton) findViewById(R.id.btn_addNotification);
         addNotificationButton.setBackgroundTintList(SuntimesUtils.colorStateList(colorPressed, colorDisabled, colorAlarmEnabled));
         addNotificationButton.setRippleColor(Color.TRANSPARENT);
         addNotificationButton.setOnClickListener(onAddNotificationButtonClick);
+
+        collapseFabMenu();
 
         alarmList = (ListView)findViewById(R.id.alarmList);
         alarmList.setOnItemClickListener(onAlarmItemClick);
@@ -537,6 +550,7 @@ public class AlarmClockActivity extends AppCompatActivity
             {
                 int pos = alarmList.pointToPosition((int)event.getX(), (int)event.getY());
                 if ((event.getAction() == MotionEvent.ACTION_DOWN) && pos == -1) {
+                    collapseFabMenu();
                     setSelectedItem(-1);
                 }
                 return false;
@@ -574,6 +588,7 @@ public class AlarmClockActivity extends AppCompatActivity
         public void onClick(View v)
         {
             showAddDialog(AlarmClockItem.AlarmType.ALARM);
+            collapseFabMenu();
         }
     };
     private View.OnClickListener onAddNotificationButtonClick = new View.OnClickListener() {
@@ -581,6 +596,7 @@ public class AlarmClockActivity extends AppCompatActivity
         public void onClick(View v)
         {
             showAddDialog(AlarmClockItem.AlarmType.NOTIFICATION);
+            collapseFabMenu();
         }
     };
 
@@ -842,15 +858,18 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         SuntimesRiseSetDataset sunData = new SuntimesRiseSetDataset(this, 0);
         SuntimesMoonData moonData = new SuntimesMoonData(this, 0);
+        SuntimesEquinoxSolsticeDataset equinoxData = new SuntimesEquinoxSolsticeDataset(this, 0);
 
         if (forLocation != null) {
             sunData.setLocation(forLocation);
             moonData.setLocation(forLocation);
+            equinoxData.setLocation(forLocation);
         }
 
         sunData.calculateData();
         moonData.calculate();
-        dialog.setData(this, sunData, moonData);
+        equinoxData.calculateData();
+        dialog.setData(this, sunData, moonData, equinoxData);
     }
 
     /**
@@ -959,7 +978,9 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         if (Build.VERSION.SDK_INT >= 11)
         {
+            int eventType = item.event != null ? item.event.getType() : -1;
             AlarmOffsetDialog offsetDialog = new AlarmOffsetDialog();
+            offsetDialog.setShowDays(eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON);
             offsetDialog.setOffset(item.offset);
             offsetDialog.setOnAcceptedListener(onOffsetChanged);
             t_selectedItem = item.rowID;
@@ -1270,6 +1291,7 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         Intent settingsIntent = new Intent(this, SuntimesSettingsActivity.class);
         startActivityForResult(settingsIntent, REQUEST_SETTINGS);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
     /**
@@ -1287,10 +1309,10 @@ public class AlarmClockActivity extends AppCompatActivity
      */
     protected void showAbout()
     {
-        AboutDialog aboutDialog = new AboutDialog();
-        aboutDialog.setIconID(R.mipmap.ic_launcher_alarms);
-        aboutDialog.setAppName(R.string.app_name_alarmclock);
-        aboutDialog.show(getSupportFragmentManager(), DIALOGTAG_ABOUT);
+        Intent about = new Intent(this, AboutActivity.class);
+        about.putExtra(AboutActivity.EXTRA_ICONID, R.mipmap.ic_launcher_alarms_round);
+        startActivity(about);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1330,7 +1352,9 @@ public class AlarmClockActivity extends AppCompatActivity
                 DatabaseUtils.cursorRowToContentValues(cursor, entryValues);
 
                 AlarmClockItem item = new AlarmClockItem(contextRef.get(), entryValues);
-                AlarmNotifications.updateAlarmTime(contextRef.get(), item);
+                if (!item.enabled) {
+                    AlarmNotifications.updateAlarmTime(contextRef.get(), item);
+                }
                 items.add(item);
                 publishProgress(item);
 
@@ -1439,6 +1463,7 @@ public class AlarmClockActivity extends AppCompatActivity
         Intent intent = new Intent(this, SuntimesActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        overridePendingTransition(R.anim.transition_swap_in, R.anim.transition_swap_out);
     }
 
     @SuppressWarnings("RestrictedApi")
@@ -1448,5 +1473,38 @@ public class AlarmClockActivity extends AppCompatActivity
         SuntimesUtils.forceActionBarIcons(menu);
         return super.onPrepareOptionsPanel(view, menu);
     }
+
+    private boolean fabMenuExpanded = false;
+
+    private void expandFabMenu()
+    {
+        addAlarmButtonLayout.setVisibility(View.VISIBLE);
+        addNotificationButtonLayout.setVisibility(View.VISIBLE);
+        addButton.setImageResource(resCloseIcon);
+        fabMenuExpanded = true;
+    }
+
+    private void collapseFabMenu()
+    {
+        addAlarmButtonLayout.setVisibility(View.GONE);
+        addNotificationButtonLayout.setVisibility(View.GONE);
+        addButton.setImageResource(resAddIcon);
+        fabMenuExpanded = false;
+    }
+
+    private void toggleFabMenu()
+    {
+        if (fabMenuExpanded)
+            collapseFabMenu();
+        else expandFabMenu();
+    }
+
+    private View.OnClickListener onFabMenuClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            toggleFabMenu();
+        }
+    };
+
 
 }

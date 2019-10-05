@@ -19,6 +19,7 @@
     <string name="configAction_setAlarm">設置鬧鐘</string>
     <string name="configAction_setTimeZone">設置時區</string>
     <string name="configAction_setDate">設置日期</string>
+    <string name="configAction_viewDate">View Date</string>    <!-- TODO -->
     <string name="configAction_sunDialog">太陽位置</string>
     <string name="configAction_equinoxDialog">夏冬至/春秋分</string>
     <string name="configAction_worldMap">世界地圖</string>
@@ -56,9 +57,8 @@
     <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> 日期已設置為今天外的另一天。</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
-    <string name="past_yesterday">過去 (-1)</string>
     <string name="past_today">過去</string>
-    <string name="past_tomorrow">過去 (+1)</string>
+    <string name="past_n">過去 (%1$s)</string>
 
     <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
     <string name="yesterday">昨日</string>
@@ -66,9 +66,8 @@
     <string name="tomorrow">明日</string>
 
     <!-- DateDesc: some day in the future (appears in dateField) -->
-    <string name="future_yesterday">將來 (-1)</string>
     <string name="future_today">將來</string>
-    <string name="future_tomorrow">將來 (+1)</string>
+    <string name="future_n">將來 (%1$s)</string>
 
     <!-- Field: length of day
          The hours in the day field(s) that appears below the table (main activity)
@@ -106,15 +105,15 @@
     <string name="until_end">為止</string>
 
     <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. the time component is shown on the next line -->
-        <item quantity="one">at</item>
+        <!--<item quantity="one">at</item>-->
         <item quantity="other">at</item>
     </plurals>  <!-- TODO -->
     <plurals name="offset_before_plural">      <!-- e.g. "30m before \n 5:30PM" .. the time component is shown on the next line -->
-        <item quantity="one">%1$s before</item>
+        <!--<item quantity="one">%1$s before</item>-->
         <item quantity="other">%1$s before</item>
     </plurals>  <!-- TODO -->
     <plurals name="offset_after_plural">      <!-- e.g. "30m after \n 5:30PM" .. the time component is shown on the next line -->
-        <item quantity="one">%1$s after</item>
+        <!--<item quantity="one">%1$s after</item>-->
         <item quantity="other">%1$s after</item>
     </plurals>  <!-- TODO -->
 
@@ -190,16 +189,30 @@
     <string name="units_feet">英尺</string>
     <string name="units_feet_short">ft</string>
     <plurals name="units_feet_long">
-        <item quantity="one">%s 英尺</item>
+        <!--<item quantity="one">%s 英尺</item>-->
         <item quantity="other">%s 英尺</item>
     </plurals>
+
+    <string name="units_miles">miles</string>    <!-- TODO -->
+    <string name="units_miles_short">mi</string>    <!-- TODO -->
+    <plurals name="units_miles_long">
+        <!--<item quantity="one">%s mile</item>-->
+        <item quantity="other">%s miles</item>
+    </plurals>                                     <!-- TODO -->
 
     <string name="units_meters">米</string>
     <string name="units_meters_short">m</string>
     <plurals name="units_meters_long">
-        <item quantity="one">%s 米</item>
+        <!--<item quantity="one">%s 米</item>-->
         <item quantity="other">%s 米</item>
     </plurals>
+
+    <string name="units_kilometers">kilometers</string>    <!-- TODO -->
+    <string name="units_kilometers_short">km</string>    <!-- TODO -->
+    <plurals name="units_kilometers_long">
+        <!--<item quantity="one">%s kilometer</item>-->
+        <item quantity="other">%s kilometers</item>
+    </plurals>                                            <!-- TODO -->
 
     <!--
          WIDGET CONFIG
@@ -317,6 +330,22 @@
     <string name="timeMode_moon_waningcrescent_short">虧眉月</string>               <!-- label -->
     <string name="timeMode_moon_waningcrescent">虧眉月</string>                     <!-- label -->
 
+    <string name="timeMode_moon_super">Supermoon</string>               <!-- label -->    <!-- TODO -->
+    <string name="timeMode_moon_micro">Micromoon</string>               <!-- label -->    <!-- TODO -->
+    <string name="timeMode_moon_superfull">Super Full Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <!--<string name="timeMode_moon_superfull_short">@string/timeMode_moon_super</string>-->     <!-- label -->
+    <string name="timeMode_moon_supernew">Super New Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <!--<string name="timeMode_moon_supernew_short">@string/timeMode_moon_super</string>-->     <!-- label -->
+    <string name="timeMode_moon_microfull">Micro Full Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <!--<string name="timeMode_moon_microfull_short">@string/timeMode_moon_micro</string>-->     <!-- label -->
+    <string name="timeMode_moon_micronew">Micro New Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <!--<string name="timeMode_moon_micronew_short">@string/timeMode_moon_micro</string>-->     <!-- label -->
+
+    <!--<string name="timeMode_moon_perigee">@string/label_perigee</string>-->                             <!-- label -->
+    <!--<string name="timeMode_moon_apogee">@string/label_apogee</string>-->                             <!-- label -->
+    <string name="label_apogee">Apogee</string>      <!-- TODO -->
+    <string name="label_perigee">Perigee</string>    <!-- TODO -->
+
     <string name="configLabel_general_timeMode">模式：</string>          <!-- spinner label -->
 
     <!-- Widget Setting: layout mode -->
@@ -327,9 +356,12 @@
 
     <string name="widgetMode1x1_altaz">海拔 &amp; 方位</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">赤經 &amp; 赤緯</string>     <!-- setting -->
+    <string name="widgetMode1x1_distance">Current distance</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode1x1_apsis">Next apogee or perigee</string>     <!-- setting -->    <!-- TODO -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">基礎</string>  <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal">極性</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">極性</string>     <!-- setting -->  <!-- TODO (north) -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [south]</string>     <!-- setting -->  <!-- TODO -->
     <string name="widgetMode_sunPosMap_bluemarble">藍色彈珠</string>    <!-- setting -->
 
     <string name="widgetMode1x1_moonriseset">月出 &amp; 月落</string>     <!-- setting -->
@@ -558,6 +590,7 @@
     <string name="widgetLabel_declination">赤緯</string>           <!-- label -->
     <string name="widgetLabel_declination_short">赤緯</string>           <!-- label -->
     <string name="widgetLabel_declination_symbol">δ</string>           <!-- label/suffix -->
+    <string name="widgetLabel_distance">Distance</string>           <!-- label -->    <!-- TODO -->
 
     <!--
          ALARM CLOCK
@@ -672,17 +705,17 @@
     <string name="no_reminder">Never</string> <!-- TODO -->
 
     <plurals name="units_hours">
-        <item quantity="one">%d hour</item>
+        <!--<item quantity="one">%d hour</item>-->
         <item quantity="other">%d hours</item>
     </plurals>  <!-- TODO -->
 
     <plurals name="units_minutes">
-        <item quantity="one">%d minute</item>
+        <!--<item quantity="one">%d minute</item>-->
         <item quantity="other">%d minutes</item>
     </plurals>  <!-- TODO -->
 
     <plurals name="units_seconds">
-        <item quantity="one">%d second</item>
+        <!--<item quantity="one">%d second</item>-->
         <item quantity="other">%d seconds</item>
     </plurals>  <!-- TODO -->
 
@@ -771,31 +804,14 @@
         <item>@string/trackingMode_closest</item>
         <item>@string/trackingMode_soonest</item>
     </string-array>
-
-    <!-- App Setting: Date "on tap" action -->
-    <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
-        <item>什麼也不做</item>
-        <item>切換卡片 (今天/明天)</item>
-        <item>顯示日曆應用</item>
-        <item>設置自定日期</item>
-    </string-array>
-
-    <!-- App Setting: Clock UI "on tap" action -->
-    <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
-        <item>什麼也不做</item>
-        <item>@string/configAction_setAlarm</item>
-        <item>@string/configAction_setTimeZone</item>
-        <item>顯示下一個便簽</item>
-        <item>顯示上一個便簽</item>
-    </string-array>
-
-    <!-- App Setting: Note UI "on tap" action -->
-    <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
-        <item>什麼也不做</item>
-        <item>為便簽設置鬧鐘</item>
-        <item>顯示下一個便簽</item>
-        <item>顯示上一個便簽</item>
-    </string-array>
+    
+    <string name="configAction_doNothing">什麼也不做</string>
+    <string name="configAction_nextNote">顯示下一個便簽</string>
+    <string name="configAction_prevNote">顯示上一個便簽</string>
+    <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
+    <string name="configAction_showCalendar">顯示日曆應用</string>
+    <string name="configAction_swapCards">切換卡片 (今天/明天)</string>
+    <string name="configAction_setAlarmForNote">為便簽設置鬧鐘</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">by offset</string>
@@ -928,9 +944,20 @@
 
     <!-- Dialog: World Map -->
     <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
+    <string name="worldmap_dialog_action_play">Play</string>       <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_pause">Pause</string>     <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_record">Record</string>   <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_next">Next</string>       <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_prev">Previous</string>   <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_reset">Reset</string>     <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_menu">Options</string>       <!-- button (contentDescription) --> <!-- TODO -->
     <string name="worldmap_dialog_option_sunlight">日照</string>
     <string name="worldmap_dialog_option_moonlight">月照</string>
     <string name="worldmap_dialog_option_all">全部</string>
+    <string name="worldmap_dialog_option_location">Location</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_latitudes">Latitudes</string>    <!-- TODO -->
+    <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- TODO -->
+    <string name="worldmap_dialog_speed_1d">&#215; 1d</string>    <!-- TODO -->
     <string name="configAction_shareMap">Share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->  <!-- TODO -->
 
     <!-- Dialog: Set Alarm -->
@@ -962,6 +989,14 @@
         <item>天文暮光</item>
         <item>月出</item>
         <item>月落</item>
+        <item>new moon</item>  <!-- TODO -->
+        <item>first quarter</item>  <!-- TODO -->
+        <item>full moon</item>  <!-- TODO -->
+        <item>third quarter</item>  <!-- TODO -->
+        <item>spring equinox</item>    <!-- TODO -->
+        <item>summer solstice</item>   <!-- TODO -->
+        <item>autumn equinox</item>   <!-- TODO -->
+        <item>winter solstice</item>   <!-- TODO -->
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>天文曙光</item>
@@ -981,6 +1016,14 @@
         <item>天文暮光</item>
         <item>月出</item>
         <item>月落</item>
+        <item>new moon</item>  <!-- TODO -->
+        <item>first quarter</item>  <!-- TODO -->
+        <item>full moon</item>  <!-- TODO -->
+        <item>third quarter</item>  <!-- TODO -->
+        <item>spring equinox</item>    <!-- TODO -->
+        <item>summer solstice</item>   <!-- TODO -->
+        <item>autumn equinox</item>   <!-- TODO -->
+        <item>winter solstice</item>   <!-- TODO -->
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
@@ -1097,6 +1140,7 @@
     <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> by <xliff:g id="authorList">%2$s</xliff:g>.]]></string>   <!-- TODO -->
     <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
     <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, and <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO -->
+    <string name="creditsTab">Credits</string>   <!-- TODO -->
 
     <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
@@ -1214,6 +1258,7 @@
     <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>    <!-- TODO -->
     <string name="privacy_permissiondialog_ignore">Ignore</string>    <!-- TODO -->
     <string name="privacy_permissiondialog_title">Permissions</string> <!-- TODO -->
+    <string name="privacyTab">Privacy</string>   <!-- TODO -->
 
     <string name="security_dialog_title">Security Alert</string>  <!-- TODO -->
     <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  <!-- TODO -->

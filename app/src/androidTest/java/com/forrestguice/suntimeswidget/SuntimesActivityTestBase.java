@@ -62,7 +62,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isSelected;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.IsNot.not;
 
@@ -205,10 +207,15 @@ public abstract class SuntimesActivityTestBase
     /**
      * @param viewId view identifier
      */
-    public static boolean viewIsDisplayed(int viewId)
+    public static boolean viewIsDisplayed(int viewId) {
+        return viewIsDisplayed(viewId, null);
+    }
+    public static boolean viewIsDisplayed(int viewId, String text)
     {
         final boolean[] isDisplayed = {true};
-        onView(withId(viewId)).withFailureHandler(new FailureHandler()
+        Matcher<View> view = (text != null) ? allOf(withId(viewId), withText(containsString(text)))
+                : withId(viewId);
+        onView(view).withFailureHandler(new FailureHandler()
         {
             @Override
             public void handle(Throwable error, Matcher<View> viewMatcher)

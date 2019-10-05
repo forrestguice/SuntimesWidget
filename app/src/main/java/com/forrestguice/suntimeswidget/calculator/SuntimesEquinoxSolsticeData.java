@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
 
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
@@ -172,9 +173,9 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
 
         switch (timeMode)
         {
-            case EQUINOX_VERNAL:
-                eventCalendarThisYear = calculator.getVernalEquinoxForYear(todaysCalendar);
-                eventCalendarOtherYear = calculator.getVernalEquinoxForYear(otherCalendar);
+            case EQUINOX_SPRING:
+                eventCalendarThisYear = calculator.getSpringEquinoxForYear(todaysCalendar);
+                eventCalendarOtherYear = calculator.getSpringEquinoxForYear(otherCalendar);
                 break;
 
             case SOLSTICE_SUMMER:
@@ -195,6 +196,12 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
         }
 
         super.calculate();
+    }
+
+    public boolean isImplemented()
+    {
+        SuntimesCalculatorDescriptor calculatorDesc = calculatorMode();
+        return calculatorDesc.hasRequestedFeature(SuntimesCalculator.FEATURE_SOLSTICE);
     }
 }
 

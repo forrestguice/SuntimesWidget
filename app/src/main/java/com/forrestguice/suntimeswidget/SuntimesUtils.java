@@ -25,6 +25,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.InsetDrawable;
@@ -95,13 +96,13 @@ public class SuntimesUtils
     protected static String strTimeShorter = "shorter";
     protected static String strTimeLonger = "longer";
     protected static String strSpace = "\u00A0";
-    protected static String strEmpty = "";
+    public static String strEmpty = "";
     protected static String strYears = "y";
     protected static String strWeeks = "w";
     protected static String strDays = "d";
-    protected static String strHours = "h";
-    protected static String strMinutes = "m";
-    protected static String strSeconds = "s";
+    public static String strHours = "h";
+    public static String strMinutes = "m";
+    public static String strSeconds = "s";
 
     protected static String strAltSymbol = "∠";
     protected static String strRaSymbol = "α";
@@ -112,7 +113,7 @@ public class SuntimesUtils
     protected static String strDeclinationFormat = "%1$s %2$s";
     protected static String strRaFormat = "%1$s %2$s";
 
-    protected static String strTimeDeltaFormat = "%1$s"  + strEmpty + "%2$s";
+    public static String strTimeDeltaFormat = "%1$s"  + strEmpty + "%2$s";
     protected static String strTimeShortFormat12 = "h:mm\u00A0a";
     protected static String strTimeShortFormat12s = "h:mm:ss\u00A0a";
     protected static String strTimeVeryShortFormat12 = "h:mm";
@@ -173,6 +174,10 @@ public class SuntimesUtils
         strTimeNone = context.getString(R.string.time_none);
         strTimeLoading = context.getString(R.string.time_loading);
 
+        strDateYearFormat = context.getString(R.string.dateyear_format_short);
+        strDateShortFormat = context.getString(R.string.date_format_short);
+        strDateLongFormat = context.getString(R.string.date_format_long);
+
         strTimeShortFormat12 = context.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12, strTimeSuffixFormat);
         String timeFormat = (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12);
         strDateTimeShortFormat = context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormat);
@@ -182,10 +187,6 @@ public class SuntimesUtils
         String timeFormatSec = (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s);
         strDateTimeShortFormatSec = context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormatSec);
         strDateTimeLongFormatSec = context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormatSec);
-
-        strDateYearFormat = context.getString(R.string.dateyear_format_short);
-        strDateShortFormat = context.getString(R.string.date_format_short);
-        strDateLongFormat = context.getString(R.string.date_format_long);
 
         CardinalDirection.initDisplayStrings(context);
 
@@ -994,6 +995,31 @@ public class SuntimesUtils
         return new TimeDisplayText(formatter.format(value), unitsString, "");
     }
 
+    public static TimeDisplayText formatAsDistance(Context context, double kilometers, WidgetSettings.LengthUnit units, int places, boolean shortForm)
+    {
+        double value;
+        String unitsString;
+        switch (units)
+        {
+            case USC:
+            case IMPERIAL:
+                value = WidgetSettings.LengthUnit.kilometersToMiles(kilometers);
+                unitsString = (shortForm ? context.getString(R.string.units_miles_short) : context.getString(R.string.units_miles));
+                break;
+
+            case METRIC:
+            default:
+                value = kilometers;
+                unitsString = (shortForm ? context.getString(R.string.units_kilometers_short) : context.getString(R.string.units_kilometers));
+                break;
+        }
+
+        NumberFormat formatter = NumberFormat.getInstance();
+        formatter.setMinimumFractionDigits(0);
+        formatter.setMaximumFractionDigits(places);
+        return new TimeDisplayText(formatter.format(value), unitsString, "");
+    }
+
     /**
      * Creates a title string from a given "title pattern".
      *
@@ -1196,6 +1222,20 @@ public class SuntimesUtils
         {
             int end = start + toBold.length();
             span.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return span;
+    }
+
+    public static SpannableString createItalicSpan(SpannableString span, String text, String toBold)
+    {
+        if (span == null) {
+            span = new SpannableString(text);
+        }
+        int start = text.indexOf(toBold);
+        if (start >= 0)
+        {
+            int end = start + toBold.length();
+            span.setSpan(new android.text.style.StyleSpan(Typeface.ITALIC), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         return span;
     }
@@ -1526,10 +1566,12 @@ public class SuntimesUtils
 
         } catch (ClassCastException e) {
             try {
+                //noinspection ConstantConditions
                 d = tintDrawable((LayerDrawable)drawable, fillColor, strokeColor, strokePixels);
 
             } catch (ClassCastException e2) {
                 try {
+                    //noinspection ConstantConditions
                     d = tintDrawable((GradientDrawable)drawable, fillColor, strokeColor, strokePixels);
 
                 } catch (ClassCastException e3) {

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -17,34 +17,36 @@
 */
 package com.forrestguice.suntimeswidget;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.app.AppCompatActivity;
 
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
-import android.util.Log;
-import android.util.TypedValue;
 
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 
+import android.util.Log;
 import android.view.ActionMode;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -59,7 +61,7 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 @SuppressWarnings("Convert2Diamond")
-public class TimeZoneDialog extends DialogFragment
+public class TimeZoneDialog extends BottomSheetDialogFragment
 {
     public static final String KEY_TIMEZONE_MODE = "timezoneMode";
     public static final String KEY_TIMEZONE_ID = "timezoneID";
@@ -68,6 +70,8 @@ public class TimeZoneDialog extends DialogFragment
     public static final String KEY_LONGITUDE = "paramLongitude";
 
     private static final String DIALOGTAG_HELP = "timezone_help";
+
+    public static final String SLOT_CUSTOM0 = "custom0";
 
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     private String customTimezoneID;
@@ -109,94 +113,35 @@ public class TimeZoneDialog extends DialogFragment
         this.calculator = calculator;
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
+    {
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_timezone, parent, false);
+
+        initViews(getContext(), dialogContent);
+        if (savedState != null) {
+            loadSettings(savedState);
+        } else {
+            loadSettings(getActivity());
+        }
+
+        final Context myParent = getActivity();
+        WidgetTimezones.TimeZoneSort sortZonesBy = AppSettings.loadTimeZoneSortPref(myParent);
+        WidgetTimezones.TimeZonesLoadTask loadTask = new WidgetTimezones.TimeZonesLoadTask(myParent);
+        loadTask.setListener(onTimeZonesLoaded);
+        loadTask.execute(sortZonesBy);
+
+        return dialogContent;
+    }
+
+
     @SuppressWarnings({"deprecation","RestrictedApi"})
     @NonNull @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState)
     {
-        super.onCreateDialog(savedInstanceState);
-
-        final Activity myParent = getActivity();
-        LayoutInflater inflater = myParent.getLayoutInflater();
-        @SuppressLint("InflateParams")
-        View dialogContent = inflater.inflate(R.layout.layout_dialog_timezone, null);
-
-        Resources r = getResources();
-        int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, r.getDisplayMetrics());
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
-        builder.setView(dialogContent, 0, padding, 0, 0);
-        builder.setTitle(myParent.getString(R.string.timezone_dialog_title));
-
-        AlertDialog dialog = builder.create();
-        dialog.setCanceledOnTouchOutside(false);
-
-        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.timezone_dialog_cancel),
-                new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        dialog.dismiss();
-
-                        if (onCanceled != null)
-                        {
-                            onCanceled.onClick(dialog, which);
-                        }
-                    }
-                }
-        );
-
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.timezone_dialog_ok),
-                new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        saveSettings(myParent);
-                        dialog.dismiss();
-
-                        if (onAccepted != null)
-                        {
-                            onAccepted.onClick(dialog, which);
-                        }
-                    }
-                }
-        );
-
-        initViews(myParent, dialogContent);
-        WidgetTimezones.TimeZoneSort sortZonesBy = AppSettings.loadTimeZoneSortPref(myParent);
-        WidgetTimezones.TimeZonesLoadTask loadTask = new WidgetTimezones.TimeZonesLoadTask(myParent);
-        loadTask.setListener(new WidgetTimezones.TimeZonesLoadTaskListener()
-        {
-            @Override
-            public void onStart()
-            {
-                super.onStart();
-                spinner_timezone.setAdapter(new WidgetTimezones.TimeZoneItemAdapter(myParent, R.layout.layout_listitem_timezone));
-            }
-
-            @Override
-            public void onFinished(WidgetTimezones.TimeZoneItemAdapter result)
-            {
-                super.onFinished(result);
-                spinner_timezone_adapter = result;
-                spinner_timezone.setAdapter(spinner_timezone_adapter);
-                WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
-            }
-        });
-
-        if (savedInstanceState != null)
-        {
-            // saved dialog state; restore it
-            //Log.d("DEBUG", "TimeZoneDialog onCreate (restoreState)");
-            loadSettings(savedInstanceState);
-
-        } else {
-            // no saved dialog state; load from preferences
-            //Log.d("DEBUG", "TimeZoneDialog onCreate (newState)");
-            loadSettings(myParent);
-        }
-        loadTask.execute(sortZonesBy);
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.setOnShowListener(onDialogShow);
         return dialog;
     }
 
@@ -287,6 +232,12 @@ public class TimeZoneDialog extends DialogFragment
 
         layout_timezoneExtras = dialogContent.findViewById(R.id.appwidget_timezone_extrasgroup);
         label_tzExtras0 = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_extras0);
+
+        Button btn_cancel = (Button) dialogContent.findViewById(R.id.dialog_button_cancel);
+        btn_cancel.setOnClickListener(onDialogCancelClick);
+
+        Button btn_accept = (Button) dialogContent.findViewById(R.id.dialog_button_accept);
+        btn_accept.setOnClickListener(onDialogAcceptClick);
     }
 
     private void updateExtrasLabel(@NonNull Context context, int stringResID, long offset)
@@ -394,6 +345,9 @@ public class TimeZoneDialog extends DialogFragment
                 spinner_solartime.setOnItemSelectedListener(onSolarTimeSelected);
             else spinner_timezone.setOnItemSelectedListener(onTimeZoneSelected);
 
+            if (timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE) {
+                customTimezoneID = WidgetSettings.loadTimezonePref(getContext(), appWidgetId, SLOT_CUSTOM0);
+            }
             setUseCustomTimezone((timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE));
             setUseSolarTime((timezoneMode == WidgetSettings.TimezoneMode.SOLAR_TIME));
 
@@ -539,7 +493,7 @@ public class TimeZoneDialog extends DialogFragment
         WidgetSettings.TimezoneMode timezoneMode = WidgetSettings.loadTimezoneModePref(context, appWidgetId);
         spinner_timezoneMode.setSelection(timezoneMode.ordinal());
 
-        customTimezoneID = WidgetSettings.loadTimezonePref(context, appWidgetId);
+        customTimezoneID = WidgetSettings.loadTimezonePref(context, appWidgetId, (timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE ? SLOT_CUSTOM0 : ""));
         WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
 
         WidgetSettings.SolarTimeMode solartimeMode = WidgetSettings.loadSolarTimeModePref(context, appWidgetId);
@@ -589,9 +543,11 @@ public class TimeZoneDialog extends DialogFragment
         WidgetSettings.TimezoneMode timezoneMode = timezoneModes[spinner_timezoneMode.getSelectedItemPosition()];
         WidgetSettings.saveTimezoneModePref(context, appWidgetId, timezoneMode);
 
-        // save: custom timezone
-        WidgetTimezones.TimeZoneItem customTimezone = (WidgetTimezones.TimeZoneItem) spinner_timezone.getSelectedItem();
-        WidgetSettings.saveTimezonePref(context, appWidgetId, customTimezone.getID());
+        WidgetTimezones.TimeZoneItem tz = (WidgetTimezones.TimeZoneItem) spinner_timezone.getSelectedItem();
+        WidgetSettings.saveTimezonePref(context, appWidgetId, tz.getID());
+        if (timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE) {
+            WidgetSettings.saveTimezonePref(context, appWidgetId, tz.getID(), SLOT_CUSTOM0);
+        }
 
         // save: solar timemode
         WidgetSettings.SolarTimeMode[] solarTimeModes = WidgetSettings.SolarTimeMode.values();
@@ -650,6 +606,85 @@ public class TimeZoneDialog extends DialogFragment
     public void setOnCanceledListener( DialogInterface.OnClickListener listener )
     {
         onCanceled = listener;
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        expandSheet(getDialog());
+    }
+
+    private WidgetTimezones.TimeZonesLoadTaskListener onTimeZonesLoaded = new WidgetTimezones.TimeZonesLoadTaskListener()
+    {
+        @Override
+        public void onStart()
+        {
+            super.onStart();
+            spinner_timezone.setAdapter(new WidgetTimezones.TimeZoneItemAdapter(getActivity(), R.layout.layout_listitem_timezone));
+        }
+
+        @Override
+        public void onFinished(WidgetTimezones.TimeZoneItemAdapter result)
+        {
+            super.onFinished(result);
+            spinner_timezone_adapter = result;
+            spinner_timezone.setAdapter(spinner_timezone_adapter);
+            WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
+        }
+    };
+
+    private DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
+    {
+        @Override
+        public void onShow(DialogInterface dialog) {
+            // EMPTY; placeholder
+        }
+    };
+
+    private View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            getDialog().cancel();
+        }
+    };
+
+    @Override
+    public void onCancel(DialogInterface dialog)
+    {
+        if (onCanceled != null) {
+            onCanceled.onClick(getDialog(), 0);
+        }
+    }
+
+    private View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            saveSettings(getContext());
+            dismiss();
+            if (onAccepted != null) {
+                onAccepted.onClick(getDialog(), 0);
+            }
+        }
+    };
+
+    private void expandSheet(DialogInterface dialog)
+    {
+        if (dialog == null) {
+            return;
+        }
+
+        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
+        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+        if (layout != null)
+        {
+            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+            behavior.setHideable(true);
+            behavior.setSkipCollapsed(true);
+            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }
     }
 
 }

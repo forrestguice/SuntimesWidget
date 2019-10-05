@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -40,12 +40,13 @@
 
         <LinearLayout
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical" android:padding="8dp">
+            android:orientation="vertical">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:animateLayoutChanges="true"
-                tools:ignore="UnusedAttribute">
+                tools:ignore="UnusedAttribute"
+                android:layout_marginLeft="@dimen/activity_margin" android:layout_marginRight="@dimen/activity_margin" android:layout_marginTop="@dimen/activity_margin">
 
                 <!-- Clock -->
                 <LinearLayout android:id="@+id/layout_clock"
@@ -109,63 +110,11 @@
 
             </android.support.constraint.ConstraintLayout>
 
-            <!-- Flipper: Time Card -->
-            <ViewFlipper
-                android:id="@+id/info_time_flipper"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:elevation="5dp"
-                tools:ignore="UnusedAttribute">
-
-                <!-- Times for Today -->
-                <RelativeLayout
-                    android:id="@+id/info_time_all_today"
-                    style="@style/SunsetTimeCard"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <include layout="@layout/info_time_card" />
-                </RelativeLayout>
-
-                <!-- Times for Tomorrow -->
-                <RelativeLayout
-                    android:id="@+id/info_time_all_tomorrow"
-                    style="@style/SunsetTimeCard"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <include layout="@layout/info_time_card" />
-                </RelativeLayout>
-
-            </ViewFlipper>
-
-            <View
-                android:layout_width="match_parent" android:layout_height="6dp"
-                android:layout_margin="0dp" />
-
-            <!-- Lightmap -->
-            <LinearLayout
-                android:id="@+id/info_time_lightmap_layout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/lightmap_clickable_height"
-                android:layout_marginBottom="2dp" android:layout_marginTop="0dp"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true" android:focusable="true"
-                android:orientation="vertical">
-
-                <com.forrestguice.suntimeswidget.LightMapView
-                    android:id="@+id/info_time_lightmap"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/lightmap_height"
-                    android:layout_gravity="top"
-                    android:contentDescription="@string/configAction_sunDialog" />
-
-                <View
-                    android:layout_width="match_parent" android:layout_height="6dp"
-                    android:layout_margin="0dp" />
-
-            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/info_time_flipper1"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:elevation="5dp" />
 
             <!-- Solstice / Equinox -->
             <LinearLayout
@@ -173,6 +122,7 @@
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="?attr/timeCardBackground"
+                android:layout_marginRight="@dimen/activity_margin" android:layout_marginLeft="@dimen/activity_margin"
                 android:layout_marginTop="0dp" android:layout_marginBottom="6dp">
 
                 <com.forrestguice.suntimeswidget.EquinoxView
@@ -187,6 +137,7 @@
                 android:id="@+id/layout_datasource"
                 style="@style/SunsetTimeCard" android:orientation="horizontal" android:gravity="end"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_margin" android:layout_marginLeft="@dimen/activity_margin"
                 android:layout_marginBottom="2dp" android:layout_marginTop="0dp"
                 android:paddingTop="0dp" android:paddingBottom="0dp">
 

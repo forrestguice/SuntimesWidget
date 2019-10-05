@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -17,7 +17,6 @@
 */
 package com.forrestguice.suntimeswidget;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
@@ -26,23 +25,27 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.AlarmClock;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
+import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 
 import android.text.SpannableString;
-import android.util.TypedValue;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -51,12 +54,14 @@ import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
+import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -66,7 +71,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-public class AlarmDialog extends DialogFragment
+public class AlarmDialog extends BottomSheetDialogFragment
 {
     public static final String KEY_ALARM_TYPE = "alarmdialog_alarmtype";
     public static final AlarmClockItem.AlarmType DEF_ALARM_TYPE = AlarmClockItem.AlarmType.ALARM;
@@ -103,15 +108,16 @@ public class AlarmDialog extends DialogFragment
      */
     private SuntimesRiseSetDataset dataset;
     private SuntimesMoonData moondata;
+    private SuntimesEquinoxSolsticeDataset equinoxdata;
     public SuntimesRiseSetDataset getData() { return dataset; }
-    public SuntimesMoonData getMoonData()
-    {
-        return moondata;
-    }
-    public void setData(Context context, SuntimesRiseSetDataset dataset, SuntimesMoonData moondata)
+    public SuntimesMoonData getMoonData() { return moondata; }
+    public SuntimesEquinoxSolsticeDataset getEquinoxData() { return equinoxdata; }
+
+    public void setData(Context context, SuntimesRiseSetDataset dataset, SuntimesMoonData moondata, SuntimesEquinoxSolsticeDataset equinoxdata)
     {
         this.dataset = dataset;
         this.moondata = moondata;
+        this.equinoxdata = equinoxdata;
         updateAdapter(context);
         setChoice(choice);
     }
@@ -137,6 +143,19 @@ public class AlarmDialog extends DialogFragment
             {
                 adapter.remove(SolarEvents.MOONRISE);
                 adapter.remove(SolarEvents.MOONSET);
+                adapter.remove(SolarEvents.NEWMOON);
+                adapter.remove(SolarEvents.FIRSTQUARTER);
+                adapter.remove(SolarEvents.FULLMOON);
+                adapter.remove(SolarEvents.THIRDQUARTER);
+            }
+
+            boolean supportsSolstice = equinoxdata != null && equinoxdata.dataEquinoxSpring.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_SOLSTICE);
+            if (!supportsSolstice)
+            {
+                adapter.remove(SolarEvents.EQUINOX_SPRING);
+                adapter.remove(SolarEvents.SOLSTICE_SUMMER);
+                adapter.remove(SolarEvents.EQUINOX_AUTUMNAL);
+                adapter.remove(SolarEvents.SOLSTICE_WINTER);
             }
         }
 
@@ -177,6 +196,26 @@ public class AlarmDialog extends DialogFragment
     }
     public SolarEvents getChoice() { return choice; }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
+    {
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_schedalarm, parent, false);
+
+        initViews(getContext(), dialogContent);
+        if (savedState != null)
+        {
+            //Log.d("DEBUG", "AlarmDialog onCreate (restoreState)");
+            loadSettings(savedState);
+
+        } else {
+            //Log.d("DEBUG", "AlarmDialog onCreate (newState)");
+            loadSettings(getActivity());
+        }
+
+        return dialogContent;
+    }
+
     /**
      * @param savedInstanceState a Bundle containing dialog state
      * @return an AlarmDialog ready to be shown
@@ -185,69 +224,8 @@ public class AlarmDialog extends DialogFragment
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
-
-        final Activity myParent = getActivity();
-        LayoutInflater inflater = myParent.getLayoutInflater();
-        @SuppressLint("InflateParams")
-        View dialogContent = inflater.inflate(R.layout.layout_dialog_schedalarm, null);
-
-        Resources r = getResources();
-        int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, r.getDisplayMetrics());
-
-        String titleString = (dialogTitle != null) ? dialogTitle
-                : myParent.getString(R.string.configAction_setAlarm);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
-        builder.setView(dialogContent, 0, padding, 0, 0);
-        builder.setTitle(titleString);
-
-        AlertDialog dialog = builder.create();
-        dialog.setCanceledOnTouchOutside(false);
-
-        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.schedalarm_dialog_cancel),
-                new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        dialog.dismiss();
-
-                        if (onCanceled != null)
-                        {
-                            onCanceled.onClick(dialog, which);
-                        }
-                    }
-                }
-        );
-
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE, myParent.getString(R.string.schedalarm_dialog_ok),
-                new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        saveSettings(myParent);
-                        dialog.dismiss();
-
-                        if (onAccepted != null)
-                        {
-                            onAccepted.onClick(dialog, which);
-                        }
-                    }
-                }
-        );
-
-        initViews(myParent, dialogContent);
-        if (savedInstanceState != null)
-        {
-            //Log.d("DEBUG", "AlarmDialog onCreate (restoreState)");
-            loadSettings(savedInstanceState);
-
-        } else {
-            //Log.d("DEBUG", "AlarmDialog onCreate (newState)");
-            loadSettings(myParent);
-        }
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.setOnShowListener(onDialogShow);
         return dialog;
     }
 
@@ -345,6 +323,16 @@ public class AlarmDialog extends DialogFragment
                     }
                 }
         );
+
+        String titleString = (dialogTitle != null) ? dialogTitle : context.getString(R.string.configAction_setAlarm);
+        TextView txt_title = (TextView) dialogContent.findViewById(R.id.dialog_title);
+        txt_title.setText(titleString);
+
+        Button btn_cancel = (Button) dialogContent.findViewById(R.id.dialog_button_cancel);
+        btn_cancel.setOnClickListener(onDialogCancelClick);
+
+        Button btn_accept = (Button) dialogContent.findViewById(R.id.dialog_button_accept);
+        btn_accept.setOnClickListener(onDialogAcceptClick);
     }
 
     private int color_textTimeDelta;
@@ -459,6 +447,46 @@ public class AlarmDialog extends DialogFragment
         Calendar calendar = null;
         switch (choice)
         {
+            case EQUINOX_SPRING:
+                if (equinoxdata != null) {
+                    calendar = equinoxdata.dataEquinoxSpring.eventCalendarThisYear();
+                    if (calendar == null || time.after(calendar.getTime())) {
+                        calendar = equinoxdata.dataEquinoxSpring.eventCalendarOtherYear();
+                    }
+                }
+                break;
+            case SOLSTICE_SUMMER:
+                if (equinoxdata != null) {
+                    calendar = equinoxdata.dataSolsticeSummer.eventCalendarThisYear();
+                    if (calendar == null || time.after(calendar.getTime())) {
+                        calendar = equinoxdata.dataSolsticeSummer.eventCalendarOtherYear();
+                    }
+                }
+                break;
+            case EQUINOX_AUTUMNAL:
+                if (equinoxdata != null) {
+                    calendar = equinoxdata.dataEquinoxAutumnal.eventCalendarThisYear();
+                    if (calendar == null || time.after(calendar.getTime())) {
+                        calendar = equinoxdata.dataEquinoxAutumnal.eventCalendarOtherYear();
+                    }
+                }
+                break;
+            case SOLSTICE_WINTER:
+                if (equinoxdata != null) {
+                    calendar = equinoxdata.dataSolsticeWinter.eventCalendarThisYear();
+                    if (calendar == null || time.after(calendar.getTime())) {
+                        calendar = equinoxdata.dataSolsticeWinter.eventCalendarOtherYear();
+                    }
+                }
+                break;
+            case NEWMOON:
+            case FIRSTQUARTER:
+            case FULLMOON:
+            case THIRDQUARTER:
+                if (moondata != null) {
+                    calendar = moondata.moonPhaseCalendar(choice.toMoonPhase());
+                }
+                break;
             case MOONRISE:
                 if (moondata != null) {
                     calendar = moondata.moonriseCalendarToday();
@@ -677,6 +705,63 @@ public class AlarmDialog extends DialogFragment
                 return false;
             }
         } else return false;
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        expandSheet(getDialog());
+    }
+
+    private DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
+    {
+        @Override
+        public void onShow(DialogInterface dialog) {
+            // EMPTY; placeholder
+        }
+    };
+
+    private View.OnClickListener onDialogCancelClick = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            dismiss();
+            if (onCanceled != null) {
+                onCanceled.onClick(getDialog(), 0);
+            }
+        }
+    };
+
+    private View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            saveSettings(getContext());
+            dismiss();
+            if (onAccepted != null) {
+                onAccepted.onClick(getDialog(), 0);
+            }
+        }
+    };
+
+    private void expandSheet(DialogInterface dialog)
+    {
+        if (dialog == null) {
+            return;
+        }
+
+        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
+        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+        if (layout != null)
+        {
+            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+            behavior.setHideable(true);
+            behavior.setSkipCollapsed(true);
+            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }
     }
 
 }

@@ -218,10 +218,16 @@ public class AlarmDismissActivity extends AppCompatActivity
         Uri data = intent.getData();
         if (data != null)
         {
-            Log.d(TAG, "onCreate: " + data);
-            setAlarmID(this, ContentUris.parseId(data));
-            screenOn();
+            try {
+                Log.d(TAG, "onCreate: " + data);
+                setAlarmID(this, ContentUris.parseId(data));
+                screenOn();
 
+            } catch (NumberFormatException e) {
+                Log.e(TAG, "onCreate: invalid data uri! canceling...");
+                setResult(RESULT_CANCELED);
+                finish();
+            }
         } else {
             Log.e(TAG, "onCreate: missing data uri! canceling...");
             setResult(RESULT_CANCELED);

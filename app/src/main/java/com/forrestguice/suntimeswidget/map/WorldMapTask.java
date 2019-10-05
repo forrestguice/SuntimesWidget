@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -22,20 +22,23 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 
+import java.util.Calendar;
+
 /**
  * WorldMapTask
  */
-public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
+public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
 {
     private WorldMapProjection projection = new WorldMapEquirectangular();
     private WorldMapOptions options = new WorldMapOptions();
@@ -55,6 +58,9 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
     protected Bitmap doInBackground(Object... params)
     {
         int w, h;
+        int numFrames = 1;
+        long frameDuration = 250000000;    // nanoseconds (250 ms)
+        long initialOffset = 0;
         SuntimesRiseSetDataset data;
         try {
             data = (SuntimesRiseSetDataset)params[0];
@@ -66,12 +72,46 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
             if (params.length > 4) {
                 projection = (WorldMapProjection) params[4];
             }
+            if (params.length > 5) {
+                numFrames = (int)params[5];
+            }
+            if (params.length > 6) {
+                initialOffset = (long)params[6];
+            }
+            frameDuration = options.anim_frameLengthMs * 1000000;   // ms to ns
 
         } catch (ClassCastException e) {
             Log.w("WorldMapTask", "Invalid params; using [null, 0, 0]");
             return null;
         }
-        return makeBitmap(data, w, h, options);
+
+        long time0 = System.nanoTime();
+        Bitmap frame = null;
+        options.offsetMinutes = initialOffset;
+
+        int i = 0;
+        while (i < numFrames || numFrames <= 0)
+        {
+            if (isCancelled()) {
+                break;
+            }
+            frame = makeBitmap(data, w, h, options);
+
+            long time1 = System.nanoTime();
+            while ((time1 - time0) < frameDuration) {
+                time1 = System.nanoTime();
+            }
+
+            publishProgress(frame);
+            if (listener != null) {
+                listener.afterFrame(frame, options.offsetMinutes);
+            }
+            options.offsetMinutes += options.anim_frameOffsetMinutes;
+            time0 = System.nanoTime();
+            i++;
+        }
+        options.offsetMinutes -= options.anim_frameOffsetMinutes;
+        return frame;
     }
 
     public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapOptions options)
@@ -82,41 +122,38 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
     @Override
     protected void onPreExecute()
     {
-    }
-
-    @Override
-    protected void onProgressUpdate( Void... progress )
-    {
-    }
-
-    @Override
-    protected void onPostExecute( Bitmap result )
-    {
-        if (isCancelled())
-        {
-            result = null;
+        if (listener != null) {
+            listener.onStarted();
         }
-        onFinished(result);
+    }
+
+    @Override
+    protected void onProgressUpdate( Bitmap... frames )
+    {
+        if (listener != null)
+        {
+            for (int i=0; i<frames.length; i++) {
+                listener.onFrame(frames[i], options.offsetMinutes);
+            }
+        }
+    }
+
+    @Override
+    protected void onPostExecute( Bitmap lastFrame )
+    {
+        if (isCancelled()) {
+            lastFrame = null;
+        }
+        if (listener != null) {
+            listener.onFinished(lastFrame);
+        }
     }
 
     /////////////////////////////////////////////
 
-    protected void onFinished( Bitmap result )
-    {
-        if (listener != null)
-        {
-            listener.onFinished(result);
-        }
-    }
-
-    private WorldMapView.WorldMapTaskListener listener = null;
-    public void setListener( WorldMapView.WorldMapTaskListener listener )
-    {
+    private WorldMapTaskListener listener = null;
+    public void setListener( WorldMapTaskListener listener ) {
         this.listener = listener;
-    }
-    public void clearListener()
-    {
-        this.listener = null;
     }
 
     /**
@@ -126,16 +163,20 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
     {
         public boolean modified = false;
 
-        public Drawable map = null;
+        public Drawable map = null;                  // BitmapDrawable
+        public Drawable map_night = null;            // BitmapDrawable
         public int backgroundColor = Color.BLUE;
         public int foregroundColor = Color.TRANSPARENT;
+        public boolean hasTransparentBaseMap = true;
 
         public boolean showGrid = false;
         public int gridXColor = Color.LTGRAY;
         public int gridYColor = Color.WHITE;
 
         public boolean showMajorLatitudes = false;
-        public int[] latitudeColors = { Color.BLACK, Color.BLUE, Color.BLUE };
+        public int[] latitudeColors = { Color.DKGRAY, Color.WHITE, Color.DKGRAY };    // equator, tropics, polar circle
+        float[][] latitudeLinePatterns = new float[][] {{ 0, 0 }, {5, 10}, {10, 5}};    // {dash-on, dash-off} .. for equator, tropics, and polar circle .. dash-on 0 for a solid line
+        public float latitudeLineScale = 0.5f;
 
         public boolean showSunPosition = true;
         public int sunFillColor = Color.YELLOW;
@@ -156,6 +197,17 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
         public int moonLightColor = Color.LTGRAY;
 
         public boolean translateToLocation = false;
+
+        public double[][] locations = null;  // a list of locations {{lat, lon}, {lat, lon}, ...} or null
+        public int locationFillColor = Color.MAGENTA;
+        public int locationStrokeColor = Color.BLACK;
+        public double locationScale = 1 / 192d;
+
+        public long offsetMinutes = 0;    // minutes offset from "now" (default 0)
+        public long now = -1;            // -1 (current)
+
+        public int anim_frameLengthMs = 100;         // frames shown for 100 ms
+        public int anim_frameOffsetMinutes = 3;      // each frame 3 minutes apart
     }
 
     /**
@@ -163,7 +215,43 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
      */
     public static abstract class WorldMapProjection
     {
+        /**
+         * algorithm described at https://gis.stackexchange.com/questions/17184/method-to-shade-or-overlay-a-raster-map-to-reflect-time-of-day-and-ambient-light
+         */
         public abstract Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options);
+        public abstract void initPaint(WorldMapTask.WorldMapOptions options);
+        public abstract double[] initMatrix();            // creates flattened multi-dimensional array; [lon][lat][v(3)]
+        public abstract double[] getMatrix();
+        public abstract int[] matrixSize();               // [width(lon), height(lat)]
+        protected abstract int k(int x, int y, int z);    // returns index into flattened array
+        public abstract int[] toBitmapCoords(int w, int h, double[] mid, double lat, double lon);
+
+        protected Calendar mapTime(SuntimesRiseSetDataset data, WorldMapTask.WorldMapOptions options)
+        {
+            Calendar mapTime;
+            if (options.now >= 0)
+            {
+                mapTime = Calendar.getInstance();
+                mapTime.setTimeInMillis(options.now);       // preset time
+
+            } else {
+                mapTime = data.nowThen(data.calendar());    // the current time (maybe on some other day)
+                options.now = mapTime.getTimeInMillis();
+            }
+
+            long minutes = options.offsetMinutes;
+            while (minutes > Integer.MAX_VALUE) {
+                minutes = minutes - Integer.MAX_VALUE;
+                mapTime.add(Calendar.MINUTE, Integer.MAX_VALUE);
+            }
+            while (minutes < Integer.MIN_VALUE) {
+                minutes = minutes + Integer.MIN_VALUE;
+                mapTime.add(Calendar.MINUTE, Integer.MIN_VALUE);
+            }
+            mapTime.add(Calendar.MINUTE, (int)minutes);    // remaining minutes
+
+            return mapTime;
+        }
 
         /**
          * Implemented using algorithm found at
@@ -221,51 +309,96 @@ public class WorldMapTask extends AsyncTask<Object, Void, Bitmap>
             return retValue;
         }
 
-        protected void drawMap(Canvas c, int w, int h, Paint p, WorldMapTask.WorldMapOptions options)
+        protected void drawMap(Canvas c, int w, int h, @NonNull Paint paintForeground, WorldMapTask.WorldMapOptions options)
         {
-            Bitmap mapBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-            Canvas mapCanvas = new Canvas(mapBitmap);
-            options.map.setBounds(0, 0, mapCanvas.getWidth(), mapCanvas.getHeight());
-            options.map.draw(mapCanvas);
+            if (options.map != null)
+            {
+                if (options.foregroundColor != Color.TRANSPARENT)
+                {
+                    Bitmap b = ((BitmapDrawable)options.map).getBitmap();
+                    Rect src = new Rect(0,0, b.getWidth(), b.getHeight());
+                    Rect dst = new Rect(0,0, w, h);
+                    c.drawBitmap(b, src, dst, paintForeground);
 
-            if (options.foregroundColor != Color.TRANSPARENT) {
-                mapBitmap = SuntimesUtils.tintBitmap(mapBitmap, options.foregroundColor);
+                } else {
+                    options.map.setBounds(0, 0, w, h);
+                    options.map.draw(c);
+                }
             }
-            c.drawBitmap(mapBitmap, 0, 0, p);
-            mapBitmap.recycle();
         }
 
-        protected void drawSun(Canvas c, int x, int y, Paint p, WorldMapTask.WorldMapOptions options)
+        protected double sunRadius(Canvas c, WorldMapTask.WorldMapOptions options)
         {
             double sunDiameter = (int)Math.ceil(c.getWidth() / (double)options.sunScale);
-            int sunRadius = (int)Math.ceil(sunDiameter / 2d);
-            int sunStroke = (int)Math.ceil(sunRadius / (double)options.sunStrokeScale);
-
-            p.setStyle(Paint.Style.FILL);
-            p.setColor(options.sunFillColor);
-            c.drawCircle(x, y, sunRadius, p);
-
-            p.setStyle(Paint.Style.STROKE);
-            p.setStrokeWidth(sunStroke);
-            p.setColor(options.sunStrokeColor);
-            c.drawCircle(x, y, sunRadius, p);
+            return (int)Math.ceil(sunDiameter * 0.5d);
         }
 
-        protected void drawMoon(Canvas c, int x, int y, Paint p, WorldMapTask.WorldMapOptions options)
+        protected int sunStroke(Canvas c, WorldMapTask.WorldMapOptions options)
+        {
+            return (int)Math.ceil(sunRadius(c, options) / (double)options.sunStrokeScale);
+        }
+
+        protected void drawSun(Canvas c, int x, int y, @NonNull Paint paintFill, @NonNull Paint paintStroke, WorldMapTask.WorldMapOptions options)
+        {
+            int sunRadius = (int)sunRadius(c, options);
+            int sunStroke = (int)Math.ceil(sunRadius / (double)options.sunStrokeScale);
+
+            paintStroke.setStrokeWidth(sunStroke);
+            c.drawCircle(x, y, sunRadius, paintFill);
+            c.drawCircle(x, y, sunRadius, paintStroke);
+        }
+
+        protected void drawMoon(Canvas c, int x, int y, @NonNull Paint paintFill, @NonNull Paint paintStroke, WorldMapTask.WorldMapOptions options)
         {
             double moonDiameter = Math.ceil(c.getWidth() / (double)options.moonScale);
-            int moonRadius = (int)Math.ceil(moonDiameter / 2d);
+            int moonRadius = (int)Math.ceil(moonDiameter * 0.5d);
             int moonStroke = (int)Math.ceil(moonRadius / (double)options.moonStrokeScale);
 
-            p.setStyle(Paint.Style.FILL);
-            p.setColor(options.moonFillColor);
-            c.drawCircle(x, y, moonRadius, p);
+            paintStroke.setStrokeWidth(moonStroke);
+            c.drawCircle(x, y, moonRadius, paintFill);
+            c.drawCircle(x, y, moonRadius, paintStroke);
+        }
 
-            p.setStyle(Paint.Style.STROKE);
-            p.setStrokeWidth(moonStroke);
-            p.setColor(options.moonStrokeColor);
-            c.drawCircle(x, y, moonRadius, p);
+        public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options) { /* EMPTY */ }
+        public void drawLocations(Canvas c, int w, int h, Paint p1, Paint p2, WorldMapTask.WorldMapOptions options)
+        {
+            if (options.locations != null && options.locations.length > 0)
+            {
+                double[] mid = new double[] { w/2, h/2d };
+                for (int i=0; i<options.locations.length; i++)
+                {
+                    int[] point = toBitmapCoords(w, h, mid, options.locations[i][0], options.locations[i][1]);
+                    drawLocation(c, point[0], point[1], p1, p2, options);
+                    Log.d("DEBUG", "drawLocations: " + options.locations[i][0] + ", " + options.locations[i][1]);
+                }
+            }
+        }
+
+        protected void drawLocation(Canvas c, int x, int y, Paint p1, Paint p2, WorldMapTask.WorldMapOptions options)
+        {
+            double pointDiameter = (int)Math.ceil(c.getWidth() * options.locationScale);
+            int pointRadius = (int)Math.ceil(pointDiameter * 0.5d);
+
+            if (p1 != null) {
+                c.drawCircle(x, y, pointRadius, p1);
+            }
+            if (p2 != null) {
+                c.drawCircle(x, y, pointRadius, p2);
+            }
         }
 
     }
+
+    /**
+     * WorldMapTaskListener
+     */
+    @SuppressWarnings("EmptyMethod")
+    public static abstract class WorldMapTaskListener
+    {
+        public void onStarted() {}
+        public void onFrame(Bitmap frame, long offsetMinutes ) {}
+        public void afterFrame(Bitmap frame, long offsetMinutes ) {}
+        public void onFinished( Bitmap result ) {}
+    }
+
 }

@@ -20,12 +20,15 @@ package com.forrestguice.suntimeswidget.map;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -45,12 +48,19 @@ public class WorldMapExportTask extends ExportTask
         setZippedOutput(zippedOutput);
     }
 
-    private Bitmap[] bitmaps;
-    public void setBitmaps( Bitmap[] bitmaps ) {
-        this.bitmaps = bitmaps;
+    private ConcurrentLinkedQueue<byte[]> bitmaps;
+    public void setBitmaps( @NonNull Bitmap[] bitmaps ) {
+        this.bitmaps = new ConcurrentLinkedQueue<>();
+        for (Bitmap bitmap : bitmaps) {
+            addBitmap(bitmap);
+        }
     }
-    public Bitmap[] getBitmaps() {
-        return this.bitmaps;
+    public void addBitmap(@NonNull Bitmap bitmap)
+    {
+        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+        bitmap.compress(imageFormat, imageQuality, byteStream);
+        byte[] bytes = byteStream.toByteArray();
+        bitmaps.add(bytes);
     }
 
     private String imageExt = ".png";
@@ -91,25 +101,33 @@ public class WorldMapExportTask extends ExportTask
         }
     }
 
+    private boolean waitForFrames = false;
+    public void setWaitForFrames(boolean value) {
+        waitForFrames = value;
+    }
+
     @Override
     protected boolean export(Context context, BufferedOutputStream out) throws IOException
     {
-        if (bitmaps != null && bitmaps.length > 0)
+        if (bitmaps != null && bitmaps.size() > 0)
         {
             if (zippedOutput)    // write entire bitmap array to zip
             {
                 ZipOutputStream zippedOut = new ZipOutputStream(out);
                 try {
-                    for (int i=0; i<bitmaps.length; i++)
+
+                    int c = 0;
+                    while (!isCancelled() && (!bitmaps.isEmpty() || waitForFrames))
                     {
-                        Bitmap bitmap = bitmaps[i];
+                        byte[] bitmap = bitmaps.poll();
                         if (bitmap != null)
                         {
-                            ZipEntry entry = new ZipEntry(i + imageExt);
+                            ZipEntry entry = new ZipEntry(c + imageExt);
                             entry.setMethod(ZipEntry.DEFLATED);
                             zippedOut.putNextEntry(entry);
-                            bitmap.compress(imageFormat, imageQuality, zippedOut);
+                            zippedOut.write(bitmap);
                             zippedOut.flush();
+                            c++;
                         }
                     }
 
@@ -121,9 +139,8 @@ public class WorldMapExportTask extends ExportTask
                     zippedOut.close();
                 }
 
-            } else {    // write first bitmap in array to file
-                Bitmap bitmap = bitmaps[0];
-                bitmap.compress(imageFormat, imageQuality, out);
+            } else {
+                out.write(bitmaps.peek());
                 out.flush();
             }
             return true;

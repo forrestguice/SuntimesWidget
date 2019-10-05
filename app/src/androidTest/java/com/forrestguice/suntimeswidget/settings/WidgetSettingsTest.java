@@ -19,8 +19,10 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
@@ -28,6 +30,9 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator;
+import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
+import com.forrestguice.suntimeswidget.map.WorldMapTask;
+import com.forrestguice.suntimeswidget.map.WorldMapView;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.defaults.LightTheme;
@@ -125,6 +130,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     public void init()
     {
         context = activityRule.getActivity();
+        WidgetSettings.initDisplayStrings(context);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -176,13 +182,31 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
         WidgetSettings.deleteTimeMode2Pref(context, appWidgetId);
         WidgetSettings.SolsticeEquinoxMode pref0 = WidgetSettings.loadTimeMode2Pref(context, appWidgetId);
-        assertTrue("pref should be default (VERNAL) but was " + pref0, pref0.equals(WidgetSettings.PREF_DEF_GENERAL_TIMEMODE2) && pref0.equals(WidgetSettings.SolsticeEquinoxMode.EQUINOX_VERNAL));
+        assertTrue("pref should be default (SPRING) but was " + pref0, pref0.equals(WidgetSettings.PREF_DEF_GENERAL_TIMEMODE2) && pref0.equals(WidgetSettings.SolsticeEquinoxMode.EQUINOX_SPRING));
     }
 
     @Test
     public void test_timeMode3Pref()
     {
-        assertTrue("STUB", false);  // TODO
+        WidgetSettings.saveTimeMode3Pref(context, appWidgetId, WidgetSettings.MoonPhaseMode.FULL_MOON);
+        WidgetSettings.MoonPhaseMode pref4 = WidgetSettings.loadTimeMode3Pref(context, appWidgetId);
+        assertTrue("pref should be FULL_MOON but was " + pref4, pref4.equals(WidgetSettings.MoonPhaseMode.FULL_MOON));
+
+        WidgetSettings.saveTimeMode3Pref(context, appWidgetId, WidgetSettings.MoonPhaseMode.NEW_MOON);
+        WidgetSettings.MoonPhaseMode pref3 = WidgetSettings.loadTimeMode3Pref(context, appWidgetId);
+        assertTrue("pref should be NEW_MOON but was " + pref3, pref3.equals(WidgetSettings.MoonPhaseMode.NEW_MOON));
+
+        WidgetSettings.saveTimeMode3Pref(context, appWidgetId, WidgetSettings.MoonPhaseMode.FIRST_QUARTER);
+        WidgetSettings.MoonPhaseMode pref2 = WidgetSettings.loadTimeMode3Pref(context, appWidgetId);
+        assertTrue("pref should be FIRST_QUARTER but was " + pref2, pref2.equals(WidgetSettings.MoonPhaseMode.FIRST_QUARTER));
+
+        WidgetSettings.saveTimeMode3Pref(context, appWidgetId, WidgetSettings.MoonPhaseMode.THIRD_QUARTER);
+        WidgetSettings.MoonPhaseMode pref1 = WidgetSettings.loadTimeMode3Pref(context, appWidgetId);
+        assertTrue("pref should be THIRD_QUARTER but was " + pref1, pref1.equals(WidgetSettings.MoonPhaseMode.THIRD_QUARTER));
+
+        WidgetSettings.deleteTimeMode3Pref(context, appWidgetId);
+        WidgetSettings.MoonPhaseMode pref0 = WidgetSettings.loadTimeMode3Pref(context, appWidgetId);
+        assertTrue("pref should be default (FULL_MOON) but was " + pref0, pref0.equals(WidgetSettings.PREF_DEF_GENERAL_TIMEMODE3) && pref0.equals(WidgetSettings.MoonPhaseMode.FULL_MOON));
     }
 
     @Test
@@ -263,6 +287,11 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_timezonePref()
     {
+        String tzid3 = TESTTZID_0;
+        WidgetSettings.saveTimezonePref(context, appWidgetId, tzid3, "test");
+        String pref3 = WidgetSettings.loadTimezonePref(context, appWidgetId, "test");
+        assertTrue("timezone should be " + tzid3 +  " but was " + pref3, pref3.equals(tzid3));
+
         String tzid2 = TESTTZID_0;
         WidgetSettings.saveTimezonePref(context, appWidgetId, tzid2);
         String pref2 = WidgetSettings.loadTimezonePref(context, appWidgetId);
@@ -349,17 +378,17 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         Location testloc2 = new Location(TESTLOC_0_LABEL, TESTLOC_0_LAT, TESTLOC_0_LON);
         WidgetSettings.saveLocationPref(context, appWidgetId, testloc2);
         Location pref2 = WidgetSettings.loadLocationPref(context, appWidgetId);
-        assertTrue("location does not match! " + pref2, pref2.equals(testloc2));
+        assertTrue("location does not match! " + pref2.getUri() + " != " + testloc2.getUri(), pref2.equals(testloc2));
 
         Location testloc1 = new Location(TESTLOC_1_LABEL, TESTLOC_1_LAT, TESTLOC_1_LON, TESTLOC_1_ALT);
         WidgetSettings.saveLocationPref(context, appWidgetId, testloc1);
         Location pref1 = WidgetSettings.loadLocationPref(context, appWidgetId);
-        assertTrue("location does not match! " + pref1, pref1.equals(testloc1));
+        assertTrue("location does not match! " + pref1.getUri() + " != " + testloc1.getUri(), pref1.equals(testloc1));
 
         Location testloc0 = new Location(WidgetSettings.PREF_DEF_LOCATION_LABEL, WidgetSettings.PREF_DEF_LOCATION_LATITUDE, WidgetSettings.PREF_DEF_LOCATION_LONGITUDE, WidgetSettings.PREF_DEF_LOCATION_ALTITUDE);
         WidgetSettings.deleteLocationPref(context, appWidgetId);
         Location pref0 = WidgetSettings.loadLocationPref(context, appWidgetId);
-        assertTrue("location does not match default! " + pref0, pref0.equals(testloc0));
+        assertTrue("location does not match default! " + pref0.getUri() + " != " + testloc0.getUri(), pref0.equals(testloc0));
     }
 
     @Test public void test_locationAltitudeEnabledPref()
@@ -537,17 +566,33 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_sunPosMapModePref()
     {
-        WorldMapWidgetSettings.saveSunPosMapModePref(context, appWidgetId, WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE);
-        WorldMapWidgetSettings.WorldMapWidgetMode pref2 = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId);
+        WorldMapWidgetSettings.saveSunPosMapModePref(context, appWidgetId, WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE, WorldMapWidgetSettings.MAPTAG_3x2);
+        WorldMapWidgetSettings.WorldMapWidgetMode pref2 = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId, WorldMapWidgetSettings.MAPTAG_3x2);
         assertTrue("pref should be EQUIAZIMUTHAL_SIMPLE but was " + pref2, pref2.equals(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE));
 
-        WorldMapWidgetSettings.saveSunPosMapModePref(context, appWidgetId,WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE);
-        WorldMapWidgetSettings.WorldMapWidgetMode pref1 = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId);
+        WorldMapWidgetSettings.saveSunPosMapModePref(context, appWidgetId,WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE, WorldMapWidgetSettings.MAPTAG_3x2);
+        WorldMapWidgetSettings.WorldMapWidgetMode pref1 = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId, WorldMapWidgetSettings.MAPTAG_3x2);
         assertTrue("pref should be EQUIRECTANGULAR_BLUEMARBLE but was " + pref1, pref1.equals(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE));
 
-        WorldMapWidgetSettings.deleteSunPosMapModePref(context, appWidgetId);
-        WorldMapWidgetSettings.WorldMapWidgetMode pref0 = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId);
-        assertTrue("pref should be default (EQUIRECTANGULAR_SIMPLE) but was " + pref0, pref0.equals(WorldMapWidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_WORLDMAP) && pref0.equals(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE));
+        WorldMapWidgetSettings.deleteSunPosMapModePref(context, appWidgetId, WorldMapWidgetSettings.MAPTAG_3x2);
+        WorldMapWidgetSettings.WorldMapWidgetMode pref0 = WorldMapWidgetSettings.loadSunPosMapModePref(context, appWidgetId, WorldMapWidgetSettings.MAPTAG_3x2);
+        assertTrue("pref should be default (EQUIRECTANGULAR_SIMPLE) but was " + pref0, pref0.equals(WorldMapWidgetSettings.defaultSunPosMapMode(WorldMapWidgetSettings.MAPTAG_3x2)) && pref0.equals(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE));
+    }
+
+    @Test
+    public void test_showMajorLatitudesPref()
+    {
+        WorldMapWidgetSettings.saveWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2, false);
+        boolean pref2 = WorldMapWidgetSettings.loadWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
+        assertTrue("pref should be false but was true", !pref2);
+
+        WorldMapWidgetSettings.saveWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2, true);
+        boolean pref1 = WorldMapWidgetSettings.loadWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
+        assertTrue("pref should be true but was false", pref1);
+
+        WorldMapWidgetSettings.deleteWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
+        boolean pref0 = WorldMapWidgetSettings.loadWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
+        assertTrue("pref should be false (default) but was true", !pref0);
     }
 
     @Test

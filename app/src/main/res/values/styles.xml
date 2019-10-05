@@ -6,6 +6,7 @@
 
     <!-- Theme: Light (left-to-right) -->
     <style name="AppThemeBase.Light" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="dialogFrame">@android:color/white</item>
         <item name="dialogBackground">@color/dialog_bg_light</item>
         <item name="dialogBackgroundAlt">@color/grey_300</item>
         <item name="settingsCardBackground">@drawable/bg_widget</item>
@@ -47,6 +48,11 @@
         <item name="moonsetIcon">@drawable/ic_moon_set_light</item>
         <item name="moonsetColor">@color/moonIcon_color_setting_light</item>
 
+        <item name="moonPhaseIcon0">@drawable/ic_moon_new</item>
+        <item name="moonPhaseIcon1">@drawable/ic_moon_waxing_quarter</item>
+        <item name="moonPhaseIcon2">@drawable/ic_moon_full</item>
+        <item name="moonPhaseIcon3">@drawable/ic_moon_waning_quarter</item>
+
         <item name="springColor">@color/springColor_light</item>
         <item name="summerColor">@color/summerColor_light</item>
         <item name="fallColor">@color/fallColor_light</item>
@@ -87,6 +93,7 @@
         <item name="icActionSettings">@drawable/ic_action_settings_light</item>
         <item name="icActionHelp">@drawable/ic_action_help_light</item>
         <item name="icActionAccept">@drawable/ic_action_accept_light</item>
+        <item name="icActionClose">@drawable/ic_action_close_light</item>
         <item name="icActionNew">@drawable/ic_action_new_light</item>
         <item name="icActionNewAlarm">@drawable/ic_action_alarms_light</item>
         <item name="icActionNewNotification">@drawable/ic_action_notification_light</item>
@@ -99,6 +106,11 @@
         <item name="icActionShare">@drawable/ic_action_share_light</item>
         <item name="icActionSnooze">@drawable/ic_action_snooze_light</item>
 
+        <item name="icActionPlay">@drawable/ic_action_play_light</item>
+        <item name="icActionPause">@drawable/ic_action_pause_light</item>
+        <item name="icActionRecord">@drawable/ic_action_record_light</item>
+        <item name="icActionTimeReset">@drawable/ic_action_timereset_light</item>
+
         <item name="windowActionModeOverlay">true</item>
     </style>
     <style name="AppTheme.Light" parent="AppThemeBase.Light">
@@ -108,6 +120,7 @@
 
     <!-- Theme: Dark (left-to-right) -->
     <style name="AppThemeBase.Dark" parent="Theme.AppCompat.NoActionBar">
+        <item name="dialogFrame">@color/grey_800</item>
         <item name="dialogBackground">@color/dialog_bg_dark</item>
         <item name="dialogBackgroundAlt">@color/grey_900</item>
         <item name="settingsCardBackground">@drawable/bg_widget_dark</item>
@@ -134,7 +147,7 @@
         <item name="graphColor_nautical">@color/graphColor_nautical_dark</item>
         <item name="graphColor_astronomical">@color/graphColor_astronomical_dark</item>
         <item name="graphColor_pointFill">@color/sunIcon_color_setting_dark</item>
-        <item name="graphColor_pointStroke">@color/grey_800</item>
+        <item name="graphColor_pointStroke">@color/sunIcon_color_noon_light</item>
 
         <item name="sunriseIconSmall">@drawable/ic_sunrise</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large</item>
@@ -148,6 +161,11 @@
         <item name="moonriseColor">@color/moonIcon_color_rising_dark</item>
         <item name="moonsetIcon">@drawable/ic_moon_set</item>
         <item name="moonsetColor">@color/moonIcon_color_setting_dark</item>
+
+        <item name="moonPhaseIcon0">@drawable/ic_moon_new</item>
+        <item name="moonPhaseIcon1">@drawable/ic_moon_waxing_quarter</item>
+        <item name="moonPhaseIcon2">@drawable/ic_moon_full</item>
+        <item name="moonPhaseIcon3">@drawable/ic_moon_waning_quarter</item>
 
         <item name="springColor">@color/springColor_dark</item>
         <item name="summerColor">@color/summerColor_dark</item>
@@ -189,6 +207,7 @@
         <item name="icActionSettings">@drawable/ic_action_settings</item>
         <item name="icActionHelp">@drawable/ic_action_help</item>
         <item name="icActionAccept">@drawable/ic_action_accept</item>
+        <item name="icActionClose">@drawable/ic_action_close</item>
         <item name="icActionNew">@drawable/ic_action_new</item>
         <item name="icActionNewAlarm">@drawable/ic_action_alarms</item>
         <item name="icActionNewNotification">@drawable/ic_action_notification</item>
@@ -200,6 +219,11 @@
         <item name="icActionCancel">@drawable/ic_action_cancel</item>
         <item name="icActionShare">@drawable/ic_action_share</item>
         <item name="icActionSnooze">@drawable/ic_action_snooze</item>
+
+        <item name="icActionPlay">@drawable/ic_action_play</item>
+        <item name="icActionPause">@drawable/ic_action_pause</item>
+        <item name="icActionRecord">@drawable/ic_action_record</item>
+        <item name="icActionTimeReset">@drawable/ic_action_timereset</item>
 
         <item name="windowActionModeOverlay">true</item>
     </style>

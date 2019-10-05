@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -60,13 +60,20 @@ import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProvider
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION_CODE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_TIMEZONE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_ALT;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_APOGEE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_AZ;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_DATE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_DEC;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_DISTANCE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_ILLUMINATION;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_PERIGEE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOONPOS_RA;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_FIRST_DISTANCE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_FULL_DISTANCE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_NEW_DISTANCE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_RISE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_SET;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_MOON_THIRD_DISTANCE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_ALT;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_AZ;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_SUNPOS_DATE;
@@ -663,6 +670,18 @@ public class CalculatorProvider extends ContentProvider
                             row[i] = position.declination;
                             break;
 
+                        case COLUMN_MOONPOS_DISTANCE:
+                            row[i] = position.distance;
+                            break;
+
+                        case COLUMN_MOONPOS_PERIGEE:
+                            row[i] = calculator.getMoonPerigeeNextDate(datetime).getTimeInMillis();
+                            break;
+
+                        case COLUMN_MOONPOS_APOGEE:
+                            row[i] = calculator.getMoonApogeeNextDate(datetime).getTimeInMillis();
+                            break;
+
                         case COLUMN_MOONPOS_ILLUMINATION:
                             row[i] = calculator.getMoonIlluminationForDate(datetime);
                             break;
@@ -694,6 +713,8 @@ public class CalculatorProvider extends ContentProvider
         if (calculator != null)
         {
             ArrayList<Calendar> events = new ArrayList<>();
+            HashMap<SuntimesCalculator.MoonPhase, Calendar> events1 = new HashMap<>();
+
             Calendar date = Calendar.getInstance();
             date.setTimeInMillis(range[0].getTimeInMillis());
 
@@ -702,34 +723,61 @@ public class CalculatorProvider extends ContentProvider
 
             do {
                 events.clear();
+                events1.clear();
                 Object[] row = new Object[columns.length];
                 for (int i=0; i<columns.length; i++)
                 {
                     Calendar event;
+                    SuntimesCalculator.MoonPosition position;
                     switch (columns[i])
                     {
                         case COLUMN_MOON_NEW:
-                            events.add(event = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.NEW , date));
+                            events.add(event = initEventValue(SuntimesCalculator.MoonPhase.NEW, events1, calculator, date));
                             row[i] = event.getTimeInMillis();
                             break;
 
                         case COLUMN_MOON_FIRST:
-                            events.add(event = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.FIRST_QUARTER, date));
+                            events.add(event = initEventValue(SuntimesCalculator.MoonPhase.FIRST_QUARTER, events1, calculator, date));
                             row[i] = event.getTimeInMillis();
                             break;
 
                         case COLUMN_MOON_FULL:
-                            events.add(event = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.FULL, date));
+                            events.add(event = initEventValue(SuntimesCalculator.MoonPhase.FULL, events1, calculator, date));
                             row[i] = event.getTimeInMillis();
                             break;
 
                         case COLUMN_MOON_THIRD:
-                            events.add(event = calculator.getMoonPhaseNextDate(SuntimesCalculator.MoonPhase.THIRD_QUARTER, date));
+                            events.add(event = initEventValue(SuntimesCalculator.MoonPhase.THIRD_QUARTER, events1, calculator, date));
                             row[i] = event.getTimeInMillis();
                             break;
 
+                        case COLUMN_MOON_NEW_DISTANCE:
+                            events.add(event = initEventValue(SuntimesCalculator.MoonPhase.NEW, events1, calculator, date));
+                            position = ((event != null) ? calculator.getMoonPosition(event) : null);
+                            row[i] = ((position != null) ? position.distance : null);
+                            break;
+
+                        case COLUMN_MOON_FIRST_DISTANCE:
+                            events.add(event = initEventValue(SuntimesCalculator.MoonPhase.FIRST_QUARTER, events1, calculator, date));
+                            position = ((event != null) ? calculator.getMoonPosition(event) : null);
+                            row[i] = ((position != null) ? position.distance : null);
+                            break;
+
+                        case COLUMN_MOON_FULL_DISTANCE:
+                            events.add(event = initEventValue(SuntimesCalculator.MoonPhase.FULL, events1, calculator, date));
+                            position = ((event != null) ? calculator.getMoonPosition(event) : null);
+                            row[i] = ((position != null) ? position.distance : null);
+                            break;
+
+                        case COLUMN_MOON_THIRD_DISTANCE:
+                            events.add(event = initEventValue(SuntimesCalculator.MoonPhase.THIRD_QUARTER, events1, calculator, date));
+                            position = ((event != null) ? calculator.getMoonPosition(event) : null);
+                            row[i] = ((position != null) ? position.distance : null);
+                            break;
+
                         default:
-                            row[i] = null; break;
+                            row[i] = null;
+                            break;
                     }
                 }
                 retValue.addRow(row);
@@ -744,6 +792,15 @@ public class CalculatorProvider extends ContentProvider
 
         } else Log.d("DEBUG", "moonSource is null!");
         return retValue;
+    }
+
+    private Calendar initEventValue(@NonNull SuntimesCalculator.MoonPhase phase, @NonNull HashMap<SuntimesCalculator.MoonPhase, Calendar> events, @NonNull SuntimesCalculator calculator, @NonNull Calendar date)
+    {
+        Calendar event = events.get(phase);
+        if (event == null) {
+            events.put(phase, event = calculator.getMoonPhaseNextDate(phase, date));
+        }
+        return event;
     }
 
     /**
@@ -773,8 +830,8 @@ public class CalculatorProvider extends ContentProvider
                             row[i] = year.get(Calendar.YEAR);
                             break;
 
-                        case COLUMN_SEASON_VERNAL:
-                            row[i] = calculator.getVernalEquinoxForYear(year).getTimeInMillis();
+                        case COLUMN_SEASON_VERNAL:  // TODO: SPRING
+                            row[i] = calculator.getSpringEquinoxForYear(year).getTimeInMillis();
                             break;
 
                         case COLUMN_SEASON_SUMMER:
@@ -840,6 +897,7 @@ public class CalculatorProvider extends ContentProvider
                         : WidgetSettings.loadCalculatorModePref(context, appWidgetID, calculatorName));
             }
             SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
+            //Log.d("CalculatorProvider", "initCalculator: " + location.getLabel() + " :: " + location.toString());
             return factory.createCalculator(location, timezone);
         }
     }
@@ -848,13 +906,15 @@ public class CalculatorProvider extends ContentProvider
     private static SuntimesCalculator initSunCalculator(Context context, int appWidgetID)
     {
         SuntimesCalculator retValue = sunSource.get(appWidgetID);   // lazy init
-        if (retValue == null) {
+        if (retValue == null)
+        {
             Location location = WidgetSettings.loadLocationPref(context, appWidgetID);
             TimeZone timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
             SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(context, appWidgetID);
             SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
             sunSource.put(appWidgetID, (retValue = factory.createCalculator(location, timezone)));
-        }
+            //Log.d("CalculatorProvider", "initSunCalculator: " + location.getLabel() + " :: " + location.toString());
+        } //else Log.d("CalculatorProvider", "initSunCalculator: using pre-existing calculator");
         return retValue;
     }
     private SuntimesCalculator initSunCalculator(Context context, HashMap<String,String> selection) {
@@ -872,11 +932,18 @@ public class CalculatorProvider extends ContentProvider
             SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(context, 0, "moon");      // always use app calculator (0)
             SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
             moonSource.put(appWidgetID, (retValue = factory.createCalculator(location, timezone)));
-        }
+            //Log.d("CalculatorProvider", "initMoonCalculator: " + location.getLabel() + " :: " + location.toString());
+        } //else Log.d("CalculatorProvider", "initMoonCalculator: using pre-existing calculator");
         return retValue;
     }
     private SuntimesCalculator initMoonCalculator(Context context, HashMap<String,String> selection) {
         return initCalculator(context, selection, "moon");
+    }
+
+    public static void clearCachedConfig(int appWidgetID)
+    {
+        sunSource.remove(appWidgetID);
+        moonSource.remove(appWidgetID);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

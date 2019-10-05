@@ -18,7 +18,6 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -28,12 +27,17 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
+import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.text.method.LinkMovementMethod;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,7 +46,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class AboutDialog extends DialogFragment
+public class AboutDialog extends BottomSheetDialogFragment
 {
     public static final String WEBSITE_URL = "https://forrestguice.github.io/SuntimesWidget/";
     public static final String ADDONS_URL = "https://forrestguice.github.io/SuntimesWidget/";
@@ -68,39 +72,68 @@ public class AboutDialog extends DialogFragment
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
-
-        final Activity myParent = getActivity();
-        LayoutInflater inflater = myParent.getLayoutInflater();
-        @SuppressLint("InflateParams") final View dialogContent = inflater.inflate(R.layout.layout_dialog_about, null);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
-        builder.setView(dialogContent);
-        AlertDialog dialog = builder.create();
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
-                dialogContent.post(new Runnable() {
-                    @Override
-                    public void run()
-                    {
-                        Context context = getContext();
-                        if (context != null) {
-                            AppSettings.checkCustomPermissions(context);
+                BottomSheetDialog bottomSheet = (BottomSheetDialog)dialog;
+                FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+                if (layout != null)
+                {
+                    layout.post(new Runnable() {
+                        @Override
+                        public void run()
+                        {
+                            Context context = getContext();
+                            if (context != null) {
+                                AppSettings.checkCustomPermissions(context);
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         });
+        return dialog;
+    }
 
-        if (savedInstanceState != null)
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
+    {
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_about, parent, false);
+
+        if (savedState != null)
         {
-            param_iconID = savedInstanceState.getInt(KEY_ICONID, param_iconID);
-            param_appName = savedInstanceState.getInt(KEY_APPNAME, param_appName);
+            param_iconID = savedState.getInt(KEY_ICONID, param_iconID);
+            param_appName = savedState.getInt(KEY_APPNAME, param_appName);
+        }
+        initViews(getActivity(), dialogContent);
+
+        return dialogContent;
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        expandSheet(getDialog());
+    }
+
+    private void expandSheet(DialogInterface dialog)
+    {
+        if (dialog == null) {
+            return;
         }
 
-        initViews(getActivity(), dialogContent);
-        return dialog;
+        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
+        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+        if (layout != null)
+        {
+            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+            behavior.setHideable(false);
+            behavior.setSkipCollapsed(true);
+            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }
     }
 
     public static String anchor(String url, String text)
@@ -115,7 +148,7 @@ public class AboutDialog extends DialogFragment
 
     public String htmlVersionString()
     {
-        String buildString = anchor(COMMIT_URL + BuildConfig.GIT_HASH, BuildConfig.GIT_HASH) + "@" + BuildConfig.BUILD_TIME.getTime();
+        String buildString = anchor(COMMIT_URL + BuildConfig.GIT_HASH, BuildConfig.GIT_HASH);
         String versionString = anchor(CHANGELOG_URL, BuildConfig.VERSION_NAME) + " " + smallText("(" + buildString + ")");
         if (BuildConfig.DEBUG)
         {

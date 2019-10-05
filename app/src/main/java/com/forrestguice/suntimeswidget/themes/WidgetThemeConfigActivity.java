@@ -25,10 +25,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.InsetDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -65,7 +63,6 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimeswidget.layouts.ClockLayout;
 import com.forrestguice.suntimeswidget.layouts.ClockLayout_1x1_0;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
@@ -82,8 +79,6 @@ import java.security.InvalidParameterException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_BACKGROUND_COLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_NAME;
@@ -734,13 +729,13 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             int dpHeight = 64;
             WorldMapTask.WorldMapProjection projection = new WorldMapEquirectangular();
             WorldMapTask drawTask = new WorldMapTask();
-            drawTask.setListener(new WorldMapView.WorldMapTaskListener()
+            drawTask.setListener(new WorldMapTask.WorldMapTaskListener()
             {
                 @Override
-                public void onFinished(Bitmap result)
+                public void onFinished(Bitmap lastFrame)
                 {
-                    super.onFinished(result);
-                    view.setImageBitmap(result);
+                    super.onFinished(lastFrame);
+                    view.setImageBitmap(lastFrame);
                 }
             });
             drawTask.execute(data0,  SuntimesUtils.dpToPixels(this, dpWidth), SuntimesUtils.dpToPixels(this, dpHeight), options, projection);
@@ -1297,6 +1292,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 WidgetThemes.addValue(WidgetThemeConfigActivity.this, theme.themeDescriptor());
                 setResult(Activity.RESULT_OK, intent);
                 finish();
+                overridePendingTransition(R.anim.transition_ok_in, R.anim.transition_ok_out);
             }
         }
     }
@@ -1699,6 +1695,12 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             super.onColorChanged(newColor);
             updatePreview();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);
     }
 
 }

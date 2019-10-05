@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2018 Forrest Guice
+    Copyright (C) 2017-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.calculator;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -29,50 +30,50 @@ import java.util.TimeZone;
 
 public class SuntimesEquinoxSolsticeDataset
 {
-    public SuntimesEquinoxSolsticeData dataEquinoxVernal;
+    public SuntimesEquinoxSolsticeData dataEquinoxSpring;
     public SuntimesEquinoxSolsticeData dataSolsticeSummer;
     public SuntimesEquinoxSolsticeData dataEquinoxAutumnal;
     public SuntimesEquinoxSolsticeData dataSolsticeWinter;
 
     public SuntimesEquinoxSolsticeDataset(Context context)
     {
-        dataEquinoxVernal = new SuntimesEquinoxSolsticeData(context, AppWidgetManager.INVALID_APPWIDGET_ID);
-        dataEquinoxVernal.setTimeMode(WidgetSettings.SolsticeEquinoxMode.EQUINOX_VERNAL);
+        dataEquinoxSpring = new SuntimesEquinoxSolsticeData(context, AppWidgetManager.INVALID_APPWIDGET_ID);
+        dataEquinoxSpring.setTimeMode(WidgetSettings.SolsticeEquinoxMode.EQUINOX_SPRING);
 
-        dataSolsticeSummer = new SuntimesEquinoxSolsticeData(dataEquinoxVernal);
+        dataSolsticeSummer = new SuntimesEquinoxSolsticeData(dataEquinoxSpring);
         dataSolsticeSummer.setTimeMode(WidgetSettings.SolsticeEquinoxMode.SOLSTICE_SUMMER);
 
-        dataEquinoxAutumnal = new SuntimesEquinoxSolsticeData(dataEquinoxVernal);
+        dataEquinoxAutumnal = new SuntimesEquinoxSolsticeData(dataEquinoxSpring);
         dataEquinoxAutumnal.setTimeMode(WidgetSettings.SolsticeEquinoxMode.EQUINOX_AUTUMNAL);
 
-        dataSolsticeWinter = new SuntimesEquinoxSolsticeData(dataEquinoxVernal);
+        dataSolsticeWinter = new SuntimesEquinoxSolsticeData(dataEquinoxSpring);
         dataSolsticeWinter.setTimeMode(WidgetSettings.SolsticeEquinoxMode.SOLSTICE_WINTER);
     }
 
     public SuntimesEquinoxSolsticeDataset(Context context, int appWidgetId)
     {
-        dataEquinoxVernal = new SuntimesEquinoxSolsticeData(context, appWidgetId);
-        dataEquinoxVernal.setTimeMode(WidgetSettings.SolsticeEquinoxMode.EQUINOX_VERNAL);
+        dataEquinoxSpring = new SuntimesEquinoxSolsticeData(context, appWidgetId);
+        dataEquinoxSpring.setTimeMode(WidgetSettings.SolsticeEquinoxMode.EQUINOX_SPRING);
 
-        dataSolsticeSummer = new SuntimesEquinoxSolsticeData(dataEquinoxVernal);
+        dataSolsticeSummer = new SuntimesEquinoxSolsticeData(dataEquinoxSpring);
         dataSolsticeSummer.setTimeMode(WidgetSettings.SolsticeEquinoxMode.SOLSTICE_SUMMER);
 
-        dataEquinoxAutumnal = new SuntimesEquinoxSolsticeData(dataEquinoxVernal);
+        dataEquinoxAutumnal = new SuntimesEquinoxSolsticeData(dataEquinoxSpring);
         dataEquinoxAutumnal.setTimeMode(WidgetSettings.SolsticeEquinoxMode.EQUINOX_AUTUMNAL);
 
-        dataSolsticeWinter = new SuntimesEquinoxSolsticeData(dataEquinoxVernal);
+        dataSolsticeWinter = new SuntimesEquinoxSolsticeData(dataEquinoxSpring);
         dataSolsticeWinter.setTimeMode(WidgetSettings.SolsticeEquinoxMode.SOLSTICE_WINTER);
     }
 
-    public SuntimesEquinoxSolsticeDataset( SuntimesEquinoxSolsticeData dataEquinoxVernal,
+    public SuntimesEquinoxSolsticeDataset( SuntimesEquinoxSolsticeData dataEquinoxSpring,
                                            SuntimesEquinoxSolsticeData dataSolsticeSummer,
                                            SuntimesEquinoxSolsticeData dataEquinoxAutumnal,
                                            SuntimesEquinoxSolsticeData dataSolsticeWinter )
     {
-        this.dataEquinoxVernal = dataEquinoxVernal;
-        if (dataEquinoxVernal == null)
+        this.dataEquinoxSpring = dataEquinoxSpring;
+        if (dataEquinoxSpring == null)
         {
-            throw new NullPointerException("dataEquinoxVernal must not be null!");
+            throw new NullPointerException("dataEquinoxSpring must not be null!");
         }
 
         this.dataSolsticeSummer = dataSolsticeSummer;
@@ -96,14 +97,14 @@ public class SuntimesEquinoxSolsticeDataset
 
     public SuntimesCalculator calculator()
     {
-        return dataEquinoxVernal.calculator();
+        return dataEquinoxSpring.calculator();
     }
 
     public void calculateData()
     {
-        dataEquinoxVernal.calculate();
-        SuntimesCalculator calculator = dataEquinoxVernal.calculator();
-        SuntimesCalculatorDescriptor descriptor = dataEquinoxVernal.calculatorMode();
+        dataEquinoxSpring.calculate();
+        SuntimesCalculator calculator = dataEquinoxSpring.calculator();
+        SuntimesCalculatorDescriptor descriptor = dataEquinoxSpring.calculatorMode();
 
         dataSolsticeSummer.setCalculator(calculator, descriptor);
         dataSolsticeSummer.calculate();
@@ -129,7 +130,7 @@ public class SuntimesEquinoxSolsticeDataset
     {
         long timeDeltaMin = Long.MAX_VALUE;
         SuntimesEquinoxSolsticeData closest = null;
-        SuntimesEquinoxSolsticeData[] dataset = { dataEquinoxVernal, dataSolsticeSummer, dataEquinoxAutumnal, dataSolsticeWinter };
+        SuntimesEquinoxSolsticeData[] dataset = {dataEquinoxSpring, dataSolsticeSummer, dataEquinoxAutumnal, dataSolsticeWinter };
         for (SuntimesEquinoxSolsticeData data : dataset)
         {
             Calendar[] events = {data.eventCalendarThisYear(), data.eventCalendarOtherYear()};
@@ -152,38 +153,52 @@ public class SuntimesEquinoxSolsticeDataset
         return closest;
     }
 
+    public void setLocation(Location location)
+    {
+        dataEquinoxSpring.setLocation(location);
+        dataSolsticeSummer.setLocation(location);
+        dataEquinoxAutumnal.setLocation(location);
+        dataSolsticeWinter.setLocation(location);
+    }
+
     public boolean isCalculated()
     {
-        return dataEquinoxVernal.isCalculated();
+        return dataEquinoxSpring.isCalculated();
     }
 
     public void invalidateCalculation()
     {
-        dataEquinoxVernal.invalidateCalculation();
+        dataEquinoxSpring.invalidateCalculation();
         dataSolsticeSummer.invalidateCalculation();
         dataEquinoxAutumnal.invalidateCalculation();
         dataSolsticeWinter.invalidateCalculation();
     }
 
-    public boolean isImplemented()
+    public boolean isImplemented() {
+        return dataEquinoxSpring.isImplemented();
+    }
+
+    public void setTodayIs(Calendar date)
     {
-        SuntimesCalculatorDescriptor calculatorDesc = dataEquinoxVernal.calculatorMode();
-        return calculatorDesc.hasRequestedFeature(SuntimesCalculator.FEATURE_SOLSTICE);
+        dataEquinoxSpring.setTodayIs(date);
+        dataEquinoxAutumnal.setTodayIs(date);
+        dataSolsticeSummer.setTodayIs(date);
+        dataSolsticeWinter.setTodayIs(date);
     }
 
     public Calendar todayIs()
     {
-        return dataEquinoxVernal.todayIs();
+        return dataEquinoxSpring.todayIs();
     }
 
     public boolean todayIsNotToday()
     {
-        return dataEquinoxVernal.todayIsNotToday();
+        return dataEquinoxSpring.todayIsNotToday();
     }
 
     public String timezone()
     {
-        return dataEquinoxVernal.timezone().getID();
+        return dataEquinoxSpring.timezone().getID();
     }
 
     public Calendar now()
