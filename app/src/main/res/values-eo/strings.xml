@@ -18,7 +18,7 @@
     <string name="configAction_setAlarm">Agordi averton</string>
     <string name="configAction_setTimeZone">Elekti horzonon</string>
     <string name="configAction_setDate">Elekti daton</string>
-    <string name="configAction_viewDate">View Date</string>    <!-- TODO -->
+    <string name="configAction_viewDate">Montri daton</string>
     <string name="configAction_sunDialog">Pozicio de Suno</string>
     <string name="configAction_equinoxDialog">Solstico / ekvinokso</string>
     <string name="configAction_worldMap">Mondmapo</string>
@@ -171,13 +171,13 @@
         <item quantity="other">%s futoj</item>
     </plurals>
 
-    <string name="units_miles">miles</string>    <!-- TODO -->
-    <string name="units_miles_short">mi</string>    <!-- TODO -->
+    <string name="units_miles">mejloj</string>
+    <string name="units_miles_short">mi</string>
     <plurals name="units_miles_long">
-        <item quantity="one">%s mile</item>
-        <item quantity="other">%s miles</item>
-    </plurals>                                     <!-- TODO -->
-
+        <item quantity="one">%s mejlo</item>
+        <item quantity="other">%s mejloj</item>
+    </plurals>
+    
     <string name="units_meters">metroj</string>
     <string name="units_meters_short">m</string>
     <plurals name="units_meters_long">
@@ -185,12 +185,12 @@
       <item quantity="other">%s metroj</item>
     </plurals>
 
-    <string name="units_kilometers">kilometers</string>    <!-- TODO -->
-    <string name="units_kilometers_short">km</string>    <!-- TODO -->
+    <string name="units_kilometers">kilometroj</string>
+    <string name="units_kilometers_short">km</string>
     <plurals name="units_kilometers_long">
-        <item quantity="one">%s kilometer</item>
-        <item quantity="other">%s kilometers</item>
-    </plurals>                                            <!-- TODO -->
+        <item quantity="one">%s kilometro</item>
+        <item quantity="other">%s kilometroj</item>
+    </plurals>
 
     <!--
          WIDGET CONFIG
@@ -308,8 +308,8 @@
     <string name="timeMode_moon_waningcrescent_short">Malkreskanta (&lt;50%)</string>   <!-- label -->
     <string name="timeMode_moon_waningcrescent">Malkreskanta post-Lunduono</string>      <!-- label -->
 
-    <string name="timeMode_moon_super">Supermoon</string>               <!-- label -->    <!-- TODO -->
-    <string name="timeMode_moon_micro">Micromoon</string>               <!-- label -->    <!-- TODO -->
+    <string name="timeMode_moon_super">Granda Luno</string>               <!-- label -->    <!-- TODO -->
+    <string name="timeMode_moon_micro">Malgranda Luno</string>               <!-- label -->    <!-- TODO -->
     <string name="timeMode_moon_superfull">Super Full Moon</string>                             <!-- setting -->    <!-- TODO -->
     <!--<string name="timeMode_moon_superfull_short">@string/timeMode_moon_super</string>-->     <!-- label -->
     <string name="timeMode_moon_supernew">Super New Moon</string>                             <!-- setting -->    <!-- TODO -->
@@ -647,9 +647,9 @@
 
     <string name="alarmenabled_toast">Agordis <xliff:g id="alarmType" example="sciigo">%1$s</xliff:g>n post <xliff:g id="duration" example="8h">%2$s</xliff:g>.</string> <!-- toast msg -->
 
-    <string name="configLabel_alarms_optWhiteList">Optimumigo de pilo</string>
+    <string name="configLabel_alarms_optWhiteList">Optimumigo de baterio</string>
     <string name="configLabel_alarms_optWhiteList_listed">Ne optimumigita (konsilinde)</string>
-    <string name="configLabel_alarms_optWhiteList_unlisted">Aktiva optimumigo de pilo.\nAlarmoj povas prokrastĝi maksimume je 15 minutoj.</string>
+    <string name="configLabel_alarms_optWhiteList_unlisted">Aktiva optimumigo de baterio.\nAlarmoj povas prokrastĝi maksimume je 15 minutoj.</string>
 
     <string name="configLabel_alarms_notifications">Sciigoj</string>
     <string name="configLabel_alarms_notifications_on">Aktivaj</string>
