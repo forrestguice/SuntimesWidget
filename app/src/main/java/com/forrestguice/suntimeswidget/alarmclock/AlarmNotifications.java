@@ -1300,6 +1300,7 @@ public class AlarmNotifications extends BroadcastReceiver
         moonData.setTodayIs(day);
         moonData.calculate();
 
+        int c = 0;
         Calendar eventTime = moonData.moonPhaseCalendar(phase);
         eventTime.set(Calendar.SECOND, 0);
         alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
@@ -1307,8 +1308,9 @@ public class AlarmNotifications extends BroadcastReceiver
         while (now.after(alarmTime))
                 //|| (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))    // does it make sense to enforce repeatingDays for moon phases? probably not.
         {
-            Log.w("AlarmReceiverItem", "updateAlarmTime: moonPhaseEvent advancing to next cycle..");
-            day.setTimeInMillis(eventTime.getTimeInMillis() + 1000);
+            c++;
+            Log.w("AlarmReceiverItem", "updateAlarmTime: moonPhaseEvent advancing to next cycle.. " + c);
+            day.add(Calendar.HOUR, (int)(c * (0.25 * 29.53d * 24d)));
             moonData.setTodayIs(day);
             moonData.calculate();
             eventTime = moonData.moonPhaseCalendar(phase);
