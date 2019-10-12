@@ -19,7 +19,7 @@
     <string name="configAction_setAlarm">Ustaw alarm</string>
     <string name="configAction_setTimeZone">Ustaw strefę czasową</string>
     <string name="configAction_setDate">Ustaw datę</string>
-    <string name="configAction_viewDate">View Date</string>    <!-- TODO -->
+    <string name="configAction_viewDate">Wyświetl datę</string>
     <string name="configAction_sunDialog">Pozycja Słońca</string>
     <string name="configAction_equinoxDialog">Przesilenie / równonoc</string>
     <string name="configAction_worldMap">Mapa świata</string>
@@ -180,14 +180,14 @@
       <item quantity="many">%s stóp</item>
     </plurals>
 
-    <string name="units_miles">miles</string>    <!-- TODO -->
-    <string name="units_miles_short">mi</string>    <!-- TODO -->
+    <string name="units_miles">mile</string>
+    <string name="units_miles_short">mi</string>
     <plurals name="units_miles_long">
-        <item quantity="one">%s mile</item>
-        <item quantity="few">%s miles</item>
-        <item quantity="other">%s miles</item>
-        <item quantity="many">%s miles</item>
-    </plurals>                                     <!-- TODO -->
+        <item quantity="one">%s mila</item>
+        <item quantity="few">%s mile</item>
+        <item quantity="other">%s mil</item>
+        <item quantity="many">%s mil</item>
+    </plurals>
 
     <string name="units_meters">metry</string>
     <string name="units_meters_short">m</string>
@@ -198,14 +198,14 @@
       <item quantity="many">%s metrów</item>
     </plurals>
 
-    <string name="units_kilometers">kilometers</string>    <!-- TODO -->
-    <string name="units_kilometers_short">km</string>    <!-- TODO -->
+    <string name="units_kilometers">kilemetry</string>
+    <string name="units_kilometers_short">km</string>
     <plurals name="units_kilometers_long">
-        <item quantity="one">%s kilometer</item>
-        <item quantity="few">%s kilometers</item>
-        <item quantity="other">%s kilometers</item>
-        <item quantity="many">%s kilometers</item>
-    </plurals>                                            <!-- TODO -->
+        <item quantity="one">%s kilometr</item>
+        <item quantity="few">%s kilometry</item>
+        <item quantity="other">%s kilemetrów</item>
+        <item quantity="many">%s kilemetrów</item>
+    </plurals>
 
     <!--
          WIDGET CONFIG
@@ -323,21 +323,21 @@
     <string name="timeMode_moon_waningcrescent_short">Malejący (&lt;50%)</string>               <!-- label -->
     <string name="timeMode_moon_waningcrescent">Księżyc malejący (&lt;50%)</string>                     <!-- label -->
 
-    <string name="timeMode_moon_super">Supermoon</string>               <!-- label -->    <!-- TODO -->
-    <string name="timeMode_moon_micro">Micromoon</string>               <!-- label -->    <!-- TODO -->
-    <string name="timeMode_moon_superfull">Super Full Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_moon_super">Superksiężyc</string>               <!-- label -->
+    <string name="timeMode_moon_micro">Mikroksiężyc</string>               <!-- label -->
+    <string name="timeMode_moon_superfull">Superksiężyc w pełni</string>                             <!-- setting -->
     <!--<string name="timeMode_moon_superfull_short">@string/timeMode_moon_super</string>-->     <!-- label -->
-    <string name="timeMode_moon_supernew">Super New Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_moon_supernew">Superksiężyc w nowiu</string>                             <!-- setting -->
     <!--<string name="timeMode_moon_supernew_short">@string/timeMode_moon_super</string>-->     <!-- label -->
-    <string name="timeMode_moon_microfull">Micro Full Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_moon_microfull">Mikroksiężyc w pełni</string>                             <!-- setting -->
     <!--<string name="timeMode_moon_microfull_short">@string/timeMode_moon_micro</string>-->     <!-- label -->
-    <string name="timeMode_moon_micronew">Micro New Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_moon_micronew">Mikroksiężyc w nowiu</string>                             <!-- setting -->
     <!--<string name="timeMode_moon_micronew_short">@string/timeMode_moon_micro</string>-->     <!-- label -->
 
     <!--<string name="timeMode_moon_perigee">@string/label_perigee</string>-->                             <!-- label -->
     <!--<string name="timeMode_moon_apogee">@string/label_apogee</string>-->                             <!-- label -->
-    <string name="label_apogee">Apogee</string>      <!-- TODO -->
-    <string name="label_perigee">Perigee</string>    <!-- TODO -->
+    <string name="label_apogee">Apogeum</string>
+    <string name="label_perigee">Perygeum</string>
 
     <string name="configLabel_general_timeMode">Tryb:</string>          <!-- spinner label -->
 
@@ -349,12 +349,12 @@
 
     <string name="widgetMode1x1_altaz">Wysokość i azymut</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Deklinacja i rektascensja</string>     <!-- setting -->
-    <string name="widgetMode1x1_distance">Current distance</string>     <!-- setting -->    <!-- TODO -->
-    <string name="widgetMode1x1_apsis">Next apogee or perigee</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode1x1_distance">Obecna odległość</string>     <!-- setting -->
+    <string name="widgetMode1x1_apsis">Następne apogeum lub perygeum</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Zwykła</string>  <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal">Biegunowa</string>     <!-- setting -->  <!-- TODO (north) -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [south]</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Biegunowa (północ)</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_south">Biegunowa (południe)</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->
 
     <string name="widgetMode1x1_moonriseset">Wschód i zachód Księżyca</string>     <!-- setting -->
@@ -580,7 +580,7 @@
     <string name="widgetLabel_rightAscension_short">Rek.</string>    <!-- label -->
     <string name="widgetLabel_declination">Deklinacja</string>           <!-- label -->
     <string name="widgetLabel_declination_short">Dek.</string>           <!-- label -->
-    <string name="widgetLabel_distance">Distance</string>           <!-- label -->    <!-- TODO -->
+    <string name="widgetLabel_distance">Odległość</string>           <!-- label -->
 
     <!--
          ALARM CLOCK
@@ -789,7 +789,7 @@
     <string name="configAction_doNothing">Nie rób nic</string>
     <string name="configAction_nextNote">Pokaż następną notatkę</string>
     <string name="configAction_prevNote">Pokaż poprzednią notatkę</string>
-    <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
+    <string name="configAction_resetNote">Resetuj notatkę</string>
     <string name="configAction_showCalendar">Uruchom aplikację Kalendarz</string>
     <string name="configAction_swapCards">Przełącz karty (dziś/jutro)</string>
     <string name="configAction_setAlarmForNote">Ustaw alarm dla notatki</string>
@@ -918,20 +918,20 @@
 
     <!-- Dialog: World Map -->
     <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
-    <string name="worldmap_dialog_action_play">Play</string>       <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="worldmap_dialog_action_pause">Pause</string>     <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="worldmap_dialog_action_record">Record</string>   <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="worldmap_dialog_action_next">Next</string>       <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="worldmap_dialog_action_prev">Previous</string>   <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="worldmap_dialog_action_reset">Reset</string>     <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="worldmap_dialog_action_menu">Options</string>       <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_play">Odtwórz</string>       <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_pause">Wstrzymaj</string>     <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_record">Nagraj</string>   <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_next">Następny</string>       <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_prev">Poprzedni</string>   <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_reset">Resetuj</string>     <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_menu">Opcje</string>       <!-- button (contentDescription) -->
     <string name="worldmap_dialog_option_sunlight">Słońce</string>
     <string name="worldmap_dialog_option_moonlight">Księżyc</string>
     <string name="worldmap_dialog_option_all">Oba</string>
-    <string name="worldmap_dialog_option_location">Location</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_latitudes">Latitudes</string>    <!-- TODO -->
-    <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- TODO -->
-    <string name="worldmap_dialog_speed_1d">&#215; 1d</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_location">Położenie</string>
+    <string name="worldmap_dialog_option_latitudes">Równoleżniki</string>
+    <string name="worldmap_dialog_speed_15m">&#215; 15min</string>
+    <string name="worldmap_dialog_speed_1d">&#215; 1d</string>
     <string name="configAction_shareMap">Udostępnij</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <!-- Dialog: Set Alarm -->
@@ -962,14 +962,14 @@
         <item>zmierzch astronomiczny</item>
         <item>wschód Księżyca</item>
         <item>zachód Księżyca</item>
-        <item>new moon</item>  <!-- TODO -->
-        <item>first quarter</item>  <!-- TODO -->
-        <item>full moon</item>  <!-- TODO -->
-        <item>third quarter</item>  <!-- TODO -->
-        <item>spring equinox</item>    <!-- TODO -->
-        <item>summer solstice</item>   <!-- TODO -->
-        <item>autumn equinox</item>   <!-- TODO -->
-        <item>winter solstice</item>   <!-- TODO -->
+        <item>nów</item>
+        <item>pierwsza kwadra</item>
+        <item>pełnia</item>
+        <item>ostatnia kwadra</item>
+        <item>równonoc wiosenna</item>
+        <item>przesilenie letnie</item>
+        <item>równonoc jesienna</item> 
+        <item>przesilenie zimowe</item> 
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>świt astronomiczny</item>
@@ -989,14 +989,14 @@
         <item>zmierzch astronomiczny</item>
         <item>wschód Księżyca</item>
         <item>zachód Księżyca</item>
-        <item>new moon</item>  <!-- TODO -->
-        <item>first quarter</item>  <!-- TODO -->
-        <item>full moon</item>  <!-- TODO -->
-        <item>third quarter</item>  <!-- TODO -->
-        <item>spring equinox</item>    <!-- TODO -->
-        <item>summer solstice</item>   <!-- TODO -->
-        <item>autumn equinox</item>   <!-- TODO -->
-        <item>winter solstice</item>   <!-- TODO -->
+        <item>nów Księżyca</item>
+        <item>pierwsza kwadra Księżyca</item>
+        <item>pełnia Księżyca</item>
+        <item>ostatnia kwadra Księżyca</item>
+        <item>równonoc wiosenna</item>
+        <item>przesilenie letnie</item>
+        <item>równonoc jesienna</item> 
+        <item>przesilenie zimowe</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
@@ -1105,7 +1105,7 @@
     <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b>: <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
     <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
     <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g> i <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
-    <string name="creditsTab">Credits</string>   <!-- TODO -->
+    <string name="creditsTab">Autorzy</string>
 
     <string name="app_legal3"><![CDATA[ <b>Biblioteki:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
@@ -1216,7 +1216,7 @@
     <string name="privacy_permissiondialog_prompt"><![CDATA[Czy udzielić uprawnień teraz?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignoruj</string>
     <string name="privacy_permissiondialog_title">Uprawnienia</string>
-    <string name="privacyTab">Privacy</string>   <!-- TODO -->
+    <string name="privacyTab">Prywatność</string>
 
     <string name="security_dialog_title">Ostrzeżenie</string>
     <string name="security_duplicate_permissions">Uprawnienie należące do aplikacji Czasy Słońca:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\njest także zdefiniowane przez aplikację: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
