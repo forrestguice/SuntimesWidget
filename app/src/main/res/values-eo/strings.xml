@@ -334,12 +334,12 @@
 
     <string name="widgetMode1x1_altaz">Altitudo kaj azimuto</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Deklinacio kaj rektascensio</string>     <!-- setting -->
-    <string name="widgetMode1x1_distance"></string>     <!-- setting -->    <!-- TODO -->
-    <string name="widgetMode1x1_apsis">Next apogee or perigee</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode1x1_distance">Nuna distanco</string>     <!-- setting -->
+    <string name="widgetMode1x1_apsis">Sekva apogeo aŭ perigeo</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Norma</string>  <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal">Polusa</string>     <!-- setting -->   <!-- TODO (north)-->
-    <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [south]</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Polusa (nordo)</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polusa (sudo)</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_bluemarble">Blua Globeto</string>    <!-- setting -->
 
     <string name="widgetMode1x1_moonriseset">Lunleviĝo kaj lunsubiro</string>       <!-- setting -->
@@ -572,7 +572,7 @@
     <string name="widgetLabel_rightAscension_short">Rek.</string>    <!-- label -->
     <string name="widgetLabel_declination">Deklinacio</string>           <!-- label -->
     <string name="widgetLabel_declination_short">Dek.</string>           <!-- label -->
-    <string name="widgetLabel_distance">Distance</string>           <!-- label -->    <!-- TODO -->
+    <string name="widgetLabel_distance">Distanco</string>           <!-- label -->
 
     <!--
          ALARM CLOCK
@@ -775,7 +775,7 @@
     <string name="configAction_doNothing">Fari nenion</string>
     <string name="configAction_nextNote">Montri sekvan noton</string>
     <string name="configAction_prevNote">Montri antaŭan noton</string>
-    <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
+    <string name="configAction_resetNote">Restarigi noton</string>
     <string name="configAction_showCalendar">Montri aplikaĵon de kalendaro</string>
     <string name="configAction_swapCards">Baskuli langetojn (hodiaŭ/morgaŭ)</string>
     <string name="configAction_setAlarmForNote">Agordi averton pri noto</string>
@@ -821,20 +821,20 @@
 
     <!-- Dialog: World Map -->
     <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
-    <string name="worldmap_dialog_action_play">Play</string>       <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="worldmap_dialog_action_pause">Pause</string>     <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="worldmap_dialog_action_record">Record</string>   <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="worldmap_dialog_action_next">Next</string>       <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="worldmap_dialog_action_prev">Previous</string>   <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="worldmap_dialog_action_reset">Reset</string>     <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="worldmap_dialog_action_menu">Options</string>       <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_play">Ludi</string>       <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_pause">Paŭzigi</string>     <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_record">Registri</string>   <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_next">Sekva</string>       <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_prev">Antaŭa</string>   <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_reset">Restarigi</string>     <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_menu">Agordoj</string>       <!-- button (contentDescription) -->
     <string name="worldmap_dialog_option_sunlight">Suno</string>
     <string name="worldmap_dialog_option_moonlight">Luno</string>
     <string name="worldmap_dialog_option_all">Ambaŭ</string>
-    <string name="worldmap_dialog_option_location">Location</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_latitudes">Latitudes</string>    <!-- TODO -->
-    <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- TODO -->
-    <string name="worldmap_dialog_speed_1d">&#215; 1d</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_location">Pozicio</string>
+    <string name="worldmap_dialog_option_latitudes">Cirkloj de latitudo</string>
+    <string name="worldmap_dialog_speed_15m">&#215; 15min</string>
+    <string name="worldmap_dialog_speed_1d">&#215; 1t</string>
     <string name="configAction_shareMap">Kunhavigi</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <!-- Dialog: Set Alarm -->
@@ -865,14 +865,14 @@
         <item>astronomia sunsubiro</item>
         <item>lunleviĝo</item>
         <item>lunsubiro</item>
-        <item>new moon</item>  <!-- TODO -->
-        <item>first quarter</item>  <!-- TODO -->
-        <item>full moon</item>  <!-- TODO -->
-        <item>third quarter</item>  <!-- TODO -->
-        <item>spring equinox</item>    <!-- TODO -->
-        <item>summer solstice</item>   <!-- TODO -->
-        <item>autumn equinox</item>   <!-- TODO -->
-        <item>winter solstice</item>   <!-- TODO -->
+        <item>novluno</item>
+        <item>unua kvarono</item>
+        <item>plenluno</item>
+        <item>tria kvarono</item>
+        <item>printempa ekvinokso</item>
+        <item>somera solstico</item>
+        <item>aŭtuna ekvinokso</item>
+        <item>vintra solstico</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>astronomia sunleviĝo</item>
@@ -892,14 +892,14 @@
         <item>astronomia sunsubiro</item>
         <item>lunleviĝo</item>
         <item>lunsubiro</item>
-        <item>new moon</item>  <!-- TODO -->
-        <item>first quarter</item>  <!-- TODO -->
-        <item>full moon</item>  <!-- TODO -->
-        <item>third quarter</item>  <!-- TODO -->
-        <item>spring equinox</item>    <!-- TODO -->
-        <item>summer solstice</item>   <!-- TODO -->
-        <item>autumn equinox</item>   <!-- TODO -->
-        <item>winter solstice</item>   <!-- TODO -->
+        <item>nova Luno</item>
+        <item>kreskanta Lunduono</item>
+        <item>plena Luno</item>
+        <item>malkreskanta Lunduono</item>
+        <item>printempa tagnoktegaleco</item>
+        <item>somera sunekstremo</item>
+        <item>aŭtuna tagnoktegaleco</item>
+        <item>vintra sunekstremo</item>
     </string-array>
     
   <!-- App Setting: locale mode -->
@@ -1088,7 +1088,7 @@
     <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> de <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
     <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
     <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g> kaj <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
-    <string name="creditsTab">Credits</string>   <!-- TODO -->
+    <string name="creditsTab">Dankoj</string>
 
     <string name="app_legal3"><![CDATA[ <b>Bibliotekoj:</b><br/> ]]>
     <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
@@ -1201,8 +1201,8 @@
     <string name="privacy_permissiondialog_prompt"><![CDATA[Ĉu peti la permeson nun?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignori</string>
     <string name="privacy_permissiondialog_title">Permesoj</string>
-    <string name="privacyTab">Privacy</string>   <!-- TODO -->
-
+    <string name="privacyTab">Privateco</string>
+    
     <string name="security_dialog_title">Sekureca averto</string>
     <string name="security_duplicate_permissions">La permeso, kiu apartenas al la programo Suntempoj:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nestas ankaŭ difinita de: <xliff:g id="packageName" example="iu.alia.aplikajho">%2$s</xliff:g></string>
     <string name="feature_not_supported_by_api">Tiu ĉi eblaĵo ne estas subtenata per API %1$s.</string>
