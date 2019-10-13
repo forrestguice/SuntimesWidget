@@ -1347,13 +1347,15 @@
     <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, and <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
     <string name="creditsTab">Credits</string>
 
-    <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
-    <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
-    <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
-    <![CDATA[ github.com/caarmen/SunriseSunset ]]> <![CDATA[ <br /> ]]>
-    <![CDATA[ github.com/QuadFlask/colorpicker ]]> <![CDATA[ <br /> ]]>
-    <![CDATA[ github.com/rubensousa/GravitySnapHelper ]]>
-    </string>
+    <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
+    <string name="libraryCreditsFormat"><![CDATA[<xliff:g id="libraryURL">%1$s</xliff:g>]]></string>
+    <string-array name="app_libraries">
+        <item><![CDATA[ github.com/MenoData/Time4A ]]></item>
+        <item><![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]></item>
+        <item><![CDATA[ github.com/caarmen/SunriseSunset ]]></item>
+        <item><![CDATA[ github.com/QuadFlask/colorpicker ]]></item>
+        <item><![CDATA[ github.com/rubensousa/GravitySnapHelper ]]></item>
+    </string-array>
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Help</string>

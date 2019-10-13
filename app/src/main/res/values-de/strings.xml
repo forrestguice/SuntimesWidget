@@ -1055,12 +1055,7 @@
   <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, und <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
   <string name="creditsTab">Credits</string>   <!-- TODO -->
   
-  <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
-    <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
-    <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
-    <![CDATA[ github.com/caarmen/SunriseSunset ]]> <![CDATA[ <br /> ]]>
-    <![CDATA[ github.com/QuadFlask/colorpicker ]]>
-  </string>
+  <string name="app_legal3"><![CDATA[ <b>Bibliotheken:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>  <!-- TODO: review -->
 
   <!-- Dialog: Help -->
   <string name="help_dialog_title">Hilfe</string>
