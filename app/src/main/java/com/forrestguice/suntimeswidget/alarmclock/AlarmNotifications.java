@@ -65,6 +65,8 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.List;
 
 public class AlarmNotifications extends BroadcastReceiver
@@ -875,8 +877,15 @@ public class AlarmNotifications extends BroadcastReceiver
                                     if (item.enabled)    // enabled; reschedule alarm/notification
                                     {
                                         Log.d(TAG, "(Re)Scheduling: " + item.rowID);
-                                        updateAlarmTime(context, item);     // sets item.hour, item.minute, item.timestamp (calculates the eventTime)
-                                        item.alarmtime = item.timestamp + item.offset;     // scheduled sounding time (-before/+after eventTime by some offset)
+                                        boolean updated = updateAlarmTime(context, item);     // sets item.hour, item.minute, item.timestamp (calculates the eventTime)
+                                        if (updated) {
+                                            item.alarmtime = item.timestamp + item.offset;     // scheduled sounding time (-before/+after eventTime by some offset)
+
+                                        } else {  // failed to schedule; this alarm needs to be disabled (prevent alarm loop)
+                                            Log.d(TAG, "Disabling: " + item.rowID);
+                                            sendBroadcast(getAlarmIntent(context, ACTION_DISABLE, item.getUri()));
+                                            return;
+                                        }
 
                                     } else {    // disabled; this alarm should have been dismissed
                                         Log.d(TAG, "Dismissing: " + item.rowID);
@@ -1193,8 +1202,9 @@ public class AlarmNotifications extends BroadcastReceiver
     /**
      * updateAlarmTime
      * @param item AlarmClockItem
+     * @return true item was updated, false failed to update item
      */
-    public static void updateAlarmTime(Context context, final AlarmClockItem item)
+    public static boolean updateAlarmTime(Context context, final AlarmClockItem item)
     {
         Calendar eventTime = Calendar.getInstance();
         if (item.location != null && item.event != null)
@@ -1220,12 +1230,20 @@ public class AlarmNotifications extends BroadcastReceiver
         } else {
             eventTime = updateAlarmTime_clockTime(item.hour, item.minute, item.offset, item.repeating, item.repeatingDays);
         }
+
+        if (eventTime == null) {
+            Log.e(TAG, "updateAlarmTime: failed to update " + item + " :: " + item.event + "@" + item.location);
+            return false;
+        }
+
         item.hour = eventTime.get(Calendar.HOUR_OF_DAY);
         item.minute = eventTime.get(Calendar.MINUTE);
         item.timestamp = eventTime.getTimeInMillis();
         item.modified = true;
+        return true;
     }
 
+    @Nullable
     private static Calendar updateAlarmTime_sunEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays)
     {
         WidgetSettings.TimeMode timeMode = event.toTimeMode();
@@ -1244,9 +1262,15 @@ public class AlarmNotifications extends BroadcastReceiver
         eventTime.set(Calendar.SECOND, 0);
         alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
 
+        Set<Long> timestamps = new HashSet<>();
         while (now.after(alarmTime)
                 || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))
         {
+            if (!timestamps.add(alarmTime.getTimeInMillis())) {
+                Log.e(TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
+                return null;
+            }
+
             Log.w("AlarmReceiverItem", "updateAlarmTime: sunEvent advancing by 1 day..");
             day.add(Calendar.DAY_OF_YEAR, 1);
             sunData.setTodayIs(day);
@@ -1258,6 +1282,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return eventTime;
     }
 
+    @Nullable
     private static Calendar updateAlarmTime_moonEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays)
     {
         SuntimesMoonData moonData = new SuntimesMoonData(context, 0);
@@ -1273,9 +1298,15 @@ public class AlarmNotifications extends BroadcastReceiver
         eventTime.set(Calendar.SECOND, 0);
         alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
 
+        Set<Long> timestamps = new HashSet<>();
         while (now.after(alarmTime)
                 || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))
         {
+            if (!timestamps.add(alarmTime.getTimeInMillis())) {
+                Log.e(TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
+                return null;
+            }
+
             Log.w("AlarmReceiverItem", "updateAlarmTime: moonEvent advancing by 1 day..");
             day.add(Calendar.DAY_OF_YEAR, 1);
             moonData.setTodayIs(day);
@@ -1287,6 +1318,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return eventTime;
     }
 
+    @Nullable
     private static Calendar updateAlarmTime_moonPhaseEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays)
     {
         SuntimesCalculator.MoonPhase phase = event.toMoonPhase();
@@ -1305,9 +1337,15 @@ public class AlarmNotifications extends BroadcastReceiver
         eventTime.set(Calendar.SECOND, 0);
         alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
 
+        Set<Long> timestamps = new HashSet<>();
         while (now.after(alarmTime))
                 //|| (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))    // does it make sense to enforce repeatingDays for moon phases? probably not.
         {
+            if (!timestamps.add(alarmTime.getTimeInMillis())) {
+                Log.e(TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
+                return null;
+            }
+
             c++;
             Log.w("AlarmReceiverItem", "updateAlarmTime: moonPhaseEvent advancing to next cycle.. " + c);
             day.add(Calendar.HOUR, (int)(c * (0.25 * 29.53d * 24d)));
@@ -1320,6 +1358,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return eventTime;
     }
 
+    @Nullable
     private static Calendar updateAlarmTime_seasonEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays)
     {
         WidgetSettings.SolsticeEquinoxMode season = event.toSolsticeEquinoxMode();
@@ -1338,9 +1377,15 @@ public class AlarmNotifications extends BroadcastReceiver
         eventTime.set(Calendar.SECOND, 0);
         alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
 
+        Set<Long> timestamps = new HashSet<>();
         while (now.after(alarmTime))
                 // || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))    // does it make sense to enforce repeatingDays for seasons? probably not.
         {
+            if (!timestamps.add(alarmTime.getTimeInMillis())) {
+                Log.e(TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
+                return null;
+            }
+
             Log.w("AlarmReceiverItem", "updateAlarmTime: seasonEvent advancing..");
             day.setTimeInMillis(eventTime.getTimeInMillis() + 1000 * 60 * 60 * 24);
             data.setTodayIs(day);
@@ -1352,6 +1397,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return eventTime;
     }
 
+    @Nullable
     private static Calendar updateAlarmTime_clockTime(int hour, int minute, long offset, boolean repeating, ArrayList<Integer> repeatingDays)
     {
         Calendar now = Calendar.getInstance();
@@ -1366,10 +1412,16 @@ public class AlarmNotifications extends BroadcastReceiver
             eventTime.set(Calendar.MINUTE, minute);
         }
 
+        Set<Long> timestamps = new HashSet<>();
         alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
         while (now.after(alarmTime)
                 || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))
         {
+            if (!timestamps.add(alarmTime.getTimeInMillis())) {
+                Log.e(TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
+                return null;
+            }
+
             Log.w("AlarmReceiverItem", "updateAlarmTime: clock time " + hour + ":" + minute + " (+" + offset + ") advancing by 1 day..");
             eventTime.add(Calendar.DAY_OF_YEAR, 1);
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
