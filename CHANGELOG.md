@@ -1,5 +1,10 @@
 ### ~
 
+### v0.12.1 (2019-10-15)
+* fixes app crash (moon phase alarms) (#365).
+* updates translation to Norwegian (nb) (#366 by FTno).
+* updates translations to Polish (pl) and Esperanto (eo) (#367 by Verdulo).
+
 ### v0.12.0 (2019-10-07)
 * enhances the main table to allow scrolling future and past days (#173, #352).
 * enhances the moon dialog to allow scrolling future and past months.
