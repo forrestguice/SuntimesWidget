@@ -658,13 +658,13 @@
 
     <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> set for <xliff:g id="duration" example="8h">%2$s</xliff:g> from now.</string> <!-- toast msg --> <!-- TODO -->
 
-    <string name="configLabel_alarms_optWhiteList">Battery optimization</string>  <!-- TODO -->
-    <string name="configLabel_alarms_optWhiteList_listed">Not optimized (recommended)</string>  <!-- TODO -->
-    <string name="configLabel_alarms_optWhiteList_unlisted">Optimizing battery use.\nAlarms may be delayed up to 15 minutes.</string>  <!-- TODO -->
+    <string name="configLabel_alarms_optWhiteList">Batterioptimalisering</string>
+    <string name="configLabel_alarms_optWhiteList_listed">Ikke optimalisert (anbefalt)</string>
+    <string name="configLabel_alarms_optWhiteList_unlisted">Optimaliserer batteribruk.\nAlarmer kan bli forsinket opptil 15 minutter.</string>
 
-    <string name="configLabel_alarms_notifications">Notifications</string>    <!-- TODO -->
-    <string name="configLabel_alarms_notifications_on">On</string>    <!-- TODO -->
-    <string name="configLabel_alarms_notifications_off">Off.\nAlarms may fail to display correctly.</string>    <!-- TODO -->
+    <string name="configLabel_alarms_notifications">Varsler</string>
+    <string name="configLabel_alarms_notifications_on">På</string>
+    <string name="configLabel_alarms_notifications_off">Av.\nAlarmer kan mislykkes i å vises korrekt.</string>
     <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
     <string name="configLabel_alarms_notifications_summary1">On lock screen: %1$s</string>    <!-- "On lock screen: Off -->     <!-- TODO -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Notifications are off. Alarms may fail to display correctly.</string>  <!-- snackbar message -->    <!-- TODO -->
@@ -672,14 +672,14 @@
     <string name="configLabel_alarms_silenceAfter">Go silent after</string>  <!-- TODO -->
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
 
-    <string name="configLabel_alarms_timeoutAfter">Timeout after</string>  <!-- TODO -->
-    <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
+    <string name="configLabel_alarms_timeoutAfter">Tidsavbrudd etter</string>
+    <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_snooze">Snooze for</string>  <!-- TODO -->
-    <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
+    <string name="configLabel_alarms_snooze">Snooze (slumre) for</string>
+    <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_upcoming">Reminder within</string>  <!-- TODO -->
-    <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
+    <string name="configLabel_alarms_upcoming">Påminnelse innen</string>
+    <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
     <string name="configLabel_alarms_hardwarebuttons">Hardware Buttons</string>  <!-- TODO -->
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>  <!-- TODO -->
@@ -690,31 +690,31 @@
         <item>Do Nothing</item>
     </string-array>
 
-    <string name="configLabel_alarmSounds">Sounds</string>            <!-- group title -->  <!-- TODO -->
-    <string name="configLabel_alarms_volumes">Volumes</string>    <!-- TODO -->
-    <string name="configLabel_alarms_allRingtones">Show all ringtones</string>  <!-- TODO -->
-    <string name="configLabel_alarms_allRingtones_summary">Show all system sounds during selection (ignore ringtone type).</string>  <!-- TODO -->
+    <string name="configLabel_alarmSounds">Lyder</string>            <!-- group title -->
+    <string name="configLabel_alarms_volumes">Volum</string>
+    <string name="configLabel_alarms_allRingtones">Vis alle ringetoner</string>
+    <string name="configLabel_alarms_allRingtones_summary">Vis alle systemlyder under valg (ignorer ringetonetype).</string>
 
     <string name="no_reminder">Never</string> <!-- TODO -->
 
     <plurals name="units_hours">
-        <item quantity="one">%d hour</item>
-        <item quantity="other">%d hours</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="one">%d time</item>
+        <item quantity="other">%d timer</item>
+    </plurals>
 
     <plurals name="units_minutes">
-        <item quantity="one">%d minute</item>
-        <item quantity="other">%d minutes</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="one">%d minutt</item>
+        <item quantity="other">%d minutter</item>
+    </plurals>
 
     <plurals name="units_seconds">
-        <item quantity="one">%d second</item>
-        <item quantity="other">%d seconds</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="one">%d sekund</item>
+        <item quantity="other">%d sekunder</item>
+    </plurals>
 
-    <string name="configLabel_alarmMisc">Miscellaneous</string>  <!-- TODO -->
-    <string name="configLabel_alarms_showlauncher">Launcher Icon</string>  <!-- TODO -->
-    <string name="configLabel_alarms_showlauncher_summary">Show alarm clock icon in the app tray.</string>  <!-- TODO -->
+    <string name="configLabel_alarmMisc">Diverse</string>
+    <string name="configLabel_alarms_showlauncher">App-ikon</string>
+    <string name="configLabel_alarms_showlauncher_summary">Vis alarmklokkeikon i app-skuffen.</string>
 
     <!--
          APP SETTINGS
@@ -1111,7 +1111,7 @@
         <a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget</a>
     ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
-        <b>Source Code:</b><br />
+        <b>Kildekode:</b><br />
         Copyright &#169 2014-2019 Forrest Guice <br />
         Source code available under GPLv3.
     ]]></string>
@@ -1122,7 +1122,7 @@
     <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g> og <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
     <string name="creditsTab">Krediteringer</string>
     
-    <string name="app_legal3"><![CDATA[ <b>Biblioteker:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>  <!-- TODO: review -->
+    <string name="app_legal3"><![CDATA[ <b>Biblioteker:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Hjelp</string>
