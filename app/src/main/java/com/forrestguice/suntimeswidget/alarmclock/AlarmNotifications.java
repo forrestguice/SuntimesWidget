@@ -19,9 +19,11 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -38,6 +40,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -356,14 +359,19 @@ public class AlarmNotifications extends BroadcastReceiver
         }
         isPlaying = true;
 
-        if (alarm.vibrate && vibrator != null)
+        boolean passesFilter = passesInterruptionFilter(context, alarm);
+        if (!passesFilter) {
+            Log.w(TAG, "startAlert: blocked by `Do Not Disturb`: " + alarm.rowID);
+        }
+
+        if (alarm.vibrate && vibrator != null && passesFilter)
         {
             int repeatFrom = (alarm.type == AlarmClockItem.AlarmType.ALARM ? 0 : -1);
             vibrator.vibrate(AlarmSettings.loadPrefVibratePattern(context, alarm.type), repeatFrom);
         }
 
         Uri soundUri = ((alarm.ringtoneURI != null && !alarm.ringtoneURI.isEmpty()) ? Uri.parse(alarm.ringtoneURI) : null);
-        if (soundUri != null)
+        if (soundUri != null && passesFilter)
         {
             try {
                 startAlert(context, soundUri, (alarm.type == AlarmClockItem.AlarmType.ALARM));
@@ -433,6 +441,83 @@ public class AlarmNotifications extends BroadcastReceiver
 
         isPlaying = false;
     }
+
+    private static boolean passesInterruptionFilter(Context context, @NonNull AlarmClockItem item)
+    {
+        if (Build.VERSION.SDK_INT >= 23)
+        {
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            int filter = (notificationManager != null) ? notificationManager.getCurrentInterruptionFilter()
+                                                       : NotificationManager.INTERRUPTION_FILTER_UNKNOWN;
+            switch (filter)
+            {
+                case NotificationManager.INTERRUPTION_FILTER_ALARMS:        // (4) alarms only
+                    return (item.type == AlarmClockItem.AlarmType.ALARM);
+
+                case NotificationManager.INTERRUPTION_FILTER_NONE:          // (3) suppress all
+                    return false;
+
+                case NotificationManager.INTERRUPTION_FILTER_PRIORITY:      // (2) allow priority
+                    if (Build.VERSION.SDK_INT >= 28) {
+                        return (item.type == AlarmClockItem.AlarmType.ALARM) &&
+                                (isCategorySet(getNotificationPolicy(notificationManager), PRIORITY_CATEGORY_ALARMS));
+                    } else {
+                        return (item.type == AlarmClockItem.AlarmType.ALARM);
+                    }
+
+                case NotificationManager.INTERRUPTION_FILTER_ALL:           // (1) allow all
+                case NotificationManager.INTERRUPTION_FILTER_UNKNOWN:       // (0) unknown
+                default:
+                    return true;
+            }
+
+        } else if (Build.VERSION.SDK_INT >= 21) {
+            try {
+                int zenMode = Settings.Global.getInt(context.getContentResolver(), "zen_mode");
+                switch (zenMode)
+                {
+                    case 2: // Settings.Global.ZEN_MODE_NO_INTERRUPTIONS:
+                        return false;
+
+                    case 3: // Settings.Global.ZEN_MODE_ALARMS:
+                    case 1: // Settings.Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS:
+                        return (item.type == AlarmClockItem.AlarmType.ALARM);
+
+                    case 0: // Settings.Global.ZEN_MODE_OFF:
+                    default:
+                        return true;
+                }
+
+            } catch (Settings.SettingNotFoundException e) {
+                Log.e(TAG, "interruptionFilter: Setting Not Found: zen_mode .. " + e);
+                return true;
+            }
+
+        } else return true;
+    }
+
+    @Nullable
+    private static NotificationManager.Policy getNotificationPolicy(NotificationManager notificationManager)
+    {
+        if (notificationManager != null)
+        {
+            try {
+                NotificationManager.Policy policy = notificationManager.getNotificationPolicy();    // does getting the policy require a permission? conflicting documentation..
+                Log.d(TAG, "getNotificationPolicy: " + policy);
+                return policy;
+
+            } catch (SecurityException e) {
+                Log.e(TAG, "getNotificationPolicy: Access Denied.. " + e);
+                return null;
+            }
+        } else return null;
+    }
+
+    @TargetApi(23)
+    private static boolean isCategorySet(@Nullable NotificationManager.Policy policy, int category) {
+        return (policy != null && ((policy.priorityCategories & category) != 0));
+    }
+    private static final int PRIORITY_CATEGORY_ALARMS = 1 << 5;  // TODO: use constants added in api28
 
     private static boolean isPlaying = false;
     private static MediaPlayer player = null;
