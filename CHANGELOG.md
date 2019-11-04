@@ -1,5 +1,9 @@
 ### ~
 
+### v0.12.2 (2019-11-04)
+* fixes bug "Notifications don't respect Do Not Disturb" (#369).
+* updates translation to Norwegian (nb) (#370 by FTno).
+
 ### v0.12.1 (2019-10-15)
 * fixes app crash (moon phase alarms) (#365).
 * updates translation to Norwegian (nb) (#366 by FTno).
