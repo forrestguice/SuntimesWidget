@@ -496,6 +496,7 @@ public class AlarmNotifications extends BroadcastReceiver
         } else return true;
     }
 
+    @TargetApi(23)
     @Nullable
     private static NotificationManager.Policy getNotificationPolicy(NotificationManager notificationManager)
     {
