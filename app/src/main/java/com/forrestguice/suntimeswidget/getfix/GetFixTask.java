@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -23,14 +23,17 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.SystemClock;
 import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * An AsyncTask that registers a LocationListener, starts listening for
@@ -93,7 +96,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     }
 
     private long startTime, stopTime, elapsedTime;
-    private Location bestFix, lastFix;
+    private Location bestFix;
     private LocationManager locationManager;
     private LocationListener locationListener = new LocationListener()
     {
@@ -103,56 +106,59 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             if (location != null)
             {
                 Log.d(TAG, "onLocationChanged [" + location.getProvider() + "]: " + location.toString());
-                lastFix = location;
-                if (isBetterFix(lastFix, bestFix))
+                if (isBetterFix(location, bestFix))
                 {
-                    bestFix = lastFix;
+                    bestFix = location;
                     onProgressUpdate(bestFix);
                 }
             }
         }
 
         /**
-         * @param location an android.location.Location obtained from some location provider
-         * @return true if location is not null and less than equal maxAge, false otherwise
-         */
-        private boolean isGoodFix(Location location)
-        {
-            if (location == null)
-            {
-                Log.d(TAG, "isGoodFix: false: location is null");
-                return false;
-
-            } else {
-                long locationAge = System.currentTimeMillis() - location.getTime();
-                boolean isGood = (locationAge <= maxAge);
-                Log.d(TAG, "isGoodFix: " + isGood + ": age is " + locationAge + " [max " + maxAge + "] [" + location.getProvider() + ": +-" + location.getAccuracy() + "]");
-                return isGood;
-            }
-        }
-
-        /**
          * @param location the first location
          * @param location2 the second location
-         * @return true if the first location is better than the second, false if the second location is worse, is null, or the first location is also no good.
+         * @return true if the first location is better than the second
          */
         private boolean isBetterFix(Location location, Location location2)
         {
             if (location2 == null)
             {
-                return isGoodFix(location);
+                if (location == null)
+                {
+                    Log.d(TAG, "isGoodFix: false: location is null");
+                    return false;
+
+                } else {
+                    long locationAge;
+                    if (Build.VERSION.SDK_INT >= 17) {
+                        locationAge = TimeUnit.NANOSECONDS.toMillis(SystemClock.elapsedRealtimeNanos() - location.getElapsedRealtimeNanos());
+                    } else {                                                             // Determining locationAge this way is potentially very inaccurate!
+                        locationAge = System.currentTimeMillis() - location.getTime();   // Location.getTime() comes from the GPS (which might be wrong due to rollover bugs), while system time is not monotonic..
+                    }
+
+                    boolean isGood = (locationAge <= maxAge);
+                    Log.d(TAG, "isGoodFix: " + isGood + ": age is " + locationAge + " [max " + maxAge + "] [" + location.getProvider() + ": +-" + location.getAccuracy() + "]");
+                    return isGood;
+                }
 
             } else if (location != null) {
-                if ((location.getTime() - location2.getTime()) > maxAge)
+                long locationDiff;
+                if (Build.VERSION.SDK_INT >= 17) {
+                    locationDiff = TimeUnit.NANOSECONDS.toMillis(location.getElapsedRealtimeNanos() - location2.getElapsedRealtimeNanos());
+                } else {
+                    locationDiff = location.getTime() - location2.getTime();
+                }
+
+                if (locationDiff > 0)
                 {
-                    Log.d(TAG, "isBetterFix: true: better age");
-                    return true;  // more than maxAge since last fix; assume the latest fix is better
+                    Log.d(TAG, "isBetterFix: true: age");
+                    return true;
 
                 } else if (location.getAccuracy() < location2.getAccuracy()) {
-                    Log.d(TAG, "isBetterFix: true: better accuracy");
+                    Log.d(TAG, "isBetterFix: true: accuracy");
                     return true;  // accuracy is a measure of radius of certainty; smaller values are more accurate
                 }
-                Log.d(TAG, "isBetterFix: false: better time, better accuracy");
+                Log.d(TAG, "isBetterFix: false: age, accuracy");
             }
             return false;
         }
