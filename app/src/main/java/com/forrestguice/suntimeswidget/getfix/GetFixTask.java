@@ -121,46 +121,45 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
          */
         private boolean isBetterFix(Location location, Location location2)
         {
-            if (location2 == null)
+            if (location != null && location2 != null)
             {
-                if (location == null)
-                {
-                    Log.d(TAG, "isGoodFix: false: location is null");
-                    return false;
-
-                } else {
-                    long locationAge;
-                    if (Build.VERSION.SDK_INT >= 17) {
-                        locationAge = TimeUnit.NANOSECONDS.toMillis(SystemClock.elapsedRealtimeNanos() - location.getElapsedRealtimeNanos());
-                    } else {                                                             // Determining locationAge this way is potentially very inaccurate!
-                        locationAge = System.currentTimeMillis() - location.getTime();   // Location.getTime() comes from the GPS (which might be wrong due to rollover bugs), while system time is not monotonic..
-                    }
-
-                    boolean isGood = (maxAge == -1) || (locationAge <= maxAge);
-                    Log.d(TAG, "isGoodFix: " + isGood + ": age is " + locationAge + " [max " + maxAge + "] [" + location.getProvider() + ": +-" + location.getAccuracy() + "]");
-                    return isGood;
-                }
-
-            } else if (location != null) {
                 long locationDiff;
                 if (Build.VERSION.SDK_INT >= 17) {
-                    locationDiff = TimeUnit.NANOSECONDS.toMillis(location.getElapsedRealtimeNanos() - location2.getElapsedRealtimeNanos());
+                    locationDiff = location.getElapsedRealtimeNanos() - location2.getElapsedRealtimeNanos();
                 } else {
                     locationDiff = location.getTime() - location2.getTime();
                 }
 
                 if (locationDiff > 0)
                 {
-                    Log.d(TAG, "isBetterFix: true: age");
+                    Log.d(TAG, "isBetterFix: true (age)");
                     return true;
 
                 } else if (location.getAccuracy() < location2.getAccuracy()) {
-                    Log.d(TAG, "isBetterFix: true: accuracy");
+                    Log.d(TAG, "isBetterFix: true (accuracy)");
                     return true;  // accuracy is a measure of radius of certainty; smaller values are more accurate
+
+                } else {
+                    Log.d(TAG, "isBetterFix: false (age, accuracy)");
+                    return false;
                 }
-                Log.d(TAG, "isBetterFix: false: age, accuracy");
+
+            } else if (location != null) {
+                long locationAge;
+                if (Build.VERSION.SDK_INT >= 17) {
+                    locationAge = TimeUnit.NANOSECONDS.toMillis(SystemClock.elapsedRealtimeNanos() - location.getElapsedRealtimeNanos());
+                } else {                                                              // Getting locationAge by comparing "system time" to "location time" isn't accurate!
+                    locationAge = System.currentTimeMillis() - location.getTime();    // systemTime drifts and is not monotonic, while locationTime comes directly from the location provider (sysTime vs gpsTime vs networkTime).
+                }                                                                     // Some devices also have GPS week rollover bugs and report the wrong time (off by ~19 years) - this check fails on those devices!  // TODO
+
+                boolean retValue = (maxAge == -1) || (locationAge <= maxAge);
+                Log.d(TAG, "isGoodFix: " + retValue + ": age is " + locationAge + " [max " + maxAge + "] [" + location.getProvider() + ": +-" + location.getAccuracy() + "] :: " + location.getTime());
+                return retValue;
+
+            } else {
+                Log.d(TAG, "isGoodFix: false: location is null");
+                return false;
             }
-            return false;
         }
 
         @Override
