@@ -805,6 +805,7 @@
         <item>du tagoj (48 horoj)</item>
         <item>unu semajno (168 horoj)</item>
         <item>unu monato (672 horoj)</item>
+        <item>any age</item>  <!-- TODO -->
     </string-array>
 
     <!-- App Setting: calendars -->

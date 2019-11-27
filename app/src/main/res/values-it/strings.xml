@@ -852,6 +852,7 @@
         <item>two days (48 hours)</item>
         <item>one week (168 hours)</item>
         <item>one month (672 hours)</item>
+        <item>any age</item>  <!-- TODO -->
     </string-array>  <!-- TODO -->
 
     <!-- App Setting: calendars -->

@@ -845,6 +845,7 @@
         <item>bi egun (48 ordu)</item>
         <item>aste bat (168 ordu)</item>
         <item>hilabete bat (672 ordu)</item>
+        <item>any age</item>  <!-- TODO -->
     </string-array>
 
     <!-- App Setting: calendars -->

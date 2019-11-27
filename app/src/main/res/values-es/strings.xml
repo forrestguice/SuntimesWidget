@@ -839,6 +839,7 @@
         <item>dos días (48 horas)</item>
         <item>una semana (168 horas)</item>
         <item>un mes (672 horas)</item>
+        <item>any age</item>  <!-- TODO -->
     </string-array>
 
     

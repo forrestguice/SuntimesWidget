@@ -821,6 +821,7 @@
         <item>2 nap (48 óra)</item>
         <item>1 hét (168 óra)</item>
         <item>1 hónap (672 óra)</item>
+        <item>any age</item>  <!-- TODO -->
     </string-array>
 
     <!-- App Setting: calendars -->

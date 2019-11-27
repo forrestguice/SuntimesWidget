@@ -852,6 +852,7 @@
         <item>兩天(48 小時)</item>
         <item>一周(168 小時)</item>
         <item>一個月(672 小時)</item>
+        <item>any age</item>  <!-- TODO -->
     </string-array>
 
     <!-- App Setting: calendars -->

@@ -826,6 +826,7 @@
         <item>dwa dni (48 godzin)</item>
         <item>tydzień (168 godzin)</item>
         <item>miesiąc (672 godziny)</item>
+        <item>any age</item>  <!-- TODO -->
     </string-array>
 
     <!-- App Setting: calendars -->

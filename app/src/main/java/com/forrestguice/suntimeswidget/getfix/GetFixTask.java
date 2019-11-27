@@ -136,7 +136,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
                         locationAge = System.currentTimeMillis() - location.getTime();   // Location.getTime() comes from the GPS (which might be wrong due to rollover bugs), while system time is not monotonic..
                     }
 
-                    boolean isGood = (locationAge <= maxAge);
+                    boolean isGood = (maxAge == -1) || (locationAge <= maxAge);
                     Log.d(TAG, "isGoodFix: " + isGood + ": age is " + locationAge + " [max " + maxAge + "] [" + location.getProvider() + ": +-" + location.getAccuracy() + "]");
                     return isGood;
                 }

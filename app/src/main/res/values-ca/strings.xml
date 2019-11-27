@@ -838,6 +838,7 @@
         <item>dos dies (48 hores)</item>
         <item>una setmana (168 hores)</item>
         <item>un mes (672 hores)</item>
+        <item>any age</item>  <!-- TODO -->
     </string-array>
 
     <!-- App Setting: calendars -->

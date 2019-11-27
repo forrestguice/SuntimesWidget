@@ -993,6 +993,7 @@
         <item>two days (48 hours)</item>
         <item>one week (168 hours)</item>
         <item>one month (672 hours)</item>
+        <item>any age</item>
     </string-array>
     <string-array name="getFix_maxAge_values" translatable="false">     <!-- ms config values (one-to-one with getFix_maxAge_display) -->
         <item>60000</item>
@@ -1005,6 +1006,7 @@
         <item>172800000</item>
         <item>604800000</item>
         <item>2419200000</item>
+        <item>-1</item>
     </string-array>
 
     <!-- App Setting: calendars -->
