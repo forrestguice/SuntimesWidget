@@ -795,6 +795,7 @@
     <string name="configLabel_getFix_maxAge">Valido de GPS‑lego</string>
     <string name="configLabel_getFix_maxAge_summary">Senvalidiĝi post <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+        <item>none</item>  <!-- TODO -->
         <item>1 minuto</item>
         <item>5 minutoj</item>
         <item>15 minutoj</item>

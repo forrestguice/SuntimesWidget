@@ -806,6 +806,7 @@
     <string name="configLabel_getFix_maxAge">Tolérance d\'ancienneté GPS</string>
     <string name="configLabel_getFix_maxAge_summary"><xliff:g example="1 minute" id="maxAgeDisplay">%s</xliff:g> considéré comme récent</string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+        <item>none</item>  <!-- TODO -->
         <item>1 minute</item>
         <item>5 minutes</item>
         <item>15 minutes</item>

@@ -48,6 +48,8 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     public static final int MIN_ELAPSED = 1000 * 5;        // wait at least 5s before settling on a fix
     public static final int MAX_ELAPSED = 1000 * 60;       // wait at most a minute for a fix
     public static final int MAX_AGE = 1000 * 60 * 5;       // consider fixes over 5min be "too old"
+    public static final int MAX_AGE_NONE = 0;
+    public static final int MAX_AGE_ANY = -1;
 
     private WeakReference<GetFixHelper> helperRef;
     public GetFixTask(Context parent, GetFixHelper helper)
@@ -152,7 +154,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
                     locationAge = System.currentTimeMillis() - location.getTime();    // systemTime drifts and is not monotonic, while locationTime comes directly from the location provider (sysTime vs gpsTime vs networkTime).
                 }                                                                     // Some devices also have GPS week rollover bugs and report the wrong time (off by ~19 years) - this check fails on those devices!  // TODO
 
-                boolean retValue = (maxAge == -1) || (locationAge <= maxAge);
+                boolean retValue = (maxAge == MAX_AGE_ANY) || (maxAge == MAX_AGE_NONE) || (locationAge <= maxAge);
                 Log.d(TAG, "isGoodFix: " + retValue + ": age is " + locationAge + " [max " + maxAge + "] [" + location.getProvider() + ": +-" + location.getAccuracy() + "] :: " + location.getTime());
                 return retValue;
 
@@ -216,16 +218,15 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             {
                 try {
                     boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-                    Location gpsLastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    locationListener.onLocationChanged(gpsLastLocation);
-
                     boolean netEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-                    Location netLastLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                    locationListener.onLocationChanged(netLastLocation);
-
                     boolean passiveEnabled = locationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER);
-                    Location passiveLastLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-                    locationListener.onLocationChanged(passiveLastLocation);
+
+                    if (maxAge != MAX_AGE_NONE)
+                    {
+                        locationListener.onLocationChanged(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
+                        locationListener.onLocationChanged(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
+                        locationListener.onLocationChanged(locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER));
+                    }
 
                     if (passiveMode && passiveEnabled)
                     {

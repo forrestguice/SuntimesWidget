@@ -828,6 +828,7 @@
     <string name="configLabel_getFix_maxAge">Límit d\'antiguitat de la posició GPS</string>
     <string name="configLabel_getFix_maxAge_summary">Límit de <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+        <item>none</item>  <!-- TODO -->
         <item>1 minut</item>
         <item>5 minuts</item>
         <item>15 minuts</item>

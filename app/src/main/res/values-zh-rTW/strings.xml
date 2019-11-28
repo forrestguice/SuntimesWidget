@@ -842,6 +842,7 @@
     <string name="configLabel_getFix_maxAge">GPS最近位置有效期</string>
     <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> 內算作最近位置</string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+        <item>none</item>  <!-- TODO -->
         <item>1分鐘</item>
         <item>5分鐘</item>
         <item>15分鐘</item>

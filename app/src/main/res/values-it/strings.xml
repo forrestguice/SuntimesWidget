@@ -842,6 +842,7 @@
     <string name="configLabel_getFix_maxAge">Massima età del dato GPS per essere considerato recente</string>
     <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute" >%s</xliff:g> considerato recente</string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+        <item>none</item>  <!-- TODO -->
         <item>1 minute</item>
         <item>5 minutes</item>
         <item>15 minutes</item>

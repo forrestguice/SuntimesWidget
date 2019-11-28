@@ -983,6 +983,7 @@
     <string name="configLabel_getFix_maxAge">GPS recent max age</string>
     <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> considered recent</string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+        <item>none</item>  <!-- TODO -->
         <item>1 minute</item>
         <item>5 minutes</item>
         <item>15 minutes</item>
@@ -996,6 +997,7 @@
         <item>any age</item>
     </string-array>
     <string-array name="getFix_maxAge_values" translatable="false">     <!-- ms config values (one-to-one with getFix_maxAge_display) -->
+        <item>0</item>
         <item>60000</item>
         <item>300000</item>
         <item>900000</item>
