@@ -44,6 +44,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
+import java.security.Security;
 import java.util.ArrayList;
 
 /**
@@ -145,6 +146,31 @@ public class GetFixHelper
         } else {
             Log.w("GetFixHelper", "getFix called while already running! ignored");
         }
+    }
+
+    public void fallbackToLastLocation()
+    {
+        LocationManager locationManager = (LocationManager)myParent.getSystemService(Context.LOCATION_SERVICE);
+        if (locationManager != null)
+        {
+            GetFixUI uiObj = getUI();
+            try {
+                Location location = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+                if (location == null) {
+                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    if (location == null) {
+                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    }
+                }
+                fix = location;
+                gotFix = (fix != null);
+                uiObj.updateUI(location);
+                uiObj.onResult(location, false);
+
+            } catch (SecurityException e) {
+                Log.e("GetFixHelper", "unable to fallback to last location ... Permissions! we don't have them.. checkPermissions should be called before calling this method. " + e);
+            }
+        } else Log.w("GetFixHelper", "unable to fallback to last location ... LocationManager is null!");
     }
 
     /**
@@ -367,6 +393,13 @@ public class GetFixHelper
                         public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id)
                         {
                             dialog.cancel();
+                        }
+                    })
+                    .setNeutralButton(context.getString(R.string.gps_keeptrying_fallback), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            helper.fallbackToLastLocation();
                         }
                     });
             return builder.create();
