@@ -98,7 +98,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     }
 
     private long startTime, stopTime, elapsedTime;
-    private Location bestFix;
+    private FilteredLocation bestFix;
     private LocationManager locationManager;
     private LocationListener locationListener = new LocationListener()
     {
@@ -108,59 +108,28 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             if (location != null)
             {
                 Log.d(TAG, "onLocationChanged [" + location.getProvider() + "]: " + location.toString());
-                if (isBetterFix(location, bestFix))
+
+                long now;
+                long locationTime;
+                if (Build.VERSION.SDK_INT >= 17)
                 {
-                    bestFix = location;
-                    onProgressUpdate(bestFix);
-                }
-            }
-        }
-
-        /**
-         * @param location the first location
-         * @param location2 the second location
-         * @return true if the first location is better than the second
-         */
-        private boolean isBetterFix(Location location, Location location2)
-        {
-            if (location != null && location2 != null)
-            {
-                long locationDiff;
-                if (Build.VERSION.SDK_INT >= 17) {
-                    locationDiff = location.getElapsedRealtimeNanos() - location2.getElapsedRealtimeNanos();
+                    now = TimeUnit.NANOSECONDS.toMillis(SystemClock.elapsedRealtimeNanos());
+                    locationTime = TimeUnit.NANOSECONDS.toMillis(location.getElapsedRealtimeNanos());
                 } else {
-                    locationDiff = location.getTime() - location2.getTime();
+                    now = System.currentTimeMillis();
+                    locationTime = location.getTime();
                 }
+                long locationAge = now - locationTime;
 
-                if (locationDiff > 0)
-                {
-                    Log.d(TAG, "isBetterFix: true (age)");
-                    return true;
-
-                } else if (location.getAccuracy() < location2.getAccuracy()) {
-                    Log.d(TAG, "isBetterFix: true (accuracy)");
-                    return true;  // accuracy is a measure of radius of certainty; smaller values are more accurate
-
+                if (bestFix == null) {
+                    if (maxAge == MAX_AGE_ANY || maxAge == MAX_AGE_NONE || locationAge <= maxAge) {
+                        bestFix = new FilteredLocation(location, locationTime, maxAge, 3);
+                        onProgressUpdate(bestFix.getLocation());
+                    }
                 } else {
-                    Log.d(TAG, "isBetterFix: false (age, accuracy)");
-                    return false;
+                    bestFix.addToFilter(location, locationTime);
+                    onProgressUpdate(bestFix.getLocation());
                 }
-
-            } else if (location != null) {
-                long locationAge;
-                if (Build.VERSION.SDK_INT >= 17) {
-                    locationAge = TimeUnit.NANOSECONDS.toMillis(SystemClock.elapsedRealtimeNanos() - location.getElapsedRealtimeNanos());
-                } else {                                                              // Getting locationAge by comparing "system time" to "location time" isn't accurate!
-                    locationAge = System.currentTimeMillis() - location.getTime();    // systemTime drifts and is not monotonic, while locationTime comes directly from the location provider (sysTime vs gpsTime vs networkTime).
-                }                                                                     // Some devices also have GPS week rollover bugs and report the wrong time (off by ~19 years) - this check fails on those devices!  // TODO
-
-                boolean retValue = (maxAge == MAX_AGE_ANY) || (maxAge == MAX_AGE_NONE) || (locationAge <= maxAge);
-                Log.d(TAG, "isGoodFix: " + retValue + ": age is " + locationAge + " [max " + maxAge + "] [" + location.getProvider() + ": +-" + location.getAccuracy() + "] :: " + location.getTime());
-                return retValue;
-
-            } else {
-                Log.d(TAG, "isGoodFix: false: location is null");
-                return false;
             }
         }
 
@@ -278,12 +247,11 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             stopTime = System.currentTimeMillis();
             elapsedTime = stopTime - startTime;
 
-            if (bestFix != null && elapsedTime > minElapsed)
-            {
+            if (bestFix != null && bestFix.getCount() >= 5 && elapsedTime > minElapsed) {
                 break;
             }
         }
-        return bestFix;
+        return ((bestFix != null) ? bestFix.getLocation() : null);
     }
 
     /**
@@ -405,5 +373,71 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
         public void onStarted() {}
         public void onFinished(Location result) {}
         public void onCancelled() {}
+    }
+
+    /**
+     * FilteredLocation
+     *
+     * Implemention based on "simple Kalman filter" code by Stochastically in the stackoverflow answer
+     * at https://stackoverflow.com/questions/1134579/smooth-gps-data
+     */
+    public static class FilteredLocation
+    {
+        private Location location;
+        private double variance;
+        private long locationTime;  // millis
+        private long maxAge;        // millis
+        private float q;        // meters per second
+        private int c = 0;
+
+        public FilteredLocation(Location location0, long locationTime0, long maxAge0, float q0)
+        {
+            maxAge = maxAge0;
+            initFilter(location0, locationTime0, q0);
+        }
+
+        public Location getLocation() {
+            return location;
+        }
+
+        public int getCount() {
+            return c;
+        }
+
+        public void initFilter(Location location0, long locationTime0, float q0)
+        {
+            float accuracy0 = location0.getAccuracy();
+            variance = Math.pow((accuracy0 < 1 ? 1 : accuracy0), 2);
+            location = new Location(location0);
+            locationTime = locationTime0;
+            q = q0;
+            c = 1;
+            Log.d(TAG, "initFilter: init to " + location.toString());
+        }
+
+        public void addToFilter(Location location1, long locationTime1)
+        {
+            long timeDiff = locationTime1 - locationTime;
+            if (maxAge > 0 && timeDiff > maxAge) {
+                initFilter(location1, locationTime1, q);
+
+            } else {
+                if (timeDiff > 0) {
+                    variance += (timeDiff * q * q) / 1000d;
+                    locationTime = locationTime1;
+                }
+
+                float accuracy1 = location1.getAccuracy();
+                double k = variance / (variance + Math.pow((accuracy1 < 1 ? 1 : accuracy1), 2));
+                variance *= (1 - k);
+                c++;
+
+                location.setLatitude(location.getLatitude() + (k * (location1.getLatitude() - location.getLatitude())));
+                location.setLongitude(location.getLongitude() + (k * (location1.getLongitude() - location.getLongitude())));
+                location.setAltitude(location.getAltitude() + (k * (location1.getAltitude() - location.getAltitude())));
+                location.setAccuracy((float)Math.sqrt(variance));
+                Log.d(TAG, "addToFilter: accuracy now " + location.getAccuracy());
+            }
+        }
     }
 }
