@@ -505,7 +505,7 @@
     <string name="configLabel_themeColorFall">Høstfarge</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Vinterfarge</string> <!-- color label -->
 
-    <string name="configLabel_themeColorAccent">Accent</string> <!-- color label -->  <!-- TODO -->
+    <string name="configLabel_themeColorAccent">Aksent</string> <!-- color label -->
     <string name="configLabel_themeColorAction">Handling</string> <!-- color label -->
 
     <string name="configLabel_themeColorMapBackground">Kartbakgrunn</string> <!-- color label -->
@@ -695,7 +695,7 @@
     <string name="configLabel_alarms_allRingtones">Vis alle ringetoner</string>
     <string name="configLabel_alarms_allRingtones_summary">Vis alle systemlyder under valg (ignorer ringetonetype).</string>
 
-    <string name="no_reminder">Never</string> <!-- TODO -->
+    <string name="no_reminder">Aldri</string>
 
     <plurals name="units_hours">
         <item quantity="one">%d time</item>
@@ -742,7 +742,7 @@
 
     <!-- App Setting: Verbose Accessibility -->
     <string name="configLabel_accessibility_verbose">Verbose TalkBack</string>
-    <string name="configLabel_accessibility_verbose_summary">Announce automated changes to the UI.</string>
+    <string name="configLabel_accessibility_verbose_summary">Annonser automatiserte endringer i brukerflaten.</string>
 
     <!-- App Setting: UI Warnings -->
     <string name="configLabel_ui_showWarnings">Vis advarsler</string>
@@ -794,9 +794,9 @@
     <string name="configAction_setAlarmForNote">Still inn alarm for notis</string>
 
     <!-- App Setting: time zone sort modes -->
-    <string name="timezone_sort_byOffset">by offset</string>
-    <string name="timezone_sort_byId">by id</string>
-    <string name="timezone_sort_byName">by name</string>
+    <string name="timezone_sort_byOffset">etter forskyvning</string>
+    <string name="timezone_sort_byId">etter id</string>
+    <string name="timezone_sort_byName">etter navn</string>
 
     <string-array name="timezoneSort_display">  <!-- display values (one-to-one with timezoneSort_values) -->
         <item>@string/timezone_sort_byOffset</item>
@@ -822,7 +822,7 @@
     <string name="configLabel_getFix_maxAge">Maks tid for siste GPS</string>
     <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> betraktet som siste</string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
-        <item>none</item>  <!-- TODO -->
+        <item>ingen</item>
         <item>1 minutt</item>
         <item>5 minutter</item>
         <item>15 minutter</item>
@@ -833,7 +833,7 @@
         <item>to døgn (48 timer)</item>
         <item>en uke (168 timer)</item>
         <item>en måned (672 timer)</item>
-        <item>any age</item>  <!-- TODO -->
+        <item>enhver tid</item>
     </string-array>
 
     <!-- App Setting: calendars -->
@@ -1184,9 +1184,9 @@
           <b>Astronomisk tussmørke:</b> Solen er 18 grader under horisonten. Nær nattens mørke.<br/>
     ]]></string>
     <string name="help_general_riseSetOrder"><![CDATA[
-          <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
-          <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
-    ]]></string>  <!-- TODO -->
+          <b>I dag:</b> Oppgang- og nedgangstider for dagens dato.<br/><br/>
+          <b>Siste / Neste:</b> Tidspunktet for den siste hendelsen og den neste forestående hendelsen.<br/>
+    ]]></string>
 
     <string name="help_general_timeMode2"><![CDATA[
           <b>Spring Equinox:</b> TODO.<br/><br/>
