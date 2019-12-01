@@ -1,0 +1,4 @@
+* fixes bug "can't get location while gps is working and has a fix" (#373).
+* improves the accuracy of gps results (applies a simple Kalman filter).
+* adds gps "recent max age" values "none" and "any" (gps time is ignored), and an option to fallback to the last location.
+* updates translation to Norwegian (nb) (#374).
