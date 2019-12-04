@@ -816,6 +816,7 @@
     <string name="configLabel_getFix_maxAge">Czas aktualności GPS</string>
     <string name="configLabel_getFix_maxAge_summary">Aktualny przez <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+        <item>none</item>  <!-- TODO -->
         <item>1 minutę</item>
         <item>5 minut</item>
         <item>15 minut</item>
@@ -826,6 +827,7 @@
         <item>dwa dni (48 godzin)</item>
         <item>tydzień (168 godzin)</item>
         <item>miesiąc (672 godziny)</item>
+        <item>any age</item>  <!-- TODO -->
     </string-array>
 
     <!-- App Setting: calendars -->
@@ -1107,11 +1109,7 @@
     <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g> i <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
     <string name="creditsTab">Autorzy</string>
 
-    <string name="app_legal3"><![CDATA[ <b>Biblioteki:</b><br/> ]]>
-    <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
-    <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
-    <![CDATA[ github.com/caarmen/SunriseSunset ]]> <![CDATA[ <br /> ]]>
-    <![CDATA[ github.com/QuadFlask/colorpicker ]]></string>
+    <string name="app_legal3"><![CDATA[ <b>Biblioteki:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
     
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Pomoc</string>

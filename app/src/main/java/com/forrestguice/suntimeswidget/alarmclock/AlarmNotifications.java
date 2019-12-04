@@ -19,9 +19,11 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -38,6 +40,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -65,6 +68,8 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.List;
 
 public class AlarmNotifications extends BroadcastReceiver
@@ -354,14 +359,19 @@ public class AlarmNotifications extends BroadcastReceiver
         }
         isPlaying = true;
 
-        if (alarm.vibrate && vibrator != null)
+        boolean passesFilter = passesInterruptionFilter(context, alarm);
+        if (!passesFilter) {
+            Log.w(TAG, "startAlert: blocked by `Do Not Disturb`: " + alarm.rowID);
+        }
+
+        if (alarm.vibrate && vibrator != null && passesFilter)
         {
             int repeatFrom = (alarm.type == AlarmClockItem.AlarmType.ALARM ? 0 : -1);
             vibrator.vibrate(AlarmSettings.loadPrefVibratePattern(context, alarm.type), repeatFrom);
         }
 
         Uri soundUri = ((alarm.ringtoneURI != null && !alarm.ringtoneURI.isEmpty()) ? Uri.parse(alarm.ringtoneURI) : null);
-        if (soundUri != null)
+        if (soundUri != null && passesFilter)
         {
             try {
                 startAlert(context, soundUri, (alarm.type == AlarmClockItem.AlarmType.ALARM));
@@ -431,6 +441,84 @@ public class AlarmNotifications extends BroadcastReceiver
 
         isPlaying = false;
     }
+
+    private static boolean passesInterruptionFilter(Context context, @NonNull AlarmClockItem item)
+    {
+        if (Build.VERSION.SDK_INT >= 23)
+        {
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            int filter = (notificationManager != null) ? notificationManager.getCurrentInterruptionFilter()
+                                                       : NotificationManager.INTERRUPTION_FILTER_UNKNOWN;
+            switch (filter)
+            {
+                case NotificationManager.INTERRUPTION_FILTER_ALARMS:        // (4) alarms only
+                    return (item.type == AlarmClockItem.AlarmType.ALARM);
+
+                case NotificationManager.INTERRUPTION_FILTER_NONE:          // (3) suppress all
+                    return false;
+
+                case NotificationManager.INTERRUPTION_FILTER_PRIORITY:      // (2) allow priority
+                    if (Build.VERSION.SDK_INT >= 28) {
+                        return (item.type == AlarmClockItem.AlarmType.ALARM) &&
+                                (isCategorySet(getNotificationPolicy(notificationManager), PRIORITY_CATEGORY_ALARMS));
+                    } else {
+                        return (item.type == AlarmClockItem.AlarmType.ALARM);
+                    }
+
+                case NotificationManager.INTERRUPTION_FILTER_ALL:           // (1) allow all
+                case NotificationManager.INTERRUPTION_FILTER_UNKNOWN:       // (0) unknown
+                default:
+                    return true;
+            }
+
+        } else if (Build.VERSION.SDK_INT >= 21) {
+            try {
+                int zenMode = Settings.Global.getInt(context.getContentResolver(), "zen_mode");
+                switch (zenMode)
+                {
+                    case 2: // Settings.Global.ZEN_MODE_NO_INTERRUPTIONS:
+                        return false;
+
+                    case 3: // Settings.Global.ZEN_MODE_ALARMS:
+                    case 1: // Settings.Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS:
+                        return (item.type == AlarmClockItem.AlarmType.ALARM);
+
+                    case 0: // Settings.Global.ZEN_MODE_OFF:
+                    default:
+                        return true;
+                }
+
+            } catch (Settings.SettingNotFoundException e) {
+                Log.e(TAG, "interruptionFilter: Setting Not Found: zen_mode .. " + e);
+                return true;
+            }
+
+        } else return true;
+    }
+
+    @TargetApi(23)
+    @Nullable
+    private static NotificationManager.Policy getNotificationPolicy(NotificationManager notificationManager)
+    {
+        if (notificationManager != null)
+        {
+            try {
+                NotificationManager.Policy policy = notificationManager.getNotificationPolicy();    // does getting the policy require a permission? conflicting documentation..
+                Log.d(TAG, "getNotificationPolicy: " + policy);
+                return policy;
+
+            } catch (SecurityException e) {
+                Log.e(TAG, "getNotificationPolicy: Access Denied.. " + e);
+                return null;
+            }
+        } else return null;
+    }
+
+    @TargetApi(23)
+    private static boolean isCategorySet(@Nullable NotificationManager.Policy policy, int category) {
+        return (policy != null && ((policy.priorityCategories & category) != 0));
+    }
+    private static final int PRIORITY_CATEGORY_ALARMS = 1 << 5;  // TODO: use constants added in api28
 
     private static boolean isPlaying = false;
     private static MediaPlayer player = null;
@@ -875,8 +963,15 @@ public class AlarmNotifications extends BroadcastReceiver
                                     if (item.enabled)    // enabled; reschedule alarm/notification
                                     {
                                         Log.d(TAG, "(Re)Scheduling: " + item.rowID);
-                                        updateAlarmTime(context, item);     // sets item.hour, item.minute, item.timestamp (calculates the eventTime)
-                                        item.alarmtime = item.timestamp + item.offset;     // scheduled sounding time (-before/+after eventTime by some offset)
+                                        boolean updated = updateAlarmTime(context, item);     // sets item.hour, item.minute, item.timestamp (calculates the eventTime)
+                                        if (updated) {
+                                            item.alarmtime = item.timestamp + item.offset;     // scheduled sounding time (-before/+after eventTime by some offset)
+
+                                        } else {  // failed to schedule; this alarm needs to be disabled (prevent alarm loop)
+                                            Log.d(TAG, "Disabling: " + item.rowID);
+                                            sendBroadcast(getAlarmIntent(context, ACTION_DISABLE, item.getUri()));
+                                            return;
+                                        }
 
                                     } else {    // disabled; this alarm should have been dismissed
                                         Log.d(TAG, "Dismissing: " + item.rowID);
@@ -1193,8 +1288,9 @@ public class AlarmNotifications extends BroadcastReceiver
     /**
      * updateAlarmTime
      * @param item AlarmClockItem
+     * @return true item was updated, false failed to update item
      */
-    public static void updateAlarmTime(Context context, final AlarmClockItem item)
+    public static boolean updateAlarmTime(Context context, final AlarmClockItem item)
     {
         Calendar eventTime = Calendar.getInstance();
         if (item.location != null && item.event != null)
@@ -1220,12 +1316,20 @@ public class AlarmNotifications extends BroadcastReceiver
         } else {
             eventTime = updateAlarmTime_clockTime(item.hour, item.minute, item.offset, item.repeating, item.repeatingDays);
         }
+
+        if (eventTime == null) {
+            Log.e(TAG, "updateAlarmTime: failed to update " + item + " :: " + item.event + "@" + item.location);
+            return false;
+        }
+
         item.hour = eventTime.get(Calendar.HOUR_OF_DAY);
         item.minute = eventTime.get(Calendar.MINUTE);
         item.timestamp = eventTime.getTimeInMillis();
         item.modified = true;
+        return true;
     }
 
+    @Nullable
     private static Calendar updateAlarmTime_sunEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays)
     {
         WidgetSettings.TimeMode timeMode = event.toTimeMode();
@@ -1244,9 +1348,15 @@ public class AlarmNotifications extends BroadcastReceiver
         eventTime.set(Calendar.SECOND, 0);
         alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
 
+        Set<Long> timestamps = new HashSet<>();
         while (now.after(alarmTime)
                 || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))
         {
+            if (!timestamps.add(alarmTime.getTimeInMillis())) {
+                Log.e(TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
+                return null;
+            }
+
             Log.w("AlarmReceiverItem", "updateAlarmTime: sunEvent advancing by 1 day..");
             day.add(Calendar.DAY_OF_YEAR, 1);
             sunData.setTodayIs(day);
@@ -1258,6 +1368,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return eventTime;
     }
 
+    @Nullable
     private static Calendar updateAlarmTime_moonEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays)
     {
         SuntimesMoonData moonData = new SuntimesMoonData(context, 0);
@@ -1273,9 +1384,15 @@ public class AlarmNotifications extends BroadcastReceiver
         eventTime.set(Calendar.SECOND, 0);
         alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
 
+        Set<Long> timestamps = new HashSet<>();
         while (now.after(alarmTime)
                 || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))
         {
+            if (!timestamps.add(alarmTime.getTimeInMillis())) {
+                Log.e(TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
+                return null;
+            }
+
             Log.w("AlarmReceiverItem", "updateAlarmTime: moonEvent advancing by 1 day..");
             day.add(Calendar.DAY_OF_YEAR, 1);
             moonData.setTodayIs(day);
@@ -1287,6 +1404,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return eventTime;
     }
 
+    @Nullable
     private static Calendar updateAlarmTime_moonPhaseEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays)
     {
         SuntimesCalculator.MoonPhase phase = event.toMoonPhase();
@@ -1300,15 +1418,23 @@ public class AlarmNotifications extends BroadcastReceiver
         moonData.setTodayIs(day);
         moonData.calculate();
 
+        int c = 0;
         Calendar eventTime = moonData.moonPhaseCalendar(phase);
         eventTime.set(Calendar.SECOND, 0);
         alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
 
+        Set<Long> timestamps = new HashSet<>();
         while (now.after(alarmTime))
                 //|| (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))    // does it make sense to enforce repeatingDays for moon phases? probably not.
         {
-            Log.w("AlarmReceiverItem", "updateAlarmTime: moonPhaseEvent advancing to next cycle..");
-            day.setTimeInMillis(eventTime.getTimeInMillis() + 1000);
+            if (!timestamps.add(alarmTime.getTimeInMillis())) {
+                Log.e(TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
+                return null;
+            }
+
+            c++;
+            Log.w("AlarmReceiverItem", "updateAlarmTime: moonPhaseEvent advancing to next cycle.. " + c);
+            day.add(Calendar.HOUR, (int)(c * (0.25 * 29.53d * 24d)));
             moonData.setTodayIs(day);
             moonData.calculate();
             eventTime = moonData.moonPhaseCalendar(phase);
@@ -1318,6 +1444,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return eventTime;
     }
 
+    @Nullable
     private static Calendar updateAlarmTime_seasonEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays)
     {
         WidgetSettings.SolsticeEquinoxMode season = event.toSolsticeEquinoxMode();
@@ -1336,9 +1463,15 @@ public class AlarmNotifications extends BroadcastReceiver
         eventTime.set(Calendar.SECOND, 0);
         alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
 
+        Set<Long> timestamps = new HashSet<>();
         while (now.after(alarmTime))
                 // || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))    // does it make sense to enforce repeatingDays for seasons? probably not.
         {
+            if (!timestamps.add(alarmTime.getTimeInMillis())) {
+                Log.e(TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
+                return null;
+            }
+
             Log.w("AlarmReceiverItem", "updateAlarmTime: seasonEvent advancing..");
             day.setTimeInMillis(eventTime.getTimeInMillis() + 1000 * 60 * 60 * 24);
             data.setTodayIs(day);
@@ -1350,6 +1483,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return eventTime;
     }
 
+    @Nullable
     private static Calendar updateAlarmTime_clockTime(int hour, int minute, long offset, boolean repeating, ArrayList<Integer> repeatingDays)
     {
         Calendar now = Calendar.getInstance();
@@ -1364,10 +1498,16 @@ public class AlarmNotifications extends BroadcastReceiver
             eventTime.set(Calendar.MINUTE, minute);
         }
 
+        Set<Long> timestamps = new HashSet<>();
         alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
         while (now.after(alarmTime)
                 || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))
         {
+            if (!timestamps.add(alarmTime.getTimeInMillis())) {
+                Log.e(TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
+                return null;
+            }
+
             Log.w("AlarmReceiverItem", "updateAlarmTime: clock time " + hour + ":" + minute + " (+" + offset + ") advancing by 1 day..");
             eventTime.add(Calendar.DAY_OF_YEAR, 1);
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);

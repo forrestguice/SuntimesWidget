@@ -1,5 +1,43 @@
 ### ~
 
+### v0.12.3 (2019-12-03)
+* fixes bug "can't get location while gps is working and has a fix" (api17+) (#373).
+* adds gps "recent max age" values "none" and "any" (ignores gps time when getting fix), and an option to fallback to the last location.
+* improves the accuracy of gps results (applies a simple Kalman filter).
+* updates translation to Norwegian (nb) (#374 by FTno).
+
+### v0.12.2 (2019-11-04)
+* fixes bug "Notifications don't respect Do Not Disturb" (#369).
+* updates translation to Norwegian (nb) (#370 by FTno).
+
+### v0.12.1 (2019-10-15)
+* fixes app crash (moon phase alarms) (#365).
+* updates translation to Norwegian (nb) (#366 by FTno).
+* updates translations to Polish (pl) and Esperanto (eo) (#367 by Verdulo).
+
+### v0.12.0 (2019-10-07)
+* enhances the main table to allow scrolling future and past days (#173, #352).
+* enhances the moon dialog to allow scrolling future and past months.
+* enhances the solstice dialog to allow scrolling future and past years.
+* adds moon apogee, perigee, and distance information to the moon dialog (#296).
+* adds supermoon and micromoon labels for upcoming new and full moons (#296).
+* adds 1x1 moon apogee/perigee widget (#296).
+* adds 1x1 moon position widgets; azimuth & elevation, right ascension & declination, or current distance.
+* enhances the World Map dialog to animate over time; play/pause or step forward/back to show changes over a span of hours or days (#284).
+* adds world map projection "Polar [south]" (#284).
+* adds 3x3 sun position widget; Polar [north], Polar [south] map projections (#284).
+* enhances the Blue Marble map; the shadow area now displays "Earth's City Lights" imagery.
+* enhances the World Map dialog; adds "major latitudes" and "location" options.
+* enhances the World Map share action; using "share" while playing saves the animation to zip.
+* adds events to Suntimes Alarms; now includes the moon phases ("full moon alarm"; #327) and solstices and equinoxes.
+* replaces multiple "floating action buttons" with "floating action menu" UI.
+* replaces most "alert dialogs" with "bottom sheet" UI.
+* adds animations when transitioning between related activities.
+* fixes the time zone dialog so that it retains user-defined settings when toggling between modes.
+* improves the Widget Config activities (ActionBar).
+* improves the About Dialog (adds tabbed activity).
+* updates dependency (Time4A 4.4.2-2019c).
+
 ### v0.11.10 (2019-09-03)
 * fixes app layout issues for Brazilian Portuguese (pt-br) and Norwegian (nb) translations (#356).
 * fixes bug "date dialog fails to respect timezone setting" (#358).

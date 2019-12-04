@@ -842,6 +842,7 @@
     <string name="configLabel_getFix_maxAge">GPS最近位置有效期</string>
     <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> 內算作最近位置</string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+        <item>none</item>  <!-- TODO -->
         <item>1分鐘</item>
         <item>5分鐘</item>
         <item>15分鐘</item>
@@ -852,6 +853,7 @@
         <item>兩天(48 小時)</item>
         <item>一周(168 小時)</item>
         <item>一個月(672 小時)</item>
+        <item>any age</item>  <!-- TODO -->
     </string-array>
 
     <!-- App Setting: calendars -->
@@ -1142,12 +1144,7 @@
     <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, and <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO -->
     <string name="creditsTab">Credits</string>   <!-- TODO -->
 
-    <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
-    <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
-    <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
-    <![CDATA[ github.com/caarmen/SunriseSunset ]]> <![CDATA[ <br /> ]]>
-    <![CDATA[ github.com/QuadFlask/colorpicker ]]>
-    </string>
+    <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>  <!-- TODO -->
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">幫助</string>

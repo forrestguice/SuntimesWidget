@@ -835,6 +835,7 @@
     <string name="configLabel_getFix_maxAge">GPSaren berritasunaren gehienezko adina</string>
     <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> berritzat hartzen da</string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+        <item>none</item>  <!-- TODO -->
         <item>Minutu 1</item>
         <item>5 minutu</item>
         <item>15 minutu</item>
@@ -845,6 +846,7 @@
         <item>bi egun (48 ordu)</item>
         <item>aste bat (168 ordu)</item>
         <item>hilabete bat (672 ordu)</item>
+        <item>any age</item>  <!-- TODO -->
     </string-array>
 
     <!-- App Setting: calendars -->
@@ -1135,12 +1137,7 @@
     <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, eta <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
     <string name="creditsTab">Credits</string>   <!-- TODO -->
 
-    <string name="app_legal3"><![CDATA[ <b>Liburutegiak:</b><br/> ]]>
-    <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
-    <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
-    <![CDATA[ github.com/caarmen/SunriseSunset ]]> <![CDATA[ <br /> ]]>
-    <![CDATA[ github.com/QuadFlask/colorpicker ]]>
-    </string>
+    <string name="app_legal3"><![CDATA[ <b>Liburutegiak:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Laguntza</string>
