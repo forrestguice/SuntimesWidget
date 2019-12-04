@@ -247,7 +247,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             stopTime = System.currentTimeMillis();
             elapsedTime = stopTime - startTime;
 
-            if (bestFix != null && bestFix.getCount() >= 5 && elapsedTime > minElapsed) {
+            if (bestFix != null && elapsedTime > minElapsed) {
                 break;
             }
         }
