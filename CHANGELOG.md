@@ -1,9 +1,9 @@
 ### ~
 
-### v0.12.3 (2019-12-02)
+### v0.12.3 (2019-12-03)
 * fixes bug "can't get location while gps is working and has a fix" (api17+) (#373).
-* improves the accuracy of gps results (applies a simple Kalman filter).
 * adds gps "recent max age" values "none" and "any" (ignores gps time when getting fix), and an option to fallback to the last location.
+* improves the accuracy of gps results (applies a simple Kalman filter).
 * updates translation to Norwegian (nb) (#374 by FTno).
 
 ### v0.12.2 (2019-11-04)
