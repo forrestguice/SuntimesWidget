@@ -251,6 +251,73 @@ public class SuntimesWidget0 extends AppWidgetProvider
         return false;
     }
 
+    public static void applyExtras(Intent intent, String extraString)
+    {
+        String[] extras = extraString.split("&");
+        for (String extra : extras)
+        {
+            String[] pair = extra.split("=");
+            if (pair.length == 2)
+            {
+                String key = pair[0];
+                String value = pair[1];
+
+                if (isNumeric(value.charAt(0)))
+                {
+                    if (value.endsWith("L") || value.endsWith("l"))
+                    {
+                        try {
+                            intent.putExtra(key, Long.parseLong(value));  // long
+                            Log.i(TAG, "applyExtras: applied " + extra + " (long)");
+
+                        } catch (NumberFormatException e) {
+                            intent.putExtra(key, value);  // string
+                            Log.w(TAG, "applyExtras: fallback " + extra + " (long)");
+                        }
+
+                    } else if (value.endsWith("D") || value.endsWith("d")) {
+                        try {
+                            intent.putExtra(key, Double.parseDouble(value));  // double
+                            Log.i(TAG, "applyExtras: applied " + extra + " (double)");
+
+                        } catch (NumberFormatException e) {
+                            intent.putExtra(key, value);  // string
+                            Log.w(TAG, "applyExtras: fallback " + extra + " (double)");
+                        }
+
+                    } else if (value.endsWith("F") || value.endsWith("f")) {
+                        try {
+                            intent.putExtra(key, Float.parseFloat(value));  // float
+                            Log.i(TAG, "applyExtras: applied " + extra + " (float)");
+
+                        } catch (NumberFormatException e) {
+                            intent.putExtra(key, value);  // string
+                            Log.w(TAG, "applyExtras: fallback " + extra + " (float)");
+                        }
+                    }
+
+                } else {
+                    String lowerCase = value.toLowerCase();
+                    if (lowerCase.equals("true") || lowerCase.equals("false")) {
+                        intent.putExtra(key, lowerCase.equals("true"));  // boolean
+                        Log.i(TAG, "applyExtras: applied " + extra + " (boolean)");
+
+                    } else {
+                        intent.putExtra(key, value);  // string
+                        Log.i(TAG, "applyExtras: applied " + extra + " (String)");
+                    }
+                }
+
+            } else {
+                Log.w(TAG, "applyExtras: skipping " + extra);
+            }
+        }
+    }
+
+    public static boolean isNumeric(char c) {
+        return (c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7'|| c == '8' || c == '9');
+    }
+
     /**
      * @return the activity (class) to be used when configuring this widget
      */
