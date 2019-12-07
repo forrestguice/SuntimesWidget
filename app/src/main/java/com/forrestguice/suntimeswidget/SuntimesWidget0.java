@@ -23,10 +23,12 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.content.Context;
@@ -217,12 +219,15 @@ public class SuntimesWidget0 extends AppWidgetProvider
         if (action.equals(WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY.name()))
         {
             Intent launchIntent;
-            String launchClassName = WidgetSettings.loadActionLaunchPref(context, appWidgetId);
+            String launchClassName = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null);
             Class<?> launchClass;
             try {
                 launchClass = Class.forName(launchClassName);
                 launchIntent = new Intent(context, launchClass);
-                applyExtras(launchIntent, WidgetSettings.loadActionLaunchExtras(context, appWidgetId));
+                applyAction(launchIntent, WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_ACTION));
+                applyData(launchIntent, WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_DATA),
+                                        WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_DATATYPE));
+                applyExtras(launchIntent, WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_EXTRAS));
 
             } catch (ClassNotFoundException e) {
                 launchClass = getConfigClass();
@@ -252,8 +257,32 @@ public class SuntimesWidget0 extends AppWidgetProvider
         return false;
     }
 
-    public static void applyExtras(Intent intent, String extraString)
+    public static void applyAction(Intent intent, @Nullable String action)
     {
+        if (intent == null || action == null || action.isEmpty()) {
+            return;
+        }
+        intent.setAction(action);
+    }
+
+    public static void applyData(Intent intent, @Nullable String dataString, @Nullable String mimeType)
+    {
+        if (intent == null || dataString == null || dataString.isEmpty()) {
+            return;
+        }
+        if (mimeType != null) {
+            intent.setDataAndType(Uri.parse(Uri.decode(dataString)), mimeType);
+        } else {
+            intent.setData(Uri.parse(Uri.decode(dataString)));
+        }
+    }
+
+    public static void applyExtras(Intent intent, @Nullable String extraString)
+    {
+        if (intent == null || extraString == null || extraString.isEmpty()) {
+            return;
+        }
+
         String[] extras = extraString.split("&");
         for (String extra : extras)
         {

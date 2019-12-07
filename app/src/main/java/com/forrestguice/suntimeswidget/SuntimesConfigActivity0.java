@@ -107,6 +107,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected Spinner spinner_onTap;
     protected EditText text_launchActivity;
+    protected EditText text_launchAction;
+    protected EditText text_launchData;
+    protected EditText text_launchDataType;
+    protected EditText text_launchExtras;
 
     protected TextView button_themeConfig;
     private WidgetThemes.ThemeListAdapter spinner_themeAdapter;
@@ -370,6 +374,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // widget: onTap launchActivity
         //
         text_launchActivity = (EditText) findViewById(R.id.appwidget_action_launch);
+        text_launchAction = (EditText) findViewById(R.id.appwidget_action_launch_action);
+        text_launchData = (EditText) findViewById(R.id.appwidget_action_launch_data);
+        text_launchDataType = (EditText) findViewById(R.id.appwidget_action_launch_datatype);
+        text_launchExtras = (EditText) findViewById(R.id.appwidget_action_launch_extras);
 
         ImageButton button_launchAppHelp = (ImageButton) findViewById(R.id.appwidget_action_launch_helpButton);
         if (button_launchAppHelp != null)
@@ -743,7 +751,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         @Override
         public void onClick(View v)
         {
-            if (text_launchActivity != null) {
+            if (text_launchActivity != null)
+            {
+                text_launchAction.setText("");
+                text_launchData.setText("");
+                text_launchDataType.setText("");
+                text_launchExtras.setText("");
                 text_launchActivity.setText(WidgetSettings.PREF_DEF_ACTION_LAUNCH);
                 text_launchActivity.selectAll();
                 text_launchActivity.requestFocus();
@@ -1360,7 +1373,36 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             launchString = WidgetSettings.PREF_DEF_ACTION_LAUNCH;
             Log.w("saveActionSettings", "empty launch string (using default)");
         }
-        WidgetSettings.saveActionLaunchPref(context, appWidgetId, launchString, null);
+
+        String launchAction = text_launchAction.getText().toString();
+        if (launchAction.trim().isEmpty())
+        {
+            launchAction = null;
+            Log.d("saveActionSettings", "empty launch action (using null)");
+        }
+
+        String launchData = text_launchData.getText().toString();
+        if (launchData.trim().isEmpty())
+        {
+            launchData = null;
+            Log.d("saveActionSettings", "empty launch data (using null)");
+        }
+
+        String launchDataType = text_launchDataType.getText().toString();
+        if (launchDataType.trim().isEmpty())
+        {
+            launchDataType = null;
+            Log.d("saveActionSettings", "empty launch datatype (using null)");
+        }
+
+        String launchExtras = text_launchExtras.getText().toString();
+        if (launchExtras.trim().isEmpty())
+        {
+            launchExtras = null;
+            Log.d("saveActionSettings", "empty launch extras (using null)");
+        }
+
+        WidgetSettings.saveActionLaunchPref(context, appWidgetId, launchString, launchAction, launchData, launchDataType, launchExtras);
     }
 
     /**
@@ -1375,8 +1417,17 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         spinner_onTap.setSelection(actionMode.ordinal(supportedActionModes()));
 
         // load: launch activity
-        String launchString = WidgetSettings.loadActionLaunchPref(context, appWidgetId);
+        String launchString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null);
+        String actionString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_ACTION);
+        String dataString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_DATA);
+        String mimeType = WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_DATATYPE);
+        String extraString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_EXTRAS);
+
         text_launchActivity.setText(launchString);
+        text_launchAction.setText((actionString != null ? actionString : ""));
+        text_launchData.setText((dataString != null ? dataString : ""));
+        text_launchDataType.setText((mimeType != null ? mimeType : ""));
+        text_launchExtras.setText((extraString != null ? extraString : ""));
     }
 
     /**
