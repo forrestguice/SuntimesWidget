@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
@@ -156,6 +157,7 @@ public class WidgetSettings
 
     public static final String PREF_KEY_ACTION_LAUNCH = "launch";
     public static final String PREF_DEF_ACTION_LAUNCH = "com.forrestguice.suntimeswidget.SuntimesActivity";
+    public static final String PREF_KEY_ACTION_LAUNCH_EXTRAS = "launchExtras";
 
     public static final String PREF_KEY_LOCATION_MODE = "locationMode";
     public static final LocationMode PREF_DEF_LOCATION_MODE = LocationMode.CUSTOM_LOCATION;
@@ -1721,11 +1723,12 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveActionLaunchPref(Context context, int appWidgetId, String launchString)
+    public static void saveActionLaunchPref(Context context, int appWidgetId, String launchString, @Nullable String extrasString)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION;
         prefs.putString(prefs_prefix + PREF_KEY_ACTION_LAUNCH, launchString);
+        prefs.putString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_EXTRAS, (extrasString != null ? extrasString : ""));
         prefs.apply();
     }
     public static String loadActionLaunchPref(Context context, int appWidgetId)
@@ -1737,11 +1740,20 @@ public class WidgetSettings
         return launchString;
 
     }
+    public static String loadActionLaunchExtras(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION;
+        //noinspection UnnecessaryLocalVariable
+        String extrasString = prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_EXTRAS, "");
+        return extrasString;
+    }
     public static void deleteActionLaunchPref(Context context, int appWidgetId)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION;
         prefs.remove(prefs_prefix + PREF_KEY_ACTION_LAUNCH);
+        prefs.remove(prefs_prefix + PREF_KEY_ACTION_LAUNCH_EXTRAS);
         prefs.apply();
     }
 

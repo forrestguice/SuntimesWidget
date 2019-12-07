@@ -222,6 +222,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
             try {
                 launchClass = Class.forName(launchClassName);
                 launchIntent = new Intent(context, launchClass);
+                applyExtras(launchIntent, WidgetSettings.loadActionLaunchExtras(context, appWidgetId));
 
             } catch (ClassNotFoundException e) {
                 launchClass = getConfigClass();
