@@ -44,33 +44,13 @@
 
         </LinearLayout>
 
-        <!-- <CheckBox android:id="@+id/appwidget_appearance_showTitle" android:layout_width="match_parent"
-            android:paddingTop="@dimen/settingsGroup_padding"
-            android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-            android:layout_height="wrap_content" android:text="@string/configLabel_appearance_showTitle" />-->
-
-        <LinearLayout android:id="@+id/applayout_action_launch"
-            android:visibility="gone" android:orientation="horizontal"
+        <LinearLayout android:id="@+id/applayout_action_launch" android:visibility="visible"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:paddingLeft="16dp" android:paddingRight="8dp"
             android:paddingStart="16dp" android:paddingEnd="8dp">
 
-            <TextView android:labelFor="@+id/appwidget_action_launch"
-                android:id="@+id/appwidget_action_launch_label"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/configLabel_action_launch" />
-
-            <EditText android:id="@+id/appwidget_action_launch" android:layout_width="0dp"
-                android:layout_height="wrap_content" android:layout_weight="1"
-                android:hint="@string/configHint_action_launch" android:text=""
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:inputType="textMultiLine|textNoSuggestions" />
-
-            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_helpButton"
-                style="@style/Widget.AppCompat.ActionButton"
-                android:layout_height="wrap_content" android:layout_width="wrap_content"
-                android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
-                android:contentDescription="@string/configAction_help"/>
+            <include android:layout_width="wrap_content" android:layout_height="wrap_content" android:visibility="gone"
+                layout="@layout/layout_settings_intent" />
 
         </LinearLayout>
 
