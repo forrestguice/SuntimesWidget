@@ -1345,7 +1345,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
         WidgetSettings.LaunchType launchType = edit_launchIntent.getIntentType();
-        WidgetSettings.saveActionLaunchPref(context, appWidgetId, launchString, launchType.name(), launchAction, launchData, launchDataType, launchExtras);
+        WidgetSettings.saveActionLaunchPref(context, appWidgetId, null, launchString, launchType.name(), launchAction, launchData, launchDataType, launchExtras);
     }
 
     /**
@@ -1360,12 +1360,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         spinner_onTap.setSelection(actionMode.ordinal(supportedActionModes()));
 
         // load: launch activity
-        String launchString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null);
-        String typeString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_TYPE);
-        String actionString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_ACTION);
-        String dataString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_DATA);
-        String mimeType = WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_DATATYPE);
-        String extraString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_EXTRAS);
+        String launchString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null, null);
+        String typeString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null, WidgetSettings.PREF_KEY_ACTION_LAUNCH_TYPE);
+        String actionString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null, WidgetSettings.PREF_KEY_ACTION_LAUNCH_ACTION);
+        String dataString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null, WidgetSettings.PREF_KEY_ACTION_LAUNCH_DATA);
+        String mimeType = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null, WidgetSettings.PREF_KEY_ACTION_LAUNCH_DATATYPE);
+        String extraString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null, WidgetSettings.PREF_KEY_ACTION_LAUNCH_EXTRAS);
 
         edit_launchIntent.setIntentClass(launchString);
         edit_launchIntent.setIntentAction((actionString != null ? actionString : ""));
