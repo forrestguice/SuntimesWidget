@@ -1366,7 +1366,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         edit_launchIntent.setIntentData((dataString != null ? dataString : ""));
         edit_launchIntent.setIntentDataType((mimeType != null ? mimeType : ""));
         edit_launchIntent.setIntentExtras((extraString != null ? extraString : ""));
-        edit_launchIntent.setIntentType(WidgetSettings.LaunchType.valueOf(typeString));
+        edit_launchIntent.setIntentType(typeString);
     }
 
     /**

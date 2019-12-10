@@ -114,6 +114,9 @@
     <attr name="icActionGPS_off" format="reference" />
     <attr name="icActionGPS_searching" format="reference" />
 
+    <declare-styleable name="EditIntentView">
+    </declare-styleable>
+
     <declare-styleable name="WorldMapView">
         <attr name="matchHeight" format="boolean" />
     </declare-styleable>

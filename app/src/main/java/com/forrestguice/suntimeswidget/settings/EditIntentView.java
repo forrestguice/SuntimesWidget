@@ -20,8 +20,6 @@ package com.forrestguice.suntimeswidget.settings;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.net.Uri;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -29,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -38,7 +37,6 @@ import android.widget.ToggleButton;
 
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesWidget0;
 
 @SuppressWarnings("Convert2Diamond")
 public class EditIntentView extends LinearLayout
@@ -81,87 +79,31 @@ public class EditIntentView extends LinearLayout
 
     private void applyAttributes(Context context, AttributeSet attrs)
     {
-        /**TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ColorChooserView, 0, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.EditIntentView, 0, 0);
         try
         {
-            String labelText = a.getString(R.styleable.ColorChooserView_labelText);
-            if (label != null)
-            {
+            /**String labelText = a.getString(R.styleable.ColorChooserView_labelText);
+            if (label != null){
                 label.setText(labelText);
                 button.setContentDescription(labelText);
-            }
-
-            String hintText = a.getString(R.styleable.ColorChooserView_hintText);
-            if (hintText != null) {
-                edit.setHint(hintText);
-            }
+            }*/
 
         } finally {
             a.recycle();
-        }*/
-    }
-
-    private int getLayoutID(Context context,AttributeSet attrs)
-    {
-        int layoutID = R.layout.layout_view_editintent;
-        /**TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ColorChooserView, 0, 0);
-        try
-        {
-            if (a.getBoolean(R.styleable.ColorChooserView_reverse, false)) {
-                layoutID = R.layout.layout_view_colorchooser_rev;
-            }
-        } finally {
-            a.recycle();
-        }*/
-        return layoutID;
+        }
     }
 
     private void init(final Context context, AttributeSet attrs)
     {
-        LayoutInflater.from(context).inflate(getLayoutID(context, attrs), this, true);
+        LayoutInflater.from(context).inflate(R.layout.layout_view_editintent, this, true);
 
         text_launchActivity = (EditText) findViewById(R.id.appwidget_action_launch);
 
         button_launchMore = (ToggleButton) findViewById(R.id.appwidget_action_launch_moreButton);
-        button_launchMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                View layout = findViewById(R.id.appwidget_action_launch_layout);
-                if (layout != null) {
-                    int visibility = layout.getVisibility();
-                    layout.setVisibility(visibility == View.VISIBLE ? View.GONE : View.VISIBLE);
-                }
-                // TODO
-            }
-        });
+        button_launchMore.setOnCheckedChangeListener(onExpandedChanged);
 
         button_launchTest = (ImageButton) findViewById(R.id.appwidget_action_launch_test);
-        button_launchTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                WidgetSettings.LaunchType launchType = (WidgetSettings.LaunchType)spinner_launchType.getSelectedItem();
-                String launchClassName = text_launchActivity.getText().toString();
-                String launchAction = text_launchAction.getText().toString();
-                String launchData = text_launchData.getText().toString();
-                String launchDataType = text_launchDataType.getText().toString();
-                String launchExtras = text_launchExtras.getText().toString();
-                Intent launchIntent;
-                Class<?> launchClass;
-                try {
-                    launchClass = Class.forName(launchClassName);
-                    launchIntent = new Intent(context, launchClass);
-                    WidgetSettings.applyAction(launchIntent, launchAction.trim().isEmpty() ? null : launchAction);
-                    WidgetSettings.applyData(launchIntent, (launchData.trim().isEmpty() ? null : launchData), (launchDataType.trim().isEmpty() ? null : launchDataType));
-                    WidgetSettings.applyExtras(launchIntent, launchExtras.trim().isEmpty() ? null : launchExtras);
-                    WidgetSettings.startIntent(context, launchIntent, launchType.name());
-
-                } catch (ClassNotFoundException e) {
-                    Log.e("LaunchApp", "LaunchApp :: " + launchClassName + " cannot be found! " + e.toString());
-                    Toast.makeText(context, "Unable to start intent!", Toast.LENGTH_LONG).show();  // TODO: i18n
-                }
-            }
-        });
+        button_launchTest.setOnClickListener(onTestButtonClicked);
 
         spinner_launchType = (Spinner) findViewById(R.id.appwidget_action_launch_type);
         ArrayAdapter<WidgetSettings.LaunchType> launchTypeAdapter = new ArrayAdapter<>(context, R.layout.layout_listitem_oneline, WidgetSettings.LaunchType.values());
@@ -178,24 +120,74 @@ public class EditIntentView extends LinearLayout
         text_launchExtras = (EditText) findViewById(R.id.appwidget_action_launch_extras);
 
         ImageButton button_launchAppHelp = (ImageButton) findViewById(R.id.appwidget_action_launch_helpButton);
-        if (button_launchAppHelp != null)
-        {
-            button_launchAppHelp.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    HelpDialog helpDialog = new HelpDialog();
-                    helpDialog.setContent(context.getString(R.string.help_action_launch));
-                    helpDialog.setShowNeutralButton(context.getString(R.string.configAction_restoreDefaults));
-                    helpDialog.setNeutralButtonListener(helpDialogListener_launchApp, HELPTAG_LAUNCH);
-                    helpDialog.show(fragmentManager, DIALOGTAG_HELP);
-                }
-            });
+        if (button_launchAppHelp != null) {
+            button_launchAppHelp.setOnClickListener(onHelpClicked);
         }
 
         applyAttributes(context, attrs);
     }
+
+    /**
+     * onHelpClicked
+     */
+    protected View.OnClickListener onHelpClicked = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            HelpDialog helpDialog = new HelpDialog();
+            helpDialog.setContent(getContext().getString(R.string.help_action_launch));
+            helpDialog.setShowNeutralButton(getContext().getString(R.string.configAction_restoreDefaults));
+            helpDialog.setNeutralButtonListener(helpDialogListener_launchApp, HELPTAG_LAUNCH);
+            helpDialog.show(fragmentManager, DIALOGTAG_HELP);
+        }
+    };
+
+    /**
+     * onExpandedChanged
+     */
+    protected CompoundButton.OnCheckedChangeListener onExpandedChanged = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+        {
+            View layout = findViewById(R.id.appwidget_action_launch_layout);
+            if (layout != null) {
+                int visibility = layout.getVisibility();
+                layout.setVisibility(visibility == View.VISIBLE ? View.GONE : View.VISIBLE);
+            }
+            // TODO: scroll until visible
+        }
+    };
+
+    /**
+     * onTestButtonClicked
+     */
+    protected View.OnClickListener onTestButtonClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v)
+        {
+            WidgetSettings.LaunchType launchType = (WidgetSettings.LaunchType)spinner_launchType.getSelectedItem();
+            String launchClassName = text_launchActivity.getText().toString();
+            String launchAction = text_launchAction.getText().toString();
+            String launchData = text_launchData.getText().toString();
+            String launchDataType = text_launchDataType.getText().toString();
+            String launchExtras = text_launchExtras.getText().toString();
+            Intent launchIntent;
+            Class<?> launchClass;
+            try {
+                launchClass = Class.forName(launchClassName);
+                launchIntent = new Intent(getContext(), launchClass);
+                WidgetSettings.applyAction(launchIntent, launchAction.trim().isEmpty() ? null : launchAction);
+                WidgetSettings.applyData(launchIntent, (launchData.trim().isEmpty() ? null : launchData), (launchDataType.trim().isEmpty() ? null : launchDataType));
+                WidgetSettings.applyExtras(launchIntent, launchExtras.trim().isEmpty() ? null : launchExtras);
+                WidgetSettings.startIntent(getContext(), launchIntent, launchType.name());
+
+            } catch (ClassNotFoundException e) {
+                Log.e("LaunchApp", "LaunchApp :: " + launchClassName + " cannot be found! " + e.toString());
+                Toast.makeText(getContext(), "Unable to start intent!", Toast.LENGTH_LONG).show();  // TODO: i18n
+            }
+        }
+    };
 
     protected FragmentManager fragmentManager;
     public void setFragmentManager( FragmentManager fragmentManager ) {
@@ -217,16 +209,15 @@ public class EditIntentView extends LinearLayout
     /**
      * getIntentType
      */
-    public WidgetSettings.LaunchType getIntentType()
-    {
+    public WidgetSettings.LaunchType getIntentType() {
         return (WidgetSettings.LaunchType)spinner_launchType.getSelectedItem();
     }
-    public void setIntentType( WidgetSettings.LaunchType launchType )
+    public void setIntentType( String launchType )
     {
         for (int i=0; i < spinner_launchType.getCount(); i++)
         {
             WidgetSettings.LaunchType type = (WidgetSettings.LaunchType)(spinner_launchType.getItemAtPosition(i));
-            if (type.equals(launchType))
+            if (type.name().equals(launchType))
             {
                 spinner_launchType.setSelection(i);
                 break;
@@ -237,48 +228,40 @@ public class EditIntentView extends LinearLayout
     /**
      * getIntentAction
      */
-    public String getIntentAction()
-    {
+    public String getIntentAction() {
         return text_launchAction.getText().toString();
     }
-    public void setIntentAction(String action)
-    {
+    public void setIntentAction(String action) {
         text_launchAction.setText(action);
     }
 
     /**
      * getIntentData
      */
-    public String getIntentData()
-    {
+    public String getIntentData() {
         return text_launchData.getText().toString();
     }
-    public void setIntentData(String data)
-    {
+    public void setIntentData(String data) {
         text_launchData.setText(data);
     }
 
     /**
      * getIntentDataType
      */
-    public String getIntentDataType()
-    {
+    public String getIntentDataType() {
         return text_launchDataType.getText().toString();
     }
-    public void setIntentDataType( String mimeType )
-    {
+    public void setIntentDataType( String mimeType ) {
         text_launchDataType.setText(mimeType);
     }
 
     /**
      * getIntentExtras
      */
-    public String getIntentExtras()
-    {
+    public String getIntentExtras() {
         return text_launchExtras.getText().toString();
     }
-    public void setIntentExtras(String extras)
-    {
+    public void setIntentExtras(String extras) {
         text_launchExtras.setText(extras);
     }
 
