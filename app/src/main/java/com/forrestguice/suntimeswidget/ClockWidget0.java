@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.layouts.ClockLayout;
 import com.forrestguice.suntimeswidget.layouts.ClockLayout_1x1_0;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -89,6 +90,11 @@ public class ClockWidget0 extends SuntimesWidget0
         nextUpdate.add(Calendar.MINUTE, 1);   // up to a minute from now
         nextUpdate.set(Calendar.SECOND, 1);
         WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, nextUpdate.getTimeInMillis());
+    }
+
+    @Override
+    protected SuntimesData getData(Context context, int appWidgetId) {
+        return new SuntimesClockData(context, appWidgetId);
     }
 
     protected static ClockLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize)

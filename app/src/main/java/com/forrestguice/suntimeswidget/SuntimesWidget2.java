@@ -23,6 +23,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_0;
@@ -96,6 +97,11 @@ public class SuntimesWidget2 extends SuntimesWidget0
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, dataset);
         appWidgetManager.updateAppWidget(appWidgetId, views);
+    }
+
+    @Override
+    protected SuntimesData getData(Context context, int appWidgetId) {
+        return new SuntimesRiseSetDataset(context, appWidgetId).dataActual;
     }
 
     protected static SunPosLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize, SunPosLayout defLayout)

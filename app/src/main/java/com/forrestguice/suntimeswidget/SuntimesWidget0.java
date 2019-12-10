@@ -543,6 +543,12 @@ public class SuntimesWidget0 extends AppWidgetProvider
     }
 
     /**
+     * getData
+     */
+    protected SuntimesData getData(Context context, int appWidgetId) {
+        return getRiseSetData(context, appWidgetId);
+    }
+    /**
      * A static method for triggering an update of all widgets using ACTION_APPWIDGET_UPDATE intent;
      * triggers the onUpdate method.
      *
