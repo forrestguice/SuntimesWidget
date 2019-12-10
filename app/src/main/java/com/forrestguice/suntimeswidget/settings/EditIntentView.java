@@ -100,7 +100,7 @@ public class EditIntentView extends LinearLayout
         text_launchActivity = (EditText) findViewById(R.id.appwidget_action_launch);
 
         button_launchMore = (ToggleButton) findViewById(R.id.appwidget_action_launch_moreButton);
-        button_launchMore.setOnCheckedChangeListener(onExpandedChanged);
+        button_launchMore.setOnCheckedChangeListener(onExpandedChanged0);
 
         button_launchTest = (ImageButton) findViewById(R.id.appwidget_action_launch_test);
         button_launchTest.setOnClickListener(onTestButtonClicked);
@@ -146,18 +146,25 @@ public class EditIntentView extends LinearLayout
     /**
      * onExpandedChanged
      */
-    protected CompoundButton.OnCheckedChangeListener onExpandedChanged = new CompoundButton.OnCheckedChangeListener() {
+    protected CompoundButton.OnCheckedChangeListener onExpandedChanged0 = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
         {
             View layout = findViewById(R.id.appwidget_action_launch_layout);
             if (layout != null) {
-                int visibility = layout.getVisibility();
-                layout.setVisibility(visibility == View.VISIBLE ? View.GONE : View.VISIBLE);
+                layout.setVisibility(isChecked ? View.VISIBLE : View.GONE);
             }
-            // TODO: scroll until visible
+
+            if (onExpandedChanged != null) {
+                onExpandedChanged.onCheckedChanged(buttonView, isChecked);
+            }
         }
     };
+
+    private CompoundButton.OnCheckedChangeListener onExpandedChanged = null;
+    public void setOnExpandedChangedListener( CompoundButton.OnCheckedChangeListener listener ) {
+        onExpandedChanged = listener;
+    }
 
     /**
      * onTestButtonClicked

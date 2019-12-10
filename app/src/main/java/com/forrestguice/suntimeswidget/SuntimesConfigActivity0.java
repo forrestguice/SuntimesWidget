@@ -40,6 +40,7 @@ import android.widget.EditText;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -82,6 +83,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     private ActionBar actionBar;
     protected TextView text_appWidgetID;
+
+    protected ScrollView scrollView;
 
     protected Spinner spinner_calculatorMode;
     protected Spinner spinner_timeFormatMode;
@@ -204,6 +207,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
+        edit_launchIntent.setOnExpandedChangedListener(onEditLaunchIntentExpanded);
         edit_launchIntent.onResume(getSupportFragmentManager());
     }
 
@@ -320,6 +324,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void initViews(final Context context)
     {
         initToolbar(context);
+
+        scrollView = (ScrollView) findViewById(R.id.scrollView);
 
         text_appWidgetID = (TextView) findViewById(R.id.text_appwidgetid);
         if (text_appWidgetID != null)
@@ -1368,6 +1374,22 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         edit_launchIntent.setIntentExtras((extraString != null ? extraString : ""));
         edit_launchIntent.setIntentType(typeString);
     }
+
+    /**
+     * OnEditLaunchIntentExpanded
+     */
+    private CompoundButton.OnCheckedChangeListener onEditLaunchIntentExpanded = new CompoundButton.OnCheckedChangeListener()
+    {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            buttonView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                }
+            }, 250);
+        }
+    };
 
     /**
      * Click handler executed when the "Add Widget" button is pressed.

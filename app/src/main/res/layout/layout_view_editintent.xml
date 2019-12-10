@@ -17,6 +17,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/appwidget_action_launch_layout0"
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:orientation="vertical" android:animateLayoutChanges="true" >
 
@@ -25,10 +26,10 @@
         android:layout_width="match_parent" android:layout_height="wrap_content">
 
         <ToggleButton android:id="@+id/appwidget_action_launch_moreButton"
-            style="@style/Widget.AppCompat.ActionButton"
+            style="@style/Widget.AppCompat.ActionButton" android:checked="false"
             android:layout_height="32dp" android:layout_width="32dp" android:layout_gravity="center" android:gravity="center"
             android:background="?attr/icActionExpand" android:textOn="" android:textOff="" android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
-            android:contentDescription="@string/expandLess"/>
+            android:contentDescription="@string/expandMore"/>
 
         <TextView android:labelFor="@+id/appwidget_action_launch" android:visibility="gone"
             android:id="@+id/appwidget_action_launch_label"
@@ -49,7 +50,7 @@
 
     </LinearLayout>
 
-    <LinearLayout android:id="@+id/appwidget_action_launch_layout"
+    <LinearLayout android:id="@+id/appwidget_action_launch_layout" android:visibility="gone"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical" android:animateLayoutChanges="true">
 
