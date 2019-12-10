@@ -25,7 +25,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -35,7 +34,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -47,8 +45,6 @@ import android.widget.TextView;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
-import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -57,6 +53,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorLi
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.EditIntentView;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
@@ -79,8 +76,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 {
     protected static final String DIALOGTAG_ABOUT = "about";
     protected static final String DIALOGTAG_HELP = "help";
-
-    protected static final String HELPTAG_LAUNCH = "action_launch";
 
     protected int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     protected boolean reconfigure = false;
@@ -107,14 +102,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected ImageButton button_riseSetOrderHelp;
 
     protected Spinner spinner_onTap;
-    protected EditText text_launchActivity;
-    protected Spinner spinner_launchType;
-    protected ImageButton button_launchTest;
-    protected ToggleButton button_launchMore;
-    protected AutoCompleteTextView text_launchAction;
-    protected EditText text_launchData;
-    protected AutoCompleteTextView text_launchDataType;
-    protected EditText text_launchExtras;
+    protected EditIntentView edit_launchIntent;
 
     protected TextView button_themeConfig;
     private WidgetThemes.ThemeListAdapter spinner_themeAdapter;
@@ -216,16 +204,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
-
-        FragmentManager fragments = getSupportFragmentManager();
-        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
-        if (helpDialog != null)
-        {
-            String tag = helpDialog.getListenerTag();
-            if (tag != null && tag.equals(HELPTAG_LAUNCH)) {
-                helpDialog.setNeutralButtonListener(helpDialogListener_launchApp, HELPTAG_LAUNCH);
-            }
-        }
+        edit_launchIntent.onResume(getSupportFragmentManager());
     }
 
     /**
@@ -338,16 +317,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return supportedModes;
     }
 
-    private static String[] ACTION_SUGGESTIONS = new String[] {
-            Intent.ACTION_VIEW, Intent.ACTION_EDIT, Intent.ACTION_INSERT, Intent.ACTION_DELETE,
-            Intent.ACTION_PICK, Intent.ACTION_RUN, Intent.ACTION_SEARCH, Intent.ACTION_SYNC,
-            Intent.ACTION_CHOOSER, Intent.ACTION_GET_CONTENT,
-            Intent.ACTION_SEND, Intent.ACTION_SENDTO, Intent.ACTION_ATTACH_DATA,
-            Intent.ACTION_WEB_SEARCH, Intent.ACTION_MAIN
-    };
-
-    private static String[] MIMETYPE_SUGGESTIONS = new String[] { "text/plain" };
-
     protected void initViews(final Context context)
     {
         initToolbar(context);
@@ -387,79 +356,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //
         // widget: onTap launchActivity
         //
-        text_launchActivity = (EditText) findViewById(R.id.appwidget_action_launch);
-
-        button_launchMore = (ToggleButton) findViewById(R.id.appwidget_action_launch_moreButton);
-        button_launchMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                View layout = findViewById(R.id.appwidget_action_launch_layout);
-                if (layout != null) {
-                    int visibility = layout.getVisibility();
-                    layout.setVisibility(visibility == View.VISIBLE ? View.GONE : View.VISIBLE);
-                }
-                // TODO
-            }
-        });
-
-        button_launchTest = (ImageButton) findViewById(R.id.appwidget_action_launch_test);
-        button_launchTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                WidgetSettings.LaunchType launchType = (WidgetSettings.LaunchType)spinner_launchType.getSelectedItem();
-                String launchClassName = text_launchActivity.getText().toString();
-                String launchAction = text_launchAction.getText().toString();
-                String launchData = text_launchData.getText().toString();
-                String launchDataType = text_launchDataType.getText().toString();
-                String launchExtras = text_launchExtras.getText().toString();
-                Intent launchIntent;
-                Class<?> launchClass;
-                try {
-                    launchClass = Class.forName(launchClassName);
-                    launchIntent = new Intent(context, launchClass);
-                    SuntimesWidget0.applyAction(launchIntent, launchAction.trim().isEmpty() ? null : launchAction);
-                    SuntimesWidget0.applyData(launchIntent, (launchData.trim().isEmpty() ? null : launchData), (launchDataType.trim().isEmpty() ? null : launchDataType));
-                    SuntimesWidget0.applyExtras(launchIntent, launchExtras.trim().isEmpty() ? null : launchExtras);
-                    SuntimesWidget0.startIntent(context, launchIntent, launchType.name());
-
-                } catch (ClassNotFoundException e) {
-                    Log.e("LaunchApp", "LaunchApp :: " + launchClassName + " cannot be found! " + e.toString());
-                    Toast.makeText(context, "Unable to start intent!", Toast.LENGTH_LONG).show();  // TODO: i18n
-                }
-            }
-        });
-
-        spinner_launchType = (Spinner) findViewById(R.id.appwidget_action_launch_type);
-        ArrayAdapter<WidgetSettings.LaunchType> launchTypeAdapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, WidgetSettings.LaunchType.values());
-        launchTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_launchType.setAdapter(launchTypeAdapter);
-
-        text_launchAction = (AutoCompleteTextView) findViewById(R.id.appwidget_action_launch_action);
-        text_launchAction.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, ACTION_SUGGESTIONS));
-
-        text_launchData = (EditText) findViewById(R.id.appwidget_action_launch_data);
-        text_launchDataType = (AutoCompleteTextView) findViewById(R.id.appwidget_action_launch_datatype);
-        text_launchDataType.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, MIMETYPE_SUGGESTIONS));
-
-        text_launchExtras = (EditText) findViewById(R.id.appwidget_action_launch_extras);
-
-        ImageButton button_launchAppHelp = (ImageButton) findViewById(R.id.appwidget_action_launch_helpButton);
-        if (button_launchAppHelp != null)
-        {
-            button_launchAppHelp.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    HelpDialog helpDialog = new HelpDialog();
-                    helpDialog.setContent(getString(R.string.help_action_launch));
-                    helpDialog.setShowNeutralButton(getString(R.string.configAction_restoreDefaults));
-                    helpDialog.setNeutralButtonListener(helpDialogListener_launchApp, HELPTAG_LAUNCH);
-                    helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
-                }
-            });
-        }
+        edit_launchIntent = (EditIntentView) findViewById(R.id.appwidget_action_launch_edit);
+        edit_launchIntent.setFragmentManager(getSupportFragmentManager());
 
         //
         // widget: theme
@@ -807,34 +705,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             actionBar.setTitle(getString(reconfigure ? R.string.configAction_reconfigWidget_short : R.string.configAction_addWidget));
         }
     }
-
-    /**
-     * HelpDialog onShow (launch App)
-     */
-    private View.OnClickListener helpDialogListener_launchApp = new View.OnClickListener()
-    {
-        @Override
-        public void onClick(View v)
-        {
-            if (text_launchActivity != null)
-            {
-                spinner_launchType.setSelection(0);
-                text_launchAction.setText("");
-                text_launchData.setText("");
-                text_launchDataType.setText("");
-                text_launchExtras.setText("");
-                text_launchActivity.setText(WidgetSettings.PREF_DEF_ACTION_LAUNCH);
-                text_launchActivity.selectAll();
-                text_launchActivity.requestFocus();
-            }
-
-            FragmentManager fragments = getSupportFragmentManager();
-            HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
-            if (helpDialog != null) {
-                helpDialog.dismiss();
-            }
-        }
-    };
 
     /**
      * @param context a context used to access resources
@@ -1433,42 +1303,42 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         WidgetSettings.saveActionModePref(context, appWidgetId, actionMode);
 
         // save: launch activity
-        String launchString = text_launchActivity.getText().toString();
+        String launchString = edit_launchIntent.getIntentClass();
         if (launchString.trim().isEmpty())
         {
             launchString = WidgetSettings.PREF_DEF_ACTION_LAUNCH;
             Log.w("saveActionSettings", "empty launch string (using default)");
         }
 
-        String launchAction = text_launchAction.getText().toString();
+        String launchAction = edit_launchIntent.getIntentAction();
         if (launchAction.trim().isEmpty())
         {
             launchAction = null;
             Log.d("saveActionSettings", "empty launch action (using null)");
         }
 
-        String launchData = text_launchData.getText().toString();
+        String launchData = edit_launchIntent.getIntentData();
         if (launchData.trim().isEmpty())
         {
             launchData = null;
             Log.d("saveActionSettings", "empty launch data (using null)");
         }
 
-        String launchDataType = text_launchDataType.getText().toString();
+        String launchDataType = edit_launchIntent.getIntentDataType();
         if (launchDataType.trim().isEmpty())
         {
             launchDataType = null;
             Log.d("saveActionSettings", "empty launch datatype (using null)");
         }
 
-        String launchExtras = text_launchExtras.getText().toString();
+        String launchExtras = edit_launchIntent.getIntentExtras();
         if (launchExtras.trim().isEmpty())
         {
             launchExtras = null;
             Log.d("saveActionSettings", "empty launch extras (using null)");
         }
 
-        WidgetSettings.LaunchType launchType = (WidgetSettings.LaunchType)spinner_launchType.getSelectedItem();
+        WidgetSettings.LaunchType launchType = edit_launchIntent.getIntentType();
         WidgetSettings.saveActionLaunchPref(context, appWidgetId, launchString, launchType.name(), launchAction, launchData, launchDataType, launchExtras);
     }
 
@@ -1491,21 +1361,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         String mimeType = WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_DATATYPE);
         String extraString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_EXTRAS);
 
-        text_launchActivity.setText(launchString);
-        text_launchAction.setText((actionString != null ? actionString : ""));
-        text_launchData.setText((dataString != null ? dataString : ""));
-        text_launchDataType.setText((mimeType != null ? mimeType : ""));
-        text_launchExtras.setText((extraString != null ? extraString : ""));
-
-        for (int i=0; i < spinner_launchType.getCount(); i++)
-        {
-            WidgetSettings.LaunchType type = (WidgetSettings.LaunchType)(spinner_launchType.getItemAtPosition(i));
-            if (type.name().equals(typeString))
-            {
-                spinner_launchType.setSelection(i);
-                break;
-            }
-        }
+        edit_launchIntent.setIntentClass(launchString);
+        edit_launchIntent.setIntentAction((actionString != null ? actionString : ""));
+        edit_launchIntent.setIntentData((dataString != null ? dataString : ""));
+        edit_launchIntent.setIntentDataType((mimeType != null ? mimeType : ""));
+        edit_launchIntent.setIntentExtras((extraString != null ? extraString : ""));
+        edit_launchIntent.setIntentType(WidgetSettings.LaunchType.valueOf(typeString));
     }
 
     /**

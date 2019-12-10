@@ -49,8 +49,9 @@
             android:paddingLeft="16dp" android:paddingRight="8dp"
             android:paddingStart="16dp" android:paddingEnd="8dp">
 
-            <include android:layout_width="wrap_content" android:layout_height="wrap_content" android:visibility="gone"
-                layout="@layout/layout_settings_intent" />
+            <com.forrestguice.suntimeswidget.settings.EditIntentView
+                android:id="@+id/appwidget_action_launch_edit"
+                android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
         </LinearLayout>
 
