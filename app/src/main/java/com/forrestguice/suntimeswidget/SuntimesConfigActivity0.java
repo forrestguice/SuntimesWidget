@@ -20,7 +20,6 @@ package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,7 +27,6 @@ import android.support.annotation.NonNull;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -37,6 +35,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -48,6 +47,8 @@ import android.widget.TextView;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -107,9 +108,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected Spinner spinner_onTap;
     protected EditText text_launchActivity;
-    protected EditText text_launchAction;
+    protected Spinner spinner_launchType;
+    protected ImageButton button_launchTest;
+    protected ToggleButton button_launchMore;
+    protected AutoCompleteTextView text_launchAction;
     protected EditText text_launchData;
-    protected EditText text_launchDataType;
+    protected AutoCompleteTextView text_launchDataType;
     protected EditText text_launchExtras;
 
     protected TextView button_themeConfig;
@@ -334,6 +338,16 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return supportedModes;
     }
 
+    private static String[] ACTION_SUGGESTIONS = new String[] {
+            Intent.ACTION_VIEW, Intent.ACTION_EDIT, Intent.ACTION_INSERT, Intent.ACTION_DELETE,
+            Intent.ACTION_PICK, Intent.ACTION_RUN, Intent.ACTION_SEARCH, Intent.ACTION_SYNC,
+            Intent.ACTION_CHOOSER, Intent.ACTION_GET_CONTENT,
+            Intent.ACTION_SEND, Intent.ACTION_SENDTO, Intent.ACTION_ATTACH_DATA,
+            Intent.ACTION_WEB_SEARCH, Intent.ACTION_MAIN
+    };
+
+    private static String[] MIMETYPE_SUGGESTIONS = new String[] { "text/plain" };
+
     protected void initViews(final Context context)
     {
         initToolbar(context);
@@ -374,9 +388,60 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // widget: onTap launchActivity
         //
         text_launchActivity = (EditText) findViewById(R.id.appwidget_action_launch);
-        text_launchAction = (EditText) findViewById(R.id.appwidget_action_launch_action);
+
+        button_launchMore = (ToggleButton) findViewById(R.id.appwidget_action_launch_moreButton);
+        button_launchMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View layout = findViewById(R.id.appwidget_action_launch_layout);
+                if (layout != null) {
+                    int visibility = layout.getVisibility();
+                    layout.setVisibility(visibility == View.VISIBLE ? View.GONE : View.VISIBLE);
+                }
+                // TODO
+            }
+        });
+
+        button_launchTest = (ImageButton) findViewById(R.id.appwidget_action_launch_test);
+        button_launchTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                WidgetSettings.LaunchType launchType = (WidgetSettings.LaunchType)spinner_launchType.getSelectedItem();
+                String launchClassName = text_launchActivity.getText().toString();
+                String launchAction = text_launchAction.getText().toString();
+                String launchData = text_launchData.getText().toString();
+                String launchDataType = text_launchDataType.getText().toString();
+                String launchExtras = text_launchExtras.getText().toString();
+                Intent launchIntent;
+                Class<?> launchClass;
+                try {
+                    launchClass = Class.forName(launchClassName);
+                    launchIntent = new Intent(context, launchClass);
+                    SuntimesWidget0.applyAction(launchIntent, launchAction.trim().isEmpty() ? null : launchAction);
+                    SuntimesWidget0.applyData(launchIntent, (launchData.trim().isEmpty() ? null : launchData), (launchDataType.trim().isEmpty() ? null : launchDataType));
+                    SuntimesWidget0.applyExtras(launchIntent, launchExtras.trim().isEmpty() ? null : launchExtras);
+                    SuntimesWidget0.startIntent(context, launchIntent, launchType.name());
+
+                } catch (ClassNotFoundException e) {
+                    Log.e("LaunchApp", "LaunchApp :: " + launchClassName + " cannot be found! " + e.toString());
+                    Toast.makeText(context, "Unable to start intent!", Toast.LENGTH_LONG).show();  // TODO: i18n
+                }
+            }
+        });
+
+        spinner_launchType = (Spinner) findViewById(R.id.appwidget_action_launch_type);
+        ArrayAdapter<WidgetSettings.LaunchType> launchTypeAdapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, WidgetSettings.LaunchType.values());
+        launchTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_launchType.setAdapter(launchTypeAdapter);
+
+        text_launchAction = (AutoCompleteTextView) findViewById(R.id.appwidget_action_launch_action);
+        text_launchAction.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, ACTION_SUGGESTIONS));
+
         text_launchData = (EditText) findViewById(R.id.appwidget_action_launch_data);
-        text_launchDataType = (EditText) findViewById(R.id.appwidget_action_launch_datatype);
+        text_launchDataType = (AutoCompleteTextView) findViewById(R.id.appwidget_action_launch_datatype);
+        text_launchDataType.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, MIMETYPE_SUGGESTIONS));
+
         text_launchExtras = (EditText) findViewById(R.id.appwidget_action_launch_extras);
 
         ImageButton button_launchAppHelp = (ImageButton) findViewById(R.id.appwidget_action_launch_helpButton);
@@ -753,6 +818,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             if (text_launchActivity != null)
             {
+                spinner_launchType.setSelection(0);
                 text_launchAction.setText("");
                 text_launchData.setText("");
                 text_launchDataType.setText("");
@@ -1402,7 +1468,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             Log.d("saveActionSettings", "empty launch extras (using null)");
         }
 
-        WidgetSettings.saveActionLaunchPref(context, appWidgetId, launchString, launchAction, launchData, launchDataType, launchExtras);
+        WidgetSettings.LaunchType launchType = (WidgetSettings.LaunchType)spinner_launchType.getSelectedItem();
+        WidgetSettings.saveActionLaunchPref(context, appWidgetId, launchString, launchType.name(), launchAction, launchData, launchDataType, launchExtras);
     }
 
     /**
@@ -1418,6 +1485,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         // load: launch activity
         String launchString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null);
+        String typeString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_TYPE);
         String actionString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_ACTION);
         String dataString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_DATA);
         String mimeType = WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_DATATYPE);
@@ -1428,6 +1496,16 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         text_launchData.setText((dataString != null ? dataString : ""));
         text_launchDataType.setText((mimeType != null ? mimeType : ""));
         text_launchExtras.setText((extraString != null ? extraString : ""));
+
+        for (int i=0; i < spinner_launchType.getCount(); i++)
+        {
+            WidgetSettings.LaunchType type = (WidgetSettings.LaunchType)(spinner_launchType.getItemAtPosition(i));
+            if (type.name().equals(typeString))
+            {
+                spinner_launchType.setSelection(i);
+                break;
+            }
+        }
     }
 
     /**
