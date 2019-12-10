@@ -111,6 +111,8 @@
         <item name="icActionRecord">@drawable/ic_action_record_light</item>
         <item name="icActionTimeReset">@drawable/ic_action_timereset_light</item>
 
+        <item name="icActionExpand">@drawable/ic_action_expand_light</item>
+
         <item name="windowActionModeOverlay">true</item>
     </style>
     <style name="AppTheme.Light" parent="AppThemeBase.Light">
@@ -224,6 +226,8 @@
         <item name="icActionPause">@drawable/ic_action_pause</item>
         <item name="icActionRecord">@drawable/ic_action_record</item>
         <item name="icActionTimeReset">@drawable/ic_action_timereset</item>
+
+        <item name="icActionExpand">@drawable/ic_action_expand</item>
 
         <item name="windowActionModeOverlay">true</item>
     </style>

@@ -108,6 +108,8 @@
     <attr name="icActionNext" format="reference" />
     <attr name="icActionPrevious" format="reference" />
 
+    <attr name="icActionExpand" format="reference" />
+
     <attr name="icActionGPS" format="reference" />
     <attr name="icActionGPS_off" format="reference" />
     <attr name="icActionGPS_searching" format="reference" />
