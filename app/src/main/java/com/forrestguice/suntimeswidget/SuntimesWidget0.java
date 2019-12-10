@@ -224,10 +224,10 @@ public class SuntimesWidget0 extends AppWidgetProvider
             try {
                 launchClass = Class.forName(launchClassName);
                 launchIntent = new Intent(context, launchClass);
-                applyAction(launchIntent, WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_ACTION));
-                applyData(launchIntent, WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_DATA),
-                                        WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_DATATYPE));
-                applyExtras(launchIntent, WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_EXTRAS));
+                WidgetSettings.applyAction(launchIntent, WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_ACTION));
+                WidgetSettings.applyData(launchIntent, WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_DATA),
+                                                       WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_DATATYPE));
+                WidgetSettings.applyExtras(launchIntent, WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_EXTRAS));
 
             } catch (ClassNotFoundException e) {
                 launchClass = getConfigClass();
@@ -237,7 +237,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
             }
 
             launchIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-            startIntent(context, launchIntent, WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_TYPE));
+            WidgetSettings.startIntent(context, launchIntent, WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_TYPE));
             return true;
         }
 
@@ -254,127 +254,6 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
         //Log.w("SuntimesWidget", "Unsupported click action: " + action + " (" + appWidgetId + ")");
         return false;
-    }
-
-    /**
-     * launchIntent
-     */
-    public static void startIntent(@NonNull Context context, @NonNull Intent launchIntent, @Nullable String launchType)
-    {
-        if (launchType != null)
-        {
-            Log.i(TAG, "startIntent :: " + launchType + " :: " + launchIntent.toString());
-            switch (launchType)
-            {
-                case WidgetSettings.LAUNCH_TYPE_BROADCAST:
-                    context.sendBroadcast(launchIntent);
-                    break;
-
-                case WidgetSettings.LAUNCH_TYPE_SERVICE:
-                    context.startService(launchIntent);
-                    break;
-
-                case WidgetSettings.LAUNCH_TYPE_ACTIVITY:
-                default:
-                    launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(launchIntent);
-                    break;
-            }
-        } else {
-            Log.i(TAG, "startIntent :: ACTIVITY :: " + launchIntent.toString());
-            context.startActivity(launchIntent);
-        }
-    }
-
-    public static void applyAction(Intent intent, @Nullable String action)
-    {
-        if (intent == null || action == null || action.isEmpty()) {
-            return;
-        }
-        intent.setAction(action);
-    }
-
-    public static void applyData(Intent intent, @Nullable String dataString, @Nullable String mimeType)
-    {
-        if (intent == null || dataString == null || dataString.isEmpty()) {
-            return;
-        }
-        if (mimeType != null) {
-            intent.setDataAndType(Uri.parse(Uri.decode(dataString)), mimeType);
-        } else {
-            intent.setData(Uri.parse(Uri.decode(dataString)));
-        }
-    }
-
-    public static void applyExtras(Intent intent, @Nullable String extraString)
-    {
-        if (intent == null || extraString == null || extraString.isEmpty()) {
-            return;
-        }
-
-        String[] extras = extraString.split("&");
-        for (String extra : extras)
-        {
-            String[] pair = extra.split("=");
-            if (pair.length == 2)
-            {
-                String key = pair[0];
-                String value = pair[1];
-
-                if (isNumeric(value.charAt(0)))
-                {
-                    if (value.endsWith("L") || value.endsWith("l"))
-                    {
-                        try {
-                            intent.putExtra(key, Long.parseLong(value));  // long
-                            Log.i(TAG, "applyExtras: applied " + extra + " (long)");
-
-                        } catch (NumberFormatException e) {
-                            intent.putExtra(key, value);  // string
-                            Log.w(TAG, "applyExtras: fallback " + extra + " (long)");
-                        }
-
-                    } else if (value.endsWith("D") || value.endsWith("d")) {
-                        try {
-                            intent.putExtra(key, Double.parseDouble(value));  // double
-                            Log.i(TAG, "applyExtras: applied " + extra + " (double)");
-
-                        } catch (NumberFormatException e) {
-                            intent.putExtra(key, value);  // string
-                            Log.w(TAG, "applyExtras: fallback " + extra + " (double)");
-                        }
-
-                    } else if (value.endsWith("F") || value.endsWith("f")) {
-                        try {
-                            intent.putExtra(key, Float.parseFloat(value));  // float
-                            Log.i(TAG, "applyExtras: applied " + extra + " (float)");
-
-                        } catch (NumberFormatException e) {
-                            intent.putExtra(key, value);  // string
-                            Log.w(TAG, "applyExtras: fallback " + extra + " (float)");
-                        }
-                    }
-
-                } else {
-                    String lowerCase = value.toLowerCase();
-                    if (lowerCase.equals("true") || lowerCase.equals("false")) {
-                        intent.putExtra(key, lowerCase.equals("true"));  // boolean
-                        Log.i(TAG, "applyExtras: applied " + extra + " (boolean)");
-
-                    } else {
-                        intent.putExtra(key, value);  // string
-                        Log.i(TAG, "applyExtras: applied " + extra + " (String)");
-                    }
-                }
-
-            } else {
-                Log.w(TAG, "applyExtras: skipping " + extra);
-            }
-        }
-    }
-
-    public static boolean isNumeric(char c) {
-        return (c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7'|| c == '8' || c == '9');
     }
 
     /**

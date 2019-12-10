@@ -19,8 +19,10 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -1822,6 +1824,125 @@ public class WidgetSettings
         prefs.remove(prefs_prefix1 + PREF_KEY_ACTION_LAUNCH_DATATYPE);
         prefs.remove(prefs_prefix1 + PREF_KEY_ACTION_LAUNCH_EXTRAS);
         prefs.apply();
+    }
+
+    /**
+     * launchIntent
+     */
+    public static void startIntent(@NonNull Context context, @NonNull Intent launchIntent, @Nullable String launchType)
+    {
+        if (launchType != null)
+        {
+            Log.i("launchPref", "startIntent :: " + launchType + " :: " + launchIntent.toString());
+            switch (launchType)
+            {
+                case WidgetSettings.LAUNCH_TYPE_BROADCAST:
+                    context.sendBroadcast(launchIntent);
+                    break;
+
+                case WidgetSettings.LAUNCH_TYPE_SERVICE:
+                    context.startService(launchIntent);
+                    break;
+
+                case WidgetSettings.LAUNCH_TYPE_ACTIVITY:
+                default:
+                    launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(launchIntent);
+                    break;
+            }
+        } else {
+            Log.i("launchPref", "startIntent :: ACTIVITY :: " + launchIntent.toString());
+            context.startActivity(launchIntent);
+        }
+    }
+
+    public static void applyAction(Intent intent, @Nullable String action)
+    {
+        if (intent == null || action == null || action.isEmpty()) {
+            return;
+        }
+        intent.setAction(action);
+    }
+
+    public static void applyData(Intent intent, @Nullable String dataString, @Nullable String mimeType)
+    {
+        if (intent == null || dataString == null || dataString.isEmpty()) {
+            return;
+        }
+        if (mimeType != null) {
+            intent.setDataAndType(Uri.parse(Uri.decode(dataString)), mimeType);
+        } else {
+            intent.setData(Uri.parse(Uri.decode(dataString)));
+        }
+    }
+
+    public static void applyExtras(Intent intent, @Nullable String extraString)
+    {
+        if (intent == null || extraString == null || extraString.isEmpty()) {
+            return;
+        }
+
+        String[] extras = extraString.split("&");
+        for (String extra : extras)
+        {
+            String[] pair = extra.split("=");
+            if (pair.length == 2)
+            {
+                String key = pair[0];
+                String value = pair[1];
+
+                char c = value.charAt(0);
+                boolean isNumeric = (c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7'|| c == '8' || c == '9');
+                if (isNumeric)
+                {
+                    if (value.endsWith("L") || value.endsWith("l"))
+                    {
+                        try {
+                            intent.putExtra(key, Long.parseLong(value));  // long
+                            Log.i("launchPref", "applyExtras: applied " + extra + " (long)");
+
+                        } catch (NumberFormatException e) {
+                            intent.putExtra(key, value);  // string
+                            Log.w("launchPref", "applyExtras: fallback " + extra + " (long)");
+                        }
+
+                    } else if (value.endsWith("D") || value.endsWith("d")) {
+                        try {
+                            intent.putExtra(key, Double.parseDouble(value));  // double
+                            Log.i("launchPref", "applyExtras: applied " + extra + " (double)");
+
+                        } catch (NumberFormatException e) {
+                            intent.putExtra(key, value);  // string
+                            Log.w("launchPref", "applyExtras: fallback " + extra + " (double)");
+                        }
+
+                    } else if (value.endsWith("F") || value.endsWith("f")) {
+                        try {
+                            intent.putExtra(key, Float.parseFloat(value));  // float
+                            Log.i("launchPref", "applyExtras: applied " + extra + " (float)");
+
+                        } catch (NumberFormatException e) {
+                            intent.putExtra(key, value);  // string
+                            Log.w("launchPref", "applyExtras: fallback " + extra + " (float)");
+                        }
+                    }
+
+                } else {
+                    String lowerCase = value.toLowerCase();
+                    if (lowerCase.equals("true") || lowerCase.equals("false")) {
+                        intent.putExtra(key, lowerCase.equals("true"));  // boolean
+                        Log.i("launchPref", "applyExtras: applied " + extra + " (boolean)");
+
+                    } else {
+                        intent.putExtra(key, value);  // string
+                        Log.i("launchPref", "applyExtras: applied " + extra + " (String)");
+                    }
+                }
+
+            } else {
+                Log.w("launchPref", "applyExtras: skipping " + extra);
+            }
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
