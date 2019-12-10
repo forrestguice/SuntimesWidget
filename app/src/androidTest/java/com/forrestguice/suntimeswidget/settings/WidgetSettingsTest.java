@@ -436,7 +436,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         String data2 = "DATA2";
         String mime2 = "text/plain";
         String extras2 = "EXTRAS2";
-        WidgetSettings.saveActionLaunchPref(context, appWidgetId, value2, action2, data2, mime2, extras2);
+        WidgetSettings.saveActionLaunchPref(context, appWidgetId, value2, WidgetSettings.LaunchType.ACTIVITY.name(), action2, data2, mime2, extras2);
         String pref2_value = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null);
         String pref2_action = WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_ACTION);
         String pref2_data = WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_DATA);
@@ -453,7 +453,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         String data1 = "DATA1";
         String mime1 = "text/html";
         String extras1 = "EXTRAS1";
-        WidgetSettings.saveActionLaunchPref(context, appWidgetId, value1, action1, data1, mime1, extras1);
+        WidgetSettings.saveActionLaunchPref(context, appWidgetId, value1, WidgetSettings.LaunchType.ACTIVITY.name(), action1, data1, mime1, extras1);
         String pref1_value = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null);
         String pref1_action = WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_ACTION);
         String pref1_data = WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_DATA);

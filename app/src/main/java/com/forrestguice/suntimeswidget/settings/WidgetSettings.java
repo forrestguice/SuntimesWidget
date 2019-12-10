@@ -162,6 +162,11 @@ public class WidgetSettings
     public static final String PREF_KEY_ACTION_LAUNCH_DATA = "data";
     public static final String PREF_KEY_ACTION_LAUNCH_DATATYPE = "datatype";
 
+    public static final String PREF_KEY_ACTION_LAUNCH_TYPE = "type";
+    public static final String LAUNCH_TYPE_ACTIVITY = "ACTIVITY";
+    public static final String LAUNCH_TYPE_BROADCAST = "BROADCAST";
+    public static final String LAUNCH_TYPE_SERVICE = "SERVICE";
+
     public static final String PREF_KEY_LOCATION_MODE = "locationMode";
     public static final LocationMode PREF_DEF_LOCATION_MODE = LocationMode.CUSTOM_LOCATION;
 
@@ -1021,6 +1026,41 @@ public class WidgetSettings
         }
     }
 
+    /**
+     * LaunchType
+     */
+    public static enum LaunchType
+    {
+        ACTIVITY("Activity"),
+        BROADCAST("Broadcast"),
+        SERVICE("Service");
+
+        private LaunchType(String displayString)
+        {
+            this.displayString = displayString;
+        }
+
+        private String displayString;
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+        public void setDisplayString(String value)
+        {
+            displayString = value;
+        }
+        public static void initDisplayStrings(Context context)
+        {
+            ACTIVITY.setDisplayString(context.getString(R.string.launchType_activity));
+            BROADCAST.setDisplayString(context.getString(R.string.launchType_broadcast));
+            SERVICE.setDisplayString(context.getString(R.string.launchType_service));
+        }
+        public String toString()
+        {
+            return displayString;
+        }
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1726,12 +1766,13 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveActionLaunchPref(Context context, int appWidgetId, String launchString, @Nullable String action, @Nullable String dataString, @Nullable String mimeType, @Nullable String extrasString)
+    public static void saveActionLaunchPref(Context context, int appWidgetId, String launchString, @Nullable String type, @Nullable String action, @Nullable String dataString, @Nullable String mimeType, @Nullable String extrasString)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix0 = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION;
         String prefs_prefix1 = prefs_prefix0 + PREF_KEY_ACTION_LAUNCH + "_";
         prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH, launchString);
+        prefs.putString(prefs_prefix1 + PREF_KEY_ACTION_LAUNCH_TYPE, (type != null ? type : LAUNCH_TYPE_ACTIVITY));
         prefs.putString(prefs_prefix1 + PREF_KEY_ACTION_LAUNCH_ACTION, (action != null ? action : ""));
         prefs.putString(prefs_prefix1 + PREF_KEY_ACTION_LAUNCH_DATA, (dataString != null ? dataString : ""));
         prefs.putString(prefs_prefix1 + PREF_KEY_ACTION_LAUNCH_DATATYPE, (mimeType != null ? mimeType : ""));
@@ -1751,6 +1792,9 @@ public class WidgetSettings
             prefs_prefix += PREF_KEY_ACTION_LAUNCH + "_";
             switch (key)
             {
+                case PREF_KEY_ACTION_LAUNCH_TYPE:
+                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_TYPE, LAUNCH_TYPE_ACTIVITY);
+
                 case PREF_KEY_ACTION_LAUNCH_ACTION:
                     return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_ACTION, "");
 
@@ -1772,6 +1816,7 @@ public class WidgetSettings
         String prefs_prefix0 = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION;
         String prefs_prefix1 = prefs_prefix0 + PREF_KEY_ACTION_LAUNCH + "_";
         prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH );
+        prefs.remove(prefs_prefix1 + PREF_KEY_ACTION_LAUNCH_TYPE);
         prefs.remove(prefs_prefix1 + PREF_KEY_ACTION_LAUNCH_ACTION);
         prefs.remove(prefs_prefix1 + PREF_KEY_ACTION_LAUNCH_DATA);
         prefs.remove(prefs_prefix1 + PREF_KEY_ACTION_LAUNCH_DATATYPE);
@@ -2459,5 +2504,6 @@ public class WidgetSettings
         DateMode.initDisplayStrings(context);
         TimeFormatMode.initDisplayStrings(context);
         RiseSetOrder.initDisplayStrings(context);
+        LaunchType.initDisplayStrings(context);
     }
 }

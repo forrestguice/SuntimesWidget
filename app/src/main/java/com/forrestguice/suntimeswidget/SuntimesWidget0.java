@@ -237,8 +237,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
             }
 
             launchIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-            launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(launchIntent);
+            startIntent(context, launchIntent, WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_TYPE));
             return true;
         }
 
@@ -255,6 +254,36 @@ public class SuntimesWidget0 extends AppWidgetProvider
 
         //Log.w("SuntimesWidget", "Unsupported click action: " + action + " (" + appWidgetId + ")");
         return false;
+    }
+
+    /**
+     * launchIntent
+     */
+    public static void startIntent(@NonNull Context context, @NonNull Intent launchIntent, @Nullable String launchType)
+    {
+        if (launchType != null)
+        {
+            Log.i(TAG, "startIntent :: " + launchType + " :: " + launchIntent.toString());
+            switch (launchType)
+            {
+                case WidgetSettings.LAUNCH_TYPE_BROADCAST:
+                    context.sendBroadcast(launchIntent);
+                    break;
+
+                case WidgetSettings.LAUNCH_TYPE_SERVICE:
+                    context.startService(launchIntent);
+                    break;
+
+                case WidgetSettings.LAUNCH_TYPE_ACTIVITY:
+                default:
+                    launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(launchIntent);
+                    break;
+            }
+        } else {
+            Log.i(TAG, "startIntent :: ACTIVITY :: " + launchIntent.toString());
+            context.startActivity(launchIntent);
+        }
     }
 
     public static void applyAction(Intent intent, @Nullable String action)
