@@ -431,12 +431,13 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_actionLaunchPref()
     {
+        String title2 = "title2";
         String value2 = "com.forrestguice.suntimeswidget.SuntimesActivity";
         String action2 = "ACTION2";
         String data2 = "DATA2";
         String mime2 = "text/plain";
         String extras2 = "EXTRAS2";
-        WidgetSettings.saveActionLaunchPref(context, appWidgetId, null, value2, WidgetSettings.LaunchType.ACTIVITY.name(), action2, data2, mime2, extras2);
+        WidgetSettings.saveActionLaunchPref(context, appWidgetId, null, value2, WidgetSettings.LaunchType.ACTIVITY.name(), action2, data2, mime2, extras2, title2);
         String pref2_value = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null, null);
         String pref2_action = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null, WidgetSettings.PREF_KEY_ACTION_LAUNCH_ACTION);
         String pref2_data = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null, WidgetSettings.PREF_KEY_ACTION_LAUNCH_DATA);
@@ -448,12 +449,13 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         assertTrue("pref datatype should be " + mime2 + " but was " + pref2_mime, pref2_mime.equals(mime2));
         assertTrue("pref extras should be " + extras2 + " but was " + pref2_extra, pref2_extra.equals(extras2));
 
+        String title1 = "title2";
         String value1 = "test value 1";
         String action1 = "ACTION1";
         String data1 = "DATA1";
         String mime1 = "text/html";
         String extras1 = "EXTRAS1";
-        WidgetSettings.saveActionLaunchPref(context, appWidgetId, null, value1, WidgetSettings.LaunchType.ACTIVITY.name(), action1, data1, mime1, extras1);
+        WidgetSettings.saveActionLaunchPref(context, appWidgetId, null, value1, WidgetSettings.LaunchType.ACTIVITY.name(), action1, data1, mime1, extras1, title1);
         String pref1_value = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null, null);
         String pref1_action = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null, WidgetSettings.PREF_KEY_ACTION_LAUNCH_ACTION);
         String pref1_data = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null, WidgetSettings.PREF_KEY_ACTION_LAUNCH_DATA);

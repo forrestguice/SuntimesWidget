@@ -48,6 +48,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorListAdapter;
@@ -208,7 +210,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         super.onResume();
         edit_launchIntent.setOnExpandedChangedListener(onEditLaunchIntentExpanded);
-        edit_launchIntent.onResume(getSupportFragmentManager());
+        edit_launchIntent.onResume(getSupportFragmentManager(), getData(this, appWidgetId));
+    }
+
+    public SuntimesData getData(Context context, int appWidgetId) {
+        return new SuntimesRiseSetData(context, appWidgetId);
     }
 
     /**
@@ -364,6 +370,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //
         edit_launchIntent = (EditIntentView) findViewById(R.id.appwidget_action_launch_edit);
         edit_launchIntent.setFragmentManager(getSupportFragmentManager());
+        edit_launchIntent.setData(getData(this, appWidgetId));
 
         //
         // widget: theme
@@ -1309,43 +1316,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         WidgetSettings.saveActionModePref(context, appWidgetId, actionMode);
 
         // save: launch activity
-        String launchString = edit_launchIntent.getIntentClass();
-        if (launchString.trim().isEmpty())
-        {
-            launchString = WidgetSettings.PREF_DEF_ACTION_LAUNCH;
-            Log.w("saveActionSettings", "empty launch string (using default)");
-        }
-
-        String launchAction = edit_launchIntent.getIntentAction();
-        if (launchAction.trim().isEmpty())
-        {
-            launchAction = null;
-            Log.d("saveActionSettings", "empty launch action (using null)");
-        }
-
-        String launchData = edit_launchIntent.getIntentData();
-        if (launchData.trim().isEmpty())
-        {
-            launchData = null;
-            Log.d("saveActionSettings", "empty launch data (using null)");
-        }
-
-        String launchDataType = edit_launchIntent.getIntentDataType();
-        if (launchDataType.trim().isEmpty())
-        {
-            launchDataType = null;
-            Log.d("saveActionSettings", "empty launch datatype (using null)");
-        }
-
-        String launchExtras = edit_launchIntent.getIntentExtras();
-        if (launchExtras.trim().isEmpty())
-        {
-            launchExtras = null;
-            Log.d("saveActionSettings", "empty launch extras (using null)");
-        }
-
-        WidgetSettings.LaunchType launchType = edit_launchIntent.getIntentType();
-        WidgetSettings.saveActionLaunchPref(context, appWidgetId, null, launchString, launchType.name(), launchAction, launchData, launchDataType, launchExtras);
+        edit_launchIntent.saveIntent(context, appWidgetId, null, null);
     }
 
     /**
@@ -1360,19 +1331,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         spinner_onTap.setSelection(actionMode.ordinal(supportedActionModes()));
 
         // load: launch activity
-        String launchString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null, null);
-        String typeString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null, WidgetSettings.PREF_KEY_ACTION_LAUNCH_TYPE);
-        String actionString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null, WidgetSettings.PREF_KEY_ACTION_LAUNCH_ACTION);
-        String dataString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null, WidgetSettings.PREF_KEY_ACTION_LAUNCH_DATA);
-        String mimeType = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null, WidgetSettings.PREF_KEY_ACTION_LAUNCH_DATATYPE);
-        String extraString = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null, WidgetSettings.PREF_KEY_ACTION_LAUNCH_EXTRAS);
-
-        edit_launchIntent.setIntentClass(launchString);
-        edit_launchIntent.setIntentAction((actionString != null ? actionString : ""));
-        edit_launchIntent.setIntentData((dataString != null ? dataString : ""));
-        edit_launchIntent.setIntentDataType((mimeType != null ? mimeType : ""));
-        edit_launchIntent.setIntentExtras((extraString != null ? extraString : ""));
-        edit_launchIntent.setIntentType(typeString);
+        edit_launchIntent.loadIntent(context, appWidgetId, null);
     }
 
     /**

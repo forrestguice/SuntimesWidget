@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,17 +19,12 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 
-import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout;
@@ -158,18 +153,6 @@ public class WidgetSettings
 
     public static final String PREF_KEY_ACTION_MODE = "action";
     public static final ActionMode PREF_DEF_ACTION_MODE = ActionMode.ONTAP_LAUNCH_CONFIG;
-
-    public static final String PREF_KEY_ACTION_LAUNCH = "launch";
-    public static final String PREF_DEF_ACTION_LAUNCH = "com.forrestguice.suntimeswidget.SuntimesActivity";
-    public static final String PREF_KEY_ACTION_LAUNCH_ACTION = "action";
-    public static final String PREF_KEY_ACTION_LAUNCH_EXTRAS = "extras";
-    public static final String PREF_KEY_ACTION_LAUNCH_DATA = "data";
-    public static final String PREF_KEY_ACTION_LAUNCH_DATATYPE = "datatype";
-
-    public static final String PREF_KEY_ACTION_LAUNCH_TYPE = "type";
-    public static final String LAUNCH_TYPE_ACTIVITY = "ACTIVITY";
-    public static final String LAUNCH_TYPE_BROADCAST = "BROADCAST";
-    public static final String LAUNCH_TYPE_SERVICE = "SERVICE";
 
     public static final String PREF_KEY_LOCATION_MODE = "locationMode";
     public static final LocationMode PREF_DEF_LOCATION_MODE = LocationMode.CUSTOM_LOCATION;
@@ -1030,41 +1013,6 @@ public class WidgetSettings
         }
     }
 
-    /**
-     * LaunchType
-     */
-    public static enum LaunchType
-    {
-        ACTIVITY("Activity"),
-        BROADCAST("Broadcast"),
-        SERVICE("Service");
-
-        private LaunchType(String displayString)
-        {
-            this.displayString = displayString;
-        }
-
-        private String displayString;
-        public String getDisplayString()
-        {
-            return displayString;
-        }
-        public void setDisplayString(String value)
-        {
-            displayString = value;
-        }
-        public static void initDisplayStrings(Context context)
-        {
-            ACTIVITY.setDisplayString(context.getString(R.string.launchType_activity));
-            BROADCAST.setDisplayString(context.getString(R.string.launchType_broadcast));
-            SERVICE.setDisplayString(context.getString(R.string.launchType_service));
-        }
-        public String toString()
-        {
-            return displayString;
-        }
-    }
-
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1770,196 +1718,6 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveActionLaunchPref(Context context, int appWidgetId, @Nullable String id, String launchString, @Nullable String type, @Nullable String action, @Nullable String dataString, @Nullable String mimeType, @Nullable String extrasString)
-    {
-        if (id == null) {
-            id = "0";
-        }
-
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
-        String prefs_prefix0 = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + id + "_";
-
-        prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH, launchString);
-        prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_TYPE, (type != null ? type : LAUNCH_TYPE_ACTIVITY));
-        prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_ACTION, (action != null ? action : ""));
-        prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_DATA, (dataString != null ? dataString : ""));
-        prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_DATATYPE, (mimeType != null ? mimeType : ""));
-        prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_EXTRAS, (extrasString != null ? extrasString : ""));
-        prefs.apply();
-    }
-    public static String loadActionLaunchPref(Context context, int appWidgetId, @Nullable String id, @Nullable String key)
-    {
-        if (id == null) {
-            id = "0";
-        }
-
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + id + "_";
-
-        if (key == null || key.isEmpty())
-        {
-            return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH, PREF_DEF_ACTION_LAUNCH);
-
-        } else {
-            switch (key)
-            {
-                case PREF_KEY_ACTION_LAUNCH_TYPE:
-                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_TYPE, LAUNCH_TYPE_ACTIVITY);
-
-                case PREF_KEY_ACTION_LAUNCH_ACTION:
-                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_ACTION, "");
-
-                case PREF_KEY_ACTION_LAUNCH_DATA:
-                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_DATA, "");
-
-                case PREF_KEY_ACTION_LAUNCH_DATATYPE:
-                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_DATATYPE, "");
-
-                case PREF_KEY_ACTION_LAUNCH_EXTRAS:
-                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_EXTRAS, "");
-            }
-            return null;
-        }
-    }
-    public static void deleteActionLaunchPref(Context context, int appWidgetId, @Nullable String id)
-    {
-        if (id == null) {
-            id = "0";
-        }
-
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
-        String prefs_prefix0 = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + id + "_";
-        prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH );
-        prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_TYPE);
-        prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_ACTION);
-        prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_DATA);
-        prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_DATATYPE);
-        prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_EXTRAS);
-        prefs.apply();
-    }
-
-    /**
-     * launchIntent
-     */
-    public static void startIntent(@NonNull Context context, @NonNull Intent launchIntent, @Nullable String launchType)
-    {
-        if (launchType != null)
-        {
-            Log.i("launchPref", "startIntent :: " + launchType + " :: " + launchIntent.toString());
-            switch (launchType)
-            {
-                case WidgetSettings.LAUNCH_TYPE_BROADCAST:
-                    context.sendBroadcast(launchIntent);
-                    break;
-
-                case WidgetSettings.LAUNCH_TYPE_SERVICE:
-                    context.startService(launchIntent);
-                    break;
-
-                case WidgetSettings.LAUNCH_TYPE_ACTIVITY:
-                default:
-                    launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(launchIntent);
-                    break;
-            }
-        } else {
-            Log.i("launchPref", "startIntent :: ACTIVITY :: " + launchIntent.toString());
-            context.startActivity(launchIntent);
-        }
-    }
-
-    public static void applyAction(Intent intent, @Nullable String action)
-    {
-        if (intent == null || action == null || action.isEmpty()) {
-            return;
-        }
-        intent.setAction(action);
-    }
-
-    public static void applyData(Intent intent, @Nullable String dataString, @Nullable String mimeType)
-    {
-        if (intent == null || dataString == null || dataString.isEmpty()) {
-            return;
-        }
-        if (mimeType != null) {
-            intent.setDataAndType(Uri.parse(Uri.decode(dataString)), mimeType);
-        } else {
-            intent.setData(Uri.parse(Uri.decode(dataString)));
-        }
-    }
-
-    public static void applyExtras(Intent intent, @Nullable String extraString)
-    {
-        if (intent == null || extraString == null || extraString.isEmpty()) {
-            return;
-        }
-
-        String[] extras = extraString.split("&");
-        for (String extra : extras)
-        {
-            String[] pair = extra.split("=");
-            if (pair.length == 2)
-            {
-                String key = pair[0];
-                String value = pair[1];
-
-                char c = value.charAt(0);
-                boolean isNumeric = (c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7'|| c == '8' || c == '9');
-                if (isNumeric)
-                {
-                    if (value.endsWith("L") || value.endsWith("l"))
-                    {
-                        try {
-                            intent.putExtra(key, Long.parseLong(value));  // long
-                            Log.i("launchPref", "applyExtras: applied " + extra + " (long)");
-
-                        } catch (NumberFormatException e) {
-                            intent.putExtra(key, value);  // string
-                            Log.w("launchPref", "applyExtras: fallback " + extra + " (long)");
-                        }
-
-                    } else if (value.endsWith("D") || value.endsWith("d")) {
-                        try {
-                            intent.putExtra(key, Double.parseDouble(value));  // double
-                            Log.i("launchPref", "applyExtras: applied " + extra + " (double)");
-
-                        } catch (NumberFormatException e) {
-                            intent.putExtra(key, value);  // string
-                            Log.w("launchPref", "applyExtras: fallback " + extra + " (double)");
-                        }
-
-                    } else if (value.endsWith("F") || value.endsWith("f")) {
-                        try {
-                            intent.putExtra(key, Float.parseFloat(value));  // float
-                            Log.i("launchPref", "applyExtras: applied " + extra + " (float)");
-
-                        } catch (NumberFormatException e) {
-                            intent.putExtra(key, value);  // string
-                            Log.w("launchPref", "applyExtras: fallback " + extra + " (float)");
-                        }
-                    }
-
-                } else {
-                    String lowerCase = value.toLowerCase();
-                    if (lowerCase.equals("true") || lowerCase.equals("false")) {
-                        intent.putExtra(key, lowerCase.equals("true"));  // boolean
-                        Log.i("launchPref", "applyExtras: applied " + extra + " (boolean)");
-
-                    } else {
-                        intent.putExtra(key, value);  // string
-                        Log.i("launchPref", "applyExtras: applied " + extra + " (String)");
-                    }
-                }
-
-            } else {
-                Log.w("launchPref", "applyExtras: skipping " + extra);
-            }
-        }
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-
     public static void saveLocationModePref(Context context, int appWidgetId, WidgetSettings.LocationMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
@@ -2563,7 +2321,6 @@ public class WidgetSettings
     {
         deleteNextSuggestedUpdate(context, appWidgetId);
         deleteActionModePref(context, appWidgetId);
-        deleteActionLaunchPref(context, appWidgetId);
 
         deleteSun1x1ModePref(context, appWidgetId);
         deleteSunPos1x1ModePref(context, appWidgetId);
@@ -2608,6 +2365,8 @@ public class WidgetSettings
 
         deleteTimeNoteRisePref(context, appWidgetId);
         deleteTimeNoteSetPref(context, appWidgetId);
+
+        WidgetActions.deletePrefs(context, appWidgetId);
     }
 
     public static void initDefaults( Context context )
@@ -2637,6 +2396,7 @@ public class WidgetSettings
         DateMode.initDisplayStrings(context);
         TimeFormatMode.initDisplayStrings(context);
         RiseSetOrder.initDisplayStrings(context);
-        LaunchType.initDisplayStrings(context);
+
+        WidgetActions.initDisplayStrings(context);
     }
 }

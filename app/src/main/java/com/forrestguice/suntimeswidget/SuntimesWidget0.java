@@ -43,8 +43,10 @@ import com.forrestguice.suntimeswidget.layouts.SunLayout;
 import com.forrestguice.suntimeswidget.layouts.SunLayout_2x1_0;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -218,16 +220,27 @@ public class SuntimesWidget0 extends AppWidgetProvider
         // OnTap: Launch an Activity
         if (action.equals(WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY.name()))
         {
+            String launchClassName = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, null);
+            String dataString = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
+            String mimeType = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE);
+            String extraString = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_EXTRAS);
+
             Intent launchIntent;
-            String launchClassName = WidgetSettings.loadActionLaunchPref(context, appWidgetId, null);
             Class<?> launchClass;
             try {
                 launchClass = Class.forName(launchClassName);
                 launchIntent = new Intent(context, launchClass);
-                WidgetSettings.applyAction(launchIntent, WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_ACTION));
-                WidgetSettings.applyData(launchIntent, WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_DATA),
-                                                       WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_DATATYPE));
-                WidgetSettings.applyExtras(launchIntent, WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_EXTRAS));
+                WidgetActions.applyAction(launchIntent, WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION));
+
+                SuntimesData data = null;
+                if ((dataString != null && !dataString.isEmpty() && dataString.contains("%")) ||
+                        (extraString != null && !extraString.isEmpty() && extraString.contains("%")) )
+                {
+                    data = getData(context, appWidgetId);
+                    data.calculate();
+                }
+                WidgetActions.applyData(context, launchIntent, dataString, mimeType, data);
+                WidgetActions.applyExtras(context, launchIntent, extraString, data);
 
             } catch (ClassNotFoundException e) {
                 launchClass = getConfigClass();
@@ -237,7 +250,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
             }
 
             launchIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-            WidgetSettings.startIntent(context, launchIntent, WidgetSettings.loadActionLaunchPref(context, appWidgetId, WidgetSettings.PREF_KEY_ACTION_LAUNCH_TYPE));
+            WidgetActions.startIntent(context, launchIntent, WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_TYPE));
             return true;
         }
 
@@ -548,6 +561,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
     protected SuntimesData getData(Context context, int appWidgetId) {
         return getRiseSetData(context, appWidgetId);
     }
+
     /**
      * A static method for triggering an update of all widgets using ACTION_APPWIDGET_UPDATE intent;
      * triggers the onUpdate method.
