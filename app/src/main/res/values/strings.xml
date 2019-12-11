@@ -515,6 +515,9 @@
     <string name="configLabel_action_launch_extras">Extras:</string>                 <!-- edittext label -->  <!-- TODO -->
     <string name="configHint_action_launch_extras"><![CDATA[<none>]]></string> <!-- editText hint (and default) -->
 
+    <string name="configAction_saveIntent">Save</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_loadIntent">Load</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+
     <!-- App Setting: WidgetThemes -->
     <string name="configLabel_widgetThemeList">Themes</string>  <!-- TODO -->
     <string name="configLabel_widgetThemeListSelect">Select a theme</string>

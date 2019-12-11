@@ -72,6 +72,11 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:src="?attr/icActionPlay"
                 android:contentDescription="Test" />
+
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_menu"
+                style="?attr/actionOverflowButtonStyle"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:contentDescription="More" />
         </LinearLayout>
 
         <LinearLayout
