@@ -515,8 +515,16 @@
     <string name="configLabel_action_launch_extras">Extras:</string>                 <!-- edittext label -->  <!-- TODO -->
     <string name="configHint_action_launch_extras"><![CDATA[<none>]]></string> <!-- editText hint (and default) -->
 
-    <string name="configAction_saveIntent">Save</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_loadIntent">Load</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="addaction_custname">custom<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="addaction_error_id">ID must not be empty (or contain spaces).</string>
+    <string name="addaction_error_title">Display string must not be empty.</string>
+
+    <string name="configAction_testAction">Test</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_saveAction">Save</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_loadAction">Load</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_deleteAction">Delete</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_exportActions">Export</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_importActions">Import</string>         <!-- button (contentDescription) -->  <!-- TODO -->
 
     <!-- App Setting: WidgetThemes -->
     <string name="configLabel_widgetThemeList">Themes</string>  <!-- TODO -->

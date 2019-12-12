@@ -2376,6 +2376,8 @@ public class WidgetSettings
         PREF_DEF_LOCATION_LONGITUDE = context.getString(R.string.default_location_longitude);
         PREF_DEF_LOCATION_ALTITUDE = context.getString(R.string.default_location_altitude);
         PREF_DEF_GENERAL_UNITS_LENGTH = getLengthUnit(context.getString(R.string.default_units_length));
+
+        WidgetActions.initDefaults(context);
     }
 
     public static void initDisplayStrings( Context context )

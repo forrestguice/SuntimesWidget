@@ -17,9 +17,12 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/appwidget_action_launch_layout0"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:orientation="vertical" android:animateLayoutChanges="true" >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -31,26 +34,31 @@
             android:background="?attr/icActionExpand" android:textOn="" android:textOff="" android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
             android:contentDescription="@string/expandMore"/>
 
-        <TextView android:labelFor="@+id/appwidget_action_launch" android:visibility="gone"
-            android:id="@+id/appwidget_action_launch_label"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="@string/configLabel_action_launch" />
+        <TextView
+            android:id="@+id/appwidget_action_label" tools:text="Title"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_vertical" android:layout_weight="3"
+            android:gravity="start|left" android:textColor="?attr/text_buttonSelector" />
 
-        <EditText android:id="@+id/appwidget_action_launch" android:layout_width="0dp"
-            android:layout_height="wrap_content" android:layout_weight="1"
-            android:hint="@string/configHint_action_launch" android:text=""
+        <EditText android:visibility="gone"
+            android:id="@+id/appwidget_action_label_edit" tools:text="Title"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:gravity="center_vertical" android:layout_gravity="center_vertical" android:layout_weight="3"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:inputType="textMultiLine|textNoSuggestions" />
 
-        <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_helpButton"
+        <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_load"
             style="@style/Widget.AppCompat.ActionButton"
-            android:layout_height="wrap_content" android:layout_width="wrap_content"
-            android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
-            android:contentDescription="@string/configAction_help"/>
+            android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_vertical"
+            android:src="?attr/icActionWidgets"
+            android:contentDescription="Load" />
+
+        <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_menu"
+            style="?attr/actionOverflowButtonStyle"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_vertical"
+            android:contentDescription="More" />
 
     </LinearLayout>
 
-    <LinearLayout android:id="@+id/appwidget_action_launch_layout" android:visibility="gone"
+    <LinearLayout android:id="@+id/appwidget_action_launch_layout" android:visibility="visible"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical" android:animateLayoutChanges="true">
 
@@ -67,16 +75,30 @@
                 android:layout_height="wrap_content" android:layout_gravity="center_vertical"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_test"
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_helpButton"
                 style="@style/Widget.AppCompat.ActionButton"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:src="?attr/icActionPlay"
-                android:contentDescription="Test" />
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
+                android:contentDescription="@string/configAction_help"/>
 
-            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_menu"
-                style="?attr/actionOverflowButtonStyle"
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
+
+            <TextView android:labelFor="@+id/appwidget_action_launch"
+                android:id="@+id/appwidget_action_launch_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:contentDescription="More" />
+                android:text="@string/configLabel_action_launch" />
+
+            <android.support.v7.widget.AppCompatAutoCompleteTextView android:id="@+id/appwidget_action_launch" android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="1"
+                android:hint="@string/configHint_action_launch" android:text=""
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:inputType="textMultiLine|textNoSuggestions" />
+
         </LinearLayout>
 
         <LinearLayout

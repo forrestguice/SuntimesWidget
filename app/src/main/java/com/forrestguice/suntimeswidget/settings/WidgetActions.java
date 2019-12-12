@@ -49,10 +49,19 @@ public class WidgetActions
     public static final String PREF_DEF_ACTION_LAUNCH = "com.forrestguice.suntimeswidget.SuntimesActivity";
 
     public static final String PREF_KEY_ACTION_LAUNCH_ACTION = "action";
+    public static final String PREF_DEF_ACTION_LAUNCH_ACTION = "";
+
     public static final String PREF_KEY_ACTION_LAUNCH_EXTRAS = "extras";
+    public static final String PREF_DEF_ACTION_LAUNCH_EXTRAS = "";
+
     public static final String PREF_KEY_ACTION_LAUNCH_DATA = "data";
+    public static final String PREF_DEF_ACTION_LAUNCH_DATA = "";
+
     public static final String PREF_KEY_ACTION_LAUNCH_DATATYPE = "datatype";
+    public static final String PREF_DEF_ACTION_LAUNCH_DATATYPE = "";
+
     public static final String PREF_KEY_ACTION_LAUNCH_TITLE = "title";
+    public static String PREF_DEF_ACTION_LAUNCH_TITLE = "Suntimes";
 
     public static final String PREF_KEY_ACTION_LAUNCH_TYPE = "type";
     public static final String LAUNCH_TYPE_ACTIVITY = "ACTIVITY";
@@ -104,8 +113,10 @@ public class WidgetActions
 
     public static void saveActionLaunchPref(Context context, int appWidgetId, @Nullable String id, String launchString, @Nullable String type, @Nullable String action, @Nullable String dataString, @Nullable String mimeType, @Nullable String extrasString, @Nullable String titleString)
     {
+        boolean hasID = true;
         if (id == null) {
             id = "0";
+            hasID = false;
         }
         if (action != null && action.trim().isEmpty()) {
             action = null;
@@ -132,10 +143,13 @@ public class WidgetActions
         prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_TITLE, (titleString != null ? titleString : ""));
         prefs.apply();
 
-        Set<String> actionList = loadActionLaunchList(context, 0);
-        actionList.add(id);
-        prefs.putStringSet(PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + PREF_KEY_ACTION_LAUNCH_LIST, actionList);
-        prefs.apply();
+        if (hasID)
+        {
+            Set<String> actionList = loadActionLaunchList(context, 0);
+            actionList.add(id);
+            prefs.putStringSet(PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + PREF_KEY_ACTION_LAUNCH_LIST, actionList);
+            prefs.apply();
+        }
     }
     public static Set<String> loadActionLaunchList(Context context, int appWidgetId)
     {
@@ -176,7 +190,7 @@ public class WidgetActions
                     return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_EXTRAS, "");
 
                 case PREF_KEY_ACTION_LAUNCH_TITLE:
-                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_TITLE, "");
+                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_TITLE, PREF_DEF_ACTION_LAUNCH_TITLE);
             }
             return null;
         }
@@ -197,6 +211,11 @@ public class WidgetActions
         prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_EXTRAS);
         prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_TITLE);
         prefs.apply();
+
+        Set<String> actionList = loadActionLaunchList(context, 0);
+        actionList.remove(id);
+        prefs.putStringSet(PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + PREF_KEY_ACTION_LAUNCH_LIST, actionList);
+        prefs.apply();
     }
 
     /**
@@ -206,23 +225,28 @@ public class WidgetActions
     {
         if (launchType != null)
         {
-            Log.i(TAG, "startIntent :: " + launchType + " :: " + launchIntent.toString());
-            switch (launchType)
-            {
-                case WidgetActions.LAUNCH_TYPE_BROADCAST:
-                    context.sendBroadcast(launchIntent);
-                    break;
+            try {
+                Log.i(TAG, "startIntent :: " + launchType + " :: " + launchIntent.toString());
+                switch (launchType)
+                {
+                    case WidgetActions.LAUNCH_TYPE_BROADCAST:
+                        context.sendBroadcast(launchIntent);
+                        break;
 
-                case WidgetActions.LAUNCH_TYPE_SERVICE:
-                    context.startService(launchIntent);
-                    break;
+                    case WidgetActions.LAUNCH_TYPE_SERVICE:
+                        context.startService(launchIntent);
+                        break;
 
-                case WidgetActions.LAUNCH_TYPE_ACTIVITY:
-                default:
-                    launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(launchIntent);
-                    break;
+                    case WidgetActions.LAUNCH_TYPE_ACTIVITY:
+                    default:
+                        launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(launchIntent);
+                        break;
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "startIntent: unable to start + " + launchType + " :: " + e);
             }
+
         } else {
             Log.i(TAG, "startIntent :: ACTIVITY :: " + launchIntent.toString());
             context.startActivity(launchIntent);
@@ -333,6 +357,13 @@ public class WidgetActions
 
     public static void deletePrefs(Context context, int appWidgetId) {
         deleteActionLaunchPref(context, appWidgetId, null);
+
+        Uri uri = null;
+        Intent intent = new Intent("view", uri);
+    }
+
+    public static void initDefaults(Context context) {
+        PREF_DEF_ACTION_LAUNCH_TITLE = context.getString(R.string.app_name);
     }
 
     public static void initDisplayStrings( Context context ) {

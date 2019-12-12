@@ -66,16 +66,22 @@
                 android:text="ID:" />
 
             <android.support.v7.widget.AppCompatAutoCompleteTextView android:id="@+id/edit_intent_id"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                 android:gravity="center_vertical" android:layout_gravity="center_vertical"
                 tools:text="custom1" />
 
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/edit_intent_reset"
+                style="@style/Widget.AppCompat.ActionButton"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                android:src="@drawable/ic_action_new" android:tint="?attr/colorAccent"
+                android:contentDescription="Suggest"/>
+
         </LinearLayout>
 
-        <TextView android:id="@+id/text_note"
+        <android.support.v7.widget.AppCompatTextView android:id="@+id/text_note"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:paddingTop="8dp" android:textColor="?attr/tagColor_warning"
-            android:text="ID is already taken. The action will be overwritten." />
+            android:text="ID is already taken. This action will be overwritten." />
 
     </LinearLayout>
 
