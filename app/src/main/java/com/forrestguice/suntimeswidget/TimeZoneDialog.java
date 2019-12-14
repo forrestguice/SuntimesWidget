@@ -543,10 +543,18 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         WidgetSettings.TimezoneMode timezoneMode = timezoneModes[spinner_timezoneMode.getSelectedItemPosition()];
         WidgetSettings.saveTimezoneModePref(context, appWidgetId, timezoneMode);
 
+        String tzString;
         WidgetTimezones.TimeZoneItem tz = (WidgetTimezones.TimeZoneItem) spinner_timezone.getSelectedItem();
-        WidgetSettings.saveTimezonePref(context, appWidgetId, tz.getID());
+        if (tz != null) {
+            tzString = tz.getID();
+        } else {
+            tzString = TimeZone.getDefault().getID();
+            Log.e("TimeZoneDialog", "Selected time zone is null; falling back to default.. " + tzString);
+        }
+
+        WidgetSettings.saveTimezonePref(context, appWidgetId, tzString);
         if (timezoneMode == WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE) {
-            WidgetSettings.saveTimezonePref(context, appWidgetId, tz.getID(), SLOT_CUSTOM0);
+            WidgetSettings.saveTimezonePref(context, appWidgetId, tzString, SLOT_CUSTOM0);
         }
 
         // save: solar timemode
