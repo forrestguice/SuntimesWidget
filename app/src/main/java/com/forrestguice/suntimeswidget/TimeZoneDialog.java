@@ -670,13 +670,24 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         @Override
         public void onClick(View v)
         {
-            saveSettings(getContext());
-            dismiss();
-            if (onAccepted != null) {
-                onAccepted.onClick(getDialog(), 0);
+            if (validateInput())
+            {
+                saveSettings(getContext());
+                dismiss();
+                if (onAccepted != null) {
+                    onAccepted.onClick(getDialog(), 0);
+                }
             }
         }
     };
+
+    private boolean validateInput()
+    {
+        if (spinner_timezone.getSelectedItem() == null) {
+            return false;
+        }
+        return true;
+    }
 
     private void expandSheet(DialogInterface dialog)
     {
