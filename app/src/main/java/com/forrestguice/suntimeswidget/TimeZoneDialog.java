@@ -76,6 +76,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     private String customTimezoneID;
 
+    private Button btn_accept;
     private Spinner spinner_timezoneMode;
 
     private LinearLayout layout_timezone;
@@ -236,7 +237,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         Button btn_cancel = (Button) dialogContent.findViewById(R.id.dialog_button_cancel);
         btn_cancel.setOnClickListener(onDialogCancelClick);
 
-        Button btn_accept = (Button) dialogContent.findViewById(R.id.dialog_button_accept);
+        btn_accept = (Button) dialogContent.findViewById(R.id.dialog_button_accept);
         btn_accept.setOnClickListener(onDialogAcceptClick);
     }
 
@@ -415,6 +416,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
                     super.onSortTimeZones(result, sortMode);
                     spinner_timezone_adapter = result;
                     WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
+                    btn_accept.setEnabled(validateInput());
                 }
 
                 @Override
@@ -445,6 +447,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
                     super.onSortTimeZones(result, sortMode);
                     spinner_timezone_adapter = result;
                     WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
+                    btn_accept.setEnabled(validateInput());
                 }
 
                 @Override
@@ -629,6 +632,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         public void onStart()
         {
             super.onStart();
+            btn_accept.setEnabled(false);
             spinner_timezone.setAdapter(new WidgetTimezones.TimeZoneItemAdapter(getActivity(), R.layout.layout_listitem_timezone));
         }
 
@@ -639,6 +643,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             spinner_timezone_adapter = result;
             spinner_timezone.setAdapter(spinner_timezone_adapter);
             WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
+            btn_accept.setEnabled(validateInput());
         }
     };
 
