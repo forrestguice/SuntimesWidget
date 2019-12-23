@@ -1,5 +1,9 @@
 ### ~
 
+### v0.12.4 (2019-12-23)
+* fixes app crash (time zone dialog) (#376).
+* fixes potentially long lived AsyncTask to run in parallel with shorter lived tasks (THREAD_POOL_EXECUTOR); "current location" updates no longer block dialogs from loading (#376).
+
 ### v0.12.3 (2019-12-03)
 * fixes bug "can't get location while gps is working and has a fix" (api17+) (#373).
 * adds gps "recent max age" values "none" and "any" (ignores gps time when getting fix), and an option to fallback to the last location.
