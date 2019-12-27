@@ -1,2 +1,2 @@
 * fixes app crash (time zone dialog) (#376).
-* fixes bug where updating "current location" would block other dialogs from loading.
+* fixes bug where updating "current location" blocks dialogs from loading.
