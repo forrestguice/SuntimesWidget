@@ -76,6 +76,7 @@ Widgets are resizable and include...
 * 3x1 sun position widget that displays the lightmap graph, and tracks the sun's altitude and azimuth (current, sunrise/sunset, and at noon).
 * 3x2 sun position widget that displays current sunlight and moonlight projected over a world map.
 
+<img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/clockwidget_1x1_preview.png" align="center"></img>
 <img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/widget1_preview.png" align="center"></img>
 <img width="128px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/widget0_1x1_preview.png" align="center"></img>
 <img width="288px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/widget0_2x1_preview.png" align="center"></img>
@@ -120,9 +121,9 @@ Version `0.9.*` contained the following additional permissions (removed in v0.10
 
 Do you find value in this software? Pay as you feel. 
 
-[![paypal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-rect-paypal-26px.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2) [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=forrestguice&url=https://github.com/forrestguice/SuntimesWidget&title=Suntimes&tags=github&category=software)
+[![paypal](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-rect-paypal-26px.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NZJ5FJBCKY6K2) 
 
-I want to express my thanks to those who have sent me something. This is a very meaningful gesture and greatly appreciated.
+I want to express my thanks to those who have sent me something. This is greatly appreciated.
 
 ## Bug Reports ##
 
@@ -134,7 +135,11 @@ When submitting a bug please be detailed and specific. What did you expect the a
 ## Legal Stuff
 
 Copyright &#169; 2014-2019 Forrest Guice<br/>
-The goal of this project is an app that is free and open-source (FOSS). The source code is available under *GPLv3* (https://github.com/forrestguice/SuntimesWidget).
+
+The source code is available under [GPLv3](LICENSE) (https://github.com/forrestguice/SuntimesWidget).
+> This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the [GNU General Public License](LICENSE) for more details.
+
+
 
 Icons and images from:
 * "Google Android Design Icons 20131120" [Apache License 2.0]

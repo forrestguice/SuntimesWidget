@@ -1,5 +1,10 @@
 ### ~
 
+### v0.12.4 (2019-12-23)
+* fixes app crash (time zone dialog) (#376).
+* fixes bug where updating "current location" blocks dialogs from loading; potentially long lived AsyncTask now run in parallel with shorter lived tasks (THREAD_POOL_EXECUTOR) (#376).
+* updates build; Android gradle plugin version updated to `com.android.tools.build:gradle:3.1.2`, gradle wrapper to `gradle-4.4`, and buildToolsVersion to `27.0.3`.
+
 ### v0.12.3 (2019-12-03)
 * fixes bug "can't get location while gps is working and has a fix" (api17+) (#373).
 * adds gps "recent max age" values "none" and "any" (ignores gps time when getting fix), and an option to fallback to the last location.
