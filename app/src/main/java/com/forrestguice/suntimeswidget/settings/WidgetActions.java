@@ -113,7 +113,7 @@ public class WidgetActions
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveActionLaunchPref(Context context, int appWidgetId, @Nullable String id, String launchString, @Nullable String type, @Nullable String action, @Nullable String dataString, @Nullable String mimeType, @Nullable String extrasString, @Nullable String titleString)
+    public static void saveActionLaunchPref(Context context, @Nullable String titleString, int appWidgetId, @Nullable String id, @Nullable String launchString, @Nullable String type, @Nullable String action, @Nullable String dataString, @Nullable String mimeType, @Nullable String extrasString)
     {
         boolean hasID = true;
         if (id == null) {
@@ -136,7 +136,7 @@ public class WidgetActions
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix0 = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + id + "_";
 
-        prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH, launchString);
+        prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH, (launchString != null ? launchString : ""));
         prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_TYPE, (type != null ? type : LAUNCH_TYPE_ACTIVITY));
         prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_ACTION, (action != null ? action : ""));
         prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_DATA, (dataString != null ? dataString : ""));

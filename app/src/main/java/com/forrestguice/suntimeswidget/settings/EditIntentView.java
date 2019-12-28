@@ -350,7 +350,7 @@ public class EditIntentView extends LinearLayout
      */
     public void saveIntent(Context context, int appWidgetId, @Nullable String id, @Nullable String title)
     {
-        WidgetActions.saveActionLaunchPref(context, appWidgetId, id, getIntentClass(), getIntentType().name(), getIntentAction(), getIntentData(), getIntentDataType(), getIntentExtras(), title);
+        WidgetActions.saveActionLaunchPref(context, title, appWidgetId, id, getIntentClass(), getIntentType().name(), getIntentAction(), getIntentData(), getIntentDataType(), getIntentExtras());
         lastLoadedID = id;
     }
 
