@@ -115,6 +115,9 @@
     <attr name="icActionGPS_searching" format="reference" />
 
     <declare-styleable name="EditIntentView">
+        <attr name="startExpanded" format="boolean" />
+        <attr name="allowCollapse" format="boolean" />
+        <attr name="allowSaveLoad" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="WorldMapView">

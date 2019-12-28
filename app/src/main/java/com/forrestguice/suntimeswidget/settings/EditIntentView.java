@@ -97,6 +97,10 @@ public class EditIntentView extends LinearLayout
     protected AutoCompleteTextView text_launchDataType;
     protected EditText text_launchExtras;
 
+    private boolean startExpanded = false;
+    private boolean allowCollapse = true;
+    private boolean allowSaveLoad = true;
+
     public EditIntentView(Context context)
     {
         super(context);
@@ -112,14 +116,10 @@ public class EditIntentView extends LinearLayout
     private void applyAttributes(Context context, AttributeSet attrs)
     {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.EditIntentView, 0, 0);
-        try
-        {
-            /**String labelText = a.getString(R.styleable.ColorChooserView_labelText);
-            if (label != null){
-                label.setText(labelText);
-                button.setContentDescription(labelText);
-            }*/
-
+        try {
+            startExpanded = a.getBoolean(R.styleable.EditIntentView_startExpanded, startExpanded);
+            allowCollapse = a.getBoolean(R.styleable.EditIntentView_allowCollapse, allowCollapse);
+            allowSaveLoad = a.getBoolean(R.styleable.EditIntentView_allowSaveLoad, allowSaveLoad);
         } finally {
             a.recycle();
         }
@@ -127,6 +127,7 @@ public class EditIntentView extends LinearLayout
 
     private void init(final Context context, AttributeSet attrs)
     {
+        applyAttributes(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.layout_view_editintent, this, true);
 
         text_label = (TextView) findViewById(R.id.appwidget_action_label);
@@ -154,7 +155,8 @@ public class EditIntentView extends LinearLayout
 
         button_launchMore = (ToggleButton) findViewById(R.id.appwidget_action_launch_moreButton);
         button_launchMore.setOnCheckedChangeListener(onExpandedChanged0);
-        button_launchMore.setChecked(false);
+        button_launchMore.setVisibility(allowCollapse ? View.VISIBLE : View.GONE);
+        button_launchMore.setChecked(startExpanded);
 
         spinner_launchType = (Spinner) findViewById(R.id.appwidget_action_launch_type);
         ArrayAdapter<WidgetActions.LaunchType> launchTypeAdapter = new ArrayAdapter<>(context, R.layout.layout_listitem_oneline, WidgetActions.LaunchType.values());
@@ -184,7 +186,9 @@ public class EditIntentView extends LinearLayout
             layout.setVisibility(View.GONE);
         }
 
-        applyAttributes(context, attrs);
+        if (startExpanded) {
+            setExpanded(true);
+        }
     }
 
     /**
@@ -208,23 +212,27 @@ public class EditIntentView extends LinearLayout
      */
     protected CompoundButton.OnCheckedChangeListener onExpandedChanged0 = new CompoundButton.OnCheckedChangeListener() {
         @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-        {
-            View layout = findViewById(R.id.appwidget_action_launch_layout);
-            if (layout != null) {
-                layout.setVisibility(isChecked ? View.VISIBLE : View.GONE);
-            }
-
-            button_load.setVisibility(isChecked ? View.GONE : View.VISIBLE);
-            button_menu.setVisibility(isChecked ? View.VISIBLE : View.GONE);
-            text_label.setVisibility(isChecked ? View.GONE : View.VISIBLE);
-            edit_label.setVisibility(isChecked ? View.VISIBLE : View.INVISIBLE);
-
-            if (onExpandedChanged != null) {
-                onExpandedChanged.onCheckedChanged(buttonView, isChecked);
-            }
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            setExpanded(isChecked);
         }
     };
+
+    private void setExpanded(boolean expanded)
+    {
+        View layout = findViewById(R.id.appwidget_action_launch_layout);
+        if (layout != null) {
+            layout.setVisibility(expanded ? View.VISIBLE : View.GONE);
+        }
+
+        button_load.setVisibility(expanded ? View.GONE : View.VISIBLE);
+        button_menu.setVisibility(expanded ? View.VISIBLE : View.GONE);
+        text_label.setVisibility(expanded ? View.GONE : View.VISIBLE);
+        edit_label.setVisibility(expanded ? View.VISIBLE : View.INVISIBLE);
+
+        if (onExpandedChanged != null) {
+            onExpandedChanged.onCheckedChanged(button_launchMore, expanded);
+        }
+    }
 
     private CompoundButton.OnCheckedChangeListener onExpandedChanged = null;
     public void setOnExpandedChangedListener( CompoundButton.OnCheckedChangeListener listener ) {
@@ -284,6 +292,16 @@ public class EditIntentView extends LinearLayout
         inflater.inflate(R.menu.editintent, menu.getMenu());
         menu.setOnMenuItemClickListener(onMenuItemClicked);
         SuntimesUtils.forceActionBarIcons(menu.getMenu());
+
+        MenuItem[] restrictedItems = new MenuItem[] { menu.getMenu().findItem(R.id.saveIntent), menu.getMenu().findItem(R.id.loadIntent) };
+        for (MenuItem item : restrictedItems)
+        {
+            if (item != null) {
+                item.setEnabled(allowSaveLoad);
+                item.setVisible(allowSaveLoad);
+            }
+        }
+
         menu.show();
     }
 
@@ -650,8 +668,8 @@ public class EditIntentView extends LinearLayout
         @Override
         public String getIntentTitle()
         {
-            if (edit_intentTitle != null) {
-                return edit_intentTitle.getText().toString();
+            if (edit.text_label != null) {
+                return edit.text_label.getText().toString();
             } else return null;
         }
         public void setIntentTitle(String value) {
@@ -680,7 +698,7 @@ public class EditIntentView extends LinearLayout
 
         private String intentID = null, intentTitle = "";
         private Set<String> intentIDs;
-        private EditText edit_intentTitle;
+        private EditIntentView edit;
         private AutoCompleteTextView edit_intentID;
         private TextView text_note;
         private ImageButton button_suggest;
@@ -688,13 +706,13 @@ public class EditIntentView extends LinearLayout
         @Override
         protected void updateViews(Context context)
         {
-            edit_intentTitle.setText(intentTitle);
+            edit.setIntentTitle(intentTitle);
             edit_intentID.setText(intentID);
             text_note.setVisibility(View.GONE);
 
             if ((intentIDs.contains(intentID)))
             {
-                edit_intentTitle.setText(WidgetActions.loadActionLaunchPref(context, 0, intentID, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE));
+                edit.setIntentTitle(WidgetActions.loadActionLaunchPref(context, 0, intentID, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE));
                 text_note.setVisibility(View.VISIBLE);
                 edit_intentID.selectAll();
                 edit_intentID.requestFocus();
@@ -705,7 +723,7 @@ public class EditIntentView extends LinearLayout
         protected boolean validateInput()
         {
             String id = edit_intentID.getText().toString();
-            String title = edit_intentTitle.getText().toString();
+            String title = edit.getIntentTitle();
 
             if (id.trim().isEmpty() || id.contains(" ")) {
                 edit_intentID.setError(getContext().getString(R.string.addaction_error_id));
@@ -713,9 +731,9 @@ public class EditIntentView extends LinearLayout
             } else edit_intentID.setError(null);
 
             if (title.trim().isEmpty()) {
-                edit_intentTitle.setError(getContext().getString(R.string.addaction_error_title));
+                edit.text_label.setError(getContext().getString(R.string.addaction_error_title));
                 return false;
-            } else edit_intentTitle.setError(null);
+            } else edit.text_label.setError(null);
 
             return true;
         }
@@ -730,8 +748,8 @@ public class EditIntentView extends LinearLayout
                 intentID = suggestedIntentID(context);
             }
 
-            edit_intentTitle = (EditText) dialogContent.findViewById(R.id.edit_intent_title);
-            edit_intentTitle.addTextChangedListener(new TextWatcher() {
+            edit = (EditIntentView) dialogContent.findViewById(R.id.edit_intent);
+            edit.text_label.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
                 @Override
