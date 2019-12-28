@@ -873,18 +873,25 @@ public class EditIntentView extends LinearLayout
 
         private void deleteAction()
         {
-            AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-            dialog.setMessage("Are you sure you want to delete " + getIntentID() + "?").setNegativeButton("Cancel", null).setPositiveButton("Ok",  // TODO: i18n
-                    new DialogInterface.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            WidgetActions.deleteActionLaunchPref(getContext(), 0, getIntentID());
-                            initAdapter(getContext());
-                            updateViews(getContext());
-                        }
-                    });
-            dialog.show();
+            Context context = getContext();
+            final String intentID = getIntentID();
+            if (intentID != null && context != null)
+            {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+                dialog.setMessage(context.getString(R.string.delaction_dialog_msg, intentID))
+                        .setNegativeButton(context.getString(R.string.delaction_dialog_cancel), null)
+                        .setPositiveButton(context.getString(R.string.delaction_dialog_ok),
+                        new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                WidgetActions.deleteActionLaunchPref(getContext(), 0, intentID);
+                                initAdapter(getContext());
+                                updateViews(getContext());
+                            }
+                        });
+                dialog.show();
+            }
         }
 
         public static class IntentDisplay
