@@ -314,14 +314,15 @@ public class EditIntentView extends LinearLayout
 
     public void saveIntent()
     {
+        final Context context = getContext();
         final SaveIntentDialog saveDialog = new SaveIntentDialog();
         saveDialog.setIntentID(lastLoadedID);
         saveDialog.setIntentTitle(edit_label.getText().toString());
         saveDialog.setOnAcceptedListener(new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                saveIntent(getContext(), 0, saveDialog.getIntentID(), saveDialog.getIntentTitle());
-                Toast.makeText(getContext(), "Saved " + saveDialog.getIntentID(), Toast.LENGTH_SHORT).show();  // TODO: i18ns
+                saveIntent(context, 0, saveDialog.getIntentID(), saveDialog.getIntentTitle());
+                Toast.makeText(context, context.getString(R.string.saveaction_toast, saveDialog.getIntentTitle(), saveDialog.getIntentID()), Toast.LENGTH_SHORT).show();
             }
         });
         saveDialog.show(fragmentManager, DIALOGTAG_SAVE);
@@ -329,12 +330,14 @@ public class EditIntentView extends LinearLayout
 
     public void loadIntent()
     {
+        final Context context = getContext();
         final LoadIntentDialog loadDialog = new LoadIntentDialog();
         loadDialog.setOnAcceptedListener(new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                loadIntent(getContext(), 0, loadDialog.getIntentID());
-                Toast.makeText(getContext(), "Loaded " + loadDialog.getIntentID(), Toast.LENGTH_SHORT).show();  // TODO: i18ns
+            public void onClick(DialogInterface dialog, int which)
+            {
+                loadIntent(context, 0, loadDialog.getIntentID());
+                Toast.makeText(context, context.getString(R.string.loadaction_toast, loadDialog.getIntentTitle()), Toast.LENGTH_SHORT).show();
             }
         });
         loadDialog.show(fragmentManager, DIALOGTAG_LOAD);
@@ -544,6 +547,7 @@ public class EditIntentView extends LinearLayout
     public static abstract class EditIntentDialog extends BottomSheetDialogFragment
     {
         protected abstract String getIntentID();
+        protected abstract String getIntentTitle();
         protected abstract int getLayoutID();
 
         protected Button btn_accept, btn_cancel;
@@ -643,6 +647,7 @@ public class EditIntentView extends LinearLayout
      */
     public static class SaveIntentDialog extends EditIntentDialog
     {
+        @Override
         public String getIntentTitle()
         {
             if (edit_intentTitle != null) {
@@ -794,11 +799,21 @@ public class EditIntentView extends LinearLayout
      */
     public static class LoadIntentDialog extends EditIntentDialog
     {
+        @Override
         public String getIntentID()
         {
             if (spin_intentID != null) {
                 IntentDisplay selected = (IntentDisplay)spin_intentID.getSelectedItem();
                 return selected != null ? selected.id : null;
+            } else return null;
+        }
+
+        @Override
+        public String getIntentTitle()
+        {
+            if (spin_intentID != null) {
+                IntentDisplay selected = (IntentDisplay)spin_intentID.getSelectedItem();
+                return selected != null ? selected.title : null;
             } else return null;
         }
 

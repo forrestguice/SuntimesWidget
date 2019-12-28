@@ -32,7 +32,7 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:gravity="center"
             style="@style/Base.DialogWindowTitle.AppCompat"
-            android:text="Load" />
+            android:text="@string/loadaction_dialog_title" />
 
     </LinearLayout>
 

@@ -32,7 +32,7 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:gravity="center"
             style="@style/Base.DialogWindowTitle.AppCompat"
-            android:text="Save Action" />
+            android:text="@string/saveaction_dialog_title" />
 
     </LinearLayout>
 
