@@ -49,7 +49,7 @@
             android:paddingLeft="16dp" android:paddingRight="8dp"
             android:paddingStart="16dp" android:paddingEnd="8dp">
 
-            <com.forrestguice.suntimeswidget.settings.EditIntentView
+            <com.forrestguice.suntimeswidget.actions.EditIntentView
                 android:id="@+id/appwidget_action_launch_edit"
                 android:layout_width="wrap_content" android:layout_height="wrap_content" />
 

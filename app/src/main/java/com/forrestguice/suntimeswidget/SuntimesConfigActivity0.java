@@ -57,7 +57,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorLi
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.EditIntentView;
+import com.forrestguice.suntimeswidget.actions.EditIntentView;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 

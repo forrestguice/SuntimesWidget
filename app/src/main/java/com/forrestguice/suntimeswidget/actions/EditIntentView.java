@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.forrestguice.suntimeswidget.settings;
+package com.forrestguice.suntimeswidget.actions;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -59,6 +59,8 @@ import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetActions;
 
 import java.util.ArrayList;
 import java.util.Set;
