@@ -58,6 +58,15 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
         this.helperRef = new WeakReference<GetFixHelper>(helper);
     }
 
+    public AsyncTask<Object, Location, Location> executeTask(Object... params)
+    {
+        if (Build.VERSION.SDK_INT >= 11) {
+            return executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
+        } else {
+            return execute(params);
+        }
+    }
+
     /**
      * Property: minimum amount of time that must elapse while searching for a location.
      */

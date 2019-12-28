@@ -123,7 +123,7 @@ public class GetFixHelper
                             }
                         }
                     });
-                    getFixTask.execute(AppSettings.loadPrefGpsPassiveMode(myParent));
+                    getFixTask.executeTask(AppSettings.loadPrefGpsPassiveMode(myParent));
 
                 } else {
                     Log.w("GetFixHelper", "getFix called while GPS disabled; showing a prompt");
