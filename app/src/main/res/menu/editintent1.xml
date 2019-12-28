@@ -3,11 +3,6 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="none">
 
-        <item android:id="@+id/deleteAction"
-            android:title="@string/configAction_deleteAction"
-            android:icon="?attr/icActionDelete"
-            app:showAsAction="never" />
-
         <item android:id="@+id/exportAction"
             android:title="@string/configAction_exportActions"
             android:icon="?attr/icActionSave"
