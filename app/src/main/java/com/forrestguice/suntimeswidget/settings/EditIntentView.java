@@ -36,6 +36,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -851,7 +852,16 @@ public class EditIntentView extends LinearLayout
             inflater.inflate(R.menu.editintent1, menu.getMenu());
             menu.setOnMenuItemClickListener(onMenuItemClicked);
             SuntimesUtils.forceActionBarIcons(menu.getMenu());
+            prepareOverflowMenu(context, menu.getMenu());
             menu.show();
+        }
+
+        protected void prepareOverflowMenu(Context context, Menu menu)
+        {
+            MenuItem deleteItem = menu.findItem(R.id.deleteAction);
+            if (deleteItem != null) {
+                deleteItem.setEnabled(getIntentID() != null);
+            }
         }
 
         protected PopupMenu.OnMenuItemClickListener onMenuItemClicked = new PopupMenu.OnMenuItemClickListener()
