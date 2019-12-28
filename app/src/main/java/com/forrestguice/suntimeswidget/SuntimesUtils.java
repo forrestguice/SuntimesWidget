@@ -1117,6 +1117,7 @@ public class SuntimesUtils
         String dateDayPatternShort = "%dd";
         String dateTimePattern = "%dT";
         String dateTimePatternShort = "%dt";
+        String dateMillisPattern = "%dm";
         String widgetIDPattern = "%id";
         String percentPattern = "%%";
 
@@ -1141,6 +1142,7 @@ public class SuntimesUtils
             displayString = displayString.replaceAll(dateDayPatternShort, calendarDayDisplayString(context, data.calendar(), true).toString());
             displayString = displayString.replaceAll(dateDayPattern, calendarDayDisplayString(context, data.calendar(), false).toString());
             displayString = displayString.replaceAll(dateYearPattern, calendarDateYearDisplayString(context, data.calendar()).toString());
+            displayString = displayString.replaceAll(dateMillisPattern, Long.toString(data.calendar().getTimeInMillis()));
             displayString = displayString.replaceAll(datePattern, calendarDateDisplayString(context, data.calendar(), false).toString());
         }
 
