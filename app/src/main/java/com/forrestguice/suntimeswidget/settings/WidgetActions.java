@@ -368,11 +368,23 @@ public class WidgetActions
         deleteActionLaunchPref(context, appWidgetId, null);
     }
 
-    public static void initDefaults(Context context) {
+    public static void initDefaults(Context context)
+    {
         PREF_DEF_ACTION_LAUNCH_TITLE = context.getString(R.string.app_name);
 
         if (!hasActionLaunchPref(context, 0, "def_suntimes")) {
-            saveActionLaunchPref(context, 0, "def_suntimes", WidgetActions.PREF_DEF_ACTION_LAUNCH, WidgetActions.PREF_DEF_ACTION_LAUNCH_TYPE.name(), WidgetActions.PREF_DEF_ACTION_LAUNCH_ACTION, WidgetActions.PREF_DEF_ACTION_LAUNCH_DATA, WidgetActions.PREF_DEF_ACTION_LAUNCH_DATATYPE, WidgetActions.PREF_DEF_ACTION_LAUNCH_EXTRAS, WidgetActions.PREF_DEF_ACTION_LAUNCH_TITLE);
+            saveActionLaunchPref(context, WidgetActions.PREF_DEF_ACTION_LAUNCH_TITLE, 0, "def_suntimes", WidgetActions.PREF_DEF_ACTION_LAUNCH,
+                    WidgetActions.PREF_DEF_ACTION_LAUNCH_TYPE.name(), WidgetActions.PREF_DEF_ACTION_LAUNCH_ACTION, WidgetActions.PREF_DEF_ACTION_LAUNCH_DATA, WidgetActions.PREF_DEF_ACTION_LAUNCH_DATATYPE, WidgetActions.PREF_DEF_ACTION_LAUNCH_EXTRAS);
+        }
+
+        if (!hasActionLaunchPref(context, 0, "def_calendar")) {
+            saveActionLaunchPref(context, "Calendar", 0, "def_calendar", null,
+                    LaunchType.ACTIVITY.name(), Intent.ACTION_VIEW, "content://com.android.calendar/time/%dm", null, null);
+        }
+
+        if (!hasActionLaunchPref(context, 0, "def_map")) {
+            saveActionLaunchPref(context, "Map", 0, "def_map", null,
+                    LaunchType.ACTIVITY.name(), Intent.ACTION_VIEW, "geo:%lat,%lon", null, null);
         }
     }
 
