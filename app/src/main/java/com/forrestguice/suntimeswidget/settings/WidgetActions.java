@@ -279,13 +279,14 @@ public class WidgetActions
      */
     public static void applyData(Context context, Intent intent, @Nullable String dataString, @Nullable String mimeType, @Nullable SuntimesData data)
     {
-        if (intent != null && dataString != null && !dataString.isEmpty())
+        //Log.d(TAG, "applyData: " + dataString + " (" + mimeType + ") [" + data + "] to " + intent);
+        if (intent != null && dataString != null && !dataString.trim().isEmpty())
         {
             SuntimesUtils utils = new SuntimesUtils();
             Uri dataUri = Uri.parse(Uri.decode(
                     ((data != null) ? utils.displayStringForTitlePattern(context, dataString, data) : dataString)
             ));
-            if (mimeType != null) {
+            if (mimeType != null && !mimeType.trim().isEmpty()) {
                 intent.setDataAndType(dataUri, mimeType);
             } else intent.setData(dataUri);
         }
@@ -293,7 +294,7 @@ public class WidgetActions
 
     public static void applyExtras(Context context, Intent intent, @Nullable String extraString, @Nullable SuntimesData data)
     {
-        if (intent == null || extraString == null || extraString.isEmpty()) {
+        if (intent == null || extraString == null || extraString.trim().isEmpty()) {
             return;
         }
 
