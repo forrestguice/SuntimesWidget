@@ -381,7 +381,7 @@ public class EditIntentView extends LinearLayout
      */
     public void restoreDefaults()
     {
-        spinner_launchType.setSelection(0);
+        setIntentType(WidgetActions.PREF_DEF_ACTION_LAUNCH_TYPE.name());
         text_label.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH_TITLE);
         edit_label.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH_TITLE);
         text_launchAction.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH_ACTION);

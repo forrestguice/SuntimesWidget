@@ -64,6 +64,8 @@ public class WidgetActions
     public static String PREF_DEF_ACTION_LAUNCH_TITLE = "Suntimes";
 
     public static final String PREF_KEY_ACTION_LAUNCH_TYPE = "type";
+    public static final LaunchType PREF_DEF_ACTION_LAUNCH_TYPE = LaunchType.ACTIVITY;
+
     public static final String LAUNCH_TYPE_ACTIVITY = "ACTIVITY";
     public static final String LAUNCH_TYPE_BROADCAST = "BROADCAST";
     public static final String LAUNCH_TYPE_SERVICE = "SERVICE";
@@ -217,6 +219,12 @@ public class WidgetActions
         prefs.putStringSet(PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + PREF_KEY_ACTION_LAUNCH_LIST, actionList);
         prefs.apply();
     }
+    public static boolean hasActionLaunchPref(Context context, int appWidgetId, @NonNull String id)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + id + "_";
+        return prefs.contains(prefs_prefix + PREF_KEY_ACTION_LAUNCH_TITLE);
+    }
 
     /**
      * launchIntent
@@ -357,13 +365,14 @@ public class WidgetActions
 
     public static void deletePrefs(Context context, int appWidgetId) {
         deleteActionLaunchPref(context, appWidgetId, null);
-
-        Uri uri = null;
-        Intent intent = new Intent("view", uri);
     }
 
     public static void initDefaults(Context context) {
         PREF_DEF_ACTION_LAUNCH_TITLE = context.getString(R.string.app_name);
+
+        if (!hasActionLaunchPref(context, 0, "def_suntimes")) {
+            saveActionLaunchPref(context, 0, "def_suntimes", WidgetActions.PREF_DEF_ACTION_LAUNCH, WidgetActions.PREF_DEF_ACTION_LAUNCH_TYPE.name(), WidgetActions.PREF_DEF_ACTION_LAUNCH_ACTION, WidgetActions.PREF_DEF_ACTION_LAUNCH_DATA, WidgetActions.PREF_DEF_ACTION_LAUNCH_DATATYPE, WidgetActions.PREF_DEF_ACTION_LAUNCH_EXTRAS, WidgetActions.PREF_DEF_ACTION_LAUNCH_TITLE);
+        }
     }
 
     public static void initDisplayStrings( Context context ) {
