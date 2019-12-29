@@ -43,7 +43,8 @@
             android:id="@+id/appwidget_action_label_edit" tools:text="Title"
             android:layout_width="0dp" android:layout_height="wrap_content" android:gravity="center_vertical" android:layout_gravity="center_vertical" android:layout_weight="3"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:inputType="textMultiLine|textNoSuggestions" />
+            android:inputType="textMultiLine|textNoSuggestions"
+            android:hint="@string/configHint_action_launch_title" />
 
         <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_load"
             style="@style/Widget.AppCompat.ActionButton"
