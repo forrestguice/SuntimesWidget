@@ -130,6 +130,10 @@ public class LoadIntentDialog extends EditIntentDialog
         {
             switch (menuItem.getItemId())
             {
+                case R.id.addAction:
+                    addAction();
+                    return true;
+
                 case R.id.clearAction:
                     clearActions();
                     return true;
@@ -143,6 +147,22 @@ public class LoadIntentDialog extends EditIntentDialog
             }
         }
     };
+
+    private void addAction()
+    {
+        final Context context = getContext();
+        final SaveIntentDialog saveDialog = new SaveIntentDialog();
+        saveDialog.setOnAcceptedListener(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                saveDialog.getEdit().saveIntent(context, 0, saveDialog.getIntentID(), saveDialog.getIntentTitle());
+                Toast.makeText(context, context.getString(R.string.saveaction_toast, saveDialog.getIntentTitle(), saveDialog.getIntentID()), Toast.LENGTH_SHORT).show();
+                initAdapter(getContext());
+                updateViews(getContext());
+            }
+        });
+        saveDialog.show(getFragmentManager(), EditIntentView.DIALOGTAG_SAVE);
+    }
 
     private void clearActions()
     {

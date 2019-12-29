@@ -534,6 +534,7 @@
     <string name="loadaction_dialog_title">Actions</string>    <!-- TODO -->
     <string name="loadaction_toast">Loaded action \"%1$s\".</string>    <!-- TODO -->
 
+    <string name="configAction_addAction">Add Action</string>           <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_testAction">Test</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_saveAction">Save</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_loadAction">Load</string>         <!-- button (contentDescription) -->  <!-- TODO -->

@@ -29,14 +29,10 @@
 
         <TextView
             android:id="@+id/dialog_title"
-            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-            android:gravity="center_vertical|start"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:gravity="center"
             style="@style/Base.DialogWindowTitle.AppCompat"
             android:text="@string/loadaction_dialog_title" />
-
-        <android.support.v7.widget.AppCompatImageButton android:id="@+id/edit_intent_menu"
-            style="@style/Widget.AppCompat.ActionButton.Overflow"
-            android:layout_height="wrap_content" android:layout_width="wrap_content" />
 
     </LinearLayout>
 
@@ -50,6 +46,10 @@
         <Spinner android:id="@+id/spin_intentid"
             android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1"
             android:gravity="center_vertical" android:layout_gravity="center_vertical" />
+
+        <android.support.v7.widget.AppCompatImageButton android:id="@+id/edit_intent_menu"
+            style="@style/Widget.AppCompat.ActionButton.Overflow"
+            android:layout_height="wrap_content" android:layout_width="wrap_content" />
 
     </LinearLayout>
 
