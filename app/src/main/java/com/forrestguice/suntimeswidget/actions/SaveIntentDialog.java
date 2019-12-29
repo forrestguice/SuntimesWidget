@@ -60,14 +60,15 @@ public class SaveIntentDialog extends EditIntentDialog
     }
     public String suggestedIntentID(Context context)
     {
-        int c = 0;
+        suggested_c = 0;
         String suggested;
         do {
-            suggested = context.getString(R.string.addaction_custname, Integer.toString(c));
-            c++;
+            suggested = context.getString(R.string.addaction_custname, Integer.toString(suggested_c));
+            suggested_c++;
         } while (intentIDs != null && intentIDs.contains(suggested));
         return suggested;
     }
+    private int suggested_c = 1;
 
     private String intentID = null, intentTitle = "";
     private Set<String> intentIDs;
@@ -127,10 +128,6 @@ public class SaveIntentDialog extends EditIntentDialog
         intentIDs = WidgetActions.loadActionLaunchList(context, 0);
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, intentIDs.toArray(new String[0]));
 
-        if (intentID == null) {
-            intentID = suggestedIntentID(context);
-        }
-
         edit = (EditIntentView) dialogContent.findViewById(R.id.edit_intent);
         edit.setFragmentManager(getFragmentManager());
         edit.edit_label.addTextChangedListener(titleWatcher);
@@ -157,6 +154,13 @@ public class SaveIntentDialog extends EditIntentDialog
                 edit_intentID.requestFocus();
             }
         });
+
+        if (intentID == null) {
+            intentID = suggestedIntentID(context);
+            if (intentTitle == null || intentTitle.trim().isEmpty()) {
+                intentTitle = context.getString(R.string.addaction_custtitle, suggested_c - 1);
+            }
+        }
 
         updateViews(context);
         super.initViews(context, dialogContent);

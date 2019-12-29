@@ -516,6 +516,7 @@
     <string name="configHint_action_launch_extras"><![CDATA[<none>]]></string> <!-- editText hint (and default) -->
 
     <string name="addaction_custname">custom<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="addaction_custtitle">Custom Action <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="addaction_error_id">ID must not be empty (or contain spaces).</string>
     <string name="addaction_error_title">Display string must not be empty.</string>
 
