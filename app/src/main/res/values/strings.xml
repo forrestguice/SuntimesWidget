@@ -523,6 +523,10 @@
     <string name="delaction_dialog_ok">Delete</string>    <!-- TODO -->
     <string name="delaction_dialog_cancel">Cancel</string>   <!-- TODO -->
 
+    <string name="clearactions_dialog_msg">Are you sure you want to reset to defaults?\n\nAll custom actions will be removed.</string>    <!-- TODO -->
+    <string name="clearactions_dialog_ok">Clear</string>    <!-- TODO -->
+    <string name="clearactions_toast">Actions reset to defaults.</string>    <!-- TODO -->
+
     <string name="saveaction_dialog_title">Add Action</string>    <!-- TODO -->
     <string name="saveaction_dialog_ok">Save</string>    <!-- TODO -->
     <string name="saveaction_toast">Saved action \"%1$s\" (%2$s).</string>    <!-- TODO -->
@@ -533,7 +537,8 @@
     <string name="configAction_testAction">Test</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_saveAction">Save</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_loadAction">Load</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_deleteAction">Delete</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_deleteAction">Delete Selected</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_clearActions">Clear All</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_exportActions">Export</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_importActions">Import</string>         <!-- button (contentDescription) -->  <!-- TODO -->
 

@@ -29,6 +29,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -129,6 +130,10 @@ public class LoadIntentDialog extends EditIntentDialog
         {
             switch (menuItem.getItemId())
             {
+                case R.id.clearAction:
+                    clearActions();
+                    return true;
+
                 case R.id.deleteAction:
                     deleteAction();
                     return true;
@@ -138,6 +143,32 @@ public class LoadIntentDialog extends EditIntentDialog
             }
         }
     };
+
+    private void clearActions()
+    {
+        final Context context = getContext();
+        if (context != null)
+        {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+            dialog.setMessage(context.getString(R.string.clearactions_dialog_msg))
+                    .setNegativeButton(context.getString(android.R.string.cancel), null)
+                    .setPositiveButton(context.getString(R.string.clearactions_dialog_ok),
+                            new DialogInterface.OnClickListener()
+                            {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which)
+                                {
+                                    // TODO WidgetActions.deleteActionLaunchPref(getContext(), 0, intentID);
+                                    WidgetActions.deletePrefs(context, 0);
+                                    WidgetActions.initDefaults(context);
+                                    Toast.makeText(context, context.getString(R.string.clearactions_toast), Toast.LENGTH_SHORT).show();
+                                    initAdapter(getContext());
+                                    updateViews(getContext());
+                                }
+                            });
+            dialog.show();
+        }
+    }
 
     private void deleteAction()
     {
