@@ -321,13 +321,22 @@ public class EditIntentView extends LinearLayout
         final SaveIntentDialog saveDialog = new SaveIntentDialog();
         saveDialog.setIntentID(lastLoadedID);
         saveDialog.setIntentTitle(edit_label.getText().toString());
+
+        saveDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                saveDialog.setValuesFrom(EditIntentView.this);
+            }
+        });
         saveDialog.setOnAcceptedListener(new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                initFromOther(saveDialog.getEdit());
                 saveIntent(context, 0, saveDialog.getIntentID(), saveDialog.getIntentTitle());
                 Toast.makeText(context, context.getString(R.string.saveaction_toast, saveDialog.getIntentTitle(), saveDialog.getIntentID()), Toast.LENGTH_SHORT).show();
             }
         });
+
         saveDialog.show(fragmentManager, DIALOGTAG_SAVE);
     }
 
@@ -499,6 +508,20 @@ public class EditIntentView extends LinearLayout
     public void setIntentTitle( String title ) {
         text_label.setText(title);
         edit_label.setText(title);
+    }
+
+    /**
+     * initFromOther
+     */
+    public void initFromOther( EditIntentView other )
+    {
+        setIntentTitle(other.getIntentTitle());
+        setIntentType(other.getIntentType().name());
+        setIntentClass(other.getIntentClass());
+        setIntentAction(other.getIntentAction());
+        setIntentData(other.getIntentData());
+        setIntentDataType(other.getIntentDataType());
+        setIntentExtras(other.getIntentExtras());
     }
 
     /**

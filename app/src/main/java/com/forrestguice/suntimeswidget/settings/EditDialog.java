@@ -17,9 +17,11 @@
 */
 package com.forrestguice.suntimeswidget.settings;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
@@ -32,7 +34,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 @SuppressWarnings("Convert2Diamond")
 public abstract class EditDialog extends BottomSheetDialogFragment
@@ -55,6 +56,12 @@ public abstract class EditDialog extends BottomSheetDialogFragment
     protected boolean validateInput() {
         return true;
     }
+    protected void checkInput() {
+        boolean validInput = validateInput();
+        if (btn_accept != null) {
+            btn_accept.setEnabled(validInput);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
@@ -66,12 +73,27 @@ public abstract class EditDialog extends BottomSheetDialogFragment
         return dialogContent;
     }
 
-    private DialogInterface.OnClickListener onAccepted = null;
+    @SuppressWarnings({"deprecation","RestrictedApi"})
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState)
+    {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.setOnShowListener(onDialogShow);
+        return dialog;
+    }
+
+    protected DialogInterface.OnShowListener onShow = null;
+    public void setOnShowListener( DialogInterface.OnShowListener listener ) {
+        onShow = listener;
+    }
+
+    protected DialogInterface.OnClickListener onAccepted = null;
     public void setOnAcceptedListener( DialogInterface.OnClickListener listener ) {
         onAccepted = listener;
     }
 
-    private DialogInterface.OnClickListener onCanceled = null;
+    protected DialogInterface.OnClickListener onCanceled = null;
     public void setOnCanceledListener( DialogInterface.OnClickListener listener ) {
         onCanceled = listener;
     }
@@ -83,7 +105,7 @@ public abstract class EditDialog extends BottomSheetDialogFragment
         expandSheet(getDialog());
     }
 
-    private View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
+    protected View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             getDialog().cancel();
@@ -113,7 +135,17 @@ public abstract class EditDialog extends BottomSheetDialogFragment
         }
     };
 
-    private void expandSheet(DialogInterface dialog)
+    protected DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
+    {
+        @Override
+        public void onShow(DialogInterface dialog) {
+            if (onShow != null) {
+                onShow.onShow(dialog);
+            }
+        }
+    };
+
+    protected void expandSheet(DialogInterface dialog)
     {
         if (dialog == null) {
             return;
