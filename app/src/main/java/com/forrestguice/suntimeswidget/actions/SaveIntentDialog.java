@@ -41,8 +41,8 @@ public class SaveIntentDialog extends EditIntentDialog
     @Override
     public String getIntentTitle()
     {
-        if (edit.text_label != null) {
-            return edit.text_label.getText().toString();
+        if (edit.edit_label != null) {
+            return edit.edit_label.getText().toString();
         } else return null;
     }
     public void setIntentTitle(String value) {
@@ -71,10 +71,14 @@ public class SaveIntentDialog extends EditIntentDialog
 
     private String intentID = null, intentTitle = "";
     private Set<String> intentIDs;
-    private EditIntentView edit;
     private AutoCompleteTextView edit_intentID;
     private TextView text_note;
     private ImageButton button_suggest;
+
+    private EditIntentView edit;
+    public EditIntentView getEdit() {
+        return edit;
+    }
 
     @Override
     protected void updateViews(Context context)
@@ -82,13 +86,19 @@ public class SaveIntentDialog extends EditIntentDialog
         edit.setIntentTitle(intentTitle);
         edit_intentID.setText(intentID);
         text_note.setVisibility(View.GONE);
+        button_suggest.setVisibility(View.GONE);
 
         if ((intentIDs.contains(intentID)))
         {
             edit.setIntentTitle(WidgetActions.loadActionLaunchPref(context, 0, intentID, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE));
             text_note.setVisibility(View.VISIBLE);
+            button_suggest.setVisibility(View.VISIBLE);
             edit_intentID.selectAll();
             edit_intentID.requestFocus();
+        }
+
+        if (intentID.trim().isEmpty()) {
+            button_suggest.setVisibility(View.VISIBLE);
         }
     }
 
@@ -104,7 +114,7 @@ public class SaveIntentDialog extends EditIntentDialog
         } else edit_intentID.setError(null);
 
         if (title.trim().isEmpty()) {
-            edit.text_label.setError(getContext().getString(R.string.addaction_error_title));
+            edit.edit_label.setError(getContext().getString(R.string.addaction_error_title));
             return false;
         } else edit.text_label.setError(null);
 
@@ -122,20 +132,7 @@ public class SaveIntentDialog extends EditIntentDialog
         }
 
         edit = (EditIntentView) dialogContent.findViewById(R.id.edit_intent);
-        edit.text_label.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                boolean validInput = validateInput();
-                if (btn_accept != null) {
-                    btn_accept.setEnabled(validInput);
-                }
-            }
-        });
+        edit.edit_label.addTextChangedListener(titleWatcher);
 
         text_note = (TextView) dialogContent.findViewById(R.id.text_note);
 
@@ -147,22 +144,7 @@ public class SaveIntentDialog extends EditIntentDialog
                 setIntentID((String)parent.getItemAtPosition(position));
             }
         });
-        edit_intentID.addTextChangedListener(new TextWatcher()
-        {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-            @Override
-            public void afterTextChanged(Editable s) {
-                text_note.setVisibility( (intentIDs.contains(s.toString())) ? View.VISIBLE : View.GONE );
-
-                boolean validInput = validateInput();
-                if (btn_accept != null) {
-                    btn_accept.setEnabled(validInput);
-                }
-            }
-        });
+        edit_intentID.addTextChangedListener(idWatcher);
 
         button_suggest = (ImageButton) dialogContent.findViewById(R.id.edit_intent_reset);
         button_suggest.setOnClickListener(new View.OnClickListener() {
@@ -177,6 +159,38 @@ public class SaveIntentDialog extends EditIntentDialog
 
         updateViews(context);
         super.initViews(context, dialogContent);
+    }
+
+    private TextWatcher titleWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            checkInput();
+        }
+    };
+
+    private TextWatcher idWatcher = new TextWatcher()
+    {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        @Override
+        public void afterTextChanged(Editable s) {
+            text_note.setVisibility( (intentIDs.contains(s.toString())) ? View.VISIBLE : View.GONE );
+            button_suggest.setVisibility( (intentIDs.contains(s.toString()) || s.toString().trim().isEmpty()) ? View.VISIBLE : View.GONE );
+            checkInput();
+        }
+    };
+
+    public void setValuesFrom(EditIntentView view)
+    {
+        edit.initFromOther(view);
+        checkInput();
     }
 
     @Override
