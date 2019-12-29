@@ -519,11 +519,12 @@
     <string name="addaction_error_id">ID must not be empty (or contain spaces).</string>
     <string name="addaction_error_title">Display string must not be empty.</string>
 
-    <string name="delaction_dialog_msg">Are you sure you want to delete %1$s?</string>    <!-- TODO -->
+    <string name="delaction_dialog_msg">Are you sure you want to delete %1$s (%2$s)?</string>    <!-- TODO -->
     <string name="delaction_dialog_ok">Delete</string>    <!-- TODO -->
     <string name="delaction_dialog_cancel">Cancel</string>   <!-- TODO -->
 
-    <string name="saveaction_dialog_title">Save Action</string>    <!-- TODO -->
+    <string name="saveaction_dialog_title">Add Action</string>    <!-- TODO -->
+    <string name="saveaction_dialog_ok">Save</string>    <!-- TODO -->
     <string name="saveaction_toast">Saved action \"%1$s\" (%2$s).</string>    <!-- TODO -->
 
     <string name="loadaction_dialog_title">Actions</string>    <!-- TODO -->

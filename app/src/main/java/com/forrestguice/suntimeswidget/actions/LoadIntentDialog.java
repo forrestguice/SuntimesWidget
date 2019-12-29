@@ -146,7 +146,8 @@ public class LoadIntentDialog extends EditIntentDialog
         if (intentID != null && context != null)
         {
             AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-            dialog.setMessage(context.getString(R.string.delaction_dialog_msg, intentID))
+            String title = WidgetActions.loadActionLaunchPref(context, 0, intentID, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
+            dialog.setMessage(context.getString(R.string.delaction_dialog_msg, title, intentID))
                     .setNegativeButton(context.getString(R.string.delaction_dialog_cancel), null)
                     .setPositiveButton(context.getString(R.string.delaction_dialog_ok),
                     new DialogInterface.OnClickListener()
