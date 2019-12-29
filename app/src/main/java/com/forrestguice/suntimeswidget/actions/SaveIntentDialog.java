@@ -132,6 +132,7 @@ public class SaveIntentDialog extends EditIntentDialog
         }
 
         edit = (EditIntentView) dialogContent.findViewById(R.id.edit_intent);
+        edit.setFragmentManager(getFragmentManager());
         edit.edit_label.addTextChangedListener(titleWatcher);
 
         text_note = (TextView) dialogContent.findViewById(R.id.text_note);

@@ -184,11 +184,13 @@ public class EditIntentView extends LinearLayout
         @Override
         public void onClick(View v)
         {
-            HelpDialog helpDialog = new HelpDialog();
-            helpDialog.setContent(getContext().getString(R.string.help_action_launch));
-            helpDialog.setShowNeutralButton(getContext().getString(R.string.configAction_restoreDefaults));
-            helpDialog.setNeutralButtonListener(helpDialogListener_launchApp, HELPTAG_LAUNCH);
-            helpDialog.show(fragmentManager, DIALOGTAG_HELP);
+            if (fragmentManager != null) {
+                HelpDialog helpDialog = new HelpDialog();
+                helpDialog.setContent(getContext().getString(R.string.help_action_launch));
+                helpDialog.setShowNeutralButton(getContext().getString(R.string.configAction_restoreDefaults));
+                helpDialog.setNeutralButtonListener(helpDialogListener_launchApp, HELPTAG_LAUNCH);
+                helpDialog.show(fragmentManager, DIALOGTAG_HELP);
+            }
         }
     };
 
@@ -515,6 +517,7 @@ public class EditIntentView extends LinearLayout
      */
     public void initFromOther( EditIntentView other )
     {
+        setFragmentManager(other.fragmentManager);
         setIntentTitle(other.getIntentTitle());
         setIntentType(other.getIntentType().name());
         setIntentClass(other.getIntentClass());
@@ -541,6 +544,11 @@ public class EditIntentView extends LinearLayout
                 if (tag != null && tag.equals(HELPTAG_LAUNCH)) {
                     helpDialog.setNeutralButtonListener(helpDialogListener_launchApp, HELPTAG_LAUNCH);
                 }
+            }
+
+            SaveIntentDialog saveDialog = (SaveIntentDialog) fragmentManager.findFragmentByTag(DIALOGTAG_SAVE);
+            if (saveDialog != null) {
+                saveDialog.getEdit().setFragmentManager(fragments);
             }
         }
     }
