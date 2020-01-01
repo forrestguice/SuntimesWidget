@@ -49,6 +49,10 @@ public class SaveActionDialog extends EditActionDialog
         intentTitle = value;
     }
 
+    public String getIntentDesc() {
+        return "TODO";
+    }
+
     public String getIntentID()
     {
         if (edit_intentID != null) {
@@ -158,7 +162,7 @@ public class SaveActionDialog extends EditActionDialog
         if (intentID == null) {
             intentID = suggestedIntentID(context);
             if (intentTitle == null || intentTitle.trim().isEmpty()) {
-                intentTitle = context.getString(R.string.addaction_custtitle, suggested_c - 1);
+                intentTitle = context.getString(R.string.addaction_custtitle, Integer.toString(suggested_c - 1));
             }
         }
 

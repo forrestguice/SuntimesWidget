@@ -93,8 +93,9 @@ public class LoadActionDialog extends EditActionDialog
         for (String id : intentIDs)
         {
             String title = WidgetActions.loadActionLaunchPref(context, 0, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
+            String desc = WidgetActions.loadActionLaunchPref(context, 0, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
             if (title != null && !title.trim().isEmpty()) {
-                ids.add(new ActionDisplay(id, title));
+                ids.add(new ActionDisplay(id, title, desc));
             }
         }
 
@@ -174,7 +175,7 @@ public class LoadActionDialog extends EditActionDialog
         saveDialog.setOnAcceptedListener(new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                saveDialog.getEdit().saveIntent(context, 0, saveDialog.getIntentID(), saveDialog.getIntentTitle());
+                saveDialog.getEdit().saveIntent(context, 0, saveDialog.getIntentID(), saveDialog.getIntentTitle(), saveDialog.getIntentDesc());
                 Toast.makeText(context, context.getString(R.string.saveaction_toast, saveDialog.getIntentTitle(), saveDialog.getIntentID()), Toast.LENGTH_SHORT).show();
                 initAdapter(getContext());
                 updateViews(getContext());
@@ -237,12 +238,12 @@ public class LoadActionDialog extends EditActionDialog
      */
     public static class ActionDisplay
     {
-        public String id;
-        public String title;
-        public ActionDisplay(String id, String title)
+        public String id, title, desc;
+        public ActionDisplay(String id, String title, String desc)
         {
             this.id = id;
             this.title = title;
+            this.desc = desc;
         }
         public String toString() {
              return title;
@@ -310,7 +311,7 @@ public class LoadActionDialog extends EditActionDialog
 
             TextView secondaryText = (TextView)view.findViewById(android.R.id.text2);
             if (secondaryText != null) {
-                secondaryText.setText(item.id);
+                secondaryText.setText(item.desc);
             }
 
             ImageView icon = (ImageView) view.findViewById(android.R.id.icon);

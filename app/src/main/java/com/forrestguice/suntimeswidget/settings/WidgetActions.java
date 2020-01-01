@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.settings;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -45,6 +46,15 @@ public class WidgetActions
     public static final String PREF_PREFIX_KEY = WidgetSettings.PREF_PREFIX_KEY;
     public static final String PREF_PREFIX_KEY_ACTION = "_action_";
 
+    public static final String PREF_KEY_ACTION_LAUNCH_TITLE = "title";
+    public static String PREF_DEF_ACTION_LAUNCH_TITLE = "Suntimes";
+
+    public static final String PREF_KEY_ACTION_LAUNCH_DESC = "desc";
+    public static String PREF_DEF_ACTION_LAUNCH_DESC = "";
+
+    public static final String PREF_KEY_ACTION_LAUNCH_COLOR = "color";
+    public static int PREF_DEF_ACTION_LAUNCH_COLOR = Color.WHITE;
+
     public static final String PREF_KEY_ACTION_LAUNCH = "launch";
     public static final String PREF_DEF_ACTION_LAUNCH = "com.forrestguice.suntimeswidget.SuntimesActivity";
 
@@ -59,9 +69,6 @@ public class WidgetActions
 
     public static final String PREF_KEY_ACTION_LAUNCH_DATATYPE = "datatype";
     public static final String PREF_DEF_ACTION_LAUNCH_DATATYPE = "";
-
-    public static final String PREF_KEY_ACTION_LAUNCH_TITLE = "title";
-    public static String PREF_DEF_ACTION_LAUNCH_TITLE = "Suntimes";
 
     public static final String PREF_KEY_ACTION_LAUNCH_TYPE = "type";
     public static final LaunchType PREF_DEF_ACTION_LAUNCH_TYPE = LaunchType.ACTIVITY;
@@ -113,7 +120,7 @@ public class WidgetActions
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveActionLaunchPref(Context context, @Nullable String titleString, int appWidgetId, @Nullable String id, @Nullable String launchString, @Nullable String type, @Nullable String action, @Nullable String dataString, @Nullable String mimeType, @Nullable String extrasString)
+    public static void saveActionLaunchPref(Context context, @Nullable String titleString, @Nullable String descString, @Nullable Integer color, int appWidgetId, @Nullable String id, @Nullable String launchString, @Nullable String type, @Nullable String action, @Nullable String dataString, @Nullable String mimeType, @Nullable String extrasString)
     {
         boolean hasID = true;
         if (id == null) {
@@ -143,6 +150,8 @@ public class WidgetActions
         prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_DATATYPE, (mimeType != null ? mimeType : ""));
         prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_EXTRAS, (extrasString != null ? extrasString : ""));
         prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_TITLE, (titleString != null ? titleString : ""));
+        prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_DESC, (descString != null ? descString : ""));
+        prefs.putInt(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_COLOR, (color != null ? color : PREF_DEF_ACTION_LAUNCH_COLOR));
         prefs.apply();
 
         if (hasID)
@@ -193,6 +202,12 @@ public class WidgetActions
 
                 case PREF_KEY_ACTION_LAUNCH_TITLE:
                     return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_TITLE, PREF_DEF_ACTION_LAUNCH_TITLE);
+
+                case PREF_KEY_ACTION_LAUNCH_DESC:
+                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_DESC, PREF_DEF_ACTION_LAUNCH_DESC);
+
+                case PREF_KEY_ACTION_LAUNCH_COLOR:
+                    return Integer.toString(prefs.getInt(prefs_prefix + PREF_KEY_ACTION_LAUNCH_COLOR, PREF_DEF_ACTION_LAUNCH_COLOR));
             }
             return null;
         }
@@ -212,6 +227,8 @@ public class WidgetActions
         prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_DATATYPE);
         prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_EXTRAS);
         prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_TITLE);
+        prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_DESC);
+        prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_COLOR);
         prefs.apply();
 
         Set<String> actionList = loadActionLaunchList(context, 0);
@@ -376,19 +393,20 @@ public class WidgetActions
     public static void initDefaults(Context context)
     {
         PREF_DEF_ACTION_LAUNCH_TITLE = context.getString(R.string.app_name);
+        PREF_DEF_ACTION_LAUNCH_DESC = context.getString(R.string.app_shortdesc);
 
         if (!hasActionLaunchPref(context, 0, "def_suntimes")) {
-            saveActionLaunchPref(context, WidgetActions.PREF_DEF_ACTION_LAUNCH_TITLE, 0, "def_suntimes", WidgetActions.PREF_DEF_ACTION_LAUNCH,
+            saveActionLaunchPref(context, WidgetActions.PREF_DEF_ACTION_LAUNCH_TITLE, WidgetActions.PREF_DEF_ACTION_LAUNCH_DESC, null, 0, "def_suntimes", WidgetActions.PREF_DEF_ACTION_LAUNCH,
                     WidgetActions.PREF_DEF_ACTION_LAUNCH_TYPE.name(), WidgetActions.PREF_DEF_ACTION_LAUNCH_ACTION, WidgetActions.PREF_DEF_ACTION_LAUNCH_DATA, WidgetActions.PREF_DEF_ACTION_LAUNCH_DATATYPE, WidgetActions.PREF_DEF_ACTION_LAUNCH_EXTRAS);
         }
 
         if (!hasActionLaunchPref(context, 0, "def_calendar")) {
-            saveActionLaunchPref(context, "Calendar", 0, "def_calendar", null,
+            saveActionLaunchPref(context, "Calendar", "Open calendar", null, 0, "def_calendar", null,
                     LaunchType.ACTIVITY.name(), Intent.ACTION_VIEW, "content://com.android.calendar/time/%dm", null, null);
         }
 
         if (!hasActionLaunchPref(context, 0, "def_map")) {
-            saveActionLaunchPref(context, "Map", 0, "def_map", null,
+            saveActionLaunchPref(context, "Map", "View location with map", null,  0, "def_map", null,
                     LaunchType.ACTIVITY.name(), Intent.ACTION_VIEW, "geo:%lat,%lon", null, null);
         }
     }

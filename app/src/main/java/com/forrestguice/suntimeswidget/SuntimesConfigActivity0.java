@@ -1321,7 +1321,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         WidgetSettings.saveActionModePref(context, appWidgetId, actionMode);
 
         // save: launch activity
-        edit_launchIntent.saveIntent(context, appWidgetId, null, edit_launchIntent.getIntentTitle());
+        edit_launchIntent.saveIntent(context, appWidgetId, null, edit_launchIntent.getIntentTitle(), "TODO");
     }
 
     /**

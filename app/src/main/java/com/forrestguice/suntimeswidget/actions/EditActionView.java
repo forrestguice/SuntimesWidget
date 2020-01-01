@@ -334,7 +334,7 @@ public class EditActionView extends LinearLayout
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 initFromOther(saveDialog.getEdit());
-                saveIntent(context, 0, saveDialog.getIntentID(), saveDialog.getIntentTitle());
+                saveIntent(context, 0, saveDialog.getIntentID(), saveDialog.getIntentTitle(), saveDialog.getIntentDesc());
                 Toast.makeText(context, context.getString(R.string.saveaction_toast, saveDialog.getIntentTitle(), saveDialog.getIntentID()), Toast.LENGTH_SHORT).show();
             }
         });
@@ -362,9 +362,9 @@ public class EditActionView extends LinearLayout
      * @param context Context
      * @param id Intent id (or null)
      */
-    public void saveIntent(Context context, int appWidgetId, @Nullable String id, @Nullable String title)
+    public void saveIntent(Context context, int appWidgetId, @Nullable String id, @Nullable String title, @Nullable String desc)
     {
-        WidgetActions.saveActionLaunchPref(context, title, appWidgetId, id, getIntentClass(), getIntentType().name(), getIntentAction(), getIntentData(), getIntentDataType(), getIntentExtras());
+        WidgetActions.saveActionLaunchPref(context, title, desc, null, appWidgetId, id, getIntentClass(), getIntentType().name(), getIntentAction(), getIntentData(), getIntentDataType(), getIntentExtras());
         lastLoadedID = id;
     }
 
