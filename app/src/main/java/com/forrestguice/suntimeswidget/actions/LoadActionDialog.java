@@ -21,14 +21,22 @@ package com.forrestguice.suntimeswidget.actions;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
@@ -36,6 +44,9 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -86,8 +97,16 @@ public class LoadActionDialog extends EditActionDialog
                 ids.add(new ActionDisplay(id, title));
             }
         }
-        ArrayAdapter<ActionDisplay> adapter = new ArrayAdapter<>(context, R.layout.layout_listitem_oneline, ids.toArray(new ActionDisplay[0]));
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        Collections.sort(ids, new Comparator<ActionDisplay>() {
+            @Override
+            public int compare(ActionDisplay o1, ActionDisplay o2) {
+                return o1.title.compareTo(o2.title);
+            }
+        });
+
+        ActionDisplayAdapter adapter = new ActionDisplayAdapter(context, R.layout.layout_listitem_timezone, ids.toArray(new ActionDisplay[0]));
+        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin_intentID.setAdapter(adapter);
     }
 
@@ -227,6 +246,96 @@ public class LoadActionDialog extends EditActionDialog
         }
         public String toString() {
              return title;
+        }
+    }
+
+    /**
+     * ActionDisplayAdapter
+     */
+    public static class ActionDisplayAdapter extends ArrayAdapter<ActionDisplay>
+    {
+        private int resourceID, dropDownResourceID;
+        private int[] colors;
+
+        public ActionDisplayAdapter(@NonNull Context context, int resource) {
+            super(context, resource);
+            init(context, resource);
+        }
+
+        public ActionDisplayAdapter(@NonNull Context context, int resource, @NonNull ActionDisplay[] objects) {
+            super(context, resource, objects);
+            init(context, resource);
+        }
+
+        public ActionDisplayAdapter(@NonNull Context context, int resource, @NonNull List<ActionDisplay> objects) {
+            super(context, resource, objects);
+            init(context, resource);
+        }
+
+        private void init(@NonNull Context context, int resource) {
+            resourceID = dropDownResourceID = resource;
+            colors = context.getResources().getIntArray(R.array.utcOffsetColors);
+        }
+
+        @Override
+        public void setDropDownViewResource(int resID) {
+            super.setDropDownViewResource(resID);
+            dropDownResourceID = resID;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+            return getItemView(position, convertView, parent, true, dropDownResourceID);
+        }
+
+        @Override
+        @NonNull
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+            return getItemView(position, convertView, parent, false, resourceID);
+        }
+
+        private View getItemView(int position, View convertView, @NonNull ViewGroup parent, boolean colorize, int resID)
+        {
+            LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+            View view = layoutInflater.inflate(resID, parent, false);
+
+            ActionDisplay item = getItem(position);
+            if (item == null) {
+                Log.w("getItemView", "item at position " + position + " is null.");
+                return view;
+            }
+
+            TextView primaryText = (TextView)view.findViewById(android.R.id.text1);
+            primaryText.setText(item.toString());
+
+            TextView secondaryText = (TextView)view.findViewById(android.R.id.text2);
+            if (secondaryText != null) {
+                secondaryText.setText(item.id);
+            }
+
+            ImageView icon = (ImageView) view.findViewById(android.R.id.icon);
+            if (icon != null)
+            {
+                if (colorize)
+                {
+                    GradientDrawable d = (GradientDrawable) icon.getBackground().mutate();
+                    d.setColor(getColorForPosition(position));
+                    d.invalidateSelf();
+                    icon.setVisibility(View.VISIBLE);
+
+                } else {
+                    icon.setVisibility(View.GONE);
+                }
+            }
+
+            return view;
+        }
+
+        private int getColorForPosition(int position) {
+            if (position < 0) {
+                position = 0;
+            }
+            return colors[position % colors.length];
         }
     }
 
