@@ -73,7 +73,7 @@
             android:paddingTop="8dp" android:textColor="?attr/tagColor_warning"
             android:text="ID is already taken. This action will be overwritten." />
 
-        <com.forrestguice.suntimeswidget.actions.EditIntentView
+        <com.forrestguice.suntimeswidget.actions.EditActionView
             android:id="@+id/edit_intent"
             android:layout_width="match_parent" android:layout_height="match_parent"
             app:startExpanded="true" app:allowCollapse="false" app:allowSaveLoad="false" />

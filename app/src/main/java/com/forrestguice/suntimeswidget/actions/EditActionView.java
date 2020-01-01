@@ -49,7 +49,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 
 @SuppressWarnings("Convert2Diamond")
-public class EditIntentView extends LinearLayout
+public class EditActionView extends LinearLayout
 {
     public static final String TAG = "EditIntent";
 
@@ -86,13 +86,13 @@ public class EditIntentView extends LinearLayout
     private boolean allowCollapse = true;
     private boolean allowSaveLoad = true;
 
-    public EditIntentView(Context context)
+    public EditActionView(Context context)
     {
         super(context);
         init(context, null);
     }
 
-    public EditIntentView(Context context, AttributeSet attrs)
+    public EditActionView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
         init(context, attrs);
@@ -100,11 +100,11 @@ public class EditIntentView extends LinearLayout
 
     private void applyAttributes(Context context, AttributeSet attrs)
     {
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.EditIntentView, 0, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.EditActionView, 0, 0);
         try {
-            startExpanded = a.getBoolean(R.styleable.EditIntentView_startExpanded, startExpanded);
-            allowCollapse = a.getBoolean(R.styleable.EditIntentView_allowCollapse, allowCollapse);
-            allowSaveLoad = a.getBoolean(R.styleable.EditIntentView_allowSaveLoad, allowSaveLoad);
+            startExpanded = a.getBoolean(R.styleable.EditActionView_startExpanded, startExpanded);
+            allowCollapse = a.getBoolean(R.styleable.EditActionView_allowCollapse, allowCollapse);
+            allowSaveLoad = a.getBoolean(R.styleable.EditActionView_allowSaveLoad, allowSaveLoad);
         } finally {
             a.recycle();
         }
@@ -320,14 +320,14 @@ public class EditIntentView extends LinearLayout
     public void saveIntent()
     {
         final Context context = getContext();
-        final SaveIntentDialog saveDialog = new SaveIntentDialog();
+        final SaveActionDialog saveDialog = new SaveActionDialog();
         saveDialog.setIntentID(lastLoadedID);
         saveDialog.setIntentTitle(edit_label.getText().toString());
 
         saveDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
-                saveDialog.setValuesFrom(EditIntentView.this);
+                saveDialog.setValuesFrom(EditActionView.this);
             }
         });
         saveDialog.setOnAcceptedListener(new DialogInterface.OnClickListener() {
@@ -345,7 +345,7 @@ public class EditIntentView extends LinearLayout
     public void loadIntent()
     {
         final Context context = getContext();
-        final LoadIntentDialog loadDialog = new LoadIntentDialog();
+        final LoadActionDialog loadDialog = new LoadActionDialog();
         loadDialog.setOnAcceptedListener(new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which)
@@ -515,7 +515,7 @@ public class EditIntentView extends LinearLayout
     /**
      * initFromOther
      */
-    public void initFromOther( EditIntentView other )
+    public void initFromOther(EditActionView other )
     {
         setFragmentManager(other.fragmentManager);
         setIntentTitle(other.getIntentTitle());
@@ -546,7 +546,7 @@ public class EditIntentView extends LinearLayout
                 }
             }
 
-            SaveIntentDialog saveDialog = (SaveIntentDialog) fragmentManager.findFragmentByTag(DIALOGTAG_SAVE);
+            SaveActionDialog saveDialog = (SaveActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_SAVE);
             if (saveDialog != null) {
                 saveDialog.getEdit().setFragmentManager(fragments);
             }

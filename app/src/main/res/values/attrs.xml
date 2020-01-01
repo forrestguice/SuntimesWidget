@@ -114,7 +114,7 @@
     <attr name="icActionGPS_off" format="reference" />
     <attr name="icActionGPS_searching" format="reference" />
 
-    <declare-styleable name="EditIntentView">
+    <declare-styleable name="EditActionView">
         <attr name="startExpanded" format="boolean" />
         <attr name="allowCollapse" format="boolean" />
         <attr name="allowSaveLoad" format="boolean" />

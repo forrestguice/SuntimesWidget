@@ -39,15 +39,15 @@ import java.util.ArrayList;
 import java.util.Set;
 
 /**
- * LoadIntentDialog
+ * LoadActionDialog
  */
-public class LoadIntentDialog extends EditIntentDialog
+public class LoadActionDialog extends EditActionDialog
 {
     @Override
     public String getIntentID()
     {
         if (spin_intentID != null) {
-            IntentDisplay selected = (IntentDisplay)spin_intentID.getSelectedItem();
+            ActionDisplay selected = (ActionDisplay)spin_intentID.getSelectedItem();
             return selected != null ? selected.id : null;
         } else return null;
     }
@@ -56,7 +56,7 @@ public class LoadIntentDialog extends EditIntentDialog
     public String getIntentTitle()
     {
         if (spin_intentID != null) {
-            IntentDisplay selected = (IntentDisplay)spin_intentID.getSelectedItem();
+            ActionDisplay selected = (ActionDisplay)spin_intentID.getSelectedItem();
             return selected != null ? selected.title : null;
         } else return null;
     }
@@ -77,16 +77,16 @@ public class LoadIntentDialog extends EditIntentDialog
 
     protected void initAdapter(Context context)
     {
-        ArrayList<IntentDisplay> ids = new ArrayList<>();
+        ArrayList<ActionDisplay> ids = new ArrayList<>();
         Set<String> intentIDs = WidgetActions.loadActionLaunchList(context, 0);
         for (String id : intentIDs)
         {
             String title = WidgetActions.loadActionLaunchPref(context, 0, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
             if (title != null && !title.trim().isEmpty()) {
-                ids.add(new IntentDisplay(id, title));
+                ids.add(new ActionDisplay(id, title));
             }
         }
-        ArrayAdapter<IntentDisplay> adapter = new ArrayAdapter<>(context, R.layout.layout_listitem_oneline, ids.toArray(new IntentDisplay[0]));
+        ArrayAdapter<ActionDisplay> adapter = new ArrayAdapter<>(context, R.layout.layout_listitem_oneline, ids.toArray(new ActionDisplay[0]));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin_intentID.setAdapter(adapter);
     }
@@ -151,7 +151,7 @@ public class LoadIntentDialog extends EditIntentDialog
     private void addAction()
     {
         final Context context = getContext();
-        final SaveIntentDialog saveDialog = new SaveIntentDialog();
+        final SaveActionDialog saveDialog = new SaveActionDialog();
         saveDialog.setOnAcceptedListener(new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -161,7 +161,7 @@ public class LoadIntentDialog extends EditIntentDialog
                 updateViews(getContext());
             }
         });
-        saveDialog.show(getFragmentManager(), EditIntentView.DIALOGTAG_SAVE);
+        saveDialog.show(getFragmentManager(), EditActionView.DIALOGTAG_SAVE);
     }
 
     private void clearActions()
@@ -178,7 +178,6 @@ public class LoadIntentDialog extends EditIntentDialog
                                 @Override
                                 public void onClick(DialogInterface dialog, int which)
                                 {
-                                    // TODO WidgetActions.deleteActionLaunchPref(getContext(), 0, intentID);
                                     WidgetActions.deletePrefs(context, 0);
                                     WidgetActions.initDefaults(context);
                                     Toast.makeText(context, context.getString(R.string.clearactions_toast), Toast.LENGTH_SHORT).show();
@@ -214,11 +213,14 @@ public class LoadIntentDialog extends EditIntentDialog
         }
     }
 
-    public static class IntentDisplay
+    /**
+     * ActionDisplay
+     */
+    public static class ActionDisplay
     {
         public String id;
         public String title;
-        public IntentDisplay(String id, String title)
+        public ActionDisplay(String id, String title)
         {
             this.id = id;
             this.title = title;
@@ -227,4 +229,5 @@ public class LoadIntentDialog extends EditIntentDialog
              return title;
         }
     }
+
 }

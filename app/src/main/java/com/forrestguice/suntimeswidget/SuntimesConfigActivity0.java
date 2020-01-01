@@ -57,7 +57,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorLi
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.actions.EditIntentView;
+import com.forrestguice.suntimeswidget.actions.EditActionView;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
@@ -108,7 +108,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected ImageButton button_riseSetOrderHelp;
 
     protected Spinner spinner_onTap;
-    protected EditIntentView edit_launchIntent;
+    protected EditActionView edit_launchIntent;
 
     protected TextView button_themeConfig;
     private WidgetThemes.ThemeListAdapter spinner_themeAdapter;
@@ -370,7 +370,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //
         // widget: onTap launchActivity
         //
-        edit_launchIntent = (EditIntentView) findViewById(R.id.appwidget_action_launch_edit);
+        edit_launchIntent = (EditActionView) findViewById(R.id.appwidget_action_launch_edit);
         edit_launchIntent.setFragmentManager(getSupportFragmentManager());
         edit_launchIntent.setData(getData(this, appWidgetId));
 

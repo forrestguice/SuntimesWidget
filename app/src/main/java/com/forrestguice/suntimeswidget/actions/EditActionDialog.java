@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.actions;
 import com.forrestguice.suntimeswidget.settings.EditDialog;
 
 @SuppressWarnings("Convert2Diamond")
-public abstract class EditIntentDialog extends EditDialog
+public abstract class EditActionDialog extends EditDialog
 {
     protected abstract String getIntentID();
     protected abstract String getIntentTitle();

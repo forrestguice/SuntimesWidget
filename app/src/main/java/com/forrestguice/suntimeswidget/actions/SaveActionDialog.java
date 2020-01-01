@@ -34,9 +34,9 @@ import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import java.util.Set;
 
 /**
- * SaveIntentDialog
+ * SaveActionDialog
  */
-public class SaveIntentDialog extends EditIntentDialog
+public class SaveActionDialog extends EditActionDialog
 {
     @Override
     public String getIntentTitle()
@@ -76,8 +76,8 @@ public class SaveIntentDialog extends EditIntentDialog
     private TextView text_note;
     private ImageButton button_suggest;
 
-    private EditIntentView edit;
-    public EditIntentView getEdit() {
+    private EditActionView edit;
+    public EditActionView getEdit() {
         return edit;
     }
 
@@ -128,7 +128,7 @@ public class SaveIntentDialog extends EditIntentDialog
         intentIDs = WidgetActions.loadActionLaunchList(context, 0);
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, intentIDs.toArray(new String[0]));
 
-        edit = (EditIntentView) dialogContent.findViewById(R.id.edit_intent);
+        edit = (EditActionView) dialogContent.findViewById(R.id.edit_intent);
         edit.setFragmentManager(getFragmentManager());
         edit.edit_label.addTextChangedListener(titleWatcher);
 
@@ -192,7 +192,7 @@ public class SaveIntentDialog extends EditIntentDialog
         }
     };
 
-    public void setValuesFrom(EditIntentView view)
+    public void setValuesFrom(EditActionView view)
     {
         edit.initFromOther(view);
         checkInput();
