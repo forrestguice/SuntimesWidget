@@ -94,8 +94,9 @@ public class LoadActionDialog extends EditActionDialog
         {
             String title = WidgetActions.loadActionLaunchPref(context, 0, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
             String desc = WidgetActions.loadActionLaunchPref(context, 0, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
+            Integer color = Integer.parseInt(WidgetActions.loadActionLaunchPref(context, 0, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR));
             if (title != null && !title.trim().isEmpty()) {
-                ids.add(new ActionDisplay(id, title, desc));
+                ids.add(new ActionDisplay(id, title, desc, color));
             }
         }
 
@@ -239,11 +240,14 @@ public class LoadActionDialog extends EditActionDialog
     public static class ActionDisplay
     {
         public String id, title, desc;
-        public ActionDisplay(String id, String title, String desc)
+        public int color;
+
+        public ActionDisplay(String id, String title, String desc, int color)
         {
             this.id = id;
             this.title = title;
             this.desc = desc;
+            this.color = color;
         }
         public String toString() {
              return title;
@@ -256,7 +260,6 @@ public class LoadActionDialog extends EditActionDialog
     public static class ActionDisplayAdapter extends ArrayAdapter<ActionDisplay>
     {
         private int resourceID, dropDownResourceID;
-        private int[] colors;
 
         public ActionDisplayAdapter(@NonNull Context context, int resource) {
             super(context, resource);
@@ -275,7 +278,6 @@ public class LoadActionDialog extends EditActionDialog
 
         private void init(@NonNull Context context, int resource) {
             resourceID = dropDownResourceID = resource;
-            colors = context.getResources().getIntArray(R.array.utcOffsetColors);
         }
 
         @Override
@@ -333,10 +335,8 @@ public class LoadActionDialog extends EditActionDialog
         }
 
         private int getColorForPosition(int position) {
-            if (position < 0) {
-                position = 0;
-            }
-            return colors[position % colors.length];
+            ActionDisplay item = getItem(position);
+            return item != null ? item.color : WidgetActions.PREF_DEF_ACTION_LAUNCH_COLOR;
         }
     }
 

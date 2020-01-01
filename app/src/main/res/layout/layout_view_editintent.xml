@@ -67,6 +67,26 @@
             android:orientation="horizontal"
             android:layout_width="match_parent" android:layout_height="wrap_content">
 
+
+            <EditText
+                android:id="@+id/appwidget_action_desc_edit" tools:text="Title"
+                android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:inputType="textMultiLine|textNoSuggestions"
+                android:hint="@string/configHint_action_launch_desc" />
+
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_helpButton"
+                style="@style/Widget.AppCompat.ActionButton"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
+                android:contentDescription="@string/configAction_help"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
+
             <TextView android:labelFor="@+id/appwidget_action_launch_type"
                 android:id="@+id/appwidget_action_launch_type_label"
                 android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center" android:layout_gravity="center_vertical"
@@ -75,12 +95,6 @@
             <Spinner android:id="@+id/appwidget_action_launch_type" android:layout_width="0dp" android:layout_weight="1"
                 android:layout_height="wrap_content" android:layout_gravity="center_vertical"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_helpButton"
-                style="@style/Widget.AppCompat.ActionButton"
-                android:layout_height="wrap_content" android:layout_width="wrap_content"
-                android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
-                android:contentDescription="@string/configAction_help"/>
 
         </LinearLayout>
 

@@ -50,7 +50,9 @@ public class SaveActionDialog extends EditActionDialog
     }
 
     public String getIntentDesc() {
-        return "TODO";
+        if (edit.edit_desc != null) {
+            return edit.edit_desc.getText().toString();
+        } else return null;
     }
 
     public String getIntentID()

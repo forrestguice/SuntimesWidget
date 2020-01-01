@@ -72,6 +72,7 @@ public class EditActionView extends LinearLayout
     protected TextView text_label;
     protected EditText edit_label;
 
+    protected EditText edit_desc;
     protected EditText text_launchActivity;
     protected Spinner spinner_launchType;
     protected ImageButton button_menu;
@@ -124,6 +125,7 @@ public class EditActionView extends LinearLayout
         });
 
         edit_label = (EditText) findViewById(R.id.appwidget_action_label_edit);
+        edit_desc = (EditText) findViewById(R.id.appwidget_action_desc_edit);
 
         text_launchActivity = (EditText) findViewById(R.id.appwidget_action_launch);
 
@@ -376,6 +378,7 @@ public class EditActionView extends LinearLayout
     public void loadIntent(Context context, int appWidgetId, @Nullable String id)
     {
         String title = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
+        String desc = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
         String launchString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, null);
         String typeString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TYPE);
         String actionString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION);
@@ -384,6 +387,7 @@ public class EditActionView extends LinearLayout
         String extraString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_EXTRAS);
 
         setIntentTitle(title);
+        setIntentDesc(desc);
         setIntentClass(launchString);
         setIntentAction((actionString != null ? actionString : ""));
         setIntentData((dataString != null ? dataString : ""));
@@ -402,6 +406,7 @@ public class EditActionView extends LinearLayout
         setIntentType(WidgetActions.PREF_DEF_ACTION_LAUNCH_TYPE.name());
         text_label.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH_TITLE);
         edit_label.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH_TITLE);
+        edit_desc.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH_DESC);
         text_launchAction.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH_ACTION);
         text_launchData.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH_DATA);
         text_launchDataType.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH_DATATYPE);
@@ -513,12 +518,23 @@ public class EditActionView extends LinearLayout
     }
 
     /**
+     * getIntentDesc
+     */
+    public String getIntentDesc() {
+        return edit_desc.getText().toString();
+    }
+    public void setIntentDesc( String desc ) {
+        edit_desc.setText(desc);
+    }
+
+    /**
      * initFromOther
      */
     public void initFromOther(EditActionView other )
     {
         setFragmentManager(other.fragmentManager);
         setIntentTitle(other.getIntentTitle());
+        setIntentDesc(other.getIntentDesc());
         setIntentType(other.getIntentType().name());
         setIntentClass(other.getIntentClass());
         setIntentAction(other.getIntentAction());
