@@ -219,8 +219,12 @@ public class EditActionView extends LinearLayout
         button_menu.setVisibility(expanded ? View.VISIBLE : View.GONE);
 
         layout_label.setVisibility(expanded ? View.GONE : View.VISIBLE);
-        layout_label.invalidate();
         edit_label.setVisibility(expanded ? View.VISIBLE : View.INVISIBLE);
+
+        if (!expanded) {
+            text_label.setText(edit_label.getText().toString());
+            text_desc.setText(edit_desc.getText().toString());
+        }
 
         if (onExpandedChanged != null) {
             onExpandedChanged.onCheckedChanged(button_launchMore, expanded);
