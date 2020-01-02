@@ -69,10 +69,10 @@ public class EditActionView extends LinearLayout
 
     private static String[] MIMETYPE_SUGGESTIONS = new String[] { "text/plain" };
 
-    protected TextView text_label;
-    protected EditText edit_label;
+    protected View layout_label;
+    protected TextView text_label, text_desc;
+    protected EditText edit_label, edit_desc;
 
-    protected EditText edit_desc;
     protected EditText text_launchActivity;
     protected Spinner spinner_launchType;
     protected ImageButton button_menu;
@@ -116,6 +116,8 @@ public class EditActionView extends LinearLayout
         applyAttributes(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.layout_view_editintent, this, true);
 
+        layout_label = findViewById(R.id.appwidget_action_label_layout);
+        text_desc = (TextView) findViewById(R.id.appwidget_action_desc);
         text_label = (TextView) findViewById(R.id.appwidget_action_label);
         text_label.setOnClickListener(new OnClickListener() {
             @Override
@@ -215,7 +217,9 @@ public class EditActionView extends LinearLayout
 
         button_load.setVisibility(expanded ? View.GONE : View.VISIBLE);
         button_menu.setVisibility(expanded ? View.VISIBLE : View.GONE);
-        text_label.setVisibility(expanded ? View.GONE : View.VISIBLE);
+
+        layout_label.setVisibility(expanded ? View.GONE : View.VISIBLE);
+        layout_label.invalidate();
         edit_label.setVisibility(expanded ? View.VISIBLE : View.INVISIBLE);
 
         if (onExpandedChanged != null) {
@@ -406,6 +410,7 @@ public class EditActionView extends LinearLayout
         setIntentType(WidgetActions.PREF_DEF_ACTION_LAUNCH_TYPE.name());
         text_label.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH_TITLE);
         edit_label.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH_TITLE);
+        text_desc.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH_DESC);
         edit_desc.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH_DESC);
         text_launchAction.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH_ACTION);
         text_launchData.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH_DATA);
@@ -524,6 +529,7 @@ public class EditActionView extends LinearLayout
         return edit_desc.getText().toString();
     }
     public void setIntentDesc( String desc ) {
+        text_desc.setText(desc);
         edit_desc.setText(desc);
     }
 
