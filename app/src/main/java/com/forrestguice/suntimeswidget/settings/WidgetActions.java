@@ -383,8 +383,8 @@ public class WidgetActions
 
     public static void deletePrefs(Context context, int appWidgetId)
     {
-        Set<String> actionList = loadActionLaunchList(context, 0);
-        for (String action : actionList.toArray(new String[0])) {
+        String[] actionList = loadActionLaunchList(context, 0).toArray(new String[0]);
+        for (String action : actionList) {
             deleteActionLaunchPref(context, appWidgetId, action);
         }
         deleteActionLaunchPref(context, appWidgetId, null);
