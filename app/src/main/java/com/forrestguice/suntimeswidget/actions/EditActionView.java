@@ -116,13 +116,14 @@ public class EditActionView extends LinearLayout
         applyAttributes(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.layout_view_editintent, this, true);
 
-        layout_label = findViewById(R.id.appwidget_action_label_layout);
         text_desc = (TextView) findViewById(R.id.appwidget_action_desc);
         text_label = (TextView) findViewById(R.id.appwidget_action_label);
-        text_label.setOnClickListener(new OnClickListener() {
+
+        layout_label = findViewById(R.id.appwidget_action_label_layout);
+        layout_label.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                button_launchMore.setChecked(true);
+                button_load.performClick();
             }
         });
 
@@ -361,7 +362,7 @@ public class EditActionView extends LinearLayout
             public void onClick(DialogInterface dialog, int which)
             {
                 loadIntent(context, 0, loadDialog.getIntentID());
-                Toast.makeText(context, context.getString(R.string.loadaction_toast, loadDialog.getIntentTitle()), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, context.getString(R.string.loadaction_toast, loadDialog.getIntentTitle()), Toast.LENGTH_SHORT).show();
             }
         });
         loadDialog.show(fragmentManager, DIALOGTAG_LOAD);

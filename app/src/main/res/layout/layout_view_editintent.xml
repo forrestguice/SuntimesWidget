@@ -37,7 +37,7 @@
             android:background="?attr/icActionExpand" android:textOn="" android:textOff="" android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
             android:contentDescription="@string/expandMore"/>
 
-        <LinearLayout android:id="@+id/appwidget_action_label_layout"
+        <LinearLayout android:id="@+id/appwidget_action_label_layout" android:clickable="true" android:focusable="true"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/appwidget_action_launch_moreButton" app:layout_constraintEnd_toStartOf="@+id/appwidget_action_launch_load"
             android:layout_width="0dp" android:layout_height="wrap_content" android:orientation="vertical" android:layout_weight="1"

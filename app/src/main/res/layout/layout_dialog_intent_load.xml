@@ -29,27 +29,27 @@
 
         <TextView
             android:id="@+id/dialog_title"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:gravity="start|center_vertical"
             style="@style/Base.DialogWindowTitle.AppCompat"
             android:text="@string/loadaction_dialog_title" />
+
+        <android.support.v7.widget.AppCompatImageButton android:id="@+id/edit_intent_menu"
+            style="@style/Widget.AppCompat.ActionButton.Overflow"
+            android:layout_height="wrap_content" android:layout_width="wrap_content" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
         android:orientation="horizontal" style="@style/SunsetTimeWidget_dark"
         android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
         android:paddingTop="8dp" android:paddingBottom="8dp"
         android:background="?attr/dialogBackground">
 
-        <Spinner android:id="@+id/spin_intentid"
-            android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1"
+        <ListView android:id="@+id/list_intentid" android:nestedScrollingEnabled="true"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
             android:gravity="center_vertical" android:layout_gravity="center_vertical" />
-
-        <android.support.v7.widget.AppCompatImageButton android:id="@+id/edit_intent_menu"
-            style="@style/Widget.AppCompat.ActionButton.Overflow"
-            android:layout_height="wrap_content" android:layout_width="wrap_content" />
 
     </LinearLayout>
 
