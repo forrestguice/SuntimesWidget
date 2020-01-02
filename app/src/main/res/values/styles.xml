@@ -114,6 +114,7 @@
         <item name="icActionExpand">@drawable/ic_action_expand_light</item>
 
         <item name="windowActionModeOverlay">true</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Suntimes.BottomSheetDialog</item>
     </style>
     <style name="AppTheme.Light" parent="AppThemeBase.Light">
         <item name="icActionNext">@drawable/ic_action_next_item_light</item>
@@ -230,10 +231,15 @@
         <item name="icActionExpand">@drawable/ic_action_expand</item>
 
         <item name="windowActionModeOverlay">true</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Suntimes.BottomSheetDialog</item>
     </style>
     <style name="AppTheme.Dark" parent="AppThemeBase.Dark">
         <item name="icActionNext">@drawable/ic_action_next_item</item>
         <item name="icActionPrevious">@drawable/ic_action_previous_item</item>
+    </style>
+
+    <style name="ThemeOverlay.Suntimes.BottomSheetDialog" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
     <!-- view styles -->
