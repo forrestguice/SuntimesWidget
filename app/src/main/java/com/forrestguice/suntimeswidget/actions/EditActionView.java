@@ -341,15 +341,7 @@ public class EditActionView extends LinearLayout
                 saveDialog.setValuesFrom(EditActionView.this);
             }
         });
-        saveDialog.setOnAcceptedListener(new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                initFromOther(saveDialog.getEdit());
-                saveIntent(context, 0, saveDialog.getIntentID(), saveDialog.getIntentTitle(), saveDialog.getIntentDesc());
-                Toast.makeText(context, context.getString(R.string.saveaction_toast, saveDialog.getIntentTitle(), saveDialog.getIntentID()), Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        saveDialog.setOnAcceptedListener(onSaveDialogAccepted(context, saveDialog));
         saveDialog.show(fragmentManager, DIALOGTAG_SAVE);
     }
 
@@ -359,6 +351,18 @@ public class EditActionView extends LinearLayout
         final LoadActionDialog loadDialog = new LoadActionDialog();
         loadDialog.setOnAcceptedListener(onLoadDialogAccepted(context, loadDialog));
         loadDialog.show(fragmentManager, DIALOGTAG_LOAD);
+    }
+
+    private DialogInterface.OnClickListener onSaveDialogAccepted(final Context context, final SaveActionDialog saveDialog)
+    {
+        return new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                initFromOther(saveDialog.getEdit());
+                saveIntent(context, 0, saveDialog.getIntentID(), saveDialog.getIntentTitle(), saveDialog.getIntentDesc());
+                Toast.makeText(context, context.getString(R.string.saveaction_toast, saveDialog.getIntentTitle(), saveDialog.getIntentID()), Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 
     private DialogInterface.OnClickListener onLoadDialogAccepted(final Context context, final LoadActionDialog loadDialog)
@@ -580,12 +584,15 @@ public class EditActionView extends LinearLayout
             }
 
             SaveActionDialog saveDialog = (SaveActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_SAVE);
-            if (saveDialog != null) {
+            if (saveDialog != null)
+            {
+                saveDialog.setOnAcceptedListener(onSaveDialogAccepted(getContext(), saveDialog));
                 saveDialog.getEdit().setFragmentManager(fragments);
             }
 
             LoadActionDialog loadDialog = (LoadActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_LOAD);
-            if (loadDialog != null) {
+            if (loadDialog != null)
+            {
                 loadDialog.setOnAcceptedListener(onLoadDialogAccepted(getContext(), loadDialog));
             }
         }
