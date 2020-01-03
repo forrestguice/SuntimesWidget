@@ -3,6 +3,11 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="none">
 
+        <item android:id="@+id/selectAction"
+            android:title="@string/configAction_editAction"
+            android:icon="?attr/icActionAccept"
+            app:showAsAction="always" />
+
         <item android:id="@+id/editAction"
             android:title="@string/configAction_editAction"
             android:icon="?attr/icActionEdit"

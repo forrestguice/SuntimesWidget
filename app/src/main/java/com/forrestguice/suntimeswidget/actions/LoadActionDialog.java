@@ -534,6 +534,10 @@ public class LoadActionDialog extends EditActionDialog
             {
                 switch (item.getItemId())
                 {
+                    case R.id.selectAction:
+                        btn_accept.performClick();
+                        return true;
+
                     case R.id.deleteAction:
                         deleteAction();
                         return true;
