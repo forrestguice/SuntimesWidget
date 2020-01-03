@@ -357,15 +357,21 @@ public class EditActionView extends LinearLayout
     {
         final Context context = getContext();
         final LoadActionDialog loadDialog = new LoadActionDialog();
-        loadDialog.setOnAcceptedListener(new DialogInterface.OnClickListener() {
+        loadDialog.setOnAcceptedListener(onLoadDialogAccepted(context, loadDialog));
+        loadDialog.show(fragmentManager, DIALOGTAG_LOAD);
+    }
+
+    private DialogInterface.OnClickListener onLoadDialogAccepted(final Context context, final LoadActionDialog loadDialog)
+    {
+        return new DialogInterface.OnClickListener()
+        {
             @Override
             public void onClick(DialogInterface dialog, int which)
             {
                 loadIntent(context, 0, loadDialog.getIntentID());
                 //Toast.makeText(context, context.getString(R.string.loadaction_toast, loadDialog.getIntentTitle()), Toast.LENGTH_SHORT).show();
             }
-        });
-        loadDialog.show(fragmentManager, DIALOGTAG_LOAD);
+        };
     }
 
     /**
@@ -576,6 +582,11 @@ public class EditActionView extends LinearLayout
             SaveActionDialog saveDialog = (SaveActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_SAVE);
             if (saveDialog != null) {
                 saveDialog.getEdit().setFragmentManager(fragments);
+            }
+
+            LoadActionDialog loadDialog = (LoadActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_LOAD);
+            if (loadDialog != null) {
+                loadDialog.setOnAcceptedListener(onLoadDialogAccepted(getContext(), loadDialog));
             }
         }
     }
