@@ -53,9 +53,9 @@ public class EditActionView extends LinearLayout
 {
     public static final String TAG = "EditIntent";
 
-    protected static final String DIALOGTAG_HELP = "help";
-    protected static final String DIALOGTAG_SAVE = "save";
-    protected static final String DIALOGTAG_LOAD = "load";
+    public static final String DIALOGTAG_HELP = "help";
+    public static final String DIALOGTAG_SAVE = "save";
+    public static final String DIALOGTAG_LOAD = "load";
 
     protected static final String HELPTAG_LAUNCH = "action_launch";
 

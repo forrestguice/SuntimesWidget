@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.actions;
 
 import android.app.AlertDialog;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -59,6 +60,9 @@ import java.util.Set;
  */
 public class LoadActionDialog extends EditActionDialog
 {
+    public static final String DIALOGTAG_ADD = "add";
+    public static final String DIALOGTAG_EDIT = "edit";
+
     private ActionDisplay selectedItem;
     private ListView list;
     private ActionDisplayAdapter adapter;
@@ -70,6 +74,27 @@ public class LoadActionDialog extends EditActionDialog
     {
         super.onSaveInstanceState(outState);
         outState.putString("selectedItem", selectedItem != null ? selectedItem.id : "");
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        android.support.v4.app.FragmentManager fragmentManager = getFragmentManager();
+        SaveActionDialog addDialog = (SaveActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_ADD);
+        if (addDialog != null)
+        {
+            addDialog.setOnAcceptedListener(onActionSaved(getContext(), addDialog));
+            addDialog.getEdit().setFragmentManager(fragmentManager);
+        }
+
+        SaveActionDialog editDialog = (SaveActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_EDIT);
+        if (editDialog != null)
+        {
+            editDialog.setOnAcceptedListener(onActionSaved(getContext(), editDialog));
+            editDialog.getEdit().setFragmentManager(fragmentManager);
+        }
     }
 
     @Override
@@ -220,7 +245,7 @@ public class LoadActionDialog extends EditActionDialog
         final Context context = getContext();
         final SaveActionDialog saveDialog = new SaveActionDialog();
         saveDialog.setOnAcceptedListener(onActionSaved(context, saveDialog));
-        saveDialog.show(getFragmentManager(), EditActionView.DIALOGTAG_SAVE);
+        saveDialog.show(getFragmentManager(), DIALOGTAG_ADD);
     }
 
     private void editAction()
@@ -236,7 +261,7 @@ public class LoadActionDialog extends EditActionDialog
             }
         });
         saveDialog.setOnAcceptedListener(onActionSaved(context, saveDialog));
-        saveDialog.show(getFragmentManager(), EditActionView.DIALOGTAG_SAVE);
+        saveDialog.show(getFragmentManager(), DIALOGTAG_EDIT);
     }
 
     private DialogInterface.OnClickListener onActionSaved(final Context context, final SaveActionDialog saveDialog)
