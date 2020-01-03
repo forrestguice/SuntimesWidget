@@ -18,22 +18,15 @@
 
 package com.forrestguice.suntimeswidget.actions;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatCallback;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.ActionBarContextView;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.ActionMode;
@@ -43,8 +36,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ContextThemeWrapper;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -55,7 +46,6 @@ import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 
 import java.util.ArrayList;
@@ -69,10 +59,18 @@ import java.util.Set;
  */
 public class LoadActionDialog extends EditActionDialog
 {
+    private ActionDisplay selectedItem;
     private ListView list;
     private ActionDisplayAdapter adapter;
     protected ActionMode actionMode = null;
     protected ActionDisplayActionMode actionModeCallback;
+
+    @Override
+    public void onSaveInstanceState( Bundle outState )
+    {
+        super.onSaveInstanceState(outState);
+        outState.putString("selectedItem", selectedItem != null ? selectedItem.id : "");
+    }
 
     @Override
     public String getIntentID()
@@ -93,16 +91,41 @@ public class LoadActionDialog extends EditActionDialog
     }
 
     @Override
-    protected void initViews(Context context, View dialogContent)
+    protected void updateViews(Context context)
     {
-        super.initViews(context, dialogContent);
+        super.updateViews(context);
+        this.btn_accept.setEnabled(adapter.getSelected() != null);
+    }
+
+    @Override
+    protected void initViews(Context context, View dialogContent, @Nullable Bundle savedState)
+    {
+        super.initViews(context, dialogContent, savedState);
 
         actionModeCallback = new ActionDisplayActionMode();
         list = (ListView) dialogContent.findViewById(R.id.list_intentid);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                list.setSelection(position);
+                adapter.setSelected(selectedItem = (ActionDisplay) list.getItemAtPosition(position));
+                updateViews(getContext());
+                triggerActionMode(view, selectedItem);
+            }
+        });
         initAdapter(context);
 
         ImageButton button_menu = (ImageButton) dialogContent.findViewById(R.id.edit_intent_menu);
         button_menu.setOnClickListener(onMenuButtonClicked);
+
+        if (savedState != null)
+        {
+            String actionID = savedState.getString("selectedItem",  null);
+            if (actionID != null && !actionID.trim().isEmpty()) {
+                adapter.setSelected(selectedItem = adapter.findItemByID(actionID));
+            }
+        }
     }
 
     protected void initAdapter(Context context)
@@ -128,12 +151,7 @@ public class LoadActionDialog extends EditActionDialog
 
         adapter = new ActionDisplayAdapter(context, R.layout.layout_listitem_timezone, ids.toArray(new ActionDisplay[0]));
         list.setAdapter(adapter);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                triggerActionMode(view, (ActionDisplay) list.getItemAtPosition(position));
-            }
-        });
+
     }
 
     @Override
@@ -214,6 +232,7 @@ public class LoadActionDialog extends EditActionDialog
             @Override
             public void onShow(DialogInterface dialog) {
                 saveDialog.getEdit().loadIntent(context, 0, intentID);
+                saveDialog.setIntentID(intentID);
             }
         });
         saveDialog.setOnAcceptedListener(onActionSaved(context, saveDialog));
@@ -262,19 +281,19 @@ public class LoadActionDialog extends EditActionDialog
     private void deleteAction()
     {
         Context context = getContext();
-        final String intentID = getIntentID();
-        if (intentID != null && context != null)
+        final String actionID = getIntentID();
+        if (actionID != null && context != null)
         {
             AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-            String title = WidgetActions.loadActionLaunchPref(context, 0, intentID, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
-            dialog.setMessage(context.getString(R.string.delaction_dialog_msg, title, intentID))
+            String title = WidgetActions.loadActionLaunchPref(context, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
+            dialog.setMessage(context.getString(R.string.delaction_dialog_msg, title, actionID))
                     .setNegativeButton(context.getString(R.string.delaction_dialog_cancel), null)
                     .setPositiveButton(context.getString(R.string.delaction_dialog_ok),
                     new DialogInterface.OnClickListener()
                     {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            WidgetActions.deleteActionLaunchPref(getContext(), 0, intentID);
+                            WidgetActions.deleteActionLaunchPref(getContext(), 0, actionID);
                             initAdapter(getContext());
                             updateViews(getContext());
                         }
@@ -310,6 +329,7 @@ public class LoadActionDialog extends EditActionDialog
     {
         private int resourceID, dropDownResourceID;
         private ActionDisplay selectedItem;
+        private ActionDisplay[] objects;
 
         public ActionDisplayAdapter(@NonNull Context context, int resource) {
             super(context, resource);
@@ -332,9 +352,22 @@ public class LoadActionDialog extends EditActionDialog
 
         public void setSelected( ActionDisplay item ) {
             selectedItem = item;
+            notifyDataSetChanged();
         }
         public ActionDisplay getSelected() {
             return selectedItem;
+        }
+
+        public ActionDisplay findItemByID(String actionID)
+        {
+            for (int i=0; i<getCount(); i++)
+            {
+                ActionDisplay item = getItem(i);
+                if (item != null && item.id.equals(actionID)) {
+                    return item;
+                }
+            }
+            return null;
         }
 
         @Override
@@ -365,12 +398,16 @@ public class LoadActionDialog extends EditActionDialog
                 return view;
             }
 
+            if (selectedItem != null && item.id.equals(selectedItem.id)) {
+                view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.text_accent_dark));
+            } else view.setBackgroundColor(Color.TRANSPARENT);
+
             TextView primaryText = (TextView)view.findViewById(android.R.id.text1);
             primaryText.setText(item.toString());
 
             TextView secondaryText = (TextView)view.findViewById(android.R.id.text2);
             if (secondaryText != null) {
-                secondaryText.setText(item.desc);
+                secondaryText.setText(item.desc != null && !item.desc.trim().isEmpty() ? item.desc : item.id);
             }
 
             ImageView icon = (ImageView) view.findViewById(android.R.id.icon);
@@ -402,21 +439,8 @@ public class LoadActionDialog extends EditActionDialog
      */
     private boolean triggerActionMode(View view, ActionDisplay item)
     {
-        Dialog dialog = getDialog();
-        if (dialog == null)
-            return false;
-
-        Window window = dialog.getWindow();
-        if (window == null)
-            return false;
-
-        View v = window.getDecorView();
-        if (v == null)
-            return false;
-
         if (actionMode == null)
         {
-            adapter.setSelected(item);
             if (item != null)
             {
                 actionModeCallback.setItem(item);
@@ -455,10 +479,8 @@ public class LoadActionDialog extends EditActionDialog
         public boolean onCreateActionMode(android.view.ActionMode mode, Menu menu) {
             return onCreateActionMode(mode.getMenuInflater(), menu);
         }
-        private boolean onCreateActionMode(MenuInflater inflater, Menu menu)
-        {
-            MenuInflater inflater1 = getActivity().getMenuInflater();
-            inflater1.inflate(R.menu.editintent2, menu);
+        private boolean onCreateActionMode(MenuInflater inflater, Menu menu) {
+            inflater.inflate(R.menu.editintent2, menu);
             return true;
         }
 
@@ -470,10 +492,8 @@ public class LoadActionDialog extends EditActionDialog
         public void onDestroyActionMode(android.view.ActionMode mode) {
             onDestroyActionMode();
         }
-        private void onDestroyActionMode()
-        {
+        private void onDestroyActionMode() {
             actionMode = null;
-            adapter.setSelected(null);
         }
 
         @Override
@@ -488,7 +508,6 @@ public class LoadActionDialog extends EditActionDialog
         private boolean onPrepareActionMode(Menu menu)
         {
             SuntimesUtils.forceActionBarIcons(menu);
-            MenuItem selectItem = menu.findItem(R.id.selectAction);
             MenuItem deleteItem = menu.findItem(R.id.deleteAction);
             MenuItem editItem = menu.findItem(R.id.editAction);
 

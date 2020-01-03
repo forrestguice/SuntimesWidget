@@ -19,6 +19,8 @@
 package com.forrestguice.suntimeswidget.actions;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -129,7 +131,7 @@ public class SaveActionDialog extends EditActionDialog
     }
 
     @Override
-    protected void initViews(Context context, View dialogContent)
+    protected void initViews(Context context, View dialogContent, @Nullable Bundle savedState)
     {
         intentIDs = WidgetActions.loadActionLaunchList(context, 0);
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, intentIDs.toArray(new String[0]));
@@ -169,7 +171,7 @@ public class SaveActionDialog extends EditActionDialog
         }
 
         updateViews(context);
-        super.initViews(context, dialogContent);
+        super.initViews(context, dialogContent, savedState);
     }
 
     private TextWatcher titleWatcher = new TextWatcher() {

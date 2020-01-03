@@ -42,7 +42,7 @@ public abstract class EditDialog extends BottomSheetDialogFragment
 
     protected Button btn_accept, btn_cancel;
 
-    protected void initViews(Context context, View dialogContent)
+    protected void initViews(Context context, View dialogContent, @Nullable Bundle savedState)
     {
         btn_cancel = (Button) dialogContent.findViewById(R.id.dialog_button_cancel);
         btn_cancel.setOnClickListener(onDialogCancelClick);
@@ -68,7 +68,7 @@ public abstract class EditDialog extends BottomSheetDialogFragment
     {
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(getLayoutID(), parent, false);
-        initViews(getContext(), dialogContent);
+        initViews(getContext(), dialogContent, savedState);
         updateViews(getContext());
         return dialogContent;
     }
