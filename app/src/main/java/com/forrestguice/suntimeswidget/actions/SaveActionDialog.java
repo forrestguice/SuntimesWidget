@@ -65,6 +65,9 @@ public class SaveActionDialog extends EditActionDialog
     }
     public void setIntentID(String id) {
         intentID = id;
+        if (edit_intentID != null) {
+            edit_intentID.setText(intentID);
+        }
     }
     public String suggestedIntentID(Context context)
     {
