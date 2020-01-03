@@ -234,7 +234,7 @@ public class WidgetActions
         Set<String> actionList = loadActionLaunchList(context, 0);
         actionList.remove(id);
         prefs.putStringSet(PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + PREF_KEY_ACTION_LAUNCH_LIST, actionList);
-        prefs.apply();
+        prefs.commit();
     }
     public static boolean hasActionLaunchPref(Context context, int appWidgetId, @NonNull String id)
     {
