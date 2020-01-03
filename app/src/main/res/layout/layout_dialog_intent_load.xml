@@ -17,10 +17,10 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <LinearLayout android:id="@+id/dialog_frame_header"
         android:background="?attr/dialogFrame"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="horizontal" android:gravity="center_vertical|start"
@@ -53,7 +53,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <LinearLayout android:id="@+id/dialog_frame_buttons"
         android:background="?attr/dialogFrame"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="horizontal" android:gravity="center_vertical|end"
