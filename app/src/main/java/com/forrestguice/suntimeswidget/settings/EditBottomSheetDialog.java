@@ -36,7 +36,7 @@ import android.widget.FrameLayout;
 import com.forrestguice.suntimeswidget.R;
 
 @SuppressWarnings("Convert2Diamond")
-public abstract class EditDialog extends BottomSheetDialogFragment
+public abstract class EditBottomSheetDialog extends BottomSheetDialogFragment
 {
     protected abstract int getLayoutID();
 

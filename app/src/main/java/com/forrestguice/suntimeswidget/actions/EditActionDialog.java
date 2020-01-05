@@ -17,10 +17,10 @@
 */
 package com.forrestguice.suntimeswidget.actions;
 
-import com.forrestguice.suntimeswidget.settings.EditDialog;
+import com.forrestguice.suntimeswidget.settings.EditBottomSheetDialog;
 
 @SuppressWarnings("Convert2Diamond")
-public abstract class EditActionDialog extends EditDialog
+public abstract class EditActionDialog extends EditBottomSheetDialog
 {
     protected abstract String getIntentID();
     protected abstract String getIntentTitle();
