@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.settings;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -244,8 +245,14 @@ public class WidgetActions
     }
 
     /**
-     * launchIntent
+     * startIntent
      */
+    public static void startIntent(@NonNull Context context, int appWidgetId, String id, @Nullable SuntimesData data, Class fallbackLaunchClass)
+    {
+        Intent launchIntent = WidgetActions.createIntent(context, appWidgetId, id, data, fallbackLaunchClass);
+        String launchType = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TYPE);
+        WidgetActions.startIntent(context, launchIntent, launchType);
+    }
     public static void startIntent(@NonNull Context context, @NonNull Intent launchIntent, @Nullable String launchType)
     {
         if (launchType != null)
@@ -278,6 +285,44 @@ public class WidgetActions
         }
     }
 
+    /**
+     * createIntent
+     */
+    public static Intent createIntent(Context context, int appWidgetId, String id, @Nullable SuntimesData data, Class fallbackLaunchClass)
+    {
+        Intent launchIntent;
+        String launchClassName = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, null);
+        String dataString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
+        String mimeType = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE);
+        String extraString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_EXTRAS);
+
+        if (launchClassName != null && !launchClassName.trim().isEmpty())
+        {
+            Class<?> launchClass;
+            try {
+                launchClass = Class.forName(launchClassName);
+                launchIntent = new Intent(context, launchClass);
+
+            } catch (ClassNotFoundException e) {
+                Log.e(TAG, "createIntent :: " + launchClassName + " cannot be found! " + e.toString());
+                launchClass = fallbackLaunchClass;
+                launchIntent = new Intent(context, launchClass);
+                launchIntent.putExtra(WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(), true);
+            }
+        } else {
+            launchIntent = new Intent();
+        }
+
+        WidgetActions.applyAction(launchIntent, WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION));
+        WidgetActions.applyData(context, launchIntent, dataString, mimeType, data);
+        WidgetActions.applyExtras(context, launchIntent, extraString, data);
+        launchIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        return launchIntent;
+    }
+
+    /**
+     * applyAction
+     */
     public static void applyAction(Intent intent, @Nullable String action)
     {
         if (intent == null || action == null || action.isEmpty()) {

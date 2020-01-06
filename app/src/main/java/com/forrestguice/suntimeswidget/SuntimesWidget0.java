@@ -220,44 +220,16 @@ public class SuntimesWidget0 extends AppWidgetProvider
         // OnTap: Launch an Activity
         if (action.equals(WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY.name()))
         {
-            String launchType = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_TYPE);
-            String launchClassName = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, null);
-            String dataString = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
-            String mimeType = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE);
-            String extraString = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_EXTRAS);
-            Intent launchIntent;
-
-            if (launchClassName != null && !launchClassName.trim().isEmpty())
-            {
-                Class<?> launchClass;
-                try {
-                    launchClass = Class.forName(launchClassName);
-                    launchIntent = new Intent(context, launchClass);
-
-                } catch (ClassNotFoundException e) {
-                    launchClass = getConfigClass();
-                    launchIntent = new Intent(context, launchClass);
-                    launchIntent.putExtra(WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(), true);
-                    Log.e(TAG, "LaunchApp :: " + launchClassName + " cannot be found! " + e.toString());
-                }
-            } else {
-                launchIntent = new Intent();
-            }
-
-            WidgetActions.applyAction(launchIntent, WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION));
-
             SuntimesData data = null;
+            String dataString = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
+            String extraString = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_EXTRAS);
             if ((dataString != null && !dataString.isEmpty() && dataString.contains("%")) ||
                     (extraString != null && !extraString.isEmpty() && extraString.contains("%")) )
             {
                 data = getData(context, appWidgetId);
                 data.calculate();
             }
-            WidgetActions.applyData(context, launchIntent, dataString, mimeType, data);
-            WidgetActions.applyExtras(context, launchIntent, extraString, data);
-
-            launchIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-            WidgetActions.startIntent(context.getApplicationContext(), launchIntent, launchType);
+            WidgetActions.startIntent(context.getApplicationContext(), appWidgetId, null, data, getConfigClass());
             return true;
         }
 
