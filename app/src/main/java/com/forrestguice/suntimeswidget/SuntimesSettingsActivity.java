@@ -63,7 +63,7 @@ import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.LengthPreference;
 import com.forrestguice.suntimeswidget.settings.SummaryListPreference;
-import com.forrestguice.suntimeswidget.settings.ThemePreference;
+import com.forrestguice.suntimeswidget.settings.ActionButtonPreference;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -77,6 +77,10 @@ import java.util.List;
 
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_APPEARANCE_THEME_DARK;
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT;
+import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_CLOCKTAPACTION;
+import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_DATETAPACTION;
+import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_DATETAPACTION1;
+import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_NOTETAPACTION;
 
 /**
  * A preferences activity for the main app;
@@ -1212,13 +1216,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             }
         }
 
-        ThemePreference overrideTheme_light = (ThemePreference)findPreference(PREF_KEY_APPEARANCE_THEME_LIGHT);
-        initPref_ui_themeOverride(this, overrideTheme_light, this, PREF_KEY_APPEARANCE_THEME_LIGHT);
-        loadPref_ui_themeOverride(this, overrideTheme_light, PREF_KEY_APPEARANCE_THEME_LIGHT, this);
+        ActionButtonPreference overrideTheme_light = (ActionButtonPreference)findPreference(PREF_KEY_APPEARANCE_THEME_LIGHT);
+        initPref_ui_themeOverride(this, overrideTheme_light, PREF_KEY_APPEARANCE_THEME_LIGHT);
+        loadPref_ui_themeOverride(this, overrideTheme_light, PREF_KEY_APPEARANCE_THEME_LIGHT);
 
-        ThemePreference overrideTheme_dark = (ThemePreference)findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
-        initPref_ui_themeOverride(this, overrideTheme_dark, this, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
-        loadPref_ui_themeOverride(this, overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK, this);
+        ActionButtonPreference overrideTheme_dark = (ActionButtonPreference)findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
+        initPref_ui_themeOverride(this, overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
+        loadPref_ui_themeOverride(this, overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
 
         updatePref_ui_themeOverride(AppSettings.loadThemePref(this), overrideTheme_dark, overrideTheme_light);
     }
@@ -1235,15 +1239,33 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             }
         }
 
-        final ThemePreference overrideTheme_light = (ThemePreference)fragment.findPreference(PREF_KEY_APPEARANCE_THEME_LIGHT);
-        initPref_ui_themeOverride(fragment.getActivity(), overrideTheme_light, fragment.getActivity(), PREF_KEY_APPEARANCE_THEME_LIGHT);
-        loadPref_ui_themeOverride(fragment.getActivity(), overrideTheme_light, PREF_KEY_APPEARANCE_THEME_LIGHT, fragment.getActivity());
+        Activity activity = fragment.getActivity();
 
-        final ThemePreference overrideTheme_dark = (ThemePreference)fragment.findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
-        initPref_ui_themeOverride(fragment.getActivity(), overrideTheme_dark, fragment.getActivity(), AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
-        loadPref_ui_themeOverride(fragment.getActivity(), overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK, fragment.getActivity());
+        final ActionButtonPreference tapAction_clock = (ActionButtonPreference)fragment.findPreference(PREF_KEY_UI_CLOCKTAPACTION);
+        initPref_ui_tapAction(activity, tapAction_clock, PREF_KEY_UI_CLOCKTAPACTION);
+        loadPref_ui_tapAction(activity, tapAction_clock, PREF_KEY_UI_CLOCKTAPACTION);
 
-        updatePref_ui_themeOverride(AppSettings.loadThemePref(fragment.getActivity()), overrideTheme_dark, overrideTheme_light);
+        final ActionButtonPreference tapAction_date0 = (ActionButtonPreference)fragment.findPreference(PREF_KEY_UI_DATETAPACTION);
+        initPref_ui_tapAction(activity, tapAction_date0, PREF_KEY_UI_DATETAPACTION);
+        loadPref_ui_tapAction(activity, tapAction_date0, PREF_KEY_UI_DATETAPACTION);
+
+        final ActionButtonPreference tapAction_date1 = (ActionButtonPreference)fragment.findPreference(PREF_KEY_UI_DATETAPACTION1);
+        initPref_ui_tapAction(activity, tapAction_date1, PREF_KEY_UI_DATETAPACTION1);
+        loadPref_ui_tapAction(activity, tapAction_date1, PREF_KEY_UI_DATETAPACTION1);
+
+        final ActionButtonPreference tapAction_note = (ActionButtonPreference)fragment.findPreference(PREF_KEY_UI_NOTETAPACTION);
+        initPref_ui_tapAction(activity, tapAction_note,  PREF_KEY_UI_NOTETAPACTION);
+        loadPref_ui_tapAction(activity, tapAction_note,  PREF_KEY_UI_NOTETAPACTION);
+
+        final ActionButtonPreference overrideTheme_light = (ActionButtonPreference)fragment.findPreference(PREF_KEY_APPEARANCE_THEME_LIGHT);
+        initPref_ui_themeOverride(activity, overrideTheme_light, PREF_KEY_APPEARANCE_THEME_LIGHT);
+        loadPref_ui_themeOverride(activity, overrideTheme_light, PREF_KEY_APPEARANCE_THEME_LIGHT);
+
+        final ActionButtonPreference overrideTheme_dark = (ActionButtonPreference)fragment.findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
+        initPref_ui_themeOverride(activity, overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
+        loadPref_ui_themeOverride(activity, overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
+
+        updatePref_ui_themeOverride(AppSettings.loadThemePref(activity), overrideTheme_dark, overrideTheme_light);
     }
 
     private static void initPref_ui_field(CheckBoxPreference field, final Context context, final int k, boolean value)
@@ -1262,21 +1284,21 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         });
     }
 
-    private static Preference.OnPreferenceChangeListener onOverrideThemeChanged(final Activity activity, final ThemePreference overridePref, final int requestCode)
+    private static Preference.OnPreferenceChangeListener onOverrideThemeChanged(final Activity activity, final ActionButtonPreference overridePref, final int requestCode)
     {
         return new Preference.OnPreferenceChangeListener()
         {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                overridePref.setThemePreferenceListener(createThemeListPreferenceListener(activity, (String)newValue, requestCode));
+                overridePref.setActionButtonPreferenceListener(createThemeListPreferenceListener(activity, (String)newValue, requestCode));
                 return true;
             }
         };
     }
 
-    private static ThemePreference.ThemePreferenceListener createThemeListPreferenceListener(final Activity activity, final String selectedTheme, final int requestCode)
+    private static ActionButtonPreference.ActionButtonPreferenceListener createThemeListPreferenceListener(final Activity activity, final String selectedTheme, final int requestCode)
     {
-        return new ThemePreference.ThemePreferenceListener()
+        return new ActionButtonPreference.ActionButtonPreferenceListener()
         {
             @Override
             public void onActionButtonClicked()
@@ -1290,17 +1312,27 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         };
     }
 
-    private static void initPref_ui_themeOverride(Activity activity, ThemePreference listPref, Context context, String key)
+    private static void initPref_ui_tapAction(Activity activity, ActionButtonPreference listPref, String key)
+    {
+        // TODO
+    }
+
+    private static void loadPref_ui_tapAction(Activity activity, ActionButtonPreference listPref, String key)
+    {
+        // TODO
+    }
+
+    private static void initPref_ui_themeOverride(Activity activity, ActionButtonPreference listPref, String key)
     {
         if (listPref != null)
         {
-            WidgetThemes.initThemes(context);
+            WidgetThemes.initThemes(activity);
             SuntimesTheme.ThemeDescriptor[] themes = WidgetThemes.sortedValues(true);
             String[] themeEntries = new String[themes.length + 1];
             String[] themeValues = new String[themes.length + 1];
 
             themeValues[0] = "default";
-            themeEntries[0] = context.getString(R.string.configLabel_tagDefault);
+            themeEntries[0] = activity.getString(R.string.configLabel_tagDefault);
             for (int i=0; i<themes.length; i++)                // i:0 is reserved for "default"
             {
                 themeValues[i + 1] = themes[i].name();
@@ -1312,19 +1344,19 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
     }
 
-    private static void loadPref_ui_themeOverride(Activity activity, ThemePreference listPref, String key, Context context)
+    private static void loadPref_ui_themeOverride(Activity activity, ActionButtonPreference listPref, String key)
     {
         if (listPref != null)
         {
             boolean isLightTheme = key.equals(PREF_KEY_APPEARANCE_THEME_LIGHT);
-            String themeName = ((isLightTheme ? AppSettings.loadThemeLightPref(context) : AppSettings.loadThemeDarkPref(context)));
+            String themeName = ((isLightTheme ? AppSettings.loadThemeLightPref(activity) : AppSettings.loadThemeDarkPref(activity)));
             int requestCode = (isLightTheme ? REQUEST_PICKTHEME_LIGHT : REQUEST_PICKTHEME_DARK);
 
             int currentIndex = ((themeName != null) ? listPref.findIndexOfValue(themeName) : -1);
             if (currentIndex >= 0)
             {
                 listPref.setValueIndex(currentIndex);
-                listPref.setThemePreferenceListener(createThemeListPreferenceListener(activity, themeName, requestCode));
+                listPref.setActionButtonPreferenceListener(createThemeListPreferenceListener(activity, themeName, requestCode));
                 listPref.setOnPreferenceChangeListener(onOverrideThemeChanged(activity, listPref, requestCode));
 
             } else {

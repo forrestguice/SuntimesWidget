@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -27,26 +27,26 @@ import android.widget.ImageView;
 
 import com.forrestguice.suntimeswidget.R;
 
-public class ThemePreference extends ListPreference
+public class ActionButtonPreference extends ListPreference
 {
-    public ThemePreference(Context context)
+    public ActionButtonPreference(Context context)
     {
         super(context);
     }
 
-    public ThemePreference(Context context, AttributeSet attrs)
+    public ActionButtonPreference(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
     @TargetApi(21)
-    public ThemePreference(Context context, AttributeSet attrs, int defStyleAttr)
+    public ActionButtonPreference(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
     }
 
     @TargetApi(21)
-    public ThemePreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
+    public ActionButtonPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
     {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
@@ -73,24 +73,24 @@ public class ThemePreference extends ListPreference
     private View.OnClickListener onActionClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (themePreferenceListener != null) {
-                themePreferenceListener.onActionButtonClicked();
+            if (actionButtonPreferenceListener != null) {
+                actionButtonPreferenceListener.onActionButtonClicked();
             }
         }
     };
 
-    private ThemePreferenceListener themePreferenceListener = null;
-    public static abstract class ThemePreferenceListener
+    private ActionButtonPreferenceListener actionButtonPreferenceListener = null;
+    public static abstract class ActionButtonPreferenceListener
     {
         public void onActionButtonClicked() {}
     }
 
     /**
-     * setThemePreferenceListener
-     * @param listener ThemePreferenceListener
+     * setActionButtonPreferenceListener
+     * @param listener ActionButtonPreferenceListener
      */
-    public void setThemePreferenceListener( ThemePreferenceListener listener ) {
-        themePreferenceListener = listener;
+    public void setActionButtonPreferenceListener(ActionButtonPreferenceListener listener ) {
+        actionButtonPreferenceListener = listener;
     }
 
 }
