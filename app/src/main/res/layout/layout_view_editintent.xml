@@ -72,7 +72,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             style="@style/Widget.AppCompat.ActionButton"
             android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_vertical"
-            android:src="?attr/icActionWidgets"
+            android:src="?attr/icActionExtension"
             android:contentDescription="Load" />
 
         <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_action_launch_menu"

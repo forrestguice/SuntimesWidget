@@ -80,6 +80,7 @@
     <attr name="icActionError" format="reference" />
     <attr name="icActionWidgets" format="reference" />
     <attr name="icActionAppearance" format="reference" />
+    <attr name="icActionExtension" format="reference" />
     <attr name="icActionAltitude" format="reference" />
     <attr name="icActionShadow" format="reference" />
     <attr name="icActionLocale" format="reference" />
