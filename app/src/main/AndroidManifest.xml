@@ -97,6 +97,13 @@
             android:icon="@mipmap/ic_launcher">
         </activity>
 
+        <!-- Action List Activity -->
+        <activity
+            android:name=".actions.ActionListActivity"
+            android:label="@string/app_name"
+            android:icon="@mipmap/ic_launcher">
+        </activity>
+
         <!-- Theme List Activity -->
         <activity
             android:name=".themes.WidgetThemeListActivity"
