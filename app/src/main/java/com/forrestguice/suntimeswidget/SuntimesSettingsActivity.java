@@ -47,6 +47,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
@@ -54,6 +55,8 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.actions.ActionListActivity;
+import com.forrestguice.suntimeswidget.actions.LoadActionDialog;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
@@ -64,6 +67,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.LengthPreference;
 import com.forrestguice.suntimeswidget.settings.SummaryListPreference;
 import com.forrestguice.suntimeswidget.settings.ActionButtonPreference;
+import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -74,7 +78,12 @@ import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
+import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_DEF_UI_CLOCKTAPACTION;
+import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_DEF_UI_DATETAPACTION;
+import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_DEF_UI_DATETAPACTION1;
+import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_DEF_UI_NOTETAPACTION;
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_APPEARANCE_THEME_DARK;
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT;
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_CLOCKTAPACTION;
@@ -102,6 +111,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
     public static final int REQUEST_PICKTHEME_LIGHT = 20;
     public static final int REQUEST_PICKTHEME_DARK = 30;
+    public static final int REQUEST_TAPACTION_CLOCK = 40;
+    public static final int REQUEST_TAPACTION_DATE0 = 50;
+    public static final int REQUEST_TAPACTION_DATE1 = 60;
+    public static final int REQUEST_TAPACTION_NOTE = 70;
 
     private Context context;
     private PlacesPrefsBase placesPrefBase = null;
@@ -138,8 +151,54 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         Log.d(LOG_TAG, "onActivityResult: " + requestCode + " (" + resultCode + ")");
-        if (requestCode == REQUEST_PICKTHEME_LIGHT || requestCode == REQUEST_PICKTHEME_DARK) {
-            onPickTheme(requestCode, resultCode, data);
+        switch(requestCode)
+        {
+            case REQUEST_PICKTHEME_DARK:
+            case REQUEST_PICKTHEME_LIGHT:
+                onPickTheme(requestCode, resultCode, data);
+                break;
+
+            case REQUEST_TAPACTION_CLOCK:
+            case REQUEST_TAPACTION_DATE0:
+            case REQUEST_TAPACTION_DATE1:
+            case REQUEST_TAPACTION_NOTE:
+                onPickAction(requestCode, resultCode, data);
+                break;
+        }
+    }
+
+    private String prefKeyForRequestCode(int requestCode)
+    {
+        switch(requestCode)
+        {
+            case REQUEST_PICKTHEME_DARK:  return AppSettings.PREF_KEY_APPEARANCE_THEME_DARK;
+            case REQUEST_PICKTHEME_LIGHT: return AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT;
+            case REQUEST_TAPACTION_CLOCK: return AppSettings.PREF_KEY_UI_CLOCKTAPACTION;
+            case REQUEST_TAPACTION_DATE0: return AppSettings.PREF_KEY_UI_DATETAPACTION;
+            case REQUEST_TAPACTION_DATE1: return AppSettings.PREF_KEY_UI_DATETAPACTION1;
+            case REQUEST_TAPACTION_NOTE:  return AppSettings.PREF_KEY_UI_NOTETAPACTION;
+            default: return null;
+        }
+    }
+
+    private void onPickAction(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode == RESULT_OK) {
+
+            String selection = data.getStringExtra(ActionListActivity.SELECTED_ACTIONID);
+            boolean adapterModified = data.getBooleanExtra(ActionListActivity.ADAPTER_MODIFIED, false);
+            Log.d("onPickAction", "Picked " + selection + " (adapterModified:" + adapterModified + ")");
+
+            if (selection != null)
+            {
+                SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+                pref.putString(prefKeyForRequestCode(requestCode), selection);
+                pref.apply();
+            }
+
+            if (adapterModified) {
+                rebuildActivity();
+            }
         }
     }
 
@@ -154,7 +213,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             if (selection != null)
             {
                 SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
-                pref.putString((requestCode == REQUEST_PICKTHEME_LIGHT ? PREF_KEY_APPEARANCE_THEME_LIGHT : PREF_KEY_APPEARANCE_THEME_DARK), selection);
+                pref.putString(prefKeyForRequestCode(requestCode), selection);
                 pref.apply();
                 rebuildActivity();
 
@@ -1243,19 +1302,19 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
         final ActionButtonPreference tapAction_clock = (ActionButtonPreference)fragment.findPreference(PREF_KEY_UI_CLOCKTAPACTION);
         initPref_ui_tapAction(activity, tapAction_clock, PREF_KEY_UI_CLOCKTAPACTION);
-        loadPref_ui_tapAction(activity, tapAction_clock, PREF_KEY_UI_CLOCKTAPACTION);
+        loadPref_ui_tapAction(activity, tapAction_clock, PREF_KEY_UI_CLOCKTAPACTION, PREF_DEF_UI_CLOCKTAPACTION, REQUEST_TAPACTION_CLOCK);
 
         final ActionButtonPreference tapAction_date0 = (ActionButtonPreference)fragment.findPreference(PREF_KEY_UI_DATETAPACTION);
         initPref_ui_tapAction(activity, tapAction_date0, PREF_KEY_UI_DATETAPACTION);
-        loadPref_ui_tapAction(activity, tapAction_date0, PREF_KEY_UI_DATETAPACTION);
+        loadPref_ui_tapAction(activity, tapAction_date0, PREF_KEY_UI_DATETAPACTION, PREF_DEF_UI_DATETAPACTION, REQUEST_TAPACTION_DATE0);
 
         final ActionButtonPreference tapAction_date1 = (ActionButtonPreference)fragment.findPreference(PREF_KEY_UI_DATETAPACTION1);
         initPref_ui_tapAction(activity, tapAction_date1, PREF_KEY_UI_DATETAPACTION1);
-        loadPref_ui_tapAction(activity, tapAction_date1, PREF_KEY_UI_DATETAPACTION1);
+        loadPref_ui_tapAction(activity, tapAction_date1, PREF_KEY_UI_DATETAPACTION1, PREF_DEF_UI_DATETAPACTION1, REQUEST_TAPACTION_DATE1);
 
         final ActionButtonPreference tapAction_note = (ActionButtonPreference)fragment.findPreference(PREF_KEY_UI_NOTETAPACTION);
         initPref_ui_tapAction(activity, tapAction_note,  PREF_KEY_UI_NOTETAPACTION);
-        loadPref_ui_tapAction(activity, tapAction_note,  PREF_KEY_UI_NOTETAPACTION);
+        loadPref_ui_tapAction(activity, tapAction_note,  PREF_KEY_UI_NOTETAPACTION, PREF_DEF_UI_NOTETAPACTION, REQUEST_TAPACTION_NOTE);
 
         final ActionButtonPreference overrideTheme_light = (ActionButtonPreference)fragment.findPreference(PREF_KEY_APPEARANCE_THEME_LIGHT);
         initPref_ui_themeOverride(activity, overrideTheme_light, PREF_KEY_APPEARANCE_THEME_LIGHT);
@@ -1312,16 +1371,6 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         };
     }
 
-    private static void initPref_ui_tapAction(Activity activity, ActionButtonPreference listPref, String key)
-    {
-        // TODO
-    }
-
-    private static void loadPref_ui_tapAction(Activity activity, ActionButtonPreference listPref, String key)
-    {
-        // TODO
-    }
-
     private static void initPref_ui_themeOverride(Activity activity, ActionButtonPreference listPref, String key)
     {
         if (listPref != null)
@@ -1370,6 +1419,83 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     {
         darkPref.setEnabled(AppSettings.THEME_DARK.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode));
         lightPref.setEnabled(AppSettings.THEME_LIGHT.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode));
+    }
+
+    /**
+     * initPref_ui_tapAction
+     */
+    private static void initPref_ui_tapAction(Activity activity, ActionButtonPreference listPref, String key)
+    {
+        if (listPref != null)
+        {
+            Set<String> actions = WidgetActions.loadActionLaunchList(activity, 0);
+            String[] entries = new String[actions.size() + 1];
+            String[] values = new String[actions.size() + 1];
+
+            values[0] = "";
+            entries[0] = AppSettings.TapAction.NOTHING.getDisplayString();
+
+            int i = 0;
+            for (String action : actions)
+            {
+                String title = WidgetActions.loadActionLaunchPref(activity, 0, action, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
+                String desc = WidgetActions.loadActionLaunchPref(activity, 0, action, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
+                String display = (desc != null && !desc.trim().isEmpty() ? desc : title);
+
+                values[i + 1] = action;
+                entries[i + 1] = display;
+                i++;
+            }
+
+            listPref.setEntries(entries);
+            listPref.setEntryValues(values);
+        }
+    }
+
+    private static void loadPref_ui_tapAction(Activity activity, ActionButtonPreference listPref, String key, String defaultValue, final int requestCode)
+    {
+        if (listPref != null)
+        {
+            String actionID = PreferenceManager.getDefaultSharedPreferences(activity).getString(key, defaultValue);
+            listPref.setActionButtonPreferenceListener(createTapActionListPreferenceListener(activity, actionID, requestCode));
+            listPref.setOnPreferenceChangeListener(onTapActionChanged(activity, listPref, requestCode));
+
+            int currentIndex = ((actionID != null) ? listPref.findIndexOfValue(actionID) : -1);
+            if (currentIndex >= 0) {
+                listPref.setValueIndex(currentIndex);
+            } else {
+                Log.w(LOG_TAG, "loadPref: Unable to load " + key + "... The list is missing an entry for the descriptor: " + actionID);
+                listPref.setValueIndex(0);
+            }
+        }
+    }
+
+    private static ActionButtonPreference.ActionButtonPreferenceListener createTapActionListPreferenceListener(final Activity activity, final String selectedActionID, final int requestCode)
+    {
+        return new ActionButtonPreference.ActionButtonPreferenceListener()
+        {
+            @Override
+            public void onActionButtonClicked()
+            {
+                Intent intent = new Intent(activity, ActionListActivity.class);
+                intent.putExtra(WidgetThemeListActivity.PARAM_NOSELECT, false);
+                intent.putExtra(WidgetThemeListActivity.PARAM_SELECTED, selectedActionID);
+                activity.startActivityForResult(intent, requestCode);
+                activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+            }
+        };
+    }
+
+    private static Preference.OnPreferenceChangeListener onTapActionChanged(final Activity activity, final ActionButtonPreference pref, final int requestCode)
+    {
+        return new Preference.OnPreferenceChangeListener()
+        {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                pref.setActionButtonPreferenceListener(createTapActionListPreferenceListener(activity, (String)newValue, requestCode));
+                return true;
+            }
+        };
     }
 
     //////////////////////////////////////////////////

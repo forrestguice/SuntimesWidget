@@ -89,6 +89,7 @@ import com.forrestguice.suntimeswidget.notes.NoteData;
 import com.forrestguice.suntimeswidget.notes.SuntimesNotes;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
@@ -1681,16 +1682,12 @@ public class SuntimesActivity extends AppCompatActivity
     private CardAdapter.CardAdapterListener cardAdapterListener = new CardAdapter.CardAdapterListener()
     {
         @Override
-        public void onDateClick(CardAdapter adapter, int position)
-        {
-            AppSettings.TapAction action = AppSettings.loadDateTapActionPref(SuntimesActivity.this);
-            onTapAction(action, position != CardAdapter.TODAY_POSITION);
+        public void onDateClick(CardAdapter adapter, int position) {
+            onTapAction(AppSettings.loadDateTapActionPref(SuntimesActivity.this), "onDateClick");
         }
         @Override
-        public boolean onDateLongClick(CardAdapter adapter, int position)
-        {
-            AppSettings.TapAction action = AppSettings.loadDateTapAction1Pref(SuntimesActivity.this);
-            onTapAction(action, position != CardAdapter.TODAY_POSITION);
+        public boolean onDateLongClick(CardAdapter adapter, int position) {
+            onTapAction(AppSettings.loadDateTapAction1Pref(SuntimesActivity.this), "onDateLongClick");
             return true;
         }
 
@@ -1813,16 +1810,11 @@ public class SuntimesActivity extends AppCompatActivity
                         else notes.showPrevNote();   // swipe left: prev
 
                     } else {                    // click: user defined
-                        AppSettings.TapAction action = AppSettings.loadNoteTapActionPref(SuntimesActivity.this);
-                        switch (action)
-                        {
-                            case ALARM:
-                                scheduleAlarmFromNote();
-                                break;
-
-                            default:
-                                onTapAction(action, false);
-                                break;
+                        String actionID = AppSettings.loadNoteTapActionPref(SuntimesActivity.this);
+                        if (AppSettings.TapAction.ALARM.name().equals(actionID)) {
+                            scheduleAlarmFromNote();
+                        } else {
+                            onTapAction(actionID, "onNoteTouch");
                         }
                     }
                     break;
@@ -1854,12 +1846,19 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onClick(View view)
         {
-            AppSettings.TapAction action = AppSettings.loadClockTapActionPref(SuntimesActivity.this);
-            onTapAction(action, false);
+            onTapAction(AppSettings.loadClockTapActionPref(SuntimesActivity.this), "onClockClick");
         }
     };
 
-    private void onTapAction( AppSettings.TapAction action, boolean tomorrow )
+    private void onTapAction( String actionID, String caller )
+    {
+        if (actionID != null && !actionID.trim().isEmpty() && !actionID.equals(AppSettings.TapAction.NOTHING.name())) {
+            Log.d("onTapAction", caller + ": " + actionID );
+            WidgetActions.startIntent(SuntimesActivity.this, 0, actionID, dataset.dataActual, SuntimesActivity.class);
+        }
+    }
+
+    /**private void onTapAction( AppSettings.TapAction action, boolean tomorrow )
     {
         switch (action)
         {
@@ -1910,7 +1909,7 @@ public class SuntimesActivity extends AppCompatActivity
                 }
                 break;
         }
-    }
+    }*/
 
 
     /**

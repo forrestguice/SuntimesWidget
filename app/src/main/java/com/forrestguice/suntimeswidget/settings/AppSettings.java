@@ -67,16 +67,16 @@ public class AppSettings
     public static final String PREF_DEF_LOCALE = "en";
 
     public static final String PREF_KEY_UI_DATETAPACTION = "app_ui_datetapaction";
-    public static final TapAction PREF_DEF_UI_DATETAPACTION = TapAction.SWAP_CARD;
+    public static final String PREF_DEF_UI_DATETAPACTION = TapAction.SWAP_CARD.name();
 
     public static final String PREF_KEY_UI_DATETAPACTION1 = "app_ui_datetapaction1";
-    public static final TapAction PREF_DEF_UI_DATETAPACTION1 = TapAction.SHOW_CALENDAR;
+    public static final String PREF_DEF_UI_DATETAPACTION1 = TapAction.SHOW_CALENDAR.name();
 
     public static final String PREF_KEY_UI_CLOCKTAPACTION = "app_ui_clocktapaction";
-    public static final TapAction PREF_DEF_UI_CLOCKTAPACTION = TapAction.RESET_NOTE;
+    public static final String PREF_DEF_UI_CLOCKTAPACTION = TapAction.RESET_NOTE.name();
 
     public static final String PREF_KEY_UI_NOTETAPACTION = "app_ui_notetapaction";
-    public static final TapAction PREF_DEF_UI_NOTETAPACTION = TapAction.NEXT_NOTE;
+    public static final String PREF_DEF_UI_NOTETAPACTION = TapAction.NEXT_NOTE.name();
 
     public static final String PREF_KEY_UI_SHOWWARNINGS = "app_ui_showwarnings";
     public static final boolean PREF_DEF_UI_SHOWWARNINGS = true;
@@ -435,73 +435,37 @@ public class AppSettings
     /**
      * Preference: the action that is performed when the clock ui is clicked/tapped
      */
-    public static TapAction loadClockTapActionPref( Context context )
+    public static String loadClockTapActionPref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        String modeString = pref.getString(PREF_KEY_UI_CLOCKTAPACTION, PREF_DEF_UI_CLOCKTAPACTION.name());
-
-        TapAction actionMode;
-        try {
-            actionMode = TapAction.valueOf(modeString);
-
-        } catch (IllegalArgumentException e) {
-            actionMode = PREF_DEF_UI_CLOCKTAPACTION;
-        }
-        return actionMode;
+        return pref.getString(PREF_KEY_UI_CLOCKTAPACTION, PREF_DEF_UI_CLOCKTAPACTION);
     }
 
     /**
      * Preference: the action that is performed when the date field is clicked/tapped
      */
-    public static TapAction loadDateTapActionPref( Context context )
+    public static String loadDateTapActionPref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        String modeString = pref.getString(PREF_KEY_UI_DATETAPACTION, PREF_DEF_UI_DATETAPACTION.name());
-
-        TapAction actionMode;
-        try {
-            actionMode = TapAction.valueOf(modeString);
-
-        } catch (IllegalArgumentException e) {
-            actionMode = PREF_DEF_UI_DATETAPACTION;
-        }
-        return actionMode;
+        return pref.getString(PREF_KEY_UI_DATETAPACTION, PREF_DEF_UI_DATETAPACTION);
     }
 
     /**
      * Preference: the action that is performed when the date field is long-clicked
      */
-    public static TapAction loadDateTapAction1Pref( Context context )
+    public static String loadDateTapAction1Pref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        String modeString = pref.getString(PREF_KEY_UI_DATETAPACTION1, PREF_DEF_UI_DATETAPACTION1.name());
-
-        TapAction actionMode;
-        try {
-            actionMode = TapAction.valueOf(modeString);
-
-        } catch (IllegalArgumentException e) {
-            actionMode = PREF_DEF_UI_DATETAPACTION1;
-        }
-        return actionMode;
+        return pref.getString(PREF_KEY_UI_DATETAPACTION1, PREF_DEF_UI_DATETAPACTION1);
     }
 
     /**
      * Preference: the action that is performed when the note ui is clicked/tapped
      */
-    public static TapAction loadNoteTapActionPref( Context context )
+    public static String loadNoteTapActionPref( Context context )
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        String modeString = pref.getString(PREF_KEY_UI_NOTETAPACTION, PREF_DEF_UI_NOTETAPACTION.name());
-        TapAction actionMode;
-
-        try {
-            actionMode = TapAction.valueOf(modeString);
-
-        } catch (IllegalArgumentException e) {
-            actionMode = PREF_DEF_UI_NOTETAPACTION;
-        }
-        return actionMode;
+        return pref.getString(PREF_KEY_UI_NOTETAPACTION, PREF_DEF_UI_NOTETAPACTION);
     }
 
     /**
