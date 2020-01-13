@@ -241,7 +241,7 @@ public class WidgetActions
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + id + "_";
-        return prefs.contains(prefs_prefix + PREF_KEY_ACTION_LAUNCH_TITLE);
+        return prefs.contains(prefs_prefix + PREF_KEY_ACTION_LAUNCH_TYPE);
     }
 
     /**
@@ -292,6 +292,7 @@ public class WidgetActions
     {
         Intent launchIntent;
         String launchClassName = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, null);
+        String actionString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION);
         String dataString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
         String mimeType = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE);
         String extraString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_EXTRAS);
@@ -313,7 +314,7 @@ public class WidgetActions
             launchIntent = new Intent();
         }
 
-        WidgetActions.applyAction(launchIntent, WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION));
+        WidgetActions.applyAction(launchIntent, actionString);
         WidgetActions.applyData(context, launchIntent, dataString, mimeType, data);
         WidgetActions.applyExtras(context, launchIntent, extraString, data);
         launchIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
