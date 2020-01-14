@@ -195,8 +195,11 @@ public class ActionListHelper
 
         Collections.sort(ids, new Comparator<ActionDisplay>() {
             @Override
-            public int compare(ActionDisplay o1, ActionDisplay o2) {
-                return o1.title.compareTo(o2.title);
+            public int compare(ActionDisplay o1, ActionDisplay o2)
+            {
+                if (o1.title.equals(o2.title)) {
+                    return o1.desc.compareTo(o2.desc);
+                } else return o1.title.compareTo(o2.title);
             }
         });
 
