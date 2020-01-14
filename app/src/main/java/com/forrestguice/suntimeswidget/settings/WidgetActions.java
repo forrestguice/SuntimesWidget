@@ -42,7 +42,8 @@ public class WidgetActions
 {
     public static final String TAG = "WidgetActions";
 
-    public static final String PREFS_WIDGET = WidgetSettings.PREFS_WIDGET;
+    public static final String PREFS_WIDGETS = WidgetSettings.PREFS_WIDGET;                  // Widget related actions are stored with WidgetSettings (where the actionID is either null or 0),
+    public static final String PREFS_ACTIONS = "com.forrestguice.suntimeswidget.actions";    // while the action collection is stored in separate .actions file.
 
     public static final String PREF_PREFIX_KEY = WidgetSettings.PREF_PREFIX_KEY;
     public static final String PREF_PREFIX_KEY_ACTION = "_action_";
@@ -145,7 +146,7 @@ public class WidgetActions
             extrasString = null;
         }
 
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        SharedPreferences.Editor prefs = context.getSharedPreferences(getPrefsId(appWidgetId, id), 0).edit();
         String prefs_prefix0 = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + id + "_";
 
         prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH, (launchString != null ? launchString : ""));
@@ -169,7 +170,7 @@ public class WidgetActions
     }
     public static Set<String> loadActionLaunchList(Context context, int appWidgetId)
     {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_ACTIONS, 0);
         String listKey = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + PREF_KEY_ACTION_LAUNCH_LIST;
         Set<String> actionList = prefs.getStringSet(listKey, null);
         return (actionList != null) ? actionList : new TreeSet<String>();
@@ -180,7 +181,7 @@ public class WidgetActions
             id = "0";
         }
 
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        SharedPreferences prefs = context.getSharedPreferences(getPrefsId(appWidgetId, id), 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + id + "_";
 
         if (key == null || key.isEmpty())
@@ -223,7 +224,7 @@ public class WidgetActions
             id = "0";
         }
 
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        SharedPreferences.Editor prefs = context.getSharedPreferences(getPrefsId(appWidgetId, id), 0).edit();
         String prefs_prefix0 = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + id + "_";
         prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH );
         prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_TYPE);
@@ -243,9 +244,14 @@ public class WidgetActions
     }
     public static boolean hasActionLaunchPref(Context context, int appWidgetId, @NonNull String id)
     {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        SharedPreferences prefs = context.getSharedPreferences(getPrefsId(appWidgetId, id), 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + id + "_";
         return prefs.contains(prefs_prefix + PREF_KEY_ACTION_LAUNCH_TYPE);
+    }
+
+    public static String getPrefsId(int appWidgetId, String actionId)
+    {
+        return (((actionId == null) || actionId.equals("0")) ? PREFS_WIDGETS : PREFS_ACTIONS);
     }
 
     /**
@@ -430,6 +436,13 @@ public class WidgetActions
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void deletePrefs(Context context)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_ACTIONS, 0).edit();
+        prefs.clear();
+        prefs.apply();
+    }
 
     public static void deletePrefs(Context context, int appWidgetId)
     {
