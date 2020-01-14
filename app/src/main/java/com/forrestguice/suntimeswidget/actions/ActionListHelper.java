@@ -321,7 +321,7 @@ public class ActionListHelper
                                 @Override
                                 public void onClick(DialogInterface dialog, int which)
                                 {
-                                    WidgetActions.deletePrefs(context, 0);
+                                    WidgetActions.deletePrefs(context);
                                     WidgetActions.initDefaults(context);
                                     Toast.makeText(context, context.getString(R.string.clearactions_toast), Toast.LENGTH_SHORT).show();
                                     initAdapter(context);
