@@ -1854,7 +1854,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         if (actionID != null && !actionID.trim().isEmpty() && !actionID.equals(WidgetActions.TapAction.NOTHING.name())) {
             Log.d("onTapAction", caller + ": " + actionID );
-            WidgetActions.startIntent(SuntimesActivity.this, 0, actionID, dataset.dataActual, SuntimesActivity.class);
+            WidgetActions.startIntent(SuntimesActivity.this, 0, actionID, dataset.dataActual, SuntimesActivity.class, Intent.FLAG_ACTIVITY_NEW_TASK);
         }
     }
 

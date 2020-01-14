@@ -257,9 +257,12 @@ public class WidgetActions
     /**
      * startIntent
      */
-    public static void startIntent(@NonNull Context context, int appWidgetId, String id, @Nullable SuntimesData data, Class fallbackLaunchClass)
+    public static void startIntent(@NonNull Context context, int appWidgetId, String id, @Nullable SuntimesData data, Class fallbackLaunchClass, @Nullable Integer flags)
     {
         Intent launchIntent = WidgetActions.createIntent(context, appWidgetId, id, data, fallbackLaunchClass);
+        if (flags != null) {
+            launchIntent.setFlags(flags);
+        }
         String launchType = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TYPE);
         WidgetActions.startIntent(context, launchIntent, launchType);
     }
@@ -281,7 +284,6 @@ public class WidgetActions
 
                     case WidgetActions.LAUNCH_TYPE_ACTIVITY:
                     default:
-                        launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(launchIntent);
                         break;
                 }

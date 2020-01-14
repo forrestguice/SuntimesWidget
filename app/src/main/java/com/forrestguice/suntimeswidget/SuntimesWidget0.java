@@ -229,7 +229,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
                 data = getData(context, appWidgetId);
                 data.calculate();
             }
-            WidgetActions.startIntent(context.getApplicationContext(), appWidgetId, null, data, getConfigClass());
+            WidgetActions.startIntent(context.getApplicationContext(), appWidgetId, null, data, getConfigClass(), Intent.FLAG_ACTIVITY_NEW_TASK);
             return true;
         }
 
