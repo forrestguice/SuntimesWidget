@@ -194,6 +194,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
                 pref.putString(prefKeyForRequestCode(requestCode), selection);
                 pref.apply();
+                rebuildActivity();
             }
 
             if (adapterModified) {
@@ -1275,6 +1276,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             }
         }
 
+        // TODO: tapActions
+
         ActionButtonPreference overrideTheme_light = (ActionButtonPreference)findPreference(PREF_KEY_APPEARANCE_THEME_LIGHT);
         initPref_ui_themeOverride(this, overrideTheme_light, PREF_KEY_APPEARANCE_THEME_LIGHT);
         loadPref_ui_themeOverride(this, overrideTheme_light, PREF_KEY_APPEARANCE_THEME_LIGHT);
@@ -1428,27 +1431,38 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     {
         if (listPref != null)
         {
-            Set<String> actions = WidgetActions.loadActionLaunchList(activity, 0);
-            String[] entries = new String[actions.size() + 1];
-            String[] values = new String[actions.size() + 1];
+            CharSequence[] entries0 = listPref.getEntries();
+            CharSequence[] values0 = listPref.getEntryValues();
+            String actionID = PreferenceManager.getDefaultSharedPreferences(activity).getString(key, null);
 
-            values[0] = "";
-            entries[0] = AppSettings.TapAction.NOTHING.getDisplayString();
-
-            int i = 0;
-            for (String action : actions)
+            boolean hasValue = false;
+            if (actionID != null)
             {
-                String title = WidgetActions.loadActionLaunchPref(activity, 0, action, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
-                String desc = WidgetActions.loadActionLaunchPref(activity, 0, action, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
-                String display = (desc != null && !desc.trim().isEmpty() ? desc : title);
-
-                values[i + 1] = action;
-                entries[i + 1] = display;
-                i++;
+                for (CharSequence value : values0) {
+                    if (value.equals(actionID)) {
+                        hasValue = true;
+                        break;
+                    }
+                }
             }
 
-            listPref.setEntries(entries);
-            listPref.setEntryValues(values);
+            if (!hasValue)
+            {
+                String title = WidgetActions.loadActionLaunchPref(activity, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
+                String desc = WidgetActions.loadActionLaunchPref(activity, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
+                String display = (desc != null && !desc.trim().isEmpty() ? desc : title);
+
+                CharSequence[] entries1 = new String[entries0.length + 1];
+                System.arraycopy(entries0, 0, entries1, 0, entries0.length);
+                entries1[entries0.length] = display;
+
+                CharSequence[] values1 = new String[values0.length + 1];
+                System.arraycopy(values0, 0, values1, 0, values0.length);
+                values1[values0.length] = actionID;
+
+                listPref.setEntries(entries1);
+                listPref.setEntryValues(values1);
+            }
         }
     }
 

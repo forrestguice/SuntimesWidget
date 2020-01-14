@@ -121,7 +121,11 @@ public class WidgetActions
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveActionLaunchPref(Context context, @Nullable String titleString, @Nullable String descString, @Nullable Integer color, int appWidgetId, @Nullable String id, @Nullable String launchString, @Nullable String type, @Nullable String action, @Nullable String dataString, @Nullable String mimeType, @Nullable String extrasString)
+    public static void saveActionLaunchPref(Context context, @Nullable String titleString, @Nullable String descString, @Nullable Integer color, int appWidgetId, @Nullable String id, @Nullable String launchString, @Nullable String type, @Nullable String action, @Nullable String dataString, @Nullable String mimeType, @Nullable String extrasString) {
+        saveActionLaunchPref(context, titleString, descString, color, appWidgetId, id, launchString, type, action, dataString, mimeType, extrasString, true);
+    }
+
+    public static void saveActionLaunchPref(Context context, @Nullable String titleString, @Nullable String descString, @Nullable Integer color, int appWidgetId, @Nullable String id, @Nullable String launchString, @Nullable String type, @Nullable String action, @Nullable String dataString, @Nullable String mimeType, @Nullable String extrasString, boolean listed)
     {
         boolean hasID = true;
         if (id == null) {
@@ -155,7 +159,7 @@ public class WidgetActions
         prefs.putInt(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_COLOR, (color != null ? color : PREF_DEF_ACTION_LAUNCH_COLOR));
         prefs.apply();
 
-        if (hasID)
+        if (hasID && listed)
         {
             Set<String> actionList = loadActionLaunchList(context, 0);
             actionList.add(id);
@@ -441,23 +445,145 @@ public class WidgetActions
         PREF_DEF_ACTION_LAUNCH_TITLE = context.getString(R.string.app_name);
         PREF_DEF_ACTION_LAUNCH_DESC = context.getString(R.string.app_shortdesc);
 
-        if (!hasActionLaunchPref(context, 0, "def_suntimes")) {
+        if (!hasActionLaunchPref(context, 0, "SUNTIMES")) {
             saveActionLaunchPref(context, WidgetActions.PREF_DEF_ACTION_LAUNCH_TITLE, WidgetActions.PREF_DEF_ACTION_LAUNCH_DESC, null, 0, "def_suntimes", WidgetActions.PREF_DEF_ACTION_LAUNCH,
                     WidgetActions.PREF_DEF_ACTION_LAUNCH_TYPE.name(), WidgetActions.PREF_DEF_ACTION_LAUNCH_ACTION, WidgetActions.PREF_DEF_ACTION_LAUNCH_DATA, WidgetActions.PREF_DEF_ACTION_LAUNCH_DATATYPE, WidgetActions.PREF_DEF_ACTION_LAUNCH_EXTRAS);
         }
 
-        if (!hasActionLaunchPref(context, 0, "def_calendar")) {
-            saveActionLaunchPref(context, "Calendar", "Open calendar", null, 0, "def_calendar", null,
-                    LaunchType.ACTIVITY.name(), Intent.ACTION_VIEW, "content://com.android.calendar/time/%dm", null, null);
-        }
-
-        if (!hasActionLaunchPref(context, 0, "def_map")) {
-            saveActionLaunchPref(context, "Map", "View location with map", null,  0, "def_map", null,
-                    LaunchType.ACTIVITY.name(), Intent.ACTION_VIEW, "geo:%lat,%lon", null, null);
-        }
+        TapAction.initDefaults(context);
     }
 
     public static void initDisplayStrings( Context context ) {
         LaunchType.initDisplayStrings(context);
+    }
+
+    /**
+     * Actions that can be performed when a UI element is clicked.
+     */
+    public static enum TapAction
+    {
+        NOTHING("Nothing", "Do nothing", false),
+        SWAP_CARD("Suntimes", "Swap cards", false),
+        CONFIG_DATE("Suntimes", "Set date", false),
+        ALARM("Suntimes", "Set alarm", false),
+        TIMEZONE("Suntimes", "Set time zone", false),
+        NEXT_NOTE("Suntimes", "Show next note", false),
+        PREV_NOTE("Suntimes", "Show previous note", false),
+        RESET_NOTE("Suntimes", "Show upcoming event", false),
+        SHOW_CALENDAR("Calendar", "Show calendar", true),
+        SHOW_MAP("Map", "Show map", false);
+
+        private String title, desc;
+        private boolean listed;
+
+        private TapAction(String title, String desc, boolean listed)
+        {
+            this.title = title;
+            this.desc = desc;
+            this.listed = listed;
+        }
+
+        public String toString() {
+            return (desc != null && !desc.trim().isEmpty()) ? desc : title;
+        }
+
+        public String desc() {
+            return desc;
+        }
+        public void setDesc( String desc ) {
+            this.desc = desc;
+        }
+
+        public String title() {
+            return title;
+        }
+        public void setTitle( String title ) {
+            this.title = title;
+        }
+
+        public boolean listed() {
+            return listed;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            TapAction[] actions = TapAction.values();
+            String[] titles = context.getResources().getStringArray(R.array.tapActions_titles);
+            String[] desc = context.getResources().getStringArray(R.array.tapActions_display);
+            for (int i=0; i<desc.length; i++)
+            {
+                if (i < actions.length)
+                {
+                    actions[i].setTitle(titles[i]);
+                    actions[i].setDesc(desc[i]);
+                }
+            }
+        }
+
+        public static void initDefaults( Context context )
+        {
+            for (TapAction action : TapAction.values())
+            {
+                if (!hasActionLaunchPref(context, 0, action.name()))
+                {
+                    LaunchType launchType = LaunchType.ACTIVITY;
+                    String launchString = null, launchAction = null, launchData = null, launchMime = null, launchExtras = null;
+
+                    switch (action)
+                    {
+                        case SHOW_CALENDAR:
+                            launchAction = Intent.ACTION_VIEW;
+                            launchData = "content://com.android.calendar/time/%dm";
+                            break;
+
+                        case SHOW_MAP:
+                            launchAction = Intent.ACTION_VIEW;
+                            launchData = "geo:%lat,%lon";
+                            break;
+
+                        /**case SWAP_CARD:
+                            // TODO
+                            break;
+
+                        case CONFIG_DATE:
+                            // TODO
+                            break;
+
+                        case ALARM:
+                            // TODO
+                            break;
+
+                        case TIMEZONE:
+                            // TODO
+                            break;
+
+                        case NEXT_NOTE:
+                            // TODO
+                            break;
+
+                        case PREV_NOTE:
+                            // TODO
+                            break;
+
+                        case RESET_NOTE:
+                            // TODO
+                            break;*/
+
+                        case NOTHING:
+                            launchType = null;
+                            break;
+
+                        default:
+                            launchType = null;
+                            Log.w(TAG, "initDefaults: unhandled action: " + action.name());
+                            break;
+                    }
+
+                    if (launchType != null) {
+                        saveActionLaunchPref(context, action.title(), action.desc(), null, 0, action.name(), launchString, launchType.name(), launchAction, launchData, launchMime, launchExtras, action.listed());
+                    }
+                }
+            }
+        }
     }
 }

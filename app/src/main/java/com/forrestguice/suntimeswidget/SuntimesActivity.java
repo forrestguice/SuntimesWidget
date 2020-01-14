@@ -1811,7 +1811,7 @@ public class SuntimesActivity extends AppCompatActivity
 
                     } else {                    // click: user defined
                         String actionID = AppSettings.loadNoteTapActionPref(SuntimesActivity.this);
-                        if (AppSettings.TapAction.ALARM.name().equals(actionID)) {
+                        if (WidgetActions.TapAction.ALARM.name().equals(actionID)) {
                             scheduleAlarmFromNote();
                         } else {
                             onTapAction(actionID, "onNoteTouch");
@@ -1852,7 +1852,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     private void onTapAction( String actionID, String caller )
     {
-        if (actionID != null && !actionID.trim().isEmpty() && !actionID.equals(AppSettings.TapAction.NOTHING.name())) {
+        if (actionID != null && !actionID.trim().isEmpty() && !actionID.equals(WidgetActions.TapAction.NOTHING.name())) {
             Log.d("onTapAction", caller + ": " + actionID );
             WidgetActions.startIntent(SuntimesActivity.this, 0, actionID, dataset.dataActual, SuntimesActivity.class);
         }

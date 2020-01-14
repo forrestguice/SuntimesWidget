@@ -977,16 +977,29 @@
     <string name="configAction_swapCards">Swap cards (today/tomorrow)</string>
     <string name="configAction_setAlarmForNote">Set alarm for note</string>
 
-    <string-array name="tapActions_display">    <!-- must be in same order as enum TapActions -->
+    <string-array name="tapActions_titles">    <!-- must be in same order as enum TapActions -->
         <item>@string/configAction_doNothing</item>
         <item>@string/configAction_swapCards</item>
-        <item>@string/configAction_showCalendar</item>
         <item>@string/configAction_setDate</item>
         <item>@string/configAction_setAlarm</item>
         <item>@string/configAction_setTimeZone</item>
         <item>@string/configAction_nextNote</item>
         <item>@string/configAction_prevNote</item>
         <item>@string/configAction_resetNote</item>
+        <item>@string/configAction_showCalendar</item>
+        <item>@string/configAction_mapLocation</item>
+    </string-array>
+    <string-array name="tapActions_display">    <!-- must be in same order as enum TapActions -->
+        <item>@string/configAction_doNothing</item>
+        <item>@string/configAction_swapCards</item>
+        <item>@string/configAction_setDate</item>
+        <item>@string/configAction_setAlarm</item>
+        <item>@string/configAction_setTimeZone</item>
+        <item>@string/configAction_nextNote</item>
+        <item>@string/configAction_prevNote</item>
+        <item>@string/configAction_resetNote</item>
+        <item>@string/configAction_showCalendar</item>
+        <item>@string/configAction_mapLocation</item>
     </string-array>
 
 
