@@ -6,7 +6,7 @@
         <item android:id="@+id/addAction"
             android:title="@string/configAction_addAction"
             android:icon="?attr/icActionNew"
-            app:showAsAction="never" />
+            app:showAsAction="ifRoom" />
 
         <item android:id="@+id/clearAction"
             android:title="@string/configAction_clearActions"

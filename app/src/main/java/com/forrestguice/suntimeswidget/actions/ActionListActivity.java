@@ -30,10 +30,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -149,10 +152,34 @@ public class ActionListActivity extends AppCompatActivity
     };
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.editintent1, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
         switch (item.getItemId())
         {
+            case R.id.addAction:
+                helper.addAction();
+                return true;
+
+            case R.id.clearAction:
+                helper.clearActions();
+                return true;
+
+            case R.id.exportAction:
+                helper.exportActions();
+                return true;
+
+            case R.id.importAction:
+                helper.importActions();
+                return true;
+
             case android.R.id.home:
                 onBackPressed();
                 return true;
@@ -160,6 +187,14 @@ public class ActionListActivity extends AppCompatActivity
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @SuppressWarnings("RestrictedApi")
+    @Override
+    protected boolean onPrepareOptionsPanel(View view, Menu menu)
+    {
+        SuntimesUtils.forceActionBarIcons(menu);
+        return super.onPrepareOptionsPanel(view, menu);
     }
 
     @Override

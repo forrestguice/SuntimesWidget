@@ -261,7 +261,7 @@ public class ActionListHelper
         }
     };
 
-    private void addAction()
+    public void addAction()
     {
         final Context context = contextRef.get();
         final SaveActionDialog saveDialog = new SaveActionDialog();
@@ -269,7 +269,7 @@ public class ActionListHelper
         saveDialog.show(fragmentManager, DIALOGTAG_ADD);
     }
 
-    private void editAction()
+    protected void editAction()
     {
         final Context context = contextRef.get();
         final String intentID = getIntentID();
@@ -299,7 +299,15 @@ public class ActionListHelper
         };
     }
 
-    private void clearActions()
+    public void exportActions() {
+        // TODO
+    }
+
+    public void importActions() {
+        // TODO
+    }
+
+    public void clearActions()
     {
         final Context context = contextRef.get();
         if (context != null)
@@ -324,7 +332,7 @@ public class ActionListHelper
         }
     }
 
-    private void deleteAction()
+    protected void deleteAction()
     {
         final Context context = contextRef.get();
         final String actionID = getIntentID();
