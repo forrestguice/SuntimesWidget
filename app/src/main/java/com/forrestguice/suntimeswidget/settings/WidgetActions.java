@@ -29,6 +29,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 
@@ -485,8 +486,11 @@ public class WidgetActions
         NEXT_NOTE("Suntimes", "Show next note", false),
         PREV_NOTE("Suntimes", "Show previous note", false),
         RESET_NOTE("Suntimes", "Show upcoming event", false),
+        SHOW_DIALOG_SOLSTICE("Suntimes", "Show solstices dialog", true),
+        SHOW_DIALOG_MOON("Suntimes", "Show moon dialog", true),
+        SHOW_DIALOG_SUN("Suntimes", "Show sun dialog", true),
         SHOW_CALENDAR("Calendar", "Show calendar", true),
-        SHOW_MAP("Map", "Show map", false);
+        SHOW_MAP("Map", "Show map", true);
 
         private String title, desc;
         private boolean listed;
@@ -522,7 +526,7 @@ public class WidgetActions
 
         public static void initDisplayStrings( Context context )
         {
-            TapAction[] actions = TapAction.values();
+            /**TapAction[] actions = TapAction.values();  // TODO
             String[] titles = context.getResources().getStringArray(R.array.tapActions_titles);
             String[] desc = context.getResources().getStringArray(R.array.tapActions_display);
             for (int i=0; i<desc.length; i++)
@@ -532,7 +536,7 @@ public class WidgetActions
                     actions[i].setTitle(titles[i]);
                     actions[i].setDesc(desc[i]);
                 }
-            }
+            }*/
         }
 
         public static void initDefaults( Context context )
@@ -554,6 +558,21 @@ public class WidgetActions
                         case SHOW_MAP:
                             launchAction = Intent.ACTION_VIEW;
                             launchData = "geo:%lat,%lon";
+                            break;
+
+                        case SHOW_DIALOG_SUN:
+                            launchString = SuntimesActivity.class.getName();
+                            launchAction = SuntimesActivity.ACTION_VIEW_SUN;
+                            break;
+
+                        case SHOW_DIALOG_MOON:
+                            launchString = SuntimesActivity.class.getName();
+                            launchAction = SuntimesActivity.ACTION_VIEW_MOON;
+                            break;
+
+                        case SHOW_DIALOG_SOLSTICE:
+                            launchString = SuntimesActivity.class.getName();
+                            launchAction = SuntimesActivity.ACTION_VIEW_SOLSTICE;
                             break;
 
                         /**case SWAP_CARD:
