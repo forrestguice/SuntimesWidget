@@ -1448,20 +1448,23 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
             if (!hasValue)
             {
-                String title = WidgetActions.loadActionLaunchPref(activity, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
-                String desc = WidgetActions.loadActionLaunchPref(activity, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
-                String display = (desc != null && !desc.trim().isEmpty() ? desc : title);
+                if (actionID != null && WidgetActions.hasActionLaunchPref(activity, 0, actionID))
+                {
+                    String title = WidgetActions.loadActionLaunchPref(activity, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
+                    String desc = WidgetActions.loadActionLaunchPref(activity, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
+                    String display = (desc != null && !desc.trim().isEmpty() ? desc : title);
 
-                CharSequence[] entries1 = new String[entries0.length + 1];
-                System.arraycopy(entries0, 0, entries1, 0, entries0.length);
-                entries1[entries0.length] = display;
+                    CharSequence[] entries1 = new String[entries0.length + 1];
+                    System.arraycopy(entries0, 0, entries1, 0, entries0.length);
+                    entries1[entries0.length] = display;
 
-                CharSequence[] values1 = new String[values0.length + 1];
-                System.arraycopy(values0, 0, values1, 0, values0.length);
-                values1[values0.length] = actionID;
+                    CharSequence[] values1 = new String[values0.length + 1];
+                    System.arraycopy(values0, 0, values1, 0, values0.length);
+                    values1[values0.length] = actionID;
 
-                listPref.setEntries(entries1);
-                listPref.setEntryValues(values1);
+                    listPref.setEntries(entries1);
+                    listPref.setEntryValues(values1);
+                }
             }
         }
     }
