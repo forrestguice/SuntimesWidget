@@ -2044,20 +2044,6 @@ public class SuntimesActivity extends AppCompatActivity
         }
     };
 
-    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-    private void showCalendar(boolean tomorrow)
-    {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-        {
-            long startMillis = (tomorrow ? dataset.otherCalendar().getTimeInMillis() : dataset.calendar().getTimeInMillis());
-            Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
-            builder.appendPath("time");
-            ContentUris.appendId(builder, startMillis);
-            Intent intent = new Intent(Intent.ACTION_VIEW).setData(builder.build());
-            startActivity(intent);
-        }
-    }
-
     private void adjustNoteIconSize(NoteData note, ImageView icon)
     {
         Resources resources = getResources();
