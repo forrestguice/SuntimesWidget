@@ -234,6 +234,12 @@ public class SuntimesActivity extends AppCompatActivity
         handleIntent(getIntent());
     }
 
+    @Override
+    public void onNewIntent( Intent intent ) {
+        Log.d("onNewIntent", intent.toString());
+        handleIntent(intent);
+    }
+
     private void handleIntent(Intent intent)
     {
         String action = intent.getAction();
@@ -1854,7 +1860,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         if (actionID != null && !actionID.trim().isEmpty() && !actionID.equals(WidgetActions.TapAction.NOTHING.name())) {
             Log.d("onTapAction", caller + ": " + actionID );
-            WidgetActions.startIntent(SuntimesActivity.this, 0, actionID, dataset.dataActual, SuntimesActivity.class, Intent.FLAG_ACTIVITY_NEW_TASK);
+            WidgetActions.startIntent(SuntimesActivity.this, 0, actionID, dataset.dataActual, SuntimesActivity.class, Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         }
     }
 
