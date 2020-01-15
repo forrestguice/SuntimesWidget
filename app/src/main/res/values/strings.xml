@@ -930,7 +930,7 @@
         <item>ADD_ALARM</item>
         <item>CONFIG_DATE</item>
         <item>SWAP_CARD</item>
-        <item>RESET_NOTE</item>
+        <item>NOTE_RESET</item>
     </string-array>
 
     <!-- App Setting: Clock UI "on tap" action -->
@@ -948,9 +948,9 @@
         <item>SHOW_CALENDAR</item>
         <item>ADD_ALARM</item>
         <item>CONFIG_TIMEZONE</item>
-        <item>NEXT_NOTE</item>
-        <item>PREV_NOTE</item>
-        <item>RESET_NOTE</item>
+        <item>NOTE_NEXT</item>
+        <item>NOTE_PREV</item>
+        <item>NOTE_RESET</item>
     </string-array>
 
     <!-- App Setting: Note UI "on tap" action -->
@@ -964,9 +964,9 @@
     <string-array name="noteTapActions_values" translatable="false">   <!-- config values (one-to-one with noteTapActions_display) -->
         <item>NOTHING</item>
         <item>ADD_ALARM</item>
-        <item>NEXT_NOTE</item>
-        <item>PREV_NOTE</item>
-        <item>RESET_NOTE</item>
+        <item>NOTE_NEXT</item>
+        <item>NOTE_PREV</item>
+        <item>NOTE_RESET</item>
     </string-array>
 
     <string name="configAction_doNothing">Do nothing</string>
@@ -1610,8 +1610,8 @@
     <string name="def_app_ui_showdatasource" translatable="false">true</string>
     <string name="def_app_ui_datetapaction" translatable="false">SWAP_CARD</string>
     <string name="def_app_ui_datetapaction1" translatable="false">SHOW_CALENDAR</string>
-    <string name="def_app_ui_notetapaction" translatable="false">NEXT_NOTE</string>
-    <string name="def_app_ui_clocktapaction" translatable="false">RESET_NOTE</string>
+    <string name="def_app_ui_notetapaction" translatable="false">NOTE_NEXT</string>
+    <string name="def_app_ui_clocktapaction" translatable="false">NOTE_RESET</string>
     <string name="def_app_appearance_theme" translatable="false">dark</string>
     <string name="def_app_accessibility_verbose" translatable="false">false</string>
 

@@ -308,10 +308,10 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
             verifyAlarmDialog();
             cancelAlarmDialog();
 
-        } else if (tapAction.equals(WidgetActions.TapAction.PREV_NOTE.name())) {
+        } else if (tapAction.equals(WidgetActions.TapAction.NOTE_PREV.name())) {
             verifyOnNotePrev(activity, noteIndex);
 
-        } else if (tapAction.equals(WidgetActions.TapAction.NEXT_NOTE.name())) {
+        } else if (tapAction.equals(WidgetActions.TapAction.NOTE_NEXT.name())) {
             verifyOnNoteNext(activity, noteIndex);
 
         } /**else {
@@ -357,10 +357,10 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
             verifyAlarmDialog();
             cancelAlarmDialog();
 
-        } else if (tapAction.equals(WidgetActions.TapAction.NEXT_NOTE.name())) {
+        } else if (tapAction.equals(WidgetActions.TapAction.NOTE_NEXT.name())) {
             verifyOnNoteNext(activity, noteIndex);
 
-        } else if (tapAction.equals(WidgetActions.TapAction.PREV_NOTE.name())) {
+        } else if (tapAction.equals(WidgetActions.TapAction.NOTE_PREV.name())) {
             verifyOnNotePrev(activity, noteIndex);
 
         } /**else {

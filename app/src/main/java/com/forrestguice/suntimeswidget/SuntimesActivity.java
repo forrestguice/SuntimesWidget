@@ -1899,17 +1899,17 @@ public class SuntimesActivity extends AppCompatActivity
                 configTimeZone();
                 break;
 
-            case NEXT_NOTE:
+            case NOTE_NEXT:
                 setUserSwappedCard( false, "onClockClick (nextNote)" );
                 notes.showNextNote();
                 break;
 
-            case PREV_NOTE:
+            case NOTE_PREV:
                 setUserSwappedCard( false, "onClockClick (prevNote)" );
                 notes.showPrevNote();
                 break;
 
-            case RESET_NOTE:
+            case NOTE_RESET:
                 setUserSwappedCard(false, "onClockClick (resetNote)");
                 notes.resetNoteIndex();
                 NoteData note = notes.getNote();

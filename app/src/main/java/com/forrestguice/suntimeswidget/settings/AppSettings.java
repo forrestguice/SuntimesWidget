@@ -73,10 +73,10 @@ public class AppSettings
     public static final String PREF_DEF_UI_DATETAPACTION1 = WidgetActions.TapAction.SHOW_CALENDAR.name();
 
     public static final String PREF_KEY_UI_CLOCKTAPACTION = "app_ui_clocktapaction";
-    public static final String PREF_DEF_UI_CLOCKTAPACTION = WidgetActions.TapAction.RESET_NOTE.name();
+    public static final String PREF_DEF_UI_CLOCKTAPACTION = WidgetActions.TapAction.NOTE_RESET.name();
 
     public static final String PREF_KEY_UI_NOTETAPACTION = "app_ui_notetapaction";
-    public static final String PREF_DEF_UI_NOTETAPACTION = WidgetActions.TapAction.NEXT_NOTE.name();
+    public static final String PREF_DEF_UI_NOTETAPACTION = WidgetActions.TapAction.NOTE_NEXT.name();
 
     public static final String PREF_KEY_UI_SHOWWARNINGS = "app_ui_showwarnings";
     public static final boolean PREF_DEF_UI_SHOWWARNINGS = true;

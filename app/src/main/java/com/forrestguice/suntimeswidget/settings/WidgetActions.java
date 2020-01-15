@@ -483,11 +483,12 @@ public class WidgetActions
 
         ADD_ALARM("Suntimes", "Set alarm", false),
 
-        NEXT_NOTE("Suntimes", "Show next note", false),
-        PREV_NOTE("Suntimes", "Show previous note", false),
-        RESET_NOTE("Suntimes", "Show upcoming event", false),
+        NOTE_NEXT("Suntimes", "Show next note", false),
+        NOTE_PREV("Suntimes", "Show previous note", false),
+        NOTE_RESET("Suntimes", "Show upcoming event", false),
 
         CONFIG_DATE("Suntimes", "Set date", false),
+        CONFIG_LOCATION("Suntimes", "Set location", false),
         CONFIG_TIMEZONE("Suntimes", "Set time zone", false),
 
         SHOW_DIALOG_WORLDMAP("Suntimes", "Show world map dialog", true),
@@ -605,15 +606,15 @@ public class WidgetActions
                             // TODO
                             break;
 
-                        case NEXT_NOTE:
+                        case NOTE_NEXT:
                             // TODO
                             break;
 
-                        case PREV_NOTE:
+                        case NOTE_PREV:
                             // TODO
                             break;
 
-                        case RESET_NOTE:
+                        case NOTE_RESET:
                             // TODO
                             break;*/
 
