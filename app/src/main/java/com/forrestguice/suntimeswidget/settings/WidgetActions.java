@@ -480,15 +480,21 @@ public class WidgetActions
     {
         NOTHING("Nothing", "Do nothing", false),
         SWAP_CARD("Suntimes", "Swap cards", false),
-        CONFIG_DATE("Suntimes", "Set date", false),
+
         ADD_ALARM("Suntimes", "Set alarm", false),
+
         NEXT_NOTE("Suntimes", "Show next note", false),
         PREV_NOTE("Suntimes", "Show previous note", false),
         RESET_NOTE("Suntimes", "Show upcoming event", false),
+
+        CONFIG_DATE("Suntimes", "Set date", false),
         CONFIG_TIMEZONE("Suntimes", "Set time zone", false),
+
+        SHOW_DIALOG_WORLDMAP("Suntimes", "Show world map dialog", true),
         SHOW_DIALOG_SOLSTICE("Suntimes", "Show solstices dialog", true),
         SHOW_DIALOG_MOON("Suntimes", "Show moon dialog", true),
         SHOW_DIALOG_SUN("Suntimes", "Show sun dialog", true),
+
         SHOW_CALENDAR("Calendar", "Show calendar", true),
         SHOW_MAP("Map", "Show map", true);
 
@@ -575,21 +581,27 @@ public class WidgetActions
                             launchAction = SuntimesActivity.ACTION_VIEW_SOLSTICE;
                             break;
 
-                        /**case SWAP_CARD:
-                            // TODO
+                        case SHOW_DIALOG_WORLDMAP:
+                            launchString = SuntimesActivity.class.getName();
+                            launchAction = SuntimesActivity.ACTION_VIEW_WORLDMAP;
                             break;
 
                         case CONFIG_DATE:
-                            // TODO
+                            launchString = SuntimesActivity.class.getName();
+                            launchAction = SuntimesActivity.ACTION_CONFIG_DATE;
                             break;
 
+                        case CONFIG_TIMEZONE:
+                            launchString = SuntimesActivity.class.getName();
+                            launchAction = SuntimesActivity.ACTION_CONFIG_TIMEZONE;
                             break;
 
-                        case TIMEZONE:
                         case ADD_ALARM:
                             launchString = SuntimesActivity.class.getName();
                             launchAction = SuntimesActivity.ACTION_ADD_ALARM;
                             break;
+
+                        /**case SWAP_CARD:
                             // TODO
                             break;
 

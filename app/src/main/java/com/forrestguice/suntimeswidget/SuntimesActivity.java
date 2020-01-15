@@ -108,13 +108,18 @@ import android.os.Handler;
 @SuppressWarnings("Convert2Diamond")
 public class SuntimesActivity extends AppCompatActivity
 {
-    public static final String SUNTIMES_APP_UPDATE_FULL = "suntimes.SUNTIMES_APP_UPDATE_FULL";
-    public static final String SUNTIMES_APP_UPDATE_PARTIAL = "suntimes.SUNTIMES_APP_UPDATE_PARTIAL";
-    public static final int SUNTIMES_SETTINGS_REQUEST = 10;
-
+    public static final String ACTION_ADD_ALARM = "com.forrestguice.suntimeswidget.ADD_ALARM";
     public static final String ACTION_VIEW_SUN = "com.forrestguice.suntimeswidget.VIEW_SUN";
     public static final String ACTION_VIEW_MOON = "com.forrestguice.suntimeswidget.VIEW_MOON";
     public static final String ACTION_VIEW_SOLSTICE = "com.forrestguice.suntimeswidget.VIEW_SOLSTICE";
+    public static final String ACTION_VIEW_WORLDMAP = "com.forrestguice.suntimeswidget.VIEW_WORLDMAP";
+    public static final String ACTION_CONFIG_LOCATION = "com.forrestguice.suntimeswidget.CONFIG_LOCATION";
+    public static final String ACTION_CONFIG_TIMEZONE = "com.forrestguice.suntimeswidget.CONFIG_TIMEZONE";
+    public static final String ACTION_CONFIG_DATE = "com.forrestguice.suntimeswidget.CONFIG_DATE";
+
+    public static final String SUNTIMES_APP_UPDATE_FULL = "suntimes.SUNTIMES_APP_UPDATE_FULL";
+    public static final String SUNTIMES_APP_UPDATE_PARTIAL = "suntimes.SUNTIMES_APP_UPDATE_PARTIAL";
+    public static final int SUNTIMES_SETTINGS_REQUEST = 10;
 
     public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedCard";
     public static final String KEY_UI_CARDPOSITION = "cardPosition";
@@ -259,6 +264,21 @@ public class SuntimesActivity extends AppCompatActivity
 
             } else if (action.equals(ACTION_VIEW_SOLSTICE)) {
                 showEquinoxDialog();
+
+            } else if (action.equals(ACTION_VIEW_WORLDMAP)) {
+                showWorldMapDialog();
+
+            } else if (action.equals(ACTION_ADD_ALARM)) {
+                scheduleAlarm();
+
+            } else if (action.equals(ACTION_CONFIG_TIMEZONE)) {
+                configTimeZone();
+
+            } else if (action.equals(ACTION_CONFIG_DATE)) {
+                configDate();
+
+            } else if (action.equals(ACTION_CONFIG_LOCATION)) {
+                configLocation();
 
             } else {
                 if (data != null && LocationConfigView.SCHEME_GEO.equals(data.getScheme())) {
