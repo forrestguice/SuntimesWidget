@@ -947,7 +947,7 @@
         <item>NOTHING</item>
         <item>SHOW_CALENDAR</item>
         <item>ALARM</item>
-        <item>TIMEZONE</item>
+        <item>CONFIG_TIMEZONE</item>
         <item>NEXT_NOTE</item>
         <item>PREV_NOTE</item>
         <item>RESET_NOTE</item>
