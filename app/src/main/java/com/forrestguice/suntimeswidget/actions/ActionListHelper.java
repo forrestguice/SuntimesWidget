@@ -72,6 +72,11 @@ public class ActionListHelper
     protected ActionMode actionMode = null;
     protected ActionDisplayActionMode actionModeCallback;
 
+    protected boolean adapterModified = false;
+    public boolean isAdapterModified() {
+        return adapterModified;
+    }
+
     public ActionListHelper(@NonNull Context context, @NonNull android.support.v4.app.FragmentManager fragments)
     {
         contextRef = new WeakReference<>(context);
@@ -94,6 +99,8 @@ public class ActionListHelper
 
     public void onRestoreInstanceState(Bundle savedState)
     {
+        adapterModified = savedState.getBoolean("adapterModified", adapterModified);
+
         String actionID = savedState.getString("selectedItem",  null);
         if (actionID != null && !actionID.trim().isEmpty()) {
             adapter.setSelected(selectedItem = adapter.findItemByID(actionID));
@@ -102,6 +109,7 @@ public class ActionListHelper
 
     public void onSaveInstanceState( Bundle outState )
     {
+        outState.putBoolean("adapterModified", adapterModified);
         outState.putString("selectedItem", selectedItem != null ? selectedItem.id : "");
     }
 
@@ -298,6 +306,7 @@ public class ActionListHelper
                 Toast.makeText(context, context.getString(R.string.saveaction_toast, saveDialog.getIntentTitle(), saveDialog.getIntentID()), Toast.LENGTH_SHORT).show();
                 initAdapter(context);
                 updateViews(context);
+                adapterModified = true;
             }
         };
     }
@@ -308,6 +317,7 @@ public class ActionListHelper
 
     public void importActions() {
         // TODO
+        adapterModified = true;
     }
 
     public void clearActions()
@@ -329,6 +339,7 @@ public class ActionListHelper
                                     Toast.makeText(context, context.getString(R.string.clearactions_toast), Toast.LENGTH_SHORT).show();
                                     initAdapter(context);
                                     updateViews(context);
+                                    adapterModified = true;
                                 }
                             });
             dialog.show();
@@ -353,6 +364,7 @@ public class ActionListHelper
                             WidgetActions.deleteActionLaunchPref(context, 0, actionID);
                             initAdapter(context);
                             updateViews(context);
+                            adapterModified = true;
                         }
                     });
             dialog.show();

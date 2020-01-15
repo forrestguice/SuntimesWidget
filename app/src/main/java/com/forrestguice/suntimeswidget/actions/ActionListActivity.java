@@ -51,8 +51,6 @@ public class ActionListActivity extends AppCompatActivity
     public static final String PARAM_NOSELECT = "noselect";
 
     private ActionListHelper helper;
-    private boolean adapterModified = false;
-
     private boolean disallowSelect = false;
     private String preselectedAction;
 
@@ -106,7 +104,7 @@ public class ActionListActivity extends AppCompatActivity
         public void onClick(View v) {
             Intent intent = new Intent();
             intent.putExtra(SELECTED_ACTIONID, helper.getIntentID());
-            intent.putExtra(ADAPTER_MODIFIED, adapterModified);
+            intent.putExtra(ADAPTER_MODIFIED, helper.isAdapterModified());
             setResult(Activity.RESULT_OK, intent);
             finish();
             overridePendingTransition(R.anim.transition_ok_in, R.anim.transition_ok_out);
@@ -144,8 +142,8 @@ public class ActionListActivity extends AppCompatActivity
         @Override
         public void onClick(View v) {
             Intent intent = new Intent();
-            intent.putExtra(ADAPTER_MODIFIED, adapterModified);
-            setResult(((adapterModified) ? Activity.RESULT_OK : Activity.RESULT_CANCELED), intent);
+            intent.putExtra(ADAPTER_MODIFIED, helper.isAdapterModified());
+            setResult(((helper.isAdapterModified()) ? Activity.RESULT_OK : Activity.RESULT_CANCELED), intent);
             finish();
             overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);
         }
