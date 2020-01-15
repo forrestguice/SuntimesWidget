@@ -482,6 +482,8 @@ public class WidgetActions
 
         ADD_ALARM("Suntimes", "Set alarm", false),
 
+        CARD_NEXT("Suntimes", "Show next card", false),
+        CARD_PREV("Suntimes", "Show previous card", false),
         CARD_RESET("Suntimes", "Swap cards", false),
 
         NOTE_NEXT("Suntimes", "Show next note", false),
@@ -554,75 +556,44 @@ public class WidgetActions
                 if (!hasActionLaunchPref(context, 0, action.name()))
                 {
                     LaunchType launchType = LaunchType.ACTIVITY;
-                    String launchString = null, launchAction = null, launchData = null, launchMime = null, launchExtras = null;
+                    String launchString = SuntimesActivity.class.getName();
+                    String launchAction = null, launchData = null, launchMime = null, launchExtras = null;
 
                     switch (action)
                     {
                         case SHOW_CALENDAR:
+                            launchString = null;
                             launchAction = Intent.ACTION_VIEW;
                             launchData = "content://com.android.calendar/time/%dm";
                             break;
 
                         case SHOW_MAP:
+                            launchString = null;
                             launchAction = Intent.ACTION_VIEW;
                             launchData = "geo:%lat,%lon";
                             break;
 
-                        case SHOW_DIALOG_SUN:
-                            launchString = SuntimesActivity.class.getName();
-                            launchAction = SuntimesActivity.ACTION_VIEW_SUN;
-                            break;
+                        case SHOW_DIALOG_SUN: launchAction = SuntimesActivity.ACTION_VIEW_SUN; break;
+                        case SHOW_DIALOG_MOON: launchAction = SuntimesActivity.ACTION_VIEW_MOON; break;
+                        case SHOW_DIALOG_SOLSTICE: launchAction = SuntimesActivity.ACTION_VIEW_SOLSTICE; break;
+                        case SHOW_DIALOG_WORLDMAP: launchAction = SuntimesActivity.ACTION_VIEW_WORLDMAP; break;
 
-                        case SHOW_DIALOG_MOON:
-                            launchString = SuntimesActivity.class.getName();
-                            launchAction = SuntimesActivity.ACTION_VIEW_MOON;
-                            break;
+                        case CONFIG_DATE: launchAction = SuntimesActivity.ACTION_CONFIG_DATE; break;
+                        case CONFIG_LOCATION: launchAction = SuntimesActivity.ACTION_CONFIG_LOCATION; break;
+                        case CONFIG_TIMEZONE: launchAction = SuntimesActivity.ACTION_CONFIG_TIMEZONE; break;
 
-                        case SHOW_DIALOG_SOLSTICE:
-                            launchString = SuntimesActivity.class.getName();
-                            launchAction = SuntimesActivity.ACTION_VIEW_SOLSTICE;
-                            break;
+                        case ADD_ALARM: launchAction = SuntimesActivity.ACTION_ADD_ALARM; break;
+                        case NOTE_NEXT: launchAction = SuntimesActivity.ACTION_NOTE_NEXT; break;
+                        case NOTE_PREV: launchAction = SuntimesActivity.ACTION_NOTE_PREV; break;
+                        case NOTE_RESET: launchAction = SuntimesActivity.ACTION_NOTE_RESET; break;
 
-                        case SHOW_DIALOG_WORLDMAP:
-                            launchString = SuntimesActivity.class.getName();
-                            launchAction = SuntimesActivity.ACTION_VIEW_WORLDMAP;
-                            break;
-
-                        case CONFIG_DATE:
-                            launchString = SuntimesActivity.class.getName();
-                            launchAction = SuntimesActivity.ACTION_CONFIG_DATE;
-                            break;
-
-                        case CONFIG_TIMEZONE:
-                            launchString = SuntimesActivity.class.getName();
-                            launchAction = SuntimesActivity.ACTION_CONFIG_TIMEZONE;
-                            break;
-
-                        case ADD_ALARM:
-                            launchString = SuntimesActivity.class.getName();
-                            launchAction = SuntimesActivity.ACTION_ADD_ALARM;
-                            break;
-
-                        /**case SWAP_CARD:
-                            // TODO
-                            break;
-
-                        case NOTE_NEXT:
-                            // TODO
-                            break;
-
-                        case NOTE_PREV:
-                            // TODO
-                            break;
-
-                        case NOTE_RESET:
-                            // TODO
-                            break;*/
+                        case CARD_NEXT: launchAction = SuntimesActivity.ACTION_CARD_NEXT; break;
+                        case CARD_PREV: launchAction = SuntimesActivity.ACTION_CARD_PREV; break;
+                        case CARD_RESET: launchAction = SuntimesActivity.ACTION_CARD_RESET; break;
 
                         case NOTHING:
                             launchType = null;
                             break;
-
                         default:
                             launchType = null;
                             Log.w(TAG, "initDefaults: unhandled action: " + action.name());

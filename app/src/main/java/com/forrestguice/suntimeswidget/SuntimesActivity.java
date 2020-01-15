@@ -109,10 +109,20 @@ import android.os.Handler;
 public class SuntimesActivity extends AppCompatActivity
 {
     public static final String ACTION_ADD_ALARM = "com.forrestguice.suntimeswidget.ADD_ALARM";
+
     public static final String ACTION_VIEW_SUN = "com.forrestguice.suntimeswidget.VIEW_SUN";
     public static final String ACTION_VIEW_MOON = "com.forrestguice.suntimeswidget.VIEW_MOON";
     public static final String ACTION_VIEW_SOLSTICE = "com.forrestguice.suntimeswidget.VIEW_SOLSTICE";
     public static final String ACTION_VIEW_WORLDMAP = "com.forrestguice.suntimeswidget.VIEW_WORLDMAP";
+
+    public static final String ACTION_CARD_NEXT = "com.forrestguice.suntimeswidget.CARD_NEXT";
+    public static final String ACTION_CARD_PREV = "com.forrestguice.suntimeswidget.CARD_PREV";
+    public static final String ACTION_CARD_RESET = "com.forrestguice.suntimeswidget.CARD_RESET";
+
+    public static final String ACTION_NOTE_NEXT = "com.forrestguice.suntimeswidget.NOTE_NEXT";
+    public static final String ACTION_NOTE_PREV = "com.forrestguice.suntimeswidget.NOTE_PREV";
+    public static final String ACTION_NOTE_RESET = "com.forrestguice.suntimeswidget.NOTE_RESET";
+
     public static final String ACTION_CONFIG_LOCATION = "com.forrestguice.suntimeswidget.CONFIG_LOCATION";
     public static final String ACTION_CONFIG_TIMEZONE = "com.forrestguice.suntimeswidget.CONFIG_TIMEZONE";
     public static final String ACTION_CONFIG_DATE = "com.forrestguice.suntimeswidget.CONFIG_DATE";
@@ -276,6 +286,34 @@ public class SuntimesActivity extends AppCompatActivity
 
             } else if (action.equals(ACTION_CONFIG_DATE)) {
                 configDate();
+
+            } else if (action.equals(ACTION_NOTE_NEXT)) {
+                setUserSwappedCard( false, "handleIntent (nextNote)" );
+                notes.showNextNote();
+
+            } else if (action.equals(ACTION_NOTE_PREV)) {
+                setUserSwappedCard( false, "handleIntent (prevNote)" );
+                notes.showPrevNote();
+
+            } else if (action.equals(ACTION_NOTE_RESET)) {
+                setUserSwappedCard(false, "handleIntent (resetNote)");
+                notes.resetNoteIndex();
+                NoteData note = notes.getNote();
+                highlightTimeField1(note.noteMode);
+
+            } else if (action.equals(ACTION_CARD_NEXT)) {
+                setUserSwappedCard( true, "handleIntent (nextCard)" );
+                scrollTo(card_layout.findFirstVisibleItemPosition() + 1);
+
+            } else if (action.equals(ACTION_CARD_PREV)) {
+                setUserSwappedCard( true, "handleIntent (prevCard)" );
+                scrollTo(card_layout.findFirstVisibleItemPosition() - 1);
+
+            } else if (action.equals(ACTION_CARD_RESET)) {
+                setUserSwappedCard( true, "handleIntent (resetCard)" );
+                if (card_layout.findFirstVisibleItemPosition() == CardAdapter.TODAY_POSITION)
+                    scrollTo(CardAdapter.TODAY_POSITION + 1);
+                else scrollTo(CardAdapter.TODAY_POSITION);
 
             } else if (action.equals(ACTION_CONFIG_LOCATION)) {
                 configLocation();
@@ -1883,27 +1921,6 @@ public class SuntimesActivity extends AppCompatActivity
             WidgetActions.startIntent(SuntimesActivity.this, 0, actionID, dataset.dataActual, SuntimesActivity.class, Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         }
     }
-
-    /**private void onTapAction( AppSettings.TapAction action, boolean tomorrow )
-    {
-        switch (action)
-        {
-            case NOTHING:
-                break;
-
-            case CARD_RESET:
-            default:
-                if (tomorrow) {
-                    scrollTo(CardAdapter.TODAY_POSITION);
-                    setUserSwappedCard( true, "onDateTapClick (prevCard)" );
-                } else {
-                    scrollTo(CardAdapter.TODAY_POSITION + 1);
-                    setUserSwappedCard( true, "onDateTapClick (nextCard)" );
-                }
-                break;
-        }
-    }*/
-
 
     /**
      * Toggle day length visibility.
