@@ -1837,7 +1837,7 @@ public class SuntimesActivity extends AppCompatActivity
 
                     } else {                    // click: user defined
                         String actionID = AppSettings.loadNoteTapActionPref(SuntimesActivity.this);
-                        if (WidgetActions.TapAction.ALARM.name().equals(actionID)) {
+                        if (WidgetActions.TapAction.ADD_ALARM.name().equals(actionID)) {
                             scheduleAlarmFromNote();
                         } else {
                             onTapAction(actionID, "onNoteTouch");
