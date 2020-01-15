@@ -929,7 +929,7 @@
         <item>SHOW_CALENDAR</item>
         <item>ADD_ALARM</item>
         <item>CONFIG_DATE</item>
-        <item>SWAP_CARD</item>
+        <item>CARD_RESET</item>
         <item>NOTE_RESET</item>
     </string-array>
 
@@ -1608,7 +1608,7 @@
     <string name="def_app_ui_showgoldhour" translatable="false">true</string>
     <string name="def_app_ui_showbluehour" translatable="false">false</string>
     <string name="def_app_ui_showdatasource" translatable="false">true</string>
-    <string name="def_app_ui_datetapaction" translatable="false">SWAP_CARD</string>
+    <string name="def_app_ui_datetapaction" translatable="false">CARD_RESET</string>
     <string name="def_app_ui_datetapaction1" translatable="false">SHOW_CALENDAR</string>
     <string name="def_app_ui_notetapaction" translatable="false">NOTE_NEXT</string>
     <string name="def_app_ui_clocktapaction" translatable="false">NOTE_RESET</string>

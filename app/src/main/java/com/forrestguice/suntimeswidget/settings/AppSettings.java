@@ -67,7 +67,7 @@ public class AppSettings
     public static final String PREF_DEF_LOCALE = "en";
 
     public static final String PREF_KEY_UI_DATETAPACTION = "app_ui_datetapaction";
-    public static final String PREF_DEF_UI_DATETAPACTION = WidgetActions.TapAction.SWAP_CARD.name();
+    public static final String PREF_DEF_UI_DATETAPACTION = WidgetActions.TapAction.CARD_RESET.name();
 
     public static final String PREF_KEY_UI_DATETAPACTION1 = "app_ui_datetapaction1";
     public static final String PREF_DEF_UI_DATETAPACTION1 = WidgetActions.TapAction.SHOW_CALENDAR.name();

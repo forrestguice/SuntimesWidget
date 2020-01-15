@@ -1891,40 +1891,7 @@ public class SuntimesActivity extends AppCompatActivity
             case NOTHING:
                 break;
 
-            case ALARM:
-                scheduleAlarm();
-                break;
-
-            case TIMEZONE:
-                configTimeZone();
-                break;
-
-            case NOTE_NEXT:
-                setUserSwappedCard( false, "onClockClick (nextNote)" );
-                notes.showNextNote();
-                break;
-
-            case NOTE_PREV:
-                setUserSwappedCard( false, "onClockClick (prevNote)" );
-                notes.showPrevNote();
-                break;
-
-            case NOTE_RESET:
-                setUserSwappedCard(false, "onClockClick (resetNote)");
-                notes.resetNoteIndex();
-                NoteData note = notes.getNote();
-                highlightTimeField1(note.noteMode);
-                break;
-
-            case CONFIG_DATE:
-                configDate();
-                break;
-
-            case SHOW_CALENDAR:
-                showCalendar(tomorrow);
-                break;
-
-            case SWAP_CARD:
+            case CARD_RESET:
             default:
                 if (tomorrow) {
                     scrollTo(CardAdapter.TODAY_POSITION);

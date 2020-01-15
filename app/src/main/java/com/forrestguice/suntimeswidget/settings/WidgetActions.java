@@ -479,9 +479,10 @@ public class WidgetActions
     public static enum TapAction
     {
         NOTHING("Nothing", "Do nothing", false),
-        SWAP_CARD("Suntimes", "Swap cards", false),
 
         ADD_ALARM("Suntimes", "Set alarm", false),
+
+        CARD_RESET("Suntimes", "Swap cards", false),
 
         NOTE_NEXT("Suntimes", "Show next note", false),
         NOTE_PREV("Suntimes", "Show previous note", false),

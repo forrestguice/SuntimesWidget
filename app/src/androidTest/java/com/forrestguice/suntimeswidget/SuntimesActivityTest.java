@@ -422,7 +422,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
             verifyDateDialog(activityRule.getActivity());
             cancelDateDialog();
 
-        } else if (tapAction.equals(WidgetActions.TapAction.SWAP_CARD.name())) {
+        } else if (tapAction.equals(WidgetActions.TapAction.CARD_RESET.name())) {
             if (viewIsDisplayed(R.id.info_time_all_today, "Today"))
                 verifyTimeCard_today();
             else verifyTimeCard_tomorrow();
