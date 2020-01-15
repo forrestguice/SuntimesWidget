@@ -303,15 +303,15 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     public static void verifyOnClockClick(SuntimesActivity activity, int noteIndex)
     {
         String tapAction = AppSettings.loadClockTapActionPref(activity);
-        if (tapAction.equals(WidgetActions.TapAction.ALARM.name()))
+        if (tapAction.equals(WidgetActions.SuntimesAction.ALARM.name()))
         {
             verifyAlarmDialog();
             cancelAlarmDialog();
 
-        } else if (tapAction.equals(WidgetActions.TapAction.NOTE_PREV.name())) {
+        } else if (tapAction.equals(WidgetActions.SuntimesAction.NOTE_PREV.name())) {
             verifyOnNotePrev(activity, noteIndex);
 
-        } else if (tapAction.equals(WidgetActions.TapAction.NOTE_NEXT.name())) {
+        } else if (tapAction.equals(WidgetActions.SuntimesAction.NOTE_NEXT.name())) {
             verifyOnNoteNext(activity, noteIndex);
 
         } /**else {
@@ -352,15 +352,15 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
     public static void verifyOnNoteClick(SuntimesActivity activity, int noteIndex)
     {
         String tapAction = AppSettings.loadNoteTapActionPref(activity);
-        if (tapAction.equals(WidgetActions.TapAction.ALARM.name()))
+        if (tapAction.equals(WidgetActions.SuntimesAction.ALARM.name()))
         {
             verifyAlarmDialog();
             cancelAlarmDialog();
 
-        } else if (tapAction.equals(WidgetActions.TapAction.NOTE_NEXT.name())) {
+        } else if (tapAction.equals(WidgetActions.SuntimesAction.NOTE_NEXT.name())) {
             verifyOnNoteNext(activity, noteIndex);
 
-        } else if (tapAction.equals(WidgetActions.TapAction.NOTE_PREV.name())) {
+        } else if (tapAction.equals(WidgetActions.SuntimesAction.NOTE_PREV.name())) {
             verifyOnNotePrev(activity, noteIndex);
 
         } /**else {
@@ -417,12 +417,12 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
 
         // verify the action
         String tapAction = AppSettings.loadDateTapActionPref(activityRule.getActivity());
-        if (tapAction.equals(WidgetActions.TapAction.CONFIG_DATE.name()))
+        if (tapAction.equals(WidgetActions.SuntimesAction.CONFIG_DATE.name()))
         {
             verifyDateDialog(activityRule.getActivity());
             cancelDateDialog();
 
-        } else if (tapAction.equals(WidgetActions.TapAction.CARD_RESET.name())) {
+        } else if (tapAction.equals(WidgetActions.SuntimesAction.CARD_RESET.name())) {
             if (viewIsDisplayed(R.id.info_time_all_today, "Today"))
                 verifyTimeCard_today();
             else verifyTimeCard_tomorrow();

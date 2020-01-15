@@ -466,7 +466,7 @@ public class WidgetActions
                     WidgetActions.PREF_DEF_ACTION_LAUNCH_TYPE.name(), WidgetActions.PREF_DEF_ACTION_LAUNCH_ACTION, WidgetActions.PREF_DEF_ACTION_LAUNCH_DATA, WidgetActions.PREF_DEF_ACTION_LAUNCH_DATATYPE, WidgetActions.PREF_DEF_ACTION_LAUNCH_EXTRAS);
         }
 
-        TapAction.initDefaults(context);
+        SuntimesAction.initDefaults(context);
     }
 
     public static void initDisplayStrings( Context context ) {
@@ -476,7 +476,7 @@ public class WidgetActions
     /**
      * Actions that can be performed when a UI element is clicked.
      */
-    public static enum TapAction
+    public static enum SuntimesAction
     {
         NOTHING("Nothing", "Do nothing", false),
 
@@ -505,7 +505,7 @@ public class WidgetActions
         private String title, desc;
         private boolean listed;
 
-        private TapAction(String title, String desc, boolean listed)
+        private SuntimesAction(String title, String desc, boolean listed)
         {
             this.title = title;
             this.desc = desc;
@@ -536,7 +536,7 @@ public class WidgetActions
 
         public static void initDisplayStrings( Context context )
         {
-            /**TapAction[] actions = TapAction.values();  // TODO
+            /**SuntimesAction[] actions = SuntimesAction.values();  // TODO
             String[] titles = context.getResources().getStringArray(R.array.tapActions_titles);
             String[] desc = context.getResources().getStringArray(R.array.tapActions_display);
             for (int i=0; i<desc.length; i++)
@@ -551,7 +551,7 @@ public class WidgetActions
 
         public static void initDefaults( Context context )
         {
-            for (TapAction action : TapAction.values())
+            for (SuntimesAction action : SuntimesAction.values())
             {
                 if (!hasActionLaunchPref(context, 0, action.name()))
                 {

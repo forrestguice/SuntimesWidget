@@ -97,7 +97,7 @@ public class SuntimesResTest extends SuntimesActivityTestBase
         for (String value : values)
         {
             try {
-                WidgetActions.TapAction action = WidgetActions.TapAction.valueOf(value);
+                WidgetActions.SuntimesAction action = WidgetActions.SuntimesAction.valueOf(value);
 
             } catch (IllegalArgumentException e) {
                 badValues.add(value);

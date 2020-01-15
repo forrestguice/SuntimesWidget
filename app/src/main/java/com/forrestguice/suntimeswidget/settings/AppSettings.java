@@ -67,16 +67,16 @@ public class AppSettings
     public static final String PREF_DEF_LOCALE = "en";
 
     public static final String PREF_KEY_UI_DATETAPACTION = "app_ui_datetapaction";
-    public static final String PREF_DEF_UI_DATETAPACTION = WidgetActions.TapAction.CARD_RESET.name();
+    public static final String PREF_DEF_UI_DATETAPACTION = WidgetActions.SuntimesAction.CARD_RESET.name();
 
     public static final String PREF_KEY_UI_DATETAPACTION1 = "app_ui_datetapaction1";
-    public static final String PREF_DEF_UI_DATETAPACTION1 = WidgetActions.TapAction.SHOW_CALENDAR.name();
+    public static final String PREF_DEF_UI_DATETAPACTION1 = WidgetActions.SuntimesAction.SHOW_CALENDAR.name();
 
     public static final String PREF_KEY_UI_CLOCKTAPACTION = "app_ui_clocktapaction";
-    public static final String PREF_DEF_UI_CLOCKTAPACTION = WidgetActions.TapAction.NOTE_RESET.name();
+    public static final String PREF_DEF_UI_CLOCKTAPACTION = WidgetActions.SuntimesAction.NOTE_RESET.name();
 
     public static final String PREF_KEY_UI_NOTETAPACTION = "app_ui_notetapaction";
-    public static final String PREF_DEF_UI_NOTETAPACTION = WidgetActions.TapAction.NOTE_NEXT.name();
+    public static final String PREF_DEF_UI_NOTETAPACTION = WidgetActions.SuntimesAction.NOTE_NEXT.name();
 
     public static final String PREF_KEY_UI_SHOWWARNINGS = "app_ui_showwarnings";
     public static final boolean PREF_DEF_UI_SHOWWARNINGS = true;
@@ -554,7 +554,7 @@ public class AppSettings
     public static void initDisplayStrings( Context context )
     {
         LocaleMode.initDisplayStrings(context);
-        WidgetActions.TapAction.initDisplayStrings(context);
+        WidgetActions.SuntimesAction.initDisplayStrings(context);
     }
 
     /**
