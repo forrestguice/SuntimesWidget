@@ -108,7 +108,7 @@ import android.os.Handler;
 @SuppressWarnings("Convert2Diamond")
 public class SuntimesActivity extends AppCompatActivity
 {
-    public static final String ACTION_ADD_ALARM = "com.forrestguice.suntimeswidget.ADD_ALARM";
+    public static final String ACTION_ADD_ALARM = "com.forrestguice.suntimeswidget.ALARM";
 
     public static final String ACTION_VIEW_SUN = "com.forrestguice.suntimeswidget.VIEW_SUN";
     public static final String ACTION_VIEW_MOON = "com.forrestguice.suntimeswidget.VIEW_MOON";
@@ -117,14 +117,14 @@ public class SuntimesActivity extends AppCompatActivity
 
     public static final String ACTION_CARD_NEXT = "com.forrestguice.suntimeswidget.CARD_NEXT";
     public static final String ACTION_CARD_PREV = "com.forrestguice.suntimeswidget.CARD_PREV";
-    public static final String ACTION_CARD_RESET = "com.forrestguice.suntimeswidget.CARD_RESET";
+    public static final String ACTION_CARD_RESET = "com.forrestguice.suntimeswidget.SWAP_CARD";
 
-    public static final String ACTION_NOTE_NEXT = "com.forrestguice.suntimeswidget.NOTE_NEXT";
-    public static final String ACTION_NOTE_PREV = "com.forrestguice.suntimeswidget.NOTE_PREV";
-    public static final String ACTION_NOTE_RESET = "com.forrestguice.suntimeswidget.NOTE_RESET";
+    public static final String ACTION_NOTE_NEXT = "com.forrestguice.suntimeswidget.NEXT_NOTE";
+    public static final String ACTION_NOTE_PREV = "com.forrestguice.suntimeswidget.PREV_NOTE";
+    public static final String ACTION_NOTE_RESET = "com.forrestguice.suntimeswidget.RESET_NOTE";
 
     public static final String ACTION_CONFIG_LOCATION = "com.forrestguice.suntimeswidget.CONFIG_LOCATION";
-    public static final String ACTION_CONFIG_TIMEZONE = "com.forrestguice.suntimeswidget.CONFIG_TIMEZONE";
+    public static final String ACTION_CONFIG_TIMEZONE = "com.forrestguice.suntimeswidget.TIMEZONE";
     public static final String ACTION_CONFIG_DATE = "com.forrestguice.suntimeswidget.CONFIG_DATE";
 
     public static final String SUNTIMES_APP_UPDATE_FULL = "suntimes.SUNTIMES_APP_UPDATE_FULL";
@@ -1875,7 +1875,7 @@ public class SuntimesActivity extends AppCompatActivity
 
                     } else {                    // click: user defined
                         String actionID = AppSettings.loadNoteTapActionPref(SuntimesActivity.this);
-                        if (WidgetActions.SuntimesAction.ADD_ALARM.name().equals(actionID)) {
+                        if (WidgetActions.SuntimesAction.ALARM.name().equals(actionID)) {
                             scheduleAlarmFromNote();
                         } else {
                             onTapAction(actionID, "onNoteTouch");

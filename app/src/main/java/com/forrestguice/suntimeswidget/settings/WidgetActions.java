@@ -480,19 +480,19 @@ public class WidgetActions
     {
         NOTHING("Nothing", "Do nothing", false),
 
-        ADD_ALARM("Suntimes", "Set alarm", false),
+        ALARM("Suntimes", "Set alarm", false),
 
         CARD_NEXT("Suntimes", "Show next card", false),
         CARD_PREV("Suntimes", "Show previous card", false),
-        CARD_RESET("Suntimes", "Swap cards", false),
+        SWAP_CARD("Suntimes", "Swap cards", false),
 
-        NOTE_NEXT("Suntimes", "Show next note", false),
-        NOTE_PREV("Suntimes", "Show previous note", false),
-        NOTE_RESET("Suntimes", "Show upcoming event", false),
+        NEXT_NOTE("Suntimes", "Show next note", false),
+        PREV_NOTE("Suntimes", "Show previous note", false),
+        RESET_NOTE("Suntimes", "Show upcoming event", false),
 
         CONFIG_DATE("Suntimes", "Set date", false),
         CONFIG_LOCATION("Suntimes", "Set location", false),
-        CONFIG_TIMEZONE("Suntimes", "Set time zone", false),
+        TIMEZONE("Suntimes", "Set time zone", false),
 
         SHOW_DIALOG_WORLDMAP("Suntimes", "Show world map dialog", true),
         SHOW_DIALOG_SOLSTICE("Suntimes", "Show solstices dialog", true),
@@ -580,16 +580,16 @@ public class WidgetActions
 
                         case CONFIG_DATE: launchAction = SuntimesActivity.ACTION_CONFIG_DATE; break;
                         case CONFIG_LOCATION: launchAction = SuntimesActivity.ACTION_CONFIG_LOCATION; break;
-                        case CONFIG_TIMEZONE: launchAction = SuntimesActivity.ACTION_CONFIG_TIMEZONE; break;
+                        case TIMEZONE: launchAction = SuntimesActivity.ACTION_CONFIG_TIMEZONE; break;
 
-                        case ADD_ALARM: launchAction = SuntimesActivity.ACTION_ADD_ALARM; break;
-                        case NOTE_NEXT: launchAction = SuntimesActivity.ACTION_NOTE_NEXT; break;
-                        case NOTE_PREV: launchAction = SuntimesActivity.ACTION_NOTE_PREV; break;
-                        case NOTE_RESET: launchAction = SuntimesActivity.ACTION_NOTE_RESET; break;
+                        case ALARM: launchAction = SuntimesActivity.ACTION_ADD_ALARM; break;
+                        case NEXT_NOTE: launchAction = SuntimesActivity.ACTION_NOTE_NEXT; break;
+                        case PREV_NOTE: launchAction = SuntimesActivity.ACTION_NOTE_PREV; break;
+                        case RESET_NOTE: launchAction = SuntimesActivity.ACTION_NOTE_RESET; break;
 
                         case CARD_NEXT: launchAction = SuntimesActivity.ACTION_CARD_NEXT; break;
                         case CARD_PREV: launchAction = SuntimesActivity.ACTION_CARD_PREV; break;
-                        case CARD_RESET: launchAction = SuntimesActivity.ACTION_CARD_RESET; break;
+                        case SWAP_CARD: launchAction = SuntimesActivity.ACTION_CARD_RESET; break;
 
                         case NOTHING:
                             launchType = null;

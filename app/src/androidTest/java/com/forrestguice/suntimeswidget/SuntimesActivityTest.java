@@ -308,10 +308,10 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
             verifyAlarmDialog();
             cancelAlarmDialog();
 
-        } else if (tapAction.equals(WidgetActions.SuntimesAction.NOTE_PREV.name())) {
+        } else if (tapAction.equals(WidgetActions.SuntimesAction.PREV_NOTE.name())) {
             verifyOnNotePrev(activity, noteIndex);
 
-        } else if (tapAction.equals(WidgetActions.SuntimesAction.NOTE_NEXT.name())) {
+        } else if (tapAction.equals(WidgetActions.SuntimesAction.NEXT_NOTE.name())) {
             verifyOnNoteNext(activity, noteIndex);
 
         } /**else {
@@ -357,10 +357,10 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
             verifyAlarmDialog();
             cancelAlarmDialog();
 
-        } else if (tapAction.equals(WidgetActions.SuntimesAction.NOTE_NEXT.name())) {
+        } else if (tapAction.equals(WidgetActions.SuntimesAction.NEXT_NOTE.name())) {
             verifyOnNoteNext(activity, noteIndex);
 
-        } else if (tapAction.equals(WidgetActions.SuntimesAction.NOTE_PREV.name())) {
+        } else if (tapAction.equals(WidgetActions.SuntimesAction.PREV_NOTE.name())) {
             verifyOnNotePrev(activity, noteIndex);
 
         } /**else {
@@ -422,7 +422,7 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
             verifyDateDialog(activityRule.getActivity());
             cancelDateDialog();
 
-        } else if (tapAction.equals(WidgetActions.SuntimesAction.CARD_RESET.name())) {
+        } else if (tapAction.equals(WidgetActions.SuntimesAction.SWAP_CARD.name())) {
             if (viewIsDisplayed(R.id.info_time_all_today, "Today"))
                 verifyTimeCard_today();
             else verifyTimeCard_tomorrow();
