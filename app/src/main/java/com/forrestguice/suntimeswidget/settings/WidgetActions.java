@@ -481,7 +481,7 @@ public class WidgetActions
         NOTHING("Nothing", "Do nothing", false),
         SWAP_CARD("Suntimes", "Swap cards", false),
         CONFIG_DATE("Suntimes", "Set date", false),
-        ALARM("Suntimes", "Set alarm", false),
+        ADD_ALARM("Suntimes", "Set alarm", false),
         NEXT_NOTE("Suntimes", "Show next note", false),
         PREV_NOTE("Suntimes", "Show previous note", false),
         RESET_NOTE("Suntimes", "Show upcoming event", false),
@@ -583,11 +583,13 @@ public class WidgetActions
                             // TODO
                             break;
 
-                        case ALARM:
-                            // TODO
                             break;
 
                         case TIMEZONE:
+                        case ADD_ALARM:
+                            launchString = SuntimesActivity.class.getName();
+                            launchAction = SuntimesActivity.ACTION_ADD_ALARM;
+                            break;
                             // TODO
                             break;
 

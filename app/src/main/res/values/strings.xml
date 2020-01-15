@@ -927,7 +927,7 @@
     <string-array name="dateTapActions_values" translatable="false"> <!-- config values (one-to-one with dateTapActions_display) -->
         <item>NOTHING</item>
         <item>SHOW_CALENDAR</item>
-        <item>ALARM</item>
+        <item>ADD_ALARM</item>
         <item>CONFIG_DATE</item>
         <item>SWAP_CARD</item>
         <item>RESET_NOTE</item>
@@ -946,7 +946,7 @@
     <string-array name="clockTapActions_values" translatable="false">  <!-- config values (one-to-one with clockTapActions_display) -->
         <item>NOTHING</item>
         <item>SHOW_CALENDAR</item>
-        <item>ALARM</item>
+        <item>ADD_ALARM</item>
         <item>CONFIG_TIMEZONE</item>
         <item>NEXT_NOTE</item>
         <item>PREV_NOTE</item>
@@ -963,7 +963,7 @@
     </string-array>
     <string-array name="noteTapActions_values" translatable="false">   <!-- config values (one-to-one with noteTapActions_display) -->
         <item>NOTHING</item>
-        <item>ALARM</item>
+        <item>ADD_ALARM</item>
         <item>NEXT_NOTE</item>
         <item>PREV_NOTE</item>
         <item>RESET_NOTE</item>
