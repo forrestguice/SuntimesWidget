@@ -781,13 +781,13 @@
     <item>Helles Thema / dunkles Thema (Nachtmodus)</item>
   </string-array>
 
-  <string name="configAction_doNothing">Nichts tun</string>
-  <string name="configAction_nextNote">Nächste Kurzinfo anzeigen</string>
-  <string name="configAction_prevNote">Vorherige Kurzinfo anzeigen</string>
-  <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
-  <string name="configAction_showCalendar">Öffne Kalender-App</string>
-  <string name="configAction_swapCards">Ansicht tauschen (heute/morgen)</string>
-  <string name="configAction_setAlarmForNote">Alarm basierend auf Kurzinfo einstellen</string>
+  <string name="configActionDesc_doNothing">Nichts tun</string>
+  <string name="configActionDesc_nextNote">Nächste Kurzinfo anzeigen</string>
+  <string name="configActionDesc_prevNote">Vorherige Kurzinfo anzeigen</string>
+  <string name="configActionDesc_resetNote">Reset note</string>  <!-- TODO -->
+  <string name="configActionDesc_showCalendar">Öffne Kalender-App</string>
+  <string name="configActionDesc_swapCards">Ansicht tauschen (heute/morgen)</string>
+  <string name="configActionDesc_setAlarmForNote">Alarm basierend auf Kurzinfo einstellen</string>
 
   <!-- App Setting: time zone sort -->
   <string name="timezone_sort_byOffset">nach Versatz</string>

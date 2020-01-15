@@ -772,13 +772,13 @@
         <item>Hela (tage) / malhela (nokte)</item>
     </string-array>
 
-    <string name="configAction_doNothing">Fari nenion</string>
-    <string name="configAction_nextNote">Montri sekvan noton</string>
-    <string name="configAction_prevNote">Montri antaŭan noton</string>
-    <string name="configAction_resetNote">Restarigi noton</string>
-    <string name="configAction_showCalendar">Montri aplikaĵon de kalendaro</string>
-    <string name="configAction_swapCards">Baskuli langetojn (hodiaŭ/morgaŭ)</string>
-    <string name="configAction_setAlarmForNote">Agordi averton pri noto</string>
+    <string name="configActionDesc_doNothing">Fari nenion</string>
+    <string name="configActionDesc_nextNote">Montri sekvan noton</string>
+    <string name="configActionDesc_prevNote">Montri antaŭan noton</string>
+    <string name="configActionDesc_resetNote">Restarigi noton</string>
+    <string name="configActionDesc_showCalendar">Montri aplikaĵon de kalendaro</string>
+    <string name="configActionDesc_swapCards">Baskuli langetojn (hodiaŭ/morgaŭ)</string>
+    <string name="configActionDesc_setAlarmForNote">Agordi averton pri noto</string>
 
     <!-- App Setting: GPS fix time limit -->
     <string name="configLabel_getFix_maxElapse">Tempolimo de GPS</string>

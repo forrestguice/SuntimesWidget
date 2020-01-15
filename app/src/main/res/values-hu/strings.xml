@@ -774,13 +774,13 @@
         <item>@string/timeFormatMode_24hr</item>
     </string-array>
 
-    <string name="configAction_doNothing">Semmit se tesz</string>
-    <string name="configAction_nextNote">Mutasd a következő bejegyzést</string>
-    <string name="configAction_prevNote">Mutasd az előző bejegyzést</string>
-    <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
-    <string name="configAction_showCalendar">Mutassa a naptárat</string>
-    <string name="configAction_swapCards">Vált (ma/holnap között)</string>
-    <string name="configAction_setAlarmForNote">Emlékeztető beállítása a bejegyzéshez</string>
+    <string name="configActionDesc_doNothing">Semmit se tesz</string>
+    <string name="configActionDesc_nextNote">Mutasd a következő bejegyzést</string>
+    <string name="configActionDesc_prevNote">Mutasd az előző bejegyzést</string>
+    <string name="configActionDesc_resetNote">Reset note</string>  <!-- TODO -->
+    <string name="configActionDesc_showCalendar">Mutassa a naptárat</string>
+    <string name="configActionDesc_swapCards">Vált (ma/holnap között)</string>
+    <string name="configActionDesc_setAlarmForNote">Emlékeztető beállítása a bejegyzéshez</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">Időeltolódás szerint</string>

@@ -917,12 +917,12 @@
 
     <!-- App Setting: Date "on tap" action -->
     <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
-        <item>@string/configAction_doNothing</item>
-        <item>@string/configAction_showCalendar</item>
+        <item>@string/configActionDesc_doNothing</item>
+        <item>@string/configActionDesc_showCalendar</item>
         <item>@string/configAction_setAlarm</item>
         <item>@string/configAction_setDate</item>
-        <item>@string/configAction_swapCards</item>
-        <item>@string/configAction_resetNote</item>
+        <item>@string/configActionDesc_swapCards</item>
+        <item>@string/configActionDesc_resetNote</item>
     </string-array>
     <string-array name="dateTapActions_values" translatable="false"> <!-- config values (one-to-one with dateTapActions_display) -->
         <item>NOTHING</item>
@@ -935,13 +935,13 @@
 
     <!-- App Setting: Clock UI "on tap" action -->
     <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
-        <item>@string/configAction_doNothing</item>
-        <item>@string/configAction_showCalendar</item>
+        <item>@string/configActionDesc_doNothing</item>
+        <item>@string/configActionDesc_showCalendar</item>
         <item>@string/configAction_setAlarm</item>
         <item>@string/configAction_setTimeZone</item>
-        <item>@string/configAction_nextNote</item>
-        <item>@string/configAction_prevNote</item>
-        <item>@string/configAction_resetNote</item>
+        <item>@string/configActionDesc_nextNote</item>
+        <item>@string/configActionDesc_prevNote</item>
+        <item>@string/configActionDesc_resetNote</item>
     </string-array>
     <string-array name="clockTapActions_values" translatable="false">  <!-- config values (one-to-one with clockTapActions_display) -->
         <item>NOTHING</item>
@@ -955,11 +955,11 @@
 
     <!-- App Setting: Note UI "on tap" action -->
     <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
-        <item>@string/configAction_doNothing</item>
-        <item>@string/configAction_setAlarmForNote</item>
-        <item>@string/configAction_nextNote</item>
-        <item>@string/configAction_prevNote</item>
-        <item>@string/configAction_resetNote</item>
+        <item>@string/configActionDesc_doNothing</item>
+        <item>@string/configActionDesc_setAlarmForNote</item>
+        <item>@string/configActionDesc_nextNote</item>
+        <item>@string/configActionDesc_prevNote</item>
+        <item>@string/configActionDesc_resetNote</item>
     </string-array>
     <string-array name="noteTapActions_values" translatable="false">   <!-- config values (one-to-one with noteTapActions_display) -->
         <item>NOTHING</item>
@@ -969,39 +969,91 @@
         <item>RESET_NOTE</item>
     </string-array>
 
-    <string name="configAction_doNothing">Do nothing</string>
-    <string name="configAction_nextNote">Show next note</string>
-    <string name="configAction_prevNote">Show previous note</string>
-    <string name="configAction_resetNote">Show upcoming event</string>
-    <string name="configAction_showCalendar">Open calendar</string>
-    <string name="configAction_swapCards">Swap cards (today/tomorrow)</string>
-    <string name="configAction_setAlarmForNote">Set alarm for note</string>
+    <string name="configActionDesc_doNothing">Do nothing</string>
+    <string name="configActionDesc_nextNote">Show next note</string>
+    <string name="configActionDesc_prevNote">Show previous note</string>
+    <string name="configActionDesc_resetNote">Show upcoming event</string>
+    <string name="configActionDesc_showCalendar">Open calendar</string>
+    <string name="configActionDesc_swapCards">Swap cards (today/tomorrow)</string>
+    <string name="configActionDesc_nextCard">Show next card</string>
+    <string name="configActionDesc_prevCard">Show previous card</string>
+    <string name="configActionDesc_setAlarmForNote">Set alarm for note</string>
 
     <string-array name="tapActions_titles">    <!-- must be in same order as enum TapActions -->
-        <item>@string/configAction_doNothing</item>
-        <item>@string/configAction_swapCards</item>
-        <item>@string/configAction_setDate</item>
+        <item>@string/configActionDesc_doNothing</item>
         <item>@string/configAction_setAlarm</item>
+
+        <item>@string/configActionDesc_nextCard</item>
+        <item>@string/configActionDesc_prevCard</item>
+        <item>@string/configActionDesc_swapCards</item>
+
+        <item>@string/configActionDesc_nextNote</item>
+        <item>@string/configActionDesc_prevNote</item>
+        <item>@string/configActionDesc_resetNote</item>
+
+        <item>@string/configAction_setDate</item>
+        <item>@string/configAction_setAlarmLocation</item>
         <item>@string/configAction_setTimeZone</item>
-        <item>@string/configAction_nextNote</item>
-        <item>@string/configAction_prevNote</item>
-        <item>@string/configAction_resetNote</item>
-        <item>@string/configAction_showCalendar</item>
+
+        <item>@string/configAction_worldMap</item>
+        <item>@string/configAction_equinoxDialog</item>
+        <item>@string/configAction_moon</item>
+        <item>@string/configAction_sunDialog</item>
+
+        <item>@string/configActionDesc_showCalendar</item>
         <item>@string/configAction_mapLocation</item>
     </string-array>
     <string-array name="tapActions_display">    <!-- must be in same order as enum TapActions -->
-        <item>@string/configAction_doNothing</item>
-        <item>@string/configAction_swapCards</item>
-        <item>@string/configAction_setDate</item>
+        <item>@string/configActionDesc_doNothing</item>
         <item>@string/configAction_setAlarm</item>
+
+        <item>@string/configActionDesc_nextCard</item>
+        <item>@string/configActionDesc_prevCard</item>
+        <item>@string/configActionDesc_swapCards</item>
+
+        <item>@string/configActionDesc_nextNote</item>
+        <item>@string/configActionDesc_prevNote</item>
+        <item>@string/configActionDesc_resetNote</item>
+
+        <item>@string/configAction_setDate</item>
+        <item>@string/configAction_setAlarmLocation</item>
         <item>@string/configAction_setTimeZone</item>
-        <item>@string/configAction_nextNote</item>
-        <item>@string/configAction_prevNote</item>
-        <item>@string/configAction_resetNote</item>
-        <item>@string/configAction_showCalendar</item>
+
+        <item>@string/configAction_worldMap</item>
+        <item>@string/configAction_equinoxDialog</item>
+        <item>@string/configAction_moon</item>
+        <item>@string/configAction_sunDialog</item>
+
+        <item>@string/configActionDesc_showCalendar</item>
         <item>@string/configAction_mapLocation</item>
     </string-array>
 
+
+    <!--
+    NOTHING("Nothing", "Do nothing", false),
+
+        ALARM("Suntimes", "Set alarm", false),
+
+        CARD_NEXT("Suntimes", "Show next card", false),
+        CARD_PREV("Suntimes", "Show previous card", false),
+        SWAP_CARD("Suntimes", "Swap cards", false),
+
+        NEXT_NOTE("Suntimes", "Show next note", false),
+        PREV_NOTE("Suntimes", "Show previous note", false),
+        RESET_NOTE("Suntimes", "Show upcoming event", false),
+
+        CONFIG_DATE("Suntimes", "Set date", false),
+        CONFIG_LOCATION("Suntimes", "Set location", false),
+        TIMEZONE("Suntimes", "Set time zone", false),
+
+        SHOW_DIALOG_WORLDMAP("Suntimes", "Show world map dialog", true),
+        SHOW_DIALOG_SOLSTICE("Suntimes", "Show solstices dialog", true),
+        SHOW_DIALOG_MOON("Suntimes", "Show moon dialog", true),
+        SHOW_DIALOG_SUN("Suntimes", "Show sun dialog", true),
+
+        SHOW_CALENDAR("Calendar", "Show calendar", true),
+        SHOW_MAP("Map", "Show map", true);
+        -->
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">by offset</string>

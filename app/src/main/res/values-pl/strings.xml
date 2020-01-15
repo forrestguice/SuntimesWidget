@@ -786,13 +786,13 @@
         <item>Jasna skórka (dzień) / Ciemna skórka (noc)</item>
     </string-array>
 
-    <string name="configAction_doNothing">Nie rób nic</string>
-    <string name="configAction_nextNote">Pokaż następną notatkę</string>
-    <string name="configAction_prevNote">Pokaż poprzednią notatkę</string>
-    <string name="configAction_resetNote">Resetuj notatkę</string>
-    <string name="configAction_showCalendar">Uruchom aplikację Kalendarz</string>
-    <string name="configAction_swapCards">Przełącz karty (dziś/jutro)</string>
-    <string name="configAction_setAlarmForNote">Ustaw alarm dla notatki</string>
+    <string name="configActionDesc_doNothing">Nie rób nic</string>
+    <string name="configActionDesc_nextNote">Pokaż następną notatkę</string>
+    <string name="configActionDesc_prevNote">Pokaż poprzednią notatkę</string>
+    <string name="configActionDesc_resetNote">Resetuj notatkę</string>
+    <string name="configActionDesc_showCalendar">Uruchom aplikację Kalendarz</string>
+    <string name="configActionDesc_swapCards">Przełącz karty (dziś/jutro)</string>
+    <string name="configActionDesc_setAlarmForNote">Ustaw alarm dla notatki</string>
 
     <!-- App Setting: time zone sort -->
     <string name="timezone_sort_byOffset">wg przesunięcia</string>

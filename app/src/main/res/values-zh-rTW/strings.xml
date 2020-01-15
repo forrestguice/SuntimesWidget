@@ -805,13 +805,13 @@
         <item>@string/trackingMode_soonest</item>
     </string-array>
     
-    <string name="configAction_doNothing">什麼也不做</string>
-    <string name="configAction_nextNote">顯示下一個便簽</string>
-    <string name="configAction_prevNote">顯示上一個便簽</string>
-    <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
-    <string name="configAction_showCalendar">顯示日曆應用</string>
-    <string name="configAction_swapCards">切換卡片 (今天/明天)</string>
-    <string name="configAction_setAlarmForNote">為便簽設置鬧鐘</string>
+    <string name="configActionDesc_doNothing">什麼也不做</string>
+    <string name="configActionDesc_nextNote">顯示下一個便簽</string>
+    <string name="configActionDesc_prevNote">顯示上一個便簽</string>
+    <string name="configActionDesc_resetNote">Reset note</string>  <!-- TODO -->
+    <string name="configActionDesc_showCalendar">顯示日曆應用</string>
+    <string name="configActionDesc_swapCards">切換卡片 (今天/明天)</string>
+    <string name="configActionDesc_setAlarmForNote">為便簽設置鬧鐘</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">by offset</string>

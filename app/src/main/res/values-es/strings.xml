@@ -792,13 +792,13 @@
     </string-array>
 
 
-    <string name="configAction_doNothing">No hacer nada</string>
-    <string name="configAction_nextNote">Mostrar nota siguiente</string>
-    <string name="configAction_prevNote">Mostrar nota anterior</string>
-    <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
-    <string name="configAction_showCalendar">Muestra aplicación de calendario</string>
-    <string name="configAction_swapCards">Intercambiar tarjetas (hoy/mañana)</string>
-    <string name="configAction_setAlarmForNote">Añadir alarma a la nota</string>
+    <string name="configActionDesc_doNothing">No hacer nada</string>
+    <string name="configActionDesc_nextNote">Mostrar nota siguiente</string>
+    <string name="configActionDesc_prevNote">Mostrar nota anterior</string>
+    <string name="configActionDesc_resetNote">Reset note</string>  <!-- TODO -->
+    <string name="configActionDesc_showCalendar">Muestra aplicación de calendario</string>
+    <string name="configActionDesc_swapCards">Intercambiar tarjetas (hoy/mañana)</string>
+    <string name="configActionDesc_setAlarmForNote">Añadir alarma a la nota</string>
 
     
     <string name="timezone_sort_byOffset">por desfase</string>

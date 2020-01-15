@@ -791,13 +791,13 @@
         <item>@string/trackingMode_soonest</item>
     </string-array>
 
-    <string name="configAction_doNothing">No fer res</string>
-    <string name="configAction_nextNote">Mostrar nota següent</string>
-    <string name="configAction_prevNote">Mostrar nota anterior</string>
-    <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
-    <string name="configAction_showCalendar">Mostra aplicació de calendari</string>
-    <string name="configAction_swapCards">Intercanviar targetes (avui/demà)</string>
-    <string name="configAction_setAlarmForNote">Posar una alarma a la nota</string>
+    <string name="configActionDesc_doNothing">No fer res</string>
+    <string name="configActionDesc_nextNote">Mostrar nota següent</string>
+    <string name="configActionDesc_prevNote">Mostrar nota anterior</string>
+    <string name="configActionDesc_resetNote">Reset note</string>  <!-- TODO -->
+    <string name="configActionDesc_showCalendar">Mostra aplicació de calendari</string>
+    <string name="configActionDesc_swapCards">Intercanviar targetes (avui/demà)</string>
+    <string name="configActionDesc_setAlarmForNote">Posar una alarma a la nota</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">per desfase</string>

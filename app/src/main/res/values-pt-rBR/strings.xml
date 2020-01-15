@@ -841,13 +841,13 @@
         <item>@string/trackingMode_soonest</item>
     </string-array>
 
-    <string name="configAction_doNothing">Fazer nada</string>
-    <string name="configAction_nextNote">Exibir próxima nota</string>
-    <string name="configAction_prevNote">Exibir nota anterior</string>
-    <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
-    <string name="configAction_showCalendar">Mostrar app de calendário</string>
-    <string name="configAction_swapCards">Inverter (hoje/amanhã)</string>
-    <string name="configAction_setAlarmForNote">Definir alarme para a nota</string>
+    <string name="configActionDesc_doNothing">Fazer nada</string>
+    <string name="configActionDesc_nextNote">Exibir próxima nota</string>
+    <string name="configActionDesc_prevNote">Exibir nota anterior</string>
+    <string name="configActionDesc_resetNote">Reset note</string>  <!-- TODO -->
+    <string name="configActionDesc_showCalendar">Mostrar app de calendário</string>
+    <string name="configActionDesc_swapCards">Inverter (hoje/amanhã)</string>
+    <string name="configActionDesc_setAlarmForNote">Definir alarme para a nota</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">por offset</string>  <!-- TODO -->
