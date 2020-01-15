@@ -17,6 +17,7 @@
     <string name="configAction_mapLocation">Show Map</string>
     <string name="configAction_mapLocation_chooser">View location using</string>
     <string name="configAction_mapLocation_noapp">Unable to find map application!</string>
+    <string name="configAction_showCalendar">Calendar</string>  <!-- TODO -->
     <string name="configAction_setAlarm">Set Alarm</string>
     <string name="configAction_setTimeZone">Set Time Zone</string>
     <string name="configAction_setDate">Set Date</string>
@@ -919,8 +920,8 @@
     <string-array name="dateTapActions_display"> <!-- display values (one-to-one with dateTapActions_values) -->
         <item>@string/configActionDesc_doNothing</item>
         <item>@string/configActionDesc_showCalendar</item>
-        <item>@string/configAction_setAlarm</item>
-        <item>@string/configAction_setDate</item>
+        <item>@string/configActionDesc_setAlarm</item>
+        <item>@string/configActionDesc_setDate</item>
         <item>@string/configActionDesc_swapCards</item>
         <item>@string/configActionDesc_resetNote</item>
     </string-array>
@@ -937,8 +938,8 @@
     <string-array name="clockTapActions_display"> <!-- display values (one-to-one with clockTapActions_values) -->
         <item>@string/configActionDesc_doNothing</item>
         <item>@string/configActionDesc_showCalendar</item>
-        <item>@string/configAction_setAlarm</item>
-        <item>@string/configAction_setTimeZone</item>
+        <item>@string/configActionDesc_setAlarm</item>
+        <item>@string/configActionDesc_setTimeZone</item>
         <item>@string/configActionDesc_nextNote</item>
         <item>@string/configActionDesc_prevNote</item>
         <item>@string/configActionDesc_resetNote</item>
@@ -974,6 +975,15 @@
     <string name="configActionDesc_prevNote">Show previous note</string>
     <string name="configActionDesc_resetNote">Show upcoming event</string>
     <string name="configActionDesc_showCalendar">Open calendar</string>
+    <string name="configActionDesc_mapLocation">Show location on map</string>  <!-- TODO -->
+    <string name="configActionDesc_setAlarm">Set an alarm</string>  <!-- TODO -->
+    <string name="configActionDesc_worldMap">Show world map dialog</string>  <!-- TODO -->
+    <string name="configActionDesc_equinoxDialog">Show solstices dialog</string>  <!-- TODO -->
+    <string name="configActionDesc_moon">Show moon dialog</string>  <!-- TODO -->
+    <string name="configActionDesc_sunDialog">Show sun position dialog</string>  <!-- TODO -->
+    <string name="configActionDesc_setDate">Configure date</string>  <!-- TODO -->
+    <string name="configActionDesc_setTimeZone">Configure time zone</string>  <!-- TODO -->
+    <string name="configActionDesc_setLocation">Configure location</string>  <!-- TODO -->
     <string name="configActionDesc_swapCards">Swap cards (today/tomorrow)</string>
     <string name="configActionDesc_nextCard">Show next card</string>
     <string name="configActionDesc_prevCard">Show previous card</string>
@@ -995,17 +1005,17 @@
         <item>@string/configAction_setAlarmLocation</item>
         <item>@string/configAction_setTimeZone</item>
 
-        <item>@string/configAction_worldMap</item>
-        <item>@string/configAction_equinoxDialog</item>
-        <item>@string/configAction_moon</item>
-        <item>@string/configAction_sunDialog</item>
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
 
-        <item>@string/configActionDesc_showCalendar</item>
+        <item>@string/configAction_showCalendar</item>
         <item>@string/configAction_mapLocation</item>
     </string-array>
     <string-array name="tapActions_display">    <!-- must be in same order as enum TapActions -->
         <item>@string/configActionDesc_doNothing</item>
-        <item>@string/configAction_setAlarm</item>
+        <item>@string/configActionDesc_setAlarm</item>
 
         <item>@string/configActionDesc_nextCard</item>
         <item>@string/configActionDesc_prevCard</item>
@@ -1015,45 +1025,18 @@
         <item>@string/configActionDesc_prevNote</item>
         <item>@string/configActionDesc_resetNote</item>
 
-        <item>@string/configAction_setDate</item>
-        <item>@string/configAction_setAlarmLocation</item>
-        <item>@string/configAction_setTimeZone</item>
+        <item>@string/configActionDesc_setDate</item>
+        <item>@string/configActionDesc_setLocation</item>
+        <item>@string/configActionDesc_setTimeZone</item>
 
-        <item>@string/configAction_worldMap</item>
-        <item>@string/configAction_equinoxDialog</item>
-        <item>@string/configAction_moon</item>
-        <item>@string/configAction_sunDialog</item>
+        <item>@string/configActionDesc_worldMap</item>
+        <item>@string/configActionDesc_equinoxDialog</item>
+        <item>@string/configActionDesc_moon</item>
+        <item>@string/configActionDesc_sunDialog</item>
 
         <item>@string/configActionDesc_showCalendar</item>
-        <item>@string/configAction_mapLocation</item>
+        <item>@string/configActionDesc_mapLocation</item>
     </string-array>
-
-
-    <!--
-    NOTHING("Nothing", "Do nothing", false),
-
-        ALARM("Suntimes", "Set alarm", false),
-
-        CARD_NEXT("Suntimes", "Show next card", false),
-        CARD_PREV("Suntimes", "Show previous card", false),
-        SWAP_CARD("Suntimes", "Swap cards", false),
-
-        NEXT_NOTE("Suntimes", "Show next note", false),
-        PREV_NOTE("Suntimes", "Show previous note", false),
-        RESET_NOTE("Suntimes", "Show upcoming event", false),
-
-        CONFIG_DATE("Suntimes", "Set date", false),
-        CONFIG_LOCATION("Suntimes", "Set location", false),
-        TIMEZONE("Suntimes", "Set time zone", false),
-
-        SHOW_DIALOG_WORLDMAP("Suntimes", "Show world map dialog", true),
-        SHOW_DIALOG_SOLSTICE("Suntimes", "Show solstices dialog", true),
-        SHOW_DIALOG_MOON("Suntimes", "Show moon dialog", true),
-        SHOW_DIALOG_SUN("Suntimes", "Show sun dialog", true),
-
-        SHOW_CALENDAR("Calendar", "Show calendar", true),
-        SHOW_MAP("Map", "Show map", true);
-        -->
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">by offset</string>

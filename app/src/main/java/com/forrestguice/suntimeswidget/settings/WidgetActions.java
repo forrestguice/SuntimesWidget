@@ -536,7 +536,7 @@ public class WidgetActions
 
         public static void initDisplayStrings( Context context )
         {
-            /**SuntimesAction[] actions = SuntimesAction.values();  // TODO
+            SuntimesAction[] actions = SuntimesAction.values();  // TODO
             String[] titles = context.getResources().getStringArray(R.array.tapActions_titles);
             String[] desc = context.getResources().getStringArray(R.array.tapActions_display);
             for (int i=0; i<desc.length; i++)
@@ -546,7 +546,7 @@ public class WidgetActions
                     actions[i].setTitle(titles[i]);
                     actions[i].setDesc(desc[i]);
                 }
-            }*/
+            }
         }
 
         public static void initDefaults( Context context )
