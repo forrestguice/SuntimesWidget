@@ -51,7 +51,6 @@ public class ActionListActivity extends AppCompatActivity
     public static final String PARAM_NOSELECT = "noselect";
 
     private ActionListHelper helper;
-    private boolean disallowSelect = false;
     private String preselectedAction;
 
     public ActionListActivity() {
@@ -77,11 +76,11 @@ public class ActionListActivity extends AppCompatActivity
         setContentView(R.layout.layout_activity_actionlist);
 
         Intent intent = getIntent();
-        disallowSelect = intent.getBooleanExtra(PARAM_NOSELECT, disallowSelect);
         preselectedAction = intent.getStringExtra(PARAM_SELECTED);
 
         helper = new ActionListHelper(this, getSupportFragmentManager());
         helper.initViews(this, findViewById(android.R.id.content), icicle);
+        helper.setDisallowSelect(intent.getBooleanExtra(PARAM_NOSELECT, false));
 
         initData(this);
 

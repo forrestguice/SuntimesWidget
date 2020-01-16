@@ -84,6 +84,7 @@ public class LoadActionDialog extends EditActionDialog
         super.initViews(context, dialogContent, savedState);
         listHelper = new ActionListHelper(context, getFragmentManager());
         listHelper.initViews(context, dialogContent, savedState);
+        listHelper.setDisallowSelect(true);
     }
 
     @Override

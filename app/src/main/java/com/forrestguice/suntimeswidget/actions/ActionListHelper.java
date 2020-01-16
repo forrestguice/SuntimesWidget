@@ -97,8 +97,14 @@ public class ActionListHelper
         fragmentManager = fragments;
     }
 
+    private boolean disallowSelect = false;
+    public void setDisallowSelect( boolean value ) {
+        disallowSelect = value;
+    }
+
     public void onRestoreInstanceState(Bundle savedState)
     {
+        disallowSelect = savedState.getBoolean("disallowSelect", disallowSelect);
         adapterModified = savedState.getBoolean("adapterModified", adapterModified);
 
         String actionID = savedState.getString("selectedItem",  null);
@@ -109,6 +115,7 @@ public class ActionListHelper
 
     public void onSaveInstanceState( Bundle outState )
     {
+        outState.putBoolean("disallowSelect", disallowSelect);
         outState.putBoolean("adapterModified", adapterModified);
         outState.putString("selectedItem", selectedItem != null ? selectedItem.id : "");
     }
@@ -577,10 +584,11 @@ public class ActionListHelper
         private boolean onPrepareActionMode(Menu menu)
         {
             SuntimesUtils.forceActionBarIcons(menu);
-            MenuItem deleteItem = menu.findItem(R.id.deleteAction);
-            MenuItem editItem = menu.findItem(R.id.editAction);
+            MenuItem selectItem = menu.findItem(R.id.selectAction);
+            selectItem.setVisible( !disallowSelect );
 
-            //selectItem.setVisible( !disallowSelect );
+            //MenuItem deleteItem = menu.findItem(R.id.deleteAction);
+            //MenuItem editItem = menu.findItem(R.id.editAction);
             //deleteItem.setVisible( !theme.isDefault() );  // not allowed to delete default
             //editItem.setVisible( !theme.isDefault() );    // not allowed to edit default
             return false;
