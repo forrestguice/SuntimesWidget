@@ -94,7 +94,8 @@ public class ActionListActivity extends AppCompatActivity
         }
 
         if (preselectedAction != null && !preselectedAction.trim().isEmpty()) {
-            // TODO: select action
+            helper.setSelected(preselectedAction);
+            helper.triggerActionMode();
         }
     }
 

@@ -102,6 +102,10 @@ public class ActionListHelper
         disallowSelect = value;
     }
 
+    public void setSelected( String actionID ) {
+        adapter.setSelected(selectedItem = adapter.findItemByID(actionID));
+    }
+
     public void onRestoreInstanceState(Bundle savedState)
     {
         disallowSelect = savedState.getBoolean("disallowSelect", disallowSelect);
@@ -109,7 +113,8 @@ public class ActionListHelper
 
         String actionID = savedState.getString("selectedItem",  null);
         if (actionID != null && !actionID.trim().isEmpty()) {
-            adapter.setSelected(selectedItem = adapter.findItemByID(actionID));
+            setSelected(actionID);
+            triggerActionMode(list, adapter.getSelected());
         }
     }
 
@@ -309,11 +314,15 @@ public class ActionListHelper
         {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                saveDialog.getEdit().saveIntent(context, 0, saveDialog.getIntentID(), saveDialog.getIntentTitle(), saveDialog.getIntentDesc());
-                Toast.makeText(context, context.getString(R.string.saveaction_toast, saveDialog.getIntentTitle(), saveDialog.getIntentID()), Toast.LENGTH_SHORT).show();
+                String intentID = saveDialog.getIntentID();
+                saveDialog.getEdit().saveIntent(context, 0, intentID, saveDialog.getIntentTitle(), saveDialog.getIntentDesc());
+                Toast.makeText(context, context.getString(R.string.saveaction_toast, saveDialog.getIntentTitle(), intentID), Toast.LENGTH_SHORT).show();
                 initAdapter(context);
                 updateViews(context);
                 adapterModified = true;
+
+                setSelected(intentID);
+                triggerActionMode(list, selectedItem);
             }
         };
     }
@@ -513,7 +522,10 @@ public class ActionListHelper
     /**
      * triggerActionMode
      */
-    private boolean triggerActionMode(View view, ActionDisplay item)
+    public boolean triggerActionMode() {
+        return triggerActionMode(list, selectedItem);
+    }
+    protected boolean triggerActionMode(View view, ActionDisplay item)
     {
         if (actionMode == null)
         {
