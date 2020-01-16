@@ -211,7 +211,7 @@ public class ActionListHelper
             }
         });
 
-        adapter = new ActionDisplayAdapter(context, R.layout.layout_listitem_timezone, ids.toArray(new ActionDisplay[0]));
+        adapter = new ActionDisplayAdapter(context, R.layout.layout_listitem_actions, ids.toArray(new ActionDisplay[0]));
         list.setAdapter(adapter);
 
     }
