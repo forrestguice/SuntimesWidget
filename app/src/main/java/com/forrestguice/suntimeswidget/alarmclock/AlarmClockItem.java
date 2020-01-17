@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -64,6 +64,7 @@ public class AlarmClockItem
     public String ringtoneName = null;
     public String ringtoneURI = null;
     public boolean vibrate = false;
+    public String actionID = null;
 
     public boolean modified = false;
     public AlarmState state = null;
@@ -106,6 +107,7 @@ public class AlarmClockItem
         vibrate = (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_VIBRATE) == 1);
         ringtoneName = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_NAME);
         ringtoneURI = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_URI);
+        actionID = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_ACTION);
     }
 
     public ContentValues asContentValues(boolean withRowID)
@@ -144,6 +146,7 @@ public class AlarmClockItem
         values.put(AlarmDatabaseAdapter.KEY_ALARM_VIBRATE, (vibrate ? 1 : 0));
         values.put(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_NAME, ringtoneName);
         values.put(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_URI, ringtoneURI);
+        values.put(AlarmDatabaseAdapter.KEY_ALARM_ACTION, actionID);
         return values;
     }
 
