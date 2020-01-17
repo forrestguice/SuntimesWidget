@@ -65,6 +65,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.io.IOException;
@@ -386,6 +387,10 @@ public class AlarmNotifications extends BroadcastReceiver
                     Log.e(TAG, "startAlert: failed to setDataSource to default! " + defaultUri.toString());
                 }
             }
+        }
+
+        if (alarm.actionID != null && !alarm.actionID.trim().isEmpty()) {
+            WidgetActions.startIntent(context.getApplicationContext(), 0, alarm.actionID, getData(context, alarm), null, Intent.FLAG_ACTIVITY_NEW_TASK);
         }
     }
 
