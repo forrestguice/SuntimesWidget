@@ -67,6 +67,7 @@ import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesWarning;
+import com.forrestguice.suntimeswidget.actions.LoadActionDialog;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
@@ -112,6 +113,7 @@ public class AlarmClockActivity extends AppCompatActivity
     private static final String DIALOGTAG_TIME = "alarmtime";
     private static final String DIALOGTAG_OFFSET = "alarmoffset";
     private static final String DIALOGTAG_LOCATION = "alarmlocation";
+    private static final String DIALOGTAG_ACTION = "alarmaction";
     private static final String DIALOGTAG_HELP = "help";
 
     private static final String KEY_SELECTED_ROWID = "selectedID";
@@ -388,6 +390,12 @@ public class AlarmClockActivity extends AppCompatActivity
         if (labelDialog != null)
         {
             labelDialog.setOnAcceptedListener(onLabelChanged);
+        }
+
+        LoadActionDialog actionDialog = (LoadActionDialog) fragments.findFragmentByTag(DIALOGTAG_ACTION);
+        if (actionDialog != null)
+        {
+            actionDialog.setOnAcceptedListener(onActionChanged);
         }
 
         LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOGTAG_LOCATION);
@@ -761,6 +769,12 @@ public class AlarmClockActivity extends AppCompatActivity
         }
 
         @Override
+        public void onRequestAction(AlarmClockItem forItem)
+        {
+            pickAction(forItem);
+        }
+
+        @Override
         public void onRequestSolarEvent(AlarmClockItem forItem)
         {
             pickSolarEvent(forItem);
@@ -1091,6 +1105,42 @@ public class AlarmClockActivity extends AppCompatActivity
             if (item != null && dialog != null)
             {
                 item.label = dialog.getLabel();
+                item.modified = true;
+
+                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, false);
+                task.setTaskListener(onUpdateItem);
+                task.execute(item);
+            }
+        }
+    };
+
+    /**
+     * pickAction
+     * @param item apply actionID to AlarmClockItem
+     */
+    protected void pickAction(@NonNull final AlarmClockItem item)
+    {
+        final LoadActionDialog loadDialog = new LoadActionDialog();
+        // TODO: select existing, allow select none
+        loadDialog.setOnAcceptedListener(onActionChanged);
+
+        t_selectedItem = item.rowID;
+        loadDialog.show(getSupportFragmentManager(), DIALOGTAG_ACTION);
+    }
+
+    private DialogInterface.OnClickListener onActionChanged = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface d, int which)
+        {
+            FragmentManager fragments = getSupportFragmentManager();
+            LoadActionDialog dialog = (LoadActionDialog) fragments.findFragmentByTag(DIALOGTAG_ACTION);
+
+            AlarmClockItem item = adapter.findItem(t_selectedItem);
+            t_selectedItem = null;
+
+            if (item != null && dialog != null)
+            {
+                item.actionID = dialog.getIntentID();
                 item.modified = true;
 
                 AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, false);
