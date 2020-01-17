@@ -223,6 +223,8 @@ public class ActionListHelper
             }
         });
 
+        ids.add(0, new ActionDisplay("", context.getString(R.string.configActionDesc_doNothing), context.getString(R.string.configActionDesc_doNothing), WidgetActions.PREF_DEF_ACTION_LAUNCH_COLOR));
+
         adapter = new ActionDisplayAdapter(context, R.layout.layout_listitem_actions, ids.toArray(new ActionDisplay[0]));
         list.setAdapter(adapter);
 
@@ -249,9 +251,19 @@ public class ActionListHelper
 
     protected void prepareOverflowMenu(Context context, Menu menu)
     {
+        String actionId = getIntentID();
+        boolean isModifiable = actionId != null && !actionId.trim().isEmpty();
+
+        MenuItem editItem = menu.findItem(R.id.editAction);
+        if (editItem != null) {
+            editItem.setEnabled(isModifiable);
+            editItem.setVisible(isModifiable);
+        }
+
         MenuItem deleteItem = menu.findItem(R.id.deleteAction);
         if (deleteItem != null) {
-            deleteItem.setEnabled(getIntentID() != null);
+            deleteItem.setEnabled(isModifiable);
+            deleteItem.setVisible(isModifiable);
         }
     }
 
@@ -295,17 +307,20 @@ public class ActionListHelper
     protected void editAction()
     {
         final Context context = contextRef.get();
-        final String intentID = getIntentID();
-        final SaveActionDialog saveDialog = new SaveActionDialog();
-        saveDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-                saveDialog.getEdit().loadIntent(context, 0, intentID);
-                saveDialog.setIntentID(intentID);
-            }
-        });
-        saveDialog.setOnAcceptedListener(onActionSaved(context, saveDialog));
-        saveDialog.show(fragmentManager, DIALOGTAG_EDIT);
+        final String actionID = getIntentID();
+        if (actionID != null && !actionID.trim().isEmpty() && context != null)
+        {
+            final SaveActionDialog saveDialog = new SaveActionDialog();
+            saveDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                @Override
+                public void onShow(DialogInterface dialog) {
+                    saveDialog.getEdit().loadIntent(context, 0, actionID);
+                    saveDialog.setIntentID(actionID);
+                }
+            });
+            saveDialog.setOnAcceptedListener(onActionSaved(context, saveDialog));
+            saveDialog.show(fragmentManager, DIALOGTAG_EDIT);
+        }
     }
 
     private DialogInterface.OnClickListener onActionSaved(final Context context, final SaveActionDialog saveDialog)
@@ -366,7 +381,7 @@ public class ActionListHelper
     {
         final Context context = contextRef.get();
         final String actionID = getIntentID();
-        if (actionID != null && context != null)
+        if (actionID != null && !actionID.trim().isEmpty() && context != null)
         {
             AlertDialog.Builder dialog = new AlertDialog.Builder(context);
             String title = WidgetActions.loadActionLaunchPref(context, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
@@ -599,10 +614,12 @@ public class ActionListHelper
             MenuItem selectItem = menu.findItem(R.id.selectAction);
             selectItem.setVisible( !disallowSelect );
 
-            //MenuItem deleteItem = menu.findItem(R.id.deleteAction);
-            //MenuItem editItem = menu.findItem(R.id.editAction);
-            //deleteItem.setVisible( !theme.isDefault() );  // not allowed to delete default
-            //editItem.setVisible( !theme.isDefault() );    // not allowed to edit default
+            String actionId = getIntentID();
+            boolean isModifiable = actionId != null && !actionId.trim().isEmpty();
+            MenuItem deleteItem = menu.findItem(R.id.deleteAction);
+            MenuItem editItem = menu.findItem(R.id.editAction);
+            deleteItem.setVisible( isModifiable );
+            editItem.setVisible( isModifiable );
             return false;
         }
 
