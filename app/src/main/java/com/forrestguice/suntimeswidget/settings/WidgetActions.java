@@ -258,14 +258,17 @@ public class WidgetActions
     /**
      * startIntent
      */
-    public static void startIntent(@NonNull Context context, int appWidgetId, String id, @Nullable SuntimesData data, Class fallbackLaunchClass, @Nullable Integer flags)
+    public static void startIntent(@NonNull Context context, int appWidgetId, String id, @Nullable SuntimesData data, @Nullable Class fallbackLaunchClass, @Nullable Integer flags)
     {
         Intent launchIntent = WidgetActions.createIntent(context, appWidgetId, id, data, fallbackLaunchClass);
-        if (flags != null) {
-            launchIntent.setFlags(flags);
+        if (launchIntent != null)
+        {
+            if (flags != null) {
+                launchIntent.setFlags(flags);
+            }
+            String launchType = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TYPE);
+            WidgetActions.startIntent(context, launchIntent, launchType);
         }
-        String launchType = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TYPE);
-        WidgetActions.startIntent(context, launchIntent, launchType);
     }
     public static void startIntent(@NonNull Context context, @NonNull Intent launchIntent, @Nullable String launchType)
     {
@@ -301,7 +304,8 @@ public class WidgetActions
     /**
      * createIntent
      */
-    public static Intent createIntent(Context context, int appWidgetId, String id, @Nullable SuntimesData data, Class fallbackLaunchClass)
+    @Nullable
+    public static Intent createIntent(Context context, int appWidgetId, String id, @Nullable SuntimesData data, @Nullable Class fallbackLaunchClass)
     {
         Intent launchIntent;
         String launchClassName = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, null);
@@ -319,9 +323,15 @@ public class WidgetActions
 
             } catch (ClassNotFoundException e) {
                 Log.e(TAG, "createIntent :: " + launchClassName + " cannot be found! " + e.toString());
-                launchClass = fallbackLaunchClass;
-                launchIntent = new Intent(context, launchClass);
-                launchIntent.putExtra(WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(), true);
+                if (fallbackLaunchClass != null)
+                {
+                    launchClass = fallbackLaunchClass;
+                    launchIntent = new Intent(context, launchClass);
+                    launchIntent.putExtra(WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(), true);
+
+                } else {
+                    return null;
+                }
             }
         } else {
             launchIntent = new Intent();
