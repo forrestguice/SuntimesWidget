@@ -42,6 +42,7 @@ import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
@@ -85,7 +86,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
     private Context context;
     private long selectedItem;
     private ArrayList<AlarmClockItem> items;
-    private int iconAlarm, iconNotification, iconSoundEnabled, iconSoundDisabled;
+    private int iconAlarm, iconNotification, iconSoundEnabled, iconSoundDisabled, iconAction;
     private Drawable alarmEnabledBG, alarmDisabledBG;
     private int alarmSelectedColor, alarmEnabledColor;
     private int onColor, offColor, disabledColor, pressedColor;
@@ -128,7 +129,8 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
     {
         int[] attrs = { R.attr.alarmCardEnabled, R.attr.alarmCardDisabled,
                 R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.icActionSoundEnabled, R.attr.icActionSoundDisabled,
-                android.R.attr.textColorPrimary, android.R.attr.textColor, R.attr.text_disabledColor, R.attr.gridItemSelected, R.attr.buttonPressColor, R.attr.alarmColorEnabled};
+                android.R.attr.textColorPrimary, android.R.attr.textColor, R.attr.text_disabledColor, R.attr.gridItemSelected, R.attr.buttonPressColor, R.attr.alarmColorEnabled,
+                R.attr.icActionExtension };
         TypedArray a = context.obtainStyledAttributes(attrs);
         alarmEnabledBG = ContextCompat.getDrawable(context, a.getResourceId(0, R.drawable.card_alarmitem_enabled_dark));
         alarmDisabledBG = ContextCompat.getDrawable(context, a.getResourceId(1, R.drawable.card_alarmitem_disabled_dark));
@@ -142,6 +144,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         alarmSelectedColor = ContextCompat.getColor(context, a.getResourceId(9, R.color.grid_selected_dark));
         pressedColor = ContextCompat.getColor(context, a.getResourceId(10, R.color.sunIcon_color_rising_dark));
         alarmEnabledColor = ContextCompat.getColor(context, a.getResourceId(11, R.color.alarm_enabled_dark));
+        iconAction = a.getResourceId(12, R.drawable.ic_action_extension);
         a.recycle();
     }
 
@@ -365,6 +368,20 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
             }
         });
 
+        // action
+        view.text_action.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isSelected) {
+                    if (adapterListener != null) {
+                        adapterListener.onRequestAction(item);
+                    }
+                } else {
+                    setSelectedItem(item.rowID);
+                }
+            }
+        });
+
         // vibrate
         view.check_vibrate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
@@ -442,6 +459,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         view.text_datetime.setOnClickListener(null);
         view.text_location.setOnClickListener(null);
         view.text_ringtone.setOnClickListener(null);
+        view.text_action.setOnClickListener(null);
         view.check_vibrate.setOnCheckedChangeListener(null);
         view.option_repeat.setOnClickListener(null);
         view.option_offset.setOnClickListener(null);
@@ -552,19 +570,31 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         }
 
         // ringtone
-        int iconID = item.ringtoneName != null ? iconSoundEnabled : iconSoundDisabled;
         int iconDimen = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,20, context.getResources().getDisplayMetrics());
-        ImageSpan icon = isSelected || item.enabled ? SuntimesUtils.createImageSpan(context, iconID, iconDimen, iconDimen, item.enabled ? alarmEnabledColor : 0)
-                : SuntimesUtils.createImageSpan(context, iconID, iconDimen, iconDimen, disabledColor, PorterDuff.Mode.MULTIPLY);
+        int ringtoneIconID = item.ringtoneName != null ? iconSoundEnabled : iconSoundDisabled;
+        ImageSpan ringtonIcon = isSelected || item.enabled ? SuntimesUtils.createImageSpan(context, ringtoneIconID, iconDimen, iconDimen, item.enabled ? alarmEnabledColor : 0)
+                                                           : SuntimesUtils.createImageSpan(context, ringtoneIconID, iconDimen, iconDimen, disabledColor, PorterDuff.Mode.MULTIPLY);
 
         final String none = context.getString(R.string.alarmOption_ringtone_none);
         String ringtoneName = isSelected ? (item.ringtoneName != null ? item.ringtoneName : none) : "";
 
         String ringtoneLabel = context.getString(R.string.alarmOption_ringtone_label, ringtoneName);
-        SpannableStringBuilder ringtoneDisplay = SuntimesUtils.createSpan(context, ringtoneLabel, "[icon]", icon);
+        SpannableStringBuilder ringtoneDisplay = SuntimesUtils.createSpan(context, ringtoneLabel, "[icon]", ringtonIcon);
 
         view.text_ringtone.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
         view.text_ringtone.setText(ringtoneDisplay);
+
+        // action
+        ImageSpan actionIcon = isSelected || item.enabled ? SuntimesUtils.createImageSpan(context, iconAction, iconDimen, iconDimen, item.enabled ? alarmEnabledColor : 0)
+                                                          : SuntimesUtils.createImageSpan(context, iconAction, iconDimen, iconDimen, disabledColor, PorterDuff.Mode.MULTIPLY);
+        String actionName = item.actionID;  // TODO
+        String actionString = isSelected ? (item.actionID != null ? actionName : "") : "";
+        String actionLabel = context.getString(R.string.alarmOption_action_label, actionString);
+        SpannableStringBuilder actionDisplay = SuntimesUtils.createSpan(context, actionLabel, "[icon]", actionIcon);
+
+        view.text_action.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+        view.text_action.setText( actionDisplay );
+        view.text_action.setVisibility( item.actionID != null ? View.VISIBLE : View.GONE );
 
         // vibrate
         view.check_vibrate.setChecked(item.vibrate);
@@ -665,6 +695,12 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
                 {
                     case R.id.setAlarmType:
                         showAlarmTypeMenu(item, buttonView, itemView);
+                        return true;
+
+                    case R.id.setAlarmAction:
+                        if (adapterListener != null) {
+                            adapterListener.onRequestAction(item);
+                        }
                         return true;
 
                     case R.id.setAlarmSound:
@@ -946,6 +982,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         public void onRequestTime(AlarmClockItem forItem) {}
         public void onRequestOffset(AlarmClockItem forItem) {}
         public void onRequestRepetition(AlarmClockItem forItem) {}
+        public void onRequestAction(AlarmClockItem forItem) {}
     }
 
     /**
@@ -962,6 +999,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         public TextView text_datetime;
         public TextView text_location;
         public TextView text_ringtone;
+        public TextView text_action;
         public CheckBox check_vibrate;
         public TextView option_repeat;
         public TextView option_offset;
@@ -981,6 +1019,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
             text_datetime = (TextView) view.findViewById(R.id.text_datetime);
             text_location = (TextView) view.findViewById(R.id.text_location_label);
             text_ringtone = (TextView) view.findViewById(R.id.text_ringtone);
+            text_action = (TextView) view.findViewById(R.id.text_action);
             check_vibrate = (CheckBox) view.findViewById(R.id.check_vibrate);
             option_repeat = (TextView) view.findViewById(R.id.option_repeat);
             option_offset = (TextView) view.findViewById(R.id.option_offset);

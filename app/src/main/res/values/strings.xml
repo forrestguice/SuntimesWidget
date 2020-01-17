@@ -700,6 +700,7 @@
     <string name="configAction_setAlarmRepeat">Set Repeating</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmEvent">Set Event</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmTime">Override Time</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmAction">Set Action</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmSound">Set Sound</string>         <!-- button (contentDescription) -->
     <string name="configAction_alarmMenu">Alarm Menu</string>         <!-- button (contentDescription) -->
 
@@ -719,6 +720,7 @@
     <string name="alarmOption_vibrate">Vibrate</string>                <!-- checkbox text -->
     <string name="alarmOption_ringtone_none">No Sound</string>          <!-- ringtone label (none) -->
     <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
+    <string name="alarmOption_action_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- action label format -->
     <string name="alarmOption_solarevent_none">Clock Time</string>          <!-- ringtone label (none) -->
 
     <string name="alarmOption_repeat">Repeat</string>                <!-- checkbox text; an alarm that repeats -->
