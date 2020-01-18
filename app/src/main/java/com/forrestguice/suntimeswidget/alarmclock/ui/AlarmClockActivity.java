@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -1121,8 +1121,13 @@ public class AlarmClockActivity extends AppCompatActivity
     protected void pickAction(@NonNull final AlarmClockItem item)
     {
         final LoadActionDialog loadDialog = new LoadActionDialog();
-        // TODO: select existing, allow select none
         loadDialog.setOnAcceptedListener(onActionChanged);
+        loadDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                loadDialog.setSelected(item.actionID);
+            }
+        });
 
         t_selectedItem = item.rowID;
         loadDialog.show(getSupportFragmentManager(), DIALOGTAG_ACTION);
@@ -1140,7 +1145,8 @@ public class AlarmClockActivity extends AppCompatActivity
 
             if (item != null && dialog != null)
             {
-                item.actionID = dialog.getIntentID();
+                String actionID = dialog.getIntentID();
+                item.actionID = (actionID != null  && !actionID.trim().isEmpty() ? actionID : null);
                 item.modified = true;
 
                 AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, false);

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2019 Forrest Guice
+    Copyright (C) 2019-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -90,6 +90,12 @@ public class LoadActionDialog extends EditActionDialog
     @Override
     protected int getLayoutID() {
         return R.layout.layout_dialog_intent_load;
+    }
+
+    public void setSelected(String actionID) {
+        listHelper.setSelected(actionID);
+        listHelper.triggerActionMode();
+        updateViews(getActivity());
     }
 
 }
