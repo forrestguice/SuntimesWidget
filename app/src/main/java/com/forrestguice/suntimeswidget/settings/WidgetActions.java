@@ -31,7 +31,11 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
+import com.forrestguice.suntimeswidget.actions.ActionListActivity;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -500,14 +504,19 @@ public class WidgetActions
         PREV_NOTE("Suntimes", "Show previous note", false),
         RESET_NOTE("Suntimes", "Show upcoming event", false),
 
-        CONFIG_DATE("Suntimes", "Set date", false),
-        CONFIG_LOCATION("Suntimes", "Set location", false),
-        TIMEZONE("Suntimes", "Set time zone", false),
+        CONFIG_DATE("Suntimes", "Set date", true),
+        CONFIG_LOCATION("Suntimes", "Set location", true),
+        TIMEZONE("Suntimes", "Set time zone", true),
 
         SHOW_DIALOG_WORLDMAP("Suntimes", "Show world map dialog", true),
         SHOW_DIALOG_SOLSTICE("Suntimes", "Show solstices dialog", true),
         SHOW_DIALOG_MOON("Suntimes", "Show moon dialog", true),
         SHOW_DIALOG_SUN("Suntimes", "Show sun dialog", true),
+
+        OPEN_ALARM_LIST("Suntimes Alarms", "Open alarm list", true),
+        OPEN_THEME_LIST("Suntimes", "Open theme list", true),
+        OPEN_ACTION_LIST("Suntimes", "Open action list", true),
+        OPEN_WIDGET_LIST("Suntimes", "Open widget list", true),
 
         SHOW_CALENDAR("Calendar", "Show calendar", true),
         SHOW_MAP("Map", "Show map", true);
@@ -587,6 +596,18 @@ public class WidgetActions
                         case SHOW_DIALOG_MOON: launchAction = SuntimesActivity.ACTION_VIEW_MOON; break;
                         case SHOW_DIALOG_SOLSTICE: launchAction = SuntimesActivity.ACTION_VIEW_SOLSTICE; break;
                         case SHOW_DIALOG_WORLDMAP: launchAction = SuntimesActivity.ACTION_VIEW_WORLDMAP; break;
+
+                        case OPEN_ACTION_LIST:
+                            launchExtras = ActionListActivity.PARAM_NOSELECT + "=true";
+                            launchString = ActionListActivity.class.getName(); break;
+
+                        case OPEN_THEME_LIST:
+                            launchExtras = WidgetThemeListActivity.PARAM_NOSELECT + "=true";
+                            launchString = WidgetThemeListActivity.class.getName();
+                            break;
+
+                        case OPEN_ALARM_LIST: launchString = AlarmClockActivity.class.getName(); break;
+                        case OPEN_WIDGET_LIST: launchString = SuntimesWidgetListActivity.class.getName(); break;
 
                         case CONFIG_DATE: launchAction = SuntimesActivity.ACTION_CONFIG_DATE; break;
                         case CONFIG_LOCATION: launchAction = SuntimesActivity.ACTION_CONFIG_LOCATION; break;

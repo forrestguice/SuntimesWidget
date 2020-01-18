@@ -990,24 +990,33 @@
     <string name="configActionDesc_nextCard">Show next card</string>
     <string name="configActionDesc_prevCard">Show previous card</string>
     <string name="configActionDesc_setAlarmForNote">Set alarm for note</string>
+    <string name="configActionDesc_alarmList">Open alarm list</string>
+    <string name="configActionDesc_themeList">Open theme list</string>
+    <string name="configActionDesc_actionList">Open action list</string>
+    <string name="configActionDesc_widgetList">Open widget list</string>
 
     <string-array name="tapActions_titles">    <!-- must be in same order as enum TapActions -->
         <item>@string/configActionDesc_doNothing</item>
-        <item>@string/configAction_setAlarm</item>
-
-        <item>@string/configActionDesc_nextCard</item>
-        <item>@string/configActionDesc_prevCard</item>
-        <item>@string/configActionDesc_swapCards</item>
-
-        <item>@string/configActionDesc_nextNote</item>
-        <item>@string/configActionDesc_prevNote</item>
-        <item>@string/configActionDesc_resetNote</item>
-
-        <item>@string/configAction_setDate</item>
-        <item>@string/configAction_setAlarmLocation</item>
-        <item>@string/configAction_setTimeZone</item>
+        <item>@string/app_name</item>
 
         <item>@string/app_name</item>
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
+
+        <item>@string/app_name_alarmclock</item>
         <item>@string/app_name</item>
         <item>@string/app_name</item>
         <item>@string/app_name</item>
@@ -1035,6 +1044,11 @@
         <item>@string/configActionDesc_equinoxDialog</item>
         <item>@string/configActionDesc_moon</item>
         <item>@string/configActionDesc_sunDialog</item>
+
+        <item>@string/configActionDesc_alarmList</item>
+        <item>@string/configActionDesc_themeList</item>
+        <item>@string/configActionDesc_actionList</item>
+        <item>@string/configActionDesc_widgetList</item>
 
         <item>@string/configActionDesc_showCalendar</item>
         <item>@string/configActionDesc_mapLocation</item>
