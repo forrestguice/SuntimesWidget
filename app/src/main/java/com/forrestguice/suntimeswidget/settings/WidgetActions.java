@@ -62,6 +62,9 @@ public class WidgetActions
     public static final String PREF_KEY_ACTION_LAUNCH_COLOR = "color";
     public static int PREF_DEF_ACTION_LAUNCH_COLOR = Color.WHITE;
 
+    public static final String PREF_KEY_ACTION_LAUNCH_TAGS = "tags";
+    public static final String TAG_DEFAULT = "default";
+
     public static final String PREF_KEY_ACTION_LAUNCH = "launch";
     public static final String PREF_DEF_ACTION_LAUNCH = "com.forrestguice.suntimeswidget.SuntimesActivity";
 
@@ -127,11 +130,11 @@ public class WidgetActions
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveActionLaunchPref(Context context, @Nullable String titleString, @Nullable String descString, @Nullable Integer color, int appWidgetId, @Nullable String id, @Nullable String launchString, @Nullable String type, @Nullable String action, @Nullable String dataString, @Nullable String mimeType, @Nullable String extrasString) {
-        saveActionLaunchPref(context, titleString, descString, color, appWidgetId, id, launchString, type, action, dataString, mimeType, extrasString, true);
+    public static void saveActionLaunchPref(Context context, @Nullable String titleString, @Nullable String descString, @Nullable Integer color, @Nullable String[] tags, int appWidgetId, @Nullable String id, @Nullable String launchString, @Nullable String type, @Nullable String action, @Nullable String dataString, @Nullable String mimeType, @Nullable String extrasString) {
+        saveActionLaunchPref(context, titleString, descString, color, tags, appWidgetId, id, launchString, type, action, dataString, mimeType, extrasString, true);
     }
 
-    public static void saveActionLaunchPref(Context context, @Nullable String titleString, @Nullable String descString, @Nullable Integer color, int appWidgetId, @Nullable String id, @Nullable String launchString, @Nullable String type, @Nullable String action, @Nullable String dataString, @Nullable String mimeType, @Nullable String extrasString, boolean listed)
+    public static void saveActionLaunchPref(Context context, @Nullable String titleString, @Nullable String descString, @Nullable Integer color, @Nullable String[] tags, int appWidgetId, @Nullable String id, @Nullable String launchString, @Nullable String type, @Nullable String action, @Nullable String dataString, @Nullable String mimeType, @Nullable String extrasString, boolean listed)
     {
         boolean hasID = true;
         if (id == null) {
@@ -163,6 +166,17 @@ public class WidgetActions
         prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_TITLE, (titleString != null ? titleString : ""));
         prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_DESC, (descString != null ? descString : ""));
         prefs.putInt(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_COLOR, (color != null ? color : PREF_DEF_ACTION_LAUNCH_COLOR));
+
+        Set<String> tagSet = new TreeSet<>();
+        if (tags != null) {
+            for (String tag : tags) {
+                if (!tagSet.contains(tag)) {
+                    tagSet.add(tag);
+                }
+            }
+        }
+        prefs.putStringSet(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_TAGS, tagSet);
+
         prefs.apply();
 
         if (hasID && listed)
@@ -172,6 +186,13 @@ public class WidgetActions
             prefs.putStringSet(PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + PREF_KEY_ACTION_LAUNCH_LIST, actionList);
             prefs.apply();
         }
+    }
+    public static Set<String> loadActionTags(Context context, int appWidgetId, @Nullable String id)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_ACTIONS, 0);
+        String prefs_prefix0 = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + id + "_";
+        Set<String> tagList = prefs.getStringSet(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_TAGS, null);
+        return (tagList != null) ? tagList : new TreeSet<String>();
     }
     public static Set<String> loadActionLaunchList(Context context, int appWidgetId)
     {
@@ -240,6 +261,7 @@ public class WidgetActions
         prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_TITLE);
         prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_DESC);
         prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_COLOR);
+        prefs.remove(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_TAGS);
         prefs.apply();
 
         Set<String> actionList = loadActionLaunchList(context, 0);
@@ -476,7 +498,7 @@ public class WidgetActions
         PREF_DEF_ACTION_LAUNCH_DESC = context.getString(R.string.app_shortdesc);
 
         if (!hasActionLaunchPref(context, 0, "SUNTIMES")) {
-            saveActionLaunchPref(context, WidgetActions.PREF_DEF_ACTION_LAUNCH_TITLE, WidgetActions.PREF_DEF_ACTION_LAUNCH_DESC, null, 0, "def_suntimes", WidgetActions.PREF_DEF_ACTION_LAUNCH,
+            saveActionLaunchPref(context, WidgetActions.PREF_DEF_ACTION_LAUNCH_TITLE, WidgetActions.PREF_DEF_ACTION_LAUNCH_DESC, null, new String[] {TAG_DEFAULT}, 0, "def_suntimes", WidgetActions.PREF_DEF_ACTION_LAUNCH,
                     WidgetActions.PREF_DEF_ACTION_LAUNCH_TYPE.name(), WidgetActions.PREF_DEF_ACTION_LAUNCH_ACTION, WidgetActions.PREF_DEF_ACTION_LAUNCH_DATA, WidgetActions.PREF_DEF_ACTION_LAUNCH_DATATYPE, WidgetActions.PREF_DEF_ACTION_LAUNCH_EXTRAS);
         }
 
@@ -492,42 +514,44 @@ public class WidgetActions
      */
     public static enum SuntimesAction
     {
-        NOTHING("Nothing", "Do nothing", false),
+        NOTHING("Nothing", "Do nothing", new String[] {TAG_DEFAULT}, false),
 
-        ALARM("Suntimes", "Set alarm", false),
+        ALARM("Suntimes", "Set alarm", new String[] {TAG_DEFAULT}, false),
 
-        CARD_NEXT("Suntimes", "Show next card", false),
-        CARD_PREV("Suntimes", "Show previous card", false),
-        SWAP_CARD("Suntimes", "Swap cards", false),
+        CARD_NEXT("Suntimes", "Show next card", new String[] {TAG_DEFAULT}, false),
+        CARD_PREV("Suntimes", "Show previous card", new String[] {TAG_DEFAULT}, false),
+        SWAP_CARD("Suntimes", "Swap cards", new String[] {TAG_DEFAULT}, false),
 
-        NEXT_NOTE("Suntimes", "Show next note", false),
-        PREV_NOTE("Suntimes", "Show previous note", false),
-        RESET_NOTE("Suntimes", "Show upcoming event", false),
+        NEXT_NOTE("Suntimes", "Show next note", new String[] {TAG_DEFAULT}, false),
+        PREV_NOTE("Suntimes", "Show previous note", new String[] {TAG_DEFAULT}, false),
+        RESET_NOTE("Suntimes", "Show upcoming event", new String[] {TAG_DEFAULT}, false),
 
-        CONFIG_DATE("Suntimes", "Set date", true),
-        CONFIG_LOCATION("Suntimes", "Set location", true),
-        TIMEZONE("Suntimes", "Set time zone", true),
+        CONFIG_DATE("Suntimes", "Set date", new String[] {TAG_DEFAULT}, true),
+        CONFIG_LOCATION("Suntimes", "Set location", new String[] {TAG_DEFAULT}, true),
+        TIMEZONE("Suntimes", "Set time zone", new String[] {TAG_DEFAULT}, true),
 
-        SHOW_DIALOG_WORLDMAP("Suntimes", "Show world map dialog", true),
-        SHOW_DIALOG_SOLSTICE("Suntimes", "Show solstices dialog", true),
-        SHOW_DIALOG_MOON("Suntimes", "Show moon dialog", true),
-        SHOW_DIALOG_SUN("Suntimes", "Show sun dialog", true),
+        SHOW_DIALOG_WORLDMAP("Suntimes", "Show world map dialog", new String[] {TAG_DEFAULT}, true),
+        SHOW_DIALOG_SOLSTICE("Suntimes", "Show solstices dialog", new String[] {TAG_DEFAULT}, true),
+        SHOW_DIALOG_MOON("Suntimes", "Show moon dialog", new String[] {TAG_DEFAULT}, true),
+        SHOW_DIALOG_SUN("Suntimes", "Show sun dialog", new String[] {TAG_DEFAULT}, true),
 
-        OPEN_ALARM_LIST("Suntimes Alarms", "Open alarm list", true),
-        OPEN_THEME_LIST("Suntimes", "Open theme list", true),
-        OPEN_ACTION_LIST("Suntimes", "Open action list", true),
-        OPEN_WIDGET_LIST("Suntimes", "Open widget list", true),
+        OPEN_ALARM_LIST("Suntimes Alarms", "Open alarm list", new String[] {TAG_DEFAULT}, true),
+        OPEN_THEME_LIST("Suntimes", "Open theme list", new String[] {TAG_DEFAULT}, true),
+        OPEN_ACTION_LIST("Suntimes", "Open action list", new String[] {TAG_DEFAULT}, true),
+        OPEN_WIDGET_LIST("Suntimes", "Open widget list", new String[] {TAG_DEFAULT}, true),
 
-        SHOW_CALENDAR("Calendar", "Show calendar", true),
-        SHOW_MAP("Map", "Show map", true);
+        SHOW_CALENDAR("Calendar", "Show calendar", new String[] {TAG_DEFAULT}, true),
+        SHOW_MAP("Map", "Show map", new String[] {TAG_DEFAULT}, true);
 
         private String title, desc;
+        private String[] tags;
         private boolean listed;
 
-        private SuntimesAction(String title, String desc, boolean listed)
+        private SuntimesAction(String title, String desc, String[] tags, boolean listed)
         {
             this.title = title;
             this.desc = desc;
+            this.tags = tags;
             this.listed = listed;
         }
 
@@ -547,6 +571,10 @@ public class WidgetActions
         }
         public void setTitle( String title ) {
             this.title = title;
+        }
+
+        public String[] getTags() {
+            return tags;
         }
 
         public boolean listed() {
@@ -632,7 +660,7 @@ public class WidgetActions
                     }
 
                     if (launchType != null) {
-                        saveActionLaunchPref(context, action.title(), action.desc(), null, 0, action.name(), launchString, launchType.name(), launchAction, launchData, launchMime, launchExtras, action.listed());
+                        saveActionLaunchPref(context, action.title(), action.desc(), null, action.getTags(), 0, action.name(), launchString, launchType.name(), launchAction, launchData, launchMime, launchExtras, action.listed());
                     }
                 }
             }
