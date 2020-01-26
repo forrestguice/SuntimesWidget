@@ -605,16 +605,17 @@ public class AlarmNotifications extends BroadcastReceiver
                     break;
 
                 case AlarmState.STATE_SCHEDULED_SOON:
-                    if (Build.VERSION.SDK_INT < 21)
-                    {
+                    //if (Build.VERSION.SDK_INT < 21)
+                    //{
                         builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
-                        builder.setPriority( NotificationCompat.PRIORITY_LOW );
+                        builder.setPriority( NotificationCompat.PRIORITY_LOW );     // TODO: should this be high priority? otherwise action buttons are hidden (revealed on swipe)
                         notificationMsg = context.getString(R.string.alarmAction_upcomingMsg);
                         builder.setWhen(alarm.alarmtime);
                         builder.setContentIntent(pendingView);
+                        builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
                         builder.setAutoCancel(false);
                         builder.setOngoing(true);
-                    } else return null;  // don't show reminder for api 21+ (uses notification provided by setAlarm instead)
+                    //} else return null;  // don't show reminder for api 21+ (uses notification provided by setAlarm instead)
                     break;
 
                 case AlarmState.STATE_SNOOZING:
