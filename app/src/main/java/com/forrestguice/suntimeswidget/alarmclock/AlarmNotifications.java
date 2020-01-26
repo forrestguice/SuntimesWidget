@@ -81,7 +81,8 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final String ACTION_DISMISS = "suntimeswidget.alarm.dismiss";          // dismiss an alarm
     public static final String ACTION_SNOOZE = "suntimeswidget.alarm.snooze";            // snooze an alarm
     public static final String ACTION_SCHEDULE = "suntimeswidget.alarm.schedule";        // enable (schedule) an alarm
-    public static final String ACTION_RESCHEDULE = "suntimeswidget.alarm.reschedule";    // reschedule; same as schedule but prev alarmtime is cleared
+    public static final String ACTION_RESCHEDULE = "suntimeswidget.alarm.reschedule";    // reschedule; same as schedule but prev alarmtime is replaced.
+    public static final String ACTION_RESCHEDULE1 = ACTION_RESCHEDULE + "1";             // reschedule + 1; advance schedule by 1 cycle (prev alarmtime used as basis for scheduling)
     public static final String ACTION_DISABLE = "suntimeswidget.alarm.disable";          // disable an alarm
     public static final String ACTION_TIMEOUT = "suntimeswidget.alarm.timeout";          // timeout an alarm
     public static final String ACTION_DELETE = "suntimeswidget.alarm.delete";            // delete an alarm
@@ -885,9 +886,14 @@ public class AlarmNotifications extends BroadcastReceiver
                                     nextAction = ACTION_DISABLE;
 
                                 } else {
-                                    Log.i(TAG, "Dismissed: Repeating; re-scheduling.." + item.rowID);
-                                    nextAction = ACTION_SCHEDULE;
-                                    item.alarmtime = 0;
+                                    boolean dismissedEarly = (Calendar.getInstance().getTimeInMillis() < item.alarmtime);
+                                    Log.i(TAG, "Dismissed: Repeating; re-scheduling.." + item.rowID + " [early=" + dismissedEarly + "]");
+                                    if (dismissedEarly) {
+                                        nextAction = ACTION_RESCHEDULE1;
+                                    } else {
+                                        nextAction = ACTION_SCHEDULE;
+                                        item.alarmtime = 0;
+                                    }
                                 }
 
                                 item.modified = true;
@@ -948,7 +954,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 deleteTask.execute(item.rowID);
                             }
 
-                        } else if (action.equals(ACTION_SCHEDULE) || (action.equals(ACTION_RESCHEDULE))) {
+                        } else if (action.equals(ACTION_SCHEDULE) || (action.startsWith(ACTION_RESCHEDULE))) {
                             ////////////////////////////////////////////////////////////////////////////
                             // Schedule Alarm
                             ////////////////////////////////////////////////////////////////////////////
@@ -957,13 +963,17 @@ public class AlarmNotifications extends BroadcastReceiver
                                 cancelAlarmTimeouts(context, item.getUri());
 
                                 long now = Calendar.getInstance().getTimeInMillis();
-                                if (item.alarmtime <= now || item.alarmtime == 0 || action.equals(ACTION_RESCHEDULE))
+                                if (item.alarmtime <= now || item.alarmtime == 0 || action.startsWith(ACTION_RESCHEDULE))
                                 {
                                     // expired alarm/notification
                                     if (item.enabled)    // enabled; reschedule alarm/notification
                                     {
                                         Log.d(TAG, "(Re)Scheduling: " + item.rowID);
+
                                         Calendar scheduledFrom = Calendar.getInstance();
+                                        if (action.equals(ACTION_RESCHEDULE1) && item.alarmtime > 0) {
+                                            scheduledFrom.setTimeInMillis(item.alarmtime + 60 * 1000);
+                                        }
                                         boolean updated = updateAlarmTime(context, item, scheduledFrom);     // sets item.hour, item.minute, item.timestamp (calculates the eventTime)
                                         if (updated) {
                                             item.alarmtime = item.timestamp + item.offset;     // scheduled sounding time (-before/+after eventTime by some offset)
