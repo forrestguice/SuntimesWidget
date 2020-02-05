@@ -119,10 +119,14 @@ public class AlarmNotifications extends BroadcastReceiver
             SuntimesUtils.TimeDisplayText alarmText = utils.timeDeltaLongDisplayString(now.getTimeInMillis(), item.timestamp + item.offset);
             String alarmString = context.getString(R.string.alarmenabled_toast, item.type.getDisplayString(), alarmText.getValue());
             SpannableString alarmDisplay = SuntimesUtils.createBoldSpan(null, alarmString, alarmText.getValue());
-            Snackbar snackbar = Snackbar.make(view, alarmDisplay, Toast.LENGTH_SHORT);
-            themeSnackbar(context, snackbar, null);
-            snackbar.show();
-            //Toast.makeText(context, alarmDisplay, Toast.LENGTH_SHORT).show();
+
+            if (view != null) {
+                Snackbar snackbar = Snackbar.make(view, alarmDisplay, Toast.LENGTH_SHORT);
+                themeSnackbar(context, snackbar, null);
+                snackbar.show();
+            } else {
+                Toast.makeText(context, alarmDisplay, Toast.LENGTH_SHORT).show();
+            }
 
         } else Log.e(TAG, "showTimeUntilToast: context is null!");
     }
@@ -976,12 +980,17 @@ public class AlarmNotifications extends BroadcastReceiver
                                         Log.d(TAG, "(Re)Scheduling: " + item.rowID);
 
                                         Calendar scheduledFrom = Calendar.getInstance();
-                                        if (action.equals(ACTION_RESCHEDULE1) && item.alarmtime > 0) {
+                                        boolean dismissedEarly = (action.equals(ACTION_RESCHEDULE1) && item.alarmtime > 0);
+                                        if (dismissedEarly) {
                                             scheduledFrom.setTimeInMillis(item.alarmtime + 60 * 1000);
                                         }
                                         boolean updated = updateAlarmTime(context, item, scheduledFrom);     // sets item.hour, item.minute, item.timestamp (calculates the eventTime)
-                                        if (updated) {
+                                        if (updated)
+                                        {
                                             item.alarmtime = item.timestamp + item.offset;     // scheduled sounding time (-before/+after eventTime by some offset)
+                                            if (dismissedEarly) {
+                                                showTimeUntilToast(context, null, item);
+                                            }
 
                                         } else {  // failed to schedule; this alarm needs to be disabled (prevent alarm loop)
                                             Log.d(TAG, "Disabling: " + item.rowID);
