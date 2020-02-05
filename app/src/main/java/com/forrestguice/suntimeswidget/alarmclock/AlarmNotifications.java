@@ -608,7 +608,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     //if (Build.VERSION.SDK_INT < 21)
                     //{
                         builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
-                        builder.setPriority( NotificationCompat.PRIORITY_LOW );     // TODO: should this be high priority? otherwise action buttons are hidden (revealed on swipe)
+                        builder.setPriority( alarm.repeating ? NotificationCompat.PRIORITY_HIGH : NotificationCompat.PRIORITY_DEFAULT );
                         notificationMsg = context.getString(R.string.alarmAction_upcomingMsg);
                         builder.setWhen(alarm.alarmtime);
                         builder.setContentIntent(pendingView);
