@@ -1,5 +1,10 @@
 ### ~
 
+### v0.12.5 (2020-02-07)
+* adds a "dismiss" button to the reminder notification that allows repeating alarms to be dismissed early (reschedule+1); reveals the reminder notification for api21+ (#387).
+* fixes the appearance of ActionModes displayed within BottomSheetDialogFragment.
+* no longer reschedules alarms in response to TIME_SET broadcast.
+
 ### v0.12.4 (2019-12-23)
 * fixes app crash (time zone dialog) (#376).
 * fixes bug where updating "current location" blocks dialogs from loading; potentially long lived AsyncTask now run in parallel with shorter lived tasks (THREAD_POOL_EXECUTOR) (#376).
