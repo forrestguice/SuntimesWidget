@@ -201,6 +201,23 @@ public class AlarmClockItem
         return calendar;
     }
 
+    public String getActionID(int actionNum)
+    {
+        switch (actionNum) {
+            case 1: return actionID1;
+            case 0: default: return actionID0;
+        }
+    }
+
+    public void setActionID(int actionNum, String actionID)
+    {
+        String value = (actionID != null  && !actionID.trim().isEmpty() ? actionID : null);
+        switch (actionNum) {
+            case 1: actionID1 = value; break;
+            case 0: default: actionID0 = value; break;
+        }
+    }
+
     /**
      * repeatsEveryDay
      */
