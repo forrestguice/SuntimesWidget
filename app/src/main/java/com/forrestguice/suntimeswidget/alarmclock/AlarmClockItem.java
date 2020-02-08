@@ -201,22 +201,30 @@ public class AlarmClockItem
         return calendar;
     }
 
+    public boolean hasActionID(int actionNum)
+    {
+        String value = getActionID(actionNum);
+        return (value != null && !value.trim().isEmpty());
+    }
     public String getActionID(int actionNum)
     {
+        String value;
         switch (actionNum) {
-            case 1: return actionID1;
-            case 0: default: return actionID0;
+            case ACTIONID_DISMISS: value = actionID1; break;
+            case ACTIONID_MAIN: default: value = actionID0; break;
         }
+        return (value != null ? value.trim() : null);
     }
-
     public void setActionID(int actionNum, String actionID)
     {
-        String value = (actionID != null  && !actionID.trim().isEmpty() ? actionID : null);
+        String value = (actionID != null  && !actionID.trim().isEmpty() ? actionID.trim() : null);
         switch (actionNum) {
-            case 1: actionID1 = value; break;
-            case 0: default: actionID0 = value; break;
+            case ACTIONID_DISMISS: actionID1 = value; break;
+            case ACTIONID_MAIN: default: actionID0 = value; break;
         }
     }
+    public static final int ACTIONID_MAIN = 0;
+    public static final int ACTIONID_DISMISS = 1;
 
     /**
      * repeatsEveryDay
