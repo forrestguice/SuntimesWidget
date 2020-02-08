@@ -394,11 +394,11 @@ public class AlarmNotifications extends BroadcastReceiver
             }
         }
 
-        if (alarm.actionID0 != null && !alarm.actionID0.trim().isEmpty())
+        if (alarm.hasActionID(AlarmClockItem.ACTIONID_MAIN))
         {
             SuntimesData data = getData(context, alarm);
             data.calculate();
-            WidgetActions.startIntent(context.getApplicationContext(), 0, alarm.actionID0, data, null, Intent.FLAG_ACTIVITY_NEW_TASK);
+            WidgetActions.startIntent(context.getApplicationContext(), 0, alarm.getActionID(AlarmClockItem.ACTIONID_MAIN), data, null, Intent.FLAG_ACTIVITY_NEW_TASK);
         }
     }
 
@@ -1109,6 +1109,13 @@ public class AlarmNotifications extends BroadcastReceiver
                     if (nextAction != null) {
                         Intent intent = getAlarmIntent(context, nextAction, data);
                         context.sendBroadcast(intent);  // trigger followup action
+                    }
+
+                    if (item.hasActionID(AlarmClockItem.ACTIONID_DISMISS))
+                    {
+                        SuntimesData data = getData(context, item);
+                        data.calculate();
+                        WidgetActions.startIntent(context.getApplicationContext(), 0, item.getActionID(AlarmClockItem.ACTIONID_DISMISS), data, null, Intent.FLAG_ACTIVITY_NEW_TASK);
                     }
 
                     Intent serviceIntent = getServiceIntent(context);
