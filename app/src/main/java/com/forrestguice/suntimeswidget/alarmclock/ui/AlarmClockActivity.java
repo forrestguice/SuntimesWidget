@@ -392,10 +392,12 @@ public class AlarmClockActivity extends AppCompatActivity
             labelDialog.setOnAcceptedListener(onLabelChanged);
         }
 
-        LoadActionDialog actionDialog = (LoadActionDialog) fragments.findFragmentByTag(DIALOGTAG_ACTION);
-        if (actionDialog != null)
+        for (int i=0; i<2; i++)
         {
-            actionDialog.setOnAcceptedListener(onActionChanged);
+            LoadActionDialog actionDialog = (LoadActionDialog) fragments.findFragmentByTag(DIALOGTAG_ACTION + i);
+            if (actionDialog != null) {
+                actionDialog.setOnAcceptedListener(onActionChanged(i));
+            }
         }
 
         LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOGTAG_LOCATION);
@@ -769,9 +771,9 @@ public class AlarmClockActivity extends AppCompatActivity
         }
 
         @Override
-        public void onRequestAction(AlarmClockItem forItem)
+        public void onRequestAction(AlarmClockItem forItem, int actionNum)
         {
-            pickAction(forItem);
+            pickAction(forItem, actionNum);
         }
 
         @Override
@@ -1118,43 +1120,47 @@ public class AlarmClockActivity extends AppCompatActivity
      * pickAction
      * @param item apply actionID to AlarmClockItem
      */
-    protected void pickAction(@NonNull final AlarmClockItem item)
+    protected void pickAction(@NonNull final AlarmClockItem item, final int actionNum)
     {
         final LoadActionDialog loadDialog = new LoadActionDialog();
-        loadDialog.setOnAcceptedListener(onActionChanged);
+        loadDialog.setOnAcceptedListener(onActionChanged(actionNum));
         loadDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
-                loadDialog.setSelected(item.actionID0);
+                loadDialog.setSelected(item.getActionID(actionNum));
             }
         });
 
         t_selectedItem = item.rowID;
-        loadDialog.show(getSupportFragmentManager(), DIALOGTAG_ACTION);
+        loadDialog.show(getSupportFragmentManager(), DIALOGTAG_ACTION + actionNum);
     }
 
-    private DialogInterface.OnClickListener onActionChanged = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface d, int which)
+    private DialogInterface.OnClickListener onActionChanged(final int actionNum)
+    {
+        return new DialogInterface.OnClickListener()
         {
-            FragmentManager fragments = getSupportFragmentManager();
-            LoadActionDialog dialog = (LoadActionDialog) fragments.findFragmentByTag(DIALOGTAG_ACTION);
-
-            AlarmClockItem item = adapter.findItem(t_selectedItem);
-            t_selectedItem = null;
-
-            if (item != null && dialog != null)
+            @Override
+            public void onClick(DialogInterface d, int which)
             {
-                String actionID = dialog.getIntentID();
-                item.actionID0 = (actionID != null  && !actionID.trim().isEmpty() ? actionID : null);
-                item.modified = true;
+                FragmentManager fragments = getSupportFragmentManager();
+                LoadActionDialog dialog = (LoadActionDialog) fragments.findFragmentByTag(DIALOGTAG_ACTION + actionNum);
 
-                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, false);
-                task.setTaskListener(onUpdateItem);
-                task.execute(item);
+                AlarmClockItem item = adapter.findItem(t_selectedItem);
+                t_selectedItem = null;
+
+                if (item != null && dialog != null)
+                {
+                    String actionID = dialog.getIntentID();
+                    item.setActionID(actionNum, actionID);
+                    item.modified = true;
+
+                    AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, false);
+                    task.setTaskListener(onUpdateItem);
+                    task.execute(item);
+                }
             }
-        }
-    };
+        };
+    }
 
     /**
      * pickRingtone

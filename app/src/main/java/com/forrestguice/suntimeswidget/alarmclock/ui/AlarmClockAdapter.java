@@ -374,7 +374,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
             public void onClick(View v) {
                 if (isSelected) {
                     if (adapterListener != null) {
-                        adapterListener.onRequestAction(item);
+                        adapterListener.onRequestAction(item, 0);  // TODO: action1
                     }
                 } else {
                     setSelectedItem(item.rowID);
@@ -699,7 +699,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
 
                     case R.id.setAlarmAction:
                         if (adapterListener != null) {
-                            adapterListener.onRequestAction(item);
+                            adapterListener.onRequestAction(item, 0);  // TODO: action1
                         }
                         return true;
 
@@ -982,7 +982,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         public void onRequestTime(AlarmClockItem forItem) {}
         public void onRequestOffset(AlarmClockItem forItem) {}
         public void onRequestRepetition(AlarmClockItem forItem) {}
-        public void onRequestAction(AlarmClockItem forItem) {}
+        public void onRequestAction(AlarmClockItem forItem, int actionNum) {}
     }
 
     /**
