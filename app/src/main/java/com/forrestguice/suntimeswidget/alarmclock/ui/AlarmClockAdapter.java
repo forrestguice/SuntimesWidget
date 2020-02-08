@@ -587,14 +587,14 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         // action
         ImageSpan actionIcon = isSelected || item.enabled ? SuntimesUtils.createImageSpan(context, iconAction, iconDimen, iconDimen, item.enabled ? alarmEnabledColor : 0)
                                                           : SuntimesUtils.createImageSpan(context, iconAction, iconDimen, iconDimen, disabledColor, PorterDuff.Mode.MULTIPLY);
-        String actionName = item.actionID;  // TODO
-        String actionString = isSelected ? (item.actionID != null ? actionName : "") : "";
+        String actionName = item.actionID0;  // TODO
+        String actionString = isSelected ? (item.actionID0 != null ? actionName : "") : "";
         String actionLabel = context.getString(R.string.alarmOption_action_label, actionString);
         SpannableStringBuilder actionDisplay = SuntimesUtils.createSpan(context, actionLabel, "[icon]", actionIcon);
 
         view.text_action.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
         view.text_action.setText( actionDisplay );
-        view.text_action.setVisibility( item.actionID != null ? View.VISIBLE : View.GONE );
+        view.text_action.setVisibility( item.actionID0 != null ? View.VISIBLE : View.GONE );
 
         // vibrate
         view.check_vibrate.setChecked(item.vibrate);

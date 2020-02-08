@@ -394,11 +394,11 @@ public class AlarmNotifications extends BroadcastReceiver
             }
         }
 
-        if (alarm.actionID != null && !alarm.actionID.trim().isEmpty())
+        if (alarm.actionID0 != null && !alarm.actionID0.trim().isEmpty())
         {
             SuntimesData data = getData(context, alarm);
             data.calculate();
-            WidgetActions.startIntent(context.getApplicationContext(), 0, alarm.actionID, data, null, Intent.FLAG_ACTIVITY_NEW_TASK);
+            WidgetActions.startIntent(context.getApplicationContext(), 0, alarm.actionID0, data, null, Intent.FLAG_ACTIVITY_NEW_TASK);
         }
     }
 

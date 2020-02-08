@@ -1125,7 +1125,7 @@ public class AlarmClockActivity extends AppCompatActivity
         loadDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
-                loadDialog.setSelected(item.actionID);
+                loadDialog.setSelected(item.actionID0);
             }
         });
 
@@ -1146,7 +1146,7 @@ public class AlarmClockActivity extends AppCompatActivity
             if (item != null && dialog != null)
             {
                 String actionID = dialog.getIntentID();
-                item.actionID = (actionID != null  && !actionID.trim().isEmpty() ? actionID : null);
+                item.actionID0 = (actionID != null  && !actionID.trim().isEmpty() ? actionID : null);
                 item.modified = true;
 
                 AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, false);

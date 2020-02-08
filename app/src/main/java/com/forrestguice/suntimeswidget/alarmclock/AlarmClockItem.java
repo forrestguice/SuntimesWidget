@@ -64,7 +64,8 @@ public class AlarmClockItem
     public String ringtoneName = null;
     public String ringtoneURI = null;
     public boolean vibrate = false;
-    public String actionID = null;
+    public String actionID0 = null;
+    public String actionID1 = null;
 
     public boolean modified = false;
     public AlarmState state = null;
@@ -107,7 +108,8 @@ public class AlarmClockItem
         vibrate = (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_VIBRATE) == 1);
         ringtoneName = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_NAME);
         ringtoneURI = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_URI);
-        actionID = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_ACTION);
+        actionID0 = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_ACTION0);
+        actionID1 = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_ACTION1);
     }
 
     public ContentValues asContentValues(boolean withRowID)
@@ -146,7 +148,8 @@ public class AlarmClockItem
         values.put(AlarmDatabaseAdapter.KEY_ALARM_VIBRATE, (vibrate ? 1 : 0));
         values.put(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_NAME, ringtoneName);
         values.put(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_URI, ringtoneURI);
-        values.put(AlarmDatabaseAdapter.KEY_ALARM_ACTION, actionID);
+        values.put(AlarmDatabaseAdapter.KEY_ALARM_ACTION0, actionID0);
+        values.put(AlarmDatabaseAdapter.KEY_ALARM_ACTION1, actionID1);
         return values;
     }
 
