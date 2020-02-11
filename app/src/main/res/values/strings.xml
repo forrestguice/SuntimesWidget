@@ -983,6 +983,7 @@
     <string name="configLabel_getFix_maxAge">GPS recent max age</string>
     <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> considered recent</string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
+        <item>none</item>  <!-- TODO -->
         <item>1 minute</item>
         <item>5 minutes</item>
         <item>15 minutes</item>
@@ -993,8 +994,10 @@
         <item>two days (48 hours)</item>
         <item>one week (168 hours)</item>
         <item>one month (672 hours)</item>
+        <item>any age</item>
     </string-array>
     <string-array name="getFix_maxAge_values" translatable="false">     <!-- ms config values (one-to-one with getFix_maxAge_display) -->
+        <item>0</item>
         <item>60000</item>
         <item>300000</item>
         <item>900000</item>
@@ -1005,6 +1008,7 @@
         <item>172800000</item>
         <item>604800000</item>
         <item>2419200000</item>
+        <item>-1</item>
     </string-array>
 
     <!-- App Setting: calendars -->
@@ -1245,6 +1249,7 @@
     <string name="gps_keeptrying_msg">Unable to get a fix.</string>
     <string name="gps_keeptrying_ok">Keep Trying</string>
     <string name="gps_keeptrying_cancel">Give Up</string>
+    <string name="gps_keeptrying_fallback">Use Last Position</string>  <!-- TODO -->
 
     <!-- Dialog: Use Date -->
     <string name="timedate_dialog_title">Set Date</string>
@@ -1347,13 +1352,15 @@
     <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, and <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
     <string name="creditsTab">Credits</string>
 
-    <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]>
-    <![CDATA[ github.com/MenoData/Time4A ]]> <![CDATA[ <br /> ]]>
-    <![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]> <![CDATA[ <br /> ]]>
-    <![CDATA[ github.com/caarmen/SunriseSunset ]]> <![CDATA[ <br /> ]]>
-    <![CDATA[ github.com/QuadFlask/colorpicker ]]> <![CDATA[ <br /> ]]>
-    <![CDATA[ github.com/rubensousa/GravitySnapHelper ]]>
-    </string>
+    <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
+    <string name="libraryCreditsFormat"><![CDATA[<xliff:g id="libraryURL">%1$s</xliff:g>]]></string>
+    <string-array name="app_libraries">
+        <item><![CDATA[ github.com/MenoData/Time4A ]]></item>
+        <item><![CDATA[ github.com/mikereedell/sunrisesunsetlib-java ]]></item>
+        <item><![CDATA[ github.com/caarmen/SunriseSunset ]]></item>
+        <item><![CDATA[ github.com/QuadFlask/colorpicker ]]></item>
+        <item><![CDATA[ github.com/rubensousa/GravitySnapHelper ]]></item>
+    </string-array>
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Help</string>

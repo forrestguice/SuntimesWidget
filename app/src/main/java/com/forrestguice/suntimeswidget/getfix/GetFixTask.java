@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -23,14 +23,17 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.SystemClock;
 import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * An AsyncTask that registers a LocationListener, starts listening for
@@ -40,15 +43,28 @@ import java.util.List;
 @SuppressWarnings("Convert2Diamond")
 public class GetFixTask extends AsyncTask<Object, Location, Location>
 {
+    public static final String TAG = "GetFixTask";
+
     public static final int MIN_ELAPSED = 1000 * 5;        // wait at least 5s before settling on a fix
     public static final int MAX_ELAPSED = 1000 * 60;       // wait at most a minute for a fix
     public static final int MAX_AGE = 1000 * 60 * 5;       // consider fixes over 5min be "too old"
+    public static final int MAX_AGE_NONE = 0;
+    public static final int MAX_AGE_ANY = -1;
 
     private WeakReference<GetFixHelper> helperRef;
     public GetFixTask(Context parent, GetFixHelper helper)
     {
         locationManager = (LocationManager)parent.getSystemService(Context.LOCATION_SERVICE);
         this.helperRef = new WeakReference<GetFixHelper>(helper);
+    }
+
+    public AsyncTask<Object, Location, Location> executeTask(Object... params)
+    {
+        if (Build.VERSION.SDK_INT >= 11) {
+            return executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
+        } else {
+            return execute(params);
+        }
     }
 
     /**
@@ -91,7 +107,7 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     }
 
     private long startTime, stopTime, elapsedTime;
-    private Location bestFix, lastFix;
+    private FilteredLocation bestFix;
     private LocationManager locationManager;
     private LocationListener locationListener = new LocationListener()
     {
@@ -100,55 +116,30 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
         {
             if (location != null)
             {
-                Log.d("GetFixTask", "onLocationChanged [" + location.getProvider() + "]: " + location.toString());
-                lastFix = location;
-                if (isBetterFix(lastFix, bestFix))
+                Log.d(TAG, "onLocationChanged [" + location.getProvider() + "]: " + location.toString());
+
+                long now;
+                long locationTime;
+                if (Build.VERSION.SDK_INT >= 17)
                 {
-                    bestFix = lastFix;
-                    onProgressUpdate(bestFix);
+                    now = TimeUnit.NANOSECONDS.toMillis(SystemClock.elapsedRealtimeNanos());
+                    locationTime = TimeUnit.NANOSECONDS.toMillis(location.getElapsedRealtimeNanos());
+                } else {
+                    now = System.currentTimeMillis();
+                    locationTime = location.getTime();
+                }
+                long locationAge = now - locationTime;
+
+                if (bestFix == null) {
+                    if (maxAge == MAX_AGE_ANY || maxAge == MAX_AGE_NONE || locationAge <= maxAge) {
+                        bestFix = new FilteredLocation(location, locationTime, maxAge, 3);
+                        onProgressUpdate(bestFix.getLocation());
+                    }
+                } else {
+                    bestFix.addToFilter(location, locationTime);
+                    onProgressUpdate(bestFix.getLocation());
                 }
             }
-        }
-
-        /**
-         * @param location an android.location.Location obtained from some location provider
-         * @return true if location is not null and less than equal maxAge, false otherwise
-         */
-        private boolean isGoodFix(Location location)
-        {
-            if (location == null)
-            {
-                return false;
-
-            } else {
-                long locationAge = System.currentTimeMillis() - location.getTime();
-                boolean isGood = (locationAge <= maxAge);
-                Log.d("isGoodFix", isGood + ": age is " + locationAge + " [max " + maxAge + "] [" + location.getProvider() + ": +-" + location.getAccuracy() + "]");
-                return isGood;
-            }
-        }
-
-        /**
-         * @param location the first location
-         * @param location2 the second location
-         * @return true if the first location is better than the second, false if the second location is worse, is null, or the first location is also no good.
-         */
-        private boolean isBetterFix(Location location, Location location2)
-        {
-            if (location2 == null)
-            {
-                return isGoodFix(location);
-
-            } else if (location != null) {
-                if ((location.getTime() - location2.getTime()) > maxAge)
-                {
-                    return true;  // more than maxAge since last fix; assume the latest fix is better
-
-                } else if (location.getAccuracy() < location2.getAccuracy()) {
-                    return true;  // accuracy is a measure of radius of certainty; smaller values are more accurate
-                }
-            }
-            return false;
         }
 
         @Override
@@ -205,52 +196,51 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             {
                 try {
                     boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-                    Location gpsLastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    locationListener.onLocationChanged(gpsLastLocation);
-
                     boolean netEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-                    Location netLastLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                    locationListener.onLocationChanged(netLastLocation);
-
                     boolean passiveEnabled = locationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER);
-                    Location passiveLastLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-                    locationListener.onLocationChanged(passiveLastLocation);
+
+                    if (maxAge != MAX_AGE_NONE)
+                    {
+                        locationListener.onLocationChanged(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
+                        locationListener.onLocationChanged(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
+                        locationListener.onLocationChanged(locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER));
+                    }
 
                     if (passiveMode && passiveEnabled)
                     {
                         // passive provider only
-                        Log.d("GetFixTask", "starting location listener; now requesting updates from PASSIVE_PROVIDER...");
+                        Log.d(TAG, "starting location listener; now requesting updates from PASSIVE_PROVIDER...");
                         locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 0, 0, locationListener);
 
                     } else if (!gpsEnabled && netEnabled) {
                         // network provider only
-                        Log.d("GetFixTask", "starting location listener; now requesting updates from NETWORK_PROVIDER...");
+                        Log.d(TAG, "starting location listener; now requesting updates from NETWORK_PROVIDER...");
                         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
 
                     } else if (gpsEnabled && !netEnabled) {
                         // gps provider only
-                        Log.d("GetFixTask", "starting location listener; now requesting updates from GPS_PROVIDER...");
+                        Log.d(TAG, "starting location listener; now requesting updates from GPS_PROVIDER...");
                         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
                     } else //noinspection ConstantConditions
                         if (gpsEnabled && netEnabled) {
                         // gps + network provider
-                        Log.d("GetFixTask", "starting location listener; now requesting updates from GPS_PROVIDER && NETWORK_PROVIDER...");
+                        Log.d(TAG, "starting location listener; now requesting updates from GPS_PROVIDER && NETWORK_PROVIDER...");
                         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
                         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
 
                     } else if (passiveEnabled) {
                         // fallback to passive provider
-                        Log.d("GetFixTask", "starting location listener; now requesting updates from PASSIVE_PROVIDER...");
+                        Log.d(TAG, "starting location listener; now requesting updates from PASSIVE_PROVIDER...");
                         locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 0, 0, locationListener);
 
                     } else {
                         // err: no providers at all!
-                        Log.e("GetFixTask", "unable to start locationListener ... No usable LocationProvider found! a provider should be enabled before starting this task.");
+                        Log.e(TAG, "unable to start locationListener ... No usable LocationProvider found! a provider should be enabled before starting this task.");
                     }
 
                 } catch (SecurityException e) {
-                    Log.e("GetFixTask", "unable to start locationListener ... Permissions! we don't have them.. checkPermissions should be called before starting this task. " + e);
+                    Log.e(TAG, "unable to start locationListener ... Permissions! we don't have them.. checkPermissions should be called before starting this task. " + e);
                 }
             }
         });
@@ -266,12 +256,11 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
             stopTime = System.currentTimeMillis();
             elapsedTime = stopTime - startTime;
 
-            if (bestFix != null && elapsedTime > minElapsed)
-            {
+            if (bestFix != null && elapsedTime > minElapsed) {
                 break;
             }
         }
-        return bestFix;
+        return ((bestFix != null) ? bestFix.getLocation() : null);
     }
 
     /**
@@ -297,9 +286,9 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     {
         try {
             locationManager.removeUpdates(locationListener);
-            Log.d("GetFixTask", "stopped location listener");
+            Log.d(TAG, "stopped location listener");
         } catch (SecurityException e) {
-            Log.e("GetFixTask", "unable to stop locationListener ... Permissions! we don't have them... checkPermissions should be called before using this task! " + e);
+            Log.e(TAG, "unable to stop locationListener ... Permissions! we don't have them... checkPermissions should be called before using this task! " + e);
         }
 
         final GetFixHelper helper = helperRef.get();
@@ -324,9 +313,9 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
     {
         try {
             locationManager.removeUpdates(locationListener);
-            Log.d("GetFixTask", "stopped location listener");
+            Log.d(TAG, "stopped location listener");
         } catch (SecurityException e) {
-            Log.e("GetFixTask", "unable to stop locationListener ... Permissions! we don't have them... checkPermissions should be called before using this task! " + e);
+            Log.e(TAG, "unable to stop locationListener ... Permissions! we don't have them... checkPermissions should be called before using this task! " + e);
         }
 
         GetFixHelper helper = helperRef.get();
@@ -393,5 +382,71 @@ public class GetFixTask extends AsyncTask<Object, Location, Location>
         public void onStarted() {}
         public void onFinished(Location result) {}
         public void onCancelled() {}
+    }
+
+    /**
+     * FilteredLocation
+     *
+     * Implemention based on "simple Kalman filter" code by Stochastically in the stackoverflow answer
+     * at https://stackoverflow.com/questions/1134579/smooth-gps-data
+     */
+    public static class FilteredLocation
+    {
+        private Location location;
+        private double variance;
+        private long locationTime;  // millis
+        private long maxAge;        // millis
+        private float q;        // meters per second
+        private int c = 0;
+
+        public FilteredLocation(Location location0, long locationTime0, long maxAge0, float q0)
+        {
+            maxAge = maxAge0;
+            initFilter(location0, locationTime0, q0);
+        }
+
+        public Location getLocation() {
+            return location;
+        }
+
+        public int getCount() {
+            return c;
+        }
+
+        public void initFilter(Location location0, long locationTime0, float q0)
+        {
+            float accuracy0 = location0.getAccuracy();
+            variance = Math.pow((accuracy0 < 1 ? 1 : accuracy0), 2);
+            location = new Location(location0);
+            locationTime = locationTime0;
+            q = q0;
+            c = 1;
+            Log.d(TAG, "initFilter: init to " + location.toString());
+        }
+
+        public void addToFilter(Location location1, long locationTime1)
+        {
+            long timeDiff = locationTime1 - locationTime;
+            if (maxAge > 0 && timeDiff > maxAge) {
+                initFilter(location1, locationTime1, q);
+
+            } else {
+                if (timeDiff > 0) {
+                    variance += (timeDiff * q * q) / 1000d;
+                    locationTime = locationTime1;
+                }
+
+                float accuracy1 = location1.getAccuracy();
+                double k = variance / (variance + Math.pow((accuracy1 < 1 ? 1 : accuracy1), 2));
+                variance *= (1 - k);
+                c++;
+
+                location.setLatitude(location.getLatitude() + (k * (location1.getLatitude() - location.getLatitude())));
+                location.setLongitude(location.getLongitude() + (k * (location1.getLongitude() - location.getLongitude())));
+                location.setAltitude(location.getAltitude() + (k * (location1.getAltitude() - location.getAltitude())));
+                location.setAccuracy((float)Math.sqrt(variance));
+                Log.d(TAG, "addToFilter: accuracy now " + location.getAccuracy());
+            }
+        }
     }
 }

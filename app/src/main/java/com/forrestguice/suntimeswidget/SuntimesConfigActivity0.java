@@ -43,6 +43,7 @@ import android.widget.EditText;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -126,6 +127,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected LinearLayout layout_timezone;
     protected TextView label_timezone;
     protected Spinner spinner_timezone;
+    protected ProgressBar progress_timezone;
 
     protected LinearLayout layout_solartime;
     protected TextView label_solartime;
@@ -485,6 +487,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         layout_timezone = (LinearLayout) findViewById(R.id.appwidget_timezone_custom_layout);
         label_timezone = (TextView) findViewById(R.id.appwidget_timezone_custom_label);
         spinner_timezone = (Spinner) findViewById(R.id.appwidget_timezone_custom);
+        progress_timezone = (ProgressBar) findViewById(R.id.appwidget_timezone_progress);
 
         if (label_timezone != null)
         {
@@ -519,6 +522,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 public void onStart()
                 {
                     super.onStart();
+                    progress_timezone.setVisibility(View.VISIBLE);
                     spinner_timezone.setAdapter(new WidgetTimezones.TimeZoneItemAdapter(SuntimesConfigActivity0.this, R.layout.layout_listitem_timezone));
                     button_addWidget.setEnabled(false);
                 }
@@ -531,6 +535,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                     spinner_timezone.setAdapter(spinner_timezone_adapter);
                     WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
                     button_addWidget.setEnabled(true);
+                    progress_timezone.setVisibility(View.GONE);
                 }
             });
             loadTask.execute(sortZonesBy);

@@ -205,7 +205,7 @@ public class AboutDialog extends BottomSheetDialogFragment
 
         TextView legalView3 = (TextView) dialogContent.findViewById(R.id.txt_about_legal3);
         legalView3.setMovementMethod(LinkMovementMethod.getInstance());
-        legalView3.setText(SuntimesUtils.fromHtml(context.getString(R.string.app_legal3)));
+        legalView3.setText(SuntimesUtils.fromHtml(initLibraryCredits(getActivity())));
 
         TextView legalView4 = (TextView) dialogContent.findViewById(R.id.txt_about_legal4);
         String permissionsExplained = context.getString(R.string.privacy_permission_location);
@@ -229,7 +229,21 @@ public class AboutDialog extends BottomSheetDialogFragment
         super.onSaveInstanceState(outState);
     }
 
-    private static String initTranslationCredits(Activity activity)
+    public static String initLibraryCredits(Activity activity)
+    {
+        final String[] libraries = activity.getResources().getStringArray(R.array.app_libraries);
+        StringBuilder credits = new StringBuilder();
+        for (int i=0; i<libraries.length; i++)
+        {
+            credits.append(activity.getString(R.string.libraryCreditsFormat, libraries[i]));
+            if (i != libraries.length-1) {
+                credits.append(" <br />");
+            }
+        }
+        return activity.getString(R.string.app_legal3, credits.toString());
+    }
+
+    public static String initTranslationCredits(Activity activity)
     {
         final String[] localeValues = activity.getResources().getStringArray(R.array.locale_values);
         final String[] localeCredits = activity.getResources().getStringArray(R.array.locale_credits);
