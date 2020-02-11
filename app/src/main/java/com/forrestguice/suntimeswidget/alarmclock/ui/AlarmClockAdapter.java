@@ -652,6 +652,31 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         view.overflow.setVisibility(isSelected ? View.VISIBLE : View.INVISIBLE);
     }
 
+    private CharSequence ringtoneDisplayChip(AlarmClockItem item, boolean isSelected)
+    {
+        int iconDimen = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,20, context.getResources().getDisplayMetrics());
+        int ringtoneIconID = item.ringtoneName != null ? iconSoundEnabled : iconSoundDisabled;
+        ImageSpan ringtonIcon = isSelected || item.enabled
+                ? SuntimesUtils.createImageSpan(context, ringtoneIconID, iconDimen, iconDimen, item.enabled ? alarmEnabledColor : 0)
+                : SuntimesUtils.createImageSpan(context, ringtoneIconID, iconDimen, iconDimen, disabledColor, PorterDuff.Mode.MULTIPLY);
+        final String none = context.getString(R.string.alarmOption_ringtone_none);
+        String ringtoneName = isSelected ? (item.ringtoneName != null ? item.ringtoneName : none) : "";
+        String ringtoneLabel = context.getString(R.string.alarmOption_ringtone_label, ringtoneName);
+        return SuntimesUtils.createSpan(context, ringtoneLabel, "[icon]", ringtonIcon);
+    }
+
+    private CharSequence actionDisplayChip(AlarmClockItem item, int actionNum, boolean isSelected)
+    {
+        int iconDimen = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,20, context.getResources().getDisplayMetrics());
+        ImageSpan actionIcon = (isSelected || item.enabled)
+                ? SuntimesUtils.createImageSpan(context, iconAction, iconDimen, iconDimen, item.enabled ? alarmEnabledColor : 0)
+                : SuntimesUtils.createImageSpan(context, iconAction, iconDimen, iconDimen, disabledColor, PorterDuff.Mode.MULTIPLY);
+        String actionName = item.getActionID(actionNum);  // TODO
+        String actionString = isSelected ? (item.actionID1 != null ? actionName : "") : "";
+        String actionLabel = context.getString(R.string.alarmOption_action_label, actionString);
+        return SuntimesUtils.createSpan(context, actionLabel, "[icon]", actionIcon);
+    }
+
     /**
      * @param item associated AlarmClockItem
      * @param buttonView button that triggered menu
