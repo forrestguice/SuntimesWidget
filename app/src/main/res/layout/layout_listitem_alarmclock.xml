@@ -200,7 +200,15 @@
                 android:textStyle="bold" android:textColor="?attr/text_buttonSelector" />
 
             <TextView
-                android:id="@+id/text_action"
+                android:id="@+id/text_action0"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp" android:layout_marginStart="4dp"
+                android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+                android:gravity="center_vertical|end"
+                tools:text="action" android:maxLines="2" android:ellipsize="end"
+                android:textStyle="bold" android:textColor="?attr/text_buttonSelector" />
+            <TextView
+                android:id="@+id/text_action1"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp" android:layout_marginStart="4dp"
                 android:layout_marginEnd="8dp" android:layout_marginRight="8dp"

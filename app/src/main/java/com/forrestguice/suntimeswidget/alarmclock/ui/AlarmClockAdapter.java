@@ -368,19 +368,9 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
             }
         });
 
-        // action
-        view.text_action.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isSelected) {
-                    if (adapterListener != null) {
-                        adapterListener.onRequestAction(item, 0);  // TODO: action1
-                    }
-                } else {
-                    setSelectedItem(item.rowID);
-                }
-            }
-        });
+        // actions
+        view.text_action0.setOnClickListener(onRequestActionClickListener(item, 0));
+        view.text_action1.setOnClickListener(onRequestActionClickListener(item, 1));
 
         // vibrate
         view.check_vibrate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
@@ -451,6 +441,25 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         });
     }
 
+    private View.OnClickListener onRequestActionClickListener(final AlarmClockItem item, final int actionNum)
+    {
+        return new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                if ((item.rowID == selectedItem))
+                {
+                    if (adapterListener != null) {
+                        adapterListener.onRequestAction(item, actionNum);
+                    }
+                } else {
+                    setSelectedItem(item.rowID);
+                }
+            }
+        };
+    }
+
+
     private void clearListeners( AlarmClockItemView view )
     {
         view.typeButton.setOnClickListener(null);
@@ -459,7 +468,8 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         view.text_datetime.setOnClickListener(null);
         view.text_location.setOnClickListener(null);
         view.text_ringtone.setOnClickListener(null);
-        view.text_action.setOnClickListener(null);
+        view.text_action0.setOnClickListener(null);
+        view.text_action1.setOnClickListener(null);
         view.check_vibrate.setOnCheckedChangeListener(null);
         view.option_repeat.setOnClickListener(null);
         view.option_offset.setOnClickListener(null);
@@ -1010,7 +1020,8 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         public TextView text_datetime;
         public TextView text_location;
         public TextView text_ringtone;
-        public TextView text_action;
+        public TextView text_action0;
+        public TextView text_action1;
         public CheckBox check_vibrate;
         public TextView option_repeat;
         public TextView option_offset;
@@ -1030,7 +1041,8 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
             text_datetime = (TextView) view.findViewById(R.id.text_datetime);
             text_location = (TextView) view.findViewById(R.id.text_location_label);
             text_ringtone = (TextView) view.findViewById(R.id.text_ringtone);
-            text_action = (TextView) view.findViewById(R.id.text_action);
+            text_action0 = (TextView) view.findViewById(R.id.text_action0);
+            text_action1 = (TextView) view.findViewById(R.id.text_action1);
             check_vibrate = (CheckBox) view.findViewById(R.id.check_vibrate);
             option_repeat = (TextView) view.findViewById(R.id.option_repeat);
             option_offset = (TextView) view.findViewById(R.id.option_offset);
