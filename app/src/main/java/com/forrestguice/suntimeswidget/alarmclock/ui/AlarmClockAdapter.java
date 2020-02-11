@@ -570,31 +570,17 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         }
 
         // ringtone
-        int iconDimen = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,20, context.getResources().getDisplayMetrics());
-        int ringtoneIconID = item.ringtoneName != null ? iconSoundEnabled : iconSoundDisabled;
-        ImageSpan ringtonIcon = isSelected || item.enabled ? SuntimesUtils.createImageSpan(context, ringtoneIconID, iconDimen, iconDimen, item.enabled ? alarmEnabledColor : 0)
-                                                           : SuntimesUtils.createImageSpan(context, ringtoneIconID, iconDimen, iconDimen, disabledColor, PorterDuff.Mode.MULTIPLY);
-
-        final String none = context.getString(R.string.alarmOption_ringtone_none);
-        String ringtoneName = isSelected ? (item.ringtoneName != null ? item.ringtoneName : none) : "";
-
-        String ringtoneLabel = context.getString(R.string.alarmOption_ringtone_label, ringtoneName);
-        SpannableStringBuilder ringtoneDisplay = SuntimesUtils.createSpan(context, ringtoneLabel, "[icon]", ringtonIcon);
-
         view.text_ringtone.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
-        view.text_ringtone.setText(ringtoneDisplay);
+        view.text_ringtone.setText( ringtoneDisplayChip(item, isSelected) );
 
         // action
-        ImageSpan actionIcon = isSelected || item.enabled ? SuntimesUtils.createImageSpan(context, iconAction, iconDimen, iconDimen, item.enabled ? alarmEnabledColor : 0)
-                                                          : SuntimesUtils.createImageSpan(context, iconAction, iconDimen, iconDimen, disabledColor, PorterDuff.Mode.MULTIPLY);
-        String actionName = item.actionID0;  // TODO
-        String actionString = isSelected ? (item.actionID0 != null ? actionName : "") : "";
-        String actionLabel = context.getString(R.string.alarmOption_action_label, actionString);
-        SpannableStringBuilder actionDisplay = SuntimesUtils.createSpan(context, actionLabel, "[icon]", actionIcon);
+        view.text_action0.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+        view.text_action0.setText( actionDisplayChip(item, 0, isSelected));
+        view.text_action0.setVisibility( item.actionID0 != null ? View.VISIBLE : View.GONE );
 
-        view.text_action.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
-        view.text_action.setText( actionDisplay );
-        view.text_action.setVisibility( item.actionID0 != null ? View.VISIBLE : View.GONE );
+        view.text_action1.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+        view.text_action1.setText( actionDisplayChip(item, 1, isSelected));
+        view.text_action1.setVisibility( item.actionID1 != null ? View.VISIBLE : View.GONE );
 
         // vibrate
         view.check_vibrate.setChecked(item.vibrate);
