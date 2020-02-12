@@ -16,7 +16,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget.settings;
+package com.forrestguice.suntimeswidget.settings.colors;
 
 import android.app.Dialog;
 import android.content.Context;

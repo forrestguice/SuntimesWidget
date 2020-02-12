@@ -67,9 +67,8 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.layouts.ClockLayout_1x1_0;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
-import com.forrestguice.suntimeswidget.map.WorldMapView;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.ColorChooserView;
+import com.forrestguice.suntimeswidget.settings.colors.ColorChooserView;
 import com.forrestguice.suntimeswidget.settings.PaddingChooser;
 import com.forrestguice.suntimeswidget.settings.SizeEditView;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -1692,7 +1691,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     /**
      * ColorChooser
      */
-    private class ColorChooser extends com.forrestguice.suntimeswidget.settings.ColorChooser
+    private class ColorChooser extends com.forrestguice.suntimeswidget.settings.colors.ColorChooser
     {
         public ColorChooser(Context context, TextView txtLabel, EditText editField, ImageButton imgButton, String id)
         {

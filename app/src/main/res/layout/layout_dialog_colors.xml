@@ -63,7 +63,7 @@
         android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding" android:paddingTop="6dp"
         android:layout_marginTop="4dp" android:elevation="5dp" />
 
-    <android.support.v4.view.ViewPager android:id="@+id/color_pager"
+    <com.forrestguice.ColorDialog android:id="@+id/color_pager"
         android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
         android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding" android:paddingBottom="10dp"
         android:layout_marginTop="8dp" android:layout_marginBottom="8dp" />

@@ -42,7 +42,7 @@
 
         </LinearLayout>
 
-        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+        <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
             android:id="@+id/chooser_titleColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:hintText="@string/configHint_themeColorSunrise"
@@ -56,7 +56,7 @@
             app:labelText="@string/configLabel_themeSizeText"
             app:hintText="@string/configHint_themeSizeText" />
 
-        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+        <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
             android:id="@+id/chooser_textColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:hintText="@string/configHint_themeColorSunrise"
@@ -83,7 +83,7 @@
 
         </LinearLayout>
 
-        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+        <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
             android:id="@+id/chooser_timeColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:hintText="@string/configHint_themeColorSunrise"
@@ -97,7 +97,7 @@
             app:labelText="@string/configLabel_themeSizeSuffix"
             app:hintText="@string/configHint_themeSizeSuffix" />
 
-        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+        <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
             android:id="@+id/chooser_suffixColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:hintText="@string/configHint_themeColorSunrise"
