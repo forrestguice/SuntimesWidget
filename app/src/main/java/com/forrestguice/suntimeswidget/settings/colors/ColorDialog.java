@@ -306,30 +306,6 @@ public class ColorDialog extends BottomSheetDialogFragment
     }
 
     /**
-     * ColorPickerPager
-     */
-    public static class ColorPickerPager extends ViewPager
-    {
-        public ColorPickerPager(Context context) {
-            super(context);
-        }
-
-        public ColorPickerPager(Context context, AttributeSet attrs) {
-            super(context, attrs);
-        }
-
-        @Override
-        public boolean onInterceptTouchEvent(MotionEvent event) {
-            return false;
-        }
-
-        @Override
-        public boolean onTouchEvent(MotionEvent event) {
-            return false;
-        }
-    }
-
-    /**
      * ColorPickerPagerAdapter
      */
     protected class ColorPickerPagerAdapter extends FragmentPagerAdapter
