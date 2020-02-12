@@ -16,86 +16,80 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical" android:background="?attr/dialogBackground">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:id="@+id/dialog_header"
+        android:background="?attr/dialogFrame"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center_vertical"
+        android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
+        android:paddingTop="16dp" android:paddingBottom="16dp">
 
-        <LinearLayout
-            android:background="?attr/dialogFrame"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal" android:gravity="center_vertical|start"
-            android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
-            android:paddingTop="16dp" android:paddingBottom="16dp">
+        <TextView
+            android:id="@+id/dialog_title"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:gravity="start"
+            style="@style/Base.DialogWindowTitle.AppCompat"
+            android:text="@string/color_dialog_msg" />
 
-            <TextView
-                android:id="@+id/dialog_title"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:gravity="center"
-                style="@style/Base.DialogWindowTitle.AppCompat"
-                android:text="@string/color_dialog_msg" />
+        <android.support.design.widget.TabLayout
+            android:id="@+id/color_pager_tabs" android:visibility="visible"
+            android:layout_width="wrap_content" android:layout_height="match_parent"
+            app:tabIndicatorHeight="2dp" app:tabGravity="center" app:tabPaddingEnd="8dp" app:tabPaddingStart="8dp"
+            android:layout_gravity="end">
 
-        </LinearLayout>
+            <android.support.design.widget.TabItem
+                android:id="@+id/tabItem"
+                android:layout_width="48dp" android:layout_height="wrap_content"
+                android:icon="?attr/icActionAppearance"
+                android:contentDescription="QuadFlask" />
 
-        <LinearLayout
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical" style="@style/SunsetTimeWidget_dark"
-            android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
-            android:paddingTop="6dp" android:paddingBottom="10dp"
-            android:background="?attr/dialogBackground">
+            <android.support.design.widget.TabItem
+                android:id="@+id/tabItem2"
+                android:layout_width="48dp" android:layout_height="wrap_content"
+                android:icon="?attr/icActionAppearance"
+                android:contentDescription="QuadFlask1" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/color_recent"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:layout_marginTop="4dp" android:elevation="5dp" />
-
-            <com.flask.colorpicker.ColorPickerView
-                android:id="@+id/color_picker"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                app:lightnessSlider="true" app:alphaSlider="true"
-                app:lightnessSliderView="@+id/color_lightness" app:alphaSliderView="@+id/color_alpha"
-                app:density="12" app:wheelType="FLOWER" />
-
-            <com.flask.colorpicker.slider.LightnessSlider
-                android:id="@+id/color_lightness"
-                android:layout_width="match_parent" android:layout_height="48dp" />
-
-            <com.flask.colorpicker.slider.AlphaSlider
-                android:id="@+id/color_alpha"
-                android:layout_width="match_parent" android:layout_height="48dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:background="?attr/dialogFrame"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal" android:gravity="center_vertical|end"
-            android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
-            android:paddingTop="8dp" android:paddingBottom="8dp">
-
-            <Button
-                style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
-                android:id="@+id/dialog_button_cancel"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/color_dialog_cancel" />
-
-            <Button
-                style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
-                android:id="@+id/dialog_button_accept"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/color_dialog_ok" />
-
-        </LinearLayout>
+        </android.support.design.widget.TabLayout>
 
     </LinearLayout>
 
-</ScrollView>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/color_recent"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding" android:paddingTop="6dp"
+        android:layout_marginTop="4dp" android:elevation="5dp" />
 
+    <android.support.v4.view.ViewPager android:id="@+id/color_pager"
+        android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+        android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding" android:paddingBottom="10dp"
+        android:layout_marginTop="8dp" android:layout_marginBottom="8dp" />
+
+    <LinearLayout
+        android:id="@+id/dialog_footer"
+        android:background="?attr/dialogFrame"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center_vertical|end"
+        android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
+        android:paddingTop="8dp" android:paddingBottom="8dp">
+
+        <Button
+            style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+            android:id="@+id/dialog_button_cancel"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/color_dialog_cancel" />
+
+        <Button
+            style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+            android:id="@+id/dialog_button_accept"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/color_dialog_ok" />
+
+    </LinearLayout>
+
+</LinearLayout>

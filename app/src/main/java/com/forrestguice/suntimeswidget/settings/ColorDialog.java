@@ -29,12 +29,20 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -53,27 +61,30 @@ public class ColorDialog extends BottomSheetDialogFragment
 {
     public ColorDialog() {}
 
-    private ColorPickerView colorPicker;
-    private AlphaSlider alphaSlider;
+    private ViewPager colorPager;
+    private TabLayout colorPagerTabs;
+    private ColorPickerPagerAdapter colorPagerAdapter;
+    protected Bundle colorPagerArgs = new Bundle();
 
     private RecyclerView recentColors;
     private ColorsAdapter recentColors_adapter;
     private LinearLayoutManager recentColors_layout;
 
-    private int color = Color.WHITE;
-    public int getColor()
-    {
-        return color;
+    public int getColor() {
+        return colorPagerArgs.getInt("color");
     }
-    public void setColor( int color )
-    {
-        this.color = color;
+    public void setColor( int color ) {
+        colorPagerArgs.putInt("color", color);
+        if (colorPagerAdapter != null) {
+            colorPagerAdapter.updateViews(getContext());
+        }
     }
 
-    private boolean showAlpha = false;
-    public void setShowAlpha(boolean value)
-    {
-        this.showAlpha = value;
+    public boolean showAlpha() {
+        return colorPagerArgs.getBoolean("showAlpha", false);
+    }
+    public void setShowAlpha(boolean value) {
+        colorPagerArgs.putBoolean("showAlpha", value);
     }
 
     @Override
@@ -85,7 +96,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         if (savedState != null)
         {
             setColor(savedState.getInt("color", getColor()));
-            showAlpha = savedState.getBoolean("showAlpha", showAlpha);
+            setShowAlpha(savedState.getBoolean("showAlpha", showAlpha()));
             setRecentColors(savedState.getIntegerArrayList("recentColors"));
         }
         initViews(getActivity(), dialogContent);
@@ -98,29 +109,23 @@ public class ColorDialog extends BottomSheetDialogFragment
     {
         super.onSaveInstanceState(outState);
         outState.putInt("color", getColor());
-        outState.putBoolean("showAlpha", showAlpha);
+        outState.putBoolean("showAlpha", showAlpha());
         outState.putIntegerArrayList("recentColors", recentColors_list);
     }
 
     private void initViews(Context context, View dialogContent)
     {
-        alphaSlider = (AlphaSlider)dialogContent.findViewById(R.id.color_alpha);
-        alphaSlider.setVisibility(showAlpha ? View.VISIBLE : View.GONE);
+        colorPagerTabs = (TabLayout) dialogContent.findViewById(R.id.color_pager_tabs);
+        colorPager = (ViewPager) dialogContent.findViewById(R.id.color_pager);
+        colorPager.setAdapter(colorPagerAdapter = new ColorPickerPagerAdapter(getChildFragmentManager()));
 
-        colorPicker = (ColorPickerView)dialogContent.findViewById(R.id.color_picker);
-        colorPicker.setColor(color, false);
-        colorPicker.addOnColorChangedListener(new OnColorChangedListener() {
-            @Override
-            public void onColorChanged(int color) {
-                setColor(color);
-            }
-        });
+        colorPagerTabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(colorPager));
+        colorPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(colorPagerTabs));
 
         recentColors_adapter = new ColorsAdapter(recentColors_list);
         recentColors_adapter.setOnColorButtonClickListener(new ColorChangeListener() {
             @Override
             public void onColorChanged(int color) {
-                colorPicker.setColor(color, false);
                 setColor(color);
             }
         });
@@ -296,6 +301,174 @@ public class ColorDialog extends BottomSheetDialogFragment
                 }
             }
             colorButton.setVisibility(color != null ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    /**
+     * ColorPickerPager
+     */
+    public static class ColorPickerPager extends ViewPager
+    {
+        public ColorPickerPager(Context context) {
+            super(context);
+        }
+
+        public ColorPickerPager(Context context, AttributeSet attrs) {
+            super(context, attrs);
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(MotionEvent event) {
+            return false;
+        }
+
+        @Override
+        public boolean onTouchEvent(MotionEvent event) {
+            return false;
+        }
+    }
+
+    /**
+     * ColorPickerPagerAdapter
+     */
+    protected class ColorPickerPagerAdapter extends FragmentPagerAdapter
+    {
+        protected ColorPickerFragment[] fragments = new ColorPickerFragment[] { new QuadFlaskColorPickerFragment(), new QuadFlaskColorPickerFragment1() };
+
+        public ColorPickerPagerAdapter(FragmentManager fragments) {
+            super(fragments);
+        }
+
+        @Override
+        public Fragment getItem(int position)
+        {
+            fragments[position].setArguments(colorPagerArgs);
+            return fragments[position];
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position)
+        {
+            fragments[position] = (ColorPickerFragment)super.instantiateItem(container, position);
+            fragments[position].setColorChangeListener(onColorChanged);
+            return fragments[position];
+        }
+
+        private ColorChangeListener onColorChanged = new ColorChangeListener() {
+            @Override
+            public void onColorChanged(int color) {
+                updateViews(getContext());
+            }
+        };
+
+        @Override
+        public int getCount() {
+            return fragments.length;
+        }
+
+        public void updateViews(Context context)
+        {
+            for (ColorPickerFragment fragment : fragments) {
+                if (fragment != null) {
+                    fragment.updateViews(context);
+                }
+            }
+        }
+    }
+
+    /**
+     * ColorPickerFragment
+     */
+    public static class ColorPickerFragment extends Fragment
+    {
+        public ColorPickerFragment() {
+            setArguments(new Bundle());
+        }
+
+        protected ColorChangeListener listener;
+        public void setColorChangeListener(ColorChangeListener listener) {
+            this.listener = listener;
+        }
+
+        public void setColor( int color )
+        {
+            getArguments().putInt("color", color);
+            if (listener != null) {
+                listener.onColorChanged(color);
+            }
+        }
+
+        public int getColor() {
+            return getArguments().getInt("color", Color.WHITE);
+        }
+
+        public boolean showAlpha() {
+            return getArguments().getBoolean("showAlpha", false);
+        }
+
+        public void updateViews(Context context) {}
+    }
+
+    /**
+     * QuadFlaskColorPickerFragment
+     * Flower Mode
+     */
+    public static class QuadFlaskColorPickerFragment extends ColorPickerFragment
+    {
+        protected AlphaSlider alphaSlider;
+        protected ColorPickerView colorPicker;
+
+        protected int getLayoutResID() {
+            return R.layout.layout_colors_quadflask;
+        }
+
+        protected void initViews(View view)
+        {
+            alphaSlider = (AlphaSlider) view.findViewById(R.id.color_alpha);
+            colorPicker = (ColorPickerView) view.findViewById(R.id.color_picker);
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        {
+            View view = inflater.inflate(getLayoutResID(), container, false);
+            initViews(view);
+
+            colorPicker.addOnColorChangedListener(new OnColorChangedListener() {
+                @Override
+                public void onColorChanged(int color) {
+                    setColor(color);
+                }
+            });
+
+            updateViews(getContext());
+            return view;
+        }
+
+        @Override
+        public void updateViews(Context context)
+        {
+            alphaSlider.setVisibility(showAlpha() ? View.VISIBLE : View.GONE);
+            colorPicker.setColor(getColor(), false);
+        }
+    }
+
+    /**
+     * QuadFlaskColorPickerFragment1
+     * Circle Mode
+     */
+    public static class QuadFlaskColorPickerFragment1 extends QuadFlaskColorPickerFragment
+    {
+        @Override
+        protected int getLayoutResID() {
+            return R.layout.layout_colors_quadflask1;
+        }
+
+        @Override
+        protected void initViews(View view)
+        {
+            alphaSlider = (AlphaSlider) view.findViewById(R.id.color_alpha1);
+            colorPicker = (ColorPickerView) view.findViewById(R.id.color_picker1);
         }
     }
 
