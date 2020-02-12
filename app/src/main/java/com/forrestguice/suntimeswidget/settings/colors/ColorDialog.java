@@ -38,11 +38,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -76,7 +73,9 @@ public class ColorDialog extends BottomSheetDialogFragment
     }
     public void setColor( int color ) {
         colorPagerArgs.putInt("color", color);
-        if (colorPagerAdapter != null) {
+        if (colorPagerAdapter != null)
+        {
+            colorPagerAdapter.setColor(color);
             colorPagerAdapter.updateViews(getContext());
         }
     }
@@ -334,6 +333,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         private ColorChangeListener onColorChanged = new ColorChangeListener() {
             @Override
             public void onColorChanged(int color) {
+                colorPagerArgs.putInt("color", color);
                 updateViews(getContext());
             }
         };
@@ -341,6 +341,15 @@ public class ColorDialog extends BottomSheetDialogFragment
         @Override
         public int getCount() {
             return fragments.length;
+        }
+
+        public void setColor(int color)
+        {
+            for (ColorPickerFragment fragment : fragments) {
+                if (fragment != null) {
+                    fragment.setColor(color);
+                }
+            }
         }
 
         public void updateViews(Context context)
@@ -362,8 +371,8 @@ public class ColorDialog extends BottomSheetDialogFragment
             setArguments(new Bundle());
         }
 
-        protected ColorChangeListener listener;
-        public void setColorChangeListener(ColorChangeListener listener) {
+        protected ColorDialog.ColorChangeListener listener;
+        public void setColorChangeListener(ColorDialog.ColorChangeListener listener) {
             this.listener = listener;
         }
 
