@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.settings.colors;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -34,7 +35,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
@@ -59,6 +59,11 @@ public class ColorDialog extends BottomSheetDialogFragment
 {
     public static final String PREFS_COLORDIALOG = "ColorDialog";
     public static final String KEY_COLORPICKER = "colorPicker";
+    public static final String KEY_SHOWALPHA = "showAlpha";
+    public static final String KEY_COLOR = "color";
+    public static final String KEY_RECENT = "recentColors";
+
+
     public ColorDialog() {}
 
     private ViewPager colorPager;
@@ -70,10 +75,10 @@ public class ColorDialog extends BottomSheetDialogFragment
     private ColorsAdapter recentColors_adapter;
 
     public int getColor() {
-        return colorPagerArgs.getInt("color");
+        return colorPagerArgs.getInt(KEY_COLOR);
     }
     public void setColor( int color ) {
-        colorPagerArgs.putInt("color", color);
+        colorPagerArgs.putInt(KEY_COLOR, color);
         if (colorPagerAdapter != null)
         {
             colorPagerAdapter.setColor(color);
@@ -82,10 +87,10 @@ public class ColorDialog extends BottomSheetDialogFragment
     }
 
     public boolean showAlpha() {
-        return colorPagerArgs.getBoolean("showAlpha", false);
+        return colorPagerArgs.getBoolean(KEY_SHOWALPHA, false);
     }
     public void setShowAlpha(boolean value) {
-        colorPagerArgs.putBoolean("showAlpha", value);
+        colorPagerArgs.putBoolean(KEY_SHOWALPHA, value);
     }
 
     @Override
@@ -97,9 +102,9 @@ public class ColorDialog extends BottomSheetDialogFragment
 
         if (savedState != null)
         {
-            setColor(savedState.getInt("color", getColor()));
-            setShowAlpha(savedState.getBoolean("showAlpha", showAlpha()));
-            setRecentColors(savedState.getIntegerArrayList("recentColors"));
+            setColor(savedState.getInt(KEY_COLOR, getColor()));
+            setShowAlpha(savedState.getBoolean(KEY_SHOWALPHA, showAlpha()));
+            setRecentColors(savedState.getIntegerArrayList(KEY_RECENT));
         }
         initViews(getActivity(), dialogContent);
 
@@ -113,9 +118,9 @@ public class ColorDialog extends BottomSheetDialogFragment
     public void onSaveInstanceState( Bundle outState )
     {
         super.onSaveInstanceState(outState);
-        outState.putInt("color", getColor());
-        outState.putBoolean("showAlpha", showAlpha());
-        outState.putIntegerArrayList("recentColors", recentColors_list);
+        outState.putInt(KEY_COLOR, getColor());
+        outState.putBoolean(KEY_SHOWALPHA, showAlpha());
+        outState.putIntegerArrayList(KEY_RECENT, recentColors_list);
     }
 
     private void initViews(Context context, View dialogContent)
@@ -353,7 +358,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         private ColorChangeListener onColorChanged = new ColorChangeListener() {
             @Override
             public void onColorChanged(int color) {
-                colorPagerArgs.putInt("color", color);
+                colorPagerArgs.putInt(KEY_COLOR, color);
                 updateViews(getContext());
             }
         };
@@ -398,14 +403,14 @@ public class ColorDialog extends BottomSheetDialogFragment
 
         public void setColor( int color )
         {
-            getArguments().putInt("color", color);
+            getArguments().putInt(KEY_COLOR, color);
             if (listener != null) {
                 listener.onColorChanged(color);
             }
         }
 
         public int getColor() {
-            return getArguments().getInt("color", Color.WHITE);
+            return getArguments().getInt(KEY_COLOR, Color.WHITE);
         }
 
         public boolean showAlpha() {
