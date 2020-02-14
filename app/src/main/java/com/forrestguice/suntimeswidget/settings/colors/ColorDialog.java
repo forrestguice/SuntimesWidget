@@ -57,6 +57,8 @@ import java.util.List;
 
 public class ColorDialog extends BottomSheetDialogFragment
 {
+    public static final String PREFS_COLORDIALOG = "ColorDialog";
+    public static final String KEY_COLORPICKER = "colorPicker";
     public ColorDialog() {}
 
     private ViewPager colorPager;
@@ -89,7 +91,8 @@ public class ColorDialog extends BottomSheetDialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
-        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
+        Context context = getContext();
+        ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(context));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_colors, parent, false);
 
         if (savedState != null)
@@ -99,6 +102,9 @@ public class ColorDialog extends BottomSheetDialogFragment
             setRecentColors(savedState.getIntegerArrayList("recentColors"));
         }
         initViews(getActivity(), dialogContent);
+
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_COLORDIALOG, Context.MODE_PRIVATE);
+        colorPager.setCurrentItem(prefs.getInt(KEY_COLORPICKER, 0));
 
         return dialogContent;
     }
@@ -116,6 +122,25 @@ public class ColorDialog extends BottomSheetDialogFragment
     {
         colorPagerTabs = (TabLayout) dialogContent.findViewById(R.id.color_pager_tabs);
         colorPager = (ViewPager) dialogContent.findViewById(R.id.color_pager);
+
+        colorPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageSelected(int position)
+            {
+                Context context = getContext();
+                if (context != null) {
+                    SharedPreferences.Editor prefs = context.getSharedPreferences( PREFS_COLORDIALOG, Context.MODE_PRIVATE).edit();
+                    prefs.putInt(KEY_COLORPICKER, position);
+                    prefs.apply();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+        });
         colorPager.setAdapter(colorPagerAdapter = new ColorPickerPagerAdapter(getChildFragmentManager()));
 
         colorPagerTabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(colorPager));
