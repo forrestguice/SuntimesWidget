@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -66,7 +66,6 @@ public class ColorDialog extends BottomSheetDialogFragment
 
     private RecyclerView recentColors;
     private ColorsAdapter recentColors_adapter;
-    private LinearLayoutManager recentColors_layout;
 
     public int getColor() {
         return colorPagerArgs.getInt("color");
@@ -130,13 +129,9 @@ public class ColorDialog extends BottomSheetDialogFragment
             }
         });
 
-        recentColors_layout = new LinearLayoutManager(context);
-        recentColors_layout.setOrientation(LinearLayoutManager.HORIZONTAL);
-
         recentColors = (RecyclerView)dialogContent.findViewById(R.id.color_recent);
         recentColors.setHasFixedSize(true);
         recentColors.setItemViewCacheSize(16);
-        recentColors.setLayoutManager(recentColors_layout);
         recentColors.setAdapter(recentColors_adapter);
         recentColors.scrollToPosition(0);
 

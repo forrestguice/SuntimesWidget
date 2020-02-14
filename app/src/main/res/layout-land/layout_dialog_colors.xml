@@ -60,19 +60,23 @@
 
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/color_recent"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding" android:paddingTop="6dp"
-        android:layout_marginTop="4dp" android:elevation="5dp"
-        android:orientation="horizontal" app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        tools:itemCount="8" tools:listitem="@layout/layout_listitem_color" />
-
-    <com.forrestguice.suntimeswidget.settings.colors.NoSwipeViewPager
-        android:id="@+id/color_pager"
+    <LinearLayout android:id="@+id/dialog_content0"
         android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
-        android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding" android:paddingBottom="10dp"
-        android:layout_marginTop="8dp" android:layout_marginBottom="8dp" />
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/color_recent"
+            android:layout_width="wrap_content" android:layout_height="match_parent"
+            android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding" android:elevation="5dp"
+            android:orientation="vertical" app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            tools:itemCount="8" tools:listitem="@layout/layout_listitem_color" />
+
+        <com.forrestguice.suntimeswidget.settings.colors.NoSwipeViewPager
+            android:id="@+id/color_pager"
+            android:layout_width="wrap_content" android:layout_height="match_parent"
+            android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/dialog_footer"
