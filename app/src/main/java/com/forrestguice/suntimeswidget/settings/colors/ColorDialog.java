@@ -45,6 +45,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -123,6 +125,13 @@ public class ColorDialog extends BottomSheetDialogFragment
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setOnKeyListener(onKeyListener);
+
+        Window window = dialog.getWindow();
+        if (window != null) {
+            window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        }
+
         return dialog;
     }
 
