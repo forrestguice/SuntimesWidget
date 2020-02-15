@@ -26,6 +26,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
@@ -99,6 +100,14 @@ public class ColorActivity extends AppCompatActivity
         }
     }
 
+    protected void setBackgroundColor(int color)
+    {
+        View background = findViewById(R.id.layout_background);
+        if (background != null) {
+            background.setBackgroundColor(color);
+        }
+    }
+
     protected ColorDialog createColorDialog(Intent intent)
     {
         ColorDialog colorDialog = new ColorDialog();
@@ -134,6 +143,11 @@ public class ColorActivity extends AppCompatActivity
         }
 
         @Override
+        public void onColorChanged(int color) {
+            setBackgroundColor(color);
+        }
+
+        @Override
         public void onCanceled() {
             onBackPressed();
         }
@@ -160,8 +174,10 @@ public class ColorActivity extends AppCompatActivity
     {
         super.onResume();
         ColorDialog colorDialog = (ColorDialog) getSupportFragmentManager().findFragmentByTag(ColorChooser.DIALOGTAG_COLOR);
-        if (colorDialog != null) {
+        if (colorDialog != null)
+        {
             colorDialog.setColorDialogListener(dialogListener);
+            setBackgroundColor(colorDialog.getColor());
         }
     }
 }
