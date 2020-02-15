@@ -73,6 +73,7 @@ import com.forrestguice.suntimeswidget.settings.PaddingChooser;
 import com.forrestguice.suntimeswidget.settings.SizeEditView;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 
 import java.security.InvalidParameterException;
@@ -123,6 +124,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ThemeNameChooser chooseName;
     private PaddingChooser choosePadding;
 
+    private ArrayList<Integer> recentColors = new ArrayList<>();
     private ColorChooser chooseColorRise, chooseColorRiseIconFill, chooseColorRiseIconStroke;
     private ColorChooser chooseColorNoon, chooseColorNoonIconFill, chooseColorNoonIconStroke;
     private ColorChooser chooseColorSet, chooseColorSetIconFill, chooseColorSetIconStroke;
@@ -550,15 +552,12 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ColorChooser createColorChooser(Context context, TextView label, EditText edit, ImageButton button, String id)
     {
         ColorChooser chooser = new ColorChooser(context, label, edit, button, id);
-
-        // TODO
-        ArrayList<Integer> recentColors = new ArrayList<>();
-        recentColors.add(Color.DKGRAY);
-        recentColors.add(Color.BLACK);
-        recentColors.add(Color.GREEN);
-        recentColors.add(Color.MAGENTA);
-        chooser.setRecentColors(recentColors);
-
+        chooser.setColorChangeListener(new ColorDialog.ColorChangeListener() {
+            @Override
+            public void onColorChanged(int color) {
+                addRecentColor(color);
+            }
+        });
         colorChoosers.add(chooser);
         return chooser;
     }
@@ -590,6 +589,24 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         {
             chooser.setFragmentManager(getSupportFragmentManager());
             chooser.setCollapsed(true);
+        }
+    }
+
+    private void addRecentColor(int color)
+    {
+        if (!recentColors.contains(color)) {
+            recentColors.add(color);
+        }
+    }
+
+    private void updateRecentColors()
+    {
+        recentColors.clear();
+        for (ColorChooser chooser : colorChoosers) {
+            addRecentColor(chooser.getColor());
+        }
+        for (ColorChooser chooser : colorChoosers) {
+            chooser.setRecentColors(recentColors);
         }
     }
 
@@ -1195,6 +1212,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             outState.putInt(chooser.getID(), chooser.getColor());
         }
         outState.putIntArray(SuntimesTheme.THEME_PADDING, choosePadding.getPadding());
+        outState.putIntegerArrayList(ColorDialog.KEY_RECENT, recentColors);
     }
 
     /**
@@ -1226,14 +1244,22 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             spinBackground.setSelection(0);
         }
 
-        for (SizeChooser chooser : sizeChoosers)
-        {
+        for (SizeChooser chooser : sizeChoosers) {
             chooser.setValue(savedState);
         }
+
+        ArrayList<Integer> colors = savedState.getIntegerArrayList(ColorDialog.KEY_RECENT);
+        if (colors != null) {
+            recentColors.clear();
+            recentColors.addAll(colors);
+        }
+
         for (ColorChooser chooser : colorChoosers)
         {
+            chooser.setRecentColors(recentColors);
             chooser.setColor(savedState);
         }
+
         choosePadding.setPadding(savedState.getIntArray(SuntimesTheme.THEME_PADDING));
     }
 
@@ -1392,6 +1418,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         toggleRiseSetIconFill(usingRiseSetIconFill(), true);
         toggleRiseSetIconStroke(usingRiseSetIconStroke(), true);
         toggleNoonIconColor(usingNoonIconColor(), true);
+        updateRecentColors();
     }
 
     private void setSelectedBackground(SuntimesTheme.ThemeBackground themeBackground)
