@@ -22,12 +22,54 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
+/**
+ * This activity can be used to pick a color:
+ * ```
+ * public void showColorPicker()
+ * {
+ *     ArrayList<Integer> recentColors = new ArrayList<>();
+ *     recentColors.add(Color.RED);
+ *     int color = Color.GREEN;
+ *
+ *     Intent intent = new Intent(Intent.ACTION_PICK);
+ *     intent.setData(Uri.parse("color://" + String.format("#%08X", color)));        // selected color as uri fragment; color://#hexColor
+ *
+ *     //intent.putExtra("color", color);                                            // selected color as an int (another way to do same as above)
+ *     intent.putExtra("showAlpha", false);                                          // show alpha slider
+ *     intent.putExtra("recentColors", recentColors);                                // show "recent" palette of colors
+ *
+ *     startActivityForResult(intent, REQUEST_CODE);
+ * }
+ * ```
+ * ```
+ * public void onActivityResult(int requestCode, int resultCode, Intent data)
+ * {
+ *     if (resultCode == RESULT_OK && resultCode == REQUEST_CODE)
+ *     {
+ *         int color;
+ *         Uri uri = data.getData();
+ *         if (uri != null)
+ *         {
+ *             try {
+ *                 color = Color.parseColor("#" + uri.getFragment());
+ *                 onColorPicked(color);    // do something with returned value
+ *
+ *             } catch (IllegalArgumentException e) {
+ *                 Log.e("onActivityResult", "bad color uri; " + e);
+ *             }
+ *         }
+ *     }
+ * }
+ * ```
+ */
 public class ColorActivity extends AppCompatActivity
 {
     public ColorActivity() {
@@ -38,6 +80,8 @@ public class ColorActivity extends AppCompatActivity
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(AppSettings.initLocale(newBase));
     }
+
+    public static final String SCHEME_COLOR = "color";
 
     @Override
     public void onCreate(Bundle icicle)
@@ -52,10 +96,23 @@ public class ColorActivity extends AppCompatActivity
         colorDialog.setRecentColors(intent.getIntegerArrayListExtra(ColorDialog.KEY_RECENT));
         colorDialog.setShowAlpha(intent.getBooleanExtra(ColorDialog.KEY_SHOWALPHA, false));
 
-        if (intent.hasExtra(ColorDialog.KEY_COLOR)) {
-            colorDialog.setColor(intent.getIntExtra(ColorDialog.KEY_COLOR, Color.WHITE));
-        } else colorDialog.setColor(Color.WHITE);
+        int color = Color.WHITE;
+        Uri data = intent.getData();
+        if (data != null && data.getScheme().equals(SCHEME_COLOR))
+        {
+            try {
+                color = Color.parseColor("#" + data.getFragment());
 
+            } catch (IllegalArgumentException e) {
+                color = Color.WHITE;
+                Log.e("ColorActivity", e.toString());
+            }
+
+        } else if (intent.hasExtra(ColorDialog.KEY_COLOR)) {
+            color = intent.getIntExtra(ColorDialog.KEY_COLOR, Color.WHITE);
+        }
+
+        colorDialog.setColor(color);
         colorDialog.setColorDialogListener(dialogListener);
         colorDialog.show(getSupportFragmentManager(), ColorChooser.DIALOGTAG_COLOR);
     }
@@ -76,6 +133,7 @@ public class ColorActivity extends AppCompatActivity
     protected void selectColor( int color )
     {
         Intent intent = new Intent();
+        intent.setData(Uri.parse(SCHEME_COLOR + "://" + String.format("#%08X", color)));
         intent.putExtra(ColorDialog.KEY_COLOR, color);
         setResult(Activity.RESULT_OK, intent);
         finish();

@@ -115,7 +115,8 @@
         <activity
             android:name=".settings.colors.ColorActivity"
             android:label="@string/configAction_chooseColor"
-            android:icon="@drawable/ic_palette">
+            android:icon="@drawable/ic_palette"
+            android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.PICK" />
