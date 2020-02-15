@@ -405,7 +405,7 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
         colorDialog.setRecentColors(recentColors);
         colorDialog.setShowAlpha(showAlpha);
         colorDialog.setColor(getColor());
-        colorDialog.setColorChangeListener(colorDialogChangeListener);
+        colorDialog.setColorDialogListener(colorDialogListener);
         if (fragmentManager != null)
         {
             colorDialog.show(fragmentManager, DIALOGTAG_COLOR + "_" + chooserID);
@@ -416,10 +416,10 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
         }
     }
 
-    private final ColorDialog.ColorChangeListener colorDialogChangeListener = new ColorDialog.ColorChangeListener()
+    private final ColorDialog.ColorDialogListener colorDialogListener = new ColorDialog.ColorDialogListener()
     {
         @Override
-        public void onColorChanged(int color)
+        public void onAccepted(int color)
         {
             setColor(color);
             ColorChooser.this.onColorChanged(getColor());
@@ -433,7 +433,7 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
             ColorDialog colorDialog = (ColorDialog) fragmentManager.findFragmentByTag(DIALOGTAG_COLOR + "_" + chooserID);
             if (colorDialog != null)
             {
-                colorDialog.setColorChangeListener(colorDialogChangeListener);
+                colorDialog.setColorDialogListener(colorDialogListener);
             }
         }
     }

@@ -219,9 +219,6 @@ public class ColorDialog extends BottomSheetDialogFragment
         @Override
         public void onClick(View v) {
             dismiss();
-            if (colorChangeListener != null) {
-                colorChangeListener.onColorChanged(getColor());
-            }
             if (colorDialogListener != null) {
                 colorDialogListener.onAccepted(getColor());
             }
@@ -270,15 +267,11 @@ public class ColorDialog extends BottomSheetDialogFragment
     public static abstract class ColorChangeListener {
         public void onColorChanged(int color) {}
     }
-    public ColorChangeListener colorChangeListener = null;
-    public void setColorChangeListener( ColorChangeListener listener ) {
-        this.colorChangeListener = listener;
-    }
 
     /**
      * ColorDialogListener
      */
-    public static abstract class ColorDialogListener
+    public static abstract class ColorDialogListener extends ColorChangeListener
     {
         public void onAccepted(int color) {}
         public void onCanceled() {}
@@ -404,8 +397,12 @@ public class ColorDialog extends BottomSheetDialogFragment
 
         private ColorChangeListener onColorChanged = new ColorChangeListener() {
             @Override
-            public void onColorChanged(int color) {
+            public void onColorChanged(int color)
+            {
                 colorPagerArgs.putInt(KEY_COLOR, color);
+                if (colorDialogListener != null) {
+                    colorDialogListener.onColorChanged(color);
+                }
                 updateViews(getContext());
             }
         };
