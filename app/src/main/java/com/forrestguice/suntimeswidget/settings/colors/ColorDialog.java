@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.settings.colors;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
@@ -26,6 +27,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
@@ -39,6 +41,7 @@ import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.view.ContextThemeWrapper;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +65,6 @@ public class ColorDialog extends BottomSheetDialogFragment
     public static final String KEY_SHOWALPHA = "showAlpha";
     public static final String KEY_COLOR = "color";
     public static final String KEY_RECENT = "recentColors";
-
 
     public ColorDialog() {}
 
@@ -113,6 +115,33 @@ public class ColorDialog extends BottomSheetDialogFragment
 
         return dialogContent;
     }
+
+    @NonNull @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState)
+    {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setOnKeyListener(onKeyListener);
+        return dialog;
+    }
+
+    private DialogInterface.OnKeyListener onKeyListener = new DialogInterface.OnKeyListener()
+    {
+        @Override
+        public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event)
+        {
+            if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_ESCAPE)
+            {
+                getDialog().cancel();
+                if (colorDialogListener != null) {
+                    colorDialogListener.onCanceled();
+                }
+                return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     public void onSaveInstanceState( Bundle outState )
@@ -179,6 +208,9 @@ public class ColorDialog extends BottomSheetDialogFragment
         @Override
         public void onClick(View v) {
             getDialog().cancel();
+            if (colorDialogListener != null) {
+                colorDialogListener.onCanceled();
+            }
         }
     };
 
@@ -189,6 +221,9 @@ public class ColorDialog extends BottomSheetDialogFragment
             dismiss();
             if (colorChangeListener != null) {
                 colorChangeListener.onColorChanged(getColor());
+            }
+            if (colorDialogListener != null) {
+                colorDialogListener.onAccepted(getColor());
             }
         }
     };
@@ -231,14 +266,25 @@ public class ColorDialog extends BottomSheetDialogFragment
     /**
      * ColorChangeListener
      */
-    public static abstract class ColorChangeListener
-    {
+    public static abstract class ColorChangeListener {
         public void onColorChanged(int color) {}
     }
     public ColorChangeListener colorChangeListener = null;
-    public void setColorChangeListener( ColorChangeListener listener )
-    {
+    public void setColorChangeListener( ColorChangeListener listener ) {
         this.colorChangeListener = listener;
+    }
+
+    /**
+     * ColorDialogListener
+     */
+    public static abstract class ColorDialogListener
+    {
+        public void onAccepted(int color) {}
+        public void onCanceled() {}
+    }
+    public ColorDialogListener colorDialogListener = null;
+    public void setColorDialogListener( ColorDialogListener listener ) {
+        this.colorDialogListener = listener;
     }
 
     /**

@@ -111,6 +111,19 @@
             android:icon="@mipmap/ic_launcher">
         </activity>
 
+        <!-- Color Dialog Activity -->
+        <activity
+            android:name=".settings.colors.ColorActivity"
+            android:label="@string/configAction_chooseColor"
+            android:icon="@drawable/ic_palette">
+
+            <intent-filter>
+                <action android:name="android.intent.action.PICK" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="color" />
+            </intent-filter>
+        </activity>
+
         <!-- FileProvider (export to file; places, themes) -->
         <provider
             android:name="android.support.v4.content.FileProvider"

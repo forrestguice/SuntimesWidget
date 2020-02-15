@@ -42,7 +42,7 @@ import java.util.Locale;
 @SuppressWarnings("Convert2Diamond")
 public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
 {
-    private static final String DIALOGTAG_COLOR = "colorchooser";
+    public static final String DIALOGTAG_COLOR = "colorchooser";
 
     private String chooserID = "0";
     final protected ImageButton button;
