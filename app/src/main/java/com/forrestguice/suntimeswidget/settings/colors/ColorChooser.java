@@ -332,9 +332,11 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
 
     protected void onColorChanged( int newColor )
     {
-        for (ColorChooser chooser : getLinked())
-        {
+        for (ColorChooser chooser : getLinked()) {
             chooser.setColor(newColor);
+        }
+        if (colorChangeListener != null) {
+            colorChangeListener.onColorChanged(newColor);
         }
     }
     protected void onFocusGained(View view)
@@ -436,6 +438,11 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
                 colorDialog.setColorDialogListener(colorDialogListener);
             }
         }
+    }
+
+    private ColorDialog.ColorChangeListener colorChangeListener = null;
+    public void setColorChangeListener(ColorDialog.ColorChangeListener listener) {
+        colorChangeListener = listener;
     }
 
 }
