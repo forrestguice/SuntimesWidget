@@ -256,10 +256,11 @@ public class ColorDialog extends BottomSheetDialogFragment
     public void setRecentColors(ArrayList<Integer> colors)
     {
         recentColors_list.clear();
-        recentColors_list.addAll(colors);
-
+        if (colors != null) {
+            recentColors_list.addAll(colors);
+        }
         if (recentColors_adapter != null) {
-            recentColors_adapter.setColors(colors);
+            recentColors_adapter.setColors(recentColors_list);
         }
     }
 

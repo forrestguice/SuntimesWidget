@@ -49,7 +49,7 @@ public class ColorActivity extends AppCompatActivity
 
         Intent intent = getIntent();
         ColorDialog colorDialog = new ColorDialog();
-        //colorDialog.setRecentColors(recentColors);
+        colorDialog.setRecentColors(intent.getIntegerArrayListExtra(ColorDialog.KEY_RECENT));
         colorDialog.setShowAlpha(intent.getBooleanExtra(ColorDialog.KEY_SHOWALPHA, false));
 
         if (intent.hasExtra(ColorDialog.KEY_COLOR)) {
