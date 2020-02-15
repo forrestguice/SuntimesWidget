@@ -91,7 +91,16 @@ public class ColorActivity extends AppCompatActivity
         setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_activity_colors);
 
-        Intent intent = getIntent();
+        ColorDialog colorDialog = (ColorDialog) getSupportFragmentManager().findFragmentByTag(ColorChooser.DIALOGTAG_COLOR);
+        if (colorDialog == null)
+        {
+            colorDialog = createColorDialog(getIntent());
+            colorDialog.show(getSupportFragmentManager(), ColorChooser.DIALOGTAG_COLOR);
+        }
+    }
+
+    protected ColorDialog createColorDialog(Intent intent)
+    {
         ColorDialog colorDialog = new ColorDialog();
         colorDialog.setRecentColors(intent.getIntegerArrayListExtra(ColorDialog.KEY_RECENT));
         colorDialog.setShowAlpha(intent.getBooleanExtra(ColorDialog.KEY_SHOWALPHA, false));
@@ -114,7 +123,7 @@ public class ColorActivity extends AppCompatActivity
 
         colorDialog.setColor(color);
         colorDialog.setColorDialogListener(dialogListener);
-        colorDialog.show(getSupportFragmentManager(), ColorChooser.DIALOGTAG_COLOR);
+        return colorDialog;
     }
 
     private ColorDialog.ColorDialogListener dialogListener = new ColorDialog.ColorDialogListener()
