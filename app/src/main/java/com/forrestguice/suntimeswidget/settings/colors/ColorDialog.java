@@ -95,6 +95,7 @@ public class ColorDialog extends BottomSheetDialogFragment
     }
     public void setShowAlpha(boolean value) {
         colorPagerArgs.putBoolean(KEY_SHOWALPHA, value);
+        filterRecentColors();
     }
 
     @Override
@@ -158,7 +159,10 @@ public class ColorDialog extends BottomSheetDialogFragment
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_COLOR, getColor());
         outState.putBoolean(KEY_SHOWALPHA, showAlpha());
-        outState.putIntegerArrayList(KEY_RECENT, recentColors_list);
+
+        @SuppressWarnings("unchecked")
+        ArrayList<Integer> colors = (ArrayList<Integer>)recentColors_list.clone();
+        outState.putIntegerArrayList(KEY_RECENT, colors);
     }
 
     private void initViews(Context context, View dialogContent)
@@ -262,11 +266,26 @@ public class ColorDialog extends BottomSheetDialogFragment
     public void setRecentColors(ArrayList<Integer> colors)
     {
         recentColors_list.clear();
+
         if (colors != null) {
             recentColors_list.addAll(colors);
+            filterRecentColors();
         }
+
         if (recentColors_adapter != null) {
             recentColors_adapter.setColors(recentColors_list);
+        }
+    }
+
+    private void filterRecentColors()
+    {
+        if (!showAlpha()) {
+            for (int i=recentColors_list.size()-1; i >= 0; i--) {
+                Integer color = recentColors_list.get(i);
+                if (color != null && Color.alpha(color) != 255) {
+                    recentColors_list.remove(color);
+                }
+            }
         }
     }
 

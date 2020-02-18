@@ -595,7 +595,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private void addRecentColor(int color)
     {
         if (!recentColors.contains(color)) {
-            recentColors.add(color);
+            recentColors.add(0, color);
         }
     }
 
