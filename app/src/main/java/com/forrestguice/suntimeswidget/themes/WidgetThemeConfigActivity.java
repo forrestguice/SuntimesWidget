@@ -32,6 +32,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.ColorUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -80,6 +81,8 @@ import java.security.InvalidParameterException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 
 import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_BACKGROUND_COLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesTheme.THEME_NAME;
@@ -605,6 +608,23 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         for (ColorChooser chooser : colorChoosers) {
             addRecentColor(chooser.getColor());
         }
+        Collections.sort(recentColors, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2)
+            {
+                double[] lab0 = new double[3];
+                double[] lab1 = new double[3];
+                double[] lab2 = new double[3];
+                ColorUtils.colorToLAB(Color.BLACK, lab0);
+                ColorUtils.colorToLAB(o1, lab1);
+                ColorUtils.colorToLAB(o2, lab2);
+
+                Double e1 = ColorUtils.distanceEuclidean(lab1, lab0);
+                Double e2 = ColorUtils.distanceEuclidean(lab2, lab0);
+                return e2.compareTo(e1);
+            }
+        });
+
         for (ColorChooser chooser : colorChoosers) {
             chooser.setRecentColors(recentColors);
         }
@@ -1286,7 +1306,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         inflater.inflate(R.menu.themeconfig, menu);
 
         final MenuItem saveItem = menu.findItem(R.id.saveTheme);
-        preview.getHandler().postDelayed(new Runnable()
+        preview.getHandler().postDelayed(new Runnable()   // TODO: bug here: npe this line, sometimes
         {
             public void run()
             {
