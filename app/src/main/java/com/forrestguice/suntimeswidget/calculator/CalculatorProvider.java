@@ -356,6 +356,7 @@ public class CalculatorProvider extends ContentProvider
                             break;
 
                         case COLUMN_CONFIG_PROVIDER_VERSION_CODE:
+                        case COLUMN_CONFIG_PROVIDER_VERSION_CODE_V2:
                             row[i] = CalculatorProviderContract.VERSION_CODE;
                             break;
 
@@ -423,6 +424,7 @@ public class CalculatorProvider extends ContentProvider
         } else Log.e("queryConfig", "context is null!");
         return retValue;
     }
+    private static final String COLUMN_CONFIG_PROVIDER_VERSION_CODE_V2 = "config_pvodier_version_code";    // key has typo in v0-v2; fixed v3
 
     /**
      * querySun

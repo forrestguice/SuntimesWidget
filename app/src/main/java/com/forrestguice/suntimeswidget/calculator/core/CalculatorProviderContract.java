@@ -209,6 +209,7 @@ package com.forrestguice.suntimeswidget.calculator.core;
  *   0 initial version
  *   1 adds COLUMN_CONFIG_LOCATION; fixes return type of SUN and MOON queries; permission changed to suntimes.permission.READ_CALCULATOR
  *   2 adds COLUMN_MOONPOS_PERIGEE, APOGEE, and COLUMN_MOON_*_DISTANCE
+ *   3 fixes typo in COLUMN_CONFIG_PROVIDER_VERSION_CODE
  */
 public interface CalculatorProviderContract
 {
@@ -221,7 +222,7 @@ public interface CalculatorProviderContract
      * CONFIG
      */
     String COLUMN_CONFIG_PROVIDER_VERSION = "config_provider_version";             // String (provider version string)
-    String COLUMN_CONFIG_PROVIDER_VERSION_CODE = "config_pvodier_version_code";    // int (provider version code)
+    String COLUMN_CONFIG_PROVIDER_VERSION_CODE = "config_provider_version_code";   // int (provider version code)
     String COLUMN_CONFIG_APP_VERSION = "config_app_version";                       // String (app version string)
     String COLUMN_CONFIG_APP_VERSION_CODE = "config_app_version_code";             // int (app version code)
     String COLUMN_CONFIG_APP_THEME = "config_app_theme";                           // String (themeName)
