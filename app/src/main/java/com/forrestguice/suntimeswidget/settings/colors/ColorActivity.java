@@ -73,6 +73,8 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
  */
 public class ColorActivity extends AppCompatActivity
 {
+    public static final String SCHEME_COLOR = "color";
+
     public ColorActivity() {
         super();
     }
@@ -81,8 +83,6 @@ public class ColorActivity extends AppCompatActivity
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(AppSettings.initLocale(newBase));
     }
-
-    public static final String SCHEME_COLOR = "color";
 
     @Override
     public void onCreate(Bundle icicle)
