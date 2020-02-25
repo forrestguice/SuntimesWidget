@@ -203,6 +203,12 @@ package com.forrestguice.suntimeswidget.calculator.core;
  *           // manifest, were revoked, or were never granted (re-installing the app should grant
  *           // permissions).
  *       }*
+ *
+ * ------------------------------------------------------------------------------------------------
+ * CHANGES
+ *   0 initial version
+ *   1 adds COLUMN_CONFIG_LOCATION; fixes return type of SUN and MOON queries; permission changed to suntimes.permission.READ_CALCULATOR
+ *   2 adds COLUMN_MOONPOS_PERIGEE, APOGEE, and COLUMN_MOON_*_DISTANCE
  */
 public interface CalculatorProviderContract
 {
