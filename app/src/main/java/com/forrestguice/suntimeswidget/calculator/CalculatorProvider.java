@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -56,6 +56,14 @@ import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProvider
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LOCALE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LOCATION;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_ALTITUDE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TALKBACK;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_DATETIME;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_HOURS;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_IS24;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_SECONDS;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_WEEKS;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_WARNINGS;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION_CODE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_TIMEZONE;
@@ -411,6 +419,41 @@ public class CalculatorProvider extends ContentProvider
 
                         case COLUMN_CONFIG_CALCULATOR_FEATURES:
                             row[i] = calculator.getSupportedFeatures();
+                            break;
+
+                        case COLUMN_CONFIG_OPTION_TIME_IS24:
+                            WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
+                            boolean is24 = (mode == WidgetSettings.TimeFormatMode.MODE_SYSTEM) ? android.text.format.DateFormat.is24HourFormat(context)
+                                    : (mode == WidgetSettings.TimeFormatMode.MODE_24HR);
+                            row[i] = (is24 ? 1 : 0);
+                            break;
+
+                        case COLUMN_CONFIG_OPTION_TIME_SECONDS:
+                            row[i] = (WidgetSettings.loadShowSecondsPref(context, appWidgetID) ? 1 : 0);
+                            break;
+
+                        case COLUMN_CONFIG_OPTION_TIME_HOURS:
+                            row[i] = (WidgetSettings.loadShowHoursPref(context, appWidgetID) ? 1 : 0);
+                            break;
+
+                        case COLUMN_CONFIG_OPTION_TIME_WEEKS:
+                            row[i] = (WidgetSettings.loadShowWeeksPref(context, appWidgetID) ? 1 : 0);
+                            break;
+
+                        case COLUMN_CONFIG_OPTION_TIME_DATETIME:
+                            row[i] = (WidgetSettings.loadShowTimeDatePref(context, appWidgetID) ? 1 : 0);
+                            break;
+
+                        case COLUMN_CONFIG_OPTION_ALTITUDE:
+                            row[i] = (WidgetSettings.loadLocationAltitudeEnabledPref(context, 0) ? 1 : 0);
+                            break;
+
+                        case COLUMN_CONFIG_OPTION_WARNINGS:
+                            row[i] = (AppSettings.loadShowWarningsPref(context) ? 1 : 0);
+                            break;
+
+                        case COLUMN_CONFIG_OPTION_TALKBACK:
+                            row[i] = (AppSettings.loadVerboseAccessibilityPref(context) ? 1 : 0);
                             break;
 
                         default:

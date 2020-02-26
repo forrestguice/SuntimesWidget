@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -40,7 +40,10 @@ package com.forrestguice.suntimeswidget.calculator.core;
  *       COLUMN_CONFIG_LOCALE, COLUMN_CONFIG_APPTHEME,
  *       COLUMN_CONFIG_CALCULATOR, COLUMN_CONFIG_CALCULATOR_FEATURES,
  *       COLUMN_CONFIG_LATITUDE, COLUMN_CONFIG_LONGITUDE, COLUMN_CONFIG_ALTITUDE,
- *       COLUMN_CONFIG_TIMEZONE, COLUMN_CONFIG_APPWIDGETID
+ *       COLUMN_CONFIG_TIMEZONE, COLUMN_CONFIG_APPWIDGETID,
+ *       COLUMN_CONFIG_OPTION_TIME_IS24, COLUMN_CONFIG_OPTION_TIME_SECONDS, COLUMN_CONFIG_OPTION_TIME_HOURS,
+ *       COLUMN_CONFIG_OPTION_TIME_WEEKS, COLUMN_CONFIG_OPTION_TIME_DATETIME,
+ *       COLUMN_CONFIG_OPTION_ALTITUDE, COLUMN_CONFIG_OPTION_WARNINGS, COLUMN_CONFIG_OPTION_TALKBACK
  *
  * ------------------------------------------------------------------------------------------------*
  * QUERY_SUN (sun)
@@ -209,7 +212,9 @@ package com.forrestguice.suntimeswidget.calculator.core;
  *   0 initial version
  *   1 adds COLUMN_CONFIG_LOCATION; fixes return type of SUN and MOON queries; permission changed to suntimes.permission.READ_CALCULATOR
  *   2 adds COLUMN_MOONPOS_PERIGEE, APOGEE, and COLUMN_MOON_*_DISTANCE
- *   3 fixes typo in COLUMN_CONFIG_PROVIDER_VERSION_CODE
+ *   3 adds COLUMN_CONFIG_OPTION_IS24, COLUMN_CONFIG_OPTION_TIME_SECONDS, COLUMN_CONFIG_OPTION_TIME_HOURS, COLUMN_CONFIG_OPTION_TIME_WEEKS
+ *     adds COLUMN_CONFIG_OPTION_ALTITUDE, COLUMN_CONFIG_OPTION_WARNINGS, COLUMN_CONFIG_OPTION_TALKBACK
+ *     fixes typo in COLUMN_CONFIG_PROVIDER_VERSION_CODE
  */
 public interface CalculatorProviderContract
 {
@@ -236,6 +241,15 @@ public interface CalculatorProviderContract
     String COLUMN_CONFIG_CALCULATOR = "calculator";                                // String (calculatorName)
     String COLUMN_CONFIG_CALCULATOR_FEATURES = "calculator_features";              // int[] (SuntimesCalculator.FEATURE flags)
 
+    String COLUMN_CONFIG_OPTION_TIME_IS24 = "option_is24";                         // int (boolean) 24 hour time
+    String COLUMN_CONFIG_OPTION_TIME_SECONDS = "option_seconds";                   // int (boolean) show seconds
+    String COLUMN_CONFIG_OPTION_TIME_HOURS = "option_hours";                       // int (boolean) show hours+min in spans > a day
+    String COLUMN_CONFIG_OPTION_TIME_WEEKS = "option_weeks";                       // int (boolean) divide spans greater than 7d into weeks
+    String COLUMN_CONFIG_OPTION_TIME_DATETIME = "option_datetime";                 // int (boolean) include time when displaying dates
+    String COLUMN_CONFIG_OPTION_ALTITUDE = "option_altitude";                      // int (boolean) use altitude based refinements
+    String COLUMN_CONFIG_OPTION_WARNINGS = "option_warnings";                      // int (boolean) show config warnings
+    String COLUMN_CONFIG_OPTION_TALKBACK = "option_talkback";                      // int (boolean) announce ui changes
+
     String QUERY_CONFIG = "config";
     String[] QUERY_CONFIG_PROJECTION = new String[] {
             COLUMN_CONFIG_APP_VERSION, COLUMN_CONFIG_APP_VERSION_CODE,
@@ -243,7 +257,9 @@ public interface CalculatorProviderContract
             COLUMN_CONFIG_LOCALE, COLUMN_CONFIG_APP_THEME,
             COLUMN_CONFIG_CALCULATOR, COLUMN_CONFIG_CALCULATOR_FEATURES,
             COLUMN_CONFIG_LOCATION, COLUMN_CONFIG_LATITUDE, COLUMN_CONFIG_LONGITUDE, COLUMN_CONFIG_ALTITUDE,
-            COLUMN_CONFIG_TIMEZONE, COLUMN_CONFIG_APPWIDGETID
+            COLUMN_CONFIG_TIMEZONE, COLUMN_CONFIG_APPWIDGETID,
+            COLUMN_CONFIG_OPTION_TIME_IS24, COLUMN_CONFIG_OPTION_TIME_SECONDS, COLUMN_CONFIG_OPTION_TIME_HOURS, COLUMN_CONFIG_OPTION_TIME_WEEKS, COLUMN_CONFIG_OPTION_TIME_DATETIME,
+            COLUMN_CONFIG_OPTION_ALTITUDE, COLUMN_CONFIG_OPTION_WARNINGS, COLUMN_CONFIG_OPTION_TALKBACK
     };
 
     /**
