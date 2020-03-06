@@ -55,6 +55,7 @@ import android.util.TypedValue;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
@@ -392,6 +393,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 String calcName = sharedPreferences.getString(key, null);
                 SuntimesCalculatorDescriptor descriptor = SuntimesCalculatorDescriptor.valueOf(this, calcName);
                 WidgetSettings.saveCalculatorModePref(this, 0, descriptor);
+                CalculatorProvider.clearCachedConfig(0);
                 Log.i(LOG_TAG, "onSharedPreferenceChanged: value: " + calcName + " :: " + descriptor);
 
             } catch (InvalidParameterException e) {
@@ -408,6 +410,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 String calcName = sharedPreferences.getString(key, null);
                 SuntimesCalculatorDescriptor descriptor = SuntimesCalculatorDescriptor.valueOf(this, calcName);
                 WidgetSettings.saveCalculatorModePref(this, 0, "moon", descriptor);
+                CalculatorProvider.clearCachedConfig(0);
                 Log.i(LOG_TAG, "onSharedPreferenceChanged: value: " + calcName + " :: " + descriptor);
 
             } catch (InvalidParameterException e) {
@@ -421,6 +424,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
             // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
             WidgetSettings.saveLocationAltitudeEnabledPref(this, 0, sharedPreferences.getBoolean(key, WidgetSettings.PREF_DEF_LOCATION_ALTITUDE_ENABLED));
+            CalculatorProvider.clearCachedConfig(0);
             return;
         }
 

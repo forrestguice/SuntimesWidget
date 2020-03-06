@@ -794,6 +794,7 @@ public class SuntimesActivity extends AppCompatActivity
                 {
                     boolean useAltitude = WidgetSettings.loadLocationAltitudeEnabledPref(SuntimesActivity.this, 0);
                     WidgetSettings.saveLocationAltitudeEnabledPref(SuntimesActivity.this, 0, !useAltitude);
+                    CalculatorProvider.clearCachedConfig(0);
                     calculateData(SuntimesActivity.this);
                     setUpdateAlarms(SuntimesActivity.this);
                     updateViews(SuntimesActivity.this);
