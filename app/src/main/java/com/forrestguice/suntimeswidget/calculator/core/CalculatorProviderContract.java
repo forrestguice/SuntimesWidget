@@ -44,6 +44,7 @@ package com.forrestguice.suntimeswidget.calculator.core;
  *       COLUMN_CONFIG_OPTION_TIME_IS24, COLUMN_CONFIG_OPTION_TIME_SECONDS, COLUMN_CONFIG_OPTION_TIME_HOURS,
  *       COLUMN_CONFIG_OPTION_TIME_WEEKS, COLUMN_CONFIG_OPTION_TIME_DATETIME,
  *       COLUMN_CONFIG_OPTION_ALTITUDE, COLUMN_CONFIG_OPTION_WARNINGS, COLUMN_CONFIG_OPTION_TALKBACK
+ *       COLUMN_CONFIG_OPTION_LENGTH_UNITS
  *
  * ------------------------------------------------------------------------------------------------*
  * QUERY_SUN (sun)
@@ -249,6 +250,7 @@ public interface CalculatorProviderContract
     String COLUMN_CONFIG_OPTION_ALTITUDE = "option_altitude";                      // int (boolean) use altitude based refinements
     String COLUMN_CONFIG_OPTION_WARNINGS = "option_warnings";                      // int (boolean) show config warnings
     String COLUMN_CONFIG_OPTION_TALKBACK = "option_talkback";                      // int (boolean) announce ui changes
+    String COLUMN_CONFIG_OPTION_LENGTH_UNITS = "distance_units";                   // String (enum) METRIC, IMPERIAL
 
     String QUERY_CONFIG = "config";
     String[] QUERY_CONFIG_PROJECTION = new String[] {
@@ -259,7 +261,7 @@ public interface CalculatorProviderContract
             COLUMN_CONFIG_LOCATION, COLUMN_CONFIG_LATITUDE, COLUMN_CONFIG_LONGITUDE, COLUMN_CONFIG_ALTITUDE,
             COLUMN_CONFIG_TIMEZONE, COLUMN_CONFIG_APPWIDGETID,
             COLUMN_CONFIG_OPTION_TIME_IS24, COLUMN_CONFIG_OPTION_TIME_SECONDS, COLUMN_CONFIG_OPTION_TIME_HOURS, COLUMN_CONFIG_OPTION_TIME_WEEKS, COLUMN_CONFIG_OPTION_TIME_DATETIME,
-            COLUMN_CONFIG_OPTION_ALTITUDE, COLUMN_CONFIG_OPTION_WARNINGS, COLUMN_CONFIG_OPTION_TALKBACK
+            COLUMN_CONFIG_OPTION_ALTITUDE, COLUMN_CONFIG_OPTION_WARNINGS, COLUMN_CONFIG_OPTION_TALKBACK, COLUMN_CONFIG_OPTION_LENGTH_UNITS
     };
 
     /**

@@ -57,6 +57,7 @@ import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProvider
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LOCATION;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_ALTITUDE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_LENGTH_UNITS;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TALKBACK;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_DATETIME;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_HOURS;
@@ -454,6 +455,10 @@ public class CalculatorProvider extends ContentProvider
 
                         case COLUMN_CONFIG_OPTION_TALKBACK:
                             row[i] = (AppSettings.loadVerboseAccessibilityPref(context) ? 1 : 0);
+                            break;
+
+                        case COLUMN_CONFIG_OPTION_LENGTH_UNITS:
+                            row[i] = (WidgetSettings.loadLengthUnitsPref(context, appWidgetID).name());
                             break;
 
                         default:
