@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.calculator.core;
 
 /**
  * CalculatorProviderContract
- * @version 2 (0.3.0)
+ * @version 3 (0.4.0)
  *
  * Supported URIs have the form: "content://AUTHORITY/query"
  * ..where [AUTHORITY] is "suntimeswidget.calculator.provider"
@@ -221,8 +221,8 @@ public interface CalculatorProviderContract
 {
     String AUTHORITY = "suntimeswidget.calculator.provider";
     String READ_PERMISSION = "suntimes.permission.READ_CALCULATOR";
-    String VERSION_NAME = "v0.3.0";
-    int VERSION_CODE = 2;
+    String VERSION_NAME = "v0.4.0";
+    int VERSION_CODE = 3;
 
     /**
      * CONFIG
