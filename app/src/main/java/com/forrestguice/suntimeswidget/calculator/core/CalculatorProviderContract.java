@@ -229,6 +229,7 @@ public interface CalculatorProviderContract
      */
     String COLUMN_CONFIG_PROVIDER_VERSION = "config_provider_version";             // String (provider version string)
     String COLUMN_CONFIG_PROVIDER_VERSION_CODE = "config_provider_version_code";   // int (provider version code)
+    String COLUMN_CONFIG_PROVIDER_VERSION_CODE_V2 = "config_pvodier_version_code"; // int (key has typo in v0-v2; fixed v3)
     String COLUMN_CONFIG_APP_VERSION = "config_app_version";                       // String (app version string)
     String COLUMN_CONFIG_APP_VERSION_CODE = "config_app_version_code";             // int (app version code)
     String COLUMN_CONFIG_APP_THEME = "config_app_theme";                           // String (themeName)
