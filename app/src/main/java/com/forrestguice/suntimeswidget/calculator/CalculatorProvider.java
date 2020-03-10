@@ -1088,10 +1088,10 @@ public class CalculatorProvider extends ContentProvider
      * @param rangeSegment startMillis-endMillis
      * @return a Calendar[2] containing [0]startDate, [1]endDate.
      */
-    public static Calendar[] parseDateRange(@NonNull String rangeSegment)
+    public static Calendar[] parseDateRange(@Nullable String rangeSegment)
     {
         Calendar[] retValue = new Calendar[2];
-        String[] rangeString = rangeSegment.split("-");
+        String[] rangeString = ((rangeSegment != null) ? rangeSegment.split("-") : new String[0]);
         if (rangeString.length == 2)
         {
             try {
@@ -1119,10 +1119,10 @@ public class CalculatorProvider extends ContentProvider
      * @param rangeSegment startYear-endYear
      * @return a Calendar[2] containing [0](startDate), [1](endDate).
      */
-    public static Calendar[] parseYearRange(String rangeSegment)
+    public static Calendar[] parseYearRange(@Nullable String rangeSegment)
     {
         Calendar[] retValue = new Calendar[2];
-        String[] rangeString = rangeSegment.split("-");
+        String[] rangeString = ((rangeSegment != null) ? rangeSegment.split("-") : new String[0]);
         if (rangeString.length == 2)
         {
             try {
