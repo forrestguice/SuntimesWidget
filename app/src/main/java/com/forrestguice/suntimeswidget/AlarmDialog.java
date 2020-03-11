@@ -144,6 +144,8 @@ public class AlarmDialog extends BottomSheetDialogFragment
             {
                 adapter.remove(SolarEvents.MOONRISE);
                 adapter.remove(SolarEvents.MOONSET);
+                adapter.remove(SolarEvents.MOONNOON);
+                adapter.remove(SolarEvents.MOONNIGHT);
                 adapter.remove(SolarEvents.NEWMOON);
                 adapter.remove(SolarEvents.FIRSTQUARTER);
                 adapter.remove(SolarEvents.FULLMOON);

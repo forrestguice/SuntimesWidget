@@ -171,8 +171,15 @@ public enum SolarEvents
 
     public static SolarEventsAdapter createAdapter(Context context)
     {
-        ArrayList<SolarEvents> choices = new ArrayList<SolarEvents>();
-        choices.addAll(Arrays.asList(SolarEvents.values()));
+        ArrayList<SolarEvents> choices = new ArrayList<SolarEvents>(Arrays.asList(
+                MORNING_ASTRONOMICAL, MORNING_NAUTICAL, MORNING_BLUE8, MORNING_CIVIL, MORNING_BLUE4,
+                SUNRISE, MORNING_GOLDEN,
+                NOON, EVENING_GOLDEN,
+                SUNSET, EVENING_BLUE4, EVENING_CIVIL, EVENING_BLUE8, EVENING_NAUTICAL, EVENING_ASTRONOMICAL,
+                MOONRISE, MOONNOON, MOONSET, MOONNIGHT,
+                NEWMOON, FIRSTQUARTER, FULLMOON, THIRDQUARTER,
+                EQUINOX_SPRING, SOLSTICE_SUMMER, EQUINOX_AUTUMNAL, SOLSTICE_WINTER
+        ));
         return new SolarEventsAdapter(context, choices);
     }
 
