@@ -336,7 +336,6 @@ public class MoonPhasesView1 extends LinearLayout
         {
             if (holder.position >= 0 && (holder.position < CENTER_POSITION - 1 || holder.position > CENTER_POSITION + 2)) {
                 data.remove(holder.position);
-                Log.d("DEBUG", "remove data " + holder.position);
             }
             holder.position = RecyclerView.NO_POSITION;
         }
@@ -360,7 +359,6 @@ public class MoonPhasesView1 extends LinearLayout
             } else if (offset < 0) {
                 firstPosition = position - (4 + (offset));
             }
-            Log.d("DEBUG", "position: + " + position + ", firstPosition: " + firstPosition);
 
             SuntimesMoonData1 moon = data.get(firstPosition);
             if (moon == null)

@@ -261,7 +261,6 @@ public class MoonApsisView extends LinearLayout
         {
             if (holder.position >= 0 && (holder.position < CENTER_POSITION - 1 || holder.position > CENTER_POSITION + 2)) {
                 data.remove(holder.position);
-                Log.d("DEBUG", "remove data " + holder.position);
             }
             holder.position = RecyclerView.NO_POSITION;
         }
@@ -306,7 +305,6 @@ public class MoonApsisView extends LinearLayout
             } else if (offset < 0) {
                 firstPosition = position - (2 + (offset));
             }
-            Log.d("DEBUG", "position: + " + position + ", firstPosition: " + firstPosition + ", isRising: " + isRising);
 
             SuntimesMoonData0 moon = data.get(firstPosition);
             if (moon == null)

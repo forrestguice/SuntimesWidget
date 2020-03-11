@@ -381,15 +381,15 @@ public class EquinoxView extends LinearLayout
         {
             if (labelColor != null) {
                 labelView.setTextColor(SuntimesUtils.colorStateList(labelColor, options.disabledColor));
-            } else Log.e("EquinoxView", "themeViews: null color, ignoring...");
+            } //else Log.w("EquinoxView", "themeViews: null color, ignoring...");
 
             if (timeColor != null) {
                 timeView.setTextColor(SuntimesUtils.colorStateList(timeColor, options.disabledColor));
-            } else Log.e("EquinoxView", "themeViews: null color, ignoring...");
+            } //else Log.w("EquinoxView", "themeViews: null color, ignoring...");
 
             if (textColor != null) {
                 noteView.setTextColor(SuntimesUtils.colorStateList(textColor, options.disabledColor));
-            } else Log.e("EquinoxView", "themeViews: null color, ignoring...");
+            } //else Log.w("EquinoxView", "themeViews: null color, ignoring...");
         }
 
         public void updateDate( Context context, Calendar time )
