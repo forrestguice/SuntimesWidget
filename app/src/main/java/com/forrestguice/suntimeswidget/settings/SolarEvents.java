@@ -69,7 +69,10 @@ public enum SolarEvents
     EQUINOX_SPRING("equinox", "spring equinox", R.attr.springColor, 3, true),                                         // 21
     SOLSTICE_SUMMER("solstice", "summer solstice", R.attr.summerColor, 3, false),                                     // 22
     EQUINOX_AUTUMNAL("equinox", "autumnal equinox", R.attr.fallColor, 3, false),                                      // 23
-    SOLSTICE_WINTER("solstice", "winter solstice", R.attr.winterColor, 3, true)                                       // 24
+    SOLSTICE_WINTER("solstice", "winter solstice", R.attr.winterColor, 3, true),                                      // 24
+
+    MOONNOON("lunar noon", "lunar noon", R.attr.moonsetIcon, 1, true),                                            // 25
+    MOONNIGHT("lunar midnight", "lunar midnight", R.attr.moonsetIcon, 1, false),                                  // 26
     ;                                                                                                    // .. R.array.solarevents_short/_long req same length/order
 
     private int iconResource;
@@ -78,7 +81,7 @@ public enum SolarEvents
     public boolean rising;
 
     public static final int TYPE_SUN = 0;         // sunrise, sunset, twilight (converted using toTimeMode)
-    public static final int TYPE_MOON = 1;        // moonrise, moonset
+    public static final int TYPE_MOON = 1;        // moonrise, moonset, lunar noon, lunar midnight
     public static final int TYPE_MOONPHASE = 2;   // major phases (converted using toMoonPhase)
     public static final int TYPE_SEASON = 3;      // solstices & equinoxes (converted using toSolsticeEquinoxMode)
 

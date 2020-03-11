@@ -967,6 +967,8 @@
         <item>summer solstice</item>   <!-- TODO -->
         <item>autumn equinox</item>   <!-- TODO -->
         <item>winter solstice</item>   <!-- TODO -->
+        <item>lunar noon</item>    <!-- TODO -->
+        <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>reggel csillagászati szürkület (kezdete)</item>
@@ -994,6 +996,8 @@
         <item>summer solstice</item>   <!-- TODO -->
         <item>autumn equinox</item>   <!-- TODO -->
         <item>winter solstice</item>   <!-- TODO -->
+        <item>lunar noon</item>    <!-- TODO -->
+        <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
 
     <!-- Dialog: Enable GPS? -->

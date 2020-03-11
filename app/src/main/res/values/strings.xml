@@ -1203,6 +1203,8 @@
         <item>summer solstice</item>
         <item>autumn equinox</item>
         <item>winter solstice</item>
+        <item>lunar noon</item>    <!-- TODO -->
+        <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>morning astronomical twilight (start)</item>
@@ -1230,6 +1232,8 @@
         <item>summer solstice</item>
         <item>autumn equinox</item>
         <item>winter solstice</item>
+        <item>lunar noon</item>    <!-- TODO -->
+        <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
