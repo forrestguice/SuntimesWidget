@@ -21,7 +21,7 @@ android
         applicationId "com.forrestguice.suntimeswidget"
         //noinspection MinSdkTooLow
         minSdkVersion 10
-        //noinspection OldTargetApi
+        //noinspection ExpiredTargetSdkVersion,OldTargetApi
         targetSdkVersion 25
         versionCode 57
         versionName "0.12.5"
