@@ -284,6 +284,7 @@ public class MoonApsisView extends LinearLayout
             boolean isAgo = rawOffset < 0;
             int offset = rawOffset % 2;
 
+            //noinspection SimplifiableConditionalExpression
             holder.isRising = (isRising ? (offset == 0) : (offset != 0));
             themeViews(context, holder, isAgo);
             holder.bindDataToPosition(context, moon, holder.isRising, position);
@@ -334,7 +335,7 @@ public class MoonApsisView extends LinearLayout
                     date.add(Calendar.DATE, -7);                   // so offset 1 week
 
                     int rawOffset = position - CENTER_POSITION;
-                    double minuteOffset = (rawOffset / 2) * anomalisticMinutes;
+                    double minuteOffset = (rawOffset >> 1) * anomalisticMinutes;
                     date.add(Calendar.MINUTE, (int)minuteOffset);
                     moon.setTodayIs(date);
 
