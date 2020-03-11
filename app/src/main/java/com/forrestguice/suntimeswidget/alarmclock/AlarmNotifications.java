@@ -1406,7 +1406,7 @@ public class AlarmNotifications extends BroadcastReceiver
         Calendar day = Calendar.getInstance();
         moonData.setTodayIs(day);
         moonData.calculate();
-        Calendar eventTime = (event.isRising() ? moonData.moonriseCalendarToday() : moonData.moonsetCalendarToday());
+        Calendar eventTime = moonEventCalendar(event, moonData, true);
         eventTime.set(Calendar.SECOND, 0);
         alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
 
@@ -1423,11 +1423,31 @@ public class AlarmNotifications extends BroadcastReceiver
             day.add(Calendar.DAY_OF_YEAR, 1);
             moonData.setTodayIs(day);
             moonData.calculate();
-            eventTime = (event.isRising() ? moonData.moonriseCalendarToday() : moonData.moonsetCalendarToday());
+            eventTime = moonEventCalendar(event, moonData, true);
             eventTime.set(Calendar.SECOND, 0);
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
         }
         return eventTime;
+    }
+
+    public static Calendar moonEventCalendar(SolarEvents event, SuntimesMoonData data, boolean today)
+    {
+        if (today)
+        {
+            switch (event) {
+                case MOONNOON: return data.getLunarNoonToday();
+                case MOONNIGHT: return data.getLunarMidnightToday();
+                case MOONRISE: return data.moonriseCalendarToday();
+                case MOONSET: default: return data.moonsetCalendarToday();
+            }
+        } else {
+            switch (event) {
+                case MOONNOON: return data.getLunarNoonTomorrow();
+                case MOONNIGHT: return data.getLunarMidnightTomorrow();
+                case MOONRISE: return data.moonriseCalendarTomorrow();
+                case MOONSET: default: return data.moonsetCalendarTomorrow();
+            }
+        }
     }
 
     @Nullable
