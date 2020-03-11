@@ -127,9 +127,9 @@ I want to express my thanks to those who have sent me something. This is greatly
 
 ## Bug Reports ##
 
-You can report bugs using the issue tracker. Be aware that times are approximate and may differ from official sources (up to 10 minutes).
+Use the issue tracker to submit a bug report or a feature request.
 
-When submitting a bug please be detailed and specific. What did you expect the app to do, what did you actually observe? Bugs that can't be reproduced won't get fixed. Useful information includes Android OS version and your specific device model.
+When reporting a bug **please be detailed as possible**. What did you expect the app to do, what did you actually observe? Include the app version number in your report. Other useful information includes the Android OS version (and sometimes your specific device model).
 
 
 ## Legal Stuff
