@@ -1343,7 +1343,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         String moonIllum = getString(R.string.help_general_moonillum);
 
-        String helpText = getString(R.string.help_general3, timeText, blueGoldText, moonIllum);
+        String helpText = getString(R.string.help_general3, moonIllum, timeText, blueGoldText);
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpText);
