@@ -4,6 +4,8 @@
  <br /> <br />
   <a href="https://f-droid.org/en/packages/com.forrestguice.suntimescalendars/"><img align="left" src="{{ 'assets/images/ic_launcher.png' | relative_url }}" hspace="8" height="64" /></a>  <br/>[Suntimes Calendars](https://f-droid.org/en/packages/com.forrestguice.suntimescalendars/) <br />An add-on that supplies events to the Calendar app.
  <br /> <br />
+  <a href="https://github.com/forrestguice/SolunarPeriods"><img align="left" src="{{ 'assets/images/ic_solunar.png' | relative_url }}" hspace="8" height="64" /></a>  <br/>[Solunar Periods](https://github.com/forrestguice/SolunarPeriods) <br />A hunting and fishing add-on app.
+ <br /> <br />
 <hr />
 <hr />
 {% include donate.html %}
