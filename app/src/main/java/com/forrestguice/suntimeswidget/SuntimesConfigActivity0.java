@@ -77,6 +77,8 @@ import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PIC
 @SuppressWarnings("Convert2Diamond")
 public class SuntimesConfigActivity0 extends AppCompatActivity
 {
+    public static final String EXTRA_RECONFIGURE = "ONTAP_LAUNCH_CONFIG";
+
     protected static final String DIALOGTAG_ABOUT = "about";
     protected static final String DIALOGTAG_HELP = "help";
 
@@ -169,7 +171,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (extras != null)
         {
             appWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
-            reconfigure = extras.getBoolean(WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(), false);
+            reconfigure = extras.getBoolean(EXTRA_RECONFIGURE, false);
         }
 
         if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID)

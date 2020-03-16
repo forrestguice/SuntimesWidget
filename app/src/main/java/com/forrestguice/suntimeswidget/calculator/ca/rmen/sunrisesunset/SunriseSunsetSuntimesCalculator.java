@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -36,7 +36,8 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public static final String LINK = "github.com/caarmen/SunriseSunset";
     public static final int[] FEATURES = new int[] { SuntimesCalculator.FEATURE_RISESET, SuntimesCalculator.FEATURE_GOLDBLUE };
 
-    Location location;
+    private Location location;
+    private TimeZone timezone;
 
     public SunriseSunsetSuntimesCalculator() { /* EMPTY */ }
 
@@ -62,7 +63,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public void init(Location location, TimeZone timezone, Context context)
     {
         this.location = location;
-        //this.timezone =  // not used; ca.rmen.sunrisesunset obtains the timezone from Calendar obj
+        this.timezone = timezone;
     }
 
     @Override
@@ -297,6 +298,16 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public Calendar getMoonApogeeNextDate(Calendar date)
     {
         return null;
+    }
+
+    @Override
+    public Location getLocation() {
+        return location;
+    }
+
+    @Override
+    public TimeZone getTimeZone() {
+        return timezone;
     }
 
 }

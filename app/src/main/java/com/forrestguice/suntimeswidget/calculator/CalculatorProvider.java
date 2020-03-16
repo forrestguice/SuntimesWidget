@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -22,10 +22,12 @@ import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -53,9 +55,20 @@ import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProvider
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_CALCULATOR;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_CALCULATOR_FEATURES;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LATITUDE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LENGTH_UNITS;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LOCALE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LOCATION;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OBJECT_HEIGHT;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_ALTITUDE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_FIELDS;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TALKBACK;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_DATETIME;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_HOURS;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_IS24;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_SECONDS;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_WEEKS;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_WARNINGS;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION_CODE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_TIMEZONE;
@@ -356,6 +369,7 @@ public class CalculatorProvider extends ContentProvider
                             break;
 
                         case COLUMN_CONFIG_PROVIDER_VERSION_CODE:
+                        case COLUMN_CONFIG_PROVIDER_VERSION_CODE_V2:
                             row[i] = CalculatorProviderContract.VERSION_CODE;
                             break;
 
@@ -412,6 +426,54 @@ public class CalculatorProvider extends ContentProvider
                             row[i] = calculator.getSupportedFeatures();
                             break;
 
+                        case COLUMN_CONFIG_OPTION_TIME_IS24:
+                            WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
+                            boolean is24 = (mode == WidgetSettings.TimeFormatMode.MODE_SYSTEM) ? android.text.format.DateFormat.is24HourFormat(context)
+                                    : (mode == WidgetSettings.TimeFormatMode.MODE_24HR);
+                            row[i] = (is24 ? 1 : 0);
+                            break;
+
+                        case COLUMN_CONFIG_OPTION_TIME_SECONDS:
+                            row[i] = (WidgetSettings.loadShowSecondsPref(context, appWidgetID) ? 1 : 0);
+                            break;
+
+                        case COLUMN_CONFIG_OPTION_TIME_HOURS:
+                            row[i] = (WidgetSettings.loadShowHoursPref(context, appWidgetID) ? 1 : 0);
+                            break;
+
+                        case COLUMN_CONFIG_OPTION_TIME_WEEKS:
+                            row[i] = (WidgetSettings.loadShowWeeksPref(context, appWidgetID) ? 1 : 0);
+                            break;
+
+                        case COLUMN_CONFIG_OPTION_TIME_DATETIME:
+                            row[i] = (WidgetSettings.loadShowTimeDatePref(context, appWidgetID) ? 1 : 0);
+                            break;
+
+                        case COLUMN_CONFIG_OPTION_ALTITUDE:
+                            row[i] = (WidgetSettings.loadLocationAltitudeEnabledPref(context, 0) ? 1 : 0);
+                            break;
+
+                        case COLUMN_CONFIG_OPTION_WARNINGS:
+                            row[i] = (AppSettings.loadShowWarningsPref(context) ? 1 : 0);
+                            break;
+
+                        case COLUMN_CONFIG_OPTION_TALKBACK:
+                            row[i] = (AppSettings.loadVerboseAccessibilityPref(context) ? 1 : 0);
+                            break;
+
+                        case COLUMN_CONFIG_LENGTH_UNITS:
+                            row[i] = (WidgetSettings.loadLengthUnitsPref(context, appWidgetID).name());
+                            break;
+
+                        case COLUMN_CONFIG_OBJECT_HEIGHT:
+                            row[i] = WidgetSettings.loadObserverHeightPref(context, appWidgetID);
+                            break;
+
+                        case COLUMN_CONFIG_OPTION_FIELDS:
+                            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+                            row[i] = pref.getInt(AppSettings.PREF_KEY_UI_SHOWFIELDS, AppSettings.PREF_DEF_UI_SHOWFIELDS);
+                            break;
+
                         default:
                             row[i] = null;
                             break;
@@ -423,6 +485,7 @@ public class CalculatorProvider extends ContentProvider
         } else Log.e("queryConfig", "context is null!");
         return retValue;
     }
+    private static final String COLUMN_CONFIG_PROVIDER_VERSION_CODE_V2 = "config_pvodier_version_code";    // key has typo in v0-v2; fixed v3
 
     /**
      * querySun
@@ -1038,10 +1101,10 @@ public class CalculatorProvider extends ContentProvider
      * @param rangeSegment startMillis-endMillis
      * @return a Calendar[2] containing [0]startDate, [1]endDate.
      */
-    public static Calendar[] parseDateRange(@NonNull String rangeSegment)
+    public static Calendar[] parseDateRange(@Nullable String rangeSegment)
     {
         Calendar[] retValue = new Calendar[2];
-        String[] rangeString = rangeSegment.split("-");
+        String[] rangeString = ((rangeSegment != null) ? rangeSegment.split("-") : new String[0]);
         if (rangeString.length == 2)
         {
             try {
@@ -1069,10 +1132,10 @@ public class CalculatorProvider extends ContentProvider
      * @param rangeSegment startYear-endYear
      * @return a Calendar[2] containing [0](startDate), [1](endDate).
      */
-    public static Calendar[] parseYearRange(String rangeSegment)
+    public static Calendar[] parseYearRange(@Nullable String rangeSegment)
     {
         Calendar[] retValue = new Calendar[2];
-        String[] rangeString = rangeSegment.split("-");
+        String[] rangeString = ((rangeSegment != null) ? rangeSegment.split("-") : new String[0]);
         if (rangeString.length == 2)
         {
             try {
