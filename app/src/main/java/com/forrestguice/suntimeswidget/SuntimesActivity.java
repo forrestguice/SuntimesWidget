@@ -1319,7 +1319,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (geoIntents.size() > 0)
         {
             Intent chooserIntent = Intent.createChooser(geoIntents.remove(0), getString(R.string.configAction_mapLocation_chooser));
-            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, geoIntents.toArray(new Parcelable[geoIntents.size()]));
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, geoIntents.toArray(new Parcelable[0]));
             startActivity(chooserIntent);
 
         } else {
@@ -1343,7 +1343,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         String moonIllum = getString(R.string.help_general_moonillum);
 
-        String helpText = getString(R.string.help_general3, timeText, blueGoldText, moonIllum);
+        String helpText = getString(R.string.help_general3, moonIllum, timeText, blueGoldText);
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpText);
@@ -2152,6 +2152,7 @@ public class SuntimesActivity extends AppCompatActivity
     public int getThemeId()
     {
         try {
+            //noinspection JavaReflectionMemberAccess
             Method method = Context.class.getMethod("getThemeResId");
             method.setAccessible(true);
             return (Integer) method.invoke(this);

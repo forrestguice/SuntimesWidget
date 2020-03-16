@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.calculator.core;
 
 /**
  * CalculatorProviderContract
- * @version 2 (0.3.0)
+ * @version 3 (0.4.0)
  *
  * Supported URIs have the form: "content://AUTHORITY/query"
  * ..where [AUTHORITY] is "suntimeswidget.calculator.provider"
@@ -40,7 +40,11 @@ package com.forrestguice.suntimeswidget.calculator.core;
  *       COLUMN_CONFIG_LOCALE, COLUMN_CONFIG_APPTHEME,
  *       COLUMN_CONFIG_CALCULATOR, COLUMN_CONFIG_CALCULATOR_FEATURES,
  *       COLUMN_CONFIG_LATITUDE, COLUMN_CONFIG_LONGITUDE, COLUMN_CONFIG_ALTITUDE,
- *       COLUMN_CONFIG_TIMEZONE, COLUMN_CONFIG_APPWIDGETID
+ *       COLUMN_CONFIG_TIMEZONE, COLUMN_CONFIG_APPWIDGETID,
+ *       COLUMN_CONFIG_OPTION_TIME_IS24, COLUMN_CONFIG_OPTION_TIME_SECONDS, COLUMN_CONFIG_OPTION_TIME_HOURS,
+ *       COLUMN_CONFIG_OPTION_TIME_WEEKS, COLUMN_CONFIG_OPTION_TIME_DATETIME,
+ *       COLUMN_CONFIG_OPTION_ALTITUDE, COLUMN_CONFIG_OPTION_WARNINGS, COLUMN_CONFIG_OPTION_TALKBACK
+ *       COLUMN_CONFIG_LENGTH_UNITS, COLUMN_CONFIG_OBJECT_HEIGHT, COLUMN_CONFIG_OPTION_FIELDS
  *
  * ------------------------------------------------------------------------------------------------*
  * QUERY_SUN (sun)
@@ -203,19 +207,30 @@ package com.forrestguice.suntimeswidget.calculator.core;
  *           // manifest, were revoked, or were never granted (re-installing the app should grant
  *           // permissions).
  *       }*
+ *
+ * ------------------------------------------------------------------------------------------------
+ * CHANGES
+ *   0 initial version
+ *   1 adds COLUMN_CONFIG_LOCATION; fixes return type of SUN and MOON queries; permission changed to suntimes.permission.READ_CALCULATOR
+ *   2 adds COLUMN_MOONPOS_PERIGEE, APOGEE, and COLUMN_MOON_*_DISTANCE
+ *   3 adds COLUMN_CONFIG_OPTION_IS24, COLUMN_CONFIG_OPTION_TIME_SECONDS, COLUMN_CONFIG_OPTION_TIME_HOURS, COLUMN_CONFIG_OPTION_TIME_WEEKS
+ *     adds COLUMN_CONFIG_OPTION_ALTITUDE, COLUMN_CONFIG_OPTION_WARNINGS, COLUMN_CONFIG_OPTION_TALKBACK, COLUMN_CONFIG_OPTION_FIELDS
+ *     adds COLUMN_CONFIG_LENGTH_UNITS, COLUMN_CONFIG_OBJECT_HEIGHT
+ *     fixes typo in COLUMN_CONFIG_PROVIDER_VERSION_CODE
  */
 public interface CalculatorProviderContract
 {
     String AUTHORITY = "suntimeswidget.calculator.provider";
     String READ_PERMISSION = "suntimes.permission.READ_CALCULATOR";
-    String VERSION_NAME = "v0.3.0";
-    int VERSION_CODE = 2;
+    String VERSION_NAME = "v0.4.0";
+    int VERSION_CODE = 3;
 
     /**
      * CONFIG
      */
     String COLUMN_CONFIG_PROVIDER_VERSION = "config_provider_version";             // String (provider version string)
-    String COLUMN_CONFIG_PROVIDER_VERSION_CODE = "config_pvodier_version_code";    // int (provider version code)
+    String COLUMN_CONFIG_PROVIDER_VERSION_CODE = "config_provider_version_code";   // int (provider version code)
+    String COLUMN_CONFIG_PROVIDER_VERSION_CODE_V2 = "config_pvodier_version_code"; // int (key has typo in v0-v2; fixed v3)
     String COLUMN_CONFIG_APP_VERSION = "config_app_version";                       // String (app version string)
     String COLUMN_CONFIG_APP_VERSION_CODE = "config_app_version_code";             // int (app version code)
     String COLUMN_CONFIG_APP_THEME = "config_app_theme";                           // String (themeName)
@@ -229,6 +244,20 @@ public interface CalculatorProviderContract
     String COLUMN_CONFIG_CALCULATOR = "calculator";                                // String (calculatorName)
     String COLUMN_CONFIG_CALCULATOR_FEATURES = "calculator_features";              // int[] (SuntimesCalculator.FEATURE flags)
 
+    String COLUMN_CONFIG_OPTION_TIME_IS24 = "option_is24";                         // int (boolean) 24 hour time
+    String COLUMN_CONFIG_OPTION_TIME_SECONDS = "option_seconds";                   // int (boolean) show seconds
+    String COLUMN_CONFIG_OPTION_TIME_HOURS = "option_hours";                       // int (boolean) show hours+min in spans > a day
+    String COLUMN_CONFIG_OPTION_TIME_WEEKS = "option_weeks";                       // int (boolean) divide spans greater than 7d into weeks
+    String COLUMN_CONFIG_OPTION_TIME_DATETIME = "option_datetime";                 // int (boolean) include time when displaying dates
+    String COLUMN_CONFIG_OPTION_ALTITUDE = "option_altitude";                      // int (boolean) use altitude based refinements
+    String COLUMN_CONFIG_OPTION_WARNINGS = "option_warnings";                      // int (boolean) show config warnings
+    String COLUMN_CONFIG_OPTION_TALKBACK = "option_talkback";                      // int (boolean) announce ui changes
+    String COLUMN_CONFIG_OPTION_FIELDS = "option_fields";                          // byte (bit positions) field visibility (see AppSettings.PREF_KEY_UI_SHOWFIELDS)
+
+    String COLUMN_CONFIG_LENGTH_UNITS = "distance_units";                          // String (enum) METRIC, IMPERIAL
+    String COLUMN_CONFIG_OBJECT_HEIGHT = "object_height";                          // float (meters)
+
+
     String QUERY_CONFIG = "config";
     String[] QUERY_CONFIG_PROJECTION = new String[] {
             COLUMN_CONFIG_APP_VERSION, COLUMN_CONFIG_APP_VERSION_CODE,
@@ -236,7 +265,9 @@ public interface CalculatorProviderContract
             COLUMN_CONFIG_LOCALE, COLUMN_CONFIG_APP_THEME,
             COLUMN_CONFIG_CALCULATOR, COLUMN_CONFIG_CALCULATOR_FEATURES,
             COLUMN_CONFIG_LOCATION, COLUMN_CONFIG_LATITUDE, COLUMN_CONFIG_LONGITUDE, COLUMN_CONFIG_ALTITUDE,
-            COLUMN_CONFIG_TIMEZONE, COLUMN_CONFIG_APPWIDGETID
+            COLUMN_CONFIG_TIMEZONE, COLUMN_CONFIG_APPWIDGETID,
+            COLUMN_CONFIG_OPTION_TIME_IS24, COLUMN_CONFIG_OPTION_TIME_SECONDS, COLUMN_CONFIG_OPTION_TIME_HOURS, COLUMN_CONFIG_OPTION_TIME_WEEKS, COLUMN_CONFIG_OPTION_TIME_DATETIME,
+            COLUMN_CONFIG_OPTION_ALTITUDE, COLUMN_CONFIG_OPTION_WARNINGS, COLUMN_CONFIG_OPTION_TALKBACK, COLUMN_CONFIG_LENGTH_UNITS, COLUMN_CONFIG_OBJECT_HEIGHT, COLUMN_CONFIG_OPTION_FIELDS
     };
 
     /**
