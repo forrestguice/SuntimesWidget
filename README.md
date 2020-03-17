@@ -21,6 +21,9 @@ An alarm clock for Suntimes.<br/><br />
 
 <a href="https://github.com/forrestguice/SuntimesCalendars/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/assets/images/ic_launcher.png" height="64" /></a> <a href="https://github.com/forrestguice/SuntimesCalendars/">Suntimes Calendars</a> <br />
 A calendar provider add-on for Suntimes.<br/><br />        
+
+<a href="https://github.com/forrestguice/SolunarPeriods/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/assets/images/ic_solunar.png" height="64" /></a> <a href="https://github.com/forrestguice/SolunarPeriods/">Solunar Periods</a> <br />
+A hunting and fishing add-on for Suntimes.<br/><br />
     
 The app:
 * displays the current time (system time zone, custom time zone, or solar time) 
@@ -134,7 +137,7 @@ When reporting a bug **please be detailed as possible**. What did you expect the
 
 ## Legal Stuff
 
-Copyright &#169; 2014-2019 Forrest Guice<br/>
+Copyright &#169; 2014-2020 Forrest Guice<br/>
 
 The source code is available under [GPLv3](LICENSE) (https://github.com/forrestguice/SuntimesWidget).
 > This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the [GNU General Public License](LICENSE) for more details.
