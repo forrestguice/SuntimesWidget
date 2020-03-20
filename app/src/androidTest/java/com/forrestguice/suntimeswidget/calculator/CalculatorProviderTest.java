@@ -127,6 +127,7 @@ import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProvider
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.QUERY_SUNPOS_PROJECTION;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.QUERY_SUN_PROJECTION;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
@@ -140,15 +141,14 @@ public class CalculatorProviderTest
     public void setup()
     {
         mockContext = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
-
-        TEST_DATE0 = Calendar.getInstance();
-        TEST_DATE0.set(2018, 0, 1, 0, 0, 0);
-
-        TEST_DATE1 = Calendar.getInstance();
-        TEST_DATE1.set(2019, 0, 1, 0, 0, 0);
-
         sunCalculator = getCalculator("");
         moonCalculator = getCalculator("moon");
+
+        TEST_DATE0 = Calendar.getInstance(moonCalculator.getTimeZone());
+        TEST_DATE0.set(2018, 0, 1, 0, 0, 0);
+
+        TEST_DATE1 = Calendar.getInstance(moonCalculator.getTimeZone());
+        TEST_DATE1.set(2019, 0, 1, 0, 0, 0);
     }
 
     private SuntimesCalculator getCalculator(String calculatorName)
@@ -559,7 +559,8 @@ public class CalculatorProviderTest
         Cursor cursor = resolver.query(uri, projection, null, null, null);
         test_cursorHasColumns("QUERY_MOON", cursor, projection);
         test_allColumnsLong("QUERY_MOON", cursor, projection);
-        test_moontimes(cursor, moonCalculator.getMoonTimesForDate(Calendar.getInstance()));
+        cursor.moveToFirst();
+        test_moontimes(cursor, moonCalculator.getMoonTimesForDate(Calendar.getInstance(moonCalculator.getTimeZone())));
 
         // case 1: date
         Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOON + "/" + TEST_DATE0.getTimeInMillis());
@@ -567,6 +568,7 @@ public class CalculatorProviderTest
         Cursor cursor1 = resolver.query(uri1, projection1, null, null, null);
         test_cursorHasColumns("QUERY_MOON", cursor1, projection1);
         test_allColumnsLong("QUERY_MOON", cursor, projection1);
+        cursor.moveToFirst();
         test_moontimes(cursor1, moonCalculator.getMoonTimesForDate(TEST_DATE0));
 
         // case 2: range
@@ -576,18 +578,105 @@ public class CalculatorProviderTest
         test_cursorHasColumns("QUERY_MOON", cursor2, projection2);
     }
 
-    public void test_moontimes(Cursor cursor, SuntimesCalculator.MoonTimes oracle)
+    public void test_moontimes(Cursor cursor, @NonNull SuntimesCalculator.MoonTimes oracle)
     {
         if (cursor != null)
         {
-            cursor.moveToFirst();
-            Calendar moonrise = Calendar.getInstance();
-            moonrise.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_MOON_RISE)));
-            assertTrue("moonrise time should match .. " + oracle.riseTime.getTimeInMillis() + " != " + moonrise.getTimeInMillis(), oracle.riseTime.getTimeInMillis() == moonrise.getTimeInMillis());
+            if (oracle.riseTime != null)
+            {
+                long moonriseMillis = cursor.getLong(cursor.getColumnIndex(COLUMN_MOON_RISE));
+                assertTrue("moonrise time should match .. " + oracle.riseTime.getTimeInMillis() + " != " + moonriseMillis,
+                        oracle.riseTime.getTimeInMillis() == moonriseMillis);
+                Log.d("TEST", "moon rise: " + oracle.riseTime.getTimeInMillis() + " == " + moonriseMillis );
+            } else {
+                assertTrue("moonrise should not occur today", cursor.isNull(0));
+                Log.d("TEST", "moon rise: null");
+            }
 
-            Calendar moonset = Calendar.getInstance();
-            moonset.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_MOON_SET)));
-            assertTrue("moonset time should match .. " + oracle.setTime + " != " + moonset, oracle.setTime.getTimeInMillis() == moonset.getTimeInMillis());
+            if (oracle.setTime != null)
+            {
+                long moonsetMillis = cursor.getLong(cursor.getColumnIndex(COLUMN_MOON_SET));
+                assertTrue("moonset time should match .. " + oracle.setTime + " != " + moonsetMillis,
+                        oracle.setTime.getTimeInMillis() == moonsetMillis);
+                Log.d("TEST", "moon set: " + oracle.setTime.getTimeInMillis() + " == " + moonsetMillis );
+            } else {
+                assertTrue("moonset should not occur today", cursor.isNull(1));
+                Log.d("TEST", "moon set: null");
+            }
+        }
+    }
+
+    @Test
+    public void test_moontimes2()
+    {
+        // setup..
+        TimeZone tz = moonCalculator.getTimeZone();
+        Calendar date0 = Calendar.getInstance(tz);
+        date0.set(2020, 3, 11, 12, 0, 0);
+
+        String[] projection = QUERY_MOON_PROJECTION;
+        Uri uri = Uri.parse("content://" + CalculatorProviderContract.AUTHORITY + "/" + CalculatorProviderContract.QUERY_MOON + "/"
+                + (date0.getTimeInMillis() - SUN_PERIOD_MILLIS) + "-" + (date0.getTimeInMillis() + SUN_PERIOD_MILLIS) );
+
+        Calendar[] dates = new Calendar[] { Calendar.getInstance(tz), Calendar.getInstance(tz), Calendar.getInstance(tz) };
+        dates[0].setTimeInMillis(date0.getTimeInMillis() - SUN_PERIOD_MILLIS);
+        dates[1].setTimeInMillis(date0.getTimeInMillis());
+        dates[2].setTimeInMillis(date0.getTimeInMillis() + SUN_PERIOD_MILLIS);
+
+        SuntimesCalculator.MoonTimes[] oracle = new SuntimesCalculator.MoonTimes[3];
+        for (int i=0; i<oracle.length; i++) {
+            oracle[i] = moonCalculator.getMoonTimesForDate(dates[i]);
+        }
+
+        // test..
+        ContentResolver resolver = mockContext.getContentResolver();
+        assertNotNull("Unable to getContentResolver!", resolver);
+        Cursor cursor = resolver.query(uri, projection, null, null, null);
+        test_cursorHasColumns("QUERY_MOON", cursor, projection);
+        test_allColumnsLong("QUERY_MOON", cursor, projection);
+
+        if (cursor != null)
+        {
+            cursor.moveToFirst();
+            for (int i=0; i<3; i++)
+            {
+                if (cursor.isAfterLast())
+                {
+                    Log.w(getClass().getSimpleName(), "queryMoonriseMoonset: cursor contains fewer rows than expected (3); got " + i + ": " + dates[i].getTimeInMillis());
+                    break;
+                }
+                test_moontimes(cursor, oracle[i]);
+                cursor.moveToNext();
+            }
+            cursor.close();
+        }
+    }
+    public static final long SUN_PERIOD_MILLIS = 24L * 60 * 60 * 1000;        // 24 hr
+
+    @Test
+    public void test_moontimes3()
+    {
+        // setup..
+        TimeZone tz = moonCalculator.getTimeZone();
+        Calendar date0 = Calendar.getInstance(tz);
+        date0.set(2020, 3, 11, 12, 0, 0);
+        SuntimesCalculator.MoonTimes oracle = moonCalculator.getMoonTimesForDate(date0);
+
+        String[] projection = QUERY_MOON_PROJECTION;
+        Uri uri = Uri.parse("content://" + CalculatorProviderContract.AUTHORITY + "/" + CalculatorProviderContract.QUERY_MOON + "/" + date0.getTimeInMillis());
+
+        // test..
+        ContentResolver resolver = mockContext.getContentResolver();
+        assertNotNull("Unable to getContentResolver!", resolver);
+        Cursor cursor = resolver.query(uri, projection, null, null, null);
+        test_cursorHasColumns("QUERY_MOON", cursor, projection);
+        test_allColumnsLong("QUERY_MOON", cursor, projection);
+
+        if (cursor != null)
+        {
+            cursor.moveToFirst();
+            test_moontimes(cursor, oracle);
+            cursor.close();
         }
     }
 
