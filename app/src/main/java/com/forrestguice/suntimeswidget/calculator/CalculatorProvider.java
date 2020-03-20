@@ -664,10 +664,10 @@ public class CalculatorProvider extends ContentProvider
         SuntimesCalculator calculator = initMoonCalculator(getContext(), selection);
         if (calculator != null)
         {
-            Calendar day = Calendar.getInstance();
+            Calendar day = Calendar.getInstance(calculator.getTimeZone());
             day.setTimeInMillis(range[0].getTimeInMillis());
 
-            Calendar endDay = Calendar.getInstance();
+            Calendar endDay = Calendar.getInstance(calculator.getTimeZone());
             endDay.setTimeInMillis(range[1].getTimeInMillis() + 1000);    // +1000ms (make range[1] inclusive)
 
             do {
