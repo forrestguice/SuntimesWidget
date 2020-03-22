@@ -60,8 +60,20 @@ import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProvider
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_CALCULATOR;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_CALCULATOR_FEATURES;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LATITUDE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LENGTH_UNITS;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LOCALE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LOCATION;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OBJECT_HEIGHT;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_ALTITUDE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_FIELDS;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TALKBACK;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_DATETIME;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_HOURS;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_IS24;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_SECONDS;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_WEEKS;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_WARNINGS;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION_CODE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_TIMEZONE;
@@ -192,17 +204,21 @@ public class CalculatorProviderTest
     @Test
     public void test_query_config_projection()
     {
+        String[] TEST_CONFIG_PROJECTION = new String[] {
+                COLUMN_CONFIG_APP_VERSION, COLUMN_CONFIG_APP_VERSION_CODE,
+                COLUMN_CONFIG_PROVIDER_VERSION, COLUMN_CONFIG_PROVIDER_VERSION_CODE,
+                COLUMN_CONFIG_LOCALE, COLUMN_CONFIG_APP_THEME,
+                COLUMN_CONFIG_CALCULATOR, COLUMN_CONFIG_CALCULATOR_FEATURES,
+                COLUMN_CONFIG_LOCATION, COLUMN_CONFIG_LATITUDE, COLUMN_CONFIG_LONGITUDE, COLUMN_CONFIG_ALTITUDE,
+                COLUMN_CONFIG_TIMEZONE, COLUMN_CONFIG_APPWIDGETID,
+                COLUMN_CONFIG_OPTION_TIME_IS24, COLUMN_CONFIG_OPTION_TIME_SECONDS, COLUMN_CONFIG_OPTION_TIME_HOURS, COLUMN_CONFIG_OPTION_TIME_WEEKS, COLUMN_CONFIG_OPTION_TIME_DATETIME,
+                COLUMN_CONFIG_OPTION_ALTITUDE, COLUMN_CONFIG_OPTION_WARNINGS, COLUMN_CONFIG_OPTION_TALKBACK, COLUMN_CONFIG_LENGTH_UNITS, COLUMN_CONFIG_OBJECT_HEIGHT, COLUMN_CONFIG_OPTION_FIELDS
+        };
+
         List<String> projection = Arrays.asList(QUERY_CONFIG_PROJECTION);
-        assertTrue("default projection contains COLUMN_CONFIG_CALCULATOR", projection.contains(COLUMN_CONFIG_CALCULATOR));
-        assertTrue("default projection contains COLUMN_CONFIG_CALCULATOR_FEATURES", projection.contains(COLUMN_CONFIG_CALCULATOR_FEATURES));
-        assertTrue("default projection contains COLUMN_CONFIG_APPWIDGETID", projection.contains(COLUMN_CONFIG_APPWIDGETID));
-        assertTrue("default projection contains COLUMN_CONFIG_APPTHEME", projection.contains(COLUMN_CONFIG_APP_THEME));
-        assertTrue("default projection contains COLUMN_CONFIG_LOCALE", projection.contains(COLUMN_CONFIG_LOCALE));
-        assertTrue("default projection contains COLUMN_CONFIG_LATITUDE", projection.contains(COLUMN_CONFIG_LATITUDE));
-        assertTrue("default projection contains COLUMN_CONFIG_LONGITUDE", projection.contains(COLUMN_CONFIG_LONGITUDE));
-        assertTrue("default projection contains COLUMN_CONFIG_ALTITUDE", projection.contains(COLUMN_CONFIG_ALTITUDE));
-        assertTrue("default projection contains COLUMN_CONFIG_TIMEZONE", projection.contains(COLUMN_CONFIG_TIMEZONE));
-        test_projectionHasUniqueColumns(QUERY_CONFIG_PROJECTION);
+        for (String column : TEST_CONFIG_PROJECTION) {
+            test_projectionContainsColumn(column, projection);
+        }
     }
 
     /**
@@ -1032,6 +1048,10 @@ public class CalculatorProviderTest
             assertTrue("Column names are not unique! \"" + column + "\" is used more than once.", !uniqueColumns.contains(column));
             uniqueColumns.add(column);
         }
+    }
+
+    private void test_projectionContainsColumn(String column, List<String> projection) {
+        assertTrue("projection contains " + column, projection.contains(column));
     }
 
     private void test_dateUTC(String tag, long timestamp, int year, int month, int day, int hour, int minute)
