@@ -231,7 +231,7 @@ public class CalculatorProvider extends ContentProvider
     {
         HashMap<String, String> selectionMap = processSelection(processSelectionArgs(selection, selectionArgs));
         long now = Calendar.getInstance().getTimeInMillis();
-        long date = Calendar.getInstance().getTimeInMillis();
+        long date;
         long[] range;
         Cursor retValue = null;
 
@@ -249,10 +249,9 @@ public class CalculatorProvider extends ContentProvider
                 break;
             case URIMATCH_SEASONS_FOR_YEAR:
                 Log.d("CalculatorProvider", "URIMATCH_SEASONS_FOR_YEAR");
-                Calendar dateTime = Calendar.getInstance();
+                Calendar dateTime = now(selectionMap);
                 dateTime.set(Calendar.YEAR, (int)ContentUris.parseId(uri));
-                date = dateTime.getTimeInMillis();
-                retValue = querySeasons(new long[] { date, date }, uri, projection, selectionMap, sortOrder);
+                retValue = querySeasons(new long[] { dateTime.getTimeInMillis(), dateTime.getTimeInMillis() }, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_SEASONS_FOR_RANGE:
                 Log.d("CalculatorProvider", "URIMATCH_SEASONS_FOR_RANGE");
@@ -499,10 +498,10 @@ public class CalculatorProvider extends ContentProvider
         SuntimesCalculator calculator = initSunCalculator(getContext(), selection);
         if (calculator != null)
         {
-            Calendar day = Calendar.getInstance();
+            Calendar day = Calendar.getInstance(calculator.getTimeZone());
             day.setTimeInMillis(range[0]);
 
-            Calendar endDay = Calendar.getInstance();
+            Calendar endDay = Calendar.getInstance(calculator.getTimeZone());
             endDay.setTimeInMillis(range[1] + 1000);      // +1000ms (make range[1] inclusive)
 
             do {
@@ -607,14 +606,13 @@ public class CalculatorProvider extends ContentProvider
      */
     private Cursor querySunPos(long dateMillis, @NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
     {
-        Calendar datetime = Calendar.getInstance();
-        datetime.setTimeInMillis(dateMillis);
-
         String[] columns = (projection != null ? projection : QUERY_SUNPOS_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
         SuntimesCalculator calculator = initSunCalculator(getContext(), selection);
         if (calculator != null)
         {
+            Calendar datetime = Calendar.getInstance(calculator.getTimeZone());
+            datetime.setTimeInMillis(dateMillis);
             SuntimesCalculator.SunPosition position = calculator.getSunPosition(datetime);
             if (position != null)
             {
@@ -709,14 +707,13 @@ public class CalculatorProvider extends ContentProvider
      */
     private Cursor queryMoonPos(long dateMillis, @NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
     {
-        Calendar datetime = Calendar.getInstance();
-        datetime.setTimeInMillis(dateMillis);
-
         String[] columns = (projection != null ? projection : QUERY_MOONPOS_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
         SuntimesCalculator calculator = initMoonCalculator(getContext(), selection);
         if (calculator != null)
         {
+            Calendar datetime = Calendar.getInstance(calculator.getTimeZone());
+            datetime.setTimeInMillis(dateMillis);
             SuntimesCalculator.MoonPosition position = calculator.getMoonPosition(datetime);
             if (position != null)
             {
@@ -786,10 +783,10 @@ public class CalculatorProvider extends ContentProvider
             ArrayList<Calendar> events = new ArrayList<>();
             HashMap<SuntimesCalculator.MoonPhase, Calendar> events1 = new HashMap<>();
 
-            Calendar date = Calendar.getInstance();
+            Calendar date = Calendar.getInstance(calculator.getTimeZone());
             date.setTimeInMillis(range[0]);
 
-            Calendar endDate = Calendar.getInstance();
+            Calendar endDate = Calendar.getInstance(calculator.getTimeZone());
             endDate.setTimeInMillis(range[1] + 1000);   // +1000ms (make range[1] inclusive)
 
             do {
@@ -884,10 +881,10 @@ public class CalculatorProvider extends ContentProvider
         SuntimesCalculator calculator = initSunCalculator(getContext(), selection);
         if (calculator != null)
         {
-            Calendar year = Calendar.getInstance();
+            Calendar year = Calendar.getInstance(calculator.getTimeZone());
             year.setTimeInMillis(range[0]);
 
-            Calendar endYear = Calendar.getInstance();
+            Calendar endYear = Calendar.getInstance(calculator.getTimeZone());
             endYear.setTimeInMillis(range[1]);
             endYear.add(Calendar.YEAR, 1);                   // +1 year (make range[1] inclusive)
 
@@ -1011,6 +1008,10 @@ public class CalculatorProvider extends ContentProvider
     }
     private SuntimesCalculator initMoonCalculator(Context context, HashMap<String,String> selection) {
         return initCalculator(context, selection, "moon");
+    }
+
+    public Calendar now(HashMap<String,String> selection) {
+        return Calendar.getInstance(getTimeZone(getContext(), selection));
     }
 
     public static void clearCachedConfig(int appWidgetID)
@@ -1160,6 +1161,27 @@ public class CalculatorProvider extends ContentProvider
         }
         Log.d("DEBUG", "startDate: " + retValue[0].get(Calendar.YEAR) + ", endDate: " + retValue[1].get(Calendar.YEAR));
         return new long[] { retValue[0].getTimeInMillis(), retValue[1].getTimeInMillis() };
+    }
+
+    /**
+     * getTimeZone
+     * @param selection selection override
+     * @return TimeZone object
+     */
+    public static TimeZone getTimeZone(Context context, HashMap<String,String> selection)
+    {
+        String tzID = selection.get(COLUMN_CONFIG_TIMEZONE);
+        if (tzID != null) {
+            return TimeZone.getTimeZone(tzID);
+
+        } else {
+            int appWidgetID = 0;
+            if (selection.containsKey(COLUMN_CONFIG_APPWIDGETID)) {
+                String id = selection.get(COLUMN_CONFIG_APPWIDGETID);
+                appWidgetID = Integer.parseInt(id != null ? id : "0");
+            }
+            return TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
+        }
     }
 
 }
