@@ -230,9 +230,9 @@ public class CalculatorProvider extends ContentProvider
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
     {
         HashMap<String, String> selectionMap = processSelection(processSelectionArgs(selection, selectionArgs));
-        Calendar now = Calendar.getInstance();
-        Calendar date = Calendar.getInstance();
-        Calendar[] range;
+        long now = Calendar.getInstance().getTimeInMillis();
+        long date = Calendar.getInstance().getTimeInMillis();
+        long[] range;
         Cursor retValue = null;
 
         int uriMatch = uriMatcher.match(uri);
@@ -245,12 +245,14 @@ public class CalculatorProvider extends ContentProvider
 
             case URIMATCH_SEASONS:
                 Log.d("CalculatorProvider", "URIMATCH_SEASONS");
-                retValue = querySeasons(new Calendar[] {now, now}, uri, projection, selectionMap, sortOrder);
+                retValue = querySeasons(new long[] {now, now}, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_SEASONS_FOR_YEAR:
                 Log.d("CalculatorProvider", "URIMATCH_SEASONS_FOR_YEAR");
-                date.set(Calendar.YEAR, (int)ContentUris.parseId(uri));
-                retValue = querySeasons(new Calendar[] { date, date }, uri, projection, selectionMap, sortOrder);
+                Calendar dateTime = Calendar.getInstance();
+                dateTime.set(Calendar.YEAR, (int)ContentUris.parseId(uri));
+                date = dateTime.getTimeInMillis();
+                retValue = querySeasons(new long[] { date, date }, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_SEASONS_FOR_RANGE:
                 Log.d("CalculatorProvider", "URIMATCH_SEASONS_FOR_RANGE");
@@ -260,12 +262,12 @@ public class CalculatorProvider extends ContentProvider
 
             case URIMATCH_SUN:
                 Log.d("CalculatorProvider", "URIMATCH_SUN");
-                retValue = querySun(new Calendar[] {now, now}, uri, projection, selectionMap, sortOrder);
+                retValue = querySun(new long[] {now, now}, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_SUN_FOR_DATE:
                 Log.d("CalculatorProvider", "URIMATCH_SUN_FOR_DATE");
-                date.setTimeInMillis(ContentUris.parseId(uri));
-                retValue = querySun(new Calendar[] {date, date}, uri, projection, selectionMap, sortOrder);
+                date = ContentUris.parseId(uri);
+                retValue = querySun(new long[] {date, date}, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_SUN_FOR_RANGE:
                 Log.d("CalculatorProvider", "URIMATCH_SUN_FOR_RANGE");
@@ -279,18 +281,18 @@ public class CalculatorProvider extends ContentProvider
                 break;
             case URIMATCH_SUNPOS_FOR_DATE:
                 Log.d("CalculatorProvider", "URIMATCH_SUNPOS_FOR_DATE");
-                date.setTimeInMillis(ContentUris.parseId(uri));
+                date = ContentUris.parseId(uri);
                 retValue = querySunPos(date, uri, projection, selectionMap, sortOrder);
                 break;
 
             case URIMATCH_MOON:
                 Log.d("CalculatorProvider", "URIMATCH_MOON");
-                retValue = queryMoon(new Calendar[] {now, now}, uri, projection, selectionMap, sortOrder);
+                retValue = queryMoon(new long[] {now, now}, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_MOON_FOR_DATE:
                 Log.d("CalculatorProvider", "URIMATCH_MOON_FOR_DATE");
-                date.setTimeInMillis(ContentUris.parseId(uri));
-                retValue = queryMoon(new Calendar[] {date, date}, uri, projection, selectionMap, sortOrder);
+                date = ContentUris.parseId(uri);
+                retValue = queryMoon(new long[] {date, date}, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_MOON_FOR_RANGE:
                 Log.d("CalculatorProvider", "URIMATCH_MOON_FOR_RANGE");
@@ -304,18 +306,18 @@ public class CalculatorProvider extends ContentProvider
                 break;
             case URIMATCH_MOONPOS_FOR_DATE:
                 Log.d("CalculatorProvider", "URIMATCH_MOONPOS_FOR_DATE");
-                date.setTimeInMillis(ContentUris.parseId(uri));
+                date = ContentUris.parseId(uri);
                 retValue = queryMoonPos(date, uri, projection, selectionMap, sortOrder);
                 break;
 
             case URIMATCH_MOONPHASE:
                 Log.d("CalculatorProvider", "URIMATCH_MOONPHASE");
-                retValue = queryMoonPhase(new Calendar[] {now, now}, uri, projection, selectionMap, sortOrder);
+                retValue = queryMoonPhase(new long[] {now, now}, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_MOONPHASE_FOR_DATE:
                 Log.d("CalculatorProvider", "URIMATCH_MOONPHASE_FOR_DATE");
-                date.setTimeInMillis(ContentUris.parseId(uri));
-                retValue = queryMoonPhase(new Calendar[] {date, date}, uri, projection, selectionMap, sortOrder);
+                date = ContentUris.parseId(uri);
+                retValue = queryMoonPhase(new long[] {date, date}, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_MOONPHASE_FOR_RANGE:
                 Log.d("CalculatorProvider", "URIMATCH_MOONPHASE_FOR_RANGE");
@@ -490,7 +492,7 @@ public class CalculatorProvider extends ContentProvider
     /**
      * querySun
      */
-    private Cursor querySun(Calendar[] range, @NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
+    private Cursor querySun(long[] range, @NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
     {
         String[] columns = (projection != null ? projection : QUERY_SUN_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
@@ -498,10 +500,10 @@ public class CalculatorProvider extends ContentProvider
         if (calculator != null)
         {
             Calendar day = Calendar.getInstance();
-            day.setTimeInMillis(range[0].getTimeInMillis());
+            day.setTimeInMillis(range[0]);
 
             Calendar endDay = Calendar.getInstance();
-            endDay.setTimeInMillis(range[1].getTimeInMillis() + 1000);      // +1000ms (make range[1] inclusive)
+            endDay.setTimeInMillis(range[1] + 1000);      // +1000ms (make range[1] inclusive)
 
             do {
                 Calendar calendar;
@@ -603,8 +605,11 @@ public class CalculatorProvider extends ContentProvider
     /**
      * querySunPos
      */
-    private Cursor querySunPos(Calendar datetime, @NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
+    private Cursor querySunPos(long dateMillis, @NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
     {
+        Calendar datetime = Calendar.getInstance();
+        datetime.setTimeInMillis(dateMillis);
+
         String[] columns = (projection != null ? projection : QUERY_SUNPOS_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
         SuntimesCalculator calculator = initSunCalculator(getContext(), selection);
@@ -639,7 +644,7 @@ public class CalculatorProvider extends ContentProvider
                             break;
 
                         case COLUMN_SUNPOS_DATE:
-                            row[i] = datetime.getTimeInMillis();
+                            row[i] = dateMillis;
                             break;
 
                         default:
@@ -657,7 +662,7 @@ public class CalculatorProvider extends ContentProvider
     /**
      * queryMoon
      */
-    private Cursor queryMoon(Calendar[] range, @NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
+    private Cursor queryMoon(long[] range, @NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
     {
         String[] columns = (projection != null ? projection : QUERY_MOON_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
@@ -665,10 +670,10 @@ public class CalculatorProvider extends ContentProvider
         if (calculator != null)
         {
             Calendar day = Calendar.getInstance(calculator.getTimeZone());
-            day.setTimeInMillis(range[0].getTimeInMillis());
+            day.setTimeInMillis(range[0]);
 
             Calendar endDay = Calendar.getInstance(calculator.getTimeZone());
-            endDay.setTimeInMillis(range[1].getTimeInMillis() + 1000);    // +1000ms (make range[1] inclusive)
+            endDay.setTimeInMillis(range[1] + 1000);    // +1000ms (make range[1] inclusive)
 
             do {
                 SuntimesCalculator.MoonTimes moontimes = null;
@@ -702,8 +707,11 @@ public class CalculatorProvider extends ContentProvider
     /**
      * queryMoonPos
      */
-    private Cursor queryMoonPos(Calendar datetime, @NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
+    private Cursor queryMoonPos(long dateMillis, @NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
     {
+        Calendar datetime = Calendar.getInstance();
+        datetime.setTimeInMillis(dateMillis);
+
         String[] columns = (projection != null ? projection : QUERY_MOONPOS_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
         SuntimesCalculator calculator = initMoonCalculator(getContext(), selection);
@@ -750,7 +758,7 @@ public class CalculatorProvider extends ContentProvider
                             break;
 
                         case COLUMN_MOONPOS_DATE:
-                            row[i] = datetime.getTimeInMillis();
+                            row[i] = dateMillis;
                             break;
 
                         default:
@@ -768,7 +776,7 @@ public class CalculatorProvider extends ContentProvider
     /**
      * queryMoonPhase
      */
-    private Cursor queryMoonPhase(Calendar[] range, @NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
+    private Cursor queryMoonPhase(long[] range, @NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
     {
         String[] columns = (projection != null ? projection : QUERY_MOONPHASE_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
@@ -779,10 +787,10 @@ public class CalculatorProvider extends ContentProvider
             HashMap<SuntimesCalculator.MoonPhase, Calendar> events1 = new HashMap<>();
 
             Calendar date = Calendar.getInstance();
-            date.setTimeInMillis(range[0].getTimeInMillis());
+            date.setTimeInMillis(range[0]);
 
             Calendar endDate = Calendar.getInstance();
-            endDate.setTimeInMillis(range[1].getTimeInMillis() + 1000);   // +1000ms (make range[1] inclusive)
+            endDate.setTimeInMillis(range[1] + 1000);   // +1000ms (make range[1] inclusive)
 
             do {
                 events.clear();
@@ -850,7 +858,7 @@ public class CalculatorProvider extends ContentProvider
                                 : (events.size() > 0) ? events.get(0) : null;
 
                 date.setTimeInMillis(latest != null ? latest.getTimeInMillis() + 1000
-                                                    : range[1].getTimeInMillis() + 1000);
+                                                    : range[1] + 1000);
             } while (date.before(endDate));
 
         } else Log.d("DEBUG", "moonSource is null!");
@@ -869,7 +877,7 @@ public class CalculatorProvider extends ContentProvider
     /**
      * querySeasons
      */
-    private Cursor querySeasons(Calendar[] range, @NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
+    private Cursor querySeasons(long[] range, @NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
     {
         String[] columns = (projection != null ? projection : QUERY_SEASONS_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
@@ -877,10 +885,10 @@ public class CalculatorProvider extends ContentProvider
         if (calculator != null)
         {
             Calendar year = Calendar.getInstance();
-            year.setTimeInMillis(range[0].getTimeInMillis());
+            year.setTimeInMillis(range[0]);
 
             Calendar endYear = Calendar.getInstance();
-            endYear.setTimeInMillis(range[1].getTimeInMillis());
+            endYear.setTimeInMillis(range[1]);
             endYear.add(Calendar.YEAR, 1);                   // +1 year (make range[1] inclusive)
 
             do {
@@ -1099,30 +1107,27 @@ public class CalculatorProvider extends ContentProvider
      * parseDateRange
      * A query helper method; get startDate and endDate from a "timestamp-timestamp" range value.
      * @param rangeSegment startMillis-endMillis
-     * @return a Calendar[2] containing [0]startDate, [1]endDate.
+     * @return a long[2] containing [0]startDateMillis, [1]endDateMillis.
      */
-    public static Calendar[] parseDateRange(@Nullable String rangeSegment)
+    public static long[] parseDateRange(@Nullable String rangeSegment)
     {
-        Calendar[] retValue = new Calendar[2];
+        long[] retValue = new long[2];
         String[] rangeString = ((rangeSegment != null) ? rangeSegment.split("-") : new String[0]);
         if (rangeString.length == 2)
         {
             try {
-                retValue[0] = Calendar.getInstance();
-                retValue[0].setTimeInMillis(Long.parseLong(rangeString[0]));
-
-                retValue[1] = Calendar.getInstance();
-                retValue[1].setTimeInMillis(Long.parseLong(rangeString[1]));
+                retValue[0] = Long.parseLong(rangeString[0]);
+                retValue[1] = Long.parseLong(rangeString[1]);
 
             } catch (NumberFormatException e) {
                 Log.w("CalculatorProvider", "Invalid range! " + rangeSegment);
-                retValue[0] = retValue[1] = Calendar.getInstance();
+                retValue[0] = retValue[1] = Calendar.getInstance().getTimeInMillis();
             }
         } else {
             Log.w("CalculatorProvider", "Invalid range! " + rangeSegment);
-            retValue[0] = retValue[1] = Calendar.getInstance();
+            retValue[0] = retValue[1] = Calendar.getInstance().getTimeInMillis();
         }
-        Log.d("DEBUG", "startDate: " + retValue[0].getTimeInMillis() + ", endDate: " + retValue[1].getTimeInMillis());
+        Log.d("DEBUG", "startDate: " + retValue[0] + ", endDate: " + retValue[1]);
         return retValue;
     }
 
@@ -1132,7 +1137,7 @@ public class CalculatorProvider extends ContentProvider
      * @param rangeSegment startYear-endYear
      * @return a Calendar[2] containing [0](startDate), [1](endDate).
      */
-    public static Calendar[] parseYearRange(@Nullable String rangeSegment)
+    public static long[] parseYearRange(@Nullable String rangeSegment)
     {
         Calendar[] retValue = new Calendar[2];
         String[] rangeString = ((rangeSegment != null) ? rangeSegment.split("-") : new String[0]);
@@ -1154,7 +1159,7 @@ public class CalculatorProvider extends ContentProvider
             retValue[0] = retValue[1] = Calendar.getInstance();
         }
         Log.d("DEBUG", "startDate: " + retValue[0].get(Calendar.YEAR) + ", endDate: " + retValue[1].get(Calendar.YEAR));
-        return retValue;
+        return new long[] { retValue[0].getTimeInMillis(), retValue[1].getTimeInMillis() };
     }
 
 }

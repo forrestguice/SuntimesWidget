@@ -607,7 +607,7 @@ public class CalculatorProviderTest
     }
 
     @Test
-    public void test_moontimes2()
+    public void test_query_moon2()
     {
         // setup..
         TimeZone tz = moonCalculator.getTimeZone();
@@ -654,7 +654,7 @@ public class CalculatorProviderTest
     public static final long SUN_PERIOD_MILLIS = 24L * 60 * 60 * 1000;        // 24 hr
 
     @Test
-    public void test_moontimes3()
+    public void test_query_moon3()
     {
         // setup..
         TimeZone tz = moonCalculator.getTimeZone();
@@ -865,13 +865,13 @@ public class CalculatorProviderTest
         end0.add(Calendar.DAY_OF_MONTH, 1);
         String segment0 = start0.getTimeInMillis() + "-" + end0.getTimeInMillis();
 
-        Calendar[] range0 = CalculatorProvider.parseDateRange(segment0);
+        long[] range0 = CalculatorProvider.parseDateRange(segment0);
         assertTrue("range should be non-null", range0 != null);
         assertTrue("range should have length of 2", range0.length == 2);
-        assertTrue("startDate should be non-null", range0[0] != null);
-        assertTrue("endDate should be non-null", range0[1] != null);
-        assertTrue("startDate should match", range0[0].getTimeInMillis() == start0.getTimeInMillis());
-        assertTrue("endDate should match (+1000)", range0[1].getTimeInMillis() == (end0.getTimeInMillis()));
+        //assertTrue("startDate should be non-null", range0[0] != null);
+        //assertTrue("endDate should be non-null", range0[1] != null);
+        assertTrue("startDate should match", range0[0] == start0.getTimeInMillis());
+        assertTrue("endDate should match (+1000)", range0[1] == (end0.getTimeInMillis()));
 
         // TODO: test against invalid ranges
     }
@@ -909,13 +909,18 @@ public class CalculatorProviderTest
                 endYear = now.get(Calendar.YEAR);
             }
 
-            Calendar[] range = CalculatorProvider.parseYearRange(segment);
+            long[] range = CalculatorProvider.parseYearRange(segment);
             assertTrue("range should be non-null", range != null);
             assertTrue("range should have length of 2", range.length == 2);
-            assertTrue("startYear should be non-null", range[0] != null);
-            assertTrue("endYear should be non-null", range[1] != null);
-            assertTrue(segment + " :: startYear should match: " + range[0].get(Calendar.YEAR) + " != " + startYear, range[0].get(Calendar.YEAR) == startYear);
-            assertTrue(segment + " :: endYear should match: " + range[1].get(Calendar.YEAR) + " != " + endYear, range[1].get(Calendar.YEAR) == endYear);
+            //assertTrue("startYear should be non-null", range[0] != null);
+            //assertTrue("endYear should be non-null", range[1] != null);
+            Calendar start = Calendar.getInstance();
+            start.setTimeInMillis(range[0]);
+            Calendar end = Calendar.getInstance();
+            end.setTimeInMillis(range[1]);
+
+            assertTrue(segment + " :: startYear should match: " + start.get(Calendar.YEAR) + " != " + startYear, start.get(Calendar.YEAR) == startYear);
+            assertTrue(segment + " :: endYear should match: " + end.get(Calendar.YEAR) + " != " + endYear, end.get(Calendar.YEAR) == endYear);
         }
     }
 
