@@ -1,0 +1,1 @@
+- ContentProvider related bug fixes (#394).

@@ -1,5 +1,8 @@
 ### ~
 
+### v0.12.7 (2020-04-06)
+* fixes bug where CalculatorProvider fails to apply the selected time zone (#394).
+
 ### v0.12.6 (2020-03-16)
 * adds fields to CalculatorProvider that provide access to general app configuration (timeIs24, showSeconds, showHours, showWeeks, useElevation, showWarnings, verboseTalkback, showFields, lengthUnits, and objectHeight).
 * fixes bug where CalculatorProvider would fail to honor changes to the calculator selection or "use elevation" option.
