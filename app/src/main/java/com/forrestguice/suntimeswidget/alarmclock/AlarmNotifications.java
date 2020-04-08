@@ -38,6 +38,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Vibrator;
 import android.provider.Settings;
@@ -394,6 +395,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
     private static void startAlert(Context context, @NonNull Uri soundUri, final boolean isAlarm) throws IOException
     {
+        final long fadeInMillis = (isAlarm ? AlarmSettings.loadPrefAlarmFadeIn(context) : 0);
         final int streamType = (isAlarm ? AudioManager.STREAM_ALARM : AudioManager.STREAM_NOTIFICATION);
         player.setAudioStreamType(streamType);
 
@@ -411,6 +413,11 @@ public class AlarmNotifications extends BroadcastReceiver
                     if (audioManager != null) {
                         audioManager.requestAudioFocus(null, streamType, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
                     }
+
+                    if (fadeInMillis > 0) {
+                        startFadeIn(fadeInMillis);
+                    } else player.setVolume(1, 1);
+
                     mediaPlayer.start();
                 }
             });
@@ -420,6 +427,38 @@ public class AlarmNotifications extends BroadcastReceiver
             Log.e(TAG, "startAlert: failed to setDataSource! " + soundUri.toString());
             throw e;
         }
+    }
+
+    private static int FADEIN_STEP_MILLIS = 50;
+    private static Handler fadeHandler;
+    private static Runnable fadein;
+    private static Runnable fadeIn(final long duration)
+    {
+        return fadein = new Runnable()
+        {
+            private float elapsed = 0;
+
+            @Override
+            public void run()
+            {
+                elapsed += FADEIN_STEP_MILLIS;
+                float volume = elapsed / (float) duration;
+                player.setVolume(volume, volume);
+
+                //Log.d("DEBUG", "fadeIn: " + elapsed + ":" + volume);
+                if ((elapsed + FADEIN_STEP_MILLIS) <= duration) {
+                    fadeHandler.postDelayed(fadein, FADEIN_STEP_MILLIS);
+                }
+            }
+        };
+    }
+    private static void startFadeIn(final long duration)
+    {
+        if (fadeHandler == null) {
+            fadeHandler = new Handler();
+        }
+        player.setVolume(0, 0);
+        fadeHandler.postDelayed(fadeIn(duration), FADEIN_STEP_MILLIS);
     }
 
     /**
