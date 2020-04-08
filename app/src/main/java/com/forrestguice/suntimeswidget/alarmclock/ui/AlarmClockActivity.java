@@ -1179,7 +1179,7 @@ public class AlarmClockActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
 
         boolean recreateActivity = false;
-        AlarmClockItem item = adapter.findItem(t_selectedItem);
+        AlarmClockItem item = (adapter != null) ? adapter.findItem(t_selectedItem) : null;
 
         switch (requestCode)
         {
