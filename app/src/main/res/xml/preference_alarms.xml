@@ -48,6 +48,12 @@
     <PreferenceCategory
         android:title="@string/configLabel_alarmSounds" >
 
+        <com.forrestguice.suntimeswidget.settings.EditTextPreference
+            android:key="app_alarms_fadeinMillis"
+            android:title="@string/configLabel_alarms_fadein"
+            android:summary="@string/configLabel_alarms_fadein_summary"
+            android:defaultValue="@string/def_app_alarms_fadein" />
+
         <CheckBoxPreference
             android:key="app_alarms_allringtones"
             android:title="@string/configLabel_alarms_allRingtones"
