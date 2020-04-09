@@ -432,7 +432,7 @@ public class AlarmNotifications extends BroadcastReceiver
     private static int FADEIN_STEP_MILLIS = 50;
     private static Handler fadeHandler;
     private static Runnable fadein;
-    private static Runnable fadeIn(final long duration)
+    private static Runnable fadeIn(final long duration)    // TODO: use VolumeShaper for api 26+
     {
         return fadein = new Runnable()
         {
