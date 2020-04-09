@@ -674,7 +674,11 @@
     <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  
 
     <string name="configLabel_alarms_upcoming">Recordatorio previo</string>  
-    <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  
+    <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+
+    <string name="configLabel_alarms_fadein">Gradually increase volume</string>  <!-- TODO -->
+    <!--<string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>-->
+    <string name="configLabel_alarms_fadein_disabled">Off</string>  <!-- TODO -->
 
     <string name="configLabel_alarms_hardwarebuttons">Botones físicos</string>  
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>  
