@@ -670,6 +670,10 @@
     <string name="configLabel_alarms_upcoming">Rememori antaŭ</string>
     <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutoj">%s</xliff:g></string>
 
+    <string name="configLabel_alarms_fadein">Gradually increase volume</string>  <!-- TODO -->
+    <!--<string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>-->
+    <string name="configLabel_alarms_fadein_disabled">Off</string>  <!-- TODO -->
+
     <string name="configLabel_alarms_hardwarebuttons">Fizikaj butonoj</string>
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Dormeti">%s</xliff:g></string>
     <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->
