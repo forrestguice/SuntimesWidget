@@ -378,8 +378,8 @@
 
     <!--<string name="timeMode_moon_perigee">@string/label_perigee</string>-->                             <!-- label -->
     <!--<string name="timeMode_moon_apogee">@string/label_apogee</string>-->                             <!-- label -->
-    <string name="label_apogee">Apogee</string>      <!-- TODO -->
-    <string name="label_perigee">Perigee</string>    <!-- TODO -->
+    <string name="label_apogee">Apogeu</string>
+    <string name="label_perigee">Perigeu</string>
 
     <string name="configLabel_general_timeMode">Modo:</string>          <!-- spinner label -->
 
@@ -391,12 +391,12 @@
 
     <string name="widgetMode1x1_altaz">Altitude &amp; Azimute</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Declinação &amp; Ascensão Reta</string>     <!-- setting -->
-    <string name="widgetMode1x1_distance">Current distance</string>     <!-- setting -->    <!-- TODO -->
-    <string name="widgetMode1x1_apsis">Next apogee or perigee</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode1x1_distance">Distância atual</string>     <!-- setting -->
+    <string name="widgetMode1x1_apsis">Próximo apogeu ou perigeu</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Básico</string>  <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [north]</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [south]</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">[north] Polar</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_south">[south] Polar</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_bluemarble">Bola Azul</string>    <!-- setting -->
 
     <string name="widgetMode1x1_moonriseset">Nascer da Lua&amp; Pôr da Lua</string>     <!-- setting -->
@@ -723,6 +723,10 @@
 
     <string name="configLabel_alarms_upcoming">Lembrar em</string>
     <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+
+    <string name="configLabel_alarms_fadein">Aumentar o volume gradualmente</string>
+    <!--<string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>-->
+    <string name="configLabel_alarms_fadein_disabled">Desligado</string>
 
     <string name="configLabel_alarms_hardwarebuttons">Botões Físicos</string>
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>
