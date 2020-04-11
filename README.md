@@ -109,7 +109,7 @@ The app benefits from the following permissions...
 |BOOT_COMPLETED|To restore active alarms when the device boots.|v0.11.0|
 |READ_EXTERNAL_STORAGE|To play alarm sounds located on the SD card.|v0.11.5|
 |SET_ALARM|To interact with the system AlarmClock app.|v0.1.0|
-|WRITE_EXTERNAL_STORAGE|To export data (places, themes, etc.) to file.|v0.2.2 (api<=18)|
+|WRITE_EXTERNAL_STORAGE|To export data (places, themes, etc.) to file.|v0.2.2 (api&le;18)|
 
 Version `0.9.*` contained the following additional permissions (removed in v0.10.0)...
 
@@ -168,7 +168,7 @@ Basque translation by <u>beriain</u>.<br/>
 Norwegian translation by <u>FTno</u>.<br/>
 Italian translation by <u>Matteo Caoduro</u>.<br/>
 Traditional Chinese translation by <u><a href=https://github.com/pggdt>ft42</a></u>.<br />
-Brazilian Portuguese translation by <u><a href=https://github.com/netosilva15>NetoSilva</a></u> and <u>Nelson A. de Oliveira</u>.<br />
+Brazilian Portuguese translation by <u><a href=https://github.com/netosilva15>NetoSilva</a></u>, <u>Nelson A. de Oliveira</u>, and <u>Enrico S. B. Fraletti</u>.<br />
 
 [Contributions to the project](CONTRIBUTING.md) are welcome.
 
