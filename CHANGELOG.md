@@ -1,7 +1,9 @@
 ### ~
 
 ### v0.12.7 (2020-04-06)
+* adds "gradually increase volume" option to Suntimes Alarms (#396).
 * fixes bug where CalculatorProvider fails to apply the selected time zone (#394).
+* updates translation to Brazilian Portuguese (pt-br) (#400 by efraletti).
 
 ### v0.12.6 (2020-03-16)
 * adds fields to CalculatorProvider that provide access to general app configuration (timeIs24, showSeconds, showHours, showWeeks, useElevation, showWarnings, verboseTalkback, showFields, lengthUnits, and objectHeight).
