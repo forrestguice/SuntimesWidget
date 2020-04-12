@@ -1,5 +1,26 @@
 ### ~
 
+### v0.12.7 (2020-04-11)
+* adds "gradually increase volume" option to Suntimes Alarms (#396).
+* fixes bug where CalculatorProvider fails to apply the selected time zone (#394).
+* updates translation to Brazilian Portuguese (pt-br) (#400 by efraletti).
+
+### v0.12.6 (2020-03-16)
+* adds fields to CalculatorProvider that provide access to general app configuration (timeIs24, showSeconds, showHours, showWeeks, useElevation, showWarnings, verboseTalkback, showFields, lengthUnits, and objectHeight).
+* fixes bug where CalculatorProvider would fail to honor changes to the calculator selection or "use elevation" option.
+* increments CalculatorProvider versionCode (`2` to `3`); note: the key used to access the providerVersionCode has also been changed (fixes typo).
+
+### v0.12.5 (2020-02-08)
+* adds a "dismiss" button to the reminder notification that allows repeating alarms to be dismissed early (reschedule+1); reveals the reminder notification for api21+ (#387).
+* fixes the appearance of ActionModes displayed within BottomSheetDialogFragment.
+* fixes bug where CalculatorProvider would sometimes return uninitialized defaults.
+* no longer reschedules alarms in response to TIME_SET broadcast.
+
+### v0.12.4 (2019-12-23)
+* fixes app crash (time zone dialog) (#376).
+* fixes bug where updating "current location" blocks dialogs from loading; potentially long lived AsyncTask now run in parallel with shorter lived tasks (THREAD_POOL_EXECUTOR) (#376).
+* updates build; Android gradle plugin version updated to `com.android.tools.build:gradle:3.1.2`, gradle wrapper to `gradle-4.4`, and buildToolsVersion to `27.0.3`.
+
 ### v0.12.3 (2019-12-03)
 * fixes bug "can't get location while gps is working and has a fix" (api17+) (#373).
 * adds gps "recent max age" values "none" and "any" (ignores gps time when getting fix), and an option to fallback to the last location.

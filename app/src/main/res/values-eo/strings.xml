@@ -670,6 +670,10 @@
     <string name="configLabel_alarms_upcoming">Rememori antaŭ</string>
     <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutoj">%s</xliff:g></string>
 
+    <string name="configLabel_alarms_fadein">Gradually increase volume</string>  <!-- TODO -->
+    <!--<string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>-->
+    <string name="configLabel_alarms_fadein_disabled">Off</string>  <!-- TODO -->
+
     <string name="configLabel_alarms_hardwarebuttons">Fizikaj butonoj</string>
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Dormeti">%s</xliff:g></string>
     <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->
@@ -1082,7 +1086,7 @@
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">erar-spurilon</a> por raporti problemon.
     ]]></string>
     <string name="app_legal1"><![CDATA[
-        Kopirajto &#169 2014-2019 Forrest GUICE <br />
+        Kopirajto &#169 2014-2020 Forrest GUICE <br />
         Fontkodo disponebla laŭ la permesilo GPLv3.
     ]]></string>
 

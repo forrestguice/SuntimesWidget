@@ -63,6 +63,9 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_SHOWLAUNCHER = "app_alarms_showlauncher";
     public static final boolean PREF_DEF_ALARM_SHOWLAUNCHER = true;
 
+    public static final String PREF_KEY_ALARM_FADEIN = "app_alarms_fadeinMillis";
+    public static final int PREF_DEF_ALARM_FADEIN = 1000 * 10;   // 10 s
+
     public static String loadPrefOnHardwareButtons(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -157,6 +160,14 @@ public class AlarmSettings
             default:
                 return RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_NOTIFICATION);
         }
+    }
+
+    public static long loadPrefAlarmFadeIn(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (Build.VERSION.SDK_INT >= 11) {
+            return prefs.getInt(PREF_KEY_ALARM_FADEIN, PREF_DEF_ALARM_FADEIN);
+        } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_FADEIN, PREF_DEF_ALARM_FADEIN);
     }
 
 }

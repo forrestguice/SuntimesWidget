@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -38,6 +38,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Vibrator;
 import android.provider.Settings;
@@ -81,7 +82,8 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final String ACTION_DISMISS = "suntimeswidget.alarm.dismiss";          // dismiss an alarm
     public static final String ACTION_SNOOZE = "suntimeswidget.alarm.snooze";            // snooze an alarm
     public static final String ACTION_SCHEDULE = "suntimeswidget.alarm.schedule";        // enable (schedule) an alarm
-    public static final String ACTION_RESCHEDULE = "suntimeswidget.alarm.reschedule";    // reschedule; same as schedule but prev alarmtime is cleared
+    public static final String ACTION_RESCHEDULE = "suntimeswidget.alarm.reschedule";    // reschedule; same as schedule but prev alarmtime is replaced.
+    public static final String ACTION_RESCHEDULE1 = ACTION_RESCHEDULE + "1";             // reschedule + 1; advance schedule by 1 cycle (prev alarmtime used as basis for scheduling)
     public static final String ACTION_DISABLE = "suntimeswidget.alarm.disable";          // disable an alarm
     public static final String ACTION_TIMEOUT = "suntimeswidget.alarm.timeout";          // timeout an alarm
     public static final String ACTION_DELETE = "suntimeswidget.alarm.delete";            // delete an alarm
@@ -118,10 +120,14 @@ public class AlarmNotifications extends BroadcastReceiver
             SuntimesUtils.TimeDisplayText alarmText = utils.timeDeltaLongDisplayString(now.getTimeInMillis(), item.timestamp + item.offset);
             String alarmString = context.getString(R.string.alarmenabled_toast, item.type.getDisplayString(), alarmText.getValue());
             SpannableString alarmDisplay = SuntimesUtils.createBoldSpan(null, alarmString, alarmText.getValue());
-            Snackbar snackbar = Snackbar.make(view, alarmDisplay, Toast.LENGTH_SHORT);
-            themeSnackbar(context, snackbar, null);
-            snackbar.show();
-            //Toast.makeText(context, alarmDisplay, Toast.LENGTH_SHORT).show();
+
+            if (view != null) {
+                Snackbar snackbar = Snackbar.make(view, alarmDisplay, Toast.LENGTH_SHORT);
+                themeSnackbar(context, snackbar, null);
+                snackbar.show();
+            } else {
+                Toast.makeText(context, alarmDisplay, Toast.LENGTH_SHORT).show();
+            }
 
         } else Log.e(TAG, "showTimeUntilToast: context is null!");
     }
@@ -389,6 +395,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
     private static void startAlert(Context context, @NonNull Uri soundUri, final boolean isAlarm) throws IOException
     {
+        final long fadeInMillis = (isAlarm ? AlarmSettings.loadPrefAlarmFadeIn(context) : 0);
         final int streamType = (isAlarm ? AudioManager.STREAM_ALARM : AudioManager.STREAM_NOTIFICATION);
         player.setAudioStreamType(streamType);
 
@@ -406,6 +413,11 @@ public class AlarmNotifications extends BroadcastReceiver
                     if (audioManager != null) {
                         audioManager.requestAudioFocus(null, streamType, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
                     }
+
+                    if (fadeInMillis > 0) {
+                        startFadeIn(fadeInMillis);
+                    } else player.setVolume(1, 1);
+
                     mediaPlayer.start();
                 }
             });
@@ -415,6 +427,38 @@ public class AlarmNotifications extends BroadcastReceiver
             Log.e(TAG, "startAlert: failed to setDataSource! " + soundUri.toString());
             throw e;
         }
+    }
+
+    private static int FADEIN_STEP_MILLIS = 50;
+    private static Handler fadeHandler;
+    private static Runnable fadein;
+    private static Runnable fadeIn(final long duration)    // TODO: use VolumeShaper for api 26+
+    {
+        return fadein = new Runnable()
+        {
+            private float elapsed = 0;
+
+            @Override
+            public void run()
+            {
+                elapsed += FADEIN_STEP_MILLIS;
+                float volume = elapsed / (float) duration;
+                player.setVolume(volume, volume);
+
+                //Log.d("DEBUG", "fadeIn: " + elapsed + ":" + volume);
+                if ((elapsed + FADEIN_STEP_MILLIS) <= duration) {
+                    fadeHandler.postDelayed(fadein, FADEIN_STEP_MILLIS);
+                }
+            }
+        };
+    }
+    private static void startFadeIn(final long duration)
+    {
+        if (fadeHandler == null) {
+            fadeHandler = new Handler();
+        }
+        player.setVolume(0, 0);
+        fadeHandler.postDelayed(fadeIn(duration), FADEIN_STEP_MILLIS);
     }
 
     /**
@@ -604,16 +648,17 @@ public class AlarmNotifications extends BroadcastReceiver
                     break;
 
                 case AlarmState.STATE_SCHEDULED_SOON:
-                    if (Build.VERSION.SDK_INT < 21)
-                    {
+                    //if (Build.VERSION.SDK_INT < 21)
+                    //{
                         builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
-                        builder.setPriority( NotificationCompat.PRIORITY_LOW );
+                        builder.setPriority( alarm.repeating ? NotificationCompat.PRIORITY_HIGH : NotificationCompat.PRIORITY_DEFAULT );
                         notificationMsg = context.getString(R.string.alarmAction_upcomingMsg);
                         builder.setWhen(alarm.alarmtime);
                         builder.setContentIntent(pendingView);
+                        builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
                         builder.setAutoCancel(false);
                         builder.setOngoing(true);
-                    } else return null;  // don't show reminder for api 21+ (uses notification provided by setAlarm instead)
+                    //} else return null;  // don't show reminder for api 21+ (uses notification provided by setAlarm instead)
                     break;
 
                 case AlarmState.STATE_SNOOZING:
@@ -766,7 +811,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     itemTask.execute(ContentUris.parseId(data));
 
                 } else {
-                    if (AlarmNotifications.ACTION_SCHEDULE.equals(action) || Intent.ACTION_BOOT_COMPLETED.equals(action) || Intent.ACTION_TIME_CHANGED.equals(action))
+                    if (AlarmNotifications.ACTION_SCHEDULE.equals(action) || Intent.ACTION_BOOT_COMPLETED.equals(action))
                     {
                         Log.d(TAG, action + ": schedule all");
                         AlarmDatabaseAdapter.AlarmListTask alarmListTask = new AlarmDatabaseAdapter.AlarmListTask(getApplicationContext());
@@ -810,6 +855,10 @@ public class AlarmNotifications extends BroadcastReceiver
                             }
                         });
                         alarmListTask.execute();
+
+                    } else if (Intent.ACTION_TIME_CHANGED.equals(action)) {
+                        Log.d(TAG, "TIME_SET received");
+                        // TODO: reschedule alarms (but only when deltaT is >reminderPeriod to avoid rescheduling alarms dismissed early)
 
                     } else if (AlarmNotifications.ACTION_DELETE.equals(action)) {
                         Log.d(TAG, "ACTION_DELETE: clear all");
@@ -885,9 +934,14 @@ public class AlarmNotifications extends BroadcastReceiver
                                     nextAction = ACTION_DISABLE;
 
                                 } else {
-                                    Log.i(TAG, "Dismissed: Repeating; re-scheduling.." + item.rowID);
-                                    nextAction = ACTION_SCHEDULE;
-                                    item.alarmtime = 0;
+                                    boolean dismissedEarly = (Calendar.getInstance().getTimeInMillis() < item.alarmtime);
+                                    Log.i(TAG, "Dismissed: Repeating; re-scheduling.." + item.rowID + " [early=" + dismissedEarly + "]");
+                                    if (dismissedEarly) {
+                                        nextAction = ACTION_RESCHEDULE1;
+                                    } else {
+                                        nextAction = ACTION_SCHEDULE;
+                                        item.alarmtime = 0;
+                                    }
                                 }
 
                                 item.modified = true;
@@ -948,7 +1002,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 deleteTask.execute(item.rowID);
                             }
 
-                        } else if (action.equals(ACTION_SCHEDULE) || (action.equals(ACTION_RESCHEDULE))) {
+                        } else if (action.equals(ACTION_SCHEDULE) || (action.startsWith(ACTION_RESCHEDULE))) {
                             ////////////////////////////////////////////////////////////////////////////
                             // Schedule Alarm
                             ////////////////////////////////////////////////////////////////////////////
@@ -957,15 +1011,25 @@ public class AlarmNotifications extends BroadcastReceiver
                                 cancelAlarmTimeouts(context, item.getUri());
 
                                 long now = Calendar.getInstance().getTimeInMillis();
-                                if (item.alarmtime <= now || item.alarmtime == 0 || action.equals(ACTION_RESCHEDULE))
+                                if (item.alarmtime <= now || item.alarmtime == 0 || action.startsWith(ACTION_RESCHEDULE))
                                 {
                                     // expired alarm/notification
                                     if (item.enabled)    // enabled; reschedule alarm/notification
                                     {
                                         Log.d(TAG, "(Re)Scheduling: " + item.rowID);
-                                        boolean updated = updateAlarmTime(context, item);     // sets item.hour, item.minute, item.timestamp (calculates the eventTime)
-                                        if (updated) {
+
+                                        Calendar scheduledFrom = Calendar.getInstance();
+                                        boolean dismissedEarly = (action.equals(ACTION_RESCHEDULE1) && item.alarmtime > 0);
+                                        if (dismissedEarly) {
+                                            scheduledFrom.setTimeInMillis(item.alarmtime + 60 * 1000);
+                                        }
+                                        boolean updated = updateAlarmTime(context, item, scheduledFrom);     // sets item.hour, item.minute, item.timestamp (calculates the eventTime)
+                                        if (updated)
+                                        {
                                             item.alarmtime = item.timestamp + item.offset;     // scheduled sounding time (-before/+after eventTime by some offset)
+                                            if (dismissedEarly) {
+                                                showTimeUntilToast(context, null, item);
+                                            }
 
                                         } else {  // failed to schedule; this alarm needs to be disabled (prevent alarm loop)
                                             Log.d(TAG, "Disabling: " + item.rowID);
@@ -1290,7 +1354,10 @@ public class AlarmNotifications extends BroadcastReceiver
      * @param item AlarmClockItem
      * @return true item was updated, false failed to update item
      */
-    public static boolean updateAlarmTime(Context context, final AlarmClockItem item)
+    public static boolean updateAlarmTime(Context context, final AlarmClockItem item) {
+        return updateAlarmTime(context, item, Calendar.getInstance());
+    }
+    public static boolean updateAlarmTime(Context context, final AlarmClockItem item, Calendar now)
     {
         Calendar eventTime = Calendar.getInstance();
         if (item.location != null && item.event != null)
@@ -1298,23 +1365,23 @@ public class AlarmNotifications extends BroadcastReceiver
             switch (item.event.getType())
             {
                 case SolarEvents.TYPE_MOON:
-                    eventTime = updateAlarmTime_moonEvent(context, item.event, item.location, item.offset, item.repeating, item.repeatingDays);
+                    eventTime = updateAlarmTime_moonEvent(context, item.event, item.location, item.offset, item.repeating, item.repeatingDays, now);
                     break;
 
                 case SolarEvents.TYPE_MOONPHASE:
-                    eventTime = updateAlarmTime_moonPhaseEvent(context, item.event, item.location, item.offset, item.repeating, item.repeatingDays);
+                    eventTime = updateAlarmTime_moonPhaseEvent(context, item.event, item.location, item.offset, item.repeating, item.repeatingDays, now);
                     break;
 
                 case SolarEvents.TYPE_SEASON:
-                    eventTime = updateAlarmTime_seasonEvent(context, item.event, item.location, item.offset, item.repeating, item.repeatingDays);
+                    eventTime = updateAlarmTime_seasonEvent(context, item.event, item.location, item.offset, item.repeating, item.repeatingDays, now);
                     break;
 
                 case SolarEvents.TYPE_SUN:
-                    eventTime = updateAlarmTime_sunEvent(context, item.event, item.location, item.offset, item.repeating, item.repeatingDays);
+                    eventTime = updateAlarmTime_sunEvent(context, item.event, item.location, item.offset, item.repeating, item.repeatingDays, now);
                     break;
             }
         } else {
-            eventTime = updateAlarmTime_clockTime(item.hour, item.minute, item.offset, item.repeating, item.repeatingDays);
+            eventTime = updateAlarmTime_clockTime(item.hour, item.minute, item.offset, item.repeating, item.repeatingDays, now);
         }
 
         if (eventTime == null) {
@@ -1330,14 +1397,13 @@ public class AlarmNotifications extends BroadcastReceiver
     }
 
     @Nullable
-    private static Calendar updateAlarmTime_sunEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays)
+    private static Calendar updateAlarmTime_sunEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
         WidgetSettings.TimeMode timeMode = event.toTimeMode();
         SuntimesRiseSetData sunData = new SuntimesRiseSetData(context, 0);
         sunData.setLocation(location);
         sunData.setTimeMode(timeMode != null ? timeMode : WidgetSettings.TimeMode.OFFICIAL);
 
-        Calendar now = Calendar.getInstance();
         Calendar alarmTime = Calendar.getInstance();
         Calendar eventTime;
 
@@ -1369,12 +1435,11 @@ public class AlarmNotifications extends BroadcastReceiver
     }
 
     @Nullable
-    private static Calendar updateAlarmTime_moonEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays)
+    private static Calendar updateAlarmTime_moonEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
         SuntimesMoonData moonData = new SuntimesMoonData(context, 0);
         moonData.setLocation(location);
 
-        Calendar now = Calendar.getInstance();
         Calendar alarmTime = Calendar.getInstance();
 
         Calendar day = Calendar.getInstance();
@@ -1405,13 +1470,12 @@ public class AlarmNotifications extends BroadcastReceiver
     }
 
     @Nullable
-    private static Calendar updateAlarmTime_moonPhaseEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays)
+    private static Calendar updateAlarmTime_moonPhaseEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
         SuntimesCalculator.MoonPhase phase = event.toMoonPhase();
         SuntimesMoonData moonData = new SuntimesMoonData(context, 0);
         moonData.setLocation(location);
 
-        Calendar now = Calendar.getInstance();
         Calendar alarmTime = Calendar.getInstance();
 
         Calendar day = Calendar.getInstance();
@@ -1445,14 +1509,13 @@ public class AlarmNotifications extends BroadcastReceiver
     }
 
     @Nullable
-    private static Calendar updateAlarmTime_seasonEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays)
+    private static Calendar updateAlarmTime_seasonEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
         WidgetSettings.SolsticeEquinoxMode season = event.toSolsticeEquinoxMode();
         SuntimesEquinoxSolsticeData data = new SuntimesEquinoxSolsticeData(context, 0);
         data.setTimeMode(season);
         data.setLocation(location);
 
-        Calendar now = Calendar.getInstance();
         Calendar alarmTime = Calendar.getInstance();
 
         Calendar day = Calendar.getInstance();
@@ -1484,9 +1547,8 @@ public class AlarmNotifications extends BroadcastReceiver
     }
 
     @Nullable
-    private static Calendar updateAlarmTime_clockTime(int hour, int minute, long offset, boolean repeating, ArrayList<Integer> repeatingDays)
+    private static Calendar updateAlarmTime_clockTime(int hour, int minute, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
-        Calendar now = Calendar.getInstance();
         Calendar alarmTime = Calendar.getInstance();
         Calendar eventTime = Calendar.getInstance();
 

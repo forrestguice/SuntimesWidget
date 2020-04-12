@@ -1,70 +1,49 @@
 # Contributing
 
-1. [Submit a bug report / feature request](#submit-a-bug-report-or-feature-request)
-2. [Add a translation](#add-a-translation)
-3. [Add a default location](#add-a-default-location)
-4. [Add a "data source"](#add-a-data-source)
-5. [Other](#other)
+1. [Donations](#donations)
+2. [Bug Reports and Feature Requests](#bug-reports-and-feature-requests)
+3. [Spread the Word](#spread-the-word)
+4. [Translations](#translations)
+5. [Plugins and Addons](#plugins-and-addons)
+6. [Other](#other)
 
-## Submit a Bug Report or Feature Request
-<a name="bugReport" />
+## Donations
+
+Does this app provide value? Please consider a monetary contribution if your disposable income allows it. Putting a price on the binary is a great way to show support for software you care about.
+
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=NZJ5FJBCKY6K2"><img src="/SuntimesWidget/assets/images/PP_logo_h_150x38.png" alt="paypal" /></a>
+
+## Bug Reports and Feature Requests
 Use the issue tracker to submit a bug report or a feature request.
 
-Issues will be tagged **bug**, **feature**, or **enhancement** as they are recognized, and later added to specific **milestones** as they are fixed or completed.
+When reporting a bug **please be detailed as possible**. What did you expect the app to do, what did you actually observe? Include the app version number in your report. Other useful information includes the Android OS version (and sometimes your specific device model).
 
-When submitting a bug **please be detailed and specific**. What did you expect the app to do, what did you actually observe? Bugs that can't be reproduced won't get fixed. Useful information includes Android OS version and your specific device model.
+## Spread the Word
+Share this app. Tell your friends. Let others know about F-Droid and the software that's available there.
 
-## Add a Translation 
-<a name="addTranslation" />
+## Translations
 
-**To add a new translation first..**
- 1. Learn how android supports translation through resources; see https://developer.android.com/training/basics/supporting-devices/languages.html
- 2. Learn how android determines which set of resources it uses; see https://developer.android.com/preview/features/multilingual-support.html
- 3. Determine your locale code and values-folder-name (e.g. values-en-rGB is British English); see https://github.com/championswimmer/android-locales for a list of codes.
- 
-**When ready to start translating..**
- 
- 1. Fork the master repository and create a new branch for your edits.
- 
- 2. Edit the `/res/<values-folder>/strings.xml` file (e.g. `/res/values-en-rGB/strings.xml`).
-   * If the folder doesn't exist, create it and copy from `/res/values/strings.xml` as a starting template.
-   * If the folder/file already exists, copy-and-paste values (shadow them) from `/res/values/strings.xml`.
- 
- 3. Translate the string values.
-   * Do not add new values that don't already appear in the default `/res/values/strings.xml`. The app will crash if it accidentally tries to use any value that isn't in the default.
-   * Do not translate values that have the attribute `translatable="false"` (remove these definitions, they should only exist in the default `/res/values/strings.xml`)
-   * Do not translate the values that fall between `<xliff:g>` tags; these are either parameters or constant values that must remain the same. You may translate the text that appears around these tags.
-   * For `string-array` type values, be mindful not to add, remove, or change the order of the entries; these `string-arrays` are usually mapped (one-to-one) with non-translatable values in the default `/res/values/strings.xml`.
-   * note: `<![CDATA[` tags are sometimes used to preserve HTML markup (which is later displayed by the view). You can add and extend these tags for values that already use them, but otherwise values do not expect HTML (and these tags shouldn't be used).
+ 1. Determine your locale code and values-folder-name (e.g. values-en-rGB is British English); see https://github.com/championswimmer/android-locales for a list of codes.
 
- 4. Add your name to the credits; add a new line `translation by <your name>` to the `app_legal2` value in the default `/res/values/strings.xml`, and also in your translated `strings.xml`. 
+ 2. Fork the master repository and create a new branch for your edits.
 
- 5. (optional) Create a new issue in the tracker if you have questions, require feedback, or would otherwise like to discuss your translation.
- 
+ 3. Edit the `/res/<values-folder>/strings.xml` file using your favorite text editor. If it doesn't exist then create it and copy from `/res/values/strings.xml` as a starting template.
+
+ 4. Translate strings. If updating a translation, the lines that are marked `TODO` need translation or review.
+   * Do not add values that don't already appear in the default `/res/values/strings.xml`.
+   * Do not translate values that are marked `translatable="false"`. These values should only exist in the default `/res/values/strings.xml`.
+   * Do not translate values between `<xliff:g>` tags. These are either parameters or constant values that must remain the same.
+   * For `string-array` values be mindful not to change the order of the entries. These `string-arrays` are usually mapped (one-to-one) with non-translatable values in the default `/res/values/strings.xml`.
+<br /><br />
+ 5. Add your name to the credits.
+  * For new translations, add an item to `locale_credits`, and corresponding items to `locale_values`, `locale_display`, and `locale_display_native` (in the default `/res/values/strings.xml`).
+  * For existing translations, append your name to the corresponding line in `locale_credits` (using a `|` as a delimiter).
+  <br /><br />
  6. Submit a pull request.
 
-## Add a default location
-<a name="addDefaultLocation" />
-
-1. Follow the guidelines for adding a new translation, except only shadowing a small subset of values.
-2. In your `res/<values-folder>/strings.xml` file add/modify the follow definitions with your locale specific values:
-
-```
-<string name="default_location_label">City Name</string>
-<string name="default_location_latitude">34.5409</string>      <!-- decimal degrees (DD) -->
-<string name="default_location_longitude">-112.4691</string>   <!-- decimal degrees (DD) -->
-```
-note: The lat/lon should use `.` as the decimal separator and include 4 decimal places.
-
-
-## Add a plugin (or addon)
-<a name="addDataSource" />
-Data sources can be added to the app by implementing the `SuntimesCalculator` interface.
-
-It is also possible to access Suntimes data from a separate "addon" app by using a ContentProvider.
-
-[https://github.com/forrestguice/SuntimesWidget/wiki/Interfaces](https://github.com/forrestguice/SuntimesWidget/wiki/Interfaces)
+### Plugins and Addons
+Add additional data sources (use your own algorithms) by implementing the `SuntimesCalculator` interface.
+Access data from separate "addon" apps or widgets using the Suntimes ContentProvider. [https://github.com/forrestguice/SuntimesWidget/wiki/Interfaces](https://github.com/forrestguice/SuntimesWidget/wiki/Interfaces)
 
 ## Other
-<a name="other" />
 Use the issue tracker to start a discussion and get started. Your participation in the project in other ways is also welcome.
