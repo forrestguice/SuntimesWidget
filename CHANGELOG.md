@@ -1,6 +1,6 @@
 ### ~
 
-### v0.12.7 (2020-04-06)
+### v0.12.7 (2020-04-11)
 * adds "gradually increase volume" option to Suntimes Alarms (#396).
 * fixes bug where CalculatorProvider fails to apply the selected time zone (#394).
 * updates translation to Brazilian Portuguese (pt-br) (#400 by efraletti).
