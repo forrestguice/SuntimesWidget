@@ -333,4 +333,99 @@ public class AlarmClockItem
         }
     }
 
+    /**
+     * AlarmTimeZone
+     */
+    public static enum AlarmTimeZone
+    {
+        SYSTEM_TIME("System Time Zone", null),
+        APPARENT_SOLAR_TIME(WidgetTimezones.ApparentSolarTime.TIMEZONEID, WidgetTimezones.ApparentSolarTime.TIMEZONEID),
+        LOCAL_MEAN_TIME(WidgetTimezones.LocalMeanTime.TIMEZONEID, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+
+        private String displayString;
+        private String tzID;
+
+        private AlarmTimeZone(String displayString, String tzID)
+        {
+            this.displayString = displayString;
+            this.tzID = tzID;
+        }
+
+        public String timeZoneID() {
+            return tzID;
+        }
+
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public String displayString() {
+            return displayString;
+        }
+
+        public static String displayString(String tzID)
+        {
+            if (tzID == null) {
+                return SYSTEM_TIME.displayString();
+
+            } else if (tzID.equals(APPARENT_SOLAR_TIME.timeZoneID())) {
+                return APPARENT_SOLAR_TIME.displayString();
+
+            } else if (tzID.equals(LOCAL_MEAN_TIME.timeZoneID())) {
+                return LOCAL_MEAN_TIME.displayString;
+
+            } else {
+                return TimeZone.getTimeZone(tzID).getDisplayName();
+            }
+        }
+
+        public void setDisplayString( String displayString ) {
+            this.displayString = displayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            SYSTEM_TIME.setDisplayString(context.getString(R.string.timeFormatMode_system));
+            LOCAL_MEAN_TIME.setDisplayString(context.getString(R.string.solartime_localMean));
+            APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.solartime_apparent));
+        }
+
+        public TimeZone getTimeZone(Location location) {
+            return AlarmTimeZone.getTimeZone(timeZoneID(), location);
+        }
+
+        public static TimeZone getTimeZone(String tzID, Location location)
+        {
+            if (location == null || tzID == null) {
+                return TimeZone.getDefault();
+
+            } else if (tzID.equals(APPARENT_SOLAR_TIME.timeZoneID())) {
+                return new WidgetTimezones.ApparentSolarTime(location.getLongitudeAsDouble(), APPARENT_SOLAR_TIME.displayString());
+
+            } else if (tzID.equals(LOCAL_MEAN_TIME.timeZoneID())) {
+                return new WidgetTimezones.LocalMeanTime(location.getLongitudeAsDouble(), LOCAL_MEAN_TIME.displayString());
+
+            } else {
+                return TimeZone.getTimeZone(tzID);
+            }
+        }
+
+        public static AlarmTimeZone valueOfID(String tzID)
+        {
+            if (tzID == null) {
+                return SYSTEM_TIME;
+
+            } else if (tzID.equals(APPARENT_SOLAR_TIME.timeZoneID())) {
+                return APPARENT_SOLAR_TIME;
+
+            } else if (tzID.equals(LOCAL_MEAN_TIME.timeZoneID())) {
+                return LOCAL_MEAN_TIME;
+
+            } else {
+                return null;
+            }
+        }
+    }
+
 }
