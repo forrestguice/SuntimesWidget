@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -31,9 +31,13 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 
 public class AlarmTimeDialog extends DialogFragment
 {
@@ -46,10 +50,17 @@ public class AlarmTimeDialog extends DialogFragment
     public static final String PREF_KEY_ALARM_TIME_MINUTE = "alarmminute";
     public static final int PREF_DEF_ALARM_TIME_MINUTE = 0;
 
+    public static final String PREF_KEY_ALARM_TIME_MODE = "alarmtimezonemode";
+    public static final AlarmClockItem.AlarmTimeZone PREF_DEF_ALARM_TIME_MODE = AlarmClockItem.AlarmTimeZone.SYSTEM_TIME;
+
     private TimePicker timePicker;
     private boolean is24 = PREF_DEF_ALARM_TIME_24HR;
     private int hour = PREF_DEF_ALARM_TIME_HOUR;
     private int minute = PREF_DEF_ALARM_TIME_MINUTE;
+
+    private Spinner modePicker;
+    ArrayAdapter<AlarmClockItem.AlarmTimeZone> modeAdapter;
+    private AlarmClockItem.AlarmTimeZone mode = AlarmClockItem.AlarmTimeZone.SYSTEM_TIME;
 
     /**
      * @param savedInstanceState a Bundle containing dialog state
@@ -121,6 +132,12 @@ public class AlarmTimeDialog extends DialogFragment
 
     protected void initViews( final Context context, View dialogContent )
     {
+        modeAdapter = new ArrayAdapter<>(context, R.layout.layout_listitem_oneline, AlarmClockItem.AlarmTimeZone.values());
+        modeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        modePicker = (Spinner)dialogContent.findViewById(R.id.modepicker);
+        modePicker.setAdapter(modeAdapter);
+        modePicker.setSelection(modeAdapter.getPosition(this.mode));
+
         timePicker = (TimePicker)dialogContent.findViewById(R.id.timepicker);
         setTimeChangedListener();
     }
@@ -130,11 +147,17 @@ public class AlarmTimeDialog extends DialogFragment
         if (timePicker != null) {
             timePicker.setOnTimeChangedListener(onTimeChanged);
         }
+        if (modePicker != null) {
+            modePicker.setOnItemSelectedListener(onModeChanged);
+        }
     }
     private void clearTimeChangedListener()
     {
         if (timePicker != null) {
             timePicker.setOnTimeChangedListener(null);
+        }
+        if (modePicker != null) {
+            modePicker.setOnItemSelectedListener(null);
         }
     }
 
@@ -146,6 +169,16 @@ public class AlarmTimeDialog extends DialogFragment
             AlarmTimeDialog.this.hour = hourOfDay;
             AlarmTimeDialog.this.minute = minute;
         }
+    };
+
+    private AdapterView.OnItemSelectedListener onModeChanged = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            AlarmTimeDialog.this.mode = (AlarmClockItem.AlarmTimeZone) parent.getItemAtPosition(position);
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {}
     };
 
     private void updateViews(Context context)
@@ -181,11 +214,24 @@ public class AlarmTimeDialog extends DialogFragment
         return minute;
     }
 
+    public String getTimeZone() {
+        return mode.timeZoneID();
+    }
+    public void setTimeZone( String tzID )
+    {
+        AlarmClockItem.AlarmTimeZone m = AlarmClockItem.AlarmTimeZone.valueOfID(tzID);
+        this.mode = (m != null ? m : PREF_DEF_ALARM_TIME_MODE);
+        if (modePicker != null) {
+            modePicker.setSelection(modeAdapter.getPosition(this.mode));
+        }
+    }
+
     protected void loadSettings(Bundle bundle)
     {
         this.is24 =  bundle.getBoolean(PREF_KEY_ALARM_TIME_24HR, PREF_DEF_ALARM_TIME_24HR);
         this.hour =  bundle.getInt(PREF_KEY_ALARM_TIME_HOUR, PREF_DEF_ALARM_TIME_HOUR);
         this.minute = bundle.getInt(PREF_KEY_ALARM_TIME_MINUTE, PREF_DEF_ALARM_TIME_MINUTE);
+        this.mode = AlarmClockItem.AlarmTimeZone.valueOf(bundle.getString(PREF_KEY_ALARM_TIME_MODE, PREF_DEF_ALARM_TIME_MODE.name()));
     }
 
     protected void saveSettings(Bundle bundle)
@@ -193,6 +239,7 @@ public class AlarmTimeDialog extends DialogFragment
         bundle.putBoolean(PREF_KEY_ALARM_TIME_24HR, is24);
         bundle.putInt(PREF_KEY_ALARM_TIME_HOUR, hour);
         bundle.putInt(PREF_KEY_ALARM_TIME_MINUTE, minute);
+        bundle.putString(PREF_KEY_ALARM_TIME_MODE, mode.name());
     }
 
     /**
