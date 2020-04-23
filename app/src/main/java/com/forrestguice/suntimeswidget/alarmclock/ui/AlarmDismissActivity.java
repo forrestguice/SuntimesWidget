@@ -521,6 +521,7 @@ public class AlarmDismissActivity extends AppCompatActivity
         }
     };
 
+    @SuppressLint("SetTextI18n")
     public void setAlarmItem(@NonNull Context context, @NonNull AlarmClockItem item)
     {
         alarm = item;
@@ -532,7 +533,19 @@ public class AlarmDismissActivity extends AppCompatActivity
             alarmSubtitle.setText(item.event.getLongDisplayString());
             alarmSubtitle.setVisibility(View.VISIBLE);
 
-        } else alarmSubtitle.setVisibility(View.GONE);
+        } else {
+            if (alarm.timezone != null)
+            {
+                Calendar eventTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(item.timezone, item.location));
+                eventTime.set(Calendar.HOUR_OF_DAY, item.hour);
+                eventTime.set(Calendar.MINUTE, item.minute);
+                alarmSubtitle.setText(utils.calendarTimeShortDisplayString(context, eventTime) + "\n" + AlarmClockItem.AlarmTimeZone.displayString(item.timezone));
+                alarmSubtitle.setVisibility(View.VISIBLE);
+
+            } else {
+                alarmSubtitle.setVisibility(View.GONE);
+            }
+        }
 
         Spannable offsetSpan = new SpannableString("");
         if (item.offset != 0)
