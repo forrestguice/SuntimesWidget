@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -22,21 +22,19 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
-import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 /**
  * AlarmClockItem
@@ -60,6 +58,7 @@ public class AlarmClockItem
     public long offset = 0;
     public String label = null;
     public SolarEvents event = null;
+    public String timezone = null;
     public Location location = null;
     public String ringtoneName = null;
     public String ringtoneURI = null;
@@ -103,6 +102,8 @@ public class AlarmClockItem
         String eventString = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_SOLAREVENT);
         event = SolarEvents.valueOf(eventString, null);
 
+        timezone = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_TIMEZONE);
+
         vibrate = (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_VIBRATE) == 1);
         ringtoneName = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_NAME);
         ringtoneURI = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_URI);
@@ -136,6 +137,10 @@ public class AlarmClockItem
         if (event != null) {
             values.put(AlarmDatabaseAdapter.KEY_ALARM_SOLAREVENT, event.name());
         } else values.putNull(AlarmDatabaseAdapter.KEY_ALARM_SOLAREVENT);
+
+        if (timezone != null) {
+            values.put(AlarmDatabaseAdapter.KEY_ALARM_TIMEZONE, timezone);
+        } else values.putNull(AlarmDatabaseAdapter.KEY_ALARM_TIMEZONE);
 
         if (repeatingDays != null) {
             values.put(AlarmDatabaseAdapter.KEY_ALARM_REPEATING_DAYS, getRepeatingDays());

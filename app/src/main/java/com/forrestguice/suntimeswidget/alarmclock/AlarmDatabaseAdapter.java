@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -30,8 +30,6 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +38,7 @@ import java.util.List;
 public class AlarmDatabaseAdapter
 {
     public static final String DATABASE_NAME = "suntimesAlarms";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
 
     //
     // Table: Alarms
@@ -80,6 +78,9 @@ public class AlarmDatabaseAdapter
 
     public static final String KEY_ALARM_SOLAREVENT = "event";                                      // SolarEvent ENUM (optional), the ALARM_DATETIME may be (re)calculated using this value
     public static final String DEF_ALARM_SOLAREVENT = KEY_ALARM_SOLAREVENT + " text";
+
+    public static final String KEY_ALARM_TIMEZONE = "timezone";                                     // TZ_ID or AlarmTimeDialogMode ENUM (optional); timezone is used when SOLAREVENT is null
+    public static final String DEF_ALARM_TIMEZONE = KEY_ALARM_TIMEZONE + " text";
 
     public static final String KEY_ALARM_PLACELABEL = "place";                                      // place label (optional), the ALARM_LABEL may include this value
     public static final String DEF_ALARM_PLACELABEL = KEY_ALARM_PLACELABEL + " text";
@@ -127,16 +128,20 @@ public class AlarmDatabaseAdapter
 
                                                          + DEF_ALARM_VIBRATE + ", "
                                                          + DEF_ALARM_RINGTONE_NAME + ", "
-                                                         + DEF_ALARM_RINGTONE_URI;
+                                                         + DEF_ALARM_RINGTONE_URI + ", "
+
+                                                         + DEF_ALARM_TIMEZONE;
 
     private static final String TABLE_ALARMS_CREATE = "create table " + TABLE_ALARMS + " (" + TABLE_ALARMS_CREATE_COLS + ");";
+    private static final String[] TABLE_ALARMS_UPGRADE_1_2 = new String[] { "alter table " + TABLE_ALARMS + " add column " + DEF_ALARM_TIMEZONE };
 
     private static final String[] QUERY_ALARMS_MINENTRY = new String[] { KEY_ROWID, KEY_ALARM_TYPE, KEY_ALARM_ENABLED, KEY_ALARM_DATETIME, KEY_ALARM_LABEL };
     private static final String[] QUERY_ALARMS_FULLENTRY = new String[] { KEY_ROWID, KEY_ALARM_TYPE, KEY_ALARM_ENABLED, KEY_ALARM_LABEL,
                                                                           KEY_ALARM_REPEATING, KEY_ALARM_REPEATING_DAYS,
                                                                           KEY_ALARM_DATETIME_ADJUSTED, KEY_ALARM_DATETIME, KEY_ALARM_DATETIME_HOUR, KEY_ALARM_DATETIME_MINUTE, KEY_ALARM_DATETIME_OFFSET,
                                                                           KEY_ALARM_SOLAREVENT, KEY_ALARM_PLACELABEL, KEY_ALARM_LATITUDE, KEY_ALARM_LONGITUDE, KEY_ALARM_ALTITUDE,
-                                                                          KEY_ALARM_VIBRATE, KEY_ALARM_RINGTONE_NAME, KEY_ALARM_RINGTONE_URI };
+                                                                          KEY_ALARM_VIBRATE, KEY_ALARM_RINGTONE_NAME, KEY_ALARM_RINGTONE_URI,
+                                                                          KEY_ALARM_TIMEZONE };
 
     //
     // Table: AlarmState
@@ -314,6 +319,7 @@ public class AlarmDatabaseAdapter
                 KEY_ALARM_REPEATING + separator +
                 KEY_ALARM_REPEATING_DAYS + separator +
                 KEY_ALARM_SOLAREVENT + separator +
+                KEY_ALARM_TIMEZONE + separator +
                 KEY_ALARM_PLACELABEL + separator +
                 KEY_ALARM_LATITUDE + separator +
                 KEY_ALARM_LONGITUDE + separator +
@@ -338,6 +344,7 @@ public class AlarmDatabaseAdapter
                       alarm.getAsInteger(KEY_ALARM_REPEATING) + separator +
                       quote + alarm.getAsString(KEY_ALARM_REPEATING_DAYS) + quote + separator +
                       alarm.getAsString(KEY_ALARM_SOLAREVENT) + separator +
+                      alarm.getAsString(KEY_ALARM_TIMEZONE) + separator +
                       quote + alarm.getAsString(KEY_ALARM_PLACELABEL) + quote + separator +
                       alarm.getAsString(KEY_ALARM_LATITUDE) + separator +
                       alarm.getAsString(KEY_ALARM_LONGITUDE) + separator +
@@ -397,14 +404,18 @@ public class AlarmDatabaseAdapter
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
         {
-            /**Log.w("GetFixDatabaseAdapter", "Upgrading database from version " + oldVersion + " to " + newVersion);
-            switch (oldVersion)
+            Log.w("AlarmDatabaseAdapter", "Upgrading database from version " + oldVersion + " to " + newVersion);
+            if (oldVersion == 1)
             {
-                case 1:
-                case 2:
-                case 3:
-                    break;
-            }*/
+                switch (newVersion)
+                {
+                    case 2:
+                        for (int i=0; i<TABLE_ALARMS_UPGRADE_1_2.length; i++) {
+                            db.execSQL(TABLE_ALARMS_UPGRADE_1_2[i]);
+                        }
+                        break;
+                }
+            }
         }
     }
 
