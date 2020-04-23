@@ -72,6 +72,7 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.List;
+import java.util.TimeZone;
 
 public class AlarmNotifications extends BroadcastReceiver
 {
@@ -1381,7 +1382,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     break;
             }
         } else {
-            eventTime = updateAlarmTime_clockTime(item.hour, item.minute, item.offset, item.repeating, item.repeatingDays, now);
+            eventTime = updateAlarmTime_clockTime(item.hour, item.minute, item.timezone, item.location, item.offset, item.repeating, item.repeatingDays, now);
         }
 
         if (eventTime == null) {
@@ -1547,10 +1548,13 @@ public class AlarmNotifications extends BroadcastReceiver
     }
 
     @Nullable
-    private static Calendar updateAlarmTime_clockTime(int hour, int minute, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
+    private static Calendar updateAlarmTime_clockTime(int hour, int minute, String tzID, @Nullable Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
-        Calendar alarmTime = Calendar.getInstance();
-        Calendar eventTime = Calendar.getInstance();
+        TimeZone timezone = AlarmClockItem.AlarmTimeZone.getTimeZone(tzID, location);
+        Log.d(TAG, "updateAlarmTime_clockTime: using timezone " + timezone.getID());
+
+        Calendar alarmTime = Calendar.getInstance(timezone);
+        Calendar eventTime = Calendar.getInstance(timezone);
 
         eventTime.set(Calendar.SECOND, 0);
         if (hour >= 0 && hour < 24) {
