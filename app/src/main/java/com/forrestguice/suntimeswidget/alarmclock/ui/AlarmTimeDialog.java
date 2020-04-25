@@ -132,6 +132,7 @@ public class AlarmTimeDialog extends DialogFragment
 
     protected void initViews( final Context context, View dialogContent )
     {
+        AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
         modeAdapter = new ArrayAdapter<>(context, R.layout.layout_listitem_oneline, AlarmClockItem.AlarmTimeZone.values());
         modeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         modePicker = (Spinner)dialogContent.findViewById(R.id.modepicker);

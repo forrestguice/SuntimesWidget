@@ -338,9 +338,9 @@ public class AlarmClockItem
      */
     public static enum AlarmTimeZone
     {
-        SYSTEM_TIME("System Time Zone", null),
         APPARENT_SOLAR_TIME(WidgetTimezones.ApparentSolarTime.TIMEZONEID, WidgetTimezones.ApparentSolarTime.TIMEZONEID),
-        LOCAL_MEAN_TIME(WidgetTimezones.LocalMeanTime.TIMEZONEID, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+        LOCAL_MEAN_TIME(WidgetTimezones.LocalMeanTime.TIMEZONEID, WidgetTimezones.LocalMeanTime.TIMEZONEID),
+        SYSTEM_TIME("System Time Zone", null);
 
         private String displayString;
         private String tzID;
@@ -386,7 +386,7 @@ public class AlarmClockItem
 
         public static void initDisplayStrings( Context context )
         {
-            SYSTEM_TIME.setDisplayString(context.getString(R.string.timeFormatMode_system));
+            SYSTEM_TIME.setDisplayString(context.getString(R.string.timezoneMode_current));
             LOCAL_MEAN_TIME.setDisplayString(context.getString(R.string.solartime_localMean));
             APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.solartime_apparent));
         }

@@ -264,6 +264,7 @@ public class AlarmDismissActivity extends AppCompatActivity
         WidgetSettings.initDisplayStrings(context);
         SuntimesUtils.initDisplayStrings(context);
         SolarEvents.initDisplayStrings(context);
+        AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
 
         int[] attrs = { R.attr.sunsetColor,  R.attr.sunriseColor, R.attr.dialogBackgroundAlt,
                 R.attr.text_disabledColor, R.attr.buttonPressColor, R.attr.text_disabledColor,
