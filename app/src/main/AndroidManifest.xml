@@ -61,6 +61,13 @@
             android:exported="true"
             android:syncable="false" />
 
+        <!-- Theme Provider -->
+        <provider
+            android:name="com.forrestguice.suntimeswidget.themes.SuntimesThemeProvider"
+            android:authorities="suntimeswidget.theme.provider"
+            android:exported="true"
+            android:syncable="false" />
+
         <!-- Calculator Plugins -->
         <!--EXAMPLE:
         <activity android:name=".calculator.ca.rmen.sunrisesunset.CalculatorPlugin">  ..where CalculatorPlugin is an empty activity

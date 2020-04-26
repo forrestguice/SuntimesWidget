@@ -18,8 +18,34 @@
 
 package com.forrestguice.suntimeswidget.themes;
 
+/**
+ * WidgetThemeProviderContract
+ * @version 1 (0.1.0)
+ *
+ * Supported URIs have the form: "content://AUTHORITY/query"
+ * ..where [AUTHORITY] is "suntimeswidget.theme.provider"
+ * ..where [query] is one of: QUERY_THEME
+ *
+ * ------------------------------------------------------------------------------------------------
+ * QUERY_THEME
+ *   The following URIs are supported:
+ *       content://suntimeswidget.theme.provider/theme/[themeName]                     .. retrieve a given theme
+ *
+ *   The result will be one row containing THEME values
+ *
+ * ------------------------------------------------------------------------------------------------
+ * CHANGES
+ *   1 initial version
+ */
 public interface SuntimesThemeContract
 {
+    String AUTHORITY = "suntimeswidget.theme.provider";
+    String VERSION_NAME = "v0.1.0";
+    int VERSION_CODE = 1;
+
+    /**
+     * THEME
+     */
     String THEME_PROVIDER_VERSION = "theme_provider_version";                                       // String (provider version string)
     String THEME_PROVIDER_VERSION_CODE = "theme_provider_version_code";                             // int (provider version code)
 
@@ -119,5 +145,24 @@ public interface SuntimesThemeContract
     float THEME_TIMESUFFIXSIZE_MIN = 4.0f;
     float THEME_TIMESUFFIXSIZE_DEF = 6.0f;
     float THEME_TIMESUFFIXSIZE_MAX = 32.0f;
+
+    String QUERY_THEME = "theme";
+    String[] QUERY_THEME_PROJECTION = new String[] {
+            THEME_PROVIDER_VERSION, THEME_PROVIDER_VERSION_CODE,
+            THEME_NAME, THEME_VERSION, THEME_ISDEFAULT, THEME_DISPLAYSTRING,
+            THEME_BACKGROUND, THEME_BACKGROUND_COLOR,
+            THEME_PADDING_LEFT, THEME_PADDING_TOP, THEME_PADDING_RIGHT, THEME_PADDING_BOTTOM,
+            THEME_TEXTCOLOR, THEME_TITLECOLOR, THEME_TIMECOLOR, THEME_TIMESUFFIXCOLOR, THEME_ACTIONCOLOR, THEME_ACCENTCOLOR,
+            THEME_SUNRISECOLOR, THEME_NOONCOLOR, THEME_SUNSETCOLOR,
+            THEME_MOONRISECOLOR, THEME_MOONSETCOLOR, THEME_MOONWANINGCOLOR, THEME_MOONWAXINGCOLOR, THEME_MOONNEWCOLOR, THEME_MOONFULLCOLOR,
+            THEME_MOONFULL_STROKE_WIDTH, THEME_MOONNEW_STROKE_WIDTH,
+            THEME_NOONICON_FILL_COLOR, THEME_NOONICON_STROKE_COLOR, THEME_NOONICON_STROKE_WIDTH,
+            THEME_RISEICON_FILL_COLOR, THEME_RISEICON_STROKE_COLOR, THEME_RISEICON_STROKE_WIDTH,
+            THEME_SETICON_FILL_COLOR, THEME_SETICON_STROKE_COLOR, THEME_SETICON_STROKE_WIDTH,
+            THEME_DAYCOLOR, THEME_CIVILCOLOR, THEME_NAUTICALCOLOR, THEME_ASTROCOLOR, THEME_NIGHTCOLOR,
+            THEME_SPRINGCOLOR, THEME_SUMMERCOLOR, THEME_FALLCOLOR, THEME_WINTERCOLOR,
+            THEME_MAP_BACKGROUNDCOLOR, THEME_MAP_FOREGROUNDCOLOR, THEME_MAP_SHADOWCOLOR, THEME_MAP_HIGHLIGHTCOLOR,
+            THEME_TITLESIZE, THEME_TITLEBOLD, THEME_TEXTSIZE, THEME_TIMESIZE, THEME_TIMEBOLD, THEME_TIMESUFFIXSIZE
+    };
 
 }
