@@ -232,7 +232,9 @@ public class AlarmTimeDialog extends DialogFragment
         this.is24 =  bundle.getBoolean(PREF_KEY_ALARM_TIME_24HR, PREF_DEF_ALARM_TIME_24HR);
         this.hour =  bundle.getInt(PREF_KEY_ALARM_TIME_HOUR, PREF_DEF_ALARM_TIME_HOUR);
         this.minute = bundle.getInt(PREF_KEY_ALARM_TIME_MINUTE, PREF_DEF_ALARM_TIME_MINUTE);
-        this.mode = AlarmClockItem.AlarmTimeZone.valueOf(bundle.getString(PREF_KEY_ALARM_TIME_MODE, PREF_DEF_ALARM_TIME_MODE.name()));
+
+        String modeString = bundle.getString(PREF_KEY_ALARM_TIME_MODE);
+        this.mode = ((modeString != null) ? AlarmClockItem.AlarmTimeZone.valueOf(modeString) : PREF_DEF_ALARM_TIME_MODE);
     }
 
     protected void saveSettings(Bundle bundle)
