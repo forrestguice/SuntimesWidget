@@ -30,19 +30,23 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
-import com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 
 import java.util.HashMap;
 
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.AUTHORITY;
-
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.QUERY_THEME;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.QUERY_THEMES;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.QUERY_THEMES_PROJECTION;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.QUERY_THEME_PROJECTION;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_DISPLAYSTRING;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_ISDEFAULT;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_NAME;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_PROVIDER_VERSION;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_PROVIDER_VERSION_CODE;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_VERSION;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.VERSION_CODE;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.VERSION_NAME;
 
 /**
  * SuntimesThemeProvider
@@ -51,10 +55,12 @@ import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME
 public class SuntimesThemeProvider extends ContentProvider
 {
     private static final int URIMATCH_THEME = 0;
+    private static final int URIMATCH_THEMES = 10;
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
         uriMatcher.addURI(AUTHORITY, QUERY_THEME, URIMATCH_THEME);
+        uriMatcher.addURI(AUTHORITY, QUERY_THEMES, URIMATCH_THEMES);
     }
 
     @Override
@@ -102,6 +108,11 @@ public class SuntimesThemeProvider extends ContentProvider
                 retValue = queryTheme(uri, projection, selectionMap, sortOrder);
                 break;
 
+            case URIMATCH_THEMES:
+                Log.d(getClass().getSimpleName(), "URIMATCH_LIST");
+                retValue = queryThemes(uri, projection, selectionMap, sortOrder);
+                break;
+
             default:
                 Log.e(getClass().getSimpleName(), "Unrecognized URI! " + uri);
                 break;
@@ -110,50 +121,120 @@ public class SuntimesThemeProvider extends ContentProvider
     }
 
     /**
+     * queryThemes
+     */
+    private Cursor queryThemes(@NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
+    {
+        Context context = getContext();
+        String[] columns = (projection != null ? projection : QUERY_THEMES_PROJECTION);
+        MatrixCursor retValue = new MatrixCursor(columns);
+
+        if (context != null)
+        {
+            for (SuntimesTheme.ThemeDescriptor themeDesc : WidgetThemes.getValues()) {
+                retValue.addRow(createRow(themeDesc, columns));
+            }
+        }
+        return retValue;
+    }
+
+    private Object[] createRow(SuntimesTheme.ThemeDescriptor themeDesc, String[] columns)
+    {
+        Object[] row = new Object[columns.length];
+        for (int i=0; i<columns.length; i++)
+        {
+            switch (columns[i])
+            {
+                case THEME_PROVIDER_VERSION:
+                    row[i] = VERSION_NAME;
+                    break;
+
+                case THEME_PROVIDER_VERSION_CODE:
+                    row[i] = VERSION_CODE;
+                    break;
+
+                case THEME_NAME:
+                    row[i] = themeDesc.name();
+                    break;
+
+                case THEME_VERSION:
+                    row[i] = themeDesc.version();
+                    break;
+
+                case THEME_ISDEFAULT:
+                    row[i] = (themeDesc.isDefault() ? 1 : 0);
+                    break;
+
+                case THEME_DISPLAYSTRING:
+                    row[i] = themeDesc.displayString();
+                    break;
+
+                default:
+                    row[i] = null;
+                    break;
+            }
+        }
+        return row;
+    }
+
+    /**
      * queryTheme
      */
     private Cursor queryTheme(@NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
     {
-        String themeID = uri.getLastPathSegment();
         Context context = getContext();
         String[] columns = (projection != null ? projection : QUERY_THEME_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
 
         if (context != null)
         {
+            String themeID = uri.getLastPathSegment();
             SuntimesTheme theme = WidgetThemes.loadTheme(context, themeID);
-            Object[] row = new Object[columns.length];
-            for (int i=0; i<columns.length; i++)
-            {
-                switch (columns[i])
-                {
-                    case THEME_PROVIDER_VERSION:
-                        row[i] = CalculatorProviderContract.VERSION_NAME;
-                        break;
-
-                    case THEME_PROVIDER_VERSION_CODE:
-                        row[i] = CalculatorProviderContract.VERSION_CODE;
-                        break;
-
-                    case THEME_NAME:
-                        row[i] = theme.themeName();
-                        break;
-
-                    case THEME_DISPLAYSTRING:
-                        row[i] = theme.themeDisplayString();
-                        break;
-
-                    // TODO
-
-                    default:
-                        row[i] = null;
-                        break;
-                }
-            }
-            retValue.addRow(row);
+            retValue.addRow(createRow(theme, columns));
 
         } else Log.e(getClass().getSimpleName(), "context is null!");
         return retValue;
+    }
+
+    private Object[] createRow(SuntimesTheme theme, String[] columns)
+    {
+        Object[] row = new Object[columns.length];
+        for (int i=0; i<columns.length; i++)
+        {
+            switch (columns[i])
+            {
+                case THEME_PROVIDER_VERSION:
+                    row[i] = VERSION_NAME;
+                    break;
+
+                case THEME_PROVIDER_VERSION_CODE:
+                    row[i] = VERSION_CODE;
+                    break;
+
+                case THEME_NAME:
+                    row[i] = theme.themeName();
+                    break;
+
+                case THEME_VERSION:
+                    row[i] = theme.themeVersion();
+                    break;
+
+                case THEME_ISDEFAULT:
+                    row[i] = (theme.isDefault() ? 1 : 0);
+                    break;
+
+                case THEME_DISPLAYSTRING:
+                    row[i] = theme.themeDisplayString();
+                    break;
+
+                // TODO
+
+                default:
+                    row[i] = null;
+                    break;
+            }
+        }
+        return row;
     }
 
 }

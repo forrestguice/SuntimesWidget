@@ -27,11 +27,17 @@ package com.forrestguice.suntimeswidget.themes;
  * ..where [query] is one of: QUERY_THEME
  *
  * ------------------------------------------------------------------------------------------------
- * QUERY_THEME
- *   The following URIs are supported:
- *       content://suntimeswidget.theme.provider/theme/[themeName]                     .. retrieve a given theme
+ * QUERY_THEMES
+ *   content://suntimeswidget.theme.provider/themes                       .. retrieve a list of available themes.
  *
- *   The result will be one row containing THEME values
+ *   The result will be multiple rows, each containing:
+ *     THEME_NAME, THEME_VERSION, THEME_ISDEFAULT, THEME_DISPLAYSTRING
+ *
+ * ------------------------------------------------------------------------------------------------
+ * QUERY_THEME
+ *   content://suntimeswidget.theme.provider/theme/[themeName]            .. retrieve a given theme
+ *
+ *   The result will be one row containing requested THEME_ values.
  *
  * ------------------------------------------------------------------------------------------------
  * CHANGES
@@ -165,4 +171,9 @@ public interface SuntimesThemeContract
             THEME_TITLESIZE, THEME_TITLEBOLD, THEME_TEXTSIZE, THEME_TIMESIZE, THEME_TIMEBOLD, THEME_TIMESUFFIXSIZE
     };
 
+    String QUERY_THEMES = "themes";
+    String[] QUERY_THEMES_PROJECTION = new String[] {
+            THEME_PROVIDER_VERSION, THEME_PROVIDER_VERSION_CODE,
+            THEME_NAME, THEME_VERSION, THEME_ISDEFAULT, THEME_DISPLAYSTRING
+    };
 }
