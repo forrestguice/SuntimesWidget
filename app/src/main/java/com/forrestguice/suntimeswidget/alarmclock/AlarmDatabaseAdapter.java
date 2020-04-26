@@ -79,7 +79,7 @@ public class AlarmDatabaseAdapter
     public static final String KEY_ALARM_SOLAREVENT = "event";                                      // SolarEvent ENUM (optional), the ALARM_DATETIME may be (re)calculated using this value
     public static final String DEF_ALARM_SOLAREVENT = KEY_ALARM_SOLAREVENT + " text";
 
-    public static final String KEY_ALARM_TIMEZONE = "timezone";                                     // TZ_ID or AlarmTimeDialogMode ENUM (optional); timezone is used when SOLAREVENT is null
+    public static final String KEY_ALARM_TIMEZONE = "timezone";                                     // TZ_ID; applied to clock time when SOLAREVENT is null
     public static final String DEF_ALARM_TIMEZONE = KEY_ALARM_TIMEZONE + " text";
 
     public static final String KEY_ALARM_PLACELABEL = "place";                                      // place label (optional), the ALARM_LABEL may include this value
