@@ -52,8 +52,8 @@ public interface SuntimesThemeContract
     /**
      * THEME
      */
-    String THEME_PROVIDER_VERSION = "theme_provider_version";                                       // String (provider version string)
-    String THEME_PROVIDER_VERSION_CODE = "theme_provider_version_code";                             // int (provider version code)
+    String THEME_PROVIDER_VERSION = "provider_version";                                       // String (provider version string)
+    String THEME_PROVIDER_VERSION_CODE = "provider_version_code";                             // int (provider version code)
 
     String THEME_NAME = "name";                                                                     // String
     String THEME_VERSION = "version";                                                               // int
