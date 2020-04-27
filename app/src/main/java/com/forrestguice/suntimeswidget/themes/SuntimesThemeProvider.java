@@ -39,12 +39,63 @@ import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.QUERY
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.QUERY_THEMES;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.QUERY_THEMES_PROJECTION;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.QUERY_THEME_PROJECTION;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_ACCENTCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_ACTIONCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_ASTROCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_BACKGROUND;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_BACKGROUND_COLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_CIVILCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_DAYCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_DISPLAYSTRING;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_FALLCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_ISDEFAULT;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_BACKGROUNDCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_FOREGROUNDCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_HIGHLIGHTCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_SHADOWCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONFULLCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONFULL_STROKE_WIDTH;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONNEWCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONNEW_STROKE_WIDTH;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONRISECOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONSETCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONWANINGCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONWAXINGCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_NAME;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_NAUTICALCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_NIGHTCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_NOONCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_NOONICON_FILL_COLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_NOONICON_STROKE_COLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_NOONICON_STROKE_WIDTH;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_PADDING_BOTTOM;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_PADDING_LEFT;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_PADDING_RIGHT;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_PADDING_TOP;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_PROVIDER_VERSION;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_PROVIDER_VERSION_CODE;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_RISEICON_FILL_COLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_RISEICON_STROKE_COLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_RISEICON_STROKE_WIDTH;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_SETICON_FILL_COLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_SETICON_STROKE_COLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_SETICON_STROKE_WIDTH;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_SPRINGCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_SUMMERCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_SUNRISECOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_SUNSETCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TEXTCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TEXTSIZE;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TIMEBOLD;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TIMECOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TIMESIZE;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TIMESUFFIXCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TIMESUFFIXSIZE;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TITLEBOLD;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TITLECOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TITLESIZE;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_VERSION;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_WINTERCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.VERSION_CODE;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.VERSION_NAME;
 
@@ -54,13 +105,13 @@ import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.VERSI
  */
 public class SuntimesThemeProvider extends ContentProvider
 {
-    private static final int URIMATCH_THEME = 0;
-    private static final int URIMATCH_THEMES = 10;
+    private static final int URIMATCH_THEMES = 0;
+    private static final int URIMATCH_THEME = 10;
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
-        uriMatcher.addURI(AUTHORITY, QUERY_THEME, URIMATCH_THEME);
-        uriMatcher.addURI(AUTHORITY, QUERY_THEMES, URIMATCH_THEMES);
+        uriMatcher.addURI(AUTHORITY, QUERY_THEMES, URIMATCH_THEMES);                 // content://AUTHORITY/themes
+        uriMatcher.addURI(AUTHORITY, QUERY_THEME + "/*", URIMATCH_THEME);      // content://AUTHORITY/[themeName]
     }
 
     @Override
@@ -109,7 +160,7 @@ public class SuntimesThemeProvider extends ContentProvider
                 break;
 
             case URIMATCH_THEMES:
-                Log.d(getClass().getSimpleName(), "URIMATCH_LIST");
+                Log.d(getClass().getSimpleName(), "URIMATCH_THEMES");
                 retValue = queryThemes(uri, projection, selectionMap, sortOrder);
                 break;
 
@@ -126,6 +177,8 @@ public class SuntimesThemeProvider extends ContentProvider
     private Cursor queryThemes(@NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
     {
         Context context = getContext();
+        WidgetThemes.initThemes(context);
+
         String[] columns = (projection != null ? projection : QUERY_THEMES_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
 
@@ -183,6 +236,8 @@ public class SuntimesThemeProvider extends ContentProvider
     private Cursor queryTheme(@NonNull Uri uri, @Nullable String[] projection, HashMap<String, String> selection, @Nullable String sortOrder)
     {
         Context context = getContext();
+        WidgetThemes.initThemes(context);
+
         String[] columns = (projection != null ? projection : QUERY_THEME_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
 
@@ -227,7 +282,172 @@ public class SuntimesThemeProvider extends ContentProvider
                     row[i] = theme.themeDisplayString();
                     break;
 
-                // TODO
+                case THEME_BACKGROUND:
+                    row[i] = null;  // TODO
+                    break;
+                case THEME_BACKGROUND_COLOR:
+                    row[i] = theme.getBackgroundColor();
+                    break;
+                case THEME_PADDING_LEFT:
+                    row[i] = theme.getPadding()[0];
+                    break;
+                case THEME_PADDING_TOP:
+                    row[i] = theme.getPadding()[1];
+                    break;
+                case THEME_PADDING_RIGHT:
+                    row[i] = theme.getPadding()[2];
+                    break;
+                case THEME_PADDING_BOTTOM:
+                    row[i] = theme.getPadding()[3];
+                    break;
+
+                case THEME_TEXTCOLOR:
+                    row[i] = theme.getTextColor();
+                    break;
+                case THEME_TITLECOLOR:
+                    row[i] = theme.getTitleColor();
+                    break;
+                case THEME_TIMECOLOR:
+                    row[i] = theme.getTimeColor();
+                    break;
+                case THEME_TIMESUFFIXCOLOR:
+                    row[i] = theme.getTimeSuffixColor();
+                    break;
+                case THEME_ACTIONCOLOR:
+                    row[i] = theme.getActionColor();
+                    break;
+                case THEME_ACCENTCOLOR:
+                    row[i] = theme.getAccentColor();
+                    break;
+
+                case THEME_TITLESIZE:
+                    row[i] = null;  // TODO
+                    break;
+                case THEME_TEXTSIZE:
+                    row[i] = null;  // TODO
+                    break;
+                case THEME_TIMESIZE:
+                    row[i] = null;  // TODO
+                    break;
+                case THEME_TIMESUFFIXSIZE:
+                    row[i] = null;  // TODO
+                    break;
+
+                case THEME_TITLEBOLD:
+                    row[i] = theme.getTitleBold() ? 1 : 0;
+                    break;
+                case THEME_TIMEBOLD:
+                    row[i] = theme.getTimeBold() ? 1 : 0;
+                    break;
+
+                case THEME_MOONRISECOLOR:
+                    row[i] = theme.getMoonriseTextColor();
+                    break;
+                case THEME_MOONSETCOLOR:
+                    row[i] = theme.getMoonsetTextColor();
+                    break;
+
+                case THEME_MOONWANINGCOLOR:
+                    row[i] = theme.getMoonWaningColor();
+                    break;
+                case THEME_MOONWAXINGCOLOR:
+                    row[i] = theme.getMoonWaxingColor();
+                    break;
+                case THEME_MOONNEWCOLOR:
+                    row[i] = theme.getMoonNewColor();
+                    break;
+                case THEME_MOONFULLCOLOR:
+                    row[i] = theme.getMoonFullColor();
+                    break;
+
+                case THEME_MOONFULL_STROKE_WIDTH:
+                    row[i] = null;  // TODO
+                    break;
+                case THEME_MOONNEW_STROKE_WIDTH:
+                    row[i] = null;  // TODO
+                    break;
+
+                case THEME_NOONICON_FILL_COLOR:
+                    row[i] = theme.getNoonIconColor();
+                    break;
+                case THEME_NOONICON_STROKE_COLOR:
+                    row[i] = theme.getNoonIconStrokeColor();
+                    break;
+                case THEME_NOONICON_STROKE_WIDTH:
+                    row[i] = null;  // TODO
+                    break;
+
+                case THEME_RISEICON_FILL_COLOR:
+                    row[i] = theme.getSunriseIconColor();
+                    break;
+                case THEME_RISEICON_STROKE_COLOR:
+                    row[i] = theme.getSunriseIconStrokeColor();
+                    break;
+                case THEME_RISEICON_STROKE_WIDTH:
+                    row[i] = null;  // TODO
+                    break;
+
+                case THEME_SETICON_FILL_COLOR:
+                    row[i] = theme.getSunsetIconColor();
+                    break;
+                case THEME_SETICON_STROKE_COLOR:
+                    row[i] = theme.getSunsetIconStrokeColor();
+                    break;
+                case THEME_SETICON_STROKE_WIDTH:
+                    row[i] = null;  // TODO
+                    break;
+
+                case THEME_SUNRISECOLOR:
+                    row[i] = theme.getSunriseTextColor();
+                    break;
+                case THEME_NOONCOLOR:
+                    row[i] = theme.getNoonTextColor();
+                    break;
+                case THEME_SUNSETCOLOR:
+                    row[i] = theme.getSunsetTextColor();
+                    break;
+
+                case THEME_DAYCOLOR:
+                    row[i] = theme.getDayColor();
+                    break;
+                case THEME_CIVILCOLOR:
+                    row[i] = theme.getCivilColor();
+                    break;
+                case THEME_NAUTICALCOLOR:
+                    row[i] = theme.getNauticalColor();
+                    break;
+                case THEME_ASTROCOLOR:
+                    row[i] = theme.getAstroColor();
+                    break;
+                case THEME_NIGHTCOLOR:
+                    row[i] = theme.getNightColor();
+                    break;
+
+                case THEME_MAP_BACKGROUNDCOLOR:
+                    row[i] = theme.getMapBackgroundColor();
+                    break;
+                case THEME_MAP_FOREGROUNDCOLOR:
+                    row[i] = theme.getMapForegroundColor();
+                    break;
+                case THEME_MAP_SHADOWCOLOR:
+                    row[i] = theme.getMapShadowColor();
+                    break;
+                case THEME_MAP_HIGHLIGHTCOLOR:
+                    row[i] = theme.getMapHighlightColor();
+                    break;
+
+                case THEME_SPRINGCOLOR:
+                    row[i] = theme.getSpringColor();
+                    break;
+                case THEME_SUMMERCOLOR:
+                    row[i] = theme.getSummerColor();
+                    break;
+                case THEME_FALLCOLOR:
+                    row[i] = theme.getFallColor();
+                    break;
+                case THEME_WINTERCOLOR:
+                    row[i] = theme.getWinterColor();
+                    break;
 
                 default:
                     row[i] = null;
