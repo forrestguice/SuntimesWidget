@@ -184,20 +184,25 @@ public class SuntimesThemeProvider extends ContentProvider
 
         if (context != null)
         {
+            int i = 0;
             for (SuntimesTheme.ThemeDescriptor themeDesc : WidgetThemes.getValues()) {
-                retValue.addRow(createRow(themeDesc, columns));
+                retValue.addRow(createRow(themeDesc, columns, i++));
             }
         }
         return retValue;
     }
 
-    private Object[] createRow(SuntimesTheme.ThemeDescriptor themeDesc, String[] columns)
+    private Object[] createRow(SuntimesTheme.ThemeDescriptor themeDesc, String[] columns, int rowID)
     {
         Object[] row = new Object[columns.length];
         for (int i=0; i<columns.length; i++)
         {
             switch (columns[i])
             {
+                case "_id":
+                    row[i] = rowID;
+                    break;
+
                 case THEME_PROVIDER_VERSION:
                     row[i] = VERSION_NAME;
                     break;

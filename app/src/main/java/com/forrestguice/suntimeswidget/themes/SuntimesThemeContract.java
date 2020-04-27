@@ -172,7 +172,7 @@ public interface SuntimesThemeContract
     };
 
     String QUERY_THEMES = "themes";
-    String[] QUERY_THEMES_PROJECTION = new String[] {
+    String[] QUERY_THEMES_PROJECTION = new String[] { "_id",
             THEME_PROVIDER_VERSION, THEME_PROVIDER_VERSION_CODE,
             THEME_NAME, THEME_VERSION, THEME_ISDEFAULT, THEME_DISPLAYSTRING
     };
