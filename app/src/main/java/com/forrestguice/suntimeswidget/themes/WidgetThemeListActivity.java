@@ -274,7 +274,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
             Intent intent = new Intent(this, WidgetThemeConfigActivity.class);
             intent.putExtra(WidgetThemeConfigActivity.PARAM_MODE, WidgetThemeConfigActivity.UIMode.EDIT_THEME);
             intent.putExtra(WidgetThemeConfigActivity.PARAM_WALLPAPER, useWallpaper);
-            intent.putExtra(SuntimesTheme.THEME_NAME, theme.themeName());
+            intent.putExtra(SuntimesThemeContract.THEME_NAME, theme.themeName());
             if (previewID >= 0) {
                 intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
             }
@@ -288,7 +288,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         Intent intent = new Intent(this, WidgetThemeConfigActivity.class);
         intent.putExtra(WidgetThemeConfigActivity.PARAM_MODE, WidgetThemeConfigActivity.UIMode.ADD_THEME);
         intent.putExtra(WidgetThemeConfigActivity.PARAM_WALLPAPER, useWallpaper);
-        intent.putExtra(SuntimesTheme.THEME_NAME, theme.themeName());
+        intent.putExtra(SuntimesThemeContract.THEME_NAME, theme.themeName());
         if (previewID >= 0) {
             intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, previewID);
         }
@@ -327,7 +327,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     protected void selectTheme( SuntimesTheme theme )
     {
         Intent intent = new Intent();
-        intent.putExtra(SuntimesTheme.THEME_NAME, theme.themeName());
+        intent.putExtra(SuntimesThemeContract.THEME_NAME, theme.themeName());
         intent.putExtra(ADAPTER_MODIFIED, adapterModified);
         setResult(Activity.RESULT_OK, intent);
         finish();
@@ -704,7 +704,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
             if (data != null)
             {
-                String themeName = data.getStringExtra(SuntimesTheme.THEME_NAME);
+                String themeName = data.getStringExtra(SuntimesThemeContract.THEME_NAME);
                 int i = adapter.ordinal(themeName);
 
                 SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(i);
@@ -725,7 +725,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
             if (data != null)
             {
-                String themeName = data.getStringExtra(SuntimesTheme.THEME_NAME);
+                String themeName = data.getStringExtra(SuntimesThemeContract.THEME_NAME);
                 int i = adapter.ordinal(themeName);
 
                 SuntimesTheme.ThemeDescriptor theme = (SuntimesTheme.ThemeDescriptor) adapter.getItem(i);
@@ -774,7 +774,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
         if (selected != null)
         {
-            outState.putString(SuntimesTheme.THEME_NAME, selected.name());
+            outState.putString(SuntimesThemeContract.THEME_NAME, selected.name());
         }
     }
 
@@ -785,7 +785,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
         savedState.getBoolean("isExporting", isExporting);
         savedState.getBoolean("isImporting", isImporting);
 
-        String themeName = savedState.getString(SuntimesTheme.THEME_NAME);
+        String themeName = savedState.getString(SuntimesThemeContract.THEME_NAME);
         if (themeName != null)
         {
             int i = adapter.ordinal(themeName);

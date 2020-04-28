@@ -68,6 +68,7 @@ import com.forrestguice.suntimeswidget.settings.ThemePreference;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.themes.SuntimesThemeContract;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
 import java.io.File;
@@ -144,7 +145,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     {
         if (resultCode == RESULT_OK)
         {
-            String selection = data.getStringExtra(SuntimesTheme.THEME_NAME);
+            String selection = data.getStringExtra(SuntimesThemeContract.THEME_NAME);
             boolean adapterModified = data.getBooleanExtra(WidgetThemeListActivity.ADAPTER_MODIFIED, false);
             Log.d("onPickTheme", "Picked " + selection + " (adapterModified:" + adapterModified + ")");
 
