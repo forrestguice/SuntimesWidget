@@ -1296,7 +1296,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     }
                     if (chained != null) {
                         chained.onFinished(true, item);
-                    }
+                    } else stopSelf();
                 }
             };
         }
@@ -1318,7 +1318,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     }
                     if (chained != null) {
                         chained.onFinished(true, item);
-                    }
+                    } else stopSelf();
                 }
             };
         }
