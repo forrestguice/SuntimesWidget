@@ -50,6 +50,7 @@ import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProvider
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_ALTITUDE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APPWIDGETID;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APP_THEME;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APP_THEME_OVERRIDE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APP_VERSION;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_APP_VERSION_CODE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_CALCULATOR;
@@ -381,6 +382,11 @@ public class CalculatorProvider extends ContentProvider
 
                         case COLUMN_CONFIG_APP_THEME:
                             row[i] = AppSettings.loadThemePref(context);
+                            break;
+
+                        case COLUMN_CONFIG_APP_THEME_OVERRIDE:
+                            int resID = AppSettings.themePrefToStyleId(context, AppSettings.loadThemePref(context), null);
+                            row[i] = AppSettings.getThemeOverride(context, resID);
                             break;
 
                         case COLUMN_CONFIG_LOCATION:

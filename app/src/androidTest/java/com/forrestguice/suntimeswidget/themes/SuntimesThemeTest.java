@@ -52,13 +52,13 @@ public class SuntimesThemeTest extends SuntimesActivityTestBase
         testTheme.saveTheme(context, WidgetThemes.PREFS_THEMES);
 
         SuntimesTheme theme = new SuntimesTheme();
-        boolean initialized = theme.initTheme(context, WidgetThemes.PREFS_THEMES, TestTheme.THEME_NAME, darkTheme);
+        boolean initialized = theme.initTheme(context, WidgetThemes.PREFS_THEMES, SuntimesThemeContract.THEME_NAME, darkTheme);
         assertTrue(initialized);
         verifyInit(theme, testTheme);
 
         testTheme.deleteTheme(context, WidgetThemes.PREFS_THEMES);
         SuntimesTheme theme1 = new SuntimesTheme();
-        theme1.initTheme(context, WidgetThemes.PREFS_THEMES, TestTheme.THEME_NAME, darkTheme);
+        theme1.initTheme(context, WidgetThemes.PREFS_THEMES, SuntimesThemeContract.THEME_NAME, darkTheme);
         verifyInit(theme, darkTheme);    // verify deleted (init should be to default: darkTheme)
     }
 

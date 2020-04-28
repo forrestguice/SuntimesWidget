@@ -61,6 +61,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+import com.forrestguice.suntimeswidget.themes.SuntimesThemeContract;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
@@ -1744,7 +1745,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (resultCode == RESULT_OK)
         {
-            String paramSelection = data.getStringExtra(SuntimesTheme.THEME_NAME);
+            String paramSelection = data.getStringExtra(SuntimesThemeContract.THEME_NAME);
             String themeName = (paramSelection != null) ? paramSelection
                                                         : ((ThemeDescriptor)spinner_theme.getSelectedItem()).name();
 
