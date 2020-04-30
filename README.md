@@ -6,7 +6,7 @@ Android app (and widget collection) that displays sunlight and moonlight times f
 
 [![F-Droid](https://img.shields.io/f-droid/v/com.forrestguice.suntimeswidget.svg)](https://f-droid.org/en/packages/com.forrestguice.suntimeswidget/)
 [![GitHub release](https://img.shields.io/github/release/forrestguice/SuntimesWidget.svg)](https://github.com/forrestguice/SuntimesWidget/releases)
-[![Build Status](https://travis-ci.org/forrestguice/SuntimesWidget.svg?branch=master)](https://travis-ci.org/forrestguice/SuntimesWidget)
+![Android CI](https://github.com/forrestguice/SuntimesWidget/workflows/Android%20CI/badge.svg?branch=master)
 
 * [Privacy and Permissions](#privacy-and-permissions)
 * [Donations](#donations)
