@@ -1,6 +1,6 @@
 ### ~
 
-### v0.12.8 (2020-04-29)
+### v0.12.8 (2020-04-30)
 * adds ability to set an alarm in solar time (#403); adds `timezone` field to alarm item database; increments database version (`1` -> `2`).
 * adds field to CalculatorProvider; `COLUMN_CONFIG_APP_THEME_OVERRIDE`; increments CalculatorProvider versionCode (`3` -> `4`).
 * adds a ContentProvider (SuntimesThemeProvider) that provides access to user-defined themes.
