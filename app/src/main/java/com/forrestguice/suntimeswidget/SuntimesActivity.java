@@ -1445,10 +1445,18 @@ public class SuntimesActivity extends AppCompatActivity
 
     protected void invalidateData( Context context )
     {
-        dataset.invalidateCalculation();
-        dataset_moon.invalidateCalculation();
-        dataset_equinox.invalidateCalculation();
-        card_adapter.invalidateData();
+        if (dataset != null) {
+            dataset.invalidateCalculation();
+        }
+        if (dataset_moon != null) {
+            dataset_moon.invalidateCalculation();
+        }
+        if (dataset_equinox != null) {
+            dataset_equinox.invalidateCalculation();
+        }
+        if (card_adapter != null) {
+            card_adapter.invalidateData();
+        }
         updateViews(context);
     }
 
