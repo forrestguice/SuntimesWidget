@@ -495,7 +495,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         return PendingIntent.getBroadcast(context, 0, new Intent(SuntimesActivity.SUNTIMES_APP_UPDATE_FULL), 0);
     }
-    private BroadcastReceiver fullUpdateReceiver = new BroadcastReceiver()
+    protected BroadcastReceiver fullUpdateReceiver = new BroadcastReceiver()
     {
         @Override
         public void onReceive(Context context, Intent intent)
@@ -521,7 +521,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         return PendingIntent.getBroadcast(context, 0, new Intent(SuntimesActivity.SUNTIMES_APP_UPDATE_PARTIAL), 0);
     }
-    private BroadcastReceiver partialUpdateReceiver = new BroadcastReceiver()
+    protected BroadcastReceiver partialUpdateReceiver = new BroadcastReceiver()
     {
         @Override
         public void onReceive(Context context, Intent intent)
