@@ -56,6 +56,8 @@ import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
 import java.util.ArrayList;
 
+import static com.forrestguice.suntimeswidget.SuntimesConfigActivity0.EXTRA_RECONFIGURE;
+
 public class SuntimesWidgetListActivity extends AppCompatActivity
 {
     private static final String DIALOGTAG_HELP = "help";
@@ -276,7 +278,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         Intent configIntent = new Intent(this, widget.getConfigClass());
         configIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widget.getWidgetId());
         configIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        configIntent.putExtra(WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(), true);
+        configIntent.putExtra(EXTRA_RECONFIGURE, true);
         startActivity(configIntent);
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }

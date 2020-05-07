@@ -495,7 +495,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         return PendingIntent.getBroadcast(context, 0, new Intent(SuntimesActivity.SUNTIMES_APP_UPDATE_FULL), 0);
     }
-    private BroadcastReceiver fullUpdateReceiver = new BroadcastReceiver()
+    protected BroadcastReceiver fullUpdateReceiver = new BroadcastReceiver()
     {
         @Override
         public void onReceive(Context context, Intent intent)
@@ -521,7 +521,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         return PendingIntent.getBroadcast(context, 0, new Intent(SuntimesActivity.SUNTIMES_APP_UPDATE_PARTIAL), 0);
     }
-    private BroadcastReceiver partialUpdateReceiver = new BroadcastReceiver()
+    protected BroadcastReceiver partialUpdateReceiver = new BroadcastReceiver()
     {
         @Override
         public void onReceive(Context context, Intent intent)
@@ -1319,7 +1319,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (geoIntents.size() > 0)
         {
             Intent chooserIntent = Intent.createChooser(geoIntents.remove(0), getString(R.string.configAction_mapLocation_chooser));
-            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, geoIntents.toArray(new Parcelable[geoIntents.size()]));
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, geoIntents.toArray(new Parcelable[0]));
             startActivity(chooserIntent);
 
         } else {
@@ -1343,7 +1343,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         String moonIllum = getString(R.string.help_general_moonillum);
 
-        String helpText = getString(R.string.help_general3, timeText, blueGoldText, moonIllum);
+        String helpText = getString(R.string.help_general3, moonIllum, timeText, blueGoldText);
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpText);
@@ -1445,10 +1445,18 @@ public class SuntimesActivity extends AppCompatActivity
 
     protected void invalidateData( Context context )
     {
-        dataset.invalidateCalculation();
-        dataset_moon.invalidateCalculation();
-        dataset_equinox.invalidateCalculation();
-        card_adapter.invalidateData();
+        if (dataset != null) {
+            dataset.invalidateCalculation();
+        }
+        if (dataset_moon != null) {
+            dataset_moon.invalidateCalculation();
+        }
+        if (dataset_equinox != null) {
+            dataset_equinox.invalidateCalculation();
+        }
+        if (card_adapter != null) {
+            card_adapter.invalidateData();
+        }
         updateViews(context);
     }
 
@@ -2152,6 +2160,7 @@ public class SuntimesActivity extends AppCompatActivity
     public int getThemeId()
     {
         try {
+            //noinspection JavaReflectionMemberAccess
             Method method = Context.class.getMethod("getThemeResId");
             method.setAccessible(true);
             return (Integer) method.invoke(this);

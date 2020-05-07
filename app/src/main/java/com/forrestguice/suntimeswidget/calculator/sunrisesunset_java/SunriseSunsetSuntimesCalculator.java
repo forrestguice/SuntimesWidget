@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2019 Forrest Guice
+    Copyright (C) 2014-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -41,9 +41,9 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public static final String REF = "com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator";
     public static final String LINK = "github.com/mikereedell/sunrisesunsetlib-java";
     public static final int[] FEATURES = new int[] { SuntimesCalculator.FEATURE_RISESET };
-    SunriseSunsetCalculator calculator = null;
-    TimeZone timezone;
-    Location location;
+    private SunriseSunsetCalculator calculator = null;
+    private TimeZone param_timezone;
+    private com.forrestguice.suntimeswidget.calculator.core.Location param_location;
 
     public SunriseSunsetSuntimesCalculator() { /* EMPTY */ }
 
@@ -62,17 +62,18 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     @Override
     public void init(com.forrestguice.suntimeswidget.calculator.core.Location locationSetting, TimeZone timezone, Context context)
     {
-        try
-        {
-            this.location = new Location(locationSetting.getLatitude(), locationSetting.getLongitude());
+        this.param_location = locationSetting;
+        this.param_timezone = timezone;
+
+        Location location;
+        try {
+            location = new Location(locationSetting.getLatitude(), locationSetting.getLongitude());
 
         } catch (NumberFormatException e) {
             Log.e("init", "location was invalid, falling back to default; " + e.toString());
-            this.location = new Location(WidgetSettings.PREF_DEF_LOCATION_LATITUDE, WidgetSettings.PREF_DEF_LOCATION_LONGITUDE);
+            location = new Location(WidgetSettings.PREF_DEF_LOCATION_LATITUDE, WidgetSettings.PREF_DEF_LOCATION_LONGITUDE);
         }
-
-        this.timezone = timezone;
-        calculator = new SunriseSunsetCalculator(this.location, this.timezone);
+        calculator = new SunriseSunsetCalculator(location, this.param_timezone);
     }
 
     @Override
@@ -124,7 +125,7 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
                 sunsetTime += (24 * 60 * 60 * 1000);  // bug workaround (sunset calendar set to wrong day; 24hrs off)
 
             long noonTime = sunriseTime + ((sunsetTime - sunriseTime) / 2L);
-            Calendar noonCalendar = Calendar.getInstance(timezone);
+            Calendar noonCalendar = Calendar.getInstance(param_timezone);
             noonCalendar.setTimeInMillis(noonTime);
             return noonCalendar;
 
@@ -284,6 +285,16 @@ public class SunriseSunsetSuntimesCalculator implements SuntimesCalculator
     public Calendar getMoonApogeeNextDate(Calendar date)
     {
         return null;
+    }
+
+    @Override
+    public com.forrestguice.suntimeswidget.calculator.core.Location getLocation() {
+        return param_location;
+    }
+
+    @Override
+    public TimeZone getTimeZone() {
+        return param_timezone;
     }
 }
 

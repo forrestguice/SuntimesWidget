@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -52,6 +52,7 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
 
     protected SolarTime solarTime;
     protected TimeZone timezone;
+    protected Location location;
 
     @Override
     public int[] getSupportedFeatures()
@@ -76,7 +77,19 @@ public abstract class Time4ASuntimesCalculator implements SuntimesCalculator
     {
         this.solarTime = SolarTime.ofLocation(location.getLatitudeAsDouble(), location.getLongitudeAsDouble(), clampAltitude(location.getAltitudeAsInteger()), getCalculator());
         this.timezone = timezone;
+        this.location = location;
     }
+
+    @Override
+    public Location getLocation() {
+        return location;
+    }
+
+    @Override
+    public TimeZone getTimeZone() {
+        return timezone;
+    }
+
 
     public static final int ALTITUDE_MIN = 0;
     public static final int ALTITUDE_MAX = 10999;

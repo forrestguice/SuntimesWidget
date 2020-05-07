@@ -348,8 +348,9 @@
     <string name="widgetMode1x1_moonillum">Nur prilumeco de Luno</string>         <!-- setting -->
     <string name="widgetMode1x1_moonphasenext">Sekvanta ĉefa fazo</string>             <!-- setting -->
 
-    <string name="configLabel_appearance_1x1mode">Grando 1x1:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x2mode">Grando 3x2:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_1x1mode">Grando 1×1:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x2mode">Grando 3×2:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x3mode">Grando 3×3:</string>     <!-- spinner label -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Fari nenion</string>           <!-- setting -->
@@ -452,6 +453,7 @@
     <string name="configAction_deleteTheme">Forigi</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Kopii</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportThemes">Elporti</string>    <!-- button (contentDescription) -->
+    <string name="configAction_shareTheme">Kunhavigi</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
     <string name="configAction_importThemes">Enporti</string>    <!-- button (contentDescription) -->
 
     <!--<string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>-->                                        <!-- suggested new theme id -->
@@ -670,6 +672,10 @@
     <string name="configLabel_alarms_upcoming">Rememori antaŭ</string>
     <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutoj">%s</xliff:g></string>
 
+    <string name="configLabel_alarms_fadein">Laŭgrade pliigi sonfortecon</string>
+    <!--<string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>-->
+    <string name="configLabel_alarms_fadein_disabled">Malaktiva</string>
+
     <string name="configLabel_alarms_hardwarebuttons">Fizikaj butonoj</string>
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Dormeti">%s</xliff:g></string>
     <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->
@@ -795,7 +801,7 @@
     <string name="configLabel_getFix_maxAge">Valido de GPS‑lego</string>
     <string name="configLabel_getFix_maxAge_summary">Senvalidiĝi post <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
-        <item>none</item>  <!-- TODO -->
+        <item>neniam</item>
         <item>1 minuto</item>
         <item>5 minutoj</item>
         <item>15 minutoj</item>
@@ -806,7 +812,7 @@
         <item>du tagoj (48 horoj)</item>
         <item>unu semajno (168 horoj)</item>
         <item>unu monato (672 horoj)</item>
-        <item>any age</item>  <!-- TODO -->
+        <item>ĉiu tempo</item>
     </string-array>
 
     <!-- App Setting: calendars -->
@@ -1001,7 +1007,8 @@
     <string name="gps_keeptrying_msg">Ne povas determini la pozicion</string>
     <string name="gps_keeptrying_ok">Reprovi</string>
     <string name="gps_keeptrying_cancel">Rezigni</string>
-
+    <string name="gps_keeptrying_fallback">Uzi antaŭan pozicion</string>
+    
     <!-- Dialog: Use Date -->
     <string name="timedate_dialog_title">Agordi daton</string>
     <string name="timedate_dialog_ok">Agordi</string>
@@ -1086,7 +1093,7 @@
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">erar-spurilon</a> por raporti problemon.
     ]]></string>
     <string name="app_legal1"><![CDATA[
-        Kopirajto &#169 2014-2019 Forrest GUICE <br />
+        Kopirajto &#169 2014-2020 Forrest GUICE <br />
         Fontkodo disponebla laŭ la permesilo GPLv3.
     ]]></string>
 

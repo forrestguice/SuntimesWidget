@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -330,6 +330,8 @@ public class AlarmClockActivity extends AppCompatActivity
         WidgetSettings.initDisplayStrings(context);
         SuntimesUtils.initDisplayStrings(context);
         SolarEvents.initDisplayStrings(context);
+        AlarmClockItem.AlarmType.initDisplayStrings(context);
+        AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
 
         int[] attrs = { R.attr.alarmColorEnabled, android.R.attr.textColorPrimary, R.attr.text_disabledColor, R.attr.buttonPressColor, android.R.attr.textColor, R.attr.icActionNew, R.attr.icActionClose };
         TypedArray a = context.obtainStyledAttributes(attrs);
@@ -933,6 +935,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
             AlarmTimeDialog timeDialog = new AlarmTimeDialog();
             timeDialog.setTime(hour, minute);
+            timeDialog.setTimeZone(item.timezone);
             timeDialog.set24Hour(SuntimesUtils.is24());
             timeDialog.setOnAcceptedListener(onTimeChanged);
             t_selectedItem = item.rowID;
@@ -959,6 +962,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 item.event = null;
                 item.hour = timeDialog.getHour();
                 item.minute = timeDialog.getMinute();
+                item.timezone = timeDialog.getTimeZone();
                 item.modified = true;
                 AlarmNotifications.updateAlarmTime(AlarmClockActivity.this, item);
 
@@ -1179,7 +1183,7 @@ public class AlarmClockActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
 
         boolean recreateActivity = false;
-        AlarmClockItem item = adapter.findItem(t_selectedItem);
+        AlarmClockItem item = (adapter != null) ? adapter.findItem(t_selectedItem) : null;
 
         switch (requestCode)
         {
