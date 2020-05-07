@@ -51,6 +51,8 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static com.forrestguice.suntimeswidget.SuntimesConfigActivity0.EXTRA_RECONFIGURE;
+
 /**
  * Widget receiver for resizable widget (that falls back to 1x1 layout).
  */
@@ -239,7 +241,7 @@ public class SuntimesWidget0 extends AppWidgetProvider
             Intent configIntent = new Intent(context, getConfigClass());
             configIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
             configIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            configIntent.putExtra(WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(), true);
+            configIntent.putExtra(EXTRA_RECONFIGURE, true);
             context.startActivity(configIntent);
             return true;
         }

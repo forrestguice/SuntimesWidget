@@ -1,9 +1,27 @@
 ### ~
 
+### v0.12.8 (2020-04-30)
+* adds ability to set an alarm in solar time (#403); adds `timezone` field to alarm item database; increments database version (`1` -> `2`).
+* adds field to CalculatorProvider; `COLUMN_CONFIG_APP_THEME_OVERRIDE`; increments CalculatorProvider versionCode (`3` -> `4`).
+* adds a ContentProvider (SuntimesThemeProvider) that provides access to user-defined themes.
+* exports the ThemeList activity; permits access to third-party apps with the `suntimes.permission.READ_CALCULATOR` permission.
+* fixes bug where NotificationService continues running after scheduling a notification or distant alarm.
+
+### v0.12.7 (2020-04-12)
+* adds "gradually increase volume" option to Suntimes Alarms (#396).
+* fixes bug where CalculatorProvider fails to apply the selected time zone (#394).
+* updates translation to Brazilian Portuguese (pt-br) (#400 by efraletti).
+* updates translations to Polish (pl) and Esperanto (eo) (#402 by Verdulo).
+
+### v0.12.6 (2020-03-16)
+* adds fields to CalculatorProvider that provide access to general app configuration (timeIs24, showSeconds, showHours, showWeeks, useElevation, showWarnings, verboseTalkback, showFields, lengthUnits, and objectHeight).
+* fixes bug where CalculatorProvider would fail to honor changes to the calculator selection or "use elevation" option.
+* increments CalculatorProvider versionCode (`2` to `3`); note: the key used to access the providerVersionCode has also been changed (fixes typo).
+
 ### v0.12.5 (2020-02-08)
 * adds a "dismiss" button to the reminder notification that allows repeating alarms to be dismissed early (reschedule+1); reveals the reminder notification for api21+ (#387).
 * fixes the appearance of ActionModes displayed within BottomSheetDialogFragment.
-* fixes bug where ContentProvider would sometimes return uninitialized defaults.
+* fixes bug where CalculatorProvider would sometimes return uninitialized defaults.
 * no longer reschedules alarms in response to TIME_SET broadcast.
 
 ### v0.12.4 (2019-12-23)

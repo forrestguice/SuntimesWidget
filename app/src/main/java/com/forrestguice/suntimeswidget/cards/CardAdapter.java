@@ -111,7 +111,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> dataPair = data.get(position);
         if (dataPair == null && !invalidated) {
             data.put(position, dataPair = createData(context, position));   // data is removed in onViewRecycled
-            Log.d("DEBUG", "add data " + position);
         }
         return dataPair;
     }
@@ -156,10 +155,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     public void onViewRecycled(CardViewHolder holder)
     {
         detachClickListeners(holder);
-        if (holder.position >= 0 && (holder.position < TODAY_POSITION - 1 || holder.position > TODAY_POSITION + 2))
-        {
+        if (holder.position >= 0 && (holder.position < TODAY_POSITION - 1 || holder.position > TODAY_POSITION + 2)) {
             data.remove(holder.position);
-            Log.d("DEBUG", "remove data " + holder.position);
         }
         holder.position = RecyclerView.NO_POSITION;
     }

@@ -61,6 +61,14 @@
             android:exported="true"
             android:syncable="false" />
 
+        <!-- Theme Provider -->
+        <provider
+            android:name="com.forrestguice.suntimeswidget.themes.SuntimesThemeProvider"
+            android:authorities="suntimeswidget.theme.provider"
+            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:exported="true"
+            android:syncable="false" />
+
         <!-- Calculator Plugins -->
         <!--EXAMPLE:
         <activity android:name=".calculator.ca.rmen.sunrisesunset.CalculatorPlugin">  ..where CalculatorPlugin is an empty activity
@@ -108,7 +116,9 @@
         <activity
             android:name=".themes.WidgetThemeListActivity"
             android:label="@string/app_name"
-            android:icon="@mipmap/ic_launcher">
+            android:icon="@mipmap/ic_launcher"
+            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:exported="true">
         </activity>
 
         <!-- Theme Config Activity -->

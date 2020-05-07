@@ -91,6 +91,13 @@ public class AboutActivity extends AppCompatActivity
         tabs = (TabLayout) findViewById(R.id.tabs);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
         tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
+
+        viewPager.post(new Runnable() {
+            @Override
+            public void run() {
+                AppSettings.checkCustomPermissions(AboutActivity.this);
+            }
+        });
     }
 
     @Override
