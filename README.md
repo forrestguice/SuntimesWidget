@@ -6,7 +6,7 @@ Android app (and widget collection) that displays sunlight and moonlight times f
 
 [![F-Droid](https://img.shields.io/f-droid/v/com.forrestguice.suntimeswidget.svg)](https://f-droid.org/en/packages/com.forrestguice.suntimeswidget/)
 [![GitHub release](https://img.shields.io/github/release/forrestguice/SuntimesWidget.svg)](https://github.com/forrestguice/SuntimesWidget/releases)
-[![Build Status](https://travis-ci.org/forrestguice/SuntimesWidget.svg?branch=master)](https://travis-ci.org/forrestguice/SuntimesWidget)
+![Android CI](https://github.com/forrestguice/SuntimesWidget/workflows/Android%20CI/badge.svg?branch=master)
 
 * [Privacy and Permissions](#privacy-and-permissions)
 * [Donations](#donations)
@@ -21,6 +21,9 @@ An alarm clock for Suntimes.<br/><br />
 
 <a href="https://github.com/forrestguice/SuntimesCalendars/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/assets/images/ic_launcher.png" height="64" /></a> <a href="https://github.com/forrestguice/SuntimesCalendars/">Suntimes Calendars</a> <br />
 A calendar provider add-on for Suntimes.<br/><br />        
+
+<a href="https://github.com/forrestguice/SolunarPeriods/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/assets/images/ic_solunar.png" height="64" /></a> <a href="https://github.com/forrestguice/SolunarPeriods/">Solunar Periods</a> <br />
+A hunting and fishing add-on for Suntimes.<br/><br />
     
 The app:
 * displays the current time (system time zone, custom time zone, or solar time) 
@@ -106,7 +109,7 @@ The app benefits from the following permissions...
 |BOOT_COMPLETED|To restore active alarms when the device boots.|v0.11.0|
 |READ_EXTERNAL_STORAGE|To play alarm sounds located on the SD card.|v0.11.5|
 |SET_ALARM|To interact with the system AlarmClock app.|v0.1.0|
-|WRITE_EXTERNAL_STORAGE|To export data (places, themes, etc.) to file.|v0.2.2 (api<=18)|
+|WRITE_EXTERNAL_STORAGE|To export data (places, themes, etc.) to file.|v0.2.2 (api&le;18)|
 
 Version `0.9.*` contained the following additional permissions (removed in v0.10.0)...
 
@@ -127,14 +130,14 @@ I want to express my thanks to those who have sent me something. This is greatly
 
 ## Bug Reports ##
 
-You can report bugs using the issue tracker. Be aware that times are approximate and may differ from official sources (up to 10 minutes).
+Use the issue tracker to submit a bug report or a feature request.
 
-When submitting a bug please be detailed and specific. What did you expect the app to do, what did you actually observe? Bugs that can't be reproduced won't get fixed. Useful information includes Android OS version and your specific device model.
+When reporting a bug **please be detailed as possible**. What did you expect the app to do, what did you actually observe? Include the app version number in your report. Other useful information includes the Android OS version (and sometimes your specific device model).
 
 
 ## Legal Stuff
 
-Copyright &#169; 2014-2019 Forrest Guice<br/>
+Copyright &#169; 2014-2020 Forrest Guice<br/>
 
 The source code is available under [GPLv3](LICENSE) (https://github.com/forrestguice/SuntimesWidget).
 > This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the [GNU General Public License](LICENSE) for more details.
@@ -165,7 +168,7 @@ Basque translation by <u>beriain</u>.<br/>
 Norwegian translation by <u>FTno</u>.<br/>
 Italian translation by <u>Matteo Caoduro</u>.<br/>
 Traditional Chinese translation by <u><a href=https://github.com/pggdt>ft42</a></u>.<br />
-Brazilian Portuguese translation by <u><a href=https://github.com/netosilva15>NetoSilva</a></u> and <u>Nelson A. de Oliveira</u>.<br />
+Brazilian Portuguese translation by <u><a href=https://github.com/netosilva15>NetoSilva</a></u>, <u>Nelson A. de Oliveira</u>, and <u>Enrico S. B. Fraletti</u>.<br />
 
 [Contributions to the project](CONTRIBUTING.md) are welcome.
 

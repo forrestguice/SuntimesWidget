@@ -22,21 +22,19 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
-import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 /**
  * AlarmClockItem
@@ -60,6 +58,7 @@ public class AlarmClockItem
     public long offset = 0;
     public String label = null;
     public SolarEvents event = null;
+    public String timezone = null;
     public Location location = null;
     public String ringtoneName = null;
     public String ringtoneURI = null;
@@ -105,6 +104,8 @@ public class AlarmClockItem
         String eventString = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_SOLAREVENT);
         event = SolarEvents.valueOf(eventString, null);
 
+        timezone = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_TIMEZONE);
+
         vibrate = (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_VIBRATE) == 1);
         ringtoneName = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_NAME);
         ringtoneURI = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_URI);
@@ -140,6 +141,10 @@ public class AlarmClockItem
         if (event != null) {
             values.put(AlarmDatabaseAdapter.KEY_ALARM_SOLAREVENT, event.name());
         } else values.putNull(AlarmDatabaseAdapter.KEY_ALARM_SOLAREVENT);
+
+        if (timezone != null) {
+            values.put(AlarmDatabaseAdapter.KEY_ALARM_TIMEZONE, timezone);
+        } else values.putNull(AlarmDatabaseAdapter.KEY_ALARM_TIMEZONE);
 
         if (repeatingDays != null) {
             values.put(AlarmDatabaseAdapter.KEY_ALARM_REPEATING_DAYS, getRepeatingDays());
@@ -356,6 +361,101 @@ public class AlarmClockItem
                 }
             }
             return retValue;
+        }
+    }
+
+    /**
+     * AlarmTimeZone
+     */
+    public static enum AlarmTimeZone
+    {
+        APPARENT_SOLAR_TIME(WidgetTimezones.ApparentSolarTime.TIMEZONEID, WidgetTimezones.ApparentSolarTime.TIMEZONEID),
+        LOCAL_MEAN_TIME(WidgetTimezones.LocalMeanTime.TIMEZONEID, WidgetTimezones.LocalMeanTime.TIMEZONEID),
+        SYSTEM_TIME("System Time Zone", null);
+
+        private String displayString;
+        private String tzID;
+
+        private AlarmTimeZone(String displayString, String tzID)
+        {
+            this.displayString = displayString;
+            this.tzID = tzID;
+        }
+
+        public String timeZoneID() {
+            return tzID;
+        }
+
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public String displayString() {
+            return displayString;
+        }
+
+        public static String displayString(String tzID)
+        {
+            if (tzID == null) {
+                return SYSTEM_TIME.displayString();
+
+            } else if (tzID.equals(APPARENT_SOLAR_TIME.timeZoneID())) {
+                return APPARENT_SOLAR_TIME.displayString();
+
+            } else if (tzID.equals(LOCAL_MEAN_TIME.timeZoneID())) {
+                return LOCAL_MEAN_TIME.displayString;
+
+            } else {
+                return TimeZone.getTimeZone(tzID).getDisplayName();
+            }
+        }
+
+        public void setDisplayString( String displayString ) {
+            this.displayString = displayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            SYSTEM_TIME.setDisplayString(context.getString(R.string.timezoneMode_current));
+            LOCAL_MEAN_TIME.setDisplayString(context.getString(R.string.solartime_localMean));
+            APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.solartime_apparent));
+        }
+
+        public TimeZone getTimeZone(Location location) {
+            return AlarmTimeZone.getTimeZone(timeZoneID(), location);
+        }
+
+        public static TimeZone getTimeZone(String tzID, Location location)
+        {
+            if (location == null || tzID == null) {
+                return TimeZone.getDefault();
+
+            } else if (tzID.equals(APPARENT_SOLAR_TIME.timeZoneID())) {
+                return new WidgetTimezones.ApparentSolarTime(location.getLongitudeAsDouble(), APPARENT_SOLAR_TIME.displayString());
+
+            } else if (tzID.equals(LOCAL_MEAN_TIME.timeZoneID())) {
+                return new WidgetTimezones.LocalMeanTime(location.getLongitudeAsDouble(), LOCAL_MEAN_TIME.displayString());
+
+            } else {
+                return TimeZone.getTimeZone(tzID);
+            }
+        }
+
+        public static AlarmTimeZone valueOfID(String tzID)
+        {
+            if (tzID == null) {
+                return SYSTEM_TIME;
+
+            } else if (tzID.equals(APPARENT_SOLAR_TIME.timeZoneID())) {
+                return APPARENT_SOLAR_TIME;
+
+            } else if (tzID.equals(LOCAL_MEAN_TIME.timeZoneID())) {
+                return LOCAL_MEAN_TIME;
+
+            } else {
+                return null;
+            }
         }
     }
 

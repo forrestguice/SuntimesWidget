@@ -62,6 +62,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+import com.forrestguice.suntimeswidget.themes.SuntimesThemeContract;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
@@ -78,6 +79,8 @@ import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PIC
 @SuppressWarnings("Convert2Diamond")
 public class SuntimesConfigActivity0 extends AppCompatActivity
 {
+    public static final String EXTRA_RECONFIGURE = "ONTAP_LAUNCH_CONFIG";
+
     protected static final String DIALOGTAG_ABOUT = "about";
     protected static final String DIALOGTAG_HELP = "help";
 
@@ -170,7 +173,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (extras != null)
         {
             appWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
-            reconfigure = extras.getBoolean(WidgetSettings.ActionMode.ONTAP_LAUNCH_CONFIG.name(), false);
+            reconfigure = extras.getBoolean(EXTRA_RECONFIGURE, false);
         }
 
         if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID)
@@ -1713,7 +1716,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (resultCode == RESULT_OK)
         {
-            String paramSelection = data.getStringExtra(SuntimesTheme.THEME_NAME);
+            String paramSelection = data.getStringExtra(SuntimesThemeContract.THEME_NAME);
             String themeName = (paramSelection != null) ? paramSelection
                                                         : ((ThemeDescriptor)spinner_theme.getSelectedItem()).name();
 

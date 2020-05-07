@@ -688,6 +688,10 @@
     <string name="configLabel_alarms_upcoming">Reminder within</string>  <!-- TODO -->
     <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>  <!-- TODO -->
 
+    <string name="configLabel_alarms_fadein">Gradually increase volume</string>  <!-- TODO -->
+    <!--<string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>-->
+    <string name="configLabel_alarms_fadein_disabled">Off</string>  <!-- TODO -->
+
     <string name="configLabel_alarms_hardwarebuttons">Hardware Buttons</string>  <!-- TODO -->
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>  <!-- TODO -->
     <string-array name="alarm_hardwarebutton_actions_display">     <!-- one-to-one with alarm_hardwarebutton_actions_values --> <!-- TODO -->
@@ -1134,7 +1138,7 @@
     ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
         <b>Source Code:</b><br />
-        Copyright &#169 2014-2019 Forrest Guice <br />
+        Copyright &#169 2014-2020 Forrest Guice <br />
         Source code available under GPLv3.
     ]]></string>
 

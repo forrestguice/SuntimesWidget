@@ -1,0 +1,2 @@
+- improved integration for add-ons (the ContentProvider now provides access to general app options).
+- miscellaneous ContentProvider related bug fixes.
