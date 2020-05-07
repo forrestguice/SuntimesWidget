@@ -261,7 +261,6 @@ public class MoonApsisView extends LinearLayout
         {
             if (holder.position >= 0 && (holder.position < CENTER_POSITION - 1 || holder.position > CENTER_POSITION + 2)) {
                 data.remove(holder.position);
-                Log.d("DEBUG", "remove data " + holder.position);
             }
             holder.position = RecyclerView.NO_POSITION;
         }
@@ -285,6 +284,7 @@ public class MoonApsisView extends LinearLayout
             boolean isAgo = rawOffset < 0;
             int offset = rawOffset % 2;
 
+            //noinspection SimplifiableConditionalExpression
             holder.isRising = (isRising ? (offset == 0) : (offset != 0));
             themeViews(context, holder, isAgo);
             holder.bindDataToPosition(context, moon, holder.isRising, position);
@@ -306,7 +306,6 @@ public class MoonApsisView extends LinearLayout
             } else if (offset < 0) {
                 firstPosition = position - (2 + (offset));
             }
-            Log.d("DEBUG", "position: + " + position + ", firstPosition: " + firstPosition + ", isRising: " + isRising);
 
             SuntimesMoonData0 moon = data.get(firstPosition);
             if (moon == null)
@@ -336,7 +335,7 @@ public class MoonApsisView extends LinearLayout
                     date.add(Calendar.DATE, -7);                   // so offset 1 week
 
                     int rawOffset = position - CENTER_POSITION;
-                    double minuteOffset = (rawOffset / 2) * anomalisticMinutes;
+                    double minuteOffset = (rawOffset >> 1) * anomalisticMinutes;
                     date.add(Calendar.MINUTE, (int)minuteOffset);
                     moon.setTodayIs(date);
 

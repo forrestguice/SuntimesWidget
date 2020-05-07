@@ -60,8 +60,20 @@ import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProvider
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_CALCULATOR;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_CALCULATOR_FEATURES;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LATITUDE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LENGTH_UNITS;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LOCALE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LOCATION;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OBJECT_HEIGHT;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_ALTITUDE;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_FIELDS;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TALKBACK;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_DATETIME;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_HOURS;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_IS24;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_SECONDS;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_TIME_WEEKS;
+import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_OPTION_WARNINGS;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_PROVIDER_VERSION_CODE;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_TIMEZONE;
@@ -127,6 +139,7 @@ import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProvider
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.QUERY_SUNPOS_PROJECTION;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.QUERY_SUN_PROJECTION;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
@@ -140,15 +153,14 @@ public class CalculatorProviderTest
     public void setup()
     {
         mockContext = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
-
-        TEST_DATE0 = Calendar.getInstance();
-        TEST_DATE0.set(2018, 0, 1, 0, 0, 0);
-
-        TEST_DATE1 = Calendar.getInstance();
-        TEST_DATE1.set(2019, 0, 1, 0, 0, 0);
-
         sunCalculator = getCalculator("");
         moonCalculator = getCalculator("moon");
+
+        TEST_DATE0 = Calendar.getInstance(moonCalculator.getTimeZone());
+        TEST_DATE0.set(2018, 0, 1, 0, 0, 0);
+
+        TEST_DATE1 = Calendar.getInstance(moonCalculator.getTimeZone());
+        TEST_DATE1.set(2019, 0, 1, 0, 0, 0);
     }
 
     private SuntimesCalculator getCalculator(String calculatorName)
@@ -192,17 +204,21 @@ public class CalculatorProviderTest
     @Test
     public void test_query_config_projection()
     {
+        String[] TEST_CONFIG_PROJECTION = new String[] {
+                COLUMN_CONFIG_APP_VERSION, COLUMN_CONFIG_APP_VERSION_CODE,
+                COLUMN_CONFIG_PROVIDER_VERSION, COLUMN_CONFIG_PROVIDER_VERSION_CODE,
+                COLUMN_CONFIG_LOCALE, COLUMN_CONFIG_APP_THEME,
+                COLUMN_CONFIG_CALCULATOR, COLUMN_CONFIG_CALCULATOR_FEATURES,
+                COLUMN_CONFIG_LOCATION, COLUMN_CONFIG_LATITUDE, COLUMN_CONFIG_LONGITUDE, COLUMN_CONFIG_ALTITUDE,
+                COLUMN_CONFIG_TIMEZONE, COLUMN_CONFIG_APPWIDGETID,
+                COLUMN_CONFIG_OPTION_TIME_IS24, COLUMN_CONFIG_OPTION_TIME_SECONDS, COLUMN_CONFIG_OPTION_TIME_HOURS, COLUMN_CONFIG_OPTION_TIME_WEEKS, COLUMN_CONFIG_OPTION_TIME_DATETIME,
+                COLUMN_CONFIG_OPTION_ALTITUDE, COLUMN_CONFIG_OPTION_WARNINGS, COLUMN_CONFIG_OPTION_TALKBACK, COLUMN_CONFIG_LENGTH_UNITS, COLUMN_CONFIG_OBJECT_HEIGHT, COLUMN_CONFIG_OPTION_FIELDS
+        };
+
         List<String> projection = Arrays.asList(QUERY_CONFIG_PROJECTION);
-        assertTrue("default projection contains COLUMN_CONFIG_CALCULATOR", projection.contains(COLUMN_CONFIG_CALCULATOR));
-        assertTrue("default projection contains COLUMN_CONFIG_CALCULATOR_FEATURES", projection.contains(COLUMN_CONFIG_CALCULATOR_FEATURES));
-        assertTrue("default projection contains COLUMN_CONFIG_APPWIDGETID", projection.contains(COLUMN_CONFIG_APPWIDGETID));
-        assertTrue("default projection contains COLUMN_CONFIG_APPTHEME", projection.contains(COLUMN_CONFIG_APP_THEME));
-        assertTrue("default projection contains COLUMN_CONFIG_LOCALE", projection.contains(COLUMN_CONFIG_LOCALE));
-        assertTrue("default projection contains COLUMN_CONFIG_LATITUDE", projection.contains(COLUMN_CONFIG_LATITUDE));
-        assertTrue("default projection contains COLUMN_CONFIG_LONGITUDE", projection.contains(COLUMN_CONFIG_LONGITUDE));
-        assertTrue("default projection contains COLUMN_CONFIG_ALTITUDE", projection.contains(COLUMN_CONFIG_ALTITUDE));
-        assertTrue("default projection contains COLUMN_CONFIG_TIMEZONE", projection.contains(COLUMN_CONFIG_TIMEZONE));
-        test_projectionHasUniqueColumns(QUERY_CONFIG_PROJECTION);
+        for (String column : TEST_CONFIG_PROJECTION) {
+            test_projectionContainsColumn(column, projection);
+        }
     }
 
     /**
@@ -559,7 +575,8 @@ public class CalculatorProviderTest
         Cursor cursor = resolver.query(uri, projection, null, null, null);
         test_cursorHasColumns("QUERY_MOON", cursor, projection);
         test_allColumnsLong("QUERY_MOON", cursor, projection);
-        test_moontimes(cursor, moonCalculator.getMoonTimesForDate(Calendar.getInstance()));
+        cursor.moveToFirst();
+        test_moontimes(cursor, moonCalculator.getMoonTimesForDate(Calendar.getInstance(moonCalculator.getTimeZone())));
 
         // case 1: date
         Uri uri1 = Uri.parse("content://" + AUTHORITY + "/" + QUERY_MOON + "/" + TEST_DATE0.getTimeInMillis());
@@ -567,6 +584,7 @@ public class CalculatorProviderTest
         Cursor cursor1 = resolver.query(uri1, projection1, null, null, null);
         test_cursorHasColumns("QUERY_MOON", cursor1, projection1);
         test_allColumnsLong("QUERY_MOON", cursor, projection1);
+        cursor.moveToFirst();
         test_moontimes(cursor1, moonCalculator.getMoonTimesForDate(TEST_DATE0));
 
         // case 2: range
@@ -576,18 +594,105 @@ public class CalculatorProviderTest
         test_cursorHasColumns("QUERY_MOON", cursor2, projection2);
     }
 
-    public void test_moontimes(Cursor cursor, SuntimesCalculator.MoonTimes oracle)
+    public void test_moontimes(Cursor cursor, @NonNull SuntimesCalculator.MoonTimes oracle)
     {
         if (cursor != null)
         {
-            cursor.moveToFirst();
-            Calendar moonrise = Calendar.getInstance();
-            moonrise.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_MOON_RISE)));
-            assertTrue("moonrise time should match .. " + oracle.riseTime.getTimeInMillis() + " != " + moonrise.getTimeInMillis(), oracle.riseTime.getTimeInMillis() == moonrise.getTimeInMillis());
+            if (oracle.riseTime != null)
+            {
+                long moonriseMillis = cursor.getLong(cursor.getColumnIndex(COLUMN_MOON_RISE));
+                assertTrue("moonrise time should match .. " + oracle.riseTime.getTimeInMillis() + " != " + moonriseMillis,
+                        oracle.riseTime.getTimeInMillis() == moonriseMillis);
+                Log.d("TEST", "moon rise: " + oracle.riseTime.getTimeInMillis() + " == " + moonriseMillis );
+            } else {
+                assertTrue("moonrise should not occur today", cursor.isNull(0));
+                Log.d("TEST", "moon rise: null");
+            }
 
-            Calendar moonset = Calendar.getInstance();
-            moonset.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(COLUMN_MOON_SET)));
-            assertTrue("moonset time should match .. " + oracle.setTime + " != " + moonset, oracle.setTime.getTimeInMillis() == moonset.getTimeInMillis());
+            if (oracle.setTime != null)
+            {
+                long moonsetMillis = cursor.getLong(cursor.getColumnIndex(COLUMN_MOON_SET));
+                assertTrue("moonset time should match .. " + oracle.setTime + " != " + moonsetMillis,
+                        oracle.setTime.getTimeInMillis() == moonsetMillis);
+                Log.d("TEST", "moon set: " + oracle.setTime.getTimeInMillis() + " == " + moonsetMillis );
+            } else {
+                assertTrue("moonset should not occur today", cursor.isNull(1));
+                Log.d("TEST", "moon set: null");
+            }
+        }
+    }
+
+    @Test
+    public void test_query_moon2()
+    {
+        // setup..
+        TimeZone tz = moonCalculator.getTimeZone();
+        Calendar date0 = Calendar.getInstance(tz);
+        date0.set(2020, 3, 11, 12, 0, 0);
+
+        String[] projection = QUERY_MOON_PROJECTION;
+        Uri uri = Uri.parse("content://" + CalculatorProviderContract.AUTHORITY + "/" + CalculatorProviderContract.QUERY_MOON + "/"
+                + (date0.getTimeInMillis() - SUN_PERIOD_MILLIS) + "-" + (date0.getTimeInMillis() + SUN_PERIOD_MILLIS) );
+
+        Calendar[] dates = new Calendar[] { Calendar.getInstance(tz), Calendar.getInstance(tz), Calendar.getInstance(tz) };
+        dates[0].setTimeInMillis(date0.getTimeInMillis() - SUN_PERIOD_MILLIS);
+        dates[1].setTimeInMillis(date0.getTimeInMillis());
+        dates[2].setTimeInMillis(date0.getTimeInMillis() + SUN_PERIOD_MILLIS);
+
+        SuntimesCalculator.MoonTimes[] oracle = new SuntimesCalculator.MoonTimes[3];
+        for (int i=0; i<oracle.length; i++) {
+            oracle[i] = moonCalculator.getMoonTimesForDate(dates[i]);
+        }
+
+        // test..
+        ContentResolver resolver = mockContext.getContentResolver();
+        assertNotNull("Unable to getContentResolver!", resolver);
+        Cursor cursor = resolver.query(uri, projection, null, null, null);
+        test_cursorHasColumns("QUERY_MOON", cursor, projection);
+        test_allColumnsLong("QUERY_MOON", cursor, projection);
+
+        if (cursor != null)
+        {
+            cursor.moveToFirst();
+            for (int i=0; i<3; i++)
+            {
+                if (cursor.isAfterLast())
+                {
+                    Log.w(getClass().getSimpleName(), "queryMoonriseMoonset: cursor contains fewer rows than expected (3); got " + i + ": " + dates[i].getTimeInMillis());
+                    break;
+                }
+                test_moontimes(cursor, oracle[i]);
+                cursor.moveToNext();
+            }
+            cursor.close();
+        }
+    }
+    public static final long SUN_PERIOD_MILLIS = 24L * 60 * 60 * 1000;        // 24 hr
+
+    @Test
+    public void test_query_moon3()
+    {
+        // setup..
+        TimeZone tz = moonCalculator.getTimeZone();
+        Calendar date0 = Calendar.getInstance(tz);
+        date0.set(2020, 3, 11, 12, 0, 0);
+        SuntimesCalculator.MoonTimes oracle = moonCalculator.getMoonTimesForDate(date0);
+
+        String[] projection = QUERY_MOON_PROJECTION;
+        Uri uri = Uri.parse("content://" + CalculatorProviderContract.AUTHORITY + "/" + CalculatorProviderContract.QUERY_MOON + "/" + date0.getTimeInMillis());
+
+        // test..
+        ContentResolver resolver = mockContext.getContentResolver();
+        assertNotNull("Unable to getContentResolver!", resolver);
+        Cursor cursor = resolver.query(uri, projection, null, null, null);
+        test_cursorHasColumns("QUERY_MOON", cursor, projection);
+        test_allColumnsLong("QUERY_MOON", cursor, projection);
+
+        if (cursor != null)
+        {
+            cursor.moveToFirst();
+            test_moontimes(cursor, oracle);
+            cursor.close();
         }
     }
 
@@ -776,13 +881,13 @@ public class CalculatorProviderTest
         end0.add(Calendar.DAY_OF_MONTH, 1);
         String segment0 = start0.getTimeInMillis() + "-" + end0.getTimeInMillis();
 
-        Calendar[] range0 = CalculatorProvider.parseDateRange(segment0);
+        long[] range0 = CalculatorProvider.parseDateRange(segment0);
         assertTrue("range should be non-null", range0 != null);
         assertTrue("range should have length of 2", range0.length == 2);
-        assertTrue("startDate should be non-null", range0[0] != null);
-        assertTrue("endDate should be non-null", range0[1] != null);
-        assertTrue("startDate should match", range0[0].getTimeInMillis() == start0.getTimeInMillis());
-        assertTrue("endDate should match (+1000)", range0[1].getTimeInMillis() == (end0.getTimeInMillis()));
+        //assertTrue("startDate should be non-null", range0[0] != null);
+        //assertTrue("endDate should be non-null", range0[1] != null);
+        assertTrue("startDate should match", range0[0] == start0.getTimeInMillis());
+        assertTrue("endDate should match (+1000)", range0[1] == (end0.getTimeInMillis()));
 
         // TODO: test against invalid ranges
     }
@@ -820,13 +925,18 @@ public class CalculatorProviderTest
                 endYear = now.get(Calendar.YEAR);
             }
 
-            Calendar[] range = CalculatorProvider.parseYearRange(segment);
+            long[] range = CalculatorProvider.parseYearRange(segment);
             assertTrue("range should be non-null", range != null);
             assertTrue("range should have length of 2", range.length == 2);
-            assertTrue("startYear should be non-null", range[0] != null);
-            assertTrue("endYear should be non-null", range[1] != null);
-            assertTrue(segment + " :: startYear should match: " + range[0].get(Calendar.YEAR) + " != " + startYear, range[0].get(Calendar.YEAR) == startYear);
-            assertTrue(segment + " :: endYear should match: " + range[1].get(Calendar.YEAR) + " != " + endYear, range[1].get(Calendar.YEAR) == endYear);
+            //assertTrue("startYear should be non-null", range[0] != null);
+            //assertTrue("endYear should be non-null", range[1] != null);
+            Calendar start = Calendar.getInstance();
+            start.setTimeInMillis(range[0]);
+            Calendar end = Calendar.getInstance();
+            end.setTimeInMillis(range[1]);
+
+            assertTrue(segment + " :: startYear should match: " + start.get(Calendar.YEAR) + " != " + startYear, start.get(Calendar.YEAR) == startYear);
+            assertTrue(segment + " :: endYear should match: " + end.get(Calendar.YEAR) + " != " + endYear, end.get(Calendar.YEAR) == endYear);
         }
     }
 
@@ -938,6 +1048,10 @@ public class CalculatorProviderTest
             assertTrue("Column names are not unique! \"" + column + "\" is used more than once.", !uniqueColumns.contains(column));
             uniqueColumns.add(column);
         }
+    }
+
+    private void test_projectionContainsColumn(String column, List<String> projection) {
+        assertTrue("projection contains " + column, projection.contains(column));
     }
 
     private void test_dateUTC(String tag, long timestamp, int year, int month, int day, int hour, int minute)

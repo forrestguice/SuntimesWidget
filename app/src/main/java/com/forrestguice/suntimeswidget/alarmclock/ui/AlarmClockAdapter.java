@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -32,13 +32,11 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Spannable;
@@ -538,7 +536,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         }
 
         // location
-        view.text_location.setVisibility(item.event == null ? View.INVISIBLE : View.VISIBLE);
+        view.text_location.setVisibility((item.event == null && item.timezone == null) ? View.INVISIBLE : View.VISIBLE);
         AlarmDialog.updateLocationLabel(context, view.text_location, item.location);
 
         if (!isSelected || item.enabled) {
@@ -839,7 +837,19 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
 
     private static CharSequence getAlarmEvent(Context context, AlarmClockItem item)
     {
-        return (item.event != null ? item.event.getLongDisplayString() : context.getString(R.string.alarmOption_solarevent_none));
+        if (item.event != null)
+        {
+            return item.event.getLongDisplayString();
+
+        } else if (item.timezone != null) {
+            Calendar adjustedTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(item.timezone, item.location));
+            adjustedTime.set(Calendar.HOUR_OF_DAY, item.hour);
+            adjustedTime.set(Calendar.MINUTE, item.minute);
+            return utils.calendarTimeShortDisplayString(context, adjustedTime) + "\n" + AlarmClockItem.AlarmTimeZone.displayString(item.timezone);
+
+        } else {
+            return context.getString(R.string.alarmOption_solarevent_none);
+        }
     }
 
     private static CharSequence getAlarmTime(Context context, AlarmClockItem item)

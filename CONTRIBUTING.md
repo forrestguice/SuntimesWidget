@@ -2,9 +2,10 @@
 
 1. [Donations](#donations)
 2. [Bug Reports and Feature Requests](#bug-reports-and-feature-requests)
-3. [Translations](#translations)
-4. [Plugins and Addons](#plugins-and-addons)
-5. [Other](#other)
+3. [Spread the Word](#spread-the-word)
+4. [Translations](#translations)
+5. [Plugins and Addons](#plugins-and-addons)
+6. [Other](#other)
 
 ## Donations
 
@@ -16,6 +17,9 @@ Does this app provide value? Please consider a monetary contribution if your dis
 Use the issue tracker to submit a bug report or a feature request.
 
 When reporting a bug **please be detailed as possible**. What did you expect the app to do, what did you actually observe? Include the app version number in your report. Other useful information includes the Android OS version (and sometimes your specific device model).
+
+## Spread the Word
+Share this app. Tell your friends. Let others know about F-Droid and the software that's available there.
 
 ## Translations
 
