@@ -59,6 +59,10 @@ public class AlarmItemDialog extends DialogFragment
         return original;
     }
 
+    public void notifyItemChanged() {
+        item.modified = true;
+        bindItemToHolder(item);
+    }
 
     protected void bindItemToHolder(AlarmClockItem item)
     {
