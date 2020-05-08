@@ -43,8 +43,9 @@ public class AlarmItemDialog extends DialogFragment
     protected AlarmClockItem item = null;
     protected AlarmItemViewHolder itemView;
 
-    public void setItem(AlarmClockItem item) {
-        this.item = item;
+    public void setItem(AlarmClockItem item)
+    {
+        this.item = new AlarmClockItem(item);
         bindItemToHolder(item);
     }
 
