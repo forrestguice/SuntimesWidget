@@ -110,6 +110,18 @@ public class Location implements Parcelable
     }
 
     /**
+     * @param other Location
+     */
+    public Location(Location other)
+    {
+        this.label = other.label;
+        this.latitude = other.latitude;
+        this.longitude = other.longitude;
+        this.altitude = other.altitude;
+        this.useAltitude = other.useAltitude;
+    }
+
+    /**
      * @return a user-defined display label / location name
      */
     public String getLabel()
