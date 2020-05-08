@@ -761,6 +761,11 @@ public class AlarmClockActivity extends AppCompatActivity
     private AlarmClockAdapter.AlarmClockAdapterListener onAdapterAction = new AlarmClockAdapter.AlarmClockAdapterListener()
     {
         @Override
+        public void onRequestDialog(AlarmClockItem forItem) {
+            showAlarmItemDialog(forItem);
+        }
+
+        @Override
         public void onRequestLabel(AlarmClockItem forItem)
         {
             pickLabel(forItem);
@@ -853,6 +858,10 @@ public class AlarmClockActivity extends AppCompatActivity
         updateTask = new AlarmClockListTask(this, alarmList, emptyView);
         updateTask.setTaskListener(onUpdateFinished);
         updateTask.execute();
+    }
+
+    protected void showAlarmItemDialog(@NonNull AlarmClockItem item)
+    {
     }
 
     /**

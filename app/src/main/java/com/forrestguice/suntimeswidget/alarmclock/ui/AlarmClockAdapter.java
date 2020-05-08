@@ -768,6 +768,10 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
                         confirmDeleteAlarm(item, itemView);
                         return true;
 
+                    case R.id.showDialog:   // TODO: remove me
+                        onRequestDialog(item);
+                        return true;
+
                     default:
                         return false;
                 }
@@ -943,6 +947,13 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         return alarmDesc;
     }
 
+    protected void onRequestDialog(final AlarmClockItem item)
+    {
+        if (adapterListener != null) {
+            adapterListener.onRequestDialog(item);
+        }
+    }
+
     /**
      * confirmDeleteAlarm
      * @param item AlarmClockItem
@@ -1014,6 +1025,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         public void onRequestOffset(AlarmClockItem forItem) {}
         public void onRequestRepetition(AlarmClockItem forItem) {}
         public void onRequestAction(AlarmClockItem forItem, int actionNum) {}
+        public void onRequestDialog(AlarmClockItem forItem) {}
     }
 
     /**
