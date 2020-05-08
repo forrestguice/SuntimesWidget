@@ -45,6 +45,10 @@ public class AlarmItemViewHolder extends RecyclerView.ViewHolder
     public int position = RecyclerView.NO_POSITION;
     public boolean selected = true;
 
+    public TextView text_datetime_offset;
+    public TextView text_datetime;
+    public TextView text_date;
+
     public ImageButton menu_type, menu_overflow;
     public EditText edit_label;
 
@@ -81,6 +85,10 @@ public class AlarmItemViewHolder extends RecyclerView.ViewHolder
 
         Context context = parent.getContext();
         SuntimesUtils.initDisplayStrings(context);
+
+        text_datetime_offset = (TextView) parent.findViewById(R.id.text_datetime_offset);
+        text_datetime = (TextView) parent.findViewById(R.id.text_datetime);
+        text_date = (TextView) parent.findViewById(R.id.text_date);
 
         menu_type = (ImageButton) parent.findViewById(R.id.type_menu);
         menu_overflow = (ImageButton) parent.findViewById(R.id.overflow_menu);
@@ -149,12 +157,22 @@ public class AlarmItemViewHolder extends RecyclerView.ViewHolder
             text_action0.setText(displayAction(context, item, 0));
             text_action1.setText(displayAction(context, item, 1));
 
-            //text_event.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
-            //text_ringtone.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
-            //text_action1.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
-            //text_action0.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+            text_datetime_offset.setText(text_offset.getText());
+            text_datetime.setText(displayAlarmTime(context, item));
+            text_date.setText(displayAlarmDate(context, item));
 
-            /**if (!isSelected && !item.enabled) {
+            int eventType = item.event == null ? -1 : item.event.getType();
+            text_date.setVisibility((eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON) ? View.VISIBLE : View.GONE);
+
+            /*
+            if (!isSelected && !item.enabled) {
+                view.text_datetime.setTextColor(disabledColor);
+            } else if (item.enabled) {
+                view.text_datetime.setTextColor(SuntimesUtils.colorStateList(alarmEnabledColor, alarmEnabledColor, pressedColor));
+            } else {
+                view.text_datetime.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+            }
+            if (!isSelected && !item.enabled) {
              ImageViewCompat.setImageTintList(view.typeButton, SuntimesUtils.colorStateList(disabledColor, disabledColor, disabledColor));
              } else if (item.enabled) {
              ImageViewCompat.setImageTintList(view.typeButton, SuntimesUtils.colorStateList(alarmEnabledColor, disabledColor, pressedColor));
@@ -214,6 +232,22 @@ public class AlarmItemViewHolder extends RecyclerView.ViewHolder
         return alarmDesc;
     }
 
+    public static CharSequence displayAlarmDate(Context context, AlarmClockItem item)
+    {
+        Calendar alarmTime = Calendar.getInstance();
+        alarmTime.setTimeInMillis(item.timestamp);
+
+        CharSequence alarmDesc;
+        SuntimesUtils.TimeDisplayText timeText = utils.calendarDateDisplayString(context, alarmTime, true);
+        if (SuntimesUtils.is24()) {
+            alarmDesc = timeText.getValue();
+
+        } else {
+            String timeString = timeText.getValue() + " " + timeText.getSuffix();
+            alarmDesc = SuntimesUtils.createRelativeSpan(null, timeString, " " + timeText.getSuffix(), 0.40f);
+        }
+        return alarmDesc;
+    }
 
     public static CharSequence displayOffset(Context context, AlarmClockItem item)
     {

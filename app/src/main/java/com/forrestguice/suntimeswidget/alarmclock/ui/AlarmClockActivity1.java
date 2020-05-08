@@ -1357,6 +1357,7 @@ public class AlarmClockActivity1 extends AppCompatActivity
             {
                 AlarmClockItem item = itemDialog.getItem();
                 item.offset = offsetDialog.getOffset();
+                AlarmNotifications.updateAlarmTime(AlarmClockActivity1.this, item);
                 itemDialog.notifyItemChanged();
             }
         }
@@ -1403,6 +1404,7 @@ public class AlarmClockActivity1 extends AppCompatActivity
             {
                 AlarmClockItem item = dialog1.getItem();
                 item.event = dialog.getChoice();
+                AlarmNotifications.updateAlarmTime(AlarmClockActivity1.this, item);
                 dialog1.notifyItemChanged();
             }
         }
@@ -1431,6 +1433,7 @@ public class AlarmClockActivity1 extends AppCompatActivity
             {
                 AlarmClockItem item = itemDialog.getItem();
                 item.location = location;
+                AlarmNotifications.updateAlarmTime(AlarmClockActivity1.this, item);
                 itemDialog.notifyItemChanged();
                 return true;
             }
@@ -1462,6 +1465,7 @@ public class AlarmClockActivity1 extends AppCompatActivity
                 AlarmClockItem item = itemDialog.getItem();
                 item.repeating = repeatDialog.getRepetition();
                 item.repeatingDays = repeatDialog.getRepetitionDays();
+                AlarmNotifications.updateAlarmTime(AlarmClockActivity1.this, item);
                 itemDialog.notifyItemChanged();
             }
         }
