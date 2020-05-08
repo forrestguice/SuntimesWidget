@@ -44,11 +44,11 @@
 
             <EditText
                 android:id="@+id/edit_label"
-                android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                 android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
                 android:textColor="?attr/text_buttonSelector"
                 android:textStyle="bold" android:maxLines="1"
+                android:inputType="text"
                 android:hint="label" tools:text="label" />
 
             <ImageButton
@@ -68,22 +68,21 @@
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <FrameLayout android:id="@+id/chip_offset"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal" android:gravity="start|center_vertical"
-                android:layout_marginLeft="4dp" android:layout_marginRight="4dp">
-
-                <TextView
-                    android:id="@+id/text_offset" style="@style/ChipText"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    tools:text="1h 30m before" />
-
-            </FrameLayout>
-
             <LinearLayout
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="horizontal" android:gravity="start|center_vertical"
                 android:layout_marginLeft="4dp" android:layout_marginRight="4dp">
+
+                <FrameLayout android:id="@+id/chip_offset"
+                    android:layout_width="wrap_content" android:layout_height="match_parent"
+                    android:orientation="horizontal" android:gravity="start|center_vertical">
+
+                    <TextView
+                        android:id="@+id/text_offset" style="@style/ChipText"
+                        android:layout_width="wrap_content" android:layout_height="match_parent"
+                        tools:text="1h 30m before" />
+
+                </FrameLayout>
 
                 <FrameLayout android:id="@+id/chip_event"
                     android:layout_width="wrap_content" android:layout_height="wrap_content">
@@ -94,6 +93,14 @@
                         tools:text="Nautical Twilight (end)" />
 
                 </FrameLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="start|center_vertical"
+                android:layout_marginLeft="4dp" android:layout_marginRight="4dp">
 
                 <FrameLayout android:id="@+id/chip_location"
                     android:layout_width="wrap_content" android:layout_height="wrap_content">
@@ -128,7 +135,7 @@
             android:layout_marginLeft="6dp" android:layout_marginRight="6dp" android:layout_marginTop="30dp">
 
             <TextView
-                android:id="@+id/option_offset_display"
+                android:id="@+id/text_datetime_offset"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
 
                 android:textColor="?attr/text_buttonSelector" android:gravity="center"
