@@ -20,16 +20,9 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.Spannable;
-import android.text.style.ImageSpan;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -194,6 +187,33 @@ public class AlarmItemViewHolder extends RecyclerView.ViewHolder
         chip_action0.setOnClickListener(null);
         chip_action1.setOnClickListener(null);
     }
+
+
+    public static CharSequence displayAlarmLabel(Context context, AlarmClockItem item)
+    {
+        String emptyLabel = ((item.type == AlarmClockItem.AlarmType.ALARM) ? context.getString(R.string.alarmMode_alarm) : context.getString(R.string.alarmMode_notification));
+        return (item.label == null || item.label.isEmpty()) ? emptyLabel : item.label;
+    }
+
+    public static CharSequence displayAlarmTime(Context context, AlarmClockItem item)
+    {
+        Calendar alarmTime = Calendar.getInstance();
+        alarmTime.setTimeInMillis(item.timestamp);
+
+        CharSequence alarmDesc;
+        SuntimesUtils utils = new SuntimesUtils();
+        SuntimesUtils.initDisplayStrings(context);
+        SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, alarmTime, false);
+        if (SuntimesUtils.is24()) {
+            alarmDesc = timeText.getValue();
+
+        } else {
+            String timeString = timeText.getValue() + " " + timeText.getSuffix();
+            alarmDesc = SuntimesUtils.createRelativeSpan(null, timeString, " " + timeText.getSuffix(), 0.40f);
+        }
+        return alarmDesc;
+    }
+
 
     public static CharSequence displayOffset(Context context, AlarmClockItem item)
     {
