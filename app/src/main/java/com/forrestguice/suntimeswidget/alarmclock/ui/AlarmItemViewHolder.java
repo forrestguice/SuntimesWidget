@@ -23,6 +23,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.RecyclerView;
@@ -180,6 +181,18 @@ public class AlarmItemViewHolder extends RecyclerView.ViewHolder
             check_vibrate.setChecked(false);
 
         }
+    }
+
+    public void detachClickListeners()
+    {
+        chip_offset.setOnClickListener(null);
+        chip_event.setOnClickListener(null);
+        chip_location.setOnClickListener(null);
+        chip_repeat.setOnClickListener(null);
+        chip_ringtone.setOnClickListener(null);
+        check_vibrate.setOnClickListener(null);
+        chip_action0.setOnClickListener(null);
+        chip_action1.setOnClickListener(null);
     }
 
     public static CharSequence displayOffset(Context context, AlarmClockItem item)
