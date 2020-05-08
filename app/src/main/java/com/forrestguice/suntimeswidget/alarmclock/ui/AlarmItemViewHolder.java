@@ -187,10 +187,18 @@ public class AlarmItemViewHolder extends RecyclerView.ViewHolder
              */
 
         } else {
+            text_datetime_offset.setText("");
+            text_datetime.setText("");
+            text_date.setText("");
             edit_label.setText("");
+            text_offset.setText("");
+            text_event.setText("");
+            text_location.setText("");
+            text_repeat.setText("");
             text_repeat.setText("");
             check_vibrate.setChecked(false);
-
+            text_action0.setText("");
+            text_action1.setText("");
         }
     }
 
