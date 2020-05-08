@@ -150,8 +150,12 @@ public class AlarmClockItem implements Parcelable
         ringtoneURI = in.readString();
         actionID0 = in.readString();
         actionID1 = in.readString();
+
+        modified = (in.readInt() == 1);
+        state = in.readParcelable(AlarmClockItem.class.getClassLoader());
     }
 
+    @Override
     public void writeToParcel(Parcel out, int flags)
     {
         out.writeLong(rowID);
@@ -182,6 +186,9 @@ public class AlarmClockItem implements Parcelable
         out.writeString(ringtoneURI);
         out.writeString(actionID0);
         out.writeString(actionID1);
+
+        out.writeInt(modified ? 1 : 0);
+        out.writeParcelable(state, 0);
     }
 
     public ContentValues asContentValues(boolean withRowID)
@@ -530,6 +537,7 @@ public class AlarmClockItem implements Parcelable
         }
     }
 
+    @Override
     public int describeContents() {
         return 0;
     }
