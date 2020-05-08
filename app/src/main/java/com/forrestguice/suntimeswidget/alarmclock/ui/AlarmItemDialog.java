@@ -21,6 +21,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -29,8 +30,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
@@ -40,14 +43,22 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 public class AlarmItemDialog extends DialogFragment
 {
     protected TextView text_title;
-    protected AlarmClockItem item = null;
+    protected AlarmClockItem item = null, original = null;
     protected AlarmItemViewHolder itemView;
 
-    public void setItem(AlarmClockItem item)
+    public void initFromItem(AlarmClockItem item)
     {
+        this.original = item;
         this.item = new AlarmClockItem(item);
         bindItemToHolder(item);
     }
+    public AlarmClockItem getItem() {
+        return item;
+    }
+    public AlarmClockItem getOriginal() {
+        return original;
+    }
+
 
     protected void bindItemToHolder(AlarmClockItem item)
     {
@@ -133,16 +144,21 @@ public class AlarmItemDialog extends DialogFragment
      * Restore the dialog state from the provided bundle.
      * @param bundle state loaded from this Bundle
      */
-    protected void loadSettings(Bundle bundle) {
-        setItem((AlarmClockItem)bundle.getParcelable("item"));
+    protected void loadSettings(Bundle bundle)
+    {
+        this.item = bundle.getParcelable("item");
+        this.original = bundle.getParcelable("original");
+        bindItemToHolder(item);
     }
 
     /**
      * Save the dialog state to a bundle to be restored at a later time (occurs onSaveInstanceState).
      * @param bundle state persisted to this Bundle
      */
-    protected void saveSettings(Bundle bundle) {
+    protected void saveSettings(Bundle bundle)
+    {
         bundle.putParcelable("item", item);
+        bundle.putParcelable("original", original);
     }
 
     /**
