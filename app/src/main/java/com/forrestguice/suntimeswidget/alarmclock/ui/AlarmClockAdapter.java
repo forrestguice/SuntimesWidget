@@ -40,8 +40,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.util.TypedValue;
@@ -1010,22 +1008,6 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
     public void setAdapterListener(AlarmClockAdapterListener l)
     {
         adapterListener = l;
-    }
-
-    /**
-     * AlarmClockAdapterListener
-     */
-    public static abstract class AlarmClockAdapterListener
-    {
-        public void onRequestLabel(AlarmClockItem forItem) {}
-        public void onRequestRingtone(AlarmClockItem forItem) {}
-        public void onRequestSolarEvent(AlarmClockItem forItem) {}
-        public void onRequestLocation(AlarmClockItem forItem) {}
-        public void onRequestTime(AlarmClockItem forItem) {}
-        public void onRequestOffset(AlarmClockItem forItem) {}
-        public void onRequestRepetition(AlarmClockItem forItem) {}
-        public void onRequestAction(AlarmClockItem forItem, int actionNum) {}
-        public void onRequestDialog(AlarmClockItem forItem) {}
     }
 
     /**
