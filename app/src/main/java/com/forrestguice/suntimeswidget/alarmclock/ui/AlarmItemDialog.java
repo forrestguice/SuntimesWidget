@@ -20,23 +20,30 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.PopupMenu;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 @SuppressWarnings("Convert2Diamond")
@@ -96,10 +103,6 @@ public class AlarmItemDialog extends DialogFragment
         return dialogContent;
     }
 
-    /**
-     * @param context a context used to access resources
-     * @param dialogContent an inflated layout containing the dialog's other views
-     */
     private void initViews(Context context, View dialogContent)
     {
         itemView = new AlarmItemViewHolder(dialogContent);
@@ -123,11 +126,6 @@ public class AlarmItemDialog extends DialogFragment
         bindItemToHolder(item);
     }
 
-    /**
-     *
-     * @param savedInstanceState a bundle containing previously saved dialog state
-     * @return a dialog instance ready to be shown
-     */
     @SuppressWarnings({"deprecation","RestrictedApi"})
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
@@ -144,10 +142,6 @@ public class AlarmItemDialog extends DialogFragment
         super.onSaveInstanceState(outState);
     }
 
-    /**
-     * Restore the dialog state from the provided bundle.
-     * @param bundle state loaded from this Bundle
-     */
     protected void loadSettings(Bundle bundle)
     {
         this.item = bundle.getParcelable("item");
@@ -155,27 +149,17 @@ public class AlarmItemDialog extends DialogFragment
         bindItemToHolder(item);
     }
 
-    /**
-     * Save the dialog state to a bundle to be restored at a later time (occurs onSaveInstanceState).
-     * @param bundle state persisted to this Bundle
-     */
     protected void saveSettings(Bundle bundle)
     {
         bundle.putParcelable("item", item);
         bundle.putParcelable("original", original);
     }
 
-    /**
-     * A listener that is triggered when the dialog is accepted.
-     */
     private DialogInterface.OnClickListener onAccepted = null;
     public void setOnAcceptedListener( DialogInterface.OnClickListener listener ) {
         onAccepted = listener;
     }
 
-    /**
-     * A listener that is triggered when the dialog is cancelled.
-     */
     private DialogInterface.OnClickListener onCanceled = null;
     public void setOnCanceledListener( DialogInterface.OnClickListener listener ) {
         onCanceled = listener;
@@ -231,8 +215,115 @@ public class AlarmItemDialog extends DialogFragment
         }
     };
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    protected void showAlarmTypeMenu(Context context, final AlarmClockItem item, final View buttonView)
+    {
+        PopupMenu menu = new PopupMenu(context, buttonView);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.alarmtype, menu.getMenu());
+
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem)
+            {
+                switch (menuItem.getItemId())
+                {
+                    case R.id.alarmTypeNotification:
+                        item.type = AlarmClockItem.AlarmType.NOTIFICATION;
+                        notifyItemChanged();
+                        return true;
+
+                    case R.id.alarmTypeAlarm:
+                    default:
+                        item.type = AlarmClockItem.AlarmType.ALARM;
+                        notifyItemChanged();
+                        return true;
+                }
+            }
+        });
+
+        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        menu.show();
+    }
+
+    protected void showOverflowMenu(final Context context, final AlarmClockItem item, final View buttonView)
+    {
+        PopupMenu menu = new PopupMenu(context, buttonView);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.alarmcontext1, menu.getMenu());
+
+        if (Build.VERSION.SDK_INT < 11)     // TODO: add support for api10
+        {
+            MenuItem[] notSupportedMenuItems = new MenuItem[] {     // not supported by api level
+                    menu.getMenu().findItem(R.id.setAlarmTime),
+                    menu.getMenu().findItem(R.id.setAlarmOffset)
+            };
+            for (MenuItem menuItem : notSupportedMenuItems) {
+                menuItem.setEnabled(false);
+            }
+        }
+
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem)
+            {
+                switch (menuItem.getItemId())
+                {
+                    case R.id.deleteAlarm:
+                        confirmDeleteAlarm(getActivity(), item, buttonView);
+                        return true;
+
+                    default:
+                        return false;
+                }
+            }
+        });
+
+        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        menu.show();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * confirmDeleteAlarm
+     * @param item AlarmClockItem
+     */
+    protected void confirmDeleteAlarm(final Context context, final AlarmClockItem item, final View itemView)
+    {
+        String message = context.getString(R.string.deletealarm_dialog_message, AlarmItemViewHolder.displayAlarmLabel(context, item), AlarmItemViewHolder.displayAlarmTime(context, item), AlarmItemViewHolder.displayEvent(context, item));
+        AlertDialog.Builder confirm = new AlertDialog.Builder(context)
+                .setTitle(context.getString(R.string.deletealarm_dialog_title))
+                .setMessage(message)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(context.getString(R.string.deletealarm_dialog_ok), new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        deleteAlarm(context, item);
+                        dismiss();
+                    }
+                })
+                .setNegativeButton(context.getString(R.string.deletealarm_dialog_cancel), null);
+        confirm.show();
+    }
+
+    private void deleteAlarm(Context context, final AlarmClockItem item) {
+        Intent deleteIntent = AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DELETE, item.getUri());
+        context.sendBroadcast(deleteIntent);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
     private void attachClickListeners(@NonNull AlarmItemViewHolder holder, int position)
     {
+        holder.menu_type.setOnClickListener(showAlarmTypeMenu());
+        holder.menu_overflow.setOnClickListener(showOverflowMenu());
         holder.chip_offset.setOnClickListener(pickOffset());
         holder.chip_event.setOnClickListener(pickEvent());
         holder.chip_location.setOnClickListener(pickLocation());
@@ -246,6 +337,26 @@ public class AlarmItemDialog extends DialogFragment
     protected AlarmClockAdapterListener listener;
     public void setAlarmClockAdapterListener( AlarmClockAdapterListener listener ) {
         this.listener = listener;
+    }
+
+    private View.OnClickListener showAlarmTypeMenu()
+    {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlarmTypeMenu(getActivity(), item, v);
+            }
+        };
+    }
+
+    private View.OnClickListener showOverflowMenu()
+    {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showOverflowMenu(getActivity(), item, v);
+            }
+        };
     }
 
     private View.OnClickListener pickOffset()
