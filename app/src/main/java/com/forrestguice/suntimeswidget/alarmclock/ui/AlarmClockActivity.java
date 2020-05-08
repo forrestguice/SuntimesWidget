@@ -106,6 +106,7 @@ public class AlarmClockActivity extends AppCompatActivity
     public static final int REQUEST_SETTINGS = 20;
     public static final int REQUEST_STORAGE_PERMISSION = 30;
 
+    private static final String DIALOGTAG_ITEM = "alarmitem";
     private static final String DIALOGTAG_EVENT_FAB = "alarmeventfab";
     private static final String DIALOGTAG_EVENT = "alarmevent";
     private static final String DIALOGTAG_REPEAT = "alarmrepetition";
@@ -368,6 +369,13 @@ public class AlarmClockActivity extends AppCompatActivity
         super.onResume();
 
         FragmentManager fragments = getSupportFragmentManager();
+
+        AlarmItemDialog alarmItemDialog = (AlarmItemDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
+        if (alarmItemDialog != null)
+        {
+            // TODOs
+        }
+
         AlarmDialog eventDialog0 = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
         if (eventDialog0 != null)
         {
@@ -862,6 +870,9 @@ public class AlarmClockActivity extends AppCompatActivity
 
     protected void showAlarmItemDialog(@NonNull AlarmClockItem item)
     {
+        AlarmItemDialog dialog = new AlarmItemDialog();
+        dialog.setItem(item);
+        dialog.show(getSupportFragmentManager(), DIALOGTAG_ITEM);
     }
 
     /**
