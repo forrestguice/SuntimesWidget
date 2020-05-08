@@ -22,6 +22,8 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -39,7 +41,7 @@ import java.util.TimeZone;
 /**
  * AlarmClockItem
  */
-public class AlarmClockItem
+public class AlarmClockItem implements Parcelable
 {
     public static final String AUTHORITY = "com.forrestguice.suntimeswidget.alarmclock";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/alarms");
@@ -103,7 +105,6 @@ public class AlarmClockItem
 
         String eventString = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_SOLAREVENT);
         event = SolarEvents.valueOf(eventString, null);
-
         timezone = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_TIMEZONE);
 
         vibrate = (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_VIBRATE) == 1);
@@ -111,6 +112,76 @@ public class AlarmClockItem
         ringtoneURI = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_URI);
         actionID0 = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_ACTION0);
         actionID1 = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_ACTION1);
+    }
+
+    private AlarmClockItem(Parcel in)
+    {
+        rowID = in.readLong();
+        type = AlarmType.valueOf(in.readString());
+        enabled = (in.readInt() == 1);
+        label = in.readString();
+
+        repeating = (in.readInt() == 1);
+        setRepeatingDays(in.readString());
+
+        alarmtime = in.readLong();
+        timestamp = in.readLong();
+        hour = in.readInt();
+        minute = in.readInt();
+        offset = in.readLong();
+
+        String locLat = in.readString();
+        String locLon = in.readString();
+        String locLabel = in.readString();
+        String locAlt = in.readString();
+        boolean useAltitude = (in.readInt() == 1);
+
+        if (locLat != null && locLon != null)
+        {
+            location = new Location(locLabel, locLat, locLon, locAlt);
+            location.setUseAltitude(useAltitude);
+        } else location = null;
+
+        event = SolarEvents.valueOf(in.readString(), null);
+        timezone = in.readString();
+
+        vibrate =  (in.readInt() == 1);
+        ringtoneName = in.readString();
+        ringtoneURI = in.readString();
+        actionID0 = in.readString();
+        actionID1 = in.readString();
+    }
+
+    public void writeToParcel(Parcel out, int flags)
+    {
+        out.writeLong(rowID);
+        out.writeString(type.name());
+        out.writeInt(enabled ? 1 : 0);
+        out.writeString(label);
+
+        out.writeInt(repeating ? 1 : 0);
+        out.writeString(getRepeatingDays());
+
+        out.writeLong(alarmtime);
+        out.writeLong(timestamp);
+        out.writeInt(hour);
+        out.writeInt(minute);
+        out.writeLong(offset);
+
+        out.writeString(location.getLatitude());
+        out.writeString(location.getLongitude());
+        out.writeString(location.getLabel());
+        out.writeString(location.getAltitude());
+        out.writeInt(location.useAltitude() ? 1 : 0);
+
+        out.writeString(event != null ? event.name() : null);
+        out.writeString(timezone);
+
+        out.writeInt(vibrate ? 1 : 0);
+        out.writeString(ringtoneName);
+        out.writeString(ringtoneURI);
+        out.writeString(actionID0);
+        out.writeString(actionID1);
     }
 
     public ContentValues asContentValues(boolean withRowID)
@@ -458,5 +529,20 @@ public class AlarmClockItem
             }
         }
     }
+
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Parcelable.Creator<AlarmClockItem> CREATOR = new Parcelable.Creator<AlarmClockItem>()
+    {
+        public AlarmClockItem createFromParcel(Parcel in) {
+            return new AlarmClockItem(in);
+        }
+
+        public AlarmClockItem[] newArray(int size) {
+            return new AlarmClockItem[size];
+        }
+    };
 
 }
