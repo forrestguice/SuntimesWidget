@@ -53,6 +53,7 @@ public class AlarmItemDialog extends DialogFragment
     {
         if (itemView != null) {
             itemView.bindDataToPosition(getActivity(), item, 0);
+            attachClickListeners(itemView, 0);
         }
         if (text_title != null) {
             text_title.setText(item != null ? item.type.getDisplayString() : "");
@@ -203,11 +204,120 @@ public class AlarmItemDialog extends DialogFragment
         @Override
         public void onClick(View v)
         {
-            dismiss();
             if (onAccepted != null) {
                 onAccepted.onClick(getDialog(), 0);
             }
+            dismiss();
         }
     };
+
+    private void attachClickListeners(@NonNull AlarmItemViewHolder holder, int position)
+    {
+        holder.chip_offset.setOnClickListener(pickOffset());
+        holder.chip_event.setOnClickListener(pickEvent());
+        holder.chip_location.setOnClickListener(pickLocation());
+        holder.chip_repeat.setOnClickListener(pickRepeating());
+        holder.chip_ringtone.setOnClickListener(pickRingtone());
+        holder.check_vibrate.setOnCheckedChangeListener(pickVibrating());
+        holder.chip_action0.setOnClickListener(pickAction(0));
+        holder.chip_action1.setOnClickListener(pickAction(1));
+    }
+
+    protected AlarmClockAdapterListener listener;
+    public void setAlarmClockAdapterListener( AlarmClockAdapterListener listener ) {
+        this.listener = listener;
+    }
+
+    private View.OnClickListener pickOffset()
+    {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onRequestOffset(item);
+                }
+            }
+        };
+    }
+
+    private View.OnClickListener pickEvent()
+    {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onRequestSolarEvent(item);
+                }
+            }
+        };
+    }
+
+    private View.OnClickListener pickLocation()
+    {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onRequestLocation(item);
+                }
+            }
+        };
+    }
+
+    private View.OnClickListener pickRepeating()
+    {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onRequestRepetition(item);
+                }
+            }
+        };
+    }
+
+    private View.OnClickListener pickRingtone()
+    {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onRequestRingtone(item);
+                }
+            }
+        };
+    }
+
+    private CompoundButton.OnCheckedChangeListener pickVibrating()
+    {
+        return new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                if (isChecked && !item.vibrate)
+                {
+                    Context context = getActivity();
+                    Vibrator vibrate = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                    if (vibrate != null) {
+                        vibrate.vibrate(500);
+                    }
+                }
+                item.vibrate = isChecked;
+                item.modified = true;
+            }
+        };
+    }
+
+    private View.OnClickListener pickAction(final int actionNum)
+    {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onRequestAction(item, actionNum);
+                }
+            }
+        };
+    }
 
 }
