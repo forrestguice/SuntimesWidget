@@ -81,7 +81,7 @@ public class AlarmClockItem implements Parcelable
         this.label = other.label;
 
         this.repeating = other.repeating;
-        this.repeatingDays = new ArrayList<Integer>(other.repeatingDays);
+        this.repeatingDays = ((other.repeatingDays != null) ? new ArrayList<Integer>(other.repeatingDays) : null);
 
         this.alarmtime = other.alarmtime;
         this.timestamp = other.timestamp;
@@ -103,45 +103,8 @@ public class AlarmClockItem implements Parcelable
         state = (other.state != null) ? new AlarmState(other.state) : null;
     }
 
-    public AlarmClockItem(@Nullable Context context, ContentValues alarm)
-    {
-        rowID = alarm.getAsLong(AlarmDatabaseAdapter.KEY_ROWID);
-        type = AlarmType.valueOf(alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_TYPE), AlarmType.ALARM);
-        enabled = (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_ENABLED) == 1);
-        label = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_LABEL);
-
-        repeating = (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_REPEATING) == 1);
-        setRepeatingDays(alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_REPEATING_DAYS));
-
-        alarmtime = alarm.getAsLong(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_ADJUSTED);
-        timestamp = alarm.getAsLong(AlarmDatabaseAdapter.KEY_ALARM_DATETIME);
-        hour = alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_HOUR);
-        minute = alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_MINUTE);
-        offset = alarm.getAsLong(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_OFFSET);
-
-        String locLat = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_LATITUDE);
-        String locLon = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_LONGITUDE);
-        if (locLat !=  null && locLon != null)
-        {
-            String locLabel = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_PLACELABEL);
-            String locAlt = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_ALTITUDE);
-            location = new Location(locLabel, locLat, locLon, locAlt);
-
-            if (context != null) {
-                location.setUseAltitude(WidgetSettings.loadLocationAltitudeEnabledPref(context, 0));
-            }
-
-        } else location = null;
-
-        String eventString = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_SOLAREVENT);
-        event = SolarEvents.valueOf(eventString, null);
-        timezone = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_TIMEZONE);
-
-        vibrate = (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_VIBRATE) == 1);
-        ringtoneName = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_NAME);
-        ringtoneURI = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_URI);
-        actionID0 = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_ACTION0);
-        actionID1 = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_ACTION1);
+    public AlarmClockItem(@Nullable Context context, ContentValues alarm) {
+       fromContentValues(context, alarm);
     }
 
     private AlarmClockItem(Parcel in)
@@ -219,6 +182,47 @@ public class AlarmClockItem implements Parcelable
 
         out.writeInt(modified ? 1 : 0);
         out.writeParcelable(state, 0);
+    }
+
+    public void fromContentValues(Context context, ContentValues alarm)
+    {
+        rowID = alarm.getAsLong(AlarmDatabaseAdapter.KEY_ROWID);
+        type = AlarmType.valueOf(alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_TYPE), AlarmType.ALARM);
+        enabled = (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_ENABLED) == 1);
+        label = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_LABEL);
+
+        repeating = (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_REPEATING) == 1);
+        setRepeatingDays(alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_REPEATING_DAYS));
+
+        alarmtime = alarm.getAsLong(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_ADJUSTED);
+        timestamp = alarm.getAsLong(AlarmDatabaseAdapter.KEY_ALARM_DATETIME);
+        hour = alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_HOUR);
+        minute = alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_MINUTE);
+        offset = alarm.getAsLong(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_OFFSET);
+
+        String locLat = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_LATITUDE);
+        String locLon = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_LONGITUDE);
+        if (locLat !=  null && locLon != null)
+        {
+            String locLabel = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_PLACELABEL);
+            String locAlt = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_ALTITUDE);
+            location = new Location(locLabel, locLat, locLon, locAlt);
+
+            if (context != null) {
+                location.setUseAltitude(WidgetSettings.loadLocationAltitudeEnabledPref(context, 0));
+            }
+
+        } else location = null;
+
+        String eventString = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_SOLAREVENT);
+        event = SolarEvents.valueOf(eventString, null);
+        timezone = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_TIMEZONE);
+
+        vibrate = (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_VIBRATE) == 1);
+        ringtoneName = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_NAME);
+        ringtoneURI = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_URI);
+        actionID0 = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_ACTION0);
+        actionID1 = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_ACTION1);
     }
 
     public ContentValues asContentValues(boolean withRowID)
