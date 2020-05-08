@@ -100,7 +100,7 @@ public class AlarmClockItem implements Parcelable
         this.actionID1 = other.actionID1;
 
         modified = other.modified;
-        state = new AlarmState(other.state);
+        state = (other.state != null) ? new AlarmState(other.state) : null;
     }
 
     public AlarmClockItem(@Nullable Context context, ContentValues alarm)
