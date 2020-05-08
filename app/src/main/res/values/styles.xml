@@ -415,7 +415,13 @@
         <item name="android:paddingRight">8dp</item>
     </style>
 
-    <style name="ChipText" parent="android:TextAppearance.Small">
+    <style name="ChipTray">
+        <item name="android:background">@drawable/chip_tray_dark</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">6dp</item>
+    </style>
+
+    <style name="ChipArea">
         <item name="android:maxWidth">250dp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -425,11 +431,36 @@
         <item name="android:paddingBottom">3dp</item>
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">8dp</item>
+        <item name="android:background">@drawable/chip_enabled_dark</item>
+    </style>
+
+    <style name="ChipTextBase" parent="android:TextAppearance.Small">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/text_buttonSelector</item>
+    </style>
+    <style name="ChipText0" parent="ChipTextBase">
+        <item name="android:maxWidth">250dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:gravity">center_vertical|start</item>
+        <item name="android:paddingTop">1dp</item>
+        <item name="android:paddingBottom">1dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:drawablePadding">4dp</item>
         <item name="android:maxLines">2</item>
         <item name="android:ellipsize">end</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">?attr/text_buttonSelector</item>
+    </style>
+    <style name="ChipText" parent="ChipText0">
         <item name="android:background">@drawable/chip_enabled_dark</item>
+    </style>
+    <style name="ChipText1" parent="ChipText0">
+        <item name="android:background">@drawable/chip_enabled_dark</item>
+        <item name="android:drawableRight">@drawable/ic_transparent1</item>
+        <item name="android:drawableEnd">@drawable/ic_transparent1</item>
     </style>
 
 </resources>
