@@ -186,6 +186,9 @@ public class Location implements Parcelable
     {
         useAltitude = enabled;
     }
+    public boolean useAltitude() {
+        return useAltitude;
+    }
 
     /**
      * @return a "geo" URI describing this Location
