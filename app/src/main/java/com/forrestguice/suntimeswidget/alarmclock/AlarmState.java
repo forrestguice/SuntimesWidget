@@ -71,6 +71,12 @@ public class AlarmState implements Parcelable
         this.state = value;
     }
 
+    public AlarmState( AlarmState other )
+    {
+        this.rowID = other.rowID;
+        this.state = other.state;
+    }
+
     public AlarmState(ContentValues values)
     {
         rowID = values.getAsLong(AlarmDatabaseAdapter.KEY_STATE_ALARMID);

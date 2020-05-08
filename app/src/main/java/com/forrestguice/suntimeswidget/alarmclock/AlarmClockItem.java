@@ -73,6 +73,36 @@ public class AlarmClockItem implements Parcelable
 
     public AlarmClockItem() {}
 
+    public AlarmClockItem( AlarmClockItem other )
+    {
+        this.rowID = other.rowID;
+        this.type = other.type;
+        this.enabled = other.enabled;
+        this.label = other.label;
+
+        this.repeating = other.repeating;
+        this.repeatingDays = new ArrayList<Integer>(other.repeatingDays);
+
+        this.alarmtime = other.alarmtime;
+        this.timestamp = other.timestamp;
+        this.hour = other.hour;
+        this.minute = other.minute;
+        this.offset = other.offset;
+
+        this.location = new Location(other.location);
+        this.event = other.event;
+        this.timezone = other.timezone;
+
+        this.vibrate = other.vibrate;
+        this.ringtoneName = other.ringtoneName;
+        this.ringtoneURI = other.ringtoneURI;
+        this.actionID0 = other.actionID0;
+        this.actionID1 = other.actionID1;
+
+        modified = other.modified;
+        state = new AlarmState(other.state);
+    }
+
     public AlarmClockItem(@Nullable Context context, ContentValues alarm)
     {
         rowID = alarm.getAsLong(AlarmDatabaseAdapter.KEY_ROWID);
