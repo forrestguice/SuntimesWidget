@@ -75,7 +75,7 @@ import java.util.Calendar;
  * AlarmClockAdapter
  */
 @SuppressWarnings("Convert2Diamond")
-public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
+public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
 {
     private static final SuntimesUtils utils = new SuntimesUtils();
 
@@ -88,21 +88,21 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
     private int onColor, offColor, disabledColor, pressedColor;
     private SuntimesTheme suntimesTheme = null;
 
-    public AlarmClockAdapter(Context context)
+    public AlarmItemArrayAdapter(Context context)
     {
         super(context, R.layout.layout_listitem_alarmclock);
         initAdapter(context);
         this.items = new ArrayList<>();
     }
 
-    public AlarmClockAdapter(Context context, ArrayList<AlarmClockItem> items)
+    public AlarmItemArrayAdapter(Context context, ArrayList<AlarmClockItem> items)
     {
         super(context, R.layout.layout_listitem_alarmclock, items);
         initAdapter(context);
         this.items = items;
     }
 
-    public AlarmClockAdapter(Context context, ArrayList<AlarmClockItem> items, SuntimesTheme theme)
+    public AlarmItemArrayAdapter(Context context, ArrayList<AlarmClockItem> items, SuntimesTheme theme)
     {
         super(context, R.layout.layout_listitem_alarmclock, items);
         suntimesTheme = theme;
@@ -1004,8 +1004,8 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
        }
     }
 
-    protected AlarmClockAdapterListener adapterListener;
-    public void setAdapterListener(AlarmClockAdapterListener l)
+    protected AlarmItemAdapterListener adapterListener;
+    public void setAdapterListener(AlarmItemAdapterListener l)
     {
         adapterListener = l;
     }

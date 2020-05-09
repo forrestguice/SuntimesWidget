@@ -29,6 +29,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
+import android.transition.TransitionInflater;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -53,9 +54,9 @@ public class AlarmItemDialog extends DialogFragment
     protected AlarmClockItem item = null, original = null;
     protected AlarmItemViewHolder itemView;
 
-    public void initFromItem(AlarmClockItem item)
+    public void initFromItem(AlarmClockItem item, boolean addItem)
     {
-        this.original = item;
+        this.original = (addItem ? null : item);
         this.item = new AlarmClockItem(item);
         bindItemToHolder(item);
     }
@@ -87,6 +88,10 @@ public class AlarmItemDialog extends DialogFragment
     {
         super.onCreate(savedState);
         setStyle(DialogFragment.STYLE_NO_FRAME, R.style.AppTheme);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
+        }
     }
 
     @Override
@@ -335,8 +340,8 @@ public class AlarmItemDialog extends DialogFragment
         holder.chip_action1.setOnClickListener(pickAction(1));
     }
 
-    protected AlarmClockAdapterListener listener;
-    public void setAlarmClockAdapterListener( AlarmClockAdapterListener listener ) {
+    protected AlarmItemAdapterListener listener;
+    public void setAlarmClockAdapterListener( AlarmItemAdapterListener listener ) {
         this.listener = listener;
     }
 

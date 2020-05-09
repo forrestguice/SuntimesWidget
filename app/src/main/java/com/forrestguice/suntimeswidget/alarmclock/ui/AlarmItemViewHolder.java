@@ -82,7 +82,6 @@ public class AlarmItemViewHolder extends RecyclerView.ViewHolder
     public AlarmItemViewHolder(View parent)
     {
         super(parent);
-
         Context context = parent.getContext();
         SuntimesUtils.initDisplayStrings(context);
 
@@ -163,28 +162,6 @@ public class AlarmItemViewHolder extends RecyclerView.ViewHolder
 
             int eventType = item.event == null ? -1 : item.event.getType();
             text_date.setVisibility((eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON) ? View.VISIBLE : View.GONE);
-
-            /*
-            if (!isSelected && !item.enabled) {
-                view.text_datetime.setTextColor(disabledColor);
-            } else if (item.enabled) {
-                view.text_datetime.setTextColor(SuntimesUtils.colorStateList(alarmEnabledColor, alarmEnabledColor, pressedColor));
-            } else {
-                view.text_datetime.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
-            }
-            if (!isSelected && !item.enabled) {
-             ImageViewCompat.setImageTintList(view.typeButton, SuntimesUtils.colorStateList(disabledColor, disabledColor, disabledColor));
-             } else if (item.enabled) {
-             ImageViewCompat.setImageTintList(view.typeButton, SuntimesUtils.colorStateList(alarmEnabledColor, disabledColor, pressedColor));
-             } else {
-             ImageViewCompat.setImageTintList(view.typeButton, SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
-             }
-             if (!isSelected || item.enabled) {
-             view.option_offset.setTextColor(disabledColor);
-             } else {
-             view.option_offset.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
-             }
-             */
 
         } else {
             text_datetime_offset.setText("");

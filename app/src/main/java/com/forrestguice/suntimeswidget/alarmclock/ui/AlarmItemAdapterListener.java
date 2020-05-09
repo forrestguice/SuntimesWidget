@@ -23,7 +23,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 /**
  * AlarmClockAdapterListener
  */
-public abstract class AlarmClockAdapterListener
+public abstract class AlarmItemAdapterListener
 {
     public void onRequestLabel(AlarmClockItem forItem) {}
     public void onRequestRingtone(AlarmClockItem forItem) {}

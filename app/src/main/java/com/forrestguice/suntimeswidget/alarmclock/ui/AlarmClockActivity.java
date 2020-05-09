@@ -135,7 +135,7 @@ public class AlarmClockActivity extends AppCompatActivity
     private SuntimesWarning notificationWarning;
     private List<SuntimesWarning> warnings;
 
-    private AlarmClockAdapter adapter = null;
+    private AlarmItemArrayAdapter adapter = null;
     private Long t_selectedItem = null;
     private Location t_selectedLocation = null;
 
@@ -764,7 +764,7 @@ public class AlarmClockActivity extends AppCompatActivity
     private AlarmClockListTask.AlarmClockListTaskListener onUpdateFinished = new AlarmClockListTask.AlarmClockListTaskListener()
     {
         @Override
-        public void onFinished(AlarmClockAdapter result)
+        public void onFinished(AlarmItemArrayAdapter result)
         {
             adapter = result;
             if (appThemeOverride != null) {
@@ -781,7 +781,7 @@ public class AlarmClockActivity extends AppCompatActivity
      * onAdapterAction
      * An action was performed on an AlarmItem managed by the adapter; respond to it.
      */
-    private AlarmClockAdapterListener onAdapterAction = new AlarmClockAdapterListener()
+    private AlarmItemAdapterListener onAdapterAction = new AlarmItemAdapterListener()
     {
         @Override
         public void onRequestDialog(AlarmClockItem forItem) {
@@ -888,7 +888,7 @@ public class AlarmClockActivity extends AppCompatActivity
     protected void showAlarmItemDialog(@NonNull AlarmClockItem item)
     {
         AlarmItemDialog dialog = new AlarmItemDialog();
-        dialog.initFromItem(item);
+        dialog.initFromItem(item, false);
         dialog.setAlarmClockAdapterListener(alarmItemDialogListener);
         dialog.setOnAcceptedListener(onItemDialogAccepted);
         dialog.show(getSupportFragmentManager(), DIALOGTAG_ITEM);
@@ -908,7 +908,7 @@ public class AlarmClockActivity extends AppCompatActivity
         }
     };
 
-    private AlarmClockAdapterListener alarmItemDialogListener = new AlarmClockAdapterListener()
+    private AlarmItemAdapterListener alarmItemDialogListener = new AlarmItemAdapterListener()
     {
         @Override
         public void onRequestLabel(AlarmClockItem forItem) { /* EMPTY */ }
@@ -1483,7 +1483,7 @@ public class AlarmClockActivity extends AppCompatActivity
     /**
      * AlarmClockListTask
      */
-    public static class AlarmClockListTask extends AsyncTask<String, AlarmClockItem, AlarmClockAdapter>
+    public static class AlarmClockListTask extends AsyncTask<String, AlarmClockItem, AlarmItemArrayAdapter>
     {
         private AlarmDatabaseAdapter db;
         private WeakReference<Context> contextRef;
@@ -1502,7 +1502,7 @@ public class AlarmClockActivity extends AppCompatActivity
         protected void onPreExecute() {}
 
         @Override
-        protected AlarmClockAdapter doInBackground(String... strings)
+        protected AlarmItemArrayAdapter doInBackground(String... strings)
         {
             ArrayList<AlarmClockItem> items = new ArrayList<>();
 
@@ -1526,7 +1526,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
             Context context = contextRef.get();
             if (context != null)
-                return new AlarmClockAdapter(context, items, theme);
+                return new AlarmItemArrayAdapter(context, items, theme);
             else return null;
         }
 
@@ -1534,7 +1534,7 @@ public class AlarmClockActivity extends AppCompatActivity
         protected void onProgressUpdate(AlarmClockItem... item) {}
 
         @Override
-        protected void onPostExecute(AlarmClockAdapter result)
+        protected void onPostExecute(AlarmItemArrayAdapter result)
         {
             if (result != null)
             {
@@ -1567,7 +1567,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
         public static abstract class AlarmClockListTaskListener
         {
-            public void onFinished(AlarmClockAdapter result) {}
+            public void onFinished(AlarmItemArrayAdapter result) {}
         }
     }
 
