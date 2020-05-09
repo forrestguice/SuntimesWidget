@@ -100,13 +100,13 @@
             android:background="@drawable/ic_sunrise_large0"
             android:scaleType="fitXY"
             android:visibility="gone"
-            app:layout_constraintEnd_toStartOf="@android:id/text2"
-            app:layout_constraintTop_toTopOf="@android:id/text2"
-            app:layout_constraintBottom_toBottomOf="@android:id/text2"
+            app:layout_constraintEnd_toStartOf="@+id/text_event"
+            app:layout_constraintTop_toTopOf="@+id/text_event"
+            app:layout_constraintBottom_toBottomOf="@+id/text_event"
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@android:id/text2"
+            android:id="@+id/text_event"
             android:layout_width="0dp" android:layout_height="wrap_content"
             android:textStyle="bold" android:textColor="?attr/text_buttonSelector"
             android:maxLines="2" android:ellipsize="end"
@@ -115,13 +115,13 @@
             android:paddingRight="8dp" android:paddingEnd="8dp"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/text_location_label"
+            app:layout_constraintStart_toStartOf="@+id/text_location"
             app:layout_constraintTop_toBottomOf="@+id/layout_header"
-            app:layout_constraintBottom_toTopOf="@+id/text_location_label"
+            app:layout_constraintBottom_toTopOf="@+id/text_location"
             tools:text="Nautical Twilight (end)" />
 
         <TextView
-            android:id="@+id/text_location_label"
+            android:id="@+id/text_location"
             android:layout_width="135dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -135,12 +135,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1"
             app:layout_constraintStart_toEndOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@android:id/text2"
+            app:layout_constraintTop_toBottomOf="@+id/text_event"
             app:layout_constraintBottom_toTopOf="@+id/text_date"
             />
 
         <TextView
-            android:id="@+id/option_offset"
+            android:id="@+id/text_datetime_offset"
             android:layout_width="0dp" android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:textColor="?attr/text_buttonSelector" android:gravity="center"
@@ -161,9 +161,9 @@
             android:gravity="start"
             android:textSize="12sp" android:maxLines="1" android:ellipsize="end" android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/layout_options"
-            app:layout_constraintStart_toStartOf="@android:id/text2"
-            app:layout_constraintEnd_toEndOf="@+id/text_location_label"
-            app:layout_constraintTop_toBottomOf="@+id/text_location_label" />
+            app:layout_constraintStart_toStartOf="@+id/text_event"
+            app:layout_constraintEnd_toEndOf="@+id/text_location"
+            app:layout_constraintTop_toBottomOf="@+id/text_location" />
 
         <LinearLayout
             android:id="@+id/layout_options"
@@ -179,7 +179,7 @@
             android:layout_marginLeft="4dp" android:layout_marginRight="4dp" android:layout_marginTop="0dp" android:layout_marginBottom="4dp">
 
             <TextView
-                android:id="@+id/option_repeat"
+                android:id="@+id/text_repeat"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
@@ -188,7 +188,7 @@
                 android:maxLines="2" android:layout_weight="1"
                 android:gravity="start"
                 android:scaleX="0.85" android:scaleY="0.85"
-                app:layout_constraintStart_toEndOf="@android:id/text2" />
+                app:layout_constraintStart_toEndOf="@+id/text_event" />
 
             <TextView
                 android:id="@+id/text_ringtone"

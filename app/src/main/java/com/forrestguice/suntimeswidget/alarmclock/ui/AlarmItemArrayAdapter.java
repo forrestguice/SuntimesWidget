@@ -88,23 +88,36 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
     private int onColor, offColor, disabledColor, pressedColor;
     private SuntimesTheme suntimesTheme = null;
 
+    protected int resource = R.layout.layout_listitem_alarmclock;
+
     public AlarmItemArrayAdapter(Context context)
     {
         super(context, R.layout.layout_listitem_alarmclock);
+        this.resource = resource;
         initAdapter(context);
         this.items = new ArrayList<>();
     }
 
-    public AlarmItemArrayAdapter(Context context, ArrayList<AlarmClockItem> items)
+    public AlarmItemArrayAdapter(Context context, int resource)
     {
-        super(context, R.layout.layout_listitem_alarmclock, items);
+        super(context, resource);
+        this.resource = resource;
+        initAdapter(context);
+        this.items = new ArrayList<>();
+    }
+
+    public AlarmItemArrayAdapter(Context context, int resource, ArrayList<AlarmClockItem> items)
+    {
+        super(context, resource, items);
+        this.resource = resource;
         initAdapter(context);
         this.items = items;
     }
 
-    public AlarmItemArrayAdapter(Context context, ArrayList<AlarmClockItem> items, SuntimesTheme theme)
+    public AlarmItemArrayAdapter(Context context, int resource, ArrayList<AlarmClockItem> items, SuntimesTheme theme)
     {
-        super(context, R.layout.layout_listitem_alarmclock, items);
+        super(context, resource, items);
+        this.resource = resource;
         suntimesTheme = theme;
         initAdapter(context);
         this.items = items;
@@ -217,7 +230,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
     {
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
-            convertView = inflater.inflate(R.layout.layout_listitem_alarmclock, parent, false);
+            convertView = inflater.inflate(resource, parent, false);
         }
 
         AlarmClockItemView itemView = new AlarmClockItemView(convertView);
@@ -240,105 +253,123 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         final boolean isSelected = (item.rowID == selectedItem);
 
         // type button
-        view.typeButton.setOnClickListener(new View.OnClickListener()
+        if (view.typeButton != null)
         {
-            @Override
-            public void onClick(View v)
+            view.typeButton.setOnClickListener(new View.OnClickListener()
             {
-                if (isSelected)
+                @Override
+                public void onClick(View v)
                 {
-                    if (item.enabled)
-                        AlarmNotifications.showTimeUntilToast(context, v, item);
-                    else showAlarmTypeMenu(item, view.typeButton, view.card);
+                    if (isSelected)
+                    {
+                        if (item.enabled)
+                            AlarmNotifications.showTimeUntilToast(context, v, item);
+                        else showAlarmTypeMenu(item, view.typeButton, view.card);
 
-                } else {
-                    setSelectedItem(item.rowID);
+                    } else {
+                        setSelectedItem(item.rowID);
+                    }
                 }
-            }
-        });
+            });
+        }
 
         // label
-        view.text.setOnClickListener(new View.OnClickListener()
+        if (view.text_label != null)
         {
-            @Override
-            public void onClick(View v)
+            view.text_label.setOnClickListener(new View.OnClickListener()
             {
-                if (isSelected) {
-                    if (adapterListener != null) {
-                        adapterListener.onRequestLabel(item);
+                @Override
+                public void onClick(View v)
+                {
+                    if (isSelected) {
+                        if (adapterListener != null) {
+                            adapterListener.onRequestLabel(item);
+                        }
+                    } else {
+                        setSelectedItem(item.rowID);
                     }
-                } else {
-                    setSelectedItem(item.rowID);
                 }
-            }
-        });
+            });
+        }
 
         // event
-        view.text2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                if (isSelected) {
-                    if (adapterListener != null && !item.enabled) {
-                        adapterListener.onRequestSolarEvent(item);
+        if (view.text_event != null)
+        {
+            view.text_event.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    if (isSelected) {
+                        if (adapterListener != null && !item.enabled) {
+                            adapterListener.onRequestSolarEvent(item);
+                        } else {
+                            AlarmNotifications.showTimeUntilToast(context, v, item);
+                        }
                     } else {
-                        AlarmNotifications.showTimeUntilToast(context, v, item);
+                        setSelectedItem(item.rowID);
                     }
-                } else {
-                    setSelectedItem(item.rowID);
                 }
-            }
-        });
+            });
+        }
 
         // time
-        view.text_datetime.setOnClickListener(new View.OnClickListener()
+        if (view.text_datetime != null)
         {
-            @Override
-            public void onClick(View v)
+            view.text_datetime.setOnClickListener(new View.OnClickListener()
             {
-                if (isSelected) {
-                    if (adapterListener != null && !item.enabled) {
-                        adapterListener.onRequestTime(item);
+                @Override
+                public void onClick(View v)
+                {
+                    if (isSelected) {
+                        if (adapterListener != null && !item.enabled) {
+                            adapterListener.onRequestTime(item);
+                        } else {
+                            AlarmNotifications.showTimeUntilToast(context, v, item);
+                        }
                     } else {
-                        AlarmNotifications.showTimeUntilToast(context, v, item);
+                        setSelectedItem(item.rowID);
                     }
-                } else {
-                    setSelectedItem(item.rowID);
                 }
-            }
-        });
+            });
+        }
 
-        view.text_date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                if (isSelected) {
-                    if (item.enabled) {
-                        AlarmNotifications.showTimeUntilToast(context, v, item);
+        if (view.text_date != null)
+        {
+            view.text_date.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    if (isSelected) {
+                        if (item.enabled) {
+                            AlarmNotifications.showTimeUntilToast(context, v, item);
+                        }
+                    } else {
+                        setSelectedItem(item.rowID);
                     }
-                } else {
-                    setSelectedItem(item.rowID);
                 }
-            }
-        });
+            });
+        }
 
         // location
-        view.text_location.setOnClickListener(new View.OnClickListener()
+        if (view.text_location != null)
         {
-            @Override
-            public void onClick(View v)
+            view.text_location.setOnClickListener(new View.OnClickListener()
             {
-                if (isSelected) {
-                    if (adapterListener != null && !item.enabled) {
-                        adapterListener.onRequestLocation(item);
+                @Override
+                public void onClick(View v)
+                {
+                    if (isSelected) {
+                        if (adapterListener != null && !item.enabled) {
+                            adapterListener.onRequestLocation(item);
+                        } else {
+                            AlarmNotifications.showTimeUntilToast(context, v, item);
+                        }
                     } else {
-                        AlarmNotifications.showTimeUntilToast(context, v, item);
+                        setSelectedItem(item.rowID);
                     }
-                } else {
-                    setSelectedItem(item.rowID);
                 }
-            }
-        });
+            });
+        }
 
         // enabled / disabled
         if (view.switch_enabled != null) {
@@ -349,92 +380,111 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         }
 
         // ringtone
-        view.text_ringtone.setOnClickListener(new View.OnClickListener()
+        if (view.text_ringtone != null)
         {
-            @Override
-            public void onClick(View v)
+            view.text_ringtone.setOnClickListener(new View.OnClickListener()
             {
-                if (isSelected) {
-                    if (adapterListener != null) {
-                        adapterListener.onRequestRingtone(item);
+                @Override
+                public void onClick(View v)
+                {
+                    if (isSelected) {
+                        if (adapterListener != null) {
+                            adapterListener.onRequestRingtone(item);
+                        }
+                    } else {
+                        setSelectedItem(item.rowID);
                     }
-                } else {
-                    setSelectedItem(item.rowID);
                 }
-            }
-        });
+            });
+        }
 
         // actions
-        view.text_action0.setOnClickListener(onRequestActionClickListener(item, 0));
-        view.text_action1.setOnClickListener(onRequestActionClickListener(item, 1));
+        if (view.text_action0 != null) {
+            view.text_action0.setOnClickListener(onRequestActionClickListener(item, 0));
+        }
+        if (view.text_action1 != null) {
+            view.text_action1.setOnClickListener(onRequestActionClickListener(item, 1));
+        }
 
         // vibrate
-        view.check_vibrate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        if (view.check_vibrate != null)
         {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            view.check_vibrate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
             {
-                item.vibrate = isChecked;
-                item.modified = true;
-                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, false);
-                task.execute(item);
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+                {
+                    item.vibrate = isChecked;
+                    item.modified = true;
+                    AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, false);
+                    task.execute(item);
 
-                if (isChecked) {
-                    Vibrator vibrate = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-                    if (vibrate != null) {
-                        vibrate.vibrate(500);
+                    if (isChecked) {
+                        Vibrator vibrate = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                        if (vibrate != null) {
+                            vibrate.vibrate(500);
+                        }
+                    }
+
+                    if (!isSelected) {
+                        setSelectedItem(item.rowID);
                     }
                 }
-
-                if (!isSelected) {
-                    setSelectedItem(item.rowID);
-                }
-            }
-        });
+            });
+        }
 
         // repeating
-        view.option_repeat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                if (isSelected) {
-                    if (adapterListener != null && !item.enabled) {
-                        adapterListener.onRequestRepetition(item);
+        if (view.text_repeat != null)
+        {
+            view.text_repeat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    if (isSelected) {
+                        if (adapterListener != null && !item.enabled) {
+                            adapterListener.onRequestRepetition(item);
+                        } else {
+                            AlarmNotifications.showTimeUntilToast(context, v, item);
+                        }
                     } else {
-                        AlarmNotifications.showTimeUntilToast(context, v, item);
+                        setSelectedItem(item.rowID);
                     }
-                } else {
-                    setSelectedItem(item.rowID);
                 }
-            }
-        });
+            });
+        }
 
         // offset (before / after)
-        view.option_offset.setOnClickListener(new View.OnClickListener()
+        if (view.text_offset != null)
         {
-            @Override
-            public void onClick(View v)
+            view.text_offset.setOnClickListener(new View.OnClickListener()
             {
-                if (isSelected) {
-                    if (adapterListener != null && !item.enabled) {
-                        adapterListener.onRequestOffset(item);
+                @Override
+                public void onClick(View v)
+                {
+                    if (isSelected) {
+                        if (adapterListener != null && !item.enabled) {
+                            adapterListener.onRequestOffset(item);
+                        } else {
+                            AlarmNotifications.showTimeUntilToast(context, v, item);
+                        }
                     } else {
-                        AlarmNotifications.showTimeUntilToast(context, v, item);
+                        setSelectedItem(item.rowID);
                     }
-                } else {
-                    setSelectedItem(item.rowID);
                 }
-            }
-        });
+            });
+        }
 
         // overflow menu
-        view.overflow.setOnClickListener(new View.OnClickListener()
+        if (view.overflow != null)
         {
-            @Override
-            public void onClick(View v) {
-                showOverflowMenu(item, v, view.card);
-            }
-        });
+            view.overflow.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v) {
+                    showOverflowMenu(item, v, view.card);
+                }
+            });
+        }
     }
 
     private View.OnClickListener onRequestActionClickListener(final AlarmClockItem item, final int actionNum)
@@ -458,19 +508,42 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
 
     private void clearListeners( AlarmClockItemView view )
     {
-        view.typeButton.setOnClickListener(null);
-        view.text.setOnClickListener(null);
-        view.text2.setOnClickListener(null);
-        view.text_datetime.setOnClickListener(null);
-        view.text_location.setOnClickListener(null);
-        view.text_ringtone.setOnClickListener(null);
-        view.text_action0.setOnClickListener(null);
-        view.text_action1.setOnClickListener(null);
-        view.check_vibrate.setOnCheckedChangeListener(null);
-        view.option_repeat.setOnClickListener(null);
-        view.option_offset.setOnClickListener(null);
-        view.overflow.setOnClickListener(null);
-
+        if (view.typeButton != null) {
+            view.typeButton.setOnClickListener(null);
+        }
+        if (view.text_label != null) {
+            view.text_label.setOnClickListener(null);
+        }
+        if (view.text_event != null) {
+            view.text_event.setOnClickListener(null);
+        }
+        if (view.text_datetime != null) {
+            view.text_datetime.setOnClickListener(null);
+        }
+        if (view.text_location != null) {
+            view.text_location.setOnClickListener(null);
+        }
+        if (view.text_ringtone != null) {
+            view.text_ringtone.setOnClickListener(null);
+        }
+        if (view.text_action0 != null) {
+            view.text_action0.setOnClickListener(null);
+        }
+        if (view.text_action1 != null) {
+            view.text_action1.setOnClickListener(null);
+        }
+        if (view.check_vibrate != null) {
+            view.check_vibrate.setOnCheckedChangeListener(null);
+        }
+        if (view.text_repeat != null) {
+            view.text_repeat.setOnClickListener(null);
+        }
+        if (view.text_offset != null) {
+            view.text_offset.setOnClickListener(null);
+        }
+        if (view.overflow != null) {
+            view.overflow.setOnClickListener(null);
+        }
         if (view.switch_enabled != null) {
             view.switch_enabled.setOnCheckedChangeListener(null);
         }
@@ -489,16 +562,19 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         view.cardBackdrop.setBackgroundColor( isSelected ? ColorUtils.setAlphaComponent(alarmSelectedColor, 170) : Color.TRANSPARENT );  // 66% alpha
 
         // enabled / disabled
-        if (Build.VERSION.SDK_INT >= 14)
+        if (view.switch_enabled != null)
         {
-            view.switch_enabled.setChecked(item.enabled);
-            view.switch_enabled.setThumbTintList(SuntimesUtils.colorStateList(alarmEnabledColor, offColor, disabledColor, pressedColor));
-            view.switch_enabled.setTrackTintList(SuntimesUtils.colorStateList(
-                    ColorUtils.setAlphaComponent(alarmEnabledColor, 85), ColorUtils.setAlphaComponent(offColor, 85),
-                    ColorUtils.setAlphaComponent(disabledColor, 85), ColorUtils.setAlphaComponent(pressedColor, 85)));  // 33% alpha (85 / 255)
-        } else {
-            view.check_enabled.setChecked(item.enabled);
-            CompoundButtonCompat.setButtonTintList(view.check_enabled, SuntimesUtils.colorStateList(alarmEnabledColor, offColor, disabledColor, pressedColor));
+            if (Build.VERSION.SDK_INT >= 14)
+            {
+                view.switch_enabled.setChecked(item.enabled);
+                view.switch_enabled.setThumbTintList(SuntimesUtils.colorStateList(alarmEnabledColor, offColor, disabledColor, pressedColor));
+                view.switch_enabled.setTrackTintList(SuntimesUtils.colorStateList(
+                        ColorUtils.setAlphaComponent(alarmEnabledColor, 85), ColorUtils.setAlphaComponent(offColor, 85),
+                        ColorUtils.setAlphaComponent(disabledColor, 85), ColorUtils.setAlphaComponent(pressedColor, 85)));  // 33% alpha (85 / 255)
+            } else {
+                view.check_enabled.setChecked(item.enabled);
+                CompoundButtonCompat.setButtonTintList(view.check_enabled, SuntimesUtils.colorStateList(alarmEnabledColor, offColor, disabledColor, pressedColor));
+            }
         }
 
         LayerDrawable alarmEnabledLayers = (LayerDrawable)alarmEnabledBG;
@@ -511,137 +587,175 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         }
 
         // type button
-        view.typeButton.setImageDrawable(ContextCompat.getDrawable(context, (item.type == AlarmClockItem.AlarmType.ALARM ? iconAlarm : iconNotification)));
-        view.typeButton.setContentDescription(item.type.getDisplayString());
+        if (view.typeButton != null)
+        {
+            view.typeButton.setImageDrawable(ContextCompat.getDrawable(context, (item.type == AlarmClockItem.AlarmType.ALARM ? iconAlarm : iconNotification)));
+            view.typeButton.setContentDescription(item.type.getDisplayString());
 
-        if (!isSelected && !item.enabled) {
-            ImageViewCompat.setImageTintList(view.typeButton, SuntimesUtils.colorStateList(disabledColor, disabledColor, disabledColor));
-        } else if (item.enabled) {
-            ImageViewCompat.setImageTintList(view.typeButton, SuntimesUtils.colorStateList(alarmEnabledColor, disabledColor, pressedColor));
-        } else {
-            ImageViewCompat.setImageTintList(view.typeButton, SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+            if (!isSelected && !item.enabled) {
+                ImageViewCompat.setImageTintList(view.typeButton, SuntimesUtils.colorStateList(disabledColor, disabledColor, disabledColor));
+            } else if (item.enabled) {
+                ImageViewCompat.setImageTintList(view.typeButton, SuntimesUtils.colorStateList(alarmEnabledColor, disabledColor, pressedColor));
+            } else {
+                ImageViewCompat.setImageTintList(view.typeButton, SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+            }
         }
 
         // label
-        view.text.setText(getAlarmLabel(context, item));
-        if (!isSelected && !item.enabled) {
-            view.text.setTextColor(disabledColor);
-        } else if (item.enabled) {
-            view.text.setTextColor(SuntimesUtils.colorStateList(alarmEnabledColor, alarmEnabledColor, pressedColor));
-        } else {
-            view.text.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+        if (view.text_label != null)
+        {
+            view.text_label.setText(AlarmItemViewHolder.displayAlarmLabel(context, item));
+            if (!isSelected && !item.enabled) {
+                view.text_label.setTextColor(disabledColor);
+            } else if (item.enabled) {
+                view.text_label.setTextColor(SuntimesUtils.colorStateList(alarmEnabledColor, alarmEnabledColor, pressedColor));
+            } else {
+                view.text_label.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+            }
         }
 
         // event
-        view.text2.setText(getAlarmEvent(context, item));
-        if (!isSelected || item.enabled) {
-            view.text2.setTextColor(disabledColor);
-        } else {
-            view.text2.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+        if (view.text_event != null)
+        {
+            view.text_event.setText(AlarmItemViewHolder.displayEvent(context, item));
+            if (!isSelected || item.enabled) {
+                view.text_event.setTextColor(disabledColor);
+            } else {
+                view.text_event.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+            }
         }
 
         // time
-        view.text_datetime.setText(getAlarmTime(context, item));
-        if (!isSelected && !item.enabled) {
-            view.text_datetime.setTextColor(disabledColor);
-        } else if (item.enabled) {
-            view.text_datetime.setTextColor(SuntimesUtils.colorStateList(alarmEnabledColor, alarmEnabledColor, pressedColor));
-        } else {
-            view.text_datetime.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+        if (view.text_datetime != null)
+        {
+            view.text_datetime.setText(AlarmItemViewHolder.displayAlarmTime(context, item));
+            if (!isSelected && !item.enabled) {
+                view.text_datetime.setTextColor(disabledColor);
+            } else if (item.enabled) {
+                view.text_datetime.setTextColor(SuntimesUtils.colorStateList(alarmEnabledColor, alarmEnabledColor, pressedColor));
+            } else {
+                view.text_datetime.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+            }
         }
 
         // date
-        view.text_date.setText(getAlarmDate(context, item));
-        view.text_date.setVisibility((eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON) ? View.VISIBLE : View.GONE);
-        if (!isSelected && !item.enabled) {
-            view.text_date.setTextColor(disabledColor);
-        } else if (item.enabled){
-            view.text_date.setTextColor(SuntimesUtils.colorStateList(alarmEnabledColor, alarmEnabledColor, pressedColor));
-        } else {
-            view.text_date.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+        if (view.text_date != null)
+        {
+            view.text_date.setText(AlarmItemViewHolder.displayAlarmDate(context, item));
+            view.text_date.setVisibility((eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON) ? View.VISIBLE : View.GONE);
+            if (!isSelected && !item.enabled) {
+                view.text_date.setTextColor(disabledColor);
+            } else if (item.enabled){
+                view.text_date.setTextColor(SuntimesUtils.colorStateList(alarmEnabledColor, alarmEnabledColor, pressedColor));
+            } else {
+                view.text_date.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+            }
         }
 
         // location
-        view.text_location.setVisibility((item.event == null && item.timezone == null) ? View.INVISIBLE : View.VISIBLE);
-        AlarmDialog.updateLocationLabel(context, view.text_location, item.location);
+        if (view.text_location != null)
+        {
+            view.text_location.setVisibility((item.event == null && item.timezone == null) ? View.INVISIBLE : View.VISIBLE);
+            AlarmDialog.updateLocationLabel(context, view.text_location, item.location);
 
-        if (!isSelected || item.enabled) {
-            Drawable[] d = SuntimesUtils.tintCompoundDrawables(view.text_location.getCompoundDrawables(), disabledColor);
-            view.text_location.setCompoundDrawables(d[0], d[1], d[2], d[3]);
-            view.text_location.setTextColor(disabledColor);
-        } else {
-            Drawable[] d = SuntimesUtils.tintCompoundDrawables(view.text_location.getCompoundDrawables(), onColor);
-            view.text_location.setCompoundDrawables(d[0], d[1], d[2], d[3]);
-            view.text_location.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+            if (!isSelected || item.enabled) {
+                Drawable[] d = SuntimesUtils.tintCompoundDrawables(view.text_location.getCompoundDrawables(), disabledColor);
+                view.text_location.setCompoundDrawables(d[0], d[1], d[2], d[3]);
+                view.text_location.setTextColor(disabledColor);
+            } else {
+                Drawable[] d = SuntimesUtils.tintCompoundDrawables(view.text_location.getCompoundDrawables(), onColor);
+                view.text_location.setCompoundDrawables(d[0], d[1], d[2], d[3]);
+                view.text_location.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+            }
         }
 
         // ringtone
-        view.text_ringtone.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
-        view.text_ringtone.setText( ringtoneDisplayChip(item, isSelected) );
-
-        // action
-        view.text_action0.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
-        view.text_action0.setText( actionDisplayChip(item, 0, isSelected));
-        view.text_action0.setVisibility( item.actionID0 != null ? View.VISIBLE : View.GONE );
-
-        view.text_action1.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
-        view.text_action1.setText( actionDisplayChip(item, 1, isSelected));
-        view.text_action1.setVisibility( item.actionID1 != null ? View.VISIBLE : View.GONE );
-
-        // vibrate
-        view.check_vibrate.setChecked(item.vibrate);
-        view.check_vibrate.setText( isSelected ? context.getString(R.string.alarmOption_vibrate) : "");
-        if (item.enabled)
-            CompoundButtonCompat.setButtonTintList(view.check_vibrate, SuntimesUtils.colorStateList(alarmEnabledColor, disabledColor, pressedColor));
-        else CompoundButtonCompat.setButtonTintList(view.check_vibrate, SuntimesUtils.colorStateList((isSelected ? alarmEnabledColor : disabledColor), disabledColor, pressedColor));
-
-        // repeating
-        boolean noRepeat = item.repeatingDays == null || item.repeatingDays.isEmpty();
-        String repeatText = AlarmClockItem.repeatsEveryDay(item.repeatingDays)
-                ? context.getString(R.string.alarmOption_repeat_all)
-                : noRepeat
-                ? context.getString(R.string.alarmOption_repeat_none)
-                : AlarmRepeatDialog.getDisplayString(context, item.repeatingDays);
-
-        if (item.repeating && (eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON)) {
-            repeatText = context.getString(R.string.alarmOption_repeat);
+        if (view.text_ringtone != null)
+        {
+            view.text_ringtone.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+            view.text_ringtone.setText( ringtoneDisplayChip(item, isSelected) );
         }
 
-        view.option_repeat.setText( isSelected || !noRepeat ? repeatText : "" );
+        // action
+        if (view.text_action0 != null)
+        {
+            view.text_action0.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+            view.text_action0.setText( actionDisplayChip(item, 0, isSelected));
+            view.text_action0.setVisibility( item.actionID0 != null ? View.VISIBLE : View.GONE );
+        }
 
-        if (!isSelected || item.enabled) {
-            view.option_repeat.setTextColor(disabledColor);
-        } else {
-            view.option_repeat.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+        if (view.text_action1 != null)
+        {
+            view.text_action1.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+            view.text_action1.setText( actionDisplayChip(item, 1, isSelected));
+            view.text_action1.setVisibility( item.actionID1 != null ? View.VISIBLE : View.GONE );
+        }
+
+        // vibrate
+        if (view.check_vibrate != null)
+        {
+            view.check_vibrate.setChecked(item.vibrate);
+            view.check_vibrate.setText( isSelected ? context.getString(R.string.alarmOption_vibrate) : "");
+            if (item.enabled)
+                CompoundButtonCompat.setButtonTintList(view.check_vibrate, SuntimesUtils.colorStateList(alarmEnabledColor, disabledColor, pressedColor));
+            else CompoundButtonCompat.setButtonTintList(view.check_vibrate, SuntimesUtils.colorStateList((isSelected ? alarmEnabledColor : disabledColor), disabledColor, pressedColor));
+        }
+
+        // repeating
+        if (view.text_repeat != null)
+        {
+            boolean noRepeat = item.repeatingDays == null || item.repeatingDays.isEmpty();
+            String repeatText = AlarmClockItem.repeatsEveryDay(item.repeatingDays)
+                    ? context.getString(R.string.alarmOption_repeat_all)
+                    : noRepeat
+                    ? context.getString(R.string.alarmOption_repeat_none)
+                    : AlarmRepeatDialog.getDisplayString(context, item.repeatingDays);
+
+            if (item.repeating && (eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON)) {
+                repeatText = context.getString(R.string.alarmOption_repeat);
+            }
+
+            view.text_repeat.setText( isSelected || !noRepeat ? repeatText : "" );
+
+            if (!isSelected || item.enabled) {
+                view.text_repeat.setTextColor(disabledColor);
+            } else {
+                view.text_repeat.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+            }
         }
 
         // offset (before / after)
-
-        Calendar alarmTime = Calendar.getInstance();
-        alarmTime.setTimeInMillis(item.timestamp);
-        int alarmHour = SuntimesUtils.is24() ? alarmTime.get(Calendar.HOUR_OF_DAY) : alarmTime.get(Calendar.HOUR);
-
-        if (item.offset == 0)
+        if (view.text_offset != null)
         {
-            String offsetDisplay = context.getResources().getQuantityString(R.plurals.offset_at_plural, alarmHour);
-            view.option_offset.setText(offsetDisplay);
+            Calendar alarmTime = Calendar.getInstance();
+            alarmTime.setTimeInMillis(item.timestamp);
+            int alarmHour = SuntimesUtils.is24() ? alarmTime.get(Calendar.HOUR_OF_DAY) : alarmTime.get(Calendar.HOUR);
 
-        } else {
-            boolean isBefore = (item.offset <= 0);
-            String offsetText = utils.timeDeltaLongDisplayString(0, item.offset).getValue();
-            String offsetDisplay = context.getResources().getQuantityString((isBefore ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), alarmHour, offsetText);
-            Spannable offsetSpan = SuntimesUtils.createBoldSpan(null, offsetDisplay, offsetText);
-            view.option_offset.setText(offsetSpan);
-        }
+            if (item.offset == 0)
+            {
+                String offsetDisplay = context.getResources().getQuantityString(R.plurals.offset_at_plural, alarmHour);
+                view.text_offset.setText(offsetDisplay);
 
-        if (!isSelected || item.enabled) {
-            view.option_offset.setTextColor(disabledColor);
-        } else {
-            view.option_offset.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+            } else {
+                boolean isBefore = (item.offset <= 0);
+                String offsetText = utils.timeDeltaLongDisplayString(0, item.offset).getValue();
+                String offsetDisplay = context.getResources().getQuantityString((isBefore ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), alarmHour, offsetText);
+                Spannable offsetSpan = SuntimesUtils.createBoldSpan(null, offsetDisplay, offsetText);
+                view.text_offset.setText(offsetSpan);
+            }
+
+            if (!isSelected || item.enabled) {
+                view.text_offset.setTextColor(disabledColor);
+            } else {
+                view.text_offset.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
+            }
         }
 
         // overflow menu
-        view.overflow.setVisibility(isSelected ? View.VISIBLE : View.INVISIBLE);
+        if (view.overflow != null)
+        {
+            view.overflow.setVisibility(isSelected ? View.VISIBLE : View.INVISIBLE);
+        }
     }
 
     private CharSequence ringtoneDisplayChip(AlarmClockItem item, boolean isSelected)
@@ -888,63 +1002,6 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         };
     }
 
-    private static CharSequence getAlarmLabel(Context context, AlarmClockItem item)
-    {
-        String emptyLabel = ((item.type == AlarmClockItem.AlarmType.ALARM) ? context.getString(R.string.alarmMode_alarm) : context.getString(R.string.alarmMode_notification));
-        return (item.label == null || item.label.isEmpty()) ? emptyLabel : item.label;
-    }
-
-    private static CharSequence getAlarmEvent(Context context, AlarmClockItem item)
-    {
-        if (item.event != null)
-        {
-            return item.event.getLongDisplayString();
-
-        } else if (item.timezone != null) {
-            Calendar adjustedTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(item.timezone, item.location));
-            adjustedTime.set(Calendar.HOUR_OF_DAY, item.hour);
-            adjustedTime.set(Calendar.MINUTE, item.minute);
-            return utils.calendarTimeShortDisplayString(context, adjustedTime) + "\n" + AlarmClockItem.AlarmTimeZone.displayString(item.timezone);
-
-        } else {
-            return context.getString(R.string.alarmOption_solarevent_none);
-        }
-    }
-
-    private static CharSequence getAlarmTime(Context context, AlarmClockItem item)
-    {
-        Calendar alarmTime = Calendar.getInstance();
-        alarmTime.setTimeInMillis(item.timestamp);
-
-        CharSequence alarmDesc;
-        SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, alarmTime, false);
-        if (SuntimesUtils.is24()) {
-            alarmDesc = timeText.getValue();
-
-        } else {
-            String timeString = timeText.getValue() + " " + timeText.getSuffix();
-            alarmDesc = SuntimesUtils.createRelativeSpan(null, timeString, " " + timeText.getSuffix(), 0.40f);
-        }
-        return alarmDesc;
-    }
-
-    private static CharSequence getAlarmDate(Context context, AlarmClockItem item)
-    {
-        Calendar alarmTime = Calendar.getInstance();
-        alarmTime.setTimeInMillis(item.timestamp);
-
-        CharSequence alarmDesc;
-        SuntimesUtils.TimeDisplayText timeText = utils.calendarDateDisplayString(context, alarmTime, true);
-        if (SuntimesUtils.is24()) {
-            alarmDesc = timeText.getValue();
-
-        } else {
-            String timeString = timeText.getValue() + " " + timeText.getSuffix();
-            alarmDesc = SuntimesUtils.createRelativeSpan(null, timeString, " " + timeText.getSuffix(), 0.40f);
-        }
-        return alarmDesc;
-    }
-
     protected void onRequestDialog(final AlarmClockItem item)
     {
         if (adapterListener != null) {
@@ -958,7 +1015,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
      */
     protected void confirmDeleteAlarm(final AlarmClockItem item, final View itemView)
     {
-        String message = context.getString(R.string.deletealarm_dialog_message, getAlarmLabel(context, item), getAlarmTime(context, item), getAlarmEvent(context, item));
+        String message = context.getString(R.string.deletealarm_dialog_message, AlarmItemViewHolder.displayAlarmLabel(context, item), AlarmItemViewHolder.displayAlarmTime(context, item), AlarmItemViewHolder.displayEvent(context, item));
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.deletealarm_dialog_title))
                 .setMessage(message)
@@ -996,7 +1053,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                public void onAnimationEnd(Animation animation) {
                    items.remove(item);
                    notifyDataSetChanged();
-                   CharSequence message = context.getString(R.string.deletealarm_toast_success, getAlarmLabel(context, item), getAlarmTime(context, item), getAlarmEvent(context, item));
+                   CharSequence message = context.getString(R.string.deletealarm_toast_success, AlarmItemViewHolder.displayAlarmLabel(context, item), AlarmItemViewHolder.displayAlarmTime(context, item), AlarmItemViewHolder.displayEvent(context, item));
                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                }
            });
@@ -1018,8 +1075,8 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         public View card;
         public View cardBackdrop;
         public ImageButton typeButton;
-        public TextView text;
-        public TextView text2;
+        public TextView text_label;
+        public TextView text_event;
         public TextView text_date;
         public TextView text_datetime;
         public TextView text_location;
@@ -1027,8 +1084,8 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         public TextView text_action0;
         public TextView text_action1;
         public CheckBox check_vibrate;
-        public TextView option_repeat;
-        public TextView option_offset;
+        public TextView text_repeat;
+        public TextView text_offset;
         public ImageButton overflow;
 
         public SwitchCompat switch_enabled;
@@ -1039,17 +1096,17 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
             card = view.findViewById(R.id.layout_alarmcard);
             cardBackdrop = view.findViewById(R.id.layout_alarmcard0);
             typeButton = (ImageButton) view.findViewById(R.id.type_menu);
-            text = (TextView) view.findViewById(android.R.id.text1);
-            text2 = (TextView) view.findViewById(android.R.id.text2);
+            text_label = (TextView) view.findViewById(android.R.id.text1);
+            text_event = (TextView) view.findViewById(R.id.text_event);
             text_date = (TextView) view.findViewById(R.id.text_date);
             text_datetime = (TextView) view.findViewById(R.id.text_datetime);
-            text_location = (TextView) view.findViewById(R.id.text_location_label);
+            text_location = (TextView) view.findViewById(R.id.text_location);
             text_ringtone = (TextView) view.findViewById(R.id.text_ringtone);
             text_action0 = (TextView) view.findViewById(R.id.text_action0);
             text_action1 = (TextView) view.findViewById(R.id.text_action1);
             check_vibrate = (CheckBox) view.findViewById(R.id.check_vibrate);
-            option_repeat = (TextView) view.findViewById(R.id.option_repeat);
-            option_offset = (TextView) view.findViewById(R.id.option_offset);
+            text_repeat = (TextView) view.findViewById(R.id.text_repeat);
+            text_offset = (TextView) view.findViewById(R.id.text_datetime_offset);
             overflow = (ImageButton) view.findViewById(R.id.overflow_menu);
 
             if (Build.VERSION.SDK_INT >= 14) {

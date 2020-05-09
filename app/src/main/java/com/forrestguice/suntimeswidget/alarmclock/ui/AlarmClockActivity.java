@@ -1526,7 +1526,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
             Context context = contextRef.get();
             if (context != null)
-                return new AlarmItemArrayAdapter(context, items, theme);
+                return new AlarmItemArrayAdapter(context, R.layout.layout_listitem_alarmclock, items, theme);
             else return null;
         }
 
