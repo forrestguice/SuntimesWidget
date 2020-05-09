@@ -87,7 +87,8 @@
             app:layout_constraintBottom_toTopOf="@+id/layout_options"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_header" />
+            app:layout_constraintTop_toBottomOf="@+id/layout_header"
+            android:transitionName="transition_alarmitem" />
 
         <ImageView
             android:id="@android:id/icon1"

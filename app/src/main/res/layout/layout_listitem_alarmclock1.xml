@@ -59,9 +59,59 @@
 
         </LinearLayout>
 
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/layout_main1"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_marginLeft="6dp" android:layout_marginRight="6dp" android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/text_datetime_offset"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+
+                android:textColor="?attr/text_buttonSelector" android:gravity="center"
+                android:textSize="12sp" android:maxLines="1" android:ellipsize="end"
+                tools:text="1h 30m before" android:minEms="5"
+
+                app:layout_constraintStart_toStartOf="@+id/text_datetime"
+                app:layout_constraintEnd_toEndOf="@+id/text_datetime"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_datetime"
+                android:layout_width="0dp" android:layout_height="67dp"
+                android:layout_marginTop="8dp" android:layout_marginBottom="24dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textColor="?attr/text_buttonSelector"
+                android:textSize="52dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SpUsage"
+                tools:text="11:22 am"
+                android:transitionName="transition_alarmitem" />
+
+            <TextView
+                android:id="@+id/text_date" android:visibility="visible"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="June 21, 2019"
+                android:gravity="center_horizontal"
+                android:textSize="12sp" android:maxLines="1" android:ellipsize="end" android:textStyle="bold"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintStart_toStartOf="@id/text_datetime"
+                app:layout_constraintEnd_toEndOf="@+id/text_datetime"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
         <TextView
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
+            android:layout_marginBottom="4dp"
             android:text="Schedule:" />
 
         <LinearLayout style="@style/ChipTray"
@@ -93,7 +143,6 @@
                         tools:text="Nautical Twilight (end)" />
 
                 </FrameLayout>
-
 
             </LinearLayout>
 
@@ -128,60 +177,6 @@
 
         </LinearLayout>
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/layout_main1"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal" android:gravity="center_vertical"
-            android:layout_marginLeft="6dp" android:layout_marginRight="6dp" android:layout_marginTop="30dp">
-
-            <TextView
-                android:id="@+id/text_datetime_offset"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-
-                android:textColor="?attr/text_buttonSelector" android:gravity="center"
-                android:textSize="12sp" android:maxLines="1" android:ellipsize="end"
-                tools:text="1h 30m before" android:minEms="5"
-
-                app:layout_constraintStart_toStartOf="@+id/text_datetime"
-                app:layout_constraintEnd_toEndOf="@+id/text_datetime"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/text_datetime"
-                android:layout_width="0dp" android:layout_height="67dp"
-                android:layout_marginTop="8dp" android:layout_marginBottom="32dp"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="1"
-                android:textColor="?attr/text_buttonSelector"
-                android:textSize="52dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="SpUsage"
-                tools:text="11:22 am" />
-
-            <TextView
-                android:id="@+id/text_date" android:visibility="visible"
-                android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:text="June 21, 2019"
-                android:gravity="center_horizontal"
-                android:textSize="12sp" android:maxLines="1" android:ellipsize="end" android:textStyle="bold"
-                app:layout_constraintHorizontal_bias="1"
-                app:layout_constraintStart_toStartOf="@id/text_datetime"
-                app:layout_constraintEnd_toEndOf="@+id/text_datetime"
-                app:layout_constraintBottom_toBottomOf="parent" />
-
-        </android.support.constraint.ConstraintLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_options"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:gravity="start|center_vertical" android:orientation="vertical"
-            android:layout_marginLeft="4dp" android:layout_marginRight="4dp" android:layout_marginTop="0dp" android:layout_marginBottom="4dp">
 
             <LinearLayout android:id="@+id/option_chips" android:orientation="vertical"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -293,8 +288,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-        </LinearLayout>
 
 
     </LinearLayout>
