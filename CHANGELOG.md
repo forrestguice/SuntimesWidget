@@ -1,6 +1,7 @@
 ### ~
 
-### v0.12.9 (2020-05-16)
+### v0.12.9 (2020-05-10)
+* fixes bug "Widget Title Substitution %lel uses meters only" (#410).
 * fixes NullPointerException when refreshing location (#408).
 
 ### v0.12.8 (2020-04-30)
