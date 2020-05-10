@@ -25,12 +25,15 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -62,32 +65,21 @@ public class AlarmTimeDialog extends DialogFragment
     ArrayAdapter<AlarmClockItem.AlarmTimeZone> modeAdapter;
     private AlarmClockItem.AlarmTimeZone mode = AlarmClockItem.AlarmTimeZone.SYSTEM_TIME;
 
-    /**
-     * @param savedInstanceState a Bundle containing dialog state
-     * @return an Dialog ready to be shown
-     */
+
     @SuppressWarnings({"deprecation","RestrictedApi"})
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
 
         final Activity myParent = getActivity();
-        LayoutInflater inflater = myParent.getLayoutInflater();
-        @SuppressLint("InflateParams")
-        View dialogContent = inflater.inflate(R.layout.layout_dialog_alarmtime, null);
+        //AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
+        //builder.setTitle(myParent.getString(R.string.alarmtime_dialog_title));
 
-        Resources r = getResources();
-        int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, r.getDisplayMetrics());
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(myParent);
-        builder.setView(dialogContent, 0, padding, 0, 0);
-        builder.setTitle(myParent.getString(R.string.alarmtime_dialog_title));
-
-        AlertDialog dialog = builder.create();
+        //AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
 
-        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.alarmtime_dialog_cancel),
+        /*dialog.setButton(AlertDialog.BUTTON_NEGATIVE, myParent.getString(R.string.alarmtime_dialog_cancel),
                 new DialogInterface.OnClickListener()
                 {
                     @Override
@@ -113,14 +105,25 @@ public class AlarmTimeDialog extends DialogFragment
                         }
                     }
                 }
-        );
+        );*/
 
-        initViews(myParent, dialogContent);
-        if (savedInstanceState != null) {
-            loadSettings(savedInstanceState);
+        //dialog.setOnShowListener(onDialogShow);
+        return dialog;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
+    {
+        super.onCreate(savedState);
+
+        @SuppressLint("InflateParams")
+        View dialogContent = inflater.inflate(R.layout.layout_dialog_alarmtime, null);
+        initViews(getActivity(), dialogContent);
+        if (savedState != null) {
+            loadSettings(savedState);
         }
         updateViews(getContext());
-        return dialog;
+        return dialogContent;
     }
 
     @Override
