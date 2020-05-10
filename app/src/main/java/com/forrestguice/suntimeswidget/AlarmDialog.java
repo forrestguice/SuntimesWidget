@@ -77,6 +77,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
     public static final AlarmClockItem.AlarmType DEF_ALARM_TYPE = AlarmClockItem.AlarmType.ALARM;
 
     public static final String KEY_DIALOGTITLE = "alarmdialog_title";
+    public static final String KEY_DIALOGSHOWFRAME = "alarmdialog_showframe";
 
     public static final String PREF_KEY_ALARM_LASTCHOICE = "alarmdialog_lastchoice";
     public static final SolarEvents PREF_DEF_ALARM_LASTCHOICE = SolarEvents.SUNRISE;
@@ -101,6 +102,11 @@ public class AlarmDialog extends BottomSheetDialogFragment
     private String dialogTitle = null;
     public void setDialogTitle( String title ) {
         dialogTitle = title;
+    }
+
+    private boolean showFrame = true;
+    public void setDialogShowFrame(boolean value) {
+        showFrame = value;
     }
 
     /**
@@ -333,6 +339,15 @@ public class AlarmDialog extends BottomSheetDialogFragment
 
         Button btn_accept = (Button) dialogContent.findViewById(R.id.dialog_button_accept);
         btn_accept.setOnClickListener(onDialogAcceptClick);
+
+        if (!showFrame)
+        {
+            View header = dialogContent.findViewById(R.id.dialog_frame_header);
+            header.setVisibility(View.GONE);
+
+            View footer = dialogContent.findViewById(R.id.dialog_frame_footer);
+            footer.setVisibility(View.GONE);
+        }
     }
 
     private int color_textTimeDelta;
@@ -369,6 +384,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
     protected void loadSettings(Bundle bundle)
     {
         dialogTitle = bundle.getString(KEY_DIALOGTITLE);
+        showFrame = bundle.getBoolean(KEY_DIALOGSHOWFRAME);
 
         String choiceString = bundle.getString(PREF_KEY_ALARM_LASTCHOICE);
         if (choiceString != null)
@@ -414,6 +430,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
     protected void saveSettings(Bundle bundle)
     {
         bundle.putString(KEY_DIALOGTITLE, dialogTitle);
+        bundle.putBoolean(KEY_DIALOGSHOWFRAME, showFrame);
         bundle.putString(KEY_ALARM_TYPE, type.name());
         bundle.putString(PREF_KEY_ALARM_LASTCHOICE, choice.name());
     }
