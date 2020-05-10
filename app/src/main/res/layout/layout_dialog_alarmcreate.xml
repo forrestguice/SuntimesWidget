@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2020 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:background="?attr/dialogFrame"
+        android:layout_width="match_parent" android:layout_height="56dp"
+        android:orientation="horizontal" android:gravity="center_vertical|start">
+
+        <ImageButton android:id="@+id/dialog_button_cancel"
+            android:layout_width="56dp" android:layout_height="match_parent"
+            android:src="?attr/icActionBack"
+            style="?attr/actionOverflowButtonStyle" />
+
+        <TextView
+            android:id="@+id/dialog_title"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:gravity="start|left"
+            style="@style/Base.DialogWindowTitle.AppCompat"
+            android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+            android:text="@string/configAction_addAlarm" />
+
+        <ImageButton
+            android:id="@+id/dialog_button_accept"
+            style="?attr/actionOverflowButtonStyle"
+            android:layout_width="56dp" android:layout_height="match_parent"
+            android:contentDescription="@string/schedalarm_dialog_ok"
+            android:scaleType="center"
+            android:src="?attr/icActionAccept" />
+
+    </LinearLayout>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" android:layout_marginBottom="8dp">
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tab_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_action_suntimes_huge"
+            android:text="Tab1" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tab_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="?attr/icActionTime"
+            android:text="Tab2" />
+
+    </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+</LinearLayout>
