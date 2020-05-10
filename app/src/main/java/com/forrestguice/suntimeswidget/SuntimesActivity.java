@@ -495,7 +495,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         return PendingIntent.getBroadcast(context, 0, new Intent(SuntimesActivity.SUNTIMES_APP_UPDATE_FULL), 0);
     }
-    private BroadcastReceiver fullUpdateReceiver = new BroadcastReceiver()
+    protected BroadcastReceiver fullUpdateReceiver = new BroadcastReceiver()
     {
         @Override
         public void onReceive(Context context, Intent intent)
@@ -521,7 +521,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         return PendingIntent.getBroadcast(context, 0, new Intent(SuntimesActivity.SUNTIMES_APP_UPDATE_PARTIAL), 0);
     }
-    private BroadcastReceiver partialUpdateReceiver = new BroadcastReceiver()
+    protected BroadcastReceiver partialUpdateReceiver = new BroadcastReceiver()
     {
         @Override
         public void onReceive(Context context, Intent intent)
@@ -1445,10 +1445,18 @@ public class SuntimesActivity extends AppCompatActivity
 
     protected void invalidateData( Context context )
     {
-        dataset.invalidateCalculation();
-        dataset_moon.invalidateCalculation();
-        dataset_equinox.invalidateCalculation();
-        card_adapter.invalidateData();
+        if (dataset != null) {
+            dataset.invalidateCalculation();
+        }
+        if (dataset_moon != null) {
+            dataset_moon.invalidateCalculation();
+        }
+        if (dataset_equinox != null) {
+            dataset_equinox.invalidateCalculation();
+        }
+        if (card_adapter != null) {
+            card_adapter.invalidateData();
+        }
         updateViews(context);
     }
 

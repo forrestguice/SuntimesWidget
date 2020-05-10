@@ -18,7 +18,12 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.test.espresso.IdlingPolicies;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.espresso.matcher.ViewMatchers;
@@ -582,5 +587,76 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         timeFields.add( allOf(withId(R.id.text_time_sunset_nautical), isDescendantOfA(card), hasSibling(sibling)) );
         timeFields.add( allOf(withId(R.id.text_time_sunset_astro), isDescendantOfA(card), hasSibling(sibling)) );
         return timeFields;
+    }
+
+    @Test
+    public void test_partialUpdateReciever()
+    {
+        // test PendingIntent
+        final SuntimesActivity activity = (SuntimesActivity)activityRule.getActivity();
+        PendingIntent partialUpdateIntent = activity.getPartialUpdateIntent(activity);
+        try {
+            partialUpdateIntent.send();
+
+        } catch (PendingIntent.CanceledException e) {
+            e.printStackTrace();
+            fail("CanceledException!");
+        }
+
+        // test receiver
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                activity.partialUpdateReceiver.onReceive(activity, new Intent(SuntimesActivity.SUNTIMES_APP_UPDATE_PARTIAL));
+                activity.finish();
+                assertTrue("app hasn't crashed", activity.isFinishing());
+            }
+        });
+    }
+
+    @Test
+    public void test_fullUpdateReciever()
+    {
+        // test PendingIntent
+        final SuntimesActivity activity = (SuntimesActivity)activityRule.getActivity();
+        PendingIntent fullUpdateIntent = activity.getFullUpdateIntent(activity);
+        try {
+            fullUpdateIntent.send();
+
+        } catch (PendingIntent.CanceledException e) {
+            e.printStackTrace();
+            fail("CanceledException!");
+        }
+
+        // test receiver
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                activity.fullUpdateReceiver.onReceive(activity, new Intent(SuntimesActivity.SUNTIMES_APP_UPDATE_FULL));
+                activity.finish();
+                assertTrue("app hasn't crashed", activity.isFinishing());
+            }
+        });
+    }
+
+    @Test
+    public void test_issue408()
+    {
+        // test "show moon" enabled
+        SuntimesActivity activity = (SuntimesActivity)activityRule.getActivity();
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(activity).edit();
+        pref.putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, true);
+        pref.commit();
+        activity.finish();
+        activityRule.launchActivity(activity.getIntent());
+        test_fullUpdateReciever();
+
+        // test "show moon" disabled
+        pref.putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, false);
+        pref.commit();
+        activity = (SuntimesActivity)activityRule.getActivity();
+        activity.finish();
+        activityRule.launchActivity(activity.getIntent());
+        test_fullUpdateReciever();
     }
 }
