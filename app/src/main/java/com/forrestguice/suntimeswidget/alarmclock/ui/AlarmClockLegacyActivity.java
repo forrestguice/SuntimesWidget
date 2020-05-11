@@ -1047,9 +1047,10 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             }
 
             AlarmTimeDialog timeDialog = new AlarmTimeDialog();
-            timeDialog.setTime(hour, minute);
-            timeDialog.setTimeZone(item.timezone);
-            timeDialog.set24Hour(SuntimesUtils.is24());
+            timeDialog.getArguments().putInt(AlarmTimeDialog.PREF_KEY_ALARM_TIME_HOUR, hour);
+            timeDialog.getArguments().putInt(AlarmTimeDialog.PREF_KEY_ALARM_TIME_MINUTE, minute);
+            timeDialog.getArguments().putBoolean(AlarmTimeDialog.PREF_KEY_ALARM_TIME_24HR, SuntimesUtils.is24());
+            timeDialog.getArguments().putString(AlarmTimeDialog.PREF_KEY_ALARM_TIME_MODE, item.timezone);
             timeDialog.setOnAcceptedListener(onTimeChanged);
             t_selectedItem = item.rowID;
             timeDialog.show(getSupportFragmentManager(), DIALOGTAG_TIME);
