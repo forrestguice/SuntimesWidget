@@ -65,6 +65,17 @@ public class AlarmTimeDialog extends DialogFragment
         setArguments(defaultArgs);
     }
 
+    public void setTime(int hour, int minute) {
+        getArguments().putInt(PREF_KEY_ALARM_TIME_HOUR, hour);
+        getArguments().putInt(PREF_KEY_ALARM_TIME_MINUTE, minute);
+    }
+    public void set24Hour(boolean value) {
+        getArguments().putBoolean(PREF_KEY_ALARM_TIME_24HR, value);
+    }
+    public void setTimeZone(String value) {
+        getArguments().putString(PREF_KEY_ALARM_TIME_MODE, value);
+    }
+
     @SuppressWarnings({"deprecation","RestrictedApi"})
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
