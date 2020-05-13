@@ -288,16 +288,10 @@ public class AlarmClockActivity extends AppCompatActivity
                 showAddDialog(AlarmClockItem.AlarmType.NOTIFICATION);
 
             } else if (param_action.equals(AlarmNotifications.ACTION_DELETE)) {
-                if (param_data != null)
-                {
-                    //final AlarmClockItem item = adapter.findItem(ContentUris.parseId(param_data));
-                    //if (item != null) {
-                    // TODO
-                    //adapter.onAlarmDeleted(true, item, alarmList.getChildAt(adapter.getPosition(item)));
-                    //selectItem = false;
-                    //}
+                if (param_data != null) {
+                    list.notifyAlarmDeleted(ContentUris.parseId(param_data));
                 } else {
-                    onClearAlarms(true);
+                    list.notifyAlarmsCleared();
                     selectItem = false;
                 }
             }
@@ -409,14 +403,23 @@ public class AlarmClockActivity extends AppCompatActivity
 
             @Override
             public void onAlarmToggled(AlarmClockItem item, boolean enabled) {
-                // TODO
+                if (enabled) {
+                    AlarmNotifications.showTimeUntilToast(AlarmClockActivity.this, list.getView(), item);
+                }
             }
 
             @Override
-            public void onTypeMenu(AlarmClockItem item, View v) {}
+            public void onAlarmAdded(AlarmClockItem item) {
+                showAlarmItemDialog(item, false);
+            }
 
             @Override
-            public void onOverflowMenu(AlarmClockItem item, View v) {}
+            public void onAlarmDeleted(long rowID) {}
+
+            @Override
+            public void onAlarmsCleared() {
+                Toast.makeText(AlarmClockActivity.this, getString(R.string.clearalarms_toast_success), Toast.LENGTH_LONG).show();
+            }
         });
 
         collapseFabMenu();
@@ -425,7 +428,7 @@ public class AlarmClockActivity extends AppCompatActivity
     private View.OnClickListener onEmptyViewClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            showAbout();
+            showHelp();
         }
     };
 
@@ -453,8 +456,6 @@ public class AlarmClockActivity extends AppCompatActivity
             FragmentManager fragments = getSupportFragmentManager();
             AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
             AlarmClockItem item = createAlarm(dialog, AlarmClockItem.AlarmType.ALARM, true);
-            list.reloadAdapter();
-            //showAlarmItemDialog(item, true);
         }
     };
     private DialogInterface.OnClickListener onAddNotificationAccepted = new DialogInterface.OnClickListener() {
@@ -464,8 +465,6 @@ public class AlarmClockActivity extends AppCompatActivity
             FragmentManager fragments = getSupportFragmentManager();
             AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
             AlarmClockItem item = createAlarm(dialog, AlarmClockItem.AlarmType.NOTIFICATION, true);
-            list.reloadAdapter();
-            //showAlarmItemDialog(item, true);
         }
     };
 
@@ -485,7 +484,7 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             FragmentManager fragments = getSupportFragmentManager();
             AlarmItemDialog itemDialog = (AlarmItemDialog)fragments.findFragmentByTag(DIALOGTAG_ITEM);
-            AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, (itemDialog.getOriginal() == null), true);
+            AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, (itemDialog.getOriginal() == null), false);
             task.setTaskListener(onUpdateItem);
             task.execute(itemDialog.getItem());
         }
@@ -790,7 +789,7 @@ public class AlarmClockActivity extends AppCompatActivity
         switch (item.getItemId())
         {
             case R.id.action_clear:
-                confirmClearAlarms();
+                AlarmListDialog.confirmClearAlarms(AlarmClockActivity.this);
                 return true;
 
             case R.id.action_settings:
@@ -866,41 +865,6 @@ public class AlarmClockActivity extends AppCompatActivity
             toggleFabMenu();
         }
     };
-
-
-    /**
-     * confirmClearAlarms
-     */
-    protected void confirmClearAlarms()
-    {
-        final Context context = this;
-        AlertDialog.Builder confirm = new AlertDialog.Builder(context)
-                .setTitle(context.getString(R.string.clearalarms_dialog_title))
-                .setMessage(context.getString(R.string.clearalarms_dialog_message))
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(context.getString(R.string.clearalarms_dialog_ok), new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        clearAlarms(context);
-                    }
-                })
-                .setNegativeButton(context.getString(R.string.clearalarms_dialog_cancel), null);
-        confirm.show();
-    }
-
-    protected void clearAlarms(final Context context)
-    {
-        Intent clearIntent = AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DELETE, null);
-        context.sendBroadcast(clearIntent);
-    }
-
-    protected void onClearAlarms(boolean result)
-    {
-        if (result) {
-            Toast.makeText(this, getString(R.string.clearalarms_toast_success), Toast.LENGTH_LONG).show();
-            list.reloadAdapter();
-        }
-    }
 
     /**
      * showSettings
