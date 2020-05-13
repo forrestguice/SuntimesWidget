@@ -138,8 +138,8 @@
         <item name="text_disabledColor">@color/text_disabled_dark</item>
 
         <item name="alarmColorEnabled">@color/alarm_enabled_dark</item>
-        <item name="alarmCardEnabled">@drawable/card_alarmitem_enabled_dark</item>
-        <item name="alarmCardDisabled">@drawable/card_alarmitem_disabled_dark</item>
+        <item name="alarmCardEnabled">@drawable/card_alarmitem_enabled_dark0</item>
+        <item name="alarmCardDisabled">@drawable/card_alarmitem_disabled_dark0</item>
         <item name="gridItemSelected">@color/grid_selected_dark</item>
 
         <item name="buttonPressColor">@color/btn_tint_pressed_dark</item>

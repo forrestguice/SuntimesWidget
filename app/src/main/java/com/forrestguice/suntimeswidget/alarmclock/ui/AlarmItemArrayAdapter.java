@@ -577,9 +577,9 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
             }
         }
 
-        LayerDrawable alarmEnabledLayers = (LayerDrawable)alarmEnabledBG;
-        GradientDrawable alarmEnabledLayers0 = (GradientDrawable)alarmEnabledLayers.getDrawable(0);
-        alarmEnabledLayers0.setStroke((int)(3 * context.getResources().getDisplayMetrics().density), alarmEnabledColor);
+        //LayerDrawable alarmEnabledLayers = (LayerDrawable)alarmEnabledBG;
+        //GradientDrawable alarmEnabledLayers0 = (GradientDrawable)alarmEnabledLayers.getDrawable(0);
+        //alarmEnabledLayers0.setStroke((int)(3 * context.getResources().getDisplayMetrics().density), alarmEnabledColor);
         if (Build.VERSION.SDK_INT >= 16) {
             view.card.setBackground(item.enabled ? alarmEnabledBG : alarmDisabledBG);
         } else {
