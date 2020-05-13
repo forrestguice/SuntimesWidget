@@ -76,7 +76,7 @@
             tools:text="11:22 am"
             android:layout_marginTop="14dp"
             android:layout_marginStart="12dp" android:layout_marginLeft="12dp"
-            android:gravity="start" android:ellipsize="end" android:maxLines="1"
+            android:gravity="center" android:ellipsize="end" android:maxLines="1"
             android:textSize="52dp" tools:ignore="SpUsage"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/layout_options"
@@ -105,21 +105,20 @@
             android:layout_width="0dp" android:layout_height="wrap_content"
             android:textStyle="bold"
             android:maxLines="2" android:ellipsize="end"
-            android:layout_marginStart="6dp" android:layout_marginLeft="6dp" android:layout_marginTop="8dp"
+            android:layout_marginStart="6dp" android:layout_marginLeft="6dp"
             android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
             android:paddingRight="8dp" android:paddingEnd="8dp"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/text_location"
-            app:layout_constraintTop_toBottomOf="@+id/layout_header"
-            app:layout_constraintBottom_toTopOf="@+id/text_location"
+            app:layout_constraintTop_toTopOf="@+id/text_datetime_offset"
             tools:text="Nautical Twilight (end)" />
 
         <TextView
             android:id="@+id/text_location"
             android:layout_width="135dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="0dp"
             android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
             android:drawableLeft="?attr/icActionPlace"
             android:drawableStart="?attr/icActionPlace"
@@ -130,13 +129,13 @@
             app:layout_constraintHorizontal_bias="1"
             app:layout_constraintStart_toEndOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/text_event"
-            app:layout_constraintBottom_toTopOf="@+id/text_date"
+
             />
 
         <TextView
             android:id="@+id/text_datetime_offset"
             android:layout_width="0dp" android:layout_height="wrap_content"
-            android:layout_marginTop="14dp" android:gravity="center"
+            android:layout_marginTop="16dp" android:gravity="center"
             android:textSize="12sp" android:maxLines="1" android:ellipsize="end"
             tools:text="1h 30m before" android:minEms="5"
 
@@ -153,7 +152,7 @@
             android:layout_marginTop="8dp"
             android:gravity="start"
             android:textSize="12sp" android:maxLines="1" android:ellipsize="end" android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/layout_options"
+
             app:layout_constraintStart_toStartOf="@+id/text_event"
             app:layout_constraintEnd_toEndOf="@+id/text_location"
             app:layout_constraintTop_toBottomOf="@+id/text_location" />
@@ -167,31 +166,21 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_date"
+            app:layout_constraintTop_toBottomOf="@+id/text_datetime"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginLeft="4dp" android:layout_marginRight="4dp" android:layout_marginTop="0dp" android:layout_marginBottom="4dp">
+            android:layout_marginTop="8dp" android:layout_marginBottom="8dp">
 
             <TextView
                 android:id="@+id/text_repeat"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
+                android:layout_marginStart="0dp" android:layout_marginLeft="0dp"
                 android:text="@string/alarmOption_repeat"
                 tools:text="Sun, Mon, Tue, Wed, Thu, Fri"
                 android:maxLines="2" android:layout_weight="1"
-                android:gravity="start"
-                android:scaleX="0.85" android:scaleY="0.85"
-                app:layout_constraintStart_toEndOf="@+id/text_event" />
-
-            <TextView
-                android:id="@+id/text_ringtone"
-                android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp" android:layout_marginStart="4dp"
-                android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
-                android:layout_weight="1" android:gravity="center_vertical|end"
-                tools:text="very very long name"
-                android:maxLines="2" android:ellipsize="end"
-                android:textStyle="bold" />
+                android:gravity="start" android:layout_gravity="start"
+                android:scaleX="0.85" android:scaleY="0.85" />
 
             <TextView
                 android:id="@+id/text_action0"
@@ -210,15 +199,25 @@
                 tools:text="action" android:maxLines="2" android:ellipsize="end"
                 android:textStyle="bold" />
 
-            <CheckBox
-                android:id="@+id/check_vibrate" android:enabled="false"
+            <TextView
+                android:id="@+id/text_vibrate"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="2dp"
-                android:gravity="center_vertical"
-                android:scaleX="0.85" android:scaleY="0.85"
-                android:text="@string/alarmOption_vibrate" />
+                android:layout_marginLeft="4dp" android:layout_marginStart="4dp"
+                android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+                android:gravity="center_vertical|end"
+                tools:text="vibrate"
+                android:maxLines="2" android:ellipsize="end"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_ringtone"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp" android:layout_marginStart="4dp"
+                android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+                android:gravity="center_vertical|end"
+                tools:text="ringtone"
+                android:maxLines="2" android:ellipsize="end"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

@@ -18,17 +18,15 @@
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.annotation.SuppressLint;
-import android.content.ContentProviderClient;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.LayerDrawable;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -42,29 +40,28 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.graphics.ColorUtils;
+import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Spannable;
+import android.text.style.ImageSpan;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.forrestguice.suntimeswidget.AlarmDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
@@ -692,6 +689,7 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
         public TextView text_ringtone;
         public TextView text_action0;
         public TextView text_action1;
+        public TextView text_vibrate;
         public CheckBox check_vibrate;
         public TextView text_repeat;
         public TextView text_offset;
@@ -699,13 +697,20 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
         public SwitchCompat switch_enabled;
         public CheckBox check_enabled;
 
-        public int r_iconAlarm = R.drawable.ic_action_alarms;
-        public int r_iconNotification = R.drawable.ic_action_notification;
-        public int r_backgroundEnabled = R.drawable.card_alarmitem_enabled_dark1;
-        public int r_backgroundDisabled = R.drawable.card_alarmitem_disabled_dark1;
+        public int res_iconAlarm = R.drawable.ic_action_alarms;
+        public int res_iconNotification = R.drawable.ic_action_notification;
+        public int res_iconSoundOn = R.drawable.ic_action_soundenabled;
+        public int res_iconSoundOff = R.drawable.ic_action_sounddisabled;
+        public int res_iconVibrate = R.drawable.ic_action_vibration;
+        public int res_iconAction = R.drawable.ic_action_extension;
+        public int res_backgroundOn = R.drawable.card_alarmitem_enabled_dark1;
+        public int res_backgroundOff = R.drawable.card_alarmitem_disabled_dark1;
 
-        public int c_selected = Color.CYAN;
-        public int c_notselected = Color.TRANSPARENT;
+        public int color_on = Color.CYAN;
+        public int color_off = Color.GRAY;
+        public int color_press = Color.MAGENTA;
+        public int color_selected = Color.CYAN;
+        public int color_notselected = Color.TRANSPARENT;
 
         public AlarmListDialogItem(View view)
         {
@@ -722,6 +727,7 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
             text_ringtone = (TextView) view.findViewById(R.id.text_ringtone);
             text_action0 = (TextView) view.findViewById(R.id.text_action0);
             text_action1 = (TextView) view.findViewById(R.id.text_action1);
+            text_vibrate = (TextView) view.findViewById(R.id.text_vibrate);
             check_vibrate = (CheckBox) view.findViewById(R.id.check_vibrate);
             text_repeat = (TextView) view.findViewById(R.id.text_repeat);
             text_offset = (TextView) view.findViewById(R.id.text_datetime_offset);
@@ -737,14 +743,25 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
         @SuppressLint("ResourceType")
         private void themeViews(Context context)
         {
-            int[] attrs = { R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.gridItemSelected,
-                            R.attr.alarmCardEnabled, R.attr.alarmCardDisabled };
+            int[] attrs = { R.attr.icActionAlarm, R.attr.icActionNotification,
+                            R.attr.icActionSoundEnabled, R.attr.icActionSoundDisabled,
+                            R.attr.icActionExtension, R.attr.icActionVibrationEnabled, R.attr.gridItemSelected,
+                            R.attr.alarmCardEnabled, R.attr.alarmCardDisabled,
+                            R.attr.alarmColorEnabled, android.R.attr.textColorPrimary,
+                            R.attr.buttonPressColor };
             TypedArray a = context.obtainStyledAttributes(attrs);
-            r_iconAlarm = a.getResourceId(0, R.drawable.ic_action_alarms);
-            r_iconNotification = a.getResourceId(1, R.drawable.ic_action_notification);
-            c_selected = ContextCompat.getColor(context, a.getResourceId(2, R.color.grid_selected_dark));
-            r_backgroundEnabled = a.getResourceId(3, R.drawable.card_alarmitem_enabled_dark1);
-            r_backgroundDisabled = a.getResourceId(4, R.drawable.card_alarmitem_disabled_dark1);
+            res_iconAlarm = a.getResourceId(0, R.drawable.ic_action_alarms);
+            res_iconNotification = a.getResourceId(1, R.drawable.ic_action_notification);
+            res_iconSoundOn = a.getResourceId(2, R.drawable.ic_action_soundenabled);
+            res_iconSoundOff = a.getResourceId(3, R.drawable.ic_action_sounddisabled);
+            res_iconAction = a.getResourceId(4, R.drawable.ic_action_extension);
+            res_iconVibrate = a.getResourceId(5, R.drawable.ic_action_extension);
+            color_selected = ContextCompat.getColor(context, a.getResourceId(6, R.color.grid_selected_dark));
+            res_backgroundOn = a.getResourceId(7, R.drawable.card_alarmitem_enabled_dark1);
+            res_backgroundOff = a.getResourceId(8, R.drawable.card_alarmitem_disabled_dark1);
+            color_on = ContextCompat.getColor(context, a.getResourceId(9, R.color.alarm_enabled_dark));
+            color_off = ContextCompat.getColor(context, a.getResourceId(10, android.R.color.primary_text_dark));
+            color_press = ContextCompat.getColor(context, a.getResourceId(11, R.color.btn_tint_pressed_dark));
             a.recycle();
         }
 
@@ -760,77 +777,99 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
             int eventType = item.event == null ? -1 : item.event.getType();
 
             // background
-            view.cardBackdrop.setBackgroundColor( isSelected ? ColorUtils.setAlphaComponent(c_selected, 170) : c_notselected );  // 66% alpha
+            view.cardBackdrop.setBackgroundColor( isSelected ? ColorUtils.setAlphaComponent(color_selected, 170) : color_notselected);  // 66% alpha
             if (Build.VERSION.SDK_INT >= 16) {
-                view.card.setBackground(item.enabled ? ContextCompat.getDrawable(context, r_backgroundEnabled) : ContextCompat.getDrawable(context, r_backgroundDisabled));
+                view.card.setBackground(item.enabled ? ContextCompat.getDrawable(context, res_backgroundOn) : ContextCompat.getDrawable(context, res_backgroundOff));
             } else {
-                view.card.setBackgroundDrawable(item.enabled ? ContextCompat.getDrawable(context, r_backgroundEnabled) : ContextCompat.getDrawable(context, r_backgroundDisabled));
+                view.card.setBackgroundDrawable(item.enabled ? ContextCompat.getDrawable(context, res_backgroundOn) : ContextCompat.getDrawable(context, res_backgroundOff));
             }
 
             // enabled / disabled
-            if (view.switch_enabled != null)
-            {
-                if (Build.VERSION.SDK_INT >= 14) {
+            if (Build.VERSION.SDK_INT >= 14) {
+                if (view.switch_enabled != null) {
                     view.switch_enabled.setChecked(item.enabled);
-                } else {
+                }
+            } else {
+                if (view.check_enabled != null) {
                     view.check_enabled.setChecked(item.enabled);
                 }
             }
 
             // type button
             if (view.typeButton != null) {
-                view.typeButton.setImageDrawable(ContextCompat.getDrawable(context, (item.type == AlarmClockItem.AlarmType.ALARM ? r_iconAlarm : r_iconNotification)));
+                view.typeButton.setImageDrawable(ContextCompat.getDrawable(context, (item.type == AlarmClockItem.AlarmType.ALARM ? res_iconAlarm : res_iconNotification)));
                 view.typeButton.setContentDescription(item.type.getDisplayString());
+
+                ImageViewCompat.setImageTintList(view.typeButton, SuntimesUtils.colorStateList(
+                        (!isSelected && !item.enabled ? color_off : (item.enabled ? color_on : color_off)),
+                        color_off,
+                        (!isSelected && !item.enabled ? color_off : color_press)
+                ));
             }
 
             // label
             if (view.text_label != null) {
                 view.text_label.setText(AlarmItemViewHolder.displayAlarmLabel(context, item));
+                view.text_label.setTextColor(item.enabled ? color_on : color_off);
             }
 
             // event
             if (view.text_event != null) {
                 view.text_event.setText(AlarmItemViewHolder.displayEvent(context, item));
+                view.text_event.setTextColor(item.enabled ? color_on : color_off);
             }
 
             // time
             if (view.text_datetime != null) {
                 view.text_datetime.setText(AlarmItemViewHolder.displayAlarmTime(context, item));
+                view.text_datetime.setTextColor(item.enabled ? color_on : color_off);
             }
 
             // date
             if (view.text_date != null) {
                 view.text_date.setText(AlarmItemViewHolder.displayAlarmDate(context, item));
                 view.text_date.setVisibility((eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON) ? View.VISIBLE : View.GONE);
+                view.text_date.setTextColor(item.enabled ? color_on : color_off);
             }
 
             // location
             if (view.text_location != null) {
                 view.text_location.setVisibility((item.event == null && item.timezone == null) ? View.INVISIBLE : View.VISIBLE);
                 view.text_location.setText(item.location.getLabel());
-                //AlarmDialog.updateLocationLabel(context, view.text_location, item.location);
+                view.text_location.setTextColor(item.enabled ? color_on : color_off);
+
+                Drawable[] d = SuntimesUtils.tintCompoundDrawables(view.text_location.getCompoundDrawables(), (item.enabled ? color_on : color_off));
+                view.text_location.setCompoundDrawables(d[0], d[1], d[2], d[3]);
             }
 
             // ringtone
-            //if (view.text_ringtone != null) {
-                //view.text_ringtone.setText( ringtoneDisplayChip(item, isSelected) );
-            //}
+            if (view.text_ringtone != null) {
+                view.text_ringtone.setText( ringtoneDisplayChip(context, item, isSelected) );
+                view.text_ringtone.setTextColor(item.enabled ? color_on : color_off);
+            }
 
             // action
-            //if (view.text_action0 != null) {
-                //view.text_action0.setText( actionDisplayChip(item, 0, isSelected));
-                //view.text_action0.setVisibility( item.actionID0 != null ? View.VISIBLE : View.GONE );
-            //}
+            if (view.text_action0 != null) {
+                view.text_action0.setText(actionDisplayChip(context, item, 0, isSelected));
+                view.text_action0.setVisibility( item.actionID0 != null ? View.VISIBLE : View.GONE );
+                view.text_action0.setTextColor(item.enabled ? color_on : color_off);
+            }
 
-            //if (view.text_action1 != null) {
-                //view.text_action1.setText( actionDisplayChip(item, 1, isSelected));
-                //view.text_action1.setVisibility( item.actionID1 != null ? View.VISIBLE : View.GONE );
-            //}
+            if (view.text_action1 != null) {
+                view.text_action1.setText(actionDisplayChip(context, item, 1, isSelected));
+                view.text_action1.setVisibility( item.actionID1 != null ? View.VISIBLE : View.GONE );
+                view.text_action1.setTextColor(item.enabled ? color_on : color_off);
+            }
 
             // vibrate
             if (view.check_vibrate != null) {
                 view.check_vibrate.setChecked(item.vibrate);
-                view.check_vibrate.setText( isSelected ? context.getString(R.string.alarmOption_vibrate) : "");
+                view.check_vibrate.setTextColor(item.enabled ? color_on : color_off);
+            }
+            if (view.text_vibrate != null) {
+                view.text_vibrate.setText(vibrateDisplayChip(context, item, isSelected));
+                view.text_vibrate.setVisibility(item.vibrate ? View.VISIBLE : View.GONE);
+                view.text_vibrate.setTextColor(item.enabled ? color_on : color_off);
             }
 
             // repeating
@@ -848,6 +887,7 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
                 }
 
                 view.text_repeat.setText(repeatText);
+                view.text_repeat.setTextColor(item.enabled ? color_on : color_off);
             }
 
             // offset (before / after)
@@ -869,12 +909,48 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
                     Spannable offsetSpan = SuntimesUtils.createBoldSpan(null, offsetDisplay, offsetText);
                     view.text_offset.setText(offsetSpan);
                 }
+                view.text_offset.setTextColor(item.enabled ? color_on : color_off);
             }
 
             // overflow menu
             if (view.overflow != null) {
                 view.overflow.setVisibility(isSelected ? View.VISIBLE : View.INVISIBLE);
             }
+        }
+
+        private CharSequence ringtoneDisplayChip(Context context, AlarmClockItem item, boolean isSelected)
+        {
+            int iconDimen = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,20, context.getResources().getDisplayMetrics());
+            int iconID = item.ringtoneName != null ? res_iconSoundOn : res_iconSoundOff;
+            ImageSpan icon = isSelected || item.enabled
+                    ? SuntimesUtils.createImageSpan(context, iconID, iconDimen, iconDimen, item.enabled ? color_on : 0)
+                    : SuntimesUtils.createImageSpan(context, iconID, iconDimen, iconDimen, color_off, PorterDuff.Mode.MULTIPLY);
+            return SuntimesUtils.createSpan(context, "[icon]", "[icon]", icon);
+        }
+
+        private CharSequence vibrateDisplayChip(Context context, AlarmClockItem item, boolean isSelected)
+        {
+            if (item.vibrate)
+            {
+                int iconID = res_iconVibrate;
+                int iconDimen = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,20, context.getResources().getDisplayMetrics());
+                ImageSpan ringtonIcon = isSelected || item.enabled
+                        ? SuntimesUtils.createImageSpan(context, iconID, iconDimen, iconDimen, item.enabled ? color_on : 0)
+                        : SuntimesUtils.createImageSpan(context, iconID, iconDimen, iconDimen, color_off, PorterDuff.Mode.MULTIPLY);
+                return SuntimesUtils.createSpan(context, "[icon]", "[icon]", ringtonIcon);
+            } else {
+                return "";
+            }
+        }
+
+
+        private CharSequence actionDisplayChip(Context context, AlarmClockItem item, int actionNum, boolean isSelected)
+        {
+            int iconDimen = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,20, context.getResources().getDisplayMetrics());
+            ImageSpan icon = (isSelected || item.enabled)
+                    ? SuntimesUtils.createImageSpan(context, res_iconAction, iconDimen, iconDimen, item.enabled ? color_on : 0)
+                    : SuntimesUtils.createImageSpan(context, res_iconAction, iconDimen, iconDimen, color_off, PorterDuff.Mode.MULTIPLY);
+            return SuntimesUtils.createSpan(context, "[icon]", "[icon]", icon);
         }
     }
 
