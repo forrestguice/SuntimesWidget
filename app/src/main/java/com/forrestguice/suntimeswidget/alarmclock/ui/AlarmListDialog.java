@@ -18,6 +18,7 @@
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.annotation.SuppressLint;
+import android.content.ContentProviderClient;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -26,6 +27,8 @@ import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -57,6 +60,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -86,6 +90,7 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
     protected View emptyView;
     protected RecyclerView list;
     protected AlarmListDialogAdapter adapter;
+    protected ProgressBar progress;
 
     @Override
     public void onCreate(Bundle savedState) {
@@ -105,12 +110,17 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));
         View content = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_alarmlist, parent, false);
 
+        progress = (ProgressBar) content.findViewById(R.id.progress);
+        progress.setVisibility(View.VISIBLE);
+
         emptyView = content.findViewById(android.R.id.empty);
         emptyView.setOnClickListener(onEmptyViewClick);
+        emptyView.setVisibility(View.GONE);
 
         list = (RecyclerView) content.findViewById(R.id.recyclerview);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(adapter = new AlarmListDialogAdapter(getActivity()));
+        list.setVisibility(View.GONE);
 
         adapter.setAdapterListener(adapterListener);
 
@@ -175,75 +185,44 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
         reloadAdapter();
     }
 
-    public void notifyAlarmsCleared() {
+    public void notifyAlarmsCleared()
+    {
+        if (listener != null) {
+            listener.onAlarmsCleared();
+        }
         reloadAdapter();
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public void reloadAdapter() {
-        getLoaderManager().restartLoader(0, null, this);
-    }
-
-    @Override
-    public Loader<List<AlarmClockItem>> onCreateLoader(int id, Bundle args) {
-        Log.d("DEBUG", "onLoaderCreate");
-        return new AlarmListDialogLoader(getActivity());
-    }
-
-    @Override
-    public void onLoadFinished(Loader<List<AlarmClockItem>> loader, List<AlarmClockItem> data) {
-        Log.d("DEBUG", "onLoadFinished: " + data.size());
-        adapter.setItems(data);
-        emptyView.setVisibility(data.size() > 0 ? View.GONE : View.VISIBLE);
-        list.setVisibility(data.size() > 0 ? View.VISIBLE : View.GONE);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<List<AlarmClockItem>> loader) {
-        Log.d("DEBUG", "onLoadReset");
-        adapter.clearItems();
-        emptyView.setVisibility(View.VISIBLE);
-        list.setVisibility(View.GONE);
-    }
-
-    /**
-     * Loader
-     */
-    public static class AlarmListDialogLoader extends AsyncTaskLoader<List<AlarmClockItem>>
+    public static void confirmDeleteAlarm(final Context context, final AlarmClockItem item)
     {
-        public AlarmListDialogLoader(Context context) {
-            super(context);
-        }
+        String message = context.getString(R.string.deletealarm_dialog_message, AlarmItemViewHolder.displayAlarmLabel(context, item), AlarmItemViewHolder.displayAlarmTime(context, item), AlarmItemViewHolder.displayEvent(context, item));
+        AlertDialog.Builder confirm = new AlertDialog.Builder(context)
+                .setTitle(context.getString(R.string.deletealarm_dialog_title))
+                .setMessage(message).setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(context.getString(R.string.deletealarm_dialog_ok), new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DELETE, item.getUri()));
+                    }
+                })
+                .setNegativeButton(context.getString(R.string.deletealarm_dialog_cancel), null);
+        confirm.show();
+    }
 
-        @Override
-        protected void onStartLoading() {
-            forceLoad();
-        }
-
-        @Override
-        public List<AlarmClockItem> loadInBackground()
-        {
-            ArrayList<AlarmClockItem> items = new ArrayList<>();
-            AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(getContext().getApplicationContext());
-            db.open();
-            Cursor cursor = db.getAllAlarms(0, true);
-            while (!cursor.isAfterLast())
-            {
-                ContentValues entryValues = new ContentValues();
-                DatabaseUtils.cursorRowToContentValues(cursor, entryValues);
-
-                AlarmClockItem item = new AlarmClockItem(getContext(), entryValues);
-                if (!item.enabled) {
-                    AlarmNotifications.updateAlarmTime(getContext(), item);
-                }
-                items.add(item);
-                cursor.moveToNext();
-            }
-            db.close();
-            return items;
-        }
+    public static void confirmClearAlarms(final Context context)
+    {
+        AlertDialog.Builder confirm = new AlertDialog.Builder(context)
+                .setTitle(context.getString(R.string.clearalarms_dialog_title))
+                .setMessage(context.getString(R.string.clearalarms_dialog_message))
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(context.getString(R.string.clearalarms_dialog_ok), new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DELETE, null));
+                    }
+                })
+                .setNegativeButton(context.getString(R.string.clearalarms_dialog_cancel), null);
+        confirm.show();
     }
 
     public AlarmClockItem createAlarm(final Context context, AlarmClockItem.AlarmType type, String label, SolarEvents event, Location location, int hour, int minute, String timezone, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays, boolean addToDatabase)
@@ -302,6 +281,78 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public void reloadAdapter() {
+        getLoaderManager().restartLoader(0, null, this);
+    }
+
+    @Override
+    public Loader<List<AlarmClockItem>> onCreateLoader(int id, Bundle args) {
+        Log.d("DEBUG", "onLoaderCreate");
+        emptyView.setVisibility(View.GONE);
+        list.setVisibility(View.GONE);
+        progress.setVisibility(View.VISIBLE);
+        return new AlarmListDialogLoader(getActivity());
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<AlarmClockItem>> loader, List<AlarmClockItem> data) {
+        Log.d("DEBUG", "onLoadFinished: " + data.size());
+        adapter.setItems(data);
+        emptyView.setVisibility(data.size() > 0 ? View.GONE : View.VISIBLE);
+        list.setVisibility(data.size() > 0 ? View.VISIBLE : View.GONE);
+        progress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<AlarmClockItem>> loader) {
+        Log.d("DEBUG", "onLoadReset");
+        adapter.clearItems();
+        emptyView.setVisibility(View.GONE);
+        list.setVisibility(View.GONE);
+        progress.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Loader
+     */
+    public static class AlarmListDialogLoader extends AsyncTaskLoader<List<AlarmClockItem>>
+    {
+        public AlarmListDialogLoader(Context context) {
+            super(context);
+        }
+
+        @Override
+        protected void onStartLoading() {
+            forceLoad();
+        }
+
+        @Override
+        public List<AlarmClockItem> loadInBackground()
+        {
+            ArrayList<AlarmClockItem> items = new ArrayList<>();
+            AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(getContext().getApplicationContext());
+            db.open();
+            Cursor cursor = db.getAllAlarms(0, true);
+            while (!cursor.isAfterLast())
+            {
+                ContentValues entryValues = new ContentValues();
+                DatabaseUtils.cursorRowToContentValues(cursor, entryValues);
+
+                AlarmClockItem item = new AlarmClockItem(getContext(), entryValues);
+                if (!item.enabled) {
+                    AlarmNotifications.updateAlarmTime(getContext(), item);
+                }
+                items.add(item);
+                cursor.moveToNext();
+            }
+            db.close();
+            return items;
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * RecyclerView.Adapter
      */
@@ -314,13 +365,6 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
         public AlarmListDialogAdapter(Context context) {
             super();
             contextRef = new WeakReference<>(context);
-        }
-
-        public AlarmListDialogAdapter(Context context, List<AlarmClockItem> values)
-        {
-            super();
-            contextRef = new WeakReference<>(context);
-            items.addAll(values);
         }
 
         public void setSelectedRowID(long rowID) {
@@ -368,7 +412,7 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
         public AlarmListDialogItem onCreateViewHolder(ViewGroup parent, int viewType)
         {
             LayoutInflater layout = LayoutInflater.from(parent.getContext());
-            View view = layout.inflate(R.layout.layout_listitem_alarmclock, parent, false);
+            View view = layout.inflate(R.layout.layout_listitem_alarmclock2, parent, false);
             return new AlarmListDialogItem(view);
         }
 
@@ -377,6 +421,8 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
         {
             AlarmClockItem item = items.get(position);
             holder.isSelected = (item.rowID == selectedRowID);
+
+            detachClickListeners(holder);
             holder.bindData(contextRef.get(), items.get(position));
             attachClickListeners(holder, position);
         }
@@ -388,12 +434,46 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
             holder.isSelected = false;
         }
 
-        private void attachClickListeners(@NonNull final AlarmListDialogItem holder, final int position) {
-            holder.card.setOnClickListener(itemClickListener(position));
-            holder.card.setOnLongClickListener(itemLongClickListener(position));
-            holder.switch_enabled.setOnCheckedChangeListener(alarmEnabledListener(position));
-            holder.overflow.setOnClickListener(overflowMenuListener(position));
-            holder.typeButton.setOnClickListener(typeMenuListener(position, holder.typeButton));
+        private void attachClickListeners(@NonNull final AlarmListDialogItem holder, final int position)
+        {
+            if (holder.card != null) {
+                holder.card.setOnClickListener(itemClickListener(position));
+                //holder.card.setOnLongClickListener(itemLongClickListener(position));
+            }
+            if (holder.overflow != null) {
+                holder.overflow.setOnClickListener(overflowMenuListener(position));
+            }
+            if (holder.typeButton != null) {
+                holder.typeButton.setOnClickListener(typeMenuListener(position, holder.typeButton));
+            }
+
+            if (Build.VERSION.SDK_INT >= 14) {
+                if (holder.switch_enabled != null) {
+                    holder.switch_enabled.setOnCheckedChangeListener(alarmEnabledListener(position));
+                }
+            } else {
+                if (holder.check_enabled != null) {
+                    holder.check_enabled.setOnCheckedChangeListener(alarmEnabledListener(position));
+                }
+            }
+        }
+
+        private void detachClickListeners(@NonNull AlarmListDialogItem holder)
+        {
+            holder.card.setOnClickListener(null);
+            holder.card.setOnLongClickListener(null);
+            holder.overflow.setOnClickListener(null);
+            holder.typeButton.setOnClickListener(null);
+
+            if (Build.VERSION.SDK_INT >= 14) {
+                if (holder.switch_enabled != null) {
+                    holder.switch_enabled.setOnCheckedChangeListener(null);
+                }
+            } else {
+                if (holder.check_enabled != null) {
+                    holder.check_enabled.setOnCheckedChangeListener(null);
+                }
+            }
         }
 
         private View.OnClickListener itemClickListener(final int position)
@@ -450,15 +530,10 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
             return new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (listener != null) {
-                        listener.onAlarmToggled(items.get(position), isChecked);
-                    }
+                    setSelectedIndex(position);
+                    enableAlarm(contextRef.get(), position, isChecked);
                 }
             };
-        }
-
-        private void detachClickListeners(@NonNull AlarmListDialogItem holder) {
-            holder.card.setOnClickListener(null);
         }
 
         @Override
@@ -497,22 +572,6 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
 
             SuntimesUtils.forceActionBarIcons(menu.getMenu());
             menu.show();
-        }
-
-        protected void confirmDeleteAlarm(final Context context, final AlarmClockItem item)
-        {
-            String message = context.getString(R.string.deletealarm_dialog_message, AlarmItemViewHolder.displayAlarmLabel(context, item), AlarmItemViewHolder.displayAlarmTime(context, item), AlarmItemViewHolder.displayEvent(context, item));
-            AlertDialog.Builder confirm = new AlertDialog.Builder(context)
-                    .setTitle(context.getString(R.string.deletealarm_dialog_title))
-                    .setMessage(message).setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton(context.getString(R.string.deletealarm_dialog_ok), new DialogInterface.OnClickListener()
-                    {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DELETE, item.getUri()));
-                        }
-                    })
-                    .setNegativeButton(context.getString(R.string.deletealarm_dialog_cancel), null);
-            confirm.show();
         }
 
         protected void showAlarmTypeMenu(final Context context, final int position, final View buttonView)
@@ -578,6 +637,37 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
             };
         }
 
+        public void enableAlarm(final Context context, final int position, final boolean enabled)
+        {
+            AlarmClockItem item = items.get(position);
+            item.alarmtime = 0;
+            item.enabled = enabled;
+            item.modified = true;
+
+            AlarmDatabaseAdapter.AlarmUpdateTask enableTask = new AlarmDatabaseAdapter.AlarmUpdateTask(context, false, false);
+            enableTask.setTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener()
+            {
+                @Override
+                public void onFinished(Boolean result, AlarmClockItem item)
+                {
+                    if (result) {
+                        context.sendBroadcast( enabled ? AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, item.getUri())
+                                                       : AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISABLE, item.getUri()) );
+                        if (!enabled) {
+                            AlarmNotifications.updateAlarmTime(context, item);
+                        }
+                        notifyItemChanged(position);
+
+                        if (listener != null) {
+                            listener.onAlarmToggled(items.get(position), enabled);
+                        }
+
+                    } else Log.e("AlarmClockActivity", "enableAlarm: failed to save state!");
+                }
+            });
+            enableTask.execute(item);
+        }
+
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -611,6 +701,8 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
 
         public int r_iconAlarm = R.drawable.ic_action_alarms;
         public int r_iconNotification = R.drawable.ic_action_notification;
+        public int r_backgroundEnabled = R.drawable.card_alarmitem_enabled_dark1;
+        public int r_backgroundDisabled = R.drawable.card_alarmitem_disabled_dark1;
 
         public int c_selected = Color.CYAN;
         public int c_notselected = Color.TRANSPARENT;
@@ -645,11 +737,14 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
         @SuppressLint("ResourceType")
         private void themeViews(Context context)
         {
-            int[] attrs = { R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.gridItemSelected };
+            int[] attrs = { R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.gridItemSelected,
+                            R.attr.alarmCardEnabled, R.attr.alarmCardDisabled };
             TypedArray a = context.obtainStyledAttributes(attrs);
             r_iconAlarm = a.getResourceId(0, R.drawable.ic_action_alarms);
             r_iconNotification = a.getResourceId(1, R.drawable.ic_action_notification);
             c_selected = ContextCompat.getColor(context, a.getResourceId(2, R.color.grid_selected_dark));
+            r_backgroundEnabled = a.getResourceId(3, R.drawable.card_alarmitem_enabled_dark1);
+            r_backgroundDisabled = a.getResourceId(4, R.drawable.card_alarmitem_disabled_dark1);
             a.recycle();
         }
 
@@ -664,7 +759,13 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
         {
             int eventType = item.event == null ? -1 : item.event.getType();
 
+            // background
             view.cardBackdrop.setBackgroundColor( isSelected ? ColorUtils.setAlphaComponent(c_selected, 170) : c_notselected );  // 66% alpha
+            if (Build.VERSION.SDK_INT >= 16) {
+                view.card.setBackground(item.enabled ? ContextCompat.getDrawable(context, r_backgroundEnabled) : ContextCompat.getDrawable(context, r_backgroundDisabled));
+            } else {
+                view.card.setBackgroundDrawable(item.enabled ? ContextCompat.getDrawable(context, r_backgroundEnabled) : ContextCompat.getDrawable(context, r_backgroundDisabled));
+            }
 
             // enabled / disabled
             if (view.switch_enabled != null)
@@ -706,7 +807,8 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
             // location
             if (view.text_location != null) {
                 view.text_location.setVisibility((item.event == null && item.timezone == null) ? View.INVISIBLE : View.VISIBLE);
-                AlarmDialog.updateLocationLabel(context, view.text_location, item.location);
+                view.text_location.setText(item.location.getLabel());
+                //AlarmDialog.updateLocationLabel(context, view.text_location, item.location);
             }
 
             // ringtone
@@ -817,6 +919,13 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
                 listener.onAlarmDeleted(rowID);
             }
         }
+
+        @Override
+        public void onAlarmsCleared() {
+            if (listener != null) {
+                listener.onAlarmsCleared();
+            }
+        }
     };
 
     public void setAdapterListener(AdapterListener listener) {
@@ -830,6 +939,7 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
         void onAlarmToggled(AlarmClockItem item, boolean enabled);
         void onAlarmAdded(AlarmClockItem item);
         void onAlarmDeleted(long rowID);
+        void onAlarmsCleared();
     }
 
 }
