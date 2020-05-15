@@ -30,15 +30,13 @@ import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.Loader;
-import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.AlertDialog;
@@ -52,6 +50,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -77,10 +76,12 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @SuppressWarnings("Convert2Diamond")
-public class AlarmListDialog extends DialogFragment implements LoaderManager.LoaderCallbacks<List<AlarmClockItem>>
+public class AlarmListDialog extends DialogFragment
 {
     public static final String EXTRA_SELECTED_ROWID = "selectedRowID";
 
@@ -90,15 +91,15 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
     protected ProgressBar progress;
 
     @Override
-    public void onCreate(Bundle savedState) {
+    public void onCreate(Bundle savedState)
+    {
         super.onCreate(savedState);
+        setHasOptionsMenu(true);
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState)
-    {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getLoaderManager().initLoader(0, null, this);
     }
 
     @Override
@@ -108,22 +109,24 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
         View content = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_alarmlist, parent, false);
 
         progress = (ProgressBar) content.findViewById(R.id.progress);
-        progress.setVisibility(View.VISIBLE);
+        progress.setVisibility(View.GONE);
 
         emptyView = content.findViewById(android.R.id.empty);
         emptyView.setOnClickListener(onEmptyViewClick);
         emptyView.setVisibility(View.GONE);
 
+        adapter = new AlarmListDialogAdapter(getActivity());
+        adapter.setAdapterListener(adapterListener);
+
         list = (RecyclerView) content.findViewById(R.id.recyclerview);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
-        list.setAdapter(adapter = new AlarmListDialogAdapter(getActivity()));
-        list.setVisibility(View.GONE);
-
-        adapter.setAdapterListener(adapterListener);
+        list.setAdapter(adapter);
 
         if (savedState != null) {
             loadSettings(savedState);
         }
+
+        reloadAdapter();
         return content;
     }
 
@@ -149,8 +152,7 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
     }
 
@@ -180,11 +182,13 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
             case R.id.sortByAlarmTime:
                 AlarmSettings.savePrefAlarmSort(getActivity(), AlarmSettings.SORT_BY_ALARMTIME);
                 getActivity().invalidateOptionsMenu();
+                adapter.sortItems();
                 return true;
 
             case R.id.sortByCreation:
                 AlarmSettings.savePrefAlarmSort(getActivity(), AlarmSettings.SORT_BY_CREATION);
                 getActivity().invalidateOptionsMenu();
+                adapter.sortItems();
                 return true;
 
             case R.id.action_clear:
@@ -216,12 +220,24 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
         return ((adapter != null) ? adapter.getSelectedRowID() : -1);
     }
 
+    public void scrollToSelectedItem()
+    {
+        int position = adapter.getSelectedIndex();
+        if (position != -1) {
+            list.scrollToPosition(position);
+        }
+    }
+
+    public void notifyAlarmUpdated(long rowID) {
+        reloadAdapter(rowID);
+    }
+
     public void notifyAlarmDeleted(long rowID)
     {
         if (listener != null) {
             listener.onAlarmDeleted(rowID);
         }
-        reloadAdapter();
+        adapter.removeItem(rowID);
     }
 
     public void notifyAlarmsCleared()
@@ -321,73 +337,115 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     public void reloadAdapter() {
-        getLoaderManager().restartLoader(0, null, this);
+        reloadAdapter(null, onListLoaded);
+    }
+    public void reloadAdapter(Long rowId) {
+        reloadAdapter(rowId, onItemChanged);
+    }
+    public void reloadAdapter(Long rowId, AlarmListTask.AlarmListTaskListener taskListener)
+    {
+        AlarmListTask listTask = new AlarmListTask(getActivity());
+        listTask.setTaskListener(taskListener);
+        listTask.execute(rowId);
+        Log.d("DEBUG", "reloadAdapter");
     }
 
-    @Override
-    public Loader<List<AlarmClockItem>> onCreateLoader(int id, Bundle args) {
-        Log.d("DEBUG", "onLoaderCreate");
-        emptyView.setVisibility(View.GONE);
-        list.setVisibility(View.GONE);
-        progress.setVisibility(View.VISIBLE);
-        return new AlarmListDialogLoader(getActivity());
-    }
+    protected AlarmListTask.AlarmListTaskListener onListLoaded = new AlarmListTask.AlarmListTaskListener() {
+        @Override
+        public void onLoadFinished(List<AlarmClockItem> data)
+        {
+            Log.d("DEBUG", "onListLoaded: " + data.size());
+            adapter.setItems(data);
+            updateViews();
+            scrollToSelectedItem();
+        }
+    };
 
-    @Override
-    public void onLoadFinished(Loader<List<AlarmClockItem>> loader, List<AlarmClockItem> data) {
-        Log.d("DEBUG", "onLoadFinished: " + data.size());
-        adapter.setItems(data);
-        emptyView.setVisibility(data.size() > 0 ? View.GONE : View.VISIBLE);
-        list.setVisibility(data.size() > 0 ? View.VISIBLE : View.GONE);
-        progress.setVisibility(View.GONE);
-    }
+    protected AlarmListTask.AlarmListTaskListener onItemChanged = new AlarmListTask.AlarmListTaskListener() {
+        @Override
+        public void onLoadFinished(List<AlarmClockItem> data)
+        {
+            Log.d("DEBUG", "onItemChanged: " + data.size());
+            adapter.setItem(data.get(0));
+            updateViews();
+            scrollToSelectedItem();
+        }
+    };
 
-    @Override
-    public void onLoaderReset(Loader<List<AlarmClockItem>> loader) {
-        Log.d("DEBUG", "onLoadReset");
-        adapter.clearItems();
-        emptyView.setVisibility(View.GONE);
-        list.setVisibility(View.GONE);
-        progress.setVisibility(View.VISIBLE);
+    protected void updateViews()
+    {
+        emptyView.setVisibility(adapter.getItemCount() > 0 ? View.GONE : View.VISIBLE);
+        list.setVisibility(adapter.getItemCount() > 0 ? View.VISIBLE : View.GONE);
     }
 
     /**
-     * Loader
+     * AlarmClockListTask
      */
-    public static class AlarmListDialogLoader extends AsyncTaskLoader<List<AlarmClockItem>>
+    public static class AlarmListTask extends AsyncTask<Long, AlarmClockItem, List<AlarmClockItem>>
     {
-        public AlarmListDialogLoader(Context context) {
-            super(context);
+        private AlarmDatabaseAdapter db;
+        private WeakReference<Context> contextRef;
+
+        public AlarmListTask(Context context)
+        {
+            contextRef = new WeakReference<>(context);
+            db = new AlarmDatabaseAdapter(context.getApplicationContext());
         }
 
         @Override
-        protected void onStartLoading() {
-            forceLoad();
-        }
+        protected void onPreExecute() {}
 
         @Override
-        public List<AlarmClockItem> loadInBackground()
+        protected List<AlarmClockItem> doInBackground(Long... rowIds)
         {
             ArrayList<AlarmClockItem> items = new ArrayList<>();
-            AlarmDatabaseAdapter db = new AlarmDatabaseAdapter(getContext().getApplicationContext());
             db.open();
-            Cursor cursor = db.getAllAlarms(0, true);
+            Cursor cursor = (rowIds == null || rowIds.length <= 0 || rowIds[0] == null)
+                          ? db.getAllAlarms(0, true) : db.getAlarm(rowIds[0]);
             while (!cursor.isAfterLast())
             {
                 ContentValues entryValues = new ContentValues();
                 DatabaseUtils.cursorRowToContentValues(cursor, entryValues);
 
-                AlarmClockItem item = new AlarmClockItem(getContext(), entryValues);
+                AlarmClockItem item = new AlarmClockItem(contextRef.get(), entryValues);
                 if (!item.enabled) {
-                    AlarmNotifications.updateAlarmTime(getContext(), item);
+                    AlarmNotifications.updateAlarmTime(contextRef.get(), item);
                 }
                 items.add(item);
+                publishProgress(item);
+
                 cursor.moveToNext();
             }
             db.close();
             return items;
         }
+
+        @Override
+        protected void onProgressUpdate(AlarmClockItem... item) {}
+
+        @Override
+        protected void onPostExecute(List<AlarmClockItem> result)
+        {
+            if (result != null)
+            {
+                if (taskListener != null) {
+                    taskListener.onLoadFinished(result);
+                }
+            }
+        }
+
+        protected AlarmListTaskListener taskListener;
+        public void setTaskListener( AlarmListTaskListener l )
+        {
+            taskListener = l;
+        }
+
+        public static abstract class AlarmListTaskListener
+        {
+            public void onLoadFinished(List<AlarmClockItem> result) {};
+        }
     }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -404,6 +462,7 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
         public AlarmListDialogAdapter(Context context) {
             super();
             contextRef = new WeakReference<>(context);
+            setHasStableIds(true);
         }
 
         public void setSelectedRowID(long rowID) {
@@ -419,12 +478,15 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
             AlarmClockItem item = items.get(index);
             setSelectedRowID(item.rowID);
         }
-        public int getSelectedIndex()
+        public int getSelectedIndex() {
+            return getIndex(selectedRowID);
+        }
+        public int getIndex( long rowID )
         {
             for (int i=0; i<items.size(); i++)
             {
                 AlarmClockItem item = items.get(i);
-                if (item != null && item.rowID == selectedRowID) {
+                if (item != null && item.rowID == rowID) {
                     return i;
                 }
             }
@@ -438,13 +500,75 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
         public void setItems(List<AlarmClockItem> values)
         {
             items.clear();
-            items.addAll(values);
+            items.addAll(sortItems(values));
             notifyDataSetChanged();
+        }
+
+        public void setItem(AlarmClockItem item)
+        {
+            int position = getIndex(item.rowID);
+            if (position >= 0 && position < items.size())
+            {
+                items.add(position, item);
+                AlarmClockItem previous = items.remove(position + 1);
+
+                if (item.timestamp != previous.timestamp) {
+                    sortItems();
+                } else {
+                    notifyItemChanged(position);
+                }
+
+            } else {
+                items.add(item);
+                notifyDataSetChanged();
+            }
         }
 
         public void clearItems() {
             items.clear();
             notifyDataSetChanged();
+        }
+
+        public void removeItem(long alarmID)
+        {
+            int position = getIndex(alarmID);
+            if (position >= 0 && position < items.size()) {
+                items.remove(position);
+                notifyItemRemoved(position);
+            }
+        }
+
+        public void sortItems()
+        {
+            sortItems(items);
+            notifyDataSetChanged();
+        }
+
+        protected List<AlarmClockItem> sortItems(List<AlarmClockItem> items)
+        {
+            final long now = Calendar.getInstance().getTimeInMillis();
+            final int sortMode = AlarmSettings.loadPrefAlarmSort(contextRef.get());
+            Collections.sort(items, new Comparator<AlarmClockItem>()
+            {
+                @Override
+                public int compare(AlarmClockItem o1, AlarmClockItem o2)
+                {
+                    switch (sortMode)
+                    {
+                        case AlarmSettings.SORT_BY_ALARMTIME:                // nearest alarm time first
+                            return Long.compare((o1.timestamp + o1.offset) - now, (o2.timestamp + o2.offset) - now);
+
+                        case AlarmSettings.SORT_BY_CREATION:
+                        default: return Long.compare(o2.rowID, o1.rowID);    // newest items first
+                    }
+                }
+            });
+            return items;
+        }
+
+        @Override
+        public long getItemId( int position ) {
+            return (position >= 0 && position < items.size()) ? items.get(position).rowID : 0;
         }
 
         @Override
@@ -930,6 +1054,7 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
 
                 view.text_repeat.setText(repeatText);
                 view.text_repeat.setTextColor(item.enabled ? color_on : color_off);
+                view.text_repeat.setVisibility((noRepeat) ? View.GONE : View.VISIBLE);
             }
 
             // offset (before / after)
