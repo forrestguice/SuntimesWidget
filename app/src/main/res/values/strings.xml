@@ -692,6 +692,9 @@
     <string name="configAction_addNotification">Set Notification</string> <!-- button (contentDescription) -->
     <string name="configAction_deleteAlarm">Delete</string>               <!-- button (contentDescription) -->
     <string name="configAction_clearAlarms">Clear</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms">Sort</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="configAction_sortAlarms_by_time">Alarm Time</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="configAction_sortAlarms_by_creation">Creation Date</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_clearOffset">Clear</string>                <!-- action button / menu item -->
     <string name="configAction_setAlarmOffset">Set Offset</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmType">Set Type</string>         <!-- button (contentDescription) -->
