@@ -157,6 +157,48 @@ public class AlarmListDialog extends DialogFragment implements LoaderManager.Loa
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.alarmlist, menu);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu)
+    {
+        int sortValue = AlarmSettings.loadPrefAlarmSort(getActivity());
+        MenuItem sort_alarmtime = menu.findItem(R.id.sortByAlarmTime);
+        MenuItem sort_creation = menu.findItem(R.id.sortByCreation);
+        sort_alarmtime.setChecked(sortValue == AlarmSettings.SORT_BY_ALARMTIME);
+        sort_creation.setChecked(sortValue == AlarmSettings.SORT_BY_CREATION);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.sortByAlarmTime:
+                AlarmSettings.savePrefAlarmSort(getActivity(), AlarmSettings.SORT_BY_ALARMTIME);
+                getActivity().invalidateOptionsMenu();
+                return true;
+
+            case R.id.sortByCreation:
+                AlarmSettings.savePrefAlarmSort(getActivity(), AlarmSettings.SORT_BY_CREATION);
+                getActivity().invalidateOptionsMenu();
+                return true;
+
+            case R.id.action_clear:
+                confirmClearAlarms(getActivity());
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     protected View.OnClickListener onEmptyViewClick = null;
     protected void setOnEmptyViewClick( View.OnClickListener listener )
     {

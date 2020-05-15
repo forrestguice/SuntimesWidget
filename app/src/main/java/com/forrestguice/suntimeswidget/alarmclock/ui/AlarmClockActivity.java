@@ -788,10 +788,6 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         switch (item.getItemId())
         {
-            case R.id.action_clear:
-                AlarmListDialog.confirmClearAlarms(AlarmClockActivity.this);
-                return true;
-
             case R.id.action_settings:
                 showSettings();
                 return true;
