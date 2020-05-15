@@ -126,7 +126,6 @@
                 android:layout_marginBottom="4dp"
                 android:ellipsize="end" android:gravity="center" android:maxLines="1"
                 android:textSize="52dp" android:textStyle="bold"
-                android:transitionName="transition_alarmitem"
                 tools:ignore="SpUsage" tools:text="11:22 am" />
 
             <TextView

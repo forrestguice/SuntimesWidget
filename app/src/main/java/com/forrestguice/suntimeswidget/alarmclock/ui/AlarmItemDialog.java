@@ -105,6 +105,14 @@ public class AlarmItemDialog extends DialogFragment
             loadSettings(savedState);
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)        // transition animation
+        {
+            if (item != null && itemView != null) {
+                itemView.text_datetime.setTransitionName("transition_" + item.rowID);
+                startPostponedEnterTransition();
+            }
+        }
+
         return dialogContent;
     }
 

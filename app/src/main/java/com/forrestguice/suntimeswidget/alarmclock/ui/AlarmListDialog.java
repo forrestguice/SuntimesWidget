@@ -38,6 +38,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -238,6 +239,7 @@ public class AlarmListDialog extends DialogFragment
             listener.onAlarmDeleted(rowID);
         }
         adapter.removeItem(rowID);
+        updateViews();
     }
 
     public void notifyAlarmsCleared()
@@ -584,6 +586,7 @@ public class AlarmListDialog extends DialogFragment
         {
             AlarmClockItem item = items.get(position);
             holder.isSelected = (item.rowID == selectedRowID);
+            ViewCompat.setTransitionName(holder.text_datetime, "transition_" + item.rowID);
 
             detachClickListeners(holder);
             holder.bindData(contextRef.get(), items.get(position));
