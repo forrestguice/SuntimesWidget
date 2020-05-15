@@ -26,6 +26,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -121,6 +122,7 @@ public class AlarmListDialog extends DialogFragment
 
         list = (RecyclerView) content.findViewById(R.id.recyclerview);
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
+        list.addItemDecoration(itemDecoration);
         list.setAdapter(adapter);
 
         if (savedState != null) {
@@ -1113,7 +1115,6 @@ public class AlarmListDialog extends DialogFragment
             }
         }
 
-
         private CharSequence actionDisplayChip(Context context, AlarmClockItem item, int actionNum, boolean isSelected)
         {
             int iconDimen = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,20, context.getResources().getDisplayMetrics());
@@ -1123,6 +1124,20 @@ public class AlarmListDialog extends DialogFragment
             return SuntimesUtils.createSpan(context, "[icon]", "[icon]", icon);
         }
     }
+
+    private RecyclerView.ItemDecoration itemDecoration = new RecyclerView.ItemDecoration()
+    {
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
+        {
+            int position = parent.getChildAdapterPosition(view);
+            if (position == adapter.getItemCount() - 1) {   // add bottom margin on last item to avoid blocking FAB
+                outRect.bottom = 150;
+            } else {
+                super.getItemOffsets(outRect, view, parent, state);
+            }
+        }
+    };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
