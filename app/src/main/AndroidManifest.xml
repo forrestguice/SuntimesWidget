@@ -191,6 +191,11 @@
 
         </activity-alias>
 
+        <activity android:name=".alarmclock.ui.AlarmEditActivity"
+            android:label="@string/app_name_alarmclock"
+            android:icon="@mipmap/ic_launcher_alarms"
+            android:taskAffinity=".alarmclock.ui.AlarmClockActivity" />
+
         <activity
             android:name=".alarmclock.ui.AlarmDismissActivity"
             android:label="@string/app_name_alarmclock"
