@@ -133,6 +133,7 @@ public class AlarmListDialog extends DialogFragment
         return content;
     }
 
+
     @Override
     public void onSaveInstanceState( Bundle outState )
     {
@@ -497,8 +498,13 @@ public class AlarmListDialog extends DialogFragment
             return -1;
         }
 
-        public void clearSelection() {
+        public void clearSelection()
+        {
+            int selectedIndex = getSelectedIndex();
             selectedRowID = -1;
+            if (selectedIndex != -1) {
+                notifyItemChanged(selectedIndex);
+            }
         }
 
         public void setItems(List<AlarmClockItem> values)
