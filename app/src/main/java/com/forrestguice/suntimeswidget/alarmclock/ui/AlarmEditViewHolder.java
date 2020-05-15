@@ -38,7 +38,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import java.util.Calendar;
 
 @SuppressWarnings("Convert2Diamond")
-public class AlarmItemViewHolder extends RecyclerView.ViewHolder
+public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 {
     public static SuntimesUtils utils = new SuntimesUtils();
 
@@ -79,7 +79,7 @@ public class AlarmItemViewHolder extends RecyclerView.ViewHolder
     public int res_icAlarm, res_icNotification;
     public int res_icSoundOn, res_icSoundOff;
 
-    public AlarmItemViewHolder(View parent)
+    public AlarmEditViewHolder(View parent)
     {
         super(parent);
         Context context = parent.getContext();

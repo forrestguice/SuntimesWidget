@@ -48,11 +48,11 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 @SuppressWarnings("Convert2Diamond")
-public class AlarmItemDialog extends DialogFragment
+public class AlarmEditDialog extends DialogFragment
 {
     protected TextView text_title;
     protected AlarmClockItem item = null, original = null;
-    protected AlarmItemViewHolder itemView;
+    protected AlarmEditViewHolder itemView;
 
     public void initFromItem(AlarmClockItem item, boolean addItem)
     {
@@ -118,7 +118,7 @@ public class AlarmItemDialog extends DialogFragment
 
     private void initViews(Context context, View dialogContent)
     {
-        itemView = new AlarmItemViewHolder(dialogContent);
+        itemView = new AlarmEditViewHolder(dialogContent);
         text_title = (TextView) dialogContent.findViewById(R.id.dialog_title);
 
         ImageButton btn_cancel = (ImageButton) dialogContent.findViewById(R.id.dialog_button_cancel);
@@ -309,7 +309,7 @@ public class AlarmItemDialog extends DialogFragment
      */
     protected void confirmDeleteAlarm(final Context context, final AlarmClockItem item, final View itemView)
     {
-        String message = context.getString(R.string.deletealarm_dialog_message, AlarmItemViewHolder.displayAlarmLabel(context, item), AlarmItemViewHolder.displayAlarmTime(context, item), AlarmItemViewHolder.displayEvent(context, item));
+        String message = context.getString(R.string.deletealarm_dialog_message, AlarmEditViewHolder.displayAlarmLabel(context, item), AlarmEditViewHolder.displayAlarmTime(context, item), AlarmEditViewHolder.displayEvent(context, item));
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.deletealarm_dialog_title))
                 .setMessage(message)
@@ -333,7 +333,7 @@ public class AlarmItemDialog extends DialogFragment
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    private void attachClickListeners(@NonNull AlarmItemViewHolder holder, int position)
+    private void attachClickListeners(@NonNull AlarmEditViewHolder holder, int position)
     {
         holder.menu_type.setOnClickListener(showAlarmTypeMenu());
         holder.menu_overflow.setOnClickListener(showOverflowMenu());

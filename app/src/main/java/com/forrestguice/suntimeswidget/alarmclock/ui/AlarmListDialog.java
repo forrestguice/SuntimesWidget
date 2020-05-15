@@ -255,7 +255,7 @@ public class AlarmListDialog extends DialogFragment
 
     public static void confirmDeleteAlarm(final Context context, final AlarmClockItem item)
     {
-        String message = context.getString(R.string.deletealarm_dialog_message, AlarmItemViewHolder.displayAlarmLabel(context, item), AlarmItemViewHolder.displayAlarmTime(context, item), AlarmItemViewHolder.displayEvent(context, item));
+        String message = context.getString(R.string.deletealarm_dialog_message, AlarmEditViewHolder.displayAlarmLabel(context, item), AlarmEditViewHolder.displayAlarmTime(context, item), AlarmEditViewHolder.displayEvent(context, item));
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.deletealarm_dialog_title))
                 .setMessage(message).setIcon(android.R.drawable.ic_dialog_alert)
@@ -986,25 +986,25 @@ public class AlarmListDialog extends DialogFragment
 
             // label
             if (view.text_label != null) {
-                view.text_label.setText(AlarmItemViewHolder.displayAlarmLabel(context, item));
+                view.text_label.setText(AlarmEditViewHolder.displayAlarmLabel(context, item));
                 view.text_label.setTextColor(item.enabled ? color_on : color_off);
             }
 
             // event
             if (view.text_event != null) {
-                view.text_event.setText(AlarmItemViewHolder.displayEvent(context, item));
+                view.text_event.setText(AlarmEditViewHolder.displayEvent(context, item));
                 view.text_event.setTextColor(item.enabled ? color_on : color_off);
             }
 
             // time
             if (view.text_datetime != null) {
-                view.text_datetime.setText(AlarmItemViewHolder.displayAlarmTime(context, item));
+                view.text_datetime.setText(AlarmEditViewHolder.displayAlarmTime(context, item));
                 view.text_datetime.setTextColor(item.enabled ? color_on : color_off);
             }
 
             // date
             if (view.text_date != null) {
-                view.text_date.setText(AlarmItemViewHolder.displayAlarmDate(context, item));
+                view.text_date.setText(AlarmEditViewHolder.displayAlarmDate(context, item));
                 view.text_date.setVisibility((eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON) ? View.VISIBLE : View.GONE);
                 view.text_date.setTextColor(item.enabled ? color_on : color_off);
             }

@@ -27,8 +27,6 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
@@ -604,7 +602,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         // label
         if (view.text_label != null)
         {
-            view.text_label.setText(AlarmItemViewHolder.displayAlarmLabel(context, item));
+            view.text_label.setText(AlarmEditViewHolder.displayAlarmLabel(context, item));
             if (!isSelected && !item.enabled) {
                 view.text_label.setTextColor(disabledColor);
             } else if (item.enabled) {
@@ -617,7 +615,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         // event
         if (view.text_event != null)
         {
-            view.text_event.setText(AlarmItemViewHolder.displayEvent(context, item));
+            view.text_event.setText(AlarmEditViewHolder.displayEvent(context, item));
             if (!isSelected || item.enabled) {
                 view.text_event.setTextColor(disabledColor);
             } else {
@@ -628,7 +626,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         // time
         if (view.text_datetime != null)
         {
-            view.text_datetime.setText(AlarmItemViewHolder.displayAlarmTime(context, item));
+            view.text_datetime.setText(AlarmEditViewHolder.displayAlarmTime(context, item));
             if (!isSelected && !item.enabled) {
                 view.text_datetime.setTextColor(disabledColor);
             } else if (item.enabled) {
@@ -641,7 +639,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         // date
         if (view.text_date != null)
         {
-            view.text_date.setText(AlarmItemViewHolder.displayAlarmDate(context, item));
+            view.text_date.setText(AlarmEditViewHolder.displayAlarmDate(context, item));
             view.text_date.setVisibility((eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON) ? View.VISIBLE : View.GONE);
             if (!isSelected && !item.enabled) {
                 view.text_date.setTextColor(disabledColor);
@@ -1015,7 +1013,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
      */
     protected void confirmDeleteAlarm(final AlarmClockItem item, final View itemView)
     {
-        String message = context.getString(R.string.deletealarm_dialog_message, AlarmItemViewHolder.displayAlarmLabel(context, item), AlarmItemViewHolder.displayAlarmTime(context, item), AlarmItemViewHolder.displayEvent(context, item));
+        String message = context.getString(R.string.deletealarm_dialog_message, AlarmEditViewHolder.displayAlarmLabel(context, item), AlarmEditViewHolder.displayAlarmTime(context, item), AlarmEditViewHolder.displayEvent(context, item));
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.deletealarm_dialog_title))
                 .setMessage(message)
@@ -1053,7 +1051,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                public void onAnimationEnd(Animation animation) {
                    items.remove(item);
                    notifyDataSetChanged();
-                   CharSequence message = context.getString(R.string.deletealarm_toast_success, AlarmItemViewHolder.displayAlarmLabel(context, item), AlarmItemViewHolder.displayAlarmTime(context, item), AlarmItemViewHolder.displayEvent(context, item));
+                   CharSequence message = context.getString(R.string.deletealarm_toast_success, AlarmEditViewHolder.displayAlarmLabel(context, item), AlarmEditViewHolder.displayAlarmTime(context, item), AlarmEditViewHolder.displayEvent(context, item));
                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                }
            });

@@ -20,19 +20,15 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.annotation.SuppressLint;
 import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
-import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,7 +37,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -54,10 +49,7 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
@@ -73,7 +65,6 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -84,7 +75,6 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -417,7 +407,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
         @Override
         public void onAlarmAdded(AlarmClockItem item) {
-            showAlarmItemDialog(item, false);
+            //showAlarmItemDialog(item, false);
         }
 
         @Override
@@ -475,7 +465,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
     protected void showAlarmItemDialog(@NonNull AlarmClockItem item, boolean addItem)
     {
-        AlarmItemDialog dialog = new AlarmItemDialog();
+        AlarmEditDialog dialog = new AlarmEditDialog();
         dialog.initFromItem(item, addItem);
         dialog.setAlarmClockAdapterListener(alarmItemDialogListener);
         dialog.setOnAcceptedListener(onItemDialogAccepted);
@@ -487,7 +477,7 @@ public class AlarmClockActivity extends AppCompatActivity
         public void onClick(DialogInterface dialog, int which)
         {
             FragmentManager fragments = getSupportFragmentManager();
-            AlarmItemDialog itemDialog = (AlarmItemDialog)fragments.findFragmentByTag(DIALOGTAG_ITEM);
+            AlarmEditDialog itemDialog = (AlarmEditDialog)fragments.findFragmentByTag(DIALOGTAG_ITEM);
             AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, (itemDialog.getOriginal() == null), false);
             task.setTaskListener(onUpdateItem);
             task.execute(itemDialog.getItem());
@@ -608,10 +598,10 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         FragmentManager fragments = getSupportFragmentManager();
 
-        AlarmItemDialog alarmItemDialog = (AlarmItemDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
-        if (alarmItemDialog != null) {
-            alarmItemDialog.setAlarmClockAdapterListener(alarmItemDialogListener);
-            alarmItemDialog.setOnAcceptedListener(onItemDialogAccepted);
+        AlarmEditDialog alarmEditDialog = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
+        if (alarmEditDialog != null) {
+            alarmEditDialog.setAlarmClockAdapterListener(alarmItemDialogListener);
+            alarmEditDialog.setOnAcceptedListener(onItemDialogAccepted);
         }
 
         //AlarmDialog eventDialog0 = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
@@ -939,7 +929,7 @@ public class AlarmClockActivity extends AppCompatActivity
     protected void onRingtonePermissionResult(@NonNull String[] permissions, @NonNull int[] grantResults)
     {
         FragmentManager fragments = getSupportFragmentManager();
-        AlarmItemDialog dialog = (AlarmItemDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
+        AlarmEditDialog dialog = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
         if (dialog != null) {
             ringtonePicker(dialog.getItem());
         }
@@ -948,7 +938,7 @@ public class AlarmClockActivity extends AppCompatActivity
     protected void onRingtoneResult(int resultCode, Intent data)
     {
         FragmentManager fragments = getSupportFragmentManager();
-        AlarmItemDialog itemDialog = (AlarmItemDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
+        AlarmEditDialog itemDialog = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
 
         if (resultCode == RESULT_OK && itemDialog != null && data != null)
         {
@@ -1005,7 +995,7 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             FragmentManager fragments = getSupportFragmentManager();
             AlarmLabelDialog dialog = (AlarmLabelDialog) fragments.findFragmentByTag(DIALOGTAG_LABEL);
-            AlarmItemDialog dialog1 = (AlarmItemDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
+            AlarmEditDialog dialog1 = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
 
             if (dialog1 != null && dialog != null)
             {
@@ -1041,7 +1031,7 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             FragmentManager fragments = getSupportFragmentManager();
             AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) fragments.findFragmentByTag(DIALOGTAG_OFFSET + 1);
-            AlarmItemDialog itemDialog = (AlarmItemDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
+            AlarmEditDialog itemDialog = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
 
             if (itemDialog != null && offsetDialog != null)
             {
@@ -1088,7 +1078,7 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             FragmentManager fragments = getSupportFragmentManager();
             AlarmDialog dialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
-            AlarmItemDialog dialog1 = (AlarmItemDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
+            AlarmEditDialog dialog1 = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
 
             if (dialog1 != null && dialog != null)
             {
@@ -1118,7 +1108,7 @@ public class AlarmClockActivity extends AppCompatActivity
         public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
         {
             FragmentManager fragments = getSupportFragmentManager();
-            AlarmItemDialog itemDialog = (AlarmItemDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
+            AlarmEditDialog itemDialog = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
             if (itemDialog != null)
             {
                 AlarmClockItem item = itemDialog.getItem();
@@ -1148,7 +1138,7 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             FragmentManager fragments = getSupportFragmentManager();
             AlarmRepeatDialog repeatDialog = (AlarmRepeatDialog) fragments.findFragmentByTag(DIALOGTAG_REPEAT + 1);
-            AlarmItemDialog itemDialog = (AlarmItemDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
+            AlarmEditDialog itemDialog = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
 
             if (itemDialog != null && repeatDialog != null)
             {
@@ -1185,7 +1175,7 @@ public class AlarmClockActivity extends AppCompatActivity
             {
                 FragmentManager fragments = getSupportFragmentManager();
                 LoadActionDialog dialog = (LoadActionDialog) fragments.findFragmentByTag(DIALOGTAG_ACTION + actionNum);
-                AlarmItemDialog dialog1 = (AlarmItemDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
+                AlarmEditDialog dialog1 = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
                 if (dialog != null && dialog1 != null)
                 {
                     AlarmClockItem item = dialog1.getItem();
