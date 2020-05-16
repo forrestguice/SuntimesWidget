@@ -19,9 +19,11 @@
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.media.Ringtone;
@@ -52,6 +54,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.actions.LoadActionDialog;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
@@ -64,9 +67,11 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
-public class AlarmEditActivity extends AppCompatActivity
+public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAdapterListener
 {
     public static final String TAG = "AlarmReceiverList";
+
+    public static final String EXTRA_ITEM = "item";
 
     public static final int REQUEST_RINGTONE = 10;
     public static final int REQUEST_SETTINGS = 20;
@@ -106,6 +111,7 @@ public class AlarmEditActivity extends AppCompatActivity
         initLocale(this);
         setContentView(R.layout.layout_activity_alarmedit);
         initViews(this);
+        setResult(Activity.RESULT_CANCELED);
     }
 
     @Override
@@ -230,6 +236,19 @@ public class AlarmEditActivity extends AppCompatActivity
     {
         SuntimesUtils.initDisplayStrings(context);
 
+        editor = (AlarmEditDialog) getSupportFragmentManager().findFragmentById(R.id.editFragment);
+        editor.setOnAcceptedListener(onEditorAccepted);
+        editor.setAlarmClockAdapterListener(this);
+        editor.setShowDialogFrame(false);
+        editor.setShowOverflow(false);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null)
+        {
+            AlarmClockItem item = extras.getParcelable(EXTRA_ITEM);
+            editor.initFromItem(item, false);
+        }
+
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
         ActionBar actionBar = getSupportActionBar();
@@ -237,14 +256,24 @@ public class AlarmEditActivity extends AppCompatActivity
         {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
+            AlarmClockItem item = editor.getItem();
+            actionBar.setTitle(item != null ? item.type.getDisplayString() : "");
         }
-
-        editor = (AlarmEditDialog) getSupportFragmentManager().findFragmentById(R.id.editFragment);
-        // TODO: init to item
     }
 
     protected void updateViews(Context context) {
     }
+
+    private DialogInterface.OnClickListener onEditorAccepted = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which)
+        {
+            Intent intent = getIntent();
+            intent.putExtra(AlarmEditActivity.EXTRA_ITEM, editor.getItem());
+            setResult(Activity.RESULT_OK, intent);
+            finish();
+        }
+    };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -673,5 +702,48 @@ public class AlarmEditActivity extends AppCompatActivity
             }
         };
     }
+
+    @Override
+    public void onRequestLabel(AlarmClockItem forItem) {
+        pickLabel(forItem);
+    }
+
+    @Override
+    public void onRequestRingtone(AlarmClockItem forItem) {
+        pickRingtone(forItem);
+    }
+
+    @Override
+    public void onRequestSolarEvent(AlarmClockItem forItem) {
+        pickSolarEvent(forItem);
+    }
+
+    @Override
+    public void onRequestLocation(AlarmClockItem forItem) {
+        pickLocation(forItem);
+    }
+
+    @Override
+    public void onRequestTime(AlarmClockItem forItem) {
+        // TODO
+    }
+
+    @Override
+    public void onRequestOffset(AlarmClockItem forItem) {
+        pickOffset(forItem);
+    }
+
+    @Override
+    public void onRequestRepetition(AlarmClockItem forItem) {
+        pickRepetition(forItem);
+    }
+
+    @Override
+    public void onRequestAction(AlarmClockItem forItem, int actionNum) {
+        pickAction(forItem, actionNum);
+    }
+
+    @Override
+    public void onRequestDialog(AlarmClockItem forItem) { /* EMPTY */ }
 
 }
