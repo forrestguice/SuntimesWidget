@@ -316,6 +316,14 @@ public class AlarmEditActivity extends AppCompatActivity
     {
         switch (item.getItemId())
         {
+            case R.id.action_save:
+                onEditorAccepted.onClick(null, 0);
+                return true;
+
+            case R.id.action_delete:
+                confirmDeleteAlarm(AlarmEditActivity.this, editor.getItem());
+                return true;
+
             case R.id.action_about:
                 showAbout();
                 return true;
@@ -343,6 +351,23 @@ public class AlarmEditActivity extends AppCompatActivity
         about.putExtra(AboutActivity.EXTRA_ICONID, R.mipmap.ic_launcher_alarms_round);
         startActivity(about);
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+    }
+
+    protected void confirmDeleteAlarm(final Context context, final AlarmClockItem item)
+    {
+        String message = context.getString(R.string.deletealarm_dialog_message, AlarmEditViewHolder.displayAlarmLabel(context, item), AlarmEditViewHolder.displayAlarmTime(context, item), AlarmEditViewHolder.displayEvent(context, item));
+        AlertDialog.Builder confirm = new AlertDialog.Builder(context)
+                .setTitle(context.getString(R.string.deletealarm_dialog_title)).setMessage(message).setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(context.getString(R.string.deletealarm_dialog_ok), new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        setResult(AlarmEditActivity.RESULT_CANCELED);
+                        finish();
+                        context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DELETE, item.getUri()));
+                    }
+                })
+                .setNegativeButton(context.getString(R.string.deletealarm_dialog_cancel), null);
+        confirm.show();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

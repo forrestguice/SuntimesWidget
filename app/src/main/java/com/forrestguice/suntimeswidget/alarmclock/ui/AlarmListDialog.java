@@ -734,7 +734,7 @@ public class AlarmListDialog extends DialogFragment
                 {
                     switch (menuItem.getItemId())
                     {
-                        case R.id.deleteAlarm:
+                        case R.id.action_delete:
                             confirmDeleteAlarm(contextRef.get(), items.get(position));
                             return true;
 
