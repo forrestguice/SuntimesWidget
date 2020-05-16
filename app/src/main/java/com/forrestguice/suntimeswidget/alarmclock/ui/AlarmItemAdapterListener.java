@@ -23,15 +23,15 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 /**
  * AlarmClockAdapterListener
  */
-public abstract class AlarmItemAdapterListener
+public interface AlarmItemAdapterListener
 {
-    public void onRequestLabel(AlarmClockItem forItem) {}
-    public void onRequestRingtone(AlarmClockItem forItem) {}
-    public void onRequestSolarEvent(AlarmClockItem forItem) {}
-    public void onRequestLocation(AlarmClockItem forItem) {}
-    public void onRequestTime(AlarmClockItem forItem) {}
-    public void onRequestOffset(AlarmClockItem forItem) {}
-    public void onRequestRepetition(AlarmClockItem forItem) {}
-    public void onRequestAction(AlarmClockItem forItem, int actionNum) {}
-    public void onRequestDialog(AlarmClockItem forItem) {}
+    void onRequestLabel(AlarmClockItem forItem);
+    void onRequestRingtone(AlarmClockItem forItem);
+    void onRequestSolarEvent(AlarmClockItem forItem);
+    void onRequestLocation(AlarmClockItem forItem);
+    void onRequestTime(AlarmClockItem forItem);
+    void onRequestOffset(AlarmClockItem forItem);
+    void onRequestRepetition(AlarmClockItem forItem);
+    void onRequestAction(AlarmClockItem forItem, int actionNum);
+    void onRequestDialog(AlarmClockItem forItem);
 }
