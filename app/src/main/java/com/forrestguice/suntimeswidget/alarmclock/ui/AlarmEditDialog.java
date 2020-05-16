@@ -50,9 +50,19 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 @SuppressWarnings("Convert2Diamond")
 public class AlarmEditDialog extends DialogFragment
 {
+    public static final String EXTRA_SHOW_FRAME = "show_frame";
+    public static final String EXTRA_SHOW_OVERFLOW = "show_overflow";
+
+    protected View dialogFrame;
     protected TextView text_title;
     protected AlarmClockItem item = null, original = null;
     protected AlarmEditViewHolder itemView;
+
+    public AlarmEditDialog()
+    {
+        super();
+        setArguments(new Bundle());
+    }
 
     public void initFromItem(AlarmClockItem item, boolean addItem)
     {
@@ -74,8 +84,10 @@ public class AlarmEditDialog extends DialogFragment
 
     protected void bindItemToHolder(AlarmClockItem item)
     {
-        if (itemView != null) {
+        if (itemView != null)
+        {
             itemView.bindDataToPosition(getActivity(), item, 0);
+            itemView.menu_overflow.setVisibility(getArguments().getBoolean(EXTRA_SHOW_OVERFLOW, true) ? View.VISIBLE : View.GONE);
             attachClickListeners(itemView, 0);
         }
         if (text_title != null) {
@@ -116,7 +128,7 @@ public class AlarmEditDialog extends DialogFragment
         return dialogContent;
     }
 
-    private void initViews(Context context, View dialogContent)
+    protected void initViews(Context context, View dialogContent)
     {
         itemView = new AlarmEditViewHolder(dialogContent);
         text_title = (TextView) dialogContent.findViewById(R.id.dialog_title);
@@ -136,7 +148,24 @@ public class AlarmEditDialog extends DialogFragment
             btn_neutral.setOnClickListener(onDialogNeutralClick);
         }
 
+        dialogFrame = dialogContent.findViewById(R.id.dialog_frame);
+        setShowDialogFrame(getArguments().getBoolean(EXTRA_SHOW_FRAME, true));
+
         bindItemToHolder(item);
+    }
+
+    public void setShowOverflow(boolean value)
+    {
+        getArguments().putBoolean(EXTRA_SHOW_OVERFLOW, value);
+        bindItemToHolder(getItem());
+    }
+
+    public void setShowDialogFrame(boolean value)
+    {
+        getArguments().putBoolean(EXTRA_SHOW_FRAME, value);
+        if (dialogFrame != null) {
+            dialogFrame.setVisibility(value ? View.VISIBLE : View.GONE);
+        }
     }
 
     @SuppressWarnings({"deprecation","RestrictedApi"})
@@ -204,7 +233,10 @@ public class AlarmEditDialog extends DialogFragment
     private View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            getDialog().cancel();
+            Dialog dialog = getDialog();
+            if (dialog != null) {
+                dialog.cancel();
+            }
         }
     };
 
@@ -286,9 +318,7 @@ public class AlarmEditDialog extends DialogFragment
             {
                 switch (menuItem.getItemId())
                 {
-                    case R.id.deleteAlarm:
-                        confirmDeleteAlarm(getActivity(), item, buttonView);
-                        return true;
+                    // TODO
 
                     default:
                         return false;
@@ -298,36 +328,6 @@ public class AlarmEditDialog extends DialogFragment
 
         SuntimesUtils.forceActionBarIcons(menu.getMenu());
         menu.show();
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * confirmDeleteAlarm
-     * @param item AlarmClockItem
-     */
-    protected void confirmDeleteAlarm(final Context context, final AlarmClockItem item, final View itemView)
-    {
-        String message = context.getString(R.string.deletealarm_dialog_message, AlarmEditViewHolder.displayAlarmLabel(context, item), AlarmEditViewHolder.displayAlarmTime(context, item), AlarmEditViewHolder.displayEvent(context, item));
-        AlertDialog.Builder confirm = new AlertDialog.Builder(context)
-                .setTitle(context.getString(R.string.deletealarm_dialog_title))
-                .setMessage(message)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(context.getString(R.string.deletealarm_dialog_ok), new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        deleteAlarm(context, item);
-                        dismiss();
-                    }
-                })
-                .setNegativeButton(context.getString(R.string.deletealarm_dialog_cancel), null);
-        confirm.show();
-    }
-
-    private void deleteAlarm(Context context, final AlarmClockItem item) {
-        Intent deleteIntent = AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DELETE, item.getUri());
-        context.sendBroadcast(deleteIntent);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
