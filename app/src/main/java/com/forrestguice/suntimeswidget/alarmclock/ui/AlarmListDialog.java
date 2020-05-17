@@ -1138,7 +1138,7 @@ public class AlarmListDialog extends DialogFragment
         {
             int position = parent.getChildAdapterPosition(view);
             if (position == adapter.getItemCount() - 1) {   // add bottom margin on last item to avoid blocking FAB
-                outRect.bottom = 150;
+                outRect.bottom = 400;
             } else {
                 super.getItemOffsets(outRect, view, parent, state);
             }
