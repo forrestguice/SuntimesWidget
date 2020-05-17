@@ -17,10 +17,14 @@
 */
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.TypedArray;
+import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -28,13 +32,19 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.AlarmDialog;
@@ -56,9 +66,21 @@ import java.util.Calendar;
 @SuppressWarnings("Convert2Diamond")
 public class AlarmCreateDialog extends DialogFragment
 {
+    public static final String EXTRA_ALARMTYPE = "alarmtype";
+
     protected TextView text_title;
+    protected Spinner spin_type;
     protected ViewPager pager;
     protected DialogPagerAdapter adapter;
+
+    public AlarmCreateDialog()
+    {
+        super();
+
+        Bundle args = new Bundle();
+        args.putSerializable(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.ALARM);
+        setArguments(args);
+    }
 
     @Override
     public void onCreate(Bundle savedState)
@@ -77,16 +99,35 @@ public class AlarmCreateDialog extends DialogFragment
         if (savedState != null) {
             loadSettings(savedState);
         }
-
         return dialogContent;
     }
 
-    private void initViews(Context context, View dialogContent)
+
+    public void setAlarmType(AlarmClockItem.AlarmType value) {
+        getArguments().putSerializable(EXTRA_ALARMTYPE, value);
+    }
+    public AlarmClockItem.AlarmType getAlarmType() {
+        return (AlarmClockItem.AlarmType) getArguments().getSerializable(EXTRA_ALARMTYPE);
+    }
+
+    private void initViews(final Context context, View dialogContent)
     {
         text_title = (TextView) dialogContent.findViewById(R.id.dialog_title);
 
-        adapter = new DialogPagerAdapter(context, getChildFragmentManager());
+        spin_type = (Spinner) dialogContent.findViewById(R.id.type_spin);
+        spin_type.setAdapter(new AlarmTypeAdapter(getContext(), R.layout.layout_listitem_alarmtype));
+        spin_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                setAlarmType((AlarmClockItem.AlarmType) parent.getItemAtPosition(position));
+                updateViews(getActivity());
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        adapter = new DialogPagerAdapter(context, getChildFragmentManager());
         pager = (ViewPager) dialogContent.findViewById(R.id.view_pager);
         pager.setAdapter(adapter);
 
@@ -106,6 +147,76 @@ public class AlarmCreateDialog extends DialogFragment
         Button btn_neutral = (Button) dialogContent.findViewById(R.id.dialog_button_neutral);
         if (btn_neutral != null) {
             btn_neutral.setOnClickListener(onDialogNeutralClick);
+        }
+    }
+
+    private void updateViews(Context context)
+    {
+        AlarmClockItem.AlarmType alarmType = getAlarmType();
+
+        if (text_title != null) {
+            text_title.setText(context.getString(alarmType == AlarmClockItem.AlarmType.NOTIFICATION ? R.string.configAction_addNotification : R.string.configAction_addAlarm));
+        }
+
+        if (spin_type != null) {
+            spin_type.setSelection(alarmType.ordinal());
+        }
+
+        if (adapter != null) {
+            adapter.setAlarmType(alarmType);
+        }
+    }
+
+    public static class AlarmTypeAdapter extends ArrayAdapter<AlarmClockItem.AlarmType>
+    {
+        protected int layout;
+
+        public AlarmTypeAdapter(@NonNull Context context, int resource)
+        {
+            super(context, resource);
+            layout = resource;
+            addAll(AlarmClockItem.AlarmType.values());
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+            return createView(position, convertView, parent);
+        }
+        @NonNull @Override
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+            return createView(position, convertView, parent);
+        }
+
+        @SuppressLint("ResourceType")
+        private View createView(int position, View convertView, ViewGroup parent)
+        {
+            View view = convertView;
+            if (view == null) {
+                LayoutInflater inflater = LayoutInflater.from(getContext());
+                view = inflater.inflate(layout, parent, false);
+            }
+
+            int[] iconAttr = { R.attr.icActionAlarm, R.attr.icActionNotification };
+            TypedArray typedArray = getContext().obtainStyledAttributes(iconAttr);
+            int res_iconAlarm = typedArray.getResourceId(0, R.drawable.ic_action_alarms);
+            int res_iconNotification = typedArray.getResourceId(1, R.drawable.ic_action_notification);
+            typedArray.recycle();
+
+            ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
+            TextView text = (TextView) view.findViewById(android.R.id.text1);
+            AlarmClockItem.AlarmType alarmType = getItem(position);
+            if (alarmType != null)
+            {
+                icon.setImageDrawable(null);
+                icon.setBackgroundResource(alarmType == AlarmClockItem.AlarmType.NOTIFICATION ? res_iconNotification : res_iconAlarm);
+                text.setText(alarmType.getDisplayString());
+            } else {
+                icon.setImageDrawable(null);
+                icon.setBackgroundResource(0);
+                text.setText("");
+            }
+
+            return view;
         }
     }
 
@@ -208,38 +319,28 @@ public class AlarmCreateDialog extends DialogFragment
         return pager.getCurrentItem();
     }
 
-    public SolarEvents getEvent()
-    {
-        AlarmDialog fragment = (AlarmDialog) adapter.getItem(0);
-        return fragment.getChoice();
+    public SolarEvents getEvent() {
+        return adapter.getEvent();
     }
 
-    public Location getLocation()
-    {
-        return WidgetSettings.loadLocationPref(getActivity(), 0);   // TODO
+    public Location getLocation() {
+        return adapter.getLocation();
     }
 
-    public int getHour()
-    {
-        AlarmTimeDialog fragment = (AlarmTimeDialog) adapter.getItem(1);
-        return fragment.getHour();
+    public int getHour() {
+        return adapter.getHour();
     }
 
-    public int getMinute()
-    {
-        AlarmTimeDialog fragment = (AlarmTimeDialog) adapter.getItem(1);
-        return fragment.getMinute();
+    public int getMinute() {
+        return adapter.getMinute();
     }
 
-    public long getDate()
-    {
+    public long getDate() {
         return System.currentTimeMillis();  // TODO
     }
 
-    public String getTimeZone()
-    {
-        AlarmTimeDialog fragment = (AlarmTimeDialog) adapter.getItem(1);
-        return fragment.getTimeZone();
+    public String getTimeZone() {
+        return adapter.getTimeZone();
     }
 
     /**
@@ -251,6 +352,46 @@ public class AlarmCreateDialog extends DialogFragment
         public DialogPagerAdapter(Context context, FragmentManager fragments) {
             super(fragments);
             this.contextRef = new WeakReference<>(context);
+            this.location = WidgetSettings.loadLocationPref(context, 0);
+        }
+
+        private Location location;
+        public Location getLocation() {
+            return location;
+        }
+
+        private AlarmClockItem.AlarmType alarmType = AlarmClockItem.AlarmType.ALARM;
+        public void setAlarmType(AlarmClockItem.AlarmType value) {
+            alarmType = value;
+            updateItems();
+        }
+
+        private SolarEvents event = SolarEvents.SUNRISE;
+        public void setEvent(SolarEvents value) {
+            event = value;
+            updateItems();
+        }
+        public SolarEvents getEvent() {
+            return ((AlarmDialog)items[0]).getChoice();
+        }
+
+        private int hour = 4, minute = 20;
+        private String timezone;
+        public void setTime(int hour, int minute, String timezone)
+        {
+            this.hour = hour;
+            this.minute = minute;
+            this.timezone = timezone;
+            updateItems();
+        }
+        public int getHour() {
+            return ((AlarmTimeDialog)items[1]).getHour();
+        }
+        public int getMinute() {
+            return ((AlarmTimeDialog)items[1]).getMinute();
+        }
+        public String getTimeZone() {
+            return ((AlarmTimeDialog)items[1]).getTimeZone();
         }
 
         @Override
@@ -264,37 +405,60 @@ public class AlarmCreateDialog extends DialogFragment
             }
         }
 
-        private Fragment[] items = new Fragment[2];
+        protected Fragment[] items = new Fragment[2];
+        public int getItemId(int position) {
+            return items[position].getId();
+        }
+
+        private void updateItems()
+        {
+            if (items[0] != null)
+            {
+                AlarmDialog page0 = (AlarmDialog) items[0];
+                page0.setType(alarmType);
+                initEventDialog(contextRef.get(), page0, WidgetSettings.loadLocationPref(contextRef.get(), 0));
+                page0.updateViews(contextRef.get());
+            }
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position)
+        {
+            Fragment fragment = (Fragment) super.instantiateItem(container, position);
+            switch (position)
+            {
+                case 0:
+                    items[0] = (AlarmDialog) fragment;
+                    break;
+                case 1:
+                    items[1] = (AlarmTimeDialog) fragment;
+                    break;
+            }
+            return fragment;
+        }
 
         @Override
         public Fragment getItem(int position)
         {
-            if (items[position] != null)
+            switch (position)
             {
-                return items[position];
+                case 0:
+                    AlarmDialog alarmDialog = new AlarmDialog();
+                    alarmDialog.setType(alarmType);
+                    alarmDialog.setChoice(event);
+                    alarmDialog.setDialogShowFrame(false);
+                    initEventDialog(contextRef.get(), alarmDialog, location);
+                    return alarmDialog;
 
-            } else {
-                switch (position)
-                {
-                    case 0:
-                        AlarmDialog alarmDialog = new AlarmDialog();
-                        initEventDialog(contextRef.get(), alarmDialog, WidgetSettings.loadLocationPref(contextRef.get(), 0));
-                        alarmDialog.setChoice(SolarEvents.SUNRISE);  // TODO
-                        alarmDialog.setDialogShowFrame(false);
-                        items[0] = alarmDialog;
-                        return alarmDialog;
+                case 1:
+                    AlarmTimeDialog timeDialog = new AlarmTimeDialog();
+                    timeDialog.setTime(hour, minute);
+                    timeDialog.setTimeZone(timezone);
+                    timeDialog.set24Hour(SuntimesUtils.is24());
+                    return timeDialog;
 
-                    case 1:
-                        AlarmTimeDialog timeDialog = new AlarmTimeDialog();
-                        timeDialog.setTime(4, 20);  // TODO
-                        timeDialog.setTimeZone(null);             // TODO
-                        timeDialog.set24Hour(SuntimesUtils.is24());
-                        items[1] = timeDialog;
-                        return timeDialog;
-
-                    default:
-                        return null;
-                }
+                default:
+                    return null;
             }
         }
 
@@ -320,6 +484,7 @@ public class AlarmCreateDialog extends DialogFragment
             equinoxData.calculateData();
             dialog.setData(context, sunData, moonData, equinoxData);
         }
+
     }
 
 }

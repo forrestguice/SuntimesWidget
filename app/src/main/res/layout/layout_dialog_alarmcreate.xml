@@ -51,11 +51,15 @@
 
     </LinearLayout>
 
+    <Spinner android:id="@+id/type_spin"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        tools:listitem="@layout/layout_listitem_alarmtype"
+        android:layout_marginRight="16dp" android:layout_marginEnd="16dp" />
+
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp" android:layout_marginBottom="8dp">
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp">
 
         <android.support.design.widget.TabItem
             android:id="@+id/tab_event"
