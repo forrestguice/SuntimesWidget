@@ -702,6 +702,15 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     }
 
     @Override
+    public void onTypeChanged(AlarmClockItem forItem)
+    {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(forItem != null ? forItem.type.getDisplayString() : "");
+        }
+    }
+
+    @Override
     public void onRequestLabel(AlarmClockItem forItem) {
         pickLabel(forItem);
     }

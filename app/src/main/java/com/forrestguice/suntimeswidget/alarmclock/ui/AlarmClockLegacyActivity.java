@@ -784,6 +784,9 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     private AlarmItemAdapterListener onAdapterAction = new AlarmItemAdapterListener()
     {
         @Override
+        public void onTypeChanged(AlarmClockItem forItem) {}
+
+        @Override
         public void onRequestDialog(AlarmClockItem forItem) {
             showAlarmItemDialog(forItem);
         }
@@ -910,6 +913,9 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
 
     private AlarmItemAdapterListener alarmItemDialogListener = new AlarmItemAdapterListener()
     {
+        @Override
+        public void onTypeChanged(AlarmClockItem forItem) {}
+
         @Override
         public void onRequestLabel(AlarmClockItem forItem) { /* EMPTY */ }
 

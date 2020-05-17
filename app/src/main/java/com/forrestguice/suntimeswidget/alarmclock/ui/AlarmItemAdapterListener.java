@@ -25,6 +25,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
  */
 public interface AlarmItemAdapterListener
 {
+    void onTypeChanged(AlarmClockItem forItem);
     void onRequestLabel(AlarmClockItem forItem);
     void onRequestRingtone(AlarmClockItem forItem);
     void onRequestSolarEvent(AlarmClockItem forItem);
