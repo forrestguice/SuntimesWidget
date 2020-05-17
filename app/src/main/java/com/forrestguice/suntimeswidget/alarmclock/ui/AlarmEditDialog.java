@@ -68,6 +68,7 @@ public class AlarmEditDialog extends DialogFragment
     {
         this.original = (addItem ? null : item);
         this.item = new AlarmClockItem(item);
+        this.item.modified = false;
         bindItemToHolder(item);
     }
     public AlarmClockItem getItem() {
@@ -75,6 +76,10 @@ public class AlarmEditDialog extends DialogFragment
     }
     public AlarmClockItem getOriginal() {
         return original;
+    }
+
+    public boolean isModified() {
+        return (item != null && item.modified);
     }
 
     public void notifyItemChanged() {
