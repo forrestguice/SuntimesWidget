@@ -208,16 +208,14 @@ public class AlarmDialog extends BottomSheetDialogFragment
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));    // hack: contextWrapper required because base theme is not properly applied
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_schedalarm, parent, false);
 
-        initViews(getContext(), dialogContent);
-        if (savedState != null)
-        {
-            //Log.d("DEBUG", "AlarmDialog onCreate (restoreState)");
+        if (savedState != null) {
             loadSettings(savedState);
-
         } else {
-            //Log.d("DEBUG", "AlarmDialog onCreate (newState)");
             loadSettings(getActivity());
         }
+
+        initViews(getActivity(), dialogContent);
+        updateViews(getActivity());
 
         return dialogContent;
     }
@@ -253,6 +251,8 @@ public class AlarmDialog extends BottomSheetDialogFragment
     private TextView txt_note;
     private ImageView icon_note;
     private TextView txt_location;
+    private TextView txt_modeLabel;
+    private TextView txt_title;
 
     protected void initViews( final Context context, View dialogContent )
     {
@@ -273,15 +273,11 @@ public class AlarmDialog extends BottomSheetDialogFragment
         }
 
         spinner_scheduleMode = (Spinner) dialogContent.findViewById(R.id.appwidget_schedalarm_mode);
-        if (adapter != null)
-        {
+        if (adapter != null) {
             spinner_scheduleMode.setAdapter(adapter);
         }
 
-        TextView txt_modeLabel = (TextView) dialogContent.findViewById(R.id.appwidget_schedalarm_mode_label);
-        if (txt_modeLabel != null) {
-            txt_modeLabel.setText(type == AlarmClockItem.AlarmType.NOTIFICATION ? getString(R.string.configLabel_schednotify_mode) : getString(R.string.configLabel_schedalarm_mode) );
-        }
+        txt_modeLabel = (TextView) dialogContent.findViewById(R.id.appwidget_schedalarm_mode_label);
 
         spinner_scheduleMode.setOnItemSelectedListener(
                 new Spinner.OnItemSelectedListener()
@@ -330,9 +326,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
                 }
         );
 
-        String titleString = (dialogTitle != null) ? dialogTitle : context.getString(R.string.configAction_setAlarm);
-        TextView txt_title = (TextView) dialogContent.findViewById(R.id.dialog_title);
-        txt_title.setText(titleString);
+        txt_title = (TextView) dialogContent.findViewById(R.id.dialog_title);
 
         Button btn_cancel = (Button) dialogContent.findViewById(R.id.dialog_button_cancel);
         btn_cancel.setOnClickListener(onDialogCancelClick);
@@ -347,6 +341,19 @@ public class AlarmDialog extends BottomSheetDialogFragment
 
             View footer = dialogContent.findViewById(R.id.dialog_frame_footer);
             footer.setVisibility(View.GONE);
+        }
+    }
+
+    public void updateViews(Context context)
+    {
+        if (txt_title != null)
+        {
+            String titleString = (dialogTitle != null) ? dialogTitle : context.getString(R.string.configAction_setAlarm);
+            txt_title.setText(titleString);
+        }
+
+        if (txt_modeLabel != null) {
+            txt_modeLabel.setText(type == AlarmClockItem.AlarmType.NOTIFICATION ? getString(R.string.configLabel_schednotify_mode) : getString(R.string.configLabel_schedalarm_mode) );
         }
     }
 
