@@ -60,7 +60,7 @@
         </LinearLayout>
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/layout_main1"
+            android:id="@+id/layout_main1" android:clipChildren="false"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:gravity="center_vertical"
             android:layout_marginLeft="6dp" android:layout_marginRight="6dp" android:layout_marginTop="16dp">
@@ -79,7 +79,7 @@
 
             <TextView
                 android:id="@+id/text_datetime"
-                android:layout_width="0dp" android:layout_height="67dp"
+                android:layout_width="wrap_content" android:layout_height="67dp"
                 android:layout_marginTop="8dp" android:layout_marginBottom="24dp"
                 android:ellipsize="end"
                 android:gravity="center"

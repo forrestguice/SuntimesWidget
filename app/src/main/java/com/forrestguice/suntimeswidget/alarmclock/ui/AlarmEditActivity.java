@@ -23,7 +23,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.media.Ringtone;
@@ -54,7 +53,6 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.actions.LoadActionDialog;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
@@ -271,7 +269,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             Intent intent = getIntent();
             intent.putExtra(AlarmEditActivity.EXTRA_ITEM, editor.getItem());
             setResult(Activity.RESULT_OK, intent);
-            finish();
+            supportFinishAfterTransition();
         }
     };
 

@@ -611,7 +611,7 @@ public class AlarmListDialog extends DialogFragment
         private void attachClickListeners(@NonNull final AlarmListDialogItem holder, final int position)
         {
             if (holder.card != null) {
-                holder.card.setOnClickListener(itemClickListener(position));
+                holder.card.setOnClickListener(itemClickListener(position, holder));
                 //holder.card.setOnLongClickListener(itemLongClickListener(position));
             }
             if (holder.overflow != null) {
@@ -650,13 +650,13 @@ public class AlarmListDialog extends DialogFragment
             }
         }
 
-        private View.OnClickListener itemClickListener(final int position)
+        private View.OnClickListener itemClickListener(final int position, final AlarmListDialogItem holder)
         {
             return new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (listener != null) {
-                        listener.onItemClicked(items.get(position));
+                        listener.onItemClicked(items.get(position), holder);
                     }
                     setSelectedIndex(position);
                 }
@@ -1152,10 +1152,10 @@ public class AlarmListDialog extends DialogFragment
     protected AdapterListener adapterListener = new AdapterListener()
     {
         @Override
-        public void onItemClicked(AlarmClockItem item)
+        public void onItemClicked(AlarmClockItem item, AlarmListDialogItem holder)
         {
             if (listener != null) {
-                listener.onItemClicked(item);
+                listener.onItemClicked(item, holder);
             }
         }
 
@@ -1201,7 +1201,7 @@ public class AlarmListDialog extends DialogFragment
 
     public interface AdapterListener
     {
-        void onItemClicked(AlarmClockItem item);
+        void onItemClicked(AlarmClockItem item, AlarmListDialogItem view);
         boolean onItemLongClicked(AlarmClockItem item);
         void onAlarmToggled(AlarmClockItem item, boolean enabled);
         void onAlarmAdded(AlarmClockItem item);

@@ -21,7 +21,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
@@ -158,6 +160,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
             text_datetime_offset.setText(text_offset.getText());
             text_datetime.setText(displayAlarmTime(context, item));
+            ViewCompat.setTransitionName(text_datetime, "transition_" + item.rowID);
             text_date.setText(displayAlarmDate(context, item));
 
             int eventType = item.event == null ? -1 : item.event.getType();
@@ -166,6 +169,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         } else {
             text_datetime_offset.setText("");
             text_datetime.setText("");
+            ViewCompat.setTransitionName(text_datetime, null);
             text_date.setText("");
             edit_label.setText("");
             text_offset.setText("");
@@ -190,7 +194,6 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         chip_action0.setOnClickListener(null);
         chip_action1.setOnClickListener(null);
     }
-
 
     public static CharSequence displayAlarmLabel(Context context, AlarmClockItem item)
     {
