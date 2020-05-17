@@ -34,11 +34,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.AlarmClock;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -93,20 +96,9 @@ public class AlarmClockActivity extends AppCompatActivity
     public static final String EXTRA_SELECTED_ALARM = "selectedAlarm";
 
     public static final int REQUEST_EDITALARM = 1;
-    public static final int REQUEST_RINGTONE = 10;
     public static final int REQUEST_SETTINGS = 20;
-    public static final int REQUEST_STORAGE_PERMISSION = 30;
 
-    private static final String DIALOGTAG_ITEM = "alarmitem";
-    private static final String DIALOGTAG_EVENT_FAB = "alarmeventfab";
-    private static final String DIALOGTAG_EVENT = "alarmevent";
-    private static final String DIALOGTAG_REPEAT = "alarmrepetition";
-    private static final String DIALOGTAG_LABEL = "alarmlabel";
-    private static final String DIALOGTAG_TIME = "alarmtime";
-    private static final String DIALOGTAG_OFFSET = "alarmoffset";
-    private static final String DIALOGTAG_LOCATION = "alarmlocation";
-    private static final String DIALOGTAG_ACTION = "alarmaction";
-    private static final String DIALOGTAG_HELP = "help";
+    private static final String DIALOGTAG_CREATE_FAB = "alarmeventfab";
 
     public static final String WARNINGID_NOTIFICATIONS = "NotificationsWarning";
 
@@ -192,23 +184,9 @@ public class AlarmClockActivity extends AppCompatActivity
             case REQUEST_SETTINGS:
                 onSettingsResult(resultCode, data);
                 break;
-
-            case REQUEST_RINGTONE:
-                onRingtoneResult(resultCode, data);
-                break;
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
-    {
-        switch (requestCode)
-        {
-            case REQUEST_STORAGE_PERMISSION:
-                onRingtonePermissionResult(permissions, grantResults);
-                break;
-        }
-    }
 
     private String appTheme;
     private int appThemeResID;
@@ -391,16 +369,14 @@ public class AlarmClockActivity extends AppCompatActivity
 
     private AlarmListDialog.AdapterListener listAdapter = new AlarmListDialog.AdapterListener() {
         @Override
-        public void onItemClicked(AlarmClockItem item) {
+        public void onItemClicked(AlarmClockItem item, AlarmListDialog.AlarmListDialogItem view) {
             if (list.getSelectedRowID() == item.rowID) {
-                //showAlarmItemDialog(item, false);
-                showAlarmEditActivity(item);
+                showAlarmEditActivity(item, view.text_datetime);
             }
         }
 
         @Override
         public boolean onItemLongClicked(AlarmClockItem item) {
-            showAlarmItemDialog(item, false);
             return true;
         }
 
@@ -454,47 +430,18 @@ public class AlarmClockActivity extends AppCompatActivity
         public void onClick(DialogInterface d, int which)
         {
             FragmentManager fragments = getSupportFragmentManager();
-            AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
-            AlarmClockItem item = createAlarm(dialog, AlarmClockItem.AlarmType.ALARM, true);
-        }
-    };
-    private DialogInterface.OnClickListener onAddNotificationAccepted = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface d, int which)
-        {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
-            AlarmClockItem item = createAlarm(dialog, AlarmClockItem.AlarmType.NOTIFICATION, true);
+            AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_CREATE_FAB);
+            AlarmClockItem item = createAlarm(dialog, dialog.getAlarmType(), true);
         }
     };
 
-    protected void showAlarmEditActivity(@NonNull AlarmClockItem item)
+    protected void showAlarmEditActivity(@NonNull AlarmClockItem item, @NonNull View sharedView)
     {
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, sharedView, ViewCompat.getTransitionName(sharedView));
         Intent intent = new Intent(this, AlarmEditActivity.class);
         intent.putExtra(AlarmEditActivity.EXTRA_ITEM, item);
-        startActivityForResult(intent, REQUEST_EDITALARM);
+        startActivityForResult(intent, REQUEST_EDITALARM, options.toBundle());
     }
-
-    protected void showAlarmItemDialog(@NonNull AlarmClockItem item, boolean addItem)
-    {
-        AlarmEditDialog dialog = new AlarmEditDialog();
-        dialog.initFromItem(item, addItem);
-        dialog.setAlarmClockAdapterListener(alarmItemDialogListener);
-        dialog.setOnAcceptedListener(onItemDialogAccepted);
-        dialog.show(getSupportFragmentManager(), DIALOGTAG_ITEM);
-    }
-
-    private DialogInterface.OnClickListener onItemDialogAccepted = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which)
-        {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmEditDialog itemDialog = (AlarmEditDialog)fragments.findFragmentByTag(DIALOGTAG_ITEM);
-            AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, (itemDialog.getOriginal() == null), false);
-            task.setTaskListener(onUpdateItem);
-            task.execute(itemDialog.getItem());
-        }
-    };
     private AlarmDatabaseAdapter.AlarmItemTaskListener onUpdateItem = new AlarmDatabaseAdapter.AlarmItemTaskListener()
     {
         @Override
@@ -513,62 +460,16 @@ public class AlarmClockActivity extends AppCompatActivity
         }
     };
 
-    private AlarmItemAdapterListener alarmItemDialogListener = new AlarmItemAdapterListener()
-    {
-        @Override
-        public void onRequestLabel(AlarmClockItem forItem) {
-            pickLabel(forItem);
-        }
-
-        @Override
-        public void onRequestRingtone(AlarmClockItem forItem) {
-            pickRingtone(forItem);
-        }
-
-        @Override
-        public void onRequestSolarEvent(AlarmClockItem forItem) {
-            pickSolarEvent(forItem);
-        }
-
-        @Override
-        public void onRequestLocation(AlarmClockItem forItem) {
-            pickLocation(forItem);
-        }
-
-        @Override
-        public void onRequestTime(AlarmClockItem forItem) {
-            // TODO
-        }
-
-        @Override
-        public void onRequestOffset(AlarmClockItem forItem) {
-            pickOffset(forItem);
-        }
-
-        @Override
-        public void onRequestRepetition(AlarmClockItem forItem) {
-            pickRepetition(forItem);
-        }
-
-        @Override
-        public void onRequestAction(AlarmClockItem forItem, int actionNum) {
-            pickAction(forItem, actionNum);
-        }
-
-        @Override
-        public void onRequestDialog(AlarmClockItem forItem) { /* EMPTY */ }
-    };
-
-
     protected void showAddDialog(AlarmClockItem.AlarmType type)
     {
         FragmentManager fragments = getSupportFragmentManager();
-        AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
+        AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_CREATE_FAB);
         if (dialog == null)
         {
             dialog = new AlarmCreateDialog();
-            dialog.setOnAcceptedListener( type == AlarmClockItem.AlarmType.ALARM ? onAddAlarmAccepted : onAddNotificationAccepted );
-            dialog.show(fragments, DIALOGTAG_EVENT_FAB);
+            dialog.setAlarmType(type);
+            dialog.setOnAcceptedListener(onAddAlarmAccepted);
+            dialog.show(fragments, DIALOGTAG_CREATE_FAB);
         }
     }
 
@@ -596,79 +497,16 @@ public class AlarmClockActivity extends AppCompatActivity
         return list.createAlarm(AlarmClockActivity.this, type, "", event, dialog.getLocation(), hour, minute, timezone, AlarmSettings.loadPrefVibrateDefault(this), AlarmSettings.getDefaultRingtoneUri(this, type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS, addToDatabase);
     }
 
-    /**
-     * updateViews
-     * @param context context
-     */
     protected void updateViews(Context context) {
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected void restoreDialogs()
     {
         FragmentManager fragments = getSupportFragmentManager();
-
-        AlarmEditDialog alarmEditDialog = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
-        if (alarmEditDialog != null) {
-            alarmEditDialog.setAlarmClockAdapterListener(alarmItemDialogListener);
-            alarmEditDialog.setOnAcceptedListener(onItemDialogAccepted);
+        AlarmCreateDialog alarmCreateDialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_CREATE_FAB);
+        if (alarmCreateDialog != null) {
+            alarmCreateDialog.setOnAcceptedListener(onAddAlarmAccepted);
         }
-
-        //AlarmDialog eventDialog0 = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
-        //if (eventDialog0 != null)
-        //{
-            // TODO
-            //initEventDialog(eventDialog0, null);
-            //eventDialog0.setOnAcceptedListener((eventDialog0.getType() == AlarmClockItem.AlarmType.ALARM) ? onAddAlarmAccepted : onAddNotificationAccepted);
-        //}
-
-        AlarmDialog eventDialog1 = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
-        if (eventDialog1 != null)
-        {
-            //initEventDialog(eventDialog1, t_selectedLocation);  // TODO
-            eventDialog1.setOnAcceptedListener(onSolarEventChanged);
-        }
-
-        AlarmRepeatDialog repeatDialog = (AlarmRepeatDialog) fragments.findFragmentByTag(DIALOGTAG_REPEAT);
-        if (repeatDialog != null) {
-            repeatDialog.setOnAcceptedListener(onRepetitionChanged);
-        }
-
-        AlarmLabelDialog labelDialog = (AlarmLabelDialog) fragments.findFragmentByTag(DIALOGTAG_LABEL);
-        if (labelDialog != null)
-        {
-            labelDialog.setOnAcceptedListener(onLabelChanged);
-        }
-
-        for (int i=0; i<2; i++)
-        {
-            LoadActionDialog actionDialog = (LoadActionDialog) fragments.findFragmentByTag(DIALOGTAG_ACTION + i);
-            if (actionDialog != null) {
-                actionDialog.setOnAcceptedListener(onActionChanged(i));
-            }
-        }
-
-        LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOGTAG_LOCATION);
-        if (locationDialog != null) {
-            locationDialog.setDialogListener(onLocationChanged);
-        }
-
-        //AlarmTimeDialog timeDialog = (AlarmTimeDialog) fragments.findFragmentByTag(DIALOGTAG_TIME);
-        //if (timeDialog != null)
-        //{
-        //timeDialog.setOnAcceptedListener(onTimeChanged);
-        //}
-
-        if (Build.VERSION.SDK_INT >= 11)
-        {
-            AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) fragments.findFragmentByTag(DIALOGTAG_OFFSET);
-            if (offsetDialog != null) {
-                offsetDialog.setOnAcceptedListener(onOffsetChanged);
-            }
-        } // else // TODO
-
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -814,7 +652,8 @@ public class AlarmClockActivity extends AppCompatActivity
     private View.OnClickListener onFabMenuClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            toggleFabMenu();
+            showAddDialog(AlarmClockItem.AlarmType.ALARM);
+            //toggleFabMenu();
         }
     };
 
@@ -893,323 +732,5 @@ public class AlarmClockActivity extends AppCompatActivity
             }
         }
     };
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * pickRingtone
-     * @param item apply ringtone to AlarmClockItem
-     */
-    protected void pickRingtone(@NonNull final AlarmClockItem item)
-    {
-        if (Build.VERSION.SDK_INT >= 16)
-        {
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-            {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.READ_EXTERNAL_STORAGE))
-                {
-                    AlertDialog.Builder requestDialog = new AlertDialog.Builder(this);
-                    requestDialog.setMessage(Html.fromHtml(getString(R.string.privacy_permission_storage1) + "<br/><br/>" + getString(R.string.privacy_permissiondialog_prompt)));
-                    requestDialog.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //noinspection ConstantConditions
-                            if (Build.VERSION.SDK_INT >= 16) {
-                                ActivityCompat.requestPermissions(AlarmClockActivity.this, new String[] { android.Manifest.permission.READ_EXTERNAL_STORAGE }, REQUEST_STORAGE_PERMISSION );
-                            }
-                        }
-                    });
-                    requestDialog.setNegativeButton(getString(R.string.privacy_permissiondialog_ignore), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ringtonePicker(item);
-                        }
-                    });
-                    requestDialog.show();
-
-                } else {
-                    ActivityCompat.requestPermissions(this, new String[] { android.Manifest.permission.READ_EXTERNAL_STORAGE }, REQUEST_STORAGE_PERMISSION );
-                }
-            } else ringtonePicker(item);
-        } else ringtonePicker(item);
-    }
-
-    protected void ringtonePicker(@NonNull AlarmClockItem item)
-    {
-        int ringtoneType = RingtoneManager.TYPE_RINGTONE;
-        if (!AlarmSettings.loadPrefAllRingtones(this)) {
-            ringtoneType = (item.type == AlarmClockItem.AlarmType.NOTIFICATION ? RingtoneManager.TYPE_NOTIFICATION : RingtoneManager.TYPE_ALARM);
-        }
-
-        Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, ringtoneType);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, item.type.getDisplayString());
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, AlarmSettings.getDefaultRingtoneUri(this, item.type));
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (item.ringtoneURI != null ? Uri.parse(item.ringtoneURI) : null));
-        startActivityForResult(intent, REQUEST_RINGTONE);
-    }
-
-    protected void onRingtonePermissionResult(@NonNull String[] permissions, @NonNull int[] grantResults)
-    {
-        FragmentManager fragments = getSupportFragmentManager();
-        AlarmEditDialog dialog = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
-        if (dialog != null) {
-            ringtonePicker(dialog.getItem());
-        }
-    }
-
-    protected void onRingtoneResult(int resultCode, Intent data)
-    {
-        FragmentManager fragments = getSupportFragmentManager();
-        AlarmEditDialog itemDialog = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
-
-        if (resultCode == RESULT_OK && itemDialog != null && data != null)
-        {
-            AlarmClockItem item = itemDialog.getItem();
-            Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-            if (uri != null)
-            {
-                Ringtone ringtone = RingtoneManager.getRingtone(this, uri);
-                if (ringtone != null)
-                {
-                    String ringtoneName = ringtone.getTitle(this);
-                    ringtone.stop();
-
-                    item.ringtoneName = ringtoneName;
-                    item.ringtoneURI = uri.toString();
-                    Log.d(TAG, "onActivityResult: uri: " + item.ringtoneURI + ", title: " + ringtoneName);
-
-                } else {
-                    item.ringtoneName = null;
-                    item.ringtoneURI = null;
-                    Log.d(TAG, "onActivityResult: uri: " + uri + " <null ringtone>");
-                }
-
-            } else {
-                item.ringtoneName = null;
-                item.ringtoneURI = null;
-                Log.d(TAG, "onActivityResult: null uri");
-            }
-            itemDialog.notifyItemChanged();
-
-        } else {
-            Log.d(TAG, "onActivityResult: bad result: " + resultCode + ", " + data);
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * pickLabel
-     */
-    protected void pickLabel(@NonNull AlarmClockItem item)
-    {
-        AlarmLabelDialog dialog = new AlarmLabelDialog();
-        dialog.setAccentColor(colorAlarmEnabled);
-        dialog.setOnAcceptedListener(onLabelChanged);
-        dialog.setLabel(item.label);
-        dialog.show(getSupportFragmentManager(), DIALOGTAG_LABEL);
-    }
-    private DialogInterface.OnClickListener onLabelChanged = new DialogInterface.OnClickListener()
-    {
-        @Override
-        public void onClick(DialogInterface d, int which)
-        {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmLabelDialog dialog = (AlarmLabelDialog) fragments.findFragmentByTag(DIALOGTAG_LABEL);
-            AlarmEditDialog dialog1 = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
-
-            if (dialog1 != null && dialog != null)
-            {
-                AlarmClockItem item = dialog1.getItem();
-                item.label = dialog.getLabel();
-                dialog1.notifyItemChanged();
-            }
-        }
-    };
-
-    /**
-     * pickOffset
-     */
-    protected void pickOffset(@NonNull AlarmClockItem item)
-    {
-        if (Build.VERSION.SDK_INT >= 11)
-        {
-            int eventType = item.event != null ? item.event.getType() : -1;
-            AlarmOffsetDialog offsetDialog = new AlarmOffsetDialog();
-            offsetDialog.setShowDays(eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON);
-            offsetDialog.setOffset(item.offset);
-            offsetDialog.setOnAcceptedListener(onOffsetChanged);
-            offsetDialog.show(getSupportFragmentManager(), DIALOGTAG_OFFSET + 1);
-
-        }  else {
-            Toast.makeText(getApplicationContext(), getString(R.string.feature_not_supported_by_api, Integer.toString(Build.VERSION.SDK_INT)), Toast.LENGTH_SHORT).show();  // TODO: support api10 requires alternative to TimePicker
-        }
-    }
-
-    private DialogInterface.OnClickListener onOffsetChanged = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which)
-        {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmOffsetDialog offsetDialog = (AlarmOffsetDialog) fragments.findFragmentByTag(DIALOGTAG_OFFSET + 1);
-            AlarmEditDialog itemDialog = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
-
-            if (itemDialog != null && offsetDialog != null)
-            {
-                AlarmClockItem item = itemDialog.getItem();
-                item.offset = offsetDialog.getOffset();
-                AlarmNotifications.updateAlarmTime(AlarmClockActivity.this, item);
-                itemDialog.notifyItemChanged();
-            }
-        }
-    };
-
-    /**
-     * pickSolarEvent
-     */
-    protected void pickSolarEvent(@NonNull AlarmClockItem item)
-    {
-        final AlarmDialog dialog = new AlarmDialog();
-        dialog.setDialogTitle((item.type == AlarmClockItem.AlarmType.NOTIFICATION) ? getString(R.string.configAction_addNotification) : getString(R.string.configAction_addAlarm));
-        initEventDialog(dialog, item.location);
-        dialog.setChoice(item.event);
-        dialog.setOnAcceptedListener(onSolarEventChanged);
-        dialog.show(getSupportFragmentManager(), DIALOGTAG_EVENT);
-    }
-    private void initEventDialog(AlarmDialog dialog, Location forLocation)
-    {
-        SuntimesRiseSetDataset sunData = new SuntimesRiseSetDataset(this, 0);
-        SuntimesMoonData moonData = new SuntimesMoonData(this, 0);
-        SuntimesEquinoxSolsticeDataset equinoxData = new SuntimesEquinoxSolsticeDataset(this, 0);
-
-        if (forLocation != null) {
-            sunData.setLocation(forLocation);
-            moonData.setLocation(forLocation);
-            equinoxData.setLocation(forLocation);
-        }
-
-        sunData.calculateData();
-        moonData.calculate();
-        equinoxData.calculateData();
-        dialog.setData(this, sunData, moonData, equinoxData);
-    }
-    private DialogInterface.OnClickListener onSolarEventChanged = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface d, int which)
-        {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmDialog dialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
-            AlarmEditDialog dialog1 = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
-
-            if (dialog1 != null && dialog != null)
-            {
-                AlarmClockItem item = dialog1.getItem();
-                item.event = dialog.getChoice();
-                AlarmNotifications.updateAlarmTime(AlarmClockActivity.this, item);
-                dialog1.notifyItemChanged();
-            }
-        }
-    };
-
-    /**
-     * pickLocation
-     */
-    protected void pickLocation(@NonNull AlarmClockItem item)
-    {
-        final LocationConfigDialog dialog = new LocationConfigDialog();
-        dialog.setHideTitle(true);
-        dialog.setHideMode(true);
-        dialog.setLocation(this, item.location);
-        dialog.setDialogListener(onLocationChanged);
-        dialog.show(getSupportFragmentManager(), DIALOGTAG_LOCATION + 1);
-    }
-    private LocationConfigDialog.LocationConfigDialogListener onLocationChanged = new LocationConfigDialog.LocationConfigDialogListener()
-    {
-        @Override
-        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
-        {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmEditDialog itemDialog = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
-            if (itemDialog != null)
-            {
-                AlarmClockItem item = itemDialog.getItem();
-                item.location = location;
-                AlarmNotifications.updateAlarmTime(AlarmClockActivity.this, item);
-                itemDialog.notifyItemChanged();
-                return true;
-            }
-            return false;
-        }
-    };
-
-    /**
-     * pickRepetition
-     */
-    protected void pickRepetition(@NonNull AlarmClockItem item)
-    {
-        AlarmRepeatDialog repeatDialog = new AlarmRepeatDialog();
-        repeatDialog.setColorOverrides(colorOn, colorOff, colorDisabled, colorPressed);
-        repeatDialog.setRepetition(item.repeating, item.repeatingDays);
-        repeatDialog.setOnAcceptedListener(onRepetitionChanged);
-        repeatDialog.show(getSupportFragmentManager(), DIALOGTAG_REPEAT + 1);
-    }
-    private DialogInterface.OnClickListener onRepetitionChanged = new DialogInterface.OnClickListener()
-    {
-        public void onClick(DialogInterface dialog, int whichButton)
-        {
-            FragmentManager fragments = getSupportFragmentManager();
-            AlarmRepeatDialog repeatDialog = (AlarmRepeatDialog) fragments.findFragmentByTag(DIALOGTAG_REPEAT + 1);
-            AlarmEditDialog itemDialog = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
-
-            if (itemDialog != null && repeatDialog != null)
-            {
-                AlarmClockItem item = itemDialog.getItem();
-                item.repeating = repeatDialog.getRepetition();
-                item.repeatingDays = repeatDialog.getRepetitionDays();
-                AlarmNotifications.updateAlarmTime(AlarmClockActivity.this, item);
-                itemDialog.notifyItemChanged();
-            }
-        }
-    };
-
-    /**
-     * pickAction
-     */
-    protected void pickAction(@NonNull final AlarmClockItem item, final int actionNum)
-    {
-        final LoadActionDialog loadDialog = new LoadActionDialog();
-        loadDialog.setOnAcceptedListener(onActionChanged(actionNum));
-        loadDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-                loadDialog.setSelected(item.getActionID(actionNum));
-            }
-        });
-        loadDialog.show(getSupportFragmentManager(), DIALOGTAG_ACTION + actionNum);
-    }
-    private DialogInterface.OnClickListener onActionChanged(final int actionNum)
-    {
-        return new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface d, int which)
-            {
-                FragmentManager fragments = getSupportFragmentManager();
-                LoadActionDialog dialog = (LoadActionDialog) fragments.findFragmentByTag(DIALOGTAG_ACTION + actionNum);
-                AlarmEditDialog dialog1 = (AlarmEditDialog) fragments.findFragmentByTag(DIALOGTAG_ITEM);
-                if (dialog != null && dialog1 != null)
-                {
-                    AlarmClockItem item = dialog1.getItem();
-                    item.setActionID(actionNum, dialog.getIntentID());
-                    dialog1.notifyItemChanged();
-                }
-            }
-        };
-    }
 
 }
