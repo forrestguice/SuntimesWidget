@@ -86,6 +86,7 @@ public class AlarmEditDialog extends DialogFragment
     {
         if (itemView != null)
         {
+            detachClickListeners(itemView);
             itemView.bindDataToPosition(getActivity(), item, 0);
             itemView.menu_overflow.setVisibility(getArguments().getBoolean(EXTRA_SHOW_OVERFLOW, true) ? View.VISIBLE : View.GONE);
             attachClickListeners(itemView, 0);
@@ -346,6 +347,21 @@ public class AlarmEditDialog extends DialogFragment
         holder.check_vibrate.setOnCheckedChangeListener(pickVibrating());
         holder.chip_action0.setOnClickListener(pickAction(0));
         holder.chip_action1.setOnClickListener(pickAction(1));
+    }
+
+    private void detachClickListeners(@NonNull AlarmEditViewHolder holder)
+    {
+        holder.menu_type.setOnClickListener(null);
+        holder.menu_overflow.setOnClickListener(null);
+        holder.edit_label.setOnClickListener(null);
+        holder.chip_offset.setOnClickListener(null);
+        holder.chip_event.setOnClickListener(null);
+        holder.chip_location.setOnClickListener(null);
+        holder.chip_repeat.setOnClickListener(null);
+        holder.chip_ringtone.setOnClickListener(null);
+        holder.check_vibrate.setOnCheckedChangeListener(null);
+        holder.chip_action0.setOnClickListener(null);
+        holder.chip_action1.setOnClickListener(null);
     }
 
     protected AlarmItemAdapterListener listener;
