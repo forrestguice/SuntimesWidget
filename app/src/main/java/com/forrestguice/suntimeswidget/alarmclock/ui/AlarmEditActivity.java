@@ -384,7 +384,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     {
         String message = context.getString(R.string.deletealarm_dialog_message, AlarmEditViewHolder.displayAlarmLabel(context, item), AlarmEditViewHolder.displayAlarmTime(context, item), AlarmEditViewHolder.displayEvent(context, item));
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
-                .setTitle(context.getString(R.string.deletealarm_dialog_title)).setMessage(message).setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(context.getString(R.string.deletealarm_dialog_title)).setMessage(message).setIcon(R.drawable.ic_action_discard)
                 .setPositiveButton(context.getString(R.string.deletealarm_dialog_ok), new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int whichButton) {
