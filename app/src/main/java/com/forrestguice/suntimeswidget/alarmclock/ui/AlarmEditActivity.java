@@ -348,7 +348,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 return true;
 
             case R.id.action_delete:
-                confirmDeleteAlarm(AlarmEditActivity.this, editor.getItem());
+                AlarmEditDialog.confirmDeleteAlarm(AlarmEditActivity.this, editor.getItem(), onDeleteConfirmed(editor.getItem()));
                 return true;
 
             case R.id.action_about:
@@ -380,21 +380,16 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
-    protected void confirmDeleteAlarm(final Context context, final AlarmClockItem item)
+    protected DialogInterface.OnClickListener onDeleteConfirmed( final AlarmClockItem item )
     {
-        String message = context.getString(R.string.deletealarm_dialog_message, AlarmEditViewHolder.displayAlarmLabel(context, item), AlarmEditViewHolder.displayAlarmTime(context, item), AlarmEditViewHolder.displayEvent(context, item));
-        AlertDialog.Builder confirm = new AlertDialog.Builder(context)
-                .setTitle(context.getString(R.string.deletealarm_dialog_title)).setMessage(message).setIcon(R.drawable.ic_action_discard)
-                .setPositiveButton(context.getString(R.string.deletealarm_dialog_ok), new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        setResult(AlarmEditActivity.RESULT_CANCELED);
-                        supportFinishAfterTransition();
-                        context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DELETE, item.getUri()));
-                    }
-                })
-                .setNegativeButton(context.getString(R.string.deletealarm_dialog_cancel), null);
-        confirm.show();
+       return new DialogInterface.OnClickListener()
+       {
+           public void onClick(DialogInterface dialog, int whichButton) {
+               setResult(AlarmEditActivity.RESULT_CANCELED);
+               supportFinishAfterTransition();
+               sendBroadcast(AlarmNotifications.getAlarmIntent(AlarmEditActivity.this, AlarmNotifications.ACTION_DELETE, item.getUri()));
+           }
+       };
     }
 
     protected void confirmDiscardChanges(final Context context)
@@ -403,8 +398,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         {
             String message = context.getString(R.string.discardchanges_dialog_message);
             AlertDialog.Builder confirm = new AlertDialog.Builder(context).setMessage(message).setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton(context.getString(R.string.discardchanges_dialog_ok), new DialogInterface.OnClickListener()
-                    {
+                    .setPositiveButton(context.getString(R.string.discardchanges_dialog_ok), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             onBackPressed();
                         }

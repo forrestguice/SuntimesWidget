@@ -330,7 +330,9 @@ public class AlarmEditDialog extends DialogFragment
             {
                 switch (menuItem.getItemId())
                 {
-                    // TODO
+                    case R.id.deleteAlarm:
+                        confirmDeleteAlarm(getActivity(), item, onDeleteConfirmed(item));
+                        return true;
 
                     default:
                         return false;
@@ -341,6 +343,26 @@ public class AlarmEditDialog extends DialogFragment
         SuntimesUtils.forceActionBarIcons(menu.getMenu());
         menu.show();
     }
+
+    public static void confirmDeleteAlarm(final Context context, final AlarmClockItem item, DialogInterface.OnClickListener onDeleteConfirmed)
+    {
+        String message = context.getString(R.string.deletealarm_dialog_message, AlarmEditViewHolder.displayAlarmLabel(context, item), AlarmEditViewHolder.displayAlarmTime(context, item), AlarmEditViewHolder.displayEvent(context, item));
+        AlertDialog.Builder confirm = new AlertDialog.Builder(context)
+                .setTitle(context.getString(R.string.deletealarm_dialog_title)).setMessage(message).setIcon(R.drawable.ic_action_discard)
+                .setPositiveButton(context.getString(R.string.deletealarm_dialog_ok), onDeleteConfirmed)
+                .setNegativeButton(context.getString(R.string.deletealarm_dialog_cancel), null);
+        confirm.show();
+    }
+
+    protected DialogInterface.OnClickListener onDeleteConfirmed( final AlarmClockItem item ) {
+        return new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                getActivity().sendBroadcast(AlarmNotifications.getAlarmIntent(getActivity(), AlarmNotifications.ACTION_DELETE, item.getUri()));
+                dialog.cancel();
+            }
+        };
+    }
+
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////

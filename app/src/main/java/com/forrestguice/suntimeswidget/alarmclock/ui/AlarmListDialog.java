@@ -253,20 +253,12 @@ public class AlarmListDialog extends DialogFragment
         reloadAdapter();
     }
 
-    public static void confirmDeleteAlarm(final Context context, final AlarmClockItem item)
-    {
-        String message = context.getString(R.string.deletealarm_dialog_message, AlarmEditViewHolder.displayAlarmLabel(context, item), AlarmEditViewHolder.displayAlarmTime(context, item), AlarmEditViewHolder.displayEvent(context, item));
-        AlertDialog.Builder confirm = new AlertDialog.Builder(context)
-                .setTitle(context.getString(R.string.deletealarm_dialog_title))
-                .setMessage(message).setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(context.getString(R.string.deletealarm_dialog_ok), new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DELETE, item.getUri()));
-                    }
-                })
-                .setNegativeButton(context.getString(R.string.deletealarm_dialog_cancel), null);
-        confirm.show();
+    protected static DialogInterface.OnClickListener onDeleteConfirmed(final Context context, final AlarmClockItem item) {
+        return new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DELETE, item.getUri()));
+            }
+        };
     }
 
     public static void confirmClearAlarms(final Context context)
@@ -735,7 +727,7 @@ public class AlarmListDialog extends DialogFragment
                     switch (menuItem.getItemId())
                     {
                         case R.id.action_delete:
-                            confirmDeleteAlarm(contextRef.get(), items.get(position));
+                            AlarmEditDialog.confirmDeleteAlarm(contextRef.get(), items.get(position), onDeleteConfirmed(contextRef.get(), items.get(position)));
                             return true;
 
                         default:
