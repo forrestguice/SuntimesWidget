@@ -24,12 +24,22 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorFactory;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
 @SuppressWarnings("ConstantConditions")
@@ -69,5 +79,43 @@ public class WidgetTimezonesTest extends SuntimesActivityTestBase
             }
         });
         task.execute(WidgetTimezones.TimeZoneSort.SORT_BY_OFFSET);
+    }
+
+    @Test
+    public void test_timezone_solarTime()
+    {
+        test_timezone_localMeanTime();
+        test_timezone_apparentSolarTime();
+    }
+
+    @Test
+    public void test_timezone_apparentSolarTime()
+    {
+        TimeZone timezone1 = new WidgetTimezones.ApparentSolarTime(-112, "Apparent Solar Time (Test 1)");
+        test_timezone(timezone1, 16, 20, 0);
+
+        SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, Time4A4JSuntimesCalculator.getDescriptor());
+        SuntimesCalculator calculator = factory.createCalculator(new Location("test","35", "-112"), TimeZone.getDefault());
+        TimeZone timezone0 = new WidgetTimezones.ApparentSolarTime(-112, "Apparent Solar Time (Test 0)", calculator);
+        test_timezone(timezone0, 16, 20, 0);
+    }
+
+    @Test
+    public void test_timezone_localMeanTime()
+    {
+        TimeZone timezone = new WidgetTimezones.LocalMeanTime(-112, "Local Mean Time (Test)");
+        test_timezone(timezone, 16, 20, 0);
+    }
+
+    protected void test_timezone(TimeZone timezone, int hour, int minute, int second)
+    {
+        Calendar calendar = Calendar.getInstance(timezone);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, second);
+
+        assertEquals(calendar.get(Calendar.HOUR_OF_DAY), hour);
+        assertEquals(calendar.get(Calendar.MINUTE), minute);
+        assertEquals(calendar.get(Calendar.SECOND), second);
     }
 }
