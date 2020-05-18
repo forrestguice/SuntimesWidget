@@ -389,7 +389,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         setResult(AlarmEditActivity.RESULT_CANCELED);
-                        finish();
+                        supportFinishAfterTransition();
                         context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DELETE, item.getUri()));
                     }
                 })
