@@ -1,5 +1,9 @@
 ### ~
 
+### v0.12.10 (2020-05-20)
+* fixes bug "solar time alarms are offset by several minutes" (#414).
+* updates translation to German (de) (#412 by xnumad).
+
 ### v0.12.9 (2020-05-10)
 * fixes bug "Widget Title Substitution %lel uses meters only" (#410).
 * fixes NullPointerException when refreshing location (#408).
