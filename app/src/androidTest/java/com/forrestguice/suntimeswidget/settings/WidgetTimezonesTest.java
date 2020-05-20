@@ -30,6 +30,12 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorFactory;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.time4a.Time4A4JSuntimesCalculator;
+import com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator;
+
+import net.time4j.Moment;
+import net.time4j.TemporalType;
+import net.time4j.calendar.astro.SolarTime;
+import net.time4j.calendar.astro.StdSolarCalculator;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -85,19 +91,67 @@ public class WidgetTimezonesTest extends SuntimesActivityTestBase
     public void test_timezone_solarTime()
     {
         test_timezone_localMeanTime();
-        test_timezone_apparentSolarTime();
+        test_timezone_apparentSolarTime0();
+        test_timezone_apparentSolarTime1();
     }
 
     @Test
-    public void test_timezone_apparentSolarTime()
+    public void test_timezone_apparentSolarTime0()
     {
         TimeZone timezone1 = new WidgetTimezones.ApparentSolarTime(-112, "Apparent Solar Time (Test 1)");
-        test_timezone(timezone1, 16, 20, 0);
+        for (int i=0; i<10000; i++) {
+            test_timezone(timezone1, 16, 20, 0);
+        }
+    }
+
+    @Test
+    public void test_timezone_apparentSolarTime1()
+    {
+        SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, Time4ASimpleSuntimesCalculator.getDescriptor());
+        SuntimesCalculator calculator = factory.createCalculator(new Location("test","35", "-112"), TimeZone.getDefault());
+        TimeZone timezone0 = new WidgetTimezones.ApparentSolarTime(-112, "Apparent Solar Time (Test 0)", calculator);
+        for (int i=0; i<1; i++) {
+            test_timezone(timezone0, 16, 20, 0);
+        }
+    }
+
+    @Test
+    public void test_eot()
+    {
+        Calendar calendar = Calendar.getInstance();
+        Moment moment = TemporalType.JAVA_UTIL_DATE.translate(calendar.getTime());
+        double eot0 = SolarTime.equationOfTime(moment, StdSolarCalculator.TIME4J.name());
+        for (int i=0; i<10000; i++) {
+            assertEquals(SolarTime.equationOfTime(moment, StdSolarCalculator.TIME4J.name()), eot0);
+        }
 
         SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, Time4A4JSuntimesCalculator.getDescriptor());
         SuntimesCalculator calculator = factory.createCalculator(new Location("test","35", "-112"), TimeZone.getDefault());
-        TimeZone timezone0 = new WidgetTimezones.ApparentSolarTime(-112, "Apparent Solar Time (Test 0)", calculator);
-        test_timezone(timezone0, 16, 20, 0);
+        double eot1 = calculator.equationOfTime(calendar);
+        for (int i=0; i<10000; i++) {
+            assertEquals(calculator.equationOfTime(calendar), eot1);
+        }
+
+        int eot2 = WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(calendar.getTimeInMillis(), calculator);
+         for (int i=0; i<10000; i++) {
+            assertEquals(WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(calendar.getTimeInMillis(), calculator), eot2);
+        }
+
+        WidgetTimezones.ApparentSolarTime apparentSolar = new WidgetTimezones.ApparentSolarTime(-112, "Apparent Solar Time", calculator);
+        int offset0 = apparentSolar.getOffset(calendar.getTimeInMillis());
+        for (int i=0; i<10000; i++) {
+            assertEquals(apparentSolar.getOffset(calendar.getTimeInMillis()), offset0);
+        }
+        int offset1 = apparentSolar.getOffset(1, 2020, 1, 1, 1, 0);
+        for (int i=0; i<10000; i++) {
+            assertEquals(apparentSolar.getOffset(1, 2020, 1, 1, 1, 0), offset1);
+        }
+
+        int rawOffset = apparentSolar.getRawOffset();
+        for (int i=0; i<10000; i++) {
+            assertEquals(apparentSolar.getRawOffset(), rawOffset);
+        }
+
     }
 
     @Test
