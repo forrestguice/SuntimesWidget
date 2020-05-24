@@ -19,10 +19,10 @@
   <string name="configAction_setAlarm">Alarm</string>
   <string name="configAction_setTimeZone">Zeitzone</string>
   <string name="configAction_setDate">Datum</string>
-  <string name="configAction_viewDate">View Date</string>    <!-- TODO -->
+  <string name="configAction_viewDate">Datum anzeigen</string>
   <string name="configAction_sunDialog">Sonnenstand</string>
   <string name="configAction_equinoxDialog">Sonnenwende / Tag-Nacht-Gleiche</string>
-  <string name="configAction_worldMap">World Map</string>  <!-- TODO -->
+  <string name="configAction_worldMap">Weltkarte</string>
   <string name="configAction_moon">Mond</string>
   <string name="configAction_help">Hilfe</string>
   <string name="configAction_settings">Einstellungen</string>
@@ -364,7 +364,7 @@
   <string name="configLabel_action_onClockTap">Bei Antippen der Uhr</string>         <!-- spinner label -->
   <string name="configLabel_action_onNoteTap">Bei Antippen der Kurzinfo</string>           <!-- spinner label -->
   <string name="configLabel_action_onDateTap">Bei Antippen des Datums</string>           <!-- spinner label -->
-  <string name="configLabel_action_onDateTap1">On Date Long Press</string>   <!-- spinner label -->  <!-- TODO -->
+  <string name="configLabel_action_onDateTap1">Bei langem Antippen des Datums</string>   <!-- spinner label -->
 
   <!-- Widget Setting: location -->
   <string name="locationMode_current">Aktueller Standort</string>  <!-- setting -->
@@ -854,43 +854,43 @@
       <item>Englisch</item>
       <item>Esperanto</item>
       <item>Französisch</item>
-      <item>Deutsche</item>
+      <item>Deutsch</item>
       <item>Ungarisch</item>
-      <item>Italienische</item>
-      <item>Polieren</item>
+      <item>Italienisch</item>
+      <item>Polnisch</item>
       <item>Spanisch</item>
       <item>Katalanisch</item>
       <item>Baskisch</item>
       <item>Norwegisch</item>
-      <item>Traditional Chinese</item>
-      <item>Portuguese</item>
-  </string-array>  <!-- TODO -->
+      <item>Traditionelles Chinesisch</item>
+      <item>Portugiesisch</item>
+  </string-array>
 
   <!--
        DIALOGS
   -->
 
   <!-- Dialog: World Map -->
-  <string name="worldmap_dialog_title">@string/configAction_worldMap</string>   <!-- TODO -->
-  <string name="worldmap_dialog_action_play">Play</string>       <!-- button (contentDescription) --> <!-- TODO -->
-  <string name="worldmap_dialog_action_pause">Pause</string>     <!-- button (contentDescription) --> <!-- TODO -->
-  <string name="worldmap_dialog_action_record">Record</string>   <!-- button (contentDescription) --> <!-- TODO -->
+  <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
+  <string name="worldmap_dialog_action_play">Abspielen</string>       <!-- button (contentDescription) -->
+  <string name="worldmap_dialog_action_pause">Pause</string>     <!-- button (contentDescription) -->
+  <string name="worldmap_dialog_action_record">Aufnehmen</string>   <!-- button (contentDescription) -->
   <string name="worldmap_dialog_action_next">Next</string>       <!-- button (contentDescription) --> <!-- TODO -->
   <string name="worldmap_dialog_action_prev">Previous</string>   <!-- button (contentDescription) --> <!-- TODO -->
   <string name="worldmap_dialog_action_reset">Reset</string>     <!-- button (contentDescription) --> <!-- TODO -->
-  <string name="worldmap_dialog_action_menu">Options</string>       <!-- button (contentDescription) --> <!-- TODO -->
-  <string name="worldmap_dialog_option_sunlight">Sunlight</string>              <!-- TODO -->
-  <string name="worldmap_dialog_option_moonlight">Moonlight</string>            <!-- TODO -->
-  <string name="worldmap_dialog_option_all">Both</string>                       <!-- TODO -->
-  <string name="worldmap_dialog_option_location">Location</string>    <!-- TODO -->
-  <string name="worldmap_dialog_option_latitudes">Latitudes</string>    <!-- TODO -->
+  <string name="worldmap_dialog_action_menu">Optionen</string>       <!-- button (contentDescription) -->
+  <string name="worldmap_dialog_option_sunlight">Sonnenlicht</string>
+  <string name="worldmap_dialog_option_moonlight">Mondlicht</string>
+  <string name="worldmap_dialog_option_all">Beides</string>
+  <string name="worldmap_dialog_option_location">Standort</string>
+  <string name="worldmap_dialog_option_latitudes">Breitengrade</string>
   <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- TODO -->
   <string name="worldmap_dialog_speed_1d">&#215; 1d</string>    <!-- TODO -->
-  <string name="configAction_shareMap">Share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->  <!-- TODO -->
+  <string name="configAction_shareMap">Teilen</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
   <!-- Dialog: Set Alarm -->
   <string name="configLabel_schedalarm_mode">Plane einen Alarm für</string>
-  <string name="configLabel_schednotify_mode">Schedule a notification for</string>  <!-- TODO -->
+  <string name="configLabel_schednotify_mode">Plane eine Benachrichtigung für</string>
   <string name="schedalarm_dialog_title">Alarm einstellen</string>
   <string name="schedalarm_dialog_ok">OK</string>
   <string name="schedalarm_dialog_cancel">Abbrechen</string>
@@ -916,14 +916,14 @@
       <item>Astron. Abend</item>
       <item>Mondaufgang</item>
       <item>Monduntergang</item>
-    <item>new moon</item>  <!-- TODO -->
+    <item>Neumond</item>
     <item>first quarter</item>  <!-- TODO -->
-    <item>full moon</item>  <!-- TODO -->
+    <item>Vollmond</item>
     <item>third quarter</item>  <!-- TODO -->
     <item>spring equinox</item>    <!-- TODO -->
     <item>summer solstice</item>   <!-- TODO -->
-    <item>autumn equinox</item>   <!-- TODO -->
-    <item>winter solstice</item>   <!-- TODO -->
+    <item>Herbst-Tag-Nacht-Gleiche</item>
+    <item>Wintersonnenwende</item>
   </string-array>
   <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
       <item>Astronomische Morgendämmerung (Beginn)</item>
@@ -943,14 +943,14 @@
       <item>Astronomische Abenddämmerung (Ende)</item>
       <item>Mondaufgang</item>
       <item>Monduntergang</item>
-    <item>new moon</item>  <!-- TODO -->
+    <item>Neumond</item>
     <item>first quarter</item>  <!-- TODO -->
-    <item>full moon</item>  <!-- TODO -->
+    <item>Vollmond</item>
     <item>third quarter</item>  <!-- TODO -->
     <item>spring equinox</item>    <!-- TODO -->
     <item>summer solstice</item>   <!-- TODO -->
-    <item>autumn equinox</item>   <!-- TODO -->
-    <item>winter solstice</item>   <!-- TODO -->
+    <item>Herbst-Tag-Nacht-Gleiche</item>
+    <item>Wintersonnenwende</item>
   </string-array>
 
   <!-- Dialog: Enable GPS? -->
@@ -986,7 +986,7 @@
   <string name="location_dialog_cancel">Abbrechen</string>
   <string name="location_dialog_error_lat">Dies ist kein gültiger Breitengrad.</string>
   <string name="location_dialog_error_lon">Dies ist kein gültiger Längengrad.</string>
-  <string name="location_dialog_error_alt">This is not a valid elevation.</string>  <!-- TODO -->
+  <string name="location_dialog_error_alt">Dies ist keine gültige Höhe.</string>
 
   <string name="location_dialog_toast_copied">In die Zwischenablage kopiert<![CDATA[<br
   />]]><xliff:g id="value">%1$s</xliff:g></string>
@@ -1017,17 +1017,17 @@
   <string name="msg_export_to">Exportiere mit</string>  <!-- title displayed over "share action" chooser -->
 
   <!-- Dialog: Import Themes -->
-  <string name="themesimport_dialog_title">Importing Themes</string>                   <!-- TODO -->
-  <string name="themesimport_dialog_message">Importing themes from file…</string>      <!-- TODO -->
+  <string name="themesimport_dialog_title">Importiere Themen</string>
+  <string name="themesimport_dialog_message">Importiere Themen von Datei…</string>
 
-  <string name="msg_import_success">Imported <xliff:g id="themePlural">%s</xliff:g>.</string>  <!-- TODO -->
-  <string name="msg_import_failure">Import from <xliff:g id="filepath">%s</xliff:g> failed!</string>  <!-- TODO -->
-  <string name="msg_import_noresults">Import skipped; no new themes were found.</string>  <!-- TODO -->
+  <string name="msg_import_success"><xliff:g id="themePlural">%s</xliff:g> importiert.</string>
+  <string name="msg_import_failure">Import von <xliff:g id="filepath">%s</xliff:g> fehlgeschlagen!</string>
+  <string name="msg_import_noresults">Import übersprungen; keine neuen Themen gefunden.</string>
 
   <plurals name="themePlural">
-    <item quantity="one">%d theme</item>
-    <item quantity="other">%d themes</item>
-  </plurals>  <!-- TODO -->
+    <item quantity="one">%d Thema</item>
+    <item quantity="other">%d Themen</item>
+  </plurals>
 
   <!-- Dialog: Color -->
   <string name="color_dialog_msg">Farbe wählen</string>
@@ -1037,11 +1037,11 @@
   <!-- Dialog: About -->
   <string name="about_dialog_title">Über</string>
   <string name="app_name">Suntimes</string>
-  <string name="app_name_alarmclock">Suntimes Alarms</string>  <!-- TODO -->
+  <string name="app_name_alarmclock">Sonnenzeiten-Alarme</string>
   <string name="app_name_widget0">Suntimes Widget</string>
   <string name="app_name_widget1">Suntimes Widget (umschaltbar)</string>
   <string name="app_name_widget2">Sonnenposition Widget</string>
-  <string name="app_name_clockwidget0">Clock Widget</string>  <!-- TODO -->
+  <string name="app_name_clockwidget0">Uhr-Widget</string>
   <string name="app_name_solsticewidget0">Sonnenwend Widget</string>
   <string name="app_name_moonwidget0">Mond Widget</string>
   <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
@@ -1059,7 +1059,7 @@
   <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> von <xliff:g id="authorList">%2$s</xliff:g>.]]></string>   <!-- TODO: review -->
   <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
   <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, und <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
-  <string name="creditsTab">Credits</string>   <!-- TODO -->
+  <string name="creditsTab">Danksagungen</string>
   
   <string name="app_legal3"><![CDATA[ <b>Bibliotheken:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>  <!-- TODO: review -->
 
@@ -1158,16 +1158,16 @@
   <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string> <!-- TODO -->
   <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string> <!-- TODO -->
   <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>    <!-- TODO -->
-  <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>    <!-- TODO -->
-  <string name="privacy_permissiondialog_ignore">Ignore</string>    <!-- TODO -->
-  <string name="privacy_permissiondialog_title">Permissions</string> <!-- TODO -->
-  <string name="privacyTab">Privacy</string>   <!-- TODO -->
+  <string name="privacy_permissiondialog_prompt"><![CDATA[Berechtigungen jetzt anfragen?]]></string>
+  <string name="privacy_permissiondialog_ignore">Ignorieren</string>
+  <string name="privacy_permissiondialog_title">Berechtigungen</string>
+  <string name="privacyTab">Privatsphäre</string>
 
-  <string name="security_dialog_title">Security Alert</string>  <!-- TODO -->
+  <string name="security_dialog_title">Sicherheitswarnung</string>
   <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  <!-- TODO -->
-  <string name="feature_not_supported_by_api">This feature is not supported by API %1$s.</string>  <!-- TODO -->
-  <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>  <!-- TODO -->
-  <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>  <!-- TODO -->
+  <string name="feature_not_supported_by_api">Diese Funktion wird nicht von der API %1$s unterstützt.</string>
+  <string name="feature_not_supported_by_source">Diese Funktion wird nicht von der aktuellen Datenquelle unterstützt.</string>
+  <string name="reboot_required_message">Ein Neustart ist möglicherweise nötig, damit die Änderungen wirksam werden.</string>
 
   <!-- calculator implemenations -->
   <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

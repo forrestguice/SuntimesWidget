@@ -1560,8 +1560,7 @@ public class AlarmNotifications extends BroadcastReceiver
     private static Calendar updateAlarmTime_clockTime(int hour, int minute, String tzID, @Nullable Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
         TimeZone timezone = AlarmClockItem.AlarmTimeZone.getTimeZone(tzID, location);
-        Log.d(TAG, "updateAlarmTime_clockTime: using timezone " + timezone.getID());
-
+        Log.d(TAG, "updateAlarmTime_clockTime: hour: " + hour + ", minute: " + minute + ", timezone: " + timezone.getID() + ", offset: " + offset + ", repeating: " + repeating);
         Calendar alarmTime = Calendar.getInstance(timezone);
         Calendar eventTime = Calendar.getInstance(timezone);
 
@@ -1583,7 +1582,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 return null;
             }
 
-            Log.w("AlarmReceiverItem", "updateAlarmTime: clock time " + hour + ":" + minute + " (+" + offset + ") advancing by 1 day..");
+            Log.w(TAG, "updateAlarmTime: clock time " + hour + ":" + minute + " (+" + offset + ") advancing by 1 day..");
             eventTime.add(Calendar.DAY_OF_YEAR, 1);
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
         }
