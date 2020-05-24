@@ -128,9 +128,9 @@
                     android:orientation="horizontal" android:gravity="start|center_vertical">
 
                     <TextView
-                        android:id="@+id/text_offset" style="@style/ChipText"
-                        android:layout_width="wrap_content" android:layout_height="match_parent"
-                        tools:text="1h 30m before" />
+                        android:id="@+id/text_offset" style="@style/ChipText" android:gravity="center"
+                        android:layout_width="wrap_content" android:layout_height="match_parent" android:minWidth="100dp"
+                        tools:text="at" />
 
                 </FrameLayout>
 
@@ -226,6 +226,7 @@
                                 android:id="@+id/check_vibrate" style="@style/ChipTextBase"
                                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                                 android:gravity="center_vertical" android:layout_gravity="center_vertical|start"
+                                android:button="?attr/checkVibrate" android:paddingLeft="8dp"
                                 android:text="@string/alarmOption_vibrate" android:checked="true" />
 
                         </FrameLayout>

@@ -17,6 +17,9 @@
         <item name="text_accentColor">@color/text_accent_light</item>
         <item name="text_disabledColor">@color/text_disabled_light</item>
 
+        <item name="chipBackground">@drawable/chip_light</item>
+        <item name="chipTrayBackground">@drawable/chip_tray_light</item>
+
         <item name="alarmColorEnabled">@color/alarm_enabled_light</item>
         <item name="alarmCardEnabled">@drawable/card_alarmitem_enabled_light</item>
         <item name="alarmCardDisabled">@drawable/card_alarmitem_disabled_light</item>
@@ -116,6 +119,7 @@
         <item name="icActionTimeReset">@drawable/ic_action_timereset_light</item>
 
         <item name="icActionExpand">@drawable/ic_action_expand_light</item>
+        <item name="checkVibrate">@drawable/check_vibrate_light</item>
 
         <item name="windowActionModeOverlay">true</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Suntimes.BottomSheetDialog</item>
@@ -138,6 +142,9 @@
         <item name="hrColor">@color/hr_dark</item>
         <item name="text_accentColor">@color/text_accent_dark</item>
         <item name="text_disabledColor">@color/text_disabled_dark</item>
+
+        <item name="chipBackground">@drawable/chip_dark</item>
+        <item name="chipTrayBackground">@drawable/chip_tray_dark</item>
 
         <item name="alarmColorEnabled">@color/alarm_enabled_dark</item>
         <item name="alarmCardEnabled">@drawable/card_alarmitem_enabled_dark0</item>
@@ -238,6 +245,7 @@
         <item name="icActionTimeReset">@drawable/ic_action_timereset</item>
 
         <item name="icActionExpand">@drawable/ic_action_expand</item>
+        <item name="checkVibrate">@drawable/check_vibrate_dark</item>
 
         <item name="windowActionModeOverlay">true</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Suntimes.BottomSheetDialog</item>
@@ -422,7 +430,7 @@
     </style>
 
     <style name="ChipTray">
-        <item name="android:background">@drawable/chip_tray_dark</item>
+        <item name="android:background">?attr/chipTrayBackground</item>
         <item name="android:paddingTop">4dp</item>
         <item name="android:paddingBottom">6dp</item>
     </style>
@@ -437,7 +445,7 @@
         <item name="android:paddingBottom">3dp</item>
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">8dp</item>
-        <item name="android:background">@drawable/chip_dark</item>
+        <item name="android:background">?attr/chipBackground</item>
     </style>
 
     <style name="ChipTextBase" parent="android:TextAppearance.Small">
@@ -459,10 +467,10 @@
         <item name="android:textStyle">bold</item>
     </style>
     <style name="ChipText" parent="ChipText0">
-        <item name="android:background">@drawable/chip_dark</item>
+        <item name="android:background">?attr/chipBackground</item>
     </style>
     <style name="ChipText1" parent="ChipText0">
-        <item name="android:background">@drawable/chip_dark</item>
+        <item name="android:background">?attr/chipBackground</item>
         <item name="android:drawableRight">@drawable/ic_transparent1</item>
         <item name="android:drawableEnd">@drawable/ic_transparent1</item>
     </style>
