@@ -35,6 +35,7 @@ import android.os.Handler;
 import android.provider.AlarmClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -53,6 +54,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
@@ -104,8 +106,9 @@ public class AlarmClockActivity extends AppCompatActivity
 
     private AlarmListDialog list;
 
-    private FloatingActionButton addButton, addAlarmButton, addNotificationButton;
-    private View addAlarmButtonLayout, addNotificationButtonLayout;
+    private FloatingActionButton addButton; //, addAlarmButton, addNotificationButton;
+    private BottomSheetBehavior sheetBehavior;
+    //private View addAlarmButtonLayout, addNotificationButtonLayout;
 
     private SuntimesWarning notificationWarning;
     private List<SuntimesWarning> warnings;
@@ -348,6 +351,7 @@ public class AlarmClockActivity extends AppCompatActivity
         addButton.setRippleColor(Color.TRANSPARENT);
         addButton.setOnClickListener(onFabMenuClick);
 
+        /*
         addAlarmButtonLayout = findViewById(R.id.layout_btn_addAlarm);
         addAlarmButton = (FloatingActionButton) findViewById(R.id.btn_addAlarm);
         addAlarmButton.setBackgroundTintList(SuntimesUtils.colorStateList(colorPressed, colorDisabled, colorAlarmEnabled));
@@ -359,19 +363,54 @@ public class AlarmClockActivity extends AppCompatActivity
         addNotificationButton.setBackgroundTintList(SuntimesUtils.colorStateList(colorPressed, colorDisabled, colorAlarmEnabled));
         addNotificationButton.setRippleColor(Color.TRANSPARENT);
         addNotificationButton.setOnClickListener(onAddNotificationButtonClick);
+        */
 
         list = (AlarmListDialog) getSupportFragmentManager().findFragmentById(R.id.listFragment);
         list.setOnEmptyViewClick(onEmptyViewClick);
         list.setAdapterListener(listAdapter);
 
-        collapseFabMenu();
+
+        LinearLayout bottomSheet = (LinearLayout) findViewById(R.id.app_bottomsheet);
+        sheetBehavior = BottomSheetBehavior.from(bottomSheet);
+        sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+        /*sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+        @Override
+            public void onStateChanged(@NonNull View view, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+                        btn_bottom_sheet.setText("Close Sheet");
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+                        btn_bottom_sheet.setText("Expand Sheet");
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View view, float v) {}
+        });*/
+
+        //collapseFabMenu();
     }
 
     private AlarmListDialog.AdapterListener listAdapter = new AlarmListDialog.AdapterListener() {
         @Override
-        public void onItemClicked(AlarmClockItem item, AlarmListDialog.AlarmListDialogItem view) {
-            if (list.getSelectedRowID() == item.rowID) {
-                showAlarmEditActivity(item, view.text_datetime);
+        public void onItemClicked(AlarmClockItem item, AlarmListDialog.AlarmListDialogItem view)
+        {
+            if (sheetBehavior.getState() != BottomSheetBehavior.STATE_HIDDEN) {
+                dismissAddDialog();
+
+            } else if (list.getSelectedRowID() == item.rowID) {
+                showAlarmEditActivity(item, view.text_datetime);                 
             }
         }
 
@@ -408,7 +447,7 @@ public class AlarmClockActivity extends AppCompatActivity
         }
     };
 
-    private View.OnClickListener onAddAlarmButtonClick = new View.OnClickListener() {
+    /*private View.OnClickListener onAddAlarmButtonClick = new View.OnClickListener() {
         @Override
         public void onClick(View v)
         {
@@ -423,7 +462,7 @@ public class AlarmClockActivity extends AppCompatActivity
             showAddDialog(AlarmClockItem.AlarmType.NOTIFICATION);
             collapseFabMenu();
         }
-    };
+    };*/
 
     private DialogInterface.OnClickListener onAddAlarmAccepted = new DialogInterface.OnClickListener() {
         @Override
@@ -460,9 +499,19 @@ public class AlarmClockActivity extends AppCompatActivity
         }
     };
 
+    protected void toggleAddDialog(AlarmClockItem.AlarmType type)
+    {
+        if (sheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED)
+            showAddDialog(type);
+        else dismissAddDialog();
+    }
+
     protected void showAddDialog(AlarmClockItem.AlarmType type)
     {
-        FragmentManager fragments = getSupportFragmentManager();
+        sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        addButton.setImageResource(resCloseIcon);
+
+        /*FragmentManager fragments = getSupportFragmentManager();
         AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_CREATE_FAB);
         if (dialog == null)
         {
@@ -470,7 +519,13 @@ public class AlarmClockActivity extends AppCompatActivity
             dialog.setAlarmType(type);
             dialog.setOnAcceptedListener(onAddAlarmAccepted);
             dialog.show(fragments, DIALOGTAG_CREATE_FAB);
-        }
+        }*/
+    }
+
+    protected void dismissAddDialog()
+    {
+        sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        addButton.setImageResource(resAddIcon);
     }
 
     protected AlarmClockItem createAlarm(AlarmCreateDialog dialog, AlarmClockItem.AlarmType type, boolean addToDatabase)
@@ -624,9 +679,8 @@ public class AlarmClockActivity extends AppCompatActivity
         return super.onPrepareOptionsPanel(view, menu);
     }
 
-    private boolean fabMenuExpanded = false;
-
-    private void expandFabMenu()
+    //private boolean fabMenuExpanded = false;
+    /*private void expandFabMenu()
     {
         addAlarmButtonLayout.setVisibility(View.VISIBLE);
         addNotificationButtonLayout.setVisibility(View.VISIBLE);
@@ -640,20 +694,18 @@ public class AlarmClockActivity extends AppCompatActivity
         addNotificationButtonLayout.setVisibility(View.GONE);
         addButton.setImageResource(resAddIcon);
         fabMenuExpanded = false;
-    }
-
-    private void toggleFabMenu()
+    }*/
+    /*private void toggleFabMenu()
     {
         if (fabMenuExpanded)
             collapseFabMenu();
         else expandFabMenu();
-    }
+    }*/
 
     private View.OnClickListener onFabMenuClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            showAddDialog(AlarmClockItem.AlarmType.ALARM);
-            //toggleFabMenu();
+            toggleAddDialog(AlarmClockItem.AlarmType.ALARM);
         }
     };
 
