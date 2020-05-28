@@ -56,7 +56,7 @@ public class PlacesActivity extends AppCompatActivity
         initLocale();
         setContentView(R.layout.layout_activity_places);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
