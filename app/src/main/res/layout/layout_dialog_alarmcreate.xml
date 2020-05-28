@@ -16,45 +16,39 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical"
+    android:background="?attr/dialogBackground">
 
-    <LinearLayout
-        android:background="?attr/dialogFrame"
-        android:layout_width="match_parent" android:layout_height="56dp"
-        android:orientation="horizontal" android:gravity="center_vertical|start">
+    <LinearLayout android:background="?attr/fab_rippleColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:paddingTop="4dp">
 
-        <ImageButton android:id="@+id/dialog_button_cancel"
-            android:layout_width="56dp" android:layout_height="match_parent"
-            android:src="?attr/icActionBack"
-            style="?attr/actionOverflowButtonStyle" />
+        <FrameLayout android:background="?attr/alarmCardDisabled"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:padding="8dp">
 
-        <TextView
-            android:id="@+id/dialog_title"
-            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-            android:gravity="start|left"
-            style="@style/Base.DialogWindowTitle.AppCompat"
-            android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-            android:text="@string/configAction_addAlarm" />
+            <include layout="@layout/layout_listitem_alarmtime" />
 
-        <ImageButton
-            android:id="@+id/dialog_button_accept"
-            style="?attr/actionOverflowButtonStyle"
-            android:layout_width="56dp" android:layout_height="match_parent"
-            android:contentDescription="@string/schedalarm_dialog_ok"
-            android:scaleType="center"
-            android:src="?attr/icActionAccept" />
+        </FrameLayout>
 
     </LinearLayout>
 
-    <Spinner android:id="@+id/type_spin"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        tools:listitem="@layout/layout_listitem_alarmtype"
-        android:layout_marginRight="16dp" android:layout_marginEnd="16dp" />
+    <LinearLayout
+        android:background="?attr/dialogBackgroundAlt"
+        android:layout_width="match_parent" android:layout_height="56dp"
+        android:orientation="horizontal" android:gravity="center_vertical|start">
+
+        <Spinner android:id="@+id/type_spin"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            tools:listitem="@layout/layout_listitem_alarmtype" />
+
+        <ImageButton android:id="@+id/dialog_button_accept"
+            style="@android:style/Widget.ActionButton.Overflow" android:contentDescription="@string/schedalarm_dialog_ok"
+            android:layout_width="96dp" android:layout_height="56dp" android:paddingLeft="16dp" android:paddingRight="16dp"
+            android:src="?attr/icActionAccept" />
+
+    </LinearLayout>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"
@@ -63,22 +57,45 @@
 
         <android.support.design.widget.TabItem
             android:id="@+id/tab_event"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_action_suntimes_huge"
-            android:text="Tab1" />
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Event" />
 
         <android.support.design.widget.TabItem
             android:id="@+id/tab_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="?attr/icActionTime"
-            android:text="Tab2" />
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Time" />
 
     </android.support.design.widget.TabLayout>
 
-    <android.support.v4.view.ViewPager
+    <!--<android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
+        android:layout_width="match_parent" android:layout_height="wrap_content" />-->
+    <FrameLayout
+        android:id="@+id/fragmentContainer1"
         android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+    <!--<LinearLayout
+        android:background="?attr/dialogFrame"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center_vertical|end"
+        android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
+        android:paddingTop="8dp" android:paddingBottom="8dp">
+
+        <Button
+            style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+            android:id="@+id/dialog_button_cancel"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/schedalarm_dialog_cancel"
+            tools:ignore="ButtonOrder" />
+
+        <Button
+            style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+            android:id="@+id/dialog_button_accept"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/schedalarm_dialog_ok" />
+
+    </LinearLayout>-->
 
 </LinearLayout>
