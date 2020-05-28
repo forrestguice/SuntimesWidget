@@ -6,17 +6,21 @@
         <item android:id="@+id/clearPlaces"
             android:icon="?attr/icActionDelete"
             android:title="@string/configLabel_places_clear"
-            app:showAsAction="never" />
+            app:showAsAction="never"
+            android:orderInCategory="200" />
 
         <item android:id="@+id/exportPlaces"
             android:icon="?attr/icActionSave"
             android:title="@string/configLabel_places_export"
-            app:showAsAction="never" />
+            app:showAsAction="never"
+            android:orderInCategory="300" />
 
-        <item android:id="@+id/action_about"
-            android:icon="?attr/icActionAbout"
-            android:title="@string/configAction_aboutWidget"
-            app:showAsAction="never" />
+
+        <item android:id="@+id/addWorldPlaces"
+            android:icon="?attr/icActionMap"
+            android:title="@string/configLabel_places_build"
+            app:showAsAction="never"
+            android:orderInCategory="400" />
 
     </group>
 </menu>

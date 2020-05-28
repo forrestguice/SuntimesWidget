@@ -78,7 +78,7 @@ public class PlacesActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu)
     {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.placeslist, menu);
+        inflater.inflate(R.menu.placesactivity, menu);
         return true;
     }
 
