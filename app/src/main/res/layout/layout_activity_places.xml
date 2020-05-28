@@ -12,15 +12,17 @@
             android:background="?attr/colorPrimary"
             android:theme="?attr/toolbarTheme"
             app:popupTheme="?attr/actionBarPopupTheme"
-            app:title="TODO" />
+            app:title="@string/configLabel_places" />
 
-        <android.support.constraint.ConstraintLayout
+        <FrameLayout
             android:id="@+id/fragmentContainer"
-            android:layout_width="match_parent" android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_width="match_parent" android:layout_height="match_parent">
 
+            <fragment android:id="@+id/placesListFragment"
+                android:name="com.forrestguice.suntimeswidget.getfix.PlacesListFragment"
+                android:layout_width="match_parent" android:layout_height="wrap_content" />
 
-        </android.support.constraint.ConstraintLayout>
+        </FrameLayout>
 
     </LinearLayout>
 
