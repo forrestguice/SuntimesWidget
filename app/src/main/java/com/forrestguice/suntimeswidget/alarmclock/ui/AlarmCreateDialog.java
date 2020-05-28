@@ -32,6 +32,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.ContextThemeWrapper;
@@ -62,19 +63,18 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 @SuppressWarnings("Convert2Diamond")
-public class AlarmCreateDialog extends DialogFragment
-{
+public class AlarmCreateDialog extends DialogFragment {
     public static final String EXTRA_ALARMTYPE = "alarmtype";
 
     protected TextView text_title;
     protected Spinner spin_type;
-    protected ViewPager pager;
-    protected DialogPagerAdapter adapter;
+    //protected ViewPager pager;
+    //protected DialogPagerAdapter adapter;
 
-    public AlarmCreateDialog()
-    {
+    public AlarmCreateDialog() {
         super();
 
         Bundle args = new Bundle();
@@ -83,15 +83,13 @@ public class AlarmCreateDialog extends DialogFragment
     }
 
     @Override
-    public void onCreate(Bundle savedState)
-    {
+    public void onCreate(Bundle savedState) {
         super.onCreate(savedState);
-        setStyle(DialogFragment.STYLE_NO_FRAME, R.style.AppTheme);
+        //setStyle(DialogFragment.STYLE_NO_FRAME, R.style.AppTheme);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
-    {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState) {
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_alarmcreate, parent, false);
 
@@ -99,7 +97,26 @@ public class AlarmCreateDialog extends DialogFragment
         if (savedState != null) {
             loadSettings(savedState);
         }
+
+        showByEventFragment();
+
         return dialogContent;
+    }
+
+
+    protected void showByEventFragment()
+    {
+        FragmentManager fragments = getChildFragmentManager();
+        FragmentTransaction transaction = fragments.beginTransaction();
+
+        AlarmDialog fragment = new AlarmDialog();
+        fragment.setDialogShowFrame(false);
+        fragment.setType(getAlarmType());
+        initEventDialog(getActivity(), fragment, getLocation());
+        //fragment.setChoice(getEvent());
+
+        transaction.add(R.id.fragmentContainer1, fragment, "AlarmDialog");
+        transaction.commit();
     }
 
 
@@ -127,14 +144,14 @@ public class AlarmCreateDialog extends DialogFragment
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        adapter = new DialogPagerAdapter(context, getChildFragmentManager());
-        pager = (ViewPager) dialogContent.findViewById(R.id.view_pager);
-        pager.setAdapter(adapter);
+        //adapter = new DialogPagerAdapter(context, getChildFragmentManager());
+        //pager = (ViewPager) dialogContent.findViewById(R.id.view_pager);
+        //pager.setAdapter(adapter);
 
         TabLayout tabs = (TabLayout) dialogContent.findViewById(R.id.tabLayout);
-        tabs.setupWithViewPager(pager);
+        //tabs.setupWithViewPager(pager);
 
-        ImageButton btn_cancel = (ImageButton) dialogContent.findViewById(R.id.dialog_button_cancel);
+        Button btn_cancel = (Button) dialogContent.findViewById(R.id.dialog_button_cancel);
         if (btn_cancel != null) {
             btn_cancel.setOnClickListener(onDialogCancelClick);
         }
@@ -162,9 +179,9 @@ public class AlarmCreateDialog extends DialogFragment
             spin_type.setSelection(alarmType.ordinal());
         }
 
-        if (adapter != null) {
-            adapter.setAlarmType(alarmType);
-        }
+        //if (adapter != null) {
+        //    adapter.setAlarmType(alarmType);
+        //}
     }
 
     public static class AlarmTypeAdapter extends ArrayAdapter<AlarmClockItem.AlarmType>
@@ -316,23 +333,28 @@ public class AlarmCreateDialog extends DialogFragment
     };
 
     public int getMode() {
-        return pager.getCurrentItem();
+        return 0;// TODO
+        //return pager.getCurrentItem();
     }
 
     public SolarEvents getEvent() {
-        return adapter.getEvent();
+        return SolarEvents.SUNRISE;// TODO
+        //return adapter.getEvent();
     }
 
     public Location getLocation() {
-        return adapter.getLocation();
+        return new Location("TODO", "25", "-112", "0");
+        //return adapter.getLocation();
     }
 
     public int getHour() {
-        return adapter.getHour();
+        return 0;
+        //return adapter.getHour();// TODO
     }
 
     public int getMinute() {
-        return adapter.getMinute();
+        return 0;
+        //return adapter.getMinute();// TODO
     }
 
     public long getDate() {
@@ -340,7 +362,8 @@ public class AlarmCreateDialog extends DialogFragment
     }
 
     public String getTimeZone() {
-        return adapter.getTimeZone();
+        return TimeZone.getDefault().getID();  // TODO
+        //return adapter.getTimeZone();
     }
 
     /**
@@ -399,8 +422,8 @@ public class AlarmCreateDialog extends DialogFragment
         {
             switch (position)
             {
-                case 0: return "Event";  // TODO
-                case 1: return "Time";   // TODO
+                case 0: return "By Event";  // TODO
+                case 1: return "At Time";   // TODO
                 default: return null;
             }
         }
@@ -486,5 +509,24 @@ public class AlarmCreateDialog extends DialogFragment
         }
 
     }
+
+    private void initEventDialog(Context context, AlarmDialog dialog, Location forLocation)
+    {
+        SuntimesRiseSetDataset sunData = new SuntimesRiseSetDataset(context, 0);
+        SuntimesMoonData moonData = new SuntimesMoonData(context, 0);
+        SuntimesEquinoxSolsticeDataset equinoxData = new SuntimesEquinoxSolsticeDataset(context, 0);
+
+        if (forLocation != null) {
+            sunData.setLocation(forLocation);
+            moonData.setLocation(forLocation);
+            equinoxData.setLocation(forLocation);
+        }
+
+        sunData.calculateData();
+        moonData.calculate();
+        equinoxData.calculateData();
+        dialog.setData(context, sunData, moonData, equinoxData);
+    }
+
 
 }
