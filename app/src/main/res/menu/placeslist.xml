@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="none">
+
+        <item android:id="@+id/clearPlaces"
+            android:icon="?attr/icActionDelete"
+            android:title="@string/configLabel_places_clear"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/exportPlaces"
+            android:icon="?attr/icActionSave"
+            android:title="@string/configLabel_places_export"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/action_about"
+            android:icon="?attr/icActionAbout"
+            android:title="@string/configAction_aboutWidget"
+            app:showAsAction="never" />
+
+    </group>
+</menu>

@@ -18,24 +18,109 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
+import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
-public class PlacesActivity extends AppCompatActivity {
+public class PlacesActivity extends AppCompatActivity
+{
+
+    @Override
+    protected void attachBaseContext(Context newBase)
+    {
+        Context context = AppSettings.initLocale(newBase);
+        super.attachBaseContext(context);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        setTheme(AppSettings.loadTheme(this));
         super.onCreate(savedInstanceState);
+        setResult(RESULT_CANCELED);
+
+        initLocale();
         setContentView(R.layout.layout_activity_places);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+        {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+    }
+
+    protected void initLocale()
+    {
+        WidgetSettings.initDefaults(this);
+        WidgetSettings.initDisplayStrings(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.placeslist, menu);
+        return true;
+    }
+
+    @SuppressWarnings("RestrictedApi")
+    @Override
+    protected boolean onPrepareOptionsPanel(View view, Menu menu)
+    {
+        SuntimesUtils.forceActionBarIcons(menu);
+        return super.onPrepareOptionsPanel(view, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.action_about:
+                showAbout();
+                return true;
+
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        setResult(Activity.RESULT_CANCELED);
+        finish();
+        overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);
+    }
+
+    protected void showAbout()
+    {
+        Intent about = new Intent(this, AboutActivity.class);
+        startActivity(about);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
 }

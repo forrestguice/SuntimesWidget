@@ -3,25 +3,25 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     tools:context=".getfix.PlacesActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+    <LinearLayout android:orientation="vertical"
+        android:layout_width="match_parent" android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:id="@+id/app_menubar"
+            android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:theme="?attr/toolbarTheme"
+            app:popupTheme="?attr/actionBarPopupTheme"
+            app:title="TODO" />
 
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/fragmentContainer"
-        android:layout_width="match_parent" android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/fragmentContainer"
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-    </android.support.constraint.ConstraintLayout>
+        </android.support.constraint.ConstraintLayout>
+
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

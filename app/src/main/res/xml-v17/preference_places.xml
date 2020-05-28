@@ -4,6 +4,12 @@
     <PreferenceCategory
         android:title="@string/configLabel_places">
 
+        <Preference android:title="Manage Places" android:key="places_manage" android:icon="?attr/icActionPlace">
+            <intent
+                android:targetPackage="com.forrestguice.suntimeswidget"
+                android:targetClass="com.forrestguice.suntimeswidget.getfix.PlacesActivity" />
+        </Preference>
+
         <Preference android:title="@string/configLabel_places_build"
             android:summary="@string/configLabel_places_build_summary" android:key="places_build" />
 
