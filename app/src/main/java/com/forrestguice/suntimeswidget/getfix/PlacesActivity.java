@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -38,6 +39,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public class PlacesActivity extends AppCompatActivity
 {
+    protected PlacesListFragment list;
 
     @Override
     protected void attachBaseContext(Context newBase)
@@ -66,6 +68,8 @@ public class PlacesActivity extends AppCompatActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        FragmentManager fragments = getSupportFragmentManager();
+        list = (PlacesListFragment) fragments.findFragmentById(R.id.placesListFragment);
     }
 
     protected void initLocale()
