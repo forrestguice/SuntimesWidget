@@ -232,6 +232,10 @@ public class AlarmListDialog extends DialogFragment
         }
     }
 
+    public void clearSelection() {
+        adapter.clearSelection();
+    }
+
     public void notifyAlarmUpdated(long rowID) {
         reloadAdapter(rowID);
     }
