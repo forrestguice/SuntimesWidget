@@ -10,10 +10,6 @@
                 android:targetClass="com.forrestguice.suntimeswidget.getfix.PlacesActivity" />
         </Preference>
 
-        <Preference android:title="@string/configLabel_places_clear" android:key="places_clear" />
-
-        <Preference android:title="@string/configLabel_places_export" android:key="places_export" />
-
         <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="getFix_maxElapsed"
             android:title="@string/configLabel_getFix_maxElapse"
