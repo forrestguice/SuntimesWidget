@@ -791,10 +791,17 @@
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Places</string>                           <!-- group title -->
-    <string name="configLabel_places_export">Export Places</string>
-    <string name="configLabel_places_clear">Clear Places</string>
+    <string name="configLabel_places_export">Export Places</string>  <!-- TODO: remove -->
+    <string name="configLabel_places_clear">Clear Places</string>   <!-- TODO: remove -->
     <string name="configLabel_places_build">Add World Places</string>
     <string name="configLabel_places_build_summary">Scan locales and add cities to the database.</string>
+
+    <string name="configAction_selectPlace">Select</string>        <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_sharePlace">Share</string>          <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_deletePlace">Delete</string>        <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_clearPlaces">Clear</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_exportPlaces">Export</string>       <!-- button (contentDescription) -->  <!-- TODO -->
+
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">User Interface</string>                       <!-- group title -->
@@ -1274,6 +1281,12 @@
     <string name="location_dialog_error_alt">This is not a valid elevation.</string>
 
     <string name="location_dialog_toast_copied">Copied to clipboard<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
+
+    <!-- Dialog: Delete Place -->
+    <string name="locationdelete_dialog_title">Remove Place?</string>  <!-- TODO -->
+    <string name="locationdelete_dialog_message">Are you sure you want to remove %s?</string>   <!-- TODO -->
+    <string name="locationdelete_dialog_ok">Remove</string>  <!-- TODO -->
+    <string name="locationdelete_dialog_cancel">Cancel</string>  <!-- TODO -->
 
     <!-- Dialog: Clear Places -->
     <string name="locationclear_dialog_title">Clear Places?</string>

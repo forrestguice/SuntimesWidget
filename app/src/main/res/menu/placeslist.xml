@@ -5,13 +5,13 @@
 
         <item android:id="@+id/clearPlaces"
             android:icon="?attr/icActionDelete"
-            android:title="@string/configLabel_places_clear"
+            android:title="@string/configAction_clearPlaces"
             app:showAsAction="never"
             android:orderInCategory="200" />
 
         <item android:id="@+id/exportPlaces"
             android:icon="?attr/icActionSave"
-            android:title="@string/configLabel_places_export"
+            android:title="@string/configAction_exportPlaces"
             app:showAsAction="never"
             android:orderInCategory="300" />
 
