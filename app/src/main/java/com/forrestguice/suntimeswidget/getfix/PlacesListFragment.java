@@ -51,6 +51,8 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class PlacesListFragment extends Fragment
@@ -533,11 +535,11 @@ public class PlacesListFragment extends Fragment
         public void setValues(List<PlaceItem> values)
         {
             items.clear();
-            items.addAll(values);
+            items.addAll(sortItems(values));
             notifyDataSetChanged();
         }
 
-        public void removeValue(long rowID)
+        public int indexOf(long rowID)
         {
             int position = -1;
             for (int i=0; i<items.size(); i++)
@@ -548,11 +550,40 @@ public class PlacesListFragment extends Fragment
                     break;
                 }
             }
+            return position;
+        }
+
+        public void removeValue(long rowID)
+        {
+            int position = indexOf(rowID);
             if (position != -1)
             {
                 items.remove(position);
                 notifyItemRemoved(position);
             }
+        }
+
+        protected List<PlaceItem> sortItems(List<PlaceItem> items)
+        {
+            Collections.sort(items, new Comparator<PlaceItem>() {
+                @Override
+                public int compare(PlaceItem o1, PlaceItem o2)
+                {
+                    if ((o1 == null || o1.location == null) && (o2 == null || o2.location == null)) {
+                        return 0;
+
+                    } else if (o1 == null || o1.location == null) {
+                        return -1;
+
+                    } else if (o2 == null || o2.location == null) {
+                        return 1;
+
+                    } else {
+                        return o1.location.getLabel().compareTo(o2.location.getLabel());
+                    }
+                }
+            });
+            return items;
         }
 
         private long selectedRowID = -1;
