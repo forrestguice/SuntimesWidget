@@ -57,6 +57,8 @@ import java.util.List;
 
 public class PlacesListFragment extends Fragment
 {
+    public static final String KEY_SELECTED_ROWID = "selectedRowID";
+
     protected PlacesListAdapter adapter;
     protected RecyclerView listView;
     protected ActionMode actionMode = null;
@@ -74,10 +76,6 @@ public class PlacesListFragment extends Fragment
     {
         View dialogContent = inflater.inflate(R.layout.layout_dialog_placeslist, parent, false);
 
-        if (savedState != null) {
-            // TODO
-        }
-
         adapter = new PlacesListAdapter();
         adapter.setAdapterListener(listAdapterListener);
 
@@ -85,8 +83,18 @@ public class PlacesListFragment extends Fragment
         listView.setLayoutManager(new LinearLayoutManager(getActivity()));
         listView.setAdapter(adapter);
 
-        reloadAdapter();
+        if (savedState != null) {
+            reloadAdapter(listTaskListener(savedState.getLong(KEY_SELECTED_ROWID, -1)));
+        } else reloadAdapter();
+
         return dialogContent;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle state)
+    {
+        state.putLong(KEY_SELECTED_ROWID, adapter.getSelectedRowID());
+        super.onSaveInstanceState(state);
     }
 
     @Override
@@ -199,23 +207,37 @@ public class PlacesListFragment extends Fragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void reloadAdapter()
+    public void reloadAdapter() {
+        reloadAdapter(listTaskListener(-1));
+    }
+
+    public void reloadAdapter( PlacesListTask.TaskListener taskListener )
     {
         PlacesListTask listTask = new PlacesListTask(getActivity());
-        listTask.setTaskListener(listTaskListener);
+        listTask.setTaskListener(taskListener);
         listTask.execute();
     }
 
-    protected PlacesListTask.TaskListener listTaskListener = new PlacesListTask.TaskListener()
+    protected PlacesListTask.TaskListener listTaskListener(final long selectedRowID)
     {
-        @Override
-        public void onStarted() {}
+        return new PlacesListTask.TaskListener() {
+            @Override
+            public void onStarted() {}
 
-        @Override
-        public void onFinished(List<PlaceItem> results) {
-            adapter.setValues(results);
-        }
-    };
+            @Override
+            public void onFinished(List<PlaceItem> results)
+            {
+                adapter.setSelectedRowID(selectedRowID);
+                adapter.setValues(results);
+
+                if (selectedRowID != -1)
+                {
+                    listView.scrollToPosition(adapter.indexOf(selectedRowID));
+                    triggerActionMode(null, adapter.getItem(selectedRowID));
+                }
+            }
+        };
+    }
 
     protected PlacesListAdapter.AdapterListener listAdapterListener = new PlacesListAdapter.AdapterListener()
     {
@@ -281,7 +303,7 @@ public class PlacesListFragment extends Fragment
                             {
                                 @Override
                                 public void onFinished(long rowID, boolean result) {
-                                    adapter.removeValue(rowID);
+                                    adapter.removeItem(rowID);
                                 }
                             });
                             task.execute(item.rowID);
@@ -553,7 +575,7 @@ public class PlacesListFragment extends Fragment
             return position;
         }
 
-        public void removeValue(long rowID)
+        public void removeItem(long rowID)
         {
             int position = indexOf(rowID);
             if (position != -1)
@@ -561,6 +583,14 @@ public class PlacesListFragment extends Fragment
                 items.remove(position);
                 notifyItemRemoved(position);
             }
+        }
+
+        public PlaceItem getItem(long rowID)
+        {
+            int position = indexOf(rowID);
+            if (position >= 0) {
+                return items.get(position);
+            } else return null;
         }
 
         protected List<PlaceItem> sortItems(List<PlaceItem> items)
@@ -635,8 +665,8 @@ public class PlacesListFragment extends Fragment
 
         protected void attachClickListeners(PlacesListViewHolder holder, int position)
         {
-            if (holder.card != null) {
-                holder.card.setOnClickListener(onItemClicked(position));
+            if (holder.itemView != null) {
+                holder.itemView.setOnClickListener(onItemClicked(position));
             }
         }
 
@@ -654,8 +684,8 @@ public class PlacesListFragment extends Fragment
 
         protected void detachClickListeners(PlacesListViewHolder holder)
         {
-            if (holder.card != null) {
-                holder.card.setOnClickListener(null);
+            if (holder.itemView != null) {
+                holder.itemView.setOnClickListener(null);
             }
         }
 
@@ -669,7 +699,6 @@ public class PlacesListFragment extends Fragment
 
     public static class PlacesListViewHolder extends RecyclerView.ViewHolder
     {
-        public View card;
         public TextView label;
         public TextView summary;
         public boolean selected = false;
@@ -679,17 +708,13 @@ public class PlacesListFragment extends Fragment
         public PlacesListViewHolder(View itemView)
         {
             super(itemView);
-            card = itemView.findViewById(R.id.listitem_layout);
             label = (TextView) itemView.findViewById(android.R.id.text1);
             summary = (TextView) itemView.findViewById(android.R.id.text2);
         }
 
         public void bindViewHolder( PlaceItem item )
         {
-            if (card != null) {
-                // TODO
-                //card.setBackgroundColor(selected ? color_selected : Color.BLACK);
-            }
+            this.itemView.setSelected(selected);
             if (label != null) {
                 label.setText(item != null && item.location != null ? item.location.getLabel() : "");
             }
