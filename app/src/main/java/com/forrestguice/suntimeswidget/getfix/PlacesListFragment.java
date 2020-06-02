@@ -28,6 +28,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
@@ -35,6 +37,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -48,8 +51,10 @@ import android.widget.Toast;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -76,7 +81,7 @@ public class PlacesListFragment extends Fragment
     {
         View dialogContent = inflater.inflate(R.layout.layout_dialog_placeslist, parent, false);
 
-        adapter = new PlacesListAdapter();
+        adapter = new PlacesListAdapter(getActivity());
         adapter.setAdapterListener(listAdapterListener);
 
         listView = (RecyclerView) dialogContent.findViewById(R.id.placesList);
@@ -137,6 +142,7 @@ public class PlacesListFragment extends Fragment
                 actionMode = activity.startSupportActionMode(actions);
                 if (actionMode != null) {
                     actionMode.setTitle(item.location != null ? item.location.getLabel() : "");
+                    actionMode.setSubtitle(item.location != null ? locationDisplayString(getActivity(), item.location, true) : "");
                 }
             }
             return true;
@@ -552,7 +558,13 @@ public class PlacesListFragment extends Fragment
 
     public static class PlacesListAdapter extends RecyclerView.Adapter<PlacesListViewHolder>
     {
-        protected ArrayList<PlaceItem> items = new ArrayList<>();
+        protected WeakReference<Context> contextRef;
+        protected ArrayList<PlaceItem> items;
+
+        public PlacesListAdapter(Context context) {
+            contextRef = new WeakReference<>(context);
+            items = new ArrayList<>();
+        }
 
         public void setValues(List<PlaceItem> values)
         {
@@ -642,7 +654,7 @@ public class PlacesListFragment extends Fragment
         {
             PlaceItem item = items.get(position);
             holder.selected = (item.rowID == selectedRowID);
-            holder.bindViewHolder(item);
+            holder.bindViewHolder(contextRef.get(), item);
             attachClickListeners(holder, position);
         }
 
@@ -703,8 +715,6 @@ public class PlacesListFragment extends Fragment
         public TextView summary;
         public boolean selected = false;
 
-        public int color_selected = Color.GREEN;
-
         public PlacesListViewHolder(View itemView)
         {
             super(itemView);
@@ -712,20 +722,22 @@ public class PlacesListFragment extends Fragment
             summary = (TextView) itemView.findViewById(android.R.id.text2);
         }
 
-        public void bindViewHolder( PlaceItem item )
+        public void bindViewHolder(@Nullable Context context, @Nullable PlaceItem item )
         {
             this.itemView.setSelected(selected);
             if (label != null) {
-                label.setText(item != null && item.location != null ? item.location.getLabel() : "");
+                label.setText(context == null || item == null || item.location == null ? ""
+                        : item.location.getLabel());
             }
             if (summary != null) {
-                summary.setText(item != null && item.location != null ? item.location.getLatitude() + ", " + item.location.getLongitude() + " (TODO)" : "");  // TODO
+                summary.setText(context == null || item == null || item.location == null ? ""
+                        : locationDisplayString(context, item.location, true));
             }
         }
 
         public void unbindViewHolder() {
             selected = false;
-            bindViewHolder(null);
+            bindViewHolder(null, null);
         }
     }
 
@@ -743,6 +755,26 @@ public class PlacesListFragment extends Fragment
         {
             this.rowID = rowID;
             this.location = location;
+        }
+    }
+
+    /**
+     * locationDisplayString .. "lat, lon [alt]"
+     */
+    public static CharSequence locationDisplayString(@NonNull Context context, @NonNull Location location, boolean showAltitude)
+    {
+        String locationString = context.getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
+        if (showAltitude)
+        {
+            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+            SuntimesUtils.TimeDisplayText altitudeText = SuntimesUtils.formatAsHeight(context, location.getAltitudeAsDouble(), units, 0,true);
+            String altitudeString = context.getString(R.string.location_format_alt, altitudeText.getValue(), altitudeText.getUnits());
+            String altitudeTag = context.getString(R.string.location_format_alttag, altitudeString);
+            String displayString = context.getString(R.string.location_format_latlonalt, locationString, altitudeTag);
+            return SuntimesUtils.createRelativeSpan(null, displayString, altitudeTag, 0.75f);
+
+        } else {
+            return locationString;
         }
     }
 
