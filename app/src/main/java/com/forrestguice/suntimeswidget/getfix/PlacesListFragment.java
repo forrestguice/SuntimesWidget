@@ -23,6 +23,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -277,9 +278,34 @@ public class PlacesListFragment extends Fragment
     {
         if (item != null && item.location != null)
         {
-            Intent intent = new Intent();
+            Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(item.location.getUri());
-            startActivity(intent);
+            List<ResolveInfo> info = getActivity().getPackageManager().queryIntentActivities(intent, 0);
+            List<Intent> geoIntents = new ArrayList<Intent>();
+
+            if (!info.isEmpty())
+            {
+                for (ResolveInfo resolveInfo : info)
+                {
+                    if (!TextUtils.equals(resolveInfo.activityInfo.packageName, "com.forrestguice.suntimeswidget"))
+                    {
+                        Intent geoIntent = new Intent(Intent.ACTION_VIEW);
+                        geoIntent.setPackage(resolveInfo.activityInfo.packageName);
+                        geoIntent.setData(item.location.getUri());
+                        geoIntents.add(geoIntent);
+                    }
+                }
+            }
+
+            if (geoIntents.size() > 0)
+            {
+                Intent chooserIntent = Intent.createChooser(geoIntents.remove(0), getString(R.string.configAction_mapLocation_chooser));
+                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, geoIntents.toArray(new Parcelable[0]));
+                startActivity(chooserIntent);
+
+            } else {
+                Toast.makeText(getActivity(), getActivity().getString(R.string.configAction_mapLocation_noapp), Toast.LENGTH_LONG).show();
+            }
         }
     }
 
