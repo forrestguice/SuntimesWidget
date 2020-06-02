@@ -49,6 +49,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -64,6 +65,8 @@ import java.util.List;
 public class PlacesListFragment extends Fragment
 {
     public static final String KEY_SELECTED_ROWID = "selectedRowID";
+
+    public static final String DIALOG_EDITPLACE = "placedialog";
 
     protected PlacesListAdapter adapter;
     protected RecyclerView listView;
@@ -311,8 +314,14 @@ public class PlacesListFragment extends Fragment
 
     protected void editPlace(@Nullable PlaceItem item)
     {
-        // TODO
-        Toast.makeText(getActivity(), "TODO", Toast.LENGTH_SHORT).show();
+        if (item != null && item.location != null)
+        {
+            LocationConfigDialog dialog = new LocationConfigDialog();
+            dialog.setLocation(getActivity(), item.location);
+            dialog.setHideTitle(true);
+            dialog.setHideMode(true);
+            dialog.show(getChildFragmentManager(), DIALOG_EDITPLACE);
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
