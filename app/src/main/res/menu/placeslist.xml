@@ -3,6 +3,12 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="none">
 
+        <item android:id="@+id/addPlace"
+            android:icon="?attr/icActionNew"
+            android:title="@string/configAction_addPlace"
+            app:showAsAction="ifRoom"
+            android:orderInCategory="0" />
+
         <item android:id="@+id/clearPlaces"
             android:icon="?attr/icActionDelete"
             android:title="@string/configAction_clearPlaces"
@@ -14,7 +20,6 @@
             android:title="@string/configAction_exportPlaces"
             app:showAsAction="never"
             android:orderInCategory="300" />
-
 
         <item android:id="@+id/addWorldPlaces"
             android:icon="?attr/icActionMap"

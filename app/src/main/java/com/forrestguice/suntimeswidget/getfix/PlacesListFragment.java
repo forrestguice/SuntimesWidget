@@ -116,6 +116,10 @@ public class PlacesListFragment extends Fragment
     {
         switch (item.getItemId())
         {
+            case R.id.addPlace:
+                addPlace(getActivity());
+                return true;
+
             case R.id.clearPlaces:
                 clearPlaces(getActivity());
                 return true;
@@ -312,6 +316,11 @@ public class PlacesListFragment extends Fragment
         }
     }
 
+    protected void addPlace(Context context)
+    {
+        // TODO
+    }
+
     protected void editPlace(@Nullable PlaceItem item)
     {
         if (item != null && item.location != null)
@@ -321,6 +330,7 @@ public class PlacesListFragment extends Fragment
             dialog.setHideTitle(true);
             dialog.setHideMode(true);
             dialog.show(getChildFragmentManager(), DIALOG_EDITPLACE);
+            // TODO
         }
     }
 
