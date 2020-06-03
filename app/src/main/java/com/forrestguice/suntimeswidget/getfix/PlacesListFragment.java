@@ -164,7 +164,7 @@ public class PlacesListFragment extends Fragment
                 actionMode = activity.startSupportActionMode(actions);
                 if (actionMode != null) {
                     actionMode.setTitle(item.location != null ? item.location.getLabel() : "");
-                    actionMode.setSubtitle(item.location != null ? locationDisplayString(getActivity(), item.location, true) : "");
+                    actionMode.setSubtitle(item.location != null ? locationDisplayString(activity, item.location, true) : "");
                 }
             }
             return true;
@@ -247,9 +247,13 @@ public class PlacesListFragment extends Fragment
 
     public void reloadAdapter( PlacesListTask.TaskListener taskListener )
     {
-        PlacesListTask listTask = new PlacesListTask(getActivity());
-        listTask.setTaskListener(taskListener);
-        listTask.execute();
+        Context context = getActivity();
+        if (context != null)
+        {
+            PlacesListTask listTask = new PlacesListTask(context);
+            listTask.setTaskListener(taskListener);
+            listTask.execute();
+        }
     }
 
     protected PlacesListTask.TaskListener listTaskListener(final long selectedRowID)
@@ -311,11 +315,12 @@ public class PlacesListFragment extends Fragment
 
     protected void sharePlace(@Nullable PlaceItem item)
     {
-        if (item != null && item.location != null)
+        Context context = getActivity();
+        if (item != null && item.location != null && context != null)
         {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(item.location.getUri());
-            List<ResolveInfo> info = getActivity().getPackageManager().queryIntentActivities(intent, 0);
+            List<ResolveInfo> info = context.getPackageManager().queryIntentActivities(intent, 0);
             List<Intent> geoIntents = new ArrayList<Intent>();
 
             if (!info.isEmpty())
@@ -339,7 +344,7 @@ public class PlacesListFragment extends Fragment
                 startActivity(chooserIntent);
 
             } else {
-                Toast.makeText(getActivity(), getActivity().getString(R.string.configAction_mapLocation_noapp), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, context.getString(R.string.configAction_mapLocation_noapp), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -352,10 +357,11 @@ public class PlacesListFragment extends Fragment
 
     protected void editPlace(@Nullable PlaceItem item)
     {
-        if (item != null && item.location != null)
+        Context context = getActivity();
+        if (item != null && item.location != null && context != null)
         {
             LocationConfigDialog dialog = new LocationConfigDialog();
-            dialog.setLocation(getActivity(), item.location);
+            dialog.setLocation(context, item.location);
             dialog.setHideTitle(true);
             dialog.setHideMode(true);
             dialog.show(getChildFragmentManager(), DIALOG_EDITPLACE);
@@ -469,7 +475,9 @@ public class PlacesListFragment extends Fragment
         {
             setRetainInstance(true);
             Context context = getActivity();
-            showProgress(getActivity(), context.getString(R.string.locationcleared_dialog_title), context.getString(R.string.locationcleared_dialog_message));
+            if (context != null) {
+                showProgress(context, context.getString(R.string.locationcleared_dialog_title), context.getString(R.string.locationcleared_dialog_message));
+            }
         }
 
         @Override
@@ -478,7 +486,11 @@ public class PlacesListFragment extends Fragment
             setModified(true);
             setRetainInstance(false);
             dismissProgress();
-            Toast.makeText(getActivity(), getActivity().getString(R.string.locationcleared_toast_success), Toast.LENGTH_LONG).show();
+
+            Context context = getActivity();
+            if (context != null) {
+                Toast.makeText(context, context.getString(R.string.locationcleared_toast_success), Toast.LENGTH_LONG).show();
+            }
             reloadAdapter();
         }
     };
@@ -499,7 +511,9 @@ public class PlacesListFragment extends Fragment
         {
             setRetainInstance(true);
             Context context = getActivity();
-            showProgress(getActivity(), context.getString(R.string.locationexport_dialog_title), context.getString(R.string.locationexport_dialog_message));
+            if (context != null) {
+                showProgress(context, context.getString(R.string.locationexport_dialog_title), context.getString(R.string.locationexport_dialog_message));
+            }
         }
 
         @Override
@@ -508,33 +522,38 @@ public class PlacesListFragment extends Fragment
             setRetainInstance(false);
             dismissProgress();
 
-            if (results.getResult())
+            Context context = getActivity();
+            if (context != null)
             {
-                Intent shareIntent = new Intent();
-                shareIntent.setAction(Intent.ACTION_SEND);
-                shareIntent.setType(results.getMimeType());
-                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                if (results.getResult())
+                {
+                    Intent shareIntent = new Intent();
+                    shareIntent.setAction(Intent.ACTION_SEND);
+                    shareIntent.setType(results.getMimeType());
+                    shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-                try {
-                    //Uri shareURI = Uri.fromFile(results.getExportFile());  // this URI works until api26 (throws FileUriExposedException)
-                    Uri shareURI = FileProvider.getUriForFile(getActivity(), "com.forrestguice.suntimeswidget.fileprovider", results.getExportFile());
-                    shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
+                    try {
+                        //Uri shareURI = Uri.fromFile(results.getExportFile());  // this URI works until api26 (throws FileUriExposedException)
+                        Uri shareURI = FileProvider.getUriForFile(context, "com.forrestguice.suntimeswidget.fileprovider", results.getExportFile());
+                        shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
 
-                    String successMessage = getActivity().getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());
-                    Toast.makeText(getActivity().getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
+                        String successMessage = context.getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());
+                        Toast.makeText(context, successMessage, Toast.LENGTH_LONG).show();
 
-                    getActivity().startActivity(Intent.createChooser(shareIntent, getActivity().getResources().getText(R.string.msg_export_to)));
-                    return;   // successful export ends here...
+                        context.startActivity(Intent.createChooser(shareIntent, context.getResources().getText(R.string.msg_export_to)));
+                        return;   // successful export ends here...
 
-                } catch (Exception e) {
-                    Log.e("ExportPlaces", "Failed to share file URI! " + e);
+                    } catch (Exception e) {
+                        Log.e("ExportPlaces", "Failed to share file URI! " + e);
+                    }
+
                 }
-            }
 
-            File file = results.getExportFile();    // export failed
-            String path = ((file != null) ? file.getAbsolutePath() : "<path>");
-            String failureMessage = getActivity().getString(R.string.msg_export_failure, path);
-            Toast.makeText(getActivity().getApplicationContext(), failureMessage, Toast.LENGTH_LONG).show();
+                File file = results.getExportFile();    // export failed
+                String path = ((file != null) ? file.getAbsolutePath() : "<path>");
+                String failureMessage = context.getString(R.string.msg_export_failure, path);
+                Toast.makeText(context, failureMessage, Toast.LENGTH_LONG).show();
+            }
         }
     };
 
@@ -554,7 +573,9 @@ public class PlacesListFragment extends Fragment
         {
             setRetainInstance(true);
             Context context = getActivity();
-            showProgress(getActivity(), context.getString(R.string.locationbuild_dialog_title), context.getString(R.string.locationbuild_dialog_message));
+            if (context != null) {
+                showProgress(context, context.getString(R.string.locationbuild_dialog_title), context.getString(R.string.locationbuild_dialog_message));
+            }
         }
 
         @Override
@@ -565,7 +586,10 @@ public class PlacesListFragment extends Fragment
             if (result > 0)
             {
                 reloadAdapter();
-                Toast.makeText(getActivity(), getActivity().getString(R.string.locationbuild_toast_success, result.toString()), Toast.LENGTH_LONG).show();
+                Context context = getActivity();
+                if (context != null) {
+                    Toast.makeText(context, context.getString(R.string.locationbuild_toast_success, result.toString()), Toast.LENGTH_LONG).show();
+                }
             } // else // TODO: fail msg
         }
     };
@@ -577,7 +601,7 @@ public class PlacesListFragment extends Fragment
     {
         protected GetFixDatabaseAdapter database;
 
-        public PlacesListTask(Context context) {
+        public PlacesListTask(@NonNull Context context) {
             database = new GetFixDatabaseAdapter(context.getApplicationContext());
         }
 
