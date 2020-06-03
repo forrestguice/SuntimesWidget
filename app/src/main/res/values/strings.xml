@@ -1291,23 +1291,23 @@
 
     <!-- Dialog: Clear Places -->
     <string name="locationclear_dialog_title">Clear Places?</string>
-    <string name="locationclear_dialog_message">Are you sure you want to clear the database of places?</string>
+    <string name="locationclear_dialog_message">Are you sure you want to clear the list of places?</string>  <!-- TODO -->
     <string name="locationclear_dialog_ok">Clear</string>
     <string name="locationclear_dialog_cancel">Cancel</string>
 
     <!-- Dialog: Clear Places (progress) -->
     <string name="locationcleared_dialog_title">Clearing Places</string>
-    <string name="locationcleared_dialog_message">Clearing the database…</string>
-    <string name="locationcleared_toast_success">The database of places has been cleared.</string>
+    <string name="locationcleared_dialog_message">Clearing the list of places…</string>               <!-- TODO -->
+    <string name="locationcleared_toast_success">The list of places has been cleared.</string>        <!-- TODO -->
 
     <!-- Dialog: Build Places List (progress) -->
     <string name="locationbuild_dialog_title">Building Database</string>
-    <string name="locationbuild_dialog_message">Building a database of places…</string>
-    <string name="locationbuild_toast_success">Added <xliff:g id="n">%1$s</xliff:g> places to the database.</string>
+    <string name="locationbuild_dialog_message">Building a list of places…</string>                   <!-- TODO -->
+    <string name="locationbuild_toast_success">Added <xliff:g id="n">%1$s</xliff:g> places.</string>  <!-- TODO -->
 
     <!-- Dialog: Export Places -->
     <string name="locationexport_dialog_title">Exporting Places</string>
-    <string name="locationexport_dialog_message">Exporting the database to csv file.</string>
+    <string name="locationexport_dialog_message">Exporting places to csv file.</string>               <!-- TODO -->
 
     <!-- Dialog: Export Themes -->
     <string name="themesexport_dialog_title">Exporting Themes</string>
