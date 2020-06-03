@@ -3,7 +3,7 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="none">
 
-        <item android:id="@+id/selectPlace"
+        <item android:id="@+id/pickPlace"
             android:icon="?attr/icActionAccept"
             android:title="@string/configAction_selectPlace"
             app:showAsAction="always" android:visible="false"

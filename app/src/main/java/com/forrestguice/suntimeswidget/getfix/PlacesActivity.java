@@ -39,6 +39,10 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public class PlacesActivity extends AppCompatActivity
 {
+    public static final String EXTRA_ADAPTER_MODIFIED = "isModified";
+    public static final String EXTRA_ALLOW_PICK = "allowPick";
+    public static final String EXTRA_SELECTED = "selected";
+
     protected PlacesListFragment list;
 
     @Override
@@ -70,6 +74,11 @@ public class PlacesActivity extends AppCompatActivity
 
         FragmentManager fragments = getSupportFragmentManager();
         list = (PlacesListFragment) fragments.findFragmentById(R.id.placesListFragment);
+        list.setFragmentListener(listFragmentListener);
+
+        Intent intent = getIntent();
+        list.setAllowPick(intent.getBooleanExtra(EXTRA_ALLOW_PICK, false));
+        list.setSelectedRowID(intent.getLongExtra(EXTRA_SELECTED, -1));
     }
 
     protected void initLocale()
@@ -112,10 +121,33 @@ public class PlacesActivity extends AppCompatActivity
         }
     }
 
+    private PlacesListFragment.FragmentListener listFragmentListener = new PlacesListFragment.FragmentListener()
+    {
+        @Override
+        public void onItemPicked(PlacesListFragment.PlaceItem item) {
+            pickPlace(item);
+        }
+
+        @Override
+        public void onItemClicked(PlacesListFragment.PlaceItem item, int position) { /* EMPTY */ }
+    };
+
+    protected void pickPlace(PlacesListFragment.PlaceItem item)
+    {
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_SELECTED, item.rowID);
+        intent.putExtra(EXTRA_ADAPTER_MODIFIED, list.isModified());
+        setResult(Activity.RESULT_OK, intent);
+        finish();
+        overridePendingTransition(R.anim.transition_ok_in, R.anim.transition_ok_out);
+    }
+
     @Override
     public void onBackPressed()
     {
-        setResult(Activity.RESULT_CANCELED);
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_ADAPTER_MODIFIED, list.isModified());
+        setResult(list.isModified() ? Activity.RESULT_OK : Activity.RESULT_CANCELED, intent);
         finish();
         overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);
     }
@@ -126,5 +158,4 @@ public class PlacesActivity extends AppCompatActivity
         startActivity(about);
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
-
 }

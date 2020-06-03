@@ -65,13 +65,23 @@ import java.util.List;
 public class PlacesListFragment extends Fragment
 {
     public static final String KEY_SELECTED_ROWID = "selectedRowID";
+    public static final String KEY_ALLOW_PICK = "allowPick";
+    public static final String KEY_MODIFIED = "isModified";
 
     public static final String DIALOG_EDITPLACE = "placedialog";
 
+    protected FragmentListener listener;
     protected PlacesListAdapter adapter;
     protected RecyclerView listView;
     protected ActionMode actionMode = null;
     protected PlacesListActionCompat actions = new PlacesListActionCompat();
+
+    public PlacesListFragment()
+    {
+        super();
+        setArguments(new Bundle());
+        setAllowPick(false);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -181,6 +191,12 @@ public class PlacesListFragment extends Fragment
         public boolean onPrepareActionMode(ActionMode mode, Menu menu)
         {
             SuntimesUtils.forceActionBarIcons(menu);
+
+            MenuItem pickPlace = menu.findItem(R.id.pickPlace);
+            if (pickPlace != null) {
+                pickPlace.setVisible(allowPick());
+            }
+
             return false;
         }
 
@@ -189,8 +205,8 @@ public class PlacesListFragment extends Fragment
         {
             switch (menuItem.getItemId())
             {
-                case R.id.selectPlace:
-                    selectPlace(item);
+                case R.id.pickPlace:
+                    pickPlace(item);
                     mode.finish();
                     return true;
 
@@ -253,11 +269,15 @@ public class PlacesListFragment extends Fragment
         };
     }
 
-    protected PlacesListAdapter.AdapterListener listAdapterListener = new PlacesListAdapter.AdapterListener()
+    protected AdapterListener listAdapterListener = new AdapterListener()
     {
         @Override
-        public void onItemClicked(PlaceItem item, int position) {
+        public void onItemClicked(PlaceItem item, int position)
+        {
             triggerActionMode(null, item);
+            if (listener != null) {
+                listener.onItemClicked(item, position);
+            }
         }
     };
 
@@ -275,10 +295,11 @@ public class PlacesListFragment extends Fragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected void selectPlace(@Nullable PlaceItem item)
+    protected void pickPlace(@Nullable PlaceItem item)
     {
-        // TODO
-        Toast.makeText(getActivity(), "TODO", Toast.LENGTH_SHORT).show();
+        if (listener != null && allowPick()) {
+            listener.onItemPicked(item);
+        }
     }
 
     protected void sharePlace(@Nullable PlaceItem item)
@@ -318,7 +339,8 @@ public class PlacesListFragment extends Fragment
 
     protected void addPlace(Context context)
     {
-        // TODO
+        // TODO: add place
+        setModified(true);   // TODO: move to onAdded
     }
 
     protected void editPlace(@Nullable PlaceItem item)
@@ -330,7 +352,9 @@ public class PlacesListFragment extends Fragment
             dialog.setHideTitle(true);
             dialog.setHideMode(true);
             dialog.show(getChildFragmentManager(), DIALOG_EDITPLACE);
-            // TODO
+
+            // TODO: edit place dialog
+            setModified(true);  // TODO: move to onEdited
         }
     }
 
@@ -355,6 +379,7 @@ public class PlacesListFragment extends Fragment
                                 @Override
                                 public void onFinished(long rowID, boolean result) {
                                     adapter.removeItem(rowID);
+                                    setModified(true);
                                 }
                             });
                             task.execute(item.rowID);
@@ -443,6 +468,7 @@ public class PlacesListFragment extends Fragment
         @Override
         public void onFinished(Integer result)
         {
+            setModified(true);
             setRetainInstance(false);
             dismissProgress();
             Toast.makeText(getActivity(), getActivity().getString(R.string.locationcleared_toast_success), Toast.LENGTH_LONG).show();
@@ -601,6 +627,42 @@ public class PlacesListFragment extends Fragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public void setSelectedRowID( long rowID ) {
+        adapter.setSelectedRowID(rowID);
+    }
+    public long selectedRowID() {
+        return adapter.getSelectedRowID();
+    }
+
+    public void setAllowPick(boolean value) {
+        getArguments().putBoolean(KEY_ALLOW_PICK, value);
+    }
+    public boolean allowPick() {
+        return getArguments().getBoolean(KEY_ALLOW_PICK, false);
+    }
+
+    public boolean isModified() {
+        return getArguments().getBoolean(KEY_MODIFIED, false);
+    }
+    protected void setModified(boolean value) {
+        getArguments().putBoolean(KEY_MODIFIED, value);
+    }
+
+    public void setFragmentListener(FragmentListener value) {
+        listener = value;
+    }
+
+    public interface FragmentListener extends AdapterListener {
+        void onItemPicked(PlaceItem item);
+    }
+
+    public interface AdapterListener {
+        void onItemClicked(PlaceItem item, int position);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     public static class PlacesListAdapter extends RecyclerView.Adapter<PlacesListViewHolder>
     {
         protected WeakReference<Context> contextRef;
@@ -744,10 +806,6 @@ public class PlacesListFragment extends Fragment
             if (holder.itemView != null) {
                 holder.itemView.setOnClickListener(null);
             }
-        }
-
-        public interface AdapterListener {
-            void onItemClicked(PlaceItem item, int position);
         }
     }
 
