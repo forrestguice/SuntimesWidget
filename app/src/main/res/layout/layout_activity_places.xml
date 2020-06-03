@@ -4,7 +4,7 @@
     tools:context=".getfix.PlacesActivity">
 
     <LinearLayout android:orientation="vertical"
-        android:layout_width="match_parent" android:layout_height="wrap_content">
+        android:layout_width="match_parent" android:layout_height="match_parent">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/app_menubar"
@@ -20,7 +20,7 @@
 
             <fragment android:id="@+id/placesListFragment"
                 android:name="com.forrestguice.suntimeswidget.getfix.PlacesListFragment"
-                android:layout_width="match_parent" android:layout_height="wrap_content" />
+                android:layout_width="match_parent" android:layout_height="match_parent" />
 
         </FrameLayout>
 

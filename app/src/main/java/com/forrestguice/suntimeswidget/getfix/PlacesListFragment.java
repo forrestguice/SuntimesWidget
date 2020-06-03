@@ -46,6 +46,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,6 +74,7 @@ public class PlacesListFragment extends Fragment
     protected FragmentListener listener;
     protected PlacesListAdapter adapter;
     protected RecyclerView listView;
+    protected View progressView;
     protected ActionMode actionMode = null;
     protected PlacesListActionCompat actions = new PlacesListActionCompat();
 
@@ -101,6 +103,8 @@ public class PlacesListFragment extends Fragment
         listView = (RecyclerView) dialogContent.findViewById(R.id.placesList);
         listView.setLayoutManager(new LinearLayoutManager(getActivity()));
         listView.setAdapter(adapter);
+
+        progressView = dialogContent.findViewById(R.id.progressLayout);
 
         if (savedState != null) {
             reloadAdapter(listTaskListener(savedState.getLong(KEY_SELECTED_ROWID, -1)));
@@ -281,15 +285,18 @@ public class PlacesListFragment extends Fragment
         }
     };
 
-    public void showProgress( Context context, CharSequence title, CharSequence message ) {
-        //progress = ProgressDialog.show(context, title, message, true);
+    public void showProgress( Context context, CharSequence title, CharSequence message )
+    {
+        if (progressView != null) {
+            progressView.setVisibility(View.VISIBLE);
+        }
     }
 
     public void dismissProgress()
     {
-        //if (!isDetached() && progress != null && progress.isShowing()) {
-            //progress.dismiss();
-        //}
+        if (progressView != null) {
+            progressView.setVisibility(View.GONE);
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

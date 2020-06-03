@@ -17,11 +17,22 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/placesList"
         android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+    <LinearLayout android:id="@+id/progressLayout" android:visibility="gone"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:layout_gravity="center" android:gravity="center"
+        android:orientation="vertical" android:padding="8dp"
+        android:clickable="true" android:focusable="true">
+
+        <ProgressBar android:id="@+id/progress"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 </FrameLayout>
