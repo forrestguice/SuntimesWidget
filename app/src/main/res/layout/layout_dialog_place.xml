@@ -17,20 +17,160 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/SunsetTimeWidget_dark"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical" android:layout_marginBottom="8dp"
+    android:paddingLeft="5dp" android:paddingRight="5dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/appwidget_location_name_layout"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/dialogBackground">
+        android:orientation="horizontal" android:paddingTop="@dimen/settingsGroup_padding">
 
-        <com.forrestguice.suntimeswidget.LocationConfigView
-            android:id="@+id/locationConfig"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <LinearLayout android:id="@+id/appwidget_location_controlPanel"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical">
+
+            <ImageButton android:id="@+id/appwidget_location_save"
+                style="@android:style/Widget.ActionButton"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:src="?attr/icActionSave"
+                android:contentDescription="@string/configAction_savePlace" />
+
+        </LinearLayout>
+
+        <EditText android:id="@+id/appwidget_location_name"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmallPopupMenu"
+            android:hint="@string/configHint_location_name" android:enabled="false"
+            android:paddingLeft="5dp" android:paddingRight="5dp"
+            android:layout_gravity="center_vertical" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <GridLayout
+                android:id="@+id/appwidget_location_latlon"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:columnCount="5" android:rowCount="4" android:orientation="horizontal"
+                android:paddingLeft="16dp" android:paddingRight="16dp" android:paddingTop="0dp">
+
+                <TextView android:labelFor="@+id/appwidget_location_lat"
+                    android:id="@+id/appwidget_location_lat_label"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="@string/configLabel_location_lat" android:enabled="false"
+                    android:layout_row="0"
+                    android:layout_column="0" />
+
+
+                <EditText android:id="@+id/appwidget_location_lat"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:inputType="numberDecimal|numberSigned"
+                    android:textAppearance="?android:attr/textAppearanceSmallPopupMenu"
+                    android:hint="@string/configHint_location_lat" android:enabled="false"
+                    android:layout_row="0"
+                    android:layout_column="1"
+                    android:layout_columnSpan="4"/>
+
+
+                <TextView android:labelFor="@+id/appwidget_location_lon"
+                    android:id="@+id/appwidget_location_lon_label"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="@string/configLabel_location_lon" android:enabled="false"
+                    android:layout_row="1"
+                    android:layout_column="0" />
+
+                <EditText android:id="@+id/appwidget_location_lon"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:inputType="numberDecimal|numberSigned"
+                    android:textAppearance="?android:attr/textAppearanceSmallPopupMenu"
+                    android:hint="@string/configHint_location_lon" android:enabled="false"
+                    android:layout_row="1"
+                    android:layout_column="1"
+                    android:layout_columnSpan="4" />
+
+
+                <TextView android:labelFor="@+id/appwidget_location_alt"
+                    android:id="@+id/appwidget_location_alt_label"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="@string/configLabel_location_alt" android:enabled="false"
+                    android:layout_row="2"
+                    android:layout_column="0" />
+
+                <EditText android:id="@+id/appwidget_location_alt"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:inputType="numberDecimal|numberSigned" android:minEms="2"
+                    android:textAppearance="?android:attr/textAppearanceSmallPopupMenu"
+                    android:hint="@string/configHint_location_alt" android:enabled="false"
+                    android:layout_row="2"
+                    android:layout_column="1"
+                    android:layout_columnSpan="3" />
+
+                <TextView android:id="@+id/appwidget_location_alt_units"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/units_meters" android:enabled="false"
+                    android:layout_row="2"
+                    android:layout_column="4" />
+
+            </GridLayout>
+
+            <View
+                android:id="@+id/appwidget_location_latlon_overlay"
+                android:layout_width="50dp" android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:layout_alignLeft="@id/appwidget_location_latlon" android:layout_alignStart="@id/appwidget_location_latlon"
+                android:layout_alignRight="@id/appwidget_location_latlon" android:layout_alignEnd="@id/appwidget_location_latlon"
+                android:layout_alignBottom="@id/appwidget_location_latlon"
+                android:layout_alignTop="@id/appwidget_location_latlon"/>
+
+        </RelativeLayout>
+
+        <LinearLayout android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" android:layout_gravity="top">
+
+            <ViewFlipper android:id="@+id/view_flip2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <FrameLayout android:id="@+id/getFixProgress"
+                    android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+                    <ImageButton android:id="@+id/appwidget_location_getfix"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:src="?attr/icActionGPS_searching"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/configAction_getFix" />
+
+                    <ProgressBar
+                        android:id="@+id/appwidget_location_getfixprogress"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
+                </FrameLayout>
+
+                <LinearLayout android:id="@+id/getFixProgress_gone"
+                    android:layout_width="fill_parent" android:layout_height="fill_parent"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
+
+            </ViewFlipper>
+
+        </LinearLayout>
 
     </LinearLayout>
 

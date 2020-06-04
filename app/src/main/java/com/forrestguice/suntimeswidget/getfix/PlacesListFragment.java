@@ -383,24 +383,16 @@ public class PlacesListFragment extends Fragment
             Context context = getActivity();
             if (item != null && item.location != null && context != null)
             {
-                LocationConfigDialog dialog = new LocationConfigDialog();
-                dialog.setDialogListener(onEditPlace);
+                PlacesEditFragment dialog = new PlacesEditFragment();
+                dialog.setFragmentListener(onEditPlace);
                 dialog.setLocation(context, item.location);
-                dialog.setHideDialogHeader(true);
-                dialog.setHideTitle(true);
-                dialog.setHideMode(true);
                 dialog.show(getChildFragmentManager(), DIALOG_EDITPLACE);
             }
         }
     }
 
-    private LocationConfigDialog.LocationConfigDialogListener onEditPlace = new LocationConfigDialog.LocationConfigDialogListener() {
-        @Override
-        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
-        {
-            setModified(true);
-            return true;
-        }
+    private PlacesEditFragment.FragmentListener onEditPlace = new PlacesEditFragment.FragmentListener() {
+        // TODO
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
