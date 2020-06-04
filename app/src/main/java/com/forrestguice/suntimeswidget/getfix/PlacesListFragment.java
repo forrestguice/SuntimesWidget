@@ -905,20 +905,6 @@ public class PlacesListFragment extends Fragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static class PlaceItem
-    {
-        public long rowID = -1;
-        public Location location = null;
-
-        public PlaceItem() {}
-
-        public PlaceItem( long rowID, Location location )
-        {
-            this.rowID = rowID;
-            this.location = location;
-        }
-    }
-
     /**
      * locationDisplayString .. "lat, lon [alt]"
      */
