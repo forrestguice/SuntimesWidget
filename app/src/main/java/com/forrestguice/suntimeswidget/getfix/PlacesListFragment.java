@@ -234,6 +234,10 @@ public class PlacesListFragment extends Fragment
                 case R.id.sharePlace:
                     sharePlace(item);
                     return true;
+
+                case android.R.id.home:
+                    finishActionMode();
+                    return true;
             }
             return false;
         }
@@ -369,19 +373,35 @@ public class PlacesListFragment extends Fragment
 
     protected void editPlace(@Nullable PlaceItem item)
     {
-        Context context = getActivity();
-        if (item != null && item.location != null && context != null)
-        {
-            LocationConfigDialog dialog = new LocationConfigDialog();
-            dialog.setLocation(context, item.location);
-            dialog.setHideTitle(true);
-            dialog.setHideMode(true);
-            dialog.show(getChildFragmentManager(), DIALOG_EDITPLACE);
+        boolean editHandled = false;
+        if (listener != null) {
+            editHandled = listener.onItemEdit(item);
+        }
 
-            // TODO: edit place dialog
-            setModified(true);  // TODO: move to onEdited
+        if (!editHandled)
+        {
+            Context context = getActivity();
+            if (item != null && item.location != null && context != null)
+            {
+                LocationConfigDialog dialog = new LocationConfigDialog();
+                dialog.setDialogListener(onEditPlace);
+                dialog.setLocation(context, item.location);
+                dialog.setHideDialogHeader(true);
+                dialog.setHideTitle(true);
+                dialog.setHideMode(true);
+                dialog.show(getChildFragmentManager(), DIALOG_EDITPLACE);
+            }
         }
     }
+
+    private LocationConfigDialog.LocationConfigDialogListener onEditPlace = new LocationConfigDialog.LocationConfigDialogListener() {
+        @Override
+        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
+        {
+            setModified(true);
+            return true;
+        }
+    };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -697,6 +717,7 @@ public class PlacesListFragment extends Fragment
 
     public interface FragmentListener extends AdapterListener
     {
+        boolean onItemEdit(PlaceItem item);
         void onItemPicked(PlaceItem item);
         void onActionModeFinished();
     }

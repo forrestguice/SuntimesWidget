@@ -124,6 +124,12 @@ public class PlacesActivity extends AppCompatActivity
     private PlacesListFragment.FragmentListener listFragmentListener = new PlacesListFragment.FragmentListener()
     {
         @Override
+        public boolean onItemEdit(PlacesListFragment.PlaceItem item) {
+            editPlace(item);
+            return true;
+        }
+
+        @Override
         public void onItemPicked(PlacesListFragment.PlaceItem item) {
             pickPlace(item);
         }
