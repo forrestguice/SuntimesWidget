@@ -442,6 +442,7 @@
     <string name="configHint_location_alt">0</string>                                    <!-- edittext hint -->
     <string name="configLabel_location_name">Name:</string>                      <!-- edittext label -->
     <string name="configHint_location_name">(optional)</string>                  <!-- edittext hint -->
+    <string name="configHint_location_name0">Place Name</string>                  <!-- edittext hint -->  <!-- TODO -->
 
     <string name="configAction_getFix">Get Location</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">Edit</string>         <!-- button (contentDescription) -->
@@ -797,6 +798,7 @@
     <string name="configLabel_places_build_summary">Scan locales and add cities to the database.</string>
 
     <string name="configAction_addPlace">Add</string>              <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_copyPlace">Copy</string>            <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_selectPlace">Select</string>        <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_sharePlace">Share</string>          <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_deletePlace">Delete</string>        <!-- button (contentDescription) -->  <!-- TODO -->
@@ -1280,6 +1282,7 @@
     <string name="location_dialog_error_lat">This is not a valid latitude.</string>
     <string name="location_dialog_error_lon">This is not a valid longitude.</string>
     <string name="location_dialog_error_alt">This is not a valid elevation.</string>
+    <string name="location_dialog_error_name">Enter a place name.</string>  <!-- TODO -->
 
     <string name="location_dialog_toast_copied">Copied to clipboard<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
 

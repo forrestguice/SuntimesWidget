@@ -422,6 +422,13 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         Context myParent = getActivity();
         boolean isValid = true;
 
+        String name = text_locationName.getText().toString();
+        if (name.trim().isEmpty())
+        {
+            isValid = false;
+            text_locationName.setError(myParent.getString(R.string.location_dialog_error_name));
+        }
+
         String latitude = text_locationLat.getText().toString();
         try {
             BigDecimal lat = new BigDecimal(latitude);
