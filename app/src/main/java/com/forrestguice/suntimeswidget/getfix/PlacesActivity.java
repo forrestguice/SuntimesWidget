@@ -129,6 +129,10 @@ public class PlacesActivity extends AppCompatActivity
         }
 
         @Override
+        public void onActionModeFinished() {
+        }
+
+        @Override
         public void onItemClicked(PlacesListFragment.PlaceItem item, int position) { /* EMPTY */ }
     };
 

@@ -176,6 +176,14 @@ public class PlacesListFragment extends Fragment
         }
     }
 
+    protected void finishActionMode()
+    {
+        actionMode.finish();
+        if (listener != null) {
+            listener.onActionModeFinished();
+        }
+    }
+
     private class PlacesListActionCompat implements android.support.v7.view.ActionMode.Callback
     {
         private PlaceItem item = null;
@@ -211,7 +219,7 @@ public class PlacesListFragment extends Fragment
             {
                 case R.id.pickPlace:
                     pickPlace(item);
-                    mode.finish();
+                    finishActionMode();
                     return true;
 
                 case R.id.editPlace:
@@ -220,7 +228,7 @@ public class PlacesListFragment extends Fragment
 
                 case R.id.deletePlace:
                     deletePlace(getActivity(), item);
-                    mode.finish();
+                    finishActionMode();
                     return true;
 
                 case R.id.sharePlace:
@@ -235,6 +243,10 @@ public class PlacesListFragment extends Fragment
         {
             actionMode = null;
             adapter.setSelectedRowID(-1);
+
+            if (listener != null) {
+                listener.onActionModeFinished();
+            }
         }
     }
 
@@ -683,8 +695,10 @@ public class PlacesListFragment extends Fragment
         listener = value;
     }
 
-    public interface FragmentListener extends AdapterListener {
+    public interface FragmentListener extends AdapterListener
+    {
         void onItemPicked(PlaceItem item);
+        void onActionModeFinished();
     }
 
     public interface AdapterListener {
