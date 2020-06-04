@@ -132,11 +132,11 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         //public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location);
     }
 
-    private Location presetLocation = null;
-    public void setLocation(Location location)
+    private PlaceItem item = null;
+    public void setPlace(PlaceItem item)
     {
-        presetLocation = location;
-        loadSettings(bundleData(presetLocation.getUri(), presetLocation.getLabel()));
+        this.item = item;
+        updateViews(item.location);
     }
 
     @Override
@@ -168,8 +168,8 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         if (savedInstanceState != null) {
             loadSettings(savedInstanceState);
 
-        } else if (presetLocation != null) {
-            setLocation(presetLocation);
+        } else if (item != null) {
+            setPlace(item);
         }
         return view;
     }

@@ -124,13 +124,13 @@ public class PlacesActivity extends AppCompatActivity
     private PlacesListFragment.FragmentListener listFragmentListener = new PlacesListFragment.FragmentListener()
     {
         @Override
-        public boolean onItemEdit(PlacesListFragment.PlaceItem item) {
+        public boolean onItemEdit(PlaceItem item) {
             //editPlace(item);
             return false;
         }
 
         @Override
-        public void onItemPicked(PlacesListFragment.PlaceItem item) {
+        public void onItemPicked(PlaceItem item) {
             pickPlace(item);
         }
 
@@ -139,10 +139,10 @@ public class PlacesActivity extends AppCompatActivity
         }
 
         @Override
-        public void onItemClicked(PlacesListFragment.PlaceItem item, int position) { /* EMPTY */ }
+        public void onItemClicked(PlaceItem item, int position) { /* EMPTY */ }
     };
 
-    protected void pickPlace(PlacesListFragment.PlaceItem item)
+    protected void pickPlace(PlaceItem item)
     {
         Intent intent = new Intent();
         intent.putExtra(EXTRA_SELECTED, item.rowID);
