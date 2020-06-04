@@ -125,6 +125,14 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     }
     public boolean getHideTitle() { return hideTitle; }
 
+    /**
+     * Show / hide the dialog header.
+     */
+    private boolean hideHeader = false;
+    public void setHideDialogHeader(boolean value) {
+        hideHeader = value;
+    }
+
     /***
      * Show / hide the location mode; when hidden the mode is locked to user-defined.
      */
@@ -202,6 +210,11 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         dialogContent.setHideTitle(hideTitle);
         dialogContent.setHideMode(hideMode);
         dialogContent.init(myParent, false);
+
+        View header = view.findViewById(R.id.dialog_header);
+        if (header != null) {
+            header.setVisibility(hideHeader ? View.GONE : View.VISIBLE);
+        }
 
         Button btn_cancel = (Button) view.findViewById(R.id.dialog_button_cancel);
         btn_cancel.setOnClickListener(onDialogCancelClick);

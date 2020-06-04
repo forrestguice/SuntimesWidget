@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2019 Forrest Guice
+    Copyright (C) 2019-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:background="?attr/dialogFrame"
+            android:background="?attr/dialogFrame" android:id="@+id/dialog_header"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:gravity="center_vertical|start"
             android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
