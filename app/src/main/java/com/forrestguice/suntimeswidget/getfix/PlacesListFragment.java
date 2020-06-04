@@ -19,13 +19,11 @@
 package com.forrestguice.suntimeswidget.getfix;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -33,6 +31,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
@@ -46,11 +45,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.forrestguice.suntimeswidget.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -90,6 +87,18 @@ public class PlacesListFragment extends Fragment
     {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        FragmentManager fragments = getChildFragmentManager();
+        PlacesEditFragment editDialog = (PlacesEditFragment) fragments.findFragmentByTag(DIALOG_EDITPLACE);
+        if (editDialog != null) {
+            editDialog.setFragmentListener(onEditPlace);
+        }
     }
 
     @Override
@@ -151,28 +160,35 @@ public class PlacesListFragment extends Fragment
         }
     }
 
-    protected boolean triggerActionMode(View view, PlaceItem item)
+    protected void triggerActionMode(PlaceItem item)
     {
         if (actionMode == null)
         {
             if (item != null)
             {
-                adapter.setSelectedRowID(item.rowID);
-                actions.setItem(item);
-
                 AppCompatActivity activity = (AppCompatActivity) getActivity();
                 actionMode = activity.startSupportActionMode(actions);
                 if (actionMode != null) {
-                    actionMode.setTitle(item.location != null ? item.location.getLabel() : "");
-                    actionMode.setSubtitle(item.location != null ? locationDisplayString(activity, item.location, true) : "");
+                    updateActionMode(getActivity(), item);
                 }
             }
-            return true;
 
         } else {
-            actionMode.finish();
-            triggerActionMode(view, item);
-            return false;
+            updateActionMode(getActivity(), item);
+        }
+    }
+
+    protected void updateActionMode(Context context, PlaceItem item)
+    {
+        if (actionMode != null)
+        {
+            adapter.setSelectedRowID(item != null ? item.rowID : -1);
+            actions.setItem(item);
+            actionMode.setTitle(item.location != null ? item.location.getLabel() : "");
+            actionMode.setSubtitle(item.location != null ? locationDisplayString(context, item.location, true) : "");
+
+        } else {
+            triggerActionMode(item);
         }
     }
 
@@ -287,7 +303,7 @@ public class PlacesListFragment extends Fragment
                 if (selectedRowID != -1)
                 {
                     listView.scrollToPosition(adapter.indexOf(selectedRowID));
-                    triggerActionMode(null, adapter.getItem(selectedRowID));
+                    triggerActionMode(adapter.getItem(selectedRowID));
                 }
             }
         };
@@ -298,7 +314,7 @@ public class PlacesListFragment extends Fragment
         @Override
         public void onItemClicked(PlaceItem item, int position)
         {
-            triggerActionMode(null, item);
+            triggerActionMode(item);
             if (listener != null) {
                 listener.onItemClicked(item, position);
             }
@@ -385,15 +401,47 @@ public class PlacesListFragment extends Fragment
             {
                 PlacesEditFragment dialog = new PlacesEditFragment();
                 dialog.setFragmentListener(onEditPlace);
-                dialog.setLocation(context, item.location);
+                dialog.setPlace(item);
                 dialog.show(getChildFragmentManager(), DIALOG_EDITPLACE);
             }
         }
     }
 
     private PlacesEditFragment.FragmentListener onEditPlace = new PlacesEditFragment.FragmentListener() {
-        // TODO
+        @Override
+        public void onCanceled() {}
+
+        @Override
+        public void onAccepted(PlaceItem item)
+        {
+            PlacesEditTask task = new PlacesEditTask(getActivity());
+            task.setTaskListener(new PlacesListTask.TaskListener() {
+                @Override
+                public void onStarted() {}
+
+                @Override
+                public void onFinished(List<PlaceItem> results)
+                {
+                    if (results.size() > 0)
+                    {
+                        adapter.updateValues(results);
+                        updateActionMode(getActivity(), results.get(0));
+                    }
+                    dismissEditPlaceDialog();
+                }
+            });
+            task.execute(item);
+        }
     };
+
+    protected void dismissEditPlaceDialog()
+    {
+        FragmentManager fragments = getChildFragmentManager();
+        PlacesEditFragment dialog = (PlacesEditFragment) fragments.findFragmentByTag(DIALOG_EDITPLACE);
+        if (dialog != null) {
+            dialog.dismiss();
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -621,7 +669,10 @@ public class PlacesListFragment extends Fragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static class PlacesListTask extends AsyncTask<Void, Location, List<PlaceItem>>
+    /**
+     * PlacesListTask
+     */
+    public static class PlacesListTask extends AsyncTask<PlaceItem, Location, List<PlaceItem>>
     {
         protected GetFixDatabaseAdapter database;
 
@@ -630,7 +681,7 @@ public class PlacesListFragment extends Fragment
         }
 
         @Override
-        protected List<PlaceItem> doInBackground(Void... voids)
+        protected List<PlaceItem> doInBackground(PlaceItem... items)
         {
             if (listener != null) {
                 listener.onStarted();
@@ -677,6 +728,45 @@ public class PlacesListFragment extends Fragment
             void onStarted();
             void onFinished(List<PlaceItem> results);
         }
+    }
+
+    /**
+     * PlacesEditTask
+     */
+    public static class PlacesEditTask extends PlacesListTask
+    {
+        public PlacesEditTask(@NonNull Context context) {
+            super(context);
+        }
+
+        @Override
+        protected List<PlaceItem> doInBackground(PlaceItem... items)
+        {
+            if (listener != null) {
+                listener.onStarted();
+            }
+
+            ArrayList<PlaceItem> result = new ArrayList<>();
+            database.open();
+            for (PlaceItem item : items)
+            {
+                if (item != null)
+                {
+                    if (item.rowID == -1) {
+                        item.rowID = database.addPlace(item.location);
+                        Log.i(getClass().getSimpleName(), "Added place " + item.rowID);
+
+                    } else {
+                        database.updatePlace(item.rowID, item.location);
+                        Log.i(getClass().getSimpleName(), "Updated place " + item.rowID);
+                    }
+                    result.add(item);
+                }
+            }
+            database.close();
+            return result;
+        }
+
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -736,6 +826,27 @@ public class PlacesListFragment extends Fragment
             items.clear();
             items.addAll(sortItems(values));
             notifyDataSetChanged();
+        }
+
+        public void updateValues(List<PlaceItem> values)
+        {
+            for (PlaceItem value : values) {
+                updateValue(value);
+            }
+        }
+
+        public void updateValue(PlaceItem value)
+        {
+            int position = indexOf(value.rowID);
+            if (position >= 0 && position < items.size())
+            {
+                items.set(position, value);
+                notifyItemChanged(position);
+
+            } else {
+                items.add(0, value);
+                notifyItemInserted(0);
+            }
         }
 
         public int indexOf(long rowID)
