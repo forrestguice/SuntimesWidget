@@ -21,6 +21,12 @@
             app:showAsAction="ifRoom"
             android:orderInCategory="200" />
 
+        <item android:id="@+id/copyPlace"
+            android:icon="?attr/icActionCopy"
+            android:title="@string/configAction_copyPlace"
+            app:showAsAction="ifRoom"
+            android:orderInCategory="250" />
+
         <item android:id="@+id/deletePlace"
             android:icon="?attr/icActionDelete"
             android:title="@string/configAction_deletePlace"

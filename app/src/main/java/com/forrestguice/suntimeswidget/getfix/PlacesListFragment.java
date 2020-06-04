@@ -242,6 +242,10 @@ public class PlacesListFragment extends Fragment
                     editPlace(item);
                     return true;
 
+                case R.id.copyPlace:
+                    copyPlace(item);
+                    return true;
+
                 case R.id.deletePlace:
                     deletePlace(getActivity(), item);
                     finishActionMode();
@@ -383,8 +387,23 @@ public class PlacesListFragment extends Fragment
 
     protected void addPlace(Context context)
     {
-        // TODO: add place
-        setModified(true);   // TODO: move to onAdded
+        PlacesEditFragment dialog = new PlacesEditFragment();
+        dialog.setFragmentListener(onEditPlace);
+        dialog.show(getChildFragmentManager(), DIALOG_EDITPLACE);
+    }
+
+    protected void copyPlace(@Nullable PlaceItem item)
+    {
+        if (item != null && item.location != null)
+        {
+            Location location = new Location("", item.location.getLatitude(), item.location.getLongitude(), item.location.getAltitude());
+            PlaceItem place = new PlaceItem(-1, location);
+
+            PlacesEditFragment dialog = new PlacesEditFragment();
+            dialog.setFragmentListener(onEditPlace);
+            dialog.setPlace(place);
+            dialog.show(getChildFragmentManager(), DIALOG_EDITPLACE);
+        }
     }
 
     protected void editPlace(@Nullable PlaceItem item)
@@ -414,8 +433,10 @@ public class PlacesListFragment extends Fragment
         @Override
         public void onAccepted(PlaceItem item)
         {
+            setModified(true);
             PlacesEditTask task = new PlacesEditTask(getActivity());
-            task.setTaskListener(new PlacesListTask.TaskListener() {
+            task.setTaskListener(new PlacesListTask.TaskListener()
+            {
                 @Override
                 public void onStarted() {}
 
