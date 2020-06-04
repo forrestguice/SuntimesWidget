@@ -615,7 +615,7 @@ public class LocationConfigView extends LinearLayout
      * @param context a context used to access shared prefs
      * @param bundle a Bundle containing saved state
      */
-    protected void loadSettings(Context context, Bundle bundle )
+    public void loadSettings(Context context, Bundle bundle )
     {
         //Log.d("DEBUG", "LocationConfigView loadSettings (bundle)");
 
@@ -678,7 +678,7 @@ public class LocationConfigView extends LinearLayout
      * @param context a context used to access shared prefs
      * @param data a Uri with geo location data
      */
-    protected void loadSettings(Context context, Uri data )
+    public void loadSettings(Context context, Uri data )
     {
         //Log.d("DEBUG", "LocationConfigView loadSettings (uri)");
         loadSettings(context, bundleData(data, context.getString(R.string.gps_lastfix_title_set)));
@@ -687,7 +687,7 @@ public class LocationConfigView extends LinearLayout
     /**
      *
      */
-    protected boolean saveSettings(Context context)
+    public boolean saveSettings(Context context)
     {
         //Log.d("DEBUG", "LocationConfigView loadSettings (prefs)");
 
@@ -711,7 +711,7 @@ public class LocationConfigView extends LinearLayout
      * @param bundle a Bundle to save to
      * @return true settings were saved
      */
-    protected boolean saveSettings(Bundle bundle)
+    public boolean saveSettings(Bundle bundle)
     {
         //Log.d("DEBUG", "LocationConfigView saveSettings (bundle)");
 
@@ -799,7 +799,7 @@ public class LocationConfigView extends LinearLayout
     /**
      *
      */
-    protected void populateLocationList()
+    public void populateLocationList()
     {
         LocationListTask task = new LocationListTask(myParent, getLocation());
         task.setTaskListener( new LocationListTask.LocationListTaskListener()
