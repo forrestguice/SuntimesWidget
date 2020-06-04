@@ -125,8 +125,8 @@ public class PlacesActivity extends AppCompatActivity
     {
         @Override
         public boolean onItemEdit(PlacesListFragment.PlaceItem item) {
-            editPlace(item);
-            return true;
+            //editPlace(item);
+            return false;
         }
 
         @Override
