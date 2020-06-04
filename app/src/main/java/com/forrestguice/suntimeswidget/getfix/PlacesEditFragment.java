@@ -49,6 +49,7 @@ import java.util.regex.Pattern;
 
 public class PlacesEditFragment extends BottomSheetDialogFragment
 {
+    public static final String KEY_LOCATION = "location";
     public static final String KEY_LOCATION_LATITUDE = "locationLatitude";
     public static final String KEY_LOCATION_LONGITUDE = "locationLongitude";
     public static final String KEY_LOCATION_ALTITUDE = "locationAltitude";
@@ -111,17 +112,6 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         }
     };
 
-
-    protected DialogInterface.OnClickListener onAccepted = null;
-    public void setOnAcceptedListener( DialogInterface.OnClickListener listener ) {
-        onAccepted = listener;
-    }
-
-    protected DialogInterface.OnClickListener onCanceled = null;
-    public void setOnCanceledListener( DialogInterface.OnClickListener listener ) {
-        onCanceled = listener;
-    }
-
     protected FragmentListener listener;
     public void setFragmentListener( FragmentListener value ) {
         listener = value;
@@ -129,7 +119,8 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
 
     public interface FragmentListener
     {
-        //public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location);
+        void onCanceled();
+        void onAccepted(PlaceItem place);
     }
 
     private PlaceItem item = null;
@@ -220,6 +211,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     @Override
     public void onSaveInstanceState( Bundle bundle )
     {
+        bundle.putParcelable(KEY_LOCATION, item);
         bundle.putString(KEY_LOCATION_LATITUDE, text_locationLat.getText().toString());
         bundle.putString(KEY_LOCATION_LONGITUDE, text_locationLon.getText().toString());
         bundle.putString(KEY_LOCATION_ALTITUDE, text_locationAlt.getText().toString());
@@ -230,6 +222,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
 
     protected void loadSettings(Bundle bundle)
     {
+        item = bundle.getParcelable(KEY_LOCATION);
         String label = bundle.getString(KEY_LOCATION_LABEL);
         String longitude = bundle.getString(KEY_LOCATION_LONGITUDE);
         String latitude = bundle.getString(KEY_LOCATION_LATITUDE);
@@ -258,8 +251,8 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     {
         cancelGetFix();
         dismiss();
-        if (onCanceled != null) {
-            onCanceled.onClick(getDialog(), 0);
+        if (listener != null) {
+            listener.onCanceled();
         }
     }
 
@@ -277,20 +270,6 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             behavior.setHideable(false);
             behavior.setSkipCollapsed(true);
             behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        }
-    }
-
-    protected CharSequence altitudeDisplayString(android.location.Location location, DecimalFormat formatter, WidgetSettings.LengthUnit units)
-    {
-        switch (units)
-        {
-            case IMPERIAL:
-            case USC:
-                return formatter.format(WidgetSettings.LengthUnit.metersToFeet(location.getAltitude()));
-
-            case METRIC:
-            default:
-                return formatter.format(location.getAltitude());
         }
     }
 
@@ -348,6 +327,20 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     @SuppressLint("SetTextI18n")
     private void updateViews(com.forrestguice.suntimeswidget.calculator.core.Location location)
     {
+        if (text_locationName == null) {
+            return;
+        }
+
+        if (item == null || item.location == null)
+        {
+            text_locationLat.setText("");
+            text_locationLon.setText("");
+            text_locationName.setText("");
+            text_locationAlt.setText("");
+            text_locationAltUnits.setText("");
+            return;
+        }
+
         text_locationLat.setText(location.getLatitude());
         text_locationLon.setText(location.getLongitude());
         text_locationName.setText(location.getLabel());
@@ -373,16 +366,35 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         }
     }
 
+    protected PlaceItem createPlaceItem(PlaceItem item0)
+    {
+        PlaceItem item = new PlaceItem();
+        if (item0 != null)
+        {
+            item.rowID = item0.rowID;
+            item.location = new Location(text_locationName.getText().toString(), text_locationLat.getText().toString(), text_locationLon.getText().toString(), text_locationAlt.getText().toString(),
+                    WidgetSettings.loadLengthUnitsPref(getActivity(), 0) == WidgetSettings.LengthUnit.METRIC);
+
+        } else {
+            item.rowID = -1;
+            item.location = new Location(text_locationName.getText().toString(), text_locationLat.getText().toString(), text_locationLon.getText().toString(), text_locationAlt.getText().toString(),
+                    WidgetSettings.loadLengthUnitsPref(getActivity(), 0) == WidgetSettings.LengthUnit.METRIC);
+        }
+        return item;
+    }
 
     private View.OnClickListener onSaveButtonClicked = new View.OnClickListener()
     {
         @Override
         public void onClick(View view)
         {
+            final PlaceItem returnValue = createPlaceItem(item);
             final boolean validInput = validateInput();
             if (validInput)
             {
-                // TODO
+                if (listener != null) {
+                    listener.onAccepted(returnValue);
+                }
             }
 
             final GetFixTask.GetFixTaskListener cancelGetFixListener = new GetFixTask.GetFixTaskListener()
@@ -392,7 +404,9 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
                 {
                     if (validInput)
                     {
-                        // TODO
+                        if (listener != null) {
+                            listener.onAccepted(returnValue);
+                        }
                     }
                 }
             };
@@ -450,6 +464,21 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
 
         return isValid;
     }
+
+    public static CharSequence altitudeDisplayString(android.location.Location location, DecimalFormat formatter, WidgetSettings.LengthUnit units)
+    {
+        switch (units)
+        {
+            case IMPERIAL:
+            case USC:
+                return formatter.format(WidgetSettings.LengthUnit.metersToFeet(location.getAltitude()));
+
+            case METRIC:
+            default:
+                return formatter.format(location.getAltitude());
+        }
+    }
+
 
 }
 
