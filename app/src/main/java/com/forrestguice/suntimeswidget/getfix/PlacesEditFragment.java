@@ -125,7 +125,6 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         dialogContent = (LocationConfigView) view.findViewById(R.id.locationConfig);
         dialogContent.setHideTitle(true);
         dialogContent.setHideMode(true);
-        dialogContent.setDisallowSelect(true);
         dialogContent.init(myParent, false);
 
         if (savedInstanceState != null) {
