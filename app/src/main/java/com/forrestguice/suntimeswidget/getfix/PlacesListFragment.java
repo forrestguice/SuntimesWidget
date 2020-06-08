@@ -426,9 +426,12 @@ public class PlacesListFragment extends Fragment
         }
     }
 
-    private PlacesEditFragment.FragmentListener onEditPlace = new PlacesEditFragment.FragmentListener() {
+    private PlacesEditFragment.FragmentListener onEditPlace = new PlacesEditFragment.FragmentListener()
+    {
         @Override
-        public void onCanceled() {}
+        public void onCanceled(PlaceItem item) {
+            updateActionMode(getActivity(), item);
+        }
 
         @Override
         public void onAccepted(PlaceItem item)

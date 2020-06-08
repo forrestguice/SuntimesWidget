@@ -28,10 +28,16 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -61,9 +67,11 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     private EditText text_locationLon;
     private EditText text_locationName;
 
-    private ImageButton button_save;
     private ImageButton button_getfix;
     private ProgressBar progress_getfix;
+
+    protected ActionMode actionMode = null;
+    protected PlacesEditActionCompat actions = new PlacesEditActionCompat();
 
     public PlacesEditFragment()
     {
@@ -119,7 +127,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
 
     public interface FragmentListener
     {
-        void onCanceled();
+        void onCanceled(PlaceItem place);
         void onAccepted(PlaceItem place);
     }
 
@@ -162,6 +170,8 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         } else if (item != null) {
             setPlace(item);
         }
+
+        //triggerActionMode(item);
         return view;
     }
 
@@ -175,8 +185,15 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         text_locationAlt = (EditText) content.findViewById(R.id.appwidget_location_alt);
         text_locationAltUnits = (TextView)content.findViewById(R.id.appwidget_location_alt_units);
 
-        button_save = (ImageButton) content.findViewById(R.id.appwidget_location_save);
-        button_save.setOnClickListener(onSaveButtonClicked);
+        ImageButton button_save = (ImageButton) content.findViewById(R.id.save_button);
+        if (button_save != null) {
+            button_save.setOnClickListener(onSaveButtonClicked);
+        }
+
+        ImageButton button_cancel = (ImageButton) content.findViewById(R.id.cancel_button);
+        if (button_cancel != null) {
+            button_cancel.setOnClickListener(onCancelButtonClicked);
+        }
 
         progress_getfix = (ProgressBar) content.findViewById(R.id.appwidget_location_getfixprogress);
         progress_getfix.setVisibility(View.GONE);
@@ -243,6 +260,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         @Override
         public void onShow(DialogInterface dialogInterface) {
             expandSheet(dialogInterface);
+            disableTouchOutsideBehavior();
         }
     };
 
@@ -251,8 +269,11 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     {
         cancelGetFix();
         dismiss();
+        if (actionMode != null) {
+            actionMode.finish();
+        }
         if (listener != null) {
-            listener.onCanceled();
+            listener.onCanceled(item);
         }
     }
 
@@ -383,39 +404,48 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         return item;
     }
 
-    private View.OnClickListener onSaveButtonClicked = new View.OnClickListener()
-    {
+    private View.OnClickListener onCancelButtonClicked = new View.OnClickListener() {
         @Override
-        public void onClick(View view)
-        {
-            final PlaceItem returnValue = createPlaceItem(item);
-            final boolean validInput = validateInput();
-            if (validInput)
-            {
-                if (listener != null) {
-                    listener.onAccepted(returnValue);
-                }
-            }
-
-            final GetFixTask.GetFixTaskListener cancelGetFixListener = new GetFixTask.GetFixTaskListener()
-            {
-                @Override
-                public void onCancelled()
-                {
-                    if (validInput)
-                    {
-                        if (listener != null) {
-                            listener.onAccepted(returnValue);
-                        }
-                    }
-                }
-            };
-            getFixHelper.removeGetFixTaskListener(cancelGetFixListener);
-            getFixHelper.addGetFixTaskListener(cancelGetFixListener);
-            getFixHelper.cancelGetFix();
+        public void onClick(View view) {
+            onCancel(getDialog());
         }
     };
 
+    private View.OnClickListener onSaveButtonClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            savePlace();
+        }
+    };
+
+    protected void savePlace()
+    {
+        final PlaceItem returnValue = createPlaceItem(item);
+        final boolean validInput = validateInput();
+        if (validInput)
+        {
+            if (listener != null) {
+                listener.onAccepted(returnValue);
+            }
+        }
+
+        final GetFixTask.GetFixTaskListener cancelGetFixListener = new GetFixTask.GetFixTaskListener()
+        {
+            @Override
+            public void onCancelled()
+            {
+                if (validInput)
+                {
+                    if (listener != null) {
+                        listener.onAccepted(returnValue);
+                    }
+                }
+            }
+        };
+        getFixHelper.removeGetFixTaskListener(cancelGetFixListener);
+        getFixHelper.addGetFixTaskListener(cancelGetFixListener);
+        getFixHelper.cancelGetFix();
+    }
 
     public boolean validateInput()
     {
@@ -486,6 +516,83 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         }
     }
 
+    private void disableTouchOutsideBehavior()
+    {
+        if (getShowsDialog())
+        {
+            Window window = getDialog().getWindow();
+            if (window != null) {
+                View decorView = window.getDecorView().findViewById(android.support.design.R.id.touch_outside);
+                decorView.setOnClickListener(null);
+            }
+        }
+    }
+
+    /**
+     * triggerActionMode
+     */
+    protected void triggerActionMode(PlaceItem item)
+    {
+        if (actionMode == null)
+        {
+            if (item != null)
+            {
+                AppCompatActivity activity = (AppCompatActivity) getActivity();
+                actionMode = activity.startSupportActionMode(actions);
+                if (actionMode != null) {
+                    updateActionMode(getActivity(), item);
+                }
+            }
+        } else {
+            updateActionMode(getActivity(), item);
+        }
+    }
+
+    protected void updateActionMode(Context context, PlaceItem item)
+    {
+        if (actionMode != null) {
+            actionMode.setTitle(item.location != null ? item.location.getLabel() : "");
+            actionMode.setSubtitle("");
+        } else {
+            triggerActionMode(item);
+        }
+    }
+
+    /**
+     * PlacesEditActionCompat
+     */
+    private class PlacesEditActionCompat implements android.support.v7.view.ActionMode.Callback
+    {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu)
+        {
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.placesedit, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem menuItem)
+        {
+            switch (menuItem.getItemId())
+            {
+                case R.id.savePlace:
+                    savePlace();
+                    break;
+            }
+            return false;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            actionMode = null;
+        }
+    }
 
 }
 

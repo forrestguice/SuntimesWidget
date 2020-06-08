@@ -29,25 +29,38 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" android:paddingTop="@dimen/settingsGroup_padding">
 
-        <LinearLayout android:id="@+id/appwidget_location_controlPanel"
+        <LinearLayout android:id="@+id/appwidget_location_controlPanel0"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center_vertical">
 
-            <ImageButton android:id="@+id/appwidget_location_save"
+            <ImageButton android:id="@+id/cancel_button"
+                style="@android:style/Widget.ActionButton"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:src="?attr/icActionBack"
+                android:contentDescription="@android:string/cancel" />
+
+        </LinearLayout>
+
+        <EditText android:id="@+id/appwidget_location_name"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:textAppearance="?android:attr/textAppearanceSmallPopupMenu"
+            android:hint="@string/configHint_location_name0"
+            android:paddingLeft="5dp" android:paddingRight="5dp"
+            android:layout_gravity="center_vertical" />
+
+        <LinearLayout android:id="@+id/appwidget_location_controlPanel1"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical">
+
+            <ImageButton android:id="@+id/save_button"
                 style="@android:style/Widget.ActionButton"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:src="?attr/icActionSave"
                 android:contentDescription="@string/configAction_savePlace" />
 
         </LinearLayout>
-
-        <EditText android:id="@+id/appwidget_location_name"
-            android:layout_width="fill_parent" android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmallPopupMenu"
-            android:hint="@string/configHint_location_name0"
-            android:paddingLeft="5dp" android:paddingRight="5dp"
-            android:layout_gravity="center_vertical" />
 
     </LinearLayout>
 
