@@ -89,6 +89,7 @@
 
     <attr name="icActionAccept" format="reference" />
     <attr name="icActionClose" format="reference" />
+    <attr name="icActionBack" format="reference" />
     <attr name="icActionNew" format="reference" />
     <attr name="icActionNewAlarm" format="reference" />
     <attr name="icActionNewNotification" format="reference" />
