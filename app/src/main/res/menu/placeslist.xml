@@ -22,7 +22,7 @@
             android:orderInCategory="300" />
 
         <item android:id="@+id/addWorldPlaces"
-            android:icon="?attr/icActionMap"
+            android:icon="?attr/icActionLocale"
             android:title="@string/configLabel_places_build"
             app:showAsAction="never"
             android:orderInCategory="400" />
