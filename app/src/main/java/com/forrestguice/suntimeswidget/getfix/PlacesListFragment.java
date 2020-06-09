@@ -33,10 +33,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.FileProvider;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -131,8 +133,19 @@ public class PlacesListFragment extends Fragment
     }
 
     @Override
-    public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu (Menu menu, MenuInflater inflater)
+    {
         inflater.inflate(R.menu.placeslist, menu);
+
+        final MenuItem searchItem = menu.findItem(R.id.searchPlaces);
+        if (searchItem != null)
+        {
+            MenuItemCompat.setOnActionExpandListener(searchItem, onItemSearchExpand);
+            SearchView searchView = (SearchView) searchItem.getActionView();
+            if (searchView != null) {
+                searchView.setOnQueryTextListener(onItemSearch);
+            }
+        }
     }
 
     @Override
@@ -479,6 +492,37 @@ public class PlacesListFragment extends Fragment
             dialog.dismiss();
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private SearchView.OnQueryTextListener onItemSearch = new SearchView.OnQueryTextListener() {
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+            return false;    // TODO
+        }
+
+        @Override
+        public boolean onQueryTextChange(String newText) {
+            return false;    // TODO
+        }
+    };
+
+    private MenuItemCompat.OnActionExpandListener onItemSearchExpand = new MenuItemCompat.OnActionExpandListener()
+    {
+        @Override
+        public boolean onMenuItemActionExpand(MenuItem item) {
+            item.setVisible(false);
+            return true;
+        }
+
+        @Override
+        public boolean onMenuItemActionCollapse(MenuItem item) {
+            item.setVisible(true);
+            getActivity().invalidateOptionsMenu();
+            return true;
+        }
+    };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////

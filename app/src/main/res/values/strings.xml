@@ -800,6 +800,7 @@
     <string name="configAction_addPlace">Add</string>              <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_copyPlace">Copy</string>            <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_selectPlace">Select</string>        <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_searchPlace">Search</string>              <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_sharePlace">Share</string>          <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_deletePlace">Delete</string>        <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_clearPlaces">Clear</string>         <!-- button (contentDescription) -->  <!-- TODO -->
