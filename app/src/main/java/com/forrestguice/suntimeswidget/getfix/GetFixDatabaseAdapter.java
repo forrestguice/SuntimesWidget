@@ -190,7 +190,6 @@ public class GetFixDatabaseAdapter
         values.put(KEY_PLACE_LATITUDE, place.getLatitude());
         values.put(KEY_PLACE_LONGITUDE, place.getLongitude());
         values.put(KEY_PLACE_ALTITUDE, place.getAltitude());
-        values.put(KEY_PLACE_COMMENT, "");
         database.update(TABLE_PLACES, values,  "name = ?", new String[] { place.getLabel() });
     }
 
@@ -202,7 +201,14 @@ public class GetFixDatabaseAdapter
         values.put(KEY_PLACE_LATITUDE, place.getLatitude());
         values.put(KEY_PLACE_LONGITUDE, place.getLongitude());
         values.put(KEY_PLACE_ALTITUDE, place.getAltitude());
-        values.put(KEY_PLACE_COMMENT, "");
+        database.update(TABLE_PLACES, values,  "rowID = ?", new String[] { Long.toString(rowID) });
+    }
+
+    public void updateComment( long rowID, String comment )
+    {
+        ContentValues values = new ContentValues();
+        values.put(KEY_ROWID, rowID);
+        values.put(KEY_PLACE_COMMENT, comment);
         database.update(TABLE_PLACES, values,  "rowID = ?", new String[] { Long.toString(rowID) });
     }
 
