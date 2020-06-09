@@ -168,14 +168,18 @@ public class GetFixDatabaseAdapter
      * @param place a Location object describing the place
      * @return the rowID of the newly added place or -1 if an error
      */
-    public long addPlace( Location place )
+    public long addPlace( Location place ) {
+        return addPlace(place, "");
+    }
+
+    public long addPlace( Location place, String comment )
     {
         ContentValues values = new ContentValues();
         values.put(KEY_PLACE_NAME, place.getLabel());
         values.put(KEY_PLACE_LATITUDE, place.getLatitude());
         values.put(KEY_PLACE_LONGITUDE, place.getLongitude());
         values.put(KEY_PLACE_ALTITUDE, place.getAltitude());
-        values.put(KEY_PLACE_COMMENT, "");
+        values.put(KEY_PLACE_COMMENT, comment);
         return database.insert(TABLE_PLACES, null, values);
     }
 
