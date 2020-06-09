@@ -25,8 +25,11 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 public class PlaceItem implements Parcelable
 {
+    public static final String TAG_DEFAULT = "[default]";
+
     public long rowID = -1;
     public Location location = null;
+    public boolean isDefault = false;
 
     public PlaceItem() {}
 
@@ -40,6 +43,7 @@ public class PlaceItem implements Parcelable
     {
         this.rowID = in.readLong();
         this.location = in.readParcelable(getClass().getClassLoader());
+        this.isDefault = (in.readInt() == 1);
     }
 
     @Override
@@ -51,6 +55,7 @@ public class PlaceItem implements Parcelable
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(rowID);
         dest.writeParcelable(location, 0);
+        dest.writeInt(isDefault ? 1 : 0);
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator()

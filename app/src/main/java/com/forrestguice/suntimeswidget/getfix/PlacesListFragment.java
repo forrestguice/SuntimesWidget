@@ -736,9 +736,14 @@ public class PlacesListFragment extends Fragment
                     String lat = cursor.getString(cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_LATITUDE));
                     String lon = cursor.getString(cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_LONGITUDE));
                     String alt = cursor.getString(cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_ALTITUDE));
+                    String comment = cursor.getString(cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_COMMENT));
                     Location location = new Location(name, lat, lon, alt);
                     location.setUseAltitude(true);
-                    result.add(new PlaceItem(cursor.getLong(cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_ROWID)), location));
+
+                    PlaceItem item = new PlaceItem(cursor.getLong(cursor.getColumnIndex(GetFixDatabaseAdapter.KEY_ROWID)), location);
+                    item.isDefault = (comment != null && comment.contains(PlaceItem.TAG_DEFAULT));
+
+                    result.add(item);
                     cursor.moveToNext();
                 }
             }

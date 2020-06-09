@@ -414,6 +414,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             item.rowID = item0.rowID;
             item.location = new Location(text_locationName.getText().toString(), text_locationLat.getText().toString(), text_locationLon.getText().toString(), text_locationAlt.getText().toString(),
                     WidgetSettings.loadLengthUnitsPref(getActivity(), 0) == WidgetSettings.LengthUnit.METRIC);
+            item.isDefault = item0.isDefault;
 
         } else {
             item.rowID = -1;
