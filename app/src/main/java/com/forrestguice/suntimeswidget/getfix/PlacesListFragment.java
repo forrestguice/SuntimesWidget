@@ -450,11 +450,23 @@ public class PlacesListFragment extends Fragment
                     {
                         adapter.updateValues(results);
                         updateActionMode(getActivity(), results.get(0));
+                        scrollToSelection();
                     }
                     dismissEditPlaceDialog();
                 }
             });
             task.execute(item);
+        }
+
+        protected void scrollToSelection()
+        {
+            LinearLayoutManager layout = (LinearLayoutManager) listView.getLayoutManager();
+            int selected = adapter.getSelectedPosition();
+            int start = layout.findFirstVisibleItemPosition();
+            int end = layout.findLastVisibleItemPosition();
+            if (selected != -1 && (selected <= start || selected >= end)) {
+                listView.smoothScrollToPosition(selected);
+            }
         }
     };
 
@@ -868,8 +880,9 @@ public class PlacesListFragment extends Fragment
                 notifyItemChanged(position);
 
             } else {
-                items.add(0, value);
-                notifyItemInserted(0);
+                items.add(value);
+                sortItems(items);
+                notifyDataSetChanged();
             }
         }
 
@@ -939,6 +952,10 @@ public class PlacesListFragment extends Fragment
         }
         public void clearSelection() {
             setSelectedRowID(-1);
+        }
+
+        public int getSelectedPosition() {
+            return indexOf(selectedRowID);
         }
 
         @Override
