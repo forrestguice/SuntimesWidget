@@ -19,20 +19,42 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
     android:background="?attr/selectableItemCard"
-    android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical"
+    android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal"
     android:padding="8dp">
 
-    <TextView android:id="@android:id/text1"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:singleLine="true" android:textStyle="bold" android:duplicateParentState="true"
-        tools:text="title" />
+    <FrameLayout
+        android:layout_width="32dp" android:layout_height="32dp" android:layout_gravity="center">
 
-    <TextView android:id="@android:id/text2"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:singleLine="true" android:duplicateParentState="true"
-        tools:text="summary"
-        android:layout_width="match_parent" android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@android:id/icon1" android:visibility="gone"
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:src="?attr/icActionPlace"
+            android:layout_gravity="center_vertical" />
 
+        <ImageView
+            android:id="@android:id/icon2"
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:src="?attr/icActionLocale"
+            android:layout_gravity="center_vertical" />
+
+    </FrameLayout>
+
+    <LinearLayout android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+        android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical"
+        android:layout_gravity="center_vertical">
+
+        <TextView android:id="@android:id/text1"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:singleLine="true" android:textStyle="bold" android:duplicateParentState="true"
+            tools:text="title" />
+
+        <TextView android:id="@android:id/text2"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:singleLine="true" android:duplicateParentState="true"
+            tools:text="summary"
+            android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+    </LinearLayout>
 </LinearLayout>
 
