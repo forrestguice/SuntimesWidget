@@ -96,6 +96,7 @@
         <item name="icActionAccept">@drawable/ic_action_accept_light</item>
         <item name="icActionClose">@drawable/ic_action_close_light</item>
         <item name="icActionBack">@drawable/ic_action_back_light</item>
+        <item name="icActionSearch">@drawable/ic_action_search_light</item>
         <item name="icActionNew">@drawable/ic_action_new_light</item>
         <item name="icActionNewAlarm">@drawable/ic_action_alarms_light</item>
         <item name="icActionNewNotification">@drawable/ic_action_notification_light</item>
@@ -213,6 +214,7 @@
         <item name="icActionAccept">@drawable/ic_action_accept</item>
         <item name="icActionClose">@drawable/ic_action_close</item>
         <item name="icActionBack">@drawable/ic_action_back</item>
+        <item name="icActionSearch">@drawable/ic_action_search</item>
         <item name="icActionNew">@drawable/ic_action_new</item>
         <item name="icActionNewAlarm">@drawable/ic_action_alarms</item>
         <item name="icActionNewNotification">@drawable/ic_action_notification</item>
