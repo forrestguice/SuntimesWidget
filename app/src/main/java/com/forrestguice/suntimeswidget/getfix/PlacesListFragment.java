@@ -45,6 +45,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -1031,6 +1032,7 @@ public class PlacesListFragment extends Fragment
     {
         public TextView label;
         public TextView summary;
+        public ImageView icon_default, icon_userdefined;
         public boolean selected = false;
 
         public PlacesListViewHolder(View itemView)
@@ -1038,6 +1040,8 @@ public class PlacesListFragment extends Fragment
             super(itemView);
             label = (TextView) itemView.findViewById(android.R.id.text1);
             summary = (TextView) itemView.findViewById(android.R.id.text2);
+            icon_userdefined = (ImageView) itemView.findViewById(R.id.icon1);
+            icon_default = (ImageView) itemView.findViewById(R.id.icon2);
         }
 
         public void bindViewHolder(@Nullable Context context, @Nullable PlaceItem item )
@@ -1050,6 +1054,16 @@ public class PlacesListFragment extends Fragment
             if (summary != null) {
                 summary.setText(context == null || item == null || item.location == null ? ""
                         : locationDisplayString(context, item.location, true));
+            }
+
+            if (item != null)
+            {
+                if (icon_default != null) {
+                    icon_default.setVisibility(item.isDefault ? View.VISIBLE : View.GONE);
+                }
+                if (icon_userdefined != null) {
+                    icon_userdefined.setVisibility(item.isDefault ? View.GONE : View.VISIBLE);
+                }
             }
         }
 
