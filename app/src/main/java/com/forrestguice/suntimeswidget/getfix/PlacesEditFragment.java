@@ -169,6 +169,9 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
 
         } else if (item != null) {
             setPlace(item);
+
+        } else {
+            updateViews(null);
         }
 
         //triggerActionMode(item);
@@ -348,40 +351,56 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     @SuppressLint("SetTextI18n")
     private void updateViews(com.forrestguice.suntimeswidget.calculator.core.Location location)
     {
-        if (text_locationName == null) {
+        if (text_locationName == null || text_locationLat == null || text_locationLon == null || text_locationAlt == null) {
             return;
         }
-
         if (item == null || item.location == null)
         {
             text_locationLat.setText("");
             text_locationLon.setText("");
             text_locationName.setText("");
             text_locationAlt.setText("");
-            text_locationAltUnits.setText("");
-            return;
+
+        } else {
+            text_locationLat.setText(location.getLatitude());
+            text_locationLon.setText(location.getLongitude());
+            text_locationName.setText(location.getLabel());
+            updateAltitudeField(getActivity(), location);
         }
+        updateAltitudeLabel(getActivity());
+    }
 
-        text_locationLat.setText(location.getLatitude());
-        text_locationLon.setText(location.getLongitude());
-        text_locationName.setText(location.getLabel());
-
-        Context context = getContext();
-        if (context != null)
+    private void updateAltitudeField(Context context, Location location)
+    {
+        if (context != null && text_locationAlt != null)
         {
             WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(getContext(), 0);
             switch (units)
             {
                 case IMPERIAL:
-                case USC:
-                    text_locationAlt.setText( Double.toString(WidgetSettings.LengthUnit.metersToFeet(location.getAltitudeAsDouble())) );
-                    text_locationAltUnits.setText(context.getString(R.string.units_feet_short));
+                case USC: text_locationAlt.setText( Double.toString(WidgetSettings.LengthUnit.metersToFeet(location.getAltitudeAsDouble())) );
                     break;
 
                 case METRIC:
-                default:
-                    text_locationAlt.setText(location.getAltitude());
-                    text_locationAltUnits.setText(context.getString(R.string.units_meters));
+                default: text_locationAlt.setText(location.getAltitude());
+                    break;
+            }
+        }
+    }
+
+    private void updateAltitudeLabel(Context context)
+    {
+        if (context != null && text_locationAltUnits != null)
+        {
+            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(getContext(), 0);
+            switch (units)
+            {
+                case IMPERIAL:
+                case USC: text_locationAltUnits.setText(context.getString(R.string.units_feet_short));
+                    break;
+
+                case METRIC:
+                default: text_locationAltUnits.setText(context.getString(R.string.units_meters));
                     break;
             }
         }
