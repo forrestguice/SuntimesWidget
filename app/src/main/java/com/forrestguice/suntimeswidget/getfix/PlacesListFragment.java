@@ -1002,7 +1002,7 @@ public class PlacesListFragment extends Fragment
                         return 1;
 
                     } else {
-                        return o1.location.getLabel().compareTo(o2.location.getLabel());
+                        return o1.location.getLabel().toLowerCase().compareTo(o2.location.getLabel().toLowerCase());
                     }
                 }
             });
