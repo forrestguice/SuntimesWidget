@@ -47,6 +47,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -499,12 +501,13 @@ public class PlacesListFragment extends Fragment
     private SearchView.OnQueryTextListener onItemSearch = new SearchView.OnQueryTextListener() {
         @Override
         public boolean onQueryTextSubmit(String query) {
-            return false;    // TODO
+            return false;
         }
 
         @Override
-        public boolean onQueryTextChange(String newText) {
-            return false;    // TODO
+        public boolean onQueryTextChange(String text) {
+            adapter.applyFilter(text);
+            return true;
         }
     };
 
@@ -897,46 +900,50 @@ public class PlacesListFragment extends Fragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static class PlacesListAdapter extends RecyclerView.Adapter<PlacesListViewHolder>
+    public static class PlacesListAdapter extends RecyclerView.Adapter<PlacesListViewHolder> implements Filterable
     {
         protected WeakReference<Context> contextRef;
-        protected ArrayList<PlaceItem> items;
+        protected ArrayList<PlaceItem> items0, items;
+        protected String filterText = "";
 
-        public PlacesListAdapter(Context context) {
+        public PlacesListAdapter(Context context)
+        {
             contextRef = new WeakReference<>(context);
+            items0 = new ArrayList<>();
             items = new ArrayList<>();
         }
 
         public void setValues(List<PlaceItem> values)
         {
+            items0.clear();
+            items0.addAll(sortItems(values));
+
             items.clear();
-            items.addAll(sortItems(values));
+            items.addAll(items0);
+
             notifyDataSetChanged();
         }
 
         public void updateValues(List<PlaceItem> values)
         {
-            for (PlaceItem value : values) {
-                updateValue(value);
-            }
-        }
-
-        public void updateValue(PlaceItem value)
-        {
-            int position = indexOf(value.rowID);
-            if (position >= 0 && position < items.size())
+            for (PlaceItem value : values)
             {
-                items.set(position, value);
-                notifyItemChanged(position);
-
-            } else {
-                items.add(value);
-                sortItems(items);
-                notifyDataSetChanged();
+                int position = indexOf(value.rowID, items0);
+                if (position >= 0 && position < items0.size())
+                {
+                    items0.set(position, value);
+                } else {
+                    items0.add(value);
+                    sortItems(items0);
+                }
             }
+            applyFilter(getFilterText());
         }
 
-        public int indexOf(long rowID)
+        public int indexOf(long rowID) {
+            return indexOf(rowID, items);
+        }
+        protected static int indexOf(long rowID, List<PlaceItem> items)
         {
             int position = -1;
             for (int i=0; i<items.size(); i++)
@@ -952,23 +959,28 @@ public class PlacesListFragment extends Fragment
 
         public void removeItem(long rowID)
         {
-            int position = indexOf(rowID);
-            if (position != -1)
+            int position0 = indexOf(rowID, items0);
+            if (position0 != -1) {
+                items0.remove(position0);
+            }
+
+            int position1 = indexOf(rowID, items);
+            if (position1 != -1)
             {
-                items.remove(position);
-                notifyItemRemoved(position);
+                items.remove(position1);
+                notifyItemRemoved(position1);
             }
         }
 
         public PlaceItem getItem(long rowID)
         {
-            int position = indexOf(rowID);
+            int position = indexOf(rowID, items0);
             if (position >= 0) {
-                return items.get(position);
+                return items0.get(position);
             } else return null;
         }
 
-        protected List<PlaceItem> sortItems(List<PlaceItem> items)
+        protected static List<PlaceItem> sortItems(List<PlaceItem> items)
         {
             Collections.sort(items, new Comparator<PlaceItem>() {
                 @Override
@@ -1066,6 +1078,57 @@ public class PlacesListFragment extends Fragment
             if (holder.itemView != null) {
                 holder.itemView.setOnClickListener(null);
             }
+        }
+
+        public void applyFilter(String text) {
+            filterText = text;
+            getFilter().filter(filterText);
+        }
+
+        public String getFilterText() {
+            return filterText;
+        }
+
+        @Override
+        public Filter getFilter()
+        {
+            return new Filter()
+            {
+                @Override
+                protected FilterResults performFiltering(CharSequence constraint)
+                {
+                    FilterResults results = new FilterResults();
+                    results.values = new ArrayList<>((constraint.length() > 0) ? getFilteredValues(constraint.toString().toLowerCase()) : items0);
+                    return results;
+                }
+
+                protected List<PlaceItem> getFilteredValues(String constraint)
+                {
+                    List<PlaceItem> values0  = new ArrayList<>();
+                    List<PlaceItem> values1  = new ArrayList<>();
+                    for (PlaceItem item : items0)
+                    {
+                        String label = item.location.getLabel().toLowerCase().trim();
+
+                        if (label.startsWith(constraint)) {
+                            values0.add(item);
+                        } else if (label.contains(constraint)) {
+                            values1.add(item);
+                        }
+                    }
+                    List<PlaceItem> values = new ArrayList<>(values0);
+                    values.addAll(values1);
+                    return values;
+                }
+
+                @Override
+                protected void publishResults(CharSequence constraint, FilterResults results)
+                {
+                    items.clear();
+                    items.addAll((List<PlaceItem>) results.values);
+                    notifyDataSetChanged();
+                }
+            };
         }
     }
 
