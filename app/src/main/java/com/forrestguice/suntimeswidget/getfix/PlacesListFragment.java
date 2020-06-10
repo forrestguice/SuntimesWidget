@@ -506,7 +506,7 @@ public class PlacesListFragment extends Fragment
 
         @Override
         public boolean onQueryTextChange(String text) {
-            adapter.applyFilter(text);
+            adapter.applyFilter(text, true);
             return true;
         }
     };
@@ -905,16 +905,20 @@ public class PlacesListFragment extends Fragment
         protected WeakReference<Context> contextRef;
         protected ArrayList<PlaceItem> items0, items;
         protected String filterText = "";
+        protected ArrayList<PlaceItem> filterExceptions;
 
         public PlacesListAdapter(Context context)
         {
             contextRef = new WeakReference<>(context);
             items0 = new ArrayList<>();
             items = new ArrayList<>();
+            filterExceptions = new ArrayList<>();
         }
 
         public void setValues(List<PlaceItem> values)
         {
+            filterExceptions.clear();
+
             items0.clear();
             items0.addAll(sortItems(values));
 
@@ -937,7 +941,9 @@ public class PlacesListFragment extends Fragment
                     sortItems(items0);
                 }
             }
-            applyFilter(getFilterText());
+
+            filterExceptions.addAll(values);
+            applyFilter(getFilterText(), false);
         }
 
         public int indexOf(long rowID) {
@@ -1080,8 +1086,11 @@ public class PlacesListFragment extends Fragment
             }
         }
 
-        public void applyFilter(String text) {
+        public void applyFilter(String text, boolean clearExceptions) {
             filterText = text;
+            if (clearExceptions) {
+                filterExceptions.clear();
+            }
             getFilter().filter(filterText);
         }
 
@@ -1090,45 +1099,53 @@ public class PlacesListFragment extends Fragment
         }
 
         @Override
-        public Filter getFilter()
+        public Filter getFilter() {
+            return new PlacesFilter();
+        }
+
+        /**
+         * PlacesFilter
+         */
+        private class PlacesFilter extends Filter
         {
-            return new Filter()
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint)
             {
-                @Override
-                protected FilterResults performFiltering(CharSequence constraint)
-                {
-                    FilterResults results = new FilterResults();
-                    results.values = new ArrayList<>((constraint.length() > 0) ? getFilteredValues(constraint.toString().toLowerCase()) : items0);
-                    return results;
-                }
+                FilterResults results = new FilterResults();
+                results.values = new ArrayList<>((constraint.length() > 0) ? getFilteredValues(constraint.toString().toLowerCase()) : items0);
+                return results;
+            }
 
-                protected List<PlaceItem> getFilteredValues(String constraint)
+            protected List<PlaceItem> getFilteredValues(String constraint)
+            {
+                List<PlaceItem> values0  = new ArrayList<>();
+                List<PlaceItem> values1  = new ArrayList<>();
+                for (PlaceItem item : items0)
                 {
-                    List<PlaceItem> values0  = new ArrayList<>();
-                    List<PlaceItem> values1  = new ArrayList<>();
-                    for (PlaceItem item : items0)
-                    {
-                        String label = item.location.getLabel().toLowerCase().trim();
+                    String label = item.location.getLabel().toLowerCase().trim();
 
-                        if (label.startsWith(constraint)) {
-                            values0.add(item);
-                        } else if (label.contains(constraint)) {
-                            values1.add(item);
-                        }
+                    if (label.equals(constraint) || filterExceptions.contains(item)) {
+                        values0.add(0, item);
+
+                    } else if (label.startsWith(constraint)) {
+                        values0.add(item);
+
+                    } else if (label.contains(constraint)) {
+                        values1.add(item);
                     }
-                    List<PlaceItem> values = new ArrayList<>(values0);
-                    values.addAll(values1);
-                    return values;
                 }
+                List<PlaceItem> values = new ArrayList<>(values0);
+                values.addAll(values1);
+                return values;
+            }
 
-                @Override
-                protected void publishResults(CharSequence constraint, FilterResults results)
-                {
-                    items.clear();
-                    items.addAll((List<PlaceItem>) results.values);
-                    notifyDataSetChanged();
-                }
-            };
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results)
+            {
+                items.clear();
+                items.addAll((List<PlaceItem>) results.values);
+                notifyDataSetChanged();
+            }
         }
     }
 
