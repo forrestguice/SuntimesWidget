@@ -1072,7 +1072,7 @@ public class PlacesListFragment extends Fragment
             return new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener != null) {
+                    if (listener != null && position >= 0 && position < items.size()) {
                         listener.onItemClicked(items.get(position), position);
                     }
                 }
