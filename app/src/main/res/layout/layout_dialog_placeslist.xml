@@ -24,10 +24,12 @@
         android:id="@+id/placesList"
         android:layout_width="match_parent" android:layout_height="wrap_content" />
 
-    <LinearLayout android:id="@+id/progressLayout" android:visibility="gone"
+    <include layout="@layout/layout_empty_placeslist" />
+
+    <LinearLayout android:id="@+id/progressLayout" android:visibility="visible"
         android:layout_width="match_parent" android:layout_height="match_parent"
         android:layout_gravity="center" android:gravity="center"
-        android:orientation="vertical" android:padding="8dp"
+        android:orientation="vertical" android:padding="8dp" android:layout_marginTop="48dp"
         android:clickable="true" android:focusable="true">
 
         <ProgressBar android:id="@+id/progress"

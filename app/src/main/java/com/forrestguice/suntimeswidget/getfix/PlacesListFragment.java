@@ -76,6 +76,7 @@ public class PlacesListFragment extends Fragment
     protected FragmentListener listener;
     protected PlacesListAdapter adapter;
     protected RecyclerView listView;
+    protected View emptyView;
     protected View progressView;
     protected ActionMode actionMode = null;
     protected PlacesListActionCompat actions = new PlacesListActionCompat();
@@ -118,7 +119,15 @@ public class PlacesListFragment extends Fragment
         listView.setLayoutManager(new LinearLayoutManager(getActivity()));
         listView.setAdapter(adapter);
 
+        emptyView = dialogContent.findViewById(android.R.id.empty);
+        if (emptyView != null) {
+            emptyView.setVisibility(View.GONE);
+        }
+
         progressView = dialogContent.findViewById(R.id.progressLayout);
+        if (progressView != null) {
+            progressView.setVisibility(View.GONE);
+        }
 
         if (savedState != null) {
             reloadAdapter(listTaskListener(savedState.getLong(KEY_SELECTED_ROWID, -1)));
@@ -312,11 +321,18 @@ public class PlacesListFragment extends Fragment
     {
         return new PlacesListTask.TaskListener() {
             @Override
-            public void onStarted() {}
+            public void onStarted() {
+                emptyView.setVisibility(View.GONE);
+            }
 
             @Override
             public void onFinished(List<PlaceItem> results)
             {
+                if (emptyView != null) {
+                    emptyView.setVisibility(results.isEmpty() ? View.VISIBLE : View.GONE);
+                }
+                listView.setVisibility(results.isEmpty() ? View.GONE : View.VISIBLE);
+
                 adapter.setSelectedRowID(selectedRowID);
                 adapter.setValues(results);
 
