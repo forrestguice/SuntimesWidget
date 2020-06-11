@@ -205,12 +205,16 @@ public class PlacesListFragment extends Fragment
 
     protected void updateActionMode(Context context, PlaceItem item)
     {
+        if (item == null || item.location == null) {
+            return;
+        }
+
         if (actionMode != null)
         {
-            adapter.setSelectedRowID(item != null ? item.rowID : -1);
+            adapter.setSelectedRowID(item.rowID);
             actions.setItem(item);
-            actionMode.setTitle(item.location != null ? item.location.getLabel() : "");
-            actionMode.setSubtitle(item.location != null ? locationDisplayString(context, item.location, true) : "");
+            actionMode.setTitle(item.location.getLabel());
+            actionMode.setSubtitle(locationDisplayString(context, item.location, true));
 
         } else {
             triggerActionMode(item);
@@ -462,7 +466,6 @@ public class PlacesListFragment extends Fragment
     {
         @Override
         public void onCanceled(PlaceItem item) {
-            updateActionMode(getActivity(), item);
         }
 
         @Override
