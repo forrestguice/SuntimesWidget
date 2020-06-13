@@ -793,6 +793,7 @@
     <!-- App Setting: Places -->
     <string name="configLabel_places">Places</string>                           <!-- group title -->
     <string name="configLabel_places_emptyMsg">@string/configLabel_places</string>    <!-- TODO -->
+    <string name="configLabel_places_multiSelect">%s places</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->   <!-- TODO -->
     <string name="configLabel_places_export">Export Places</string>  <!-- TODO: remove -->
     <string name="configLabel_places_clear">Clear Places</string>   <!-- TODO: remove -->
     <string name="configLabel_places_build">Add World Places</string>
@@ -1290,7 +1291,8 @@
     <string name="location_dialog_toast_copied">Copied to clipboard<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
 
     <!-- Dialog: Delete Place -->
-    <string name="locationdelete_dialog_title">Remove Place?</string>  <!-- TODO -->
+    <string name="locationdelete_dialog_title">Remove Place?</string>   <!-- title; remove 1 place --> <!-- TODO -->
+    <string name="locationdelete_dialog_title1">Remove Places?</string>  <!-- title; remove multiple places --> <!-- TODO -->
     <string name="locationdelete_dialog_message">Are you sure you want to remove %s?</string>   <!-- TODO -->
     <string name="locationdelete_dialog_ok">Remove</string>  <!-- TODO -->
     <string name="locationdelete_dialog_cancel">Cancel</string>  <!-- TODO -->

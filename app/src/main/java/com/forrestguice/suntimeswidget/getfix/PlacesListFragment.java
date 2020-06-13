@@ -133,7 +133,7 @@ public class PlacesListFragment extends Fragment
         }
 
         if (savedState != null) {
-            reloadAdapter(listTaskListener(savedState.getLong(KEY_SELECTED_ROWID, -1)));
+            reloadAdapter(listTaskListener(savedState.getLongArray(KEY_SELECTED_ROWID)));
         } else reloadAdapter();
 
         return dialogContent;
@@ -142,7 +142,7 @@ public class PlacesListFragment extends Fragment
     @Override
     public void onSaveInstanceState(Bundle state)
     {
-        state.putLong(KEY_SELECTED_ROWID, adapter.getSelectedRowID());
+        state.putLongArray(KEY_SELECTED_ROWID, adapter.getSelectedRowID());
         super.onSaveInstanceState(state);
     }
 
@@ -195,39 +195,55 @@ public class PlacesListFragment extends Fragment
         }
     }
 
-    protected void triggerActionMode(PlaceItem item)
+    protected void triggerActionMode(PlaceItem... items)
     {
         if (actionMode == null)
         {
-            if (item != null)
+            if (items[0] != null)
             {
                 AppCompatActivity activity = (AppCompatActivity) getActivity();
                 actionMode = activity.startSupportActionMode(actions);
                 if (actionMode != null) {
-                    updateActionMode(getActivity(), item);
+                    updateActionMode(getActivity(), items);
                 }
             }
 
         } else {
-            updateActionMode(getActivity(), item);
+            updateActionMode(getActivity(), items);
         }
     }
 
-    protected void updateActionMode(Context context, PlaceItem item)
+    protected void updateActionMode(Context context, PlaceItem... items)
     {
-        if (item == null || item.location == null) {
+        if (items == null || items.length == 0 ||
+                items[0] == null || items[0].location == null) {
             return;
         }
 
         if (actionMode != null)
         {
-            adapter.setSelectedRowID(item.rowID);
-            actions.setItem(item);
-            actionMode.setTitle(item.location.getLabel());
-            actionMode.setSubtitle(locationDisplayString(context, item.location, true));
+            long[] rowID = new long[items.length];
+            for (int i=0; i<items.length; i++) {
+                if (items[i] != null) {
+                    rowID[i] = items[i].rowID;
+                }
+            }
+            adapter.setSelectedRowID(rowID);
+
+            if (rowID.length > 1)
+            {
+                actionMode.setTitle( context.getString(R.string.configLabel_places_multiSelect, Integer.toString(rowID.length)));
+                actionMode.setSubtitle("");
+
+            } else {
+                actionMode.setTitle(items[0].location.getLabel());
+                actionMode.setSubtitle(locationDisplayString(context, items[0].location, true));
+            }
+            actions.setItems(items);
+            actionMode.invalidate();
 
         } else {
-            triggerActionMode(item);
+            triggerActionMode(items);
         }
     }
 
@@ -241,9 +257,9 @@ public class PlacesListFragment extends Fragment
 
     private class PlacesListActionCompat implements android.support.v7.view.ActionMode.Callback
     {
-        private PlaceItem item = null;
-        public void setItem(PlaceItem item) {
-            this.item = item;
+        private PlaceItem[] items = null;
+        public void setItems(PlaceItem[] values) {
+            this.items = values;
         }
 
         @Override
@@ -264,6 +280,14 @@ public class PlacesListFragment extends Fragment
                 pickPlace.setVisible(allowPick());
             }
 
+            int[] singleSelectItems = new int[] { R.id.pickPlace, R.id.sharePlace, R.id.editPlace, R.id.copyPlace };
+            for (int resID : singleSelectItems)
+            {
+                MenuItem menuItem = menu.findItem(resID);
+                if (menuItem != null) {
+                    menuItem.setVisible(items == null || items.length == 1);
+                }
+            }
             return false;
         }
 
@@ -273,25 +297,24 @@ public class PlacesListFragment extends Fragment
             switch (menuItem.getItemId())
             {
                 case R.id.pickPlace:
-                    pickPlace(item);
+                    pickPlace(items[0]);
                     finishActionMode();
                     return true;
 
                 case R.id.editPlace:
-                    editPlace(item);
+                    editPlace(items[0]);
                     return true;
 
                 case R.id.copyPlace:
-                    copyPlace(item);
+                    copyPlace(items[0]);
                     return true;
 
                 case R.id.deletePlace:
-                    deletePlace(getActivity(), item);
-                    finishActionMode();
+                    deletePlace(getActivity(), items);
                     return true;
 
                 case R.id.sharePlace:
-                    sharePlace(item);
+                    sharePlace(items[0]);
                     return true;
 
                 case android.R.id.home:
@@ -331,7 +354,7 @@ public class PlacesListFragment extends Fragment
         }
     }
 
-    protected PlacesListTask.TaskListener listTaskListener(final long selectedRowID)
+    protected PlacesListTask.TaskListener listTaskListener(final long... selectedRowID)
     {
         return new PlacesListTask.TaskListener() {
             @Override
@@ -352,10 +375,10 @@ public class PlacesListFragment extends Fragment
                 adapter.setFilterExceptions(getFilterExceptions());
                 adapter.applyFilter(getFilterText(), false);
 
-                if (selectedRowID != -1)
+                if (selectedRowID != null && selectedRowID.length > 0 && selectedRowID[0] != -1)
                 {
-                    listView.scrollToPosition(adapter.indexOf(selectedRowID));
-                    triggerActionMode(adapter.getItem(selectedRowID));
+                    listView.scrollToPosition(adapter.indexOf(selectedRowID[0]));
+                    triggerActionMode(adapter.getItems(selectedRowID));
                 }
             }
         };
@@ -375,7 +398,27 @@ public class PlacesListFragment extends Fragment
         @Override
         public boolean onItemLongClicked(PlaceItem item, int position)
         {
-            triggerActionMode(item);  // TODO: multi-select
+            long[] valuesArray = adapter.getSelectedRowID();
+            boolean emptySelection = (valuesArray.length == 1 && valuesArray[0] == -1);
+
+            ArrayList<Long> values = new ArrayList<>();
+            for (int i=0; i<valuesArray.length; i++) {
+                values.add(valuesArray[i]);
+            }
+
+            PlaceItem[] selection;
+            if (emptySelection) {
+                selection = new PlaceItem[] { item };
+
+            } else {
+                if (values.contains(item.rowID)) {
+                    values.remove(item.rowID);
+                } else values.add(item.rowID);
+
+                selection = adapter.getItems(values);
+            }
+
+            triggerActionMode(selection);
             if (listener != null) {
                 listener.onItemLongClicked(item, position);
             }
@@ -583,14 +626,23 @@ public class PlacesListFragment extends Fragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected void deletePlace(final Context context, @Nullable final PlaceItem item)
+    protected void deletePlace(final Context context, @Nullable final PlaceItem... items)
     {
-        if (item != null && item.location != null)
+        if (items != null && items.length > 0
+                && items[0] != null && items[0].location != null)
         {
+            final Long[] rowIDs = new Long[items.length];
+            for (int i=0; i<rowIDs.length; i++) {
+                rowIDs[i] = items[i] != null ? items[i].rowID : -1;
+            }
+
+            final boolean multiDelete = (items.length > 1);
+            String title = context.getString(multiDelete ? R.string.locationdelete_dialog_title1 : R.string.locationdelete_dialog_title);
+            String desc = (multiDelete ? context.getString(R.string.configLabel_places_multiSelect, Integer.toString(items.length)) : items[0].location.getLabel());
+            String message = context.getString(R.string.locationdelete_dialog_message, desc);
+
             AlertDialog.Builder confirm = new AlertDialog.Builder(context)
-                    .setTitle(context.getString(R.string.locationdelete_dialog_title))
-                    .setMessage(context.getString(R.string.locationdelete_dialog_message, item.location.getLabel()))
-                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle(title).setMessage(message).setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(context.getString(R.string.locationdelete_dialog_ok), new DialogInterface.OnClickListener()
                     {
                         public void onClick(DialogInterface dialog, int whichButton)
@@ -599,50 +651,57 @@ public class PlacesListFragment extends Fragment
                             task.setTaskListener(new DeletePlaceTask.TaskListener()
                             {
                                 @Override
-                                public void onFinished(long rowID, boolean result) {
-                                    adapter.removeItem(rowID);
+                                public void onFinished(boolean result, Long... rowIDs)
+                                {
+                                    for (long rowID : rowIDs) {
+                                        adapter.removeItem(rowID);
+                                    }
                                     setModified(true);
                                 }
                             });
-                            task.execute(item.rowID);
+
+                            finishActionMode();
+                            task.execute(rowIDs);
                         }
                     })
                     .setNegativeButton(context.getString(R.string.locationdelete_dialog_cancel), null);
-
             confirm.show();
         }
     }
 
-    public static class DeletePlaceTask extends AsyncTask<Object, Object, Boolean>
+    public static class DeletePlaceTask extends AsyncTask<Long, Object, Boolean>
     {
         private GetFixDatabaseAdapter database;
-        private long rowID = -1;
+        private Long[] rowIDs = new Long[] { -1L };
 
         public DeletePlaceTask(Context context) {
             database = new GetFixDatabaseAdapter(context.getApplicationContext());
         }
 
         @Override
-        protected Boolean doInBackground(Object... params)
+        protected Boolean doInBackground(Long... params)
         {
             if (params.length > 0) {
-                rowID = (Long)params[0];
+                rowIDs = params;
             }
-            if (rowID != -1)
+
+            boolean result = false;
+            database.open();
+            for (long rowID : rowIDs)
             {
-                database.open();
-                boolean result = database.removePlace(rowID);
-                database.close();
-                return result;
+                if (rowID != -1) {
+                    result = database.removePlace(rowID);
+                }
             }
-            return false;
+            database.close();
+            return result;
         }
 
         @Override
         protected void onPostExecute(Boolean result)
         {
             if (taskListener != null)
-                taskListener.onFinished(rowID, result);
+                taskListener.onFinished(result, rowIDs);
         }
 
         private TaskListener taskListener = null;
@@ -651,7 +710,7 @@ public class PlacesListFragment extends Fragment
         }
         public static abstract class TaskListener
         {
-            public void onFinished( long rowID, boolean result ) {}
+            public void onFinished( boolean result, Long... rowIDs ) {}
         }
     }
 
@@ -914,10 +973,10 @@ public class PlacesListFragment extends Fragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void setSelectedRowID( long rowID ) {
+    public void setSelectedRowID( long... rowID ) {
         adapter.setSelectedRowID(rowID);
     }
-    public long selectedRowID() {
+    public long[] selectedRowID() {
         return adapter.getSelectedRowID();
     }
 
@@ -1053,6 +1112,24 @@ public class PlacesListFragment extends Fragment
             } else return null;
         }
 
+        public PlaceItem[] getItems(long[] rowID)
+        {
+            PlaceItem[] array = new PlaceItem[rowID.length];
+            for (int i=0; i<array.length; i++) {
+                array[i] = getItem(rowID[i]);
+            }
+            return array;
+        }
+
+        public PlaceItem[] getItems(List<Long> rowID)
+        {
+            PlaceItem[] array = new PlaceItem[rowID.size()];
+            for (int i=0; i<array.length; i++) {
+                array[i] = getItem(rowID.get(i));
+            }
+            return array;
+        }
+
         protected static List<PlaceItem> sortItems(List<PlaceItem> items)
         {
             Collections.sort(items, new Comparator<PlaceItem>() {
@@ -1076,21 +1153,35 @@ public class PlacesListFragment extends Fragment
             return items;
         }
 
-        private long selectedRowID = -1;
-        public void setSelectedRowID( long rowID )
+        private long[] selectedRowID = new long[] { -1 };
+        public void setSelectedRowID( long... rowID )
         {
-            selectedRowID = rowID;
-            notifyDataSetChanged();
+            if (rowID != null)
+            {
+                selectedRowID = new long[rowID.length];
+                System.arraycopy(rowID, 0, selectedRowID, 0, rowID.length);
+                notifyDataSetChanged();
+            }
         }
-        public long getSelectedRowID() {
+        public long[] getSelectedRowID() {
             return selectedRowID;
         }
         public void clearSelection() {
             setSelectedRowID(-1);
         }
 
+        public boolean isSelected(long rowID)
+        {
+            for (long id : selectedRowID) {
+                if (id == rowID) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public int getSelectedPosition() {
-            return indexOf(selectedRowID);
+            return indexOf(selectedRowID[0]);
         }
 
         @Override
@@ -1105,7 +1196,7 @@ public class PlacesListFragment extends Fragment
         public void onBindViewHolder(PlacesListViewHolder holder, int position)
         {
             PlaceItem item = items.get(position);
-            holder.selected = (item.rowID == selectedRowID);
+            holder.selected = isSelected(item.rowID);
             holder.bindViewHolder(contextRef.get(), item);
             attachClickListeners(holder, position);
         }
