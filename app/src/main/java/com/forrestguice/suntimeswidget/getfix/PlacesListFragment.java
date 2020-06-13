@@ -1198,7 +1198,7 @@ public class PlacesListFragment extends Fragment
             PlaceItem item = items.get(position);
             holder.selected = isSelected(item.rowID);
             holder.bindViewHolder(contextRef.get(), item);
-            attachClickListeners(holder, position);
+            attachClickListeners(holder);
         }
 
         @Override
@@ -1218,19 +1218,20 @@ public class PlacesListFragment extends Fragment
             this.listener = listener;
         }
 
-        protected void attachClickListeners(PlacesListViewHolder holder, int position)
+        protected void attachClickListeners(PlacesListViewHolder holder)
         {
             if (holder.itemView != null) {
-                holder.itemView.setOnClickListener(onItemClicked(position));
-                holder.itemView.setOnLongClickListener(onItemLongClicked(position));
+                holder.itemView.setOnClickListener(onItemClicked(holder));
+                holder.itemView.setOnLongClickListener(onItemLongClicked(holder));
             }
         }
 
-        protected View.OnClickListener onItemClicked(final int position)
+        protected View.OnClickListener onItemClicked(final PlacesListViewHolder holder)
         {
             return new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    int position = holder.getAdapterPosition();
                     if (listener != null && position >= 0 && position < items.size()) {
                         listener.onItemClicked(items.get(position), position);
                     }
@@ -1238,11 +1239,12 @@ public class PlacesListFragment extends Fragment
             };
         }
 
-        protected View.OnLongClickListener onItemLongClicked(final int position)
+        protected View.OnLongClickListener onItemLongClicked(final PlacesListViewHolder holder)
         {
             return new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
+                    int position = holder.getAdapterPosition();
                     if (listener != null && position >= 0 && position < items.size()) {
                         return listener.onItemLongClicked(items.get(position), position);
                     }
