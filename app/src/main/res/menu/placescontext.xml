@@ -30,7 +30,7 @@
         <item android:id="@+id/deletePlace"
             android:icon="?attr/icActionDelete"
             android:title="@string/configAction_deletePlace"
-            app:showAsAction="never"
+            app:showAsAction="ifRoom"
             android:orderInCategory="300" />
     </group>
 </menu>
