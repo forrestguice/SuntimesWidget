@@ -141,6 +141,11 @@ public class PlacesActivity extends AppCompatActivity
         public void onItemClicked(PlaceItem item, int position) { /* EMPTY */ }
 
         @Override
+        public boolean onItemLongClicked(PlaceItem item, int position) {
+            return false;
+        }
+
+        @Override
         public void onFilterChanged(String filterText, Long[] filterExceptions) {}
     };
 

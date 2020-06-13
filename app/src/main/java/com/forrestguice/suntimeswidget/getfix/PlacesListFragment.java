@@ -373,6 +373,16 @@ public class PlacesListFragment extends Fragment
         }
 
         @Override
+        public boolean onItemLongClicked(PlaceItem item, int position)
+        {
+            triggerActionMode(item);  // TODO: multi-select
+            if (listener != null) {
+                listener.onItemLongClicked(item, position);
+            }
+            return true;
+        }
+
+        @Override
         public void onFilterChanged(String filterText, Long[] filterExceptions)
         {
             getArguments().putString(KEY_FILTER_TEXT, filterText);
@@ -951,6 +961,7 @@ public class PlacesListFragment extends Fragment
 
     public interface AdapterListener {
         void onItemClicked(PlaceItem item, int position);
+        boolean onItemLongClicked(PlaceItem item, int position);
         void onFilterChanged(String filterText, Long[] filterExceptions);
     }
 
@@ -1120,6 +1131,7 @@ public class PlacesListFragment extends Fragment
         {
             if (holder.itemView != null) {
                 holder.itemView.setOnClickListener(onItemClicked(position));
+                holder.itemView.setOnLongClickListener(onItemLongClicked(position));
             }
         }
 
@@ -1135,10 +1147,24 @@ public class PlacesListFragment extends Fragment
             };
         }
 
+        protected View.OnLongClickListener onItemLongClicked(final int position)
+        {
+            return new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (listener != null && position >= 0 && position < items.size()) {
+                        return listener.onItemLongClicked(items.get(position), position);
+                    }
+                    return false;
+                }
+            };
+        }
+
         protected void detachClickListeners(PlacesListViewHolder holder)
         {
             if (holder.itemView != null) {
                 holder.itemView.setOnClickListener(null);
+                holder.itemView.setOnLongClickListener(null);
             }
         }
 
