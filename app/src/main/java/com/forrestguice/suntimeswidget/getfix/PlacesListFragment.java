@@ -69,6 +69,7 @@ public class PlacesListFragment extends Fragment
 {
     public static final String KEY_SELECTED_ROWID = "selectedRowID";
     public static final String KEY_FILTER_TEXT = "filterText";
+    public static final String KEY_FILTER_EXCEPTIONS = "filterExceptions";
     public static final String KEY_ALLOW_PICK = "allowPick";
     public static final String KEY_MODIFIED = "isModified";
 
@@ -348,6 +349,7 @@ public class PlacesListFragment extends Fragment
 
                 adapter.setSelectedRowID(selectedRowID);
                 adapter.setValues(results);
+                adapter.setFilterExceptions(getFilterExceptions());
                 adapter.applyFilter(getFilterText(), false);
 
                 if (selectedRowID != -1)
@@ -371,8 +373,15 @@ public class PlacesListFragment extends Fragment
         }
 
         @Override
-        public void onFilterChanged(String filterText) {
+        public void onFilterChanged(String filterText, Long[] filterExceptions)
+        {
             getArguments().putString(KEY_FILTER_TEXT, filterText);
+
+            long[] array = new long[filterExceptions.length];
+            for (int i=0; i<array.length; i++) {
+                array[i] = filterExceptions[i];
+            }
+            getArguments().putLongArray(KEY_FILTER_EXCEPTIONS, array);
         }
     };
 
@@ -911,6 +920,9 @@ public class PlacesListFragment extends Fragment
     public String getFilterText() {
         return getArguments().getString(KEY_FILTER_TEXT, "");
     }
+    public long[] getFilterExceptions() {
+        return getArguments().getLongArray(KEY_FILTER_EXCEPTIONS);
+    }
 
     public void setAllowPick(boolean value) {
         getArguments().putBoolean(KEY_ALLOW_PICK, value);
@@ -939,7 +951,7 @@ public class PlacesListFragment extends Fragment
 
     public interface AdapterListener {
         void onItemClicked(PlaceItem item, int position);
-        void onFilterChanged(String filterText);
+        void onFilterChanged(String filterText, Long[] filterExceptions);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -950,7 +962,7 @@ public class PlacesListFragment extends Fragment
         protected WeakReference<Context> contextRef;
         protected ArrayList<PlaceItem> items0, items;
         protected String filterText = "";
-        protected ArrayList<PlaceItem> filterExceptions;
+        protected ArrayList<Long> filterExceptions;
 
         public PlacesListAdapter(Context context)
         {
@@ -985,9 +997,8 @@ public class PlacesListFragment extends Fragment
                     items0.add(value);
                     sortItems(items0);
                 }
+                filterExceptions.add(value.rowID);
             }
-
-            filterExceptions.addAll(values);
             applyFilter(getFilterText(), false);
         }
 
@@ -1134,7 +1145,7 @@ public class PlacesListFragment extends Fragment
         public void applyFilter(@Nullable String text, boolean clearExceptions) {
             filterText = (text != null ? text : "");
             if (listener != null) {
-                listener.onFilterChanged(filterText);
+                listener.onFilterChanged(filterText, filterExceptions.toArray(new Long[0]));
             }
 
             if (clearExceptions) {
@@ -1149,6 +1160,19 @@ public class PlacesListFragment extends Fragment
 
         public String getFilterText() {
             return filterText;
+        }
+
+        public void setFilterExceptions(long... values)
+        {
+            filterExceptions.clear();
+            if (values != null) {
+                for (Long value : values) {
+                    filterExceptions.add(value);
+                }
+            }
+        }
+        public List<Long> getFilterExceptions() {
+            return new ArrayList<>(filterExceptions);
         }
 
         @Override
@@ -1177,7 +1201,7 @@ public class PlacesListFragment extends Fragment
                 {
                     String label = item.location.getLabel().toLowerCase().trim();
 
-                    if (label.equals(constraint) || filterExceptions.contains(item)) {
+                    if (label.equals(constraint) || filterExceptions.contains(item.rowID)) {
                         values0.add(0, item);
 
                     } else if (label.startsWith(constraint)) {
