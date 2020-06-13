@@ -68,6 +68,7 @@ import java.util.List;
 public class PlacesListFragment extends Fragment
 {
     public static final String KEY_SELECTED_ROWID = "selectedRowID";
+    public static final String KEY_FILTER_TEXT = "filterText";
     public static final String KEY_ALLOW_PICK = "allowPick";
     public static final String KEY_MODIFIED = "isModified";
 
@@ -113,6 +114,7 @@ public class PlacesListFragment extends Fragment
         View dialogContent = inflater.inflate(R.layout.layout_dialog_placeslist, parent, false);
 
         adapter = new PlacesListAdapter(getActivity());
+        adapter.setFilterText(getFilterText());
         adapter.setAdapterListener(listAdapterListener);
 
         listView = (RecyclerView) dialogContent.findViewById(R.id.placesList);
@@ -153,7 +155,14 @@ public class PlacesListFragment extends Fragment
         {
             MenuItemCompat.setOnActionExpandListener(searchItem, onItemSearchExpand);
             SearchView searchView = (SearchView) searchItem.getActionView();
-            if (searchView != null) {
+            if (searchView != null)
+            {
+                if (!TextUtils.isEmpty(adapter.getFilterText()))
+                {
+                    searchItem.expandActionView();
+                    searchView.setQuery(adapter.getFilterText(), true);
+                    searchView.clearFocus();
+                }
                 searchView.setOnQueryTextListener(onItemSearch);
             }
         }
@@ -339,6 +348,7 @@ public class PlacesListFragment extends Fragment
 
                 adapter.setSelectedRowID(selectedRowID);
                 adapter.setValues(results);
+                adapter.applyFilter(getFilterText(), false);
 
                 if (selectedRowID != -1)
                 {
@@ -358,6 +368,11 @@ public class PlacesListFragment extends Fragment
             if (listener != null) {
                 listener.onItemClicked(item, position);
             }
+        }
+
+        @Override
+        public void onFilterChanged(String filterText) {
+            getArguments().putString(KEY_FILTER_TEXT, filterText);
         }
     };
 
@@ -887,6 +902,16 @@ public class PlacesListFragment extends Fragment
         return adapter.getSelectedRowID();
     }
 
+    public void setFilterText( String value ) {
+        getArguments().putString(KEY_FILTER_TEXT, value);
+        if (adapter != null) {
+            adapter.setFilterText(value);
+        }
+    }
+    public String getFilterText() {
+        return getArguments().getString(KEY_FILTER_TEXT, "");
+    }
+
     public void setAllowPick(boolean value) {
         getArguments().putBoolean(KEY_ALLOW_PICK, value);
     }
@@ -914,6 +939,7 @@ public class PlacesListFragment extends Fragment
 
     public interface AdapterListener {
         void onItemClicked(PlaceItem item, int position);
+        void onFilterChanged(String filterText);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1105,12 +1131,20 @@ public class PlacesListFragment extends Fragment
             }
         }
 
-        public void applyFilter(String text, boolean clearExceptions) {
-            filterText = text;
+        public void applyFilter(@Nullable String text, boolean clearExceptions) {
+            filterText = (text != null ? text : "");
+            if (listener != null) {
+                listener.onFilterChanged(filterText);
+            }
+
             if (clearExceptions) {
                 filterExceptions.clear();
             }
             getFilter().filter(filterText);
+        }
+
+        public void setFilterText( String value ) {
+            filterText = value;
         }
 
         public String getFilterText() {

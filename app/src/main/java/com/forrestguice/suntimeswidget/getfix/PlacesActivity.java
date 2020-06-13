@@ -135,11 +135,13 @@ public class PlacesActivity extends AppCompatActivity
         }
 
         @Override
-        public void onActionModeFinished() {
-        }
+        public void onActionModeFinished() {}
 
         @Override
         public void onItemClicked(PlaceItem item, int position) { /* EMPTY */ }
+
+        @Override
+        public void onFilterChanged(String filterText) {}
     };
 
     protected void pickPlace(PlaceItem item)
