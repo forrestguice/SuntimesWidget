@@ -439,6 +439,7 @@ public class AlarmClockActivity extends AppCompatActivity
             FragmentManager fragments = getSupportFragmentManager();
             AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentById(R.id.createAlarmFragment);
             AlarmClockItem item = createAlarm(dialog, dialog.getAlarmType(), true);
+            AlarmNotifications.updateAlarmTime(AlarmClockActivity.this, item);
             showAlarmEditActivity(item, null);
             addButton.postDelayed(new Runnable() {
                 @Override

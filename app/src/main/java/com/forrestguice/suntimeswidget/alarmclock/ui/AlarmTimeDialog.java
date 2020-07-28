@@ -134,13 +134,21 @@ public class AlarmTimeDialog extends DialogFragment
         {
             getArguments().putInt(PREF_KEY_ALARM_TIME_HOUR, hourOfDay);
             getArguments().putInt(PREF_KEY_ALARM_TIME_MINUTE, minute);
+            if (listener != null) {
+                listener.onChanged(AlarmTimeDialog.this);
+            }
         }
     };
 
-    private AdapterView.OnItemSelectedListener onModeChanged = new AdapterView.OnItemSelectedListener() {
+    private AdapterView.OnItemSelectedListener onModeChanged = new AdapterView.OnItemSelectedListener()
+    {
         @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+        {
             getArguments().putString(PREF_KEY_ALARM_TIME_MODE, ((AlarmClockItem.AlarmTimeZone) parent.getItemAtPosition(position)).timeZoneID());
+            if (listener != null) {
+                listener.onChanged(AlarmTimeDialog.this);
+            }
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {}
@@ -170,20 +178,16 @@ public class AlarmTimeDialog extends DialogFragment
         return getArguments().getString(PREF_KEY_ALARM_TIME_MODE);
     }
 
-    /**
-     * Dialog accepted listener.
-     */
-    private DialogInterface.OnClickListener onAccepted = null;
-    public void setOnAcceptedListener( DialogInterface.OnClickListener listener ) {
-        onAccepted = listener;
+    public interface DialogListener
+    {
+        void onAccepted(AlarmTimeDialog dialog);
+        void onCanceled(AlarmTimeDialog dialog);
+        void onChanged(AlarmTimeDialog dialog);
     }
 
-    /**
-     * Dialog cancelled listener.
-     */
-    private DialogInterface.OnClickListener onCanceled = null;
-    public void setOnCanceledListener( DialogInterface.OnClickListener listener ) {
-        onCanceled = listener;
+    private DialogListener listener = null;
+    public void setDialogListener( DialogListener listener ) {
+        this.listener = listener;
     }
 
 }

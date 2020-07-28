@@ -428,9 +428,8 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         }
 
         AlarmTimeDialog timeDialog = (AlarmTimeDialog) fragments.findFragmentByTag(DIALOGTAG_TIME);
-        if (timeDialog != null)
-        {
-            timeDialog.setOnAcceptedListener(onTimeChanged);
+        if (timeDialog != null) {
+            timeDialog.setDialogListener(onTimeChanged);
         }
 
         if (Build.VERSION.SDK_INT >= 11)
@@ -1056,7 +1055,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             timeDialog.setTime(hour, minute);
             timeDialog.set24Hour(SuntimesUtils.is24());
             timeDialog.setTimeZone(item.timezone);
-            timeDialog.setOnAcceptedListener(onTimeChanged);
+            timeDialog.setDialogListener(onTimeChanged);
             t_selectedItem = item.rowID;
             timeDialog.show(getSupportFragmentManager(), DIALOGTAG_TIME);
 
@@ -1065,10 +1064,10 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         }
     }
 
-    private DialogInterface.OnClickListener onTimeChanged = new DialogInterface.OnClickListener()
+    private AlarmTimeDialog.DialogListener onTimeChanged = new AlarmTimeDialog.DialogListener()
     {
         @Override
-        public void onClick(DialogInterface dialog, int which)
+        public void onAccepted(AlarmTimeDialog dialog)
         {
             FragmentManager fragments = getSupportFragmentManager();
             AlarmTimeDialog timeDialog = (AlarmTimeDialog) fragments.findFragmentByTag(DIALOGTAG_TIME);
@@ -1089,8 +1088,13 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
                 task.setTaskListener(onUpdateItem);
                 task.execute(item);
             }
-
         }
+
+        @Override
+        public void onCanceled(AlarmTimeDialog dialog) {}
+
+        @Override
+        public void onChanged(AlarmTimeDialog dialog) {}
     };
 
     /**

@@ -283,29 +283,7 @@ public class AlarmListDialog extends DialogFragment
 
     public AlarmClockItem createAlarm(final Context context, AlarmClockItem.AlarmType type, String label, SolarEvents event, Location location, int hour, int minute, String timezone, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays, boolean addToDatabase)
     {
-        final AlarmClockItem alarm = new AlarmClockItem();
-        alarm.enabled = AlarmSettings.loadPrefAlarmAutoEnable(context);
-        alarm.type = type;
-        alarm.label = label;
-        alarm.hour = hour;
-        alarm.minute = minute;
-        alarm.timezone = timezone;
-        alarm.event = event;
-        alarm.location = (location != null ? location : WidgetSettings.loadLocationPref(context, 0));
-        alarm.repeating = false;
-        alarm.vibrate = vibrate;
-
-        alarm.ringtoneURI = (ringtoneUri != null ? ringtoneUri.toString() : null);
-        if (alarm.ringtoneURI != null)
-        {
-            Ringtone ringtone = RingtoneManager.getRingtone(context, ringtoneUri);
-            alarm.ringtoneName = ringtone.getTitle(context);
-            ringtone.stop();
-        }
-
-        alarm.setState(alarm.enabled ? AlarmState.STATE_NONE : AlarmState.STATE_DISABLED);
-        alarm.modified = true;
-
+        final AlarmClockItem alarm = createAlarm(context, type, label, event, location, hour, minute, timezone, vibrate, ringtoneUri, repetitionDays);
         if (addToDatabase)
         {
             AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, true, true);
@@ -331,6 +309,33 @@ public class AlarmListDialog extends DialogFragment
             });
             task.execute(alarm);
         }
+        return alarm;
+    }
+
+    public static AlarmClockItem createAlarm(final Context context, AlarmClockItem.AlarmType type, String label, SolarEvents event, Location location, int hour, int minute, String timezone, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays)
+    {
+        final AlarmClockItem alarm = new AlarmClockItem();
+        alarm.enabled = AlarmSettings.loadPrefAlarmAutoEnable(context);
+        alarm.type = type;
+        alarm.label = label;
+        alarm.hour = hour;
+        alarm.minute = minute;
+        alarm.timezone = timezone;
+        alarm.event = event;
+        alarm.location = (location != null ? location : WidgetSettings.loadLocationPref(context, 0));
+        alarm.repeating = false;
+        alarm.vibrate = vibrate;
+
+        alarm.ringtoneURI = (ringtoneUri != null ? ringtoneUri.toString() : null);
+        if (alarm.ringtoneURI != null)
+        {
+            Ringtone ringtone = RingtoneManager.getRingtone(context, ringtoneUri);
+            alarm.ringtoneName = ringtone.getTitle(context);
+            ringtone.stop();
+        }
+
+        alarm.setState(alarm.enabled ? AlarmState.STATE_NONE : AlarmState.STATE_DISABLED);
+        alarm.modified = true;
         return alarm;
     }
 
