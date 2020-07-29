@@ -1,5 +1,9 @@
 ### ~
 
+### v0.12.11 (2020-06-16)
+* fixes bug "sun position widget does not render midnight sun" (#421).
+* fixes app crash when using fallback to "last location" (#420).
+
 ### v0.12.10 (2020-05-20)
 * fixes bug "solar time alarms are offset by several minutes" (#414).
 * updates translation to German (de) (#412 by xnumad).

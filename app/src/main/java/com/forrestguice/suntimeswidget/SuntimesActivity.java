@@ -889,8 +889,11 @@ public class SuntimesActivity extends AppCompatActivity
             @Override
             public void updateUI(Location... locations)
             {
-                com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(getString(R.string.gps_lastfix_title_found), locations[0]);
-                actionBar.setSubtitle(location.toString());
+                if (locations[0] != null)
+                {
+                    com.forrestguice.suntimeswidget.calculator.core.Location location = new com.forrestguice.suntimeswidget.calculator.core.Location(getString(R.string.gps_lastfix_title_found), locations[0]);
+                    actionBar.setSubtitle(location.toString());
+                }
             }
 
             @Override
