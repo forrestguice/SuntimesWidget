@@ -284,30 +284,8 @@ public class AlarmListDialog extends DialogFragment
     public AlarmClockItem createAlarm(final Context context, AlarmClockItem.AlarmType type, String label, SolarEvents event, Location location, int hour, int minute, String timezone, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays, boolean addToDatabase)
     {
         final AlarmClockItem alarm = createAlarm(context, type, label, event, location, hour, minute, timezone, vibrate, ringtoneUri, repetitionDays);
-        if (addToDatabase)
-        {
-            AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, true, true);
-            task.setTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener()
-            {
-                @Override
-                public void onFinished(Boolean result, AlarmClockItem item)
-                {
-                    if (result)
-                    {
-                        if (listener != null) {
-                            listener.onAlarmAdded(item);
-                        }
-
-                        setSelectedRowID(item.rowID);
-                        reloadAdapter();
-
-                        if (item.enabled) {
-                            context.sendBroadcast( AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, item.getUri()) );
-                        }
-                    }
-                }
-            });
-            task.execute(alarm);
+        if (addToDatabase) {
+            addAlarm(context, alarm);
         }
         return alarm;
     }
@@ -338,6 +316,35 @@ public class AlarmListDialog extends DialogFragment
         alarm.modified = true;
         return alarm;
     }
+
+
+    public AlarmClockItem addAlarm(final Context context, AlarmClockItem alarm)
+    {
+        AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, true, true);
+        task.setTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener()
+        {
+            @Override
+            public void onFinished(Boolean result, AlarmClockItem item)
+            {
+                if (result)
+                {
+                    if (listener != null) {
+                        listener.onAlarmAdded(item);
+                    }
+
+                    setSelectedRowID(item.rowID);
+                    reloadAdapter();
+
+                    if (item.enabled) {
+                        context.sendBroadcast( AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, item.getUri()) );
+                    }
+                }
+            }
+        });
+        task.execute(alarm);
+        return alarm;
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////

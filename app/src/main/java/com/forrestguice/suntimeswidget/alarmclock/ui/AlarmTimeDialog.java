@@ -20,17 +20,21 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.res.TypedArray;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.forrestguice.suntimeswidget.R;
@@ -96,8 +100,8 @@ public class AlarmTimeDialog extends DialogFragment
     protected void initViews( final Context context, View dialogContent )
     {
         AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
-        ArrayAdapter<AlarmClockItem.AlarmTimeZone> modeAdapter = new ArrayAdapter<>(context, R.layout.layout_listitem_oneline, AlarmClockItem.AlarmTimeZone.values());
-        modeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        AlarmTimeModeAdapter modeAdapter = new AlarmTimeModeAdapter(context, R.layout.layout_listitem_alarmtz, AlarmClockItem.AlarmTimeZone.values());
+        //modeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         modePicker = (Spinner)dialogContent.findViewById(R.id.modepicker);
         modePicker.setAdapter(modeAdapter);
 
@@ -188,6 +192,61 @@ public class AlarmTimeDialog extends DialogFragment
     private DialogListener listener = null;
     public void setDialogListener( DialogListener listener ) {
         this.listener = listener;
+    }
+
+    /**
+     * AlarmTimeModeAdapter
+     */
+    public static class AlarmTimeModeAdapter extends ArrayAdapter<AlarmClockItem.AlarmTimeZone>
+    {
+        private int layout;
+        public AlarmTimeModeAdapter(@NonNull Context context, int resource, @NonNull AlarmClockItem.AlarmTimeZone[] objects)
+        {
+            super(context, resource, objects);
+            layout = resource;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+            return createView(position, convertView, parent);
+        }
+        @NonNull @Override
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+            return createView(position, convertView, parent);
+        }
+
+        @SuppressLint("ResourceType")
+        private View createView(int position, View convertView, ViewGroup parent)
+        {
+            View view = convertView;
+            if (view == null) {
+                LayoutInflater inflater = LayoutInflater.from(getContext());
+                view = inflater.inflate(layout, parent, false);
+            }
+
+            int[] iconAttr = { R.attr.icActionTime };
+            TypedArray typedArray = getContext().obtainStyledAttributes(iconAttr);
+            int res_icon0 = typedArray.getResourceId(0, R.drawable.ic_action_time);
+            typedArray.recycle();
+
+            ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
+            TextView text = (TextView) view.findViewById(android.R.id.text1);
+
+            AlarmClockItem.AlarmTimeZone item = getItem(position);
+
+            if (text != null) {
+                text.setText(item != null ? item.displayString() : "");
+            }
+
+            if (icon != null)
+            {
+                int resID = (item != null && item.timeZoneID() != null ? R.drawable.ic_sun : res_icon0);
+                icon.setImageDrawable(null);
+                icon.setBackgroundResource(item != null ? resID : 0);
+            }
+
+            return view;
+        }
     }
 
 }

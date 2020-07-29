@@ -314,6 +314,7 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         super.onSaveInstanceState(outState);
         saveWarnings(outState);
+        outState.putInt("bottomsheet", sheetBehavior.getState());
     }
 
     @Override
@@ -321,6 +322,13 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         super.onRestoreInstanceState(savedState);
         restoreWarnings(savedState);
+
+        int sheetState = savedState.getInt("bottomsheet", BottomSheetBehavior.STATE_HIDDEN);
+        sheetBehavior.setState(sheetState);
+        if (sheetState != BottomSheetBehavior.STATE_HIDDEN) {
+            addButton.setScaleX(0);
+            addButton.setScaleY(0);
+        }
     }
 
     /**
@@ -364,11 +372,8 @@ public class AlarmClockActivity extends AppCompatActivity
                 switch (newState)
                 {
                     case BottomSheetBehavior.STATE_HIDDEN:
-                        //addButton.show();
                         break;
-
                     case BottomSheetBehavior.STATE_EXPANDED:
-                        //addButton.hide();
                         break;
 
                     //case BottomSheetBehavior.STATE_COLLAPSED: break;
@@ -438,8 +443,7 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             FragmentManager fragments = getSupportFragmentManager();
             AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentById(R.id.createAlarmFragment);
-            AlarmClockItem item = createAlarm(dialog, dialog.getAlarmType(), true);
-            AlarmNotifications.updateAlarmTime(AlarmClockActivity.this, item);
+            AlarmClockItem item = list.addAlarm(AlarmClockActivity.this, AlarmCreateDialog.createAlarm(dialog, dialog.getAlarmType()));
             showAlarmEditActivity(item, null);
             addButton.postDelayed(new Runnable() {
                 @Override
@@ -502,30 +506,6 @@ public class AlarmClockActivity extends AppCompatActivity
 
     protected void dismissAddDialog() {
         sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-    }
-
-    protected AlarmClockItem createAlarm(AlarmCreateDialog dialog, AlarmClockItem.AlarmType type, boolean addToDatabase)
-    {
-        int hour;
-        int minute;
-        SolarEvents event;
-        String timezone;
-
-        if (dialog.getMode() == 0)
-        {
-            hour = -1;
-            minute = -1;
-            timezone = null;
-            event = dialog.getEvent();
-
-        } else {
-            hour = dialog.getHour();
-            minute = dialog.getMinute();
-            timezone = dialog.getTimeZone();
-            event = null;
-        }
-
-        return list.createAlarm(AlarmClockActivity.this, type, "", event, dialog.getLocation(), hour, minute, timezone, AlarmSettings.loadPrefVibrateDefault(this), AlarmSettings.getDefaultRingtoneUri(this, type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS, addToDatabase);
     }
 
     protected void updateViews(Context context) {

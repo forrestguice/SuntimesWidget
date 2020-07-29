@@ -20,18 +20,10 @@
     android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical"
     android:background="?attr/dialogBackground">
 
-    <LinearLayout android:background="?attr/fab_rippleColor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:paddingTop="4dp">
-
-        <FrameLayout android:background="?attr/alarmCardDisabled"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:padding="8dp">
-
-            <include layout="@layout/layout_listitem_alarmtime" />
-
-        </FrameLayout>
-
+    <LinearLayout android:visibility="visible"
+        android:background="?attr/fab_rippleColor"
+        android:layout_width="match_parent" android:layout_height="1dp"
+        android:orientation="horizontal" android:gravity="center_vertical|start">
     </LinearLayout>
 
     <LinearLayout
@@ -46,34 +38,39 @@
         <ImageButton android:id="@+id/dialog_button_accept"
             style="@android:style/Widget.ActionButton.Overflow" android:contentDescription="@string/schedalarm_dialog_ok"
             android:layout_width="96dp" android:layout_height="56dp" android:paddingLeft="16dp" android:paddingRight="16dp"
-            android:src="?attr/icActionAccept" />
+            android:src="?attr/icActionAccept"
+            android:tint="?attr/fab_rippleColor" />
 
     </LinearLayout>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"
         android:background="?attr/dialogBackgroundAlt"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_width="match_parent" android:layout_height="32dp"
         android:layout_marginBottom="8dp">
 
         <android.support.design.widget.TabItem
-            android:id="@+id/tab_event"
+            android:id="@+id/tab_event" android:tag="AlarmDialog"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="Event" />
 
         <android.support.design.widget.TabItem
-            android:id="@+id/tab_time"
+            android:id="@+id/tab_time" android:tag="AlarmTimeDialog"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="Time" />
 
     </android.support.design.widget.TabLayout>
 
-    <!--<android.support.v4.view.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent" android:layout_height="wrap_content" />-->
     <FrameLayout
         android:id="@+id/fragmentContainer1"
         android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+    <FrameLayout android:background="?attr/dialogBackgroundAlt"
+        android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingTop="8dp">
+
+        <include layout="@layout/layout_listitem_alarmtime" />
+
+    </FrameLayout>
 
     <!--<LinearLayout
         android:background="?attr/dialogFrame"

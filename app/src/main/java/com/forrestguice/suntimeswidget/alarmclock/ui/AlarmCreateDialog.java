@@ -23,13 +23,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
+
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,6 +60,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 @SuppressWarnings("Convert2Diamond")
 public class AlarmCreateDialog extends DialogFragment
 {
+    public static final String EXTRA_MODE = "mode";             // "by event", "by time", ..
     public static final String EXTRA_ALARMTYPE = "alarmtype";
     public static final String EXTRA_HOUR = "hour";
     public static final String EXTRA_MINUTE = "minute";
@@ -74,12 +76,14 @@ public class AlarmCreateDialog extends DialogFragment
     public AlarmCreateDialog() {
         super();
         setArguments(new Bundle());
+        setRetainInstance(true);
     }
 
     @Override
     public void onCreate(Bundle savedState)
     {
         Bundle args = getArguments();
+        args.putInt(EXTRA_MODE, 1);
         args.putInt(EXTRA_HOUR, 6);
         args.putInt(EXTRA_MINUTE, 3);
         args.putString(EXTRA_TIMEZONE, WidgetSettings.loadTimezonePref(getActivity(), 0));
@@ -101,15 +105,29 @@ public class AlarmCreateDialog extends DialogFragment
             loadSettings(savedState);
         }
 
-        showByEventFragment();
-        TabLayout.Tab tab = tabs.getTabAt(0);
+        TabLayout.Tab tab = tabs.getTabAt(getArguments().getInt(EXTRA_MODE, 0));
         if (tab != null) {
             tab.select();
         }
+        showFragmentForMode(tab != null ? tab.getPosition() : 0);
 
         return dialogContent;
     }
 
+    private void showFragmentForMode(int mode)
+    {
+        switch (mode)
+        {
+            case 1:
+                showByTimeFragment();
+                break;
+
+            case 0:
+            default:
+                showByEventFragment();
+                break;
+        }
+    }
 
     protected void showByEventFragment() {
         FragmentManager fragments = getChildFragmentManager();
@@ -209,18 +227,10 @@ public class AlarmCreateDialog extends DialogFragment
         tabs = (TabLayout) dialogContent.findViewById(R.id.tabLayout);
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition())
-                {
-                    case 1:
-                        showByTimeFragment();
-                        break;
-
-                    case 0:
-                    default:
-                        showByEventFragment();
-                        break;
-                }
+            public void onTabSelected(TabLayout.Tab tab)
+            {
+                getArguments().putInt(EXTRA_MODE, tab.getPosition());
+                showFragmentForMode(tab.getPosition());
             }
 
             @Override
@@ -250,7 +260,6 @@ public class AlarmCreateDialog extends DialogFragment
     {
         AlarmClockItem.AlarmType alarmType = getAlarmType();
         AlarmClockItem item = createAlarm(AlarmCreateDialog.this, alarmType);
-        AlarmNotifications.updateAlarmTime(context, item);
         int eventType = item.event == null ? -1 : item.event.getType();
 
         if (text_title != null) {
@@ -470,7 +479,7 @@ public class AlarmCreateDialog extends DialogFragment
         dialog.setData(context, sunData, moonData, equinoxData);
     }
 
-    protected static AlarmClockItem createAlarm(AlarmCreateDialog dialog, AlarmClockItem.AlarmType type)
+    public static AlarmClockItem createAlarm(AlarmCreateDialog dialog, AlarmClockItem.AlarmType type)
     {
         int hour;
         int minute;
@@ -491,8 +500,9 @@ public class AlarmCreateDialog extends DialogFragment
             event = null;
         }
 
-        return AlarmListDialog.createAlarm(dialog.getActivity(), type, "", event, dialog.getLocation(), hour, minute, timezone, AlarmSettings.loadPrefVibrateDefault(dialog.getActivity()), AlarmSettings.getDefaultRingtoneUri(dialog.getActivity(), type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
+        AlarmClockItem item = AlarmListDialog.createAlarm(dialog.getActivity(), type, "", event, dialog.getLocation(), hour, minute, timezone, AlarmSettings.loadPrefVibrateDefault(dialog.getActivity()), AlarmSettings.getDefaultRingtoneUri(dialog.getActivity(), type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
+        AlarmNotifications.updateAlarmTime(dialog.getActivity(), item);
+        return item;
     }
-
 
 }
