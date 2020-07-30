@@ -29,6 +29,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
@@ -48,7 +49,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     public boolean selected = true;
 
     public TextView text_datetime_offset;
-    public TextView text_datetime;
+    public TextSwitcher text_datetime;
     public TextView text_date;
 
     public ImageButton menu_type, menu_overflow;
@@ -88,7 +89,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         SuntimesUtils.initDisplayStrings(context);
 
         text_datetime_offset = (TextView) parent.findViewById(R.id.text_datetime_offset);
-        text_datetime = (TextView) parent.findViewById(R.id.text_datetime);
+        text_datetime = (TextSwitcher) parent.findViewById(R.id.text_datetime);
         text_date = (TextView) parent.findViewById(R.id.text_date);
 
         menu_type = (ImageButton) parent.findViewById(R.id.type_menu);

@@ -41,6 +41,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.AlarmDialog;
@@ -70,7 +71,8 @@ public class AlarmCreateDialog extends DialogFragment
     public static final String EXTRA_EVENT = "event";
 
     protected TabLayout tabs;
-    protected TextView text_title, text_offset, text_time, text_date;
+    protected TextView text_title, text_offset, text_date, text_note;
+    protected TextSwitcher text_time;
     protected Spinner spin_type;
 
     public AlarmCreateDialog() {
@@ -208,7 +210,7 @@ public class AlarmCreateDialog extends DialogFragment
     private void initViews(final Context context, View dialogContent)
     {
         text_title = (TextView) dialogContent.findViewById(R.id.dialog_title);
-        text_time = (TextView) dialogContent.findViewById(R.id.text_datetime);
+        text_time = (TextSwitcher) dialogContent.findViewById(R.id.text_datetime);
         text_offset = (TextView) dialogContent.findViewById(R.id.text_datetime_offset);
         text_date = (TextView) dialogContent.findViewById(R.id.text_date);
 
