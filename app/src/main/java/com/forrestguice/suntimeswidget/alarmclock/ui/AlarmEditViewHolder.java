@@ -51,6 +51,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     public TextView text_datetime_offset;
     public TextSwitcher text_datetime;
     public TextView text_date;
+    public TextView text_note;
 
     public ImageButton menu_type, menu_overflow;
     public EditText edit_label;
@@ -91,6 +92,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         text_datetime_offset = (TextView) parent.findViewById(R.id.text_datetime_offset);
         text_datetime = (TextSwitcher) parent.findViewById(R.id.text_datetime);
         text_date = (TextView) parent.findViewById(R.id.text_date);
+        text_note = (TextView) parent.findViewById(R.id.text_note);
 
         menu_type = (ImageButton) parent.findViewById(R.id.type_menu);
         menu_overflow = (ImageButton) parent.findViewById(R.id.overflow_menu);
@@ -164,6 +166,10 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             ViewCompat.setTransitionName(text_datetime, "transition_" + item.rowID);
             text_date.setText(displayAlarmDate(context, item));
 
+            String timeString = " " + utils.timeDeltaLongDisplayString(System.currentTimeMillis(), item.timestamp + item.offset).getValue() + " ";   // TODO: periodic update
+            String noteString = context.getString(R.string.schedalarm_dialog_note1, timeString);
+            text_note.setText(SuntimesUtils.createRelativeSpan(SuntimesUtils.createBoldSpan(null, noteString, timeString), noteString, timeString, 1.25f));
+
             int eventType = item.event == null ? -1 : item.event.getType();
             text_date.setVisibility((eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON) ? View.VISIBLE : View.GONE);
 
@@ -172,6 +178,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             text_datetime.setText("");
             ViewCompat.setTransitionName(text_datetime, null);
             text_date.setText("");
+            text_note.setText("");
             edit_label.setText("");
             text_offset.setText("");
             text_event.setText("");

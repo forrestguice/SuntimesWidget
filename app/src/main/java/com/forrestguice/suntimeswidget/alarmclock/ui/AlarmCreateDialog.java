@@ -74,6 +74,7 @@ public class AlarmCreateDialog extends DialogFragment
     protected TextView text_title, text_offset, text_date, text_note;
     protected TextSwitcher text_time;
     protected Spinner spin_type;
+    protected SuntimesUtils utils = new SuntimesUtils();
 
     public AlarmCreateDialog() {
         super();
@@ -213,6 +214,7 @@ public class AlarmCreateDialog extends DialogFragment
         text_time = (TextSwitcher) dialogContent.findViewById(R.id.text_datetime);
         text_offset = (TextView) dialogContent.findViewById(R.id.text_datetime_offset);
         text_date = (TextView) dialogContent.findViewById(R.id.text_date);
+        text_note = (TextView) dialogContent.findViewById(R.id.text_note);
 
         spin_type = (Spinner) dialogContent.findViewById(R.id.type_spin);
         spin_type.setAdapter(new AlarmTypeAdapter(getContext(), R.layout.layout_listitem_alarmtype));
@@ -281,6 +283,12 @@ public class AlarmCreateDialog extends DialogFragment
         {
             text_date.setText(AlarmEditViewHolder.displayAlarmDate(context, item));
             text_date.setVisibility((eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON) ? View.VISIBLE : View.GONE);
+        }
+        if (text_note != null)    // TODO: periodic update
+        {
+            String timeString = " " + utils.timeDeltaLongDisplayString(System.currentTimeMillis(), item.timestamp + item.offset).getValue() + " ";
+            String noteString = context.getString(R.string.schedalarm_dialog_note1, timeString);
+            text_note.setText(SuntimesUtils.createRelativeSpan(SuntimesUtils.createBoldSpan(null, noteString, timeString), noteString, timeString, 1.25f));
         }
     }
 
