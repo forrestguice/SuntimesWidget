@@ -89,7 +89,7 @@ public class AlarmCreateDialog extends DialogFragment
         args.putInt(EXTRA_MODE, 1);
         args.putInt(EXTRA_HOUR, 6);
         args.putInt(EXTRA_MINUTE, 3);
-        args.putString(EXTRA_TIMEZONE, WidgetSettings.loadTimezonePref(getActivity(), 0));
+        args.putString(EXTRA_TIMEZONE, null);
         args.putParcelable(EXTRA_LOCATION, WidgetSettings.loadLocationPref(getActivity(), 0));
         args.putSerializable(EXTRA_EVENT, SolarEvents.SUNRISE);
         args.putSerializable(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.ALARM);
