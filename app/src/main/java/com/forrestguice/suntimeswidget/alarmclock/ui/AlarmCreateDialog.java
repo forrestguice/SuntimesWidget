@@ -135,6 +135,7 @@ public class AlarmCreateDialog extends DialogFragment
 
         AlarmDialog fragment = new AlarmDialog();
         fragment.setDialogShowFrame(false);
+        fragment.setDialogShowDesc(false);
         fragment.setType(getAlarmType());
         initEventDialog(getActivity(), fragment, getLocation());
         fragment.setDialogListener(new AlarmDialog.DialogListener() {

@@ -79,6 +79,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
 
     public static final String KEY_DIALOGTITLE = "alarmdialog_title";
     public static final String KEY_DIALOGSHOWFRAME = "alarmdialog_showframe";
+    public static final String KEY_DIALOGSHOWDESC = "alarmdialog_showdesc";
 
     public static final String PREF_KEY_ALARM_LASTCHOICE = "alarmdialog_lastchoice";
     public static final SolarEvents PREF_DEF_ALARM_LASTCHOICE = SolarEvents.SUNRISE;
@@ -109,6 +110,11 @@ public class AlarmDialog extends BottomSheetDialogFragment
     private boolean showFrame = true;
     public void setDialogShowFrame(boolean value) {
         showFrame = value;
+    }
+
+    private boolean showDesc = true;
+    public void setDialogShowDesc(boolean value) {
+        showDesc = value;
     }
 
     /**
@@ -358,6 +364,12 @@ public class AlarmDialog extends BottomSheetDialogFragment
             View footer = dialogContent.findViewById(R.id.dialog_frame_footer);
             footer.setVisibility(View.GONE);
         }
+
+        if (!showDesc)
+        {
+            txt_note.setVisibility(View.GONE);
+            txt_modeLabel.setVisibility(View.GONE);
+        }
     }
 
     public void updateViews(Context context)
@@ -408,6 +420,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
     {
         dialogTitle = bundle.getString(KEY_DIALOGTITLE);
         showFrame = bundle.getBoolean(KEY_DIALOGSHOWFRAME);
+        showDesc = bundle.getBoolean(KEY_DIALOGSHOWDESC);
 
         choice = (SolarEvents) bundle.getSerializable(PREF_KEY_ALARM_LASTCHOICE);
         if (choice == null) {
@@ -440,6 +453,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
     {
         bundle.putString(KEY_DIALOGTITLE, dialogTitle);
         bundle.putBoolean(KEY_DIALOGSHOWFRAME, showFrame);
+        bundle.putBoolean(KEY_DIALOGSHOWDESC, showDesc);
         bundle.putSerializable(KEY_ALARM_TYPE, type);
         bundle.putSerializable(PREF_KEY_ALARM_LASTCHOICE, choice);
     }
