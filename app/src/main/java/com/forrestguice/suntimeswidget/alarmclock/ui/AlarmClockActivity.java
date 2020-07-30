@@ -369,17 +369,13 @@ public class AlarmClockActivity extends AppCompatActivity
             @Override
             public void onStateChanged(@NonNull View view, int newState)
             {
-                switch (newState)
-                {
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED:
-                        break;
-
-                    //case BottomSheetBehavior.STATE_COLLAPSED: break;
-                    //case BottomSheetBehavior.STATE_DRAGGING: break;
-                    //case BottomSheetBehavior.STATE_SETTLING: break;
-                }
+                /* switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN: break;
+                    case BottomSheetBehavior.STATE_EXPANDED: break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: break;
+                    case BottomSheetBehavior.STATE_DRAGGING: break;
+                    case BottomSheetBehavior.STATE_SETTLING: break;
+                } */
             }
 
             @Override
@@ -390,7 +386,7 @@ public class AlarmClockActivity extends AppCompatActivity
     }
 
     private boolean isAddDialogShowing() {
-        return sheetBehavior.getState() != BottomSheetBehavior.STATE_HIDDEN;
+        return sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED || sheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED;
     }
 
     private AlarmListDialog.AdapterListener listAdapter = new AlarmListDialog.AdapterListener() {
@@ -398,9 +394,11 @@ public class AlarmClockActivity extends AppCompatActivity
         public void onItemClicked(AlarmClockItem item, AlarmListDialog.AlarmListDialogItem view)
         {
             if (isAddDialogShowing()) {
+                Log.d("DEBUG", "onItemClicked: dismiss add: " + sheetBehavior.getState());
                 dismissAddDialog();
 
             } else if (list.getSelectedRowID() == item.rowID) {
+                Log.d("DEBUG", "onItemClicked: show edit");
                 showAlarmEditActivity(item, view.text_datetime);
             }
         }
