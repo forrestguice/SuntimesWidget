@@ -286,6 +286,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
         txt_location = (TextView) dialogContent.findViewById(R.id.appwidget_schedalarm_location);
         if (txt_location != null) {
             txt_location.setText("");
+            txt_location.setOnClickListener(onLocationClicked);
         }
 
         spinner_scheduleMode = (Spinner) dialogContent.findViewById(R.id.appwidget_schedalarm_mode);
@@ -466,6 +467,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
         void onChanged(AlarmDialog dialog);
         void onAccepted(AlarmDialog dialog);
         void onCanceled(AlarmDialog dialog);
+        void onLocationClick(AlarmDialog dialog);
     }
 
     private DialogListener listener = null;
@@ -740,6 +742,15 @@ public class AlarmDialog extends BottomSheetDialogFragment
             }
         }
     }
+
+    private View.OnClickListener onLocationClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (listener != null) {
+                listener.onLocationClick(AlarmDialog.this);
+            }
+        }
+    };
 
     public static boolean updateLocationLabel(Context context, TextView text_location, Location location)
     {

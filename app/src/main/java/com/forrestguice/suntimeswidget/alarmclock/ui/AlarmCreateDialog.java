@@ -43,6 +43,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.AlarmDialog;
 import com.forrestguice.suntimeswidget.R;
@@ -154,6 +155,11 @@ public class AlarmCreateDialog extends DialogFragment
 
             @Override
             public void onCanceled(AlarmDialog dialog) {}
+
+            @Override
+            public void onLocationClick(AlarmDialog dialog) {
+                Toast.makeText(getActivity(), "TODO", Toast.LENGTH_SHORT).show();
+            }
         });
         fragment.setChoice(getEvent());
 
