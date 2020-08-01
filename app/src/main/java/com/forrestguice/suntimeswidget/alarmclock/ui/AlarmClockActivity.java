@@ -99,6 +99,7 @@ public class AlarmClockActivity extends AppCompatActivity
     public static final String EXTRA_SELECTED_ALARM = "selectedAlarm";
 
     public static final int REQUEST_EDITALARM = 1;
+    public static final int REQUEST_ADDALARM = 10;
     public static final int REQUEST_SETTINGS = 20;
 
     public static final String WARNINGID_NOTIFICATIONS = "NotificationsWarning";
@@ -178,8 +179,12 @@ public class AlarmClockActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode)
         {
+            case REQUEST_ADDALARM:
+                onEditAlarmResult(resultCode, data, true);
+                break;
+
             case REQUEST_EDITALARM:
-                onEditAlarmResult(resultCode, data);
+                onEditAlarmResult(resultCode, data, false);
                 break;
 
             case REQUEST_SETTINGS:
@@ -399,7 +404,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
             } else if (list.getSelectedRowID() == item.rowID) {
                 Log.d("DEBUG", "onItemClicked: show edit");
-                showAlarmEditActivity(item, view.text_datetime);
+                showAlarmEditActivity(item, view.text_datetime, REQUEST_EDITALARM);
             }
         }
 
@@ -441,8 +446,11 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             FragmentManager fragments = getSupportFragmentManager();
             AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentById(R.id.createAlarmFragment);
-            AlarmClockItem item = list.addAlarm(AlarmClockActivity.this, AlarmCreateDialog.createAlarm(dialog, dialog.getAlarmType()));
-            showAlarmEditActivity(item, null);
+
+            AlarmClockItem item = AlarmCreateDialog.createAlarm(dialog, dialog.getAlarmType());
+            //AlarmClockItem item = list.addAlarm(AlarmClockActivity.this, AlarmCreateDialog.createAlarm(dialog, dialog.getAlarmType()));
+
+            showAlarmEditActivity(item,null, REQUEST_ADDALARM);
             addButton.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -458,16 +466,16 @@ public class AlarmClockActivity extends AppCompatActivity
         }
     };
 
-    protected void showAlarmEditActivity(@NonNull AlarmClockItem item, @Nullable View sharedView)
+    protected void showAlarmEditActivity(@NonNull AlarmClockItem item, @Nullable View sharedView, int requestCode)
     {
         Intent intent = new Intent(this, AlarmEditActivity.class);
         intent.putExtra(AlarmEditActivity.EXTRA_ITEM, item);
 
         if (sharedView != null) {
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, sharedView, ViewCompat.getTransitionName(sharedView));
-            startActivityForResult(intent, REQUEST_EDITALARM, options.toBundle());
+            startActivityForResult(intent, requestCode, options.toBundle());
         } else {
-            startActivityForResult(intent, REQUEST_EDITALARM);
+            startActivityForResult(intent, requestCode);
         }
     }
     private AlarmDatabaseAdapter.AlarmItemTaskListener onUpdateItem = new AlarmDatabaseAdapter.AlarmItemTaskListener()
@@ -483,6 +491,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
                 if (list != null) {
                     list.reloadAdapter(item.rowID);
+                    list.setSelectedRowID(item.rowID);
                 }
             }
         }
@@ -675,14 +684,14 @@ public class AlarmClockActivity extends AppCompatActivity
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    protected void onEditAlarmResult(int resultCode, Intent data)
+    protected void onEditAlarmResult(int resultCode, Intent data, boolean isNewAlarm)
     {
         if (resultCode == RESULT_OK)
         {
             if (data != null)
             {
                 AlarmClockItem item = data.getParcelableExtra(AlarmEditActivity.EXTRA_ITEM);
-                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, false, false);
+                AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(AlarmClockActivity.this, isNewAlarm, false);
                 task.setTaskListener(onUpdateItem);
                 task.execute(item);
             }
