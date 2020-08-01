@@ -20,11 +20,13 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -285,10 +287,21 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public static CharSequence displayAction(Context context, AlarmClockItem item, int actionNum)
     {
-        String noAction = "No Action";  // TODO
+        String noAction = "No Action";  // TODO: i18n
         String actionID = item.getActionID(actionNum);
-        String actionTitle = WidgetActions.loadActionLaunchPref(context, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE );
-        return ((actionID != null) ? actionTitle : noAction);
+        String actionTitle = WidgetActions.loadActionLaunchPref(context, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
+        String actionDesc = WidgetActions.loadActionLaunchPref(context, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
+        String desc = "(" + actionDesc +")";  // TODO: i18n
+        String label = actionTitle + " " + desc;  // TODO: i18n
+
+        int[] attrs = { R.attr.text_disabledColor };
+        TypedArray a = context.obtainStyledAttributes(attrs);
+        int descColor = ContextCompat.getColor(context, a.getResourceId(0, R.color.text_disabled_dark));
+        a.recycle();
+
+        SpannableString s = SuntimesUtils.createRelativeSpan(null, label, desc, 0.75f);
+        s = SuntimesUtils.createColorSpan(s, label, desc, descColor);
+        return ((actionID != null) ? s : noAction);
     }
 
     public static CharSequence displayEvent(Context context, AlarmClockItem item)
