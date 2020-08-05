@@ -48,6 +48,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.AlarmDialog;
+import com.forrestguice.suntimeswidget.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
@@ -72,6 +73,8 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     public static final String EXTRA_TIMEZONE = "timezone";
     public static final String EXTRA_LOCATION = "location";
     public static final String EXTRA_EVENT = "event";
+
+    public static final String DIALOG_LOCATION = "locationDialog";
 
     protected TabLayout tabs;
     protected TextView text_title, text_offset, text_date, text_note;
@@ -166,7 +169,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
             @Override
             public void onLocationClick(AlarmDialog dialog) {
-                Toast.makeText(getActivity(), "TODO", Toast.LENGTH_SHORT).show();
+                showLocationDialog(getActivity());
             }
         });
         fragment.setChoice(getEvent());
@@ -174,6 +177,32 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         transaction.replace(R.id.fragmentContainer1, fragment, "AlarmDialog");
         transaction.commit();
     }
+
+    protected void showLocationDialog(Context context)
+    {
+        final LocationConfigDialog dialog = new LocationConfigDialog();
+        dialog.setHideTitle(true);
+        dialog.setHideMode(true);
+        dialog.setLocation(context, getLocation());
+        dialog.setDialogListener(onLocationChanged);
+        dialog.show(getChildFragmentManager(), DIALOG_LOCATION);
+    }
+    private LocationConfigDialog.LocationConfigDialogListener onLocationChanged = new LocationConfigDialog.LocationConfigDialogListener()
+    {
+        @Override
+        public boolean saveSettings(Context context, WidgetSettings.LocationMode locationMode, Location location)
+        {
+            FragmentManager fragments = getChildFragmentManager();
+            LocationConfigDialog dialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOG_LOCATION);
+            if (dialog != null)
+            {
+                setEvent(getEvent(), location);
+                updateViews(getActivity());
+                return true;
+            }
+            return false;
+        }
+    };
 
     protected void showByTimeFragment()
     {
@@ -389,6 +418,12 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     public void onResume()
     {
         super.onResume();
+
+        FragmentManager fragments = getChildFragmentManager();
+        LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOG_LOCATION);
+        if (locationDialog != null) {
+            locationDialog.setDialogListener(onLocationChanged);
+        }
     }
 
     private DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
@@ -469,6 +504,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         FragmentManager fragments = getChildFragmentManager();
         AlarmDialog fragment = (AlarmDialog) fragments.findFragmentByTag("AlarmDialog");
         if (fragment != null) {
+            initEventDialog(getActivity(), fragment, location);
             fragment.setChoice(event);
         }
     }
@@ -568,6 +604,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             item.minute = -1;
             item.timezone = null;
             item.event = dialog.getEvent();
+            item.location = dialog.getLocation();
 
         } else {
             item.hour = dialog.getHour();
