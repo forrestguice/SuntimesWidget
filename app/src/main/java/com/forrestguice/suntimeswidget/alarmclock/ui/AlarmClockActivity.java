@@ -404,7 +404,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
             } else if (list.getSelectedRowID() == item.rowID) {
                 Log.d("DEBUG", "onItemClicked: show edit");
-                showAlarmEditActivity(item, view.text_datetime, REQUEST_EDITALARM);
+                showAlarmEditActivity(item, view.text_datetime, REQUEST_EDITALARM, false);
             }
         }
 
@@ -446,17 +446,9 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             FragmentManager fragments = getSupportFragmentManager();
             AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentById(R.id.createAlarmFragment);
-
             AlarmClockItem item = AlarmCreateDialog.createAlarm(dialog, dialog.getAlarmType());
-            //AlarmClockItem item = list.addAlarm(AlarmClockActivity.this, AlarmCreateDialog.createAlarm(dialog, dialog.getAlarmType()));
-
-            showAlarmEditActivity(item,null, REQUEST_ADDALARM);
-            addButton.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    dismissAddDialog();
-                }
-            }, 1000);
+            dialog.text_time.setTransitionName("transition_alarmitem");
+            showAlarmEditActivity(item, dialog.text_time, REQUEST_ADDALARM, true);
         }
     };
     private DialogInterface.OnClickListener onAddAlarmCanceled = new DialogInterface.OnClickListener() {
@@ -466,10 +458,11 @@ public class AlarmClockActivity extends AppCompatActivity
         }
     };
 
-    protected void showAlarmEditActivity(@NonNull AlarmClockItem item, @Nullable View sharedView, int requestCode)
+    protected void showAlarmEditActivity(@NonNull AlarmClockItem item, @Nullable View sharedView, int requestCode, boolean isNewAlarm)
     {
         Intent intent = new Intent(this, AlarmEditActivity.class);
         intent.putExtra(AlarmEditActivity.EXTRA_ITEM, item);
+        intent.putExtra(AlarmEditActivity.EXTRA_ISNEW, isNewAlarm);
 
         if (sharedView != null) {
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, sharedView, ViewCompat.getTransitionName(sharedView));
@@ -686,6 +679,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
     protected void onEditAlarmResult(int resultCode, Intent data, boolean isNewAlarm)
     {
+        dismissAddDialog();
         if (resultCode == RESULT_OK)
         {
             if (data != null)

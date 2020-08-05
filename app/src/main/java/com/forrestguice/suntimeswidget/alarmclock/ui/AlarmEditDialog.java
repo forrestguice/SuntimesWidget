@@ -79,7 +79,7 @@ public class AlarmEditDialog extends DialogFragment
     }
 
     public boolean isModified() {
-        return (item != null && item.modified);
+        return ((item != null && item.modified) || original == null);
     }
 
     public void notifyItemChanged() {

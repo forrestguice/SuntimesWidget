@@ -70,6 +70,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     public static final String TAG = "AlarmReceiverList";
 
     public static final String EXTRA_ITEM = "item";
+    public static final String EXTRA_ISNEW = "isnew";
 
     public static final int REQUEST_RINGTONE = 10;
     public static final int REQUEST_SETTINGS = 20;
@@ -244,7 +245,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         if (extras != null)
         {
             AlarmClockItem item = extras.getParcelable(EXTRA_ITEM);
-            editor.initFromItem(item, false);
+            boolean isNew = extras.getBoolean(EXTRA_ISNEW, false);
+            editor.initFromItem(item, isNew);
         }
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
@@ -280,11 +282,9 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     {
         FragmentManager fragments = getSupportFragmentManager();
 
-        AlarmDialog eventDialog1 = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
-        if (eventDialog1 != null)
-        {
-            //initEventDialog(eventDialog1, t_selectedLocation);  // TODO
-            eventDialog1.setOnAcceptedListener(onSolarEventChanged);
+        AlarmCreateDialog eventDialog1 = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
+        if (eventDialog1 != null) {
+            eventDialog1.setOnAcceptedListener(onPickEventAccepted);
         }
 
         AlarmRepeatDialog repeatDialog = (AlarmRepeatDialog) fragments.findFragmentByTag(DIALOGTAG_REPEAT);
@@ -588,40 +588,24 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
      */
     protected void pickSolarEvent(@NonNull AlarmClockItem item)
     {
-        final AlarmDialog dialog = new AlarmDialog();
-        dialog.setDialogTitle((item.type == AlarmClockItem.AlarmType.NOTIFICATION) ? getString(R.string.configAction_addNotification) : getString(R.string.configAction_addAlarm));
-        initEventDialog(dialog, item.location);
-        dialog.setChoice(item.event);
-        dialog.setOnAcceptedListener(onSolarEventChanged);
+        final AlarmCreateDialog dialog = new AlarmCreateDialog();
+        dialog.setAlarmType(item.type);
+        dialog.setDialogMode(item.event != null ? 0 : 1);
+        dialog.setEvent(item.event, item.location);
+        dialog.setAlarmTime(item.hour, item.minute, item.timezone);
+        dialog.setOnAcceptedListener(onPickEventAccepted);
         dialog.show(getSupportFragmentManager(), DIALOGTAG_EVENT);
     }
-    private void initEventDialog(AlarmDialog dialog, Location forLocation)
-    {
-        SuntimesRiseSetDataset sunData = new SuntimesRiseSetDataset(this, 0);
-        SuntimesMoonData moonData = new SuntimesMoonData(this, 0);
-        SuntimesEquinoxSolsticeDataset equinoxData = new SuntimesEquinoxSolsticeDataset(this, 0);
-
-        if (forLocation != null) {
-            sunData.setLocation(forLocation);
-            moonData.setLocation(forLocation);
-            equinoxData.setLocation(forLocation);
-        }
-
-        sunData.calculateData();
-        moonData.calculate();
-        equinoxData.calculateData();
-        dialog.setData(this, sunData, moonData, equinoxData);
-    }
-    private DialogInterface.OnClickListener onSolarEventChanged = new DialogInterface.OnClickListener() {
+    private DialogInterface.OnClickListener onPickEventAccepted = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface d, int which)
         {
             FragmentManager fragments = getSupportFragmentManager();
-            AlarmDialog dialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
+            AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
             if (editor != null && dialog != null)
             {
                 AlarmClockItem item = editor.getItem();
-                item.event = dialog.getChoice();
+                AlarmCreateDialog.updateAlarmItem(dialog, item);
                 AlarmNotifications.updateAlarmTime(AlarmEditActivity.this, item);
                 editor.notifyItemChanged();
             }

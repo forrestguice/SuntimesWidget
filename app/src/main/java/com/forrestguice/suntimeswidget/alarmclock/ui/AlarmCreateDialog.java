@@ -26,11 +26,13 @@ import android.os.Bundle;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +62,7 @@ import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 @SuppressWarnings("Convert2Diamond")
-public class AlarmCreateDialog extends DialogFragment
+public class AlarmCreateDialog extends BottomSheetDialogFragment
 {
     public static final String EXTRA_MODE = "mode";             // "by event", "by time", ..
     public static final String EXTRA_ALARMTYPE = "alarmtype";
@@ -79,7 +81,16 @@ public class AlarmCreateDialog extends DialogFragment
 
     public AlarmCreateDialog() {
         super();
-        setArguments(new Bundle());
+
+        Bundle args = new Bundle();
+        args.putInt(EXTRA_MODE, 1);
+        args.putInt(EXTRA_HOUR, 6);
+        args.putInt(EXTRA_MINUTE, 3);
+        args.putString(EXTRA_TIMEZONE, null);
+        args.putSerializable(EXTRA_EVENT, SolarEvents.SUNRISE);
+        args.putSerializable(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.ALARM);
+
+        setArguments(args);
         setRetainInstance(true);
     }
 
@@ -87,13 +98,10 @@ public class AlarmCreateDialog extends DialogFragment
     public void onCreate(Bundle savedState)
     {
         Bundle args = getArguments();
-        args.putInt(EXTRA_MODE, 1);
-        args.putInt(EXTRA_HOUR, 6);
-        args.putInt(EXTRA_MINUTE, 3);
-        args.putString(EXTRA_TIMEZONE, null);
-        args.putParcelable(EXTRA_LOCATION, WidgetSettings.loadLocationPref(getActivity(), 0));
-        args.putSerializable(EXTRA_EVENT, SolarEvents.SUNRISE);
-        args.putSerializable(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.ALARM);
+
+        if (getLocation() == null) {
+            args.putParcelable(EXTRA_LOCATION, WidgetSettings.loadLocationPref(getActivity(), 0));
+        }
 
         //setStyle(DialogFragment.STYLE_NO_FRAME, R.style.AppTheme);
         super.onCreate(savedState);
@@ -200,20 +208,6 @@ public class AlarmCreateDialog extends DialogFragment
         transaction.commit();
     }
 
-    public void setAlarmType(AlarmClockItem.AlarmType value)
-    {
-        getArguments().putSerializable(EXTRA_ALARMTYPE, value);
-
-        FragmentManager fragments = getChildFragmentManager();
-        AlarmDialog fragment = (AlarmDialog) fragments.findFragmentByTag("AlarmDialog");
-        if (fragment != null) {
-            fragment.setType(getAlarmType());
-        }
-    }
-    public AlarmClockItem.AlarmType getAlarmType() {
-        return (AlarmClockItem.AlarmType) getArguments().getSerializable(EXTRA_ALARMTYPE);
-    }
-
     private void initViews(final Context context, View dialogContent)
     {
         text_title = (TextView) dialogContent.findViewById(R.id.dialog_title);
@@ -224,16 +218,6 @@ public class AlarmCreateDialog extends DialogFragment
 
         spin_type = (Spinner) dialogContent.findViewById(R.id.type_spin);
         spin_type.setAdapter(new AlarmTypeAdapter(getContext(), R.layout.layout_listitem_alarmtype));
-        spin_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                setAlarmType((AlarmClockItem.AlarmType) parent.getItemAtPosition(position));
-                updateViews(getActivity());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
 
         tabs = (TabLayout) dialogContent.findViewById(R.id.tabLayout);
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -267,6 +251,18 @@ public class AlarmCreateDialog extends DialogFragment
         }
     }
 
+    private AdapterView.OnItemSelectedListener onTypeSelected = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            Log.d("DEBUG", "onItemSelected: " + position);
+            setAlarmType((AlarmClockItem.AlarmType) parent.getItemAtPosition(position));
+            updateViews(getActivity());
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {}
+    };
+
     private void updateViews(Context context)
     {
         AlarmClockItem.AlarmType alarmType = getAlarmType();
@@ -277,7 +273,9 @@ public class AlarmCreateDialog extends DialogFragment
             text_title.setText(context.getString(alarmType == AlarmClockItem.AlarmType.NOTIFICATION ? R.string.configAction_addNotification : R.string.configAction_addAlarm));
         }
         if (spin_type != null) {
+            spin_type.setOnItemSelectedListener(null);
             spin_type.setSelection(alarmType.ordinal());
+            spin_type.setOnItemSelectedListener(onTypeSelected);
         }
         if (text_offset != null) {
             text_offset.setText(AlarmEditViewHolder.displayOffset(context, item));
@@ -455,27 +453,67 @@ public class AlarmCreateDialog extends DialogFragment
         SolarEvents event = (SolarEvents) getArguments().getSerializable(EXTRA_EVENT);
         return (event != null ? event : SolarEvents.SUNRISE);
     }
-
     public Location getLocation()
     {
         Location location = getArguments().getParcelable(EXTRA_LOCATION);
         return (location != null ? location : WidgetSettings.loadLocationPref(getActivity(), 0));
     }
+    public void setEvent( SolarEvents event, Location location )
+    {
+        Bundle args = getArguments();
+        args.putSerializable(EXTRA_EVENT, event);
+        args.putParcelable(EXTRA_LOCATION, location);
+        if (!isAdded()) {
+            return;
+        }
+        FragmentManager fragments = getChildFragmentManager();
+        AlarmDialog fragment = (AlarmDialog) fragments.findFragmentByTag("AlarmDialog");
+        if (fragment != null) {
+            fragment.setChoice(event);
+        }
+    }
 
     public int getHour() {
         return getArguments().getInt(EXTRA_HOUR, 0);
     }
-
     public int getMinute() {
         return getArguments().getInt(EXTRA_MINUTE, 0);
     }
-
     public long getDate() {
         return getArguments().getLong(EXTRA_DATE, System.currentTimeMillis());
     }
-
     public String getTimeZone() {
         return getArguments().getString(EXTRA_TIMEZONE);
+    }
+    public void setAlarmTime( int hour, int minute, String timezone )
+    {
+        Bundle args = getArguments();
+        args.putInt(EXTRA_HOUR, hour);
+        args.putInt(EXTRA_MINUTE, minute);
+        args.putString(EXTRA_TIMEZONE, timezone);
+    }
+
+    public void setDialogMode(int mode) {
+        getArguments().putInt(EXTRA_MODE, mode);
+    }
+    public int getDialogMode() {
+        return getArguments().getInt(EXTRA_MODE, 0);
+    }
+
+    public void setAlarmType(AlarmClockItem.AlarmType value)
+    {
+        getArguments().putSerializable(EXTRA_ALARMTYPE, value);
+        if (!isAdded()) {
+            return;
+        }
+        FragmentManager fragments = getChildFragmentManager();
+        AlarmDialog fragment = (AlarmDialog) fragments.findFragmentByTag("AlarmDialog");
+        if (fragment != null) {
+            fragment.setType(getAlarmType());
+        }
+    }
+    public AlarmClockItem.AlarmType getAlarmType() {
+        return (AlarmClockItem.AlarmType) getArguments().getSerializable(EXTRA_ALARMTYPE);
     }
 
     private void initEventDialog(Context context, AlarmDialog dialog, Location forLocation)
@@ -520,6 +558,23 @@ public class AlarmCreateDialog extends DialogFragment
         AlarmClockItem item = AlarmListDialog.createAlarm(dialog.getActivity(), type, "", event, dialog.getLocation(), hour, minute, timezone, AlarmSettings.loadPrefVibrateDefault(dialog.getActivity()), AlarmSettings.getDefaultRingtoneUri(dialog.getActivity(), type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
         AlarmNotifications.updateAlarmTime(dialog.getActivity(), item);
         return item;
+    }
+
+    public static void updateAlarmItem(AlarmCreateDialog dialog, AlarmClockItem item)
+    {
+        if (dialog.getMode() == 0)
+        {
+            item.hour = -1;
+            item.minute = -1;
+            item.timezone = null;
+            item.event = dialog.getEvent();
+
+        } else {
+            item.hour = dialog.getHour();
+            item.minute = dialog.getMinute();
+            item.timezone = dialog.getTimeZone();
+            item.event = null;
+        }
     }
 
 }
