@@ -480,6 +480,7 @@ public class AlarmClockActivity extends AppCompatActivity
             {
                 if (item.enabled) {
                     sendBroadcast( AlarmNotifications.getAlarmIntent(AlarmClockActivity.this, AlarmNotifications.ACTION_SCHEDULE, item.getUri()) );
+                    listAdapter.onAlarmToggled(item, true);
                 }
 
                 if (list != null) {
