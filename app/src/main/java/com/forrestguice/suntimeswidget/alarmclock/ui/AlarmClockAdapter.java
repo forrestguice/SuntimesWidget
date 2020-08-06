@@ -593,7 +593,7 @@ public class AlarmClockAdapter extends ArrayAdapter<AlarmClockItem>
         view.text_ringtone.setText(ringtoneDisplay);
 
         // action
-        SpannableStringBuilder actionDisplay = SuntimesUtils.createSpan(context, actionLabel, "[icon]", actionIcon);
+        SpannableStringBuilder actionDisplay = SuntimesUtils.createSpan(context, ringtoneLabel, "[icon]", ringtonIcon);
         view.text_action0.setTextColor(SuntimesUtils.colorStateList(onColor, disabledColor, pressedColor));
         view.text_action0.setVisibility( item.actionID0 != null ? View.VISIBLE : View.GONE );
 
