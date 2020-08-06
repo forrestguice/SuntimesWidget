@@ -29,6 +29,14 @@
         android:layout_gravity="end"
         tools:text="System Time Zone" />
 
+    <TextView
+        android:id="@+id/locationPicker" android:background="?attr/selectableItemBackground"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:gravity="center_vertical" android:drawablePadding="8dp"
+        android:layout_marginLeft="8dp" android:layout_marginRight="8dp" android:paddingLeft="8dp" android:paddingRight="8dp"
+        android:drawableLeft="?attr/icActionPlace" android:drawableStart="?attr/icActionPlace"
+        tools:text="Location" />
+
     <TimePicker
         android:id="@+id/timepicker"
         android:timePickerMode="spinner"
