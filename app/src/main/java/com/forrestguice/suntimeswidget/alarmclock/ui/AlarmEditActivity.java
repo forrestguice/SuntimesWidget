@@ -264,14 +264,25 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     protected void updateViews(Context context) {
     }
 
+    protected void returnItem(boolean enabled)
+    {
+        AlarmClockItem item = editor.getItem();
+        item.enabled = enabled;
+        returnItem(item);
+    }
+
+    protected void returnItem(AlarmClockItem item)
+    {
+        Intent intent = getIntent();
+        intent.putExtra(AlarmEditActivity.EXTRA_ITEM, item);
+        setResult(Activity.RESULT_OK, intent);
+        supportFinishAfterTransition();
+    }
+
     private DialogInterface.OnClickListener onEditorAccepted = new DialogInterface.OnClickListener() {
         @Override
-        public void onClick(DialogInterface dialog, int which)
-        {
-            Intent intent = getIntent();
-            intent.putExtra(AlarmEditActivity.EXTRA_ITEM, editor.getItem());
-            setResult(Activity.RESULT_OK, intent);
-            supportFinishAfterTransition();
+        public void onClick(DialogInterface dialog, int which) {
+            returnItem(editor.getItem());
         }
     };
 
@@ -343,8 +354,16 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     {
         switch (item.getItemId())
         {
+            case R.id.action_enable:
+                returnItem(true);
+                return true;
+
+            /*case R.id.action_disable:
+                returnItem(false);
+                return true;*/
+
             case R.id.action_save:
-                onEditorAccepted.onClick(null, 0);
+                returnItem(editor.getItem());
                 return true;
 
             case R.id.action_delete:
@@ -369,6 +388,14 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     protected boolean onPrepareOptionsPanel(View view, Menu menu)
     {
         SuntimesUtils.forceActionBarIcons(menu);
+
+        MenuItem enableItem = menu.findItem(R.id.action_enable);
+        if (enableItem != null)
+        {
+            AlarmClockItem item = editor.getItem();
+            enableItem.setVisible(item != null && !item.enabled);
+        }
+
         return super.onPrepareOptionsPanel(view, menu);
     }
 
