@@ -212,6 +212,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         AlarmTimeDialog fragment = new AlarmTimeDialog();
         fragment.setTime(getHour(), getMinute());
         fragment.setTimeZone(getTimeZone());
+        fragment.setLocation(getLocation());
         fragment.set24Hour(SuntimesUtils.is24());
         fragment.setDialogListener(new AlarmTimeDialog.DialogListener()
         {
@@ -222,6 +223,11 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
                 getArguments().putInt(EXTRA_MINUTE, dialog.getMinute());
                 getArguments().putString(EXTRA_TIMEZONE, dialog.getTimeZone());
                 updateViews(getActivity());
+            }
+
+            @Override
+            public void onLocationClick(AlarmTimeDialog dialog) {
+                showLocationDialog(getActivity());
             }
 
             @Override
@@ -498,14 +504,22 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         Bundle args = getArguments();
         args.putSerializable(EXTRA_EVENT, event);
         args.putParcelable(EXTRA_LOCATION, location);
+
         if (!isAdded()) {
             return;
         }
+
         FragmentManager fragments = getChildFragmentManager();
-        AlarmDialog fragment = (AlarmDialog) fragments.findFragmentByTag("AlarmDialog");
-        if (fragment != null) {
-            initEventDialog(getActivity(), fragment, location);
-            fragment.setChoice(event);
+        AlarmDialog fragment0 = (AlarmDialog) fragments.findFragmentByTag("AlarmDialog");
+        if (fragment0 != null) {
+            initEventDialog(getActivity(), fragment0, location);
+            fragment0.setChoice(event);
+        }
+
+        AlarmTimeDialog fragment1 = (AlarmTimeDialog) fragments.findFragmentByTag("AlarmTimeDialog");
+        if (fragment1 != null) {
+            fragment1.setLocation(location);
+            fragment1.updateViews(getActivity());
         }
     }
 
@@ -598,13 +612,15 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
     public static void updateAlarmItem(AlarmCreateDialog dialog, AlarmClockItem item)
     {
+        item.type = dialog.getAlarmType();
+        item.location = dialog.getLocation();
+
         if (dialog.getMode() == 0)
         {
             item.hour = -1;
             item.minute = -1;
             item.timezone = null;
             item.event = dialog.getEvent();
-            item.location = dialog.getLocation();
 
         } else {
             item.hour = dialog.getHour();

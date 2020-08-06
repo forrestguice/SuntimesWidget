@@ -27,6 +27,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
+import android.text.style.CharacterStyle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +38,13 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public class AlarmTimeDialog extends DialogFragment
 {
@@ -54,8 +60,11 @@ public class AlarmTimeDialog extends DialogFragment
     public static final String PREF_KEY_ALARM_TIME_MODE = "alarmtimezonemode";
     public static final AlarmClockItem.AlarmTimeZone PREF_DEF_ALARM_TIME_MODE = AlarmClockItem.AlarmTimeZone.SYSTEM_TIME;
 
+    public static final String PREF_KEY_ALARM_LOCATION = "alarmlocation";
+
     private TimePicker timePicker;
     private Spinner modePicker;
+    private TextView locationPicker;
 
     public AlarmTimeDialog()
     {
@@ -69,6 +78,16 @@ public class AlarmTimeDialog extends DialogFragment
         setArguments(defaultArgs);
     }
 
+    @Override
+    public void onCreate(Bundle savedState)
+    {
+        Bundle args = getArguments();
+        if (getLocation() == null) {
+            args.putParcelable(PREF_KEY_ALARM_LOCATION, WidgetSettings.loadLocationPref(getActivity(), 0));
+        }
+        super.onCreate(savedState);
+    }
+
     public void setTime(int hour, int minute) {
         getArguments().putInt(PREF_KEY_ALARM_TIME_HOUR, hour);
         getArguments().putInt(PREF_KEY_ALARM_TIME_MINUTE, minute);
@@ -78,6 +97,9 @@ public class AlarmTimeDialog extends DialogFragment
     }
     public void setTimeZone(String value) {
         getArguments().putString(PREF_KEY_ALARM_TIME_MODE, value);
+    }
+    public void setLocation(Location location) {
+        getArguments().putParcelable(PREF_KEY_ALARM_LOCATION, location);
     }
 
     @SuppressWarnings({"deprecation","RestrictedApi"})
@@ -109,6 +131,7 @@ public class AlarmTimeDialog extends DialogFragment
         modePicker.setSelection(modeAdapter.getPosition(mode));
 
         timePicker = (TimePicker)dialogContent.findViewById(R.id.timepicker);
+        locationPicker = (TextView) dialogContent.findViewById(R.id.locationPicker);
         setTimeChangedListener();
     }
 
@@ -120,6 +143,9 @@ public class AlarmTimeDialog extends DialogFragment
         if (modePicker != null) {
             modePicker.setOnItemSelectedListener(onModeChanged);
         }
+        if (locationPicker != null) {
+            locationPicker.setOnClickListener(onLocationClicked);
+        }
     }
     private void clearTimeChangedListener()
     {
@@ -128,6 +154,9 @@ public class AlarmTimeDialog extends DialogFragment
         }
         if (modePicker != null) {
             modePicker.setOnItemSelectedListener(null);
+        }
+        if (locationPicker != null) {
+            locationPicker.setOnClickListener(null);
         }
     }
 
@@ -149,7 +178,9 @@ public class AlarmTimeDialog extends DialogFragment
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
-            getArguments().putString(PREF_KEY_ALARM_TIME_MODE, ((AlarmClockItem.AlarmTimeZone) parent.getItemAtPosition(position)).timeZoneID());
+            String timezone = ((AlarmClockItem.AlarmTimeZone) parent.getItemAtPosition(position)).timeZoneID();
+            getArguments().putString(PREF_KEY_ALARM_TIME_MODE, timezone);
+            updateViews(getActivity());
             if (listener != null) {
                 listener.onChanged(AlarmTimeDialog.this);
             }
@@ -158,16 +189,42 @@ public class AlarmTimeDialog extends DialogFragment
         public void onNothingSelected(AdapterView<?> parent) {}
     };
 
-    private void updateViews(Context context)
+    private View.OnClickListener onLocationClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (listener != null) {
+                listener.onLocationClick(AlarmTimeDialog.this);
+            }
+        }
+    };
+
+    protected void updateViews(Context context)
     {
         if (timePicker != null)
         {
             clearTimeChangedListener();
+
             timePicker.setIs24HourView(getArguments().getBoolean(PREF_KEY_ALARM_TIME_24HR));
             timePicker.setCurrentHour(getArguments().getInt(PREF_KEY_ALARM_TIME_HOUR));
             timePicker.setCurrentMinute(getArguments().getInt(PREF_KEY_ALARM_TIME_MINUTE));
+
+            locationPicker.setText(displayLocation(getActivity(), getLocation()));
+            locationPicker.setVisibility(getArguments().getString(PREF_KEY_ALARM_TIME_MODE, null) == null ? View.GONE : View.VISIBLE);
+
             setTimeChangedListener();
         }
+    }
+
+    public static CharSequence displayLocation(Context context, Location location)
+    {
+        if (location == null) {
+            return "";
+        }
+        String coordString = context.getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
+        String labelString = location.getLabel();
+        String displayString = labelString + "\n" + coordString;
+        SpannableString displayText = SuntimesUtils.createBoldSpan(null, displayString, labelString);
+        return SuntimesUtils.createRelativeSpan(displayText, displayString, coordString, 0.75f);
     }
 
     public int getHour() {
@@ -182,11 +239,16 @@ public class AlarmTimeDialog extends DialogFragment
         return getArguments().getString(PREF_KEY_ALARM_TIME_MODE);
     }
 
+    public Location getLocation() {
+        return (Location)getArguments().getParcelable(PREF_KEY_ALARM_LOCATION);
+    }
+
     public interface DialogListener
     {
         void onAccepted(AlarmTimeDialog dialog);
         void onCanceled(AlarmTimeDialog dialog);
         void onChanged(AlarmTimeDialog dialog);
+        void onLocationClick(AlarmTimeDialog dialog);
     }
 
     private DialogListener listener = null;

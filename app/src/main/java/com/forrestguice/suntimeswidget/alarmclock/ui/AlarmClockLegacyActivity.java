@@ -1055,6 +1055,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             timeDialog.setTime(hour, minute);
             timeDialog.set24Hour(SuntimesUtils.is24());
             timeDialog.setTimeZone(item.timezone);
+            timeDialog.setLocation(item.location);
             timeDialog.setDialogListener(onTimeChanged);
             t_selectedItem = item.rowID;
             timeDialog.show(getSupportFragmentManager(), DIALOGTAG_TIME);
@@ -1095,6 +1096,10 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
 
         @Override
         public void onChanged(AlarmTimeDialog dialog) {}
+
+        @Override
+        public void onLocationClick(AlarmTimeDialog dialog) {
+        }
     };
 
     /**
