@@ -103,6 +103,7 @@
         <item name="icActionNew">@drawable/ic_action_new_light</item>
         <item name="icActionNewAlarm">@drawable/ic_action_alarms_light</item>
         <item name="icActionNewNotification">@drawable/ic_action_notification_light</item>
+        <item name="icActionEnableAlarm">@drawable/ic_action_doneall_light</item>
         <item name="icActionSave">@drawable/ic_action_save_light</item>
         <item name="icActionEdit">@drawable/ic_action_edit_light</item>
         <item name="icActionDelete">@drawable/ic_action_discard_light</item>
@@ -229,6 +230,7 @@
         <item name="icActionNew">@drawable/ic_action_new</item>
         <item name="icActionNewAlarm">@drawable/ic_action_alarms</item>
         <item name="icActionNewNotification">@drawable/ic_action_notification</item>
+        <item name="icActionEnableAlarm">@drawable/ic_action_doneall</item>
         <item name="icActionSave">@drawable/ic_action_save</item>
         <item name="icActionEdit">@drawable/ic_action_edit</item>
         <item name="icActionDelete">@drawable/ic_action_discard</item>

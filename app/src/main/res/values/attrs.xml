@@ -97,6 +97,7 @@
     <attr name="icActionNew" format="reference" />
     <attr name="icActionNewAlarm" format="reference" />
     <attr name="icActionNewNotification" format="reference" />
+    <attr name="icActionEnableAlarm" format="reference" />
     <attr name="icActionSave" format="reference" />
     <attr name="icActionEdit" format="reference" />
     <attr name="icActionDelete" format="reference" />

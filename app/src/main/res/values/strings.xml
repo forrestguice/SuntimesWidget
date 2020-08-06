@@ -706,6 +706,9 @@
     <string name="configAction_setAlarmAction">Set Action</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmSound">Set Sound</string>         <!-- button (contentDescription) -->
     <string name="configAction_alarmMenu">Alarm Menu</string>         <!-- button (contentDescription) -->
+    <string name="configAction_saveAlarm">Save</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_enableAlarm">Save &amp; Enable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_disableAlarm">Save &amp; Disable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
 
     <string name="alarmAction_dismiss">Dismiss</string>                <!-- notification action button -->
     <string name="alarmAction_snooze">Snooze</string>                  <!-- notification action button -->
@@ -991,10 +994,10 @@
     <string name="configActionDesc_showCalendar">Open calendar</string>
     <string name="configActionDesc_mapLocation">Show location on map</string>  <!-- TODO -->
     <string name="configActionDesc_setAlarm">Set an alarm</string>  <!-- TODO -->
-    <string name="configActionDesc_worldMap">Show world map dialog</string>  <!-- TODO -->
-    <string name="configActionDesc_equinoxDialog">Show solstices dialog</string>  <!-- TODO -->
-    <string name="configActionDesc_moon">Show moon dialog</string>  <!-- TODO -->
-    <string name="configActionDesc_sunDialog">Show sun position dialog</string>  <!-- TODO -->
+    <string name="configActionDesc_worldMap">World map dialog</string>  <!-- TODO -->
+    <string name="configActionDesc_equinoxDialog">Solstices dialog</string>  <!-- TODO -->
+    <string name="configActionDesc_moon">Moon dialog</string>  <!-- TODO -->
+    <string name="configActionDesc_sunDialog">Sun position dialog</string>  <!-- TODO -->
     <string name="configActionDesc_setDate">Configure date</string>  <!-- TODO -->
     <string name="configActionDesc_setTimeZone">Configure time zone</string>  <!-- TODO -->
     <string name="configActionDesc_setLocation">Configure location</string>  <!-- TODO -->
@@ -1002,10 +1005,10 @@
     <string name="configActionDesc_nextCard">Show next card</string>
     <string name="configActionDesc_prevCard">Show previous card</string>
     <string name="configActionDesc_setAlarmForNote">Set alarm for note</string>
-    <string name="configActionDesc_alarmList">Open alarm list</string>
-    <string name="configActionDesc_themeList">Open theme list</string>
-    <string name="configActionDesc_actionList">Open action list</string>
-    <string name="configActionDesc_widgetList">Open widget list</string>
+    <string name="configActionDesc_alarmList">Alarm list</string>
+    <string name="configActionDesc_themeList">Theme list</string>
+    <string name="configActionDesc_actionList">Action list</string>
+    <string name="configActionDesc_widgetList">Widget list</string>
 
     <string-array name="tapActions_titles">    <!-- must be in same order as enum TapActions -->
         <item>@string/configActionDesc_doNothing</item>
