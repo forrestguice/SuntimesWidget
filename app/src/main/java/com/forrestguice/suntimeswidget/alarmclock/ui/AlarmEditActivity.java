@@ -30,7 +30,9 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.AlarmClock;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
@@ -51,6 +53,7 @@ import com.forrestguice.suntimeswidget.AlarmDialog;
 import com.forrestguice.suntimeswidget.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.actions.ActionListActivity;
 import com.forrestguice.suntimeswidget.actions.LoadActionDialog;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
@@ -75,6 +78,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     public static final int REQUEST_RINGTONE = 10;
     public static final int REQUEST_SETTINGS = 20;
     public static final int REQUEST_STORAGE_PERMISSION = 30;
+    public static final int REQUEST_ACTION0 = 40;
+    public static final int REQUEST_ACTION1 = 50;
 
     private static final String DIALOGTAG_EVENT = "alarmevent";
     private static final String DIALOGTAG_REPEAT = "alarmrepetition";
@@ -82,7 +87,6 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     private static final String DIALOGTAG_TIME = "alarmtime";
     private static final String DIALOGTAG_OFFSET = "alarmoffset";
     private static final String DIALOGTAG_LOCATION = "alarmlocation";
-    private static final String DIALOGTAG_ACTION = "alarmaction";
 
     private AlarmEditDialog editor;
     private AppSettings.LocaleInfo localeInfo;
@@ -152,6 +156,14 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         {
             case REQUEST_RINGTONE:
                 onRingtoneResult(resultCode, data);
+                break;
+
+            case REQUEST_ACTION0:
+                onActionResult(resultCode, data, 0);
+                break;
+
+            case REQUEST_ACTION1:
+                onActionResult(resultCode, data, 1);
                 break;
         }
     }
@@ -309,24 +321,10 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             labelDialog.setOnAcceptedListener(onLabelChanged);
         }
 
-        for (int i=0; i<2; i++)
-        {
-            LoadActionDialog actionDialog = (LoadActionDialog) fragments.findFragmentByTag(DIALOGTAG_ACTION + i);
-            if (actionDialog != null) {
-                actionDialog.setOnAcceptedListener(onActionChanged(i));
-            }
-        }
-
         LocationConfigDialog locationDialog = (LocationConfigDialog) fragments.findFragmentByTag(DIALOGTAG_LOCATION);
         if (locationDialog != null) {
             locationDialog.setDialogListener(onLocationChanged);
         }
-
-        //AlarmTimeDialog timeDialog = (AlarmTimeDialog) fragments.findFragmentByTag(DIALOGTAG_TIME);
-        //if (timeDialog != null)
-        //{
-        //timeDialog.setOnAcceptedListener(onTimeChanged);
-        //}
 
         if (Build.VERSION.SDK_INT >= 11)
         {
@@ -703,33 +701,29 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
      */
     protected void pickAction(@NonNull final AlarmClockItem item, final int actionNum)
     {
-        final LoadActionDialog loadDialog = new LoadActionDialog();
-        loadDialog.setOnAcceptedListener(onActionChanged(actionNum));
-        loadDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-                loadDialog.setSelected(item.getActionID(actionNum));
-            }
-        });
-        loadDialog.show(getSupportFragmentManager(), DIALOGTAG_ACTION + actionNum);
+        Intent intent = new Intent(AlarmEditActivity.this, ActionListActivity.class);
+        Bundle extras = new Bundle();
+        extras.putString(ActionListActivity.PARAM_SELECTED, item.getActionID(actionNum));
+        startActivityForResult(intent, getActionRequestCode(actionNum), extras);
     }
-    private DialogInterface.OnClickListener onActionChanged(final int actionNum)
+    protected void onActionResult(int resultCode, Intent data, int actionNum)
     {
-        return new DialogInterface.OnClickListener()
+        if (resultCode == RESULT_OK && editor != null && data != null)
         {
-            @Override
-            public void onClick(DialogInterface d, int which)
-            {
-                FragmentManager fragments = getSupportFragmentManager();
-                LoadActionDialog dialog = (LoadActionDialog) fragments.findFragmentByTag(DIALOGTAG_ACTION + actionNum);
-                if (dialog != null && editor != null)
-                {
-                    AlarmClockItem item = editor.getItem();
-                    item.setActionID(actionNum, dialog.getIntentID());
-                    editor.notifyItemChanged();
-                }
-            }
-        };
+            AlarmClockItem item = editor.getItem();
+            String actionID = data.getStringExtra(ActionListActivity.SELECTED_ACTIONID);
+            item.setActionID(actionNum, actionID);
+            editor.notifyItemChanged();
+
+        } else {
+            Log.d(TAG, "onActivityResult: bad result: " + resultCode + ", " + data);
+        }
+    }
+    protected int getActionRequestCode(int actionNum) {
+        switch (actionNum) {
+            case 1: return REQUEST_ACTION1;
+            case 0: default: return REQUEST_ACTION0;
+        }
     }
 
     @Override
