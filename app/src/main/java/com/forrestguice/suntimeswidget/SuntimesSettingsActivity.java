@@ -1500,8 +1500,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             public void onActionButtonClicked()
             {
                 Intent intent = new Intent(activity, ActionListActivity.class);
-                intent.putExtra(WidgetThemeListActivity.PARAM_NOSELECT, false);
-                intent.putExtra(WidgetThemeListActivity.PARAM_SELECTED, selectedActionID);
+                intent.putExtra(ActionListActivity.PARAM_NOSELECT, false);
+                intent.putExtra(ActionListActivity.PARAM_SELECTED, selectedActionID);
                 activity.startActivityForResult(intent, requestCode);
                 activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
             }
