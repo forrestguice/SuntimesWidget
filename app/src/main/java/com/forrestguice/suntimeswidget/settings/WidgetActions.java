@@ -64,6 +64,8 @@ public class WidgetActions
 
     public static final String PREF_KEY_ACTION_LAUNCH_TAGS = "tags";
     public static final String TAG_DEFAULT = "default";
+    public static final String TAG_SUNTIMES = "suntimes";
+    public static final String TAG_SUNTIMESALARMS = "suntimesalarms";
 
     public static final String PREF_KEY_ACTION_LAUNCH = "launch";
     public static final String PREF_DEF_ACTION_LAUNCH = "com.forrestguice.suntimeswidget.SuntimesActivity";
@@ -498,7 +500,7 @@ public class WidgetActions
         PREF_DEF_ACTION_LAUNCH_DESC = context.getString(R.string.app_shortdesc);
 
         if (!hasActionLaunchPref(context, 0, "SUNTIMES")) {
-            saveActionLaunchPref(context, WidgetActions.PREF_DEF_ACTION_LAUNCH_TITLE, WidgetActions.PREF_DEF_ACTION_LAUNCH_DESC, null, new String[] {TAG_DEFAULT}, 0, "def_suntimes", WidgetActions.PREF_DEF_ACTION_LAUNCH,
+            saveActionLaunchPref(context, WidgetActions.PREF_DEF_ACTION_LAUNCH_TITLE, WidgetActions.PREF_DEF_ACTION_LAUNCH_DESC, null, new String[] {TAG_DEFAULT, TAG_SUNTIMES}, 0, "def_suntimes", WidgetActions.PREF_DEF_ACTION_LAUNCH,
                     WidgetActions.PREF_DEF_ACTION_LAUNCH_TYPE.name(), WidgetActions.PREF_DEF_ACTION_LAUNCH_ACTION, WidgetActions.PREF_DEF_ACTION_LAUNCH_DATA, WidgetActions.PREF_DEF_ACTION_LAUNCH_DATATYPE, WidgetActions.PREF_DEF_ACTION_LAUNCH_EXTRAS);
         }
 
@@ -516,29 +518,29 @@ public class WidgetActions
     {
         NOTHING("Nothing", "Do nothing", new String[] {TAG_DEFAULT}, false),
 
-        ALARM("Suntimes", "Set alarm", new String[] {TAG_DEFAULT}, false),
+        ALARM("Suntimes", "Set alarm", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, false),
 
-        CARD_NEXT("Suntimes", "Show next card", new String[] {TAG_DEFAULT}, false),
-        CARD_PREV("Suntimes", "Show previous card", new String[] {TAG_DEFAULT}, false),
-        SWAP_CARD("Suntimes", "Swap cards", new String[] {TAG_DEFAULT}, false),
+        CARD_NEXT("Suntimes", "Show next card", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, false),
+        CARD_PREV("Suntimes", "Show previous card", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, false),
+        SWAP_CARD("Suntimes", "Swap cards", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, false),
 
-        NEXT_NOTE("Suntimes", "Show next note", new String[] {TAG_DEFAULT}, false),
-        PREV_NOTE("Suntimes", "Show previous note", new String[] {TAG_DEFAULT}, false),
-        RESET_NOTE("Suntimes", "Show upcoming event", new String[] {TAG_DEFAULT}, false),
+        NEXT_NOTE("Suntimes", "Show next note", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, false),
+        PREV_NOTE("Suntimes", "Show previous note", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, false),
+        RESET_NOTE("Suntimes", "Show upcoming event", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, false),
 
-        CONFIG_DATE("Suntimes", "Set date", new String[] {TAG_DEFAULT}, true),
-        CONFIG_LOCATION("Suntimes", "Set location", new String[] {TAG_DEFAULT}, true),
-        TIMEZONE("Suntimes", "Set time zone", new String[] {TAG_DEFAULT}, true),
+        CONFIG_DATE("Suntimes", "Set date", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
+        CONFIG_LOCATION("Suntimes", "Set location", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
+        TIMEZONE("Suntimes", "Set time zone", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
 
-        SHOW_DIALOG_WORLDMAP("Suntimes", "Show world map dialog", new String[] {TAG_DEFAULT}, true),
-        SHOW_DIALOG_SOLSTICE("Suntimes", "Show solstices dialog", new String[] {TAG_DEFAULT}, true),
-        SHOW_DIALOG_MOON("Suntimes", "Show moon dialog", new String[] {TAG_DEFAULT}, true),
-        SHOW_DIALOG_SUN("Suntimes", "Show sun dialog", new String[] {TAG_DEFAULT}, true),
+        SHOW_DIALOG_WORLDMAP("Suntimes", "World Map Dialog", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
+        SHOW_DIALOG_SOLSTICE("Suntimes", "Solstices Dialog", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
+        SHOW_DIALOG_MOON("Suntimes", "Moon Dialog", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
+        SHOW_DIALOG_SUN("Suntimes", "Sun Dialog", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
 
-        OPEN_ALARM_LIST("Suntimes Alarms", "Open alarm list", new String[] {TAG_DEFAULT}, true),
-        OPEN_THEME_LIST("Suntimes", "Open theme list", new String[] {TAG_DEFAULT}, true),
-        OPEN_ACTION_LIST("Suntimes", "Open action list", new String[] {TAG_DEFAULT}, true),
-        OPEN_WIDGET_LIST("Suntimes", "Open widget list", new String[] {TAG_DEFAULT}, true),
+        OPEN_ALARM_LIST("Suntimes Alarms", "Alarm List", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),
+        OPEN_THEME_LIST("Suntimes", "Theme List", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
+        OPEN_ACTION_LIST("Suntimes", "Action List", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
+        OPEN_WIDGET_LIST("Suntimes", "Widget List", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
 
         SHOW_CALENDAR("Calendar", "Show calendar", new String[] {TAG_DEFAULT}, true),
         SHOW_MAP("Map", "Show map", new String[] {TAG_DEFAULT}, true);

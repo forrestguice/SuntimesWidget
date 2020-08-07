@@ -22,11 +22,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.ActionMode;
@@ -54,6 +56,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+
+import static com.forrestguice.suntimeswidget.settings.WidgetActions.TAG_DEFAULT;
+import static com.forrestguice.suntimeswidget.settings.WidgetActions.TAG_SUNTIMES;
+import static com.forrestguice.suntimeswidget.settings.WidgetActions.TAG_SUNTIMESALARMS;
 
 /**
  * LoadActionDialog
@@ -208,8 +214,9 @@ public class ActionListHelper
             String title = WidgetActions.loadActionLaunchPref(context, 0, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
             String desc = WidgetActions.loadActionLaunchPref(context, 0, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
             Integer color = Integer.parseInt(WidgetActions.loadActionLaunchPref(context, 0, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR));
+            String[] tags = WidgetActions.loadActionTags(context, 0, id).toArray(new String[0]);
             if (title != null && !title.trim().isEmpty()) {
-                ids.add(new ActionDisplay(id, title, desc, color));
+                ids.add(new ActionDisplay(id, title, desc, color, tags));
             }
         }
 
@@ -223,7 +230,7 @@ public class ActionListHelper
             }
         });
 
-        ids.add(0, new ActionDisplay("", context.getString(R.string.configActionDesc_doNothing), context.getString(R.string.configActionDesc_doNothing), WidgetActions.PREF_DEF_ACTION_LAUNCH_COLOR));
+        ids.add(0, new ActionDisplay("", context.getString(R.string.configActionDesc_doNothing), context.getString(R.string.configActionDesc_doNothing), WidgetActions.PREF_DEF_ACTION_LAUNCH_COLOR, new String[] {TAG_DEFAULT}));
 
         adapter = new ActionDisplayAdapter(context, R.layout.layout_listitem_actions, ids.toArray(new ActionDisplay[0]));
         list.setAdapter(adapter);
@@ -409,16 +416,28 @@ public class ActionListHelper
     {
         public String id, title, desc;
         public int color;
+        public String[] tags;
 
-        public ActionDisplay(String id, String title, String desc, int color)
+        public ActionDisplay(String id, String title, String desc, int color, String[] tags)
         {
             this.id = id;
             this.title = title;
             this.desc = desc;
             this.color = color;
+            this.tags = tags;
         }
         public String toString() {
              return title;
+        }
+
+        public boolean hasTag(String value)
+        {
+            for (String tag : tags) {
+                if (tag.equals(value)) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 
@@ -484,7 +503,7 @@ public class ActionListHelper
         @Override
         @NonNull
         public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-            return getItemView(position, convertView, parent, false, resourceID);
+            return getItemView(position, convertView, parent, true, resourceID);
         }
 
         private View getItemView(int position, View convertView, @NonNull ViewGroup parent, boolean colorize, int resID)
@@ -510,19 +529,23 @@ public class ActionListHelper
                 secondaryText.setText(item.desc != null && !item.desc.trim().isEmpty() ? item.desc : item.id);
             }
 
-            ImageView icon = (ImageView) view.findViewById(android.R.id.icon);
-            if (icon != null)
+            ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
+            if (icon != null && colorize)
             {
-                if (colorize)
-                {
-                    GradientDrawable d = (GradientDrawable) icon.getBackground().mutate();
-                    d.setColor(getColorForPosition(position));
-                    d.invalidateSelf();
-                    icon.setVisibility(View.VISIBLE);
+                icon.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                if (item.hasTag(TAG_SUNTIMESALARMS)) {
+                    icon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher_alarms_foreground));
+
+                } else if (item.hasTag(TAG_SUNTIMES)) {
+                    icon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher_foreground));
 
                 } else {
-                    icon.setVisibility(View.GONE);
+                    icon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_action_extension));   // TODO: theme
                 }
+
+                //Drawable d = icon.getDrawable();
+                //DrawableCompat.setTint(d, color);
+                //d.invalidateSelf();
             }
 
             return view;
