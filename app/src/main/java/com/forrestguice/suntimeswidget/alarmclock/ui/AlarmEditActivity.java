@@ -709,9 +709,9 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     protected void pickAction(@NonNull final AlarmClockItem item, final int actionNum)
     {
         Intent intent = new Intent(AlarmEditActivity.this, ActionListActivity.class);
-        Bundle extras = new Bundle();
-        extras.putString(ActionListActivity.PARAM_SELECTED, item.getActionID(actionNum));
-        startActivityForResult(intent, getActionRequestCode(actionNum), extras);
+        intent.putExtra(ActionListActivity.PARAM_NOSELECT, false);
+        intent.putExtra(ActionListActivity.PARAM_SELECTED, item.getActionID(actionNum));
+        startActivityForResult(intent, getActionRequestCode(actionNum));
     }
     protected void onActionResult(int resultCode, Intent data, int actionNum)
     {
