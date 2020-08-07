@@ -721,4 +721,42 @@ public class AlarmClockActivity extends AppCompatActivity
         }
     };
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void scheduleAlarm(Activity context, String label, SolarEvents event, com.forrestguice.suntimeswidget.calculator.core.Location location)
+    {
+        // TODO:
+        Calendar alarm = new GregorianCalendar(TimeZone.getDefault());
+        //alarm.setTimeInMillis(calendar.getTimeInMillis());
+        int hour = alarm.get(Calendar.HOUR_OF_DAY);
+        int minutes = alarm.get(Calendar.MINUTE);
+        // TODO: local mean, apparent solar
+
+        scheduleAlarm(context, label, event, location, hour, minutes, null);
+    }
+
+    public static void scheduleAlarm(Activity context, String label, SolarEvents event, com.forrestguice.suntimeswidget.calculator.core.Location location, int hour, int minutes, String timezone)
+    {
+        TimeZone tz = (timezone == null ? TimeZone.getDefault() : AlarmClockItem.AlarmTimeZone.getTimeZone(timezone, location));
+        Calendar calendar = Calendar.getInstance(tz);
+
+        Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
+        alarmIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        alarmIntent.putExtra(AlarmClock.EXTRA_MESSAGE, label);
+        alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, ((timezone == null) ? hour : calendar.get(Calendar.HOUR_OF_DAY)));
+        alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, ((timezone == null) ? minutes : calendar.get(Calendar.MINUTE)));
+        alarmIntent.putExtra(AlarmClockActivity.EXTRA_TIMEZONE, timezone);
+        alarmIntent.putExtra(AlarmClockActivity.EXTRA_LOCATION, location);
+        alarmIntent.putExtra(AlarmClockActivity.EXTRA_SOLAREVENT, (event != null ? event.name() : (String) null));
+
+        if (alarmIntent.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(alarmIntent);
+        }
+                                /*String alarmErrorTxt = getString(R.string.schedalarm_dialog_error) + "\n" + getString(R.string.schedalarm_dialog_note2, event.getLongDisplayString());
+                        Toast alarmError = Toast.makeText(context, alarmErrorTxt, Toast.LENGTH_LONG);
+                        alarmError.show();*/
+    }
+
+
 }

@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -39,6 +40,7 @@ import android.os.Bundle;
 
 import android.os.Parcelable;
 import android.preference.PreferenceActivity;
+import android.provider.AlarmClock;
 import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
@@ -73,6 +75,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialog;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
@@ -97,9 +102,11 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.lang.reflect.Method;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
@@ -425,12 +432,10 @@ public class SuntimesActivity extends AppCompatActivity
     {
         FragmentManager fragments = getSupportFragmentManager();
 
-        AlarmDialog alarmDialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_ALARM);
-        if (alarmDialog != null)
-        {
-            alarmDialog.setData(this, dataset, dataset_moon, dataset_equinox);
-            alarmDialog.setOnAcceptedListener(alarmDialog.scheduleAlarmClickListener);
-            //Log.d("DEBUG", "AlarmDialog listeners restored.");
+        AlarmCreateDialog alarmDialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_ALARM);
+        if (alarmDialog != null) {
+            alarmDialog.setOnAcceptedListener(onScheduleAlarm);
+            //Log.d("DEBUG", "AlarmCreateDialog listeners restored.");
         }
 
         LightMapDialog lightMapDialog = (LightMapDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTMAP);
@@ -1461,27 +1466,17 @@ public class SuntimesActivity extends AppCompatActivity
     {
         scheduleAlarm(null);
     }
-    protected void scheduleAlarm( SolarEvents selected )
+    protected void scheduleAlarm( SolarEvents event )
     {
         if (dataset.isCalculated())
         {
-            SuntimesMoonData moonData = dataset_moon;
-            if (moonData == null) {
-                moonData = new SuntimesMoonData(SuntimesActivity.this, 0, "moon");
-                moonData.calculate();
-            }
-
-            SuntimesEquinoxSolsticeDataset equinoxData = dataset_equinox;
-            if (equinoxData == null) {
-                equinoxData = new SuntimesEquinoxSolsticeDataset(SuntimesActivity.this, 0);
-                equinoxData.calculateData();
-            }
-
-            AlarmDialog alarmDialog = new AlarmDialog();
-            alarmDialog.setData(this, dataset, moonData, equinoxData);
-            alarmDialog.setChoice(selected);
-            alarmDialog.setOnAcceptedListener(alarmDialog.scheduleAlarmClickListener);
-            alarmDialog.show(getSupportFragmentManager(), DIALOGTAG_ALARM);
+            AlarmCreateDialog dialog = new AlarmCreateDialog();
+            dialog.setAlarmType(AlarmClockItem.AlarmType.ALARM);
+            dialog.setDialogMode(0);
+            dialog.setEvent(event, WidgetSettings.loadLocationPref(this, 0));
+            //dialog.setAlarmTime(item.hour, item.minute, item.timezone);
+            dialog.setOnAcceptedListener(onScheduleAlarm);
+            dialog.show(getSupportFragmentManager(), DIALOGTAG_ALARM);
 
         } else {
             String msg = getString(R.string.schedalarm_dialog_error2);
@@ -1489,6 +1484,35 @@ public class SuntimesActivity extends AppCompatActivity
             errorMsg.show();
         }
     }
+
+    private DialogInterface.OnClickListener onScheduleAlarm = new DialogInterface.OnClickListener()
+    {
+        @Override
+        public void onClick(DialogInterface d, int which)
+        {
+            Activity context = SuntimesActivity.this;
+
+            AlarmCreateDialog dialog = (AlarmCreateDialog) d;
+            com.forrestguice.suntimeswidget.calculator.core.Location location = dialog.getLocation();
+
+            switch (dialog.getMode())
+            {
+                case 1:
+                    int hour = dialog.getHour();
+                    int minutes = dialog.getMinute();
+                    String timezone = dialog.getTimeZone();
+                    AlarmClockActivity.scheduleAlarm(context, "", null, location, hour, minutes, timezone);
+                    break;
+
+                case 0:
+                default:
+                    SolarEvents event = dialog.getEvent();
+                    String alarmLabel = context.getString(R.string.schedalarm_labelformat2, event.getShortDisplayString());
+                    AlarmClockActivity.scheduleAlarm(context, alarmLabel, event, location);
+                    break;
+            }
+        }
+    };
 
     protected void scheduleAlarmFromNote()
     {
