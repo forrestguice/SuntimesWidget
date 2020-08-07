@@ -25,6 +25,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -36,6 +38,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -387,11 +390,15 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     {
         SuntimesUtils.forceActionBarIcons(menu);
 
+        AlarmClockItem item = editor.getItem();
+        boolean alarmEnabled = (item != null && item.enabled);
+
         MenuItem enableItem = menu.findItem(R.id.action_enable);
         if (enableItem != null)
         {
-            AlarmClockItem item = editor.getItem();
-            enableItem.setVisible(item != null && !item.enabled);
+            enableItem.setVisible(!alarmEnabled);
+            DrawableCompat.setTint(enableItem.getIcon(), colorAlarmEnabled);
+            DrawableCompat.setTintMode(enableItem.getIcon(), PorterDuff.Mode.SRC_ATOP);
         }
 
         return super.onPrepareOptionsPanel(view, menu);

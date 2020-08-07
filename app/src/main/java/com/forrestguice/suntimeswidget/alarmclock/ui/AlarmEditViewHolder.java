@@ -84,6 +84,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public int res_icAlarm, res_icNotification;
     public int res_icSoundOn, res_icSoundOff;
+    public int res_colorEnabled;
 
     public AlarmEditViewHolder(View parent)
     {
@@ -130,12 +131,13 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     @SuppressLint("ResourceType")
     public void themeHolder(Context context)
     {
-        int[] attrs = { R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.icActionSoundEnabled, R.attr.icActionSoundDisabled };
+        int[] attrs = { R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.icActionSoundEnabled, R.attr.icActionSoundDisabled, R.attr.alarmColorEnabled };
         TypedArray a = context.obtainStyledAttributes(attrs);
         res_icAlarm = a.getResourceId(0, R.drawable.ic_action_extension);
         res_icNotification = a.getResourceId(1, R.drawable.ic_action_notification);
         res_icSoundOn = a.getResourceId(2, R.drawable.ic_action_soundenabled);
         res_icSoundOff = a.getResourceId(3, R.drawable.ic_action_sounddisabled);
+        res_colorEnabled = a.getResourceId(4, R.color.alarm_enabled_dark);
         a.recycle();
     }
 
