@@ -447,7 +447,7 @@ public class AlarmClockActivity extends AppCompatActivity
             FragmentManager fragments = getSupportFragmentManager();
             AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentById(R.id.createAlarmFragment);
             AlarmClockItem item = AlarmCreateDialog.createAlarm(dialog, dialog.getAlarmType());
-            dialog.text_time.setTransitionName("transition_alarmitem");
+            ViewCompat.setTransitionName(dialog.text_time, "transition_" + item.rowID);
             showAlarmEditActivity(item, dialog.text_time, REQUEST_ADDALARM, true);
         }
     };
