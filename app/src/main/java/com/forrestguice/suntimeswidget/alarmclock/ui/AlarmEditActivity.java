@@ -396,9 +396,9 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         MenuItem enableItem = menu.findItem(R.id.action_enable);
         if (enableItem != null)
         {
-            enableItem.setVisible(!alarmEnabled);
+            enableItem.setVisible(!alarmEnabled && AlarmNotifications.updateAlarmTime(this, item));
             DrawableCompat.setTint(enableItem.getIcon(), colorAlarmEnabled);
-            DrawableCompat.setTintMode(enableItem.getIcon(), PorterDuff.Mode.SRC_ATOP);
+            //DrawableCompat.setTintMode(enableItem.getIcon(), PorterDuff.Mode.SRC_ATOP);
         }
 
         return super.onPrepareOptionsPanel(view, menu);
@@ -640,6 +640,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 AlarmCreateDialog.updateAlarmItem(dialog, item);
                 AlarmNotifications.updateAlarmTime(AlarmEditActivity.this, item);
                 editor.notifyItemChanged();
+                invalidateOptionsMenu();
             }
         }
     };
@@ -668,6 +669,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 item.location = location;
                 AlarmNotifications.updateAlarmTime(AlarmEditActivity.this, item);
                 editor.notifyItemChanged();
+                invalidateOptionsMenu();
                 return true;
             }
             return false;

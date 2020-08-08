@@ -303,6 +303,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     {
         AlarmClockItem.AlarmType alarmType = getAlarmType();
         AlarmClockItem item = createAlarm(AlarmCreateDialog.this, alarmType);
+        boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item);
 
         if (text_title != null) {
             text_title.setText(context.getString(alarmType == AlarmClockItem.AlarmType.NOTIFICATION ? R.string.configAction_addNotification : R.string.configAction_addAlarm));
@@ -312,22 +313,20 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             spin_type.setSelection(alarmType.ordinal());
             spin_type.setOnItemSelectedListener(onTypeSelected);
         }
+
         if (text_offset != null) {
-            text_offset.setText(AlarmEditViewHolder.displayOffset(context, item));
+            text_offset.setText(isSchedulable ? AlarmEditViewHolder.displayOffset(context, item) : "");
         }
         if (text_time != null) {
-            text_time.setText(AlarmEditViewHolder.displayAlarmTime(context, item));
+            text_time.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmTime(context, item) : "");
         }
         if (text_date != null)
         {
-            text_date.setText(AlarmEditViewHolder.displayAlarmDate(context, item));
-            text_date.setVisibility(AlarmEditViewHolder.showAlarmDate(context, item) ? View.VISIBLE : View.GONE);
+            text_date.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmDate(context, item) : "");
+            text_date.setVisibility(isSchedulable && AlarmEditViewHolder.showAlarmDate(context, item) ? View.VISIBLE : View.GONE);
         }
-        if (text_note != null)    // TODO: periodic update
-        {
-            String timeString = " " + utils.timeDeltaLongDisplayString(System.currentTimeMillis(), item.timestamp + item.offset).getValue() + " ";
-            String noteString = context.getString(R.string.schedalarm_dialog_note1, timeString);
-            text_note.setText(SuntimesUtils.createRelativeSpan(SuntimesUtils.createBoldSpan(null, noteString, timeString), noteString, timeString, 1.25f));
+        if (text_note != null) {    // TODO: periodic update
+            text_note.setText(AlarmEditViewHolder.displayAlarmNote(context, item, isSchedulable));
         }
     }
 
@@ -605,9 +604,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             event = null;
         }
 
-        AlarmClockItem item = AlarmListDialog.createAlarm(dialog.getActivity(), type, "", event, dialog.getLocation(), hour, minute, timezone, AlarmSettings.loadPrefVibrateDefault(dialog.getActivity()), AlarmSettings.getDefaultRingtoneUri(dialog.getActivity(), type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
-        AlarmNotifications.updateAlarmTime(dialog.getActivity(), item);
-        return item;
+        return AlarmListDialog.createAlarm(dialog.getActivity(), type, "", event, dialog.getLocation(), hour, minute, timezone, AlarmSettings.loadPrefVibrateDefault(dialog.getActivity()), AlarmSettings.getDefaultRingtoneUri(dialog.getActivity(), type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
 
     public static void updateAlarmItem(AlarmCreateDialog dialog, AlarmClockItem item)

@@ -462,6 +462,7 @@ public class AlarmClockActivity extends AppCompatActivity
             FragmentManager fragments = getSupportFragmentManager();
             AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentById(R.id.createAlarmFragment);
             AlarmClockItem item = AlarmCreateDialog.createAlarm(dialog, dialog.getAlarmType());
+            AlarmNotifications.updateAlarmTime(dialog.getActivity(), item);
             ViewCompat.setTransitionName(dialog.text_time, "transition_" + item.rowID);
             showAlarmEditActivity(item, dialog.text_time, REQUEST_ADDALARM, true);
         }
@@ -771,9 +772,6 @@ public class AlarmClockActivity extends AppCompatActivity
         if (alarmIntent.resolveActivity(context.getPackageManager()) != null) {
             context.startActivity(alarmIntent);
         }
-                                /*String alarmErrorTxt = getString(R.string.schedalarm_dialog_error) + "\n" + getString(R.string.schedalarm_dialog_note2, event.getLongDisplayString());
-                        Toast alarmError = Toast.makeText(context, alarmErrorTxt, Toast.LENGTH_LONG);
-                        alarmError.show();*/
     }
 
 

@@ -37,6 +37,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 
@@ -148,6 +149,8 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
         if (item != null)
         {
+            boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item);
+
             menu_type.setImageDrawable(ContextCompat.getDrawable(context, (item.type == AlarmClockItem.AlarmType.ALARM ? res_icAlarm : res_icNotification)));
             menu_type.setContentDescription(item.type.getDisplayString());
 
@@ -166,15 +169,13 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             text_action0.setText(displayAction(context, item, 0));
             text_action1.setText(displayAction(context, item, 1));
 
-            text_datetime_offset.setText(text_offset.getText());
-            text_datetime.setText(displayAlarmTime(context, item));
+            text_datetime_offset.setText(isSchedulable ? text_offset.getText() : "");
+            text_datetime.setText(isSchedulable ? displayAlarmTime(context, item) : "");
             ViewCompat.setTransitionName(text_datetime, "transition_" + item.rowID);
-            text_date.setText(displayAlarmDate(context, item));
+            text_date.setText(isSchedulable ? displayAlarmDate(context, item) : "");
 
-            String timeString = " " + utils.timeDeltaLongDisplayString(System.currentTimeMillis(), item.timestamp + item.offset).getValue() + " ";   // TODO: periodic update
-            String noteString = context.getString(R.string.schedalarm_dialog_note1, timeString);
-            text_note.setText(SuntimesUtils.createRelativeSpan(SuntimesUtils.createBoldSpan(null, noteString, timeString), noteString, timeString, 1.25f));
-            text_date.setVisibility(AlarmEditViewHolder.showAlarmDate(context, item) ? View.VISIBLE : View.GONE);
+            text_note.setText(AlarmEditViewHolder.displayAlarmNote(context, item, isSchedulable));
+            text_date.setVisibility(isSchedulable && AlarmEditViewHolder.showAlarmDate(context, item) ? View.VISIBLE : View.GONE);
 
             /*if (item.enabled) {
                 TextView v = (TextView)text_datetime.getCurrentView();
@@ -236,6 +237,21 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             alarmDesc = SuntimesUtils.createRelativeSpan(null, timeString, " " + timeText.getSuffix(), 0.40f);
         }
         return alarmDesc;
+    }
+
+    public static CharSequence displayAlarmNote(Context context, AlarmClockItem item, boolean isSchedulable)
+    {
+        if (isSchedulable)
+        {
+            String timeString = " " + utils.timeDeltaLongDisplayString(System.currentTimeMillis(), item.timestamp + item.offset).getValue() + " ";
+            return context.getString(R.string.schedalarm_dialog_note1, timeString);
+
+        } else if (item.event != null) {
+            return context.getString(R.string.schedalarm_dialog_note2, item.event.getLongDisplayString());
+
+        } else {
+            return "";
+        }
     }
 
     public static CharSequence displayAlarmDate(Context context, AlarmClockItem item)
