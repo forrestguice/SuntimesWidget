@@ -960,6 +960,7 @@ public class AlarmListDialog extends DialogFragment
         private void updateView(Context context, AlarmListDialogItem view, @NonNull final AlarmClockItem item)
         {
             int eventType = item.event == null ? -1 : item.event.getType();
+            boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item, Calendar.getInstance(), false);
 
             // background
             view.cardBackdrop.setBackgroundColor( isSelected ? ColorUtils.setAlphaComponent(color_selected, 170) : color_notselected);  // 66% alpha
@@ -1006,14 +1007,14 @@ public class AlarmListDialog extends DialogFragment
 
             // time
             if (view.text_datetime != null) {
-                view.text_datetime.setText(AlarmEditViewHolder.displayAlarmTime(context, item));
+                view.text_datetime.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmTime(context, item) : "");
                 view.text_datetime.setTextColor(item.enabled ? color_on : color_off);
             }
 
             // date
             if (view.text_date != null) {
-                view.text_date.setText(AlarmEditViewHolder.displayAlarmDate(context, item));
-                view.text_date.setVisibility(AlarmEditViewHolder.showAlarmDate(context, item) ? View.VISIBLE : View.GONE);
+                view.text_date.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmDate(context, item) : "");
+                view.text_date.setVisibility(isSchedulable && AlarmEditViewHolder.showAlarmDate(context, item) ? View.VISIBLE : View.GONE);
                 view.text_date.setTextColor(item.enabled ? color_on : color_off);
             }
 
@@ -1086,14 +1087,14 @@ public class AlarmListDialog extends DialogFragment
                 if (item.offset == 0)
                 {
                     String offsetDisplay = context.getResources().getQuantityString(R.plurals.offset_at_plural, alarmHour);
-                    view.text_offset.setText(offsetDisplay);
+                    view.text_offset.setText(isSchedulable ? offsetDisplay : "");
 
                 } else {
                     boolean isBefore = (item.offset <= 0);
                     String offsetText = utils.timeDeltaLongDisplayString(0, item.offset).getValue();
                     String offsetDisplay = context.getResources().getQuantityString((isBefore ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), alarmHour, offsetText);
                     Spannable offsetSpan = SuntimesUtils.createBoldSpan(null, offsetDisplay, offsetText);
-                    view.text_offset.setText(offsetSpan);
+                    view.text_offset.setText(isSchedulable ? offsetSpan : "");
                 }
                 view.text_offset.setTextColor(item.enabled ? color_on : color_off);
             }
