@@ -61,6 +61,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -85,6 +86,9 @@ public class AlarmClockActivity extends AppCompatActivity
 
     public static final String EXTRA_SHOWBACK = "showBack";
     public static final String EXTRA_SOLAREVENT = "solarevent";
+    public static final String EXTRA_LOCATION = "location";
+    public static final String EXTRA_TIMEZONE = "timezone";
+    public static final String EXTRA_ALARMTYPE = "alarmtype";
     public static final String EXTRA_SELECTED_ALARM = "selectedAlarm";
 
     public static final int REQUEST_EDITALARM = 1;
@@ -211,6 +215,8 @@ public class AlarmClockActivity extends AppCompatActivity
 
     protected void handleIntent(Intent intent)
     {
+        Context context = this;
+
         String param_action = intent.getAction();
         intent.setAction(null);
 
@@ -223,13 +229,15 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             if (param_action.equals(AlarmClock.ACTION_SET_ALARM))
             {
+                AlarmClockItem.AlarmType param_type = AlarmClockItem.AlarmType.valueOf(intent.getStringExtra(AlarmClockActivity.EXTRA_ALARMTYPE), AlarmClockItem.AlarmType.ALARM);
                 String param_label = intent.getStringExtra(AlarmClock.EXTRA_MESSAGE);
                 int param_hour = intent.getIntExtra(AlarmClock.EXTRA_HOUR, -1);
                 int param_minute = intent.getIntExtra(AlarmClock.EXTRA_MINUTES, -1);
+                String param_timezone = intent.getStringExtra(AlarmClockActivity.EXTRA_TIMEZONE);
 
                 ArrayList<Integer> param_days = AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS;
                 boolean param_vibrate = AlarmSettings.loadPrefVibrateDefault(this);
-                Uri param_ringtoneUri = AlarmSettings.getDefaultRingtoneUri(this, AlarmClockItem.AlarmType.ALARM);
+                Uri param_ringtoneUri = AlarmSettings.getDefaultRingtoneUri(this, param_type);
                 if (Build.VERSION.SDK_INT >= 19)
                 {
                     param_vibrate = intent.getBooleanExtra(AlarmClock.EXTRA_VIBRATE, param_vibrate);
@@ -246,7 +254,22 @@ public class AlarmClockActivity extends AppCompatActivity
                 }
 
                 SolarEvents param_event = SolarEvents.valueOf(intent.getStringExtra(AlarmClockActivity.EXTRA_SOLAREVENT), null);
-                list.createAlarm(this, AlarmClockItem.AlarmType.ALARM, param_label, param_event, null, param_hour, param_minute, null, param_vibrate, param_ringtoneUri, param_days, true);
+                Location param_location = intent.getParcelableExtra(AlarmClockActivity.EXTRA_LOCATION);
+                if (param_location == null) {
+                    param_location = WidgetSettings.loadLocationPref(context, 0);
+                }
+
+                boolean param_skipUI = false;
+                if (Build.VERSION.SDK_INT >= 11) {
+                    param_skipUI = intent.getBooleanExtra(AlarmClock.EXTRA_SKIP_UI, false);
+                }
+                if (param_skipUI) {
+                    list.createAlarm(context, param_type, param_label, param_event, param_location, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_days, true);
+                } else {
+                    AlarmClockItem item = AlarmListDialog.createAlarm(context, param_type, param_label, param_event, param_location, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_days);
+                    AlarmNotifications.updateAlarmTime(context, item);
+                    showAlarmEditActivity(item, null, REQUEST_ADDALARM, true);
+                }
 
             } else if (param_action.equals(ACTION_ADD_ALARM)) {
                 showAddDialog(AlarmClockItem.AlarmType.ALARM);
@@ -713,19 +736,18 @@ public class AlarmClockActivity extends AppCompatActivity
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void scheduleAlarm(Activity context, String label, SolarEvents event, com.forrestguice.suntimeswidget.calculator.core.Location location)
+    public static void scheduleAlarm(Activity context, AlarmClockItem.AlarmType type, String label, SolarEvents event, com.forrestguice.suntimeswidget.calculator.core.Location location)
     {
         // TODO:
         Calendar alarm = new GregorianCalendar(TimeZone.getDefault());
         //alarm.setTimeInMillis(calendar.getTimeInMillis());
         int hour = alarm.get(Calendar.HOUR_OF_DAY);
         int minutes = alarm.get(Calendar.MINUTE);
-        // TODO: local mean, apparent solar
 
-        scheduleAlarm(context, label, event, location, hour, minutes, null);
+        scheduleAlarm(context, type, label, event, location, hour, minutes, null);
     }
 
-    public static void scheduleAlarm(Activity context, String label, SolarEvents event, com.forrestguice.suntimeswidget.calculator.core.Location location, int hour, int minutes, String timezone)
+    public static void scheduleAlarm(Activity context, AlarmClockItem.AlarmType type, String label, SolarEvents event, com.forrestguice.suntimeswidget.calculator.core.Location location, int hour, int minutes, String timezone)
     {
         TimeZone tz = (timezone == null ? TimeZone.getDefault() : AlarmClockItem.AlarmTimeZone.getTimeZone(timezone, location));
         Calendar calendar = Calendar.getInstance(tz);
@@ -738,6 +760,7 @@ public class AlarmClockActivity extends AppCompatActivity
         alarmIntent.putExtra(AlarmClockActivity.EXTRA_TIMEZONE, timezone);
         alarmIntent.putExtra(AlarmClockActivity.EXTRA_LOCATION, location);
         alarmIntent.putExtra(AlarmClockActivity.EXTRA_SOLAREVENT, (event != null ? event.name() : (String) null));
+        alarmIntent.putExtra(AlarmClockActivity.EXTRA_ALARMTYPE, type.name());
 
         if (alarmIntent.resolveActivity(context.getPackageManager()) != null) {
             context.startActivity(alarmIntent);
