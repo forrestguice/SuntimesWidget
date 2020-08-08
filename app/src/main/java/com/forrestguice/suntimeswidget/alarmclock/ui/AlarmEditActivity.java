@@ -71,6 +71,8 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
+import java.util.Calendar;
+
 public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAdapterListener
 {
     public static final String TAG = "AlarmReceiverList";
@@ -394,9 +396,9 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         boolean alarmEnabled = (item != null && item.enabled);
 
         MenuItem enableItem = menu.findItem(R.id.action_enable);
-        if (enableItem != null)
+        if (enableItem != null && item != null)
         {
-            enableItem.setVisible(!alarmEnabled && AlarmNotifications.updateAlarmTime(this, item));
+            enableItem.setVisible(!alarmEnabled && AlarmNotifications.updateAlarmTime(this, item, Calendar.getInstance(), false));
             DrawableCompat.setTint(enableItem.getIcon(), colorAlarmEnabled);
             //DrawableCompat.setTintMode(enableItem.getIcon(), PorterDuff.Mode.SRC_ATOP);
         }

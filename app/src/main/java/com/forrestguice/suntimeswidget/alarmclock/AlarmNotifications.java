@@ -1034,7 +1034,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                         if (dismissedEarly) {
                                             scheduledFrom.setTimeInMillis(item.alarmtime + 60 * 1000);
                                         }
-                                        boolean updated = updateAlarmTime(context, item, scheduledFrom);     // sets item.hour, item.minute, item.timestamp (calculates the eventTime)
+                                        boolean updated = updateAlarmTime(context, item, scheduledFrom, true);     // sets item.hour, item.minute, item.timestamp (calculates the eventTime)
                                         if (updated)
                                         {
                                             item.alarmtime = item.timestamp + item.offset;     // scheduled sounding time (-before/+after eventTime by some offset)
@@ -1373,9 +1373,9 @@ public class AlarmNotifications extends BroadcastReceiver
      * @return true item was updated, false failed to update item
      */
     public static boolean updateAlarmTime(Context context, final AlarmClockItem item) {
-        return updateAlarmTime(context, item, Calendar.getInstance());
+        return updateAlarmTime(context, item, Calendar.getInstance(), true);
     }
-    public static boolean updateAlarmTime(Context context, final AlarmClockItem item, Calendar now)
+    public static boolean updateAlarmTime(Context context, final AlarmClockItem item, Calendar now, boolean modifyItem)
     {
         Calendar eventTime = Calendar.getInstance();
         if (item.location != null && item.event != null)
@@ -1407,10 +1407,13 @@ public class AlarmNotifications extends BroadcastReceiver
             return false;
         }
 
-        item.hour = eventTime.get(Calendar.HOUR_OF_DAY);
-        item.minute = eventTime.get(Calendar.MINUTE);
-        item.timestamp = eventTime.getTimeInMillis();
-        item.modified = true;
+        if (modifyItem)
+        {
+            item.hour = eventTime.get(Calendar.HOUR_OF_DAY);
+            item.minute = eventTime.get(Calendar.MINUTE);
+            item.timestamp = eventTime.getTimeInMillis();
+            item.modified = true;
+        }
         return true;
     }
 

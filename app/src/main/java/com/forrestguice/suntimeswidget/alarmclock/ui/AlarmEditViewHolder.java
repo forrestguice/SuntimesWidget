@@ -149,7 +149,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
         if (item != null)
         {
-            boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item);
+            boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item, Calendar.getInstance(), false);
 
             menu_type.setImageDrawable(ContextCompat.getDrawable(context, (item.type == AlarmClockItem.AlarmType.ALARM ? res_icAlarm : res_icNotification)));
             menu_type.setContentDescription(item.type.getDisplayString());
