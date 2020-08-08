@@ -399,8 +399,13 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         if (enableItem != null && item != null)
         {
             enableItem.setVisible(!alarmEnabled && AlarmNotifications.updateAlarmTime(this, item, Calendar.getInstance(), false));
-            DrawableCompat.setTint(enableItem.getIcon(), colorAlarmEnabled);
+            DrawableCompat.setTint(enableItem.getIcon(), colorAlarmEnabled);   // TODO: doesn't work on lower api? e.g. 19
             //DrawableCompat.setTintMode(enableItem.getIcon(), PorterDuff.Mode.SRC_ATOP);
+        }
+
+        MenuItem saveItem = menu.findItem(R.id.action_save);
+        if (saveItem != null) {
+            DrawableCompat.setTint(saveItem.getIcon(), (alarmEnabled) ? colorAlarmEnabled : colorEnabled);
         }
 
         return super.onPrepareOptionsPanel(view, menu);
