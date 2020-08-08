@@ -1013,7 +1013,7 @@ public class AlarmListDialog extends DialogFragment
             // date
             if (view.text_date != null) {
                 view.text_date.setText(AlarmEditViewHolder.displayAlarmDate(context, item));
-                view.text_date.setVisibility((eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON) ? View.VISIBLE : View.GONE);
+                view.text_date.setVisibility(AlarmEditViewHolder.showAlarmDate(context, item) ? View.VISIBLE : View.GONE);
                 view.text_date.setTextColor(item.enabled ? color_on : color_off);
             }
 

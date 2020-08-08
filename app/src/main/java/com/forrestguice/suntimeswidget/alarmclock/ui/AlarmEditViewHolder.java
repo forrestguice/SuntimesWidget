@@ -41,6 +41,7 @@ import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 
 @SuppressWarnings("Convert2Diamond")
 public class AlarmEditViewHolder extends RecyclerView.ViewHolder
@@ -173,9 +174,14 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             String timeString = " " + utils.timeDeltaLongDisplayString(System.currentTimeMillis(), item.timestamp + item.offset).getValue() + " ";   // TODO: periodic update
             String noteString = context.getString(R.string.schedalarm_dialog_note1, timeString);
             text_note.setText(SuntimesUtils.createRelativeSpan(SuntimesUtils.createBoldSpan(null, noteString, timeString), noteString, timeString, 1.25f));
+            text_date.setVisibility(AlarmEditViewHolder.showAlarmDate(context, item) ? View.VISIBLE : View.GONE);
 
-            int eventType = item.event == null ? -1 : item.event.getType();
-            text_date.setVisibility((eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON) ? View.VISIBLE : View.GONE);
+            /*if (item.enabled) {
+                TextView v = (TextView)text_datetime.getCurrentView();
+                v.setTextColor(ContextCompat.getColor(context, res_colorEnabled));
+                v = (TextView)text_datetime.getNextView();
+                v.setTextColor(ContextCompat.getColor(context, res_colorEnabled));
+            }*/
 
         } else {
             text_datetime_offset.setText("");
@@ -215,7 +221,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public static CharSequence displayAlarmTime(Context context, AlarmClockItem item)
     {
-        Calendar alarmTime = Calendar.getInstance();
+        Calendar alarmTime = Calendar.getInstance(TimeZone.getDefault());
         alarmTime.setTimeInMillis(item.timestamp);
 
         CharSequence alarmDesc;
@@ -247,6 +253,15 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             alarmDesc = SuntimesUtils.createRelativeSpan(null, timeString, " " + timeText.getSuffix(), 0.40f);
         }
         return alarmDesc;
+    }
+
+    public static boolean showAlarmDate(Context context, AlarmClockItem item)
+    {
+        int eventType = item.event == null ? -1 : item.event.getType();
+        long now = Calendar.getInstance(TimeZone.getDefault()).getTimeInMillis();
+        long delta = item.timestamp - now;
+        boolean isDistant = (delta >= (48 * 60 * 60 * 1000));
+        return (eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON || isDistant);
     }
 
     public static CharSequence displayOffset(Context context, AlarmClockItem item)

@@ -60,6 +60,9 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
 @SuppressWarnings("Convert2Diamond")
 public class AlarmCreateDialog extends BottomSheetDialogFragment
 {
@@ -85,8 +88,8 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
         Bundle args = new Bundle();
         args.putInt(EXTRA_MODE, 1);
-        args.putInt(EXTRA_HOUR, 6);
-        args.putInt(EXTRA_MINUTE, 3);
+        args.putInt(EXTRA_HOUR, 6);           // TODO: defaults from?
+        args.putInt(EXTRA_MINUTE, 30);
         args.putString(EXTRA_TIMEZONE, null);
         args.putSerializable(EXTRA_EVENT, SolarEvents.SUNRISE);
         args.putSerializable(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.ALARM);
@@ -300,7 +303,6 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     {
         AlarmClockItem.AlarmType alarmType = getAlarmType();
         AlarmClockItem item = createAlarm(AlarmCreateDialog.this, alarmType);
-        int eventType = item.event == null ? -1 : item.event.getType();
 
         if (text_title != null) {
             text_title.setText(context.getString(alarmType == AlarmClockItem.AlarmType.NOTIFICATION ? R.string.configAction_addNotification : R.string.configAction_addAlarm));
@@ -319,7 +321,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         if (text_date != null)
         {
             text_date.setText(AlarmEditViewHolder.displayAlarmDate(context, item));
-            text_date.setVisibility((eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON) ? View.VISIBLE : View.GONE);
+            text_date.setVisibility(AlarmEditViewHolder.showAlarmDate(context, item) ? View.VISIBLE : View.GONE);
         }
         if (text_note != null)    // TODO: periodic update
         {
