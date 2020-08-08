@@ -254,7 +254,10 @@ public class AlarmClockActivity extends AppCompatActivity
                 }
 
                 SolarEvents param_event = SolarEvents.valueOf(intent.getStringExtra(AlarmClockActivity.EXTRA_SOLAREVENT), null);
-                Location param_location = intent.getParcelableExtra(AlarmClockActivity.EXTRA_LOCATION);
+                intent.setExtrasClassLoader(getClassLoader());
+
+                Bundle locationBundle = intent.getBundleExtra(AlarmClockActivity.EXTRA_LOCATION);
+                Location param_location = ((locationBundle != null) ? (Location) locationBundle.getParcelable(AlarmClockActivity.EXTRA_LOCATION) : null);
                 if (param_location == null) {
                     param_location = WidgetSettings.loadLocationPref(context, 0);
                 }
@@ -758,9 +761,12 @@ public class AlarmClockActivity extends AppCompatActivity
         alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, ((timezone == null) ? hour : calendar.get(Calendar.HOUR_OF_DAY)));
         alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, ((timezone == null) ? minutes : calendar.get(Calendar.MINUTE)));
         alarmIntent.putExtra(AlarmClockActivity.EXTRA_TIMEZONE, timezone);
-        alarmIntent.putExtra(AlarmClockActivity.EXTRA_LOCATION, location);
         alarmIntent.putExtra(AlarmClockActivity.EXTRA_SOLAREVENT, (event != null ? event.name() : (String) null));
         alarmIntent.putExtra(AlarmClockActivity.EXTRA_ALARMTYPE, type.name());
+
+        Bundle locationBundle = new Bundle();
+        locationBundle.putParcelable(AlarmClockActivity.EXTRA_LOCATION, location);
+        alarmIntent.putExtra(AlarmClockActivity.EXTRA_LOCATION, locationBundle);
 
         if (alarmIntent.resolveActivity(context.getPackageManager()) != null) {
             context.startActivity(alarmIntent);
