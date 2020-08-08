@@ -1491,25 +1491,28 @@ public class SuntimesActivity extends AppCompatActivity
         public void onClick(DialogInterface d, int which)
         {
             Activity context = SuntimesActivity.this;
-
-            AlarmCreateDialog dialog = (AlarmCreateDialog) d;
-            com.forrestguice.suntimeswidget.calculator.core.Location location = dialog.getLocation();
-
-            switch (dialog.getMode())
+            FragmentManager fragments = getSupportFragmentManager();
+            AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_ALARM);
+            if (dialog != null)
             {
-                case 1:
-                    int hour = dialog.getHour();
-                    int minutes = dialog.getMinute();
-                    String timezone = dialog.getTimeZone();
-                    AlarmClockActivity.scheduleAlarm(context, "", null, location, hour, minutes, timezone);
-                    break;
+                AlarmClockItem.AlarmType type = dialog.getAlarmType();
+                com.forrestguice.suntimeswidget.calculator.core.Location location = dialog.getLocation();
+                switch (dialog.getMode())
+                {
+                    case 1:
+                        int hour = dialog.getHour();
+                        int minutes = dialog.getMinute();
+                        String timezone = dialog.getTimeZone();
+                        AlarmClockActivity.scheduleAlarm(context, type, "", null, location, hour, minutes, timezone);   // TODO: label
+                        break;
 
-                case 0:
-                default:
-                    SolarEvents event = dialog.getEvent();
-                    String alarmLabel = context.getString(R.string.schedalarm_labelformat2, event.getShortDisplayString());
-                    AlarmClockActivity.scheduleAlarm(context, alarmLabel, event, location);
-                    break;
+                    case 0:
+                    default:
+                        SolarEvents event = dialog.getEvent();
+                        String alarmLabel = context.getString(R.string.schedalarm_labelformat2, event.getShortDisplayString());
+                        AlarmClockActivity.scheduleAlarm(context, type, alarmLabel, event, location);
+                        break;
+                }
             }
         }
     };
