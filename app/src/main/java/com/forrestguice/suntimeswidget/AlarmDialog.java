@@ -368,7 +368,10 @@ public class AlarmDialog extends BottomSheetDialogFragment
 
         if (!showDesc)
         {
-            txt_note.setVisibility(View.GONE);
+            View layout_note = dialogContent.findViewById(R.id.appwidget_schedalarm_note_layout);
+            if (layout_note != null) {
+                layout_note.setVisibility(View.GONE);
+            }
             txt_modeLabel.setVisibility(View.GONE);
         }
     }
