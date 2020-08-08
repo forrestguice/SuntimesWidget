@@ -59,6 +59,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
 import com.forrestguice.suntimeswidget.actions.LoadActionDialog;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
@@ -361,9 +362,9 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 returnItem(true);
                 return true;
 
-            /*case R.id.action_disable:
-                returnItem(false);
-                return true;*/
+            case R.id.action_disable:
+                disableAlarm();
+                return true;
 
             case R.id.action_save:
                 returnItem(editor.getItem());
@@ -395,15 +396,19 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         AlarmClockItem item = editor.getItem();
         boolean alarmEnabled = (item != null && item.enabled);
 
+        MenuItem saveItem = menu.findItem(R.id.action_save);
         MenuItem enableItem = menu.findItem(R.id.action_enable);
+        MenuItem disableItem = menu.findItem(R.id.action_disable);
+
         if (enableItem != null && item != null)
         {
             enableItem.setVisible(!alarmEnabled && AlarmNotifications.updateAlarmTime(this, item, Calendar.getInstance(), false));
             DrawableCompat.setTint(enableItem.getIcon(), colorAlarmEnabled);   // TODO: doesn't work on lower api? e.g. 19
             //DrawableCompat.setTintMode(enableItem.getIcon(), PorterDuff.Mode.SRC_ATOP);
         }
-
-        MenuItem saveItem = menu.findItem(R.id.action_save);
+        if (disableItem != null && item != null) {
+            disableItem.setVisible(alarmEnabled);
+        }
         if (saveItem != null) {
             DrawableCompat.setTint(saveItem.getIcon(), (alarmEnabled) ? colorAlarmEnabled : colorEnabled);
         }
@@ -454,6 +459,25 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         } else {
             onBackPressed();
         }
+    }
+
+    protected void disableAlarm()
+    {
+        AlarmClockItem item = editor.getItem();
+        item.alarmtime = 0;
+        item.enabled = false;
+        item.modified = true;
+
+        AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(this, false, false);
+        task.setTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener() {
+            @Override
+            public void onFinished(Boolean result, AlarmClockItem item)
+            {
+                sendBroadcast(AlarmNotifications.getAlarmIntent(AlarmEditActivity.this, AlarmNotifications.ACTION_DISABLE, item.getUri()));
+                invalidateOptionsMenu();
+            }
+        });
+        task.execute(item);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

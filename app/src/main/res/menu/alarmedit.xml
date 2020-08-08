@@ -13,7 +13,13 @@
             android:icon="?attr/icActionSave"
             android:title="@string/configAction_saveAlarm"
             app:showAsAction="always"
-            android:orderInCategory="899" />
+            android:orderInCategory="810" />
+
+        <item android:id="@+id/action_disable"
+            android:icon="?attr/icActionCancel"
+            android:title="@string/configAction_disableAlarm"
+            app:showAsAction="always"
+            android:orderInCategory="820" />
 
         <item android:id="@+id/action_delete"
             android:icon="?attr/icActionDelete"
