@@ -624,16 +624,23 @@ public class AlarmClockActivity extends AppCompatActivity
                 return true;
 
             case android.R.id.home:
-                boolean showBack = getIntent().getBooleanExtra(EXTRA_SHOWBACK, false);
-                if (showBack) {
+                if (getIntent().getBooleanExtra(EXTRA_SHOWBACK, false))
                     onBackPressed();
-                } else {
-                    onHomePressed();
-                }
+                else onHomePressed();
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        if (isAddDialogShowing()) {
+            sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        } else {
+            super.onBackPressed();
         }
     }
 

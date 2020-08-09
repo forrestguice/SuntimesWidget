@@ -379,7 +379,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 return true;
 
             case android.R.id.home:
-                confirmDiscardChanges(AlarmEditActivity.this);
+                onBackPressed();
                 return true;
 
             default:
@@ -436,6 +436,11 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
        };
     }
 
+    @Override
+    public void onBackPressed() {
+        confirmDiscardChanges(AlarmEditActivity.this);
+    }
+
     protected void confirmDiscardChanges(final Context context)
     {
         if (editor.isModified())
@@ -444,7 +449,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             AlertDialog.Builder confirm = new AlertDialog.Builder(context).setMessage(message).setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(context.getString(R.string.discardchanges_dialog_ok), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            onBackPressed();
+                            AlarmEditActivity.super.onBackPressed();
                         }
                     })
                     .setNegativeButton(context.getString(R.string.discardchanges_dialog_cancel), null)
@@ -457,7 +462,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             confirm.show();
 
         } else {
-            onBackPressed();
+            super.onBackPressed();
         }
     }
 
