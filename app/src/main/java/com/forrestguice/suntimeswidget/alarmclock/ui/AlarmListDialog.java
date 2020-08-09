@@ -290,6 +290,10 @@ public class AlarmListDialog extends DialogFragment
         return alarm;
     }
 
+    public static AlarmClockItem createAlarm(final Context context, AlarmClockItem.AlarmType type, String label, @NonNull SolarEvents event, @NonNull Location location) {
+        return createAlarm(context, type, label, event, location, -1, -1, null, AlarmSettings.loadPrefVibrateDefault(context), AlarmSettings.getDefaultRingtoneUri(context, type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
+    }
+
     public static AlarmClockItem createAlarm(final Context context, AlarmClockItem.AlarmType type, String label, SolarEvents event, Location location, int hour, int minute, String timezone, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays)
     {
         final AlarmClockItem alarm = new AlarmClockItem();
