@@ -742,25 +742,31 @@ public class AlarmClockActivity extends AppCompatActivity
 
     public static void scheduleAlarm(Activity context, AlarmClockItem.AlarmType type, String label, SolarEvents event, com.forrestguice.suntimeswidget.calculator.core.Location location)
     {
-        // TODO:
-        Calendar alarm = new GregorianCalendar(TimeZone.getDefault());
-        //alarm.setTimeInMillis(calendar.getTimeInMillis());
-        int hour = alarm.get(Calendar.HOUR_OF_DAY);
-        int minutes = alarm.get(Calendar.MINUTE);
+        Calendar alarmTime = Calendar.getInstance(TimeZone.getDefault());
+        AlarmClockItem item = AlarmListDialog.createAlarm(context, type, label, event, location);
+        AlarmNotifications.updateAlarmTime(context, item);
+        alarmTime.setTimeInMillis(item.timestamp);
 
+        int hour = alarmTime.get(Calendar.HOUR_OF_DAY);
+        int minutes = alarmTime.get(Calendar.MINUTE);
         scheduleAlarm(context, type, label, event, location, hour, minutes, null);
     }
 
     public static void scheduleAlarm(Activity context, AlarmClockItem.AlarmType type, String label, SolarEvents event, com.forrestguice.suntimeswidget.calculator.core.Location location, int hour, int minutes, String timezone)
     {
         TimeZone tz = (timezone == null ? TimeZone.getDefault() : AlarmClockItem.AlarmTimeZone.getTimeZone(timezone, location));
-        Calendar calendar = Calendar.getInstance(tz);
+        Calendar calendar0 = Calendar.getInstance(tz);
+        calendar0.set(Calendar.HOUR_OF_DAY, hour);
+        calendar0.set(Calendar.MINUTE, minutes);
+
+        Calendar calendar1 = Calendar.getInstance(TimeZone.getDefault());
+        calendar1.setTimeInMillis(calendar0.getTimeInMillis());
 
         Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
         alarmIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         alarmIntent.putExtra(AlarmClock.EXTRA_MESSAGE, label);
-        alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, ((timezone == null) ? hour : calendar.get(Calendar.HOUR_OF_DAY)));
-        alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, ((timezone == null) ? minutes : calendar.get(Calendar.MINUTE)));
+        alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, ((timezone == null) ? hour : calendar1.get(Calendar.HOUR_OF_DAY)));
+        alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, ((timezone == null) ? minutes : calendar1.get(Calendar.MINUTE)));
         alarmIntent.putExtra(AlarmClockActivity.EXTRA_TIMEZONE, timezone);
         alarmIntent.putExtra(AlarmClockActivity.EXTRA_SOLAREVENT, (event != null ? event.name() : (String) null));
         alarmIntent.putExtra(AlarmClockActivity.EXTRA_ALARMTYPE, type.name());
