@@ -740,15 +740,19 @@ public class AlarmClockActivity extends AppCompatActivity
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void scheduleAlarm(Activity context, AlarmClockItem.AlarmType type, String label, SolarEvents event, com.forrestguice.suntimeswidget.calculator.core.Location location)
+    public static void scheduleAlarm(Activity context, AlarmClockItem.AlarmType type, String label, @NonNull SolarEvents event, @NonNull com.forrestguice.suntimeswidget.calculator.core.Location location)
     {
-        Calendar alarmTime = Calendar.getInstance(TimeZone.getDefault());
         AlarmClockItem item = AlarmListDialog.createAlarm(context, type, label, event, location);
-        AlarmNotifications.updateAlarmTime(context, item);
-        alarmTime.setTimeInMillis(item.timestamp);
+        boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item);
+        int hour = 6, minutes = 30;    // fallback to an arbitrary alarm time if event does not occur
 
-        int hour = alarmTime.get(Calendar.HOUR_OF_DAY);
-        int minutes = alarmTime.get(Calendar.MINUTE);
+        if (isSchedulable)
+        {
+            Calendar alarmTime = Calendar.getInstance(TimeZone.getDefault());
+            alarmTime.setTimeInMillis(item.timestamp);
+            hour = alarmTime.get(Calendar.HOUR_OF_DAY);
+            minutes = alarmTime.get(Calendar.MINUTE);
+        }
         scheduleAlarm(context, type, label, event, location, hour, minutes, null);
     }
 
