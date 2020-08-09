@@ -243,11 +243,19 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     {
         if (isSchedulable)
         {
+            int[] attrs = { android.R.attr.textColorPrimary };   // TODO: from SuntimesTheme
+            TypedArray a = context.obtainStyledAttributes(attrs);
+            int noteColor = ContextCompat.getColor(context, a.getResourceId(0, R.color.text_accent_dark));
+            a.recycle();
+
             String timeString = " " + utils.timeDeltaLongDisplayString(System.currentTimeMillis(), item.timestamp + item.offset).getValue() + " ";
-            return context.getString(R.string.schedalarm_dialog_note1, timeString);
+            String displayString = context.getString(R.string.schedalarm_dialog_note1, timeString);
+            return SuntimesUtils.createBoldColorSpan(null, displayString, timeString, noteColor);
 
         } else if (item.event != null) {
-            return context.getString(R.string.schedalarm_dialog_note2, item.event.getLongDisplayString());
+            String eventString = item.event.getLongDisplayString();
+            String displayString = context.getString(R.string.schedalarm_dialog_note2, eventString);
+            return SuntimesUtils.createBoldSpan(null, displayString, eventString);
 
         } else {
             return "";

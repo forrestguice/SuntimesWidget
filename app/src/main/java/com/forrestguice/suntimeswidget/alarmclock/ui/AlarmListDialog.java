@@ -896,7 +896,7 @@ public class AlarmListDialog extends DialogFragment
         public int res_backgroundOff = R.drawable.card_alarmitem_disabled_dark1;
 
         public int color_on = Color.CYAN;
-        public int color_off = Color.GRAY;
+        public int color_off = Color.GRAY, color_off1 = Color.WHITE;
         public int color_press = Color.MAGENTA;
         public int color_selected = Color.CYAN;
         public int color_notselected = Color.TRANSPARENT;
@@ -936,7 +936,7 @@ public class AlarmListDialog extends DialogFragment
                             R.attr.icActionSoundEnabled, R.attr.icActionSoundDisabled,
                             R.attr.icActionExtension, R.attr.icActionVibrationEnabled, R.attr.gridItemSelected,
                             R.attr.alarmCardEnabled, R.attr.alarmCardDisabled,
-                            R.attr.alarmColorEnabled, android.R.attr.textColorPrimary,
+                            R.attr.alarmColorEnabled, android.R.attr.textColorSecondary, android.R.attr.textColorPrimary,
                             R.attr.buttonPressColor };
             TypedArray a = context.obtainStyledAttributes(attrs);
             res_iconAlarm = a.getResourceId(0, R.drawable.ic_action_alarms);
@@ -949,8 +949,9 @@ public class AlarmListDialog extends DialogFragment
             res_backgroundOn = a.getResourceId(7, R.drawable.card_alarmitem_enabled_dark1);
             res_backgroundOff = a.getResourceId(8, R.drawable.card_alarmitem_disabled_dark1);
             color_on = ContextCompat.getColor(context, a.getResourceId(9, R.color.alarm_enabled_dark));
-            color_off = ContextCompat.getColor(context, a.getResourceId(10, android.R.color.primary_text_dark));
-            color_press = ContextCompat.getColor(context, a.getResourceId(11, R.color.btn_tint_pressed_dark));
+            color_off = ContextCompat.getColor(context, a.getResourceId(10, android.R.color.secondary_text_dark));
+            color_off1 = ContextCompat.getColor(context, a.getResourceId(11, android.R.color.primary_text_dark));
+            color_press = ContextCompat.getColor(context, a.getResourceId(12, R.color.btn_tint_pressed_dark));
             a.recycle();
         }
 
@@ -1012,14 +1013,14 @@ public class AlarmListDialog extends DialogFragment
             // time
             if (view.text_datetime != null) {
                 view.text_datetime.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmTime(context, item) : "");
-                view.text_datetime.setTextColor(item.enabled ? color_on : color_off);
+                view.text_datetime.setTextColor(item.enabled ? color_on : (isSelected ? color_off1 : color_off));
             }
 
             // date
             if (view.text_date != null) {
                 view.text_date.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmDate(context, item) : "");
                 view.text_date.setVisibility(isSchedulable && AlarmEditViewHolder.showAlarmDate(context, item) ? View.VISIBLE : View.GONE);
-                view.text_date.setTextColor(item.enabled ? color_on : color_off);
+                view.text_date.setTextColor(item.enabled ? color_on : (isSelected ? color_off1 : color_off));
             }
 
             // location
