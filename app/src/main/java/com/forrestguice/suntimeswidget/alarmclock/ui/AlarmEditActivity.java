@@ -663,6 +663,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         dialog.setDialogMode(item.event != null ? 0 : 1);
         dialog.setEvent(item.event, item.location);
         dialog.setAlarmTime(item.hour, item.minute, item.timezone);
+        dialog.setOffset(item.offset);
         dialog.setOnAcceptedListener(onPickEventAccepted);
         dialog.setOnNeutralListener(onPickEventCanceled);
         dialog.setOnCanceledListener(onPickEventCanceled);

@@ -68,6 +68,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     public static final String EXTRA_HOUR = "hour";
     public static final String EXTRA_MINUTE = "minute";
     public static final String EXTRA_DATE = "date";
+    public static final String EXTRA_OFFSET = "offset";
     public static final String EXTRA_TIMEZONE = "timezone";
     public static final String EXTRA_LOCATION = "location";
     public static final String EXTRA_EVENT = "event";
@@ -87,6 +88,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         args.putInt(EXTRA_MODE, 1);
         args.putInt(EXTRA_HOUR, 6);           // TODO: defaults from?
         args.putInt(EXTRA_MINUTE, 30);
+        args.putLong(EXTRA_OFFSET, 0);
         args.putString(EXTRA_TIMEZONE, null);
         args.putSerializable(EXTRA_EVENT, SolarEvents.SUNRISE);
         args.putSerializable(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.ALARM);
@@ -306,6 +308,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     {
         AlarmClockItem.AlarmType alarmType = getAlarmType();
         AlarmClockItem item = createAlarm(AlarmCreateDialog.this, alarmType);
+        item.offset = getOffset();
         boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item);
 
         if (text_title != null) {
@@ -570,6 +573,17 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     }
     public AlarmClockItem.AlarmType getAlarmType() {
         return (AlarmClockItem.AlarmType) getArguments().getSerializable(EXTRA_ALARMTYPE);
+    }
+
+    public void setOffset(long offset)
+    {
+        getArguments().putLong(EXTRA_OFFSET, offset);
+        if (isAdded()) {
+            updateViews(getActivity());
+        }
+    }
+    public long getOffset() {
+        return getArguments().getLong(EXTRA_OFFSET, 0);
     }
 
     private void initEventDialog(Context context, AlarmDialog dialog, Location forLocation)
