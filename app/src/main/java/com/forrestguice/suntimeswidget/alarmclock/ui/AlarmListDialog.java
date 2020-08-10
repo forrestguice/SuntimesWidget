@@ -646,10 +646,16 @@ public class AlarmListDialog extends DialogFragment
 
         private void detachClickListeners(@NonNull AlarmListDialogItem holder)
         {
-            holder.card.setOnClickListener(null);
-            holder.card.setOnLongClickListener(null);
-            holder.overflow.setOnClickListener(null);
-            holder.typeButton.setOnClickListener(null);
+            if (holder.card != null) {
+                holder.card.setOnClickListener(null);
+                holder.card.setOnLongClickListener(null);
+            }
+            if (holder.overflow != null) {
+                holder.overflow.setOnClickListener(null);
+            }
+            if (holder.typeButton != null) {
+                holder.typeButton.setOnClickListener(null);
+            }
 
             if (Build.VERSION.SDK_INT >= 14) {
                 if (holder.switch_enabled != null) {
