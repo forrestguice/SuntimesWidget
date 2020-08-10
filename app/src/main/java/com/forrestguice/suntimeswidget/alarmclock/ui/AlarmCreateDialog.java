@@ -17,6 +17,7 @@
 */
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
+import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
@@ -44,6 +45,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.AlarmDialog;
 import com.forrestguice.suntimeswidget.LocationConfigDialog;
@@ -73,6 +75,8 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     public static final String EXTRA_LOCATION = "location";
     public static final String EXTRA_EVENT = "event";
 
+    public static final String EXTRA_PREVIEW_OFFSET = "previewOffset";
+
     public static final String DIALOG_LOCATION = "locationDialog";
 
     protected TabLayout tabs;
@@ -86,6 +90,8 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
         Bundle args = new Bundle();
         args.putInt(EXTRA_MODE, 1);
+        args.putBoolean(EXTRA_PREVIEW_OFFSET, false);
+
         args.putInt(EXTRA_HOUR, 6);           // TODO: defaults from?
         args.putInt(EXTRA_MINUTE, 30);
         args.putLong(EXTRA_OFFSET, 0);
@@ -285,6 +291,11 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             btn_neutral.setOnClickListener(onDialogNeutralClick);
         }
 
+        View layout_time = dialogContent.findViewById(R.id.layout_datetime);
+        if (layout_time != null) {
+            layout_time.setOnClickListener(onDialogBottomBarClick);
+        }
+
         ImageButton btn_alarms = (ImageButton) dialogContent.findViewById(R.id.dialog_button_alarms);
         if (btn_alarms != null)
         {
@@ -324,11 +335,11 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             text_offset.setText(isSchedulable ? AlarmEditViewHolder.displayOffset(context, item) : "");
         }
         if (text_time != null) {
-            text_time.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmTime(context, item) : "");
+            text_time.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmTime(context, item, previewOffset()) : "");
         }
         if (text_date != null)
         {
-            text_date.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmDate(context, item) : "");
+            text_date.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmDate(context, item, previewOffset()) : "");
             text_date.setVisibility(isSchedulable && AlarmEditViewHolder.showAlarmDate(context, item) ? View.VISIBLE : View.GONE);
         }
         if (text_note != null) {    // TODO: periodic update
@@ -494,6 +505,67 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         }
     };
 
+    private View.OnClickListener onDialogBottomBarClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            setPreviewOffset(!previewOffset());
+            animatePreviewOffset(AlarmCreateDialog.this, previewOffset());
+        }
+    };
+
+    protected void animatePreviewOffset(final AlarmCreateDialog dialog, final boolean enable)
+    {
+        if (dialog == null || dialog.getActivity() == null || !isAdded()) {
+            return;
+        }
+
+        AlarmClockItem item = createAlarm(dialog, getAlarmType());
+        item.offset = getOffset();
+        boolean isSchedulable = AlarmNotifications.updateAlarmTime(getActivity(), item);
+
+        if (!enable && text_offset != null) {
+            text_offset.setAlpha(0.0f);
+            text_offset.setVisibility(View.VISIBLE);
+        }
+        if (text_time != null) {
+            text_time.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmTime(getActivity(), item, enable) : "");
+        }
+        if (text_date != null) {
+            text_date.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmDate(getActivity(), item, enable): "");
+        }
+        if (text_offset != null)
+        {
+            text_offset.animate().translationY((enable ? 2 * text_offset.getHeight() : 0))
+                    .alpha(enable ? 0.0f : 1.0f).setListener(new Animator.AnimatorListener() {
+                public void onAnimationCancel(Animator animation) {}
+                public void onAnimationRepeat(Animator animation) {}
+                public void onAnimationStart(Animator animation) {}
+                public void onAnimationEnd(Animator animation)
+                {
+                    text_offset.setVisibility(enable ? View.GONE : View.VISIBLE);
+                    if (enable)
+                    {
+                        text_offset.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                setPreviewOffset(false);
+                                animatePreviewOffset(dialog,false);
+                            }
+                        }, PREVIEW_OFFSET_DURATION_MILLIS);
+                    }
+                }
+            });
+        }
+    }
+    public static final int PREVIEW_OFFSET_DURATION_MILLIS = 1500;
+
+    public boolean previewOffset() {
+        return getArguments().getBoolean(EXTRA_PREVIEW_OFFSET, false);
+    }
+    public void setPreviewOffset(boolean value) {
+        getArguments().putBoolean(EXTRA_PREVIEW_OFFSET, value);
+    }
+
     public int getMode() {
         return tabs.getSelectedTabPosition();
     }
@@ -604,7 +676,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         dialog.setData(context, sunData, moonData, equinoxData);
     }
 
-    public static AlarmClockItem createAlarm(AlarmCreateDialog dialog, AlarmClockItem.AlarmType type)
+    public static AlarmClockItem createAlarm(@NonNull AlarmCreateDialog dialog, AlarmClockItem.AlarmType type)
     {
         int hour;
         int minute;
