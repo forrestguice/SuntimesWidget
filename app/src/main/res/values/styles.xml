@@ -21,8 +21,8 @@
         <item name="chipTrayBackground">@drawable/chip_tray_light</item>
 
         <item name="alarmColorEnabled">@color/alarm_enabled_light</item>
-        <item name="alarmCardEnabled">@drawable/card_alarmitem_enabled_light</item>
-        <item name="alarmCardDisabled">@drawable/card_alarmitem_disabled_light</item>
+        <item name="alarmCardEnabled">@drawable/card_alarmitem_enabled_light0</item>
+        <item name="alarmCardDisabled">@drawable/card_alarmitem_disabled_light0</item>
         <item name="gridItemSelected">@color/grid_selected_light</item>
 
         <item name="buttonPressColor">@color/btn_tint_pressed_light</item>
