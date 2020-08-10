@@ -79,7 +79,7 @@
     <TextView
         android:id="@+id/text_note" android:visibility="visible"
         android:layout_width="0dp" android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginLeft="16dp" android:layout_marginTop="8dp" android:layout_marginRight="8dp" android:layout_marginBottom="8dp"
         android:text="~15m\nfrom now"
         android:gravity="end"
         android:textSize="10sp" android:maxLines="3" android:ellipsize="end"
@@ -87,6 +87,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
-
 
 </android.support.constraint.ConstraintLayout>
