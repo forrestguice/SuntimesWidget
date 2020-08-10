@@ -629,6 +629,9 @@ public class AlarmListDialog extends DialogFragment
             if (holder.overflow != null) {
                 holder.overflow.setOnClickListener(overflowMenuListener(position));
             }
+            if (holder.editButton != null) {
+                holder.editButton.setOnClickListener(editButtonListener(position, holder));
+            }
             if (holder.typeButton != null) {
                 holder.typeButton.setOnClickListener(typeMenuListener(position, holder.typeButton));
             }
@@ -652,6 +655,9 @@ public class AlarmListDialog extends DialogFragment
             }
             if (holder.overflow != null) {
                 holder.overflow.setOnClickListener(null);
+            }
+            if (holder.editButton != null) {
+                holder.editButton.setOnClickListener(null);
             }
             if (holder.typeButton != null) {
                 holder.typeButton.setOnClickListener(null);
@@ -702,6 +708,19 @@ public class AlarmListDialog extends DialogFragment
                 public void onClick(View v) {
                     setSelectedIndex(position);
                     showOverflowMenu(contextRef.get(), position, v);
+                }
+            };
+        }
+
+        private View.OnClickListener editButtonListener(final int position, final AlarmListDialogItem holder)
+        {
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setSelectedIndex(position);
+                    if (listener != null) {
+                        listener.onItemClicked(items.get(position), holder);
+                    }
                 }
             };
         }
@@ -889,6 +908,7 @@ public class AlarmListDialog extends DialogFragment
         public TextView text_repeat;
         public TextView text_offset;
         public ImageButton overflow;
+        public ImageButton editButton;
         public SwitchCompat switch_enabled;
         public CheckBox check_enabled;
 
@@ -927,6 +947,7 @@ public class AlarmListDialog extends DialogFragment
             text_repeat = (TextView) view.findViewById(R.id.text_repeat);
             text_offset = (TextView) view.findViewById(R.id.text_datetime_offset);
             overflow = (ImageButton) view.findViewById(R.id.overflow_menu);
+            editButton = (ImageButton) view.findViewById(R.id.edit_button);
 
             if (Build.VERSION.SDK_INT >= 14) {
                 switch_enabled = (SwitchCompat) view.findViewById(R.id.switch_enabled);        // switch used by api >= 14 (otherwise null)
@@ -1113,6 +1134,9 @@ public class AlarmListDialog extends DialogFragment
             // overflow menu
             if (view.overflow != null) {
                 view.overflow.setVisibility(isSelected ? View.VISIBLE : View.INVISIBLE);
+            }
+            if (view.editButton != null) {
+                view.editButton.setVisibility(isSelected ? View.VISIBLE : View.INVISIBLE);
             }
         }
 

@@ -63,6 +63,14 @@
                 tools:text="label" />
 
             <ImageButton
+                android:id="@+id/edit_button"
+                android:layout_width="32dp" android:layout_height="32dp"
+                android:contentDescription="@string/configAction_editAlarm"
+                style="?attr/actionOverflowButtonStyle"
+                android:scaleX="0.75" android:scaleY="0.75"
+                android:src="?attr/icActionEdit" />
+
+            <ImageButton
                 android:id="@+id/overflow_menu"
                 android:layout_width="32dp" android:layout_height="32dp"
                 android:contentDescription="@string/configAction_alarmMenu"
