@@ -220,10 +220,13 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         return (item.label == null || item.label.isEmpty()) ? emptyLabel : item.label;
     }
 
-    public static CharSequence displayAlarmTime(Context context, AlarmClockItem item)
+    public static CharSequence displayAlarmTime(Context context, AlarmClockItem item) {
+        return displayAlarmTime(context, item, false);
+    }
+    public static CharSequence displayAlarmTime(Context context, AlarmClockItem item, boolean withOffset)
     {
         Calendar alarmTime = Calendar.getInstance(TimeZone.getDefault());
-        alarmTime.setTimeInMillis(item.timestamp);
+        alarmTime.setTimeInMillis(item.timestamp + (withOffset ? item.offset : 0));
 
         CharSequence alarmDesc;
         SuntimesUtils utils = new SuntimesUtils();
@@ -262,10 +265,13 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         }
     }
 
-    public static CharSequence displayAlarmDate(Context context, AlarmClockItem item)
+    public static CharSequence displayAlarmDate(Context context, AlarmClockItem item) {
+        return displayAlarmDate(context, item, false);
+    }
+    public static CharSequence displayAlarmDate(Context context, AlarmClockItem item, boolean withOffset)
     {
         Calendar alarmTime = Calendar.getInstance();
-        alarmTime.setTimeInMillis(item.timestamp);
+        alarmTime.setTimeInMillis(item.timestamp + (withOffset ? item.offset : 0));
 
         CharSequence alarmDesc;
         SuntimesUtils.TimeDisplayText timeText = utils.calendarDateDisplayString(context, alarmTime, true);
