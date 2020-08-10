@@ -701,7 +701,7 @@ public class AlarmClockActivity extends AppCompatActivity
     protected void showAbout()
     {
         Intent about = new Intent(this, AboutActivity.class);
-        about.putExtra(AboutActivity.EXTRA_ICONID, R.mipmap.ic_launcher_alarms_round);
+        about.putExtra(AboutActivity.EXTRA_ICONID, R.drawable.ic_suntimesalarms);
         startActivity(about);
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
