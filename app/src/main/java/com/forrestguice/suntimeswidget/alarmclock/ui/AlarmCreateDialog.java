@@ -60,9 +60,6 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
-import java.util.Calendar;
-import java.util.TimeZone;
-
 @SuppressWarnings("Convert2Diamond")
 public class AlarmCreateDialog extends BottomSheetDialogFragment
 {
@@ -285,6 +282,12 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         if (btn_neutral != null) {
             btn_neutral.setOnClickListener(onDialogNeutralClick);
         }
+
+        ImageButton btn_alarms = (ImageButton) dialogContent.findViewById(R.id.dialog_button_alarms);
+        if (btn_alarms != null)
+        {
+            btn_alarms.setOnClickListener(onDialogNeutralClick);
+        }
     }
 
     private AdapterView.OnItemSelectedListener onTypeSelected = new AdapterView.OnItemSelectedListener() {
@@ -419,6 +422,11 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         onCanceled = listener;
     }
 
+    private DialogInterface.OnClickListener onNeutral = null;
+    public void setOnNeutralListener( DialogInterface.OnClickListener listener) {
+        onNeutral = listener;
+    }
+
     @Override
     public void onResume()
     {
@@ -434,10 +442,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     private DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
     {
         @Override
-        public void onShow(DialogInterface dialog)
-        {
-
-        }
+        public void onShow(DialogInterface dialog) {}
     };
 
     private View.OnClickListener onDialogNeutralClick = new View.OnClickListener()
@@ -445,7 +450,9 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         @Override
         public void onClick(View v)
         {
-            // TODO: neutral click
+            if (onNeutral != null) {
+                onNeutral.onClick(getDialog(), 0);
+            }
         }
     };
 

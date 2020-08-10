@@ -467,6 +467,12 @@ public class AlarmClockActivity extends AppCompatActivity
             showAlarmEditActivity(item, dialog.text_time, REQUEST_ADDALARM, true);
         }
     };
+    private DialogInterface.OnClickListener onAddAlarmNeutral = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface d, int which) {
+            dismissAddDialog();
+        }
+    };
     private DialogInterface.OnClickListener onAddAlarmCanceled = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface d, int which) {
@@ -517,6 +523,7 @@ public class AlarmClockActivity extends AppCompatActivity
             dialog.setAlarmType(type);
             dialog.setOnAcceptedListener(onAddAlarmAccepted);
             dialog.setOnCanceledListener(onAddAlarmCanceled);
+            dialog.setOnNeutralListener(onAddAlarmNeutral);
         }
         sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
@@ -535,6 +542,7 @@ public class AlarmClockActivity extends AppCompatActivity
         if (alarmCreateDialog != null) {
             alarmCreateDialog.setOnAcceptedListener(onAddAlarmAccepted);
             alarmCreateDialog.setOnCanceledListener(onAddAlarmCanceled);
+            alarmCreateDialog.setOnNeutralListener(onAddAlarmNeutral);
         }
     }
 
@@ -790,6 +798,5 @@ public class AlarmClockActivity extends AppCompatActivity
             context.startActivity(alarmIntent);
         }
     }
-
 
 }

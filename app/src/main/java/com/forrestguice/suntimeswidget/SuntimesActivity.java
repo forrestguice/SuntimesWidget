@@ -435,6 +435,7 @@ public class SuntimesActivity extends AppCompatActivity
         AlarmCreateDialog alarmDialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_ALARM);
         if (alarmDialog != null) {
             alarmDialog.setOnAcceptedListener(onScheduleAlarm);
+            alarmDialog.setOnNeutralListener(onManageAlarms);
             //Log.d("DEBUG", "AlarmCreateDialog listeners restored.");
         }
 
@@ -1476,6 +1477,7 @@ public class SuntimesActivity extends AppCompatActivity
             dialog.setEvent(event, WidgetSettings.loadLocationPref(this, 0));
             //dialog.setAlarmTime(item.hour, item.minute, item.timezone);
             dialog.setOnAcceptedListener(onScheduleAlarm);
+            dialog.setOnNeutralListener(onManageAlarms);
             dialog.show(getSupportFragmentManager(), DIALOGTAG_ALARM);
 
         } else {
@@ -1514,6 +1516,24 @@ public class SuntimesActivity extends AppCompatActivity
                         break;
                 }
             }
+        }
+    };
+
+    private DialogInterface.OnClickListener onManageAlarms = new DialogInterface.OnClickListener()
+    {
+        @Override
+        public void onClick(DialogInterface d, int which)
+        {
+            FragmentManager fragments = getSupportFragmentManager();
+            AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_ALARM);
+            if (dialog != null) {
+                dialog.dismiss();
+            }
+
+            Context context = SuntimesActivity.this;
+            Intent alarmIntent = new Intent(context, AlarmClockActivity.class);
+            alarmIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(alarmIntent);
         }
     };
 

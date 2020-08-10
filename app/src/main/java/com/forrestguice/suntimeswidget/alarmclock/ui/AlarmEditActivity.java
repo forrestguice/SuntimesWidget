@@ -314,6 +314,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         AlarmCreateDialog eventDialog1 = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
         if (eventDialog1 != null) {
             eventDialog1.setOnAcceptedListener(onPickEventAccepted);
+            eventDialog1.setOnNeutralListener(onPickEventCanceled);
+            eventDialog1.setOnCanceledListener(onPickEventCanceled);
         }
 
         AlarmRepeatDialog repeatDialog = (AlarmRepeatDialog) fragments.findFragmentByTag(DIALOGTAG_REPEAT);
@@ -662,6 +664,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         dialog.setEvent(item.event, item.location);
         dialog.setAlarmTime(item.hour, item.minute, item.timezone);
         dialog.setOnAcceptedListener(onPickEventAccepted);
+        dialog.setOnNeutralListener(onPickEventCanceled);
+        dialog.setOnCanceledListener(onPickEventCanceled);
         dialog.show(getSupportFragmentManager(), DIALOGTAG_EVENT);
     }
     private DialogInterface.OnClickListener onPickEventAccepted = new DialogInterface.OnClickListener() {
@@ -680,6 +684,18 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             }
         }
     };
+    private DialogInterface.OnClickListener onPickEventCanceled = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface d, int which)
+        {
+            FragmentManager fragments = getSupportFragmentManager();
+            AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT);
+            if (editor != null && dialog != null) {
+                dialog.dismiss();
+            }
+        }
+    };
+
 
     /**
      * pickLocation
