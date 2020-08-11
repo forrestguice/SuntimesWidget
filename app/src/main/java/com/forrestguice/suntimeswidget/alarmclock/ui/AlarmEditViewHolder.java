@@ -222,6 +222,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         chip_repeat.setOnClickListener(null);
         chip_ringtone.setOnClickListener(null);
         check_vibrate.setOnClickListener(null);
+        check_vibrate.setOnCheckedChangeListener(null);
         chip_action0.setOnClickListener(null);
         chip_action1.setOnClickListener(null);
     }
