@@ -17,6 +17,7 @@
 */
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
+import android.animation.Animator;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -40,12 +41,15 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+
+import java.util.Calendar;
 
 @SuppressWarnings("Convert2Diamond")
 public class AlarmEditDialog extends DialogFragment
@@ -85,6 +89,7 @@ public class AlarmEditDialog extends DialogFragment
     public void notifyItemChanged() {
         item.modified = true;
         bindItemToHolder(item);
+        itemView.bindDataToPosition(getActivity(), item, 0);
     }
 
     protected void bindItemToHolder(AlarmClockItem item)
@@ -380,21 +385,11 @@ public class AlarmEditDialog extends DialogFragment
         holder.check_vibrate.setOnCheckedChangeListener(pickVibrating());
         holder.chip_action0.setOnClickListener(pickAction(0));
         holder.chip_action1.setOnClickListener(pickAction(1));
+        holder.layout_datetime.setOnClickListener(togglePreviewOffset(holder));
     }
 
-    private void detachClickListeners(@NonNull AlarmEditViewHolder holder)
-    {
-        holder.menu_type.setOnClickListener(null);
-        holder.menu_overflow.setOnClickListener(null);
-        holder.edit_label.setOnClickListener(null);
-        holder.chip_offset.setOnClickListener(null);
-        holder.chip_event.setOnClickListener(null);
-        holder.chip_location.setOnClickListener(null);
-        holder.chip_repeat.setOnClickListener(null);
-        holder.chip_ringtone.setOnClickListener(null);
-        holder.check_vibrate.setOnCheckedChangeListener(null);
-        holder.chip_action0.setOnClickListener(null);
-        holder.chip_action1.setOnClickListener(null);
+    private void detachClickListeners(@NonNull AlarmEditViewHolder holder) {
+        holder.detachClickListeners();
     }
 
     protected AlarmItemAdapterListener listener;
@@ -493,6 +488,66 @@ public class AlarmEditDialog extends DialogFragment
             }
         };
     }
+
+    public void togglePreviewOffset()
+    {
+        itemView.preview_offset = !itemView.preview_offset;
+        animatePreviewOffset(itemView, itemView.preview_offset);
+    }
+
+    private View.OnClickListener togglePreviewOffset(final AlarmEditViewHolder holder)
+    {
+        return new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                holder.preview_offset = !holder.preview_offset;
+                animatePreviewOffset(holder, holder.preview_offset);
+            }
+        };
+    }
+    protected void animatePreviewOffset(final AlarmEditViewHolder holder, final boolean enable)
+    {
+        if (holder == null || getActivity() == null || !isAdded()) {
+            return;
+        }
+        boolean isSchedulable = AlarmNotifications.updateAlarmTime(getActivity(), item, Calendar.getInstance(), false);
+
+        if (!enable && holder.text_offset != null) {
+            holder.text_datetime_offset.setAlpha(0.0f);
+            holder.text_datetime_offset.setVisibility(View.VISIBLE);
+        }
+        if (holder.text_datetime != null) {
+            holder.text_datetime.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmTime(getActivity(), item, enable) : "");
+        }
+        if (holder.text_date != null) {
+            holder.text_date.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmDate(getActivity(), item, enable): "");
+        }
+        if (holder.text_datetime_offset != null)
+        {
+            holder.text_datetime_offset.animate().translationY((enable ? 2 * holder.text_datetime_offset.getHeight() : 0))
+                    .alpha(enable ? 0.0f : 1.0f).setListener(new Animator.AnimatorListener() {
+                public void onAnimationCancel(Animator animation) {}
+                public void onAnimationRepeat(Animator animation) {}
+                public void onAnimationStart(Animator animation) {}
+                public void onAnimationEnd(Animator animation)
+                {
+                    holder.text_datetime_offset.setVisibility(enable ? View.GONE : View.VISIBLE);
+                    if (enable)
+                    {
+                        holder.text_datetime_offset.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                holder.preview_offset = false;
+                                animatePreviewOffset(holder,false);
+                            }
+                        }, PREVIEW_OFFSET_DURATION_MILLIS);
+                    }
+                }
+            });
+        }
+    }
+    public static final int PREVIEW_OFFSET_DURATION_MILLIS = 1500;
 
     private CompoundButton.OnCheckedChangeListener pickVibrating()
     {

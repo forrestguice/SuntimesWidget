@@ -51,7 +51,9 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public int position = RecyclerView.NO_POSITION;
     public boolean selected = true;
+    public boolean preview_offset = false;
 
+    public View layout_datetime;
     public TextView text_datetime_offset;
     public TextSwitcher text_datetime;
     public TextView text_date;
@@ -94,6 +96,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         Context context = parent.getContext();
         SuntimesUtils.initDisplayStrings(context);
 
+        layout_datetime = parent.findViewById(R.id.layout_datetime);
         text_datetime_offset = (TextView) parent.findViewById(R.id.text_datetime_offset);
         text_datetime = (TextSwitcher) parent.findViewById(R.id.text_datetime);
         text_date = (TextView) parent.findViewById(R.id.text_date);
@@ -170,12 +173,16 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             text_action1.setText(displayAction(context, item, 1));
 
             text_datetime_offset.setText(isSchedulable ? text_offset.getText() : "");
-            text_datetime.setText(isSchedulable ? displayAlarmTime(context, item) : "");
+            text_datetime_offset.setVisibility(preview_offset ? View.GONE : View.VISIBLE);
+
+            text_datetime.setText(isSchedulable ? displayAlarmTime(context, item, preview_offset) : "");
             ViewCompat.setTransitionName(text_datetime, "transition_" + item.rowID);
-            text_date.setText(isSchedulable ? displayAlarmDate(context, item) : "");
+
+            text_date.setText(isSchedulable ? displayAlarmDate(context, item, preview_offset) : "");
+            text_date.setVisibility(isSchedulable && AlarmEditViewHolder.showAlarmDate(context, item) ? View.VISIBLE : View.GONE);
 
             text_note.setText(AlarmEditViewHolder.displayAlarmNote(context, item, isSchedulable));
-            text_date.setVisibility(isSchedulable && AlarmEditViewHolder.showAlarmDate(context, item) ? View.VISIBLE : View.GONE);
+
 
             /*if (item.enabled) {
                 TextView v = (TextView)text_datetime.getCurrentView();
@@ -204,6 +211,11 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public void detachClickListeners()
     {
+        layout_datetime.setOnClickListener(null);
+        menu_type.setOnClickListener(null);
+        menu_overflow.setOnClickListener(null);
+        edit_label.setOnClickListener(null);
+        chip_offset.setOnClickListener(null);
         chip_offset.setOnClickListener(null);
         chip_event.setOnClickListener(null);
         chip_location.setOnClickListener(null);
