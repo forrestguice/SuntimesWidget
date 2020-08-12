@@ -420,6 +420,9 @@ public class AlarmClockActivity extends AppCompatActivity
             } else if (list.getSelectedRowID() == item.rowID) {
                 Log.d("DEBUG", "onItemClicked: show edit");
                 showAlarmEditActivity(item, view.text_datetime, REQUEST_EDITALARM, false);
+
+            } else if (item.enabled) {
+                AlarmNotifications.showTimeUntilToast(AlarmClockActivity.this, list.getView(), item);
             }
         }
 
