@@ -20,9 +20,7 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
@@ -38,6 +36,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
+import com.forrestguice.suntimeswidget.settings.SolarEventIcons;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 
@@ -162,7 +161,17 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             text_offset.setText(displayOffset(context, item));
             text_location.setText(item.location.getLabel());
             text_repeat.setText( displayRepeating(context, item, selected));
+
             text_event.setText(displayEvent(context, item));
+            if (item.event != null)
+            {
+                float iconSize = context.getResources().getDimension(R.dimen.eventIcon_width);
+                Drawable eventIcon = SolarEventIcons.getIconDrawable(context, item.event, (int)iconSize, (int)iconSize);
+                text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, item.event));
+                text_event.setCompoundDrawables(eventIcon, null, null, null);
+            } else {
+                text_event.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            }
 
             Drawable ringtoneIcon = ContextCompat.getDrawable(context, (item.ringtoneName != null ? res_icSoundOn : res_icSoundOff));
             text_ringtone.setCompoundDrawablesWithIntrinsicBounds(ringtoneIcon, null, null, null);
@@ -366,8 +375,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public static CharSequence displayEvent(Context context, AlarmClockItem item)
     {
-        if (item.event != null)
-        {
+        if (item.event != null) {
             return item.event.getLongDisplayString();
 
         } else if (item.timezone != null) {
