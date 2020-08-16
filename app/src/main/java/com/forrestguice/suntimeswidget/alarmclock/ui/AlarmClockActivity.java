@@ -650,6 +650,10 @@ public class AlarmClockActivity extends AppCompatActivity
     {
         if (isAddDialogShowing()) {
             sheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+        } else if (list.getSelectedRowID() != -1) {
+            list.clearSelection();
+
         } else {
             super.onBackPressed();
         }
