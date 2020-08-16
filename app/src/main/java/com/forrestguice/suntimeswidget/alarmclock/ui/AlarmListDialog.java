@@ -39,6 +39,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.AlertDialog;
@@ -60,6 +61,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -72,6 +74,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.SolarEventIcons;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -897,6 +900,7 @@ public class AlarmListDialog extends DialogFragment
         public ImageButton typeButton;
         public TextView text_label;
         public TextView text_event;
+        public ImageView icon_event;
         public TextView text_date;
         public TextView text_datetime;
         public TextView text_location;
@@ -936,6 +940,7 @@ public class AlarmListDialog extends DialogFragment
             typeButton = (ImageButton) view.findViewById(R.id.type_menu);
             text_label = (TextView) view.findViewById(android.R.id.text1);
             text_event = (TextView) view.findViewById(R.id.text_event);
+            icon_event = (ImageView) view.findViewById(R.id.icon_event);
             text_date = (TextView) view.findViewById(R.id.text_date);
             text_datetime = (TextView) view.findViewById(R.id.text_datetime);
             text_location = (TextView) view.findViewById(R.id.text_location);
@@ -1032,10 +1037,22 @@ public class AlarmListDialog extends DialogFragment
             }
 
             // event
-            if (view.text_event != null) {
+            if (view.text_event != null)
+            {
                 view.text_event.setText(AlarmEditViewHolder.displayEvent(context, item));
                 view.text_event.setTextColor(item.enabled ? color_on : color_off);
+
+                if (item.event != null)
+                {
+                    float iconSize = context.getResources().getDimension(R.dimen.eventIcon_width);
+                    Drawable eventIcon = SolarEventIcons.getIconDrawable(context, item.event, (int)iconSize, (int)iconSize);
+                    view.text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, item.event));
+                    view.text_event.setCompoundDrawables(eventIcon, null, null, null);
+                } else {
+                    view.text_event.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                }
             }
+            view.icon_event.setVisibility(View.GONE);
 
             // time
             if (view.text_datetime != null) {
