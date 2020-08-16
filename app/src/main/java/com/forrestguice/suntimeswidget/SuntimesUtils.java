@@ -1160,11 +1160,18 @@ public class SuntimesUtils
 
     public static SpannableStringBuilder createSpan(Context context, String text, String spanTag, ImageSpan imageSpan)
     {
+        return createSpan(context, text, spanTag, imageSpan, ImageSpan.ALIGN_BASELINE);
+    }
+    public static SpannableStringBuilder createSpan(Context context, String text, String spanTag, ImageSpan imageSpan, int alignment)
+    {
         ImageSpanTag[] tags = { new ImageSpanTag(spanTag, imageSpan) };
-        return createSpan(context, text, tags);
+        return createSpan(context, text, tags, alignment);
     }
 
-    public static SpannableStringBuilder createSpan(Context context, String text, ImageSpanTag[] tags)
+    public static SpannableStringBuilder createSpan(Context context, String text, ImageSpanTag[] tags) {
+        return createSpan(context, text, tags, ImageSpan.ALIGN_BASELINE);
+    }
+    public static SpannableStringBuilder createSpan(Context context, String text, ImageSpanTag[] tags, int alignment)
     {
         SpannableStringBuilder span = new SpannableStringBuilder(text);
         ImageSpan blank = createImageSpan(context, R.drawable.ic_transparent, 0, 0, R.color.transparent);
@@ -1180,7 +1187,7 @@ public class SuntimesUtils
                 int tagEnd = tagPos + spanTag.length();
                 //Log.d("DEBUG", "tag=" + spanTag + ", tagPos=" + tagPos + ", " + tagEnd + ", text=" + text);
 
-                span.setSpan(createImageSpan(imageSpan), tagPos, tagEnd, ImageSpan.ALIGN_BASELINE);
+                span.setSpan(createImageSpan(imageSpan), tagPos, tagEnd, alignment);
                 text = text.substring(0, tagPos) + tag.getBlank() + text.substring(tagEnd);
             }
         }
