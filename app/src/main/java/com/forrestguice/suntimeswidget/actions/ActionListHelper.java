@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.actions;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -540,12 +541,11 @@ public class ActionListHelper
                     icon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher_foreground));
 
                 } else {
-                    icon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_action_extension));   // TODO: theme
+                    int[] attrs = { R.attr.icActionExtension };
+                    TypedArray a = getContext().obtainStyledAttributes(attrs);
+                    icon.setImageDrawable(ContextCompat.getDrawable(getContext(), a.getResourceId(0, R.drawable.ic_action_extension)));
+                    a.recycle();
                 }
-
-                //Drawable d = icon.getDrawable();
-                //DrawableCompat.setTint(d, color);
-                //d.invalidateSelf();
             }
 
             return view;
