@@ -219,6 +219,14 @@ public class AlarmListDialog extends DialogFragment
         }
     }
 
+    public RecyclerView getList() {
+        return list;
+    }
+
+    public AlarmListDialogAdapter getAdapter() {
+        return adapter;
+    }
+
     public void setSelectedRowID(long value) {
         adapter.setSelectedRowID(value);
     }
@@ -561,6 +569,18 @@ public class AlarmListDialog extends DialogFragment
                 items.remove(position);
                 notifyItemRemoved(position);
             }
+        }
+
+        public AlarmClockItem getItem(long rowID)
+        {
+            for (int i=0; i<items.size(); i++)
+            {
+                AlarmClockItem item = items.get(i);
+                if (item != null && item.rowID == rowID) {
+                    return item;
+                }
+            }
+            return null;
         }
 
         public void sortItems()
