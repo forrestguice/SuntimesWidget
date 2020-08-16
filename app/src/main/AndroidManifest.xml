@@ -156,8 +156,7 @@
 
         </activity>
 
-        <!-- TODO: remove me -->
-        <activity
+        <!--<activity
             android:name=".alarmclock.ui.AlarmClockLegacyActivity"
             android:label="Legacy Suntimes Alarms"
             android:icon="@mipmap/ic_launcher_alarms"
@@ -174,7 +173,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-        </activity>
+        </activity>-->
 
         <activity-alias
             android:name=".alarmclock.ui.AlarmClockActivityLauncher"
