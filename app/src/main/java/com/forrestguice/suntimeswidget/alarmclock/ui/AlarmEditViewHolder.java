@@ -356,12 +356,12 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public static CharSequence displayAction(Context context, AlarmClockItem item, int actionNum)
     {
-        String noAction = "No Action";  // TODO: i18n
+        String noAction = context.getString(R.string.configLabel_action_item_none);
         String actionID = item.getActionID(actionNum);
         String actionTitle = WidgetActions.loadActionLaunchPref(context, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
         String actionDesc = WidgetActions.loadActionLaunchPref(context, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
-        String desc = "(" + actionDesc +")";  // TODO: i18n
-        String label = actionTitle + " " + desc;  // TODO: i18n
+        String desc = context.getString(R.string.configLabel_action_item_desc, actionDesc);
+        String label = context.getString(R.string.configLabel_action_item, actionTitle, desc);
 
         int[] attrs = { R.attr.text_disabledColor };
         TypedArray a = context.obtainStyledAttributes(attrs);

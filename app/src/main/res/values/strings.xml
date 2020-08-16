@@ -518,6 +518,10 @@
     <string name="configLabel_action_launch_extras">Extras:</string>                 <!-- edittext label -->  <!-- TODO -->
     <string name="configHint_action_launch_extras"><![CDATA[<none>]]></string> <!-- editText hint (and default) -->
 
+    <string name="configLabel_action_item">%1$s %2$s</string>  <!-- TODO -->
+    <string name="configLabel_action_item_desc">(%1$s)</string>  <!-- TODO -->
+    <string name="configLabel_action_item_none">No Action</string>  <!-- TODO -->
+
     <string name="addaction_custname">custom<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="addaction_custtitle">Custom Action <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="addaction_error_id">ID must not be empty (or contain spaces).</string>
