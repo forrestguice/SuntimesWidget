@@ -115,25 +115,41 @@ public class AlarmNotifications extends BroadcastReceiver
 
     /**
      */
-    public static void showTimeUntilToast(Context context, View view, @NonNull AlarmClockItem item)
+    public static void showTimeUntilToast(Context context, View view, @NonNull AlarmClockItem item) {
+        showTimeUntilToast(context, view, item, null, null, null, Toast.LENGTH_SHORT);
+    }
+    public static Snackbar showTimeUntilToast(Context context, View view, @NonNull AlarmClockItem item, @Nullable Integer messageResID, String actionText, View.OnClickListener actionListener, int duration)
     {
         if (context != null)
         {
+            if (messageResID == null) {
+                messageResID = R.string.alarmenabled_toast;
+            }
+
             Calendar now = Calendar.getInstance();
             SuntimesUtils.initDisplayStrings(context);
             SuntimesUtils.TimeDisplayText alarmText = utils.timeDeltaLongDisplayString(now.getTimeInMillis(), item.timestamp + item.offset);
-            String alarmString = context.getString(R.string.alarmenabled_toast, item.type.getDisplayString(), alarmText.getValue());
+            String alarmString = context.getString(messageResID, item.type.getDisplayString(), alarmText.getValue());
             SpannableString alarmDisplay = SuntimesUtils.createBoldSpan(null, alarmString, alarmText.getValue());
 
-            if (view != null) {
-                Snackbar snackbar = Snackbar.make(view, alarmDisplay, Toast.LENGTH_SHORT);
+            if (view != null)
+            {
+                Snackbar snackbar = Snackbar.make(view, alarmDisplay, duration);
+                if (actionText != null && actionListener != null) {
+                    snackbar.setAction(actionText, actionListener);
+                }
                 themeSnackbar(context, snackbar, null);
                 snackbar.show();
+                return snackbar;
+
             } else {
-                Toast.makeText(context, alarmDisplay, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, alarmDisplay, duration).show();
+                return null;
             }
 
-        } else Log.e(TAG, "showTimeUntilToast: context is null!");
+        }
+        Log.e(TAG, "showTimeUntilToast: context is null!");
+        return null;
     }
 
     @SuppressLint("ResourceType")
