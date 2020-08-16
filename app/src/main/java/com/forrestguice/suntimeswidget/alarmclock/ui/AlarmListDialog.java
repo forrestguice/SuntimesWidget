@@ -36,6 +36,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
@@ -256,6 +257,7 @@ public class AlarmListDialog extends DialogFragment
         if (listener != null) {
             listener.onAlarmDeleted(rowID);
         }
+        offerUndoDeleteAlarm(getActivity(), adapter.getItem(rowID));
         adapter.removeItem(rowID);
         updateViews();
     }
@@ -266,6 +268,23 @@ public class AlarmListDialog extends DialogFragment
             listener.onAlarmsCleared();
         }
         reloadAdapter();
+    }
+
+    public void offerUndoDeleteAlarm(Context context, final AlarmClockItem deletedItem)
+    {
+        View view = getView();
+        if (view != null)
+        {
+            Snackbar snackbar = Snackbar.make(getView(), context.getString(R.string.deletealarm_toast_success1, deletedItem.type.getDisplayString()), Snackbar.LENGTH_LONG);
+            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addAlarm(getActivity(), deletedItem);
+                }
+            });
+            AlarmNotifications.themeSnackbar(context, snackbar, null);
+            snackbar.show();
+        }
     }
 
     protected static DialogInterface.OnClickListener onDeleteConfirmed(final Context context, final AlarmClockItem item) {

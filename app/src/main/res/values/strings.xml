@@ -710,6 +710,7 @@
     <string name="configAction_saveAlarm">Save</string>               <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_enableAlarm">Save &amp; Enable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_disableAlarm">Save &amp; Disable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_undo">Undo</string>               <!-- button (contentDescription) -->  <!-- TODO -->
 
     <string name="alarmAction_dismiss">Dismiss</string>                <!-- notification action button -->
     <string name="alarmAction_snooze">Snooze</string>                  <!-- notification action button -->
@@ -739,6 +740,7 @@
     <string name="deletealarm_dialog_ok">Delete</string>        <!-- button -->
     <string name="deletealarm_dialog_cancel">Cancel</string>    <!-- button -->
     <string name="deletealarm_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) was deleted.</string> <!-- toast msg -->
+    <string name="deletealarm_toast_success1"><xliff:g id="type" example="Notification">%1$s</xliff:g> was deleted.</string> <!-- toast msg -->
 
     <string name="discardchanges_dialog_message">There are unsaved changes.</string>      <!-- dialog message -->  <!-- TODO -->
     <string name="discardchanges_dialog_ok">Discard</string>                              <!-- button -->  <!-- TODO -->
