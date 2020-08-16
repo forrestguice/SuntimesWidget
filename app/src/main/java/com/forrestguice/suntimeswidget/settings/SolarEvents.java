@@ -188,7 +188,7 @@ public enum SolarEvents
             this.choices = choices;
         }
 
-        static int[] getIconDimen(Resources resources, SolarEvents event)
+        public static int[] getIconDimen(Resources resources, SolarEvents event)
         {
             int width, height;
             switch (event)
@@ -258,7 +258,11 @@ public enum SolarEvents
             return view;
         }
 
-        private void adjustIcon(int iconResource, ImageView icon, SolarEvents event)
+        public static void adjustIcon(int iconResource, ImageView icon, SolarEvents event)
+        {
+            adjustIcon(iconResource, icon, event, 8);
+        }
+        public static void adjustIcon(int iconResource, ImageView icon, SolarEvents event, int marginDp)
         {
             Resources resources = icon.getContext().getResources();
             int defWidth = (int)resources.getDimension(R.dimen.sunIconLarge_width);
@@ -271,7 +275,7 @@ public enum SolarEvents
             if (iconParams instanceof ViewGroup.MarginLayoutParams)
             {
                 ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) iconParams;
-                float vertMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, resources.getDisplayMetrics());
+                float vertMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, marginDp, resources.getDisplayMetrics());
                 float horizMargin = (vertMargin + (defWidth - dimen[0])) / 2f;
                 params.setMargins((int)horizMargin, (int)vertMargin, (int)horizMargin, (int)vertMargin);
             }
