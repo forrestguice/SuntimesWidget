@@ -1609,7 +1609,24 @@
         <b>Blue Hour:</b> The sun is between 8 degrees and 4 degrees below the horizon. The start and end of the blue hour falls between nautical and civil twilight.<br/>
     ]]></string>
     <string name="help_action_launch"><![CDATA[
-        The fully qualified class name of the Activity to be launched.<br/><br/>Extras should contain a &amp; delimited query string (e.g. key1=value1&key2=value2). Values may be one of; int, long, double, float, boolean or String (e.g. 1, 1L, 1D, 1F, true, stringValue).
+        See <b>Intents and Intent Filters</b> <small>(https://developer.android.com/guide/components/intents-filters)</small>.
+        <br/><br/>
+        All fields are optional (values may be left empty for an <em>implicit intent</em>).
+        <br/>
+        <br/>
+        <b>Action:</b> An action string.<br/><small>e.g. <em>android.intent.action.VIEW</em></small>
+        <br/>
+        <br/>
+        <b>Class:</b> A fully qualified class name.<br/><small>e.g. <em>suntimeswidget.SuntimesActivity</em></small>
+        <br/>
+        <br/>
+        <b>Data:</b> A Uri that contains or points to attached data. Supports <em>%s</em>ubstitutions. <small>e.g. <em>geo:%lat,%lon</em></small>
+        <br/>
+        <br/>
+        <b>Mime:</b> The mime type of attached data.
+        <br/>
+        <br/>
+        <b>Extras:</b> An <em>&amp;</em> delimited string containing extra values. Supports <em>%s</em>ubstitutions.<br/><br/>Values may be <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> or String. <small>e.g. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>
     ]]></string>
     <string name="help_widgetlist"><![CDATA[
           To <b>add</b> or <b>remove</b> a widget you must navigate to the home screen.<br/><br/>
