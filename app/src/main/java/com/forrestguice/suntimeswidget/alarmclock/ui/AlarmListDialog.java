@@ -65,6 +65,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -273,9 +274,9 @@ public class AlarmListDialog extends DialogFragment
     public void offerUndoDeleteAlarm(Context context, final AlarmClockItem deletedItem)
     {
         View view = getView();
-        if (view != null)
+        if (context != null && view != null && deletedItem != null)
         {
-            Snackbar snackbar = Snackbar.make(getView(), context.getString(R.string.deletealarm_toast_success1, deletedItem.type.getDisplayString()), Snackbar.LENGTH_LONG);
+            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.deletealarm_toast_success1, deletedItem.type.getDisplayString()), Snackbar.LENGTH_LONG);
             snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
