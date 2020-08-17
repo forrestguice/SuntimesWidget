@@ -119,7 +119,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         super.onCreate(savedState);
         initLocale(this);
         setContentView(R.layout.layout_activity_alarmedit);
-        initViews(this);
+        initViews(this, savedState);
         setResult(Activity.RESULT_CANCELED);
     }
 
@@ -249,7 +249,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
      * initialize ui/views
      * @param context a context used to access resources
      */
-    protected void initViews(Context context)
+    protected void initViews(Context context, Bundle savedState)
     {
         SuntimesUtils.initDisplayStrings(context);
 
@@ -260,7 +260,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         editor.setShowOverflow(false);
 
         Bundle extras = getIntent().getExtras();
-        if (extras != null)
+        if (extras != null && savedState == null)
         {
             AlarmClockItem item = extras.getParcelable(EXTRA_ITEM);
             boolean isNew = extras.getBoolean(EXTRA_ISNEW, false);
