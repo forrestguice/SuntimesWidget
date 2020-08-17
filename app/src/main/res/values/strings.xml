@@ -775,6 +775,7 @@
     <string name="alarmoffset_dialog_cancel">Cancel</string>    <!-- button -->
 
     <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> set for <xliff:g id="duration" example="8h">%2$s</xliff:g> from now.</string> <!-- toast msg -->
+    <string name="alarmdetails_snack"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> in <xliff:g id="duration" example="8h">%2$s</xliff:g></string> <!-- snackbar msg -->
 
     <string name="configLabel_alarms_optWhiteList">Battery optimization</string>
     <string name="configLabel_alarms_optWhiteList_listed">Not optimized (recommended)</string>
