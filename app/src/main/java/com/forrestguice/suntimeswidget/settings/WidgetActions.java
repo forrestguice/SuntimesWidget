@@ -194,14 +194,14 @@ public class WidgetActions
         SharedPreferences prefs = context.getSharedPreferences(PREFS_ACTIONS, 0);
         String prefs_prefix0 = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + id + "_";
         Set<String> tagList = prefs.getStringSet(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_TAGS, null);
-        return (tagList != null) ? tagList : new TreeSet<String>();
+        return (tagList != null) ? new TreeSet<String>(tagList) : new TreeSet<String>();
     }
     public static Set<String> loadActionLaunchList(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_ACTIONS, 0);
         String listKey = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + PREF_KEY_ACTION_LAUNCH_LIST;
         Set<String> actionList = prefs.getStringSet(listKey, null);
-        return (actionList != null) ? actionList : new TreeSet<String>();
+        return (actionList != null) ? new TreeSet<String>(actionList) : new TreeSet<String>();
     }
     public static String loadActionLaunchPref(Context context, int appWidgetId, @Nullable String id, @Nullable String key)
     {
@@ -600,6 +600,7 @@ public class WidgetActions
 
         public static void initDefaults( Context context )
         {
+            Log.d("DEBUG", "initDefaults");
             for (SuntimesAction action : SuntimesAction.values())
             {
                 if (!hasActionLaunchPref(context, 0, action.name()))
