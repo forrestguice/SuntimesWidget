@@ -60,8 +60,19 @@ public class SolarEventIcons
             default: return 0;
         }
     }
+    public static int getIconResID(Context context, String timezoneID)
+    {
+        if (timezoneID != null && (timezoneID.equals(WidgetTimezones.ApparentSolarTime.TIMEZONEID) || timezoneID.equals(WidgetTimezones.LocalMeanTime.TIMEZONEID))) {
+            return getResID(context, R.attr.sunnoonIcon, R.drawable.ic_noon_large);
+        } else {
+            return getResID(context, R.attr.icActionTime, R.drawable.ic_action_time);
+        }
+    }
 
     public static float[] getIconScale(SolarEvents event) {
+        return new float[] {1f, 1f};
+    }
+    public static float[] getIconScale(String timezoneID) {
         return new float[] {1f, 1f};
     }
 
@@ -92,6 +103,9 @@ public class SolarEventIcons
             default: return null;
         }
     }
+    public static Integer getIconTint(Context context, String timezoneID) {
+        return null;
+    }
 
     public static int getIconDrawablePadding(Context context, @NonNull SolarEvents event)
     {
@@ -104,6 +118,9 @@ public class SolarEventIcons
                 return (int)context.getResources().getDimension(R.dimen.eventIcon_margin);
         }
     }
+    public static int getIconDrawablePadding(Context context, String timezoneID) {
+        return (int)context.getResources().getDimension(R.dimen.eventIcon_margin1);
+    }
 
     public static int getIconDrawableInset(Context context, @NonNull SolarEvents event)
     {
@@ -115,31 +132,39 @@ public class SolarEventIcons
                 return 0;
         }
     }
-
-    public static Drawable getIconDrawable(Context context, @NonNull SolarEvents event)
+    public static int getIconDrawableInset(Context context, String timezoneID)
     {
-        return getIconDrawable(context, event, -1, -1);
+        if (timezoneID != null && (timezoneID.equals(WidgetTimezones.ApparentSolarTime.TIMEZONEID) || timezoneID.equals(WidgetTimezones.LocalMeanTime.TIMEZONEID))) {
+            return (int)context.getResources().getDimension(R.dimen.eventIcon_margin1);
+        } else {
+            return 0;
+        }
     }
-    public static Drawable getIconDrawable(Context context, @NonNull SolarEvents event, int width, int height)
+
+    public static Drawable getIconDrawable(Context context, String timezoneID, int width, int height)
     {
-        Drawable eventIcon = ContextCompat.getDrawable(context, SolarEventIcons.getIconResID(context, event)).mutate();
-        Integer tintColor = SolarEventIcons.getIconTint(context, event);
-        if (tintColor != null)
+        return getIconDrawable(context, SolarEventIcons.getIconResID(context, timezoneID), width, height, getIconScale(timezoneID), getIconDrawableInset(context, timezoneID), SolarEventIcons.getIconTint(context, timezoneID));
+    }
+    public static Drawable getIconDrawable(Context context, @NonNull SolarEvents event, int width, int height) {
+        return getIconDrawable(context, SolarEventIcons.getIconResID(context, event), width, height, getIconScale(event), getIconDrawableInset(context, event), SolarEventIcons.getIconTint(context, event));
+    }
+    public static Drawable getIconDrawable(Context context, int resID, int width, int height, float[] scale, int inset, Integer tint)
+    {
+        Drawable eventIcon = ContextCompat.getDrawable(context, resID).mutate();
+        if (tint != null)
         {
             if (Build.VERSION.SDK_INT >= 21) {
-                DrawableCompat.setTint(eventIcon, tintColor);
+                DrawableCompat.setTint(eventIcon, tint);
                 DrawableCompat.setTintMode(eventIcon, PorterDuff.Mode.SRC_IN);
             } else {
-                eventIcon.setColorFilter(tintColor, PorterDuff.Mode.SRC_IN);
+                eventIcon.setColorFilter(tint, PorterDuff.Mode.SRC_IN);
             }
         }
 
-        int inset = getIconDrawableInset(context, event);
         if (inset > 0) {
             eventIcon = new InsetDrawable(eventIcon, inset, inset, inset, inset);
         }
 
-        float[] scale = getIconScale(event);
         if (width > 0 && height > 0 && scale[0] > 0 && scale[1] > 0) {
             eventIcon.setBounds(0, 0, (int)(scale[0] * width), (int)(scale[1] * height));
         }

@@ -1074,14 +1074,17 @@ public class AlarmListDialog extends DialogFragment
                 view.text_event.setText(AlarmEditViewHolder.displayEvent(context, item));
                 view.text_event.setTextColor(item.enabled ? color_on : color_off);
 
+                float iconSize = context.getResources().getDimension(R.dimen.eventIcon_width);
                 if (item.event != null)
                 {
-                    float iconSize = context.getResources().getDimension(R.dimen.eventIcon_width);
                     Drawable eventIcon = SolarEventIcons.getIconDrawable(context, item.event, (int)iconSize, (int)iconSize);
                     view.text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, item.event));
                     view.text_event.setCompoundDrawables(eventIcon, null, null, null);
+
                 } else {
-                    view.text_event.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                    Drawable eventIcon = SolarEventIcons.getIconDrawable(context, item.timezone, (int)iconSize, (int)iconSize);
+                    text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, item.timezone));
+                    text_event.setCompoundDrawables(eventIcon, null, null, null);
                 }
             }
             view.icon_event.setVisibility(View.GONE);
