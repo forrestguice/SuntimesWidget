@@ -48,6 +48,9 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 @SuppressWarnings("Convert2Diamond")
 public class EditActionView extends LinearLayout
 {
@@ -385,7 +388,7 @@ public class EditActionView extends LinearLayout
      */
     public void saveIntent(Context context, int appWidgetId, @Nullable String id, @Nullable String title, @Nullable String desc)
     {
-        WidgetActions.saveActionLaunchPref(context, title, desc, null, null, appWidgetId, id, getIntentClass(), getIntentType().name(), getIntentAction(), getIntentData(), getIntentDataType(), getIntentExtras());
+        WidgetActions.saveActionLaunchPref(context, title, desc, getIntentColor(), getIntentTags().toArray(new String[0]), appWidgetId, id, getIntentClass(), getIntentType().name(), getIntentAction(), getIntentData(), getIntentDataType(), getIntentExtras());
         lastLoadedID = id;
     }
 
@@ -404,6 +407,8 @@ public class EditActionView extends LinearLayout
         String dataString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
         String mimeType = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE);
         String extraString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_EXTRAS);
+        Integer color = Integer.parseInt(WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR));
+        Set<String> tagSet = WidgetActions.loadActionTags(context, appWidgetId, id);
 
         setIntentTitle(title);
         setIntentDesc(desc);
@@ -413,6 +418,8 @@ public class EditActionView extends LinearLayout
         setIntentDataType((mimeType != null ? mimeType : ""));
         setIntentExtras((extraString != null ? extraString : ""));
         setIntentType(typeString);
+        setIntentTags(tagSet);
+        setIntentColor(color);
         lastLoadedID = id;
     }
     private String lastLoadedID = null;
@@ -434,6 +441,8 @@ public class EditActionView extends LinearLayout
         text_launchActivity.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH);
         text_launchActivity.selectAll();
         text_launchActivity.requestFocus();
+        intentColor = WidgetActions.PREF_DEF_ACTION_LAUNCH_COLOR;
+        tags = new TreeSet<>();
     }
 
     /**
@@ -548,6 +557,24 @@ public class EditActionView extends LinearLayout
         edit_desc.setText(desc);
     }
 
+    private Integer intentColor = null;
+    public Integer getIntentColor() {
+        return intentColor;
+    }
+    public void setIntentColor(Integer color) {
+        intentColor = color;
+    }
+
+    private TreeSet<String> tags = new TreeSet<>();
+    public Set<String> getIntentTags() {
+        return tags;
+    }
+    public void setIntentTags(Set<String> values) {
+        tags = new TreeSet<>(values);
+    }
+
+    /**
+
     /**
      * initFromOther
      */
@@ -562,6 +589,8 @@ public class EditActionView extends LinearLayout
         setIntentData(other.getIntentData());
         setIntentDataType(other.getIntentDataType());
         setIntentExtras(other.getIntentExtras());
+        setIntentTags(other.getIntentTags());
+        setIntentColor(other.getIntentColor());
     }
 
     /**
