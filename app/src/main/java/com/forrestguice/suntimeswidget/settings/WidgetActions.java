@@ -504,6 +504,7 @@ public class WidgetActions
                     WidgetActions.PREF_DEF_ACTION_LAUNCH_TYPE.name(), WidgetActions.PREF_DEF_ACTION_LAUNCH_ACTION, WidgetActions.PREF_DEF_ACTION_LAUNCH_DATA, WidgetActions.PREF_DEF_ACTION_LAUNCH_DATATYPE, WidgetActions.PREF_DEF_ACTION_LAUNCH_EXTRAS);
         }
 
+        SuntimesAction.initDisplayStrings(context);
         SuntimesAction.initDefaults(context);
     }
 
