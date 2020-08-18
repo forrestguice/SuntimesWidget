@@ -1472,10 +1472,8 @@ public class SuntimesActivity extends AppCompatActivity
         if (dataset.isCalculated())
         {
             AlarmCreateDialog dialog = new AlarmCreateDialog();
-            dialog.setAlarmType(AlarmClockItem.AlarmType.ALARM);
-            dialog.setDialogMode(0);
-            dialog.setEvent(event, WidgetSettings.loadLocationPref(this, 0));
-            //dialog.setAlarmTime(item.hour, item.minute, item.timezone);
+            dialog.loadSettings(SuntimesActivity.this);
+            dialog.setEvent((event != null ? event : dialog.getEvent()), WidgetSettings.loadLocationPref(this, 0));
             dialog.setOnAcceptedListener(onScheduleAlarm);
             dialog.setOnNeutralListener(onManageAlarms);
             dialog.show(getSupportFragmentManager(), DIALOGTAG_ALARM);

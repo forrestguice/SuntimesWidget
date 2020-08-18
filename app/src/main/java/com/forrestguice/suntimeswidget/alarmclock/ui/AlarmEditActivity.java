@@ -667,6 +667,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     protected void pickSolarEvent(@NonNull AlarmClockItem item)
     {
         final AlarmCreateDialog dialog = new AlarmCreateDialog();
+        dialog.loadSettings(AlarmEditActivity.this);
         dialog.setAlarmType(item.type);
         dialog.setDialogMode(item.event != null ? 0 : 1);
         dialog.setEvent(item.event, item.location);

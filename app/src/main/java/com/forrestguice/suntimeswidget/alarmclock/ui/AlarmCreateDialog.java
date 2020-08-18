@@ -22,6 +22,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 
@@ -88,6 +89,8 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     public static final String EXTRA_PREVIEW_OFFSET = "previewOffset";
 
     public static final String DIALOG_LOCATION = "locationDialog";
+
+    public static final String PREFS_ALARMCREATE = "com.forrestguice.suntimeswidget.alarmcreate";
 
     protected TabLayout tabs;
     protected TextView text_title, text_offset, text_date, text_note;
@@ -425,14 +428,38 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         super.onSaveInstanceState(outState);
     }
 
-    protected void loadSettings(Bundle bundle)
+    protected void loadSettings(Bundle bundle) {}
+
+    public void loadSettings(Context context)
     {
-        // TODO
+        loadSettings(context.getSharedPreferences(PREFS_ALARMCREATE, 0));
+    }
+    public void loadSettings(SharedPreferences prefs)
+    {
+        Bundle args = getArguments();
+        args.putInt(EXTRA_MODE, prefs.getInt(EXTRA_MODE, getDialogMode()));
+        args.putInt(EXTRA_HOUR, prefs.getInt(EXTRA_HOUR, getHour()));
+        args.putInt(EXTRA_MINUTE, prefs.getInt(EXTRA_MINUTE, getMinute()));
+        args.putString(EXTRA_TIMEZONE, prefs.getString(EXTRA_TIMEZONE, getTimeZone()));
+        args.putSerializable(EXTRA_EVENT, SolarEvents.valueOf(prefs.getString(EXTRA_EVENT, SolarEvents.SUNRISE.name())));;
+        args.putSerializable(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.valueOf(prefs.getString(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.ALARM.name())));
     }
 
-    protected void saveSettings(Bundle bundle)
+    protected void saveSettings(Bundle bundle) {}
+
+    public void saveSettings(Context context) {
+        saveSettings(context.getSharedPreferences(PREFS_ALARMCREATE, 0));
+    }
+    public void saveSettings(SharedPreferences prefs)
     {
-        // TODO
+        SharedPreferences.Editor out = prefs.edit();
+        out.putInt(EXTRA_MODE, getDialogMode());
+        out.putInt(EXTRA_HOUR, getHour());
+        out.putInt(EXTRA_MINUTE, getMinute());
+        out.putString(EXTRA_TIMEZONE, getTimeZone());
+        out.putString(EXTRA_EVENT, getEvent().name());
+        out.putString(EXTRA_ALARMTYPE, getAlarmType().name());
+        out.apply();
     }
 
     private DialogInterface.OnClickListener onAccepted = null;
@@ -515,6 +542,13 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         if (onCanceled != null) {
             onCanceled.onClick(getDialog(), 0);
         }
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog)
+    {
+        super.onDismiss(dialog);
+        saveSettings(getActivity());
     }
 
     private View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
