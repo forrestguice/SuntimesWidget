@@ -542,7 +542,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
                 public void onAnimationStart(Animator animation) {}
                 public void onAnimationEnd(Animator animation)
                 {
-                    text_offset.setVisibility(enable ? View.GONE : View.VISIBLE);
+                    text_offset.setVisibility(enable ? View.INVISIBLE : View.VISIBLE);
                     if (enable)
                     {
                         text_offset.postDelayed(new Runnable() {
