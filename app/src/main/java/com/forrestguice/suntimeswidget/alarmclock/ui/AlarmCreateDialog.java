@@ -27,6 +27,8 @@ import android.os.Bundle;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -40,6 +42,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -456,7 +459,22 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     private DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
     {
         @Override
-        public void onShow(DialogInterface dialog) {}
+        public void onShow(DialogInterface dialog)
+        {
+            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
+            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+            if (layout != null)
+            {
+                final BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+                behavior.setPeekHeight((int)getResources().getDimension(R.dimen.alarmcreate_bottomsheet_peek));
+                layout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    }
+                }, 700);
+            }
+        }
     };
 
     private View.OnClickListener onDialogNeutralClick = new View.OnClickListener()
