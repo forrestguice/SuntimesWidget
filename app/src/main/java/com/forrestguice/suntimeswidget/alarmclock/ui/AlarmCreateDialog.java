@@ -505,7 +505,6 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
                     public void run() {
                         behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                     }
-                }, 700);
                 }, AUTO_EXPAND_DELAY);
             }
         }
