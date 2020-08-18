@@ -235,7 +235,6 @@ public class ActionListHelper
 
         adapter = new ActionDisplayAdapter(context, R.layout.layout_listitem_actions, ids.toArray(new ActionDisplay[0]));
         list.setAdapter(adapter);
-
     }
 
     protected View.OnClickListener onMenuButtonClicked = new View.OnClickListener() {
@@ -391,6 +390,9 @@ public class ActionListHelper
         final String actionID = getIntentID();
         if (actionID != null && !actionID.trim().isEmpty() && context != null)
         {
+            Set<String> tags = WidgetActions.loadActionTags(context, 0, actionID);
+            final boolean isDefault = tags.contains(TAG_DEFAULT);
+
             AlertDialog.Builder dialog = new AlertDialog.Builder(context);
             String title = WidgetActions.loadActionLaunchPref(context, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
             dialog.setMessage(context.getString(R.string.delaction_dialog_msg, title, actionID))
@@ -633,12 +635,13 @@ public class ActionListHelper
         }
         private boolean onPrepareActionMode(Menu menu)
         {
+            String actionId = getIntentID();
+            boolean isModifiable = (actionId != null && !actionId.trim().isEmpty());
+
             SuntimesUtils.forceActionBarIcons(menu);
             MenuItem selectItem = menu.findItem(R.id.selectAction);
             selectItem.setVisible( !disallowSelect );
 
-            String actionId = getIntentID();
-            boolean isModifiable = actionId != null && !actionId.trim().isEmpty();
             MenuItem deleteItem = menu.findItem(R.id.deleteAction);
             MenuItem editItem = menu.findItem(R.id.editAction);
             deleteItem.setVisible( isModifiable );
