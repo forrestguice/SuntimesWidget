@@ -151,14 +151,8 @@ public class SolarEventIcons
     public static Drawable getIconDrawable(Context context, int resID, int width, int height, float[] scale, int inset, Integer tint)
     {
         Drawable eventIcon = ContextCompat.getDrawable(context, resID).mutate();
-        if (tint != null)
-        {
-            if (Build.VERSION.SDK_INT >= 21) {
-                DrawableCompat.setTint(eventIcon, tint);
-                DrawableCompat.setTintMode(eventIcon, PorterDuff.Mode.SRC_IN);
-            } else {
-                eventIcon.setColorFilter(tint, PorterDuff.Mode.SRC_IN);
-            }
+        if (tint != null) {
+            tintDrawable(eventIcon, tint);
         }
 
         if (inset > 0) {
@@ -190,4 +184,13 @@ public class SolarEventIcons
         return color;
     }
 
+    public static void tintDrawable(Drawable d, int color)
+    {
+        if (Build.VERSION.SDK_INT >= 21) {
+            DrawableCompat.setTint(d, color);
+            DrawableCompat.setTintMode(d, PorterDuff.Mode.SRC_IN);
+        } else {
+            d.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+        }
+    }
 }

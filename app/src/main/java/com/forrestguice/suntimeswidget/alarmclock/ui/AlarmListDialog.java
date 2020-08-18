@@ -1083,6 +1083,9 @@ public class AlarmListDialog extends DialogFragment
 
                 } else {
                     Drawable eventIcon = SolarEventIcons.getIconDrawable(context, item.timezone, (int)iconSize, (int)iconSize);
+                    if (item.timezone == null) {
+                        SolarEventIcons.tintDrawable(eventIcon, item.enabled ? color_on : color_off);
+                    }
                     text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, item.timezone));
                     text_event.setCompoundDrawables(eventIcon, null, null, null);
                 }
