@@ -528,7 +528,9 @@
     <string name="addaction_error_title">Display string must not be empty.</string>
 
     <string name="delaction_dialog_msg">Are you sure you want to delete %1$s (%2$s)?</string>    <!-- TODO -->
+    <string name="delaction_dialog_msg1">Default actions cannot be removed.\n\nRevert to defaults?</string>    <!-- TODO -->
     <string name="delaction_dialog_ok">Delete</string>    <!-- TODO -->
+    <string name="delaction_dialog_ok1">Revert</string>    <!-- TODO -->
     <string name="delaction_dialog_cancel">Cancel</string>   <!-- TODO -->
 
     <string name="clearactions_dialog_msg">Are you sure you want to reset to defaults?\n\nAll custom actions will be removed.</string>    <!-- TODO -->
@@ -729,6 +731,10 @@
     <string name="alarmMode_alarm">Alarm</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">Notification</string>                <!-- alarm type (setting) -->
 
+    <string name="configLabel_alarmEdit_scheduleTray">Schedule:</string>               <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_alarmEdit_onAlertTray">On Alert:</string>               <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_alarmEdit_onDismissTray">On Dismiss:</string>               <!-- group title -->  <!-- TODO -->
+
     <string name="alarmOption_vibrate">Vibrate</string>                <!-- checkbox text -->
     <string name="alarmOption_ringtone_none">No Sound</string>          <!-- ringtone label (none) -->
     <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
@@ -760,6 +766,7 @@
     <string name="alarmlabel_dialog_title">Label</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Apply</string>        <!-- button -->
     <string name="alarmlabel_dialog_cancel">Cancel</string>    <!-- button -->
+    <string name="alarmlabel_hint">Label</string>        <!-- EditText hint -->  <!-- TODO -->
 
     <string name="alarmrepeat_dialog_title">Repeat Alarm</string>        <!-- dialog title -->
     <string name="alarmrepeat_dialog_ok">Apply</string>        <!-- button -->
@@ -1627,7 +1634,7 @@
         <br/>
         <br/>
         <b>Extras:</b> An <em>&amp;</em> delimited string containing extra values. Supports <em>%s</em>ubstitutions.<br/><br/>Values may be <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> or String. <small>e.g. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>
-    ]]></string>
+    ]]></string> <!-- TODO -->
     <string name="help_widgetlist"><![CDATA[
           To <b>add</b> or <b>remove</b> a widget you must navigate to the home screen.<br/><br/>
           To <b>reconfigure</b> an existing widget you can select from the following list.<br/>
