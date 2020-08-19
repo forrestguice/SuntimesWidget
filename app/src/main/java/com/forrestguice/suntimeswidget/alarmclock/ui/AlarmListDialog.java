@@ -675,6 +675,9 @@ public class AlarmListDialog extends DialogFragment
             if (holder.typeButton != null) {
                 holder.typeButton.setOnClickListener(typeMenuListener(position, holder.typeButton));
             }
+            if (holder.button_delete != null) {
+                holder.button_delete.setOnClickListener(deleteButtonListener(position));
+            }
 
             if (Build.VERSION.SDK_INT >= 14) {
                 if (holder.switch_enabled != null) {
@@ -698,6 +701,9 @@ public class AlarmListDialog extends DialogFragment
             }
             if (holder.typeButton != null) {
                 holder.typeButton.setOnClickListener(null);
+            }
+            if (holder.button_delete != null) {
+                holder.button_delete.setOnClickListener(null);
             }
 
             if (Build.VERSION.SDK_INT >= 14) {
@@ -745,6 +751,16 @@ public class AlarmListDialog extends DialogFragment
                 public void onClick(View v) {
                     setSelectedIndex(position);
                     showOverflowMenu(contextRef.get(), position, v);
+                }
+            };
+        }
+
+        private View.OnClickListener deleteButtonListener(final int position)
+        {
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlarmEditDialog.confirmDeleteAlarm(contextRef.get(), items.get(position), onDeleteConfirmed(contextRef.get(), items.get(position)));
                 }
             };
         }
@@ -930,11 +946,13 @@ public class AlarmListDialog extends DialogFragment
         public boolean isSelected = false;
 
         public View card;
+        public View cardTray;
         public View cardBackdrop;
         public ImageButton typeButton;
         public TextView text_label;
         public TextView text_event;
         public ImageView icon_event;
+        public TextView text_note;
         public TextView text_date;
         public TextView text_datetime;
         public TextView text_location;
@@ -946,6 +964,7 @@ public class AlarmListDialog extends DialogFragment
         public TextView text_repeat;
         public TextView text_offset;
         public ImageButton overflow;
+        public ImageButton button_delete;
         public SwitchCompat switch_enabled;
         public CheckBox check_enabled;
 
@@ -969,11 +988,13 @@ public class AlarmListDialog extends DialogFragment
             super(view);
 
             card = view.findViewById(R.id.layout_alarmcard);
+            cardTray = view.findViewById(R.id.layout_alarmcard_tray);
             cardBackdrop = view.findViewById(R.id.layout_alarmcard0);
             typeButton = (ImageButton) view.findViewById(R.id.type_menu);
             text_label = (TextView) view.findViewById(android.R.id.text1);
             text_event = (TextView) view.findViewById(R.id.text_event);
             icon_event = (ImageView) view.findViewById(R.id.icon_event);
+            text_note = (TextView) view.findViewById(R.id.text_note);
             text_date = (TextView) view.findViewById(R.id.text_date);
             text_datetime = (TextView) view.findViewById(R.id.text_datetime);
             text_location = (TextView) view.findViewById(R.id.text_location);
@@ -985,6 +1006,7 @@ public class AlarmListDialog extends DialogFragment
             text_repeat = (TextView) view.findViewById(R.id.text_repeat);
             text_offset = (TextView) view.findViewById(R.id.text_datetime_offset);
             overflow = (ImageButton) view.findViewById(R.id.overflow_menu);
+            button_delete = (ImageButton) view.findViewById(R.id.button_delete);
 
             if (Build.VERSION.SDK_INT >= 14) {
                 switch_enabled = (SwitchCompat) view.findViewById(R.id.switch_enabled);        // switch used by api >= 14 (otherwise null)
@@ -1186,9 +1208,12 @@ public class AlarmListDialog extends DialogFragment
                 view.text_offset.setTextColor(item.enabled ? color_on : color_off);
             }
 
-            // overflow menu
-            if (view.overflow != null) {
-                view.overflow.setVisibility(isSelected ? View.VISIBLE : View.INVISIBLE);
+            // extended tray
+            if (view.cardTray != null) {
+                view.cardTray.setVisibility(isSelected ? View.VISIBLE : View.GONE);
+            }
+            if (view.text_note != null) {
+                view.text_note.setText(isSelected ? AlarmEditViewHolder.displayAlarmNote(context, item, isSchedulable) : "");
             }
         }
 
