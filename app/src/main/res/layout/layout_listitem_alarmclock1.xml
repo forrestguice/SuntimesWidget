@@ -49,7 +49,7 @@
                 android:textColor="?attr/text_buttonSelector"
                 android:textStyle="bold" android:maxLines="1"
                 android:inputType="text"
-                android:hint="label" tools:text="label" />
+                android:hint="@string/alarmlabel_hint" tools:text="label" />
 
             <ImageButton
                 android:id="@+id/overflow_menu"
@@ -64,7 +64,7 @@
         <TextView
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:text="Schedule:" />
+            android:text="@string/configLabel_alarmEdit_scheduleTray" />
 
         <LinearLayout style="@style/ChipTray"
             android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -140,7 +140,7 @@
                 <TextView
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
-                    android:text="On Alert:" />
+                    android:text="@string/configLabel_alarmEdit_onAlertTray" />
 
                 <LinearLayout style="@style/ChipTray"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -211,7 +211,7 @@
                 <TextView
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_marginTop="8dp" android:layout_marginBottom="4dp"
-                    android:text="On Dismiss:"/>
+                    android:text="@string/configLabel_alarmEdit_onDismissTray"/>
 
                 <LinearLayout
                     android:id="@+id/layout_options1" style="@style/ChipTray"
