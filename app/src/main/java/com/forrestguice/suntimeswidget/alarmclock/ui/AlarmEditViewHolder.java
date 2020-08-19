@@ -186,7 +186,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             text_action1.setText(displayAction(context, item, 1));
 
             text_datetime_offset.setText(isSchedulable ? text_offset.getText() : "");
-            text_datetime_offset.setVisibility(preview_offset ? View.GONE : View.VISIBLE);
+            text_datetime_offset.setVisibility(preview_offset ? View.INVISIBLE : View.VISIBLE);
 
             text_datetime.setText(isSchedulable ? displayAlarmTime(context, item, preview_offset) : "");
             ViewCompat.setTransitionName(text_datetime, "transition_" + item.rowID);

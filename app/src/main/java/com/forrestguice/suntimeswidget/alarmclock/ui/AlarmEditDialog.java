@@ -532,7 +532,7 @@ public class AlarmEditDialog extends DialogFragment
                 public void onAnimationStart(Animator animation) {}
                 public void onAnimationEnd(Animator animation)
                 {
-                    holder.text_datetime_offset.setVisibility(enable ? View.GONE : View.VISIBLE);
+                    holder.text_datetime_offset.setVisibility(enable ? View.INVISIBLE : View.VISIBLE);
                     if (enable)
                     {
                         holder.text_datetime_offset.postDelayed(new Runnable() {
