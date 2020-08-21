@@ -212,11 +212,13 @@
             android:layout_marginLeft="6dp" android:layout_marginRight="6dp" android:gravity="end|right"
             android:background="?attr/dialogBackground">
 
-            <TextView android:id="@+id/text_note"
-                android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1"
-                android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+            <TextView android:id="@+id/text_note" android:background="?attr/selectableItemBackground"
+                android:layout_width="wrap_content" android:layout_height="match_parent"
+                android:paddingLeft="8dp" android:paddingRight="8dp"
                 android:gravity="center_vertical|start"
                 tools:text="15m from now" />
+
+            <View android:background="@null" android:layout_height="1dp" android:layout_width="0dp" android:layout_weight="1" />
 
             <ImageButton android:id="@+id/button_delete"
                 android:layout_width="48dp" android:layout_height="48dp"

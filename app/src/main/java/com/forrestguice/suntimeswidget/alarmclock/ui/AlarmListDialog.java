@@ -49,6 +49,8 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.util.TypedValue;
@@ -678,6 +680,9 @@ public class AlarmListDialog extends DialogFragment
             if (holder.button_delete != null) {
                 holder.button_delete.setOnClickListener(deleteButtonListener(position));
             }
+            if (holder.text_note != null) {
+                holder.text_note.setOnClickListener(noteListener(position));
+            }
 
             if (Build.VERSION.SDK_INT >= 14) {
                 if (holder.switch_enabled != null) {
@@ -704,6 +709,9 @@ public class AlarmListDialog extends DialogFragment
             }
             if (holder.button_delete != null) {
                 holder.button_delete.setOnClickListener(null);
+            }
+            if (holder.text_note != null) {
+                holder.text_note.setOnClickListener(null);
             }
 
             if (Build.VERSION.SDK_INT >= 14) {
@@ -761,6 +769,17 @@ public class AlarmListDialog extends DialogFragment
                 @Override
                 public void onClick(View v) {
                     AlarmEditDialog.confirmDeleteAlarm(contextRef.get(), items.get(position), onDeleteConfirmed(contextRef.get(), items.get(position)));
+                }
+            };
+        }
+
+        private View.OnClickListener noteListener(final int position)
+        {
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO
+                    Toast.makeText(contextRef.get(), "TODO", Toast.LENGTH_SHORT).show();
                 }
             };
         }
