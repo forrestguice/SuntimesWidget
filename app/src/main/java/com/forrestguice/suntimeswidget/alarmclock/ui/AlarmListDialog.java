@@ -944,6 +944,7 @@ public class AlarmListDialog extends DialogFragment
         public static SuntimesUtils utils = new SuntimesUtils();
 
         public boolean isSelected = false;
+        public boolean preview_offset = true;
 
         public View card;
         public View cardTray;
@@ -1116,13 +1117,13 @@ public class AlarmListDialog extends DialogFragment
 
             // time
             if (view.text_datetime != null) {
-                view.text_datetime.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmTime(context, item) : "");
+                view.text_datetime.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmTime(context, item, preview_offset && !isSelected) : "");
                 view.text_datetime.setTextColor(item.enabled ? color_on : (isSelected ? color_off1 : color_off));
             }
 
             // date
             if (view.text_date != null) {
-                view.text_date.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmDate(context, item) : "");
+                view.text_date.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmDate(context, item, preview_offset && !isSelected) : "");
                 view.text_date.setVisibility(isSchedulable && AlarmEditViewHolder.showAlarmDate(context, item) ? View.VISIBLE : View.GONE);
                 view.text_date.setTextColor(item.enabled ? color_on : (isSelected ? color_off1 : color_off));
             }
