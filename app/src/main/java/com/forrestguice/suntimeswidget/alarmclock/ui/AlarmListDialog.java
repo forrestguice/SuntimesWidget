@@ -681,7 +681,7 @@ public class AlarmListDialog extends DialogFragment
                 holder.button_delete.setOnClickListener(deleteButtonListener(position));
             }
             if (holder.text_note != null) {
-                holder.text_note.setOnClickListener(noteListener(position));
+                holder.text_note.setOnClickListener(noteListener(position, holder));
             }
 
             if (Build.VERSION.SDK_INT >= 14) {
@@ -729,7 +729,8 @@ public class AlarmListDialog extends DialogFragment
         {
             return new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v)
+                {
                     if (listener != null) {
                         listener.onItemClicked(items.get(position), holder);
                     }
@@ -773,13 +774,14 @@ public class AlarmListDialog extends DialogFragment
             };
         }
 
-        private View.OnClickListener noteListener(final int position)
+        private View.OnClickListener noteListener(final int position, final AlarmListDialogItem view)
         {
             return new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO
-                    Toast.makeText(contextRef.get(), "TODO", Toast.LENGTH_SHORT).show();
+                    if (listener != null) {
+                        listener.onItemNoteClicked(items.get(position), view);
+                    }
                 }
             };
         }
@@ -1308,6 +1310,13 @@ public class AlarmListDialog extends DialogFragment
         }
 
         @Override
+        public void onItemNoteClicked(AlarmClockItem item, AlarmListDialogItem view) {
+            if (listener != null) {
+                listener.onItemNoteClicked(item, view);
+            }
+        }
+
+        @Override
         public void onAlarmToggled(AlarmClockItem item, boolean enabled) {
             if (listener != null) {
                 listener.onAlarmToggled(item, enabled);
@@ -1344,6 +1353,7 @@ public class AlarmListDialog extends DialogFragment
     {
         void onItemClicked(AlarmClockItem item, AlarmListDialogItem view);
         boolean onItemLongClicked(AlarmClockItem item);
+        void onItemNoteClicked(AlarmClockItem item, AlarmListDialogItem view);
         void onAlarmToggled(AlarmClockItem item, boolean enabled);
         void onAlarmAdded(AlarmClockItem item);
         void onAlarmDeleted(long rowID);
