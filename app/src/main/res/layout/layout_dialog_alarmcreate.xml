@@ -52,12 +52,12 @@
         <android.support.design.widget.TabItem
             android:id="@+id/tab_event" android:tag="AlarmDialog"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Event" />
+            android:text="@string/schedalarm_dialog_tab_event" />
 
         <android.support.design.widget.TabItem
             android:id="@+id/tab_time" android:tag="AlarmTimeDialog"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Time" />
+            android:text="@string/schedalarm_dialog_tab_time" />
 
     </android.support.design.widget.TabLayout>
 
