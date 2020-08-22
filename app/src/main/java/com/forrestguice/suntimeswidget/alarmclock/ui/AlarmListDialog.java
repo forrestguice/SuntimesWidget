@@ -266,32 +266,21 @@ public class AlarmListDialog extends DialogFragment
         if (listener != null) {
             listener.onAlarmsCleared();
         }
-        reloadAdapter();
+        offerUndoClearAlarms(getActivity(), adapter.getItems());   // pass the (now stale) items to undo
+        reloadAdapter();                                           // and reload adapter (now cleared)
     }
-
-    public void offerUndoDeleteAlarm(Context context, final AlarmClockItem deletedItem)
-    {
-        View view = getView();
-        if (context != null && view != null && deletedItem != null)
-        {
-            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.deletealarm_toast_success1, deletedItem.type.getDisplayString()), Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    addAlarm(getActivity(), deletedItem);
-                }
-            });
-            AlarmNotifications.themeSnackbar(context, snackbar, null);
-            snackbar.setDuration(UNDO_DELETE_MILLIS);
-            snackbar.show();
-        }
-    }
-    public static final int UNDO_DELETE_MILLIS = 8000;
 
     protected static DialogInterface.OnClickListener onDeleteConfirmed(final Context context, final AlarmClockItem item) {
         return new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DELETE, item.getUri()));
+            }
+        };
+    }
+    protected static DialogInterface.OnClickListener onClearAlarmsConfirmed(final Context context) {
+        return new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DELETE, null));
             }
         };
     }
@@ -307,15 +296,59 @@ public class AlarmListDialog extends DialogFragment
                 .setTitle(context.getString(R.string.clearalarms_dialog_title))
                 .setMessage(context.getString(R.string.clearalarms_dialog_message))
                 .setIcon(iconResID)
-                .setPositiveButton(context.getString(R.string.clearalarms_dialog_ok), new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DELETE, null));
-                    }
-                })
+                .setPositiveButton(context.getString(R.string.clearalarms_dialog_ok), onClearAlarmsConfirmed(context))
                 .setNegativeButton(context.getString(R.string.clearalarms_dialog_cancel), null);
         confirm.show();
     }
+
+    public void offerUndoClearAlarms(Context context, final List<AlarmClockItem> items)
+    {
+        View view = getView();
+        if (context != null && view != null)
+        {
+            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.clearalarms_toast_success), Snackbar.LENGTH_INDEFINITE);
+            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    Context context = getActivity();
+                    if (context != null) {
+                        for (AlarmClockItem item : items) {
+                            if (item != null) {
+                                addAlarm(context, item);
+                            }
+                        }
+                    }
+                }
+            });
+            AlarmNotifications.themeSnackbar(context, snackbar, null);
+            snackbar.setDuration(UNDO_DELETE_MILLIS);
+            snackbar.show();
+        }
+    }
+
+    public void offerUndoDeleteAlarm(Context context, final AlarmClockItem deletedItem)
+    {
+        View view = getView();
+        if (context != null && view != null && deletedItem != null)
+        {
+            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.deletealarm_toast_success1, deletedItem.type.getDisplayString()), Snackbar.LENGTH_INDEFINITE);
+            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    Context context = getActivity();
+                    if (context != null && deletedItem != null) {
+                        addAlarm(getActivity(), deletedItem);
+                    }
+                }
+            });
+            AlarmNotifications.themeSnackbar(context, snackbar, null);
+            snackbar.setDuration(UNDO_DELETE_MILLIS);
+            snackbar.show();
+        }
+    }
+    public static final int UNDO_DELETE_MILLIS = 8000;
 
     public AlarmClockItem createAlarm(final Context context, AlarmClockItem.AlarmType type, String label, SolarEvents event, Location location, int hour, int minute, String timezone, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays, boolean addToDatabase)
     {
@@ -606,6 +639,10 @@ public class AlarmListDialog extends DialogFragment
                 }
             }
             return null;
+        }
+
+        public List<AlarmClockItem> getItems() {
+            return new ArrayList<>(items);
         }
 
         public void sortItems()

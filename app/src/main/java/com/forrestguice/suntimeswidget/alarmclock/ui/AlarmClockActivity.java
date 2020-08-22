@@ -462,7 +462,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
         @Override
         public void onAlarmsCleared() {
-            Toast.makeText(AlarmClockActivity.this, getString(R.string.clearalarms_toast_success), Toast.LENGTH_LONG).show();
+            //Toast.makeText(AlarmClockActivity.this, getString(R.string.clearalarms_toast_success), Toast.LENGTH_LONG).show();
         }
     };
 
