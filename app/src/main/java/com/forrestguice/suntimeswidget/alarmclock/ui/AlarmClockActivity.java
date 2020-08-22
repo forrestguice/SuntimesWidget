@@ -374,8 +374,12 @@ public class AlarmClockActivity extends AppCompatActivity
         }
 
         addButton = (FloatingActionButton) findViewById(R.id.btn_add);
-        addButton.setBackgroundTintList(SuntimesUtils.colorStateList(colorAlarmEnabled, colorDisabled, colorPressed));
-        addButton.setRippleColor(Color.TRANSPARENT);
+
+        if (Build.VERSION.SDK_INT <= 19) {    // override ripple fallback
+            addButton.setBackgroundTintList(SuntimesUtils.colorStateList(colorAlarmEnabled, colorDisabled, colorPressed));
+            addButton.setRippleColor(Color.TRANSPARENT);
+        }
+
         addButton.setOnClickListener(onFabMenuClick);
 
         list = (AlarmListDialog) getSupportFragmentManager().findFragmentById(R.id.listFragment);

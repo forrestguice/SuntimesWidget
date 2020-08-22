@@ -21,7 +21,7 @@
     android:background="?attr/dialogBackground">
 
     <LinearLayout android:visibility="visible"
-        android:background="?attr/fab_rippleColor"
+        android:background="?attr/text_accentColor"
         android:layout_width="match_parent" android:layout_height="1dp"
         android:orientation="horizontal" android:gravity="center_vertical|start">
     </LinearLayout>
@@ -39,7 +39,7 @@
             style="@android:style/Widget.ActionButton.Overflow" android:contentDescription="@string/schedalarm_dialog_ok"
             android:layout_width="96dp" android:layout_height="56dp" android:paddingLeft="16dp" android:paddingRight="16dp"
             android:src="?attr/icActionAccept"
-            android:tint="?attr/fab_rippleColor" />
+            android:tint="?attr/text_accentColor" />
 
     </LinearLayout>
 
