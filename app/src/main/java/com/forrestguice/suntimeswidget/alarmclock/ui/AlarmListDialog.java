@@ -34,6 +34,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -962,6 +963,7 @@ public class AlarmListDialog extends DialogFragment
 
         public boolean isSelected = false;
         public boolean preview_offset = true;
+        public boolean preview_offset_transition = false;
 
         public View card;
         public View cardTray;
@@ -1031,6 +1033,26 @@ public class AlarmListDialog extends DialogFragment
             } else {
                 check_enabled = (CheckBox) view.findViewById(R.id.switch_enabled);              // checkbox used by api < 14 (otherwise null)
             }
+        }
+
+        public void triggerPreviewOffset(final Context context, final AlarmClockItem item)
+        {
+            if (preview_offset_transition) {
+                return;
+            }
+
+            preview_offset = true;
+            preview_offset_transition = true;
+            bindData(context, item);
+
+            cardTray.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    preview_offset_transition = false;
+                    preview_offset = !isSelected;
+                    bindData(context, item);
+                }
+            }, AlarmEditDialog.PREVIEW_OFFSET_DURATION_MILLIS);
         }
 
         @SuppressLint("ResourceType")

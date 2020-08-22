@@ -436,22 +436,11 @@ public class AlarmClockActivity extends AppCompatActivity
         @Override
         public void onItemNoteClicked(final AlarmClockItem item, final AlarmListDialog.AlarmListDialogItem view)
         {
-            view.preview_offset = true;
-            view.bindData(AlarmClockActivity.this, item);
-
-            view.cardTray.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    view.preview_offset = !view.preview_offset;
-                    view.bindData(AlarmClockActivity.this, item);
-                }
-            }, AlarmEditDialog.PREVIEW_OFFSET_DURATION_MILLIS);
-
+            view.triggerPreviewOffset(AlarmClockActivity.this, item);
             if (item.enabled) {
                 AlarmNotifications.showTimeUntilToast(AlarmClockActivity.this, list.getView(), item);
             }
         }
-        private long lastClick_note = Long.MAX_VALUE;
 
         @Override
         public void onAlarmToggled(AlarmClockItem item, boolean enabled) {
