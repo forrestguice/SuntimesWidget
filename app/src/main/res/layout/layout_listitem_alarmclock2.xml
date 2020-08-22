@@ -115,7 +115,7 @@
 
                 <TextView
                     android:id="@+id/text_datetime_offset"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" android:minHeight="18dp"
                     android:gravity="center"
                     android:layout_marginTop="4dp" android:layout_marginBottom="-8dp"
                     android:textSize="12sp" android:maxLines="1" android:ellipsize="end"
