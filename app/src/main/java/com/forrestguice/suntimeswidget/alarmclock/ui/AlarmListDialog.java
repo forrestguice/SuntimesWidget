@@ -40,7 +40,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.AlertDialog;
@@ -48,9 +47,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.util.TypedValue;
@@ -67,7 +63,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -651,6 +646,7 @@ public class AlarmListDialog extends DialogFragment
         {
             AlarmClockItem item = items.get(position);
             holder.isSelected = (item.rowID == selectedRowID);
+            holder.preview_offset = !holder.isSelected;
             ViewCompat.setTransitionName(holder.text_datetime, "transition_" + item.rowID);
 
             detachClickListeners(holder);
@@ -1070,10 +1066,18 @@ public class AlarmListDialog extends DialogFragment
             updateView(context, this, item);
         }
 
-        private void updateView(Context context, AlarmListDialogItem view, @NonNull final AlarmClockItem item)
+        protected void updateView(Context context, AlarmListDialogItem view, @NonNull final AlarmClockItem item)
         {
             int eventType = item.event == null ? -1 : item.event.getType();
             boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item, Calendar.getInstance(), false);
+
+            // spannable icons
+            int iconColor = (item.enabled ? color_on : color_off);
+            int[] attrs = { R.attr.icActionTimeReset };
+            TypedArray a = context.obtainStyledAttributes(attrs);
+            int offsetIconSize = (int)context.getResources().getDimension(R.dimen.offsetIcon_width);
+            ImageSpan offsetIcon = SuntimesUtils.createImageSpan(context, a.getResourceId(0, R.drawable.ic_action_timereset), offsetIconSize, offsetIconSize, iconColor);
+            a.recycle();
 
             // background
             view.cardBackdrop.setBackgroundColor( isSelected ? ColorUtils.setAlphaComponent(color_selected, 170) : color_notselected);  // 66% alpha
@@ -1118,15 +1122,15 @@ public class AlarmListDialog extends DialogFragment
                 view.text_event.setText(AlarmEditViewHolder.displayEvent(context, item));
                 view.text_event.setTextColor(item.enabled ? color_on : color_off);
 
-                float iconSize = context.getResources().getDimension(R.dimen.eventIcon_width);
+                float eventIconSize = context.getResources().getDimension(R.dimen.eventIcon_width);
                 if (item.event != null)
                 {
-                    Drawable eventIcon = SolarEventIcons.getIconDrawable(context, item.event, (int)iconSize, (int)iconSize);
+                    Drawable eventIcon = SolarEventIcons.getIconDrawable(context, item.event, (int)eventIconSize, (int)eventIconSize);
                     view.text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, item.event));
                     view.text_event.setCompoundDrawables(eventIcon, null, null, null);
 
                 } else {
-                    Drawable eventIcon = SolarEventIcons.getIconDrawable(context, item.timezone, (int)iconSize, (int)iconSize);
+                    Drawable eventIcon = SolarEventIcons.getIconDrawable(context, item.timezone, (int)eventIconSize, (int)eventIconSize);
                     if (item.timezone == null) {
                         SolarEventIcons.tintDrawable(eventIcon, item.enabled ? color_on : color_off);
                     }
@@ -1137,14 +1141,24 @@ public class AlarmListDialog extends DialogFragment
             view.icon_event.setVisibility(View.GONE);
 
             // time
-            if (view.text_datetime != null) {
-                view.text_datetime.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmTime(context, item, preview_offset && !isSelected) : "");
+            if (view.text_datetime != null)
+            {
+                CharSequence timeDisplay = isSchedulable ? AlarmEditViewHolder.displayAlarmTime(context, item, preview_offset) : "";
+                if (item.offset != 0 && !isSelected)
+                {
+                    //SpannableStringBuilder offsetSpan = SuntimesUtils.createSpan(context, "[i]", "[i]", offsetIcon, ImageSpan.ALIGN_BASELINE);
+                    //view.text_datetime.setText(offsetSpan.append(timeDisplay));
+                    view.text_datetime.setText(timeDisplay);
+
+                } else {
+                    view.text_datetime.setText(timeDisplay);
+                }
                 view.text_datetime.setTextColor(item.enabled ? color_on : (isSelected ? color_off1 : color_off));
             }
 
             // date
             if (view.text_date != null) {
-                view.text_date.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmDate(context, item, preview_offset && !isSelected) : "");
+                view.text_date.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmDate(context, item, preview_offset) : "");
                 view.text_date.setVisibility(isSchedulable && AlarmEditViewHolder.showAlarmDate(context, item) ? View.VISIBLE : View.GONE);
                 view.text_date.setTextColor(item.enabled ? color_on : (isSelected ? color_off1 : color_off));
             }
@@ -1211,22 +1225,17 @@ public class AlarmListDialog extends DialogFragment
             // offset (before / after)
             if (view.text_offset != null)
             {
-                Calendar alarmTime = Calendar.getInstance();
-                alarmTime.setTimeInMillis(item.timestamp);
-                int alarmHour = SuntimesUtils.is24() ? alarmTime.get(Calendar.HOUR_OF_DAY) : alarmTime.get(Calendar.HOUR);
-
-                if (item.offset == 0)
-                {
-                    String offsetDisplay = context.getResources().getQuantityString(R.plurals.offset_at_plural, alarmHour);
-                    view.text_offset.setText(isSchedulable ? offsetDisplay : "");
-
-                } else {
-                    boolean isBefore = (item.offset <= 0);
-                    String offsetText = utils.timeDeltaLongDisplayString(0, item.offset).getValue();
-                    String offsetDisplay = context.getResources().getQuantityString((isBefore ? R.plurals.offset_before_plural : R.plurals.offset_after_plural), alarmHour, offsetText);
-                    Spannable offsetSpan = SuntimesUtils.createBoldSpan(null, offsetDisplay, offsetText);
-                    view.text_offset.setText(isSchedulable ? offsetSpan : "");
+                CharSequence offsetDisplay = AlarmEditViewHolder.displayOffset(context, item);
+                boolean showIcon = (!isSelected && item.offset != 0);
+                //int visibility = (preview_offset && !showIcon ? View.INVISIBLE : View.VISIBLE);
+                if (showIcon) {
+                    offsetDisplay = SuntimesUtils.createSpan(context, "[i]", "[i]", offsetIcon, ImageSpan.ALIGN_BASELINE);
+                } else if (preview_offset) {
+                    offsetDisplay = "";
                 }
+
+                view.text_offset.setText(((isSchedulable && isSelected) || showIcon) ? offsetDisplay : "");
+                //view.text_offset.setVisibility(visibility);
                 view.text_offset.setTextColor(item.enabled ? color_on : color_off);
             }
 
