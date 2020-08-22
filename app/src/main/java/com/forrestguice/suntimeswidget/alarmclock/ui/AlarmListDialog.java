@@ -274,7 +274,7 @@ public class AlarmListDialog extends DialogFragment
         View view = getView();
         if (context != null && view != null && deletedItem != null)
         {
-            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.deletealarm_toast_success1, deletedItem.type.getDisplayString()), Snackbar.LENGTH_LONG);
+            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.deletealarm_toast_success1, deletedItem.type.getDisplayString()), Snackbar.LENGTH_INDEFINITE);
             snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -282,9 +282,11 @@ public class AlarmListDialog extends DialogFragment
                 }
             });
             AlarmNotifications.themeSnackbar(context, snackbar, null);
+            snackbar.setDuration(UNDO_DELETE_MILLIS);
             snackbar.show();
         }
     }
+    public static final int UNDO_DELETE_MILLIS = 8000;
 
     protected static DialogInterface.OnClickListener onDeleteConfirmed(final Context context, final AlarmClockItem item) {
         return new DialogInterface.OnClickListener() {
