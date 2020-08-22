@@ -30,6 +30,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.provider.AlarmClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -483,8 +484,12 @@ public class AlarmClockActivity extends AppCompatActivity
         }
     };
 
-    protected void showAlarmEditActivity(@NonNull AlarmClockItem item, @Nullable View sharedView, int requestCode, boolean isNewAlarm)
+    protected boolean showAlarmEditActivity(@NonNull AlarmClockItem item, @Nullable View sharedView, int requestCode, boolean isNewAlarm)
     {
+        if (SystemClock.elapsedRealtime() - showAlarmEditActivity_last < 1000) {
+            return false;  // prevent multiple successive calls (by click handlers) from triggering startActivity multiple times
+        } else showAlarmEditActivity_last = SystemClock.elapsedRealtime();
+
         Intent intent = new Intent(this, AlarmEditActivity.class);
         intent.putExtra(AlarmEditActivity.EXTRA_ITEM, item);
         intent.putExtra(AlarmEditActivity.EXTRA_ISNEW, isNewAlarm);
@@ -495,7 +500,10 @@ public class AlarmClockActivity extends AppCompatActivity
         } else {
             startActivityForResult(intent, requestCode);
         }
+        return true;
     }
+    private long showAlarmEditActivity_last = SystemClock.elapsedRealtime();
+
     private AlarmDatabaseAdapter.AlarmItemTaskListener onUpdateItem = new AlarmDatabaseAdapter.AlarmItemTaskListener()
     {
         @Override
