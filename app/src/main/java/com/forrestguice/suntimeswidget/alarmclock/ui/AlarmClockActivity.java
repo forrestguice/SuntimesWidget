@@ -410,20 +410,21 @@ public class AlarmClockActivity extends AppCompatActivity
         return sheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED || sheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED;
     }
 
-    private AlarmListDialog.AdapterListener listAdapter = new AlarmListDialog.AdapterListener() {
+    private AlarmListDialog.AdapterListener listAdapter = new AlarmListDialog.AdapterListener()
+    {
         @Override
         public void onItemClicked(AlarmClockItem item, AlarmListDialog.AlarmListDialogItem view)
         {
             if (isAddDialogShowing()) {
-                Log.d("DEBUG", "onItemClicked: dismiss add: " + sheetBehavior.getState());
                 dismissAddDialog();
 
             } else if (list.getSelectedRowID() == item.rowID) {
-                Log.d("DEBUG", "onItemClicked: show edit");
                 showAlarmEditActivity(item, view.text_datetime, REQUEST_EDITALARM, false);
 
-            } else if (item.enabled) {
-                AlarmNotifications.showTimeUntilToast(AlarmClockActivity.this, list.getView(), item);
+            } else {
+                if (item.enabled) {
+                    AlarmNotifications.showTimeUntilToast(AlarmClockActivity.this, list.getView(), item);
+                }
             }
         }
 
@@ -431,6 +432,26 @@ public class AlarmClockActivity extends AppCompatActivity
         public boolean onItemLongClicked(AlarmClockItem item) {
             return true;
         }
+
+        @Override
+        public void onItemNoteClicked(final AlarmClockItem item, final AlarmListDialog.AlarmListDialogItem view)
+        {
+            view.preview_offset = true;
+            view.bindData(AlarmClockActivity.this, item);
+
+            view.cardTray.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    view.preview_offset = !view.preview_offset;
+                    view.bindData(AlarmClockActivity.this, item);
+                }
+            }, AlarmEditDialog.PREVIEW_OFFSET_DURATION_MILLIS);
+
+            if (item.enabled) {
+                AlarmNotifications.showTimeUntilToast(AlarmClockActivity.this, list.getView(), item);
+            }
+        }
+        private long lastClick_note = Long.MAX_VALUE;
 
         @Override
         public void onAlarmToggled(AlarmClockItem item, boolean enabled) {
