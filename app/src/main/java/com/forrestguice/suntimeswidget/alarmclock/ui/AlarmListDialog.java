@@ -296,10 +296,15 @@ public class AlarmListDialog extends DialogFragment
 
     public static void confirmClearAlarms(final Context context)
     {
+        int[] attrs = { R.attr.icActionDelete };
+        TypedArray a = context.obtainStyledAttributes(attrs);
+        int iconResID = a.getResourceId(0, R.drawable.ic_action_discard);
+        a.recycle();
+
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.clearalarms_dialog_title))
                 .setMessage(context.getString(R.string.clearalarms_dialog_message))
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(iconResID)
                 .setPositiveButton(context.getString(R.string.clearalarms_dialog_ok), new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int whichButton) {

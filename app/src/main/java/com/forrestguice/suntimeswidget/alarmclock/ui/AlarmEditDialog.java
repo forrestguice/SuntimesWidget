@@ -22,6 +22,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -351,9 +352,14 @@ public class AlarmEditDialog extends DialogFragment
 
     public static void confirmDeleteAlarm(final Context context, final AlarmClockItem item, DialogInterface.OnClickListener onDeleteConfirmed)
     {
+        int[] attrs = { R.attr.icActionDelete };
+        TypedArray a = context.obtainStyledAttributes(attrs);
+        int iconResID = a.getResourceId(0, R.drawable.ic_action_discard);
+        a.recycle();
+
         String message = context.getString(R.string.deletealarm_dialog_message, AlarmEditViewHolder.displayAlarmLabel(context, item), AlarmEditViewHolder.displayAlarmTime(context, item), AlarmEditViewHolder.displayEvent(context, item));
         AlertDialog.Builder confirm = new AlertDialog.Builder(context)
-                .setTitle(context.getString(R.string.deletealarm_dialog_title)).setMessage(message).setIcon(R.drawable.ic_action_discard)
+                .setTitle(context.getString(R.string.deletealarm_dialog_title)).setMessage(message).setIcon(iconResID)
                 .setPositiveButton(context.getString(R.string.deletealarm_dialog_ok), onDeleteConfirmed)
                 .setNegativeButton(context.getString(R.string.deletealarm_dialog_cancel), null);
         confirm.show();
