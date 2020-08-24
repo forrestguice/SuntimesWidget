@@ -100,6 +100,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         SuntimesUtils.initDisplayStrings(context);
 
         layout_datetime = parent.findViewById(R.id.layout_datetime);
+        icon_datetime_offset = (ImageView) parent.findViewById(R.id.icon_datetime_offset);
         text_datetime_offset = (TextView) parent.findViewById(R.id.text_datetime_offset);
         text_datetime = (TextSwitcher) parent.findViewById(R.id.text_datetime);
         text_date = (TextView) parent.findViewById(R.id.text_date);

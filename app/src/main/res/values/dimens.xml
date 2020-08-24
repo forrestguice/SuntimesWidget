@@ -29,7 +29,8 @@
     <dimen name="sunIconLarge_width">32dip</dimen>
     <dimen name="sunIconLarge_height">8dip</dimen>
 
-    <dimen name="offsetIcon_width">12dip</dimen>
+    <dimen name="offsetIcon_width">16dip</dimen>
+    <dimen name="offsetIcon_margin">8dip</dimen>
     <dimen name="eventIcon_width">32dip</dimen>
     <dimen name="eventIcon_margin">6dip</dimen>
     <dimen name="eventIcon_margin1">4dip</dimen>
