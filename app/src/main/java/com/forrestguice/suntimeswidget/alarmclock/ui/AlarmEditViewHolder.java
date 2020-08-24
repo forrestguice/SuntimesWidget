@@ -21,6 +21,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.InsetDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +30,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 
@@ -53,6 +55,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     public boolean preview_offset = false;
 
     public View layout_datetime;
+    public ImageView icon_datetime_offset;
     public TextView text_datetime_offset;
     public TextSwitcher text_datetime;
     public TextView text_date;
@@ -88,6 +91,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     public int res_icAlarm, res_icNotification;
     public int res_icSoundOn, res_icSoundOff;
     public int res_colorEnabled;
+    public int res_icOffset;
 
     public AlarmEditViewHolder(View parent)
     {
@@ -135,13 +139,14 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     @SuppressLint("ResourceType")
     public void themeHolder(Context context)
     {
-        int[] attrs = { R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.icActionSoundEnabled, R.attr.icActionSoundDisabled, R.attr.alarmColorEnabled };
+        int[] attrs = { R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.icActionSoundEnabled, R.attr.icActionSoundDisabled, R.attr.alarmColorEnabled, R.attr.icActionTimeReset };
         TypedArray a = context.obtainStyledAttributes(attrs);
         res_icAlarm = a.getResourceId(0, R.drawable.ic_action_extension);
         res_icNotification = a.getResourceId(1, R.drawable.ic_action_notification);
         res_icSoundOn = a.getResourceId(2, R.drawable.ic_action_soundenabled);
         res_icSoundOff = a.getResourceId(3, R.drawable.ic_action_sounddisabled);
         res_colorEnabled = a.getResourceId(4, R.color.alarm_enabled_dark);
+        res_icOffset = a.getResourceId(5, R.drawable.ic_action_timereset);;
         a.recycle();
     }
 
@@ -152,6 +157,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         if (item != null)
         {
             boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item, Calendar.getInstance(), false);
+            float iconSize = context.getResources().getDimension(R.dimen.eventIcon_width);
 
             menu_type.setImageDrawable(ContextCompat.getDrawable(context, (item.type == AlarmClockItem.AlarmType.ALARM ? res_icAlarm : res_icNotification)));
             menu_type.setContentDescription(item.type.getDisplayString());
@@ -159,11 +165,24 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             edit_label.setText(item.getLabel(context));
 
             text_offset.setText(displayOffset(context, item));
+
+            if (item.offset != 0)
+            {
+                int iconMargin = (int)context.getResources().getDimension(R.dimen.eventIcon_margin1);
+                Drawable offsetIcon = ContextCompat.getDrawable(context, res_icOffset).mutate();
+                offsetIcon = new InsetDrawable(offsetIcon, iconMargin, iconMargin, iconMargin, iconMargin);
+                offsetIcon.setBounds(0, 0, (int)iconSize, (int)iconSize);
+                text_offset.setCompoundDrawablePadding(iconMargin);
+                text_offset.setCompoundDrawables(offsetIcon, null, null, null);
+
+            } else {
+                text_offset.setCompoundDrawables(null, null, null, null);
+            }
+
             text_location.setText(item.location.getLabel());
             text_repeat.setText( displayRepeating(context, item, selected));
 
             text_event.setText(displayEvent(context, item));
-            float iconSize = context.getResources().getDimension(R.dimen.eventIcon_width);
 
             if (item.event != null)
             {
@@ -187,6 +206,8 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
             text_datetime_offset.setText(isSchedulable ? text_offset.getText() : "");
             text_datetime_offset.setVisibility(preview_offset ? View.INVISIBLE : View.VISIBLE);
+            icon_datetime_offset.setVisibility(preview_offset ? View.VISIBLE : View.INVISIBLE);
+            icon_datetime_offset.setContentDescription(context.getString( item.offset < 0 ? R.string.offset_button_before : R.string.offset_button_after));
 
             text_datetime.setText(isSchedulable ? displayAlarmTime(context, item, preview_offset) : "");
             ViewCompat.setTransitionName(text_datetime, "transition_" + item.rowID);

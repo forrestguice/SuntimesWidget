@@ -95,6 +95,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     protected TabLayout tabs;
     protected TextView text_title, text_offset, text_date, text_note;
     protected TextSwitcher text_time;
+    protected ImageView icon_offset;
     protected Spinner spin_type;
     protected SuntimesUtils utils = new SuntimesUtils();
 
@@ -266,6 +267,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         text_title = (TextView) dialogContent.findViewById(R.id.dialog_title);
         text_time = (TextSwitcher) dialogContent.findViewById(R.id.text_datetime);
         text_offset = (TextView) dialogContent.findViewById(R.id.text_datetime_offset);
+        icon_offset = (ImageView) dialogContent.findViewById(R.id.icon_datetime_offset);
         text_date = (TextView) dialogContent.findViewById(R.id.text_date);
         text_note = (TextView) dialogContent.findViewById(R.id.text_note);
 
@@ -585,6 +587,9 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         if (!enable && text_offset != null) {
             text_offset.setAlpha(0.0f);
             text_offset.setVisibility(View.VISIBLE);
+        }
+        if (icon_offset != null) {
+            icon_offset.setVisibility(enable ? View.VISIBLE : View.INVISIBLE);
         }
         if (text_time != null) {
             text_time.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmTime(getActivity(), item, enable) : "");

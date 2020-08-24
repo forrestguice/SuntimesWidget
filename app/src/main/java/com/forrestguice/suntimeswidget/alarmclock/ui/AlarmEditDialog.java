@@ -391,7 +391,7 @@ public class AlarmEditDialog extends DialogFragment
         holder.check_vibrate.setOnCheckedChangeListener(pickVibrating());
         holder.chip_action0.setOnClickListener(pickAction(0));
         holder.chip_action1.setOnClickListener(pickAction(1));
-        holder.layout_datetime.setOnClickListener(togglePreviewOffset(holder));
+        holder.layout_datetime.setOnClickListener(triggerPreviewOffsetListener(holder));
     }
 
     private void detachClickListeners(@NonNull AlarmEditViewHolder holder) {
@@ -495,20 +495,24 @@ public class AlarmEditDialog extends DialogFragment
         };
     }
 
-    public void togglePreviewOffset()
-    {
-        itemView.preview_offset = !itemView.preview_offset;
-        animatePreviewOffset(itemView, itemView.preview_offset);
+    public void triggerPreviewOffset() {
+        triggerPreviewOffset(itemView);
     }
 
-    private View.OnClickListener togglePreviewOffset(final AlarmEditViewHolder holder)
+    protected void triggerPreviewOffset(AlarmEditViewHolder holder)
     {
-        return new View.OnClickListener()
-        {
+        if (!holder.preview_offset && item.offset != 0) {
+            holder.preview_offset = true;
+            animatePreviewOffset(holder, true);
+        }
+    }
+
+    private View.OnClickListener triggerPreviewOffsetListener(final AlarmEditViewHolder holder)
+    {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.preview_offset = !holder.preview_offset;
-                animatePreviewOffset(holder, holder.preview_offset);
+                triggerPreviewOffset(holder);
             }
         };
     }
@@ -519,10 +523,15 @@ public class AlarmEditDialog extends DialogFragment
         }
         boolean isSchedulable = AlarmNotifications.updateAlarmTime(getActivity(), item, Calendar.getInstance(), false);
 
-        if (!enable && holder.text_offset != null) {
+        if (!enable && holder.text_datetime_offset != null) {
             holder.text_datetime_offset.setAlpha(0.0f);
             holder.text_datetime_offset.setVisibility(View.VISIBLE);
         }
+
+        if (holder.icon_datetime_offset != null) {
+            holder.icon_datetime_offset.setVisibility(enable ? View.VISIBLE : View.INVISIBLE);
+        }
+
         if (holder.text_datetime != null) {
             holder.text_datetime.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmTime(getActivity(), item, enable) : "");
         }

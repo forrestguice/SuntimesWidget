@@ -656,7 +656,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 item.offset = offsetDialog.getOffset();
                 AlarmNotifications.updateAlarmTime(AlarmEditActivity.this, item);
                 editor.notifyItemChanged();
-                editor.togglePreviewOffset();
+                editor.triggerPreviewOffset();
             }
         }
     };
@@ -690,7 +690,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 AlarmCreateDialog.updateAlarmItem(dialog, item);
                 AlarmNotifications.updateAlarmTime(AlarmEditActivity.this, item);
                 editor.notifyItemChanged();
-                editor.togglePreviewOffset();
+                editor.triggerPreviewOffset();
                 invalidateOptionsMenu();
             }
         }
@@ -732,7 +732,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 item.location = location;
                 AlarmNotifications.updateAlarmTime(AlarmEditActivity.this, item);
                 editor.notifyItemChanged();
-                editor.togglePreviewOffset();
+                editor.triggerPreviewOffset();
                 invalidateOptionsMenu();
                 return true;
             }
