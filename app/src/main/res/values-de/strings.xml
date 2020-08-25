@@ -924,6 +924,8 @@
     <item>summer solstice</item>   <!-- TODO -->
     <item>Herbst-Tag-Nacht-Gleiche</item>
     <item>Wintersonnenwende</item>
+    <item>lunar noon</item>    <!-- TODO -->
+    <item>lunar midnight</item>    <!-- TODO -->
   </string-array>
   <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
       <item>Astronomische Morgendämmerung (Beginn)</item>
@@ -951,6 +953,8 @@
     <item>summer solstice</item>   <!-- TODO -->
     <item>Herbst-Tag-Nacht-Gleiche</item>
     <item>Wintersonnenwende</item>
+    <item>lunar noon</item>    <!-- TODO -->
+    <item>lunar midnight</item>    <!-- TODO -->
   </string-array>
 
   <!-- Dialog: Enable GPS? -->
@@ -1060,7 +1064,7 @@
   <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
   <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, und <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
   <string name="creditsTab">Danksagungen</string>
-  
+
   <string name="app_legal3"><![CDATA[ <b>Bibliotheken:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>  <!-- TODO: review -->
 
   <!-- Dialog: Help -->

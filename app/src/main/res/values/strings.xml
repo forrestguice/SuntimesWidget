@@ -168,6 +168,8 @@
     <string name="untilEnd_bluehour">blue hour</string>
     <string name="until_moonrise">moonrise</string>
     <string name="until_moonset">moonset</string>
+    <string name="until_moonnoon">lunar noon</string>   <!-- TODO -->
+    <string name="until_moonnight">lunar midnight</string>   <!-- TODO -->
 
     <!-- Table -->
     <string name="sunrise">Sunrise</string>                             <!-- contentDescription -->
@@ -1363,6 +1365,8 @@
         <item>summer solstice</item>
         <item>autumn equinox</item>
         <item>winter solstice</item>
+        <item>lunar noon</item>    <!-- TODO -->
+        <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>morning astronomical twilight (start)</item>
@@ -1390,6 +1394,8 @@
         <item>summer solstice</item>
         <item>autumn equinox</item>
         <item>winter solstice</item>
+        <item>lunar noon</item>    <!-- TODO -->
+        <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
 
     <!-- Dialog: Enable GPS? -->

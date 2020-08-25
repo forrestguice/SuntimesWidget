@@ -975,7 +975,9 @@
         <item>równonoc wiosenna</item>
         <item>przesilenie letnie</item>
         <item>równonoc jesienna</item> 
-        <item>przesilenie zimowe</item> 
+        <item>przesilenie zimowe</item>
+        <item>lunar noon</item>    <!-- TODO -->
+        <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>świt astronomiczny</item>
@@ -1003,6 +1005,8 @@
         <item>przesilenie letnie</item>
         <item>równonoc jesienna</item> 
         <item>przesilenie zimowe</item>
+        <item>lunar noon</item>    <!-- TODO -->
+        <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
 
     <!-- Dialog: Enable GPS? -->

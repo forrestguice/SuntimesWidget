@@ -54,6 +54,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -157,6 +158,8 @@ public class AlarmDialog extends BottomSheetDialogFragment
             {
                 adapter.remove(SolarEvents.MOONRISE);
                 adapter.remove(SolarEvents.MOONSET);
+                adapter.remove(SolarEvents.MOONNOON);
+                adapter.remove(SolarEvents.MOONNIGHT);
                 adapter.remove(SolarEvents.NEWMOON);
                 adapter.remove(SolarEvents.FIRSTQUARTER);
                 adapter.remove(SolarEvents.FULLMOON);
@@ -548,20 +551,14 @@ public class AlarmDialog extends BottomSheetDialogFragment
                 }
                 break;
             case MOONRISE:
-                if (moondata != null) {
-                    calendar = moondata.moonriseCalendarToday();
-                    if (calendar == null || time.after(calendar.getTime()))
-                    {
-                        calendar = moondata.moonriseCalendarTomorrow();
-                    }
-                }
-                break;
             case MOONSET:
-                if (moondata != null) {
-                    calendar = moondata.moonsetCalendarToday();
-                    if (calendar == null || time.after(calendar.getTime()))
-                    {
-                        calendar = moondata.moonsetCalendarTomorrow();
+            case MOONNOON:
+            case MOONNIGHT:
+                if (moondata != null)
+                {
+                    calendar = AlarmNotifications.moonEventCalendar(choice, moondata, true);
+                    if (calendar == null || time.after(calendar.getTime())) {
+                        calendar = AlarmNotifications.moonEventCalendar(choice, moondata, false);
                     }
                 }
                 break;
