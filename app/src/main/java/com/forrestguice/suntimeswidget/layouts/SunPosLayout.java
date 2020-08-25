@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2018 Forrest Guice
+   Copyright (C) 2018-2020 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,6 +21,8 @@ package com.forrestguice.suntimeswidget.layouts;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.SpannableString;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
@@ -56,58 +58,72 @@ public abstract class SunPosLayout extends PositionLayout
         //Log.v("DEBUG", "title text: " + titleText);
     }
 
-    protected void updateViewsAzimuthElevationText(Context context, RemoteViews views, SuntimesCalculator.SunPosition sunPosition, SuntimesCalculator.SunPosition noonPosition)
+    protected void updateViewsAzimuthElevationText(Context context, @NonNull RemoteViews views, @Nullable SuntimesCalculator.SunPosition sunPosition, @Nullable SuntimesCalculator.SunPosition noonPosition)
     {
-        SuntimesUtils.TimeDisplayText azimuthDisplay = utils.formatAsDirection2(sunPosition.azimuth, DECIMAL_PLACES, false);
-        views.setTextViewText(R.id.info_sun_azimuth_current, styleAzimuthText(azimuthDisplay, highlightColor, suffixColor, boldTime));
+        if (sunPosition != null)
+        {
+            SuntimesUtils.TimeDisplayText azimuthDisplay = utils.formatAsDirection2(sunPosition.azimuth, DECIMAL_PLACES, false);
+            views.setTextViewText(R.id.info_sun_azimuth_current, styleAzimuthText(azimuthDisplay, highlightColor, suffixColor, boldTime));
 
-        if (Build.VERSION.SDK_INT >= 15) {
-            SuntimesUtils.TimeDisplayText azimuthDescription = utils.formatAsDirection2(sunPosition.azimuth, DECIMAL_PLACES, true);
-            views.setContentDescription(R.id.info_sun_azimuth_current, utils.formatAsDirection(azimuthDescription.getValue(), azimuthDescription.getSuffix()));
+            if (Build.VERSION.SDK_INT >= 15) {
+                SuntimesUtils.TimeDisplayText azimuthDescription = utils.formatAsDirection2(sunPosition.azimuth, DECIMAL_PLACES, true);
+                views.setContentDescription(R.id.info_sun_azimuth_current, utils.formatAsDirection(azimuthDescription.getValue(), azimuthDescription.getSuffix()));
+            }
+
+            int elevationColor = (sunPosition.elevation <= 0 ? highlightColor :
+                    (SuntimesRiseSetDataset.isRising(sunPosition, noonPosition) ? risingColor : settingColor));
+            views.setTextViewText(R.id.info_sun_elevation_current, styleElevationText(sunPosition.elevation, elevationColor, suffixColor, boldTime));
         }
-
-        int elevationColor = (sunPosition.elevation <= 0 ? highlightColor :
-                (SuntimesRiseSetDataset.isRising(sunPosition, noonPosition) ? risingColor : settingColor));
-        views.setTextViewText(R.id.info_sun_elevation_current, styleElevationText(sunPosition.elevation, elevationColor, suffixColor, boldTime));
     }
 
-    protected void updateViewsRightAscDeclinationText(Context context, RemoteViews views, SuntimesCalculator.SunPosition sunPosition)
+    protected void updateViewsRightAscDeclinationText(Context context, @NonNull RemoteViews views, @Nullable SuntimesCalculator.SunPosition sunPosition)
     {
-        SuntimesUtils.TimeDisplayText rightAscDisplay = utils.formatAsRightAscension(sunPosition.rightAscension, DECIMAL_PLACES);
-        String rightAscSymbol = rightAscDisplay.getSuffix();
-        String rightAscString = utils.formatAsRightAscension(rightAscDisplay.getValue(), rightAscSymbol);
-        SpannableString rightAsc = SuntimesUtils.createColorSpan(null, rightAscString, rightAscString, highlightColor, boldTime);
-        rightAsc = SuntimesUtils.createBoldColorSpan(rightAsc, rightAscString, rightAscSymbol, suffixColor);
-        rightAsc = SuntimesUtils.createRelativeSpan(rightAsc, rightAscString, rightAscSymbol, SYMBOL_RELATIVE_SIZE);
-        views.setTextViewText(R.id.info_sun_rightascension_current, rightAsc);
+        if (sunPosition != null)
+        {
+            SuntimesUtils.TimeDisplayText rightAscDisplay = utils.formatAsRightAscension(sunPosition.rightAscension, DECIMAL_PLACES);
+            String rightAscSymbol = rightAscDisplay.getSuffix();
+            String rightAscString = utils.formatAsRightAscension(rightAscDisplay.getValue(), rightAscSymbol);
+            SpannableString rightAsc = SuntimesUtils.createColorSpan(null, rightAscString, rightAscString, highlightColor, boldTime);
+            rightAsc = SuntimesUtils.createBoldColorSpan(rightAsc, rightAscString, rightAscSymbol, suffixColor);
+            rightAsc = SuntimesUtils.createRelativeSpan(rightAsc, rightAscString, rightAscSymbol, SYMBOL_RELATIVE_SIZE);
+            views.setTextViewText(R.id.info_sun_rightascension_current, rightAsc);
 
-        SuntimesUtils.TimeDisplayText declinationDisplay = utils.formatAsDeclination(sunPosition.declination, DECIMAL_PLACES);
-        String declinationSymbol = declinationDisplay.getSuffix();
-        String declinationString = utils.formatAsDeclination(declinationDisplay.getValue(), declinationSymbol);
-        SpannableString declination = SuntimesUtils.createColorSpan(null, declinationString, declinationString, highlightColor, boldTime);
-        declination = SuntimesUtils.createBoldColorSpan(declination, declinationString, declinationSymbol, suffixColor);
-        declination = SuntimesUtils.createRelativeSpan(declination, declinationString, declinationSymbol, SYMBOL_RELATIVE_SIZE);
-        views.setTextViewText(R.id.info_sun_declination_current, declination);
+            SuntimesUtils.TimeDisplayText declinationDisplay = utils.formatAsDeclination(sunPosition.declination, DECIMAL_PLACES);
+            String declinationSymbol = declinationDisplay.getSuffix();
+            String declinationString = utils.formatAsDeclination(declinationDisplay.getValue(), declinationSymbol);
+            SpannableString declination = SuntimesUtils.createColorSpan(null, declinationString, declinationString, highlightColor, boldTime);
+            declination = SuntimesUtils.createBoldColorSpan(declination, declinationString, declinationSymbol, suffixColor);
+            declination = SuntimesUtils.createRelativeSpan(declination, declinationString, declinationSymbol, SYMBOL_RELATIVE_SIZE);
+            views.setTextViewText(R.id.info_sun_declination_current, declination);
+        }
     }
 
-    protected void updateViewsAzimuthElevationText(Context context, RemoteViews views, SuntimesCalculator.SunPosition sunPosition, SuntimesCalculator.SunPosition risingPosition, SuntimesCalculator.SunPosition noonPosition, SuntimesCalculator.SunPosition settingPosition)
+    protected void updateViewsAzimuthElevationText(Context context, @NonNull RemoteViews views, @Nullable SuntimesCalculator.SunPosition sunPosition, @Nullable SuntimesCalculator.SunPosition risingPosition, @Nullable SuntimesCalculator.SunPosition noonPosition, @Nullable SuntimesCalculator.SunPosition settingPosition)
     {
-        SuntimesUtils.TimeDisplayText azimuthRising = utils.formatAsDirection2(risingPosition.azimuth, DECIMAL_PLACES, false);
-        views.setTextViewText(R.id.info_sun_azimuth_rising, styleAzimuthText(azimuthRising, risingColor, suffixColor, boldTime));
+        if (risingPosition != null)
+        {
+            SuntimesUtils.TimeDisplayText azimuthRising = utils.formatAsDirection2(risingPosition.azimuth, DECIMAL_PLACES, false);
+            views.setTextViewText(R.id.info_sun_azimuth_rising, styleAzimuthText(azimuthRising, risingColor, suffixColor, boldTime));
 
-        if (Build.VERSION.SDK_INT >= 15) {
-            SuntimesUtils.TimeDisplayText azimuthRisingDesc = utils.formatAsDirection2(risingPosition.azimuth, DECIMAL_PLACES, true);
-            views.setContentDescription(R.id.info_sun_azimuth_rising, utils.formatAsDirection(azimuthRisingDesc.getValue(), azimuthRisingDesc.getSuffix()));
+            if (Build.VERSION.SDK_INT >= 15) {
+                SuntimesUtils.TimeDisplayText azimuthRisingDesc = utils.formatAsDirection2(risingPosition.azimuth, DECIMAL_PLACES, true);
+                views.setContentDescription(R.id.info_sun_azimuth_rising, utils.formatAsDirection(azimuthRisingDesc.getValue(), azimuthRisingDesc.getSuffix()));
+            }
         }
 
-        views.setTextViewText(R.id.info_sun_elevation_atnoon, styleElevationText(noonPosition.elevation, settingColor, suffixColor, boldTime));
+        if (noonPosition != null) {
+            views.setTextViewText(R.id.info_sun_elevation_atnoon, styleElevationText(noonPosition.elevation, settingColor, suffixColor, boldTime));
+        }
 
-        SuntimesUtils.TimeDisplayText azimuthSetting = utils.formatAsDirection2(settingPosition.azimuth, DECIMAL_PLACES, false);
-        views.setTextViewText(R.id.info_sun_azimuth_setting, styleAzimuthText(azimuthSetting, settingColor, suffixColor, boldTime));
+        if (settingPosition != null)
+        {
+            SuntimesUtils.TimeDisplayText azimuthSetting = utils.formatAsDirection2(settingPosition.azimuth, DECIMAL_PLACES, false);
+            views.setTextViewText(R.id.info_sun_azimuth_setting, styleAzimuthText(azimuthSetting, settingColor, suffixColor, boldTime));
 
-        if (Build.VERSION.SDK_INT >= 15) {
-            SuntimesUtils.TimeDisplayText azimuthSettingDesc = utils.formatAsDirection2(settingPosition.azimuth, DECIMAL_PLACES, true);
-            views.setContentDescription(R.id.info_sun_azimuth_setting, utils.formatAsDirection(azimuthSettingDesc.getValue(), azimuthSettingDesc.getSuffix()));
+            if (Build.VERSION.SDK_INT >= 15) {
+                SuntimesUtils.TimeDisplayText azimuthSettingDesc = utils.formatAsDirection2(settingPosition.azimuth, DECIMAL_PLACES, true);
+                views.setContentDescription(R.id.info_sun_azimuth_setting, utils.formatAsDirection(azimuthSettingDesc.getValue(), azimuthSettingDesc.getSuffix()));
+            }
         }
     }
 
@@ -122,7 +138,7 @@ public abstract class SunPosLayout extends PositionLayout
         settingColor = theme.getSunsetTextColor();
     }
 
-    protected void themeViewsAzimuthElevationText(Context context, RemoteViews views, SuntimesTheme theme)
+    protected void themeViewsAzimuthElevationText(Context context, @NonNull RemoteViews views, @NonNull SuntimesTheme theme)
     {
         int textColor = theme.getTextColor();
         views.setTextColor(R.id.info_sun_azimuth_current_label, textColor);
@@ -142,7 +158,7 @@ public abstract class SunPosLayout extends PositionLayout
         }
     }
 
-    protected void themeViewsRightAscDeclinationText(Context context, RemoteViews views, SuntimesTheme theme)
+    protected void themeViewsRightAscDeclinationText(Context context, @NonNull RemoteViews views, @NonNull SuntimesTheme theme)
     {
         int textColor = theme.getTextColor();
         views.setTextColor(R.id.info_sun_rightascension_current_label, textColor);
