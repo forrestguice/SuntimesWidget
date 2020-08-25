@@ -515,9 +515,11 @@ public class AlarmClockActivity extends AppCompatActivity
         intent.putExtra(AlarmEditActivity.EXTRA_ITEM, item);
         intent.putExtra(AlarmEditActivity.EXTRA_ISNEW, isNewAlarm);
 
-        if (sharedView != null) {
+        if (Build.VERSION.SDK_INT >= 16 && sharedView != null)
+        {
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, sharedView, ViewCompat.getTransitionName(sharedView));
             startActivityForResult(intent, requestCode, options.toBundle());
+
         } else {
             startActivityForResult(intent, requestCode);
         }
