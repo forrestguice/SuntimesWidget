@@ -532,7 +532,7 @@ public class AlarmEditDialog extends DialogFragment
 
         if (holder.text_datetime_offset != null)
         {
-            if (Build.VERSION.SDK_INT >= 11)
+            if (Build.VERSION.SDK_INT >= 14)
             {
                 if (!enable) {
                     holder.text_datetime_offset.setAlpha(0.0f);
