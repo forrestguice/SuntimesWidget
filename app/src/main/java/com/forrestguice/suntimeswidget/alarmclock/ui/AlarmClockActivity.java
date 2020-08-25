@@ -346,9 +346,14 @@ public class AlarmClockActivity extends AppCompatActivity
 
         int sheetState = savedState.getInt("bottomsheet", BottomSheetBehavior.STATE_HIDDEN);
         sheetBehavior.setState(sheetState);
-        if (sheetState != BottomSheetBehavior.STATE_HIDDEN) {
-            addButton.setScaleX(0);
-            addButton.setScaleY(0);
+
+        if (Build.VERSION.SDK_INT >= 14)
+        {
+            if (sheetState != BottomSheetBehavior.STATE_HIDDEN)
+            {
+                addButton.setScaleX(0);
+                addButton.setScaleY(0);
+            }
         }
     }
 
@@ -405,7 +410,9 @@ public class AlarmClockActivity extends AppCompatActivity
 
             @Override
             public void onSlide(@NonNull View view, float v) {
-                addButton.animate().scaleX(1 - v).scaleY(1 - v).setDuration(0).start();
+                if (Build.VERSION.SDK_INT >= 14) {
+                    addButton.animate().scaleX(1 - v).scaleY(1 - v).setDuration(0).start();
+                }
             }
         });
     }
