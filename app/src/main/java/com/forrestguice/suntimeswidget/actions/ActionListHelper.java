@@ -395,19 +395,35 @@ public class ActionListHelper
 
             AlertDialog.Builder dialog = new AlertDialog.Builder(context);
             String title = WidgetActions.loadActionLaunchPref(context, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
-            dialog.setMessage(context.getString(R.string.delaction_dialog_msg, title, actionID))
+            dialog.setMessage(context.getString(isDefault ? R.string.delaction_dialog_msg1 : R.string.delaction_dialog_msg, title, actionID))
                     .setNegativeButton(context.getString(R.string.delaction_dialog_cancel), null)
-                    .setPositiveButton(context.getString(R.string.delaction_dialog_ok),
-                    new DialogInterface.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            WidgetActions.deleteActionLaunchPref(context, 0, actionID);
-                            initAdapter(context);
-                            updateViews(context);
-                            adapterModified = true;
-                        }
-                    });
+                    .setPositiveButton(context.getString(isDefault ? R.string.delaction_dialog_ok1 : R.string.delaction_dialog_ok),
+                            new DialogInterface.OnClickListener()
+                            {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which)
+                                {
+                                    WidgetActions.deleteActionLaunchPref(context, 0, actionID);
+                                    adapterModified = true;
+
+                                    list.post(new Runnable()
+                                    {
+                                        @Override
+                                        public void run()
+                                        {
+                                            Context context = contextRef.get();
+                                            if (context != null)
+                                            {
+                                                if (isDefault) {
+                                                    WidgetActions.initDefaults(context);
+                                                }
+                                                initAdapter(context);
+                                                updateViews(context);
+                                            }
+                                        }
+                                    });
+                                }
+                            });
             dialog.show();
         }
     }
