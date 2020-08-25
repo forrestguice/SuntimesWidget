@@ -16,7 +16,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget.settings;
+package com.forrestguice.suntimeswidget.settings.colors;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -42,7 +42,7 @@ import java.util.Locale;
 @SuppressWarnings("Convert2Diamond")
 public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
 {
-    private static final String DIALOGTAG_COLOR = "colorchooser";
+    public static final String DIALOGTAG_COLOR = "colorchooser";
 
     private String chooserID = "0";
     final protected ImageButton button;
@@ -137,6 +137,11 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
         {
             linked.remove(chooser);
         }
+    }
+
+    private ArrayList<Integer> recentColors;
+    public void setRecentColors(ArrayList<Integer> colors) {
+        recentColors = colors;
     }
 
     /**
@@ -327,9 +332,11 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
 
     protected void onColorChanged( int newColor )
     {
-        for (ColorChooser chooser : getLinked())
-        {
+        for (ColorChooser chooser : getLinked()) {
             chooser.setColor(newColor);
+        }
+        if (colorChangeListener != null) {
+            colorChangeListener.onColorChanged(newColor);
         }
     }
     protected void onFocusGained(View view)
@@ -397,9 +404,10 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
     private void showColorPicker(Context context)
     {
         ColorDialog colorDialog = new ColorDialog();
+        colorDialog.setRecentColors(recentColors);
         colorDialog.setShowAlpha(showAlpha);
         colorDialog.setColor(getColor());
-        colorDialog.setColorChangeListener(colorDialogChangeListener);
+        colorDialog.setColorDialogListener(colorDialogListener);
         if (fragmentManager != null)
         {
             colorDialog.show(fragmentManager, DIALOGTAG_COLOR + "_" + chooserID);
@@ -410,10 +418,10 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
         }
     }
 
-    private final ColorDialog.ColorChangeListener colorDialogChangeListener = new ColorDialog.ColorChangeListener()
+    private final ColorDialog.ColorDialogListener colorDialogListener = new ColorDialog.ColorDialogListener()
     {
         @Override
-        public void onColorChanged(int color)
+        public void onAccepted(int color)
         {
             setColor(color);
             ColorChooser.this.onColorChanged(getColor());
@@ -427,9 +435,14 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
             ColorDialog colorDialog = (ColorDialog) fragmentManager.findFragmentByTag(DIALOGTAG_COLOR + "_" + chooserID);
             if (colorDialog != null)
             {
-                colorDialog.setColorChangeListener(colorDialogChangeListener);
+                colorDialog.setColorDialogListener(colorDialogListener);
             }
         }
+    }
+
+    private ColorDialog.ColorChangeListener colorChangeListener = null;
+    public void setColorChangeListener(ColorDialog.ColorChangeListener listener) {
+        colorChangeListener = listener;
     }
 
 }

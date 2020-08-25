@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
-package com.forrestguice.suntimeswidget.settings;
+package com.forrestguice.suntimeswidget.settings.colors;
 
 import android.content.Context;
 import android.content.res.TypedArray;

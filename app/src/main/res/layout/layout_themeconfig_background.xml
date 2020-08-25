@@ -40,7 +40,7 @@
             app:layout_constraintStart_toEndOf="@+id/editLabel_background"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+        <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
             android:id="@+id/chooser_backgroundColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
