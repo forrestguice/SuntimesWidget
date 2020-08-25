@@ -667,14 +667,18 @@ public class AlarmListDialog extends DialogFragment
                     switch (sortMode)
                     {
                         case AlarmSettings.SORT_BY_ALARMTIME:                // nearest alarm time first
-                            return Long.compare((o1.timestamp + o1.offset) - now, (o2.timestamp + o2.offset) - now);
+                            return compareLong((o1.timestamp + o1.offset) - now, (o2.timestamp + o2.offset) - now);
 
                         case AlarmSettings.SORT_BY_CREATION:
-                        default: return Long.compare(o2.rowID, o1.rowID);    // newest items first
+                        default: return compareLong(o2.rowID, o1.rowID);    // newest items first
                     }
                 }
             });
             return items;
+        }
+
+        static int compareLong(long x, long y) {
+            return (x < y) ? -1 : ((x == y) ? 0 : 1);    // copied from Long.compare to support api < 19
         }
 
         @Override
