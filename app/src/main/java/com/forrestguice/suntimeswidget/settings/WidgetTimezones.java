@@ -221,10 +221,11 @@ public class WidgetTimezones
         @Override
         public int getOffset( long date )
         {
-            return getRawOffset() + equationOfTimeOffset(date, calculator);
+            eotOffset = equationOfTimeOffset(date, calculator);
+            return getRawOffset() + eotOffset;
         }
 
-        public static int equationOfTimeOffset(long date,SuntimesCalculator calculator)
+        public static int equationOfTimeOffset(long date, SuntimesCalculator calculator)
         {
             if (calculator != null)
             {
@@ -298,10 +299,10 @@ public class WidgetTimezones
         }
 
         @Override
-        public int getDSTSavings()
-        {
-            return 1;
+        public int getDSTSavings() {
+            return eotOffset;
         }
+        private int eotOffset = 0;
     }
 
     ///////////////////////////////////////

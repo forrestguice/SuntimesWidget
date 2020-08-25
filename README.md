@@ -159,7 +159,7 @@ Libraries used:
 
 ## Project Contributions
 
-German translation by <u>Henrik "HerHde" Hüttemann</u> and <u>Wolkenschieber</u>.<br/>
+German translation by <u>Henrik "HerHde" Hüttemann</u>, <u>Wolkenschieber</u>, and <u>xnumad</u>.<br/>
 Polish and Esperanto translations by <u>Verdulo</u>.<br/>
 French translation by <u>Jej</u> and <u>Aloha</u>.<br/>
 Hungarian translation by <u>Erci</u>.<br/>

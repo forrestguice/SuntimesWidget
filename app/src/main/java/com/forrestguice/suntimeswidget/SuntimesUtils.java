@@ -1129,7 +1129,15 @@ public class SuntimesUtils
         displayString = displayString.replaceAll(locPattern, location.getLabel());
         displayString = displayString.replaceAll(latPattern, location.getLatitude());
         displayString = displayString.replaceAll(lonPattern, location.getLongitude());
-        displayString = displayString.replaceAll(altPattern, "" + location.getAltitudeAsInteger());
+
+        if (displayString.contains(altPattern))
+        {
+            String altitudeDisplay = (WidgetSettings.loadLengthUnitsPref(context, 0) == WidgetSettings.LengthUnit.IMPERIAL)
+                                   ? (int)WidgetSettings.LengthUnit.metersToFeet(location.getAltitudeAsDouble()) + ""
+                                   : location.getAltitudeAsInteger() + "";
+            displayString = displayString.replaceAll(altPattern, altitudeDisplay);
+        }
+
         displayString = displayString.replaceAll(timezoneIDPattern, timezoneID);
         displayString = displayString.replaceAll(datasourcePattern, datasource);
         displayString = displayString.replaceAll(widgetIDPattern, appWidgetID);
