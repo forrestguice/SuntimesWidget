@@ -188,13 +188,17 @@ public class AlarmListDialog extends DialogFragment
         {
             case R.id.sortByAlarmTime:
                 AlarmSettings.savePrefAlarmSort(getActivity(), AlarmSettings.SORT_BY_ALARMTIME);
-                getActivity().invalidateOptionsMenu();
+                if (Build.VERSION.SDK_INT >= 11) {
+                    getActivity().invalidateOptionsMenu();
+                }  // else { TODO }
                 adapter.sortItems();
                 return true;
 
             case R.id.sortByCreation:
                 AlarmSettings.savePrefAlarmSort(getActivity(), AlarmSettings.SORT_BY_CREATION);
-                getActivity().invalidateOptionsMenu();
+                if (Build.VERSION.SDK_INT >= 11) {
+                    getActivity().invalidateOptionsMenu();
+                }  // else { TODO }
                 adapter.sortItems();
                 return true;
 
