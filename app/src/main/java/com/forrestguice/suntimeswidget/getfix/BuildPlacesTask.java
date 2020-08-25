@@ -120,7 +120,7 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
                 int p = GetFixDatabaseAdapter.findPlaceByName(location.getLabel(), cursor);
                 if (p < 0)    // if not found
                 {                 // then add new place
-                    db.addPlace(location);
+                    db.addPlace(location, PlaceItem.TAG_DEFAULT);
                     result++;
                 }
             }

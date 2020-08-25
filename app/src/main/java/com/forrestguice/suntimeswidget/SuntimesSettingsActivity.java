@@ -64,6 +64,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
+import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.LengthPreference;
 import com.forrestguice.suntimeswidget.settings.SummaryListPreference;
@@ -914,10 +915,11 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_places, false);
             addPreferencesFromResource(R.xml.preference_places);
 
+            Preference managePlacesPref = findPreference("places_manage");
             Preference clearPlacesPref = findPreference("places_clear");
             Preference exportPlacesPref = findPreference("places_export");
             Preference buildPlacesPref = findPreference("places_build");
-            base = new PlacesPrefsBase(getActivity(), buildPlacesPref, clearPlacesPref, exportPlacesPref);
+            base = new PlacesPrefsBase(getActivity(), managePlacesPref, buildPlacesPref, clearPlacesPref, exportPlacesPref);
         }
 
         @Override
@@ -939,9 +941,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         public void onAttach(Context context)
         {
             super.onAttach(context);
-            if (base != null)
-            {
-                base.setParent(context);
+            if (base != null) {
+                base.setParent(getActivity());
             }
         }
 
@@ -949,8 +950,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         public void onAttach(Activity activity)
         {
             super.onAttach(activity);
-            if (base != null)
-            {
+            if (base != null) {
                 base.setParent(activity);
             }
         }
@@ -965,7 +965,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         //public static final String KEY_ISCLEARING = "isclearing";
         //public static final String KEY_ISEXPORTING = "isexporting";
 
-        private Context myParent;
+        private Activity myParent;
         private ProgressDialog progress;
 
         private BuildPlacesTask buildPlacesTask = null;
@@ -977,9 +977,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         private ExportPlacesTask exportPlacesTask = null;
         private boolean isExporting = false;
 
-        public PlacesPrefsBase(Context context, Preference buildPref, Preference clearPref, Preference exportPref)
+        public PlacesPrefsBase(Activity context, Preference managePref, Preference buildPref, Preference clearPref, Preference exportPref)
         {
             myParent = context;
+
+            if (managePref != null) {
+                managePref.setOnPreferenceClickListener(onClickManagePlaces);
+            }
 
             if (buildPref != null)
                 buildPref.setOnPreferenceClickListener(onClickBuildPlaces);
@@ -991,8 +995,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 exportPref.setOnPreferenceClickListener(onClickExportPlaces);
         }
 
-        public void setParent( Context context )
-        {
+        public void setParent( Activity context ) {
             myParent = context;
         }
 
@@ -1018,6 +1021,24 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 progress.dismiss();
             }
         }
+
+        /**
+         * Manage Places (click handler)
+         */
+        private Preference.OnPreferenceClickListener onClickManagePlaces = new Preference.OnPreferenceClickListener()
+        {
+            public boolean onPreferenceClick(Preference preference)
+            {
+                if (myParent != null)
+                {
+                    Intent intent = new Intent(myParent, PlacesActivity.class);
+                    myParent.startActivity(intent);
+                    myParent.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+                    return true;
+                }
+                return false;
+            }
+        };
 
         /**
          * Build Places (click handler)
@@ -1236,12 +1257,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     private void initPref_places()
     {
         //noinspection deprecation
+        Preference managePlacesPref = findPreference("places_manage");
+        //noinspection deprecation
         Preference buildPlacesPref = findPreference("places_build");
         //noinspection deprecation
         Preference clearPlacesPref = findPreference("places_clear");
         //noinspection deprecation
         Preference exportPlacesPref = findPreference("places_export");
-        placesPrefBase = new PlacesPrefsBase(this, buildPlacesPref, clearPlacesPref, exportPlacesPref);
+        placesPrefBase = new PlacesPrefsBase(this, managePlacesPref, buildPlacesPref, clearPlacesPref, exportPlacesPref);
     }
 
     //////////////////////////////////////////////////

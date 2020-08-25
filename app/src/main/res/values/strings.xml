@@ -450,6 +450,7 @@
     <string name="configHint_location_alt">0</string>                                    <!-- edittext hint -->
     <string name="configLabel_location_name">Name:</string>                      <!-- edittext label -->
     <string name="configHint_location_name">(optional)</string>                  <!-- edittext hint -->
+    <string name="configHint_location_name0">Place Name</string>                  <!-- edittext hint -->  <!-- TODO -->
 
     <string name="configAction_getFix">Get Location</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">Edit</string>         <!-- button (contentDescription) -->
@@ -868,10 +869,23 @@
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Places</string>                           <!-- group title -->
-    <string name="configLabel_places_export">Export Places</string>
-    <string name="configLabel_places_clear">Clear Places</string>
+    <string name="configLabel_places_emptyMsg">@string/configLabel_places</string>    <!-- TODO -->
+    <string name="configLabel_places_multiSelect">%s places</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->   <!-- TODO -->
+    <string name="configLabel_places_export">Export Places</string>  <!-- TODO: remove -->
+    <string name="configLabel_places_clear">Clear Places</string>   <!-- TODO: remove -->
     <string name="configLabel_places_build">Add World Places</string>
     <string name="configLabel_places_build_summary">Scan locales and add cities to the database.</string>
+
+
+    <string name="configAction_addPlace">Add</string>              <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_copyPlace">Copy</string>            <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_selectPlace">Select</string>        <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_searchPlace">Search</string>              <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_sharePlace">Share</string>          <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_deletePlace">Delete</string>        <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_clearPlaces">Clear</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_exportPlaces">Export</string>       <!-- button (contentDescription) -->  <!-- TODO -->
+
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">User Interface</string>                       <!-- group title -->
@@ -1414,28 +1428,36 @@
     <string name="location_dialog_error_lat">This is not a valid latitude.</string>
     <string name="location_dialog_error_lon">This is not a valid longitude.</string>
     <string name="location_dialog_error_alt">This is not a valid elevation.</string>
+    <string name="location_dialog_error_name">Enter a place name.</string>  <!-- TODO -->
 
     <string name="location_dialog_toast_copied">Copied to clipboard<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
 
+    <!-- Dialog: Delete Place -->
+    <string name="locationdelete_dialog_title">Remove Place?</string>   <!-- title; remove 1 place --> <!-- TODO -->
+    <string name="locationdelete_dialog_title1">Remove Places?</string>  <!-- title; remove multiple places --> <!-- TODO -->
+    <string name="locationdelete_dialog_message">Are you sure you want to remove %s?</string>   <!-- TODO -->
+    <string name="locationdelete_dialog_ok">Remove</string>  <!-- TODO -->
+    <string name="locationdelete_dialog_cancel">Cancel</string>  <!-- TODO -->
+
     <!-- Dialog: Clear Places -->
     <string name="locationclear_dialog_title">Clear Places?</string>
-    <string name="locationclear_dialog_message">Are you sure you want to clear the database of places?</string>
+    <string name="locationclear_dialog_message">Are you sure you want to clear the list of places?</string>  <!-- TODO -->
     <string name="locationclear_dialog_ok">Clear</string>
     <string name="locationclear_dialog_cancel">Cancel</string>
 
     <!-- Dialog: Clear Places (progress) -->
     <string name="locationcleared_dialog_title">Clearing Places</string>
-    <string name="locationcleared_dialog_message">Clearing the database…</string>
-    <string name="locationcleared_toast_success">The database of places has been cleared.</string>
+    <string name="locationcleared_dialog_message">Clearing the list of places…</string>               <!-- TODO -->
+    <string name="locationcleared_toast_success">The list of places has been cleared.</string>        <!-- TODO -->
 
     <!-- Dialog: Build Places List (progress) -->
     <string name="locationbuild_dialog_title">Building Database</string>
-    <string name="locationbuild_dialog_message">Building a database of places…</string>
-    <string name="locationbuild_toast_success">Added <xliff:g id="n">%1$s</xliff:g> places to the database.</string>
+    <string name="locationbuild_dialog_message">Building a list of places…</string>                   <!-- TODO -->
+    <string name="locationbuild_toast_success">Added <xliff:g id="n">%1$s</xliff:g> places.</string>  <!-- TODO -->
 
     <!-- Dialog: Export Places -->
     <string name="locationexport_dialog_title">Exporting Places</string>
-    <string name="locationexport_dialog_message">Exporting the database to csv file.</string>
+    <string name="locationexport_dialog_message">Exporting places to csv file.</string>               <!-- TODO -->
 
     <!-- Dialog: Export Themes -->
     <string name="themesexport_dialog_title">Exporting Themes</string>
