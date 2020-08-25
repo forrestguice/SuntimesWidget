@@ -545,6 +545,7 @@ public class AlarmClockActivity extends AppCompatActivity
         FragmentManager fragments = getSupportFragmentManager();
         AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentById(R.id.createAlarmFragment);
         if (dialog != null) {
+            dialog.loadSettings(AlarmClockActivity.this);
             dialog.setAlarmType(type);
             dialog.setOnAcceptedListener(onAddAlarmAccepted);
             dialog.setOnCanceledListener(onAddAlarmCanceled);

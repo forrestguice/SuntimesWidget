@@ -445,6 +445,27 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         args.putString(EXTRA_TIMEZONE, prefs.getString(EXTRA_TIMEZONE, getTimeZone()));
         args.putSerializable(EXTRA_EVENT, SolarEvents.valueOf(prefs.getString(EXTRA_EVENT, SolarEvents.SUNRISE.name())));;
         args.putSerializable(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.valueOf(prefs.getString(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.ALARM.name())));
+
+        if (isAdded())
+        {
+            FragmentManager fragments = getChildFragmentManager();
+            AlarmDialog fragment0 = (AlarmDialog) fragments.findFragmentByTag("AlarmDialog");
+            if (fragment0 != null) {
+                initEventDialog(getActivity(), fragment0, getLocation());
+                fragment0.setChoice(getEvent());
+                fragment0.setType(getAlarmType());
+            }
+
+            AlarmTimeDialog fragment1 = (AlarmTimeDialog) fragments.findFragmentByTag("AlarmTimeDialog");
+            if (fragment1 != null) {
+                fragment1.setLocation(getLocation());
+                fragment1.setTime(getHour(), getMinute());
+                fragment1.setTimeZone(getTimeZone());
+                fragment1.updateViews(getActivity());
+            }
+
+            updateViews(getActivity());
+        }
     }
 
     protected void saveSettings(Bundle bundle) {}
@@ -650,21 +671,20 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         args.putSerializable(EXTRA_EVENT, event);
         args.putParcelable(EXTRA_LOCATION, location);
 
-        if (!isAdded()) {
-            return;
-        }
+        if (isAdded())
+        {
+            FragmentManager fragments = getChildFragmentManager();
+            AlarmDialog fragment0 = (AlarmDialog) fragments.findFragmentByTag("AlarmDialog");
+            if (fragment0 != null) {
+                initEventDialog(getActivity(), fragment0, location);
+                fragment0.setChoice(event);
+            }
 
-        FragmentManager fragments = getChildFragmentManager();
-        AlarmDialog fragment0 = (AlarmDialog) fragments.findFragmentByTag("AlarmDialog");
-        if (fragment0 != null) {
-            initEventDialog(getActivity(), fragment0, location);
-            fragment0.setChoice(event);
-        }
-
-        AlarmTimeDialog fragment1 = (AlarmTimeDialog) fragments.findFragmentByTag("AlarmTimeDialog");
-        if (fragment1 != null) {
-            fragment1.setLocation(location);
-            fragment1.updateViews(getActivity());
+            AlarmTimeDialog fragment1 = (AlarmTimeDialog) fragments.findFragmentByTag("AlarmTimeDialog");
+            if (fragment1 != null) {
+                fragment1.setLocation(location);
+                fragment1.updateViews(getActivity());
+            }
         }
     }
 
@@ -686,6 +706,19 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         args.putInt(EXTRA_HOUR, hour);
         args.putInt(EXTRA_MINUTE, minute);
         args.putString(EXTRA_TIMEZONE, timezone);
+
+        if (isAdded())
+        {
+            FragmentManager fragments = getChildFragmentManager();
+            AlarmTimeDialog fragment1 = (AlarmTimeDialog) fragments.findFragmentByTag("AlarmTimeDialog");
+            if (fragment1 != null) {
+                fragment1.setTime(hour, minute);
+                fragment1.setTimeZone(timezone);
+                fragment1.updateViews(getActivity());
+            }
+
+            updateViews(getActivity());
+        }
     }
 
     public void setDialogMode(int mode) {
@@ -698,13 +731,13 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     public void setAlarmType(AlarmClockItem.AlarmType value)
     {
         getArguments().putSerializable(EXTRA_ALARMTYPE, value);
-        if (!isAdded()) {
-            return;
-        }
-        FragmentManager fragments = getChildFragmentManager();
-        AlarmDialog fragment = (AlarmDialog) fragments.findFragmentByTag("AlarmDialog");
-        if (fragment != null) {
-            fragment.setType(getAlarmType());
+        if (isAdded())
+        {
+            FragmentManager fragments = getChildFragmentManager();
+            AlarmDialog fragment = (AlarmDialog) fragments.findFragmentByTag("AlarmDialog");
+            if (fragment != null) {
+                fragment.setType(getAlarmType());
+            }
         }
     }
     public AlarmClockItem.AlarmType getAlarmType() {
