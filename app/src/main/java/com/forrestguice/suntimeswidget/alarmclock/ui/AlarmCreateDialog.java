@@ -613,44 +613,56 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         item.offset = getOffset();
         boolean isSchedulable = AlarmNotifications.updateAlarmTime(getActivity(), item);
 
-        if (!enable && text_offset != null) {
-            text_offset.setAlpha(0.0f);
-            text_offset.setVisibility(View.VISIBLE);
-        }
-        if (icon_offset != null) {
-            icon_offset.setVisibility(enable ? View.VISIBLE : View.INVISIBLE);
-        }
         if (text_time != null) {
             text_time.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmTime(getActivity(), item, enable) : "");
         }
         if (text_date != null) {
             text_date.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmDate(getActivity(), item, enable): "");
         }
-        if (text_offset != null)
+
+        if (Build.VERSION.SDK_INT >= 14)
         {
-            text_offset.animate().translationY((enable ? 2 * text_offset.getHeight() : 0))
-                    .alpha(enable ? 0.0f : 1.0f).setListener(new Animator.AnimatorListener() {
-                public void onAnimationCancel(Animator animation) {}
-                public void onAnimationRepeat(Animator animation) {}
-                public void onAnimationStart(Animator animation) {}
-                public void onAnimationEnd(Animator animation)
-                {
-                    text_offset.setVisibility(enable ? View.INVISIBLE : View.VISIBLE);
-                    if (enable)
-                    {
-                        text_offset.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                setPreviewOffset(false);
-                                animatePreviewOffset(dialog,false);
-                            }
-                        }, PREVIEW_OFFSET_DURATION_MILLIS);
+            if (!enable && text_offset != null) {
+                text_offset.setAlpha(0.0f);
+                text_offset.setVisibility(View.VISIBLE);
+            }
+            if (icon_offset != null) {
+                icon_offset.setVisibility(enable ? View.VISIBLE : View.INVISIBLE);
+            }
+
+            if (text_offset != null)
+            {
+                text_offset.animate().translationY((enable ? 2 * text_offset.getHeight() : 0))
+                        .alpha(enable ? 0.0f : 1.0f).setListener(new Animator.AnimatorListener() {
+                    public void onAnimationCancel(Animator animation) {}
+                    public void onAnimationRepeat(Animator animation) {}
+                    public void onAnimationStart(Animator animation) {}
+                    public void onAnimationEnd(Animator animation) {
+                        onAnimatePreviewOffsetEnd(dialog, enable);
                     }
-                }
-            });
+                });
+            }
+
+        } else {
+            onAnimatePreviewOffsetEnd(dialog, enable);
         }
     }
     public static final int PREVIEW_OFFSET_DURATION_MILLIS = 1500;
+
+    protected void onAnimatePreviewOffsetEnd(final AlarmCreateDialog dialog, boolean enable)
+    {
+        text_offset.setVisibility(enable ? View.INVISIBLE : View.VISIBLE);
+        if (enable)
+        {
+            text_offset.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    setPreviewOffset(false);
+                    animatePreviewOffset(dialog,false);
+                }
+            }, PREVIEW_OFFSET_DURATION_MILLIS);
+        }
+    }
 
     public boolean previewOffset() {
         return getArguments().getBoolean(EXTRA_PREVIEW_OFFSET, false);
