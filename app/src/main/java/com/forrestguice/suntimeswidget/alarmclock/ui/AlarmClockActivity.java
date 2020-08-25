@@ -516,7 +516,7 @@ public class AlarmClockActivity extends AppCompatActivity
         }
         return true;
     }
-    private long showAlarmEditActivity_last = SystemClock.elapsedRealtime();
+    private long showAlarmEditActivity_last = (SystemClock.elapsedRealtime() - 1000);
 
     private AlarmDatabaseAdapter.AlarmItemTaskListener onUpdateItem = new AlarmDatabaseAdapter.AlarmItemTaskListener()
     {
