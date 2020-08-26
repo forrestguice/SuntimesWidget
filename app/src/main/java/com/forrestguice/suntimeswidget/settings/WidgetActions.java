@@ -37,6 +37,7 @@ import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
+import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -458,7 +459,7 @@ public class WidgetActions
                     }
 
                 } else {
-                    String lowerCase = value.toLowerCase();
+                    String lowerCase = value.toLowerCase(Locale.getDefault());
                     if (lowerCase.equals("true") || lowerCase.equals("false")) {
                         intent.putExtra(key, lowerCase.equals("true"));  // boolean
                         Log.i(TAG, "applyExtras: applied " + extra + " (boolean)");
