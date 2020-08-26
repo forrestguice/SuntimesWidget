@@ -26,6 +26,7 @@ import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -64,6 +65,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 public class PlacesListFragment extends Fragment
 {
@@ -154,17 +156,25 @@ public class PlacesListFragment extends Fragment
         final MenuItem searchItem = menu.findItem(R.id.searchPlaces);
         if (searchItem != null)
         {
-            MenuItemCompat.setOnActionExpandListener(searchItem, onItemSearchExpand);
-            SearchView searchView = (SearchView) searchItem.getActionView();
-            if (searchView != null)
+            if (Build.VERSION.SDK_INT >= 11)
             {
-                if (!TextUtils.isEmpty(adapter.getFilterText()))
+                MenuItemCompat.setOnActionExpandListener(searchItem, onItemSearchExpand);
+                SearchView searchView = (SearchView) searchItem.getActionView();
+                if (searchView != null)
                 {
-                    searchItem.expandActionView();
-                    searchView.setQuery(adapter.getFilterText(), true);
-                    searchView.clearFocus();
+                    if (!TextUtils.isEmpty(adapter.getFilterText()))
+                    {
+                        if (Build.VERSION.SDK_INT >= 14) {
+                            searchItem.expandActionView();
+                        }
+                        searchView.setQuery(adapter.getFilterText(), true);
+                        searchView.clearFocus();
+                    }
+                    searchView.setOnQueryTextListener(onItemSearch);
                 }
-                searchView.setOnQueryTextListener(onItemSearch);
+
+            } else {
+                searchItem.setVisible(false);  // TODO: legacy support
             }
         }
     }
@@ -618,7 +628,9 @@ public class PlacesListFragment extends Fragment
         @Override
         public boolean onMenuItemActionCollapse(MenuItem item) {
             item.setVisible(true);
-            getActivity().invalidateOptionsMenu();
+            if (Build.VERSION.SDK_INT >= 11) {
+                getActivity().invalidateOptionsMenu();
+            }
             return true;
         }
     };
@@ -987,7 +999,8 @@ public class PlacesListFragment extends Fragment
         }
     }
     public String getFilterText() {
-        return getArguments().getString(KEY_FILTER_TEXT, "");
+        String value = getArguments().getString(KEY_FILTER_TEXT);
+        return (value != null ? value : "");
     }
     public long[] getFilterExceptions() {
         return getArguments().getLongArray(KEY_FILTER_EXCEPTIONS);
@@ -1146,7 +1159,7 @@ public class PlacesListFragment extends Fragment
                         return 1;
 
                     } else {
-                        return o1.location.getLabel().toLowerCase().compareTo(o2.location.getLabel().toLowerCase());
+                        return o1.location.getLabel().toLowerCase(Locale.ROOT).compareTo(o2.location.getLabel().toLowerCase(Locale.ROOT));
                     }
                 }
             });
@@ -1308,7 +1321,7 @@ public class PlacesListFragment extends Fragment
             protected FilterResults performFiltering(CharSequence constraint)
             {
                 FilterResults results = new FilterResults();
-                results.values = new ArrayList<>((constraint.length() > 0) ? getFilteredValues(constraint.toString().toLowerCase()) : items0);
+                results.values = new ArrayList<>((constraint.length() > 0) ? getFilteredValues(constraint.toString().toLowerCase(Locale.ROOT)) : items0);
                 return results;
             }
 
@@ -1318,7 +1331,7 @@ public class PlacesListFragment extends Fragment
                 List<PlaceItem> values1  = new ArrayList<>();
                 for (PlaceItem item : items0)
                 {
-                    String label = item.location.getLabel().toLowerCase().trim();
+                    String label = item.location.getLabel().toLowerCase(Locale.ROOT).trim();
 
                     if (label.equals(constraint) || filterExceptions.contains(item.rowID)) {
                         values0.add(0, item);
