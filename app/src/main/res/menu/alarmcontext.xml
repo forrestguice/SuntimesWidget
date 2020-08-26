@@ -53,10 +53,5 @@
             android:icon="?attr/icActionExtension"
             app:showAsAction="never" />
 
-        <item android:id="@+id/showDialog"
-            android:title="Test Dialog"
-            android:icon="?attr/icActionExtension"
-            app:showAsAction="never" />
-
     </group>
 </menu>
