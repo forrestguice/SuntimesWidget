@@ -413,4 +413,6 @@
         <item name="android:paddingRight">8dp</item>
     </style>
 
+    <style name="ActionButton" parent="@android:style/Widget.Button.Small" />
+
 </resources>
