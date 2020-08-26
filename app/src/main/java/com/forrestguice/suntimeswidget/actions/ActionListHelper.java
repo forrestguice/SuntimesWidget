@@ -118,7 +118,7 @@ public class ActionListHelper
         disallowSelect = savedState.getBoolean("disallowSelect", disallowSelect);
         adapterModified = savedState.getBoolean("adapterModified", adapterModified);
 
-        String actionID = savedState.getString("selectedItem",  null);
+        String actionID = savedState.getString("selectedItem");
         if (actionID != null && !actionID.trim().isEmpty()) {
             setSelected(actionID);
             triggerActionMode(list, adapter.getSelected());
