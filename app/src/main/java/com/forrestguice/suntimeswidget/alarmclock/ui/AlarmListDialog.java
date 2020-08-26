@@ -1023,7 +1023,6 @@ public class AlarmListDialog extends DialogFragment
         public ImageButton typeButton;
         public TextView text_label;
         public TextView text_event;
-        public ImageView icon_event;
         public TextView text_note;
         public TextView text_date;
         public TextView text_datetime;
@@ -1065,7 +1064,6 @@ public class AlarmListDialog extends DialogFragment
             typeButton = (ImageButton) view.findViewById(R.id.type_menu);
             text_label = (TextView) view.findViewById(android.R.id.text1);
             text_event = (TextView) view.findViewById(R.id.text_event);
-            icon_event = (ImageView) view.findViewById(R.id.icon_event);
             text_note = (TextView) view.findViewById(R.id.text_note);
             text_date = (TextView) view.findViewById(R.id.text_date);
             text_datetime = (TextView) view.findViewById(R.id.text_datetime);
@@ -1213,7 +1211,6 @@ public class AlarmListDialog extends DialogFragment
                     text_event.setCompoundDrawables(eventIcon, null, null, null);
                 }
             }
-            view.icon_event.setVisibility(View.GONE);
 
             // time
             if (view.text_datetime != null)

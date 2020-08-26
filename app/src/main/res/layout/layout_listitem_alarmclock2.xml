@@ -79,11 +79,6 @@
                 app:layout_constraintTop_toTopOf="@+id/layout_alarmtime"
                 app:layout_constraintBottom_toBottomOf="@+id/layout_alarmtime">
 
-
-                <ImageView android:id="@+id/icon_event" android:visibility="gone"
-                    android:layout_width="32dp" android:layout_height="8dp" android:src="@drawable/ic_moon_full"
-                    android:layout_gravity="start" />
-
                 <TextView
                     android:id="@+id/text_event"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
