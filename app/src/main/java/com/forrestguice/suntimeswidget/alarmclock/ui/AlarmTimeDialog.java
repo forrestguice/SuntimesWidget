@@ -209,7 +209,7 @@ public class AlarmTimeDialog extends DialogFragment
             timePicker.setCurrentMinute(getArguments().getInt(PREF_KEY_ALARM_TIME_MINUTE));
 
             locationPicker.setText(displayLocation(getActivity(), getLocation()));
-            locationPicker.setVisibility(getArguments().getString(PREF_KEY_ALARM_TIME_MODE, null) == null ? View.GONE : View.VISIBLE);
+            locationPicker.setVisibility(getArguments().getString(PREF_KEY_ALARM_TIME_MODE) == null ? View.GONE : View.VISIBLE);
 
             setTimeChangedListener();
         }

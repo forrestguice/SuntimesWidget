@@ -878,10 +878,6 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                         confirmDeleteAlarm(item, itemView);
                         return true;
 
-                    case R.id.showDialog:   // TODO: remove me
-                        onRequestDialog(item);
-                        return true;
-
                     default:
                         return false;
                 }

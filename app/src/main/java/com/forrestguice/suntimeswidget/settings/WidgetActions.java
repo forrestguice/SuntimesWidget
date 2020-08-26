@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -37,6 +38,8 @@ import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
+import java.util.Arrays;
+import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -177,7 +180,7 @@ public class WidgetActions
                 }
             }
         }
-        prefs.putStringSet(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_TAGS, tagSet);
+        putStringSet(prefs, prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_TAGS, tagSet);
 
         prefs.apply();
 
@@ -185,22 +188,23 @@ public class WidgetActions
         {
             Set<String> actionList = loadActionLaunchList(context, 0);
             actionList.add(id);
-            prefs.putStringSet(PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + PREF_KEY_ACTION_LAUNCH_LIST, actionList);
+            putStringSet(prefs, PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + PREF_KEY_ACTION_LAUNCH_LIST, actionList);
             prefs.apply();
         }
     }
+
     public static Set<String> loadActionTags(Context context, int appWidgetId, @Nullable String id)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_ACTIONS, 0);
         String prefs_prefix0 = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + id + "_";
-        Set<String> tagList = prefs.getStringSet(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_TAGS, null);
+        Set<String> tagList = getStringSet(prefs, prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_TAGS, null);
         return (tagList != null) ? new TreeSet<String>(tagList) : new TreeSet<String>();
     }
     public static Set<String> loadActionLaunchList(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_ACTIONS, 0);
         String listKey = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + PREF_KEY_ACTION_LAUNCH_LIST;
-        Set<String> actionList = prefs.getStringSet(listKey, null);
+        Set<String> actionList = getStringSet(prefs, listKey, null);
         return (actionList != null) ? new TreeSet<String>(actionList) : new TreeSet<String>();
     }
     public static String loadActionLaunchPref(Context context, int appWidgetId, @Nullable String id, @Nullable String key)
@@ -268,7 +272,7 @@ public class WidgetActions
 
         Set<String> actionList = loadActionLaunchList(context, 0);
         actionList.remove(id);
-        prefs.putStringSet(PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + PREF_KEY_ACTION_LAUNCH_LIST, actionList);
+        putStringSet(prefs, PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + PREF_KEY_ACTION_LAUNCH_LIST, actionList);
         prefs.commit();
     }
     public static boolean hasActionLaunchPref(Context context, int appWidgetId, @NonNull String id)
@@ -281,6 +285,38 @@ public class WidgetActions
     public static String getPrefsId(int appWidgetId, String actionId)
     {
         return (((actionId == null) || actionId.equals("0")) ? PREFS_WIDGETS : PREFS_ACTIONS);
+    }
+
+    public static Set<String> getStringSet(SharedPreferences prefs, String key, @Nullable Set<String> defValues)    // TODO: needs test
+    {
+        if (Build.VERSION.SDK_INT >= 11) {
+            return prefs.getStringSet(key, defValues);
+
+        } else {
+            String s = prefs.getString(key, null);
+            return (s != null) ? new TreeSet<>(Arrays.asList(s.split("\\|"))) : null;
+        }
+    }
+
+    public static void putStringSet(SharedPreferences.Editor prefs, String key, @Nullable Set<String> values)  // TODO: needs test
+    {
+        if (Build.VERSION.SDK_INT >= 11) {
+            prefs.putStringSet(key, values);
+            prefs.apply();
+
+        } else {
+            if (values != null)
+            {
+                StringBuilder s = new StringBuilder();
+                for (String v : values) {
+                    s.append(v).append("|");
+                }
+                prefs.putString(key, s.toString());
+            } else {
+                prefs.putString(key, null);
+            }
+            prefs.apply();
+        }
     }
 
     /**
@@ -458,7 +494,7 @@ public class WidgetActions
                     }
 
                 } else {
-                    String lowerCase = value.toLowerCase();
+                    String lowerCase = value.toLowerCase(Locale.getDefault());
                     if (lowerCase.equals("true") || lowerCase.equals("false")) {
                         intent.putExtra(key, lowerCase.equals("true"));  // boolean
                         Log.i(TAG, "applyExtras: applied " + extra + " (boolean)");

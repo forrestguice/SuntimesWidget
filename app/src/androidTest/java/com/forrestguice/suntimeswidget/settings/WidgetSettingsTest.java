@@ -46,6 +46,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Calendar;
+import java.util.Set;
+import java.util.TreeSet;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -440,7 +442,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         String data2 = "DATA2";
         String mime2 = "text/plain";
         String extras2 = "EXTRAS2";
-        WidgetActions.saveActionLaunchPref(context, title2, desc2, color2, appWidgetId, null, value2, WidgetActions.LaunchType.ACTIVITY.name(), action2, data2, mime2, extras2);
+        WidgetActions.saveActionLaunchPref(context, title2, desc2, color2, null, appWidgetId, null, value2, WidgetActions.LaunchType.ACTIVITY.name(), action2, data2, mime2, extras2);
         String pref2_value = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, null);
         String pref2_action = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION);
         String pref2_data = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
@@ -466,7 +468,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         String data1 = "DATA1";
         String mime1 = "text/html";
         String extras1 = "EXTRAS1";
-        WidgetActions.saveActionLaunchPref(context, title1, desc1, color1, appWidgetId, null, value1, WidgetActions.LaunchType.ACTIVITY.name(), action1, data1, mime1, extras1);
+        WidgetActions.saveActionLaunchPref(context, title1, desc1, color1, null, appWidgetId, null, value1, WidgetActions.LaunchType.ACTIVITY.name(), action1, data1, mime1, extras1);
         String pref1_value = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, null);
         String pref1_action = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION);
         String pref1_data = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
@@ -502,6 +504,24 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         assertTrue("pref title should be default", pref0_title.equals(WidgetActions.PREF_DEF_ACTION_LAUNCH_TITLE));
         assertTrue("pref desc should be default", pref0_desc.equals(WidgetActions.PREF_DEF_ACTION_LAUNCH_DESC));
         assertTrue("pref color should be default", pref0_color == WidgetActions.PREF_DEF_ACTION_LAUNCH_COLOR);
+    }
+
+    @Test
+    public void test_StringSetPref()
+    {
+        Context context = activityRule.getActivity();
+        SharedPreferences prefs = context.getSharedPreferences(WidgetActions.PREFS_ACTIONS, 0);
+
+        Set<String> values0 = new TreeSet<>();
+        for (int i=0; i<10; i++) {
+            values0.add(Integer.toString(i));
+        }
+
+        WidgetActions.putStringSet(prefs.edit(), "TEST", values0);
+        Set<String> values1 = WidgetActions.getStringSet(prefs, "TEST", null);
+        for (String v : values0) {
+            assertTrue(values1.contains(v));
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////

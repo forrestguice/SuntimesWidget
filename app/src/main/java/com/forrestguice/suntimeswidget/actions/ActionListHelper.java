@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.actions;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,6 +26,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -77,7 +79,7 @@ public class ActionListHelper
     private ListView list;
     private ActionDisplayAdapter adapter;
     protected ActionMode actionMode = null;
-    protected ActionDisplayActionMode actionModeCallback;
+    protected ActionDisplayActionMode1 actionModeCallback = new ActionDisplayActionMode1();
 
     protected boolean adapterModified = false;
     public boolean isAdapterModified() {
@@ -118,7 +120,7 @@ public class ActionListHelper
         disallowSelect = savedState.getBoolean("disallowSelect", disallowSelect);
         adapterModified = savedState.getBoolean("adapterModified", adapterModified);
 
-        String actionID = savedState.getString("selectedItem",  null);
+        String actionID = savedState.getString("selectedItem");
         if (actionID != null && !actionID.trim().isEmpty()) {
             setSelected(actionID);
             triggerActionMode(list, adapter.getSelected());
@@ -182,7 +184,6 @@ public class ActionListHelper
             return;
         }
 
-        actionModeCallback = new ActionDisplayActionMode();
         list = (ListView) content.findViewById(R.id.list_intentid);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -583,21 +584,28 @@ public class ActionListHelper
     }
     protected boolean triggerActionMode(View view, ActionDisplay item)
     {
-        if (actionMode == null)
+        if (Build.VERSION.SDK_INT >= 11)
         {
-            if (item != null)
+            if (actionMode == null)
             {
-                actionModeCallback.setItem(item);
-                actionMode = list.startActionModeForChild(view, actionModeCallback);   // TODO: legacy support
-                if (actionMode != null) {
-                    actionMode.setTitle(item.title);
+                if (item != null)
+                {
+                    actionModeCallback.setItem(item);
+                    actionMode = list.startActionModeForChild(view, actionModeCallback);
+                    if (actionMode != null) {
+                        actionMode.setTitle(item.title);
+                    }
                 }
+                return true;
+
+            } else {
+                actionMode.finish();
+                triggerActionMode(view, item);
+                return false;
             }
-            return true;
 
         } else {
-            actionMode.finish();
-            triggerActionMode(view, item);
+            Toast.makeText(contextRef.get(), "TODO", Toast.LENGTH_SHORT).show();  // TODO: legacy support
             return false;
         }
     }
@@ -605,9 +613,9 @@ public class ActionListHelper
     /**
      * ActionDisplayActionMode
      */
-    private class ActionDisplayActionMode implements android.support.v7.view.ActionMode.Callback, ActionMode.Callback
+    private class ActionDisplayActionModeBase
     {
-        public ActionDisplayActionMode() {
+        public ActionDisplayActionModeBase() {
         }
 
         protected ActionDisplay action = null;
@@ -615,41 +623,16 @@ public class ActionListHelper
             action = item;
         }
 
-        @Override
-        public boolean onCreateActionMode(android.support.v7.view.ActionMode mode, Menu menu) {
-            return onCreateActionMode(mode.getMenuInflater(), menu);
-        }
-        @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            return onCreateActionMode(mode.getMenuInflater(), menu);
-        }
-        private boolean onCreateActionMode(MenuInflater inflater, Menu menu) {
+        protected boolean onCreateActionMode(MenuInflater inflater, Menu menu) {
             inflater.inflate(R.menu.editintent2, menu);
             return true;
         }
 
-        @Override
-        public void onDestroyActionMode(android.support.v7.view.ActionMode mode) {
-            onDestroyActionMode();
-        }
-        @Override
-        public void onDestroyActionMode(ActionMode mode) {
-            onDestroyActionMode();
-        }
-        private void onDestroyActionMode() {
+        protected void onDestroyActionMode() {
             actionMode = null;
         }
 
-        @Override
-        public boolean onPrepareActionMode(android.support.v7.view.ActionMode mode, Menu menu)
-        {
-            return onPrepareActionMode(menu);
-        }
-        @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            return onPrepareActionMode(menu);
-        }
-        private boolean onPrepareActionMode(Menu menu)
+        protected boolean onPrepareActionMode(Menu menu)
         {
             String actionId = getIntentID();
             boolean isModifiable = (actionId != null && !actionId.trim().isEmpty());
@@ -665,18 +648,7 @@ public class ActionListHelper
             return false;
         }
 
-        @Override
-        public boolean onActionItemClicked(android.support.v7.view.ActionMode mode, MenuItem item) {
-            mode.finish();
-            return onActionItemClicked(item);
-        }
-
-        @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            mode.finish();
-            return onActionItemClicked(item);
-        }
-        private boolean onActionItemClicked(MenuItem item)
+        protected boolean onActionItemClicked(MenuItem item)
         {
             if (action != null)
             {
@@ -700,6 +672,55 @@ public class ActionListHelper
             return false;
         }
 
+    }
+
+    private class ActionDisplayActionMode extends ActionDisplayActionModeBase implements android.support.v7.view.ActionMode.Callback
+    {
+        public ActionDisplayActionMode() {
+            super();
+        }
+        @Override
+        public boolean onCreateActionMode(android.support.v7.view.ActionMode mode, Menu menu) {
+            return onCreateActionMode(mode.getMenuInflater(), menu);
+        }
+        @Override
+        public void onDestroyActionMode(android.support.v7.view.ActionMode mode) {
+            onDestroyActionMode();
+        }
+        @Override
+        public boolean onPrepareActionMode(android.support.v7.view.ActionMode mode, Menu menu) {
+            return onPrepareActionMode(menu);
+        }
+        @Override
+        public boolean onActionItemClicked(android.support.v7.view.ActionMode mode, MenuItem item) {
+            mode.finish();
+            return onActionItemClicked(item);
+        }
+    }
+
+    @TargetApi(11)
+    private class ActionDisplayActionMode1 extends ActionDisplayActionModeBase implements ActionMode.Callback
+    {
+        public ActionDisplayActionMode1() {
+            super();
+        }
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            return onCreateActionMode(mode.getMenuInflater(), menu);
+        }
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            onDestroyActionMode();
+        }
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return onPrepareActionMode(menu);
+        }
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            mode.finish();
+            return onActionItemClicked(item);
+        }
     }
 
 

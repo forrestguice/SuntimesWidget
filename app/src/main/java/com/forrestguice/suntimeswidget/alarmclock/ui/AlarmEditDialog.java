@@ -523,46 +523,54 @@ public class AlarmEditDialog extends DialogFragment
         }
         boolean isSchedulable = AlarmNotifications.updateAlarmTime(getActivity(), item, Calendar.getInstance(), false);
 
-        if (!enable && holder.text_datetime_offset != null) {
-            holder.text_datetime_offset.setAlpha(0.0f);
-            holder.text_datetime_offset.setVisibility(View.VISIBLE);
-        }
-
-        if (holder.icon_datetime_offset != null) {
-            holder.icon_datetime_offset.setVisibility(enable ? View.VISIBLE : View.INVISIBLE);
-        }
-
         if (holder.text_datetime != null) {
             holder.text_datetime.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmTime(getActivity(), item, enable) : "");
         }
         if (holder.text_date != null) {
             holder.text_date.setText(isSchedulable ? AlarmEditViewHolder.displayAlarmDate(getActivity(), item, enable): "");
         }
+
         if (holder.text_datetime_offset != null)
         {
-            holder.text_datetime_offset.animate().translationY((enable ? 2 * holder.text_datetime_offset.getHeight() : 0))
-                    .alpha(enable ? 0.0f : 1.0f).setListener(new Animator.AnimatorListener() {
-                public void onAnimationCancel(Animator animation) {}
-                public void onAnimationRepeat(Animator animation) {}
-                public void onAnimationStart(Animator animation) {}
-                public void onAnimationEnd(Animator animation)
-                {
-                    holder.text_datetime_offset.setVisibility(enable ? View.INVISIBLE : View.VISIBLE);
-                    if (enable)
-                    {
-                        holder.text_datetime_offset.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                holder.preview_offset = false;
-                                animatePreviewOffset(holder,false);
-                            }
-                        }, PREVIEW_OFFSET_DURATION_MILLIS);
-                    }
+            if (Build.VERSION.SDK_INT >= 14)
+            {
+                if (!enable) {
+                    holder.text_datetime_offset.setAlpha(0.0f);
+                    holder.text_datetime_offset.setVisibility(View.VISIBLE);
                 }
-            });
+
+                holder.icon_datetime_offset.setVisibility(enable ? View.VISIBLE : View.INVISIBLE);
+                holder.text_datetime_offset.animate().translationY((enable ? 2 * holder.text_datetime_offset.getHeight() : 0))
+                        .alpha(enable ? 0.0f : 1.0f).setListener(new Animator.AnimatorListener() {
+                    public void onAnimationCancel(Animator animation) {}
+                    public void onAnimationRepeat(Animator animation) {}
+                    public void onAnimationStart(Animator animation) {}
+                    public void onAnimationEnd(Animator animation) {
+                        onAnimatePreviewOffsetEnd(holder, enable);
+                    }
+                });
+
+            } else {
+                onAnimatePreviewOffsetEnd(holder, enable);
+            }
         }
     }
     public static final int PREVIEW_OFFSET_DURATION_MILLIS = 1500;
+
+    protected void onAnimatePreviewOffsetEnd(final AlarmEditViewHolder holder, final boolean enable)
+    {
+        holder.text_datetime_offset.setVisibility(enable ? View.INVISIBLE : View.VISIBLE);
+        if (enable)
+        {
+            holder.text_datetime_offset.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    holder.preview_offset = false;
+                    animatePreviewOffset(holder,false);
+                }
+            }, PREVIEW_OFFSET_DURATION_MILLIS);
+        }
+    }
 
     private CompoundButton.OnCheckedChangeListener pickVibrating()
     {

@@ -188,13 +188,17 @@ public class AlarmListDialog extends DialogFragment
         {
             case R.id.sortByAlarmTime:
                 AlarmSettings.savePrefAlarmSort(getActivity(), AlarmSettings.SORT_BY_ALARMTIME);
-                getActivity().invalidateOptionsMenu();
+                if (Build.VERSION.SDK_INT >= 11) {
+                    getActivity().invalidateOptionsMenu();
+                }  // else { TODO }
                 adapter.sortItems();
                 return true;
 
             case R.id.sortByCreation:
                 AlarmSettings.savePrefAlarmSort(getActivity(), AlarmSettings.SORT_BY_CREATION);
-                getActivity().invalidateOptionsMenu();
+                if (Build.VERSION.SDK_INT >= 11) {
+                    getActivity().invalidateOptionsMenu();
+                }  // else { TODO }
                 adapter.sortItems();
                 return true;
 
@@ -663,14 +667,18 @@ public class AlarmListDialog extends DialogFragment
                     switch (sortMode)
                     {
                         case AlarmSettings.SORT_BY_ALARMTIME:                // nearest alarm time first
-                            return Long.compare((o1.timestamp + o1.offset) - now, (o2.timestamp + o2.offset) - now);
+                            return compareLong((o1.timestamp + o1.offset) - now, (o2.timestamp + o2.offset) - now);
 
                         case AlarmSettings.SORT_BY_CREATION:
-                        default: return Long.compare(o2.rowID, o1.rowID);    // newest items first
+                        default: return compareLong(o2.rowID, o1.rowID);    // newest items first
                     }
                 }
             });
             return items;
+        }
+
+        static int compareLong(long x, long y) {
+            return (x < y) ? -1 : ((x == y) ? 0 : 1);    // copied from Long.compare to support api < 19
         }
 
         @Override
@@ -1015,7 +1023,6 @@ public class AlarmListDialog extends DialogFragment
         public ImageButton typeButton;
         public TextView text_label;
         public TextView text_event;
-        public ImageView icon_event;
         public TextView text_note;
         public TextView text_date;
         public TextView text_datetime;
@@ -1057,7 +1064,6 @@ public class AlarmListDialog extends DialogFragment
             typeButton = (ImageButton) view.findViewById(R.id.type_menu);
             text_label = (TextView) view.findViewById(android.R.id.text1);
             text_event = (TextView) view.findViewById(R.id.text_event);
-            icon_event = (ImageView) view.findViewById(R.id.icon_event);
             text_note = (TextView) view.findViewById(R.id.text_note);
             text_date = (TextView) view.findViewById(R.id.text_date);
             text_datetime = (TextView) view.findViewById(R.id.text_datetime);
@@ -1205,7 +1211,6 @@ public class AlarmListDialog extends DialogFragment
                     text_event.setCompoundDrawables(eventIcon, null, null, null);
                 }
             }
-            view.icon_event.setVisibility(View.GONE);
 
             // time
             if (view.text_datetime != null)

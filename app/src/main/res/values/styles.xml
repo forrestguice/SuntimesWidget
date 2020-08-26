@@ -126,7 +126,6 @@
 
         <item name="windowActionModeOverlay">true</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Suntimes.BottomSheetDialog</item>
-        <item name="android:windowContentTransitions">true</item>
     </style>
     <style name="AppTheme.Light" parent="AppThemeBase.Light">
         <item name="icActionNext">@drawable/ic_action_next_item_light</item>
@@ -255,7 +254,6 @@
 
         <item name="windowActionModeOverlay">true</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Suntimes.BottomSheetDialog</item>
-        <item name="android:windowContentTransitions">true</item>
     </style>
     <style name="AppTheme.Dark" parent="AppThemeBase.Dark">
         <item name="icActionNext">@drawable/ic_action_next_item</item>
@@ -478,7 +476,6 @@
     <style name="ChipText1" parent="ChipText0">
         <item name="android:background">?attr/chipBackground</item>
         <item name="android:drawableRight">@drawable/ic_transparent1</item>
-        <item name="android:drawableEnd">@drawable/ic_transparent1</item>
     </style>
 
 </resources>
