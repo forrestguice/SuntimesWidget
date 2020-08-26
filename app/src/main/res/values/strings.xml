@@ -1321,6 +1321,9 @@
     <string name="color_dialog_msg">Choose Colour</string>
     <string name="color_dialog_ok">Select</string>
     <string name="color_dialog_cancel">Cancel</string>
+    <string name="color_dialog_tab1">1</string>  <!-- TODO -->
+    <string name="color_dialog_tab2">2</string>  <!-- TODO -->
+    <string name="color_dialog_tab3">3</string>  <!-- TODO -->
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">About</string>
