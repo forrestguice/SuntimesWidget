@@ -26,6 +26,7 @@ import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -154,17 +155,25 @@ public class PlacesListFragment extends Fragment
         final MenuItem searchItem = menu.findItem(R.id.searchPlaces);
         if (searchItem != null)
         {
-            MenuItemCompat.setOnActionExpandListener(searchItem, onItemSearchExpand);
-            SearchView searchView = (SearchView) searchItem.getActionView();
-            if (searchView != null)
+            if (Build.VERSION.SDK_INT >= 11)
             {
-                if (!TextUtils.isEmpty(adapter.getFilterText()))
+                MenuItemCompat.setOnActionExpandListener(searchItem, onItemSearchExpand);
+                SearchView searchView = (SearchView) searchItem.getActionView();
+                if (searchView != null)
                 {
-                    searchItem.expandActionView();
-                    searchView.setQuery(adapter.getFilterText(), true);
-                    searchView.clearFocus();
+                    if (!TextUtils.isEmpty(adapter.getFilterText()))
+                    {
+                        if (Build.VERSION.SDK_INT >= 14) {
+                            searchItem.expandActionView();
+                        }
+                        searchView.setQuery(adapter.getFilterText(), true);
+                        searchView.clearFocus();
+                    }
+                    searchView.setOnQueryTextListener(onItemSearch);
                 }
-                searchView.setOnQueryTextListener(onItemSearch);
+
+            } else {
+                searchItem.setVisible(false);  // TODO: legacy support
             }
         }
     }
@@ -618,7 +627,9 @@ public class PlacesListFragment extends Fragment
         @Override
         public boolean onMenuItemActionCollapse(MenuItem item) {
             item.setVisible(true);
-            getActivity().invalidateOptionsMenu();
+            if (Build.VERSION.SDK_INT >= 11) {
+                getActivity().invalidateOptionsMenu();
+            }
             return true;
         }
     };
