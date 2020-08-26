@@ -65,6 +65,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 public class PlacesListFragment extends Fragment
 {
@@ -1158,7 +1159,7 @@ public class PlacesListFragment extends Fragment
                         return 1;
 
                     } else {
-                        return o1.location.getLabel().toLowerCase().compareTo(o2.location.getLabel().toLowerCase());
+                        return o1.location.getLabel().toLowerCase(Locale.ROOT).compareTo(o2.location.getLabel().toLowerCase(Locale.ROOT));
                     }
                 }
             });
@@ -1320,7 +1321,7 @@ public class PlacesListFragment extends Fragment
             protected FilterResults performFiltering(CharSequence constraint)
             {
                 FilterResults results = new FilterResults();
-                results.values = new ArrayList<>((constraint.length() > 0) ? getFilteredValues(constraint.toString().toLowerCase()) : items0);
+                results.values = new ArrayList<>((constraint.length() > 0) ? getFilteredValues(constraint.toString().toLowerCase(Locale.ROOT)) : items0);
                 return results;
             }
 
@@ -1330,7 +1331,7 @@ public class PlacesListFragment extends Fragment
                 List<PlaceItem> values1  = new ArrayList<>();
                 for (PlaceItem item : items0)
                 {
-                    String label = item.location.getLabel().toLowerCase().trim();
+                    String label = item.location.getLabel().toLowerCase(Locale.ROOT).trim();
 
                     if (label.equals(constraint) || filterExceptions.contains(item.rowID)) {
                         values0.add(0, item);
