@@ -156,7 +156,7 @@
         <TextView
             android:id="@+id/text_date" android:visibility="visible"
             android:layout_width="0dp" android:layout_height="wrap_content"
-            android:text="June 21, 2019"
+            tools:text="June 21, 2019"
             android:layout_marginTop="8dp"
             android:gravity="start"
             android:textSize="12sp" android:maxLines="1" android:ellipsize="end" android:textStyle="bold"
