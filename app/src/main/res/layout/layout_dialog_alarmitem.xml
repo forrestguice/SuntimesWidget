@@ -25,10 +25,9 @@
         android:layout_width="match_parent" android:layout_height="56dp"
         android:orientation="horizontal" android:gravity="center_vertical|start">
 
-        <ImageButton android:id="@+id/dialog_button_cancel"
+        <ImageButton android:id="@+id/dialog_button_cancel" style="?attr/actionOverflowButtonStyle"
             android:layout_width="56dp" android:layout_height="match_parent"
-            android:src="?attr/icActionBack"
-            style="?attr/actionOverflowButtonStyle" />
+            android:src="?attr/icActionBack" android:contentDescription="@android:string/cancel" />
 
         <TextView
             android:id="@+id/dialog_title"
@@ -39,12 +38,10 @@
             android:text="@string/alarmMode_notification" />
 
         <ImageButton
-            android:id="@+id/dialog_button_accept"
-            style="?attr/actionOverflowButtonStyle"
+            android:id="@+id/dialog_button_accept" style="?attr/actionOverflowButtonStyle"
             android:layout_width="56dp" android:layout_height="match_parent"
-            android:contentDescription="Save"
             android:scaleType="center"
-            android:src="?attr/icActionSave" />
+            android:src="?attr/icActionSave" android:contentDescription="@string/configAction_saveAlarm" />
 
     </LinearLayout>
 
