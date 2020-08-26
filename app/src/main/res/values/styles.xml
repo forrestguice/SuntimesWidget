@@ -472,7 +472,6 @@
     <style name="ChipText1" parent="ChipText0">
         <item name="android:background">?attr/chipBackground</item>
         <item name="android:drawableRight">@drawable/ic_transparent1</item>
-        <item name="android:drawableEnd">@drawable/ic_transparent1</item>
     </style>
 
 </resources>
