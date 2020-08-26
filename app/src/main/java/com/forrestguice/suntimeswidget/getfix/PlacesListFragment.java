@@ -987,7 +987,8 @@ public class PlacesListFragment extends Fragment
         }
     }
     public String getFilterText() {
-        return getArguments().getString(KEY_FILTER_TEXT, "");
+        String value = getArguments().getString(KEY_FILTER_TEXT);
+        return (value != null ? value : "");
     }
     public long[] getFilterExceptions() {
         return getArguments().getLongArray(KEY_FILTER_EXCEPTIONS);
