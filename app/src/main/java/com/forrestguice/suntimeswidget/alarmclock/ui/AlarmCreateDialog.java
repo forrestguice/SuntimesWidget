@@ -83,7 +83,6 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     public static final int DEF_MODE = 1;
     public static final int DEF_HOUR = 6;
     public static final int DEF_MINUTE = 30;
-    public static final String DEF_TIMEZONE = null;
     public static final SolarEvents DEF_EVENT = SolarEvents.SUNRISE;
     public static final AlarmClockItem.AlarmType DEF_ALARMTYPE = AlarmClockItem.AlarmType.ALARM;
 
@@ -110,7 +109,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         args.putInt(EXTRA_HOUR, DEF_HOUR);
         args.putInt(EXTRA_MINUTE, DEF_MINUTE);
         args.putLong(EXTRA_OFFSET, 0);
-        args.putString(EXTRA_TIMEZONE, DEF_TIMEZONE);
+        args.putString(EXTRA_TIMEZONE, null);
         args.putSerializable(EXTRA_EVENT, DEF_EVENT);
         args.putSerializable(EXTRA_ALARMTYPE, DEF_ALARMTYPE);
 
@@ -718,7 +717,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         return getArguments().getLong(EXTRA_DATE, System.currentTimeMillis());
     }
     public String getTimeZone() {
-        return getArguments().getString(EXTRA_TIMEZONE, DEF_TIMEZONE);
+        return getArguments().getString(EXTRA_TIMEZONE);
     }
     public void setAlarmTime( int hour, int minute, String timezone )
     {
