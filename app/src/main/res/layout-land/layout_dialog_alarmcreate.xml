@@ -36,7 +36,7 @@
             tools:listitem="@layout/layout_listitem_alarmtype" />
 
         <ImageButton android:id="@+id/dialog_button_accept"
-            style="@android:style/Widget.ActionButton.Overflow" android:contentDescription="@string/schedalarm_dialog_ok"
+            style="?attr/actionOverflowButtonStyle" android:contentDescription="@string/schedalarm_dialog_ok"
             android:layout_width="96dp" android:layout_height="56dp" android:paddingLeft="16dp" android:paddingRight="16dp"
             android:src="?attr/icActionAccept"
             android:tint="?attr/text_accentColor" />
@@ -70,7 +70,7 @@
                 android:layout_marginLeft="32dp" android:layout_marginRight="32dp" android:layout_height="wrap_content" android:layout_width="match_parent" />
 
             <ImageButton android:id="@+id/dialog_button_alarms" android:visibility="gone"
-                style="@android:style/Widget.ActionButton.Overflow"
+                style="?attr/actionOverflowButtonStyle"
                 android:contentDescription="@string/app_name_alarmclock"
                 android:layout_width="48dp" android:layout_height="48dp"
                 android:layout_gravity="center|start" android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
