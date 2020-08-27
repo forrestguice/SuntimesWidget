@@ -552,9 +552,7 @@ public class PlacesListFragment extends Fragment
 
     protected void addOrUpdatePlace(PlaceItem... item)
     {
-        setModified(true);
-        PlacesEditTask task = new PlacesEditTask(getActivity());
-        task.setTaskListener(new PlacesListTask.TaskListener()
+        addOrUpdatePlace(new PlacesListTask.TaskListener()
         {
             @Override
             public void onStarted() {}
@@ -570,7 +568,14 @@ public class PlacesListFragment extends Fragment
                 }
                 dismissEditPlaceDialog();
             }
-        });
+        }, item);
+    }
+
+    protected void addOrUpdatePlace(PlacesListTask.TaskListener listener, PlaceItem... item)
+    {
+        setModified(true);
+        PlacesEditTask task = new PlacesEditTask(getActivity());
+        task.setTaskListener(listener);
         task.execute(item);
     }
 
@@ -813,11 +818,49 @@ public class PlacesListFragment extends Fragment
 
             Context context = getActivity();
             if (context != null) {
-                Toast.makeText(context, context.getString(R.string.locationcleared_toast_success), Toast.LENGTH_LONG).show();
+                offerUndoClearPlaces(context, adapter.getItems());
             }
             reloadAdapter();
         }
     };
+    protected void offerUndoClearPlaces(Context context, final PlaceItem... deletedItems)
+    {
+        View view = getView();
+        if (context != null && view != null && deletedItems != null)
+        {
+            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.locationcleared_toast_success), Snackbar.LENGTH_INDEFINITE);
+            snackbar.setAction("Undo", new View.OnClickListener() {   // TODO: i18n
+                @Override
+                public void onClick(View v)
+                {
+                    Context context = getActivity();
+                    if (context != null) {
+                        for (PlaceItem item : deletedItems) {
+                            item.rowID = -1;    // re-add item
+                        }
+                        addOrUpdatePlace(new PlacesListTask.TaskListener()
+                        {
+                            @Override
+                            public void onStarted() {}
+
+                            @Override
+                            public void onFinished(List<PlaceItem> results)
+                            {
+                                setSelectedRowID(-1);
+                                reloadAdapter();
+                                dismissEditPlaceDialog();
+                            }
+                        }, deletedItems);
+                        setSelectedRowID(-1);
+                    }
+                }
+            });
+            //AlarmNotifications.themeSnackbar(context, snackbar, null);   // TODO: theme
+            snackbar.setDuration(UNDO_DELETE_MILLIS);
+            snackbar.show();
+        }
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1167,6 +1210,10 @@ public class PlacesListFragment extends Fragment
             if (position >= 0) {
                 return items0.get(position);
             } else return null;
+        }
+
+        public PlaceItem[] getItems() {
+            return items0.toArray(new PlaceItem[0]);
         }
 
         public PlaceItem[] getItems(long[] rowID)
