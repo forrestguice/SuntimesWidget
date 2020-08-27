@@ -1294,6 +1294,8 @@
     <string name="locationdelete_dialog_title">Remove Place?</string>   <!-- title; remove 1 place --> <!-- TODO -->
     <string name="locationdelete_dialog_title1">Remove Places?</string>  <!-- title; remove multiple places --> <!-- TODO -->
     <string name="locationdelete_dialog_message">Are you sure you want to remove %s?</string>   <!-- TODO -->
+    <string name="locationdelete_dialog_success">Place was deleted.</string>   <!-- toast --> <!-- TODO -->
+    <string name="locationdelete_dialog_success1">%s places were deleted.</string>   <!-- toast; e.g. 2 places were deleted --> <!-- TODO -->
     <string name="locationdelete_dialog_ok">Remove</string>  <!-- TODO -->
     <string name="locationdelete_dialog_cancel">Cancel</string>  <!-- TODO -->
 
