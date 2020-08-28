@@ -402,7 +402,7 @@ public class ColorDialog extends BottomSheetDialogFragment
      */
     protected class ColorPickerPagerAdapter extends FragmentPagerAdapter
     {
-        protected ColorPickerFragment[] fragments = new ColorPickerFragment[] { new QuadFlaskColorPickerFragment(), new QuadFlaskColorPickerFragment1() };
+        protected ColorPickerFragment[] fragments = new ColorPickerFragment[] { new QuadFlaskColorPickerFragment(), new QuadFlaskColorPickerFragment1(), new SimpleColorPickerFragment() };
 
         public ColorPickerPagerAdapter(FragmentManager fragments) {
             super(fragments);
@@ -500,6 +500,7 @@ public class ColorDialog extends BottomSheetDialogFragment
     {
         protected AlphaSlider alphaSlider;
         protected ColorPickerView colorPicker;
+        protected View preview;
 
         protected int getLayoutResID() {
             return R.layout.layout_colors_quadflask;
@@ -509,6 +510,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         {
             alphaSlider = (AlphaSlider) view.findViewById(R.id.color_alpha);
             colorPicker = (ColorPickerView) view.findViewById(R.id.color_picker);
+            preview = view.findViewById(R.id.preview_color);
         }
 
         @Override
@@ -533,6 +535,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         {
             alphaSlider.setVisibility(showAlpha() ? View.VISIBLE : View.GONE);
             colorPicker.setColor(getColor(), false);
+            preview.setBackgroundColor(getColor());
         }
     }
 
@@ -552,6 +555,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         {
             alphaSlider = (AlphaSlider) view.findViewById(R.id.color_alpha1);
             colorPicker = (ColorPickerView) view.findViewById(R.id.color_picker1);
+            preview = view.findViewById(R.id.preview_color1);
         }
     }
 
