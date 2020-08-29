@@ -30,11 +30,11 @@
         <TextView android:id="@+id/color_label_r" android:labelFor="@+id/color_edit_r"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-            android:text="R:" android:textStyle="bold" />
+            android:text="@string/color_dialog_label_r" android:textStyle="bold" />
 
         <EditText android:id="@+id/color_edit_r"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:hint="0-255" android:minEms="3"
+            android:hint="@string/color_dialog_hint_rgba" android:minEms="3"
             android:inputType="number" />
 
     </LinearLayout>
@@ -50,11 +50,11 @@
         <TextView android:id="@+id/color_label_g" android:labelFor="@+id/color_edit_g"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-            android:text="G:" android:textStyle="bold" />
+            android:text="@string/color_dialog_label_g" android:textStyle="bold" />
 
         <EditText android:id="@+id/color_edit_g"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:hint="0-255" android:minEms="3"
+            android:hint="@string/color_dialog_hint_rgba" android:minEms="3"
             android:inputType="number" />
 
     </LinearLayout>
@@ -69,11 +69,11 @@
         <TextView android:id="@+id/color_label_b" android:labelFor="@+id/color_edit_b"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-            android:text="B:" android:textStyle="bold" />
+            android:text="@string/color_dialog_label_b" android:textStyle="bold" />
 
         <EditText android:id="@+id/color_edit_b"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:hint="0-255" android:minEms="3"
+            android:hint="@string/color_dialog_hint_rgba" android:minEms="3"
             android:inputType="number" />
 
     </LinearLayout>
@@ -88,11 +88,11 @@
         <TextView android:id="@+id/color_label_a" android:labelFor="@+id/color_edit_a"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-            android:text="A:" android:textStyle="bold" />
+            android:text="@string/color_dialog_label_a" android:textStyle="bold" />
 
         <EditText android:id="@+id/color_edit_a"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:hint="0-255" android:minEms="3"
+            android:hint="@string/color_dialog_hint_rgba" android:minEms="3"
             android:inputType="number" />
 
     </LinearLayout>
