@@ -26,6 +26,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -402,10 +403,17 @@ public class ColorDialog extends BottomSheetDialogFragment
      */
     protected class ColorPickerPagerAdapter extends FragmentPagerAdapter
     {
-        protected ColorPickerFragment[] fragments = new ColorPickerFragment[] { new QuadFlaskColorPickerFragment(), new QuadFlaskColorPickerFragment1(), new SimpleColorPickerFragment() };
+        protected ColorPickerFragment[] fragments;
 
-        public ColorPickerPagerAdapter(FragmentManager fragments) {
-            super(fragments);
+        public ColorPickerPagerAdapter(FragmentManager fragmentManager)
+        {
+            super(fragmentManager);
+
+            if (Build.VERSION.SDK_INT >= 14) {
+                fragments = new ColorPickerFragment[] { new QuadFlaskColorPickerFragment(), new QuadFlaskColorPickerFragment1(), new SimpleColorPickerFragment() };
+            } else {
+                fragments = new ColorPickerFragment[] { new SimpleColorPickerFragment() };
+            }
         }
 
         @Override
