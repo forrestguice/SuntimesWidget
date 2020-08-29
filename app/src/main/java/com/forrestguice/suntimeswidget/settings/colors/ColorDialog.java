@@ -26,6 +26,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -402,10 +403,17 @@ public class ColorDialog extends BottomSheetDialogFragment
      */
     protected class ColorPickerPagerAdapter extends FragmentPagerAdapter
     {
-        protected ColorPickerFragment[] fragments = new ColorPickerFragment[] { new QuadFlaskColorPickerFragment(), new QuadFlaskColorPickerFragment1() };
+        protected ColorPickerFragment[] fragments;
 
-        public ColorPickerPagerAdapter(FragmentManager fragments) {
-            super(fragments);
+        public ColorPickerPagerAdapter(FragmentManager fragmentManager)
+        {
+            super(fragmentManager);
+
+            if (Build.VERSION.SDK_INT >= 14) {
+                fragments = new ColorPickerFragment[] { new QuadFlaskColorPickerFragment(), new QuadFlaskColorPickerFragment1(), new SimpleColorPickerFragment() };
+            } else {
+                fragments = new ColorPickerFragment[] { new SimpleColorPickerFragment() };
+            }
         }
 
         @Override
@@ -500,6 +508,7 @@ public class ColorDialog extends BottomSheetDialogFragment
     {
         protected AlphaSlider alphaSlider;
         protected ColorPickerView colorPicker;
+        protected View preview;
 
         protected int getLayoutResID() {
             return R.layout.layout_colors_quadflask;
@@ -509,6 +518,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         {
             alphaSlider = (AlphaSlider) view.findViewById(R.id.color_alpha);
             colorPicker = (ColorPickerView) view.findViewById(R.id.color_picker);
+            preview = view.findViewById(R.id.preview_color);
         }
 
         @Override
@@ -533,6 +543,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         {
             alphaSlider.setVisibility(showAlpha() ? View.VISIBLE : View.GONE);
             colorPicker.setColor(getColor(), false);
+            preview.setBackgroundColor(getColor());
         }
     }
 
@@ -552,6 +563,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         {
             alphaSlider = (AlphaSlider) view.findViewById(R.id.color_alpha1);
             colorPicker = (ColorPickerView) view.findViewById(R.id.color_picker1);
+            preview = view.findViewById(R.id.preview_color1);
         }
     }
 

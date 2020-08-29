@@ -116,7 +116,7 @@ public class ColorActivity extends AppCompatActivity
 
         int color = Color.WHITE;
         Uri data = intent.getData();
-        if (data != null && data.getScheme().equals(SCHEME_COLOR))
+        if (data != null && SCHEME_COLOR.equals(data.getScheme()))
         {
             try {
                 color = Color.parseColor("#" + data.getFragment());
