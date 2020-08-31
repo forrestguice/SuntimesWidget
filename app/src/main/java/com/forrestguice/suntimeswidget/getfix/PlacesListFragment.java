@@ -576,9 +576,15 @@ public class PlacesListFragment extends Fragment
             {
                 if (results.size() > 0)
                 {
-                    adapter.updateValues(results);
                     updateActionMode(getActivity(), results.toArray(new PlaceItem[0]));
-                    scrollToSelection();
+
+                    if (adapter.getItemCount() == 0) {
+                        reloadAdapter(listTaskListener(results.get(0).rowID));
+
+                    } else {
+                        adapter.updateValues(results);
+                        scrollToSelection();
+                    }
                 }
                 dismissEditPlaceDialog();
             }
