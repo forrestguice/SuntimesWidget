@@ -927,7 +927,7 @@ public class PlacesListFragment extends Fragment
                     cursor.moveToNext();
                 }
             }
-
+            database.close();
             return result;
         }
 
