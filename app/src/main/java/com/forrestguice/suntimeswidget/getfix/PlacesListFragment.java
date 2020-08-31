@@ -297,11 +297,6 @@ public class PlacesListFragment extends Fragment
         {
             SuntimesUtils.forceActionBarIcons(menu);
 
-            MenuItem pickPlace = menu.findItem(R.id.pickPlace);
-            if (pickPlace != null) {
-                pickPlace.setVisible(allowPick());
-            }
-
             int[] singleSelectItems = new int[] { R.id.pickPlace, R.id.sharePlace, R.id.editPlace, R.id.copyPlace };
             for (int resID : singleSelectItems)
             {
@@ -310,6 +305,13 @@ public class PlacesListFragment extends Fragment
                     menuItem.setVisible(items == null || items.length == 1);
                 }
             }
+
+            MenuItem pickPlace = menu.findItem(R.id.pickPlace);
+            if (pickPlace != null) {
+                pickPlace.setVisible(pickPlace.isVisible() && allowPick());
+                Log.d("DEBUG", "onPrepareActionMode: allowPick: " + allowPick());
+            }
+
             return false;
         }
 
