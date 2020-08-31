@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.FileProvider;
@@ -563,6 +564,46 @@ public class PlacesListFragment extends Fragment
         }
     }
 
+    protected void addOrUpdatePlace(PlaceItem... item)
+    {
+        addOrUpdatePlace(new PlacesListTask.TaskListener()
+        {
+            @Override
+            public void onStarted() {}
+
+            @Override
+            public void onFinished(List<PlaceItem> results)
+            {
+                if (results.size() > 0)
+                {
+                    adapter.updateValues(results);
+                    updateActionMode(getActivity(), results.toArray(new PlaceItem[0]));
+                    scrollToSelection();
+                }
+                dismissEditPlaceDialog();
+            }
+        }, item);
+    }
+
+    protected void addOrUpdatePlace(PlacesListTask.TaskListener listener, PlaceItem... item)
+    {
+        setModified(true);
+        PlacesEditTask task = new PlacesEditTask(getActivity());
+        task.setTaskListener(listener);
+        task.execute(item);
+    }
+
+    protected void scrollToSelection()
+    {
+        LinearLayoutManager layout = (LinearLayoutManager) listView.getLayoutManager();
+        int selected = adapter.getSelectedPosition();
+        int start = layout.findFirstVisibleItemPosition();
+        int end = layout.findLastVisibleItemPosition();
+        if (selected != -1 && (selected <= start || selected >= end)) {
+            listView.smoothScrollToPosition(selected);
+        }
+    }
+
     private PlacesEditFragment.FragmentListener onEditPlace = new PlacesEditFragment.FragmentListener()
     {
         @Override
@@ -570,39 +611,8 @@ public class PlacesListFragment extends Fragment
         }
 
         @Override
-        public void onAccepted(PlaceItem item)
-        {
-            setModified(true);
-            PlacesEditTask task = new PlacesEditTask(getActivity());
-            task.setTaskListener(new PlacesListTask.TaskListener()
-            {
-                @Override
-                public void onStarted() {}
-
-                @Override
-                public void onFinished(List<PlaceItem> results)
-                {
-                    if (results.size() > 0)
-                    {
-                        adapter.updateValues(results);
-                        updateActionMode(getActivity(), results.get(0));
-                        scrollToSelection();
-                    }
-                    dismissEditPlaceDialog();
-                }
-            });
-            task.execute(item);
-        }
-
-        protected void scrollToSelection()
-        {
-            LinearLayoutManager layout = (LinearLayoutManager) listView.getLayoutManager();
-            int selected = adapter.getSelectedPosition();
-            int start = layout.findFirstVisibleItemPosition();
-            int end = layout.findLastVisibleItemPosition();
-            if (selected != -1 && (selected <= start || selected >= end)) {
-                listView.smoothScrollToPosition(selected);
-            }
+        public void onAccepted(PlaceItem item) {
+            addOrUpdatePlace(item);
         }
     };
 
@@ -669,31 +679,70 @@ public class PlacesListFragment extends Fragment
 
             AlertDialog.Builder confirm = new AlertDialog.Builder(context)
                     .setTitle(title).setMessage(message).setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton(context.getString(R.string.locationdelete_dialog_ok), new DialogInterface.OnClickListener()
-                    {
-                        public void onClick(DialogInterface dialog, int whichButton)
-                        {
-                            DeletePlaceTask task = new DeletePlaceTask(context);
-                            task.setTaskListener(new DeletePlaceTask.TaskListener()
-                            {
-                                @Override
-                                public void onFinished(boolean result, Long... rowIDs)
-                                {
-                                    for (long rowID : rowIDs) {
-                                        adapter.removeItem(rowID);
-                                    }
-                                    setModified(true);
-                                }
-                            });
-
-                            finishActionMode();
-                            task.execute(rowIDs);
-                        }
-                    })
+                    .setPositiveButton(context.getString(R.string.locationdelete_dialog_ok), onConfirmDeletePlace(context, rowIDs))
                     .setNegativeButton(context.getString(R.string.locationdelete_dialog_cancel), null);
             confirm.show();
         }
     }
+
+    private DialogInterface.OnClickListener onConfirmDeletePlace(final Context context, final Long[] rowIDs)
+    {
+        return new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int whichButton)
+            {
+                DeletePlaceTask task = new DeletePlaceTask(context);
+                task.setTaskListener(new DeletePlaceTask.TaskListener()
+                {
+                    @Override
+                    public void onFinished(boolean result, Long... rowIDs)
+                    {
+                        List<PlaceItem> deletedItems = new ArrayList<>();
+                        for (long rowID : rowIDs)
+                        {
+                            PlaceItem item = adapter.getItem(rowID);
+                            if (item != null) {
+                                deletedItems.add(item);
+                            }
+                            adapter.removeItem(rowID);
+                        }
+                        setModified(true);
+                        offerUndoDeletePlace(context, deletedItems.toArray(new PlaceItem[0]));
+                    }
+                });
+
+                finishActionMode();
+                task.execute(rowIDs);
+            }
+        };
+    }
+
+    protected void offerUndoDeletePlace(Context context, final PlaceItem... deletedItems)
+    {
+        View view = getView();
+        if (context != null && view != null && deletedItems != null)
+        {
+            final boolean multiDelete = (deletedItems.length > 1);
+            Snackbar snackbar = Snackbar.make(view, multiDelete ? context.getString(R.string.locationdelete_dialog_success1, Integer.toString(deletedItems.length)) : context.getString(R.string.locationdelete_dialog_success), Snackbar.LENGTH_INDEFINITE);
+            snackbar.setAction("Undo", new View.OnClickListener() {   // TODO: i18n
+                @Override
+                public void onClick(View v)
+                {
+                    Context context = getActivity();
+                    if (context != null) {
+                        for (PlaceItem item : deletedItems) {
+                            item.rowID = -1;    // re-add item
+                        }
+                        addOrUpdatePlace(deletedItems);
+                    }
+                }
+            });
+            //AlarmNotifications.themeSnackbar(context, snackbar, null);   // TODO: theme
+            snackbar.setDuration(UNDO_DELETE_MILLIS);
+            snackbar.show();
+        }
+    }
+    public static final int UNDO_DELETE_MILLIS = 8000;
 
     public static class DeletePlaceTask extends AsyncTask<Long, Object, Boolean>
     {
@@ -783,11 +832,49 @@ public class PlacesListFragment extends Fragment
 
             Context context = getActivity();
             if (context != null) {
-                Toast.makeText(context, context.getString(R.string.locationcleared_toast_success), Toast.LENGTH_LONG).show();
+                offerUndoClearPlaces(context, adapter.getItems());
             }
             reloadAdapter();
         }
     };
+    protected void offerUndoClearPlaces(Context context, final PlaceItem... deletedItems)
+    {
+        View view = getView();
+        if (context != null && view != null && deletedItems != null)
+        {
+            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.locationcleared_toast_success), Snackbar.LENGTH_INDEFINITE);
+            snackbar.setAction("Undo", new View.OnClickListener() {   // TODO: i18n
+                @Override
+                public void onClick(View v)
+                {
+                    Context context = getActivity();
+                    if (context != null) {
+                        for (PlaceItem item : deletedItems) {
+                            item.rowID = -1;    // re-add item
+                        }
+                        addOrUpdatePlace(new PlacesListTask.TaskListener()
+                        {
+                            @Override
+                            public void onStarted() {}
+
+                            @Override
+                            public void onFinished(List<PlaceItem> results)
+                            {
+                                setSelectedRowID(-1);
+                                reloadAdapter();
+                                dismissEditPlaceDialog();
+                            }
+                        }, deletedItems);
+                        setSelectedRowID(-1);
+                    }
+                }
+            });
+            //AlarmNotifications.themeSnackbar(context, snackbar, null);   // TODO: theme
+            snackbar.setDuration(UNDO_DELETE_MILLIS);
+            snackbar.show();
+        }
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1137,6 +1224,10 @@ public class PlacesListFragment extends Fragment
             if (position >= 0) {
                 return items0.get(position);
             } else return null;
+        }
+
+        public PlaceItem[] getItems() {
+            return items0.toArray(new PlaceItem[0]);
         }
 
         public PlaceItem[] getItems(long[] rowID)
