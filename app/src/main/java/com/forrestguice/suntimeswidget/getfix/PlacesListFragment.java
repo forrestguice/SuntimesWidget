@@ -903,10 +903,6 @@ public class PlacesListFragment extends Fragment
         @Override
         protected List<PlaceItem> doInBackground(PlaceItem... items)
         {
-            if (listener != null) {
-                listener.onStarted();
-            }
-
             ArrayList<PlaceItem> result = new ArrayList<>();
 
             database.open();
@@ -943,6 +939,14 @@ public class PlacesListFragment extends Fragment
             }
         }
 
+        @Override
+        protected void onPreExecute()
+        {
+            if (listener != null) {
+                listener.onStarted();
+            }
+        }
+
         protected TaskListener listener = null;
         public void setTaskListener(TaskListener listener) {
             this.listener = listener;
@@ -967,10 +971,6 @@ public class PlacesListFragment extends Fragment
         @Override
         protected List<PlaceItem> doInBackground(PlaceItem... items)
         {
-            if (listener != null) {
-                listener.onStarted();
-            }
-
             ArrayList<PlaceItem> result = new ArrayList<>();
             database.open();
             for (PlaceItem item : items)
