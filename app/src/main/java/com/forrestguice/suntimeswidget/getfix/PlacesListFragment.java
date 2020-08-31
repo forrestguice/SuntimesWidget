@@ -153,6 +153,18 @@ public class PlacesListFragment extends Fragment
     {
         inflater.inflate(R.menu.placeslist, menu);
 
+        final MenuItem worldPlacesItem = menu.findItem(R.id.addWorldPlaces);
+        if (worldPlacesItem != null)
+        {
+            if (Build.VERSION.SDK_INT >= 17) {
+                worldPlacesItem.setVisible(true);
+                worldPlacesItem.setEnabled(true);
+            } else {
+                worldPlacesItem.setEnabled(false);
+                worldPlacesItem.setVisible(false);   // TODO: legacy support
+            }
+        }
+
         final MenuItem searchItem = menu.findItem(R.id.searchPlaces);
         if (searchItem != null)
         {
