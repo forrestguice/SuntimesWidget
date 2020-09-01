@@ -28,7 +28,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.InsetDrawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -48,7 +47,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
-import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.util.TypedValue;
@@ -62,7 +60,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -325,7 +322,7 @@ public class AlarmListDialog extends DialogFragment
                     }
                 }
             });
-            AlarmNotifications.themeSnackbar(context, snackbar, null);
+            SuntimesUtils.themeSnackbar(context, snackbar, null);
             snackbar.setDuration(UNDO_DELETE_MILLIS);
             snackbar.show();
         }
@@ -347,7 +344,7 @@ public class AlarmListDialog extends DialogFragment
                     }
                 }
             });
-            AlarmNotifications.themeSnackbar(context, snackbar, null);
+            SuntimesUtils.themeSnackbar(context, snackbar, null);
             snackbar.setDuration(UNDO_DELETE_MILLIS);
             snackbar.show();
         }

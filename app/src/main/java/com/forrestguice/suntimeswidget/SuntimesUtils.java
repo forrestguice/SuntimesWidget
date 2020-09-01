@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import android.content.res.ColorStateList;
@@ -33,6 +34,7 @@ import android.graphics.drawable.InsetDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.Html;
@@ -59,7 +61,7 @@ import android.view.ViewParent;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import java.lang.reflect.Method;
 import java.text.DateFormat;
@@ -1808,6 +1810,36 @@ public class SuntimesUtils
             }
         }
         return drawables;
+    }
+
+    @SuppressLint("ResourceType")
+    public static void themeSnackbar(Context context, Snackbar snackbar, Integer[] colorOverrides)
+    {
+        Integer[] colors = new Integer[] {null, null, null};
+        int[] colorAttrs = { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor };
+        TypedArray a = context.obtainStyledAttributes(colorAttrs);
+        colors[0] = ContextCompat.getColor(context, a.getResourceId(0, android.R.color.primary_text_dark));
+        colors[1] = ContextCompat.getColor(context, a.getResourceId(1, R.color.text_accent_dark));
+        colors[2] = ContextCompat.getColor(context, a.getResourceId(2, R.color.card_bg_dark));
+        a.recycle();
+
+        if (colorOverrides != null && colorOverrides.length == colors.length) {
+            for (int i=0; i<colors.length; i++) {
+                if (colorOverrides[i] != null) {
+                    colors[i] = colorOverrides[i];
+                }
+            }
+        }
+
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(colors[2]);
+        snackbar.setActionTextColor(colors[1]);
+
+        TextView snackbarText = (TextView)snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+        if (snackbarText != null) {
+            snackbarText.setTextColor(colors[0]);
+            snackbarText.setMaxLines(3);
+        }
     }
 
 }

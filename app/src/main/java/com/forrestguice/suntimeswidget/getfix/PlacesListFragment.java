@@ -743,7 +743,7 @@ public class PlacesListFragment extends Fragment
                     }
                 }
             });
-            //AlarmNotifications.themeSnackbar(context, snackbar, null);   // TODO: theme
+            SuntimesUtils.themeSnackbar(context, snackbar, null);
             snackbar.setDuration(UNDO_DELETE_MILLIS);
             snackbar.show();
         }
@@ -875,7 +875,7 @@ public class PlacesListFragment extends Fragment
                     }
                 }
             });
-            //AlarmNotifications.themeSnackbar(context, snackbar, null);   // TODO: theme
+            SuntimesUtils.themeSnackbar(context, snackbar, null);
             snackbar.setDuration(UNDO_DELETE_MILLIS);
             snackbar.show();
         }
