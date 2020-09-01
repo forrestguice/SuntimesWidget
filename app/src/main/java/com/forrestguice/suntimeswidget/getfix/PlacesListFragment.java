@@ -730,7 +730,7 @@ public class PlacesListFragment extends Fragment
         {
             final boolean multiDelete = (deletedItems.length > 1);
             Snackbar snackbar = Snackbar.make(view, multiDelete ? context.getString(R.string.locationdelete_dialog_success1, Integer.toString(deletedItems.length)) : context.getString(R.string.locationdelete_dialog_success), Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction("Undo", new View.OnClickListener() {   // TODO: i18n
+            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
                 @Override
                 public void onClick(View v)
                 {
@@ -849,7 +849,7 @@ public class PlacesListFragment extends Fragment
         if (context != null && view != null && deletedItems != null)
         {
             Snackbar snackbar = Snackbar.make(view, context.getString(R.string.locationcleared_toast_success), Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction("Undo", new View.OnClickListener() {   // TODO: i18n
+            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
                 @Override
                 public void onClick(View v)
                 {
