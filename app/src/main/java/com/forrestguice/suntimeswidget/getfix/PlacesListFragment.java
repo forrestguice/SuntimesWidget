@@ -1459,6 +1459,7 @@ public class PlacesListFragment extends Fragment
                 return values;
             }
 
+            @SuppressWarnings("unchecked")
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results)
             {
