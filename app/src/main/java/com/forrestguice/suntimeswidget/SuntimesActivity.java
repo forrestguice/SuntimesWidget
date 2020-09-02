@@ -710,6 +710,7 @@ public class SuntimesActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SUNTIMES_SETTINGS_REQUEST && resultCode == RESULT_OK)
         {
             boolean needsRecreate = ((!AppSettings.loadThemePref(SuntimesActivity.this).equals(appTheme))                           // theme mode changed
