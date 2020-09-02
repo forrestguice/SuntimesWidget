@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2019 Forrest Guice
+    Copyright (C) 2014-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
@@ -51,11 +52,13 @@ import android.support.v7.view.ActionMode;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorListAdapter;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 
+import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.actions.EditActionView;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -580,6 +583,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             locationConfig.setAutoAllowed(false);
             locationConfig.setHideMode(true);
             locationConfig.init(this, false, this.appWidgetId);
+            locationConfig.setOnListButtonClicked(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(SuntimesConfigActivity0.this, PlacesActivity.class);
+                    intent.putExtra(PlacesActivity.EXTRA_ALLOW_PICK, true);
+                    startActivityForResult(intent, LocationConfigDialog.REQUEST_LOCATION);
+                }
+            });
         }
 
         //
@@ -1702,9 +1713,24 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode)
         {
+            case LocationConfigDialog.REQUEST_LOCATION:
+                onLocationResult(resultCode, data);
+                break;
+
             case PICK_THEME_REQUEST:
                 onPickThemeResult(resultCode, data);
                 break;
+        }
+    }
+
+    protected void onLocationResult(int resultCode, Intent data)
+    {
+        if (resultCode == Activity.RESULT_OK && data != null)
+        {
+            Location location = data.getParcelableExtra(PlacesActivity.EXTRA_LOCATION);
+            if (location != null) {
+                locationConfig.loadSettings(SuntimesConfigActivity0.this, LocationConfigView.bundleData(location.getUri(), location.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
+            }
         }
     }
 

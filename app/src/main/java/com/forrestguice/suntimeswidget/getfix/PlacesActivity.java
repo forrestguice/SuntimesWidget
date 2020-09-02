@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -41,7 +42,8 @@ public class PlacesActivity extends AppCompatActivity
 {
     public static final String EXTRA_ADAPTER_MODIFIED = "isModified";
     public static final String EXTRA_ALLOW_PICK = "allowPick";
-    public static final String EXTRA_SELECTED = "selected";
+    public static final String EXTRA_SELECTED = "selectedRowID";
+    public static final String EXTRA_LOCATION = "selectedLocation";
 
     protected PlacesListFragment list;
 
@@ -153,6 +155,7 @@ public class PlacesActivity extends AppCompatActivity
     {
         Intent intent = new Intent();
         intent.putExtra(EXTRA_SELECTED, item.rowID);
+        intent.putExtra(EXTRA_LOCATION, item.location);
         intent.putExtra(EXTRA_ADAPTER_MODIFIED, list.isModified());
         setResult(Activity.RESULT_OK, intent);
         finish();

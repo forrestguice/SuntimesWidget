@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -251,8 +251,10 @@ public class LocationConfigView extends LinearLayout
                 flipper.setDisplayedChild(1);
 
                 autoButtonLayout.setVisibility(View.VISIBLE);
+                button_list.setVisibility(View.GONE);
                 button_edit.setVisibility(View.GONE);
                 button_save.setVisibility(View.GONE);
+                button_cancel.setVisibility(View.GONE);
                 flipper2.setDisplayedChild(1);
                 break;
 
@@ -273,8 +275,10 @@ public class LocationConfigView extends LinearLayout
                 text_locationName.requestFocus();
 
                 autoButtonLayout.setVisibility(View.GONE);
+                button_list.setVisibility(View.GONE);
                 button_edit.setVisibility(View.GONE);
                 button_save.setVisibility(View.VISIBLE);
+                button_cancel.setVisibility(View.VISIBLE);
                 flipper2.setDisplayedChild(0);
                 break;
 
@@ -294,8 +298,10 @@ public class LocationConfigView extends LinearLayout
                 flipper.setDisplayedChild(1);
 
                 autoButtonLayout.setVisibility(View.GONE);
+                button_list.setVisibility(View.VISIBLE);
                 button_edit.setVisibility(View.VISIBLE);
                 button_save.setVisibility(View.GONE);
+                button_cancel.setVisibility(View.GONE);
                 flipper2.setDisplayedChild(1);
                 break;
         }
@@ -320,8 +326,10 @@ public class LocationConfigView extends LinearLayout
     private EditText text_locationName;
     private View inputOverlay;
 
+    private ImageButton button_list;
     private ImageButton button_edit;
     private ImageButton button_save;
+    private ImageButton button_cancel;
 
     private ImageButton button_getfix;
     private ProgressBar progress_getfix;
@@ -492,6 +500,12 @@ public class LocationConfigView extends LinearLayout
         text_locationAlt = (EditText)findViewById(R.id.appwidget_location_alt);
         text_locationAltUnits = (TextView)findViewById(R.id.appwidget_location_alt_units);
 
+        button_list = (ImageButton)findViewById(R.id.appwidget_location_list);
+        button_list.setOnClickListener(onListButtonClicked);
+
+        button_cancel = (ImageButton)findViewById(R.id.appwidget_location_cancel);
+        button_cancel.setOnClickListener(onEditCancelButtonClicked);
+
         // custom mode: toggle edit mode
         button_edit = (ImageButton)findViewById(R.id.appwidget_location_edit);
         button_edit.setOnClickListener(onEditButtonClicked);
@@ -589,6 +603,19 @@ public class LocationConfigView extends LinearLayout
             }
         }
     }
+    private void updateViews()
+    {
+        int position = spin_locationName.getSelectedItemPosition();
+        if (position >= 0)
+        {
+            Cursor cursor = getFixAdapter.getCursor();
+            cursor.moveToPosition(position);
+            if (cursor.getColumnCount() >= 4) {
+                updateViews(new com.forrestguice.suntimeswidget.calculator.core.Location(cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
+            }
+        }
+    }
+
 
     /**
      * @param context a context used to access shared prefs
@@ -1040,6 +1067,32 @@ public class LocationConfigView extends LinearLayout
         }
         public void onNothingSelected(AdapterView<?> parent) {}
     };
+
+    private View.OnClickListener onListButtonClicked = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View view)
+        {
+            if (onListButtonClickListener != null) {
+                 onListButtonClickListener.onClick(view);
+            }
+        }
+    };
+    private View.OnClickListener onListButtonClickListener = null;
+    public void setOnListButtonClicked(View.OnClickListener listener) {
+        onListButtonClickListener = listener;
+    }
+
+    private View.OnClickListener onEditCancelButtonClicked = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View view)
+        {
+            updateViews();   // reset changes
+            setMode(LocationViewMode.MODE_CUSTOM_SELECT);
+        }
+    };
+
 
     /**
      * the custom location edit button has been clicked.
