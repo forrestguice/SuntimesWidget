@@ -22,6 +22,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 
 import android.support.v7.widget.PopupMenu;
@@ -261,8 +262,10 @@ public class EditActionView extends LinearLayout
                 launchIntent = new Intent(getContext(), launchClass);
 
             } catch (ClassNotFoundException e) {
-                Log.e("LaunchApp", "LaunchApp :: " + launchClassName + " cannot be found! " + e.toString());
-                Toast.makeText(getContext(), "Unable to start intent!", Toast.LENGTH_LONG).show();  // TODO: i18n
+                Log.e(TAG, "testIntent: " + launchClassName + " cannot be found! " + e);
+                Snackbar snackbar = Snackbar.make(this, getContext().getString(R.string.startaction_failed_toast, launchType), Snackbar.LENGTH_LONG);
+                SuntimesUtils.themeSnackbar(getContext(), snackbar, null);
+                snackbar.show();
                 return;
             }
         } else {
@@ -272,7 +275,16 @@ public class EditActionView extends LinearLayout
         WidgetActions.applyAction(launchIntent, launchAction.trim().isEmpty() ? null : launchAction);
         WidgetActions.applyData(getContext(), launchIntent, (launchData.trim().isEmpty() ? null : launchData), (launchDataType.trim().isEmpty() ? null : launchDataType), data);
         WidgetActions.applyExtras(getContext(), launchIntent, launchExtras.trim().isEmpty() ? null : launchExtras, data);
-        WidgetActions.startIntent(getContext(), launchIntent, launchType.name());
+
+        try {
+            WidgetActions.startIntent(getContext(), launchIntent, launchType.name());
+
+        } catch (Exception e) {
+            Log.e(TAG, "testIntent: unable to start + " + launchType + " :: " + e);
+            Snackbar snackbar = Snackbar.make(this, getContext().getString(R.string.startaction_failed_toast, launchType), Snackbar.LENGTH_LONG);
+            SuntimesUtils.themeSnackbar(getContext(), snackbar, null);
+            snackbar.show();
+        }
     }
 
     /**

@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import android.appwidget.AppWidgetManager;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,6 +29,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
@@ -331,32 +333,35 @@ public class WidgetActions
                 launchIntent.setFlags(flags);
             }
             String launchType = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TYPE);
-            WidgetActions.startIntent(context, launchIntent, launchType);
+
+            try {
+                WidgetActions.startIntent(context, launchIntent, launchType);
+
+            } catch (Exception e) {
+                Log.e(TAG, "startIntent: unable to start + " + launchType + " :: " + e);
+                Toast.makeText(context, context.getString(R.string.startaction_failed_toast), Toast.LENGTH_SHORT).show();
+            }
         }
     }
-    public static void startIntent(@NonNull Context context, @NonNull Intent launchIntent, @Nullable String launchType)
+    public static void startIntent(@NonNull Context context, @NonNull Intent launchIntent, @Nullable String launchType) throws ActivityNotFoundException, SecurityException
     {
         if (launchType != null)
         {
-            try {
-                Log.i(TAG, "startIntent :: " + launchType + " :: " + launchIntent.toString());
-                switch (launchType)
-                {
-                    case WidgetActions.LAUNCH_TYPE_BROADCAST:
-                        context.sendBroadcast(launchIntent);
-                        break;
+            Log.i(TAG, "startIntent :: " + launchType + " :: " + launchIntent.toString());
+            switch (launchType)
+            {
+                case WidgetActions.LAUNCH_TYPE_BROADCAST:
+                    context.sendBroadcast(launchIntent);
+                    break;
 
-                    case WidgetActions.LAUNCH_TYPE_SERVICE:
-                        context.startService(launchIntent);
-                        break;
+                case WidgetActions.LAUNCH_TYPE_SERVICE:
+                    context.startService(launchIntent);
+                    break;
 
-                    case WidgetActions.LAUNCH_TYPE_ACTIVITY:
-                    default:
-                        context.startActivity(launchIntent);
-                        break;
-                }
-            } catch (Exception e) {
-                Log.e(TAG, "startIntent: unable to start + " + launchType + " :: " + e);
+                case WidgetActions.LAUNCH_TYPE_ACTIVITY:
+                default:
+                    context.startActivity(launchIntent);
+                    break;
             }
 
         } else {

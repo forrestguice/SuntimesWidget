@@ -552,6 +552,8 @@
     <string name="loadaction_dialog_title">Actions</string>    <!-- TODO -->
     <string name="loadaction_toast">Loaded action \"%1$s\".</string>    <!-- TODO -->
 
+    <string name="startaction_failed_toast">Failed to start %s!</string>         <!-- error toast -->  <!-- TODO -->
+
     <string name="configAction_addAction">Add</string>           <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_editAction">Edit</string>           <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_testAction">Test</string>         <!-- button (contentDescription) -->  <!-- TODO -->
