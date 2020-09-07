@@ -1,5 +1,23 @@
 ### ~
 
+### v0.13.0 (2020-09-09)
+* adds "lunar noon" and "lunar midnight" to notes and alarms.
+* improves SuntimesAlarms support for polar regions; it is now possible to schedule alarms for infrequently occurring twilight events.
+* adds PlacesActivity; adds support for searching places; adds support for deleting individual places (#419); adds undo clear/delete places; extends place selection to add-on apps.
+* improves ColorDialog; now supports paging between different pickers; adds alternate quadflask color picker; adds simple RGB color picker; adds "recent colors" palette; refactored to BottomSheetDialog.
+* adds ColorActivity; extends color selection to add-on apps.
+* extends "On Tap" functionality to support user-defined actions; adds UI for adding, editing, and selecting user-defined actions.
+* adds SuntimesAlarms actions; trigger a user-defined action when an alarm sounds or is dismissed.
+* improves SuntimesAlarms UI; replaces AlarmList UI; adds AlarmEditActivity.
+* (SuntimesAlarms) improves alarm list to allow rescheduling already active alarms (#355).
+* (SuntimesAlarms) improves visibility of the "clock time", "apparent solar time", and "local mean time" alarm modes.
+* (SuntimesAlarms) improves visibility of the alarm offset feature (#416).
+* (SuntimesAlarms) improves alarm offset UI to show the actual alarm time (#424);
+* (SuntimesAlarms) adds support for sorting the alarm list (#413); by time, by creation date.
+* (SuntimesAlarms) adds support for undo delete alarms.
+* (SuntimesAlarms) alarm database version 2 -> 3; adds columns "actionID0", "actionID1.
+* adds %dm to %substitutions; widget update time in milliseconds.
+
 ### v0.12.11 (2020-06-16)
 * fixes bug "sun position widget does not render midnight sun" (#421).
 * fixes app crash when using fallback to "last location" (#420).
