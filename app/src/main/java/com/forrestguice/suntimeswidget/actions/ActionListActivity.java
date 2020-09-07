@@ -78,11 +78,12 @@ public class ActionListActivity extends AppCompatActivity
         Intent intent = getIntent();
         preselectedAction = intent.getStringExtra(PARAM_SELECTED);
 
+        initData(this);
+
         helper = new ActionListHelper(this, getSupportFragmentManager());
+        helper.setData(data);
         helper.initViews(this, findViewById(android.R.id.content), icicle);
         helper.setDisallowSelect(intent.getBooleanExtra(PARAM_NOSELECT, false));
-
-        initData(this);
 
         Toolbar menuBar = (Toolbar) findViewById(R.id.app_menubar);
         setSupportActionBar(menuBar);
@@ -116,6 +117,7 @@ public class ActionListActivity extends AppCompatActivity
     {
         super.onResume();
         helper.setFragmentManager(getSupportFragmentManager());
+        helper.setData(data);
         helper.setOnItemAcceptedListener(onItemAccepted);
         helper.onResume();
     }

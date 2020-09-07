@@ -24,6 +24,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 
 /**
  * LoadActionDialog
@@ -44,6 +45,7 @@ public class LoadActionDialog extends EditActionDialog
     {
         super.onResume();
         listHelper.setFragmentManager(getFragmentManager());
+        listHelper.setData(data);
         listHelper.setOnItemAcceptedListener(onItemAccepted);
         listHelper.setOnUpdateViews(new View.OnClickListener() {
             @Override
@@ -53,6 +55,12 @@ public class LoadActionDialog extends EditActionDialog
         });
         listHelper.onResume();
     }
+
+    protected SuntimesData data = null;
+    public void setData(@Nullable SuntimesData data) {
+        this.data = data;
+    }
+
 
     private View.OnClickListener onItemAccepted = new View.OnClickListener() {
         @Override

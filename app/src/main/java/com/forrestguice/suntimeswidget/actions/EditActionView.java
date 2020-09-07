@@ -364,6 +364,7 @@ public class EditActionView extends LinearLayout
     {
         final Context context = getContext();
         final LoadActionDialog loadDialog = new LoadActionDialog();
+        loadDialog.setData(data);
         loadDialog.setOnAcceptedListener(onLoadDialogAccepted(context, loadDialog));
         loadDialog.show(fragmentManager, DIALOGTAG_LOAD);
     }
@@ -629,11 +630,13 @@ public class EditActionView extends LinearLayout
             {
                 saveDialog.setOnAcceptedListener(onSaveDialogAccepted(getContext(), saveDialog));
                 saveDialog.getEdit().setFragmentManager(fragments);
+                saveDialog.getEdit().setData(data);
             }
 
             LoadActionDialog loadDialog = (LoadActionDialog) fragmentManager.findFragmentByTag(DIALOGTAG_LOAD);
             if (loadDialog != null)
             {
+                loadDialog.setData(data);
                 loadDialog.setOnAcceptedListener(onLoadDialogAccepted(getContext(), loadDialog));
             }
         }

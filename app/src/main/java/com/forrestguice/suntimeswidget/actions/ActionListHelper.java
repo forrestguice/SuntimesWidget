@@ -51,6 +51,7 @@ import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 
 import java.lang.ref.WeakReference;
@@ -113,6 +114,11 @@ public class ActionListHelper
 
     public void setSelected( String actionID ) {
         adapter.setSelected(selectedItem = adapter.findItemByID(actionID));
+    }
+
+    protected SuntimesData data = null;
+    public void setData(@Nullable SuntimesData data) {
+        this.data = data;
     }
 
     public void onRestoreInstanceState(Bundle savedState)
@@ -308,6 +314,12 @@ public class ActionListHelper
     {
         final Context context = contextRef.get();
         final SaveActionDialog saveDialog = new SaveActionDialog();
+        saveDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                saveDialog.getEdit().setData(data);
+            }
+        });
         saveDialog.setOnAcceptedListener(onActionSaved(context, saveDialog));
         saveDialog.show(fragmentManager, DIALOGTAG_ADD);
     }
@@ -322,10 +334,12 @@ public class ActionListHelper
             saveDialog.setOnShowListener(new DialogInterface.OnShowListener() {
                 @Override
                 public void onShow(DialogInterface dialog) {
+                    saveDialog.getEdit().setData(data);
                     saveDialog.getEdit().loadIntent(context, 0, actionID);
                     saveDialog.setIntentID(actionID);
                 }
             });
+
             saveDialog.setOnAcceptedListener(onActionSaved(context, saveDialog));
             saveDialog.show(fragmentManager, DIALOGTAG_EDIT);
         }
