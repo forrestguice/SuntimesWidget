@@ -433,9 +433,7 @@ public class WidgetActions
         if (intent != null && dataString != null && !dataString.trim().isEmpty())
         {
             SuntimesUtils utils = new SuntimesUtils();
-            Uri dataUri = Uri.parse(Uri.decode(
-                    ((data != null) ? utils.displayStringForTitlePattern(context, dataString, data) : dataString)
-            ));
+            Uri dataUri = Uri.parse(Uri.decode(utils.displayStringForTitlePattern(context, dataString, data)));
             if (mimeType != null && !mimeType.trim().isEmpty()) {
                 intent.setDataAndType(dataUri, mimeType);
             } else intent.setData(dataUri);
@@ -448,6 +446,7 @@ public class WidgetActions
             return;
         }
 
+        SuntimesUtils utils = new SuntimesUtils();
         String[] extras = extraString.split("&");
         for (String extra : extras)
         {
@@ -500,7 +499,7 @@ public class WidgetActions
                         Log.i(TAG, "applyExtras: applied " + extra + " (boolean)");
 
                     } else {
-                        intent.putExtra(key, value);  // string
+                        intent.putExtra(key, utils.displayStringForTitlePattern(context, value, data));  // string (may contain % patterns)
                         Log.i(TAG, "applyExtras: applied " + extra + " (String)");
                     }
                 }
