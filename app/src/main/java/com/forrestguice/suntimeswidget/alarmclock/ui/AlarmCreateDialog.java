@@ -331,6 +331,8 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
     private void updateViews(Context context)
     {
+        detachListeners();
+
         AlarmClockItem.AlarmType alarmType = getAlarmType();
         AlarmClockItem item = createAlarm(AlarmCreateDialog.this, alarmType);
         item.offset = getOffset();
@@ -340,9 +342,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             text_title.setText(context.getString(alarmType == AlarmClockItem.AlarmType.NOTIFICATION ? R.string.configAction_addNotification : R.string.configAction_addAlarm));
         }
         if (spin_type != null) {
-            spin_type.setOnItemSelectedListener(null);
-            spin_type.setSelection(alarmType.ordinal());
-            spin_type.setOnItemSelectedListener(onTypeSelected);
+            spin_type.setSelection(alarmType.ordinal(), false);
         }
 
         if (text_offset != null) {
@@ -358,6 +358,22 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         }
         if (text_note != null) {    // TODO: periodic update
             text_note.setText(AlarmEditViewHolder.displayAlarmNote(context, item, isSchedulable));
+        }
+
+        attachListeners();
+    }
+
+    protected void attachListeners()
+    {
+        if (spin_type != null) {
+            spin_type.setOnItemSelectedListener(onTypeSelected);
+        }
+    }
+
+    protected void detachListeners()
+    {
+        if (spin_type != null) {
+            spin_type.setOnItemSelectedListener(null);
         }
     }
 
