@@ -773,13 +773,13 @@
         <item>Automatique (jour/nuit)</item>
     </string-array>
 
-    <string name="configAction_doNothing">Ne rien faire</string>
-    <string name="configAction_nextNote">Affichage suivant</string>
-    <string name="configAction_prevNote">Affichage précédent</string>
-    <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
-    <string name="configAction_showCalendar">Afficher le calendrier</string>
-    <string name="configAction_swapCards">Inverser (aujourd\'hui/demain)</string>
-    <string name="configAction_setAlarmForNote">Régler l\'alarme</string>
+    <string name="configActionDesc_doNothing">Ne rien faire</string>
+    <string name="configActionDesc_nextNote">Affichage suivant</string>
+    <string name="configActionDesc_prevNote">Affichage précédent</string>
+    <string name="configActionDesc_resetNote">Reset note</string>  <!-- TODO -->
+    <string name="configActionDesc_showCalendar">Afficher le calendrier</string>
+    <string name="configActionDesc_swapCards">Inverser (aujourd\'hui/demain)</string>
+    <string name="configActionDesc_setAlarmForNote">Régler l\'alarme</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">par décalage</string>
@@ -966,6 +966,8 @@
         <item>summer solstice</item>   <!-- TODO -->
         <item>autumn equinox</item>   <!-- TODO -->
         <item>winter solstice</item>   <!-- TODO -->
+        <item>lunar noon</item>    <!-- TODO -->
+        <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>crépuscule astronomique du matin</item>
@@ -993,6 +995,8 @@
         <item>summer solstice</item>   <!-- TODO -->
         <item>autumn equinox</item>   <!-- TODO -->
         <item>winter solstice</item>   <!-- TODO -->
+        <item>lunar noon</item>    <!-- TODO -->
+        <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
 
     <!-- Dialog: Enable GPS? -->

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -60,43 +60,24 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal" android:paddingTop="@dimen/settingsGroup_padding">
 
+            <LinearLayout android:id="@+id/appwidget_location_controlPanel0"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:layout_gravity="center_vertical">
 
-            <LinearLayout android:id="@+id/appwidget_location_controlPanel"
-                          android:layout_width="wrap_content" android:layout_height="wrap_content"
-                          android:orientation="horizontal"
-                          android:layout_gravity="center_vertical">
+                <ImageButton android:id="@+id/appwidget_location_list"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:src="?attr/icActionPlace"
+                    android:contentDescription="@string/configAction_selectPlace" />
 
-                <FrameLayout android:id="@+id/appwidget_location_auto_layout"
-                             android:layout_width="fill_parent" android:layout_height="fill_parent">
-
-                    <ImageButton android:id="@+id/appwidget_location_auto"
-                                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                 android:src="?attr/icActionGPS"
-                                 android:contentDescription="@string/configAction_getFix" />
-
-                    <ProgressBar
-                        android:id="@+id/appwidget_location_auto_progress"
-                        style="?android:attr/progressBarStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center" />
-                </FrameLayout>
-
-                <ImageButton android:id="@+id/appwidget_location_edit"
-                             android:layout_width="wrap_content" android:layout_height="wrap_content"
-                             android:src="?attr/icActionPlace"
-                             android:contentDescription="@string/configAction_editPlace" />
-
-                <ImageButton android:id="@+id/appwidget_location_save"
-                             android:layout_width="wrap_content" android:layout_height="wrap_content"
-                             android:src="?attr/icActionSave"
-                             android:visibility="gone"
-                             android:contentDescription="@string/configAction_savePlace" />
+                <ImageButton android:id="@+id/appwidget_location_cancel"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:src="?attr/icActionBack"
+                    android:contentDescription="@android:string/cancel" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal"
+                android:layout_width="0dp" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_weight="1"
                 android:paddingLeft="5dp" android:paddingStart="5dp"
                 android:paddingRight="0dp" android:paddingEnd="0dp"
                 android:layout_gravity="center_vertical">
@@ -126,6 +107,39 @@
 
                 </ViewFlipper>
 
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/appwidget_location_controlPanel"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical">
+
+                <FrameLayout android:id="@+id/appwidget_location_auto_layout"
+                    android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+                    <ImageButton android:id="@+id/appwidget_location_auto"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:src="?attr/icActionGPS"
+                        android:contentDescription="@string/configAction_getFix" />
+
+                    <ProgressBar
+                        android:id="@+id/appwidget_location_auto_progress"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
+                </FrameLayout>
+
+                <ImageButton android:id="@+id/appwidget_location_edit"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:src="?attr/icActionPlace"
+                    android:contentDescription="@string/configAction_editPlace" />
+
+                <ImageButton android:id="@+id/appwidget_location_save"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:src="?attr/icActionSave"
+                    android:visibility="gone"
+                    android:contentDescription="@string/configAction_savePlace" />
 
             </LinearLayout>
 

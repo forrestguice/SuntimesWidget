@@ -22,6 +22,7 @@
 
     <LinearLayout
         style="@style/SunsetTimeWidget"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:id="@+id/widgetframe_inner">
 
         <TextView style="@style/SunsetTimeTextTitleView"
@@ -30,8 +31,8 @@
             android:gravity="start"
             tools:text="title" />
 
-        <LinearLayout
-            style="@style/SunsetTimeLayout"
+        <LinearLayout style="@style/SunsetTimeLayout"
+            android:layout_gravity="center"
             android:orientation="horizontal"
             android:showDividers="middle"
             android:divider="@drawable/ic_spacer"

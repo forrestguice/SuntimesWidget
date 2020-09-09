@@ -17,10 +17,14 @@
         <item name="text_accentColor">@color/text_accent_light</item>
         <item name="text_disabledColor">@color/text_disabled_light</item>
 
+        <item name="chipBackground">@drawable/chip_light</item>
+        <item name="chipTrayBackground">@drawable/chip_tray_light</item>
+
         <item name="alarmColorEnabled">@color/alarm_enabled_light</item>
-        <item name="alarmCardEnabled">@drawable/card_alarmitem_enabled_light</item>
-        <item name="alarmCardDisabled">@drawable/card_alarmitem_disabled_light</item>
+        <item name="alarmCardEnabled">@drawable/card_alarmitem_enabled_light0</item>
+        <item name="alarmCardDisabled">@drawable/card_alarmitem_disabled_light0</item>
         <item name="gridItemSelected">@color/grid_selected_light</item>
+        <item name="selectableItemCard">@drawable/selectable_item_light</item>
 
         <item name="buttonPressColor">@color/btn_tint_pressed_light</item>
         <item name="text_buttonSelector">@drawable/btn_txt_light</item>
@@ -66,8 +70,8 @@
         <item name="snackbar_accentColor">?colorAccent</item>
         <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
 
-        <item name="fab_backgroundColor">@color/sunIcon_color_rising_light</item>
-        <item name="fab_rippleColor">@color/text_accent_light</item>
+        <item name="fab_backgroundColor">@color/text_accent_light</item>
+        <item name="fab_rippleColor">@color/grey_50</item>
 
         <item name="icActionGPS">@drawable/ic_action_location_found_light</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off_light</item>
@@ -80,6 +84,7 @@
         <item name="icActionAlarm">@drawable/ic_action_alarms_light</item>
         <item name="icActionCalendar">@drawable/ic_calendar_light</item>
         <item name="icActionNotification">@drawable/ic_action_notification_light</item>
+        <item name="icActionVibrationEnabled">@drawable/ic_action_vibration_light</item>
         <item name="icActionSoundEnabled">@drawable/ic_action_soundenabled_light</item>
         <item name="icActionSoundDisabled">@drawable/ic_action_sounddisabled_light</item>
         <item name="icActionAbout">@drawable/ic_action_about_light</item>
@@ -87,6 +92,7 @@
         <item name="icActionError">@drawable/ic_action_error_light</item>
         <item name="icActionWidgets">@drawable/ic_action_widget_light</item>
         <item name="icActionAppearance">@drawable/ic_palette_light</item>
+        <item name="icActionExtension">@drawable/ic_action_extension_light</item>
         <item name="icActionAltitude">@drawable/baseline_terrain_black_18</item>
         <item name="icActionShadow">@drawable/ic_action_shadow_light</item>
         <item name="icActionLocale">@drawable/ic_action_locale_light</item>
@@ -94,13 +100,17 @@
         <item name="icActionHelp">@drawable/ic_action_help_light</item>
         <item name="icActionAccept">@drawable/ic_action_accept_light</item>
         <item name="icActionClose">@drawable/ic_action_close_light</item>
+        <item name="icActionBack">@drawable/ic_action_back_light</item>
+        <item name="icActionSearch">@drawable/ic_action_search_light</item>
         <item name="icActionNew">@drawable/ic_action_new_light</item>
         <item name="icActionNewAlarm">@drawable/ic_action_alarms_light</item>
         <item name="icActionNewNotification">@drawable/ic_action_notification_light</item>
+        <item name="icActionEnableAlarm">@drawable/ic_action_doneall_light</item>
         <item name="icActionSave">@drawable/ic_action_save_light</item>
         <item name="icActionEdit">@drawable/ic_action_edit_light</item>
         <item name="icActionDelete">@drawable/ic_action_discard_light</item>
         <item name="icActionCopy">@drawable/ic_action_copy_light</item>
+        <item name="icActionSort">@drawable/ic_action_sort_light</item>
         <item name="icActionDismiss">@drawable/ic_action_cancel_light</item>
         <item name="icActionCancel">@drawable/ic_action_cancel_light</item>
         <item name="icActionShare">@drawable/ic_action_share_light</item>
@@ -110,6 +120,9 @@
         <item name="icActionPause">@drawable/ic_action_pause_light</item>
         <item name="icActionRecord">@drawable/ic_action_record_light</item>
         <item name="icActionTimeReset">@drawable/ic_action_timereset_light</item>
+
+        <item name="icActionExpand">@drawable/ic_action_expand_light</item>
+        <item name="checkVibrate">@drawable/check_vibrate_light</item>
 
         <item name="windowActionModeOverlay">true</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Suntimes.BottomSheetDialog</item>
@@ -132,10 +145,14 @@
         <item name="text_accentColor">@color/text_accent_dark</item>
         <item name="text_disabledColor">@color/text_disabled_dark</item>
 
+        <item name="chipBackground">@drawable/chip_dark</item>
+        <item name="chipTrayBackground">@drawable/chip_tray_dark</item>
+
         <item name="alarmColorEnabled">@color/alarm_enabled_dark</item>
-        <item name="alarmCardEnabled">@drawable/card_alarmitem_enabled_dark</item>
-        <item name="alarmCardDisabled">@drawable/card_alarmitem_disabled_dark</item>
+        <item name="alarmCardEnabled">@drawable/card_alarmitem_enabled_dark0</item>
+        <item name="alarmCardDisabled">@drawable/card_alarmitem_disabled_dark0</item>
         <item name="gridItemSelected">@color/grid_selected_dark</item>
+        <item name="selectableItemCard">@drawable/selectable_item_dark</item>
 
         <item name="buttonPressColor">@color/btn_tint_pressed_dark</item>
         <item name="text_buttonSelector">@drawable/btn_txt_dark</item>
@@ -181,8 +198,8 @@
         <item name="snackbar_accentColor">?colorAccent</item>
         <item name="snackbar_backgroundColor">?attr/colorPrimary</item>
 
-        <item name="fab_backgroundColor">@color/sunIcon_color_setting_dark</item>
-        <item name="fab_rippleColor">@color/text_accent_dark</item>
+        <item name="fab_backgroundColor">@color/text_accent_dark</item>
+        <item name="fab_rippleColor">@color/grey_900</item>
 
         <item name="icActionGPS">@drawable/ic_action_location_found</item>
         <item name="icActionGPS_off">@drawable/ic_action_location_off</item>
@@ -195,6 +212,7 @@
         <item name="icActionAlarm">@drawable/ic_action_alarms</item>
         <item name="icActionCalendar">@drawable/ic_calendar</item>
         <item name="icActionNotification">@drawable/ic_action_notification</item>
+        <item name="icActionVibrationEnabled">@drawable/ic_action_vibration</item>
         <item name="icActionSoundEnabled">@drawable/ic_action_soundenabled</item>
         <item name="icActionSoundDisabled">@drawable/ic_action_sounddisabled</item>
         <item name="icActionAbout">@drawable/ic_action_about</item>
@@ -202,6 +220,7 @@
         <item name="icActionError">@drawable/ic_action_error</item>
         <item name="icActionWidgets">@drawable/ic_action_widget</item>
         <item name="icActionAppearance">@drawable/ic_palette</item>
+        <item name="icActionExtension">@drawable/ic_action_extension</item>
         <item name="icActionAltitude">@drawable/baseline_terrain_white_18</item>
         <item name="icActionShadow">@drawable/ic_action_shadow</item>
         <item name="icActionLocale">@drawable/ic_action_locale</item>
@@ -209,13 +228,17 @@
         <item name="icActionHelp">@drawable/ic_action_help</item>
         <item name="icActionAccept">@drawable/ic_action_accept</item>
         <item name="icActionClose">@drawable/ic_action_close</item>
+        <item name="icActionBack">@drawable/ic_action_back</item>
+        <item name="icActionSearch">@drawable/ic_action_search</item>
         <item name="icActionNew">@drawable/ic_action_new</item>
         <item name="icActionNewAlarm">@drawable/ic_action_alarms</item>
         <item name="icActionNewNotification">@drawable/ic_action_notification</item>
+        <item name="icActionEnableAlarm">@drawable/ic_action_doneall</item>
         <item name="icActionSave">@drawable/ic_action_save</item>
         <item name="icActionEdit">@drawable/ic_action_edit</item>
         <item name="icActionDelete">@drawable/ic_action_discard</item>
         <item name="icActionCopy">@drawable/ic_action_copy</item>
+        <item name="icActionSort">@drawable/ic_action_sort</item>
         <item name="icActionDismiss">@drawable/ic_action_cancel</item>
         <item name="icActionCancel">@drawable/ic_action_cancel</item>
         <item name="icActionShare">@drawable/ic_action_share</item>
@@ -225,6 +248,9 @@
         <item name="icActionPause">@drawable/ic_action_pause</item>
         <item name="icActionRecord">@drawable/ic_action_record</item>
         <item name="icActionTimeReset">@drawable/ic_action_timereset</item>
+
+        <item name="icActionExpand">@drawable/ic_action_expand</item>
+        <item name="checkVibrate">@drawable/check_vibrate_dark</item>
 
         <item name="windowActionModeOverlay">true</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Suntimes.BottomSheetDialog</item>
@@ -406,5 +432,52 @@
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">8dp</item>
     </style>
+
+    <style name="ChipTray">
+        <item name="android:background">?attr/chipTrayBackground</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">6dp</item>
+    </style>
+
+    <style name="ChipArea">
+        <item name="android:maxWidth">250dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:gravity">center_vertical|start</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:background">?attr/chipBackground</item>
+    </style>
+
+    <style name="ChipTextBase" parent="android:TextAppearance.Small">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="ChipText0" parent="ChipTextBase">
+        <item name="android:maxWidth">250dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:gravity">center_vertical|start</item>
+        <item name="android:paddingTop">1dp</item>
+        <item name="android:paddingBottom">1dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="ChipText" parent="ChipText0">
+        <item name="android:background">?attr/chipBackground</item>
+    </style>
+    <style name="ChipText1" parent="ChipText0">
+        <item name="android:background">?attr/chipBackground</item>
+        <item name="android:drawableRight">@drawable/ic_transparent1</item>
+    </style>
+
+    <style name="ActionButton" parent="@android:style/Widget.Button.Small" />
 
 </resources>

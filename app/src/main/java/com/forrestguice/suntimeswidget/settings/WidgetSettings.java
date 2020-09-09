@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -153,9 +153,6 @@ public class WidgetSettings
 
     public static final String PREF_KEY_ACTION_MODE = "action";
     public static final ActionMode PREF_DEF_ACTION_MODE = ActionMode.ONTAP_LAUNCH_CONFIG;
-
-    public static final String PREF_KEY_ACTION_LAUNCH = "launch";
-    public static final String PREF_DEF_ACTION_LAUNCH = "com.forrestguice.suntimeswidget.SuntimesActivity";
 
     public static final String PREF_KEY_LOCATION_MODE = "locationMode";
     public static final LocationMode PREF_DEF_LOCATION_MODE = LocationMode.CUSTOM_LOCATION;
@@ -1721,33 +1718,6 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveActionLaunchPref(Context context, int appWidgetId, String launchString)
-    {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION;
-        prefs.putString(prefs_prefix + PREF_KEY_ACTION_LAUNCH, launchString);
-        prefs.apply();
-    }
-    public static String loadActionLaunchPref(Context context, int appWidgetId)
-    {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION;
-        //noinspection UnnecessaryLocalVariable
-        String launchString = prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH, PREF_DEF_ACTION_LAUNCH);
-        return launchString;
-
-    }
-    public static void deleteActionLaunchPref(Context context, int appWidgetId)
-    {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION;
-        prefs.remove(prefs_prefix + PREF_KEY_ACTION_LAUNCH);
-        prefs.apply();
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-
     public static void saveLocationModePref(Context context, int appWidgetId, WidgetSettings.LocationMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
@@ -2351,7 +2321,6 @@ public class WidgetSettings
     {
         deleteNextSuggestedUpdate(context, appWidgetId);
         deleteActionModePref(context, appWidgetId);
-        deleteActionLaunchPref(context, appWidgetId);
 
         deleteSun1x1ModePref(context, appWidgetId);
         deleteSunPos1x1ModePref(context, appWidgetId);
@@ -2396,6 +2365,8 @@ public class WidgetSettings
 
         deleteTimeNoteRisePref(context, appWidgetId);
         deleteTimeNoteSetPref(context, appWidgetId);
+
+        WidgetActions.deletePrefs(context, appWidgetId);
     }
 
     public static void initDefaults( Context context )
@@ -2405,6 +2376,8 @@ public class WidgetSettings
         PREF_DEF_LOCATION_LONGITUDE = context.getString(R.string.default_location_longitude);
         PREF_DEF_LOCATION_ALTITUDE = context.getString(R.string.default_location_altitude);
         PREF_DEF_GENERAL_UNITS_LENGTH = getLengthUnit(context.getString(R.string.default_units_length));
+
+        WidgetActions.initDefaults(context);
     }
 
     public static void initDisplayStrings( Context context )
@@ -2425,5 +2398,7 @@ public class WidgetSettings
         DateMode.initDisplayStrings(context);
         TimeFormatMode.initDisplayStrings(context);
         RiseSetOrder.initDisplayStrings(context);
+
+        WidgetActions.initDisplayStrings(context);
     }
 }

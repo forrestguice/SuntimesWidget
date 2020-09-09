@@ -13,10 +13,14 @@
     <attr name="text_accentColor" format="reference" />
     <attr name="text_disabledColor" format="reference" />
 
+    <attr name="chipBackground" format="reference" />
+    <attr name="chipTrayBackground" format="reference" />
+
     <attr name="alarmColorEnabled" format="reference" />
     <attr name="alarmCardEnabled" format="reference" />
     <attr name="alarmCardDisabled" format="reference" />
     <attr name="gridItemSelected" format="reference" />
+    <attr name="selectableItemCard" format="reference" />
 
     <attr name="buttonPressColor" format="reference" />
     <attr name="text_buttonSelector" format="reference" />
@@ -73,6 +77,7 @@
     <attr name="icActionAlarm" format="reference" />
     <attr name="icActionCalendar" format="reference" />
     <attr name="icActionNotification" format="reference" />
+    <attr name="icActionVibrationEnabled" format="reference" />
     <attr name="icActionSoundEnabled" format="reference" />
     <attr name="icActionSoundDisabled" format="reference" />
     <attr name="icActionAbout" format="reference" />
@@ -80,6 +85,7 @@
     <attr name="icActionError" format="reference" />
     <attr name="icActionWidgets" format="reference" />
     <attr name="icActionAppearance" format="reference" />
+    <attr name="icActionExtension" format="reference" />
     <attr name="icActionAltitude" format="reference" />
     <attr name="icActionShadow" format="reference" />
     <attr name="icActionLocale" format="reference" />
@@ -88,13 +94,17 @@
 
     <attr name="icActionAccept" format="reference" />
     <attr name="icActionClose" format="reference" />
+    <attr name="icActionBack" format="reference" />
+    <attr name="icActionSearch" format="reference" />
     <attr name="icActionNew" format="reference" />
     <attr name="icActionNewAlarm" format="reference" />
     <attr name="icActionNewNotification" format="reference" />
+    <attr name="icActionEnableAlarm" format="reference" />
     <attr name="icActionSave" format="reference" />
     <attr name="icActionEdit" format="reference" />
     <attr name="icActionDelete" format="reference" />
     <attr name="icActionCopy" format="reference" />
+    <attr name="icActionSort" format="reference" />
     <attr name="icActionDismiss" format="reference" />
     <attr name="icActionCancel" format="reference" />
     <attr name="icActionShare" format="reference" />
@@ -108,9 +118,19 @@
     <attr name="icActionNext" format="reference" />
     <attr name="icActionPrevious" format="reference" />
 
+    <attr name="icActionExpand" format="reference" />
+
     <attr name="icActionGPS" format="reference" />
     <attr name="icActionGPS_off" format="reference" />
     <attr name="icActionGPS_searching" format="reference" />
+
+    <attr name="checkVibrate" format="reference" />
+
+    <declare-styleable name="EditActionView">
+        <attr name="startExpanded" format="boolean" />
+        <attr name="allowCollapse" format="boolean" />
+        <attr name="allowSaveLoad" format="boolean" />
+    </declare-styleable>
 
     <declare-styleable name="WorldMapView">
         <attr name="matchHeight" format="boolean" />

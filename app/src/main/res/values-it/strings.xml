@@ -809,13 +809,13 @@
         <item>@string/trackingMode_soonest</item>
     </string-array>
 
-    <string name="configAction_doNothing">Do nothing</string>  <!-- TODO -->
-    <string name="configAction_nextNote">Show next note</string>  <!-- TODO -->
-    <string name="configAction_prevNote">Show previous note</string>  <!-- TODO -->
-    <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
-    <string name="configAction_showCalendar">Show calendar app</string>  <!-- TODO -->
-    <string name="configAction_swapCards">Swap cards (today/tomorrow)</string>  <!-- TODO -->
-    <string name="configAction_setAlarmForNote">Set alarm for note</string>  <!-- TODO -->
+    <string name="configActionDesc_doNothing">Do nothing</string>  <!-- TODO -->
+    <string name="configActionDesc_nextNote">Show next note</string>  <!-- TODO -->
+    <string name="configActionDesc_prevNote">Show previous note</string>  <!-- TODO -->
+    <string name="configActionDesc_resetNote">Reset note</string>  <!-- TODO -->
+    <string name="configActionDesc_showCalendar">Show calendar app</string>  <!-- TODO -->
+    <string name="configActionDesc_swapCards">Swap cards (today/tomorrow)</string>  <!-- TODO -->
+    <string name="configActionDesc_setAlarmForNote">Set alarm for note</string>  <!-- TODO -->
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">per compensazione</string>
@@ -1003,6 +1003,8 @@
         <item>summer solstice</item>   <!-- TODO -->
         <item>autumn equinox</item>   <!-- TODO -->
         <item>winter solstice</item>   <!-- TODO -->
+        <item>lunar noon</item>    <!-- TODO -->
+        <item>lunar midnight</item>    <!-- TODO -->
     </string-array>  <!-- TODO -->
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>morning astronomical twilight (start)</item>
@@ -1030,6 +1032,8 @@
         <item>summer solstice</item>   <!-- TODO -->
         <item>autumn equinox</item>   <!-- TODO -->
         <item>winter solstice</item>   <!-- TODO -->
+        <item>lunar noon</item>    <!-- TODO -->
+        <item>lunar midnight</item>    <!-- TODO -->
     </string-array>  <!-- TODO -->
 
     <!-- Dialog: Enable GPS? -->

@@ -48,5 +48,10 @@
             android:icon="?attr/icActionAlarm"
             app:showAsAction="never" />
 
+        <item android:id="@+id/setAlarmAction"
+            android:title="@string/configAction_setAlarmAction"
+            android:icon="?attr/icActionExtension"
+            app:showAsAction="never" />
+
     </group>
 </menu>

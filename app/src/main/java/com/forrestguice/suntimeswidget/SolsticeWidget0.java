@@ -24,6 +24,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.layouts.SolsticeLayout;
@@ -109,6 +110,11 @@ public class SolsticeWidget0 extends SuntimesWidget0
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, data);
         appWidgetManager.updateAppWidget(appWidgetId, views);
+    }
+
+    @Override
+    protected SuntimesData getData(Context context, int appWidgetId) {
+        return new SuntimesEquinoxSolsticeDataset(context, appWidgetId).dataEquinoxSpring;
     }
 
     protected static SolsticeLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId)

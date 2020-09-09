@@ -66,6 +66,24 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_FADEIN = "app_alarms_fadeinMillis";
     public static final int PREF_DEF_ALARM_FADEIN = 1000 * 10;   // 10 s
 
+    public static final int SORT_BY_ALARMTIME = 0;
+    public static final int SORT_BY_CREATION = 10;
+
+    public static final String PREF_KEY_ALARM_SORT = "app_alarms_sort";
+    public static final int PREF_DEF_ALARM_SORT = SORT_BY_CREATION;
+
+    public static int loadPrefAlarmSort(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getInt(PREF_KEY_ALARM_SORT, PREF_DEF_ALARM_SORT);
+    }
+    public static void savePrefAlarmSort(Context context, int value)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putInt(PREF_KEY_ALARM_SORT, value);
+        prefs.apply();
+    }
+
     public static String loadPrefOnHardwareButtons(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);

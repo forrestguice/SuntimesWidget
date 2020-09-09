@@ -25,12 +25,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.ColorUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -67,17 +69,20 @@ import com.forrestguice.suntimeswidget.layouts.ClockLayout_1x1_0;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.ColorChooserView;
+import com.forrestguice.suntimeswidget.settings.colors.ColorChooserView;
 import com.forrestguice.suntimeswidget.settings.PaddingChooser;
 import com.forrestguice.suntimeswidget.settings.SizeEditView;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+import com.forrestguice.suntimeswidget.settings.colors.ColorDialog;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 
 import java.security.InvalidParameterException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_ACCENTCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_ACTIONCOLOR;
@@ -179,6 +184,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ThemeNameChooser chooseName;
     private PaddingChooser choosePadding;
 
+    private ArrayList<Integer> recentColors = new ArrayList<>();
     private ColorChooser chooseColorRise, chooseColorRiseIconFill, chooseColorRiseIconStroke;
     private ColorChooser chooseColorNoon, chooseColorNoonIconFill, chooseColorNoonIconStroke;
     private ColorChooser chooseColorSet, chooseColorSetIconFill, chooseColorSetIconStroke;
@@ -606,6 +612,12 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ColorChooser createColorChooser(Context context, TextView label, EditText edit, ImageButton button, String id)
     {
         ColorChooser chooser = new ColorChooser(context, label, edit, button, id);
+        chooser.setColorChangeListener(new ColorDialog.ColorChangeListener() {
+            @Override
+            public void onColorChanged(int color) {
+                addRecentColor(color);
+            }
+        });
         colorChoosers.add(chooser);
         return chooser;
     }
@@ -637,6 +649,41 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         {
             chooser.setFragmentManager(getSupportFragmentManager());
             chooser.setCollapsed(true);
+        }
+    }
+
+    private void addRecentColor(int color)
+    {
+        if (!recentColors.contains(color)) {
+            recentColors.add(0, color);
+        }
+    }
+
+    private void updateRecentColors()
+    {
+        recentColors.clear();
+        for (ColorChooser chooser : colorChoosers) {
+            addRecentColor(chooser.getColor());
+        }
+        Collections.sort(recentColors, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2)
+            {
+                double[] lab0 = new double[3];
+                double[] lab1 = new double[3];
+                double[] lab2 = new double[3];
+                ColorUtils.colorToLAB(Color.BLACK, lab0);
+                ColorUtils.colorToLAB(o1, lab1);
+                ColorUtils.colorToLAB(o2, lab2);
+
+                Double e1 = ColorUtils.distanceEuclidean(lab1, lab0);
+                Double e2 = ColorUtils.distanceEuclidean(lab2, lab0);
+                return e2.compareTo(e1);
+            }
+        });
+
+        for (ColorChooser chooser : colorChoosers) {
+            chooser.setRecentColors(recentColors);
         }
     }
 
@@ -1242,6 +1289,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             outState.putInt(chooser.getID(), chooser.getColor());
         }
         outState.putIntArray(THEME_PADDING, choosePadding.getPadding());
+        outState.putIntegerArrayList(ColorDialog.KEY_RECENT, recentColors);
     }
 
     /**
@@ -1273,15 +1321,23 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             spinBackground.setSelection(0);
         }
 
-        for (SizeChooser chooser : sizeChoosers)
-        {
+        for (SizeChooser chooser : sizeChoosers) {
             chooser.setValue(savedState);
         }
+
+        ArrayList<Integer> colors = savedState.getIntegerArrayList(ColorDialog.KEY_RECENT);
+        if (colors != null) {
+            recentColors.clear();
+            recentColors.addAll(colors);
+        }
+
         for (ColorChooser chooser : colorChoosers)
         {
+            chooser.setRecentColors(recentColors);
             chooser.setColor(savedState);
         }
-        choosePadding.setPadding(savedState.getIntArray(THEME_PADDING));
+
+        choosePadding.setPadding(savedState.getIntArray(THEME_PADDING));   // TODO: might be null (check)
     }
 
     protected void flipToPreview( int previewID )
@@ -1307,7 +1363,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         inflater.inflate(R.menu.themeconfig, menu);
 
         final MenuItem saveItem = menu.findItem(R.id.saveTheme);
-        preview.getHandler().postDelayed(new Runnable()
+        preview.getHandler().postDelayed(new Runnable()   // TODO: bug here: npe this line, sometimes
         {
             public void run()
             {
@@ -1439,6 +1495,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         toggleRiseSetIconFill(usingRiseSetIconFill(), true);
         toggleRiseSetIconStroke(usingRiseSetIconStroke(), true);
         toggleNoonIconColor(usingNoonIconColor(), true);
+        updateRecentColors();
     }
 
     private void setSelectedBackground(SuntimesTheme.ThemeBackground themeBackground)
@@ -1738,7 +1795,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     /**
      * ColorChooser
      */
-    private class ColorChooser extends com.forrestguice.suntimeswidget.settings.ColorChooser
+    private class ColorChooser extends com.forrestguice.suntimeswidget.settings.colors.ColorChooser
     {
         public ColorChooser(Context context, TextView txtLabel, EditText editField, ImageButton imgButton, String id)
         {

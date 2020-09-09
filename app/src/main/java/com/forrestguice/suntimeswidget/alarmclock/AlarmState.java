@@ -19,6 +19,8 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.content.ContentValues;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -46,7 +48,7 @@ import android.util.Log;
  * Alarms are DISMISSED when the notification is dismissed. After an alarm is dismissed its state becomes NONE.
  * Alarms are TIMEOUT when the alarm sounds for more than X minutes without user intervention. Same as dismissed.
  */
-public class AlarmState
+public class AlarmState implements Parcelable
 {
     public static final String TAG = "AlarmReceiverState";
 
@@ -69,10 +71,31 @@ public class AlarmState
         this.state = value;
     }
 
+    public AlarmState( AlarmState other )
+    {
+        this.rowID = other.rowID;
+        this.state = other.state;
+    }
+
     public AlarmState(ContentValues values)
     {
         rowID = values.getAsLong(AlarmDatabaseAdapter.KEY_STATE_ALARMID);
         state = values.getAsInteger(AlarmDatabaseAdapter.KEY_STATE);
+    }
+
+    private AlarmState(Parcel in)
+    {
+        rowID = in.readLong();
+        state = in.readInt();
+        modified = (in.readInt() == 1);
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags)
+    {
+        out.writeLong(rowID);
+        out.writeInt(state);
+        out.writeInt(modified ? 1 : 0);
     }
 
     public ContentValues asContentValues()
@@ -164,4 +187,21 @@ public class AlarmState
     {
         return "" + state;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Parcelable.Creator<AlarmState> CREATOR = new Parcelable.Creator<AlarmState>()
+    {
+        public AlarmState createFromParcel(Parcel in) {
+            return new AlarmState(in);
+        }
+
+        public AlarmState[] newArray(int size) {
+            return new AlarmState[size];
+        }
+    };
+
 }

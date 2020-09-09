@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import android.content.res.ColorStateList;
@@ -33,6 +34,8 @@ import android.graphics.drawable.InsetDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.Html;
@@ -59,7 +62,7 @@ import android.view.ViewParent;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import java.lang.reflect.Method;
 import java.text.DateFormat;
@@ -1041,12 +1044,16 @@ public class SuntimesUtils
      * @param titlePattern a pattern string (simple substitutions)
      * @return a display string suitable for display as a widget title
      */
-    public String displayStringForTitlePattern(Context context, String titlePattern, SuntimesRiseSetData data)
+    public String displayStringForTitlePattern(Context context, String titlePattern, @Nullable SuntimesRiseSetData data)
     {
         String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData)data);
         String modePattern = "%M";
         String modePatternShort = "%m";
         String orderPattern = "%o";
+
+        if (data == null) {
+            return displayString.replaceAll(modePatternShort, "").replaceAll(modePattern, "").replaceAll(orderPattern, "");
+        }
 
         WidgetSettings.TimeMode timeMode = data.timeMode();
         WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
@@ -1057,16 +1064,16 @@ public class SuntimesUtils
         return displayString;
     }
 
-    public String displayStringForTitlePattern(Context context, String titlePattern, SuntimesMoonData data)
+    public String displayStringForTitlePattern(Context context, String titlePattern, @Nullable SuntimesMoonData data)
     {
         String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData)data);
+        String modePattern = "%M";
+        String modePatternShort = "%m";
+        String illumPattern = "%i";
+        String orderPattern = "%o";
+
         if (data != null && data.isCalculated())
         {
-            String modePattern = "%M";
-            String modePatternShort = "%m";
-            String illumPattern = "%i";
-            String orderPattern = "%o";
-
             WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
 
             displayString = displayString.replaceAll(modePatternShort, data.getMoonPhaseToday().getShortDisplayString());
@@ -1077,16 +1084,22 @@ public class SuntimesUtils
                 NumberFormat percentage = NumberFormat.getPercentInstance();
                 displayString = displayString.replaceAll(illumPattern, percentage.format(data.getMoonIlluminationToday()));
             }
+        } else {
+            displayString = displayString.replaceAll(modePatternShort, "").replaceAll(modePattern, "").replaceAll(orderPattern, "").replaceAll(illumPattern, "");
         }
         return displayString;
     }
 
-    public String displayStringForTitlePattern(Context context, String titlePattern, SuntimesEquinoxSolsticeData data)
+    public String displayStringForTitlePattern(Context context, String titlePattern, @Nullable SuntimesEquinoxSolsticeData data)
     {
         String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData)data);
         String modePattern = "%M";
         String modePatternShort = "%m";
         String orderPattern = "%o";
+
+        if (data == null) {
+            return displayString.replaceAll(modePatternShort, "").replaceAll(modePattern, "").replaceAll(orderPattern, "");
+        }
 
         WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, data.appWidgetID());
         WidgetSettings.SolsticeEquinoxMode timeMode = data.timeMode();
@@ -1097,35 +1110,47 @@ public class SuntimesUtils
         return displayString;
     }
 
-    public String displayStringForTitlePattern(Context context, String titlePattern, SuntimesRiseSetDataset dataset)
-    {
-        // TODO
-        return displayStringForTitlePattern(context, titlePattern, dataset.dataActual);
+    public String displayStringForTitlePattern(Context context, String titlePattern, @Nullable SuntimesRiseSetDataset dataset) {
+        return displayStringForTitlePattern(context, titlePattern, (dataset != null ? dataset.dataActual : null));
     }
 
-    public String displayStringForTitlePattern(Context context, String titlePattern, SuntimesData data)
+    public String displayStringForTitlePattern(Context context, String titlePattern, @Nullable SuntimesData data)
     {
+        String displayString = titlePattern;
         String locPattern = "%loc";
         String latPattern = "%lat";
         String lonPattern = "%lon";
         String altPattern = "%lel";
         String timezoneIDPattern = "%t";
         String datasourcePattern = "%s";
+        String widgetIDPattern = "%id";
         String datePattern = "%d";
         String dateYearPattern = "%dY";
         String dateDayPattern = "%dD";
         String dateDayPatternShort = "%dd";
         String dateTimePattern = "%dT";
         String dateTimePatternShort = "%dt";
-        String widgetIDPattern = "%id";
+        String dateMillisPattern = "%dm";
         String percentPattern = "%%";
+
+        if (data == null)
+        {
+            String[] patterns = new String[] { locPattern, latPattern, lonPattern, altPattern,          // in order of operation
+                    timezoneIDPattern, datasourcePattern, widgetIDPattern,
+                    dateTimePatternShort, dateTimePattern, dateDayPatternShort, dateDayPattern, dateYearPattern, dateMillisPattern, datePattern,
+                    percentPattern };
+
+            for (int i=0; i<patterns.length; i++) {
+                displayString = displayString.replaceAll(patterns[i], "");
+            }
+            return displayString;
+        }
 
         Location location = data.location();
         String timezoneID = data.timezone().getID();
         String datasource = (data.calculatorMode() == null) ? "" : data.calculatorMode().getName();
         String appWidgetID = (data.appWidgetID() != null ? String.format("%s", data.appWidgetID()) : "");
 
-        String displayString = titlePattern;
         displayString = displayString.replaceAll(locPattern, location.getLabel());
         displayString = displayString.replaceAll(latPattern, location.getLatitude());
         displayString = displayString.replaceAll(lonPattern, location.getLongitude());
@@ -1149,6 +1174,7 @@ public class SuntimesUtils
             displayString = displayString.replaceAll(dateDayPatternShort, calendarDayDisplayString(context, data.calendar(), true).toString());
             displayString = displayString.replaceAll(dateDayPattern, calendarDayDisplayString(context, data.calendar(), false).toString());
             displayString = displayString.replaceAll(dateYearPattern, calendarDateYearDisplayString(context, data.calendar()).toString());
+            displayString = displayString.replaceAll(dateMillisPattern, Long.toString(data.calendar().getTimeInMillis()));
             displayString = displayString.replaceAll(datePattern, calendarDateDisplayString(context, data.calendar(), false).toString());
         }
 
@@ -1158,11 +1184,18 @@ public class SuntimesUtils
 
     public static SpannableStringBuilder createSpan(Context context, String text, String spanTag, ImageSpan imageSpan)
     {
+        return createSpan(context, text, spanTag, imageSpan, ImageSpan.ALIGN_BASELINE);
+    }
+    public static SpannableStringBuilder createSpan(Context context, String text, String spanTag, ImageSpan imageSpan, int alignment)
+    {
         ImageSpanTag[] tags = { new ImageSpanTag(spanTag, imageSpan) };
-        return createSpan(context, text, tags);
+        return createSpan(context, text, tags, alignment);
     }
 
-    public static SpannableStringBuilder createSpan(Context context, String text, ImageSpanTag[] tags)
+    public static SpannableStringBuilder createSpan(Context context, String text, ImageSpanTag[] tags) {
+        return createSpan(context, text, tags, ImageSpan.ALIGN_BASELINE);
+    }
+    public static SpannableStringBuilder createSpan(Context context, String text, ImageSpanTag[] tags, int alignment)
     {
         SpannableStringBuilder span = new SpannableStringBuilder(text);
         ImageSpan blank = createImageSpan(context, R.drawable.ic_transparent, 0, 0, R.color.transparent);
@@ -1178,7 +1211,7 @@ public class SuntimesUtils
                 int tagEnd = tagPos + spanTag.length();
                 //Log.d("DEBUG", "tag=" + spanTag + ", tagPos=" + tagPos + ", " + tagEnd + ", text=" + text);
 
-                span.setSpan(createImageSpan(imageSpan), tagPos, tagEnd, ImageSpan.ALIGN_BASELINE);
+                span.setSpan(createImageSpan(imageSpan), tagPos, tagEnd, alignment);
                 text = text.substring(0, tagPos) + tag.getBlank() + text.substring(tagEnd);
             }
         }
@@ -1799,6 +1832,36 @@ public class SuntimesUtils
             }
         }
         return drawables;
+    }
+
+    @SuppressLint("ResourceType")
+    public static void themeSnackbar(Context context, Snackbar snackbar, Integer[] colorOverrides)
+    {
+        Integer[] colors = new Integer[] {null, null, null};
+        int[] colorAttrs = { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor };
+        TypedArray a = context.obtainStyledAttributes(colorAttrs);
+        colors[0] = ContextCompat.getColor(context, a.getResourceId(0, android.R.color.primary_text_dark));
+        colors[1] = ContextCompat.getColor(context, a.getResourceId(1, R.color.text_accent_dark));
+        colors[2] = ContextCompat.getColor(context, a.getResourceId(2, R.color.card_bg_dark));
+        a.recycle();
+
+        if (colorOverrides != null && colorOverrides.length == colors.length) {
+            for (int i=0; i<colors.length; i++) {
+                if (colorOverrides[i] != null) {
+                    colors[i] = colorOverrides[i];
+                }
+            }
+        }
+
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(colors[2]);
+        snackbar.setActionTextColor(colors[1]);
+
+        TextView snackbarText = (TextView)snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+        if (snackbarText != null) {
+            snackbarText.setTextColor(colors[0]);
+            snackbarText.setMaxLines(3);
+        }
     }
 
 }

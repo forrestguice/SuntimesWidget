@@ -115,9 +115,19 @@ public class SuntimesMoonData extends SuntimesMoonData0
      * result: moon transit time
      */
     private Calendar noonToday, noonTomorrow;
-    public Calendar getLunarNoonToday()
-    {
+    public Calendar getLunarNoonToday() {
         return noonToday;
+    }
+    public Calendar getLunarNoonTomorrow() {
+        return noonTomorrow;
+    }
+
+    private Calendar midnightToday, midnightTomorrow;
+    public Calendar getLunarMidnightToday() {
+        return midnightToday;
+    }
+    public Calendar getLunarMidnightTomorrow() {
+        return midnightTomorrow;
     }
 
     /**
@@ -221,23 +231,42 @@ public class SuntimesMoonData extends SuntimesMoonData0
         riseSet[1] = calculator.getMoonTimesForDate(todaysCalendar);
         riseSet[2] = calculator.getMoonTimesForDate(otherCalendar);
 
+        ArrayList<Calendar> midnights = findMidnight();
+        if (midnights.size() >= 1)
+        {
+            midnightToday = midnights.get(midnights.size() - 1);
+            for (Calendar midnight : midnights)
+            {
+                if (midnight.get(Calendar.DAY_OF_YEAR) == todaysCalendar.get(Calendar.DAY_OF_YEAR)) {
+                    midnightToday = midnight;
+                }
+                if (midnight.get(Calendar.DAY_OF_YEAR) == otherCalendar.get(Calendar.DAY_OF_YEAR)) {
+                    midnightTomorrow = midnight;
+                }
+            }
+        }
+        if (midnightTomorrow == null && midnightToday != null)
+        {
+            midnightTomorrow = (Calendar)midnightToday.clone();
+            midnightTomorrow.add(Calendar.DAY_OF_MONTH, 1);
+            midnightTomorrow.add(Calendar.MINUTE, 50);   // approximate noon tomorrow
+            //Log.d("DEBUG", "using approximate lunar noon tomorrow");
+        }
+
         ArrayList<Calendar> noons = findNoon();
         if (noons.size() >= 1)
         {
             noonToday = noons.get(noons.size() - 1);
             for (Calendar noon : noons)
             {
-                if (noon.get(Calendar.DAY_OF_YEAR) == todaysCalendar.get(Calendar.DAY_OF_YEAR))
-                {
+                if (noon.get(Calendar.DAY_OF_YEAR) == todaysCalendar.get(Calendar.DAY_OF_YEAR)) {
                     noonToday = noon;
                 }
-                if (noon.get(Calendar.DAY_OF_YEAR) == otherCalendar.get(Calendar.DAY_OF_YEAR))
-                {
+                if (noon.get(Calendar.DAY_OF_YEAR) == otherCalendar.get(Calendar.DAY_OF_YEAR)) {
                     noonTomorrow = noon;
                 }
             }
         }
-
         if (noonTomorrow == null && noonToday != null)
         {
             noonTomorrow = (Calendar)noonToday.clone();
@@ -303,6 +332,35 @@ public class SuntimesMoonData extends SuntimesMoonData0
             }
         }
         return noon;
+    }
+
+    private ArrayList<Calendar> findMidnight()
+    {
+        ArrayList<Calendar> events = new ArrayList<>();
+        for (int i=0; i<riseSet.length; i++)  // for yesterday [0], today [1], and tomorrow [2]
+        {
+            if (riseSet[i] == null) {
+                continue;
+            }
+
+            Calendar set = riseSet[i].setTime;
+            if (set != null)                          // check for moonset..
+            {
+                Calendar rise = riseSet[i].riseTime;
+                if (rise != null && rise.after(set))    // check for moonrise same day..
+                {
+                    events.add(midpoint(set, rise));         // case0: moonset / moonrise same day
+
+                } else if ((i+1) < riseSet.length) {
+                    rise = riseSet[i+1].riseTime;
+                    if (rise != null)                  // check for moonrise next day..
+                    {
+                        events.add(midpoint(set, rise));     // case 1: moonset / moonrise straddles next day
+                    }
+                }
+            }
+        }
+        return events;
     }
 
     /**

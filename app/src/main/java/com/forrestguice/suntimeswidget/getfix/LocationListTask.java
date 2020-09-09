@@ -55,9 +55,9 @@ public class LocationListTask extends AsyncTask<Object, Object, LocationListTask
         }
 
         Cursor selectedCursor = db.getPlace(selectedPlaceName, true);
-        String selectedLat = selectedCursor.getString(2);
-        String selectedLon = selectedCursor.getString(3);
-        String selectedAlt = selectedCursor.getString(4);
+        String selectedLat = selectedCursor.getString(selectedCursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_LATITUDE));
+        String selectedLon = selectedCursor.getString(selectedCursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_LONGITUDE));
+        String selectedAlt = selectedCursor.getString(selectedCursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_ALTITUDE));
         if (!selectedLat.equals(selectedPlaceLat) || !selectedLon.equals(selectedPlaceLon) || !selectedAlt.equals(selectedPlaceAlt))
         {
             Log.i("LocationListTask", "Place modified; saving it.. " + selectedPlaceName + ":" + selectedPlaceLat + "," + selectedPlaceLon + " [" +  selectedPlaceAlt + "]");

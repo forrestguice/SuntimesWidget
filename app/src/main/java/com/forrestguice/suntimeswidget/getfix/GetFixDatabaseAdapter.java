@@ -168,14 +168,18 @@ public class GetFixDatabaseAdapter
      * @param place a Location object describing the place
      * @return the rowID of the newly added place or -1 if an error
      */
-    public long addPlace( Location place )
+    public long addPlace( Location place ) {
+        return addPlace(place, "");
+    }
+
+    public long addPlace( Location place, String comment )
     {
         ContentValues values = new ContentValues();
         values.put(KEY_PLACE_NAME, place.getLabel());
         values.put(KEY_PLACE_LATITUDE, place.getLatitude());
         values.put(KEY_PLACE_LONGITUDE, place.getLongitude());
         values.put(KEY_PLACE_ALTITUDE, place.getAltitude());
-        values.put(KEY_PLACE_COMMENT, "");
+        values.put(KEY_PLACE_COMMENT, comment);
         return database.insert(TABLE_PLACES, null, values);
     }
 
@@ -186,8 +190,26 @@ public class GetFixDatabaseAdapter
         values.put(KEY_PLACE_LATITUDE, place.getLatitude());
         values.put(KEY_PLACE_LONGITUDE, place.getLongitude());
         values.put(KEY_PLACE_ALTITUDE, place.getAltitude());
-        values.put(KEY_PLACE_COMMENT, "");
         database.update(TABLE_PLACES, values,  "name = ?", new String[] { place.getLabel() });
+    }
+
+    public void updatePlace( long rowID, Location place )
+    {
+        ContentValues values = new ContentValues();
+        values.put(KEY_ROWID, rowID);
+        values.put(KEY_PLACE_NAME, place.getLabel());
+        values.put(KEY_PLACE_LATITUDE, place.getLatitude());
+        values.put(KEY_PLACE_LONGITUDE, place.getLongitude());
+        values.put(KEY_PLACE_ALTITUDE, place.getAltitude());
+        database.update(TABLE_PLACES, values,  "rowID = ?", new String[] { Long.toString(rowID) });
+    }
+
+    public void updateComment( long rowID, String comment )
+    {
+        ContentValues values = new ContentValues();
+        values.put(KEY_ROWID, rowID);
+        values.put(KEY_PLACE_COMMENT, comment);
+        database.update(TABLE_PLACES, values,  "rowID = ?", new String[] { Long.toString(rowID) });
     }
 
     public static int findPlaceByName(String name, Cursor cursor)

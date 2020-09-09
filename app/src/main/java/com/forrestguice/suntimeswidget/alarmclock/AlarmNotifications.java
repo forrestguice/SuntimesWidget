@@ -18,7 +18,6 @@
 
 package com.forrestguice.suntimeswidget.alarmclock;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.AlarmManager;
@@ -32,7 +31,6 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 
-import android.content.res.TypedArray;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -51,19 +49,21 @@ import android.support.v7.app.NotificationCompat;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity;
+import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.io.IOException;
@@ -112,55 +112,41 @@ public class AlarmNotifications extends BroadcastReceiver
 
     /**
      */
-    public static void showTimeUntilToast(Context context, View view, @NonNull AlarmClockItem item)
+    public static void showTimeUntilToast(Context context, View view, @NonNull AlarmClockItem item) {
+        showTimeUntilToast(context, view, item, null, null, null, Toast.LENGTH_SHORT);
+    }
+    public static Snackbar showTimeUntilToast(Context context, View view, @NonNull AlarmClockItem item, @Nullable Integer messageResID, String actionText, View.OnClickListener actionListener, int duration)
     {
         if (context != null)
         {
+            if (messageResID == null) {
+                messageResID = R.string.alarmenabled_toast;
+            }
+
             Calendar now = Calendar.getInstance();
             SuntimesUtils.initDisplayStrings(context);
             SuntimesUtils.TimeDisplayText alarmText = utils.timeDeltaLongDisplayString(now.getTimeInMillis(), item.timestamp + item.offset);
-            String alarmString = context.getString(R.string.alarmenabled_toast, item.type.getDisplayString(), alarmText.getValue());
+            String alarmString = context.getString(messageResID, item.type.getDisplayString(), alarmText.getValue());
             SpannableString alarmDisplay = SuntimesUtils.createBoldSpan(null, alarmString, alarmText.getValue());
 
-            if (view != null) {
-                Snackbar snackbar = Snackbar.make(view, alarmDisplay, Toast.LENGTH_SHORT);
-                themeSnackbar(context, snackbar, null);
-                snackbar.show();
-            } else {
-                Toast.makeText(context, alarmDisplay, Toast.LENGTH_SHORT).show();
-            }
-
-        } else Log.e(TAG, "showTimeUntilToast: context is null!");
-    }
-
-    @SuppressLint("ResourceType")
-    public static void themeSnackbar(Context context, Snackbar snackbar, Integer[] colorOverrides)
-    {
-        Integer[] colors = new Integer[] {null, null, null};
-        int[] colorAttrs = { R.attr.snackbar_textColor, R.attr.snackbar_accentColor, R.attr.snackbar_backgroundColor };
-        TypedArray a = context.obtainStyledAttributes(colorAttrs);
-        colors[0] = ContextCompat.getColor(context, a.getResourceId(0, android.R.color.primary_text_dark));
-        colors[1] = ContextCompat.getColor(context, a.getResourceId(1, R.color.text_accent_dark));
-        colors[2] = ContextCompat.getColor(context, a.getResourceId(2, R.color.card_bg_dark));
-        a.recycle();
-
-        if (colorOverrides != null && colorOverrides.length == colors.length) {
-            for (int i=0; i<colors.length; i++) {
-                if (colorOverrides[i] != null) {
-                    colors[i] = colorOverrides[i];
+            if (view != null)
+            {
+                Snackbar snackbar = Snackbar.make(view, alarmDisplay, duration);
+                if (actionText != null && actionListener != null) {
+                    snackbar.setAction(actionText, actionListener);
                 }
+                SuntimesUtils.themeSnackbar(context, snackbar, null);
+                snackbar.show();
+                return snackbar;
+
+            } else {
+                Toast.makeText(context, alarmDisplay, duration).show();
+                return null;
             }
-        }
 
-        View snackbarView = snackbar.getView();
-        snackbarView.setBackgroundColor(colors[2]);
-        snackbar.setActionTextColor(colors[1]);
-
-        TextView snackbarText = (TextView)snackbarView.findViewById(android.support.design.R.id.snackbar_text);
-        if (snackbarText != null) {
-            snackbarText.setTextColor(colors[0]);
-            snackbarText.setMaxLines(3);
         }
+        Log.e(TAG, "showTimeUntilToast: context is null!");
+        return null;
     }
 
     /**
@@ -391,6 +377,13 @@ public class AlarmNotifications extends BroadcastReceiver
                     Log.e(TAG, "startAlert: failed to setDataSource to default! " + defaultUri.toString());
                 }
             }
+        }
+
+        if (alarm.hasActionID(AlarmClockItem.ACTIONID_MAIN))
+        {
+            SuntimesData data = getData(context, alarm);
+            data.calculate();
+            WidgetActions.startIntent(context.getApplicationContext(), 0, alarm.getActionID(AlarmClockItem.ACTIONID_MAIN), data, null, Intent.FLAG_ACTIVITY_NEW_TASK);
         }
     }
 
@@ -1024,7 +1017,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                         if (dismissedEarly) {
                                             scheduledFrom.setTimeInMillis(item.alarmtime + 60 * 1000);
                                         }
-                                        boolean updated = updateAlarmTime(context, item, scheduledFrom);     // sets item.hour, item.minute, item.timestamp (calculates the eventTime)
+                                        boolean updated = updateAlarmTime(context, item, scheduledFrom, true);     // sets item.hour, item.minute, item.timestamp (calculates the eventTime)
                                         if (updated)
                                         {
                                             item.alarmtime = item.timestamp + item.offset;     // scheduled sounding time (-before/+after eventTime by some offset)
@@ -1139,6 +1132,13 @@ public class AlarmNotifications extends BroadcastReceiver
                     if (nextAction != null) {
                         Intent intent = getAlarmIntent(context, nextAction, data);
                         context.sendBroadcast(intent);  // trigger followup action
+                    }
+
+                    if (item.hasActionID(AlarmClockItem.ACTIONID_DISMISS))
+                    {
+                        SuntimesData data = getData(context, item);
+                        data.calculate();
+                        WidgetActions.startIntent(context.getApplicationContext(), 0, item.getActionID(AlarmClockItem.ACTIONID_DISMISS), data, null, Intent.FLAG_ACTIVITY_NEW_TASK);
                     }
 
                     Intent serviceIntent = getServiceIntent(context);
@@ -1356,9 +1356,9 @@ public class AlarmNotifications extends BroadcastReceiver
      * @return true item was updated, false failed to update item
      */
     public static boolean updateAlarmTime(Context context, final AlarmClockItem item) {
-        return updateAlarmTime(context, item, Calendar.getInstance());
+        return updateAlarmTime(context, item, Calendar.getInstance(), true);
     }
-    public static boolean updateAlarmTime(Context context, final AlarmClockItem item, Calendar now)
+    public static boolean updateAlarmTime(Context context, final AlarmClockItem item, Calendar now, boolean modifyItem)
     {
         Calendar eventTime = Calendar.getInstance();
         if (item.location != null && item.event != null)
@@ -1390,20 +1390,20 @@ public class AlarmNotifications extends BroadcastReceiver
             return false;
         }
 
-        item.hour = eventTime.get(Calendar.HOUR_OF_DAY);
-        item.minute = eventTime.get(Calendar.MINUTE);
-        item.timestamp = eventTime.getTimeInMillis();
-        item.modified = true;
+        if (modifyItem)
+        {
+            item.hour = eventTime.get(Calendar.HOUR_OF_DAY);
+            item.minute = eventTime.get(Calendar.MINUTE);
+            item.timestamp = eventTime.getTimeInMillis();
+            item.modified = true;
+        }
         return true;
     }
 
     @Nullable
     private static Calendar updateAlarmTime_sunEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
-        WidgetSettings.TimeMode timeMode = event.toTimeMode();
-        SuntimesRiseSetData sunData = new SuntimesRiseSetData(context, 0);
-        sunData.setLocation(location);
-        sunData.setTimeMode(timeMode != null ? timeMode : WidgetSettings.TimeMode.OFFICIAL);
+        SuntimesRiseSetData sunData = getData_sunEvent(context, event, location);
 
         Calendar alarmTime = Calendar.getInstance();
         Calendar eventTime;
@@ -1412,14 +1412,19 @@ public class AlarmNotifications extends BroadcastReceiver
         sunData.setTodayIs(day);
         sunData.calculate();
         eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
-        eventTime.set(Calendar.SECOND, 0);
-        alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+        if (eventTime != null)
+        {
+            eventTime.set(Calendar.SECOND, 0);
+            alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+        }
 
+        int c = 0;
         Set<Long> timestamps = new HashSet<>();
         while (now.after(alarmTime)
+                || eventTime == null
                 || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))
         {
-            if (!timestamps.add(alarmTime.getTimeInMillis())) {
+            if (!timestamps.add(alarmTime.getTimeInMillis()) && c > 365) {
                 Log.e(TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
                 return null;
             }
@@ -1429,8 +1434,12 @@ public class AlarmNotifications extends BroadcastReceiver
             sunData.setTodayIs(day);
             sunData.calculate();
             eventTime = (event.isRising() ? sunData.sunriseCalendarToday() : sunData.sunsetCalendarToday());
-            eventTime.set(Calendar.SECOND, 0);
-            alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+            if (eventTime != null)
+            {
+                eventTime.set(Calendar.SECOND, 0);
+                alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+            }
+            c++;
         }
         return eventTime;
     }
@@ -1438,23 +1447,26 @@ public class AlarmNotifications extends BroadcastReceiver
     @Nullable
     private static Calendar updateAlarmTime_moonEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
-        SuntimesMoonData moonData = new SuntimesMoonData(context, 0);
-        moonData.setLocation(location);
+        SuntimesMoonData moonData = getData_moonEvent(context, location);
 
         Calendar alarmTime = Calendar.getInstance();
 
         Calendar day = Calendar.getInstance();
         moonData.setTodayIs(day);
         moonData.calculate();
-        Calendar eventTime = (event.isRising() ? moonData.moonriseCalendarToday() : moonData.moonsetCalendarToday());
-        eventTime.set(Calendar.SECOND, 0);
-        alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
-
+        Calendar eventTime = moonEventCalendar(event, moonData, true);
+        if (eventTime != null)
+        {
+            eventTime.set(Calendar.SECOND, 0);
+            alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+        }
+        int c = 0;
         Set<Long> timestamps = new HashSet<>();
         while (now.after(alarmTime)
+                || eventTime == null
                 || (repeating && !repeatingDays.contains(eventTime.get(Calendar.DAY_OF_WEEK))))
         {
-            if (!timestamps.add(alarmTime.getTimeInMillis())) {
+            if (!timestamps.add(alarmTime.getTimeInMillis()) && c > 365) {
                 Log.e(TAG, "updateAlarmTime: encountered same timestamp twice! (breaking loop)");
                 return null;
             }
@@ -1463,19 +1475,41 @@ public class AlarmNotifications extends BroadcastReceiver
             day.add(Calendar.DAY_OF_YEAR, 1);
             moonData.setTodayIs(day);
             moonData.calculate();
-            eventTime = (event.isRising() ? moonData.moonriseCalendarToday() : moonData.moonsetCalendarToday());
-            eventTime.set(Calendar.SECOND, 0);
-            alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
-        }
+            eventTime = moonEventCalendar(event, moonData, true);
+            if (eventTime != null)
+            {
+                eventTime.set(Calendar.SECOND, 0);
+                alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+            }
+            c++;        }
         return eventTime;
+    }
+
+    public static Calendar moonEventCalendar(SolarEvents event, SuntimesMoonData data, boolean today)
+    {
+        if (today)
+        {
+            switch (event) {
+                case MOONNOON: return data.getLunarNoonToday();
+                case MOONNIGHT: return data.getLunarMidnightToday();
+                case MOONRISE: return data.moonriseCalendarToday();
+                case MOONSET: default: return data.moonsetCalendarToday();
+            }
+        } else {
+            switch (event) {
+                case MOONNOON: return data.getLunarNoonTomorrow();
+                case MOONNIGHT: return data.getLunarMidnightTomorrow();
+                case MOONRISE: return data.moonriseCalendarTomorrow();
+                case MOONSET: default: return data.moonsetCalendarTomorrow();
+            }
+        }
     }
 
     @Nullable
     private static Calendar updateAlarmTime_moonPhaseEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
         SuntimesCalculator.MoonPhase phase = event.toMoonPhase();
-        SuntimesMoonData moonData = new SuntimesMoonData(context, 0);
-        moonData.setLocation(location);
+        SuntimesMoonData moonData = getData_moonEvent(context, location);
 
         Calendar alarmTime = Calendar.getInstance();
 
@@ -1512,10 +1546,7 @@ public class AlarmNotifications extends BroadcastReceiver
     @Nullable
     private static Calendar updateAlarmTime_seasonEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
-        WidgetSettings.SolsticeEquinoxMode season = event.toSolsticeEquinoxMode();
-        SuntimesEquinoxSolsticeData data = new SuntimesEquinoxSolsticeData(context, 0);
-        data.setTimeMode(season);
-        data.setLocation(location);
+        SuntimesEquinoxSolsticeData data = getData_seasons(context, event, location);
 
         Calendar alarmTime = Calendar.getInstance();
 
@@ -1578,6 +1609,60 @@ public class AlarmNotifications extends BroadcastReceiver
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
         }
         return eventTime;
+    }
+
+    private static SuntimesData getData(Context context, @NonNull AlarmClockItem alarm)
+    {
+        if (alarm.location != null && alarm.event != null)
+        {
+            switch (alarm.event.getType())
+            {
+                case SolarEvents.TYPE_MOON:
+                case SolarEvents.TYPE_MOONPHASE:
+                    return getData_moonEvent(context, alarm.location);
+                case SolarEvents.TYPE_SEASON:
+                    return getData_seasons(context, alarm.event, alarm.location);
+                case SolarEvents.TYPE_SUN:
+                    return getData_sunEvent(context, alarm.event, alarm.location);
+                default:
+                    return getData_clockEvent(context, alarm.location);
+            }
+        } else {
+            return getData_clockEvent(context, WidgetSettings.loadLocationPref(context, 0));
+        }
+    }
+
+    private static SuntimesRiseSetData getData_sunEvent(Context context, @NonNull SolarEvents event, @NonNull Location location)
+    {
+        WidgetSettings.TimeMode timeMode = event.toTimeMode();
+        SuntimesRiseSetData sunData = new SuntimesRiseSetData(context, 0);
+        sunData.setLocation(location);
+        sunData.setTimeMode(timeMode != null ? timeMode : WidgetSettings.TimeMode.OFFICIAL);
+        sunData.setTodayIs(Calendar.getInstance());
+        return sunData;
+    }
+    private static SuntimesMoonData getData_moonEvent(Context context, @NonNull Location location)
+    {
+        SuntimesMoonData moonData = new SuntimesMoonData(context, 0);
+        moonData.setLocation(location);
+        moonData.setTodayIs(Calendar.getInstance());
+        return moonData;
+    }
+    private static SuntimesEquinoxSolsticeData getData_seasons(Context context, @NonNull SolarEvents event, @NonNull Location location)
+    {
+        WidgetSettings.SolsticeEquinoxMode season = event.toSolsticeEquinoxMode();
+        SuntimesEquinoxSolsticeData data = new SuntimesEquinoxSolsticeData(context, 0);
+        data.setTimeMode(season);
+        data.setLocation(location);
+        data.setTodayIs(Calendar.getInstance());
+        return data;
+    }
+    private static SuntimesClockData getData_clockEvent(Context context, @NonNull Location location)
+    {
+        SuntimesClockData data = new SuntimesClockData(context, 0);
+        data.setLocation(location);
+        data.setTodayIs(Calendar.getInstance());
+        return data;
     }
 
     /**
