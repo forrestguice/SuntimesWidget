@@ -40,11 +40,11 @@ public class SolarEventIcons
         switch (event)
         {
             case MORNING_ASTRONOMICAL: case MORNING_NAUTICAL: case MORNING_BLUE8: case MORNING_CIVIL:
-            case MORNING_BLUE4: case SUNRISE: case MORNING_GOLDEN: case MOONRISE:
+            case MORNING_BLUE4: case SUNRISE: case MORNING_GOLDEN: case MOONRISE: case MOONNOON:
                 return R.drawable.svg_sunrise;
 
             case EVENING_GOLDEN: case SUNSET: case EVENING_BLUE4: case EVENING_CIVIL: case EVENING_BLUE8:
-            case EVENING_NAUTICAL: case EVENING_ASTRONOMICAL: case MOONSET:
+            case EVENING_NAUTICAL: case EVENING_ASTRONOMICAL: case MOONSET: case MOONNIGHT:
                 return R.drawable.svg_sunset;
 
             case FIRSTQUARTER: return R.drawable.svg_moon_q1;
@@ -97,8 +97,8 @@ public class SolarEventIcons
             case EQUINOX_AUTUMNAL: return getColor(context, R.attr.fallColor, R.color.fallColor_dark);
             case SOLSTICE_WINTER: return getColor(context, R.attr.winterColor, R.color.winterColor_dark);
 
-            case MOONRISE: case FIRSTQUARTER: return getColor(context, R.attr.moonriseColor, R.color.moonIcon_color_rising_dark);
-            case MOONSET: case THIRDQUARTER: return getColor(context, R.attr.moonsetColor, R.color.moonIcon_color_setting_dark);
+            case MOONRISE: case MOONNOON: case FIRSTQUARTER: return getColor(context, R.attr.moonriseColor, R.color.moonIcon_color_rising_dark);
+            case MOONSET: case MOONNIGHT: case THIRDQUARTER: return getColor(context, R.attr.moonsetColor, R.color.moonIcon_color_setting_dark);
 
             default: return null;
         }
