@@ -23,14 +23,14 @@
         android:id="@+id/layout_colors_moon"
         android:layout_width="match_parent" android:layout_height="wrap_content">
 
-        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+        <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
             android:id="@+id/chooser_moonriseColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:reverse="true"
             app:labelText="@string/configLabel_themeColorMoonrise"
             app:hintText="@string/configHint_themeColorSunrise" />
 
-        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+        <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
             android:id="@+id/chooser_moonsetColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginLeft="48dp" android:layout_marginStart="48dp"
@@ -38,14 +38,14 @@
             app:labelText="@string/configLabel_themeColorMoonset"
             app:hintText="@string/configHint_themeColorSunrise" />
 
-        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+        <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
             android:id="@+id/chooser_moonWaxingColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:reverse="true"
             app:labelText="@string/configLabel_themeColorMoonWaxing"
             app:hintText="@string/configHint_themeColorSunrise" />
 
-        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+        <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
             android:id="@+id/chooser_moonWaningColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginLeft="48dp" android:layout_marginStart="48dp"
@@ -53,14 +53,14 @@
             app:labelText="@string/configLabel_themeColorMoonWaning"
             app:hintText="@string/configHint_themeColorSunrise" />
 
-        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+        <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
             android:id="@+id/chooser_moonNewColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:reverse="true"
             app:labelText="@string/configLabel_themeColorMoonNew"
             app:hintText="@string/configHint_themeColorSunrise" />
 
-        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+        <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
             android:id="@+id/chooser_moonFullColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginLeft="48dp" android:layout_marginStart="48dp"

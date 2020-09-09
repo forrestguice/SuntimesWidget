@@ -26,6 +26,7 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
@@ -96,7 +97,7 @@ public class SuntimesResTest extends SuntimesActivityTestBase
         for (String value : values)
         {
             try {
-                AppSettings.TapAction action = AppSettings.TapAction.valueOf(value);
+                WidgetActions.SuntimesAction action = WidgetActions.SuntimesAction.valueOf(value);
 
             } catch (IllegalArgumentException e) {
                 badValues.add(value);

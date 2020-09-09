@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
                 android:checked="true"
-                app:switchMinWidth="100dp" />
+                app:switchMinWidth="48dp" />
 
     </LinearLayout>
 </merge>

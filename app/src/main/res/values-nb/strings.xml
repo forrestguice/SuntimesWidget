@@ -789,13 +789,13 @@
         <item>Lyst tema / Mørkt tema (nattmodus)</item>
     </string-array>
 
-    <string name="configAction_doNothing">Ikke gjør noe</string>
-    <string name="configAction_nextNote">Vis neste notis</string>
-    <string name="configAction_prevNote">Vis forrige notis</string>
-    <string name="configAction_resetNote">Tilbakestill notis</string>
-    <string name="configAction_showCalendar">Vis kalender-app</string>
-    <string name="configAction_swapCards">Bytt visning (i dag / i morgen)</string>
-    <string name="configAction_setAlarmForNote">Still inn alarm for notis</string>
+    <string name="configActionDesc_doNothing">Ikke gjør noe</string>
+    <string name="configActionDesc_nextNote">Vis neste notis</string>
+    <string name="configActionDesc_prevNote">Vis forrige notis</string>
+    <string name="configActionDesc_resetNote">Tilbakestill notis</string>
+    <string name="configActionDesc_showCalendar">Vis kalender-app</string>
+    <string name="configActionDesc_swapCards">Bytt visning (i dag / i morgen)</string>
+    <string name="configActionDesc_setAlarmForNote">Still inn alarm for notis</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">etter forskyvning</string>
@@ -983,6 +983,8 @@
         <item>sommersolverv</item>
         <item>høstjevndøgn</item>
         <item>vintersolverv</item>
+        <item>lunar noon</item>    <!-- TODO -->
+        <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>astronomisk tussmørke morgen (start)</item>
@@ -1010,6 +1012,8 @@
         <item>sommersolverv</item>
         <item>høstjevndøgn</item>
         <item>vintersolverv</item>
+        <item>lunar noon</item>    <!-- TODO -->
+        <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
 
     <!-- Dialog: Enable GPS? -->

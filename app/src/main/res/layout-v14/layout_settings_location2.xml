@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -58,13 +58,59 @@
             android:id="@+id/appwidget_location_name_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" android:paddingTop="@dimen/settingsGroup_padding">
+            android:orientation="horizontal" android:paddingTop="@dimen/settingsGroup_padding"
+            android:layout_marginRight="8dp" android:layout_marginEnd="8dp">
 
 
-            <LinearLayout android:id="@+id/appwidget_location_controlPanel"
+            <LinearLayout android:id="@+id/appwidget_location_controlPanel0"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:layout_gravity="center_vertical">
+
+                <ImageButton android:id="@+id/appwidget_location_list"
+                    style="@android:style/Widget.ActionButton"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:src="?attr/icActionPlace"
+                    android:contentDescription="@string/configAction_selectPlace" />
+
+                <ImageButton android:id="@+id/appwidget_location_cancel"
+                    style="@android:style/Widget.ActionButton"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:src="?attr/icActionBack"
+                    android:contentDescription="@android:string/cancel" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_weight="1"
+                android:layout_gravity="center_vertical">
+
+                <TextView android:labelFor="@+id/view_flip" android:visibility="gone"
+                    android:id="@+id/appwidget_location_name_label"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_gravity="end|center_vertical"
+                    android:text="@string/configLabel_location_name" android:enabled="false" />
+
+                <ViewFlipper android:id="@+id/view_flip"
+                    android:layout_width="fill_parent" android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical">
+
+                    <EditText android:id="@+id/appwidget_location_name"
+                        android:layout_width="fill_parent" android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmallPopupMenu"
+                        android:hint="@string/configHint_location_name" android:enabled="false"
+                        android:layout_gravity="center_vertical" />
+
+                    <Spinner android:id="@+id/appwidget_location_nameSelect"
+                        android:layout_width="fill_parent" android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical" android:dropDownVerticalOffset="24sp" />
+
+                </ViewFlipper>
+
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/appwidget_location_controlPanel1"
                           android:layout_width="wrap_content" android:layout_height="wrap_content"
-                          android:orientation="horizontal"
-                          android:layout_gravity="center_vertical">
+                          android:orientation="horizontal" android:layout_gravity="center_vertical">
 
                 <FrameLayout android:id="@+id/appwidget_location_auto_layout"
                     android:layout_width="fill_parent" android:layout_height="fill_parent">
@@ -86,7 +132,7 @@
                 <ImageButton android:id="@+id/appwidget_location_edit"
                              android:layout_width="wrap_content" android:layout_height="wrap_content"
                              style="@android:style/Widget.ActionButton"
-                             android:src="?attr/icActionPlace"
+                             android:src="?attr/icActionEdit"
                              android:contentDescription="@string/configAction_editPlace" />
 
                 <ImageButton android:id="@+id/appwidget_location_save"
@@ -95,40 +141,6 @@
                              android:src="?attr/icActionSave"
                              android:visibility="gone"
                              android:contentDescription="@string/configAction_savePlace" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal"
-                android:paddingLeft="5dp" android:paddingStart="5dp"
-                android:paddingRight="0dp" android:paddingEnd="0dp"
-                android:layout_gravity="center_vertical">
-
-                <TextView android:labelFor="@+id/view_flip"
-                          android:id="@+id/appwidget_location_name_label"
-                          android:layout_width="wrap_content" android:layout_height="wrap_content"
-                          android:layout_gravity="end|center_vertical"
-                          android:text="@string/configLabel_location_name" android:enabled="false" />
-
-                <ViewFlipper android:id="@+id/view_flip"
-                             android:layout_width="fill_parent" android:layout_height="wrap_content"
-                             android:layout_gravity="center_vertical"
-                             android:paddingLeft="0dp" android:paddingStart="0dp"
-                             android:paddingRight="16dp" android:paddingEnd="16dp" >
-
-                    <EditText android:id="@+id/appwidget_location_name"
-                              android:layout_width="fill_parent" android:layout_height="wrap_content"
-                              android:textAppearance="?android:attr/textAppearanceSmallPopupMenu"
-                              android:hint="@string/configHint_location_name" android:enabled="false"
-                              android:paddingLeft="5dp" android:paddingRight="5dp"
-                              android:layout_gravity="center_vertical" />
-
-                    <Spinner android:id="@+id/appwidget_location_nameSelect"
-                             android:layout_width="fill_parent" android:layout_height="wrap_content"
-                             android:layout_gravity="center_vertical" android:dropDownVerticalOffset="24sp" />
-
-                </ViewFlipper>
-
 
             </LinearLayout>
 

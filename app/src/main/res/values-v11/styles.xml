@@ -1,0 +1,5 @@
+<resources>
+
+    <style name="ActionButton" parent="@android:style/Widget.ActionButton" />
+
+</resources>

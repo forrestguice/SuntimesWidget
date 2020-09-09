@@ -778,13 +778,13 @@
         <item>@string/timeFormatMode_24hr</item>
     </string-array>
 
-    <string name="configAction_doNothing">Semmit se tesz</string>
-    <string name="configAction_nextNote">Mutasd a következő bejegyzést</string>
-    <string name="configAction_prevNote">Mutasd az előző bejegyzést</string>
-    <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
-    <string name="configAction_showCalendar">Mutassa a naptárat</string>
-    <string name="configAction_swapCards">Vált (ma/holnap között)</string>
-    <string name="configAction_setAlarmForNote">Emlékeztető beállítása a bejegyzéshez</string>
+    <string name="configActionDesc_doNothing">Semmit se tesz</string>
+    <string name="configActionDesc_nextNote">Mutasd a következő bejegyzést</string>
+    <string name="configActionDesc_prevNote">Mutasd az előző bejegyzést</string>
+    <string name="configActionDesc_resetNote">Reset note</string>  <!-- TODO -->
+    <string name="configActionDesc_showCalendar">Mutassa a naptárat</string>
+    <string name="configActionDesc_swapCards">Vált (ma/holnap között)</string>
+    <string name="configActionDesc_setAlarmForNote">Emlékeztető beállítása a bejegyzéshez</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">Időeltolódás szerint</string>
@@ -971,6 +971,8 @@
         <item>summer solstice</item>   <!-- TODO -->
         <item>autumn equinox</item>   <!-- TODO -->
         <item>winter solstice</item>   <!-- TODO -->
+        <item>lunar noon</item>    <!-- TODO -->
+        <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>reggel csillagászati szürkület (kezdete)</item>
@@ -998,6 +1000,8 @@
         <item>summer solstice</item>   <!-- TODO -->
         <item>autumn equinox</item>   <!-- TODO -->
         <item>winter solstice</item>   <!-- TODO -->
+        <item>lunar noon</item>    <!-- TODO -->
+        <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
 
     <!-- Dialog: Enable GPS? -->

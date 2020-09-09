@@ -138,7 +138,7 @@ public class SuntimesNotes
                 continue;
             else if ((!hasGoldBlue || !enabledBlue) && (event.equals(SolarEvents.EVENING_BLUE8) || event.equals(SolarEvents.MORNING_BLUE8) || event.equals(SolarEvents.EVENING_BLUE4) || event.equals(SolarEvents.MORNING_BLUE4)))
                 continue;
-            else if ((!hasMoon || !enabledMoon) && (event.equals(SolarEvents.MOONRISE) || event.equals(SolarEvents.MOONSET)))
+            else if ((!hasMoon || !enabledMoon) && (event.equals(SolarEvents.MOONRISE) || event.equals(SolarEvents.MOONSET) || event.equals(SolarEvents.MOONNOON) || event.equals(SolarEvents.MOONNIGHT)))
                 continue;
             else if (!enabledNoon && (event.equals(SolarEvents.NOON)))
                 continue;
@@ -363,6 +363,19 @@ public class SuntimesNotes
                 noteString = context.getString(R.string.until_moonset);
                 break;
 
+            case MOONNOON:
+                iconStroke = strokeWidthNoon;
+                noteColor = noteColor2 = colorMoonrise;
+                noteString = context.getString(R.string.until_moonnoon);
+                break;
+
+            case MOONNIGHT:
+                iconStroke = strokeWidthNoon;
+                noteColor = colorMoonset;
+                noteColor2 = colorMoonrise;
+                noteString = context.getString(R.string.until_moonnight);
+                break;
+
             case MORNING_ASTRONOMICAL:
                 iconStroke = strokeWidthRising;
                 noteColor = colorSunrise;
@@ -474,6 +487,8 @@ public class SuntimesNotes
             {
                 case MOONRISE:
                 case MOONSET:
+                case MOONNOON:
+                case MOONNIGHT:
                 case MORNING_ASTRONOMICAL:          // until
                 case MORNING_NAUTICAL:
                 case MORNING_BLUE8:
@@ -524,6 +539,22 @@ public class SuntimesNotes
                 date = moondata.moonsetCalendarToday();
                 dateOther = moondata.moonsetCalendarTomorrow();
                 break;
+
+            case MOONNOON:
+                if (moondata == null) {
+                    return;
+                }
+                date = moondata.getLunarNoonToday();
+                dateOther = moondata.getLunarNoonTomorrow();
+                break;
+            case MOONNIGHT:
+                if (moondata == null) {
+                    return;
+                }
+                date = moondata.getLunarMidnightToday();
+                dateOther = moondata.getLunarMidnightTomorrow();
+                break;
+
             case MORNING_ASTRONOMICAL:
                 date = dataset.dataAstro.sunriseCalendarToday();
                 dateOther = dataset.dataAstro.sunriseCalendarOther();

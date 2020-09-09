@@ -785,13 +785,13 @@
     <item>Helles Thema / dunkles Thema (Nachtmodus)</item>
   </string-array>
 
-  <string name="configAction_doNothing">Nichts tun</string>
-  <string name="configAction_nextNote">Nächste Kurzinfo anzeigen</string>
-  <string name="configAction_prevNote">Vorherige Kurzinfo anzeigen</string>
-  <string name="configAction_resetNote">Reset note</string>  <!-- TODO -->
-  <string name="configAction_showCalendar">Öffne Kalender-App</string>
-  <string name="configAction_swapCards">Ansicht tauschen (heute/morgen)</string>
-  <string name="configAction_setAlarmForNote">Alarm basierend auf Kurzinfo einstellen</string>
+  <string name="configActionDesc_doNothing">Nichts tun</string>
+  <string name="configActionDesc_nextNote">Nächste Kurzinfo anzeigen</string>
+  <string name="configActionDesc_prevNote">Vorherige Kurzinfo anzeigen</string>
+  <string name="configActionDesc_resetNote">Reset note</string>  <!-- TODO -->
+  <string name="configActionDesc_showCalendar">Öffne Kalender-App</string>
+  <string name="configActionDesc_swapCards">Ansicht tauschen (heute/morgen)</string>
+  <string name="configActionDesc_setAlarmForNote">Alarm basierend auf Kurzinfo einstellen</string>
 
   <!-- App Setting: time zone sort -->
   <string name="timezone_sort_byOffset">nach Versatz</string>
@@ -924,6 +924,8 @@
     <item>summer solstice</item>   <!-- TODO -->
     <item>Herbst-Tag-Nacht-Gleiche</item>
     <item>Wintersonnenwende</item>
+    <item>lunar noon</item>    <!-- TODO -->
+    <item>lunar midnight</item>    <!-- TODO -->
   </string-array>
   <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
       <item>Astronomische Morgendämmerung (Beginn)</item>
@@ -951,6 +953,8 @@
     <item>summer solstice</item>   <!-- TODO -->
     <item>Herbst-Tag-Nacht-Gleiche</item>
     <item>Wintersonnenwende</item>
+    <item>lunar noon</item>    <!-- TODO -->
+    <item>lunar midnight</item>    <!-- TODO -->
   </string-array>
 
   <!-- Dialog: Enable GPS? -->
@@ -1060,7 +1064,7 @@
   <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
   <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, und <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
   <string name="creditsTab">Danksagungen</string>
-  
+
   <string name="app_legal3"><![CDATA[ <b>Bibliotheken:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>  <!-- TODO: review -->
 
   <!-- Dialog: Help -->

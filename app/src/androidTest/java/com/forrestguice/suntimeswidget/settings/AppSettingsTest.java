@@ -142,31 +142,31 @@ public class AppSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_clockTapPref()
     {
-        String defaultValue0 = AppSettings.PREF_DEF_UI_CLOCKTAPACTION.name();
+        String defaultValue0 = AppSettings.PREF_DEF_UI_CLOCKTAPACTION;
         String defaultValue1 = context.getResources().getString(R.string.def_app_ui_clocktapaction);
         assertTrue("defaults should match", defaultValue0.equals(defaultValue1));
 
-        AppSettings.TapAction value = AppSettings.loadClockTapActionPref(context);
+        String value = AppSettings.loadClockTapActionPref(context);
     }
 
     @Test
     public void test_dateTapPref()
     {
-        String defaultValue0 = AppSettings.PREF_DEF_UI_DATETAPACTION.name();
+        String defaultValue0 = AppSettings.PREF_DEF_UI_DATETAPACTION;
         String defaultValue1 = context.getResources().getString(R.string.def_app_ui_datetapaction);
         assertTrue("defaults should match", defaultValue0.equals(defaultValue1));
 
-        AppSettings.TapAction value = AppSettings.loadDateTapActionPref(context);
+        String value = AppSettings.loadDateTapActionPref(context);
     }
 
     @Test
     public void test_noteTapPref()
     {
-        String defaultValue0 = AppSettings.PREF_DEF_UI_NOTETAPACTION.name();
+        String defaultValue0 = AppSettings.PREF_DEF_UI_NOTETAPACTION;
         String defaultValue1 = context.getResources().getString(R.string.def_app_ui_notetapaction);
         assertTrue("defaults should match", defaultValue0.equals(defaultValue1));
 
-        AppSettings.TapAction value = AppSettings.loadNoteTapActionPref(context);
+        String value = AppSettings.loadNoteTapActionPref(context);
     }
 
     ///////////////////////////////////////////////////////////////////////////
