@@ -16,6 +16,7 @@
     <string name="configAction_mapLocation">Mostra mappa</string>
     <string name="configAction_mapLocation_chooser">Visualizza la posizione tramite</string>
     <string name="configAction_mapLocation_noapp">Impossible trovare un\'applicazione per visualizzare la mappa!</string>
+    <string name="configAction_showCalendar">Calendar</string>  <!-- TODO -->
     <string name="configAction_setAlarm">Imposta allarme</string>
     <string name="configAction_setTimeZone">Imposta fuso orario</string>
     <string name="configAction_setDate">Imposta data</string>
@@ -25,6 +26,7 @@
     <string name="configAction_worldMap">Mappa mondiale</string>
     <string name="configAction_moon">Luna</string>
     <string name="configAction_help">Aiuto</string>
+    <string name="configAction_overflow">More</string>  <!-- TODO -->
     <string name="configAction_settings">Impostazioni</string>
     <string name="configAction_aboutWidget">A proposito</string>
 
@@ -138,6 +140,8 @@
     <string name="untilEnd_bluehour">ora blu</string>
     <string name="until_moonrise">alba lunare</string>
     <string name="until_moonset">tramonto lunare</string>
+    <string name="until_moonnoon">lunar noon</string>   <!-- TODO -->
+    <string name="until_moonnight">lunar midnight</string>   <!-- TODO -->
 
     <!-- Table -->
     <string name="sunrise">Alba</string>                             <!-- contentDescription -->
@@ -372,6 +376,7 @@
 
     <string name="configLabel_appearance_1x1mode">Formato 1x1:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_3x2mode">Formato 3x2:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x3mode">Formato 3x3:</string>     <!-- spinner label -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Non fare nulla</string>           <!-- setting -->
@@ -379,6 +384,13 @@
     <string name="actionMode_config">Riconfigura il Widget</string>      <!-- setting -->
     <string name="actionMode_launchActivity">Avvia l\'applicazione</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Inverti le visuali</string>      <!-- setting -->
+
+    <string name="launchType_activity">Activity</string>           <!-- setting -->  <!-- TODO -->
+    <string name="launchType_broadcast">Broadcast</string>           <!-- setting -->  <!-- TODO -->
+    <string name="launchType_service">Service</string>           <!-- setting -->  <!-- TODO -->
+
+    <string name="expandMore">More</string>  <!-- contentDescription -->  <!-- TODO -->
+    <string name="expandLess">Less</string>  <!-- contentDescription -->  <!-- TODO -->
 
     <string name="configLabel_action">Azioni</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Al tocco:</string>                    <!-- spinner label -->
@@ -401,6 +413,7 @@
     <string name="configHint_location_alt">0</string>                                    <!-- edittext hint -->
     <string name="configLabel_location_name">Nome:</string>                      <!-- edittext label -->
     <string name="configHint_location_name">(opzionale)</string>                  <!-- edittext hint -->
+    <string name="configHint_location_name0">Place Name</string>                  <!-- edittext hint -->  <!-- TODO -->
 
     <string name="configAction_getFix">Acquisisci posizione</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">Modifica</string>         <!-- button (contentDescription) -->
@@ -455,8 +468,61 @@
     <string name="configLabel_general_showNoon">Mostra mezzogiorno solare</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
-    <string name="configLabel_action_launch">Attività:</string>                 <!-- edittext label -->
-    <string name="configHint_action_launch"><xliff:g id="uri" >com.forrestguice.suntimeswidget.SuntimesActivity</xliff:g></string> <!-- editText hint (and default) -->
+    <string name="configLabel_action_id">ID:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configLabel_action_launch">Class:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
+
+    <string name="configHint_action_launch_title">Action Title</string>                 <!-- edittext hint -->  <!-- TODO -->
+    <string name="configHint_action_launch_desc">Short description</string>                 <!-- edittext hint -->  <!-- TODO -->
+    <string name="configLabel_action_launch_type">Type:</string>                 <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_action_launch_action">Action:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configHint_action_launch_action">&lt;none&gt;</string> <!-- editText hint (and default) -->  <!-- TODO -->
+    <string name="configLabel_action_launch_data">Data:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configHint_action_launch_data">&lt;none&gt;</string> <!-- editText hint (and default) -->  <!-- TODO -->
+    <string name="configLabel_action_launch_datatype">Mime:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configHint_action_launch_datatype">text/plain</string> <!-- editText hint (and default) -->  <!-- TODO -->
+    <string name="configLabel_action_launch_extras">Extras:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configHint_action_launch_extras"><![CDATA[<none>]]></string> <!-- editText hint (and default) -->
+
+    <string name="configLabel_action_item">%1$s %2$s</string>  <!-- TODO -->
+    <string name="configLabel_action_item_desc">(%1$s)</string>  <!-- TODO -->
+    <string name="configLabel_action_item_none">No Action</string>  <!-- TODO -->
+
+    <string name="addaction_custname">custom<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="addaction_custtitle">Custom Action <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="addaction_error_id">ID must not be empty (or contain spaces).</string>
+    <string name="addaction_error_title">Display string must not be empty.</string>  <!-- TODO -->
+    <string name="addaction_error_exists">ID is already taken. This action will be overwritten.</string> <!-- TODO -->
+
+    <string name="delaction_dialog_msg">Are you sure you want to delete %1$s (%2$s)?</string>    <!-- TODO -->
+    <string name="delaction_dialog_msg1">Default actions cannot be removed.\n\nRevert to defaults?</string>    <!-- TODO -->
+    <string name="delaction_dialog_ok">Delete</string>    <!-- TODO -->
+    <string name="delaction_dialog_ok1">Revert</string>    <!-- TODO -->
+    <string name="delaction_dialog_cancel">Cancella</string>
+
+    <string name="clearactions_dialog_msg">Are you sure you want to reset to defaults?\n\nAll custom actions will be removed.</string>    <!-- TODO -->
+    <string name="clearactions_dialog_ok">Clear</string>    <!-- TODO -->
+    <string name="clearactions_toast">Actions reset to defaults.</string>    <!-- TODO -->
+
+    <string name="saveaction_dialog_title">Add Action</string>    <!-- TODO -->
+    <string name="saveaction_dialog_ok">Save</string>    <!-- TODO -->
+    <string name="saveaction_dialog_suggest">Suggest</string>                  <!-- TODO -->
+    <string name="saveaction_toast">Saved action \"%1$s\" (%2$s).</string>    <!-- TODO -->
+
+    <string name="loadaction_dialog_title">Actions</string>    <!-- TODO -->
+    <string name="loadaction_toast">Loaded action \"%1$s\".</string>    <!-- TODO -->
+
+    <string name="startaction_failed_toast">Failed to start %s!</string>         <!-- error toast -->  <!-- TODO -->
+
+    <string name="configAction_addAction">Add</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_editAction">Edit</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_testAction">Test</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_saveAction">Save</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_loadAction">Load</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_deleteAction">Delete</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_clearActions">Clear All</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_exportActions">Export</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_importActions">Import</string>         <!-- button (contentDescription) -->  <!-- TODO -->
 
     <!-- App Setting: WidgetThemes -->
     <string name="configLabel_widgetThemeList">Temi per i widget</string>
@@ -599,8 +665,12 @@
     <string name="configLabel_alarmClock_emptyMsg">No Alarms</string>     <!-- a label that is displayed in place of an empty listview -->  <!-- TODO -->
     <string name="configAction_addAlarm">Set Alarm</string>               <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_addNotification">Set Notification</string> <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_deleteAlarm">Delete</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_editAlarm">Edit</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_deleteAlarm">Elimina</string>               <!-- button (contentDescription) -->
     <string name="configAction_clearAlarms">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="configAction_sortAlarms">Sort</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="configAction_sortAlarms_by_time">Alarm Time</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="configAction_sortAlarms_by_creation">Creation Date</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_clearOffset">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_setAlarmOffset">Set Offset</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmType">Set Type</string>         <!-- button (contentDescription) -->  <!-- TODO -->
@@ -609,8 +679,13 @@
     <string name="configAction_setAlarmRepeat">Set Repeating</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmEvent">Set Event</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmTime">Override Time</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_setAlarmAction">Set Action</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmSound">Set Sound</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_alarmMenu">Alarm Menu</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_saveAlarm">Save</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_enableAlarm">Save &amp; Enable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_disableAlarm">Save &amp; Disable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_undo">Undo</string>               <!-- button (contentDescription) -->  <!-- TODO -->
 
     <string name="alarmAction_dismiss">Dismiss</string>                <!-- notification action button -->  <!-- TODO -->
     <string name="alarmAction_snooze">Snooze</string>                  <!-- notification action button -->  <!-- TODO -->
@@ -625,6 +700,10 @@
     <string name="alarmMode_alarm">Alarm</string>                <!-- alarm type (setting) -->  <!-- TODO -->
     <string name="alarmMode_notification">Notification</string>                <!-- alarm type (setting) -->  <!-- TODO -->
 
+    <string name="configLabel_alarmEdit_scheduleTray">Schedule:</string>               <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_alarmEdit_onAlertTray">On Alert:</string>               <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_alarmEdit_onDismissTray">On Dismiss:</string>               <!-- group title -->  <!-- TODO -->
+
     <string name="alarmOption_vibrate">Vibrate</string>                <!-- checkbox text -->  <!-- TODO -->
     <string name="alarmOption_ringtone_none">No Sound</string>          <!-- ringtone label (none) -->  <!-- TODO -->
     <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->  <!-- TODO -->
@@ -634,34 +713,40 @@
     <string name="alarmOption_repeat_none">No Repeat</string>         <!-- label text; an alarm that does not repeat (occurs once) -->  <!-- TODO -->
     <string name="alarmOption_repeat_all">Every Day</string>         <!-- label text; an alarm that repeats every day -->  <!-- TODO -->
 
-    <string name="deletealarm_dialog_title">Delete</string>        <!-- dialog title -->  <!-- TODO -->
+    <string name="deletealarm_dialog_title">Elimina</string>        <!-- dialog title -->
     <string name="deletealarm_dialog_message">Are you sure you want to delete <xliff:g id="type">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg --> <!-- TODO -->
-    <string name="deletealarm_dialog_ok">Delete</string>        <!-- button --> <!-- TODO -->
-    <string name="deletealarm_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
+    <string name="deletealarm_dialog_ok">Elimina</string>        <!-- button -->
+    <string name="deletealarm_dialog_cancel">Cancella</string>    <!-- button -->
     <string name="deletealarm_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) was deleted.</string> <!-- toast msg --> <!-- TODO -->
+
+    <string name="discardchanges_dialog_message">There are unsaved changes.</string>      <!-- dialog message -->  <!-- TODO -->
+    <string name="discardchanges_dialog_ok">Discard</string>                              <!-- button -->  <!-- TODO -->
+    <string name="discardchanges_dialog_cancel">Cancella</string>                           <!-- button -->
+    <string name="discardchanges_dialog_neutral">Save</string>                            <!-- button -->  <!-- TODO -->
 
     <string name="clearalarms_dialog_title">Clear Alarms</string>        <!-- dialog title -->  <!-- TODO -->
     <string name="clearalarms_dialog_message">Are you sure you want to delete all alarms?</string>   <!-- dialog msg --> <!-- TODO -->
     <string name="clearalarms_dialog_ok">Clear</string>        <!-- button --> <!-- TODO -->
-    <string name="clearalarms_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
+    <string name="clearalarms_dialog_cancel">Cancella</string>    <!-- button -->
     <string name="clearalarms_toast_success">Alarms cleared.</string> <!-- toast msg --> <!-- TODO -->
 
     <string name="alarmlabel_dialog_title">Label</string>        <!-- dialog title -->  <!-- TODO -->
     <string name="alarmlabel_dialog_ok">Apply</string>        <!-- button --> <!-- TODO -->
-    <string name="alarmlabel_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
+    <string name="alarmlabel_dialog_cancel">Cancella</string>    <!-- button -->
+    <string name="alarmlabel_hint">Label</string>        <!-- EditText hint -->  <!-- TODO -->
 
     <string name="alarmrepeat_dialog_title">Repeat Alarm</string>        <!-- dialog title -->  <!-- TODO -->
     <string name="alarmrepeat_dialog_ok">Apply</string>        <!-- button --> <!-- TODO -->
-    <string name="alarmrepeat_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
+    <string name="alarmrepeat_dialog_cancel">Cancella</string>    <!-- button -->
 
     <string name="alarmtime_dialog_title">Alarm Time</string>        <!-- dialog title -->  <!-- TODO -->
     <string name="alarmtime_dialog_ok">Override</string>        <!-- button --> <!-- TODO -->
-    <string name="alarmtime_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
+    <string name="alarmtime_dialog_cancel">Cancella</string>    <!-- button -->
     <string name="alarmtime_dialog_message">Override the alarm time?\n\nThis alarm will no longer be scheduled by event.</string>   <!-- dialog msg --> <!-- TODO -->
 
     <string name="alarmoffset_dialog_title">Alarm Offset</string>        <!-- dialog title -->  <!-- TODO -->
     <string name="alarmoffset_dialog_ok">Apply</string>        <!-- button --> <!-- TODO -->
-    <string name="alarmoffset_dialog_cancel">Cancel</string>    <!-- button --> <!-- TODO -->
+    <string name="alarmoffset_dialog_cancel">Cancella</string>    <!-- button -->
 
     <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> set for <xliff:g id="duration" example="8h">%2$s</xliff:g> from now.</string> <!-- toast msg --> <!-- TODO -->
 
@@ -743,10 +828,21 @@
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Luoghi</string>                           <!-- group title -->
+    <string name="configLabel_places_emptyMsg">@string/configLabel_places</string>    <!-- TODO -->
+    <string name="configLabel_places_multiSelect">%s places</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->   <!-- TODO -->
     <string name="configLabel_places_export">Esporta luoghi</string>
     <string name="configLabel_places_clear">Rimuovi luoghi</string>
     <string name="configLabel_places_build">Aggiungi luoghi da tutto il mondo</string>
     <string name="configLabel_places_build_summary">Aggiungi città al database in base alle località.</string>
+
+    <string name="configAction_addPlace">Add</string>              <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_copyPlace">Copy</string>            <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_selectPlace">Select</string>        <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_searchPlace">Search</string>              <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_sharePlace">Share</string>          <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_deletePlace">Delete</string>        <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_clearPlaces">Clear</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_exportPlaces">Export</string>       <!-- button (contentDescription) -->  <!-- TODO -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interfaccia utente</string>                       <!-- group title -->
@@ -814,6 +910,15 @@
     <string name="configActionDesc_prevNote">Show previous note</string>  <!-- TODO -->
     <string name="configActionDesc_resetNote">Reset note</string>  <!-- TODO -->
     <string name="configActionDesc_showCalendar">Show calendar app</string>  <!-- TODO -->
+    <string name="configActionDesc_mapLocation">Show location on map</string>  <!-- TODO -->
+    <string name="configActionDesc_setAlarm">Set an alarm</string>  <!-- TODO -->
+    <string name="configActionDesc_worldMap">World Map Dialog</string>  <!-- TODO -->
+    <string name="configActionDesc_equinoxDialog">Solstices Dialog</string>  <!-- TODO -->
+    <string name="configActionDesc_moon">Moon Dialog</string>  <!-- TODO -->
+    <string name="configActionDesc_sunDialog">Sun Dialog</string>  <!-- TODO -->
+    <string name="configActionDesc_setDate">Set date</string>  <!-- TODO -->
+    <string name="configActionDesc_setTimeZone">Set time zone</string>  <!-- TODO -->
+    <string name="configActionDesc_setLocation">Set location</string>  <!-- TODO -->
     <string name="configActionDesc_swapCards">Swap cards (today/tomorrow)</string>  <!-- TODO -->
     <string name="configActionDesc_setAlarmForNote">Set alarm for note</string>  <!-- TODO -->
 
@@ -970,39 +1075,42 @@
     <string name="configLabel_schedalarm_mode">Pianifica un allarme per</string>
     <string name="configLabel_schednotify_mode">Schedule a notification for</string>  <!-- TODO -->
     <string name="schedalarm_dialog_title">Imposta allarme</string>
+    <string name="schedalarm_dialog_tab_event">Event</string>                      <!-- tab text -->  <!-- TODO -->
+    <string name="schedalarm_dialog_tab_time">Time</string>                        <!-- tab text -->  <!-- TODO -->
     <string name="schedalarm_dialog_ok">Imposta allarme</string>
     <string name="schedalarm_dialog_cancel">Cancella</string>
     <string name="schedalarm_dialog_error">L\'allarme non è stato impostato…</string>
     <string name="schedalarm_dialog_error2">L\'allarme non può essere impostato…</string>
     <string name="schedalarm_dialog_note">circa <xliff:g id="timetext" example="6h 30m" >%s</xliff:g> a partire da ora.</string>
+    <string name="schedalarm_dialog_note1">~<xliff:g id="timetext" example="6h 30m" >%s</xliff:g> a partire&#160;da&#160;ora.</string>
     <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight" >%s</xliff:g> non si verifica.</string>
     <string name="schedalarm_labelformat"><xliff:g id="solarevents_short" example="sunrise" >%1$s</xliff:g> (<xliff:g id="shortDate" example="4/6/2018" >%2$s</xliff:g>)</string>
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
-        <item>astronomical twilight</item>
-        <item>nautical twilight</item>
-        <item>blue hour</item>
-        <item>civil twilight</item>
-        <item>blue hour</item>
-        <item>sunrise</item>
-        <item>golden hour</item>
-        <item>solar noon</item>
-        <item>golden hour</item>
-        <item>sunset</item>
-        <item>blue hour</item>
-        <item>civil twilight</item>
-        <item>blue hour</item>
-        <item>nautical twilight</item>
-        <item>astronomical twilight</item>
-        <item>moonrise</item>
-        <item>moonset</item>
-        <item>new moon</item>  <!-- TODO -->
-        <item>first quarter</item>  <!-- TODO -->
-        <item>full moon</item>  <!-- TODO -->
-        <item>third quarter</item>  <!-- TODO -->
-        <item>spring equinox</item>    <!-- TODO -->
-        <item>summer solstice</item>   <!-- TODO -->
-        <item>autumn equinox</item>   <!-- TODO -->
-        <item>winter solstice</item>   <!-- TODO -->
+        <item>astronomical twilight</item>    <!-- TODO -->
+        <item>nautical twilight</item>        <!-- TODO -->
+        <item>blue hour</item>                <!-- TODO -->
+        <item>civil twilight</item>           <!-- TODO -->
+        <item>blue hour</item>                <!-- TODO -->
+        <item>sunrise</item>                  <!-- TODO -->
+        <item>golden hour</item>              <!-- TODO -->
+        <item>solar noon</item>               <!-- TODO -->
+        <item>golden hour</item>              <!-- TODO -->
+        <item>sunset</item>                   <!-- TODO -->
+        <item>blue hour</item>                <!-- TODO -->
+        <item>civil twilight</item>           <!-- TODO -->
+        <item>blue hour</item>                <!-- TODO -->
+        <item>nautical twilight</item>        <!-- TODO -->
+        <item>astronomical twilight</item>    <!-- TODO -->
+        <item>moonrise</item>                 <!-- TODO -->
+        <item>moonset</item>                  <!-- TODO -->
+        <item>luna nuova</item>
+        <item>primo quarto</item>
+        <item>luna piena</item>
+        <item>ultimo quarto</item>
+        <item>equinozio di primavera</item>
+        <item>solstizio d\'estate</item>
+        <item>equinozio d\'autunno</item>
+        <item>solstizio d\'inverno</item>
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
     </string-array>  <!-- TODO -->
@@ -1024,14 +1132,14 @@
         <item>evening astronomical twilight (end)</item>
         <item>moonrise</item>
         <item>moonset</item>
-        <item>new moon</item>  <!-- TODO -->
-        <item>first quarter</item>  <!-- TODO -->
-        <item>full moon</item>  <!-- TODO -->
-        <item>third quarter</item>  <!-- TODO -->
-        <item>spring equinox</item>    <!-- TODO -->
-        <item>summer solstice</item>   <!-- TODO -->
-        <item>autumn equinox</item>   <!-- TODO -->
-        <item>winter solstice</item>   <!-- TODO -->
+        <item>luna nuova</item>
+        <item>primo quarto</item>
+        <item>luna piena</item>
+        <item>ultimo quarto</item>
+        <item>equinozio di primavera</item>
+        <item>solstizio d\'estate</item>
+        <item>equinozio d\'autunno</item>
+        <item>solstizio d\'inverno</item>
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
     </string-array>  <!-- TODO -->
@@ -1053,6 +1161,7 @@
     <string name="gps_keeptrying_msg">Incapace di ottenere un fix.</string>
     <string name="gps_keeptrying_ok">Continua a provare</string>
     <string name="gps_keeptrying_cancel">Rinuncia</string>
+    <string name="gps_keeptrying_fallback">Use Last Position</string>  <!-- TODO -->
 
     <!-- Dialog: Use Date -->
     <string name="timedate_dialog_title">Imposta data</string>
@@ -1071,8 +1180,18 @@
     <string name="location_dialog_error_lat">Questa non è una latitudine valida.</string>
     <string name="location_dialog_error_lon">Questa non è una longitudine valida.</string>
     <string name="location_dialog_error_alt">Questa non è una quota valida.</string>
+    <string name="location_dialog_error_name">Enter a place name.</string>  <!-- TODO -->
 
     <string name="location_dialog_toast_copied">Copiato nella clipboard<![CDATA[<br/>]]><xliff:g id="value" >%1$s</xliff:g></string>
+
+    <!-- Dialog: Delete Place -->
+    <string name="locationdelete_dialog_title">Remove Place?</string>   <!-- title; remove 1 place --> <!-- TODO -->
+    <string name="locationdelete_dialog_title1">Remove Places?</string>  <!-- title; remove multiple places --> <!-- TODO -->
+    <string name="locationdelete_dialog_message">Are you sure you want to remove %s?</string>   <!-- TODO -->
+    <string name="locationdelete_dialog_success">Place was removed.</string>   <!-- toast --> <!-- TODO -->
+    <string name="locationdelete_dialog_success1">%s places were removed.</string>   <!-- toast; e.g. 2 places were deleted --> <!-- TODO -->
+    <string name="locationdelete_dialog_ok">Remove</string>  <!-- TODO -->
+    <string name="locationdelete_dialog_cancel">Cancella</string>
 
     <!-- Dialog: Clear Places -->
     <string name="locationclear_dialog_title">Elimina luoghi?</string>
@@ -1120,6 +1239,14 @@
     <string name="color_dialog_msg">Scegli colore</string>
     <string name="color_dialog_ok">Seleziona</string>
     <string name="color_dialog_cancel">Cancella</string>
+    <string name="color_dialog_tab1">1</string>  <!-- TODO -->
+    <string name="color_dialog_tab2">2</string>  <!-- TODO -->
+    <string name="color_dialog_tab3">3</string>  <!-- TODO -->
+    <string name="color_dialog_label_r">R</string>  <!-- TODO -->
+    <string name="color_dialog_label_g">G</string>  <!-- TODO -->
+    <string name="color_dialog_label_b">B</string>  <!-- TODO -->
+    <string name="color_dialog_label_a">A</string>  <!-- TODO -->
+    <string name="color_dialog_hint_rgba">0–255</string>  <!-- TODO -->
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">A proposito</string>

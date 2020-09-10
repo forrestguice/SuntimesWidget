@@ -15,6 +15,7 @@
     <string name="configAction_mapLocation">Montri mapon</string>
     <string name="configAction_mapLocation_chooser">Montri lokon per</string>
     <string name="configAction_mapLocation_noapp">Ne povas trovi map‑aplikaĵon!</string>
+    <string name="configAction_showCalendar">Calendar</string>  <!-- TODO -->
     <string name="configAction_setAlarm">Agordi averton</string>
     <string name="configAction_setTimeZone">Elekti horzonon</string>
     <string name="configAction_setDate">Elekti daton</string>
@@ -24,6 +25,7 @@
     <string name="configAction_worldMap">Mondmapo</string>
     <string name="configAction_moon">Luno</string>
     <string name="configAction_help">Helpo</string>
+    <string name="configAction_overflow">More</string>  <!-- TODO -->
     <string name="configAction_settings">Agordoj</string>
     <string name="configAction_aboutWidget">Pri</string>
 
@@ -132,6 +134,8 @@
     <string name="untilEnd_bluehour">fino de blua horo</string>
     <string name="until_moonrise">lunleviĝo</string>
     <string name="until_moonset">lunsubiro</string>
+    <string name="until_moonnoon">lunar noon</string>   <!-- TODO -->
+    <string name="until_moonnight">lunar midnight</string>   <!-- TODO -->
 
     <!-- Table -->
     <string name="sunrise">Sunleviĝo</string>                             <!-- contentDescription -->
@@ -359,6 +363,13 @@
     <string name="actionMode_launchActivity">Ekigi aplikaĵon</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Baskuli vidon</string>      <!-- setting -->
 
+    <string name="launchType_activity">Activity</string>           <!-- setting -->  <!-- TODO -->
+    <string name="launchType_broadcast">Broadcast</string>           <!-- setting -->  <!-- TODO -->
+    <string name="launchType_service">Service</string>           <!-- setting -->  <!-- TODO -->
+
+    <string name="expandMore">More</string>  <!-- contentDescription -->  <!-- TODO -->
+    <string name="expandLess">Less</string>  <!-- contentDescription -->  <!-- TODO -->
+
     <string name="configLabel_action">Agordoj de agoj</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Je frapeto:</string>                    <!-- spinner label -->
     <string name="configLabel_action_onClockTap">Je frapeto sur horloĝo</string>         <!-- spinner label -->
@@ -387,6 +398,7 @@
     <string name="configHint_location_alt">139</string> <!-- edittext hint -->
     <string name="configLabel_location_name">Nomo:</string>                     <!-- edittext label -->
     <string name="configHint_location_name">(malnepra)</string>                 <!-- edittext hint -->
+    <string name="configHint_location_name0">Place Name</string>                  <!-- edittext hint -->  <!-- TODO -->
 
     <string name="configAction_getFix">Determini pozicion</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">Redakti</string>         <!-- button (contentDescription) -->
@@ -441,8 +453,61 @@
     <string name="configLabel_general_showNoon">Montri tagmezon veran</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
-    <string name="configLabel_action_launch">Ago:</string>                 <!-- edittext label -->
-    <string name="configHint_action_launch"><xliff:g id="uri">com.forrestguice.suntimeswidget.SuntimesActivity</xliff:g></string> <!-- editText hint (and default) -->
+    <string name="configLabel_action_id">ID:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configLabel_action_launch">Class:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
+
+    <string name="configHint_action_launch_title">Action Title</string>                 <!-- edittext hint -->  <!-- TODO -->
+    <string name="configHint_action_launch_desc">Short description</string>                 <!-- edittext hint -->  <!-- TODO -->
+    <string name="configLabel_action_launch_type">Type:</string>                 <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_action_launch_action">Action:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configHint_action_launch_action">&lt;none&gt;</string> <!-- editText hint (and default) -->  <!-- TODO -->
+    <string name="configLabel_action_launch_data">Data:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configHint_action_launch_data">&lt;none&gt;</string> <!-- editText hint (and default) -->  <!-- TODO -->
+    <string name="configLabel_action_launch_datatype">Mime:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configHint_action_launch_datatype">text/plain</string> <!-- editText hint (and default) -->  <!-- TODO -->
+    <string name="configLabel_action_launch_extras">Extras:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configHint_action_launch_extras"><![CDATA[<none>]]></string> <!-- editText hint (and default) -->
+
+    <string name="configLabel_action_item">%1$s %2$s</string>  <!-- TODO -->
+    <string name="configLabel_action_item_desc">(%1$s)</string>  <!-- TODO -->
+    <string name="configLabel_action_item_none">No Action</string>  <!-- TODO -->
+
+    <string name="addaction_custname">custom<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="addaction_custtitle">Custom Action <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="addaction_error_id">ID must not be empty (or contain spaces).</string>
+    <string name="addaction_error_title">Display string must not be empty.</string>  <!-- TODO -->
+    <string name="addaction_error_exists">ID is already taken. This action will be overwritten.</string> <!-- TODO -->
+
+    <string name="delaction_dialog_msg">Are you sure you want to delete %1$s (%2$s)?</string>    <!-- TODO -->
+    <string name="delaction_dialog_msg1">Default actions cannot be removed.\n\nRevert to defaults?</string>    <!-- TODO -->
+    <string name="delaction_dialog_ok">Delete</string>    <!-- TODO -->
+    <string name="delaction_dialog_ok1">Revert</string>    <!-- TODO -->
+    <string name="delaction_dialog_cancel">Nuligi</string>
+
+    <string name="clearactions_dialog_msg">Are you sure you want to reset to defaults?\n\nAll custom actions will be removed.</string>    <!-- TODO -->
+    <string name="clearactions_dialog_ok">Clear</string>    <!-- TODO -->
+    <string name="clearactions_toast">Actions reset to defaults.</string>    <!-- TODO -->
+
+    <string name="saveaction_dialog_title">Add Action</string>    <!-- TODO -->
+    <string name="saveaction_dialog_ok">Save</string>    <!-- TODO -->
+    <string name="saveaction_dialog_suggest">Suggest</string>                  <!-- TODO -->
+    <string name="saveaction_toast">Saved action \"%1$s\" (%2$s).</string>    <!-- TODO -->
+
+    <string name="loadaction_dialog_title">Actions</string>    <!-- TODO -->
+    <string name="loadaction_toast">Loaded action \"%1$s\".</string>    <!-- TODO -->
+
+    <string name="startaction_failed_toast">Failed to start %s!</string>         <!-- error toast -->  <!-- TODO -->
+
+    <string name="configAction_addAction">Add</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_editAction">Edit</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_testAction">Test</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_saveAction">Save</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_loadAction">Load</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_deleteAction">Delete</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_clearActions">Clear All</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_exportActions">Export</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_importActions">Import</string>         <!-- button (contentDescription) -->  <!-- TODO -->
 
     <!-- Widget Setting: Themes -->
     <string name="configLabel_widgetThemeList">Fenestraĵa etoso</string>
@@ -583,8 +648,12 @@
     <string name="configLabel_alarmClock_emptyMsg">Neniuj alarmoj</string>     <!-- a label that is displayed in place of an empty listview -->
     <string name="configAction_addAlarm">Agordi alarmon</string>               <!-- button (contentDescription) -->
     <string name="configAction_addNotification">Agordi sciigon</string> <!-- button (contentDescription) -->
+    <string name="configAction_editAlarm">Edit</string>               <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_deleteAlarm">Forigi</string>               <!-- button (contentDescription) -->
     <string name="configAction_clearAlarms">Forgi ĉiujn</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms">Sort</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="configAction_sortAlarms_by_time">Alarm Time</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="configAction_sortAlarms_by_creation">Creation Date</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_clearOffset">Forviŝi</string>                <!-- action button / menu item -->
     <string name="configAction_setAlarmOffset">Agordi deŝovon</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmType">Agordi tipon</string>         <!-- button (contentDescription) -->
@@ -593,8 +662,13 @@
     <string name="configAction_setAlarmRepeat">Agordi ripeton</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmEvent">Agordi okazaĵon</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmTime">Agordi konstantan tempon</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmAction">Set Action</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmSound">Agordi sonon</string>         <!-- button (contentDescription) -->
     <string name="configAction_alarmMenu">Alarma menuo</string>         <!-- button (contentDescription) -->
+    <string name="configAction_saveAlarm">Save</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_enableAlarm">Save &amp; Enable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_disableAlarm">Save &amp; Disable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_undo">Undo</string>               <!-- button (contentDescription) -->  <!-- TODO -->
 
     <string name="alarmAction_dismiss">Silentigi</string>                <!-- notification action button -->
     <string name="alarmAction_snooze">Prokrasti</string>                  <!-- notification action button -->
@@ -608,6 +682,10 @@
 
     <string name="alarmMode_alarm">alarmo</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">sciigo</string>                <!-- alarm type (setting) -->
+
+    <string name="configLabel_alarmEdit_scheduleTray">Schedule:</string>               <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_alarmEdit_onAlertTray">On Alert:</string>               <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_alarmEdit_onDismissTray">On Dismiss:</string>               <!-- group title -->  <!-- TODO -->
 
     <string name="alarmOption_vibrate">Vibri</string>                <!-- checkbox text -->
     <string name="alarmOption_ringtone_none">Sen sono</string>          <!-- ringtone label (none) -->
@@ -624,6 +702,11 @@
     <string name="deletealarm_dialog_cancel">Nuligi</string>    <!-- button -->
     <string name="deletealarm_toast_success">Forigis <xliff:g id="type" example="sciigo">%1$s</xliff:g>n je <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>).</string> <!-- toast msg -->
 
+    <string name="discardchanges_dialog_message">There are unsaved changes.</string>      <!-- dialog message -->  <!-- TODO -->
+    <string name="discardchanges_dialog_ok">Discard</string>                              <!-- button -->  <!-- TODO -->
+    <string name="discardchanges_dialog_cancel">Nuligi</string>                           <!-- button -->
+    <string name="discardchanges_dialog_neutral">Save</string>                            <!-- button -->  <!-- TODO -->
+
     <string name="clearalarms_dialog_title">Forigi ĉiujn alarmojn</string>        <!-- dialog title -->
     <string name="clearalarms_dialog_message">Ĉu vi certe volas forigi ĉiujn alarmojn?</string>   <!-- dialog msg -->
     <string name="clearalarms_dialog_ok">Forigi</string>        <!-- button -->
@@ -633,6 +716,7 @@
     <string name="alarmlabel_dialog_title">Etikedo</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Apliki</string>        <!-- button -->
     <string name="alarmlabel_dialog_cancel">Nuligi</string>    <!-- button -->
+    <string name="alarmlabel_hint">Etikedo</string>        <!-- EditText hint -->
 
     <string name="alarmrepeat_dialog_title">Ripeti alarmon</string>        <!-- dialog title -->
     <string name="alarmrepeat_dialog_ok">Apliki</string>        <!-- button -->
@@ -725,10 +809,21 @@
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Lokoj</string>                           <!-- group title -->
+    <string name="configLabel_places_emptyMsg">@string/configLabel_places</string>    <!-- TODO -->
+    <string name="configLabel_places_multiSelect">%s places</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->   <!-- TODO -->
     <string name="configLabel_places_export">Elporti lokojn</string>
     <string name="configLabel_places_clear">Forviŝi lokojn</string>
     <string name="configLabel_places_build">Aldoni mondajn lokojn</string>
     <string name="configLabel_places_build_summary">Skani lokojn kaj aldoni urbojn al la datumbazo.</string>
+
+    <string name="configAction_addPlace">Add</string>              <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_copyPlace">Copy</string>            <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_selectPlace">Select</string>        <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_searchPlace">Search</string>              <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_sharePlace">Share</string>          <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_deletePlace">Delete</string>        <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_clearPlaces">Clear</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_exportPlaces">Export</string>       <!-- button (contentDescription) -->  <!-- TODO -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Fasado</string>                       <!-- group title -->
@@ -783,6 +878,15 @@
     <string name="configActionDesc_prevNote">Montri antaŭan noton</string>
     <string name="configActionDesc_resetNote">Restarigi noton</string>
     <string name="configActionDesc_showCalendar">Montri aplikaĵon de kalendaro</string>
+    <string name="configActionDesc_mapLocation">Show location on map</string>  <!-- TODO -->
+    <string name="configActionDesc_setAlarm">Set an alarm</string>  <!-- TODO -->
+    <string name="configActionDesc_worldMap">World Map Dialog</string>  <!-- TODO -->
+    <string name="configActionDesc_equinoxDialog">Solstices Dialog</string>  <!-- TODO -->
+    <string name="configActionDesc_moon">Moon Dialog</string>  <!-- TODO -->
+    <string name="configActionDesc_sunDialog">Sun Dialog</string>  <!-- TODO -->
+    <string name="configActionDesc_setDate">Set date</string>  <!-- TODO -->
+    <string name="configActionDesc_setTimeZone">Set time zone</string>  <!-- TODO -->
+    <string name="configActionDesc_setLocation">Set location</string>  <!-- TODO -->
     <string name="configActionDesc_swapCards">Baskuli langetojn (hodiaŭ/morgaŭ)</string>
     <string name="configActionDesc_setAlarmForNote">Agordi averton pri noto</string>
 
@@ -849,11 +953,14 @@
     <string name="configLabel_schedalarm_mode">Plani alarmon pri</string>
     <string name="configLabel_schednotify_mode">Plani sciigon pri</string>
     <string name="schedalarm_dialog_title">Plani averton</string>
+    <string name="schedalarm_dialog_tab_event">Event</string>                      <!-- tab text -->  <!-- TODO -->
+    <string name="schedalarm_dialog_tab_time">Time</string>                        <!-- tab text -->  <!-- TODO -->
     <string name="schedalarm_dialog_ok">Plani averton</string>
     <string name="schedalarm_dialog_cancel">Rezigni</string>
     <string name="schedalarm_dialog_error">Averto ne agordita…</string>
     <string name="schedalarm_dialog_error2">Ne povis agordi averton…</string>
     <string name="schedalarm_dialog_note">post <xliff:g id="timetext" example="6h 30m">%s</xliff:g> de nun.</string>
+    <string name="schedalarm_dialog_note1">~<xliff:g id="timetext" example="6h 30m">%s</xliff:g> de&#160;nun.</string>
     <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="naŭtika krepusko">%s</xliff:g> ne okazos.</string>
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
         <item>astronomia sunleviĝo</item>
@@ -1026,8 +1133,18 @@
     <string name="location_dialog_error_lat">Latitudo erara.</string>
     <string name="location_dialog_error_lon">Longitudo erara.</string>
     <string name="location_dialog_error_alt">Altitudo erara.</string>
+    <string name="location_dialog_error_name">Enter a place name.</string>  <!-- TODO -->
 
     <string name="location_dialog_toast_copied">Enpoŝigita<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
+
+    <!-- Dialog: Delete Place -->
+    <string name="locationdelete_dialog_title">Remove Place?</string>   <!-- title; remove 1 place --> <!-- TODO -->
+    <string name="locationdelete_dialog_title1">Remove Places?</string>  <!-- title; remove multiple places --> <!-- TODO -->
+    <string name="locationdelete_dialog_message">Are you sure you want to remove %s?</string>   <!-- TODO -->
+    <string name="locationdelete_dialog_success">Place was removed.</string>   <!-- toast --> <!-- TODO -->
+    <string name="locationdelete_dialog_success1">%s places were removed.</string>   <!-- toast; e.g. 2 places were deleted --> <!-- TODO -->
+    <string name="locationdelete_dialog_ok">Remove</string>  <!-- TODO -->
+    <string name="locationdelete_dialog_cancel">Nuligi</string>
 
     <!-- Dialog: Clear Places -->
     <string name="locationclear_dialog_title">Ĉu forigi lokojn?</string>
@@ -1075,6 +1192,14 @@
     <string name="color_dialog_msg">Elekti koloron</string>
     <string name="color_dialog_ok">Aktualigi</string>
     <string name="color_dialog_cancel">Nuligi</string>
+    <string name="color_dialog_tab1">1</string>  <!-- TODO -->
+    <string name="color_dialog_tab2">2</string>  <!-- TODO -->
+    <string name="color_dialog_tab3">3</string>  <!-- TODO -->
+    <string name="color_dialog_label_r">R</string>  <!-- TODO -->
+    <string name="color_dialog_label_g">G</string>  <!-- TODO -->
+    <string name="color_dialog_label_b">B</string>  <!-- TODO -->
+    <string name="color_dialog_label_a">A</string>  <!-- TODO -->
+    <string name="color_dialog_hint_rgba">0–255</string>  <!-- TODO -->
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">Pri</string>
