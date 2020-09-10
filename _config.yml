@@ -18,7 +18,7 @@ app_locales:
  - zh_TW Chinese
 app_versions:
  - v0.9.5
- - v0.11.3
+ - v0.13.0
 app_versions1:
  - v0.3.1
 plugins:
