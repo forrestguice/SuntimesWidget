@@ -958,10 +958,10 @@
         <item>crépuscule astronomique</item>
         <item>lever de la lune</item>                         
         <item>coucher de la lune</item>
-        <item>new moon</item>  <!-- TODO -->
-        <item>first quarter</item>  <!-- TODO -->
-        <item>full moon</item>  <!-- TODO -->
-        <item>third quarter</item>  <!-- TODO -->
+        <item>nouvelle lune</item>
+        <item>premier quartier</item>
+        <item>pleine lune</item>
+        <item>dernier quartier</item>
         <item>spring equinox</item>    <!-- TODO -->
         <item>summer solstice</item>   <!-- TODO -->
         <item>autumn equinox</item>   <!-- TODO -->
@@ -987,10 +987,10 @@
         <item>crépuscule astronomique du soir</item>
         <item>lever de la lune</item>    
         <item>coucher de la lune</item>
-        <item>new moon</item>  <!-- TODO -->
-        <item>first quarter</item>  <!-- TODO -->
-        <item>full moon</item>  <!-- TODO -->
-        <item>third quarter</item>  <!-- TODO -->
+        <item>nouvelle lune</item>
+        <item>premier quartier</item>
+        <item>pleine lune</item>
+        <item>dernier quartier</item>
         <item>spring equinox</item>    <!-- TODO -->
         <item>summer solstice</item>   <!-- TODO -->
         <item>autumn equinox</item>   <!-- TODO -->

@@ -995,10 +995,10 @@
         <item>天文暮光</item>
         <item>月出</item>
         <item>月落</item>
-        <item>new moon</item>  <!-- TODO -->
-        <item>first quarter</item>  <!-- TODO -->
-        <item>full moon</item>  <!-- TODO -->
-        <item>third quarter</item>  <!-- TODO -->
+        <item>新月</item>
+        <item>上弦月</item>
+        <item>滿月</item>
+        <item>下弦月</item>
         <item>spring equinox</item>    <!-- TODO -->
         <item>summer solstice</item>   <!-- TODO -->
         <item>autumn equinox</item>   <!-- TODO -->
@@ -1024,10 +1024,10 @@
         <item>天文暮光</item>
         <item>月出</item>
         <item>月落</item>
-        <item>new moon</item>  <!-- TODO -->
-        <item>first quarter</item>  <!-- TODO -->
-        <item>full moon</item>  <!-- TODO -->
-        <item>third quarter</item>  <!-- TODO -->
+        <item>新月</item>
+        <item>上弦月</item>
+        <item>滿月</item>
+        <item>下弦月</item>
         <item>spring equinox</item>    <!-- TODO -->
         <item>summer solstice</item>   <!-- TODO -->
         <item>autumn equinox</item>   <!-- TODO -->

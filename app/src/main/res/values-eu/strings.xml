@@ -988,10 +988,10 @@
         <item>krepuskulu astronomikoa</item>
         <item>ilargiaren irteera</item>
         <item>ilargia ezkutatzea</item>
-        <item>new moon</item>  <!-- TODO -->
-        <item>first quarter</item>  <!-- TODO -->
-        <item>full moon</item>  <!-- TODO -->
-        <item>third quarter</item>  <!-- TODO -->
+        <item>ilberria</item>
+        <item>lehen laurdena</item>
+        <item>ilbetea</item>
+        <item>hirugarren laurdena</item>
         <item>spring equinox</item>    <!-- TODO -->
         <item>summer solstice</item>   <!-- TODO -->
         <item>autumn equinox</item>   <!-- TODO -->
@@ -1017,10 +1017,10 @@
         <item>arratsaldeko krepuskulu astronomikoa (amaiera)</item>
         <item>ilargiaren irteera</item>
         <item>ilargia ezkutatzea</item>
-        <item>new moon</item>  <!-- TODO -->
-        <item>first quarter</item>  <!-- TODO -->
-        <item>full moon</item>  <!-- TODO -->
-        <item>third quarter</item>  <!-- TODO -->
+        <item>ilberria</item>
+        <item>lehen laurdena</item>
+        <item>ilbetea</item>
+        <item>hirugarren laurdena</item>
         <item>spring equinox</item>    <!-- TODO -->
         <item>summer solstice</item>   <!-- TODO -->
         <item>autumn equinox</item>   <!-- TODO -->

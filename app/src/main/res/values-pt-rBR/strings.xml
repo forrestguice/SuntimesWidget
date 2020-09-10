@@ -1031,10 +1031,10 @@
         <item>crepúsculo astronômico</item>
         <item>nascer da lua</item>
         <item>pôr da lua</item>
-        <item>new moon</item>  <!-- TODO -->
-        <item>first quarter</item>  <!-- TODO -->
-        <item>full moon</item>  <!-- TODO -->
-        <item>third quarter</item>  <!-- TODO -->
+        <item>lua nova</item>
+        <item>lua quarto crescente</item>
+        <item>lua cheia</item>
+        <item>lua quarto minguante</item>
         <item>spring equinox</item>    <!-- TODO -->
         <item>summer solstice</item>   <!-- TODO -->
         <item>autumn equinox</item>   <!-- TODO -->
@@ -1060,10 +1060,10 @@
         <item>crepúsculo astronômico da tarde (fim)</item>
         <item>nascer da lua</item>
         <item>pôr da lua</item>
-        <item>new moon</item>  <!-- TODO -->
-        <item>first quarter</item>  <!-- TODO -->
-        <item>full moon</item>  <!-- TODO -->
-        <item>third quarter</item>  <!-- TODO -->
+        <item>lua nova</item>
+        <item>lua quarto crescente</item>
+        <item>lua cheia</item>
+        <item>lua quarto minguante</item>
         <item>spring equinox</item>    <!-- TODO -->
         <item>summer solstice</item>   <!-- TODO -->
         <item>autumn equinox</item>   <!-- TODO -->

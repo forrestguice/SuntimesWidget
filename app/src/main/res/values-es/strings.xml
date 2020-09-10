@@ -983,10 +983,10 @@
         <item>Ocaso astronómico</item>
         <item>Salida lunar</item>
         <item>Puesta lunar</item>
-        <item>new moon</item>  <!-- TODO -->
-        <item>first quarter</item>  <!-- TODO -->
-        <item>full moon</item>  <!-- TODO -->
-        <item>third quarter</item>  <!-- TODO -->
+        <item>Luna nueva</item>
+        <item>Cuarto creciente</item>
+        <item>Luna llena</item>
+        <item>Cuarto menguante</item>
         <item>spring equinox</item>    <!-- TODO -->
         <item>summer solstice</item>   <!-- TODO -->
         <item>autumn equinox</item>   <!-- TODO -->
@@ -1012,10 +1012,10 @@
         <item>Atardecer astronómico</item>
         <item>Salida lunar</item>
         <item>Puesta lunar</item>
-        <item>new moon</item>  <!-- TODO -->
-        <item>first quarter</item>  <!-- TODO -->
-        <item>full moon</item>  <!-- TODO -->
-        <item>third quarter</item>  <!-- TODO -->
+        <item>Luna nueva</item>
+        <item>Cuarto creciente</item>
+        <item>Luna llena</item>
+        <item>Cuarto menguante</item>
         <item>spring equinox</item>    <!-- TODO -->
         <item>summer solstice</item>   <!-- TODO -->
         <item>autumn equinox</item>   <!-- TODO -->

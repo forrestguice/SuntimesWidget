@@ -978,27 +978,27 @@
     <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight" >%s</xliff:g> non si verifica.</string>
     <string name="schedalarm_labelformat"><xliff:g id="solarevents_short" example="sunrise" >%1$s</xliff:g> (<xliff:g id="shortDate" example="4/6/2018" >%2$s</xliff:g>)</string>
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
-        <item>astronomical twilight</item>
-        <item>nautical twilight</item>
-        <item>blue hour</item>
-        <item>civil twilight</item>
-        <item>blue hour</item>
-        <item>sunrise</item>
-        <item>golden hour</item>
-        <item>solar noon</item>
-        <item>golden hour</item>
-        <item>sunset</item>
-        <item>blue hour</item>
-        <item>civil twilight</item>
-        <item>blue hour</item>
-        <item>nautical twilight</item>
-        <item>astronomical twilight</item>
-        <item>moonrise</item>
-        <item>moonset</item>
-        <item>new moon</item>  <!-- TODO -->
-        <item>first quarter</item>  <!-- TODO -->
-        <item>full moon</item>  <!-- TODO -->
-        <item>third quarter</item>  <!-- TODO -->
+        <item>astronomical twilight</item>    <!-- TODO -->
+        <item>nautical twilight</item>        <!-- TODO -->
+        <item>blue hour</item>                <!-- TODO -->
+        <item>civil twilight</item>           <!-- TODO -->
+        <item>blue hour</item>                <!-- TODO -->
+        <item>sunrise</item>                  <!-- TODO -->
+        <item>golden hour</item>              <!-- TODO -->
+        <item>solar noon</item>               <!-- TODO -->
+        <item>golden hour</item>              <!-- TODO -->
+        <item>sunset</item>                   <!-- TODO -->
+        <item>blue hour</item>                <!-- TODO -->
+        <item>civil twilight</item>           <!-- TODO -->
+        <item>blue hour</item>                <!-- TODO -->
+        <item>nautical twilight</item>        <!-- TODO -->
+        <item>astronomical twilight</item>    <!-- TODO -->
+        <item>moonrise</item>                 <!-- TODO -->
+        <item>moonset</item>                  <!-- TODO -->
+        <item>luna nuova</item>
+        <item>primo quarto</item>
+        <item>luna piena</item>
+        <item>ultimo quarto</item>
         <item>spring equinox</item>    <!-- TODO -->
         <item>summer solstice</item>   <!-- TODO -->
         <item>autumn equinox</item>   <!-- TODO -->
@@ -1024,10 +1024,10 @@
         <item>evening astronomical twilight (end)</item>
         <item>moonrise</item>
         <item>moonset</item>
-        <item>new moon</item>  <!-- TODO -->
-        <item>first quarter</item>  <!-- TODO -->
-        <item>full moon</item>  <!-- TODO -->
-        <item>third quarter</item>  <!-- TODO -->
+        <item>luna nuova</item>
+        <item>primo quarto</item>
+        <item>luna piena</item>
+        <item>ultimo quarto</item>
         <item>spring equinox</item>    <!-- TODO -->
         <item>summer solstice</item>   <!-- TODO -->
         <item>autumn equinox</item>   <!-- TODO -->

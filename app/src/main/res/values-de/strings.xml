@@ -917,9 +917,9 @@
       <item>Mondaufgang</item>
       <item>Monduntergang</item>
     <item>Neumond</item>
-    <item>first quarter</item>  <!-- TODO -->
+    <item>Zunehmender Halbmond</item>
     <item>Vollmond</item>
-    <item>third quarter</item>  <!-- TODO -->
+    <item>Abnehmender Halbmond</item>
     <item>spring equinox</item>    <!-- TODO -->
     <item>summer solstice</item>   <!-- TODO -->
     <item>Herbst-Tag-Nacht-Gleiche</item>
@@ -946,9 +946,9 @@
       <item>Mondaufgang</item>
       <item>Monduntergang</item>
     <item>Neumond</item>
-    <item>first quarter</item>  <!-- TODO -->
+    <item>Zunehmender Halbmond</item>
     <item>Vollmond</item>
-    <item>third quarter</item>  <!-- TODO -->
+    <item>Abnehmender Halbmond</item>
     <item>spring equinox</item>    <!-- TODO -->
     <item>summer solstice</item>   <!-- TODO -->
     <item>Herbst-Tag-Nacht-Gleiche</item>
