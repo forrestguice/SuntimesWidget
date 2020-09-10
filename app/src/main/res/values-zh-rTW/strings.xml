@@ -363,10 +363,10 @@
     <string name="widgetMode1x1_distance">Current distance</string>     <!-- setting -->    <!-- TODO -->
     <string name="widgetMode1x1_apsis">Next apogee or perigee</string>     <!-- setting -->    <!-- TODO -->
 
-    <string name="widgetMode_sunPosMap_simplerectangular">基礎</string>  <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal">極性</string>     <!-- setting -->  <!-- TODO (north) -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [south]</string>     <!-- setting -->  <!-- TODO -->
-    <string name="widgetMode_sunPosMap_bluemarble">藍色彈珠</string>    <!-- setting -->
+    <string name="widgetMode_sunPosMap_simplerectangular">基礎</string>  <!-- setting -->  <!-- TODO: should be 預設 ? -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">北半球視角</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_south">南半球視角</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_bluemarble">衛星</string>    <!-- setting -->
 
     <string name="widgetMode1x1_moonriseset">月出 &amp; 月落</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">月相 &amp; 月光</string>     <!-- setting -->
