@@ -992,10 +992,10 @@
         <item>lehen laurdena</item>
         <item>ilbetea</item>
         <item>hirugarren laurdena</item>
-        <item>spring equinox</item>    <!-- TODO -->
-        <item>summer solstice</item>   <!-- TODO -->
-        <item>autumn equinox</item>   <!-- TODO -->
-        <item>winter solstice</item>   <!-- TODO -->
+        <item>udaberriko ekinokzioa</item>
+        <item>udako solstizioa</item>
+        <item>udazkeneko ekinokzioa</item>
+        <item>neguko solstizioa</item>
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
@@ -1021,10 +1021,10 @@
         <item>lehen laurdena</item>
         <item>ilbetea</item>
         <item>hirugarren laurdena</item>
-        <item>spring equinox</item>    <!-- TODO -->
-        <item>summer solstice</item>   <!-- TODO -->
-        <item>autumn equinox</item>   <!-- TODO -->
-        <item>winter solstice</item>   <!-- TODO -->
+        <item>udaberriko ekinokzioa</item>
+        <item>udako solstizioa</item>
+        <item>udazkeneko ekinokzioa</item>
+        <item>neguko solstizioa</item>
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
     </string-array>

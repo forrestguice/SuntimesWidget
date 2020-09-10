@@ -999,10 +999,10 @@
         <item>上弦月</item>
         <item>滿月</item>
         <item>下弦月</item>
-        <item>spring equinox</item>    <!-- TODO -->
-        <item>summer solstice</item>   <!-- TODO -->
-        <item>autumn equinox</item>   <!-- TODO -->
-        <item>winter solstice</item>   <!-- TODO -->
+        <item>春分</item>
+        <item>夏至</item>
+        <item>秋分</item>
+        <item>冬至</item>
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
@@ -1028,10 +1028,10 @@
         <item>上弦月</item>
         <item>滿月</item>
         <item>下弦月</item>
-        <item>spring equinox</item>    <!-- TODO -->
-        <item>summer solstice</item>   <!-- TODO -->
-        <item>autumn equinox</item>   <!-- TODO -->
-        <item>winter solstice</item>   <!-- TODO -->
+        <item>春分</item>
+        <item>夏至</item>
+        <item>秋分</item>
+        <item>冬至</item>
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
     </string-array>

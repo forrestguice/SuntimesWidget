@@ -999,10 +999,10 @@
         <item>primo quarto</item>
         <item>luna piena</item>
         <item>ultimo quarto</item>
-        <item>spring equinox</item>    <!-- TODO -->
-        <item>summer solstice</item>   <!-- TODO -->
-        <item>autumn equinox</item>   <!-- TODO -->
-        <item>winter solstice</item>   <!-- TODO -->
+        <item>equinozio di primavera</item>
+        <item>solstizio d\'estate</item>
+        <item>equinozio d\'autunno</item>
+        <item>solstizio d\'inverno</item>
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
     </string-array>  <!-- TODO -->
@@ -1028,10 +1028,10 @@
         <item>primo quarto</item>
         <item>luna piena</item>
         <item>ultimo quarto</item>
-        <item>spring equinox</item>    <!-- TODO -->
-        <item>summer solstice</item>   <!-- TODO -->
-        <item>autumn equinox</item>   <!-- TODO -->
-        <item>winter solstice</item>   <!-- TODO -->
+        <item>equinozio di primavera</item>
+        <item>solstizio d\'estate</item>
+        <item>equinozio d\'autunno</item>
+        <item>solstizio d\'inverno</item>
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
     </string-array>  <!-- TODO -->

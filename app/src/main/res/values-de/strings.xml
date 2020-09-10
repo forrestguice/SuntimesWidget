@@ -920,8 +920,8 @@
     <item>Zunehmender Halbmond</item>
     <item>Vollmond</item>
     <item>Abnehmender Halbmond</item>
-    <item>spring equinox</item>    <!-- TODO -->
-    <item>summer solstice</item>   <!-- TODO -->
+    <item>Frühjahrs-Tag-Nacht-Gleiche</item>
+    <item>Sommersonnenwende</item>
     <item>Herbst-Tag-Nacht-Gleiche</item>
     <item>Wintersonnenwende</item>
     <item>lunar noon</item>    <!-- TODO -->
@@ -949,8 +949,8 @@
     <item>Zunehmender Halbmond</item>
     <item>Vollmond</item>
     <item>Abnehmender Halbmond</item>
-    <item>spring equinox</item>    <!-- TODO -->
-    <item>summer solstice</item>   <!-- TODO -->
+    <item>Frühjahrs-Tag-Nacht-Gleiche</item>
+    <item>Sommersonnenwende</item>
     <item>Herbst-Tag-Nacht-Gleiche</item>
     <item>Wintersonnenwende</item>
     <item>lunar noon</item>    <!-- TODO -->

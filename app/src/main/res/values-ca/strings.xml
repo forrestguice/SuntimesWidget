@@ -985,10 +985,10 @@
         <item>quart creixent</item>
         <item>lluna plena</item>
         <item>quart minvant</item>
-        <item>spring equinox</item>    <!-- TODO -->
-        <item>summer solstice</item>   <!-- TODO -->
-        <item>autumn equinox</item>   <!-- TODO -->
-        <item>winter solstice</item>   <!-- TODO -->
+        <item>equinocci de primavera</item>
+        <item>solstici d\'estiu</item>
+        <item>equinocci de tardor</item>
+        <item>solstici d\'hivern</item>
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
@@ -1014,10 +1014,10 @@
         <item>quart creixent</item>
         <item>lluna plena</item>
         <item>quart minvant</item>
-        <item>spring equinox</item>    <!-- TODO -->
-        <item>summer solstice</item>   <!-- TODO -->
-        <item>autumn equinox</item>   <!-- TODO -->
-        <item>winter solstice</item>   <!-- TODO -->
+        <item>equinocci de primavera</item>
+        <item>solstici d\'estiu</item>
+        <item>equinocci de tardor</item>
+        <item>solstici d\'hivern</item>
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
