@@ -16,6 +16,7 @@
     <string name="configAction_mapLocation">Mostra mappa</string>
     <string name="configAction_mapLocation_chooser">Visualizza la posizione tramite</string>
     <string name="configAction_mapLocation_noapp">Impossible trovare un\'applicazione per visualizzare la mappa!</string>
+    <string name="configAction_showCalendar">Calendar</string>  <!-- TODO -->
     <string name="configAction_setAlarm">Imposta allarme</string>
     <string name="configAction_setTimeZone">Imposta fuso orario</string>
     <string name="configAction_setDate">Imposta data</string>
@@ -25,6 +26,7 @@
     <string name="configAction_worldMap">Mappa mondiale</string>
     <string name="configAction_moon">Luna</string>
     <string name="configAction_help">Aiuto</string>
+    <string name="configAction_overflow">More</string>  <!-- TODO -->
     <string name="configAction_settings">Impostazioni</string>
     <string name="configAction_aboutWidget">A proposito</string>
 
@@ -138,6 +140,8 @@
     <string name="untilEnd_bluehour">ora blu</string>
     <string name="until_moonrise">alba lunare</string>
     <string name="until_moonset">tramonto lunare</string>
+    <string name="until_moonnoon">lunar noon</string>   <!-- TODO -->
+    <string name="until_moonnight">lunar midnight</string>   <!-- TODO -->
 
     <!-- Table -->
     <string name="sunrise">Alba</string>                             <!-- contentDescription -->
@@ -372,6 +376,7 @@
 
     <string name="configLabel_appearance_1x1mode">Formato 1x1:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_3x2mode">Formato 3x2:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x3mode">Formato 3x3:</string>     <!-- spinner label -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Non fare nulla</string>           <!-- setting -->
@@ -379,6 +384,13 @@
     <string name="actionMode_config">Riconfigura il Widget</string>      <!-- setting -->
     <string name="actionMode_launchActivity">Avvia l\'applicazione</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Inverti le visuali</string>      <!-- setting -->
+
+    <string name="launchType_activity">Activity</string>           <!-- setting -->  <!-- TODO -->
+    <string name="launchType_broadcast">Broadcast</string>           <!-- setting -->  <!-- TODO -->
+    <string name="launchType_service">Service</string>           <!-- setting -->  <!-- TODO -->
+
+    <string name="expandMore">More</string>  <!-- contentDescription -->  <!-- TODO -->
+    <string name="expandLess">Less</string>  <!-- contentDescription -->  <!-- TODO -->
 
     <string name="configLabel_action">Azioni</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Al tocco:</string>                    <!-- spinner label -->
@@ -401,6 +413,7 @@
     <string name="configHint_location_alt">0</string>                                    <!-- edittext hint -->
     <string name="configLabel_location_name">Nome:</string>                      <!-- edittext label -->
     <string name="configHint_location_name">(opzionale)</string>                  <!-- edittext hint -->
+    <string name="configHint_location_name0">Place Name</string>                  <!-- edittext hint -->  <!-- TODO -->
 
     <string name="configAction_getFix">Acquisisci posizione</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">Modifica</string>         <!-- button (contentDescription) -->
@@ -970,6 +983,8 @@
     <string name="configLabel_schedalarm_mode">Pianifica un allarme per</string>
     <string name="configLabel_schednotify_mode">Schedule a notification for</string>  <!-- TODO -->
     <string name="schedalarm_dialog_title">Imposta allarme</string>
+    <string name="schedalarm_dialog_tab_event">Event</string>                      <!-- tab text -->  <!-- TODO -->
+    <string name="schedalarm_dialog_tab_time">Time</string>                        <!-- tab text -->  <!-- TODO -->
     <string name="schedalarm_dialog_ok">Imposta allarme</string>
     <string name="schedalarm_dialog_cancel">Cancella</string>
     <string name="schedalarm_dialog_error">L\'allarme non è stato impostato…</string>
@@ -1053,6 +1068,7 @@
     <string name="gps_keeptrying_msg">Incapace di ottenere un fix.</string>
     <string name="gps_keeptrying_ok">Continua a provare</string>
     <string name="gps_keeptrying_cancel">Rinuncia</string>
+    <string name="gps_keeptrying_fallback">Use Last Position</string>  <!-- TODO -->
 
     <!-- Dialog: Use Date -->
     <string name="timedate_dialog_title">Imposta data</string>
@@ -1071,8 +1087,18 @@
     <string name="location_dialog_error_lat">Questa non è una latitudine valida.</string>
     <string name="location_dialog_error_lon">Questa non è una longitudine valida.</string>
     <string name="location_dialog_error_alt">Questa non è una quota valida.</string>
+    <string name="location_dialog_error_name">Enter a place name.</string>  <!-- TODO -->
 
     <string name="location_dialog_toast_copied">Copiato nella clipboard<![CDATA[<br/>]]><xliff:g id="value" >%1$s</xliff:g></string>
+
+    <!-- Dialog: Delete Place -->
+    <string name="locationdelete_dialog_title">Remove Place?</string>   <!-- title; remove 1 place --> <!-- TODO -->
+    <string name="locationdelete_dialog_title1">Remove Places?</string>  <!-- title; remove multiple places --> <!-- TODO -->
+    <string name="locationdelete_dialog_message">Are you sure you want to remove %s?</string>   <!-- TODO -->
+    <string name="locationdelete_dialog_success">Place was removed.</string>   <!-- toast --> <!-- TODO -->
+    <string name="locationdelete_dialog_success1">%s places were removed.</string>   <!-- toast; e.g. 2 places were deleted --> <!-- TODO -->
+    <string name="locationdelete_dialog_ok">Remove</string>  <!-- TODO -->
+    <string name="locationdelete_dialog_cancel">Cancel</string>  <!-- TODO -->
 
     <!-- Dialog: Clear Places -->
     <string name="locationclear_dialog_title">Elimina luoghi?</string>
@@ -1120,6 +1146,14 @@
     <string name="color_dialog_msg">Scegli colore</string>
     <string name="color_dialog_ok">Seleziona</string>
     <string name="color_dialog_cancel">Cancella</string>
+    <string name="color_dialog_tab1">1</string>  <!-- TODO -->
+    <string name="color_dialog_tab2">2</string>  <!-- TODO -->
+    <string name="color_dialog_tab3">3</string>  <!-- TODO -->
+    <string name="color_dialog_label_r">R</string>  <!-- TODO -->
+    <string name="color_dialog_label_g">G</string>  <!-- TODO -->
+    <string name="color_dialog_label_b">B</string>  <!-- TODO -->
+    <string name="color_dialog_label_a">A</string>  <!-- TODO -->
+    <string name="color_dialog_hint_rgba">0–255</string>  <!-- TODO -->
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">A proposito</string>

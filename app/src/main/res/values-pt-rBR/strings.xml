@@ -17,6 +17,7 @@
     <string name="configAction_mapLocation">Mostrar Mapa</string>
     <string name="configAction_mapLocation_chooser">Ver localização com</string>
     <string name="configAction_mapLocation_noapp">Nenhum app de mapa instalado!</string>
+    <string name="configAction_showCalendar">Calendar</string>  <!-- TODO -->
     <string name="configAction_setAlarm">Definir Alarme</string>
     <string name="configAction_setTimeZone">Definir Fuso Horário</string>
     <string name="configAction_setDate">Definir Data</string>
@@ -26,6 +27,7 @@
     <string name="configAction_worldMap">Mapa Mundial</string>
     <string name="configAction_moon">Lua</string>
     <string name="configAction_help">Ajuda</string>
+    <string name="configAction_overflow">More</string>  <!-- TODO -->
     <string name="configAction_settings">Configurações</string>
     <string name="configAction_aboutWidget">Sobre o app</string>
 
@@ -167,6 +169,8 @@
     <string name="untilEnd_bluehour">da hora azul</string>
     <string name="until_moonrise">o nascer da lua</string>
     <string name="until_moonset">o pôr da lua</string>
+    <string name="until_moonnoon">lunar noon</string>   <!-- TODO -->
+    <string name="until_moonnight">lunar midnight</string>   <!-- TODO -->
 
     <!-- Table -->
     <string name="sunrise">Nascer do Sol</string>                             <!-- contentDescription -->
@@ -405,8 +409,9 @@
     <string name="widgetMode1x1_moonillum">Apenas iluminação da Lua</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphasenext">Próxima fase principal</string>     <!-- setting -->
 
-    <string name="configLabel_appearance_1x1mode">Layout 1x1:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x2mode">Layout 3x2:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_1x1mode">Layout 1x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x2mode">Layout 3x2:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x3mode">3x3 Layout:</string>     <!-- spinner label -->  <!-- TODO -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Fazer Nada</string>           <!-- setting -->
@@ -414,6 +419,13 @@
     <string name="actionMode_config">Reconfigurar Widget</string>      <!-- setting -->
     <string name="actionMode_launchActivity">Iniciar App</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Virar Visual</string>      <!-- setting -->
+
+    <string name="launchType_activity">Activity</string>           <!-- setting -->  <!-- TODO -->
+    <string name="launchType_broadcast">Broadcast</string>           <!-- setting -->  <!-- TODO -->
+    <string name="launchType_service">Service</string>           <!-- setting -->  <!-- TODO -->
+
+    <string name="expandMore">More</string>  <!-- contentDescription -->  <!-- TODO -->
+    <string name="expandLess">Less</string>  <!-- contentDescription -->  <!-- TODO -->
 
     <string name="configLabel_action">Configurar Ações</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Ao tocar:</string>                    <!-- spinner label -->
@@ -436,6 +448,7 @@
     <string name="configHint_location_alt">0</string>                                    <!-- edittext hint -->
     <string name="configLabel_location_name">Nome:</string>                      <!-- edittext label -->
     <string name="configHint_location_name">(opcional)</string>                  <!-- edittext hint -->
+    <string name="configHint_location_name0">Place Name</string>                  <!-- edittext hint -->  <!-- TODO -->
 
     <string name="configAction_getFix">Obter Localização</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">Editar</string>         <!-- button (contentDescription) -->
@@ -1006,6 +1019,8 @@
     <string name="configLabel_schedalarm_mode">Programar um alarme</string>
     <string name="configLabel_schednotify_mode">Programar uma notificação</string>
     <string name="schedalarm_dialog_title">@string/configAction_setAlarm</string>  <!-- may also be set to configAction_setNotification -->  <!-- TODO -->
+    <string name="schedalarm_dialog_tab_event">Event</string>                      <!-- tab text -->  <!-- TODO -->
+    <string name="schedalarm_dialog_tab_time">Time</string>                        <!-- tab text -->  <!-- TODO -->
     <string name="schedalarm_dialog_ok">Programar</string>  <!-- TODO -->
     <string name="schedalarm_dialog_cancel">Cancelar</string>
     <string name="schedalarm_dialog_error">Alarme cancelado…</string>
@@ -1089,6 +1104,7 @@
     <string name="gps_keeptrying_msg">Não foi possível obter uma posição.</string>
     <string name="gps_keeptrying_ok">Continuar tentando</string>
     <string name="gps_keeptrying_cancel">Cancelar</string>
+    <string name="gps_keeptrying_fallback">Use Last Position</string>  <!-- TODO -->
 
     <!-- Dialog: Use Date -->
     <string name="timedate_dialog_title">Definir Data</string>
@@ -1107,8 +1123,18 @@
     <string name="location_dialog_error_lat">Não é uma latitude válida.</string>
     <string name="location_dialog_error_lon">Não é uma longitude válida.</string>
     <string name="location_dialog_error_alt">Não é uma elevação válida.</string>
+    <string name="location_dialog_error_name">Enter a place name.</string>  <!-- TODO -->
 
     <string name="location_dialog_toast_copied">Copiado para a área de transferência<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
+
+    <!-- Dialog: Delete Place -->
+    <string name="locationdelete_dialog_title">Remove Place?</string>   <!-- title; remove 1 place --> <!-- TODO -->
+    <string name="locationdelete_dialog_title1">Remove Places?</string>  <!-- title; remove multiple places --> <!-- TODO -->
+    <string name="locationdelete_dialog_message">Are you sure you want to remove %s?</string>   <!-- TODO -->
+    <string name="locationdelete_dialog_success">Place was removed.</string>   <!-- toast --> <!-- TODO -->
+    <string name="locationdelete_dialog_success1">%s places were removed.</string>   <!-- toast; e.g. 2 places were deleted --> <!-- TODO -->
+    <string name="locationdelete_dialog_ok">Remove</string>  <!-- TODO -->
+    <string name="locationdelete_dialog_cancel">Cancel</string>  <!-- TODO -->
 
     <!-- Dialog: Clear Places -->
     <string name="locationclear_dialog_title">Limpar Lugares?</string>
@@ -1156,6 +1182,14 @@
     <string name="color_dialog_msg">Escolher Cor</string>
     <string name="color_dialog_ok">Selecionar</string>
     <string name="color_dialog_cancel">Cancelar</string>
+    <string name="color_dialog_tab1">1</string>  <!-- TODO -->
+    <string name="color_dialog_tab2">2</string>  <!-- TODO -->
+    <string name="color_dialog_tab3">3</string>  <!-- TODO -->
+    <string name="color_dialog_label_r">R</string>  <!-- TODO -->
+    <string name="color_dialog_label_g">G</string>  <!-- TODO -->
+    <string name="color_dialog_label_b">B</string>  <!-- TODO -->
+    <string name="color_dialog_label_a">A</string>  <!-- TODO -->
+    <string name="color_dialog_hint_rgba">0–255</string>  <!-- TODO -->
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">Sobre</string>
