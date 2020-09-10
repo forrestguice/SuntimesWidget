@@ -125,6 +125,11 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             args.putParcelable(EXTRA_LOCATION, WidgetSettings.loadLocationPref(getActivity(), 0));
         }
 
+        Context context = getActivity();
+        SolarEvents.initDisplayStrings(context);
+        AlarmClockItem.AlarmType.initDisplayStrings(context);
+        AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
+
         //setStyle(DialogFragment.STYLE_NO_FRAME, R.style.AppTheme);
         super.onCreate(savedState);
     }
