@@ -483,7 +483,7 @@
     <string name="delaction_dialog_msg1">Default actions cannot be removed.\n\nRevert to defaults?</string>    <!-- TODO -->
     <string name="delaction_dialog_ok">Delete</string>    <!-- TODO -->
     <string name="delaction_dialog_ok1">Revert</string>    <!-- TODO -->
-    <string name="delaction_dialog_cancel">Cancel</string>   <!-- TODO -->
+    <string name="delaction_dialog_cancel">Nuligi</string>
 
     <string name="clearactions_dialog_msg">Are you sure you want to reset to defaults?\n\nAll custom actions will be removed.</string>    <!-- TODO -->
     <string name="clearactions_dialog_ok">Clear</string>    <!-- TODO -->
@@ -704,7 +704,7 @@
 
     <string name="discardchanges_dialog_message">There are unsaved changes.</string>      <!-- dialog message -->  <!-- TODO -->
     <string name="discardchanges_dialog_ok">Discard</string>                              <!-- button -->  <!-- TODO -->
-    <string name="discardchanges_dialog_cancel">Cancel</string>                           <!-- button -->  <!-- TODO -->
+    <string name="discardchanges_dialog_cancel">Nuligi</string>                           <!-- button -->
     <string name="discardchanges_dialog_neutral">Save</string>                            <!-- button -->  <!-- TODO -->
 
     <string name="clearalarms_dialog_title">Forigi ĉiujn alarmojn</string>        <!-- dialog title -->
@@ -1144,7 +1144,7 @@
     <string name="locationdelete_dialog_success">Place was removed.</string>   <!-- toast --> <!-- TODO -->
     <string name="locationdelete_dialog_success1">%s places were removed.</string>   <!-- toast; e.g. 2 places were deleted --> <!-- TODO -->
     <string name="locationdelete_dialog_ok">Remove</string>  <!-- TODO -->
-    <string name="locationdelete_dialog_cancel">Cancel</string>  <!-- TODO -->
+    <string name="locationdelete_dialog_cancel">Nuligi</string>
 
     <!-- Dialog: Clear Places -->
     <string name="locationclear_dialog_title">Ĉu forigi lokojn?</string>
