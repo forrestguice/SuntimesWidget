@@ -17,7 +17,7 @@ app_locales:
  - pt_BR Portuguese
  - zh_TW Chinese
 app_versions:
- - v0.9.5
+ - v0.13.0
  - v0.13.0
 app_versions1:
  - v0.3.1
