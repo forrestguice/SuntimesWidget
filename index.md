@@ -15,8 +15,8 @@
 <p>{% include gallery_nav.html gallery_root = "gallery/" %}</p>
 <div>
 {% assign screenshot_width = '200px' %}
-<a href="gallery/en"><img alt="screenshot1" src="{{ 'doc/screenshots/v0.9.5/en/activity-main0-dark.png' | relative_url }}" width="{{ screenshot_width }}" alt="screenshot1" /></a>&nbsp;&nbsp;
-<a href="gallery/en"><img alt="screenshot2" src="{{ 'doc/screenshots/v0.11.3/en/activity-alarms0-dark.png' | relative_url }}" width="{{ screenshot_width }}" alt="screenshot2" /></a>&nbsp;&nbsp;
+<a href="gallery/en"><img alt="screenshot1" src="{{ 'doc/screenshots/v0.13.0/en/activity-main0-dark.png' | relative_url }}" width="{{ screenshot_width }}" alt="screenshot1" /></a>&nbsp;&nbsp;
+<a href="gallery/en"><img alt="screenshot2" src="{{ 'doc/screenshots/v0.13.0/en/activity-alarms0-dark.png' | relative_url }}" width="{{ screenshot_width }}" alt="screenshot2" /></a>&nbsp;&nbsp;
 <a href="gallery/en"><img alt="screenshot3" src="{{ 'doc/screenshots/suntimescalendars/v0.3.1/en/activity-calendars0.png' | relative_url }}" width="{{ screenshot_width }}" alt="screenshot3" /></a>
 </div>
 
