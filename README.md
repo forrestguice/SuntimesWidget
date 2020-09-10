@@ -93,7 +93,7 @@ Widgets are resizable and include...
 <img height="256px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/sunposwidget0_3x2_preview.png" align="center"></img>
 <br />Additional screenshots can be found on the <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Screenshots">project wiki</a> and in the <a href="https://github.com/forrestguice/SuntimesWidget/tree/gh-pages/doc/screenshots">gh-pages branch</a>.
 
-<img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.9.5/en/activity-main0-dark.png' width="280px" />&nbsp;&nbsp;<img alt="screenshot2" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.11.3/en/activity-alarms0-dark.png' width="280px" />&nbsp;&nbsp;<img alt="screenshot3" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.9.5/en/activity-main0-light.png' width="280px" />
+<img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.13.0/en/activity-main0-dark.png' width="280px" />&nbsp;&nbsp;<img alt="screenshot2" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.13.0/en/activity-alarms0-dark.png' width="280px" />&nbsp;&nbsp;<img alt="screenshot3" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.13.0/en/activity-main0-light.png' width="280px" />
 
 ## Privacy and Permissions ##
 
