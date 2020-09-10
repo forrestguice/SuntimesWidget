@@ -598,9 +598,13 @@
     <string name="configLabel_alarmClock">Alarmes</string>            <!-- group title -->  
     <string name="configLabel_alarmClock_emptyMsg">Sense alarmes</string>     <!-- a label that is displayed in place of an empty listview -->  
     <string name="configAction_addAlarm">Afegir alarma</string>               <!-- button (contentDescription) -->  
-    <string name="configAction_addNotification">Afegir notificació</string> <!-- button (contentDescription) -->  
+    <string name="configAction_addNotification">Afegir notificació</string> <!-- button (contentDescription) -->
+    <string name="configAction_editAlarm">Edit</string>               <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_deleteAlarm">Elimina</string>               <!-- button (contentDescription) -->  
     <string name="configAction_clearAlarms">Elimina tot</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms">Sort</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="configAction_sortAlarms_by_time">Alarm Time</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="configAction_sortAlarms_by_creation">Creation Date</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_clearOffset">Elimina</string>                <!-- action button / menu item -->  
     <string name="configAction_setAlarmOffset">Retard</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmType">Tipus</string>         <!-- button (contentDescription) -->  
@@ -608,9 +612,14 @@
     <string name="configAction_setAlarmLocation">Localització</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmRepeat">Repetició</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmEvent">Event</string>         <!-- button (contentDescription) -->  
-    <string name="configAction_setAlarmTime">Hora</string>         <!-- button (contentDescription) -->  
+    <string name="configAction_setAlarmTime">Hora</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmAction">Set Action</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmSound">So</string>         <!-- button (contentDescription) -->
-    <string name="configAction_alarmMenu">Menú d\'alarmes</string>         <!-- button (contentDescription) -->  
+    <string name="configAction_alarmMenu">Menú d\'alarmes</string>         <!-- button (contentDescription) -->
+    <string name="configAction_saveAlarm">Save</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_enableAlarm">Save &amp; Enable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_disableAlarm">Save &amp; Disable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_undo">Undo</string>               <!-- button (contentDescription) -->  <!-- TODO -->
 
     <string name="alarmAction_dismiss">Ignorar</string>                <!-- notification action button -->  
     <string name="alarmAction_snooze">Posposar</string>                  <!-- notification action button -->  
@@ -623,7 +632,11 @@
     <string name="alarmAction_upcomingMsg">Alarma inminent</string>     <!-- notification msg -->  
 
     <string name="alarmMode_alarm">Alarma</string>                <!-- alarm type (setting) -->  
-    <string name="alarmMode_notification">Notificació</string>                <!-- alarm type (setting) -->  
+    <string name="alarmMode_notification">Notificació</string>                <!-- alarm type (setting) -->
+
+    <string name="configLabel_alarmEdit_scheduleTray">Schedule:</string>               <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_alarmEdit_onAlertTray">On Alert:</string>               <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_alarmEdit_onDismissTray">On Dismiss:</string>               <!-- group title -->  <!-- TODO -->
 
     <string name="alarmOption_vibrate">Vibrar</string>                <!-- checkbox text -->
     <string name="alarmOption_ringtone_none">Sense so</string>          <!-- ringtone label (none) -->  
@@ -638,7 +651,12 @@
     <string name="deletealarm_dialog_message">Estàs segur de voler esborrar <xliff:g id="type">%1$s</xliff:g> de les <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg --> 
     <string name="deletealarm_dialog_ok">Esborra</string>        <!-- button --> 
     <string name="deletealarm_dialog_cancel">Canceŀla</string>    <!-- button --> 
-    <string name="deletealarm_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> de les <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) s\'ha esborrat.</string> <!-- toast msg --> 
+    <string name="deletealarm_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> de les <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) s\'ha esborrat.</string> <!-- toast msg -->
+
+    <string name="discardchanges_dialog_message">There are unsaved changes.</string>      <!-- dialog message -->  <!-- TODO -->
+    <string name="discardchanges_dialog_ok">Discard</string>                              <!-- button -->  <!-- TODO -->
+    <string name="discardchanges_dialog_cancel">Cancel</string>                           <!-- button -->  <!-- TODO -->
+    <string name="discardchanges_dialog_neutral">Save</string>                            <!-- button -->  <!-- TODO -->
 
     <string name="clearalarms_dialog_title">Elimina les alarmes</string>        <!-- dialog title -->  
     <string name="clearalarms_dialog_message">Estàs segur de voler esborrar totes les alarmes?</string>   <!-- dialog msg --> 
@@ -648,7 +666,8 @@
 
     <string name="alarmlabel_dialog_title">Etiqueta</string>        <!-- dialog title -->  
     <string name="alarmlabel_dialog_ok">Aplica</string>        <!-- button --> 
-    <string name="alarmlabel_dialog_cancel">Canceŀla</string>    <!-- button --> 
+    <string name="alarmlabel_dialog_cancel">Canceŀla</string>    <!-- button -->
+    <string name="alarmlabel_hint">Etiqueta</string>        <!-- EditText hint -->
 
     <string name="alarmrepeat_dialog_title">Repeteix l\'alarma</string>        <!-- dialog title -->  
     <string name="alarmrepeat_dialog_ok">Aplica</string>        <!-- button --> 
@@ -742,10 +761,21 @@
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Llocs</string>                           <!-- group title -->
+    <string name="configLabel_places_emptyMsg">@string/configLabel_places</string>    <!-- TODO -->
+    <string name="configLabel_places_multiSelect">%s places</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->   <!-- TODO -->
     <string name="configLabel_places_export">Exportar llocs</string>
     <string name="configLabel_places_clear">Borrar llocs</string>
     <string name="configLabel_places_build">Afegir llocs del món</string>
     <string name="configLabel_places_build_summary">Cerca locals i afegeix ciutats a la base de dades.</string>
+
+    <string name="configAction_addPlace">Add</string>              <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_copyPlace">Copy</string>            <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_selectPlace">Select</string>        <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_searchPlace">Search</string>              <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_sharePlace">Share</string>          <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_deletePlace">Delete</string>        <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_clearPlaces">Clear</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_exportPlaces">Export</string>       <!-- button (contentDescription) -->  <!-- TODO -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interfície d\'usuari</string>                       <!-- group title -->
@@ -813,6 +843,15 @@
     <string name="configActionDesc_prevNote">Mostrar nota anterior</string>
     <string name="configActionDesc_resetNote">Reset note</string>  <!-- TODO -->
     <string name="configActionDesc_showCalendar">Mostra aplicació de calendari</string>
+    <string name="configActionDesc_mapLocation">Show location on map</string>  <!-- TODO -->
+    <string name="configActionDesc_setAlarm">Set an alarm</string>  <!-- TODO -->
+    <string name="configActionDesc_worldMap">World Map Dialog</string>  <!-- TODO -->
+    <string name="configActionDesc_equinoxDialog">Solstices Dialog</string>  <!-- TODO -->
+    <string name="configActionDesc_moon">Moon Dialog</string>  <!-- TODO -->
+    <string name="configActionDesc_sunDialog">Sun Dialog</string>  <!-- TODO -->
+    <string name="configActionDesc_setDate">Set date</string>  <!-- TODO -->
+    <string name="configActionDesc_setTimeZone">Set time zone</string>  <!-- TODO -->
+    <string name="configActionDesc_setLocation">Set location</string>  <!-- TODO -->
     <string name="configActionDesc_swapCards">Intercanviar targetes (avui/demà)</string>
     <string name="configActionDesc_setAlarmForNote">Posar una alarma a la nota</string>
 
