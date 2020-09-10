@@ -1,6 +1,6 @@
 ### ~
 
-### v0.13.0 (2020-09-09)
+### v0.13.0 (2020-09-10)
 * adds "lunar noon" and "lunar midnight" to notes and alarms.
 * improves SuntimesAlarms support for polar regions; it is now possible to schedule alarms for infrequently occurring twilight events.
 * adds PlacesActivity; adds support for searching places; adds support for deleting individual places (#419); adds undo clear/delete places; extends place selection to add-on apps.
@@ -17,6 +17,8 @@
 * (SuntimesAlarms) adds support for undo delete alarms.
 * (SuntimesAlarms) alarm database version 2 -> 3; adds columns "actionID0", "actionID1.
 * adds %dm to %substitutions; widget update time in milliseconds.
+* tweaks 2x1 sun widget layout (#423) to center the time.
+* fixes adaptive icon shape.
 
 ### v0.12.11 (2020-06-16)
 * fixes bug "sun position widget does not render midnight sun" (#421).
