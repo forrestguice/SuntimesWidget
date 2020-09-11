@@ -484,7 +484,7 @@
 
     <string name="delaction_dialog_msg">Are you sure you want to delete %1$s (%2$s)?</string>    <!-- TODO -->
     <string name="delaction_dialog_msg1">Default actions cannot be removed.\n\nRevert to defaults?</string>    <!-- TODO -->
-    <string name="delaction_dialog_ok">Delete</string>    <!-- TODO -->
+    <string name="delaction_dialog_ok">Borrar</string>
     <string name="delaction_dialog_ok1">Revert</string>    <!-- TODO -->
     <string name="delaction_dialog_cancel">Cancelar</string>
 
@@ -493,7 +493,7 @@
     <string name="clearactions_toast">Actions reset to defaults.</string>    <!-- TODO -->
 
     <string name="saveaction_dialog_title">Add Action</string>    <!-- TODO -->
-    <string name="saveaction_dialog_ok">Save</string>    <!-- TODO -->
+    <string name="saveaction_dialog_ok">Guardar</string>
     <string name="saveaction_dialog_suggest">Suggest</string>                  <!-- TODO -->
     <string name="saveaction_toast">Saved action \"%1$s\" (%2$s).</string>    <!-- TODO -->
 
@@ -502,15 +502,15 @@
 
     <string name="startaction_failed_toast">Failed to start %s!</string>         <!-- error toast -->  <!-- TODO -->
 
-    <string name="configAction_addAction">Add</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_editAction">Edit</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_addAction">Añadir</string>           <!-- button (contentDescription) -->
+    <string name="configAction_editAction">Editar</string>           <!-- button (contentDescription) -->
     <string name="configAction_testAction">Test</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_saveAction">Save</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_saveAction">Guardar</string>         <!-- button (contentDescription) -->
     <string name="configAction_loadAction">Load</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_deleteAction">Delete</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_deleteAction">Borrar</string>         <!-- button (contentDescription) -->
     <string name="configAction_clearActions">Clear All</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_exportActions">Export</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_importActions">Import</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_exportActions">Exportar</string>         <!-- button (contentDescription) -->
+    <string name="configAction_importActions">Importar</string>         <!-- button (contentDescription) -->
 
     
     <string name="configLabel_widgetThemeList">Temas de widget</string>
@@ -652,7 +652,7 @@
 
     <string name="configAction_addAlarm">Añadir alarma</string>               <!-- button (contentDescription) -->  
     <string name="configAction_addNotification">Añadir notificación</string> <!-- button (contentDescription) -->
-    <string name="configAction_editAlarm">Edit</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_editAlarm">Editar</string>               <!-- button (contentDescription) -->
     <string name="configAction_deleteAlarm">Suprimir</string>               <!-- button (contentDescription) -->  
     <string name="configAction_clearAlarms">Suprimir todo</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms">Sort</string>                <!-- action button / menu item -->  <!-- TODO -->
@@ -669,7 +669,7 @@
     <string name="configAction_setAlarmAction">Set Action</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmSound">Sonido</string>         <!-- button (contentDescription) -->
     <string name="configAction_alarmMenu">Menú de alarma</string>         <!-- button (contentDescription) -->
-    <string name="configAction_saveAlarm">Save</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_saveAlarm">Guardar</string>               <!-- button (contentDescription) -->
     <string name="configAction_enableAlarm">Save &amp; Enable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_disableAlarm">Save &amp; Disable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_undo">Undo</string>               <!-- button (contentDescription) -->  <!-- TODO -->
@@ -709,7 +709,7 @@
     <string name="discardchanges_dialog_message">There are unsaved changes.</string>      <!-- dialog message -->  <!-- TODO -->
     <string name="discardchanges_dialog_ok">Discard</string>                              <!-- button -->  <!-- TODO -->
     <string name="discardchanges_dialog_cancel">Cancelar</string>                           <!-- button -->
-    <string name="discardchanges_dialog_neutral">Save</string>                            <!-- button -->  <!-- TODO -->
+    <string name="discardchanges_dialog_neutral">Guardar</string>                            <!-- button -->
 
     <string name="clearalarms_dialog_title">Suprimir alarmas</string>        <!-- dialog title -->  
     <string name="clearalarms_dialog_message">¿Estás seguro de querer suprimir todas las alarmas?</string>   <!-- dialog msg --> 
@@ -815,22 +815,20 @@
 
     
     <string name="configLabel_places">Lugares</string>
-    <string name="configLabel_places_emptyMsg">@string/configLabel_places</string>    <!-- TODO -->
+    <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
     <string name="configLabel_places_multiSelect">%s places</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->   <!-- TODO -->
-    <string name="configLabel_places_export">Exportar lugares</string>
-    <string name="configLabel_places_clear">Borrar lugares</string>
     <string name="configLabel_places_build">Añadir sitios del mundo</string>
     <string name="configLabel_places_build_summary">Buscar locales y añadir ciudades en la base de datos.</string>
 
 
-    <string name="configAction_addPlace">Add</string>              <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_copyPlace">Copy</string>            <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_selectPlace">Select</string>        <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_addPlace">Añadir</string>              <!-- button (contentDescription) -->
+    <string name="configAction_copyPlace">Copiar</string>            <!-- button (contentDescription) -->
+    <string name="configAction_selectPlace">Seleccionar</string>        <!-- button (contentDescription) -->
     <string name="configAction_searchPlace">Search</string>              <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_sharePlace">Share</string>          <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_deletePlace">Delete</string>        <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_sharePlace">Compartir</string>          <!-- button (contentDescription) -->
+    <string name="configAction_deletePlace">Borrar</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Clear</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_exportPlaces">Export</string>       <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_exportPlaces">Exportar</string>       <!-- button (contentDescription) -->
 
     
     <string name="configLabel_ui">Interfaz de usuario</string>
