@@ -816,10 +816,8 @@
 
   <!-- App Setting: Places -->
   <string name="configLabel_places">Orte</string>                           <!-- group title -->
-  <string name="configLabel_places_emptyMsg">@string/configLabel_places</string>    <!-- TODO -->
+  <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
   <string name="configLabel_places_multiSelect">%s places</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->   <!-- TODO -->
-  <string name="configLabel_places_export">Exportiere Orte</string>
-  <string name="configLabel_places_clear">Lösche Orte</string>
   <string name="configLabel_places_build">Orte hinzufügen</string>
   <string name="configLabel_places_build_summary">Untersuche Gebietsschemata und füge Städe zur Datenbank hinzu.</string>
 
@@ -828,9 +826,9 @@
   <string name="configAction_selectPlace">Select</string>        <!-- button (contentDescription) -->  <!-- TODO -->
   <string name="configAction_searchPlace">Search</string>              <!-- button (contentDescription) -->  <!-- TODO -->
   <string name="configAction_sharePlace">Share</string>          <!-- button (contentDescription) -->  <!-- TODO -->
-  <string name="configAction_deletePlace">Delete</string>        <!-- button (contentDescription) -->  <!-- TODO -->
+  <string name="configAction_deletePlace">Lösche</string>        <!-- button (contentDescription) -->
   <string name="configAction_clearPlaces">Clear</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-  <string name="configAction_exportPlaces">Export</string>       <!-- button (contentDescription) -->  <!-- TODO -->
+  <string name="configAction_exportPlaces">Exportiere</string>       <!-- button (contentDescription) -->
 
   <!-- App Setting: UI -->
   <string name="configLabel_ui">Benutzeroberfläche</string>                       <!-- group title -->

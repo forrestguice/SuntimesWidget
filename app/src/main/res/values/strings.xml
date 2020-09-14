@@ -880,8 +880,6 @@
     <string name="configLabel_places">Places</string>                           <!-- group title -->
     <string name="configLabel_places_emptyMsg">@string/configLabel_places</string>
     <string name="configLabel_places_multiSelect">%s places</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->   <!-- TODO: needs to be a plural? -->
-    <string name="configLabel_places_export">Export Places</string>  <!-- TODO: remove -->
-    <string name="configLabel_places_clear">Clear Places</string>   <!-- TODO: remove -->
     <string name="configLabel_places_build">Add World Places</string>
     <string name="configLabel_places_build_summary">Scan locales and add cities to the database.</string>
 

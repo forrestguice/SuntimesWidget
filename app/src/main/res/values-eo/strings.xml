@@ -481,16 +481,16 @@
 
     <string name="delaction_dialog_msg">Are you sure you want to delete %1$s (%2$s)?</string>    <!-- TODO -->
     <string name="delaction_dialog_msg1">Default actions cannot be removed.\n\nRevert to defaults?</string>    <!-- TODO -->
-    <string name="delaction_dialog_ok">Delete</string>    <!-- TODO -->
+    <string name="delaction_dialog_ok">Forigi</string>
     <string name="delaction_dialog_ok1">Revert</string>    <!-- TODO -->
     <string name="delaction_dialog_cancel">Nuligi</string>
 
     <string name="clearactions_dialog_msg">Are you sure you want to reset to defaults?\n\nAll custom actions will be removed.</string>    <!-- TODO -->
-    <string name="clearactions_dialog_ok">Clear</string>    <!-- TODO -->
+    <string name="clearactions_dialog_ok">Forigi ĉiujn</string>
     <string name="clearactions_toast">Actions reset to defaults.</string>    <!-- TODO -->
 
     <string name="saveaction_dialog_title">Add Action</string>    <!-- TODO -->
-    <string name="saveaction_dialog_ok">Save</string>    <!-- TODO -->
+    <string name="saveaction_dialog_ok">Konservi</string>
     <string name="saveaction_dialog_suggest">Suggest</string>                  <!-- TODO -->
     <string name="saveaction_toast">Saved action \"%1$s\" (%2$s).</string>    <!-- TODO -->
 
@@ -499,15 +499,15 @@
 
     <string name="startaction_failed_toast">Failed to start %s!</string>         <!-- error toast -->  <!-- TODO -->
 
-    <string name="configAction_addAction">Add</string>           <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_editAction">Edit</string>           <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_addAction">Aldoni</string>           <!-- button (contentDescription) -->
+    <string name="configAction_editAction">Redakti</string>           <!-- button (contentDescription) -->
     <string name="configAction_testAction">Test</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_saveAction">Save</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_saveAction">Konservi</string>         <!-- button (contentDescription) -->
     <string name="configAction_loadAction">Load</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_deleteAction">Delete</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_clearActions">Clear All</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_exportActions">Export</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_importActions">Import</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_deleteAction">Forigi</string>         <!-- button (contentDescription) -->
+    <string name="configAction_clearActions">Forigi ĉiujn</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportActions">Eksporti</string>         <!-- button (contentDescription) -->
+    <string name="configAction_importActions">Enporti</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: Themes -->
     <string name="configLabel_widgetThemeList">Fenestraĵa etoso</string>
@@ -517,7 +517,7 @@
     <string name="configAction_editTheme">Redakti</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteTheme">Forigi</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Kopii</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportThemes">Elporti</string>    <!-- button (contentDescription) -->
+    <string name="configAction_exportThemes">Eksporti</string>    <!-- button (contentDescription) -->
     <string name="configAction_shareTheme">Kunhavigi</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
     <string name="configAction_importThemes">Enporti</string>    <!-- button (contentDescription) -->
 
@@ -648,9 +648,9 @@
     <string name="configLabel_alarmClock_emptyMsg">Neniuj alarmoj</string>     <!-- a label that is displayed in place of an empty listview -->
     <string name="configAction_addAlarm">Agordi alarmon</string>               <!-- button (contentDescription) -->
     <string name="configAction_addNotification">Agordi sciigon</string> <!-- button (contentDescription) -->
-    <string name="configAction_editAlarm">Edit</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_editAlarm">Redakti</string>               <!-- button (contentDescription) -->
     <string name="configAction_deleteAlarm">Forigi</string>               <!-- button (contentDescription) -->
-    <string name="configAction_clearAlarms">Forgi ĉiujn</string>                <!-- action button / menu item -->
+    <string name="configAction_clearAlarms">Forigi ĉiujn</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms">Sort</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_sortAlarms_by_time">Alarm Time</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_sortAlarms_by_creation">Creation Date</string>                <!-- action button / menu item -->  <!-- TODO -->
@@ -665,7 +665,7 @@
     <string name="configAction_setAlarmAction">Set Action</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmSound">Agordi sonon</string>         <!-- button (contentDescription) -->
     <string name="configAction_alarmMenu">Alarma menuo</string>         <!-- button (contentDescription) -->
-    <string name="configAction_saveAlarm">Save</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_saveAlarm">Konservi</string>               <!-- button (contentDescription) -->
     <string name="configAction_enableAlarm">Save &amp; Enable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_disableAlarm">Save &amp; Disable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_undo">Undo</string>               <!-- button (contentDescription) -->  <!-- TODO -->
@@ -705,7 +705,7 @@
     <string name="discardchanges_dialog_message">There are unsaved changes.</string>      <!-- dialog message -->  <!-- TODO -->
     <string name="discardchanges_dialog_ok">Discard</string>                              <!-- button -->  <!-- TODO -->
     <string name="discardchanges_dialog_cancel">Nuligi</string>                           <!-- button -->
-    <string name="discardchanges_dialog_neutral">Save</string>                            <!-- button -->  <!-- TODO -->
+    <string name="discardchanges_dialog_neutral">Konservi</string>                            <!-- button -->
 
     <string name="clearalarms_dialog_title">Forigi ĉiujn alarmojn</string>        <!-- dialog title -->
     <string name="clearalarms_dialog_message">Ĉu vi certe volas forigi ĉiujn alarmojn?</string>   <!-- dialog msg -->
@@ -809,21 +809,19 @@
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Lokoj</string>                           <!-- group title -->
-    <string name="configLabel_places_emptyMsg">@string/configLabel_places</string>    <!-- TODO -->
+    <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
     <string name="configLabel_places_multiSelect">%s places</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->   <!-- TODO -->
-    <string name="configLabel_places_export">Elporti lokojn</string>
-    <string name="configLabel_places_clear">Forviŝi lokojn</string>
     <string name="configLabel_places_build">Aldoni mondajn lokojn</string>
     <string name="configLabel_places_build_summary">Skani lokojn kaj aldoni urbojn al la datumbazo.</string>
 
-    <string name="configAction_addPlace">Add</string>              <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_copyPlace">Copy</string>            <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_selectPlace">Select</string>        <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_addPlace">Aldoni</string>              <!-- button (contentDescription) -->
+    <string name="configAction_copyPlace">Kopii</string>            <!-- button (contentDescription) -->
+    <string name="configAction_selectPlace">Elekti</string>        <!-- button (contentDescription) -->
     <string name="configAction_searchPlace">Search</string>              <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_sharePlace">Share</string>          <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_deletePlace">Delete</string>        <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_clearPlaces">Clear</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_exportPlaces">Export</string>       <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_sharePlace">Kunhavigi</string>          <!-- button (contentDescription) -->
+    <string name="configAction_deletePlace">Forigi</string>        <!-- button (contentDescription) -->
+    <string name="configAction_clearPlaces">Forviŝi ĉiujn</string>         <!-- button (contentDescription) -->  <!-- TODO: Forigi aŭ Forviŝi ? -->
+    <string name="configAction_exportPlaces">Eksporti</string>       <!-- button (contentDescription) -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Fasado</string>                       <!-- group title -->
@@ -1172,8 +1170,8 @@
 
     <!-- Dialog: Export -->
     <string name="msg_export_success">Provizore kopiita al <xliff:g id="filepath">%s</xliff:g></string>
-    <string name="msg_export_failure">Elportado al <xliff:g id="filepath">%s</xliff:g> malsukcesis!</string>
-    <string name="msg_export_to">Elporti per</string>  <!-- title displayed over "share action" chooser -->
+    <string name="msg_export_failure">Eksporti al <xliff:g id="filepath">%s</xliff:g> malsukcesis!</string>
+    <string name="msg_export_to">Eksporti per</string>  <!-- title displayed over "share action" chooser -->
 
     <!-- Dialog: Import Themes -->
     <string name="themesimport_dialog_title">Enporti etosojn</string>

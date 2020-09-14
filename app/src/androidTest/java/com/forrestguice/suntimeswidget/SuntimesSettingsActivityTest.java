@@ -238,14 +238,14 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
     {
         verifyPlacesSettings_gpsTimeLimit(context);
         verifyPlacesSettings_gpsMaxAge(context);
-        onView(withText(context.getString(R.string.configLabel_places_export))).check(assertEnabled);
-        onView(withText(context.getString(R.string.configLabel_places_clear))).check(assertEnabled);
+        //onView(withText(context.getString(R.string.configLabel_places_export))).check(assertEnabled);  // TODO: move to PlacesActivity
+        //onView(withText(context.getString(R.string.configLabel_places_clear))).check(assertEnabled);
     }
 
     public static void showClearPlacesDialog(Context context)
     {
-        onView(withText(context.getString(R.string.configLabel_places_clear))).perform(click());
-        verifyClearPlacesDialog(context);
+        //onView(withText(context.getString(R.string.configLabel_places_clear))).perform(click());  // TODO: move to PlacesActivity
+        //verifyClearPlacesDialog(context);
     }
 
     public static void verifyClearPlacesDialog(Context context)
