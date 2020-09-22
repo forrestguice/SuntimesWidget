@@ -400,7 +400,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         formatter.setMinimumFractionDigits(0);
         formatter.setMaximumFractionDigits(2);
         if (meters < Double.POSITIVE_INFINITY)
-            return SuntimesUtils.formatAsHeight(context, meters, units, 2, true).toString();
+            return SuntimesUtils.formatAsDistance(context, SuntimesUtils.formatAsHeight(context, meters, units, 2, true));
         else return formatter.format(meters);
     }
 
