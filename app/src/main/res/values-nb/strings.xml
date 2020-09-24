@@ -821,7 +821,7 @@
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Steder</string>                           <!-- group title -->
-    <string name="configLabel_places_manage">Manage Places</string>             <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_places_manage">Håndter steder</string>             <!-- group title -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
     <string name="configLabel_places_multiSelect">%s steder</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->
     <string name="configLabel_places_build">Legg til verdenssteder</string>
