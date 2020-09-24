@@ -7,7 +7,7 @@
         <Preference
             android:key="places_manage"
             android:persistent="false"
-            android:title="Manage Places"
+            android:title="@string/configLabel_places_manage"
             android:icon="?attr/icActionPlace" />
 
         <com.forrestguice.suntimeswidget.settings.ListPreference
