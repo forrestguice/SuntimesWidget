@@ -115,6 +115,7 @@ public class SuntimesUtils
     protected static String strElevationFormat = "%1$s%2$s";
     protected static String strDeclinationFormat = "%1$s %2$s";
     protected static String strRaFormat = "%1$s %2$s";
+    protected static String strDistanceFormat = "%1$s\u00A0%2%s";
 
     public static String strTimeDeltaFormat = "%1$s"  + strEmpty + "%2$s";
     protected static String strTimeShortFormat12 = "h:mm\u00A0a";
@@ -168,6 +169,7 @@ public class SuntimesUtils
         strElevationFormat = context.getString(R.string.elevation_format);
         strRaFormat = context.getString(R.string.rightascension_format);
         strDeclinationFormat = context.getString(R.string.declination_format);
+        strDistanceFormat = context.getString(R.string.distance_format);
 
         strTimeDeltaFormat = context.getString(R.string.delta_format);
         strTimeVeryShortFormat12 = context.getString(R.string.time_format_12hr_veryshort);
@@ -1021,6 +1023,10 @@ public class SuntimesUtils
         formatter.setMinimumFractionDigits(0);
         formatter.setMaximumFractionDigits(places);
         return new TimeDisplayText(formatter.format(value), unitsString, "");
+    }
+
+    public static String formatAsDistance(Context context, TimeDisplayText text) {
+        return String.format(strDistanceFormat, text.getValue(), text.getUnits());
     }
 
     /**

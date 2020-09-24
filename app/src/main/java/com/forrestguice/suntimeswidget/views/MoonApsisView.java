@@ -460,7 +460,7 @@ public class MoonApsisView extends LinearLayout
                 labelView.setText(context.getString(isRising ? R.string.label_apogee : R.string.label_perigee));
                 timeView.setText(utils.calendarDateTimeDisplayString(context, apsis.first, showTime, showSeconds).getValue());
                 noteView.setText(createApsisNote(context, apsis.first, showWeeks, showHours, timeColor));
-                positionView.setText(SuntimesUtils.formatAsDistance(context, apsis.second.distance, units, 2, true).toString());
+                positionView.setText(SuntimesUtils.formatAsDistance(context, SuntimesUtils.formatAsDistance(context, apsis.second.distance, units, 2, true)));
 
                 timeView.setVisibility(View.VISIBLE);
                 noteView.setVisibility(View.VISIBLE);

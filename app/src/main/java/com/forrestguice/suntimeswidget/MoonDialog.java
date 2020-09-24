@@ -241,7 +241,7 @@ public class MoonDialog extends BottomSheetDialogFragment
             if (position != null)
             {
                 SuntimesUtils.TimeDisplayText distance = SuntimesUtils.formatAsDistance(context, position.distance, units, 2, true);
-                moondistance.setText(SuntimesUtils.createColorSpan(null, distance.toString(), distance.getValue(), (moonapsis.isRising() ? riseColor : setColor)));
+                moondistance.setText(SuntimesUtils.createColorSpan(null, SuntimesUtils.formatAsDistance(context, distance), distance.getValue(), (moonapsis.isRising() ? riseColor : setColor)));
 
                 if (SuntimesMoonData.isSuperMoon(position))
                     moondistance_note.setText(context.getString(R.string.timeMode_moon_super));
