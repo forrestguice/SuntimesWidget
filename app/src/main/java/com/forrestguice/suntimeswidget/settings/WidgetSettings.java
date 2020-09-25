@@ -1866,13 +1866,31 @@ public class WidgetSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
-        String altString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE, PREF_DEF_LOCATION_ALTITUDE);
-        String lonString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LONGITUDE, PREF_DEF_LOCATION_LONGITUDE);
-        String latString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LATITUDE, PREF_DEF_LOCATION_LATITUDE);
-        String nameString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LABEL, PREF_DEF_LOCATION_LABEL);
+
+        String defaultAlt = PREF_DEF_LOCATION_ALTITUDE;   // locale defaults
+        String defaultLon = PREF_DEF_LOCATION_LONGITUDE;
+        String defaultLat = PREF_DEF_LOCATION_LATITUDE;
+        String defaultName = PREF_DEF_LOCATION_LABEL;
+        boolean defaultUseAltitude = PREF_DEF_LOCATION_ALTITUDE_ENABLED;
+
+        String nameString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LABEL, null);
+        if (nameString == null)
+        {
+            String prefs_prefix0 = PREF_PREFIX_KEY + "0" + PREF_PREFIX_KEY_LOCATION;    // prefer app configuration (if it exists) over locale default
+            defaultAlt = prefs.getString(prefs_prefix0 + PREF_KEY_LOCATION_ALTITUDE, PREF_DEF_LOCATION_ALTITUDE);
+            defaultLon = prefs.getString(prefs_prefix0 + PREF_KEY_LOCATION_LONGITUDE, PREF_DEF_LOCATION_LONGITUDE);
+            defaultLat = prefs.getString(prefs_prefix0 + PREF_KEY_LOCATION_LATITUDE, PREF_DEF_LOCATION_LATITUDE);
+            defaultName = prefs.getString(prefs_prefix0 + PREF_KEY_LOCATION_LABEL, PREF_DEF_LOCATION_LABEL);
+            defaultUseAltitude = prefs.getBoolean(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE_ENABLED, PREF_DEF_LOCATION_ALTITUDE_ENABLED);
+        }
+
+        String altString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE, defaultAlt);
+        String lonString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LONGITUDE, defaultLon);
+        String latString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LATITUDE, defaultLat);
+        nameString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LABEL, defaultName);
 
         Location location = new Location(nameString, latString, lonString, altString);
-        location.setUseAltitude(prefs.getBoolean(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE_ENABLED, PREF_DEF_LOCATION_ALTITUDE_ENABLED));
+        location.setUseAltitude(prefs.getBoolean(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE_ENABLED, defaultUseAltitude));
         return location;
     }
     public static void deleteLocationPref(Context context, int appWidgetId)
