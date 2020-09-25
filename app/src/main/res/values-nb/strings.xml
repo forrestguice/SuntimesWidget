@@ -16,7 +16,7 @@
     <string name="configAction_mapLocation">Vis kart</string>
     <string name="configAction_mapLocation_chooser">Vis sted med</string>
     <string name="configAction_mapLocation_noapp">Kan ikke finne kartprogram!</string>
-    <string name="configAction_showCalendar">Calendar</string>  <!-- TODO -->
+    <string name="configAction_showCalendar">Kalender</string>
     <string name="configAction_setAlarm">Alarm</string>
     <string name="configAction_setTimeZone">Tidssone</string>
     <string name="configAction_setDate">Dato</string>
@@ -26,7 +26,7 @@
     <string name="configAction_worldMap">Verdenskart</string>
     <string name="configAction_moon">Månen</string>
     <string name="configAction_help">Hjelp</string>
-    <string name="configAction_overflow">More</string>  <!-- TODO -->
+    <string name="configAction_overflow">Mer</string>
     <string name="configAction_settings">Innstillinger</string>
     <string name="configAction_aboutWidget">Om</string>
 
@@ -45,7 +45,7 @@
          The time zone field that appears below the clock (main activity).
     -->
     <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
-    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> The time zone may be wrong for this location.</string>  <!-- snackbar message -->
+    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Tidssonen kan være feil for dette stedet.</string>  <!-- snackbar message -->
     <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Sommertid</string>  <!-- timezone dialog label -->
     <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> tidsjevning</string>  <!-- timezone dialog label -->
 
@@ -140,8 +140,8 @@
     <string name="untilEnd_bluehour">blå time</string>
     <string name="until_moonrise">måneoppgang</string>
     <string name="until_moonset">månenedgang</string>
-    <string name="until_moonnoon">lunar noon</string>   <!-- TODO -->
-    <string name="until_moonnight">lunar midnight</string>   <!-- TODO -->
+    <string name="until_moonnoon">måne-middag</string>
+    <string name="until_moonnight">måne-midnatt</string>
 
     <!-- Table -->
     <string name="sunrise">Soloppgang</string>                             <!-- contentDescription -->
@@ -215,7 +215,7 @@
          WIDGET CONFIG
     -->
 
-    <string name="configAction_restoreDefaults">Restore Defaults</string>   <!-- button / menu text -->
+    <string name="configAction_restoreDefaults">Gjenopprett standardverdier</string>   <!-- button / menu text -->
 
     <string name="configLabel_tagDefault">[standard]</string>
     <string name="configLabel_tagPlugin">[plugin]</string>                <!-- TODO -->
@@ -378,12 +378,12 @@
     <string name="actionMode_launchActivity">Launch App</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Flip Views</string>      <!-- setting -->
 
-    <string name="launchType_activity">Activity</string>           <!-- setting -->  <!-- TODO -->
+    <string name="launchType_activity">Aktivitet</string>           <!-- setting -->
     <string name="launchType_broadcast">Broadcast</string>           <!-- setting -->  <!-- TODO -->
     <string name="launchType_service">Service</string>           <!-- setting -->  <!-- TODO -->
 
-    <string name="expandMore">More</string>  <!-- contentDescription -->  <!-- TODO -->
-    <string name="expandLess">Less</string>  <!-- contentDescription -->  <!-- TODO -->
+    <string name="expandMore">Mer</string>  <!-- contentDescription -->
+    <string name="expandLess">Mindre</string>  <!-- contentDescription -->
 
     <string name="configLabel_action">Handlingsinnstillinger</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Ved trykk:</string>                    <!-- spinner label -->
@@ -406,7 +406,7 @@
     <string name="configHint_location_alt">0</string> <!-- edittext hint -->
     <string name="configLabel_location_name">Navn:</string>                      <!-- edittext label -->
     <string name="configHint_location_name">(valgfri)</string>                  <!-- edittext hint -->
-    <string name="configHint_location_name0">Place Name</string>                  <!-- edittext hint -->  <!-- TODO -->
+    <string name="configHint_location_name0">Stedsnavn</string>                  <!-- edittext hint -->
 
     <string name="configAction_getFix">Hent posisjon</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">Rediger</string>         <!-- button (contentDescription) -->
@@ -465,13 +465,13 @@
     <string name="configLabel_action_launch">Class:</string>                 <!-- edittext label -->  <!-- TODO -->
     <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
 
-    <string name="configHint_action_launch_title">Action Title</string>                 <!-- edittext hint -->  <!-- TODO -->
-    <string name="configHint_action_launch_desc">Short description</string>                 <!-- edittext hint -->  <!-- TODO -->
-    <string name="configLabel_action_launch_type">Type:</string>                 <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_action_launch_action">Action:</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configHint_action_launch_action">&lt;none&gt;</string> <!-- editText hint (and default) -->  <!-- TODO -->
+    <string name="configHint_action_launch_title">Handlingstittel</string>                 <!-- edittext hint -->
+    <string name="configHint_action_launch_desc">Kort beskrivelse</string>                 <!-- edittext hint -->
+    <string name="configLabel_action_launch_type">Type:</string>                 <!-- spinner label -->
+    <string name="configLabel_action_launch_action">Handling:</string>                 <!-- edittext label -->
+    <string name="configHint_action_launch_action">&lt;ingen&gt;</string> <!-- editText hint (and default) -->
     <string name="configLabel_action_launch_data">Data:</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configHint_action_launch_data">&lt;none&gt;</string> <!-- editText hint (and default) -->  <!-- TODO -->
+    <string name="configHint_action_launch_data">&lt;ingen&gt;</string> <!-- editText hint (and default) -->
     <string name="configLabel_action_launch_datatype">Mime:</string>                 <!-- edittext label -->  <!-- TODO -->
     <string name="configHint_action_launch_datatype">text/plain</string> <!-- editText hint (and default) -->  <!-- TODO -->
     <string name="configLabel_action_launch_extras">Extras:</string>                 <!-- edittext label -->  <!-- TODO -->
@@ -479,39 +479,39 @@
 
     <string name="configLabel_action_item">%1$s %2$s</string>  <!-- TODO -->
     <string name="configLabel_action_item_desc">(%1$s)</string>  <!-- TODO -->
-    <string name="configLabel_action_item_none">No Action</string>  <!-- TODO -->
+    <string name="configLabel_action_item_none">Ingen handling</string>
 
     <string name="addaction_custname">custom<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="addaction_custtitle">Custom Action <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="addaction_custtitle">Egendefinert handling <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
     <string name="addaction_error_id">ID must not be empty (or contain spaces).</string>
     <string name="addaction_error_title">Display string must not be empty.</string>  <!-- TODO -->
     <string name="addaction_error_exists">ID is already taken. This action will be overwritten.</string> <!-- TODO -->
 
-    <string name="delaction_dialog_msg">Are you sure you want to delete %1$s (%2$s)?</string>    <!-- TODO -->
-    <string name="delaction_dialog_msg1">Default actions cannot be removed.\n\nRevert to defaults?</string>    <!-- TODO -->
+    <string name="delaction_dialog_msg">Er du sikker på at du vil slette %1$s (%2$s)?</string>
+    <string name="delaction_dialog_msg1">Standardhandlinger kan ikke fjernes.\n\nGå tilbake til standardverdier?</string>
     <string name="delaction_dialog_ok">Slett</string>
-    <string name="delaction_dialog_ok1">Revert</string>    <!-- TODO -->
+    <string name="delaction_dialog_ok1">Tilbakestill</string>
     <string name="delaction_dialog_cancel">Avbryt</string>
 
-    <string name="clearactions_dialog_msg">Are you sure you want to reset to defaults?\n\nAll custom actions will be removed.</string>    <!-- TODO -->
-    <string name="clearactions_dialog_ok">Clear</string>    <!-- TODO -->
-    <string name="clearactions_toast">Actions reset to defaults.</string>    <!-- TODO -->
+    <string name="clearactions_dialog_msg">Er du sikker på at du vil tilbakestille til standardverdier?\n\nAlle egendefinerte handlinger blir fjernet.</string>
+    <string name="clearactions_dialog_ok">Fjern</string>
+    <string name="clearactions_toast">Handlinger tilbakestilt til standardverdier.</string>
 
-    <string name="saveaction_dialog_title">Add Action</string>    <!-- TODO -->
+    <string name="saveaction_dialog_title">Legg til handling</string>
     <string name="saveaction_dialog_ok">Lagre</string>
-    <string name="saveaction_dialog_suggest">Suggest</string>                  <!-- TODO -->
-    <string name="saveaction_toast">Saved action \"%1$s\" (%2$s).</string>    <!-- TODO -->
+    <string name="saveaction_dialog_suggest">Foreslå</string>
+    <string name="saveaction_toast">Lagret handling \"%1$s\" (%2$s).</string>
 
-    <string name="loadaction_dialog_title">Actions</string>    <!-- TODO -->
-    <string name="loadaction_toast">Loaded action \"%1$s\".</string>    <!-- TODO -->
+    <string name="loadaction_dialog_title">Handlinger</string>
+    <string name="loadaction_toast">Lastet handling \"%1$s\".</string>
 
-    <string name="startaction_failed_toast">Failed to start %s!</string>         <!-- error toast -->  <!-- TODO -->
+    <string name="startaction_failed_toast">Kunne ikke starte %s!</string>         <!-- error toast -->
 
     <string name="configAction_addAction">Legg til</string>           <!-- button (contentDescription) -->
     <string name="configAction_editAction">Rediger</string>           <!-- button (contentDescription) -->
-    <string name="configAction_testAction">Test</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_testAction">Test</string>         <!-- button (contentDescription) -->
     <string name="configAction_saveAction">Lagre</string>         <!-- button (contentDescription) -->
-    <string name="configAction_loadAction">Load</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_loadAction">Last</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteAction">Slett</string>         <!-- button (contentDescription) -->
     <string name="configAction_clearActions">Fjern alle</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportActions">Eksporter</string>         <!-- button (contentDescription) -->
@@ -601,7 +601,7 @@
     <string name="configLabel_themeColorBorder">Ramme</string>         <!-- color label -->
     <string name="configHint_themeColorBorder">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeBorderWidthRiseSet">Rammebredde (opp-/nedgang):</string>  <!-- size label -->
+    <string name="configLabel_themeBorderWidthRiseSet">Rammebredde (oppg/nedg):</string>  <!-- size label -->
     <string name="configHint_themeBorderWidthRiseSet">2</string>                          <!-- size hint -->
     <string name="configLabel_themeBorderWidthNoon">Rammebredde (middag):</string>         <!-- size label -->
     <string name="configHint_themeBorderWidthNoon">3</string>                             <!-- size hint -->
@@ -660,7 +660,7 @@
     <string name="configAction_addNotification">Set Notification</string> <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_editAlarm">Rediger</string>               <!-- button (contentDescription) -->
     <string name="configAction_deleteAlarm">Slett</string>               <!-- button (contentDescription) -->
-    <string name="configAction_clearAlarms">Fjern alle</string>                <!-- action button / menu item -->
+    <string name="configAction_clearAlarms">Fjern</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms">Sort</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_sortAlarms_by_time">Alarm Time</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_sortAlarms_by_creation">Creation Date</string>                <!-- action button / menu item -->  <!-- TODO -->
@@ -678,7 +678,7 @@
     <string name="configAction_saveAlarm">Lagre</string>               <!-- button (contentDescription) -->
     <string name="configAction_enableAlarm">Save &amp; Enable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_disableAlarm">Save &amp; Disable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_undo">Undo</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_undo">Angre</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">Dismiss</string>                <!-- notification action button -->  <!-- TODO -->
     <string name="alarmAction_snooze">Snooze</string>                  <!-- notification action button -->  <!-- TODO -->
@@ -691,7 +691,7 @@
     <string name="alarmAction_upcomingMsg">Upcoming Alarm</string>     <!-- notification msg -->  <!-- TODO -->
 
     <string name="alarmMode_alarm">Alarm</string>                <!-- alarm type (setting) -->  <!-- TODO -->
-    <string name="alarmMode_notification">Notification</string>                <!-- alarm type (setting) -->  <!-- TODO -->
+    <string name="alarmMode_notification">Varsel</string>                <!-- alarm type (setting) -->
 
     <string name="configLabel_alarmEdit_scheduleTray">Schedule:</string>               <!-- group title -->  <!-- TODO -->
     <string name="configLabel_alarmEdit_onAlertTray">On Alert:</string>               <!-- group title -->  <!-- TODO -->
@@ -766,9 +766,9 @@
     <string name="configLabel_alarms_upcoming">Påminnelse innen</string>
     <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_fadein">Gradually increase volume</string>  <!-- TODO -->
+    <string name="configLabel_alarms_fadein">Øk volum gradvis</string>
     <!--<string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>-->
-    <string name="configLabel_alarms_fadein_disabled">Off</string>  <!-- TODO -->
+    <string name="configLabel_alarms_fadein_disabled">Av</string>
 
     <string name="configLabel_alarms_hardwarebuttons">Hardware Buttons</string>  <!-- TODO -->
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>  <!-- TODO -->
@@ -821,18 +821,19 @@
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Steder</string>                           <!-- group title -->
+    <string name="configLabel_places_manage">Håndter steder</string>             <!-- group title -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
-    <string name="configLabel_places_multiSelect">%s places</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->   <!-- TODO -->
-    <string name="configLabel_places_build">Legg til steder</string>
+    <string name="configLabel_places_multiSelect">%s steder</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->
+    <string name="configLabel_places_build">Legg til verdenssteder</string>
     <string name="configLabel_places_build_summary">Skann standardsteder og legg til byer i databasen.</string>
 
     <string name="configAction_addPlace">Legg til</string>              <!-- button (contentDescription) -->
     <string name="configAction_copyPlace">Kopier</string>            <!-- button (contentDescription) -->
     <string name="configAction_selectPlace">Velg</string>        <!-- button (contentDescription) -->
-    <string name="configAction_searchPlace">Search</string>              <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_searchPlace">Søk</string>              <!-- button (contentDescription) -->
     <string name="configAction_sharePlace">Del</string>          <!-- button (contentDescription) -->
     <string name="configAction_deletePlace">Slett</string>        <!-- button (contentDescription) -->
-    <string name="configAction_clearPlaces">Fjern alle</string>         <!-- button (contentDescription) -->
+    <string name="configAction_clearPlaces">Fjern</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportPlaces">Eksporter</string>       <!-- button (contentDescription) -->
 
     <!-- App Setting: UI -->
@@ -888,15 +889,15 @@
     <string name="configActionDesc_prevNote">Vis forrige notis</string>
     <string name="configActionDesc_resetNote">Tilbakestill notis</string>
     <string name="configActionDesc_showCalendar">Vis kalender-app</string>
-    <string name="configActionDesc_mapLocation">Show location on map</string>  <!-- TODO -->
-    <string name="configActionDesc_setAlarm">Set an alarm</string>  <!-- TODO -->
-    <string name="configActionDesc_worldMap">World Map Dialog</string>  <!-- TODO -->
-    <string name="configActionDesc_equinoxDialog">Solstices Dialog</string>  <!-- TODO -->
-    <string name="configActionDesc_moon">Moon Dialog</string>  <!-- TODO -->
-    <string name="configActionDesc_sunDialog">Sun Dialog</string>  <!-- TODO -->
-    <string name="configActionDesc_setDate">Set date</string>  <!-- TODO -->
-    <string name="configActionDesc_setTimeZone">Set time zone</string>  <!-- TODO -->
-    <string name="configActionDesc_setLocation">Set location</string>  <!-- TODO -->
+    <string name="configActionDesc_mapLocation">Vis sted på kart</string>
+    <string name="configActionDesc_setAlarm">Still inn en alarm</string>
+    <string name="configActionDesc_worldMap">Verdenskartdialog</string>
+    <string name="configActionDesc_equinoxDialog">Solvervdialog</string>
+    <string name="configActionDesc_moon">Månedialog</string>
+    <string name="configActionDesc_sunDialog">Soldialog</string>
+    <string name="configActionDesc_setDate">Still inn dato</string>
+    <string name="configActionDesc_setTimeZone">Still inn tidssone</string>
+    <string name="configActionDesc_setLocation">Still inn sted</string>
     <string name="configActionDesc_swapCards">Bytt visning (i dag / i morgen)</string>
     <string name="configActionDesc_setAlarmForNote">Still inn alarm for notis</string>
 
@@ -1053,8 +1054,8 @@
     <string name="configLabel_schedalarm_mode">Planlegg en alarm for</string>
     <string name="configLabel_schednotify_mode">Planlegg en varsling for</string>
     <string name="schedalarm_dialog_title">Still inn alarm</string>
-    <string name="schedalarm_dialog_tab_event">Event</string>                      <!-- tab text -->  <!-- TODO -->
-    <string name="schedalarm_dialog_tab_time">Time</string>                        <!-- tab text -->  <!-- TODO -->
+    <string name="schedalarm_dialog_tab_event">Hendelse</string>                      <!-- tab text -->
+    <string name="schedalarm_dialog_tab_time">Tid</string>                        <!-- tab text -->
     <string name="schedalarm_dialog_ok">OK</string>
     <string name="schedalarm_dialog_cancel">Avbryt</string>
     <string name="schedalarm_dialog_error">Alarm ble ikke stilt inn…</string>
@@ -1089,8 +1090,8 @@
         <item>sommersolverv</item>
         <item>høstjevndøgn</item>
         <item>vintersolverv</item>
-        <item>lunar noon</item>    <!-- TODO -->
-        <item>lunar midnight</item>    <!-- TODO -->
+        <item>måne-middag</item>
+        <item>måne-midnatt</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>astronomisk tussmørke morgen (start)</item>
@@ -1118,8 +1119,8 @@
         <item>sommersolverv</item>
         <item>høstjevndøgn</item>
         <item>vintersolverv</item>
-        <item>lunar noon</item>    <!-- TODO -->
-        <item>lunar midnight</item>    <!-- TODO -->
+        <item>måne-middag</item>
+        <item>måne-midnatt</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
@@ -1139,7 +1140,7 @@
     <string name="gps_keeptrying_msg">Ikke i stand til å oppnå en posisjonsfastsettelse.</string>
     <string name="gps_keeptrying_ok">Fortsett å prøve</string>
     <string name="gps_keeptrying_cancel">Gi opp</string>
-    <string name="gps_keeptrying_fallback">Use Last Position</string>  <!-- TODO -->
+    <string name="gps_keeptrying_fallback">Bruk siste posisjon</string>
 
     <!-- Dialog: Use Date -->
     <string name="timedate_dialog_title">Still inn dato</string>
@@ -1158,17 +1159,17 @@
     <string name="location_dialog_error_lat">Dette er ikke en gyldig breddegrad.</string>
     <string name="location_dialog_error_lon">Dette er ikke en gyldig lengdegrad.</string>
     <string name="location_dialog_error_alt">Dette er ikke en gyldig høyde.</string>
-    <string name="location_dialog_error_name">Enter a place name.</string>  <!-- TODO -->
+    <string name="location_dialog_error_name">Oppfør et stedsnavn.</string>
 
     <string name="location_dialog_toast_copied">Kopiert til utklippstavle<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
 
     <!-- Dialog: Delete Place -->
-    <string name="locationdelete_dialog_title">Remove Place?</string>   <!-- title; remove 1 place --> <!-- TODO -->
-    <string name="locationdelete_dialog_title1">Remove Places?</string>  <!-- title; remove multiple places --> <!-- TODO -->
-    <string name="locationdelete_dialog_message">Are you sure you want to remove %s?</string>   <!-- TODO -->
-    <string name="locationdelete_dialog_success">Place was removed.</string>   <!-- toast --> <!-- TODO -->
-    <string name="locationdelete_dialog_success1">%s places were removed.</string>   <!-- toast; e.g. 2 places were deleted --> <!-- TODO -->
-    <string name="locationdelete_dialog_ok">Slett</string>
+    <string name="locationdelete_dialog_title">Fjerne sted?</string>   <!-- title; remove 1 place -->
+    <string name="locationdelete_dialog_title1">Fjerne steder?</string>  <!-- title; remove multiple places -->
+    <string name="locationdelete_dialog_message">Er du sikker på at du vil fjerne %s?</string>
+    <string name="locationdelete_dialog_success">Sted ble fjernet.</string>   <!-- toast -->
+    <string name="locationdelete_dialog_success1">%s steder ble fjernet.</string>   <!-- toast; e.g. 2 places were deleted -->
+    <string name="locationdelete_dialog_ok">Fjern</string>
     <string name="locationdelete_dialog_cancel">Avbryt</string>
 
     <!-- Dialog: Clear Places -->
@@ -1217,14 +1218,14 @@
     <string name="color_dialog_msg">Velg farge</string>
     <string name="color_dialog_ok">OK</string>
     <string name="color_dialog_cancel">Avbryt</string>
-    <string name="color_dialog_tab1">1</string>  <!-- TODO -->
-    <string name="color_dialog_tab2">2</string>  <!-- TODO -->
-    <string name="color_dialog_tab3">3</string>  <!-- TODO -->
-    <string name="color_dialog_label_r">R</string>  <!-- TODO -->
-    <string name="color_dialog_label_g">G</string>  <!-- TODO -->
-    <string name="color_dialog_label_b">B</string>  <!-- TODO -->
-    <string name="color_dialog_label_a">A</string>  <!-- TODO -->
-    <string name="color_dialog_hint_rgba">0–255</string>  <!-- TODO -->
+    <string name="color_dialog_tab1">1</string>
+    <string name="color_dialog_tab2">2</string>
+    <string name="color_dialog_tab3">3</string>
+    <string name="color_dialog_label_r">R</string>
+    <string name="color_dialog_label_g">G</string>
+    <string name="color_dialog_label_b">B</string>
+    <string name="color_dialog_label_a">A</string>
+    <string name="color_dialog_hint_rgba">0–255</string>
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">Om</string>
@@ -1332,7 +1333,7 @@
         <b>Brukbart lys:</b> Tiden mellom alminnelig tussmørke morgen og kveld.<br/>
     ]]></string>
     <string name="help_general_moonillum"><![CDATA[
-        <b>Måneilluminasjon:</b> Månemodulene og hovedsiden viser i hvor stor grad månen er opplyst ved månens senit (midtpunktet mellom måneoppgang og månenedgang), mens månedialogen viser i hvor stor grad månen er opplyst nå.<br/><br/>
+        <b>Måneilluminasjon:</b> Hovedsiden viser i hvor stor grad månen er opplyst ved månens senit, mens månedialogen viser i hvor stor grad månen er opplyst nå.<br/><br/>
     ]]></string>
     <string name="help_general_goldhour"><![CDATA[
         <b>Gylne time:</b> Solen er mellom 6 grader over eller under horisonten. Om morgenen begynner den gylne timen med alminnelig tussmørke og slutter kort tid etter soloppgang. Om kvelden begynner den gylne timen kort tid før solnedgang og slutter med alminnelig tussmørke.<br/>
