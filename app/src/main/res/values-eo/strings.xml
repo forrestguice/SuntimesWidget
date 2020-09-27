@@ -15,7 +15,7 @@
     <string name="configAction_mapLocation">Montri mapon</string>
     <string name="configAction_mapLocation_chooser">Montri lokon per</string>
     <string name="configAction_mapLocation_noapp">Ne povas trovi map‑aplikaĵon!</string>
-    <string name="configAction_showCalendar">Calendar</string>  <!-- TODO -->
+    <string name="configAction_showCalendar">Kalendaro</string>
     <string name="configAction_setAlarm">Agordi averton</string>
     <string name="configAction_setTimeZone">Elekti horzonon</string>
     <string name="configAction_setDate">Elekti daton</string>
@@ -25,16 +25,16 @@
     <string name="configAction_worldMap">Mondmapo</string>
     <string name="configAction_moon">Luno</string>
     <string name="configAction_help">Helpo</string>
-    <string name="configAction_overflow">More</string>  <!-- TODO -->
+    <string name="configAction_overflow">Pli</string>
     <string name="configAction_settings">Agordoj</string>
     <string name="configAction_aboutWidget">Pri</string>
 
     <!-- Button: Next/Prev Date
          The next/prev button contentDescription (accessibility).
     -->
-    <string name="nextDay">Sekvanta tago</string>
+    <string name="nextDay">Sekva tago</string>
     <string name="prevDay">Antaŭa tago</string>
-    <string name="nextYear">Sekvanta jaro</string>
+    <string name="nextYear">Sekva jaro</string>
     <string name="prevYear">Antaŭa jaro</string>
 
     <!-- Warnings -->
@@ -134,8 +134,8 @@
     <string name="untilEnd_bluehour">fino de blua horo</string>
     <string name="until_moonrise">lunleviĝo</string>
     <string name="until_moonset">lunsubiro</string>
-    <string name="until_moonnoon">lunar noon</string>   <!-- TODO -->
-    <string name="until_moonnight">lunar midnight</string>   <!-- TODO -->
+    <string name="until_moonnoon">plejsupro de Luno</string>
+    <string name="until_moonnight">malplejsupro de Luno</string>
 
     <!-- Table -->
     <string name="sunrise">Sunleviĝo</string>                             <!-- contentDescription -->
@@ -363,12 +363,12 @@
     <string name="actionMode_launchActivity">Ekigi aplikaĵon</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Baskuli vidon</string>      <!-- setting -->
 
-    <string name="launchType_activity">Activity</string>           <!-- setting -->  <!-- TODO -->
-    <string name="launchType_broadcast">Broadcast</string>           <!-- setting -->  <!-- TODO -->
-    <string name="launchType_service">Service</string>           <!-- setting -->  <!-- TODO -->
+    <string name="launchType_activity">Activity</string>           <!-- setting -->  <!-- Android-rilata termino, netradukita -->
+    <string name="launchType_broadcast">Broadcast</string>           <!-- setting -->  <!-- Android-rilata termino, netradukita -->
+    <string name="launchType_service">Service</string>           <!-- setting --> <!-- Android-rilata termino, netradukita -->
 
-    <string name="expandMore">More</string>  <!-- contentDescription -->  <!-- TODO -->
-    <string name="expandLess">Less</string>  <!-- contentDescription -->  <!-- TODO -->
+    <string name="expandMore">Pli</string>  <!-- contentDescription -->
+    <string name="expandLess">Malpli</string>  <!-- contentDescription -->
 
     <string name="configLabel_action">Agordoj de agoj</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Je frapeto:</string>                    <!-- spinner label -->
@@ -398,7 +398,7 @@
     <string name="configHint_location_alt">139</string> <!-- edittext hint -->
     <string name="configLabel_location_name">Nomo:</string>                     <!-- edittext label -->
     <string name="configHint_location_name">(malnepra)</string>                 <!-- edittext hint -->
-    <string name="configHint_location_name0">Place Name</string>                  <!-- edittext hint -->  <!-- TODO -->
+    <string name="configHint_location_name0">Nomo de loko</string>                  <!-- edittext hint -->
 
     <string name="configAction_getFix">Determini pozicion</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">Redakti</string>         <!-- button (contentDescription) -->
@@ -453,36 +453,36 @@
     <string name="configLabel_general_showNoon">Montri tagmezon veran</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
-    <string name="configLabel_action_id">ID:</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configLabel_action_launch">Class:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configLabel_action_id">Identigilo:</string>                 <!-- edittext label -->
+    <string name="configLabel_action_launch">Klaso:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
 
-    <string name="configHint_action_launch_title">Action Title</string>                 <!-- edittext hint -->  <!-- TODO -->
-    <string name="configHint_action_launch_desc">Short description</string>                 <!-- edittext hint -->  <!-- TODO -->
-    <string name="configLabel_action_launch_type">Type:</string>                 <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_action_launch_action">Action:</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configHint_action_launch_action">&lt;none&gt;</string> <!-- editText hint (and default) -->  <!-- TODO -->
-    <string name="configLabel_action_launch_data">Data:</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configHint_action_launch_data">&lt;none&gt;</string> <!-- editText hint (and default) -->  <!-- TODO -->
-    <string name="configLabel_action_launch_datatype">Mime:</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configHint_action_launch_datatype">text/plain</string> <!-- editText hint (and default) -->  <!-- TODO -->
-    <string name="configLabel_action_launch_extras">Extras:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configHint_action_launch_title">Nomo de ago</string>                 <!-- edittext hint -->
+    <string name="configHint_action_launch_desc">Konciza priskribo</string>                 <!-- edittext hint -->
+    <string name="configLabel_action_launch_type">Tipo:</string>                 <!-- spinner label -->
+    <string name="configLabel_action_launch_action">Ago:</string>                 <!-- edittext label -->
+    <string name="configHint_action_launch_action">&lt;neniu&gt;</string> <!-- editText hint (and default) -->
+    <string name="configLabel_action_launch_data">Datumo:</string>                 <!-- edittext label -->
+    <string name="configHint_action_launch_data">&lt;neniu&gt;</string> <!-- editText hint (and default) -->
+    <string name="configLabel_action_launch_datatype">MIME:</string>                 <!-- edittext label -->
+    <string name="configHint_action_launch_datatype">text/plain</string> <!-- editText hint (and default) -->
+    <string name="configLabel_action_launch_extras">Ekstraj:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch_extras"><![CDATA[<none>]]></string> <!-- editText hint (and default) -->
 
-    <string name="configLabel_action_item">%1$s %2$s</string>  <!-- TODO -->
-    <string name="configLabel_action_item_desc">(%1$s)</string>  <!-- TODO -->
-    <string name="configLabel_action_item_none">No Action</string>  <!-- TODO -->
+    <string name="configLabel_action_item">%1$s %2$s</string>
+    <string name="configLabel_action_item_desc">(%1$s)</string>
+    <string name="configLabel_action_item_none">Neniu ago</string>
 
-    <string name="addaction_custname">custom<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="addaction_custtitle">Custom Action <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="addaction_error_id">ID must not be empty (or contain spaces).</string>
-    <string name="addaction_error_title">Display string must not be empty.</string>  <!-- TODO -->
-    <string name="addaction_error_exists">ID is already taken. This action will be overwritten.</string> <!-- TODO -->
+    <string name="addaction_custname">propra<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
+    <string name="addaction_custtitle">Propra ago <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
+    <string name="addaction_error_id">Identigilo ne estu malplena kaj ne enhavu spacetojn.</string>
+    <string name="addaction_error_title">Nomo ne estu malplena.</string>
+    <string name="addaction_error_exists">Identigilo jam estas uzata. Tiu ĉi ago estos superskribita.</string>
 
-    <string name="delaction_dialog_msg">Are you sure you want to delete %1$s (%2$s)?</string>    <!-- TODO -->
-    <string name="delaction_dialog_msg1">Default actions cannot be removed.\n\nRevert to defaults?</string>    <!-- TODO -->
+    <string name="delaction_dialog_msg">Ĉu vi certe volas forigi la agon %1$s (%2$s)?</string>
+    <string name="delaction_dialog_msg1">Ne eblas forigi implicitajn agojn.\n\nĈu restarigi implicitajn?</string>
     <string name="delaction_dialog_ok">Forigi</string>
-    <string name="delaction_dialog_ok1">Revert</string>    <!-- TODO -->
+    <string name="delaction_dialog_ok1">Restarigi</string>
     <string name="delaction_dialog_cancel">Nuligi</string>
 
     <string name="clearactions_dialog_msg">Are you sure you want to reset to defaults?\n\nAll custom actions will be removed.</string>    <!-- TODO -->
@@ -506,7 +506,7 @@
     <string name="configAction_loadAction">Load</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_deleteAction">Forigi</string>         <!-- button (contentDescription) -->
     <string name="configAction_clearActions">Forigi ĉiujn</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportActions">Eksporti</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportActions">Elporti</string>         <!-- button (contentDescription) -->
     <string name="configAction_importActions">Enporti</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: Themes -->
@@ -517,7 +517,7 @@
     <string name="configAction_editTheme">Redakti</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteTheme">Forigi</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Kopii</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportThemes">Eksporti</string>    <!-- button (contentDescription) -->
+    <string name="configAction_exportThemes">Elporti</string>    <!-- button (contentDescription) -->
     <string name="configAction_shareTheme">Kunhavigi</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
     <string name="configAction_importThemes">Enporti</string>    <!-- button (contentDescription) -->
 
@@ -817,11 +817,11 @@
     <string name="configAction_addPlace">Aldoni</string>              <!-- button (contentDescription) -->
     <string name="configAction_copyPlace">Kopii</string>            <!-- button (contentDescription) -->
     <string name="configAction_selectPlace">Elekti</string>        <!-- button (contentDescription) -->
-    <string name="configAction_searchPlace">Search</string>              <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_searchPlace">Serĉi</string>              <!-- button (contentDescription) -->
     <string name="configAction_sharePlace">Kunhavigi</string>          <!-- button (contentDescription) -->
     <string name="configAction_deletePlace">Forigi</string>        <!-- button (contentDescription) -->
-    <string name="configAction_clearPlaces">Forviŝi ĉiujn</string>         <!-- button (contentDescription) -->  <!-- TODO: Forigi aŭ Forviŝi ? -->
-    <string name="configAction_exportPlaces">Eksporti</string>       <!-- button (contentDescription) -->
+    <string name="configAction_clearPlaces">Forigi ĉiujn</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportPlaces">Elporti</string>       <!-- button (contentDescription) -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Fasado</string>                       <!-- group title -->
