@@ -12,14 +12,14 @@
             android:entries="@array/appThemes_display" android:entryValues="@array/appThemes_values"
             android:defaultValue="@string/def_app_appearance_theme"/>
 
-        <com.forrestguice.suntimeswidget.settings.ThemePreference
+        <com.forrestguice.suntimeswidget.settings.ActionButtonPreference
             android:key="app_appearance_theme_light"
             android:title="@string/appThemes_lightTheme"
             android:dialogTitle="@string/appThemes_lightTheme"
             android:widgetLayout="@layout/layout_pref_themewidget"
             android:summary="%s" />
 
-        <com.forrestguice.suntimeswidget.settings.ThemePreference
+        <com.forrestguice.suntimeswidget.settings.ActionButtonPreference
             android:key="app_appearance_theme_dark"
             android:title="@string/appThemes_darkTheme"
             android:dialogTitle="@string/appThemes_darkTheme"
@@ -134,35 +134,36 @@
     <PreferenceCategory
         android:title="@string/configLabel_action">
 
-        <com.forrestguice.suntimeswidget.settings.ListPreference
+        <com.forrestguice.suntimeswidget.settings.ActionButtonPreference
             android:key="app_ui_clocktapaction"
             android:title="@string/configLabel_action_onClockTap"
             android:dialogTitle="@string/configLabel_action_onClockTap"
-            android:summary="%s"
+            android:summary="%s" android:widgetLayout="@layout/layout_pref_action"
             android:entries="@array/clockTapActions_display" android:entryValues="@array/clockTapActions_values"
-            android:defaultValue="@string/def_app_ui_clocktapaction" />
+            android:defaultValue="@string/def_app_ui_clocktapaction"
+            />
 
-        <com.forrestguice.suntimeswidget.settings.ListPreference
+        <com.forrestguice.suntimeswidget.settings.ActionButtonPreference
             android:key="app_ui_datetapaction"
             android:title="@string/configLabel_action_onDateTap"
             android:dialogTitle="@string/configLabel_action_onDateTap"
-            android:summary="%s"
+            android:summary="%s" android:widgetLayout="@layout/layout_pref_action"
             android:entries="@array/dateTapActions_display" android:entryValues="@array/dateTapActions_values"
             android:defaultValue="@string/def_app_ui_datetapaction" />
 
-        <com.forrestguice.suntimeswidget.settings.ListPreference
+        <com.forrestguice.suntimeswidget.settings.ActionButtonPreference
             android:key="app_ui_datetapaction1"
             android:title="@string/configLabel_action_onDateTap1"
             android:dialogTitle="@string/configLabel_action_onDateTap1"
-            android:summary="%s"
+            android:summary="%s" android:widgetLayout="@layout/layout_pref_action"
             android:entries="@array/dateTapActions_display" android:entryValues="@array/dateTapActions_values"
             android:defaultValue="@string/def_app_ui_datetapaction1" />
 
-        <com.forrestguice.suntimeswidget.settings.ListPreference
+        <com.forrestguice.suntimeswidget.settings.ActionButtonPreference
             android:key="app_ui_notetapaction"
             android:title="@string/configLabel_action_onNoteTap"
             android:dialogTitle="@string/configLabel_action_onNoteTap"
-            android:summary="%s"
+            android:summary="%s" android:widgetLayout="@layout/layout_pref_action"
             android:entries="@array/noteTapActions_display" android:entryValues="@array/noteTapActions_values"
             android:defaultValue="@string/def_app_ui_notetapaction" />
 

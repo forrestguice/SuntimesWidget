@@ -99,6 +99,11 @@ public class MoonWidget0 extends SuntimesWidget0
         }
     }
 
+    @Override
+    protected SuntimesData getData(Context context, int appWidgetId) {
+        return new SuntimesMoonData(context, appWidgetId);
+    }
+
     protected static MoonLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId, int[] defSize, MoonLayout defLayout)
     {
         int[] mustFitWithinDp = widgetSizeDp(context, appWidgetManager, appWidgetId, defSize);

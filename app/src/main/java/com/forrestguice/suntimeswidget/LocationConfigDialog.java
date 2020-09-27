@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2019 Forrest Guice
+    Copyright (C) 2014-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -17,9 +17,11 @@
 */
 package com.forrestguice.suntimeswidget;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -38,6 +40,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -45,6 +48,8 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
 {
     public static final String KEY_LOCATION_HIDETITLE = "hidetitle";
     public static final String KEY_LOCATION_HIDEMODE = "hidemode";
+
+    public static final int REQUEST_LOCATION = 30;
 
     /**
      * The dialog content; in this case just a wrapper around a LocationConfigView.
@@ -125,6 +130,14 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     }
     public boolean getHideTitle() { return hideTitle; }
 
+    /**
+     * Show / hide the dialog header.
+     */
+    private boolean hideHeader = false;
+    public void setHideDialogHeader(boolean value) {
+        hideHeader = value;
+    }
+
     /***
      * Show / hide the location mode; when hidden the mode is locked to user-defined.
      */
@@ -202,6 +215,20 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         dialogContent.setHideTitle(hideTitle);
         dialogContent.setHideMode(hideMode);
         dialogContent.init(myParent, false);
+        dialogContent.setOnListButtonClicked(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PlacesActivity.class);
+                intent.putExtra(PlacesActivity.EXTRA_ALLOW_PICK, true);
+                //intent.putExtra(PlacesActivity.EXTRA_SELECTED, selectedRowID);
+                startActivityForResult(intent, REQUEST_LOCATION);
+            }
+        });
+
+        View header = view.findViewById(R.id.dialog_header);
+        if (header != null) {
+            header.setVisibility(hideHeader ? View.GONE : View.VISIBLE);
+        }
 
         Button btn_cancel = (Button) view.findViewById(R.id.dialog_button_cancel);
         btn_cancel.setOnClickListener(onDialogCancelClick);
@@ -349,6 +376,28 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     {
         super.onActivityCreated(savedInstanceState);
         disableTouchOutsideBehavior();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode)
+        {
+            case REQUEST_LOCATION:
+                onLocationResult(resultCode, data);
+                break;
+        }
+    }
+    protected void onLocationResult(int resultCode, Intent data)
+    {
+        if (resultCode == Activity.RESULT_OK && data != null)
+        {
+            Location location = data.getParcelableExtra(PlacesActivity.EXTRA_LOCATION);
+            if (location != null) {
+                setLocation(getActivity(), location);
+            }
+        }
     }
 
     private void disableTouchOutsideBehavior()

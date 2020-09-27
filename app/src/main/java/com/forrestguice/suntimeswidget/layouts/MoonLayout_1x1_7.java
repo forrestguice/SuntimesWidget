@@ -64,7 +64,7 @@ public class MoonLayout_1x1_7 extends MoonLayout
         SuntimesUtils.TimeDisplayText distanceDisplay = SuntimesUtils.formatAsDistance(context, moonPosition.distance, units, PositionLayout.DECIMAL_PLACES, true);
 
         String unitsSymbol = distanceDisplay.getUnits();
-        String distanceString = distanceDisplay.toString();
+        String distanceString = SuntimesUtils.formatAsDistance(context, distanceDisplay);
 
         SpannableString distance = SuntimesUtils.createColorSpan(null, distanceString, distanceString, highlightColor, boldTime);
         distance = SuntimesUtils.createBoldColorSpan(distance, distanceString, unitsSymbol, suffixColor);

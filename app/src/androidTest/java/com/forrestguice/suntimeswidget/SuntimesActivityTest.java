@@ -18,10 +18,14 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.test.espresso.IdlingPolicies;
 import android.support.test.espresso.IdlingResource;
-import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
 
 import android.support.test.rule.ActivityTestRule;
@@ -33,14 +37,13 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.notes.NoteData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
-import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.internal.matchers.TypeSafeMatcher;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
@@ -62,7 +65,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.hasSibling;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
-import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -305,16 +307,16 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
 
     public static void verifyOnClockClick(SuntimesActivity activity, int noteIndex)
     {
-        AppSettings.TapAction tapAction = AppSettings.loadClockTapActionPref(activity);
-        if (tapAction == AppSettings.TapAction.ALARM)
+        String tapAction = AppSettings.loadClockTapActionPref(activity);
+        if (tapAction.equals(WidgetActions.SuntimesAction.ALARM.name()))
         {
             verifyAlarmDialog();
             cancelAlarmDialog();
 
-        } else if (tapAction == AppSettings.TapAction.PREV_NOTE) {
+        } else if (tapAction.equals(WidgetActions.SuntimesAction.PREV_NOTE.name())) {
             verifyOnNotePrev(activity, noteIndex);
 
-        } else if (tapAction == AppSettings.TapAction.NEXT_NOTE) {
+        } else if (tapAction.equals(WidgetActions.SuntimesAction.NEXT_NOTE.name())) {
             verifyOnNoteNext(activity, noteIndex);
 
         } /**else {
@@ -354,16 +356,16 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
 
     public static void verifyOnNoteClick(SuntimesActivity activity, int noteIndex)
     {
-        AppSettings.TapAction tapAction = AppSettings.loadNoteTapActionPref(activity);
-        if (tapAction == AppSettings.TapAction.ALARM)
+        String tapAction = AppSettings.loadNoteTapActionPref(activity);
+        if (tapAction.equals(WidgetActions.SuntimesAction.ALARM.name()))
         {
             verifyAlarmDialog();
             cancelAlarmDialog();
 
-        } else if (tapAction == AppSettings.TapAction.NEXT_NOTE) {
+        } else if (tapAction.equals(WidgetActions.SuntimesAction.NEXT_NOTE.name())) {
             verifyOnNoteNext(activity, noteIndex);
 
-        } else if (tapAction == AppSettings.TapAction.PREV_NOTE) {
+        } else if (tapAction.equals(WidgetActions.SuntimesAction.PREV_NOTE.name())) {
             verifyOnNotePrev(activity, noteIndex);
 
         } /**else {
@@ -419,13 +421,13 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         onView(dateField).perform(click());
 
         // verify the action
-        AppSettings.TapAction tapAction = AppSettings.loadDateTapActionPref(activityRule.getActivity());
-        if (tapAction == AppSettings.TapAction.CONFIG_DATE)
+        String tapAction = AppSettings.loadDateTapActionPref(activityRule.getActivity());
+        if (tapAction.equals(WidgetActions.SuntimesAction.CONFIG_DATE.name()))
         {
             verifyDateDialog(activityRule.getActivity());
             cancelDateDialog();
 
-        } else if (tapAction == AppSettings.TapAction.SWAP_CARD) {
+        } else if (tapAction.equals(WidgetActions.SuntimesAction.SWAP_CARD.name())) {
             if (viewIsDisplayed(R.id.info_time_all_today, "Today"))
                 verifyTimeCard_today();
             else verifyTimeCard_tomorrow();
@@ -582,5 +584,76 @@ public class SuntimesActivityTest extends SuntimesActivityTestBase
         timeFields.add( allOf(withId(R.id.text_time_sunset_nautical), isDescendantOfA(card), hasSibling(sibling)) );
         timeFields.add( allOf(withId(R.id.text_time_sunset_astro), isDescendantOfA(card), hasSibling(sibling)) );
         return timeFields;
+    }
+
+    @Test
+    public void test_partialUpdateReciever()
+    {
+        // test PendingIntent
+        final SuntimesActivity activity = (SuntimesActivity)activityRule.getActivity();
+        PendingIntent partialUpdateIntent = activity.getPartialUpdateIntent(activity);
+        try {
+            partialUpdateIntent.send();
+
+        } catch (PendingIntent.CanceledException e) {
+            e.printStackTrace();
+            fail("CanceledException!");
+        }
+
+        // test receiver
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                activity.partialUpdateReceiver.onReceive(activity, new Intent(SuntimesActivity.SUNTIMES_APP_UPDATE_PARTIAL));
+                activity.finish();
+                assertTrue("app hasn't crashed", activity.isFinishing());
+            }
+        });
+    }
+
+    @Test
+    public void test_fullUpdateReciever()
+    {
+        // test PendingIntent
+        final SuntimesActivity activity = (SuntimesActivity)activityRule.getActivity();
+        PendingIntent fullUpdateIntent = activity.getFullUpdateIntent(activity);
+        try {
+            fullUpdateIntent.send();
+
+        } catch (PendingIntent.CanceledException e) {
+            e.printStackTrace();
+            fail("CanceledException!");
+        }
+
+        // test receiver
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                activity.fullUpdateReceiver.onReceive(activity, new Intent(SuntimesActivity.SUNTIMES_APP_UPDATE_FULL));
+                activity.finish();
+                assertTrue("app hasn't crashed", activity.isFinishing());
+            }
+        });
+    }
+
+    @Test
+    public void test_issue408()
+    {
+        // test "show moon" enabled
+        SuntimesActivity activity = (SuntimesActivity)activityRule.getActivity();
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(activity).edit();
+        pref.putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, true);
+        pref.commit();
+        activity.finish();
+        activityRule.launchActivity(activity.getIntent());
+        test_fullUpdateReciever();
+
+        // test "show moon" disabled
+        pref.putBoolean(AppSettings.PREF_KEY_UI_SHOWMOON, false);
+        pref.commit();
+        activity = (SuntimesActivity)activityRule.getActivity();
+        activity.finish();
+        activityRule.launchActivity(activity.getIntent());
+        test_fullUpdateReciever();
     }
 }

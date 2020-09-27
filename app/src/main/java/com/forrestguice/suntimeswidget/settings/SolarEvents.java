@@ -69,7 +69,10 @@ public enum SolarEvents
     EQUINOX_SPRING("equinox", "spring equinox", R.attr.springColor, 3, true),                                         // 21
     SOLSTICE_SUMMER("solstice", "summer solstice", R.attr.summerColor, 3, false),                                     // 22
     EQUINOX_AUTUMNAL("equinox", "autumnal equinox", R.attr.fallColor, 3, false),                                      // 23
-    SOLSTICE_WINTER("solstice", "winter solstice", R.attr.winterColor, 3, true)                                       // 24
+    SOLSTICE_WINTER("solstice", "winter solstice", R.attr.winterColor, 3, true),                                      // 24
+
+    MOONNOON("lunar noon", "lunar noon", R.attr.moonriseIcon, 1, true),                                            // 25
+    MOONNIGHT("lunar midnight", "lunar midnight", R.attr.moonsetIcon, 1, false),                                  // 26
     ;                                                                                                    // .. R.array.solarevents_short/_long req same length/order
 
     private int iconResource;
@@ -78,7 +81,7 @@ public enum SolarEvents
     public boolean rising;
 
     public static final int TYPE_SUN = 0;         // sunrise, sunset, twilight (converted using toTimeMode)
-    public static final int TYPE_MOON = 1;        // moonrise, moonset
+    public static final int TYPE_MOON = 1;        // moonrise, moonset, lunar noon, lunar midnight
     public static final int TYPE_MOONPHASE = 2;   // major phases (converted using toMoonPhase)
     public static final int TYPE_SEASON = 3;      // solstices & equinoxes (converted using toSolsticeEquinoxMode)
 
@@ -168,8 +171,15 @@ public enum SolarEvents
 
     public static SolarEventsAdapter createAdapter(Context context)
     {
-        ArrayList<SolarEvents> choices = new ArrayList<SolarEvents>();
-        choices.addAll(Arrays.asList(SolarEvents.values()));
+        ArrayList<SolarEvents> choices = new ArrayList<SolarEvents>(Arrays.asList(
+                MORNING_ASTRONOMICAL, MORNING_NAUTICAL, MORNING_BLUE8, MORNING_CIVIL, MORNING_BLUE4,
+                SUNRISE, MORNING_GOLDEN,
+                NOON, EVENING_GOLDEN,
+                SUNSET, EVENING_BLUE4, EVENING_CIVIL, EVENING_BLUE8, EVENING_NAUTICAL, EVENING_ASTRONOMICAL,
+                MOONRISE, MOONNOON, MOONSET, MOONNIGHT,
+                NEWMOON, FIRSTQUARTER, FULLMOON, THIRDQUARTER,
+                EQUINOX_SPRING, SOLSTICE_SUMMER, EQUINOX_AUTUMNAL, SOLSTICE_WINTER
+        ));
         return new SolarEventsAdapter(context, choices);
     }
 
@@ -188,7 +198,7 @@ public enum SolarEvents
             this.choices = choices;
         }
 
-        static int[] getIconDimen(Resources resources, SolarEvents event)
+        public static int[] getIconDimen(Resources resources, SolarEvents event)
         {
             int width, height;
             switch (event)
@@ -258,7 +268,11 @@ public enum SolarEvents
             return view;
         }
 
-        private void adjustIcon(int iconResource, ImageView icon, SolarEvents event)
+        public static void adjustIcon(int iconResource, ImageView icon, SolarEvents event)
+        {
+            adjustIcon(iconResource, icon, event, 8);
+        }
+        public static void adjustIcon(int iconResource, ImageView icon, SolarEvents event, int marginDp)
         {
             Resources resources = icon.getContext().getResources();
             int defWidth = (int)resources.getDimension(R.dimen.sunIconLarge_width);
@@ -271,7 +285,7 @@ public enum SolarEvents
             if (iconParams instanceof ViewGroup.MarginLayoutParams)
             {
                 ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) iconParams;
-                float vertMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, resources.getDisplayMetrics());
+                float vertMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, marginDp, resources.getDisplayMetrics());
                 float horizMargin = (vertMargin + (defWidth - dimen[0])) / 2f;
                 params.setMargins((int)horizMargin, (int)vertMargin, (int)horizMargin, (int)vertMargin);
             }

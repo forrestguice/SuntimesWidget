@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.calculator.core;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.text.DecimalFormat;
@@ -95,7 +96,7 @@ public class Location implements Parcelable
      * @param label display name
      * @param location an android.location.Location object (that might be obtained via GPS or otherwise)
      */
-    public Location(String label, android.location.Location location )
+    public Location(String label, @NonNull android.location.Location location)
     {
         double rawLatitude = location.getLatitude();
         double rawLongitude = location.getLongitude();
@@ -107,6 +108,18 @@ public class Location implements Parcelable
         this.latitude = formatter.format(rawLatitude);
         this.longitude = formatter.format(rawLongitude);
         this.altitude = rawAltitude + "";
+    }
+
+    /**
+     * @param other Location
+     */
+    public Location(Location other)
+    {
+        this.label = other.label;
+        this.latitude = other.latitude;
+        this.longitude = other.longitude;
+        this.altitude = other.altitude;
+        this.useAltitude = other.useAltitude;
     }
 
     /**
@@ -185,6 +198,9 @@ public class Location implements Parcelable
     public void setUseAltitude( boolean enabled )
     {
         useAltitude = enabled;
+    }
+    public boolean useAltitude() {
+        return useAltitude;
     }
 
     /**

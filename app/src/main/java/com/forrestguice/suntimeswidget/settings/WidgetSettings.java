@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2019 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -153,9 +153,6 @@ public class WidgetSettings
 
     public static final String PREF_KEY_ACTION_MODE = "action";
     public static final ActionMode PREF_DEF_ACTION_MODE = ActionMode.ONTAP_LAUNCH_CONFIG;
-
-    public static final String PREF_KEY_ACTION_LAUNCH = "launch";
-    public static final String PREF_DEF_ACTION_LAUNCH = "com.forrestguice.suntimeswidget.SuntimesActivity";
 
     public static final String PREF_KEY_LOCATION_MODE = "locationMode";
     public static final LocationMode PREF_DEF_LOCATION_MODE = LocationMode.CUSTOM_LOCATION;
@@ -1721,33 +1718,6 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveActionLaunchPref(Context context, int appWidgetId, String launchString)
-    {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION;
-        prefs.putString(prefs_prefix + PREF_KEY_ACTION_LAUNCH, launchString);
-        prefs.apply();
-    }
-    public static String loadActionLaunchPref(Context context, int appWidgetId)
-    {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION;
-        //noinspection UnnecessaryLocalVariable
-        String launchString = prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH, PREF_DEF_ACTION_LAUNCH);
-        return launchString;
-
-    }
-    public static void deleteActionLaunchPref(Context context, int appWidgetId)
-    {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION;
-        prefs.remove(prefs_prefix + PREF_KEY_ACTION_LAUNCH);
-        prefs.apply();
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-
     public static void saveLocationModePref(Context context, int appWidgetId, WidgetSettings.LocationMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
@@ -1896,13 +1866,31 @@ public class WidgetSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
-        String altString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE, PREF_DEF_LOCATION_ALTITUDE);
-        String lonString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LONGITUDE, PREF_DEF_LOCATION_LONGITUDE);
-        String latString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LATITUDE, PREF_DEF_LOCATION_LATITUDE);
-        String nameString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LABEL, PREF_DEF_LOCATION_LABEL);
+
+        String defaultAlt = PREF_DEF_LOCATION_ALTITUDE;   // locale defaults
+        String defaultLon = PREF_DEF_LOCATION_LONGITUDE;
+        String defaultLat = PREF_DEF_LOCATION_LATITUDE;
+        String defaultName = PREF_DEF_LOCATION_LABEL;
+        boolean defaultUseAltitude = PREF_DEF_LOCATION_ALTITUDE_ENABLED;
+
+        String nameString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LABEL, null);
+        if (nameString == null)
+        {
+            String prefs_prefix0 = PREF_PREFIX_KEY + "0" + PREF_PREFIX_KEY_LOCATION;    // prefer app configuration (if it exists) over locale default
+            defaultAlt = prefs.getString(prefs_prefix0 + PREF_KEY_LOCATION_ALTITUDE, PREF_DEF_LOCATION_ALTITUDE);
+            defaultLon = prefs.getString(prefs_prefix0 + PREF_KEY_LOCATION_LONGITUDE, PREF_DEF_LOCATION_LONGITUDE);
+            defaultLat = prefs.getString(prefs_prefix0 + PREF_KEY_LOCATION_LATITUDE, PREF_DEF_LOCATION_LATITUDE);
+            defaultName = prefs.getString(prefs_prefix0 + PREF_KEY_LOCATION_LABEL, PREF_DEF_LOCATION_LABEL);
+            defaultUseAltitude = prefs.getBoolean(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE_ENABLED, PREF_DEF_LOCATION_ALTITUDE_ENABLED);
+        }
+
+        String altString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE, defaultAlt);
+        String lonString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LONGITUDE, defaultLon);
+        String latString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LATITUDE, defaultLat);
+        nameString = prefs.getString(prefs_prefix + PREF_KEY_LOCATION_LABEL, defaultName);
 
         Location location = new Location(nameString, latString, lonString, altString);
-        location.setUseAltitude(prefs.getBoolean(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE_ENABLED, PREF_DEF_LOCATION_ALTITUDE_ENABLED));
+        location.setUseAltitude(prefs.getBoolean(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE_ENABLED, defaultUseAltitude));
         return location;
     }
     public static void deleteLocationPref(Context context, int appWidgetId)
@@ -2351,7 +2339,6 @@ public class WidgetSettings
     {
         deleteNextSuggestedUpdate(context, appWidgetId);
         deleteActionModePref(context, appWidgetId);
-        deleteActionLaunchPref(context, appWidgetId);
 
         deleteSun1x1ModePref(context, appWidgetId);
         deleteSunPos1x1ModePref(context, appWidgetId);
@@ -2396,6 +2383,8 @@ public class WidgetSettings
 
         deleteTimeNoteRisePref(context, appWidgetId);
         deleteTimeNoteSetPref(context, appWidgetId);
+
+        WidgetActions.deletePrefs(context, appWidgetId);
     }
 
     public static void initDefaults( Context context )
@@ -2405,6 +2394,8 @@ public class WidgetSettings
         PREF_DEF_LOCATION_LONGITUDE = context.getString(R.string.default_location_longitude);
         PREF_DEF_LOCATION_ALTITUDE = context.getString(R.string.default_location_altitude);
         PREF_DEF_GENERAL_UNITS_LENGTH = getLengthUnit(context.getString(R.string.default_units_length));
+
+        WidgetActions.initDefaults(context);
     }
 
     public static void initDisplayStrings( Context context )
@@ -2425,5 +2416,7 @@ public class WidgetSettings
         DateMode.initDisplayStrings(context);
         TimeFormatMode.initDisplayStrings(context);
         RiseSetOrder.initDisplayStrings(context);
+
+        WidgetActions.initDisplayStrings(context);
     }
 }

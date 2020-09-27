@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
+import android.os.SystemClock;
 import android.support.test.espresso.IdlingPolicies;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.espresso.ViewAction;
@@ -82,13 +83,19 @@ public class SuntimesScreenshots1 extends SuntimesActivityTestBase
 
         activityRule.getActivity().finish();
         activityRule.launchActivity(activityRule.getActivity().getIntent());
-        onView( withId(android.R.id.content)).perform(ViewActions.swipeUp());
+        onView( withId(android.R.id.content)).perform(ViewActions.click());
 
         long waitTime = 6 * 1000;            // wait a moment
         IdlingResource waitForResource = new ElapsedTimeIdlingResource(waitTime);
         IdlingPolicies.setMasterPolicyTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
         IdlingPolicies.setIdlingResourceTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
         registerIdlingResources(waitForResource);
+
+        long t0 = SystemClock.elapsedRealtime();
+        long t1 = t0 + 3000;
+        while (SystemClock.elapsedRealtime() < t1) {
+            // busy wait
+        }
 
         captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "activity-alarms0-" + theme);
         unregisterIdlingResources(waitForResource);

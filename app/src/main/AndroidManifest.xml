@@ -61,6 +61,14 @@
             android:exported="true"
             android:syncable="false" />
 
+        <!-- Theme Provider -->
+        <provider
+            android:name="com.forrestguice.suntimeswidget.themes.SuntimesThemeProvider"
+            android:authorities="suntimeswidget.theme.provider"
+            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:exported="true"
+            android:syncable="false" />
+
         <!-- Calculator Plugins -->
         <!--EXAMPLE:
         <activity android:name=".calculator.ca.rmen.sunrisesunset.CalculatorPlugin">  ..where CalculatorPlugin is an empty activity
@@ -90,9 +98,25 @@
             android:icon="@mipmap/ic_launcher">
         </activity>
 
+        <!-- Places Activity -->
+        <activity
+            android:name=".getfix.PlacesActivity"
+            android:label="@string/app_name"
+            android:icon="@mipmap/ic_launcher"
+            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:exported="true">
+        </activity>
+
         <!-- Widget List Activity -->
         <activity
             android:name=".SuntimesWidgetListActivity"
+            android:label="@string/app_name"
+            android:icon="@mipmap/ic_launcher">
+        </activity>
+
+        <!-- Action List Activity -->
+        <activity
+            android:name=".actions.ActionListActivity"
             android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher">
         </activity>
@@ -101,7 +125,9 @@
         <activity
             android:name=".themes.WidgetThemeListActivity"
             android:label="@string/app_name"
-            android:icon="@mipmap/ic_launcher">
+            android:icon="@mipmap/ic_launcher"
+            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:exported="true">
         </activity>
 
         <!-- Theme Config Activity -->
@@ -109,6 +135,20 @@
             android:name=".themes.WidgetThemeConfigActivity"
             android:label="@string/app_name"
             android:icon="@mipmap/ic_launcher">
+        </activity>
+
+        <!-- Color Dialog Activity -->
+        <activity
+            android:name=".settings.colors.ColorActivity"
+            android:label="@string/configAction_chooseColor"
+            android:icon="@drawable/ic_palette"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.PICK" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="color" />
+            </intent-filter>
         </activity>
 
         <!-- FileProvider (export to file; places, themes) -->
@@ -139,6 +179,25 @@
 
         </activity>
 
+        <!--<activity
+            android:name=".alarmclock.ui.AlarmClockLegacyActivity"
+            android:label="Legacy Suntimes Alarms"
+            android:icon="@mipmap/ic_launcher_alarms"
+            android:taskAffinity=".alarmclock.ui.AlarmClockLegacyActivity"
+            android:launchMode="singleTask">
+
+            <intent-filter>
+                <action android:name="android.intent.action.SET_ALARM" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>-->
+
         <activity-alias
             android:name=".alarmclock.ui.AlarmClockActivityLauncher"
             android:targetActivity=".alarmclock.ui.AlarmClockActivity"
@@ -153,6 +212,11 @@
                 android:resource="@xml/shortcuts_alarms" />
 
         </activity-alias>
+
+        <activity android:name=".alarmclock.ui.AlarmEditActivity"
+            android:label="@string/app_name_alarmclock"
+            android:icon="@mipmap/ic_launcher_alarms"
+            android:taskAffinity=".alarmclock.ui.AlarmClockActivity" />
 
         <activity
             android:name=".alarmclock.ui.AlarmDismissActivity"

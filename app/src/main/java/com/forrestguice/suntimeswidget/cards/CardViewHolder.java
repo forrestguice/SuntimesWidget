@@ -398,7 +398,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         else dayLengthDisplay = utils.timeDeltaLongDisplayString(0, dayLength, showSeconds);
 
         dayLengthDisplay.setSuffix("");
-        String dayLengthStr = dayLengthDisplay.toString();
+        String dayLengthStr = dayLengthDisplay.getValue();
         String dayLength_label = context.getString(labelID, dayLengthStr);
         textView.setText(SuntimesUtils.createBoldColorSpan(null, dayLength_label, dayLengthStr, highlightColor));
     }

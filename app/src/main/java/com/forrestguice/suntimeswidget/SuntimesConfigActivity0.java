@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2019 Forrest Guice
+    Copyright (C) 2014-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -18,17 +18,15 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -43,6 +41,7 @@ import android.widget.EditText;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -51,16 +50,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
+import com.forrestguice.suntimeswidget.calculator.SuntimesData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorListAdapter;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 
+import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.actions.EditActionView;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+import com.forrestguice.suntimeswidget.themes.SuntimesThemeContract;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
@@ -82,13 +87,13 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected static final String DIALOGTAG_ABOUT = "about";
     protected static final String DIALOGTAG_HELP = "help";
 
-    protected static final String HELPTAG_LAUNCH = "action_launch";
-
     protected int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     protected boolean reconfigure = false;
 
     private ActionBar actionBar;
     protected TextView text_appWidgetID;
+
+    protected ScrollView scrollView;
 
     protected Spinner spinner_calculatorMode;
     protected Spinner spinner_timeFormatMode;
@@ -109,7 +114,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected ImageButton button_riseSetOrderHelp;
 
     protected Spinner spinner_onTap;
-    protected EditText text_launchActivity;
+    protected EditActionView edit_launchIntent;
 
     protected TextView button_themeConfig;
     private WidgetThemes.ThemeListAdapter spinner_themeAdapter;
@@ -212,16 +217,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
+        edit_launchIntent.setOnExpandedChangedListener(onEditLaunchIntentExpanded);
+        edit_launchIntent.onResume(getSupportFragmentManager(), getData(this, appWidgetId));
+    }
 
-        FragmentManager fragments = getSupportFragmentManager();
-        HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
-        if (helpDialog != null)
-        {
-            String tag = helpDialog.getListenerTag();
-            if (tag != null && tag.equals(HELPTAG_LAUNCH)) {
-                helpDialog.setNeutralButtonListener(helpDialogListener_launchApp, HELPTAG_LAUNCH);
-            }
-        }
+    public SuntimesData getData(Context context, int appWidgetId) {
+        return new SuntimesRiseSetData(context, appWidgetId);
     }
 
     /**
@@ -338,6 +339,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         initToolbar(context);
 
+        scrollView = (ScrollView) findViewById(R.id.scrollView);
+
         text_appWidgetID = (TextView) findViewById(R.id.text_appwidgetid);
         if (text_appWidgetID != null)
         {
@@ -373,24 +376,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //
         // widget: onTap launchActivity
         //
-        text_launchActivity = (EditText) findViewById(R.id.appwidget_action_launch);
-
-        ImageButton button_launchAppHelp = (ImageButton) findViewById(R.id.appwidget_action_launch_helpButton);
-        if (button_launchAppHelp != null)
-        {
-            button_launchAppHelp.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    HelpDialog helpDialog = new HelpDialog();
-                    helpDialog.setContent(getString(R.string.help_action_launch));
-                    helpDialog.setShowNeutralButton(getString(R.string.configAction_restoreDefaults));
-                    helpDialog.setNeutralButtonListener(helpDialogListener_launchApp, HELPTAG_LAUNCH);
-                    helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
-                }
-            });
-        }
+        edit_launchIntent = (EditActionView) findViewById(R.id.appwidget_action_launch_edit);
+        edit_launchIntent.setFragmentManager(getSupportFragmentManager());
+        edit_launchIntent.setData(getData(this, appWidgetId));
 
         //
         // widget: theme
@@ -595,6 +583,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             locationConfig.setAutoAllowed(false);
             locationConfig.setHideMode(true);
             locationConfig.init(this, false, this.appWidgetId);
+            locationConfig.setOnListButtonClicked(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(SuntimesConfigActivity0.this, PlacesActivity.class);
+                    intent.putExtra(PlacesActivity.EXTRA_ALLOW_PICK, true);
+                    startActivityForResult(intent, LocationConfigDialog.REQUEST_LOCATION);
+                }
+            });
         }
 
         //
@@ -741,28 +737,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             actionBar.setTitle(getString(reconfigure ? R.string.configAction_reconfigWidget_short : R.string.configAction_addWidget));
         }
     }
-
-    /**
-     * HelpDialog onShow (launch App)
-     */
-    private View.OnClickListener helpDialogListener_launchApp = new View.OnClickListener()
-    {
-        @Override
-        public void onClick(View v)
-        {
-            if (text_launchActivity != null) {
-                text_launchActivity.setText(WidgetSettings.PREF_DEF_ACTION_LAUNCH);
-                text_launchActivity.selectAll();
-                text_launchActivity.requestFocus();
-            }
-
-            FragmentManager fragments = getSupportFragmentManager();
-            HelpDialog helpDialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
-            if (helpDialog != null) {
-                helpDialog.dismiss();
-            }
-        }
-    };
 
     /**
      * @param context a context used to access resources
@@ -1361,13 +1335,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         WidgetSettings.saveActionModePref(context, appWidgetId, actionMode);
 
         // save: launch activity
-        String launchString = text_launchActivity.getText().toString();
-        if (launchString.trim().isEmpty())
-        {
-            launchString = WidgetSettings.PREF_DEF_ACTION_LAUNCH;
-            Log.w("saveActionSettings", "empty launch string (using default)");
-        }
-        WidgetSettings.saveActionLaunchPref(context, appWidgetId, launchString);
+        edit_launchIntent.saveIntent(context, appWidgetId, null, edit_launchIntent.getIntentTitle(), edit_launchIntent.getIntentDesc());
     }
 
     /**
@@ -1382,9 +1350,24 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         spinner_onTap.setSelection(actionMode.ordinal(supportedActionModes()));
 
         // load: launch activity
-        String launchString = WidgetSettings.loadActionLaunchPref(context, appWidgetId);
-        text_launchActivity.setText(launchString);
+        edit_launchIntent.loadIntent(context, appWidgetId, null);
     }
+
+    /**
+     * OnEditLaunchIntentExpanded
+     */
+    private CompoundButton.OnCheckedChangeListener onEditLaunchIntentExpanded = new CompoundButton.OnCheckedChangeListener()
+    {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            buttonView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                }
+            }, 250);
+        }
+    };
 
     /**
      * Click handler executed when the "Add Widget" button is pressed.
@@ -1730,9 +1713,24 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode)
         {
+            case LocationConfigDialog.REQUEST_LOCATION:
+                onLocationResult(resultCode, data);
+                break;
+
             case PICK_THEME_REQUEST:
                 onPickThemeResult(resultCode, data);
                 break;
+        }
+    }
+
+    protected void onLocationResult(int resultCode, Intent data)
+    {
+        if (resultCode == Activity.RESULT_OK && data != null)
+        {
+            Location location = data.getParcelableExtra(PlacesActivity.EXTRA_LOCATION);
+            if (location != null) {
+                locationConfig.loadSettings(SuntimesConfigActivity0.this, LocationConfigView.bundleData(location.getUri(), location.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
+            }
         }
     }
 
@@ -1744,7 +1742,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (resultCode == RESULT_OK)
         {
-            String paramSelection = data.getStringExtra(SuntimesTheme.THEME_NAME);
+            String paramSelection = data.getStringExtra(SuntimesThemeContract.THEME_NAME);
             String themeName = (paramSelection != null) ? paramSelection
                                                         : ((ThemeDescriptor)spinner_theme.getSelectedItem()).name();
 

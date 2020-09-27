@@ -6,7 +6,7 @@ Android app (and widget collection) that displays sunlight and moonlight times f
 
 [![F-Droid](https://img.shields.io/f-droid/v/com.forrestguice.suntimeswidget.svg)](https://f-droid.org/en/packages/com.forrestguice.suntimeswidget/)
 [![GitHub release](https://img.shields.io/github/release/forrestguice/SuntimesWidget.svg)](https://github.com/forrestguice/SuntimesWidget/releases)
-[![Build Status](https://travis-ci.org/forrestguice/SuntimesWidget.svg?branch=master)](https://travis-ci.org/forrestguice/SuntimesWidget)
+![Android CI](https://github.com/forrestguice/SuntimesWidget/workflows/Android%20CI/badge.svg?branch=master)
 
 * [Privacy and Permissions](#privacy-and-permissions)
 * [Donations](#donations)
@@ -93,7 +93,7 @@ Widgets are resizable and include...
 <img height="256px" src="https://github.com/forrestguice/SuntimesWidget/blob/master/app/src/main/res/drawable-nodpi/sunposwidget0_3x2_preview.png" align="center"></img>
 <br />Additional screenshots can be found on the <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Screenshots">project wiki</a> and in the <a href="https://github.com/forrestguice/SuntimesWidget/tree/gh-pages/doc/screenshots">gh-pages branch</a>.
 
-<img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.9.5/en/activity-main0-dark.png' width="280px" />&nbsp;&nbsp;<img alt="screenshot2" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.11.3/en/activity-alarms0-dark.png' width="280px" />&nbsp;&nbsp;<img alt="screenshot3" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.9.5/en/activity-main0-light.png' width="280px" />
+<img alt="screenshot1" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.13.0/en/activity-main0-dark.png' width="280px" />&nbsp;&nbsp;<img alt="screenshot2" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.13.0/en/activity-alarms0-dark.png' width="280px" />&nbsp;&nbsp;<img alt="screenshot3" src='https://github.com/forrestguice/SuntimesWidget/blob/gh-pages/doc/screenshots/v0.13.0/en/activity-main0-light.png' width="280px" />
 
 ## Privacy and Permissions ##
 
@@ -159,7 +159,7 @@ Libraries used:
 
 ## Project Contributions
 
-German translation by <u>Henrik "HerHde" Hüttemann</u> and <u>Wolkenschieber</u>.<br/>
+German translation by <u>Henrik "HerHde" Hüttemann</u>, <u>Wolkenschieber</u>, and <u>xnumad</u>.<br/>
 Polish and Esperanto translations by <u>Verdulo</u>.<br/>
 French translation by <u>Jej</u> and <u>Aloha</u>.<br/>
 Hungarian translation by <u>Erci</u>.<br/>

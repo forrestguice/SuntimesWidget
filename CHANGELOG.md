@@ -1,9 +1,50 @@
 ### ~
 
-### v0.12.7 (2020-04-11)
+### v0.13.0 (2020-09-14)
+* adds "lunar noon" and "lunar midnight" to notes and alarms.
+* improves SuntimesAlarms support for polar regions; it is now possible to schedule alarms for infrequently occurring twilight events.
+* adds PlacesActivity; adds support for searching places; adds support for deleting individual places (#419); adds undo clear/delete places; extends place selection to add-on apps.
+* improves ColorDialog; now supports paging between different pickers; adds alternate quadflask color picker; adds simple RGB color picker; adds "recent colors" palette; refactored to BottomSheetDialog.
+* adds ColorActivity; extends color selection to add-on apps.
+* extends "On Tap" functionality to support user-defined actions; adds UI for adding, editing, and selecting user-defined actions.
+* adds SuntimesAlarms actions; trigger a user-defined action when an alarm sounds or is dismissed.
+* improves SuntimesAlarms UI; replaces AlarmList UI; adds AlarmEditActivity.
+* (SuntimesAlarms) improves alarm list to allow rescheduling already active alarms (#355).
+* (SuntimesAlarms) improves visibility of the "clock time", "apparent solar time", and "local mean time" alarm modes.
+* (SuntimesAlarms) improves visibility of the alarm offset feature (#416).
+* (SuntimesAlarms) improves alarm offset UI to show the actual alarm time (#424);
+* (SuntimesAlarms) adds support for sorting the alarm list (#413); by time, by creation date.
+* (SuntimesAlarms) adds support for undo delete alarms.
+* (SuntimesAlarms) alarm database version 2 -> 3; adds columns "actionID0", "actionID1.
+* adds %dm to %substitutions; widget update time in milliseconds.
+* tweaks 2x1 sun widget layout (#423) to center the time.
+* fixes adaptive icon shape.
+* updates translation to Chinese (zh-tw) (#380).
+
+### v0.12.11 (2020-06-16)
+* fixes bug "sun position widget does not render midnight sun" (#421).
+* fixes app crash when using fallback to "last location" (#420).
+
+### v0.12.10 (2020-05-20)
+* fixes bug "solar time alarms are offset by several minutes" (#414).
+* updates translation to German (de) (#412 by xnumad).
+
+### v0.12.9 (2020-05-10)
+* fixes bug "Widget Title Substitution %lel uses meters only" (#410).
+* fixes NullPointerException when refreshing location (#408).
+
+### v0.12.8 (2020-04-30)
+* adds ability to set an alarm in solar time (#403); adds `timezone` field to alarm item database; increments database version (`1` -> `2`).
+* adds field to CalculatorProvider; `COLUMN_CONFIG_APP_THEME_OVERRIDE`; increments CalculatorProvider versionCode (`3` -> `4`).
+* adds a ContentProvider (SuntimesThemeProvider) that provides access to user-defined themes.
+* exports the ThemeList activity; permits access to third-party apps with the `suntimes.permission.READ_CALCULATOR` permission.
+* fixes bug where NotificationService continues running after scheduling a notification or distant alarm.
+
+### v0.12.7 (2020-04-12)
 * adds "gradually increase volume" option to Suntimes Alarms (#396).
 * fixes bug where CalculatorProvider fails to apply the selected time zone (#394).
 * updates translation to Brazilian Portuguese (pt-br) (#400 by efraletti).
+* updates translations to Polish (pl) and Esperanto (eo) (#402 by Verdulo).
 
 ### v0.12.6 (2020-03-16)
 * adds fields to CalculatorProvider that provide access to general app configuration (timeIs24, showSeconds, showHours, showWeeks, useElevation, showWarnings, verboseTalkback, showFields, lengthUnits, and objectHeight).

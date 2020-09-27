@@ -24,7 +24,7 @@
         android:layout_width="match_parent" android:layout_height="wrap_content">
 
         <!-- Sunrise Color -->
-        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+        <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
             android:id="@+id/chooser_sunriseColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginStart="48dp" android:layout_marginLeft="48dp">
 
-            <com.forrestguice.suntimeswidget.settings.ColorChooserView
+            <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
                 android:id="@+id/chooser_sunriseFillColor"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 app:hintText="@string/configHint_themeColorSunrise"
@@ -56,7 +56,7 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginStart="48dp" android:layout_marginLeft="48dp">
 
-            <com.forrestguice.suntimeswidget.settings.ColorChooserView
+            <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
                 android:id="@+id/chooser_sunriseStrokeColor"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 app:hintText="@string/configHint_themeColorSunrise"
@@ -71,14 +71,14 @@
         </LinearLayout>
 
         <!-- Sunset Color -->
-        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+        <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
             android:id="@+id/chooser_sunsetColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             app:hintText="@string/configHint_themeColorSunrise" app:labelText="@string/configLabel_themeColorSunset"
             app:reverse="true" />
 
         <!-- Sunset Fill Color -->
-        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+        <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
             android:id="@+id/chooser_sunsetFillColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginStart="48dp" android:layout_marginLeft="48dp"
@@ -87,7 +87,7 @@
             app:reverse="true" />
 
         <!-- Sunset Stroke Color -->
-        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+        <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
             android:id="@+id/chooser_sunsetStrokeColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginStart="48dp" android:layout_marginLeft="48dp"
@@ -107,7 +107,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <com.forrestguice.suntimeswidget.settings.ColorChooserView
+            <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
                 android:id="@+id/chooser_noonColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -123,7 +123,7 @@
         </LinearLayout>
 
         <!-- Noon Fill Color -->
-        <com.forrestguice.suntimeswidget.settings.ColorChooserView
+        <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
             android:id="@+id/chooser_noonFillColor"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginStart="48dp" android:layout_marginLeft="48dp"
@@ -136,7 +136,7 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginStart="48dp" android:layout_marginLeft="48dp">
 
-            <com.forrestguice.suntimeswidget.settings.ColorChooserView
+            <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
                 android:id="@+id/chooser_noonStrokeColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

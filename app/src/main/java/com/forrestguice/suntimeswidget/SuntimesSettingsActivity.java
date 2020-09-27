@@ -47,6 +47,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
@@ -54,6 +55,8 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.actions.ActionListActivity;
+import com.forrestguice.suntimeswidget.actions.LoadActionDialog;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -61,13 +64,16 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
+import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.LengthPreference;
 import com.forrestguice.suntimeswidget.settings.SummaryListPreference;
-import com.forrestguice.suntimeswidget.settings.ThemePreference;
+import com.forrestguice.suntimeswidget.settings.ActionButtonPreference;
+import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.themes.SuntimesThemeContract;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
 import java.io.File;
@@ -75,9 +81,18 @@ import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
+import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_DEF_UI_CLOCKTAPACTION;
+import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_DEF_UI_DATETAPACTION;
+import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_DEF_UI_DATETAPACTION1;
+import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_DEF_UI_NOTETAPACTION;
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_APPEARANCE_THEME_DARK;
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT;
+import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_CLOCKTAPACTION;
+import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_DATETAPACTION;
+import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_DATETAPACTION1;
+import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_NOTETAPACTION;
 
 /**
  * A preferences activity for the main app;
@@ -99,6 +114,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
     public static final int REQUEST_PICKTHEME_LIGHT = 20;
     public static final int REQUEST_PICKTHEME_DARK = 30;
+    public static final int REQUEST_TAPACTION_CLOCK = 40;
+    public static final int REQUEST_TAPACTION_DATE0 = 50;
+    public static final int REQUEST_TAPACTION_DATE1 = 60;
+    public static final int REQUEST_TAPACTION_NOTE = 70;
 
     private Context context;
     private PlacesPrefsBase placesPrefBase = null;
@@ -135,8 +154,55 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         Log.d(LOG_TAG, "onActivityResult: " + requestCode + " (" + resultCode + ")");
-        if (requestCode == REQUEST_PICKTHEME_LIGHT || requestCode == REQUEST_PICKTHEME_DARK) {
-            onPickTheme(requestCode, resultCode, data);
+        switch(requestCode)
+        {
+            case REQUEST_PICKTHEME_DARK:
+            case REQUEST_PICKTHEME_LIGHT:
+                onPickTheme(requestCode, resultCode, data);
+                break;
+
+            case REQUEST_TAPACTION_CLOCK:
+            case REQUEST_TAPACTION_DATE0:
+            case REQUEST_TAPACTION_DATE1:
+            case REQUEST_TAPACTION_NOTE:
+                onPickAction(requestCode, resultCode, data);
+                break;
+        }
+    }
+
+    private String prefKeyForRequestCode(int requestCode)
+    {
+        switch(requestCode)
+        {
+            case REQUEST_PICKTHEME_DARK:  return AppSettings.PREF_KEY_APPEARANCE_THEME_DARK;
+            case REQUEST_PICKTHEME_LIGHT: return AppSettings.PREF_KEY_APPEARANCE_THEME_LIGHT;
+            case REQUEST_TAPACTION_CLOCK: return AppSettings.PREF_KEY_UI_CLOCKTAPACTION;
+            case REQUEST_TAPACTION_DATE0: return AppSettings.PREF_KEY_UI_DATETAPACTION;
+            case REQUEST_TAPACTION_DATE1: return AppSettings.PREF_KEY_UI_DATETAPACTION1;
+            case REQUEST_TAPACTION_NOTE:  return AppSettings.PREF_KEY_UI_NOTETAPACTION;
+            default: return null;
+        }
+    }
+
+    private void onPickAction(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode == RESULT_OK) {
+
+            String selection = data.getStringExtra(ActionListActivity.SELECTED_ACTIONID);
+            boolean adapterModified = data.getBooleanExtra(ActionListActivity.ADAPTER_MODIFIED, false);
+            Log.d("onPickAction", "Picked " + selection + " (adapterModified:" + adapterModified + ")");
+
+            if (selection != null)
+            {
+                SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+                pref.putString(prefKeyForRequestCode(requestCode), selection);
+                pref.apply();
+                rebuildActivity();
+            }
+
+            if (adapterModified) {
+                rebuildActivity();
+            }
         }
     }
 
@@ -144,14 +210,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     {
         if (resultCode == RESULT_OK)
         {
-            String selection = data.getStringExtra(SuntimesTheme.THEME_NAME);
+            String selection = data.getStringExtra(SuntimesThemeContract.THEME_NAME);
             boolean adapterModified = data.getBooleanExtra(WidgetThemeListActivity.ADAPTER_MODIFIED, false);
             Log.d("onPickTheme", "Picked " + selection + " (adapterModified:" + adapterModified + ")");
 
             if (selection != null)
             {
                 SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
-                pref.putString((requestCode == REQUEST_PICKTHEME_LIGHT ? PREF_KEY_APPEARANCE_THEME_LIGHT : PREF_KEY_APPEARANCE_THEME_DARK), selection);
+                pref.putString(prefKeyForRequestCode(requestCode), selection);
                 pref.apply();
                 rebuildActivity();
 
@@ -849,10 +915,11 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_places, false);
             addPreferencesFromResource(R.xml.preference_places);
 
+            Preference managePlacesPref = findPreference("places_manage");
             Preference clearPlacesPref = findPreference("places_clear");
             Preference exportPlacesPref = findPreference("places_export");
             Preference buildPlacesPref = findPreference("places_build");
-            base = new PlacesPrefsBase(getActivity(), buildPlacesPref, clearPlacesPref, exportPlacesPref);
+            base = new PlacesPrefsBase(getActivity(), managePlacesPref, buildPlacesPref, clearPlacesPref, exportPlacesPref);
         }
 
         @Override
@@ -874,9 +941,8 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         public void onAttach(Context context)
         {
             super.onAttach(context);
-            if (base != null)
-            {
-                base.setParent(context);
+            if (base != null) {
+                base.setParent(getActivity());
             }
         }
 
@@ -884,8 +950,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         public void onAttach(Activity activity)
         {
             super.onAttach(activity);
-            if (base != null)
-            {
+            if (base != null) {
                 base.setParent(activity);
             }
         }
@@ -900,7 +965,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         //public static final String KEY_ISCLEARING = "isclearing";
         //public static final String KEY_ISEXPORTING = "isexporting";
 
-        private Context myParent;
+        private Activity myParent;
         private ProgressDialog progress;
 
         private BuildPlacesTask buildPlacesTask = null;
@@ -912,9 +977,13 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         private ExportPlacesTask exportPlacesTask = null;
         private boolean isExporting = false;
 
-        public PlacesPrefsBase(Context context, Preference buildPref, Preference clearPref, Preference exportPref)
+        public PlacesPrefsBase(Activity context, Preference managePref, Preference buildPref, Preference clearPref, Preference exportPref)
         {
             myParent = context;
+
+            if (managePref != null) {
+                managePref.setOnPreferenceClickListener(onClickManagePlaces);
+            }
 
             if (buildPref != null)
                 buildPref.setOnPreferenceClickListener(onClickBuildPlaces);
@@ -926,8 +995,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 exportPref.setOnPreferenceClickListener(onClickExportPlaces);
         }
 
-        public void setParent( Context context )
-        {
+        public void setParent( Activity context ) {
             myParent = context;
         }
 
@@ -953,6 +1021,24 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 progress.dismiss();
             }
         }
+
+        /**
+         * Manage Places (click handler)
+         */
+        private Preference.OnPreferenceClickListener onClickManagePlaces = new Preference.OnPreferenceClickListener()
+        {
+            public boolean onPreferenceClick(Preference preference)
+            {
+                if (myParent != null)
+                {
+                    Intent intent = new Intent(myParent, PlacesActivity.class);
+                    myParent.startActivity(intent);
+                    myParent.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+                    return true;
+                }
+                return false;
+            }
+        };
 
         /**
          * Build Places (click handler)
@@ -1171,12 +1257,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     private void initPref_places()
     {
         //noinspection deprecation
+        Preference managePlacesPref = findPreference("places_manage");
+        //noinspection deprecation
         Preference buildPlacesPref = findPreference("places_build");
         //noinspection deprecation
         Preference clearPlacesPref = findPreference("places_clear");
         //noinspection deprecation
         Preference exportPlacesPref = findPreference("places_export");
-        placesPrefBase = new PlacesPrefsBase(this, buildPlacesPref, clearPlacesPref, exportPlacesPref);
+        placesPrefBase = new PlacesPrefsBase(this, managePlacesPref, buildPlacesPref, clearPlacesPref, exportPlacesPref);
     }
 
     //////////////////////////////////////////////////
@@ -1216,13 +1304,15 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             }
         }
 
-        ThemePreference overrideTheme_light = (ThemePreference)findPreference(PREF_KEY_APPEARANCE_THEME_LIGHT);
-        initPref_ui_themeOverride(this, overrideTheme_light, this, PREF_KEY_APPEARANCE_THEME_LIGHT);
-        loadPref_ui_themeOverride(this, overrideTheme_light, PREF_KEY_APPEARANCE_THEME_LIGHT, this);
+        // TODO: tapActions
 
-        ThemePreference overrideTheme_dark = (ThemePreference)findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
-        initPref_ui_themeOverride(this, overrideTheme_dark, this, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
-        loadPref_ui_themeOverride(this, overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK, this);
+        ActionButtonPreference overrideTheme_light = (ActionButtonPreference)findPreference(PREF_KEY_APPEARANCE_THEME_LIGHT);
+        initPref_ui_themeOverride(this, overrideTheme_light, PREF_KEY_APPEARANCE_THEME_LIGHT);
+        loadPref_ui_themeOverride(this, overrideTheme_light, PREF_KEY_APPEARANCE_THEME_LIGHT);
+
+        ActionButtonPreference overrideTheme_dark = (ActionButtonPreference)findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
+        initPref_ui_themeOverride(this, overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
+        loadPref_ui_themeOverride(this, overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
 
         updatePref_ui_themeOverride(AppSettings.loadThemePref(this), overrideTheme_dark, overrideTheme_light);
     }
@@ -1239,15 +1329,33 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             }
         }
 
-        final ThemePreference overrideTheme_light = (ThemePreference)fragment.findPreference(PREF_KEY_APPEARANCE_THEME_LIGHT);
-        initPref_ui_themeOverride(fragment.getActivity(), overrideTheme_light, fragment.getActivity(), PREF_KEY_APPEARANCE_THEME_LIGHT);
-        loadPref_ui_themeOverride(fragment.getActivity(), overrideTheme_light, PREF_KEY_APPEARANCE_THEME_LIGHT, fragment.getActivity());
+        Activity activity = fragment.getActivity();
 
-        final ThemePreference overrideTheme_dark = (ThemePreference)fragment.findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
-        initPref_ui_themeOverride(fragment.getActivity(), overrideTheme_dark, fragment.getActivity(), AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
-        loadPref_ui_themeOverride(fragment.getActivity(), overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK, fragment.getActivity());
+        final ActionButtonPreference tapAction_clock = (ActionButtonPreference)fragment.findPreference(PREF_KEY_UI_CLOCKTAPACTION);
+        initPref_ui_tapAction(activity, tapAction_clock, PREF_KEY_UI_CLOCKTAPACTION);
+        loadPref_ui_tapAction(activity, tapAction_clock, PREF_KEY_UI_CLOCKTAPACTION, PREF_DEF_UI_CLOCKTAPACTION, REQUEST_TAPACTION_CLOCK);
 
-        updatePref_ui_themeOverride(AppSettings.loadThemePref(fragment.getActivity()), overrideTheme_dark, overrideTheme_light);
+        final ActionButtonPreference tapAction_date0 = (ActionButtonPreference)fragment.findPreference(PREF_KEY_UI_DATETAPACTION);
+        initPref_ui_tapAction(activity, tapAction_date0, PREF_KEY_UI_DATETAPACTION);
+        loadPref_ui_tapAction(activity, tapAction_date0, PREF_KEY_UI_DATETAPACTION, PREF_DEF_UI_DATETAPACTION, REQUEST_TAPACTION_DATE0);
+
+        final ActionButtonPreference tapAction_date1 = (ActionButtonPreference)fragment.findPreference(PREF_KEY_UI_DATETAPACTION1);
+        initPref_ui_tapAction(activity, tapAction_date1, PREF_KEY_UI_DATETAPACTION1);
+        loadPref_ui_tapAction(activity, tapAction_date1, PREF_KEY_UI_DATETAPACTION1, PREF_DEF_UI_DATETAPACTION1, REQUEST_TAPACTION_DATE1);
+
+        final ActionButtonPreference tapAction_note = (ActionButtonPreference)fragment.findPreference(PREF_KEY_UI_NOTETAPACTION);
+        initPref_ui_tapAction(activity, tapAction_note,  PREF_KEY_UI_NOTETAPACTION);
+        loadPref_ui_tapAction(activity, tapAction_note,  PREF_KEY_UI_NOTETAPACTION, PREF_DEF_UI_NOTETAPACTION, REQUEST_TAPACTION_NOTE);
+
+        final ActionButtonPreference overrideTheme_light = (ActionButtonPreference)fragment.findPreference(PREF_KEY_APPEARANCE_THEME_LIGHT);
+        initPref_ui_themeOverride(activity, overrideTheme_light, PREF_KEY_APPEARANCE_THEME_LIGHT);
+        loadPref_ui_themeOverride(activity, overrideTheme_light, PREF_KEY_APPEARANCE_THEME_LIGHT);
+
+        final ActionButtonPreference overrideTheme_dark = (ActionButtonPreference)fragment.findPreference(AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
+        initPref_ui_themeOverride(activity, overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
+        loadPref_ui_themeOverride(activity, overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
+
+        updatePref_ui_themeOverride(AppSettings.loadThemePref(activity), overrideTheme_dark, overrideTheme_light);
     }
 
     private static void initPref_ui_field(CheckBoxPreference field, final Context context, final int k, boolean value)
@@ -1266,21 +1374,21 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         });
     }
 
-    private static Preference.OnPreferenceChangeListener onOverrideThemeChanged(final Activity activity, final ThemePreference overridePref, final int requestCode)
+    private static Preference.OnPreferenceChangeListener onOverrideThemeChanged(final Activity activity, final ActionButtonPreference overridePref, final int requestCode)
     {
         return new Preference.OnPreferenceChangeListener()
         {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                overridePref.setThemePreferenceListener(createThemeListPreferenceListener(activity, (String)newValue, requestCode));
+                overridePref.setActionButtonPreferenceListener(createThemeListPreferenceListener(activity, (String)newValue, requestCode));
                 return true;
             }
         };
     }
 
-    private static ThemePreference.ThemePreferenceListener createThemeListPreferenceListener(final Activity activity, final String selectedTheme, final int requestCode)
+    private static ActionButtonPreference.ActionButtonPreferenceListener createThemeListPreferenceListener(final Activity activity, final String selectedTheme, final int requestCode)
     {
-        return new ThemePreference.ThemePreferenceListener()
+        return new ActionButtonPreference.ActionButtonPreferenceListener()
         {
             @Override
             public void onActionButtonClicked()
@@ -1294,17 +1402,17 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         };
     }
 
-    private static void initPref_ui_themeOverride(Activity activity, ThemePreference listPref, Context context, String key)
+    private static void initPref_ui_themeOverride(Activity activity, ActionButtonPreference listPref, String key)
     {
         if (listPref != null)
         {
-            WidgetThemes.initThemes(context);
+            WidgetThemes.initThemes(activity);
             SuntimesTheme.ThemeDescriptor[] themes = WidgetThemes.sortedValues(true);
             String[] themeEntries = new String[themes.length + 1];
             String[] themeValues = new String[themes.length + 1];
 
             themeValues[0] = "default";
-            themeEntries[0] = context.getString(R.string.configLabel_tagDefault);
+            themeEntries[0] = activity.getString(R.string.configLabel_tagDefault);
             for (int i=0; i<themes.length; i++)                // i:0 is reserved for "default"
             {
                 themeValues[i + 1] = themes[i].name();
@@ -1316,19 +1424,19 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
     }
 
-    private static void loadPref_ui_themeOverride(Activity activity, ThemePreference listPref, String key, Context context)
+    private static void loadPref_ui_themeOverride(Activity activity, ActionButtonPreference listPref, String key)
     {
         if (listPref != null)
         {
             boolean isLightTheme = key.equals(PREF_KEY_APPEARANCE_THEME_LIGHT);
-            String themeName = ((isLightTheme ? AppSettings.loadThemeLightPref(context) : AppSettings.loadThemeDarkPref(context)));
+            String themeName = ((isLightTheme ? AppSettings.loadThemeLightPref(activity) : AppSettings.loadThemeDarkPref(activity)));
             int requestCode = (isLightTheme ? REQUEST_PICKTHEME_LIGHT : REQUEST_PICKTHEME_DARK);
 
             int currentIndex = ((themeName != null) ? listPref.findIndexOfValue(themeName) : -1);
             if (currentIndex >= 0)
             {
                 listPref.setValueIndex(currentIndex);
-                listPref.setThemePreferenceListener(createThemeListPreferenceListener(activity, themeName, requestCode));
+                listPref.setActionButtonPreferenceListener(createThemeListPreferenceListener(activity, themeName, requestCode));
                 listPref.setOnPreferenceChangeListener(onOverrideThemeChanged(activity, listPref, requestCode));
 
             } else {
@@ -1342,6 +1450,97 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
     {
         darkPref.setEnabled(AppSettings.THEME_DARK.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode));
         lightPref.setEnabled(AppSettings.THEME_LIGHT.equals(mode) || AppSettings.THEME_DAYNIGHT.equals(mode));
+    }
+
+    /**
+     * initPref_ui_tapAction
+     */
+    private static void initPref_ui_tapAction(Activity activity, ActionButtonPreference listPref, String key)
+    {
+        if (listPref != null)
+        {
+            CharSequence[] entries0 = listPref.getEntries();
+            CharSequence[] values0 = listPref.getEntryValues();
+            String actionID = PreferenceManager.getDefaultSharedPreferences(activity).getString(key, null);
+
+            boolean hasValue = false;
+            if (actionID != null)
+            {
+                for (CharSequence value : values0) {
+                    if (value.equals(actionID)) {
+                        hasValue = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!hasValue)
+            {
+                if (actionID != null && WidgetActions.hasActionLaunchPref(activity, 0, actionID))
+                {
+                    String title = WidgetActions.loadActionLaunchPref(activity, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
+                    String desc = WidgetActions.loadActionLaunchPref(activity, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
+                    String display = (desc != null && !desc.trim().isEmpty() ? desc : title);
+
+                    CharSequence[] entries1 = new String[entries0.length + 1];
+                    System.arraycopy(entries0, 0, entries1, 0, entries0.length);
+                    entries1[entries0.length] = display;
+
+                    CharSequence[] values1 = new String[values0.length + 1];
+                    System.arraycopy(values0, 0, values1, 0, values0.length);
+                    values1[values0.length] = actionID;
+
+                    listPref.setEntries(entries1);
+                    listPref.setEntryValues(values1);
+                }
+            }
+        }
+    }
+
+    private static void loadPref_ui_tapAction(Activity activity, ActionButtonPreference listPref, String key, String defaultValue, final int requestCode)
+    {
+        if (listPref != null)
+        {
+            String actionID = PreferenceManager.getDefaultSharedPreferences(activity).getString(key, defaultValue);
+            listPref.setActionButtonPreferenceListener(createTapActionListPreferenceListener(activity, actionID, requestCode));
+            listPref.setOnPreferenceChangeListener(onTapActionChanged(activity, listPref, requestCode));
+
+            int currentIndex = ((actionID != null) ? listPref.findIndexOfValue(actionID) : -1);
+            if (currentIndex >= 0) {
+                listPref.setValueIndex(currentIndex);
+            } else {
+                Log.w(LOG_TAG, "loadPref: Unable to load " + key + "... The list is missing an entry for the descriptor: " + actionID);
+                listPref.setValueIndex(0);
+            }
+        }
+    }
+
+    private static ActionButtonPreference.ActionButtonPreferenceListener createTapActionListPreferenceListener(final Activity activity, final String selectedActionID, final int requestCode)
+    {
+        return new ActionButtonPreference.ActionButtonPreferenceListener()
+        {
+            @Override
+            public void onActionButtonClicked()
+            {
+                Intent intent = new Intent(activity, ActionListActivity.class);
+                intent.putExtra(ActionListActivity.PARAM_NOSELECT, false);
+                intent.putExtra(ActionListActivity.PARAM_SELECTED, selectedActionID);
+                activity.startActivityForResult(intent, requestCode);
+                activity.overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+            }
+        };
+    }
+
+    private static Preference.OnPreferenceChangeListener onTapActionChanged(final Activity activity, final ActionButtonPreference pref, final int requestCode)
+    {
+        return new Preference.OnPreferenceChangeListener()
+        {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                pref.setActionButtonPreferenceListener(createTapActionListPreferenceListener(activity, (String)newValue, requestCode));
+                return true;
+            }
+        };
     }
 
     //////////////////////////////////////////////////

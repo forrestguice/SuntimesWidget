@@ -45,6 +45,7 @@ import android.view.MenuItem;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 
+import com.forrestguice.suntimeswidget.actions.ActionListActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
@@ -267,6 +268,18 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         Intent configThemesIntent = new Intent(context, WidgetThemeListActivity.class);
         configThemesIntent.putExtra(WidgetThemeListActivity.PARAM_NOSELECT, true);
         startActivity(configThemesIntent);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+    }
+
+    /**
+     * launchActionList
+     * @param context
+     */
+    protected void launchActionList(Context context)
+    {
+        Intent intent = new Intent(context, ActionListActivity.class);
+        intent.putExtra(WidgetThemeListActivity.PARAM_NOSELECT, true);
+        startActivity(intent);
         overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
     }
 
@@ -540,6 +553,10 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         {
             case R.id.action_themes:
                 launchThemeEditor(SuntimesWidgetListActivity.this);
+                return true;
+
+            case R.id.action_actionlist:
+                launchActionList(SuntimesWidgetListActivity.this);
                 return true;
 
             case R.id.action_help:

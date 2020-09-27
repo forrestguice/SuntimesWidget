@@ -23,10 +23,12 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.content.Context;
@@ -41,8 +43,10 @@ import com.forrestguice.suntimeswidget.layouts.SunLayout;
 import com.forrestguice.suntimeswidget.layouts.SunLayout_2x1_0;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -218,23 +222,16 @@ public class SuntimesWidget0 extends AppWidgetProvider
         // OnTap: Launch an Activity
         if (action.equals(WidgetSettings.ActionMode.ONTAP_LAUNCH_ACTIVITY.name()))
         {
-            Intent launchIntent;
-            String launchClassName = WidgetSettings.loadActionLaunchPref(context, appWidgetId);
-            Class<?> launchClass;
-            try {
-                launchClass = Class.forName(launchClassName);
-                launchIntent = new Intent(context, launchClass);
-
-            } catch (ClassNotFoundException e) {
-                launchClass = getConfigClass();
-                launchIntent = new Intent(context, launchClass);
-                launchIntent.putExtra(EXTRA_RECONFIGURE, true);
-                Log.e(TAG, "LaunchApp :: " + launchClassName + " cannot be found! " + e.toString());
+            SuntimesData data = null;
+            String dataString = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
+            String extraString = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_EXTRAS);
+            if ((dataString != null && !dataString.isEmpty() && dataString.contains("%")) ||
+                    (extraString != null && !extraString.isEmpty() && extraString.contains("%")) )
+            {
+                data = getData(context, appWidgetId);
+                data.calculate();
             }
-
-            launchIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-            launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(launchIntent);
+            WidgetActions.startIntent(context.getApplicationContext(), appWidgetId, null, data, getConfigClass(), Intent.FLAG_ACTIVITY_NEW_TASK);
             return true;
         }
 
@@ -537,6 +534,13 @@ public class SuntimesWidget0 extends AppWidgetProvider
         WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
         return (order == WidgetSettings.RiseSetOrder.TODAY)
                 ? new SuntimesRiseSetData(context, appWidgetId) : new SuntimesRiseSetData2(context, appWidgetId);
+    }
+
+    /**
+     * getData
+     */
+    protected SuntimesData getData(Context context, int appWidgetId) {
+        return getRiseSetData(context, appWidgetId);
     }
 
     /**
