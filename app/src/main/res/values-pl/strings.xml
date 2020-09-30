@@ -16,7 +16,7 @@
     <string name="configAction_mapLocation">Pokaż mapę</string>
     <string name="configAction_mapLocation_chooser">Pokaż lokalizację używając</string>
     <string name="configAction_mapLocation_noapp">Nie można odnaleźć programu do mapy!</string>
-    <string name="configAction_showCalendar">Calendar</string>  <!-- TODO -->
+    <string name="configAction_showCalendar">Kalendarz</string>
     <string name="configAction_setAlarm">Ustaw alarm</string>
     <string name="configAction_setTimeZone">Ustaw strefę czasową</string>
     <string name="configAction_setDate">Ustaw datę</string>
@@ -26,7 +26,7 @@
     <string name="configAction_worldMap">Mapa świata</string>
     <string name="configAction_moon">Księżyc</string>
     <string name="configAction_help">Pomoc</string>
-    <string name="configAction_overflow">More</string>  <!-- TODO -->
+    <string name="configAction_overflow">Więcej</string>
     <string name="configAction_settings">Ustawienia</string>
     <string name="configAction_aboutWidget">O programie</string>
 
@@ -141,8 +141,8 @@
     <string name="untilEnd_bluehour">końca błękitnej godziny</string>
     <string name="until_moonrise">wschodu Księżyca</string>
     <string name="until_moonset">zachodu Księżyca</string>
-    <string name="until_moonnoon">lunar noon</string>   <!-- TODO -->
-    <string name="until_moonnight">lunar midnight</string>   <!-- TODO -->
+    <string name="until_moonnoon">górowania Księżyca</string>
+    <string name="until_moonnight">dołowania Księżyca</string>
 
     <!-- Table -->
     <string name="sunrise">Wschód Słońca</string>                             <!-- contentDescription -->
@@ -155,7 +155,7 @@
     <string name="moonset_short">Zachód Księżyca</string>                             <!-- table title -->
 
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
-    <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
+    <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g>&#8239;<xliff:g id="units" example="m">%2$s</xliff:g></string>
     <string name="delta_years">a</string>    <!-- e.g. 1y -->
     <string name="delta_weeks">tyg</string>    <!-- e.g. 2w -->
     <string name="delta_days">d</string>     <!-- e.g. 1d -->
@@ -378,12 +378,12 @@
     <string name="actionMode_launchActivity">Uruchom apkę</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Przełącz widok</string>      <!-- setting -->
 
-    <string name="launchType_activity">Activity</string>           <!-- setting -->  <!-- TODO -->
-    <string name="launchType_broadcast">Broadcast</string>           <!-- setting -->  <!-- TODO -->
-    <string name="launchType_service">Service</string>           <!-- setting -->  <!-- TODO -->
+    <string name="launchType_activity">Activity</string>           <!-- setting -->  <!-- termin związany z Androidem, pozostawiono nieprzetłumaczone -->
+    <string name="launchType_broadcast">Broadcast</string>           <!-- setting -->   <!-- termin związany z Androidem, pozostawiono nieprzetłumaczone -->
+    <string name="launchType_service">Service</string>           <!-- setting -->   <!-- termin związany z Androidem, pozostawiono nieprzetłumaczone -->
 
-    <string name="expandMore">More</string>  <!-- contentDescription -->  <!-- TODO -->
-    <string name="expandLess">Less</string>  <!-- contentDescription -->  <!-- TODO -->
+    <string name="expandMore">Więcej</string>  <!-- contentDescription -->
+    <string name="expandLess">Mniej</string>  <!-- contentDescription -->
 
     <string name="configLabel_action">Ustawienia akcji</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Przy kliknięciu:</string>                    <!-- spinner label -->
@@ -406,7 +406,7 @@
     <string name="configHint_location_alt">143</string> <!-- edittext hint -->
     <string name="configLabel_location_name">Nazwa:</string>                     <!-- edittext label -->
     <string name="configHint_location_name">(opcjonalne)</string>                 <!-- edittext hint -->
-    <string name="configHint_location_name0">Place Name</string>                  <!-- edittext hint -->  <!-- TODO -->
+    <string name="configHint_location_name0">Nazwa miejsca</string>                  <!-- edittext hint -->
 
     <string name="configAction_getFix">Obecna lokalizacja</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">Edytuj</string>         <!-- button (contentDescription) -->
@@ -461,36 +461,36 @@
     <string name="configLabel_general_showNoon">Pokaż górowanie Słońca</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
-    <string name="configLabel_action_id">ID:</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configLabel_action_launch">Class:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configLabel_action_id">Identyfikator:</string>                 <!-- edittext label -->
+    <string name="configLabel_action_launch">Klasa:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
 
-    <string name="configHint_action_launch_title">Action Title</string>                 <!-- edittext hint -->  <!-- TODO -->
-    <string name="configHint_action_launch_desc">Short description</string>                 <!-- edittext hint -->  <!-- TODO -->
-    <string name="configLabel_action_launch_type">Type:</string>                 <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_action_launch_action">Action:</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configHint_action_launch_action">&lt;none&gt;</string> <!-- editText hint (and default) -->  <!-- TODO -->
-    <string name="configLabel_action_launch_data">Data:</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configHint_action_launch_data">&lt;none&gt;</string> <!-- editText hint (and default) -->  <!-- TODO -->
-    <string name="configLabel_action_launch_datatype">Mime:</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configHint_action_launch_datatype">text/plain</string> <!-- editText hint (and default) -->  <!-- TODO -->
-    <string name="configLabel_action_launch_extras">Extras:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configHint_action_launch_title">Nazwa czynności</string>                 <!-- edittext hint -->
+    <string name="configHint_action_launch_desc">Krótki opis</string>                 <!-- edittext hint -->
+    <string name="configLabel_action_launch_type">Typ:</string>                 <!-- spinner label -->
+    <string name="configLabel_action_launch_action">Czynność:</string>                 <!-- edittext label -->
+    <string name="configHint_action_launch_action">&lt;brak&gt;</string> <!-- editText hint (and default) -->
+    <string name="configLabel_action_launch_data">Dane:</string>                 <!-- edittext label -->
+    <string name="configHint_action_launch_data">&lt;brak&gt;</string> <!-- editText hint (and default) -->
+    <string name="configLabel_action_launch_datatype">MIME:</string>                 <!-- edittext label -->
+    <string name="configHint_action_launch_datatype">text/plain</string> <!-- editText hint (and default) -->
+    <string name="configLabel_action_launch_extras">Dodatkowe:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch_extras"><![CDATA[<none>]]></string> <!-- editText hint (and default) -->
 
-    <string name="configLabel_action_item">%1$s %2$s</string>  <!-- TODO -->
-    <string name="configLabel_action_item_desc">(%1$s)</string>  <!-- TODO -->
-    <string name="configLabel_action_item_none">No Action</string>  <!-- TODO -->
+    <string name="configLabel_action_item">%1$s %2$s</string>
+    <string name="configLabel_action_item_desc">(%1$s)</string>
+    <string name="configLabel_action_item_none">Brak czynności</string>
 
-    <string name="addaction_custname">custom<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="addaction_custtitle">Custom Action <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="addaction_error_id">ID must not be empty (or contain spaces).</string>
-    <string name="addaction_error_title">Display string must not be empty.</string>  <!-- TODO -->
-    <string name="addaction_error_exists">ID is already taken. This action will be overwritten.</string> <!-- TODO -->
+    <string name="addaction_custname">custom<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
+    <string name="addaction_custtitle">Własna czynność <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
+    <string name="addaction_error_id">Identyfikator nie może być pusty lub zawierać spacje.</string>
+    <string name="addaction_error_title">Nazwa nie może być pusta.</string>
+    <string name="addaction_error_exists">Identyfikator w użyciu. Ta czynność zostanie nadpisana.</string>
 
-    <string name="delaction_dialog_msg">Are you sure you want to delete %1$s (%2$s)?</string>    <!-- TODO -->
-    <string name="delaction_dialog_msg1">Default actions cannot be removed.\n\nRevert to defaults?</string>    <!-- TODO -->
+    <string name="delaction_dialog_msg">Czy na pewno chcesz usunąć czynność %1$s (%2$s)?</string>
+    <string name="delaction_dialog_msg1">Nie można usunąć domyślnych czynności.\n\nCzy przywrócić domyślne?</string>
     <string name="delaction_dialog_ok">Usuń</string>
-    <string name="delaction_dialog_ok1">Revert</string>    <!-- TODO -->
+    <string name="delaction_dialog_ok1">Przywróć</string>
     <string name="delaction_dialog_cancel">Anuluj</string>
 
     <string name="clearactions_dialog_msg">Are you sure you want to reset to defaults?\n\nAll custom actions will be removed.</string>    <!-- TODO -->
