@@ -135,7 +135,7 @@
     <string name="until_moonrise">lunleviĝo</string>
     <string name="until_moonset">lunsubiro</string>
     <string name="until_moonnoon">plejsupro de Luno</string>
-    <string name="until_moonnight">malplejsupro de Luno</string>
+    <string name="until_moonnight">plejmalsupro de Luno</string>
 
     <!-- Table -->
     <string name="sunrise">Sunleviĝo</string>                             <!-- contentDescription -->
@@ -276,7 +276,7 @@
     <string name="timeMode_nautical">Naŭtika krepusko</string>         <!-- setting -->
     <string name="timeMode_astronomical_short">Astronomia</string>    <!-- setting -->
     <string name="timeMode_astronomical">Astronomia krepusko</string> <!-- setting -->
-    <string name="timeMode_night">Nokto</string>                <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_night">Astronomia nokto</string>                <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_day">Tago</string>                   <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_golden_short">Ora</string>                <!-- setting -->
     <string name="timeMode_golden">Ora horo</string>                 <!-- setting -->
@@ -350,7 +350,7 @@
     <string name="widgetMode1x1_moonphaseillum">Lunfazo kaj prilumeco</string>    <!-- setting -->
     <string name="widgetMode1x1_moonphase">Nur lunfazo</string>                     <!-- setting -->
     <string name="widgetMode1x1_moonillum">Nur prilumeco de Luno</string>         <!-- setting -->
-    <string name="widgetMode1x1_moonphasenext">Sekvanta ĉefa fazo</string>             <!-- setting -->
+    <string name="widgetMode1x1_moonphasenext">Sekva ĉefa fazo</string>             <!-- setting -->
 
     <string name="configLabel_appearance_1x1mode">Grando 1×1:</string>     <!-- spinner label -->
     <string name="configLabel_appearance_3x2mode">Grando 3×2:</string>     <!-- spinner label -->
@@ -443,7 +443,7 @@
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_closest">Plej proksima okazaĵo</string>                 <!-- setting -->
-    <string name="trackingMode_soonest">Sekvanta okazaĵo</string>                <!-- setting -->
+    <string name="trackingMode_soonest">Sekva okazaĵo</string>                <!-- setting -->
     <string name="configLabel_general_trackingMode">Spuri:</string>            <!-- spinner label -->
 
     <!-- Widget Setting: timeMode override -->
@@ -844,11 +844,11 @@
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Montri sunekstremon / tagnoktegalecon</string>
-    <string name="configLabel_ui_showEquinox_summary">Montri tempon ĝis la sekvanta sunekstremo aŭ tagnoktegaleco.</string>
+    <string name="configLabel_ui_showEquinox_summary">Montri tempon ĝis la sekva sunekstremo aŭ tagnoktegaleco.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Spuri sunekstremon / tagnoktegalecon</string>
-    <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Sekvanta okazaĵo">%s</xliff:g></string>
+    <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Sekva okazaĵo">%s</xliff:g></string>
 
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Montri fonton de datumoj</string>
@@ -876,15 +876,15 @@
     <string name="configActionDesc_prevNote">Montri antaŭan noton</string>
     <string name="configActionDesc_resetNote">Restarigi noton</string>
     <string name="configActionDesc_showCalendar">Montri aplikaĵon de kalendaro</string>
-    <string name="configActionDesc_mapLocation">Show location on map</string>  <!-- TODO -->
-    <string name="configActionDesc_setAlarm">Set an alarm</string>  <!-- TODO -->
-    <string name="configActionDesc_worldMap">World Map Dialog</string>  <!-- TODO -->
-    <string name="configActionDesc_equinoxDialog">Solstices Dialog</string>  <!-- TODO -->
-    <string name="configActionDesc_moon">Moon Dialog</string>  <!-- TODO -->
-    <string name="configActionDesc_sunDialog">Sun Dialog</string>  <!-- TODO -->
-    <string name="configActionDesc_setDate">Set date</string>  <!-- TODO -->
-    <string name="configActionDesc_setTimeZone">Set time zone</string>  <!-- TODO -->
-    <string name="configActionDesc_setLocation">Set location</string>  <!-- TODO -->
+    <string name="configActionDesc_mapLocation">Montri lokon sur mapo</string>
+    <string name="configActionDesc_setAlarm">Agordi alarmon</string>
+    <string name="configActionDesc_worldMap">Montri mondmapon</string>
+    <string name="configActionDesc_equinoxDialog">Dialogujo “solstico/ekvinokso”</string>
+    <string name="configActionDesc_moon">Dialogujo “Luno”</string>
+    <string name="configActionDesc_sunDialog">Dialogujo “Suno”</string>
+    <string name="configActionDesc_setDate">Agordi daton</string>
+    <string name="configActionDesc_setTimeZone">Agordi horzonon</string>
+    <string name="configActionDesc_setLocation">Agordi pozicion</string>
     <string name="configActionDesc_swapCards">Baskuli langetojn (hodiaŭ/morgaŭ)</string>
     <string name="configActionDesc_setAlarmForNote">Agordi averton pri noto</string>
 
@@ -951,8 +951,8 @@
     <string name="configLabel_schedalarm_mode">Plani alarmon pri</string>
     <string name="configLabel_schednotify_mode">Plani sciigon pri</string>
     <string name="schedalarm_dialog_title">Plani averton</string>
-    <string name="schedalarm_dialog_tab_event">Event</string>                      <!-- tab text -->  <!-- TODO -->
-    <string name="schedalarm_dialog_tab_time">Time</string>                        <!-- tab text -->  <!-- TODO -->
+    <string name="schedalarm_dialog_tab_event">Okazaĵo</string>                      <!-- tab text -->
+    <string name="schedalarm_dialog_tab_time">Tempo</string>                        <!-- tab text -->
     <string name="schedalarm_dialog_ok">Plani averton</string>
     <string name="schedalarm_dialog_cancel">Rezigni</string>
     <string name="schedalarm_dialog_error">Averto ne agordita…</string>
@@ -986,8 +986,8 @@
         <item>somera solstico</item>
         <item>aŭtuna ekvinokso</item>
         <item>vintra solstico</item>
-        <item>lunar noon</item>    <!-- TODO -->
-        <item>lunar midnight</item>    <!-- TODO -->
+        <item>plejsupro de Luno</item>
+        <item>plejmalsupro de Luno</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>astronomia sunleviĝo</item>
@@ -997,7 +997,7 @@
         <item>matena blua horo (fino)</item>
         <item>sunleviĝo</item>
         <item>matena ora horo (fino)</item>
-        <item>tagmezo vera (kulminado)</item>
+        <item>tagmezo vera (kulmino)</item>
         <item>vespera ora horo (komenco)</item>
         <item>sunsubiro</item>
         <item>vespera blua horo (komenco)</item>
@@ -1015,8 +1015,8 @@
         <item>somera sunekstremo</item>
         <item>aŭtuna tagnoktegaleco</item>
         <item>vintra sunekstremo</item>
-        <item>lunar noon</item>    <!-- TODO -->
-        <item>lunar midnight</item>    <!-- TODO -->
+        <item>kulmino supra de Luno</item>
+        <item>kulmino malsupra de Luno</item>
     </string-array>
     
   <!-- App Setting: locale mode -->
@@ -1131,17 +1131,17 @@
     <string name="location_dialog_error_lat">Latitudo erara.</string>
     <string name="location_dialog_error_lon">Longitudo erara.</string>
     <string name="location_dialog_error_alt">Altitudo erara.</string>
-    <string name="location_dialog_error_name">Enter a place name.</string>  <!-- TODO -->
+    <string name="location_dialog_error_name">Enigu nomon por loko.</string>
 
     <string name="location_dialog_toast_copied">Enpoŝigita<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
 
     <!-- Dialog: Delete Place -->
-    <string name="locationdelete_dialog_title">Remove Place?</string>   <!-- title; remove 1 place --> <!-- TODO -->
-    <string name="locationdelete_dialog_title1">Remove Places?</string>  <!-- title; remove multiple places --> <!-- TODO -->
-    <string name="locationdelete_dialog_message">Are you sure you want to remove %s?</string>   <!-- TODO -->
-    <string name="locationdelete_dialog_success">Place was removed.</string>   <!-- toast --> <!-- TODO -->
-    <string name="locationdelete_dialog_success1">%s places were removed.</string>   <!-- toast; e.g. 2 places were deleted --> <!-- TODO -->
-    <string name="locationdelete_dialog_ok">Remove</string>  <!-- TODO -->
+    <string name="locationdelete_dialog_title">Ĉu forigi lokon?</string>   <!-- title; remove 1 place -->
+    <string name="locationdelete_dialog_title1">Ĉu forigi lokojn?</string>  <!-- title; remove multiple places -->
+    <string name="locationdelete_dialog_message">Ĉu vi certe volas forigi la lokon %s?</string>
+    <string name="locationdelete_dialog_success">Forigis lokon.</string>   <!-- toast -->
+    <string name="locationdelete_dialog_success1">Forigis %s lokojn.</string>   <!-- toast; e.g. 2 places were deleted -->
+    <string name="locationdelete_dialog_ok">Forigi</string>
     <string name="locationdelete_dialog_cancel">Nuligi</string>
 
     <!-- Dialog: Clear Places -->
@@ -1190,14 +1190,14 @@
     <string name="color_dialog_msg">Elekti koloron</string>
     <string name="color_dialog_ok">Aktualigi</string>
     <string name="color_dialog_cancel">Nuligi</string>
-    <string name="color_dialog_tab1">1</string>  <!-- TODO -->
-    <string name="color_dialog_tab2">2</string>  <!-- TODO -->
-    <string name="color_dialog_tab3">3</string>  <!-- TODO -->
-    <string name="color_dialog_label_r">R</string>  <!-- TODO -->
-    <string name="color_dialog_label_g">G</string>  <!-- TODO -->
-    <string name="color_dialog_label_b">B</string>  <!-- TODO -->
-    <string name="color_dialog_label_a">A</string>  <!-- TODO -->
-    <string name="color_dialog_hint_rgba">0–255</string>  <!-- TODO -->
+    <string name="color_dialog_tab1">1</string>
+    <string name="color_dialog_tab2">2</string>
+    <string name="color_dialog_tab3">3</string>
+    <string name="color_dialog_label_r">R</string>  <!-- 🟥 -->
+    <string name="color_dialog_label_g">V</string>  <!-- 🟩 -->
+    <string name="color_dialog_label_b">B</string>  <!-- 🟦 -->
+    <string name="color_dialog_label_a">α</string>
+    <string name="color_dialog_hint_rgba">0–255</string>
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">Pri</string>
@@ -1235,7 +1235,7 @@
         La jenaj mallongigoj estas subtenataj:<br/>
         <br/>
         <b>Ĉiuj fenestraĵoj:</b> <br />
-                * <b>%d</b> por dato (ekz. februaro 12) <br/>
+                * <b>%d</b> por dato (ekz. Februaro 12) <br/>
                 * <b>%dd</b> por tago (mallonge) (ekz. lu) <br/>
                 * <b>%dD</b> por tago (longe) (ekz. lundo) <br/>
                 * <b>%dY</b> por jaro (ekz. 2018) <br/>
@@ -1245,11 +1245,11 @@
                 * <b>%loc</b> por etikedo (ekz. Prescott) <br />
                 * <b>%lat</b> por latitudo (ekz. 35.5409) <br />
                 * <b>%lon</b> por longitudo (ekz. -112.4691) <br/>
-                * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
+                * <b>%lel</b> por altitudo (ekz. 385 metroj) <br/>
                 <br/>
                 * <b>%s</b> por datum‑fonto (ekz. sunrisesunsetlib) <br/>
                 * <b>%t</b> por horzono (id) (ekz. US/Arizona) <br/>
-                * <b>%id</b> for appWidgetID <br/>
+                * <b>%id</b> por appWidgetID <br/>
          <br/>
          <b>Sunaj fenestraĵoj:</b> <br/>
                 * <b>%m</b> por reĝimo (mallonge) (ekz. civila) <br/>
@@ -1266,26 +1266,26 @@
     </string>
     <string name="help_general_timeMode"><![CDATA[
           <b>Reala sunleviĝo/sunsubiro:</b> la Suno estas sur la horizonto, tio ĉi estas proksimuma tempo de sunleviĝo aŭ sunsubiro.<br/><br/>
-          <b>Civila krepusko:</b> la Suno estas 6 gradoj sub la horizonto, la plej helaj steloj estas videblaj. Estas sufiĉe da lumo por fari plejparte da agadoj eksterdome sen artefarita prilumado.<br/><br/>
-          <b>Naŭtika krepusko:</b> la Suno estas 12 gradoj sub la horizonto, konturoj de objektoj kaj la horizonto estas kvazaŭ nevideblaj. Lumo mankas por plejparte da agadoj eksterdome sen artefarita prilumado.<br/><br/>
-          <b>Astronomia krepusko:</b> la Suno estas 18 gradoj sub la horizonto. Preskaŭ nigra nokto.<br/>
+          <b>Civila krepusko:</b> la Suno estas 6&nbsp;gradoj sub la horizonto, la plej helaj steloj estas videblaj. Estas sufiĉe da lumo por fari plejparte da agadoj eksterdome sen artefarita prilumado.<br/><br/>
+          <b>Naŭtika krepusko:</b> la Suno estas 12&nbsp;gradoj sub la horizonto, konturoj de objektoj kaj la horizonto estas kvazaŭ nevideblaj. Lumo mankas por plejparte da agadoj eksterdome sen artefarita prilumado.<br/><br/>
+          <b>Astronomia krepusko:</b> la Suno estas 18&nbsp;gradoj sub la horizonto. Preskaŭ nigra nokto.<br/>
     ]]></string>
     <string name="help_general_riseSetOrder"><![CDATA[
           <b>Hodiaŭ:</b> tempoj de leviĝo kaj subiro por la hodiaŭa dato.<br/><br/>
-          <b>Antaŭa / sekvanta:</b> tempo de la eksa okazaĵo kaj la sekvanta okazaĵo.<br/>
+          <b>Antaŭa / sekva:</b> tempo de la eksa okazaĵo kaj la sekva okazaĵo.<br/>
     ]]></string>
 
         <string name="help_general_solartime"><![CDATA[
           <b>Ŝajna suntempo:</b> tempo determinita per spuri movon de ŝajna Suno al la agordita longitudo kaj latitudo.<br/><br/>
           Ŝajna movo de Suno ne estas konstanta. Ĝi ŝanĝiĝas laŭ sezonoj pro aksa kliniĝo de ekliptiko kaj pro discentreco de Tera orbito.
-          Longo de ĉiu ŝajna suna tago – mezurita inter du tagmezoj – povas iomete malegali al 24 horoj (maksimume je 30s).
+          Longo de ĉiu ŝajna suna tago – mezurita inter du tagmezoj – povas iomete malegali al 24&nbsp;horoj (maksimume je 30&nbsp;s).
           Tiuj etaj ŝanĝoj kolektiĝas kun ĉiu pasigita tago (kaj nuliĝas dum jaro).<br/><br/>
           <b>Mezuma suntempo:</b> la tempo determinita el mezuma pozicio de Suno por agordita longitudo.<br/><br/>
           Mezuma movo de Suno enhavas korektojn por aksa kliniĝo kaj discentreco kaj estas egaligita.
-          Longo de ĉiu mezuma suna tago estas ekzakte 24 horoj.<br/><br/>
+          Longo de ĉiu mezuma suna tago estas ekzakte 24&nbsp;horoj.<br/><br/>
           <b>Ekvacio de tempo:</b> diferenco inter mezuma suntempo kaj ŝajna suntempo.
           Estiĝis pro kolektigitaj diferencoj inter ŝajnaj sunaj tagoj.<br/><br/>
-          Ŝajna suntempo povas diferenci de mezuma suntempo maksimume je 16 minutoj, depende de sezono.<br/><br/>
+          Ŝajna suntempo povas diferenci de mezuma suntempo maksimume je 16&nbsp;minutoj, depende de sezono.<br/><br/>
           <i>Tiu ĉi aplikaĵo uzas algoritmon por kalkuli ekvacion de tempo (kaj derivi ŝajnan suntempon).
           Via pozicio estas uzata por kalkuli mezuman suntempon.</i>
           <br/><br/>
@@ -1297,13 +1297,13 @@
     ]]>
     </string>
     <string name="help_general_moonillum"><![CDATA[
-        <b>Prilumeco de Luno:</b> fenestraĵoj kaj la ĉefa paĝo vidigas prilumecon de la Luno je ĝia ekstremo (mezpunkto inter lunleviĝo kaj lunsubiro), sed la ekrano de lun-informoj vidigas nunan prilumecon de la Luno.<br/><br/>
+        <b>Prilumeco de Luno:</b> fenestraĵoj kaj la ĉefa paĝo vidigas prilumecon de la Luno je ĝia supra kulmino (mezpunkto inter lunleviĝo kaj lunsubiro), sed la ekrano de lun-informoj vidigas nunan prilumecon de la Luno.<br/><br/>
     ]]></string>
     <string name="help_general_goldhour"><![CDATA[
-        <b>Ora horo:</b> la Suno estas inter 6 gradoj sub kaj super la horizonto. Matene la ora horo komenciĝas kun civila krepusko kaj finiĝas baldaŭ post sunleviĝo. Vespere la ora horo komenciĝas tuj antaŭ sunsubiro kaj finiĝas kun civila krepusko.<br/>
+        <b>Ora horo:</b> la Suno estas inter 6&nbsp;gradoj sub kaj super la horizonto. Matene la ora horo komenciĝas kun civila krepusko kaj finiĝas baldaŭ post sunleviĝo. Vespere la ora horo komenciĝas tuj antaŭ sunsubiro kaj finiĝas kun civila krepusko.<br/>
     ]]></string>
     <string name="help_general_bluehour"><![CDATA[
-        <b>Blua horo:</b> la Suno estas inter 8 kaj 4 gradoj sub la horizonto. Komenco kaj fino de la blua horo okazas inter civila kaj naŭtika krepuskoj.<br/>
+        <b>Blua horo:</b> la Suno estas inter 8&nbsp;kaj 4&nbsp;gradoj sub la horizonto. Komenco kaj fino de la blua horo okazas inter civila kaj naŭtika krepuskoj.<br/>
     ]]></string>
     <string name="help_action_launch"><![CDATA[
         La plene unusignifa nomo de klaso de ago por lanĉi.<br/>
