@@ -148,7 +148,7 @@
     <string name="moonset_short">Lunsubiro</string>                       <!-- table title -->
 
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
-    <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
+    <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g>&#8239;<xliff:g id="units" example="m">%2$s</xliff:g></string>
     <string name="delta_years">a</string>    <!-- e.g. 1y -->
     <string name="delta_weeks">sem</string>    <!-- e.g. 2w -->
     <string name="delta_days">t</string>     <!-- e.g. 1d -->
