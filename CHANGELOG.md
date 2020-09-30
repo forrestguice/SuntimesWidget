@@ -1,5 +1,9 @@
 ### ~
 
+### v0.13.1 (2020-10-02)
+* fixes bug where deleted locations would reappear ("no way to remove default location" #430).
+* updates translation to Norwegian (nb) (#429 by FTno).
+
 ### v0.13.0 (2020-09-14)
 * adds "lunar noon" and "lunar midnight" to notes and alarms.
 * improves SuntimesAlarms support for polar regions; it is now possible to schedule alarms for infrequently occurring twilight events.
