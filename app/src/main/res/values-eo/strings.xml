@@ -881,7 +881,7 @@
     <string name="configActionDesc_worldMap">Montri mondmapon</string>
     <string name="configActionDesc_equinoxDialog">Dialogujo “solstico/ekvinokso”</string>
     <string name="configActionDesc_moon">Dialogujo “Luno”</string>
-    <string name="configActionDesc_sunDialog">Dialogujo “Suno”</string>
+    <string name="configActionDesc_sunDialog">Dialogujo “pozicio de Suno”</string>
     <string name="configActionDesc_setDate">Agordi daton</string>
     <string name="configActionDesc_setTimeZone">Agordi horzonon</string>
     <string name="configActionDesc_setLocation">Agordi pozicion</string>
@@ -1138,7 +1138,7 @@
     <!-- Dialog: Delete Place -->
     <string name="locationdelete_dialog_title">Ĉu forigi lokon?</string>   <!-- title; remove 1 place -->
     <string name="locationdelete_dialog_title1">Ĉu forigi lokojn?</string>  <!-- title; remove multiple places -->
-    <string name="locationdelete_dialog_message">Ĉu vi certe volas forigi la lokon %s?</string>
+    <string name="locationdelete_dialog_message">Ĉu vi certe volas forigi: %s?</string>
     <string name="locationdelete_dialog_success">Forigis lokon.</string>   <!-- toast -->
     <string name="locationdelete_dialog_success1">Forigis %s lokojn.</string>   <!-- toast; e.g. 2 places were deleted -->
     <string name="locationdelete_dialog_ok">Forigi</string>
@@ -1303,7 +1303,7 @@
         <b>Ora horo:</b> la Suno estas inter 6&nbsp;gradoj sub kaj super la horizonto. Matene la ora horo komenciĝas kun civila krepusko kaj finiĝas baldaŭ post sunleviĝo. Vespere la ora horo komenciĝas tuj antaŭ sunsubiro kaj finiĝas kun civila krepusko.<br/>
     ]]></string>
     <string name="help_general_bluehour"><![CDATA[
-        <b>Blua horo:</b> la Suno estas inter 8&nbsp;kaj 4&nbsp;gradoj sub la horizonto. Komenco kaj fino de la blua horo okazas inter civila kaj naŭtika krepuskoj.<br/>
+        <b>Blua horo:</b> la Suno estas inter 8&nbsp;kaj&nbsp;4&nbsp;gradoj sub la horizonto. Komenco kaj fino de la blua horo okazas inter civila kaj naŭtika krepuskoj.<br/>
     ]]></string>
     <string name="help_action_launch"><![CDATA[
         La plene unusignifa nomo de klaso de ago por lanĉi.<br/>
