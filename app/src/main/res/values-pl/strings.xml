@@ -493,27 +493,27 @@
     <string name="delaction_dialog_ok1">Przywróć</string>
     <string name="delaction_dialog_cancel">Anuluj</string>
 
-    <string name="clearactions_dialog_msg">Are you sure you want to reset to defaults?\n\nAll custom actions will be removed.</string>    <!-- TODO -->
-    <string name="clearactions_dialog_ok">Czyść</string>
-    <string name="clearactions_toast">Actions reset to defaults.</string>    <!-- TODO -->
+    <string name="clearactions_dialog_msg">Czy na pewno chcesz przywrócić wartości domyślne?\n\nWszystkie własne czynności zostaną nadpisane.</string>
+    <string name="clearactions_dialog_ok">Wyczyść</string>
+    <string name="clearactions_toast">Przywrócono czynności do wartości domyślnych.</string>
 
-    <string name="saveaction_dialog_title">Add Action</string>    <!-- TODO -->
+    <string name="saveaction_dialog_title">Dodaj czynność</string>
     <string name="saveaction_dialog_ok">Zapisz</string>
-    <string name="saveaction_dialog_suggest">Suggest</string>                  <!-- TODO -->
-    <string name="saveaction_toast">Saved action \"%1$s\" (%2$s).</string>    <!-- TODO -->
+    <string name="saveaction_dialog_suggest">Zaproponuj</string>
+    <string name="saveaction_toast">Zapisano czynność „%1$s” (%2$s).</string>
 
-    <string name="loadaction_dialog_title">Actions</string>    <!-- TODO -->
-    <string name="loadaction_toast">Loaded action \"%1$s\".</string>    <!-- TODO -->
+    <string name="loadaction_dialog_title">Czynności</string>
+    <string name="loadaction_toast">Wywołano czynność „%1$s”.</string>
 
-    <string name="startaction_failed_toast">Failed to start %s!</string>         <!-- error toast -->  <!-- TODO -->
+    <string name="startaction_failed_toast">Nie udało się wywołać: %s!</string>         <!-- error toast -->
 
     <string name="configAction_addAction">Dodaj</string>           <!-- button (contentDescription) -->
     <string name="configAction_editAction">Edytuj</string>           <!-- button (contentDescription) -->
-    <string name="configAction_testAction">Test</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_testAction">Testuj</string>         <!-- button (contentDescription) -->
     <string name="configAction_saveAction">Zapisz</string>         <!-- button (contentDescription) -->
-    <string name="configAction_loadAction">Load</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_loadAction">Wywołaj</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteAction">Usuń</string>         <!-- button (contentDescription) -->
-    <string name="configAction_clearActions">Clear All</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_clearActions">Wyczyść wszystkie</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportActions">Eksportuj</string>         <!-- button (contentDescription) -->
     <string name="configAction_importActions">Importuj</string>         <!-- button (contentDescription) -->
 
@@ -658,9 +658,9 @@
     <string name="configAction_editAlarm">Edytuj</string>               <!-- button (contentDescription) -->
     <string name="configAction_deleteAlarm">Usuń</string>               <!-- button (contentDescription) -->
     <string name="configAction_clearAlarms">Usuń wszystkie</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms">Sort</string>                <!-- action button / menu item -->  <!-- TODO -->
-    <string name="configAction_sortAlarms_by_time">Alarm Time</string>                <!-- action button / menu item -->  <!-- TODO -->
-    <string name="configAction_sortAlarms_by_creation">Creation Date</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="configAction_sortAlarms">Sortuj</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms_by_time">Czas alarmu</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms_by_creation">Data utworzenia</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">Usuń</string>                <!-- action button / menu item -->
     <string name="configAction_setAlarmOffset">Ustaw przesunięcie</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmType">Ustaw typ</string>         <!-- button (contentDescription) -->
@@ -669,13 +669,13 @@
     <string name="configAction_setAlarmRepeat">Ustaw powtarzanie</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmEvent">Ustaw wydarzenie</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmTime">Ustaw stały czas</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmAction">Set Action</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_setAlarmAction">Ustaw czynność</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmSound">Ustaw dźwięk</string>         <!-- button (contentDescription) -->
     <string name="configAction_alarmMenu">Menu alarmu</string>         <!-- button (contentDescription) -->
     <string name="configAction_saveAlarm">Zapisz</string>               <!-- button (contentDescription) -->
-    <string name="configAction_enableAlarm">Save &amp; Enable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_disableAlarm">Save &amp; Disable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_undo">Undo</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_enableAlarm">Zapisz i aktywuj</string>               <!-- button (contentDescription) -->
+    <string name="configAction_disableAlarm">Zapisz i nie aktywuj</string>               <!-- button (contentDescription) -->
+    <string name="configAction_undo">Cofnij</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">Wycisz</string>                <!-- notification action button -->
     <string name="alarmAction_snooze">Drzemka</string>                  <!-- notification action button -->
@@ -687,12 +687,12 @@
     <string name="alarmAction_timeoutMsg">Przegapiono alarm.</string>     <!-- notification msg -->
     <string name="alarmAction_upcomingMsg">Nadchodzący alarm</string>     <!-- notification msg -->
 
-    <string name="alarmMode_alarm">alarm</string>                <!-- alarm type (setting) -->
-    <string name="alarmMode_notification">powiadomienie</string>                <!-- alarm type (setting) -->
+    <string name="alarmMode_alarm">Alarm</string>                <!-- alarm type (setting) -->
+    <string name="alarmMode_notification">Powiadomienie</string>                <!-- alarm type (setting) -->
 
-    <string name="configLabel_alarmEdit_scheduleTray">Schedule:</string>               <!-- group title -->  <!-- TODO -->
-    <string name="configLabel_alarmEdit_onAlertTray">On Alert:</string>               <!-- group title -->  <!-- TODO -->
-    <string name="configLabel_alarmEdit_onDismissTray">On Dismiss:</string>               <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_alarmEdit_scheduleTray">Zaplanuj:</string>               <!-- group title -->
+    <string name="configLabel_alarmEdit_onAlertTray">Odtwórz dźwięk &#47; wywołaj:</string>               <!-- group title -->
+    <string name="configLabel_alarmEdit_onDismissTray">Po wciśnięciu „wycisz”:</string>               <!-- group title -->
 
     <string name="alarmOption_vibrate">Wibruj</string>                <!-- checkbox text -->
     <string name="alarmOption_ringtone_none">Bez dźwięku</string>          <!-- ringtone label (none) -->
@@ -709,8 +709,8 @@
     <string name="deletealarm_dialog_cancel">Anuluj</string>    <!-- button -->
     <string name="deletealarm_toast_success">Usunięto <xliff:g id="type" example="powiadomienie">%1$s</xliff:g> z <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>).</string> <!-- toast msg -->
 
-    <string name="discardchanges_dialog_message">There are unsaved changes.</string>      <!-- dialog message -->  <!-- TODO -->
-    <string name="discardchanges_dialog_ok">Discard</string>                              <!-- button -->  <!-- TODO -->
+    <string name="discardchanges_dialog_message">Są niezapisane zmiany.</string>      <!-- dialog message -->
+    <string name="discardchanges_dialog_ok">Nie zapisuj</string>                              <!-- button -->
     <string name="discardchanges_dialog_cancel">Anuluj</string>                           <!-- button -->
     <string name="discardchanges_dialog_neutral">Zapisz</string>                            <!-- button -->
 
@@ -823,14 +823,14 @@
     <!-- App Setting: Places -->
     <string name="configLabel_places">Miejsca</string>                           <!-- group title -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
-    <string name="configLabel_places_multiSelect">%s places</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->   <!-- TODO -->
+    <string name="configLabel_places_multiSelect">wiele miejsc (%s)</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->
     <string name="configLabel_places_build">Dodaj światowe miejsca</string>
     <string name="configLabel_places_build_summary">Przeskanuj miejsca i dodaj miasta do bazy danych.</string>
 
     <string name="configAction_addPlace">Dodaj</string>              <!-- button (contentDescription) -->
     <string name="configAction_copyPlace">Kopiuj</string>            <!-- button (contentDescription) -->
     <string name="configAction_selectPlace">Wybierz</string>        <!-- button (contentDescription) -->
-    <string name="configAction_searchPlace">Search</string>              <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_searchPlace">Wyszukaj</string>              <!-- button (contentDescription) -->
     <string name="configAction_sharePlace">Udostępnij</string>          <!-- button (contentDescription) -->
     <string name="configAction_deletePlace">Usuń</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Czyść</string>         <!-- button (contentDescription) -->
@@ -889,15 +889,15 @@
     <string name="configActionDesc_prevNote">Pokaż poprzednią notatkę</string>
     <string name="configActionDesc_resetNote">Resetuj notatkę</string>
     <string name="configActionDesc_showCalendar">Uruchom aplikację Kalendarz</string>
-    <string name="configActionDesc_mapLocation">Show location on map</string>  <!-- TODO -->
-    <string name="configActionDesc_setAlarm">Set an alarm</string>  <!-- TODO -->
-    <string name="configActionDesc_worldMap">World Map Dialog</string>  <!-- TODO -->
-    <string name="configActionDesc_equinoxDialog">Solstices Dialog</string>  <!-- TODO -->
-    <string name="configActionDesc_moon">Moon Dialog</string>  <!-- TODO -->
-    <string name="configActionDesc_sunDialog">Sun Dialog</string>  <!-- TODO -->
-    <string name="configActionDesc_setDate">Set date</string>  <!-- TODO -->
-    <string name="configActionDesc_setTimeZone">Set time zone</string>  <!-- TODO -->
-    <string name="configActionDesc_setLocation">Set location</string>  <!-- TODO -->
+    <string name="configActionDesc_mapLocation">Wyświetl miejsce na mapie</string>
+    <string name="configActionDesc_setAlarm">Ustaw alarm</string>
+    <string name="configActionDesc_worldMap">Okno „mapa świata”</string>
+    <string name="configActionDesc_equinoxDialog">Okno „przesilenie/równonoc”</string>
+    <string name="configActionDesc_moon">Okno „Księżyc”</string>
+    <string name="configActionDesc_sunDialog">Okno „pozycja Słońca”</string>
+    <string name="configActionDesc_setDate">Ustaw datę</string>
+    <string name="configActionDesc_setTimeZone">Ustaw strefę czasową</string>>
+    <string name="configActionDesc_setLocation">Ustaw lokalizację</string>
     <string name="configActionDesc_swapCards">Przełącz karty (dziś/jutro)</string>
     <string name="configActionDesc_setAlarmForNote">Ustaw alarm dla notatki</string>
 
@@ -905,7 +905,7 @@
     <string name="timezone_sort_byOffset">wg przesunięcia</string>
     <string name="timezone_sort_byId">wg id</string>
     <string name="timezone_sort_byName">wg nazwy</string>
-    <string name="timezone_sort_contextAction">Uszereguj strefy</string>           <!-- action bar title -->
+    <string name="timezone_sort_contextAction">Sortuj strefy</string>           <!-- action bar title -->
     <string name="timezone_sort_msg">Strefy czasowe posortowane (%1$s).</string>      <!-- toast msg -->
 
     <!-- App Setting: GPS fix time limit -->
@@ -923,7 +923,7 @@
     <string name="configLabel_getFix_maxAge">Czas aktualności GPS</string>
     <string name="configLabel_getFix_maxAge_summary">Aktualny przez <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
-        <item>none</item>  <!-- TODO -->
+        <item>nigdy</item>
         <item>1 minutę</item>
         <item>5 minut</item>
         <item>15 minut</item>
@@ -934,7 +934,7 @@
         <item>dwa dni (48 godzin)</item>
         <item>tydzień (168 godzin)</item>
         <item>miesiąc (672 godziny)</item>
-        <item>any age</item>  <!-- TODO -->
+        <item>zawsze</item>
     </string-array>
 
     <!-- App Setting: calendars -->
@@ -1047,8 +1047,8 @@
     <string name="configLabel_schedalarm_mode">Ustaw alarm na</string>
     <string name="configLabel_schednotify_mode">Ustaw powiadomienie na</string>
     <string name="schedalarm_dialog_title">Ustaw alarm</string>
-    <string name="schedalarm_dialog_tab_event">Event</string>                      <!-- tab text -->  <!-- TODO -->
-    <string name="schedalarm_dialog_tab_time">Time</string>                        <!-- tab text -->  <!-- TODO -->
+    <string name="schedalarm_dialog_tab_event">Wydarzenie</string>                      <!-- tab text -->
+    <string name="schedalarm_dialog_tab_time">Czas</string>                        <!-- tab text -->
     <string name="schedalarm_dialog_ok">Ustaw alarm</string>
     <string name="schedalarm_dialog_cancel">Anuluj</string>
     <string name="schedalarm_dialog_error">Alarm nie ustawiony…</string>
@@ -1082,8 +1082,8 @@
         <item>przesilenie letnie</item>
         <item>równonoc jesienna</item> 
         <item>przesilenie zimowe</item>
-        <item>lunar noon</item>    <!-- TODO -->
-        <item>lunar midnight</item>    <!-- TODO -->
+        <item>górowanie Księżyca</item>
+        <item>dołowanie Księżyca</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>świt astronomiczny</item>
@@ -1111,8 +1111,8 @@
         <item>przesilenie letnie</item>
         <item>równonoc jesienna</item> 
         <item>przesilenie zimowe</item>
-        <item>lunar noon</item>    <!-- TODO -->
-        <item>lunar midnight</item>    <!-- TODO -->
+        <item>kulminacja górna Księżyca</item>
+        <item>kulminacja dolna Księżyca</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
@@ -1132,7 +1132,7 @@
     <string name="gps_keeptrying_msg">Nie można ustalić pozycji</string>
     <string name="gps_keeptrying_ok">Próbuj dalej</string>
     <string name="gps_keeptrying_cancel">Zrezygnuj</string>
-    <string name="gps_keeptrying_fallback">Use Last Position</string>  <!-- TODO -->
+    <string name="gps_keeptrying_fallback">Użyj ostatniej pozycji</string>
 
     <!-- Dialog: Use Date -->
     <string name="timedate_dialog_title">Ustaw datę</string>
@@ -1151,16 +1151,16 @@
     <string name="location_dialog_error_lat">Nieprawidłowa szerokość geograficzna.</string>
     <string name="location_dialog_error_lon">Nieprawidłowa długość geograficzna.</string>
     <string name="location_dialog_error_alt">Nieprawidłowa wysokość n.p.m.</string>
-    <string name="location_dialog_error_name">Enter a place name.</string>  <!-- TODO -->
+    <string name="location_dialog_error_name">Wprowadź nazwę miejsca.</string>
 
     <string name="location_dialog_toast_copied">Skopiowano do schowka<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
 
     <!-- Dialog: Delete Place -->
-    <string name="locationdelete_dialog_title">Remove Place?</string>   <!-- title; remove 1 place --> <!-- TODO -->
-    <string name="locationdelete_dialog_title1">Remove Places?</string>  <!-- title; remove multiple places --> <!-- TODO -->
-    <string name="locationdelete_dialog_message">Are you sure you want to remove %s?</string>   <!-- TODO -->
-    <string name="locationdelete_dialog_success">Place was removed.</string>   <!-- toast --> <!-- TODO -->
-    <string name="locationdelete_dialog_success1">%s places were removed.</string>   <!-- toast; e.g. 2 places were deleted --> <!-- TODO -->
+    <string name="locationdelete_dialog_title">Czy usunąć miejsce?</string>   <!-- title; remove 1 place -->
+    <string name="locationdelete_dialog_title1">Czy usunąć miejsca?</string>  <!-- title; remove multiple places -->
+    <string name="locationdelete_dialog_message">Czy na pewno chcesz usunąć: %s?</string>
+    <string name="locationdelete_dialog_success">Usunięto miejsce.</string>   <!-- toast -->
+    <string name="locationdelete_dialog_success1">Usunięto kilka (%s) miejsc.</string>   <!-- toast; e.g. 2 places were deleted -->
     <string name="locationdelete_dialog_ok">Usuń</string>
     <string name="locationdelete_dialog_cancel">Anuluj</string>
 
@@ -1212,14 +1212,14 @@
     <string name="color_dialog_msg">Wybierz kolor</string>
     <string name="color_dialog_ok">Ustaw</string>
     <string name="color_dialog_cancel">Anuluj</string>
-    <string name="color_dialog_tab1">1</string>  <!-- TODO -->
-    <string name="color_dialog_tab2">2</string>  <!-- TODO -->
-    <string name="color_dialog_tab3">3</string>  <!-- TODO -->
-    <string name="color_dialog_label_r">R</string>  <!-- TODO -->
-    <string name="color_dialog_label_g">G</string>  <!-- TODO -->
-    <string name="color_dialog_label_b">B</string>  <!-- TODO -->
-    <string name="color_dialog_label_a">A</string>  <!-- TODO -->
-    <string name="color_dialog_hint_rgba">0–255</string>  <!-- TODO -->
+    <string name="color_dialog_tab1">1</string>
+    <string name="color_dialog_tab2">2</string>
+    <string name="color_dialog_tab3">3</string>
+    <string name="color_dialog_label_r">Cz</string>
+    <string name="color_dialog_label_g">Z</string>
+    <string name="color_dialog_label_b">N</string>
+    <string name="color_dialog_label_a">α</string>
+    <string name="color_dialog_hint_rgba">0–255</string>
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">O programie</string>
@@ -1280,9 +1280,9 @@
     ]]></string>
     <string name="help_general_timeMode"><![CDATA[
           <b>Rzeczywisty wschód/zachód:</b> Słońce znajduje się na linii horyzontu, jest to przybliżony czas wschodu lub zachodu Słońca.<br/><br/>
-          <b>Świt/zmierzch cywilny:</b> Słońce znajduje się 6 stopni pod horyzontem, widoczne są najjaśniejsze gwiazdy. Jest wystarczająco jasno na wykonywanie większości czynności na dworze bez potrzeby korzystania ze sztucznego oświetlenia.<br/><br/>
-          <b>Świt/zmierzch żeglarski:</b> Słońce znajduje się 12 stopni pod horyzontem, kontury obiektów i linia horyzontu są praktycznie niewidoczne. Jest zbyt ciemno na wykonywanie większości czynności na dworze bez sztucznego oświetlenia.<br/><br/>
-          <b>Świt/zmierzch astronomiczny: </b> Słońce znajduje się 18 stopni pod horyzontem. Praktycznie czarne niebo.<br/>
+          <b>Świt/zmierzch cywilny:</b> Słońce znajduje się 6&nbsp;stopni pod horyzontem, widoczne są najjaśniejsze gwiazdy. Jest wystarczająco jasno na wykonywanie większości czynności na dworze bez potrzeby korzystania ze sztucznego oświetlenia.<br/><br/>
+          <b>Świt/zmierzch żeglarski:</b> Słońce znajduje się 12&nbsp;stopni pod horyzontem, kontury obiektów i linia horyzontu są praktycznie niewidoczne. Jest zbyt ciemno na wykonywanie większości czynności na dworze bez sztucznego oświetlenia.<br/><br/>
+          <b>Świt/zmierzch astronomiczny: </b> Słońce znajduje się 18&nbsp;stopni pod horyzontem. Praktycznie czarne niebo.<br/>
     ]]></string>
 
     <string name="help_general_riseSetOrder"><![CDATA[
@@ -1292,14 +1292,14 @@
 
 <string name="help_general_solartime"><![CDATA[
           <b>Prawdziwy czas słoneczny:</b> czas określony przez śledzenie pozornego ruchu Słońca dla danej długości i szerokości geograficznej.<br/><br/>
-          Pozorny ruch Słońca nie jest stały. Ulega tymczasowym wahaniom na skutek nachylenia ekliptyki i ekscentryczności orbity Ziemi. Długość rzeczywistej doby (czasu pomiędzy dwoma górowaniami Słońca) może być nieco krótsza lub dłuższa niż 24 godziny (maksymalnie do 30s).
+          Pozorny ruch Słońca nie jest stały. Ulega tymczasowym wahaniom na skutek nachylenia ekliptyki i ekscentryczności orbity Ziemi. Długość rzeczywistej doby (czasu pomiędzy dwoma górowaniami Słońca) może być nieco krótsza lub dłuższa niż 24&nbsp;godziny (maksymalnie do 30&nbsp;s).
           Te małe wahania akumulują się z każdym dniem (i zerują w ciągu roku).<br/><br/>
           <b>Średni czas słoneczny:</b> czas określony na podstawie średniej pozycji Słońca dla danej długości geograficznej.<br/><br/>
           Średni ruch Słońca zawiera poprawki na nachylenie ekliptyki i ekscentryczność orbity, jest jednorodny.
-          Długość każdego średniego dnia słonecznego wynosi dokładnie 24 godziny.<br/><br/>
+          Długość każdego średniego dnia słonecznego wynosi dokładnie 24&nbsp;godziny.<br/><br/>
           <b>Równanie czasu:</b> różnica między średnim czasem słonecznym i prawdziwym czasem słonecznym.
           Powstaje na skutek kumulacji różnic prawdziwego czasu słonecznego.<br/><br/>
-          Prawdziwy czas słoneczny może się różnić od czasu średniego o maksymalnie 16 minut w zależności od pory roku.<br/><br/>
+          Prawdziwy czas słoneczny może się różnić od czasu średniego o maksymalnie 16&nbsp;minut w zależności od pory roku.<br/><br/>
           <i>Ta aplikacja korzysta z algorytmu do obliczenia równania czasu (i wyprowadzenia prawdziwego czasu słonecznego).
           Twoje położenie jest wykorzystywane do obliczenia średniego czasu słonecznego.</i>
           <br/><br/>
@@ -1311,16 +1311,16 @@
     ]]>
     </string>
     <string name="help_general_moonillum"><![CDATA[
-        <b>Oświetlenie Księżyca:</b> widżety księżycowe i ekran główny wyświetlają oświetlenie Księżyca w momencie jego górowania (punkt pomiędzy wschodem i zachodem Księżyca, podczas gdy okno informacji o Księżycu wyświetla jego obecne oświetlenie.<br/><br/>
+        <b>Oświetlenie Księżyca:</b> widżety księżycowe i ekran główny wyświetlają oświetlenie Księżyca w momencie jego górowania (punkt dokładnie pomiędzy wschodem i zachodem Księżyca), podczas gdy okno informacji o Księżycu wyświetla jego obecne oświetlenie.<br/><br/>
     ]]></string>
     <string name="help_general_goldhour"><![CDATA[
-        <b>Złota godzina:</b> Słońce znajduje się pomiędzy 6 stopniami nad i pod horyzontem. Ranem złota godzina zaczyna się wraz ze świtem cywilnym i kończy się wkrótce po wschodzie Słońca. Wieczorem złota godzina zaczyna się na krótko przed zachodem i kończy wraz ze zmierzchem cywilnym.<br/>
+        <b>Złota godzina:</b> Słońce znajduje się pomiędzy 6&nbsp;stopniami nad i pod horyzontem. Ranem złota godzina zaczyna się wraz ze świtem cywilnym i kończy się wkrótce po wschodzie Słońca. Wieczorem złota godzina zaczyna się na krótko przed zachodem i kończy wraz ze zmierzchem cywilnym.<br/>
     ]]></string>
     <string name="help_general_bluehour"><![CDATA[
-        <b>Błękitna godzina:</b> Słońce znajduje się pomiędzy 8 i 4 stopniami pod horyzontem. Początek i koniec błękitnej godziny przypada pomiędzy świtem (bądź zmierzchem) cywilnym i żeglarskim.<br/>
+        <b>Błękitna godzina:</b> Słońce znajduje się pomiędzy 8&nbsp;i&nbsp;4&nbsp;stopniami pod horyzontem. Początek i koniec błękitnej godziny przypada pomiędzy świtem (bądź zmierzchem) cywilnym i żeglarskim.<br/>
     ]]></string>
     <string name="help_action_launch"><![CDATA[
-        W pełni jednoznaczna nazwa klasy Czynności do wywołania.<br/>
+        W pełni jednoznaczna nazwa klasy czynności do wywołania.<br/>
     ]]></string>
     <string name="help_widgetlist"><![CDATA[
           Przejdź do ekranu głównego, aby <b>dodać nowy widżet</b>.<br/><br/>
