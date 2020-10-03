@@ -77,7 +77,7 @@
             <EditText android:id="@+id/appwidget_location_name"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:hint="@string/configHint_location_name" android:enabled="false" />
+                android:hint="@string/configHint_location_name" android:enabled="false" android:inputType="text" />
 
 
             <FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
