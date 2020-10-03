@@ -1,7 +1,9 @@
 ### ~
 
-### v0.13.1 (2020-10-02)
+### v0.13.1 (2020-10-03)
+* minor tweaks to app help topics (#432).
 * fixes bug where deleted locations would reappear ("no way to remove default location" #430).
+* updates translation to Polish and Esperanto (eo, pl) (#433 Verdulo).
 * updates translation to Norwegian (nb) (#429 by FTno).
 
 ### v0.13.0 (2020-09-14)
