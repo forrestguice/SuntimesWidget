@@ -144,6 +144,7 @@ public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
     protected SeekBar.OnSeekBarChangeListener onSliderChangedRGB(final EditText edit)
     {
         return new SeekBar.OnSeekBarChangeListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 edit.setText(Integer.toString(progress));
@@ -204,6 +205,7 @@ public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
         return v;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void updateViews(Context context)
     {
