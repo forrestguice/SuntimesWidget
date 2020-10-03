@@ -44,7 +44,7 @@
         <EditText android:id="@+id/appwidget_location_name"
             android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
             android:textAppearance="?attr/textAppearanceSmallPopupMenu"
-            android:hint="@string/configHint_location_name0"
+            android:hint="@string/configHint_location_name0" android:inputType="text"
             android:paddingLeft="5dp" android:paddingRight="5dp"
             android:layout_gravity="center_vertical" />
 
