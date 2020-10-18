@@ -529,15 +529,9 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             for (String widgetClass : ALL_WIDGETS) {
                 items.addAll(createWidgetListItems(context, widgetManager, packageName, widgetClass));
             }
-
-            items.addAll(createWidgetListItems(context, widgetManager, packageName, "com.forrestguice.suntimes.naturalhour.ui.widget.NaturalHourWidget_3x2"));
-            items.addAll(createWidgetListItems(context, widgetManager, packageName, "com.forrestguice.suntimes.naturalhour.ui.widget.NaturalHourWidget_4x3"));
-            items.addAll(createWidgetListItems(context, widgetManager, packageName, "com.forrestguice.suntimes.naturalhour.ui.widget.NaturalHourWidget_5x3"));
-
             for (String uri : queryWidgetInfoProviders(context)) {
                 items.addAll(createWidgetListItems(context, uri));
             }
-
             return new WidgetListAdapter(context, items);
         }
 
