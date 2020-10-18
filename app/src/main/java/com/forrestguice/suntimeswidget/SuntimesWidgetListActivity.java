@@ -30,10 +30,15 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -326,11 +331,11 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         protected final String widgetClass;
         protected final String configClass;
         protected final int appWidgetId;
-        protected final int icon;
+        protected final Drawable icon;
         protected final String title;
         protected final String summary;
 
-        public WidgetListItem( String packageName, String widgetClass, int appWidgetId, int icon, String title, String summary, String configClass )
+        public WidgetListItem( String packageName, String widgetClass, int appWidgetId, Drawable icon, String title, String summary, String configClass )
         {
             this.packageName = packageName;
             this.widgetClass = widgetClass;
@@ -355,8 +360,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             return configClass;
         }
 
-        public int getIcon()
-        {
+        public Drawable getIcon() {
             return icon;
         }
 
@@ -424,7 +428,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             WidgetListItem item = widgets.get(position);
 
             ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
-            icon.setImageResource(item.getIcon());
+            icon.setImageDrawable(item.getIcon());
 
             TextView text = (TextView) view.findViewById(android.R.id.text1);
             text.setText(item.getTitle());
@@ -481,7 +485,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 String title = context.getString(R.string.configLabel_widgetList_itemTitle, widgetTitle);
                 String source = ((data == null || data.calculatorMode() == null) ? "def" : data.calculatorMode().getName());
                 String summary = context.getString(R.string.configLabel_widgetList_itemSummaryPattern, widgetType, source);
-                items.add(new WidgetListItem(packageName, widgetClass, id, widgetIcon, title, summary, configClass));
+                items.add(new WidgetListItem(packageName, widgetClass, id, ContextCompat.getDrawable(context, widgetIcon), title, summary, configClass));
             }
             return items;
         }
@@ -510,9 +514,12 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
                         String title = cursor.getString(cursor.getColumnIndex(COLUMN_WIDGET_LABEL));
                         String summary = cursor.getString(cursor.getColumnIndex(COLUMN_WIDGET_SUMMARY));
-                        int icon = R.drawable.ic_action_suntimes;
-                        items.add(new WidgetListItem(packageName, widgetClass, appWidgetID, icon, title, summary, configClass));
 
+                        byte[] iconBlob = cursor.getBlob(cursor.getColumnIndex(COLUMN_WIDGET_ICON));
+                        Bitmap iconBitmap = (iconBlob != null ? BitmapFactory.decodeByteArray(iconBlob, 0, iconBlob.length) : null);
+                        Drawable iconDrawable = (iconBitmap != null ? new BitmapDrawable(context.getResources(), iconBitmap) : ContextCompat.getDrawable(context, R.drawable.ic_action_suntimes));
+
+                        items.add(new WidgetListItem(packageName, widgetClass, appWidgetID, iconDrawable, title, summary, configClass));
                         cursor.moveToNext();
                     }
                     cursor.close();
@@ -642,11 +649,12 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     public static final String COLUMN_WIDGET_CONFIGCLASS = "configclass";
     public static final String COLUMN_WIDGET_LABEL = "label";
     public static final String COLUMN_WIDGET_SUMMARY = "summary";
+    public static final String COLUMN_WIDGET_ICON = "icon";
 
     public static final String QUERY_WIDGET = "widgets";
     public static final String[] QUERY_WIDGET_PROJECTION = new String[] {
             COLUMN_WIDGET_APPWIDGETID, COLUMN_WIDGET_CLASS, COLUMN_WIDGET_CONFIGCLASS, COLUMN_WIDGET_PACKAGENAME,
-            COLUMN_WIDGET_LABEL, COLUMN_WIDGET_SUMMARY
+            COLUMN_WIDGET_LABEL, COLUMN_WIDGET_SUMMARY, COLUMN_WIDGET_ICON
     };
 
     public static List<String> queryWidgetInfoProviders(Context context)
