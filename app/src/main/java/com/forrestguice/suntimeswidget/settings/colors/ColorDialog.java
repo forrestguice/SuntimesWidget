@@ -55,6 +55,7 @@ import android.widget.ImageButton;
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.OnColorChangedListener;
 import com.flask.colorpicker.slider.AlphaSlider;
+import com.flask.colorpicker.slider.LightnessSlider;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
@@ -511,6 +512,7 @@ public class ColorDialog extends BottomSheetDialogFragment
     public static class QuadFlaskColorPickerFragment extends ColorPickerFragment
     {
         protected AlphaSlider alphaSlider;
+        protected LightnessSlider lightnessSlider;
         protected ColorPickerView colorPicker;
         protected View preview;
 
@@ -521,8 +523,13 @@ public class ColorDialog extends BottomSheetDialogFragment
         protected void initViews(View view)
         {
             alphaSlider = (AlphaSlider) view.findViewById(R.id.color_alpha);
+            lightnessSlider = (LightnessSlider) view.findViewById(R.id.color_lightness);
             colorPicker = (ColorPickerView) view.findViewById(R.id.color_picker);
             preview = view.findViewById(R.id.preview_color);
+
+            colorPicker.setLightnessSlider(lightnessSlider);
+            lightnessSlider.setColorPicker(colorPicker);
+            alphaSlider.setColorPicker(colorPicker);
         }
 
         @Override
@@ -546,6 +553,13 @@ public class ColorDialog extends BottomSheetDialogFragment
         public void updateViews(Context context)
         {
             alphaSlider.setVisibility(showAlpha() ? View.VISIBLE : View.GONE);
+            lightnessSlider.post(new Runnable() {
+                @Override
+                public void run() {
+                    lightnessSlider.setColor(getColor());
+                    alphaSlider.setColor(getColor());
+                }
+            });
             colorPicker.setColor(getColor(), false);
             preview.setBackgroundColor(getColor());
         }
@@ -566,6 +580,7 @@ public class ColorDialog extends BottomSheetDialogFragment
         protected void initViews(View view)
         {
             alphaSlider = (AlphaSlider) view.findViewById(R.id.color_alpha1);
+            lightnessSlider = (LightnessSlider) view.findViewById(R.id.color_lightness1);
             colorPicker = (ColorPickerView) view.findViewById(R.id.color_picker1);
             preview = view.findViewById(R.id.preview_color1);
         }
