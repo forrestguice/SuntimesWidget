@@ -481,6 +481,10 @@ public class ColorDialog extends BottomSheetDialogFragment
             this.listener = listener;
         }
 
+        public void setColor( String hexValue ) {
+            setColor(Color.parseColor(hexValue.trim()));
+        }
+
         public void setColor( int color )
         {
             getArguments().putInt(KEY_COLOR, color);
