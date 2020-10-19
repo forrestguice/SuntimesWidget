@@ -102,16 +102,22 @@
             android:entries="@array/solsticeTrackingMode_display" android:entryValues="@array/solsticeTrackingMode_values"
             android:defaultValue="@string/def_appwidget_0_general_trackingmode" />
 
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/configLabel_ui_misc">
-
         <CheckBoxPreference
             android:key="app_ui_showwarnings"
             android:title="@string/configLabel_ui_showWarnings"
             android:summary="@string/configLabel_ui_showWarnings_summary"
             android:defaultValue="@string/def_app_ui_showwarnings" />
+
+        <CheckBoxPreference
+            android:key="app_accessibility_verbose"
+            android:title="@string/configLabel_accessibility_verbose"
+            android:summary="@string/configLabel_accessibility_verbose_summary"
+            android:defaultValue="@string/def_app_accessibility_verbose" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/configLabel_ui_misc">
 
         <CheckBoxPreference
             android:key="appwidget_0_general_showweeks"
@@ -122,7 +128,7 @@
             android:key="appwidget_0_general_showhours"
             android:title="@string/configLabel_general_showHours"
             android:summary="@string/configLabel_general_showHours_summary" android:defaultValue="@string/def_appwidget_0_general_showhours" />
-        
+
         <CheckBoxPreference
             android:key="appwidget_0_general_showseconds"
             android:title="@string/configLabel_general_showSeconds"
@@ -132,12 +138,6 @@
             android:key="appwidget_0_general_showtimedate"
             android:title="@string/configLabel_general_showTimeDate"
             android:summary="@string/configLabel_general_showTimeDate_summary" android:defaultValue="@string/def_appwidget_0_general_showtimedate" />
-
-        <CheckBoxPreference
-            android:key="app_accessibility_verbose"
-            android:title="@string/configLabel_accessibility_verbose"
-            android:summary="@string/configLabel_accessibility_verbose_summary"
-            android:defaultValue="@string/def_app_accessibility_verbose" />
 
     </PreferenceCategory>
 
