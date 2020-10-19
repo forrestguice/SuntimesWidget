@@ -1808,8 +1808,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         int drawableID = a.getResourceId(0, R.drawable.ic_action_shadow);
         a.recycle();
 
-        String title = context.getString(R.string.configLabel_general_observerheight) + "  [i]";
-        ImageSpan shadowIcon = SuntimesUtils.createImageSpan(context, drawableID, 32, 32, 0);
+        String title = context.getString(R.string.configLabel_general_observerheight) + " [i]";
+        int iconSize = (int) context.getResources().getDimension(R.dimen.prefIcon_size);
+        ImageSpan shadowIcon = SuntimesUtils.createImageSpan(context, drawableID, iconSize, iconSize, 0);
         SpannableStringBuilder titleSpan = SuntimesUtils.createSpan(context, title, "[i]", shadowIcon);
         pref.setTitle(titleSpan);
 
@@ -1853,8 +1854,9 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         int drawableID = a.getResourceId(0, R.drawable.baseline_terrain_black_18);
         a.recycle();
 
-        String title = context.getString(R.string.configLabel_general_altitude_enabled) + "  [i]";
-        ImageSpan altitudeIcon = SuntimesUtils.createImageSpan(context, drawableID, 32, 32, 0);
+        String title = context.getString(R.string.configLabel_general_altitude_enabled) + " [i]";
+        int iconSize = (int) context.getResources().getDimension(R.dimen.prefIcon_size);
+        ImageSpan altitudeIcon = SuntimesUtils.createImageSpan(context, drawableID, iconSize, iconSize, 0);
         SpannableStringBuilder altitudeSpan = SuntimesUtils.createSpan(context, title, "[i]", altitudeIcon);
         altitudePref.setTitle(altitudeSpan);
     }
