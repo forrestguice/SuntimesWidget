@@ -42,6 +42,11 @@
             android:defaultValue="true" />
 
         <CheckBoxPreference
+            android:key="app_ui_showfields_6"
+            android:title="@string/configLabel_ui_showbluehour"
+            android:defaultValue="@string/def_app_ui_showbluehour" />
+
+        <CheckBoxPreference
             android:key="app_ui_showfields_1"
             android:title="@string/timeMode_civil"
             android:defaultValue="true" />
@@ -55,21 +60,10 @@
             android:key="app_ui_showfields_4"
             android:title="@string/timeMode_noon"
             android:defaultValue="true" />
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/configLabel_ui">
-
-        <CheckBoxPreference
-            android:key="app_ui_showfields_6"
-            android:title="@string/configLabel_ui_showbluehour"
-            android:summary="@string/configLabel_ui_showbluehour_summary"
-            android:defaultValue="@string/def_app_ui_showbluehour" />
 
         <CheckBoxPreference
             android:key="app_ui_showfields_5"
             android:title="@string/configLabel_ui_showgoldhour"
-            android:summary="@string/configLabel_ui_showgoldhour_summary"
             android:defaultValue="@string/def_app_ui_showgoldhour" />
 
     </PreferenceCategory>
