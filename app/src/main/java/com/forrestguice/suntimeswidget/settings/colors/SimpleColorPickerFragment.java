@@ -24,11 +24,15 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 
@@ -40,7 +44,7 @@ import java.util.HashMap;
  */
 public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
 {
-    protected EditText edit_r, edit_g, edit_b, edit_a;
+    protected EditText edit_r, edit_g, edit_b, edit_a, edit_hex;
     protected SeekBar seek_r, seek_g, seek_b, seek_a;
     protected View preview, layout_a;
     protected HashMap<EditText, TextWatcher> onTextChanged = new HashMap<>();
@@ -57,6 +61,7 @@ public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
 
     protected void initViews(View view)
     {
+        edit_hex = (EditText) view.findViewById(R.id.color_edit_hex);
         edit_r = (EditText) view.findViewById(R.id.color_edit_r);
         edit_g = (EditText) view.findViewById(R.id.color_edit_g);
         edit_b = (EditText) view.findViewById(R.id.color_edit_b);
@@ -82,6 +87,7 @@ public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
         onTextChanged.put(edit_g, onValueChangedRGB(edit_g));
         onTextChanged.put(edit_b, onValueChangedRGB(edit_b));
         onTextChanged.put(edit_a, onValueChangedRGB(edit_a));
+        onTextChanged.put(edit_hex, onValueChangedHex(edit_hex));
     }
 
     protected void setListeners()
@@ -90,7 +96,25 @@ public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
         edit_g.addTextChangedListener(onTextChanged.get(edit_g));
         edit_b.addTextChangedListener(onTextChanged.get(edit_b));
         edit_a.addTextChangedListener(onTextChanged.get(edit_a));
+        edit_hex.addTextChangedListener(onTextChanged.get(edit_hex));
+        edit_hex.setOnEditorActionListener(onHexEditAction);
     }
+
+    private TextView.OnEditorActionListener onHexEditAction = new TextView.OnEditorActionListener() {
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL)
+            {
+                ColorChooser.HexColorTextWatcher hexWatcher = (ColorChooser.HexColorTextWatcher) onTextChanged.get(edit_hex);
+                StringBuilder value = new StringBuilder(edit_hex.getText().toString());
+                while (value.length() < (showAlpha() ? 9 : 7)) {
+                    value.append("F");
+                }
+                hexWatcher.onValueChanged(value.toString());
+            }
+            return true;
+        }
+    };
 
     protected void clearListeners()
     {
@@ -98,6 +122,8 @@ public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
         edit_g.removeTextChangedListener(onTextChanged.get(edit_g));
         edit_b.removeTextChangedListener(onTextChanged.get(edit_b));
         edit_a.removeTextChangedListener(onTextChanged.get(edit_a));
+        edit_hex.removeTextChangedListener(onTextChanged.get(edit_hex));
+        edit_hex.setOnEditorActionListener(null);
     }
 
     protected int[] getRGB()
@@ -188,6 +214,17 @@ public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
         };
     }
 
+    protected TextWatcher onValueChangedHex(final EditText edit) {
+        return new ColorChooser.HexColorTextWatcher(showAlpha()) {
+            @Override
+            protected void onValueChanged(String hexValue) {
+                Log.d("DEBUG", "hexValue:" + hexValue +".");
+                setColor(hexValue);
+                edit.setSelection(edit.getText().length());
+            }
+        };
+    }
+
     protected int getRGBValue(String s)
     {
         int v;
@@ -219,6 +256,7 @@ public class SimpleColorPickerFragment extends ColorDialog.ColorPickerFragment
         int b = Color.blue(color);
         int a = Color.alpha(color);
 
+        edit_hex.setText( String.format("#%08X", color) );
         edit_r.setText(Integer.toString(r));
         edit_g.setText(Integer.toString(g));
         edit_b.setText(Integer.toString(b));
