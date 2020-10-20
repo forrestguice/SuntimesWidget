@@ -97,5 +97,16 @@
 
     </LinearLayout>
 
+    <LinearLayout android:id="@+id/color_layout_hex"
+        android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+        <EditText android:id="@+id/color_edit_hex"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:hint="@string/color_dialog_hint_hex" android:minEms="6" android:gravity="center"
+            android:inputType="textCapCharacters" />
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

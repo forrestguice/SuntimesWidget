@@ -40,7 +40,7 @@ import java.util.HashSet;
 import java.util.Locale;
 
 @SuppressWarnings("Convert2Diamond")
-public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
+public class ColorChooser implements View.OnFocusChangeListener
 {
     public static final String DIALOGTAG_COLOR = "colorchooser";
 
@@ -50,12 +50,9 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
     final protected TextView label;
 
     private int color;
-    private boolean isRunning = false, isRemoving = false;
     private boolean isCollapsed = false;
     private boolean showAlpha = false;
-
-    public static final char[] alphabet = {'#', '0', '1', '2', '3', '4', '5', '6', '7','8', '9', 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F'};
-    protected final HashSet<Character> inputSet;
+    private TextWatcher textWatcher = new HexColorTextWatcher(showAlpha);
 
     public ColorChooser(final Context context, TextView txtLabel, EditText editField, ImageButton imgButton, String id)
     {
@@ -77,7 +74,7 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
         edit = editField;
         if (edit != null)
         {
-            edit.addTextChangedListener(this);
+            edit.addTextChangedListener(textWatcher);
             edit.setOnFocusChangeListener(this);
 
             edit.setOnEditorActionListener(new EditText.OnEditorActionListener() {
@@ -93,12 +90,6 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
                 }
             });
 
-        }
-
-        inputSet = new HashSet<>();
-        for (char c : alphabet)
-        {
-            inputSet.add(c);
         }
 
         button = imgButton;
@@ -225,6 +216,8 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
     public void setShowAlpha(boolean value)
     {
         showAlpha = value;
+        edit.removeTextChangedListener(textWatcher);
+        edit.addTextChangedListener(textWatcher = new HexColorTextWatcher(showAlpha));
     }
 
     public void setEnabled( boolean value )
@@ -284,50 +277,76 @@ public class ColorChooser implements TextWatcher, View.OnFocusChangeListener
         }
     }
 
-    @Override
-    public void beforeTextChanged(CharSequence charSequence, int start, int count, int after)
+    /**
+     * HexColorTextWatcher
+     */
+    public static class HexColorTextWatcher implements TextWatcher
     {
-        isRemoving = count > after;
-    }
+        public static final char[] alphabet = {'#', '0', '1', '2', '3', '4', '5', '6', '7','8', '9', 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F'};
+        protected final HashSet<Character> inputSet;
+        private boolean isRunning = false, isRemoving = false;
+        private boolean withAlpha = true;
 
-    @Override
-    public void onTextChanged(CharSequence charSequence, int start, int before, int after) {}
-
-    @Override
-    public void afterTextChanged(Editable editable)
-    {
-        if (isRunning || isRemoving)
-            return;
-        isRunning = true;
-
-        String text = editable.toString();             // should consist of [#][0-9][a-f]
-        for (int j=text.length()-1; j>=0; j--)
+        public HexColorTextWatcher(boolean withAlpha)
         {
-            if (!inputSet.contains(text.charAt(j)))
-            {
-                editable.delete(j, j+1);
+            this.withAlpha = withAlpha;
+            inputSet = new HashSet<>();
+            for (char c : alphabet) {
+                inputSet.add(c);
             }
         }
 
-        text = editable.toString();                   // should start with a #
-        int i = text.indexOf('#');
-        if (i != -1)
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int start, int count, int after)
         {
-            editable.delete(i, i + 1);
-        }
-        editable.insert(0, "#");
-
-        if (editable.length() > 8)                   // should be no longer than 8
-        {
-            editable.delete(9, editable.length());
+            isRemoving = count > after;
         }
 
-        text = editable.toString();
-        String toCaps = text.toUpperCase(Locale.US);
-        editable.clear();
-        editable.append(toCaps);
+        @Override
+        public void onTextChanged(CharSequence charSequence, int start, int before, int after) {}
 
-        isRunning = false;
+        @Override
+        public void afterTextChanged(Editable editable)
+        {
+            if (isRunning || isRemoving)
+                return;
+            isRunning = true;
+
+            String text = editable.toString();             // should consist of [#][0-9][a-f]
+            for (int j=text.length()-1; j>=0; j--)
+            {
+                if (!inputSet.contains(text.charAt(j)))
+                {
+                    editable.delete(j, j+1);
+                }
+            }
+
+            text = editable.toString();                   // should start with a #
+            int i = text.indexOf('#');
+            if (i != -1)
+            {
+                editable.delete(i, i + 1);
+            }
+            editable.insert(0, "#");
+
+            if (editable.length() > 8)                   // should be no longer than 8
+            {
+                editable.delete(9, editable.length());
+            }
+
+            text = editable.toString();
+            String toCaps = text.toUpperCase(Locale.US);
+            editable.clear();
+            editable.append(toCaps);
+
+            if (toCaps.length() == (withAlpha ? 9 : 7)) {
+                onValueChanged(toCaps);
+            }
+
+            isRunning = false;
+        }
+
+        protected void onValueChanged(String hexValue) {}
     }
 
     protected void onColorChanged( int newColor )
