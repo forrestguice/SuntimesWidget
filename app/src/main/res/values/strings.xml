@@ -423,7 +423,7 @@
     <string name="actionMode_doNothing">Do Nothing</string>           <!-- setting -->
     <string name="actionMode_update">Update Widget</string>           <!-- setting -->
     <string name="actionMode_config">Reconfigure Widget</string>      <!-- setting -->
-    <string name="actionMode_launchActivity">Launch App</string>      <!-- setting -->
+    <string name="actionMode_launchActivity">Perform Action</string>      <!-- setting -->  <!-- TODO: update -->
     <string name="actionMode_flipToNextItem">Flip Views</string>      <!-- setting -->
 
     <string name="launchType_activity">Activity</string>           <!-- setting -->
@@ -897,6 +897,8 @@
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">User Interface</string>                       <!-- group title -->
+    <string name="configLabel_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->   <!-- TODO -->
+    <string name="configLabel_ui_misc">Miscellaneous</string>   <!-- TODO -->
 
     <!-- App Setting: Verbose Accessibility -->
     <string name="configLabel_accessibility_verbose">Verbose TalkBack</string>
@@ -928,11 +930,11 @@
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Golden Hour</string>    <!-- TODO -->
-    <string name="configLabel_ui_showgoldhour_summary">Show golden hour times.</string>
+    <string name="configLabel_ui_showgoldhour_summary">Show golden hour times.</string>  <!-- TODO: unused? remove -->
 
     <!-- App Setting: show blue hour -->
     <string name="configLabel_ui_showbluehour">Blue Hour</string>  <!-- TODO -->
-    <string name="configLabel_ui_showbluehour_summary">Show blue hour times.</string>
+    <string name="configLabel_ui_showbluehour_summary">Show blue hour times.</string>  <!-- TODO: unused? remove -->
 
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Light Theme</string>
@@ -1508,6 +1510,7 @@
     <string name="color_dialog_label_b">B</string>
     <string name="color_dialog_label_a">A</string>
     <string name="color_dialog_hint_rgba">0–255</string>
+    <string name="color_dialog_hint_hex">#FFFFFF</string>     <!-- TODO -->
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">About</string>
