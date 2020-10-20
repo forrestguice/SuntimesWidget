@@ -95,7 +95,9 @@
         <activity
             android:name=".SuntimesSettingsActivity"
             android:label="@string/app_name"
-            android:icon="@mipmap/ic_launcher">
+            android:icon="@mipmap/ic_launcher"
+            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:exported="true">
         </activity>
 
         <!-- Places Activity -->
