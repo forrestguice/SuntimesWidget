@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -301,14 +302,20 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
      */
     protected void reconfigureWidget(WidgetListItem widgetItem)
     {
-        Log.d("DEBUG", "reconfigureWidget: " + widgetItem.packageName + " :: " + widgetItem.configClass);
         Intent configIntent = new Intent();
-        configIntent.setComponent(new ComponentName(widgetItem.packageName, widgetItem.getConfigClass()));
-        configIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetItem.getWidgetId());
+        configIntent.setComponent(new ComponentName(widgetItem.packageName, widgetItem.configClass));
+        configIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetItem.appWidgetId);
         configIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         configIntent.putExtra(EXTRA_RECONFIGURE, true);
-        startActivity(configIntent);
-        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+
+        try {
+            Log.i(getClass().getSimpleName(), "reconfigureWidget: " + widgetItem.packageName + " :: " + widgetItem.configClass);
+            startActivity(configIntent);
+            overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+
+        } catch (ActivityNotFoundException | SecurityException e) {
+            Log.e(getClass().getSimpleName(), "reconfigureWidget: " + widgetItem.packageName + " :: " + widgetItem.configClass + " :: " + e);
+        }
     }
 
     /**
