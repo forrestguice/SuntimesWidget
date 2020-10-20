@@ -111,14 +111,18 @@
         <activity
             android:name=".SuntimesWidgetListActivity"
             android:label="@string/app_name"
-            android:icon="@mipmap/ic_launcher">
+            android:icon="@mipmap/ic_launcher"
+            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:exported="true">
         </activity>
 
         <!-- Action List Activity -->
         <activity
             android:name=".actions.ActionListActivity"
             android:label="@string/app_name"
-            android:icon="@mipmap/ic_launcher">
+            android:icon="@mipmap/ic_launcher"
+            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:exported="true">
         </activity>
 
         <!-- Theme List Activity -->
