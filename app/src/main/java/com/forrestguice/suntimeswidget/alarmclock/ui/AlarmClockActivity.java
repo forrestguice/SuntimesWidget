@@ -45,12 +45,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
 import com.forrestguice.suntimeswidget.R;
@@ -71,7 +69,6 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -615,9 +612,7 @@ public class AlarmClockActivity extends AppCompatActivity
         boolean showWarnings = AppSettings.loadShowWarningsPref(this);
         if (showWarnings && notificationWarning.shouldShow() && !notificationWarning.wasDismissed())
         {
-            View view = notificationWarning.getSnackbar().getView();
-            float iconSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
-            notificationWarning.initWarning(this, view, getString(R.string.notificationsWarning));
+            notificationWarning.initWarning(this, addButton, getString(R.string.notificationsWarning));
             notificationWarning.getSnackbar().setAction(getString(R.string.configLabel_alarms_notifications), new View.OnClickListener()
             {
                 @Override
