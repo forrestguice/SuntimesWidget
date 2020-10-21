@@ -73,6 +73,7 @@
     <integer name="widget_updateInterval">0</integer>
 
     <dimen name="aboutIcon_margin">0dip</dimen>
+    <dimen name="chipIcon_size">20dp</dimen>
     <dimen name="prefIcon_size">24dp</dimen>
 
 </resources>

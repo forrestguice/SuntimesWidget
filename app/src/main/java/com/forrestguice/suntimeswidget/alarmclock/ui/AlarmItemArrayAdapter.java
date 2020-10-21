@@ -758,7 +758,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
 
     private CharSequence ringtoneDisplayChip(AlarmClockItem item, boolean isSelected)
     {
-        int iconDimen = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,20, context.getResources().getDisplayMetrics());
+        int iconDimen = (int) context.getResources().getDimension(R.dimen.chipIcon_size);
         int ringtoneIconID = item.ringtoneName != null ? iconSoundEnabled : iconSoundDisabled;
         ImageSpan ringtonIcon = isSelected || item.enabled
                 ? SuntimesUtils.createImageSpan(context, ringtoneIconID, iconDimen, iconDimen, item.enabled ? alarmEnabledColor : 0)
@@ -771,7 +771,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
 
     private CharSequence actionDisplayChip(AlarmClockItem item, int actionNum, boolean isSelected)
     {
-        int iconDimen = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,20, context.getResources().getDisplayMetrics());
+        int iconDimen = (int) context.getResources().getDimension(R.dimen.chipIcon_size);
         ImageSpan actionIcon = (isSelected || item.enabled)
                 ? SuntimesUtils.createImageSpan(context, iconAction, iconDimen, iconDimen, item.enabled ? alarmEnabledColor : 0)
                 : SuntimesUtils.createImageSpan(context, iconAction, iconDimen, iconDimen, disabledColor, PorterDuff.Mode.MULTIPLY);
