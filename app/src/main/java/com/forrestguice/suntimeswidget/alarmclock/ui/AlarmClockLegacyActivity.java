@@ -221,8 +221,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         boolean showWarnings = AppSettings.loadShowWarningsPref(this);
         if (showWarnings && notificationWarning.shouldShow() && !notificationWarning.wasDismissed())
         {
-            float iconSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
-            notificationWarning.initWarning(this, alarmList, getString(R.string.notificationsWarning), iconSize);
+            notificationWarning.initWarning(this, alarmList, getString(R.string.notificationsWarning));
             notificationWarning.getSnackbar().setAction(getString(R.string.configLabel_alarms_notifications), new View.OnClickListener()
             {
                 @Override

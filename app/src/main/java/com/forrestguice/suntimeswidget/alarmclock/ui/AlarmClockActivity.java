@@ -617,7 +617,7 @@ public class AlarmClockActivity extends AppCompatActivity
         {
             View view = notificationWarning.getSnackbar().getView();
             float iconSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
-            notificationWarning.initWarning(this, view, getString(R.string.notificationsWarning), iconSize);
+            notificationWarning.initWarning(this, view, getString(R.string.notificationsWarning));
             notificationWarning.getSnackbar().setAction(getString(R.string.configLabel_alarms_notifications), new View.OnClickListener()
             {
                 @Override
