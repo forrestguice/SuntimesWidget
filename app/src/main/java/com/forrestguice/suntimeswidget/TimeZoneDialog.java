@@ -248,8 +248,9 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
 
     private void updateExtrasLabel(@NonNull Context context, int stringResID, long offset)
     {
+        int iconSize = (int) Math.ceil(context.getResources().getDimension(R.dimen.statusIcon_size));
         SuntimesUtils.TimeDisplayText dstSavings = utils.timeDeltaLongDisplayString(0L, offset, false, false, true);
-        ImageSpan dstIcon = SuntimesUtils.createDstSpan(context, 24, 24);
+        ImageSpan dstIcon = SuntimesUtils.createDstSpan(context, iconSize, iconSize);
         String dstString = (dstSavings.getRawValue() < 0 ? "-" : "+") + dstSavings.getValue();
         String extrasString = getString(stringResID, dstString);
 
