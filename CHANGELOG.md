@@ -1,5 +1,14 @@
 ### ~
 
+### v0.13.2 (2020-10-26)
+* adds a hex color field to the rgb color picker.
+* fixes bug where ColorDialog sliders sometimes start with the wrong value.
+* fixes crash in AlarmClockActivity when notifications are disabled (#437).
+* fixes bug "incorrect future and past number of days, when DST starts or ends" (#436).
+* fixes warning icons (too small / unreadable) to be consistent across devices.
+* exports the WidgetListActivity, ActionListActivity, and SettingsActivity; permits access to third-party apps with the `suntimes.permission.READ_CALCULATOR` permission.
+* improves organization of "User Interface" settings (#434).
+
 ### v0.13.1 (2020-10-03)
 * minor tweaks to app help topics (#432).
 * fixes bug where deleted locations would reappear ("no way to remove default location" #430).
