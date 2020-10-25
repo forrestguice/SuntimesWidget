@@ -514,19 +514,35 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                     cursor.moveToFirst();
                     while (!cursor.isAfterLast())
                     {
-                        int appWidgetID = cursor.getInt(cursor.getColumnIndex(COLUMN_WIDGET_APPWIDGETID));
-                        String packageName = cursor.getString(cursor.getColumnIndex(COLUMN_WIDGET_PACKAGENAME));
-                        String widgetClass = cursor.getString(cursor.getColumnIndex(COLUMN_WIDGET_CLASS));
-                        String configClass = cursor.getString(cursor.getColumnIndex(COLUMN_WIDGET_CONFIGCLASS));
+                        try {
+                            int appWidgetID = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_WIDGET_APPWIDGETID));    // required
+                            String packageName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_WIDGET_PACKAGENAME));    // required
+                            String widgetClass = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_WIDGET_CLASS));    //required
 
-                        String title = cursor.getString(cursor.getColumnIndex(COLUMN_WIDGET_LABEL));
-                        String summary = cursor.getString(cursor.getColumnIndex(COLUMN_WIDGET_SUMMARY));
+                            int i_configClass = cursor.getColumnIndex(COLUMN_WIDGET_CONFIGCLASS);   // optional
+                            String configClass = ((i_configClass >= 0) ? cursor.getString(i_configClass) : null);
 
-                        byte[] iconBlob = cursor.getBlob(cursor.getColumnIndex(COLUMN_WIDGET_ICON));
-                        Bitmap iconBitmap = (iconBlob != null ? BitmapFactory.decodeByteArray(iconBlob, 0, iconBlob.length) : null);
-                        Drawable iconDrawable = (iconBitmap != null ? new BitmapDrawable(context.getResources(), iconBitmap) : ContextCompat.getDrawable(context, R.drawable.ic_action_suntimes));
+                            int i_title = cursor.getColumnIndex(COLUMN_WIDGET_LABEL);    // optional
+                            String title = ((i_title >= 0) ? cursor.getString(i_title) : widgetClass);
 
-                        items.add(new WidgetListItem(packageName, widgetClass, appWidgetID, iconDrawable, title, summary, configClass));
+                            int i_summary = cursor.getColumnIndex(COLUMN_WIDGET_SUMMARY);    // optional
+                            String summary = ((i_summary >= 0) ? cursor.getString(i_summary) : packageName);
+
+                            Drawable iconDrawable;
+                            int i_icon = cursor.getColumnIndex(COLUMN_WIDGET_ICON);    // optional
+                            if (i_icon >= 0) {
+                                byte[] iconBlob = cursor.getBlob(i_icon);
+                                Bitmap iconBitmap = (iconBlob != null ? BitmapFactory.decodeByteArray(iconBlob, 0, iconBlob.length) : null);
+                                iconDrawable = (iconBitmap != null ? new BitmapDrawable(context.getResources(), iconBitmap) : ContextCompat.getDrawable(context, R.drawable.ic_action_suntimes));
+                            } else {
+                                iconDrawable = ContextCompat.getDrawable(context, R.drawable.ic_action_suntimes);
+                            }
+
+                            items.add(new WidgetListItem(packageName, widgetClass, appWidgetID, iconDrawable, title, summary, configClass));
+
+                        } catch (IllegalArgumentException e) {
+                            Log.e("WidgetListActivity", "Missing column! skipping this entry.. " + e);
+                        }
                         cursor.moveToNext();
                     }
                     cursor.close();
