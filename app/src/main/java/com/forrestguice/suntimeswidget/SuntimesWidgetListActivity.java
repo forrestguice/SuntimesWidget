@@ -83,6 +83,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
     private ActionBar actionBar;
     private ListView widgetList;
+    private WidgetListAdapter widgetListAdapter;
     private static final SuntimesUtils utils = new SuntimesUtils();
 
     public SuntimesWidgetListActivity()
@@ -111,7 +112,6 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_activity_widgetlist);
         initViews(this);
-        updateWidgetAlarms(this);
     }
 
     /**
@@ -122,6 +122,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     {
         super.onStart();
         updateViews(this);
+        updateWidgetAlarms(this);
     }
 
     /**
@@ -252,7 +253,8 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
      */
     protected void updateViews(@NonNull Context context)
     {
-        widgetList.setAdapter(WidgetListAdapter.createWidgetListAdapter(context));
+        widgetListAdapter = WidgetListAdapter.createWidgetListAdapter(context);
+        widgetList.setAdapter(widgetListAdapter);
     }
 
     /**
@@ -323,11 +325,17 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
      * updateWidgetAlarms
      * @param context context
      */
-    public static void updateWidgetAlarms(Context context)
+    protected void updateWidgetAlarms(Context context)
     {
-        Intent updateIntent = new Intent();
-        updateIntent.setAction(SuntimesWidget0.SUNTIMES_ALARM_UPDATE);
-        context.sendBroadcast(updateIntent);
+        if (widgetListAdapter != null)
+        {
+            for (ComponentName widgetClass : widgetListAdapter.getAllWidgetClasses())
+            {
+                Intent updateIntent = new Intent(SuntimesWidget0.SUNTIMES_ALARM_UPDATE);
+                updateIntent.setComponent(widgetClass);
+                context.sendBroadcast(updateIntent);
+            }
+        }
     }
 
     /**
@@ -394,12 +402,25 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     @SuppressWarnings("Convert2Diamond")
     public static class WidgetListAdapter extends ArrayAdapter<WidgetListItem>
     {
-        public static String[] ALL_WIDGETS = new String[]{
+        public static String[] ALL_WIDGETS = new String[] {
                 SuntimesWidget0.class.getName(), SuntimesWidget0_2x1.class.getName(), SuntimesWidget1.class.getName(), SolsticeWidget0.class.getName(),
                 MoonWidget0.class.getName(), MoonWidget0_2x1.class.getName(), MoonWidget0_3x1.class.getName(), MoonWidget0_3x2.class.getName(),
                 SuntimesWidget2.class.getName(), SuntimesWidget2_3x1.class.getName(), SuntimesWidget2_3x2.class.getName(), SuntimesWidget2_3x3.class.getName(),
                 ClockWidget0.class.getName(), ClockWidget0_3x1.class.getName()
         };
+
+        public ComponentName[] getAllWidgetClasses()
+        {
+            ArrayList<ComponentName> components = new ArrayList<>();
+            for (WidgetListItem widget : widgets)
+            {
+                ComponentName component = new ComponentName(widget.packageName, widget.widgetClass);
+                if (!components.contains(component)) {
+                    components.add(component);
+                }
+            }
+            return components.toArray(new ComponentName[0]);
+        }
 
         private Context context;
         private ArrayList<WidgetListItem> widgets;
