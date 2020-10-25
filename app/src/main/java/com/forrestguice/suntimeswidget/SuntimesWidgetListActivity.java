@@ -39,6 +39,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -412,18 +413,18 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
         @Override
         @NonNull
-        public View getView(int position, View convertView, @NonNull ViewGroup parent)
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
         {
             return widgetItemView(position, convertView, parent);
         }
 
         @Override
-        public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent)
+        public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
         {
             return widgetItemView(position, convertView, parent);
         }
 
-        private View widgetItemView(int position, View convertView, @NonNull ViewGroup parent)
+        private View widgetItemView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
         {
             View view = convertView;
             if (convertView == null)
@@ -452,7 +453,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             return view;
         }
 
-        public static ArrayList<WidgetListItem> createWidgetListItems(Context context, AppWidgetManager widgetManager, @NonNull String packageName, @NonNull String widgetClass)
+        public static ArrayList<WidgetListItem> createWidgetListItems(Context context, @NonNull AppWidgetManager widgetManager, @NonNull String packageName, @NonNull String widgetClass)
         {
             String titlePattern = getTitlePattern(context, widgetClass);
             ArrayList<WidgetListItem> items = new ArrayList<WidgetListItem>();
