@@ -22,6 +22,7 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.text.DecimalFormat;
@@ -55,12 +56,12 @@ public class Location implements Parcelable
      * @param latitude decimal degrees (DD) string
      * @param longitude decimal degrees (DD) string
      */
-    public Location(String label, String latitude, String longitude )
+    public Location(@Nullable String label, String latitude, String longitude )
     {
         this(label, latitude, longitude, "0", true);
     }
 
-    public Location(String label, String latitude, String longitude, String altitude )
+    public Location(@Nullable String label, String latitude, String longitude, String altitude )
     {
         this(label, latitude, longitude, altitude, true);
     }
