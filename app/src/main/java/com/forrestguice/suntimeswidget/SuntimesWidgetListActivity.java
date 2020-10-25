@@ -249,7 +249,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
      * updateViews
      * @param context context
      */
-    protected void updateViews(Context context)
+    protected void updateViews(@NonNull Context context)
     {
         widgetList.setAdapter(WidgetListAdapter.createWidgetListAdapter(context));
     }
@@ -497,14 +497,14 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             return items;
         }
 
-        public static ArrayList<WidgetListItem> createWidgetListItems(Context context, @NonNull String contentUri)
+        public static ArrayList<WidgetListItem> createWidgetListItems(@NonNull Context context, @NonNull String contentUri)
         {
             if (!contentUri.endsWith("/")) {
                 contentUri += "/";
             }
 
             ArrayList<WidgetListItem> items = new ArrayList<WidgetListItem>();
-            ContentResolver resolver = (context == null ? null : context.getContentResolver());
+            ContentResolver resolver = context.getContentResolver();
             if (resolver != null)
             {
                 Uri uri = Uri.parse(contentUri + QUERY_WIDGET);
@@ -535,7 +535,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             return items;
         }
 
-        public static WidgetListAdapter createWidgetListAdapter(Context context)
+        public static WidgetListAdapter createWidgetListAdapter(@NonNull Context context)
         {
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
             ArrayList<WidgetListItem> items = new ArrayList<WidgetListItem>();
@@ -664,7 +664,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             COLUMN_WIDGET_LABEL, COLUMN_WIDGET_SUMMARY, COLUMN_WIDGET_ICON
     };
 
-    public static List<String> queryWidgetInfoProviders(Context context)
+    public static List<String> queryWidgetInfoProviders(@NonNull Context context)
     {
         ArrayList<String> references = new ArrayList<>();
         PackageManager packageManager = context.getPackageManager();
@@ -675,7 +675,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
         for (ResolveInfo resolveInfo : packages)
         {
-            if (resolveInfo.activityInfo != null && resolveInfo.activityInfo.metaData != null)
+            if (resolveInfo != null && resolveInfo.activityInfo != null && resolveInfo.activityInfo.metaData != null)
             {
                 try {
                     PackageInfo packageInfo = packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, PackageManager.GET_PERMISSIONS);
