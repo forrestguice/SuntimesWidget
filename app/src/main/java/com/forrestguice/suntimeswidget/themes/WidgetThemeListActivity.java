@@ -880,7 +880,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     @SuppressLint("ResourceType")
     protected void showHelp()
     {
-        int iconSize = 32;
+        int iconSize = (int) getResources().getDimension(R.dimen.helpIcon_size);
         int[] iconAttrs = { R.attr.icActionNew, R.attr.icActionCopy, R.attr.icActionEdit, R.attr.icActionDelete, R.attr.icActionSettings };
         TypedArray typedArray = obtainStyledAttributes(iconAttrs);
         ImageSpan addIcon = SuntimesUtils.createImageSpan(this, typedArray.getResourceId(0, R.drawable.ic_action_new), iconSize, iconSize, 0);
