@@ -85,6 +85,10 @@ public class AlarmClockActivity extends AppCompatActivity
     public static final String EXTRA_SHOWBACK = "showBack";
     public static final String EXTRA_SOLAREVENT = "solarevent";
     public static final String EXTRA_LOCATION = "location";
+    public static final String EXTRA_LOCATION_LABEL = "location_label";
+    public static final String EXTRA_LOCATION_LAT = "latitude";
+    public static final String EXTRA_LOCATION_LON = "longitude";
+    public static final String EXTRA_LOCATION_ALT = "altitude";
     public static final String EXTRA_TIMEZONE = "timezone";
     public static final String EXTRA_ALARMTYPE = "alarmtype";
     public static final String EXTRA_SELECTED_ALARM = "selectedAlarm";
@@ -254,11 +258,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 SolarEvents param_event = SolarEvents.valueOf(intent.getStringExtra(AlarmClockActivity.EXTRA_SOLAREVENT), null);
                 intent.setExtrasClassLoader(getClassLoader());
 
-                Bundle locationBundle = intent.getBundleExtra(AlarmClockActivity.EXTRA_LOCATION);
-                Location param_location = ((locationBundle != null) ? (Location) locationBundle.getParcelable(AlarmClockActivity.EXTRA_LOCATION) : null);
-                if (param_location == null) {
-                    param_location = WidgetSettings.loadLocationPref(context, 0);
-                }
+                Location param_location = locationFromIntentExtras(context, intent);
 
                 boolean param_skipUI = false;
                 if (Build.VERSION.SDK_INT >= 11) {
@@ -300,6 +300,30 @@ public class AlarmClockActivity extends AppCompatActivity
         }
     }
 
+    protected static Location locationFromIntentExtras(Context context, Intent intent)
+    {
+        Bundle locationBundle = intent.getBundleExtra(AlarmClockActivity.EXTRA_LOCATION);
+        Location location = ((locationBundle != null) ? (Location) locationBundle.getParcelable(AlarmClockActivity.EXTRA_LOCATION) : null);
+        if (location != null) {
+            return location;
+        }
+
+        Location appLocation = WidgetSettings.loadLocationPref(context, 0);
+        if (intent.hasExtra(AlarmClockActivity.EXTRA_LOCATION_LAT) && intent.hasExtra(AlarmClockActivity.EXTRA_LOCATION_LON))
+        {
+            double latitude = intent.getDoubleExtra(AlarmClockActivity.EXTRA_LOCATION_LAT, -1000);
+            double longitude = intent.getDoubleExtra(AlarmClockActivity.EXTRA_LOCATION_LON, -1000);
+            if ((latitude >= -90 && latitude <= 90) && (longitude >= -180 && longitude <= 180))
+            {
+                String label = intent.getStringExtra(AlarmClockActivity.EXTRA_LOCATION_LABEL);
+                double altitude = intent.getDoubleExtra(AlarmClockActivity.EXTRA_LOCATION_ALT, 0);
+                location = new Location(label, latitude + "", longitude + "", altitude + "");
+                location.setUseAltitude(appLocation.useAltitude());
+                return location;
+            } else return appLocation;    // invalid extras
+        } else return appLocation;    // no extras
+    }
+    
     @SuppressLint("ResourceType")
     private void initLocale(Context context)
     {

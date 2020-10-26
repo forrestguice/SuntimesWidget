@@ -78,5 +78,6 @@
     <dimen name="warningIcon_size">18dp</dimen>
     <dimen name="chipIcon_size">20dp</dimen>
     <dimen name="prefIcon_size">24dp</dimen>
+    <dimen name="helpIcon_size">24dp</dimen>
 
 </resources>
