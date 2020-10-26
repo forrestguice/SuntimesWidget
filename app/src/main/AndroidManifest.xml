@@ -18,6 +18,7 @@
     <permission
         android:name="suntimes.permission.READ_CALCULATOR"
         android:protectionLevel="normal" />                       <!-- protects suntimeswidget.calculator.provider -->
+    <uses-permission android:name="suntimes.permission.READ_CALCULATOR" />
 
     <uses-sdk tools:overrideLibrary="com.flask.colorpicker" />
 

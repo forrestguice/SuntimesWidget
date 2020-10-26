@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget;
 import android.app.Activity;
 import android.content.Context;
 import android.preference.Preference;
+import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 
 import android.support.test.espresso.DataInteraction;
@@ -440,7 +441,7 @@ public class SuntimesSettingsActivityTest extends SuntimesActivityTestBase
         verifyWidgetSettings(activity);
     }
 
-    public static void verifyWidgetSettings(Context context)
+    public static void verifyWidgetSettings(@NonNull Context context)
     {
         ArrayAdapter widgetAdapter = SuntimesWidgetListActivity.WidgetListAdapter.createWidgetListAdapter(context);
         if (widgetAdapter.isEmpty())

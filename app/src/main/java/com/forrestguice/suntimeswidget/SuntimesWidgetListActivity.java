@@ -20,13 +20,27 @@ package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,10 +66,11 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.forrestguice.suntimeswidget.SuntimesConfigActivity0.EXTRA_RECONFIGURE;
 
@@ -68,6 +83,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
     private ActionBar actionBar;
     private ListView widgetList;
+    private WidgetListAdapter widgetListAdapter;
     private static final SuntimesUtils utils = new SuntimesUtils();
 
     public SuntimesWidgetListActivity()
@@ -96,7 +112,6 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         setResult(RESULT_CANCELED);
         setContentView(R.layout.layout_activity_widgetlist);
         initViews(this);
-        updateWidgetAlarms(this);
     }
 
     /**
@@ -107,6 +122,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     {
         super.onStart();
         updateViews(this);
+        updateWidgetAlarms(this);
     }
 
     /**
@@ -235,9 +251,10 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
      * updateViews
      * @param context context
      */
-    protected void updateViews(Context context)
+    protected void updateViews(@NonNull Context context)
     {
-        widgetList.setAdapter(WidgetListAdapter.createWidgetListAdapter(context));
+        widgetListAdapter = WidgetListAdapter.createWidgetListAdapter(context);
+        widgetList.setAdapter(widgetListAdapter);
     }
 
     /**
@@ -284,27 +301,41 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     }
 
     /**
-     * @param widget a WidgetListItem (referencing some widget id)
+     * @param widgetItem a WidgetListItem (referencing some widget id)
      */
-    protected void reconfigureWidget(WidgetListItem widget)
+    protected void reconfigureWidget(WidgetListItem widgetItem)
     {
-        Intent configIntent = new Intent(this, widget.getConfigClass());
-        configIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widget.getWidgetId());
+        Intent configIntent = new Intent();
+        configIntent.setComponent(new ComponentName(widgetItem.packageName, widgetItem.configClass));
+        configIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetItem.appWidgetId);
         configIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         configIntent.putExtra(EXTRA_RECONFIGURE, true);
-        startActivity(configIntent);
-        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+
+        try {
+            Log.i(getClass().getSimpleName(), "reconfigureWidget: " + widgetItem.packageName + " :: " + widgetItem.configClass);
+            startActivity(configIntent);
+            overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+
+        } catch (ActivityNotFoundException | SecurityException e) {
+            Log.e(getClass().getSimpleName(), "reconfigureWidget: " + widgetItem.packageName + " :: " + widgetItem.configClass + " :: " + e);
+        }
     }
 
     /**
      * updateWidgetAlarms
      * @param context context
      */
-    public static void updateWidgetAlarms(Context context)
+    protected void updateWidgetAlarms(Context context)
     {
-        Intent updateIntent = new Intent();
-        updateIntent.setAction(SuntimesWidget0.SUNTIMES_ALARM_UPDATE);
-        context.sendBroadcast(updateIntent);
+        if (widgetListAdapter != null)
+        {
+            for (ComponentName widgetClass : widgetListAdapter.getAllWidgetClasses())
+            {
+                Intent updateIntent = new Intent(SuntimesWidget0.SUNTIMES_ALARM_UPDATE);
+                updateIntent.setComponent(widgetClass);
+                context.sendBroadcast(updateIntent);
+            }
+        }
     }
 
     /**
@@ -312,14 +343,18 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
      */
     public static class WidgetListItem
     {
-        private final int appWidgetId;
-        private final int icon;
-        private final String title;
-        private final String summary;
-        private final Class configClass;
+        protected final String packageName;
+        protected final String widgetClass;
+        protected final String configClass;
+        protected final int appWidgetId;
+        protected final Drawable icon;
+        protected final String title;
+        protected final String summary;
 
-        public WidgetListItem( int appWidgetId, int icon, String title, String summary, Class configClass )
+        public WidgetListItem( String packageName, String widgetClass, int appWidgetId, Drawable icon, String title, String summary, String configClass )
         {
+            this.packageName = packageName;
+            this.widgetClass = widgetClass;
             this.appWidgetId = appWidgetId;
             this.configClass = configClass;
             this.icon = icon;
@@ -327,18 +362,21 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             this.summary = summary;
         }
 
+        public String getPackageName() {
+            return packageName;
+        }
+
         public int getWidgetId()
         {
             return appWidgetId;
         }
 
-        public Class getConfigClass()
+        public String getConfigClass()
         {
             return configClass;
         }
 
-        public int getIcon()
-        {
+        public Drawable getIcon() {
             return icon;
         }
 
@@ -364,6 +402,26 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     @SuppressWarnings("Convert2Diamond")
     public static class WidgetListAdapter extends ArrayAdapter<WidgetListItem>
     {
+        public static String[] ALL_WIDGETS = new String[] {
+                SuntimesWidget0.class.getName(), SuntimesWidget0_2x1.class.getName(), SuntimesWidget1.class.getName(), SolsticeWidget0.class.getName(),
+                MoonWidget0.class.getName(), MoonWidget0_2x1.class.getName(), MoonWidget0_3x1.class.getName(), MoonWidget0_3x2.class.getName(),
+                SuntimesWidget2.class.getName(), SuntimesWidget2_3x1.class.getName(), SuntimesWidget2_3x2.class.getName(), SuntimesWidget2_3x3.class.getName(),
+                ClockWidget0.class.getName(), ClockWidget0_3x1.class.getName()
+        };
+
+        public ComponentName[] getAllWidgetClasses()
+        {
+            ArrayList<ComponentName> components = new ArrayList<>();
+            for (WidgetListItem widget : widgets)
+            {
+                ComponentName component = new ComponentName(widget.packageName, widget.widgetClass);
+                if (!components.contains(component)) {
+                    components.add(component);
+                }
+            }
+            return components.toArray(new ComponentName[0]);
+        }
+
         private Context context;
         private ArrayList<WidgetListItem> widgets;
 
@@ -376,18 +434,18 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
         @Override
         @NonNull
-        public View getView(int position, View convertView, @NonNull ViewGroup parent)
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
         {
             return widgetItemView(position, convertView, parent);
         }
 
         @Override
-        public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent)
+        public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
         {
             return widgetItemView(position, convertView, parent);
         }
 
-        private View widgetItemView(int position, View convertView, @NonNull ViewGroup parent)
+        private View widgetItemView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
         {
             View view = convertView;
             if (convertView == null)
@@ -399,7 +457,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             WidgetListItem item = widgets.get(position);
 
             ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
-            icon.setImageResource(item.getIcon());
+            icon.setImageDrawable(item.getIcon());
 
             TextView text = (TextView) view.findViewById(android.R.id.text1);
             text.setText(item.getTitle());
@@ -416,126 +474,161 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             return view;
         }
 
-        public static WidgetListItem createWidgetListItem(Context context, int appWidgetId, AppWidgetManager widgetManager, SuntimesData data, String widgetTitle, String type) throws ClassNotFoundException
+        public static ArrayList<WidgetListItem> createWidgetListItems(Context context, @NonNull AppWidgetManager widgetManager, @NonNull String packageName, @NonNull String widgetClass)
         {
-            AppWidgetProviderInfo info = widgetManager.getAppWidgetInfo(appWidgetId);
-            String title = context.getString(R.string.configLabel_widgetList_itemTitle, widgetTitle);
-            String source = ((data.calculatorMode() == null) ? "def" : data.calculatorMode().getName());
-            String summary = context.getString(R.string.configLabel_widgetList_itemSummaryPattern, type, source);
-            return new WidgetListItem(appWidgetId, info.icon, title, summary, Class.forName(info.configure.getClassName()) );
-        }
-
-        public static ArrayList<WidgetListItem> createWidgetListItems(Context context, AppWidgetManager widgetManager, Class widgetClass, String titlePattern)
-        {
+            String titlePattern = getTitlePattern(context, widgetClass);
             ArrayList<WidgetListItem> items = new ArrayList<WidgetListItem>();
-            int[] ids = widgetManager.getAppWidgetIds(new ComponentName(context, widgetClass));
+            int[] ids = widgetManager.getAppWidgetIds(new ComponentName(packageName, widgetClass));
             for (int id : ids)
             {
-                try {
-                    SuntimesData data;
-                    String widgetTitle;
-                    String widgetType = getWidgetName(context, widgetClass);
+                AppWidgetProviderInfo info = widgetManager.getAppWidgetInfo(id);
+                SuntimesData data;
+                String widgetTitle;
+                String widgetType = getWidgetName(context, widgetClass);
+                String widgetClass0 = simpleClassName(widgetClass);
+                String configClass = info.configure.getClassName();
+                int widgetIcon = info.icon;
 
-                    if (widgetClass == SolsticeWidget0.class)
+                if (widgetClass0.equals("SolsticeWidget0"))
+                {
+                    SuntimesEquinoxSolsticeData data0 =  new SuntimesEquinoxSolsticeData(context, id);
+                    widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
+                    data = data0;
+
+                } else if (widgetClass0.equals("MoonWidget0") || widgetClass0.equals("MoonWidget0_2x1") || widgetClass0.equals("MoonWidget0_3x1") || widgetClass0.equals("MoonWidget0_3x2")) {
+                    SuntimesMoonData data0 =  new SuntimesMoonData(context, id, "moon");
+                    widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
+                    data = data0;
+
+                } else if (widgetClass0.equals("ClockWidget0") || widgetClass0.equals("ClockWidget0_3x1")) {
+                    SuntimesClockData data0 = new SuntimesClockData(context, id);
+                    widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
+                    data = data0;
+
+                } else {
+                    SuntimesRiseSetData data0 = new SuntimesRiseSetData(context, id);
+                    widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
+                    data = data0;
+                }
+
+                String title = context.getString(R.string.configLabel_widgetList_itemTitle, widgetTitle);
+                String source = ((data == null || data.calculatorMode() == null) ? "def" : data.calculatorMode().getName());
+                String summary = context.getString(R.string.configLabel_widgetList_itemSummaryPattern, widgetType, source);
+                items.add(new WidgetListItem(packageName, widgetClass, id, ContextCompat.getDrawable(context, widgetIcon), title, summary, configClass));
+            }
+            return items;
+        }
+
+        public static ArrayList<WidgetListItem> createWidgetListItems(@NonNull Context context, @NonNull String contentUri)
+        {
+            if (!contentUri.endsWith("/")) {
+                contentUri += "/";
+            }
+
+            ArrayList<WidgetListItem> items = new ArrayList<WidgetListItem>();
+            ContentResolver resolver = context.getContentResolver();
+            if (resolver != null)
+            {
+                Uri uri = Uri.parse(contentUri + QUERY_WIDGET);
+                Cursor cursor = resolver.query(uri, QUERY_WIDGET_PROJECTION, null, null, null);
+                if (cursor != null)
+                {
+                    cursor.moveToFirst();
+                    while (!cursor.isAfterLast())
                     {
-                        SuntimesEquinoxSolsticeData data0 =  new SuntimesEquinoxSolsticeData(context, id);
-                        widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
-                        data = data0;
+                        try {
+                            int appWidgetID = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_WIDGET_APPWIDGETID));    // required
+                            String packageName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_WIDGET_PACKAGENAME));    // required
+                            String widgetClass = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_WIDGET_CLASS));    //required
 
-                    } else if (widgetClass == MoonWidget0.class || widgetClass == MoonWidget0_2x1.class || widgetClass == MoonWidget0_3x1.class || widgetClass == MoonWidget0_3x2.class) {
-                        SuntimesMoonData data0 =  new SuntimesMoonData(context, id, "moon");
-                        widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
-                        data = data0;
+                            int i_configClass = cursor.getColumnIndex(COLUMN_WIDGET_CONFIGCLASS);   // optional
+                            String configClass = ((i_configClass >= 0) ? cursor.getString(i_configClass) : null);
 
-                    } else if (widgetClass == ClockWidget0.class || widgetClass == ClockWidget0_3x1.class) {
-                        SuntimesClockData data0 = new SuntimesClockData(context, id);
-                        widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
-                        data = data0;
+                            int i_title = cursor.getColumnIndex(COLUMN_WIDGET_LABEL);    // optional
+                            String title = ((i_title >= 0) ? cursor.getString(i_title) : widgetClass);
 
-                    } else {
-                        SuntimesRiseSetData data0 = new SuntimesRiseSetData(context, id);
-                        widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
-                        data = data0;
+                            int i_summary = cursor.getColumnIndex(COLUMN_WIDGET_SUMMARY);    // optional
+                            String summary = ((i_summary >= 0) ? cursor.getString(i_summary) : packageName);
+
+                            Drawable iconDrawable;
+                            int i_icon = cursor.getColumnIndex(COLUMN_WIDGET_ICON);    // optional
+                            if (i_icon >= 0) {
+                                byte[] iconBlob = cursor.getBlob(i_icon);
+                                Bitmap iconBitmap = (iconBlob != null ? BitmapFactory.decodeByteArray(iconBlob, 0, iconBlob.length) : null);
+                                iconDrawable = (iconBitmap != null ? new BitmapDrawable(context.getResources(), iconBitmap) : ContextCompat.getDrawable(context, R.drawable.ic_action_suntimes));
+                            } else {
+                                iconDrawable = ContextCompat.getDrawable(context, R.drawable.ic_action_suntimes);
+                            }
+
+                            items.add(new WidgetListItem(packageName, widgetClass, appWidgetID, iconDrawable, title, summary, configClass));
+
+                        } catch (IllegalArgumentException e) {
+                            Log.e("WidgetListActivity", "Missing column! skipping this entry.. " + e);
+                        }
+                        cursor.moveToNext();
                     }
-
-                    items.add(createWidgetListItem(context, id, widgetManager, data, widgetTitle, widgetType));
-                } catch (ClassNotFoundException e) {
-                    Log.e("WidgetListActivity", "configuration class for widget " + id + " missing.");
+                    cursor.close();
                 }
             }
             return items;
         }
 
-        public static WidgetListAdapter createWidgetListAdapter(Context context)
+        public static WidgetListAdapter createWidgetListAdapter(@NonNull Context context)
         {
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
             ArrayList<WidgetListItem> items = new ArrayList<WidgetListItem>();
-
-            String titlePattern0 = context.getString(R.string.configLabel_widgetList_itemTitlePattern);
-            items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget0.class, titlePattern0));
-            items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget0_2x1.class, titlePattern0));
-            items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget1.class, titlePattern0));
-            items.addAll(createWidgetListItems(context, widgetManager, SolsticeWidget0.class, titlePattern0));
-
-            String titlePattern1 = context.getString(R.string.configLabel_widgetList_itemTitlePattern1);
-            items.addAll(createWidgetListItems(context, widgetManager, MoonWidget0.class, titlePattern1));
-            items.addAll(createWidgetListItems(context, widgetManager, MoonWidget0_2x1.class, titlePattern1));
-            items.addAll(createWidgetListItems(context, widgetManager, MoonWidget0_3x1.class, titlePattern1));
-            items.addAll(createWidgetListItems(context, widgetManager, MoonWidget0_3x2.class, titlePattern1));
-            items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2.class, titlePattern1));
-            items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2_3x1.class, titlePattern1));
-            items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2_3x2.class, titlePattern1));
-            items.addAll(createWidgetListItems(context, widgetManager, SuntimesWidget2_3x3.class, titlePattern1));
-            items.addAll(createWidgetListItems(context, widgetManager, ClockWidget0.class, titlePattern1));
-            items.addAll(createWidgetListItems(context, widgetManager, ClockWidget0_3x1.class, titlePattern1));
-
+            String packageName = context.getPackageName();
+            for (String widgetClass : ALL_WIDGETS) {
+                items.addAll(createWidgetListItems(context, widgetManager, packageName, widgetClass));
+            }
+            for (String uri : queryWidgetInfoProviders(context)) {
+                items.addAll(createWidgetListItems(context, uri));
+            }
             return new WidgetListAdapter(context, items);
         }
 
-        public static String getWidgetName(Context context, Class widgetClass)
+        private static String getTitlePattern(Context context, @NonNull String widgetClass)
         {
-            if (widgetClass == SolsticeWidget0.class)
-                return context.getString(R.string.app_name_solsticewidget0);
+            switch (simpleClassName(widgetClass))
+            {
+                case "ClockWidget0": case "ClockWidget0_3x1":
+                case "MoonWidget0": case "MoonWidget0_2x1": case "MoonWidget0_3x1": case "MoonWidget0_3x2":
+                case "SuntimesWidget2": case "SuntimesWidget2_3x1": case "SuntimesWidget2_3x2": case "SuntimesWidget2_3x3":
+                    return context.getString(R.string.configLabel_widgetList_itemTitlePattern1);
 
-            if (widgetClass == ClockWidget0.class)
-                return context.getString(R.string.app_name_clockwidget0);
-
-            if (widgetClass == ClockWidget0_3x1.class)
-                return context.getString(R.string.app_name_clockwidget0) + " (3x1)";
-
-            if (widgetClass == MoonWidget0.class)
-                return context.getString(R.string.app_name_moonwidget0);
-
-            if (widgetClass == MoonWidget0_2x1.class)
-                return context.getString(R.string.app_name_moonwidget0) + " (2x1)";
-
-            if (widgetClass == MoonWidget0_3x1.class)
-                return context.getString(R.string.app_name_moonwidget0) + " (3x1)";
-
-            if (widgetClass == MoonWidget0_3x2.class)
-                return context.getString(R.string.app_name_moonwidget0) + " (3x2)";
-
-            if (widgetClass == SuntimesWidget1.class)
-                return context.getString(R.string.app_name_widget1);
-
-            if (widgetClass == SuntimesWidget2.class)
-                return context.getString(R.string.app_name_widget2);
-
-            if (widgetClass == SuntimesWidget2_3x1.class)
-                return context.getString(R.string.app_name_widget2) + " (3x1)";
-
-            if (widgetClass == SuntimesWidget2_3x2.class)
-                return context.getString(R.string.app_name_widget2) + " (3x2)";
-
-            if (widgetClass == SuntimesWidget2_3x3.class)
-                return context.getString(R.string.app_name_widget2) + " (3x3)";
-
-            if (widgetClass == SuntimesWidget0_2x1.class)
-                return context.getString(R.string.app_name_widget0) + " (2x1)";
-
-            return context.getString(R.string.app_name_widget0);
+                case "SuntimesWidget0": case "SuntimesWidget0_2x1": case "SuntimesWidget1": case "SolsticeWidget0":
+                default: return context.getString(R.string.configLabel_widgetList_itemTitlePattern);
+            }
         }
 
+        private static String getWidgetName(Context context, @NonNull String widgetClass)
+        {
+            switch (simpleClassName(widgetClass))
+            {
+                case "SolsticeWidget0": return context.getString(R.string.app_name_solsticewidget0);
+                case "ClockWidget0": return context.getString(R.string.app_name_clockwidget0);
+                case "ClockWidget0_3x1": return context.getString(R.string.app_name_clockwidget0) + " (3x1)";
+                case "MoonWidget0": return context.getString(R.string.app_name_moonwidget0);
+                case "MoonWidget0_2x1": return context.getString(R.string.app_name_moonwidget0) + " (2x1)";
+                case "MoonWidget0_3x1": return context.getString(R.string.app_name_moonwidget0) + " (3x1)";
+                case "MoonWidget0_3x2": return context.getString(R.string.app_name_moonwidget0) + " (3x2)";
+                case "SuntimesWidget1": return context.getString(R.string.app_name_widget1);
+                case "SuntimesWidget2": return context.getString(R.string.app_name_widget2);
+                case "SuntimesWidget2_3x1": return context.getString(R.string.app_name_widget2) + " (3x1)";
+                case "SuntimesWidget2_3x2": return context.getString(R.string.app_name_widget2) + " (3x2)";
+                case "SuntimesWidget2_3x3": return context.getString(R.string.app_name_widget2) + " (3x3)";
+                case "SuntimesWidget0_2x1": return context.getString(R.string.app_name_widget0) + " (2x1)";
+                default: return context.getString(R.string.app_name_widget0);
+            }
+        }
+
+        private static String simpleClassName(String className)
+        {
+            final int i = className.lastIndexOf(".");
+            if (i > 0) {
+                return className.substring(className.lastIndexOf(".") + 1);
+            } else return className;
+        }
     }
 
     @Override
@@ -588,6 +681,71 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);
+    }
+
+    public static final String ACTION_SUNTIMES_LISTWIDGETS = "suntimes.action.LIST_WIDGETS";
+    public static final String CATEGORY_SUNTIMES_ADDON = "suntimes.SUNTIMES_ADDON";
+    public static final String KEY_WIDGET_INFO_PROVIDER = "WidgetInfoProvider";
+    public static final String REQUIRED_PERMISSION = "suntimes.permission.READ_CALCULATOR";
+
+    public static final String COLUMN_WIDGET_PACKAGENAME = "packagename";
+    public static final String COLUMN_WIDGET_APPWIDGETID = "appwidgetid";
+    public static final String COLUMN_WIDGET_CLASS = "widgetclass";
+    public static final String COLUMN_WIDGET_CONFIGCLASS = "configclass";
+    public static final String COLUMN_WIDGET_LABEL = "label";
+    public static final String COLUMN_WIDGET_SUMMARY = "summary";
+    public static final String COLUMN_WIDGET_ICON = "icon";
+
+    public static final String QUERY_WIDGET = "widgets";
+    public static final String[] QUERY_WIDGET_PROJECTION = new String[] {
+            COLUMN_WIDGET_APPWIDGETID, COLUMN_WIDGET_CLASS, COLUMN_WIDGET_CONFIGCLASS, COLUMN_WIDGET_PACKAGENAME,
+            COLUMN_WIDGET_LABEL, COLUMN_WIDGET_SUMMARY, COLUMN_WIDGET_ICON
+    };
+
+    public static List<String> queryWidgetInfoProviders(@NonNull Context context)
+    {
+        ArrayList<String> references = new ArrayList<>();
+        PackageManager packageManager = context.getPackageManager();
+        Intent packageQuery = new Intent(ACTION_SUNTIMES_LISTWIDGETS);
+        packageQuery.addCategory(CATEGORY_SUNTIMES_ADDON);
+        List<ResolveInfo> packages = packageManager.queryIntentActivities(packageQuery, PackageManager.GET_META_DATA);
+        Log.i("queryWidgetInfo", "Scanning for WidgetInfoProvider references... found " + packages.size());
+
+        for (ResolveInfo resolveInfo : packages)
+        {
+            if (resolveInfo != null && resolveInfo.activityInfo != null && resolveInfo.activityInfo.metaData != null)
+            {
+                try {
+                    PackageInfo packageInfo = packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, PackageManager.GET_PERMISSIONS);
+                    if (hasPermission(packageInfo, resolveInfo.activityInfo))
+                    {
+                        String metaData = resolveInfo.activityInfo.metaData.getString(KEY_WIDGET_INFO_PROVIDER);
+                        String[] values = (metaData != null) ? metaData.replace(" ","").split("\\|") : new String[0];
+                        references.addAll(Arrays.asList(values));
+                    } else {
+                        Log.w("queryWidgetInfo", "Permission denied! " + packageInfo.packageName + " does not have required permissions.");
+                    }
+                } catch (PackageManager.NameNotFoundException e) {
+                    Log.e("queryWidgetInfo", "Package not found! " + e);
+                }
+            }
+        }
+        return references;
+    }
+
+    private static boolean hasPermission(@NonNull PackageInfo packageInfo, @NonNull ActivityInfo activityInfo)
+    {
+        boolean hasPermission = false;
+        if (packageInfo.requestedPermissions != null)
+        {
+            for (String permission : packageInfo.requestedPermissions) {
+                if (permission != null && permission.equals(REQUIRED_PERMISSION)) {
+                    hasPermission = true;
+                    break;
+                }
+            }
+        }
+        return hasPermission;
     }
 
 
