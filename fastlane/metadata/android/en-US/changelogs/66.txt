@@ -1,6 +1,6 @@
 - fixes crash in SuntimesAlarms when notifications are disabled (#437).
 - fixes bug "incorrect future and past number of days, when DST starts or ends" (#436).
 - fixes bug where ColorDialog sliders sometimes start with the wrong value.
-- improves integration for add-ons; access now permitted to app settings, widget, and action lists.
+- improves integration for add-ons; exports activities, extends custom permission.
 - reorganizes "User Interface" settings (#434), and other misc UI fixes.
 - adds a hex color field to the rgb color picker.
