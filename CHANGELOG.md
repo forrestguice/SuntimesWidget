@@ -1,5 +1,8 @@
 ### ~
 
+### v0.13.3 (2020-11-02)
+* updates translation to Brazilian Portuguese (pt-br) (#441 by naoliv). 
+
 ### v0.13.2 (2020-10-26)
 * adds support for overriding location when creating alarms via Intent.
 * adds a hex color field to the rgb color picker.
