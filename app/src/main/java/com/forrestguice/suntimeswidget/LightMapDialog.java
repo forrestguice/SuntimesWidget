@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -26,11 +26,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.InsetDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
@@ -42,8 +43,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -56,6 +60,8 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class LightMapDialog extends BottomSheetDialogFragment
 {
@@ -218,10 +224,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
         sunAzimuthSetting = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_setting);
         sunAzimuthLabel = (TextView)dialogView.findViewById(R.id.info_sun_azimuth_current_label);
 
-        /**View shadowLayout = dialogView.findViewById(R.id.info_shadow_layout);
+        View shadowLayout = dialogView.findViewById(R.id.info_shadow_layout);
         if (shadowLayout != null) {
             shadowLayout.setOnClickListener(onShadowLayoutClick);
-        }*/
+        }
 
         sunShadowObj = (TextView)dialogView.findViewById(R.id.info_shadow_height);
         sunShadowLength = (TextView)dialogView.findViewById(R.id.info_shadow_length);
@@ -237,18 +243,98 @@ public class LightMapDialog extends BottomSheetDialogFragment
         setIcon = (ImageView)dialogView.findViewById(R.id.sundialog_seticon);
     }
 
-    /**private View.OnClickListener onShadowLayoutClick =  new View.OnClickListener()
+    private View.OnClickListener onShadowLayoutClick =  new View.OnClickListener()
     {
         @Override
-        public void onClick(View v)
+        public void onClick(@NonNull View v)
         {
             Context context = getContext();
-            if (context != null)
-            {
-                Toast.makeText(context, "TODO: set height", Toast.LENGTH_SHORT).show();     // TODO: set object height
+            if (context != null) {
+                showShadowObjHeightPopup(context, v);
             }
         }
-    };*/
+    };
+
+    protected void showShadowObjHeightPopup(@NonNull final Context context, @NonNull View v)
+    {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+        if (inflater != null)
+        {
+            PopupWindow popupWindow = new PopupWindow(createShadowObjHeightPopupView(context), LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+            popupWindow.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(context, android.R.color.transparent)));
+            popupWindow.setOutsideTouchable(true);
+            popupWindow.showAsDropDown(v);
+        }
+    }
+    protected View createShadowObjHeightPopupView(@NonNull final Context context)
+    {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+        if (inflater != null)
+        {
+            View popupView = inflater.inflate(R.layout.layout_dialog_objheight, null);
+            if (popupView != null)
+            {
+                SeekBar seekbar = (SeekBar) popupView.findViewById(R.id.seek_objheight);
+                if (seekbar != null)
+                {
+                    int centimeters = (int) (WidgetSettings.loadObserverHeightPref(context, 0) * 100) + 1;
+                    centimeters = (centimeters < 1 ? 1 : Math.min(centimeters, SEEK_CENTIMETERS_MAX));
+                    seekbar.setMax(SEEK_CENTIMETERS_MAX);
+                    if (Build.VERSION.SDK_INT >= 24) {
+                        seekbar.setProgress(centimeters, false);
+                    } else {
+                        seekbar.setProgress(centimeters);
+                    }
+                    seekbar.setOnSeekBarChangeListener(onObjectHeightSeek);
+                }
+                ImageButton moreButton = (ImageButton) popupView.findViewById(R.id.btn_more);
+                if (moreButton != null) {
+                    moreButton.setOnClickListener(onObjectHeightMoreLess(true));
+                }
+                ImageButton lessButton = (ImageButton) popupView.findViewById(R.id.btn_less);
+                if (lessButton != null) {
+                    lessButton.setOnClickListener(onObjectHeightMoreLess(false));
+                }
+            }
+            return popupView;
+        }
+        return null;
+    }
+    private View.OnClickListener onObjectHeightMoreLess( final boolean more ) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = getContext();
+                if (context != null) {
+                    float currentHeight = WidgetSettings.loadObserverHeightPref(context, 0);
+                    WidgetSettings.saveObserverHeightPref(getContext(), 0, currentHeight + ((more ? 1 : -1) * (SEEK_CENTIMETERS_INC / 100f)));
+                    updateViews();
+                }
+            }
+        };
+    }
+    private SeekBar.OnSeekBarChangeListener onObjectHeightSeek = new SeekBar.OnSeekBarChangeListener()
+    {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int centimeters, boolean fromUser)
+        {
+            Context context = getContext();
+            if (fromUser && context != null)
+            {
+                if (centimeters < 1) {
+                    centimeters = 1;
+                }
+                WidgetSettings.saveObserverHeightPref(getContext(), 0, (centimeters / 100f));
+                updateViews();
+            }
+        }
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {}
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {}
+    };
+    private static final int SEEK_CENTIMETERS_MAX = 5 * 100;
+    private static final int SEEK_CENTIMETERS_INC = 1;
 
     @SuppressWarnings("ResourceType")
     public void themeViews(Context context)
