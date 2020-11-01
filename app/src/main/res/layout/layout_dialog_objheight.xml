@@ -5,13 +5,15 @@
 
     <ImageButton android:id="@+id/btn_less"
         style="@style/Widget.AppCompat.ActionButton" android:src="?attr/icActionPrevious"
-        android:layout_width="32dp" android:layout_height="32dp" />
+        android:layout_width="32dp" android:layout_height="32dp"
+        android:contentDescription="@string/decrement" />
 
     <SeekBar android:id="@+id/seek_objheight"
         android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" />
 
     <ImageButton android:id="@+id/btn_more"
         style="@style/Widget.AppCompat.ActionButton" android:src="?attr/icActionNext"
-        android:layout_width="32dp" android:layout_height="32dp" />
+        android:layout_width="32dp" android:layout_height="32dp"
+        android:contentDescription="@string/increment" />
 
 </LinearLayout>
