@@ -1,6 +1,8 @@
 ### ~
 
 ### v0.13.3 (2020-11-02)
+* fixes crash in Manage Places when copying or editing places (#443).
+* adds an object height slider (shadow length) to sun position dialog (#189, #442).
 * updates translation to Brazilian Portuguese (pt-br) (#441 by naoliv). 
 
 ### v0.13.2 (2020-10-26)
