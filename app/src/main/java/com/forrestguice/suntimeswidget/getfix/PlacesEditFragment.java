@@ -383,7 +383,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
                     break;
 
                 case METRIC:
-                default: text_locationAlt.setText(formatter.format(location.getAltitude()));
+                default: text_locationAlt.setText(formatter.format(location.getAltitudeAsDouble()));
                     break;
             }
         }
