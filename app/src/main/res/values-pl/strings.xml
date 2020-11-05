@@ -822,6 +822,7 @@
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Miejsca</string>                           <!-- group title -->
+    <string name="configLabel_places_manage">Manage Places</string>             <!-- group title -->  <!-- TODO -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
     <string name="configLabel_places_multiSelect">wiele miejsc (%s)</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->
     <string name="configLabel_places_build">Dodaj światowe miejsca</string>
