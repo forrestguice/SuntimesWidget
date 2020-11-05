@@ -379,7 +379,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             switch (units)
             {
                 case IMPERIAL:
-                case USC: text_locationAlt.setText(formatter.format(WidgetSettings.LengthUnit.metersToFeet(location.getAltitudeAsDouble())));
+                    text_locationAlt.setText(formatter.format(WidgetSettings.LengthUnit.metersToFeet(location.getAltitudeAsDouble())));
                     break;
 
                 case METRIC:
@@ -397,7 +397,7 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
             switch (units)
             {
                 case IMPERIAL:
-                case USC: text_locationAltUnits.setText(context.getString(R.string.units_feet_short));
+                    text_locationAltUnits.setText(context.getString(R.string.units_feet_short));
                     break;
 
                 case METRIC:
@@ -528,7 +528,6 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
         switch (units)
         {
             case IMPERIAL:
-            case USC:
                 return formatter.format(WidgetSettings.LengthUnit.metersToFeet(location.getAltitude()));
 
             case METRIC:

@@ -88,10 +88,6 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         WidgetSettings.LengthUnit units2 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
         assertTrue("units should be imperial, was " + units2, units2 == WidgetSettings.LengthUnit.IMPERIAL);
 
-        WidgetSettings.saveLengthUnitsPref(context, appWidgetId, WidgetSettings.LengthUnit.USC);
-        WidgetSettings.LengthUnit units1 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
-        assertTrue("units should be usc, was " + units1, units1 == WidgetSettings.LengthUnit.USC);
-
         WidgetSettings.deleteLengthUnitsPref(context, appWidgetId);
         WidgetSettings.LengthUnit units0 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
         assertTrue("units should be default (metric) but was " + units0, units0 == WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH);

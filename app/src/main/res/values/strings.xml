@@ -220,7 +220,6 @@
     <!-- distances (meters, feet, etc) -->
     <string name="lengthUnits_metric">Metric</string>
     <string name="lengthUnits_imperial">Imperial</string>
-    <string name="lengthUnits_usc">U.S. Customary</string>     <!-- TODO -->
     <string-array name="lengthUnits_values" translatable="false">
         <item>METRIC</item>
         <item>IMPERIAL</item>

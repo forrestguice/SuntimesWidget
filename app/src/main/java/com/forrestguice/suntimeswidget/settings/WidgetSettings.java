@@ -206,8 +206,7 @@ public class WidgetSettings
     public static enum LengthUnit
     {
         METRIC("Metric"),
-        IMPERIAL("Imperial"),
-        USC("U.S. Customary");
+        IMPERIAL("Imperial");
 
         private LengthUnit(String displayString)
         {
@@ -227,7 +226,6 @@ public class WidgetSettings
         {
             METRIC.setDisplayString(context.getString(R.string.lengthUnits_metric));
             IMPERIAL.setDisplayString(context.getString(R.string.lengthUnits_imperial));
-            IMPERIAL.setDisplayString(context.getString(R.string.lengthUnits_usc));
         }
         public String toString()
         {

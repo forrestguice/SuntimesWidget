@@ -179,7 +179,6 @@
 
     <string name="lengthUnits_metric">Métrico</string>    
     <string name="lengthUnits_imperial">Imperial</string>
-    <string name="lengthUnits_usc">Costumbre de EEUU</string>
 
     <string name="units_feet">pies</string>
     <string name="units_feet_short">ft</string>

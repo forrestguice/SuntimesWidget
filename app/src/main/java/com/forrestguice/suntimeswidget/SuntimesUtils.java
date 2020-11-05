@@ -946,7 +946,6 @@ public class SuntimesUtils
         int stringID;
         switch (units)
         {
-            case USC:
             case IMPERIAL:
                 if (convert) {
                     value = WidgetSettings.LengthUnit.metersToFeet(value);
@@ -981,7 +980,6 @@ public class SuntimesUtils
         String unitsString;
         switch (units)
         {
-            case USC:
             case IMPERIAL:
                 value = WidgetSettings.LengthUnit.metersToFeet(meters);
                 unitsString = (shortForm ? context.getString(R.string.units_feet_short) : context.getString(R.string.units_feet));
@@ -1006,7 +1004,6 @@ public class SuntimesUtils
         String unitsString;
         switch (units)
         {
-            case USC:
             case IMPERIAL:
                 value = WidgetSettings.LengthUnit.kilometersToMiles(kilometers);
                 unitsString = (shortForm ? context.getString(R.string.units_miles_short) : context.getString(R.string.units_miles));
