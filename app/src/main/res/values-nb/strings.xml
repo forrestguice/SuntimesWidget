@@ -840,6 +840,8 @@
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Brukerflate</string>                       <!-- group title -->
+    <string name="configLabel_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->   <!-- TODO -->
+    <string name="configLabel_ui_misc">Miscellaneous</string>   <!-- TODO -->
 
     <!-- App Setting: Verbose Accessibility -->
     <string name="configLabel_accessibility_verbose">Verbose TalkBack</string>

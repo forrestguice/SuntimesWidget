@@ -834,6 +834,8 @@
 
     
     <string name="configLabel_ui">Interfaz de usuario</string>
+    <string name="configLabel_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->   <!-- TODO -->
+    <string name="configLabel_ui_misc">Miscellaneous</string>   <!-- TODO -->
 
     
     <string name="configLabel_accessibility_verbose">Retroalimentación detallada</string>
