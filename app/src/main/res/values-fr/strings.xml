@@ -856,10 +856,10 @@
     <string name="configLabel_ui_showdatasource_summary">Affiche une étiquette contenant le nom de la source de données actuelle.</string> 
 
     <!-- App Setting: show golden hour -->
-    <string name="configLabel_ui_showgoldhour">Afficher les heures dorées</string>
+    <string name="configLabel_ui_showgoldhour">Heure dorée</string>
 
     <!-- App Setting: show blue hour -->
-    <string name="configLabel_ui_showbluehour">Afficher les heures bleues</string>
+    <string name="configLabel_ui_showbluehour">Heure bleue</string>
 
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Thème clair</string>

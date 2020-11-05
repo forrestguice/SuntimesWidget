@@ -930,10 +930,10 @@
     <string name="configLabel_ui_showdatasource_summary">Show a label indicating the current configuration.</string>
 
     <!-- App Setting: show golden hour -->
-    <string name="configLabel_ui_showgoldhour">Golden Hour</string>    <!-- TODO -->
+    <string name="configLabel_ui_showgoldhour">Golden Hour</string>
 
     <!-- App Setting: show blue hour -->
-    <string name="configLabel_ui_showbluehour">Blue Hour</string>  <!-- TODO -->
+    <string name="configLabel_ui_showbluehour">Blue Hour</string>
 
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Light Theme</string>

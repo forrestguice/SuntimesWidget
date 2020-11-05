@@ -873,10 +873,10 @@
     <string name="configLabel_ui_showdatasource_summary">Pokaż etykietę wyświetlającą obecną konfigurację.</string>
 
     <!-- App Setting: show golden hour -->
-    <string name="configLabel_ui_showgoldhour">Wyświetl złotą godzinę</string>
+    <string name="configLabel_ui_showgoldhour">Wyświetl złotą godzinę</string>   <!-- TODO: "Show Golden Hour" -> "Golden Hour" to match other config fields -->
 
     <!-- App Setting: show blue hour -->
-    <string name="configLabel_ui_showbluehour">Wyświetl błękitną godzinę</string>
+    <string name="configLabel_ui_showbluehour">Wyświetl błękitną godzinę</string>    <!-- TODO: "Show Blue Hour" -> "Blue Hour" to match other config fields -->
 
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Jasna skórka</string>

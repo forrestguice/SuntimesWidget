@@ -872,10 +872,10 @@
     <string name="configLabel_ui_showdatasource_summary">Vis en påskrift som angir den gjeldende innstillingen.</string>
 
     <!-- App Setting: show golden hour -->
-    <string name="configLabel_ui_showgoldhour">Vis gylne time</string>
+    <string name="configLabel_ui_showgoldhour">@string/timeMode_golden</string>
 
     <!-- App Setting: show blue hour -->
-    <string name="configLabel_ui_showbluehour">Vis blå time</string>
+    <string name="configLabel_ui_showbluehour">Blå time</string>
 
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Lyst tema</string>

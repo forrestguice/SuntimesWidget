@@ -864,10 +864,10 @@
     <string name="configLabel_ui_showdatasource_summary">Mostrar una etiqueta indicant la Configuració actual.</string>
 
     <!-- App Setting: show golden hour -->
-    <string name="configLabel_ui_showgoldhour">Mostrar l\'hora daurada</string>
+    <string name="configLabel_ui_showgoldhour">Hora daurada</string>
 
     <!-- App Setting: show blue hour -->
-    <string name="configLabel_ui_showbluehour">Mostrar l\'hora blava</string>
+    <string name="configLabel_ui_showbluehour">Hora blava</string>
 
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Tema clar</string>

@@ -865,9 +865,9 @@
     <string name="configLabel_ui_showdatasource_summary">Mostrar una etiqueta indicando la configuración actual.</string>
 
     
-    <string name="configLabel_ui_showgoldhour">Mostrar la hora dorada</string>
+    <string name="configLabel_ui_showgoldhour">Hora dorada</string>
 
-    <string name="configLabel_ui_showbluehour">Mostrar la hora azul</string>
+    <string name="configLabel_ui_showbluehour">Hora azul</string>
 
     <string name="appThemes_lightTheme">Tema claro</string>
     <string name="appThemes_darkTheme">Tema oscuro</string>
