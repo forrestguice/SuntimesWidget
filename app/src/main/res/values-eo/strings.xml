@@ -1201,6 +1201,7 @@
     <string name="color_dialog_label_b">B</string>  <!-- 🟦 -->
     <string name="color_dialog_label_a">α</string>
     <string name="color_dialog_hint_rgba">0–255</string>
+    <!--<string name="color_dialog_hint_hex">#FFFFFF</string>-->
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">Pri</string>

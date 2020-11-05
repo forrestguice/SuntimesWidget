@@ -1233,6 +1233,7 @@
     <string name="color_dialog_label_b">B</string>  <!-- TODO -->
     <string name="color_dialog_label_a">A</string>  <!-- TODO -->
     <string name="color_dialog_hint_rgba">0–255</string>  <!-- TODO -->
+    <!--<string name="color_dialog_hint_hex">#FFFFFF</string>-->
 
     
     <string name="about_dialog_title">Acerca de</string>
