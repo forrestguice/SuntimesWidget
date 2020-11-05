@@ -18,6 +18,7 @@
     <permission
         android:name="suntimes.permission.READ_CALCULATOR"
         android:protectionLevel="normal" />                       <!-- protects suntimeswidget.calculator.provider -->
+    <uses-permission android:name="suntimes.permission.READ_CALCULATOR" />
 
     <uses-sdk tools:overrideLibrary="com.flask.colorpicker" />
 
@@ -95,7 +96,9 @@
         <activity
             android:name=".SuntimesSettingsActivity"
             android:label="@string/app_name"
-            android:icon="@mipmap/ic_launcher">
+            android:icon="@mipmap/ic_launcher"
+            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:exported="true">
         </activity>
 
         <!-- Places Activity -->
@@ -111,14 +114,18 @@
         <activity
             android:name=".SuntimesWidgetListActivity"
             android:label="@string/app_name"
-            android:icon="@mipmap/ic_launcher">
+            android:icon="@mipmap/ic_launcher"
+            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:exported="true">
         </activity>
 
         <!-- Action List Activity -->
         <activity
             android:name=".actions.ActionListActivity"
             android:label="@string/app_name"
-            android:icon="@mipmap/ic_launcher">
+            android:icon="@mipmap/ic_launcher"
+            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:exported="true">
         </activity>
 
         <!-- Theme List Activity -->

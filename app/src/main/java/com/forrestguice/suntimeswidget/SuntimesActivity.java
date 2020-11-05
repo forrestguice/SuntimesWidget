@@ -1643,12 +1643,13 @@ public class SuntimesActivity extends AppCompatActivity
         // timezone field
         TimeZone timezone = dataset.timezone();
         timezoneWarning.setShouldShow( WidgetTimezones.isProbablyNotLocal(timezone, dataset.location(), dataset.date()) );
-        ImageSpan timezoneWarningIcon = (showWarnings && timezoneWarning.shouldShow()) ? SuntimesUtils.createWarningSpan(this, txt_timezone.getTextSize()) : null;
+        int iconSize = (int) getResources().getDimension(R.dimen.statusIcon_size);
+        ImageSpan timezoneWarningIcon = (showWarnings && timezoneWarning.shouldShow()) ? SuntimesUtils.createWarningSpan(this, iconSize) : null;
 
         boolean useDST = showWarnings && (Build.VERSION.SDK_INT < 24 ? timezone.useDaylightTime()
                                                                      : timezone.observesDaylightTime());
         boolean inDST = useDST && timezone.inDaylightTime(now.getTime());
-        ImageSpan dstWarningIcon = (inDST) ? SuntimesUtils.createDstSpan(this, txt_timezone.getTextSize()) : null;
+        ImageSpan dstWarningIcon = (inDST) ? SuntimesUtils.createDstSpan(this, iconSize) : null;
 
         SuntimesUtils.ImageSpanTag[] timezoneTags = {
                 new SuntimesUtils.ImageSpanTag(SuntimesUtils.SPANTAG_WARNING, timezoneWarningIcon),
@@ -1717,7 +1718,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         if (showWarnings && timezoneWarning.shouldShow() && !timezoneWarning.wasDismissed())
         {
-            timezoneWarning.initWarning(this, txt_timezone, getString(R.string.timezoneWarning), getResources().getDimension(R.dimen.table_heading_date_fontsize));
+            timezoneWarning.initWarning(this, txt_timezone, getString(R.string.timezoneWarning));
             timezoneWarning.getSnackbar().setAction(getString(R.string.configAction_setTimeZone), new View.OnClickListener()
             {
                 @Override
@@ -1732,7 +1733,7 @@ public class SuntimesActivity extends AppCompatActivity
 
         if (showWarnings && dateWarning.shouldShow() && !dateWarning.wasDismissed())
         {
-            dateWarning.initWarning(this, card_view, getString(R.string.dateWarning), getResources().getDimension(R.dimen.table_heading_date_fontsize));
+            dateWarning.initWarning(this, card_view, getString(R.string.dateWarning));
             dateWarning.getSnackbar().setAction(getString(R.string.configAction_setDate), new View.OnClickListener()
             {
                 @Override

@@ -97,7 +97,7 @@
                     <EditText android:id="@+id/appwidget_location_name"
                         android:layout_width="fill_parent" android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmallPopupMenu"
-                        android:hint="@string/configHint_location_name" android:enabled="false"
+                        android:hint="@string/configHint_location_name" android:enabled="false" android:inputType="text"
                         android:layout_gravity="center_vertical" />
 
                     <Spinner android:id="@+id/appwidget_location_nameSelect"

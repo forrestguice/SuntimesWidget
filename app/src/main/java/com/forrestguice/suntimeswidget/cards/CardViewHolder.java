@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2019 Forrest Guice
+    Copyright (C) 2019-2020 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -43,14 +43,12 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
-import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.regex.Pattern;
@@ -227,21 +225,13 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             updateDayLengthViews(context, txt_lightlength, sun.dataCivil.dayLengthToday(), R.string.length_light, options.showSeconds, options.color_textTimeDelta);
 
             // date field
-            Calendar now = sun.now();
             Date data_date = sun.dataActual.date();
             DateFormat dateFormat = android.text.format.DateFormat.getMediumDateFormat(context.getApplicationContext());   // Apr 11, 2016
             dateFormat.setTimeZone(sun.timezone());
 
-            int i = 0;
-            int diffDays = (int)((data_date.getTime() - now.getTimeInMillis()) / 1000L / 60L / 60L / 24L);
-            if (data_date.after(now.getTime())) {
-                i = diffDays + 1;
-            } else if (data_date.before(now.getTime())) {
-                i = diffDays;
-            }
-
+            int i = (position - CardAdapter.TODAY_POSITION);
             boolean showDateWarning = (options.dateMode != WidgetSettings.DateMode.CURRENT_DATE && (i > 1 || i < -1));
-            ImageSpan dateWarningIcon = (options.showWarnings && showDateWarning) ? SuntimesUtils.createWarningSpan(context, txt_date.getTextSize()) : null;
+            ImageSpan dateWarningIcon = (options.showWarnings && showDateWarning) ? SuntimesUtils.createWarningSpan(context, context.getResources().getDimension(R.dimen.statusIcon_size)) : null;
 
             Pair<String,String> label = getCardLabel(context, i, options);
             String dateString = context.getString(R.string.dateField, label.first, dateFormat.format(data_date));

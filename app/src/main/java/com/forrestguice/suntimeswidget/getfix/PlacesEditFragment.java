@@ -374,15 +374,16 @@ public class PlacesEditFragment extends BottomSheetDialogFragment
     {
         if (context != null && text_locationAlt != null)
         {
+            DecimalFormat formatter = com.forrestguice.suntimeswidget.calculator.core.Location.decimalDegreesFormatter();
             WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(getContext(), 0);
             switch (units)
             {
                 case IMPERIAL:
-                case USC: text_locationAlt.setText( Double.toString(WidgetSettings.LengthUnit.metersToFeet(location.getAltitudeAsDouble())) );
+                case USC: text_locationAlt.setText(formatter.format(WidgetSettings.LengthUnit.metersToFeet(location.getAltitudeAsDouble())));
                     break;
 
                 case METRIC:
-                default: text_locationAlt.setText(location.getAltitude());
+                default: text_locationAlt.setText(formatter.format(location.getAltitudeAsDouble()));
                     break;
             }
         }

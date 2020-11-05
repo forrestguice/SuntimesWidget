@@ -1,5 +1,28 @@
 ### ~
 
+### v0.13.3 (2020-11-03)
+* fixes crash in Manage Places when copying or editing places (#443).
+* adds an object height slider (shadow length) to sun position dialog (#189, #442).
+* updates translation to Brazilian Portuguese (pt-br) (#441 by naoliv). 
+
+### v0.13.2 (2020-10-26)
+* adds support for overriding location when creating alarms via Intent.
+* adds a hex color field to the rgb color picker.
+* fixes bug where ColorDialog sliders sometimes start with the wrong value.
+* fixes crash in AlarmClockActivity when notifications are disabled (#437).
+* fixes bug "incorrect future and past number of days, when DST starts or ends" (#436).
+* fixes spannable icons (too small / unreadable) to be consistent across devices.
+* improves organization of "User Interface" settings (#434).
+* exports the WidgetListActivity, ActionListActivity, and SettingsActivity; permits access to third-party apps with the `suntimes.permission.READ_CALCULATOR` permission.
+* enhances the WidgetListActivity to show add-on widgets (and allow reconfigure).
+* new permission: The app now uses `suntimes.permission.READ_CALCULATOR` (in addition to declaring it). Add-on apps may now use this permission to protect their own interfaces. [PERMISSION]
+
+### v0.13.1 (2020-10-03)
+* minor tweaks to app help topics (#432).
+* fixes bug where deleted locations would reappear ("no way to remove default location" #430).
+* updates translation to Polish and Esperanto (eo, pl) (#433 Verdulo).
+* updates translation to Norwegian (nb) (#429 by FTno).
+
 ### v0.13.0 (2020-09-14)
 * adds "lunar noon" and "lunar midnight" to notes and alarms.
 * improves SuntimesAlarms support for polar regions; it is now possible to schedule alarms for infrequently occurring twilight events.

@@ -423,7 +423,7 @@
     <string name="actionMode_doNothing">Do Nothing</string>           <!-- setting -->
     <string name="actionMode_update">Update Widget</string>           <!-- setting -->
     <string name="actionMode_config">Reconfigure Widget</string>      <!-- setting -->
-    <string name="actionMode_launchActivity">Launch App</string>      <!-- setting -->
+    <string name="actionMode_launchActivity">Perform Action</string>      <!-- setting -->  <!-- TODO: update -->
     <string name="actionMode_flipToNextItem">Flip Views</string>      <!-- setting -->
 
     <string name="launchType_activity">Activity</string>           <!-- setting -->
@@ -432,6 +432,8 @@
 
     <string name="expandMore">More</string>  <!-- contentDescription -->
     <string name="expandLess">Less</string>  <!-- contentDescription -->
+    <string name="increment">@string/expandMore</string>  <!-- contentDescription for (+>) type buttons -->  <!-- TODO -->
+    <string name="decrement">@string/expandLess</string>  <!-- contentDescription for (-<) type buttons -->  <!-- TODO -->
 
     <string name="configLabel_action">Action Settings</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">On Tap:</string>                    <!-- spinner label -->
@@ -897,6 +899,8 @@
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">User Interface</string>                       <!-- group title -->
+    <string name="configLabel_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->   <!-- TODO -->
+    <string name="configLabel_ui_misc">Miscellaneous</string>   <!-- TODO -->
 
     <!-- App Setting: Verbose Accessibility -->
     <string name="configLabel_accessibility_verbose">Verbose TalkBack</string>
@@ -928,11 +932,11 @@
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Golden Hour</string>    <!-- TODO -->
-    <string name="configLabel_ui_showgoldhour_summary">Show golden hour times.</string>
+    <string name="configLabel_ui_showgoldhour_summary">Show golden hour times.</string>  <!-- TODO: unused? remove -->
 
     <!-- App Setting: show blue hour -->
     <string name="configLabel_ui_showbluehour">Blue Hour</string>  <!-- TODO -->
-    <string name="configLabel_ui_showbluehour_summary">Show blue hour times.</string>
+    <string name="configLabel_ui_showbluehour_summary">Show blue hour times.</string>  <!-- TODO: unused? remove -->
 
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Light Theme</string>
@@ -1508,6 +1512,7 @@
     <string name="color_dialog_label_b">B</string>
     <string name="color_dialog_label_a">A</string>
     <string name="color_dialog_hint_rgba">0–255</string>
+    <string name="color_dialog_hint_hex">#FFFFFF</string>     <!-- TODO -->
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">About</string>
@@ -1609,7 +1614,7 @@
     </string>
 
     <string name="help_general_timeMode"><![CDATA[
-          <b>Actual Time:</b> The sun is on the horizon; this is the approximate time of sunrise and sunset.<br/><br/>
+          <b>Actual Time:</b> The approximate time of sunrise and sunset.<br/><br/>
           <b>Civil Twilight:</b> The sun is 6 degrees below the horizon; the brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
           <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
           <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon. Near darkness of night.<br/>

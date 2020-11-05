@@ -1316,7 +1316,7 @@ public class AlarmListDialog extends DialogFragment
 
         private CharSequence ringtoneDisplayChip(Context context, AlarmClockItem item, boolean isSelected)
         {
-            int iconDimen = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,20, context.getResources().getDisplayMetrics());
+            int iconDimen = (int) context.getResources().getDimension(R.dimen.chipIcon_size);
             int iconID = item.ringtoneName != null ? res_iconSoundOn : res_iconSoundOff;
             ImageSpan icon = isSelected || item.enabled
                     ? SuntimesUtils.createImageSpan(context, iconID, iconDimen, iconDimen, item.enabled ? color_on : 0)
@@ -1329,7 +1329,7 @@ public class AlarmListDialog extends DialogFragment
             if (item.vibrate)
             {
                 int iconID = res_iconVibrate;
-                int iconDimen = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,20, context.getResources().getDisplayMetrics());
+                int iconDimen = (int) context.getResources().getDimension(R.dimen.chipIcon_size);
                 ImageSpan ringtonIcon = isSelected || item.enabled
                         ? SuntimesUtils.createImageSpan(context, iconID, iconDimen, iconDimen, item.enabled ? color_on : 0)
                         : SuntimesUtils.createImageSpan(context, iconID, iconDimen, iconDimen, color_off, PorterDuff.Mode.MULTIPLY);
@@ -1341,7 +1341,7 @@ public class AlarmListDialog extends DialogFragment
 
         private CharSequence actionDisplayChip(Context context, AlarmClockItem item, int actionNum, boolean isSelected)
         {
-            int iconDimen = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,20, context.getResources().getDisplayMetrics());
+            int iconDimen = (int) context.getResources().getDimension(R.dimen.chipIcon_size);
             ImageSpan icon = (isSelected || item.enabled)
                     ? SuntimesUtils.createImageSpan(context, res_iconAction, iconDimen, iconDimen, item.enabled ? color_on : 0)
                     : SuntimesUtils.createImageSpan(context, res_iconAction, iconDimen, iconDimen, color_off, PorterDuff.Mode.MULTIPLY);

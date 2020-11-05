@@ -67,10 +67,10 @@ public class SuntimesWarning
     protected String contentDescription = null;
     protected View parentView = null;
 
-    public void initWarning(@NonNull Context context, View view, String msg, float textSize)
+    public void initWarning(@NonNull Context context, View view, String msg)
     {
         this.parentView = view;
-        ImageSpan warningIcon = SuntimesUtils.createWarningSpan(context, textSize);
+        ImageSpan warningIcon = SuntimesUtils.createWarningSpan(context, context.getResources().getDimension(R.dimen.warningIcon_size));
         SpannableStringBuilder message = SuntimesUtils.createSpan(context, msg, SuntimesUtils.SPANTAG_WARNING, warningIcon);
         this.contentDescription = msg.replaceAll(Pattern.quote(SuntimesUtils.SPANTAG_WARNING), context.getString(R.string.spanTag_warning));
 
