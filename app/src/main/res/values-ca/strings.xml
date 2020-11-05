@@ -381,6 +381,8 @@
 
     <string name="expandMore">More</string>  <!-- contentDescription -->  <!-- TODO -->
     <string name="expandLess">Less</string>  <!-- contentDescription -->  <!-- TODO -->
+    <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
+    <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
     <string name="configLabel_action">Opcions de pulsació</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Al prèmer:</string>                    <!-- spinner label -->

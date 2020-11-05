@@ -372,6 +372,8 @@
 
     <string name="expandMore">More</string>  <!-- contentDescription -->  <!-- TODO -->
     <string name="expandLess">Less</string>  <!-- contentDescription -->  <!-- TODO -->
+    <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
+    <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
     <string name="configLabel_action">Comportement</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Sur un appui :</string>                    <!-- spinner label -->

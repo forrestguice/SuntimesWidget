@@ -369,6 +369,8 @@
 
     <string name="expandMore">Pli</string>  <!-- contentDescription -->
     <string name="expandLess">Malpli</string>  <!-- contentDescription -->
+    <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
+    <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
     <string name="configLabel_action">Agordoj de agoj</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Je frapeto:</string>                    <!-- spinner label -->

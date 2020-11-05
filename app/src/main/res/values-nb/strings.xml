@@ -384,6 +384,8 @@
 
     <string name="expandMore">Mer</string>  <!-- contentDescription -->
     <string name="expandLess">Mindre</string>  <!-- contentDescription -->
+    <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
+    <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
     <string name="configLabel_action">Handlingsinnstillinger</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Ved trykk:</string>                    <!-- spinner label -->

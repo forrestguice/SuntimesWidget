@@ -426,6 +426,8 @@
 
     <string name="expandMore">Mais</string>  <!-- contentDescription -->
     <string name="expandLess">Menos</string>  <!-- contentDescription -->
+    <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
+    <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
     <string name="configLabel_action">Configurar Ações</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Ao tocar:</string>                    <!-- spinner label -->
