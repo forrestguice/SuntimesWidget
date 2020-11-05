@@ -997,7 +997,7 @@
     <!--<string name="declination_format"><xliff:g example="45" id="degrees">%1$s</xliff:g> <xliff:g example="δ" id="decSymbol">%2$s</xliff:g></string>-->
     <!--<string name="rightascension_format"><xliff:g example="45" id="degrees">%1$s</xliff:g> <xliff:g example="δ" id="raSymbol">%2$s</xliff:g></string>-->
     <!--<string name="direction_format"><xliff:g example="180°" id="degrees">%1$s</xliff:g> <xliff:g example="S" id="directions_short">%2$s</xliff:g></string>-->
-
+    <!--<string name="distance_format"><xliff:g id="value" example="6">%1$s</xliff:g>&#160;<xliff:g id="units_short" example="ft">%2$s</xliff:g></string>-->  <!-- e.g. 6 ft (shadow length), 250,000 mi (distance to moon) -->
     
     <string-array name="directions_short">  
         <item>N</item>

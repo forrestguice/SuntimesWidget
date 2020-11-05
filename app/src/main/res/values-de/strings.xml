@@ -974,6 +974,53 @@
       <item>Portugiesisch</item>
   </string-array>
 
+  <!--<string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>-->  <!-- e.g. 45° -->
+  <!--<string name="elevation_format"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="altSymbol" example="∠">%2$s</xliff:g></string>-->  <!-- e.g. 45°∠ -->
+  <!--<string name="declination_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>-->  <!-- e.g. 5° δ -->
+  <!--<string name="rightascension_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>-->  <!-- e.g. 5° α -->
+  <!--<string name="direction_format"><xliff:g id="degrees" example="180°">%1$s</xliff:g> <xliff:g id="directions_short" example="S">%2$s</xliff:g></string>-->  <!-- e.g. 180°S -->
+  <!--<string name="distance_format"><xliff:g id="value" example="6">%1$s</xliff:g>&#160;<xliff:g id="units_short" example="ft">%2$s</xliff:g></string>-->  <!-- e.g. 6 ft (shadow length), 250,000 mi (distance to moon) -->
+
+  <!-- cardinal directions -->
+  <string-array name="directions_short">  <!-- one-to-one with directions_long -->
+    <item>N</item>
+    <item>NNE</item>
+    <item>NE</item>
+    <item>ENE</item>
+    <item>E</item>
+    <item>ESE</item>
+    <item>SE</item>
+    <item>SSE</item>
+    <item>S</item>
+    <item>SSW</item>
+    <item>SW</item>
+    <item>WSW</item>
+    <item>W</item>
+    <item>WNW</item>
+    <item>NW</item>
+    <item>NNW</item>
+    <item>N</item>
+  </string-array>  <!-- TODO -->
+  <string-array name="directions_long">   <!-- one-to-one with directions_short -->
+    <item>North</item>
+    <item>North North East</item>
+    <item>North East</item>
+    <item>East North East</item>
+    <item>East</item>
+    <item>East South East</item>
+    <item>South East</item>
+    <item>South South East</item>
+    <item>South</item>
+    <item>South South West</item>
+    <item>South West</item>
+    <item>West South West</item>
+    <item>West</item>
+    <item>West North West</item>
+    <item>North West</item>
+    <item>North North West</item>
+    <item>North</item>
+  </string-array>  <!-- TODO -->
+
   <!--
        DIALOGS
   -->
