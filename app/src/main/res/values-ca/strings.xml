@@ -878,7 +878,7 @@
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
         <item>@string/appThemes_lightTheme</item>
         <item>@string/appThemes_darkTheme</item>
-        <item>Tema clar / Tema fosc (mode nit)</item>
+        <item>Tema clar / Tema fosc (mode&#160;nit)</item>
     </string-array>
 
     <!-- App Setting: time format -->

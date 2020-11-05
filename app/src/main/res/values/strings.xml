@@ -944,7 +944,7 @@
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
         <item>@string/appThemes_lightTheme</item>
         <item>@string/appThemes_darkTheme</item>
-        <item>Light Theme / Dark Theme (Night&#160;Mode)</item>  <!-- TODO: nbsp -->
+        <item>Light Theme / Dark Theme (Night&#160;Mode)</item>
     </string-array>
     <string-array name="appThemes_values" translatable="false">  <!-- config values (one-to-one with appThemes_display) -->
         <item>light</item>

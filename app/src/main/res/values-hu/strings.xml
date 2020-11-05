@@ -867,7 +867,7 @@
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
         <item>@string/appThemes_lightTheme</item>
         <item>@string/appThemes_darkTheme</item>
-        <item>Világos / Sötét színtéma (Éjszakai mód)</item>
+        <item>Világos / Sötét színtéma (Éjszakai&#160;mód)</item>
     </string-array>
 
     <!-- App Setting: time format -->

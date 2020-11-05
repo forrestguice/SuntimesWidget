@@ -885,7 +885,7 @@
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
         <item>@string/appThemes_lightTheme</item>
         <item>@string/appThemes_darkTheme</item>
-        <item>Argia / iluna (Gau modua)</item>
+        <item>Argia / iluna (Gau&#160;modua)</item>
     </string-array>
 
     <!-- App Setting: time format -->
