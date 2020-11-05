@@ -880,11 +880,9 @@
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Mostra ora d\'oro</string>
-    <string name="configLabel_ui_showgoldhour_summary">Mostra i periodi dell\'ora d\'oro.</string>
 
     <!-- App Setting: show blue hour -->
     <string name="configLabel_ui_showbluehour">Mostra ora blu</string>
-    <string name="configLabel_ui_showbluehour_summary">Mostra i periodi dell\'ora blu.</string>
 
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Light Theme</string>  <!-- TODO -->

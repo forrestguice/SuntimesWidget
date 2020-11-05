@@ -873,11 +873,9 @@
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Vis gylne time</string>
-    <string name="configLabel_ui_showgoldhour_summary">Vis tider for gylne time.</string>
 
     <!-- App Setting: show blue hour -->
     <string name="configLabel_ui_showbluehour">Vis blå time</string>
-    <string name="configLabel_ui_showbluehour_summary">Vis tider for den blå timen.</string>
 
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Lyst tema</string>

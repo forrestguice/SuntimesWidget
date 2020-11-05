@@ -873,11 +873,9 @@
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Urrezko ordua erakutsi</string>
-    <string name="configLabel_ui_showgoldhour_summary">Urrezko orduak erakutsi.</string>
 
     <!-- App Setting: show blue hour -->
     <string name="configLabel_ui_showbluehour">Ordu urdina erakutsi</string>
-    <string name="configLabel_ui_showbluehour_summary">Ordu urdinak erakutsi.</string>
 
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Argia</string>
