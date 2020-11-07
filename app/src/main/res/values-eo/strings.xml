@@ -369,6 +369,8 @@
 
     <string name="expandMore">Pli</string>  <!-- contentDescription -->
     <string name="expandLess">Malpli</string>  <!-- contentDescription -->
+    <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
+    <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
     <string name="configLabel_action">Agordoj de agoj</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Je frapeto:</string>                    <!-- spinner label -->
@@ -809,6 +811,7 @@
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Lokoj</string>                           <!-- group title -->
+    <string name="configLabel_places_manage">Manage Places</string>             <!-- group title -->  <!-- TODO -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
     <string name="configLabel_places_multiSelect">%s lokoj</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->
     <string name="configLabel_places_build">Aldoni mondajn lokojn</string>
@@ -825,6 +828,8 @@
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Fasado</string>                       <!-- group title -->
+    <string name="configLabel_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->   <!-- TODO -->
+    <string name="configLabel_ui_misc">Miscellaneous</string>   <!-- TODO -->
 
     <!-- App Setting: Verbose Accessibility -->
     <string name="configLabel_accessibility_verbose">Interagi kun TalkBack</string>
@@ -855,12 +860,10 @@
     <string name="configLabel_ui_showdatasource_summary">Montri etikedon indikantan la nunan agordaron.</string>
 
     <!-- App Setting: show golden hour -->
-    <string name="configLabel_ui_showgoldhour">Montri oran horon</string>
-    <string name="configLabel_ui_showgoldhour_summary">Montri periodon de ora horo.</string>
+    <string name="configLabel_ui_showgoldhour">Montri oran horon</string>    <!-- TODO: "Show Golden Hour" -> "Golden Hour" to match other config fields -->
 
     <!-- App Setting: show blue hour -->
-    <string name="configLabel_ui_showbluehour">Montri bluan horon</string>
-    <string name="configLabel_ui_showbluehour_summary">Montri periodon de blua horo.</string>
+    <string name="configLabel_ui_showbluehour">Montri bluan horon</string>    <!-- TODO: "Show Blue Hour" -> "Blue Hour" to match other config fields -->
 
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Hela etoso</string>
@@ -1054,6 +1057,7 @@
     <!--<string name="declination_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>-->  <!-- e.g. 5° δ -->
     <!--<string name="rightascension_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>-->  <!-- e.g. 5° α -->
     <!--<string name="direction_format"><xliff:g id="degrees" example="180°">%1$s</xliff:g> <xliff:g id="directions_short" example="S">%2$s</xliff:g></string>-->  <!-- e.g. 180°S -->
+    <!--<string name="distance_format"><xliff:g id="value" example="6">%1$s</xliff:g>&#160;<xliff:g id="units_short" example="ft">%2$s</xliff:g></string>-->  <!-- e.g. 6 ft (shadow length), 250,000 mi (distance to moon) -->
 
     <!-- cardinal directions -->
     <string-array name="directions_short">  <!-- one-to-one with directions_long -->
@@ -1198,6 +1202,7 @@
     <string name="color_dialog_label_b">B</string>  <!-- 🟦 -->
     <string name="color_dialog_label_a">α</string>
     <string name="color_dialog_hint_rgba">0–255</string>
+    <!--<string name="color_dialog_hint_hex">#FFFFFF</string>-->
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">Pri</string>

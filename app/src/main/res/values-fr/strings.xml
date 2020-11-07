@@ -372,6 +372,8 @@
 
     <string name="expandMore">More</string>  <!-- contentDescription -->  <!-- TODO -->
     <string name="expandLess">Less</string>  <!-- contentDescription -->  <!-- TODO -->
+    <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
+    <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
     <string name="configLabel_action">Comportement</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Sur un appui :</string>                    <!-- spinner label -->
@@ -805,6 +807,7 @@
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Emplacements</string>                           <!-- group title -->
+    <string name="configLabel_places_manage">Manage Places</string>             <!-- group title -->  <!-- TODO -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
     <string name="configLabel_places_multiSelect">%s places</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->   <!-- TODO -->
     <string name="configLabel_places_build">Ajouter des emplacements mondiaux</string>  
@@ -821,6 +824,8 @@
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interface utilisateur</string>                       <!-- group title -->
+    <string name="configLabel_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->   <!-- TODO -->
+    <string name="configLabel_ui_misc">Miscellaneous</string>   <!-- TODO -->
 
     <!-- App Setting: Verbose Accessibility -->
     <string name="configLabel_accessibility_verbose">Verbose TalkBack</string>   <!-- TODO -->
@@ -851,12 +856,10 @@
     <string name="configLabel_ui_showdatasource_summary">Affiche une étiquette contenant le nom de la source de données actuelle.</string> 
 
     <!-- App Setting: show golden hour -->
-    <string name="configLabel_ui_showgoldhour">Afficher les heures dorées</string>                
-    <string name="configLabel_ui_showgoldhour_summary">Affiche les heures dorées.</string> 
+    <string name="configLabel_ui_showgoldhour">Heure dorée</string>
 
     <!-- App Setting: show blue hour -->
-    <string name="configLabel_ui_showbluehour">Afficher les heures bleues</string>                  
-    <string name="configLabel_ui_showbluehour_summary">Affiche les heures bleues.</string>   
+    <string name="configLabel_ui_showbluehour">Heure bleue</string>
 
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Thème clair</string>
@@ -970,6 +973,7 @@
     <!--<string name="declination_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>-->  <!-- e.g. 5° δ -->
     <!--<string name="rightascension_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>-->  <!-- e.g. 5° α -->
     <!--<string name="direction_format"><xliff:g id="degrees" example="180°">%1$s</xliff:g> <xliff:g id="directions_short" example="S">%2$s</xliff:g></string>-->  <!-- e.g. 180°S -->
+    <!--<string name="distance_format"><xliff:g id="value" example="6">%1$s</xliff:g>&#160;<xliff:g id="units_short" example="ft">%2$s</xliff:g></string>-->  <!-- e.g. 6 ft (shadow length), 250,000 mi (distance to moon) -->
 
     <!-- cardinal directions -->
     <string-array name="directions_short">  <!-- one-to-one with directions_long -->
@@ -1204,6 +1208,7 @@
     <string name="color_dialog_label_b">B</string>  <!-- TODO -->
     <string name="color_dialog_label_a">A</string>  <!-- TODO -->
     <string name="color_dialog_hint_rgba">0–255</string>  <!-- TODO -->
+    <!--<string name="color_dialog_hint_hex">#FFFFFF</string>-->
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">À propos</string>

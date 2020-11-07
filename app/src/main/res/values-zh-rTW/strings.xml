@@ -391,6 +391,8 @@
 
     <string name="expandMore">More</string>  <!-- contentDescription -->  <!-- TODO -->
     <string name="expandLess">Less</string>  <!-- contentDescription -->  <!-- TODO -->
+    <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
+    <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
     <string name="configLabel_action">動作設置</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">輕按時：</string>                    <!-- spinner label -->
@@ -828,6 +830,7 @@
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">地點</string>                           <!-- group title -->
+    <string name="configLabel_places_manage">Manage Places</string>             <!-- group title -->  <!-- TODO -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
     <string name="configLabel_places_multiSelect">%s places</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->   <!-- TODO -->
     <string name="configLabel_places_build">添加世界地點</string>
@@ -844,6 +847,8 @@
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">用戶界面</string>                       <!-- group title -->
+    <string name="configLabel_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->   <!-- TODO -->
+    <string name="configLabel_ui_misc">Miscellaneous</string>   <!-- TODO -->
 
     <!-- App Setting: Verbose Accessibility -->
     <string name="configLabel_accessibility_verbose">詳細的屏幕閱讀器</string>
@@ -875,11 +880,9 @@
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">顯示黃金時刻</string>
-    <string name="configLabel_ui_showgoldhour_summary">顯示黃金時刻的時間。</string>
 
     <!-- App Setting: show blue hour -->
     <string name="configLabel_ui_showbluehour">顯示藍色時刻</string>
-    <string name="configLabel_ui_showbluehour_summary">顯示藍色時刻的時間。</string>
 
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">亮色主題</string>
@@ -1006,6 +1009,7 @@
     <!--<string name="declination_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>-->  <!-- e.g. 5° δ -->
     <!--<string name="rightascension_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>-->  <!-- e.g. 5° α -->
     <!--<string name="direction_format"><xliff:g id="degrees" example="180°">%1$s</xliff:g> <xliff:g id="directions_short" example="S">%2$s</xliff:g></string>-->  <!-- e.g. 180°S -->
+    <!--<string name="distance_format"><xliff:g id="value" example="6">%1$s</xliff:g>&#160;<xliff:g id="units_short" example="ft">%2$s</xliff:g></string>-->  <!-- e.g. 6 ft (shadow length), 250,000 mi (distance to moon) -->
 
     <!-- cardinal directions -->
     <string-array name="directions_short">  <!-- one-to-one with directions_long -->
@@ -1245,6 +1249,7 @@
     <string name="color_dialog_label_b">B</string>  <!-- TODO -->
     <string name="color_dialog_label_a">A</string>  <!-- TODO -->
     <string name="color_dialog_hint_rgba">0–255</string>  <!-- TODO -->
+    <!--<string name="color_dialog_hint_hex">#FFFFFF</string>-->
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">關於</string>

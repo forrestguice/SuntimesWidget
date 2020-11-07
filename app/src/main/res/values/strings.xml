@@ -220,7 +220,6 @@
     <!-- distances (meters, feet, etc) -->
     <string name="lengthUnits_metric">Metric</string>
     <string name="lengthUnits_imperial">Imperial</string>
-    <string name="lengthUnits_usc">U.S. Customary</string>     <!-- TODO -->
     <string-array name="lengthUnits_values" translatable="false">
         <item>METRIC</item>
         <item>IMPERIAL</item>
@@ -432,8 +431,8 @@
 
     <string name="expandMore">More</string>  <!-- contentDescription -->
     <string name="expandLess">Less</string>  <!-- contentDescription -->
-    <string name="increment">@string/expandMore</string>  <!-- contentDescription for (+>) type buttons -->  <!-- TODO -->
-    <string name="decrement">@string/expandLess</string>  <!-- contentDescription for (-<) type buttons -->  <!-- TODO -->
+    <string name="increment">@string/expandMore</string>  <!-- contentDescription for (+>) type buttons -->
+    <string name="decrement">@string/expandLess</string>  <!-- contentDescription for (-<) type buttons -->
 
     <string name="configLabel_action">Action Settings</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">On Tap:</string>                    <!-- spinner label -->
@@ -880,7 +879,7 @@
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Places</string>                           <!-- group title -->
-    <string name="configLabel_places_manage">Manage Places</string>             <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_places_manage">Manage Places</string>             <!-- group title -->
     <string name="configLabel_places_emptyMsg">@string/configLabel_places</string>
     <string name="configLabel_places_multiSelect">%s places</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->   <!-- TODO: needs to be a plural? -->
     <string name="configLabel_places_build">Add World Places</string>
@@ -899,8 +898,8 @@
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">User Interface</string>                       <!-- group title -->
-    <string name="configLabel_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->   <!-- TODO -->
-    <string name="configLabel_ui_misc">Miscellaneous</string>   <!-- TODO -->
+    <string name="configLabel_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
+    <string name="configLabel_ui_misc">Miscellaneous</string>
 
     <!-- App Setting: Verbose Accessibility -->
     <string name="configLabel_accessibility_verbose">Verbose TalkBack</string>
@@ -931,12 +930,10 @@
     <string name="configLabel_ui_showdatasource_summary">Show a label indicating the current configuration.</string>
 
     <!-- App Setting: show golden hour -->
-    <string name="configLabel_ui_showgoldhour">Golden Hour</string>    <!-- TODO -->
-    <string name="configLabel_ui_showgoldhour_summary">Show golden hour times.</string>  <!-- TODO: unused? remove -->
+    <string name="configLabel_ui_showgoldhour">Golden Hour</string>
 
     <!-- App Setting: show blue hour -->
-    <string name="configLabel_ui_showbluehour">Blue Hour</string>  <!-- TODO -->
-    <string name="configLabel_ui_showbluehour_summary">Show blue hour times.</string>  <!-- TODO: unused? remove -->
+    <string name="configLabel_ui_showbluehour">Blue Hour</string>
 
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Light Theme</string>
@@ -944,7 +941,7 @@
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
         <item>@string/appThemes_lightTheme</item>
         <item>@string/appThemes_darkTheme</item>
-        <item>Light Theme / Dark Theme (Night&#160;Mode)</item>  <!-- TODO: nbsp -->
+        <item>Light Theme / Dark Theme (Night&#160;Mode)</item>
     </string-array>
     <string-array name="appThemes_values" translatable="false">  <!-- config values (one-to-one with appThemes_display) -->
         <item>light</item>
@@ -1271,7 +1268,7 @@
     <string name="declination_format"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° δ -->
     <string name="rightascension_format"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>  <!-- e.g. 5° α -->
     <string name="direction_format"><xliff:g id="degrees" example="180°">%1$s</xliff:g>&#160;<xliff:g id="directions_short" example="S">%2$s</xliff:g></string>  <!-- e.g. 180°S -->
-    <string name="distance_format"><xliff:g id="value" example="6">%1$s</xliff:g>&#160;<xliff:g id="units_short" example="ft">%2$s</xliff:g></string>  <!-- e.g. 6 ft (shadow length), 250,000 mi (distance to moon) -->  <!-- TODO -->
+    <string name="distance_format"><xliff:g id="value" example="6">%1$s</xliff:g>&#160;<xliff:g id="units_short" example="ft">%2$s</xliff:g></string>  <!-- e.g. 6 ft (shadow length), 250,000 mi (distance to moon) -->
 
     <!-- cardinal directions -->
     <string-array name="directions_short">  <!-- one-to-one with directions_long -->
@@ -1512,7 +1509,7 @@
     <string name="color_dialog_label_b">B</string>
     <string name="color_dialog_label_a">A</string>
     <string name="color_dialog_hint_rgba">0–255</string>
-    <string name="color_dialog_hint_hex">#FFFFFF</string>     <!-- TODO -->
+    <string name="color_dialog_hint_hex">#FFFFFF</string>
 
     <!-- Dialog: About -->
     <string name="about_dialog_title">About</string>

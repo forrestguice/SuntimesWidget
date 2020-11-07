@@ -370,6 +370,8 @@
 
   <string name="expandMore">More</string>  <!-- contentDescription -->  <!-- TODO -->
   <string name="expandLess">Less</string>  <!-- contentDescription -->  <!-- TODO -->
+  <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
+  <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
   <string name="configLabel_action">Aktionen</string>                  <!-- group title -->
   <string name="configLabel_action_onTap">Bei Antippen:</string>                    <!-- spinner label -->
@@ -816,6 +818,7 @@
 
   <!-- App Setting: Places -->
   <string name="configLabel_places">Orte</string>                           <!-- group title -->
+  <string name="configLabel_places_manage">Manage Places</string>             <!-- group title -->  <!-- TODO -->
   <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
   <string name="configLabel_places_multiSelect">%s places</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->   <!-- TODO -->
   <string name="configLabel_places_build">Orte hinzufügen</string>
@@ -832,6 +835,8 @@
 
   <!-- App Setting: UI -->
   <string name="configLabel_ui">Benutzeroberfläche</string>                       <!-- group title -->
+  <string name="configLabel_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->   <!-- TODO -->
+  <string name="configLabel_ui_misc">Miscellaneous</string>   <!-- TODO -->
 
   <!-- App Setting: Verbose Accessibility -->
   <string name="configLabel_accessibility_verbose">Ausführliches TalkBack</string>
@@ -863,12 +868,10 @@
   <string name="configLabel_ui_showdatasource_summary">Zeige eine Beschriftung mit der aktuellen Konfiguration.</string>
 
   <!-- App Setting: show golden hour -->
-  <string name="configLabel_ui_showgoldhour">Zeige Goldene Stunde</string>
-  <string name="configLabel_ui_showgoldhour_summary">Zeige Zeiten der Goldenen Stunde.</string>
+  <string name="configLabel_ui_showgoldhour">@string/timeMode_golden</string>
 
   <!-- App Setting: show blue hour -->
-  <string name="configLabel_ui_showbluehour">Zeige Blaue Stunde</string>
-  <string name="configLabel_ui_showbluehour_summary">Zeige Zeiten der Blauen Stunde.</string>
+  <string name="configLabel_ui_showbluehour">Blaue Stunde</string>
 
   <!-- App Setting: UI Theme -->
   <string name="appThemes_lightTheme">Helles Thema</string>
@@ -968,6 +971,53 @@
       <item>Traditionelles Chinesisch</item>
       <item>Portugiesisch</item>
   </string-array>
+
+  <!--<string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>-->  <!-- e.g. 45° -->
+  <!--<string name="elevation_format"><xliff:g id="degrees" example="45">%1$s</xliff:g><xliff:g id="altSymbol" example="∠">%2$s</xliff:g></string>-->  <!-- e.g. 45°∠ -->
+  <!--<string name="declination_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="decSymbol" example="δ">%2$s</xliff:g></string>-->  <!-- e.g. 5° δ -->
+  <!--<string name="rightascension_format"><xliff:g id="degrees" example="45">%1$s</xliff:g> <xliff:g id="raSymbol" example="δ">%2$s</xliff:g></string>-->  <!-- e.g. 5° α -->
+  <!--<string name="direction_format"><xliff:g id="degrees" example="180°">%1$s</xliff:g> <xliff:g id="directions_short" example="S">%2$s</xliff:g></string>-->  <!-- e.g. 180°S -->
+  <!--<string name="distance_format"><xliff:g id="value" example="6">%1$s</xliff:g>&#160;<xliff:g id="units_short" example="ft">%2$s</xliff:g></string>-->  <!-- e.g. 6 ft (shadow length), 250,000 mi (distance to moon) -->
+
+  <!-- cardinal directions -->
+  <string-array name="directions_short">  <!-- one-to-one with directions_long -->
+    <item>N</item>
+    <item>NNE</item>
+    <item>NE</item>
+    <item>ENE</item>
+    <item>E</item>
+    <item>ESE</item>
+    <item>SE</item>
+    <item>SSE</item>
+    <item>S</item>
+    <item>SSW</item>
+    <item>SW</item>
+    <item>WSW</item>
+    <item>W</item>
+    <item>WNW</item>
+    <item>NW</item>
+    <item>NNW</item>
+    <item>N</item>
+  </string-array>  <!-- TODO -->
+  <string-array name="directions_long">   <!-- one-to-one with directions_short -->
+    <item>North</item>
+    <item>North North East</item>
+    <item>North East</item>
+    <item>East North East</item>
+    <item>East</item>
+    <item>East South East</item>
+    <item>South East</item>
+    <item>South South East</item>
+    <item>South</item>
+    <item>South South West</item>
+    <item>South West</item>
+    <item>West South West</item>
+    <item>West</item>
+    <item>West North West</item>
+    <item>North West</item>
+    <item>North North West</item>
+    <item>North</item>
+  </string-array>  <!-- TODO -->
 
   <!--
        DIALOGS
@@ -1162,6 +1212,7 @@
   <string name="color_dialog_label_b">B</string>  <!-- TODO -->
   <string name="color_dialog_label_a">A</string>  <!-- TODO -->
   <string name="color_dialog_hint_rgba">0–255</string>  <!-- TODO -->
+  <!--<string name="color_dialog_hint_hex">#FFFFFF</string>-->
 
   <!-- Dialog: About -->
   <string name="about_dialog_title">Über</string>

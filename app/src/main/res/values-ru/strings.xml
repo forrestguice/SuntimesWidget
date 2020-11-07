@@ -226,7 +226,6 @@
     <!-- distances (meters, feet, etc) -->
     <string name="lengthUnits_metric">Metric</string>
     <string name="lengthUnits_imperial">Imperial</string>
-    <string name="lengthUnits_usc">U.S. Customary</string>
     <string-array name="lengthUnits_display"> <!-- one-to-one with lengthUnits_values -->
         <item>@string/lengthUnits_metric</item>
         <item>@string/lengthUnits_imperial</item>
@@ -937,11 +936,9 @@
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Golden Hour</string>
-    <string name="configLabel_ui_showgoldhour_summary">Show golden hour times.</string>
 
     <!-- App Setting: show blue hour -->
     <string name="configLabel_ui_showbluehour">Blue Hour</string>
-    <string name="configLabel_ui_showbluehour_summary">Show blue hour times.</string>
 
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Light Theme</string>

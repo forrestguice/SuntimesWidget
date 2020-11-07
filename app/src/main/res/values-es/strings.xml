@@ -179,7 +179,6 @@
 
     <string name="lengthUnits_metric">Métrico</string>    
     <string name="lengthUnits_imperial">Imperial</string>
-    <string name="lengthUnits_usc">Costumbre de EEUU</string>
 
     <string name="units_feet">pies</string>
     <string name="units_feet_short">ft</string>
@@ -379,6 +378,8 @@
 
     <string name="expandMore">More</string>  <!-- contentDescription -->  <!-- TODO -->
     <string name="expandLess">Less</string>  <!-- contentDescription -->  <!-- TODO -->
+    <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
+    <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
     <string name="configLabel_action">Opciones de pulsación</string>
     <string name="configLabel_action_onTap">Al pulsar:</string>
@@ -832,6 +833,8 @@
 
     
     <string name="configLabel_ui">Interfaz de usuario</string>
+    <string name="configLabel_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->   <!-- TODO -->
+    <string name="configLabel_ui_misc">Miscellaneous</string>   <!-- TODO -->
 
     
     <string name="configLabel_accessibility_verbose">Retroalimentación detallada</string>
@@ -862,19 +865,16 @@
     <string name="configLabel_ui_showdatasource_summary">Mostrar una etiqueta indicando la configuración actual.</string>
 
     
-    <string name="configLabel_ui_showgoldhour">Mostrar la hora dorada</string>
-    <string name="configLabel_ui_showgoldhour_summary">Mostrar las horas doradas.</string>
+    <string name="configLabel_ui_showgoldhour">Hora dorada</string>
 
-    
-    <string name="configLabel_ui_showbluehour">Mostrar la hora azul</string>
-    <string name="configLabel_ui_showbluehour_summary">Mostrar las horas azules.</string>
+    <string name="configLabel_ui_showbluehour">Hora azul</string>
 
     <string name="appThemes_lightTheme">Tema claro</string>
     <string name="appThemes_darkTheme">Tema oscuro</string>
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
         <item>@string/appThemes_lightTheme</item>
         <item>@string/appThemes_darkTheme</item>
-        <item>Tema claro/Tema oscuro (modo noche)</item>
+        <item>Tema claro/Tema oscuro (modo&#160;noche)</item>
     </string-array>
     
     <string-array name="timeFormatMode_display">                      
@@ -993,7 +993,7 @@
     <!--<string name="declination_format"><xliff:g example="45" id="degrees">%1$s</xliff:g> <xliff:g example="δ" id="decSymbol">%2$s</xliff:g></string>-->
     <!--<string name="rightascension_format"><xliff:g example="45" id="degrees">%1$s</xliff:g> <xliff:g example="δ" id="raSymbol">%2$s</xliff:g></string>-->
     <!--<string name="direction_format"><xliff:g example="180°" id="degrees">%1$s</xliff:g> <xliff:g example="S" id="directions_short">%2$s</xliff:g></string>-->
-
+    <!--<string name="distance_format"><xliff:g id="value" example="6">%1$s</xliff:g>&#160;<xliff:g id="units_short" example="ft">%2$s</xliff:g></string>-->  <!-- e.g. 6 ft (shadow length), 250,000 mi (distance to moon) -->
     
     <string-array name="directions_short">  
         <item>N</item>
@@ -1231,6 +1231,7 @@
     <string name="color_dialog_label_b">B</string>  <!-- TODO -->
     <string name="color_dialog_label_a">A</string>  <!-- TODO -->
     <string name="color_dialog_hint_rgba">0–255</string>  <!-- TODO -->
+    <!--<string name="color_dialog_hint_hex">#FFFFFF</string>-->
 
     
     <string name="about_dialog_title">Acerca de</string>
