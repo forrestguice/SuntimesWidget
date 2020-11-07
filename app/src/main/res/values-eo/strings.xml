@@ -251,7 +251,7 @@
     <string name="configLabel_general_scanPlugins_summary">Skani kaj enlegi eksterajn kromprogramojn.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_appearance">Agordoj de aspekto</string>           <!-- group title -->
+    <string name="configLabel_appearance">Aspekto</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Aspekto</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Etoso:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Etendigi al disponebla spaco (regrandigebla)</string>  <!-- checkbox label -->
@@ -372,7 +372,7 @@
     <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
     <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
-    <string name="configLabel_action">Agordoj de agoj</string>                  <!-- group title -->
+    <string name="configLabel_action">Agoj</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Je frapeto:</string>                    <!-- spinner label -->
     <string name="configLabel_action_onClockTap">Je frapeto sur horloĝo</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">Je frapeto sur noto</string>           <!-- spinner label -->
@@ -807,11 +807,11 @@
     <!--<string name="configLabel_widgetList_itemTitlePattern"><xliff:g id="titlePattern"><![CDATA[%M (%lat, %lon) [%t]]]></xliff:g></string>--> <!-- the pattern used when generating widget titles for display in the list -->
     <string name="configLabel_widgetListHelp_title">Helpo</string>               <!-- always the first item in the widgetList -->
     <string name="configLabel_widgetListHelp_summary">Montri helpon pri fenestraĵoj</string>
-    <string name="configLabel_widgetList_emptyMsg">Neniuj fenestraĵoj</string>          <!-- a label that is displayed in place of an empty listview -->
+    <string name="configLabel_widgetList_emptyMsg">Neniu fenestraĵo</string>          <!-- a label that is displayed in place of an empty listview -->
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Lokoj</string>                           <!-- group title -->
-    <string name="configLabel_places_manage">Manage Places</string>             <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_places_manage">Administri lokojn</string>             <!-- group title -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
     <string name="configLabel_places_multiSelect">%s lokoj</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->
     <string name="configLabel_places_build">Aldoni mondajn lokojn</string>
@@ -828,8 +828,8 @@
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Fasado</string>                       <!-- group title -->
-    <string name="configLabel_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->   <!-- TODO -->
-    <string name="configLabel_ui_misc">Miscellaneous</string>   <!-- TODO -->
+    <string name="configLabel_ui_fields">Vidigo</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
+    <string name="configLabel_ui_misc">Diversaj</string>
 
     <!-- App Setting: Verbose Accessibility -->
     <string name="configLabel_accessibility_verbose">Interagi kun TalkBack</string>
@@ -860,10 +860,10 @@
     <string name="configLabel_ui_showdatasource_summary">Montri etikedon indikantan la nunan agordaron.</string>
 
     <!-- App Setting: show golden hour -->
-    <string name="configLabel_ui_showgoldhour">Montri oran horon</string>    <!-- TODO: "Show Golden Hour" -> "Golden Hour" to match other config fields -->
+    <string name="configLabel_ui_showgoldhour">Ora horo</string>
 
     <!-- App Setting: show blue hour -->
-    <string name="configLabel_ui_showbluehour">Montri bluan horon</string>    <!-- TODO: "Show Blue Hour" -> "Blue Hour" to match other config fields -->
+    <string name="configLabel_ui_showbluehour">Blua horo</string>
 
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Hela etoso</string>
