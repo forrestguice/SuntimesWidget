@@ -1,8 +1,9 @@
 ### ~
 
-### v0.13.3 (2020-11-16)
+### v0.13.4 (2020-11-16)
+* updates translation to Brazilian Portuguese (pt-br) (#450 by naoliv). 
 * updates translation to Norwegian (nb) (#447 by FTno).
-* updates translation to Polish and Esperanto (eo, pl) (#446 Verdulo).
+* updates translation to Polish and Esperanto (eo, pl) (#446 by Verdulo).
 
 ### v0.13.3 (2020-11-03)
 * fixes crash in Manage Places when copying or editing places (#443).
