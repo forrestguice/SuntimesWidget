@@ -865,7 +865,7 @@
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Lugares</string>                           <!-- group title -->
-    <string name="configLabel_places_manage">Manage Places</string>             <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_places_manage">Gerenciar Lugares</string>             <!-- group title -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
     <string name="configLabel_places_multiSelect">%s lugares</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->
     <string name="configLabel_places_build">Adicionar Lugares</string>
@@ -882,8 +882,8 @@
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interface do Usuário</string>                       <!-- group title -->
-    <string name="configLabel_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->   <!-- TODO -->
-    <string name="configLabel_ui_misc">Miscellaneous</string>   <!-- TODO -->
+    <string name="configLabel_ui_fields">Exibir</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
+    <string name="configLabel_ui_misc">Diversos</string>
 
     <!-- App Setting: Verbose Accessibility -->
     <string name="configLabel_accessibility_verbose">TalkBack Detalhado</string>
@@ -1224,7 +1224,7 @@
     <!-- Dialog: Delete Place -->
     <string name="locationdelete_dialog_title">Remover Local?</string>   <!-- title; remove 1 place -->
     <string name="locationdelete_dialog_title1">Remover Locais?</string>  <!-- title; remove multiple places -->
-    <string name="locationdelete_dialog_message">Tem certea que deseja remover %s?</string>
+    <string name="locationdelete_dialog_message">Tem certeza que deseja remover %s?</string>
     <string name="locationdelete_dialog_success">Local foi removido.</string>   <!-- toast -->
     <string name="locationdelete_dialog_success1">%s locais foram removidos.</string>   <!-- toast; e.g. 2 places were deleted -->
     <string name="locationdelete_dialog_ok">Apagar</string>
