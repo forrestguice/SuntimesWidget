@@ -1,5 +1,9 @@
 ### ~
 
+### v0.13.3 (2020-11-16)
+* updates translation to Norwegian (nb) (#447 by FTno).
+* updates translation to Polish and Esperanto (eo, pl) (#446 Verdulo).
+
 ### v0.13.3 (2020-11-03)
 * fixes crash in Manage Places when copying or editing places (#443).
 * adds an object height slider (shadow length) to sun position dialog (#189, #442).

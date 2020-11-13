@@ -1,0 +1,2 @@
+- updates translation to Norwegian.
+- updates translations to Polish and Esperanto.
