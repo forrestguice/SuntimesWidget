@@ -498,8 +498,10 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
     protected void saveSettings(Bundle bundle) {}
 
-    public void saveSettings(Context context) {
-        saveSettings(context.getSharedPreferences(PREFS_ALARMCREATE, 0));
+    public void saveSettings(@Nullable Context context) {
+        if (context != null) {
+            saveSettings(context.getSharedPreferences(PREFS_ALARMCREATE, 0));
+        }
     }
     public void saveSettings(SharedPreferences prefs)
     {
