@@ -724,7 +724,7 @@
     <string name="configAction_disableAlarm">Salvar &amp; Desabilitar</string>               <!-- button (contentDescription) -->
     <string name="configAction_undo">Desfazer</string>               <!-- button (contentDescription) -->
 
-    <string name="alarmAction_dismiss">Ignorar</string>                <!-- notification action button -->
+    <string name="alarmAction_dismiss">Dispensar</string>                <!-- notification action button -->
     <string name="alarmAction_snooze">Soneca</string>                  <!-- notification action button -->
     <string name="alarmAction_timeout">Tempo esgotado</string>                  <!-- notification action button -->
 
@@ -817,7 +817,7 @@
     <string name="configLabel_alarms_hardwarebuttons">Botões Físicos</string>
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>
     <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->
-        <item>Ignorar</item>
+        <item>Dispensar</item>
         <item>Silenciar</item>
         <item>Soneca</item>
         <item>Fazer Nada</item>
