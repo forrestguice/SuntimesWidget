@@ -388,6 +388,7 @@ public class AlarmDismissActivity extends AppCompatActivity
         Drawable[] drawables = button.getCompoundDrawables();
         for (Drawable d : drawables) {
             if (d != null) {
+                d.mutate();
                 d.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
             }
         }
