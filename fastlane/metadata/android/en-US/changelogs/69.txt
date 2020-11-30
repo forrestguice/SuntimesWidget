@@ -1,0 +1,2 @@
+- fixes bug "NotificationService keeps running in background" (#456, #323).
+- updates translation to Brazilian Portuguese.
