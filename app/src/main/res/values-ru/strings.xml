@@ -19,11 +19,11 @@
     <string name="configAction_mapLocation_noapp">Приложение карт не найдено!</string>
     <string name="configAction_showCalendar">Календарь</string>
     <string name="configAction_setAlarm">Установить будильник</string>
-    <string name="configAction_setTimeZone">Установить временную зону</string>
-    <string name="configAction_setDate">Установить дату</string>
+    <string name="configAction_setTimeZone">Выбрать часовой пояс</string>
+    <string name="configAction_setDate">Выбрать дату</string>
     <string name="configAction_viewDate">Отобразить дату</string>
     <string name="configAction_sunDialog">Позиция солнца</string>
-    <string name="configAction_equinoxDialog">Солнцестояние / Равноденствие</string>
+    <string name="configAction_equinoxDialog">Солнцест. / Равнод.</string>
     <string name="configAction_worldMap">Карта мира</string>
     <string name="configAction_moon">Луна</string>
     <string name="configAction_help">Справка</string>
@@ -73,7 +73,7 @@
          The time zone field that appears below the clock (main activity).
     -->
     <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
-    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Временная зона может не соответствовать данному местоположению.</string>  <!-- snackbar message -->
+    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g>  Часовой пояс может не соответствовать текущему местоположению.</string>  <!-- snackbar message -->
     <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> летнее время</string>  <!-- timezone dialog label -->
     <string name="timezoneExtraDST_short"><xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> л.вр.</string>  <!-- timezone dialog label -->
     <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> уравнение времени</string>  <!-- timezone dialog label -->
@@ -86,7 +86,7 @@
              where [date] is a dateString formatted by app using user's locale
     -->
     <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
-    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> Дата установлена на день, отличный от сегодняшнего.</string>  <!-- snackbar message -->
+    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g>  Дата установлена на день, отличный от сегодняшнего.</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
     <string name="past_today">В прошлом</string>
@@ -132,7 +132,7 @@
                   sunset
          The relative order is defined by the layout (layout/info_time_note.xml).
     -->
-    <string name="since">после</string>
+    <string name="since">прошло после</string>
     <string name="until">до</string>
     <string name="until_end">до конца</string>
 
@@ -161,7 +161,9 @@
     <!-- NoteBody: sunset/sunrise/twilight string
          The note body text; appears next to the prefix (layout/info_time_note.xml)
     -->
-    <string name="until_astroTwilight">астрономических сумерек</string>   <!-- TODO: for translator: расширить типы сумерек указанием на начало и конец (посмотреть вмещается ли в виджеты и слои) -->
+    <!-- TODO: Think about extending the next twilight titles with indication of the beginning (see how it fits into the graphical UI).
+    The problem is: the titles longer than 2 lines are displayed with a scrollbar. Adding just 1 word will broaden the titles to 3+ lines. -->
+    <string name="until_astroTwilight">астроном. сумерек</string>
     <string name="until_civilTwilight">гражданских сумерек</string>
     <string name="until_nauticalTwilight">навигационных сумерек</string>
     <string name="until_sunrise">восхода солнца</string>
@@ -169,7 +171,7 @@
     <string name="until_sunset">захода солнца</string>
     <string name="untilEnd_civilTwilight">гражданских сумерек</string>
     <string name="untilEnd_nauticalTwilight">навигационных сумерек</string>
-    <string name="untilEnd_astroTwilight">астрономических сумерек</string>
+    <string name="untilEnd_astroTwilight">астроном. сумерек</string>
     <string name="until_goldhour">золотого часа</string>
     <string name="untilEnd_goldhour">золотого часа</string>
     <string name="until_bluehour">режимного времени</string>
@@ -190,7 +192,7 @@
     <string name="moonset_short">Зах.л.</string>                             <!-- table title -->
 
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
-    <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g> <xliff:g id="units" example="m">%2$s</xliff:g>.</string>
+    <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g>&#160;<xliff:g id="units" example="m">%2$s</xliff:g>.</string>
     <string name="delta_years">г</string>    <!-- e.g. 1y -->
     <string name="delta_weeks">нед</string>    <!-- e.g. 2w -->
     <string name="delta_days">дн</string>     <!-- e.g. 1d -->
@@ -198,8 +200,8 @@
     <string name="delta_minutes">мин</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">сек</string>  <!-- e.g. 4s -->
 
-    <string name="hence">натупит через  <xliff:g id="timeSpan">%1$s</xliff:g></string>  <!-- e.g. 15d 23h from now -->
-    <string name="ago"><xliff:g id="timeSpan">%1$s</xliff:g>  прошло после</string>         <!-- e.g. 1y 15d 12h ago -->
+    <string name="hence">через  <xliff:g id="timeSpan">%1$s</xliff:g></string>  <!-- e.g. 15d 23h from now -->
+    <string name="ago">было  <xliff:g id="timeSpan">%1$s</xliff:g>  назад</string>         <!-- e.g. 1y 15d 12h ago -->
 
     <!-- misc time values: might be displayed in a timeField in place of an actual time -->
     <string name="time_none">—</string>  <!-- no time / time does not occur -->
@@ -218,7 +220,7 @@
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
 
     <!-- location display formats -->
-    <string name="location_format_alt"><xliff:g id="altitude">%1$s</xliff:g><xliff:g id="distanceUnit" example="m">%2$s</xliff:g></string>  <!-- altitude, e.g. 1600m -->
+    <string name="location_format_alt"><xliff:g id="altitude">%1$s</xliff:g>&#160;<xliff:g id="distanceUnit" example="m">%2$s</xliff:g></string>  <!-- altitude, e.g. 1600m -->
     <string name="location_format_alttag">[<xliff:g id="altitudeString">%1$s</xliff:g>]</string>                                            <!-- altitude as a tag, e.g. [1600m] -->
     <string name="location_format_latlon"><xliff:g id="latitude">%1$s</xliff:g>, <xliff:g id="longitude">%2$s</xliff:g></string>            <!-- latitude, longitude -->
     <string name="location_format_latlonalt"><xliff:g id="latlon">%1$s</xliff:g> <xliff:g id="altitudeTag">%2$s</xliff:g></string>        <!-- latitude, longitude [altitude] -->
@@ -291,29 +293,29 @@
     <!-- Widget Setting: general -->
     <string name="configLabel_general">Общие настройки</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Источник данных:</string>         <!-- spinner label -->
-    <string name="configLabel_general_calculator_sun">Алгоритмы положения солнца</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_moon">Алгоритмы положения луны</string>         <!-- preference label -->
+    <string name="configLabel_general_calculator_sun">Алгоритм положения солнца</string>         <!-- preference label -->
+    <string name="configLabel_general_calculator_moon">Алгоритм положения луны</string>         <!-- preference label -->
 
     <string name="configLabel_general_timeFormatMode">Формат времени:</string>         <!-- spinner label -->
 
-    <string name="configLabel_general_altitude_enabled">Использовать высоту над уровнем моря (НУМ)</string>        <!-- checkbox label -->
-    <string name="configLabel_general_altitude_enabled_summary">Применять уточнения на основе высоты.</string>        <!-- checkbox label -->
+    <string name="configLabel_general_altitude_enabled">Использовать высоту НУМ</string>        <!-- checkbox label -->
+    <string name="configLabel_general_altitude_enabled_summary">Применять уточнения на основе высоты над уровнем моря.</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_lengthUnits">Единицы длины</string>        <!-- spinner label -->
 
     <string name="configLabel_general_showSeconds">Показывать секунды</string>        <!-- checkbox label -->
     <string name="configLabel_general_showSeconds_summary">Включить секунды в отображение времени.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showTimeDate">Показывать время рядом с датами</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showTimeDate">Показывать время рядом с датой</string>        <!-- checkbox label -->
     <string name="configLabel_general_showTimeDate_summary">Включить время в отображение дат.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showWeeks">Использовать недели</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showWeeks">Дни в недели</string>        <!-- checkbox label -->
     <string name="configLabel_general_showWeeks_summary">Промежутки времени длиной более 7 дней показывать как недели (15 дн. -> 2 нед. 1 д.).</string>    <!-- checkbox label -->
 
     <string name="configLabel_general_showHours">Показывать часы</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">Отображать часы и минуты в промежутках времени больше суток.</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_observerheight">Тень объекта</string>        <!-- checkbox label -->
+    <string name="configLabel_general_observerheight">Высота объекта для тени</string>        <!-- checkbox label -->
     <string name="configLabel_general_observerheight_summary">Показывать длину тени, отбрасываемой объектом высотой <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
@@ -324,9 +326,9 @@
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Настройки внешнего вида</string>           <!-- group title -->
-    <string name="configLabel_appearance_mode">Внешний вид</string>                  <!-- spinner label -->
+    <string name="configLabel_appearance_mode">Тема оформления</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Тема:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Заполнять доступное пространство (изменяемый размер)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_allowResize">Заполнять все доступное пространство (изменяемый размер)</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_showLabels">Показывать детали (азимуты, высоты)</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">Показывать заголовок</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Заголовок:</string>              <!-- edittext label -->
@@ -338,19 +340,19 @@
     <string name="risesetorder_lastnext">Прош./след. событие</string>           <!-- setting -->
 
     <!-- Widget Setting: time mode -->
-    <string name="timeMode_noon_short">Полдень</string>                    <!-- setting -->
+    <string name="timeMode_noon_short">Солн.&#160;полдень</string>                    <!-- setting -->
     <string name="timeMode_noon">Солнечный полдень</string>                    <!-- setting -->
-    <string name="timeMode_official_short">Факт.вр.</string>              <!-- setting -->
+    <string name="timeMode_official_short">Фактич.&#160;вр.</string>              <!-- setting -->
     <string name="timeMode_official">Фактическое время</string>               <!-- setting -->
-    <string name="timeMode_civil_short">Гражданские</string>                  <!-- setting -->
+    <string name="timeMode_civil_short">Гражд.&#160;сум.</string>                  <!-- setting -->
     <string name="timeMode_civil">Гражданские сумерки</string>               <!-- setting -->
-    <string name="timeMode_nautical_short">Навигационные</string>            <!-- setting -->
+    <string name="timeMode_nautical_short">Навигац.&#160;сум.</string>            <!-- setting -->
     <string name="timeMode_nautical">Навигационные сумерки</string>         <!-- setting -->
-    <string name="timeMode_astronomical_short">Астрономические</string>    <!-- setting -->
+    <string name="timeMode_astronomical_short">Астроном.&#160;сум.</string>    <!-- setting -->
     <string name="timeMode_astronomical">Астрономические сумерки</string> <!-- setting -->
     <string name="timeMode_night">Ночь</string>                   <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_day">День</string>                       <!-- a label (not an actual timeMode setting) -->
-    <string name="timeMode_golden_short">Золот.ч.</string>                <!-- setting -->
+    <string name="timeMode_golden_short">Золот.&#160;час</string>                <!-- setting -->
     <string name="timeMode_golden">Золотой час</string>                 <!-- setting -->
     <string name="timeMode_blue8_short">Реж.вр. (8\u00B0)</string>                    <!-- setting -->
     <string name="timeMode_blue8">Режимное время (8\u00B0)</string>                     <!-- setting -->
@@ -413,9 +415,9 @@
     <string name="widgetMode1x1_distance">Текущее расстояние</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">Следующий апогей или перигей</string>     <!-- setting -->
 
-    <string name="widgetMode_sunPosMap_simplerectangular">Схема</string>  <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal">Полярная [Сев.п.]</string>     <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal_south">Полярная [Южн.п.]</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_simplerectangular">Карта-схема</string>  <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Полярная [Сев. п.]</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_south">Полярная [Южн. п.]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_bluemarble">Спутниковая</string>    <!-- setting -->
 
     <string name="widgetMode1x1_moonriseset">Восход и заход луны</string>     <!-- setting -->
@@ -424,9 +426,9 @@
     <string name="widgetMode1x1_moonillum">Только освещенность луны</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphasenext">Следующая большая фаза луны</string>     <!-- setting -->
 
-    <string name="configLabel_appearance_1x1mode">1x1 размещение:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x2mode">3x2 размещение:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x3mode">3x3 размещение:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_1x1mode">Размер 1x1:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x2mode">Размер 3x2:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x3mode">Размер 3x3:</string>     <!-- spinner label -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Ничего не делать</string>           <!-- setting -->
@@ -539,9 +541,9 @@
 
     <string name="addaction_custname">custom<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
     <string name="addaction_custtitle">Пользовательское действие <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
-    <string name="addaction_error_id">ID не должен быть пустым (и содержать пробелов).</string>
-    <string name="addaction_error_title">Отображаемая строка не должна быть пустой.</string>
-    <string name="addaction_error_exists">ID уже используется. Действие с таким ID будет перезаписано.</string>
+    <string name="addaction_error_id">ID не может быть пустым (и содержать пробелы).</string>
+    <string name="addaction_error_title">Название не может быть пустым.</string>
+    <string name="addaction_error_exists">ID уже используется. Действие с этим ID будет перезаписано.</string>
 
     <string name="delaction_dialog_msg">Вы уверены, что хотите удалить %1$s (%2$s)?</string>
     <string name="delaction_dialog_msg1">Стандартные действия удалить нельзя.\n\nВосстановить действия по умолчанию?</string>
@@ -805,7 +807,7 @@
 
     <string name="configLabel_alarms_optWhiteList">Оптимизация энергопотребления</string>
     <string name="configLabel_alarms_optWhiteList_listed">Не оптимизировано (рекомендовано)</string>
-    <string name="configLabel_alarms_optWhiteList_unlisted">Используется оптимизация.\nСрабатывание сигналов может задерживаться до 15 минут.</string>
+    <string name="configLabel_alarms_optWhiteList_unlisted">Используется оптимизация.\nСрабатывание сигнала может задерживаться до 15 минут.</string>
 
     <string name="configLabel_alarms_notifications">Уведомления от приложения</string>
     <string name="configLabel_alarms_notifications_on">Разрешены</string>
@@ -814,20 +816,20 @@
     <string name="configLabel_alarms_notifications_summary1">На экране блокировки: %1$s</string>    <!-- "On lock screen: Off -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Уведомления запрещены. Сигналы могут работать некорректно.</string>  <!-- snackbar message -->
 
-    <string name="configLabel_alarms_silenceAfter">Отключать звук будильника через</string>
-    <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+    <string name="configLabel_alarms_silenceAfter">Уведомление о сигнале</string>
+    <string name="configLabel_alarms_silenceAfter_summary">Начать показывать уведомление о сигнале за <xliff:g id="timePeriod" example="10 minutes">%s</xliff:g> до его начала.</string>
+Отключать звук будильника через
+    <string name="configLabel_alarms_timeoutAfter">Автовыключение</string>
+    <string name="configLabel_alarms_timeoutAfter_summary">Выключать сигнал автоматически после <xliff:g id="timePeriod" example="10 minutes">%s</xliff:g> работы.</string>
 
-    <string name="configLabel_alarms_timeoutAfter">Timeout after</string>
-    <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
+    <string name="configLabel_alarms_snooze">Время откладывания</string>
+    <string name="configLabel_alarms_snooze_summary">Откладывать сигнал на <xliff:g id="timePeriod" example="10 minutes">%s</xliff:g> при нажатии на соответствующую кнопку.</string>
 
-    <string name="configLabel_alarms_snooze">Откладывать на</string>
-    <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
-
-    <string name="configLabel_alarms_upcoming">Срабатывать в течение</string>
+    <string name="configLabel_alarms_upcoming">Воспроизводить сигнал в течение</string>
     <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_fadein">Увеличивать громкость сигнала в течение</string>
-    <string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
+    <string name="configLabel_alarms_fadein">Увеличение громкости</string>
+    <string name="configLabel_alarms_fadein_summary">Постепенно увеличивать громкость сигнала в начале срабатывания в течение<xliff:g id="timePeriod" example="30 seconds">%s</xliff:g>.</string>
     <string name="configLabel_alarms_fadein_disabled">Выкл.</string>
 
     <string name="configLabel_alarms_hardwarebuttons">Аппаратные кнопки</string>
@@ -840,9 +842,9 @@
     </string-array>
 
     <string name="configLabel_alarmSounds">Звуковые сигналы</string>            <!-- group title -->
-    <string name="configLabel_alarms_volumes">Настройки профиля</string>
-    <string name="configLabel_alarms_allRingtones">Показывать все рингтоны</string>
-    <string name="configLabel_alarms_allRingtones_summary">Показывать все системные звуки при выборе сигнала (игнорирует тип звука).</string>
+    <string name="configLabel_alarms_volumes">Настройки звукового профиля</string>
+    <string name="configLabel_alarms_allRingtones">Показывать все звуки</string>
+    <string name="configLabel_alarms_allRingtones_summary">Показывать все системные звуки при выборе сигнала (игнорируя тип звука).</string>
 
     <string name="no_reminder">Никогда</string>
 
@@ -868,8 +870,8 @@
     </plurals>
 
     <string name="configLabel_alarmMisc">Прочие настройки</string>
-    <string name="configLabel_alarms_showlauncher">Отображать приложение в списке приложений системы</string>
-    <string name="configLabel_alarms_showlauncher_summary">Отображать приложение будильников как самостоятельное</string>
+    <string name="configLabel_alarms_showlauncher">Отображать ярлык</string>
+    <string name="configLabel_alarms_showlauncher_summary">Отображать приложение будильников Suntimes Alarms в списке приложений отдельно.</string>
 
     <!--
          APP SETTINGS
@@ -887,7 +889,9 @@
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Местоположения</string>                           <!-- group title -->
-    <string name="configLabel_places_emptyMsg">@string/configLabel_places</string>
+    <string name="configLabel_places_manage">Редактировать места</string>             <!-- group title -->
+    <!-- TODO for Forrest: please remove the line below if it's no longer needed. -->
+    <!-- <string name="configLabel_places_emptyMsg">@string/configLabel_places</string> --> 
     <string name="configLabel_places_multiSelect">%s мест</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->
     <string name="configLabel_places_build">Добавить местоположения</string>
     <string name="configLabel_places_build_summary">Просканировать локали и добавить города в базу.</string>
@@ -896,7 +900,7 @@
     <string name="configAction_addPlace">Добавить</string>              <!-- button (contentDescription) -->
     <string name="configAction_copyPlace">Копировать</string>            <!-- button (contentDescription) -->
     <string name="configAction_selectPlace">Выбрать</string>        <!-- button (contentDescription) -->
-    <string name="configAction_searchPlace">Искать</string>        <!-- button (contentDescription) -->
+    <string name="configAction_searchPlace">Найти</string>        <!-- button (contentDescription) -->
     <string name="configAction_sharePlace">Поделиться</string>          <!-- button (contentDescription) -->
     <string name="configAction_deletePlace">Удалить</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Очистить</string>         <!-- button (contentDescription) -->
@@ -904,19 +908,21 @@
 
 
     <!-- App Setting: UI -->
-    <string name="configLabel_ui">Пользовательский интерфейс</string>                       <!-- group title -->
+    <string name="configLabel_ui">Дополнительная информация</string>                       <!-- group title -->
+    <string name="configLabel_ui_fields">Главный экран</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
+    <string name="configLabel_ui_misc">Прочее</string>
 
     <!-- App Setting: Verbose Accessibility -->
-    <string name="configLabel_accessibility_verbose">Подробно озвучивать изменения интерфейса</string>
-    <string name="configLabel_accessibility_verbose_summary">Объявлять об автоматических изменениях интерфейса с помощью TalkBack.</string>
+    <string name="configLabel_accessibility_verbose">Озвучивать изменения в интерфейсе</string>
+    <string name="configLabel_accessibility_verbose_summary">Подробно озвучивать автоматические изменения интерфейса с помощью TalkBack.</string>
 
     <!-- App Setting: UI Warnings -->
     <string name="configLabel_ui_showWarnings">Показывать предупреждения</string>
-    <string name="configLabel_ui_showWarnings_summary">Показывать предупреждения о конфигурации.</string>
+    <string name="configLabel_ui_showWarnings_summary">Предупреждать о расхождении выбранной вручную конфигурации с расчитанной автоматически (время, дата, местоположение).</string>
 
     <!-- App Setting: Show Lightmap -->
-    <string name="configLabel_ui_showLightmap">Карта освещенности</string>
-    <string name="configLabel_ui_showLightmap_summary">Показывать график дня, ночи и сумерек (в виде линии) с положением солнца.</string>
+    <string name="configLabel_ui_showLightmap">Карта освещенности (линия)</string>
+    <string name="configLabel_ui_showLightmap_summary">Показывать график дня, ночи и сумерек с положением солнца.</string>
 
     <!-- App Setting: Show Moon -->
     <string name="configLabel_ui_showmoon">Луна</string>
@@ -924,14 +930,14 @@
 
     <!-- App Setting: Show Equinox / Solstice -->
     <string name="configLabel_ui_showEquinox">Солнцестояние и равноденствие</string>
-    <string name="configLabel_ui_showEquinox_summary">Показывать время до ближайшего события (солнцестояния или равноденствия).</string>
+    <string name="configLabel_ui_showEquinox_summary">Показывать время до солнцестояния или равноденствия.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
-    <string name="configLabel_ui_solsticeTrackingMode">Выбор солнцест./равнод.</string>
-    <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
+    <string name="configLabel_ui_solsticeTrackingMode">Выбор солнцест. / равнод.</string>
+    <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g> отображается.</string>
 
     <!-- App Setting: show data source -->
-    <string name="configLabel_ui_showdatasource">Источник данных</string>
+    <string name="configLabel_ui_showdatasource">Источник расчетов</string>
     <string name="configLabel_ui_showdatasource_summary">Показывать текущий алгоритм и коррекцию по высоте (если доступно).</string>
 
     <!-- App Setting: show golden hour -->
@@ -946,7 +952,7 @@
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
         <item>@string/appThemes_lightTheme</item>
         <item>@string/appThemes_darkTheme</item>
-        <item>Светлая / Темная тема (в#160;ночное&#160;время)</item>
+        <item>Выбирать по времени (темная&#160;-&#160;ночью)</item>
     </string-array>
 
     <!-- App Setting: time format -->
@@ -1003,8 +1009,8 @@
     <string name="configActionDesc_equinoxDialog">Параметры солнцестояния</string>
     <string name="configActionDesc_moon">Параметры луны</string>
     <string name="configActionDesc_sunDialog">Параметры солнца</string>
-    <string name="configActionDesc_setDate">Установить дату</string>
-    <string name="configActionDesc_setTimeZone">Установить временную зону</string>
+    <string name="configActionDesc_setDate">Выбрать дату</string>
+    <string name="configActionDesc_setTimeZone">Выбрать часовой пояс</string>
     <string name="configActionDesc_setLocation">Установить местоположение</string>
     <string name="configActionDesc_swapCards">Перевернуть календарь (сегодня/завтра)</string>
     <string name="configActionDesc_nextCard">Показать следующий день</string>
@@ -1085,8 +1091,8 @@
         <item>@string/timezone_sort_byName</item>
     </string-array>
 
-    <string name="timezone_sort_contextAction">Сортировка временных зон</string>           <!-- action bar title -->
-    <string name="timezone_sort_msg">Временные зоны отсортированы (%1$s).</string>      <!-- toast msg -->
+    <string name="timezone_sort_contextAction">Сортировка часовых поясов</string>           <!-- action bar title -->
+    <string name="timezone_sort_msg">Часовые пояса отсортированы (%1$s).</string>      <!-- toast msg -->
 
     <!-- App Setting: GPS fix time limit -->
     <string name="configLabel_getFix_maxElapse">Время поиска по GPS</string>
@@ -1100,7 +1106,7 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">Продолжать использовать координаты GPS</string>
+    <string name="configLabel_getFix_maxAge">Сохранять GPS-координаты</string>
     <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
         <item>нет (всегда искать)</item>
@@ -1114,7 +1120,7 @@
         <item>два дня (48 часов)</item>
         <item>одну неделю (168 часов)</item>
         <item>один месяц (672 часа)</item>
-        <item>без срока (не обновлять)</item>
+        <item>бессрочно (не обновлять)</item>
     </string-array>
 
     <!-- App Setting: calendars -->
@@ -1122,7 +1128,7 @@
     <string name="configLabel_calendars_enabled">Интеграция с календарями</string>
 
     <!-- App Setting: passive location mode -->
-    <string name="configLabel_getFix_passiveMode">Использовать пассивные источники</string>
+    <string name="configLabel_getFix_passiveMode">Пассивные источники</string>
     <string name="configLabel_getFix_passiveMode_summary">Использовать данные местоположения от сотовой сети и WiFi.</string>
 
     <!-- App Setting: locale mode -->
@@ -1215,12 +1221,12 @@
     <string name="worldmap_dialog_action_prev">Назад</string>   <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_reset">Сбросить</string>     <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_menu">Настройки</string>       <!-- button (contentDescription) -->
-    <string name="worldmap_dialog_option_sunlight">Солнечный свет</string> <!-- TODO: check menu appearance after translation -->
+    <string name="worldmap_dialog_option_sunlight">Солнечный свет</string>
     <string name="worldmap_dialog_option_moonlight">Лунный свет</string>
     <string name="worldmap_dialog_option_all">Оба</string>
     <string name="worldmap_dialog_option_location">Местоположение</string>
     <string name="worldmap_dialog_option_latitudes">Линии широт</string>
-    <string name="worldmap_dialog_speed_15m">&#215; 15 мин.</string> <!-- TODO: add comment to basic lang file that it is minutes (for further translations) -->
+    <string name="worldmap_dialog_speed_15m">&#215; 15 мин.</string> <!-- TODO for Forrest: please, add a comment to basic strings.xml that it is minutes (for translators) -->
     <string name="worldmap_dialog_speed_1d">&#215; 1 день</string>
     <string name="configAction_shareMap">Поделиться</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
@@ -1228,8 +1234,8 @@
     <string name="configLabel_schedalarm_mode">Установить будильник для</string>
     <string name="configLabel_schednotify_mode">Задать уведомление для</string>
     <string name="schedalarm_dialog_title">@string/configAction_setAlarm</string>  <!-- may also be set to configAction_setNotification -->
-    <string name="schedalarm_dialog_tab_event">Событие</string>                      <!-- tab text -->
-    <string name="schedalarm_dialog_tab_time">Время</string>                        <!-- tab text -->
+    <string name="schedalarm_dialog_tab_event">По событию</string>                      <!-- tab text -->
+    <string name="schedalarm_dialog_tab_time">По времени</string>                        <!-- tab text -->
     <string name="schedalarm_dialog_ok">Сохранить</string>                          <!-- button text -->
     <string name="schedalarm_dialog_cancel">Отменить</string>
     <string name="schedalarm_dialog_error">Будильник не установлен…</string>
@@ -1240,62 +1246,62 @@
     <string name="schedalarm_labelformat"><xliff:g id="solarevents_short" example="sunrise">%1$s</xliff:g> (<xliff:g id="shortDate" example="4/6/2018">%2$s</xliff:g>)</string>
     <string name="schedalarm_labelformat2"><xliff:g id="solarevents_short" example="sunrise">%1$s</xliff:g></string>
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
-        <item>астрономические сумерки</item>
-        <item>навигационные сумерки</item>
-        <item>режимное время</item>
-        <item>гражданские сумерки</item>
-        <item>режимное время</item>
-        <item>восход солнца</item>
-        <item>золотой час</item>
-        <item>солнечный полдень</item>
-        <item>золотой час</item>
-        <item>заход солнца</item>
-        <item>режимное время</item>
-        <item>гражданские сумерки</item>
-        <item>режимное время</item>
-        <item>навигационные сумерки</item>
-        <item>астрономические сумерки</item>
-        <item>восход луны</item>
-        <item>заход луны</item>
-        <item>новолуние</item>
-        <item>первая четверть</item>
-        <item>полнолуние</item>
-        <item>третья четверть</item>
-        <item>весеннее равноденствие</item>
-        <item>летнее солнцестояние</item>
-        <item>осеннее равноденствие</item>
-        <item>зимнее солнцестояние</item>
-        <item>лунный полдень</item>
-        <item>лунная полночь</item>
+        <item>Астрономические сумерки</item>
+        <item>Навигационные сумерки</item>
+        <item>Режимное время</item>
+        <item>Гражданские сумерки</item>
+        <item>Режимное время</item>
+        <item>Восход солнца</item>
+        <item>Золотой час</item>
+        <item>Солнечный полдень</item>
+        <item>Золотой час</item>
+        <item>Заход солнца</item>
+        <item>Режимное время</item>
+        <item>Гражданские сумерки</item>
+        <item>Режимное время</item>
+        <item>Навигационные сумерки</item>
+        <item>Астрономические сумерки</item>
+        <item>Восход луны</item>
+        <item>Заход луны</item>
+        <item>Новолуние</item>
+        <item>Первая четверть</item>
+        <item>Полнолуние</item>
+        <item>Третья четверть</item>
+        <item>Весеннее равноденствие</item>
+        <item>Летнее солнцестояние</item>
+        <item>Осеннее равноденствие</item>
+        <item>Зимнее солнцестояние</item>
+        <item>Лунный полдень</item>
+        <item>Лунная полночь</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
-        <item>утренние астрономические сумерки (начало)</item>
-        <item>утренние навигационные сумерки (начало)</item>
-        <item>утреннее режимное время (начало)</item>
-        <item>утренние гражданские сумерки (начало)</item>
-        <item>утреннее режимное время (конец)</item>
-        <item>восход солнца</item>
-        <item>утренний золотой час (конец)</item>
-        <item>солнечный полдень</item>
-        <item>вечерний золотой час (начало)</item>
-        <item>заход солнца</item>
-        <item>вечернее режимное время (начало)</item>
-        <item>вечерние гражданские сумерки (конец)</item>
-        <item>вечернее режимное время (конец)</item>
-        <item>вечерние навигационные сумерки (конец)</item>
-        <item>вечерние астрономические сумерки (конец)</item>
-        <item>восход луны</item>
-        <item>заход луны</item>
-        <item>новолуние</item>
-        <item>первая четверть</item>
-        <item>полнолуние</item>
-        <item>третья четверть</item>
-        <item>весеннее равноденствие</item>
-        <item>летнее солнцестояние</item>
-        <item>осеннее равноденствие</item>
-        <item>зимнее солнцестояние</item>
-        <item>лунный полдень</item>
-        <item>лунная полночь</item>
+        <item>Утренние астроном. сум. (начало)</item>
+        <item>Утренние навигац. сум. (начало)</item>
+        <item>Утреннее режимное время (начало)</item>
+        <item>Утренние гражданские сум. (начало)</item>
+        <item>Утреннее режимное время (конец)</item>
+        <item>Восход солнца</item>
+        <item>Утренний золотой час (конец)</item>
+        <item>Солнечный полдень</item>
+        <item>Вечерний золотой час (начало)</item>
+        <item>Заход солнца</item>
+        <item>Вечернее режимное время (начало)</item>
+        <item>Вечерние гражданские сум. (конец)</item>
+        <item>Вечернее режимное время (конец)</item>
+        <item>Вечерние навигац. сум. (конец)</item>
+        <item>Вечерние астроном. сум. (конец)</item>
+        <item>Восход луны</item>
+        <item>Заход луны</item>
+        <item>Новолуние</item>
+        <item>Первая четверть</item>
+        <item>Полнолуние</item>
+        <item>Третья четверть</item>
+        <item>Весеннее равноденствие</item>
+        <item>Летнее солнцестояние</item>
+        <item>Осеннее равноденствие</item>
+        <item>Зимнее солнцестояние</item>
+        <item>Лунный полдень</item>
+        <item>Лунная полночь</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
@@ -1318,18 +1324,18 @@
     <string name="gps_keeptrying_fallback">Использовать последнее местоположение</string>
 
     <!-- Dialog: Use Date -->
-    <string name="timedate_dialog_title">Установить дату</string>
+    <string name="timedate_dialog_title">Выбрать дату</string>
     <string name="timedate_dialog_ok">Сохранить</string>
     <string name="timedate_dialog_cancel">Отмена</string>
 
     <!-- Dialog: Use Timezone -->
-    <string name="timezone_dialog_title">Временная зона</string>
+    <string name="timezone_dialog_title">Часовой пояс</string>
     <string name="timezone_dialog_ok">Сохранить</string>
     <string name="timezone_dialog_cancel">Отмена</string>
 
     <!-- Dialog: Set Location -->
     <string name="location_dialog_title">Местоположение</string>
-    <string name="location_dialog_ok">Обновить</string>
+    <string name="location_dialog_ok">Сохранить</string>
     <string name="location_dialog_cancel">Отмена</string>
     <string name="location_dialog_error_lat">Неверно задана широта.</string>
     <string name="location_dialog_error_lon">Неверно задана долгота.</string>
@@ -1465,10 +1471,10 @@
                 * <b>%loc</b> название места (напр. Москва) <br />
                 * <b>%lat</b> широта (напр. 35.5409) <br />
                 * <b>%lon</b> долгота (напр. -112.4691) <br/>
-                * <b>%lel</b> высота НУМ (напр. 385 метров) <br/>
+                * <b>%lel</b> высота НУМ (напр. 186 метров) <br/>
                 <br/>
                 * <b>%s</b> алгоритм (напр. sunrisesunsetlib) <br/>
-                * <b>%t</b> идент-р временной зоны (напр. Europe/Moscow) <br/>
+                * <b>%t</b> ID часового пояса (напр. Europe/Moscow) <br/>
                 * <b>%id</b> appWidgetID <br/>
          <br/>
          <b>Солнечный виджет:</b> <br/>
@@ -1560,22 +1566,22 @@
     <string name="help_action_launch"><![CDATA[
         См. <b>Intents and Intent Filters</b> по адресу<br/><a href="https://developer.android.com/guide/components/intents-filters">developer.android.com/guide/components/intents-filters</a>.
         <br/><br/>
-        Все поля необязательны (значения могут быть оставлены пустыми для <em>использования значений по умолчанию</em>).
+        Все поля необязательны (значения могут быть оставлены пустыми для использования значений по умолчанию).
         <br/>
         <br/>
-        <b>Действие:</b> Строка действия.<br/><small>напр. <em>android.intent.action.VIEW</em></small>
+        <b>Действие:</b> Строка действия. <br/><small>напр. <em>android.intent.action.VIEW</em></small>
         <br/>
         <br/>
-        <b>Class:</b> Полное имя класса.<br/><small>напр. <em>suntimeswidget.SuntimesActivity</em></small>
+        <b>Class:</b> Полное имя класса. <br/><small>напр. <em>suntimeswidget.SuntimesActivity</em></small>
         <br/>
         <br/>
-        <b>Data:</b> URI, который содержит прикрепляемые данные или указывает на них. Поддерживаются регулярные выражения. <small>напр. <em>geo:%lat,%lon</em></small>
+        <b>Data:</b> URI, который содержит прикрепляемые данные или указывает на них. Поддерживаются регулярные выражения. <br/><small>напр. <em>geo:%lat,%lon</em></small>
         <br/>
         <br/>
         <b>Mime:</b> Mime-тип прикрепляемых данных.
         <br/>
         <br/>
-        <b>Extras:</b> Разделенные знаком <em>&amp;</em> строки, содержащие дополнительные значения. Поддерживаются регулярные выражения.<br/><br/>Значения могут быть представлены типами <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> или <em>String</em>. <br/><small>напр. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>
+        <b>Extras:</b> Разделенные знаком \"<em>&amp;</em>\" строки, содержащие дополнительные значения. Поддерживаются регулярные выражения.<br/><br/>Значения могут быть представлены типами <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> или <em>String</em>. <br/><small>напр. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>
     ]]></string>
     <string name="help_widgetlist"><![CDATA[
           Для <b>добавления</b> или <b>удаления</b> виджета необходимо перейти на домашний экран устройства.<br/><br/>
@@ -1590,9 +1596,9 @@
           Стандартные темы со значком [Icon Default] не могут быть изменены.\n
     </string>
 
-    <string name="help_calendar"><![CDATA[Добавить события в приложение "Календарь" (фазы луны, солнцестояние и равнодествие).<br />
+    <string name="help_calendar"><![CDATA[Добавить события в приложение "Календарь" (фазы луны, солнцестояние, равноденствие).<br />
         <br />
-        <u><b><font color="#ff9900">Интеграция с календарем выключена.</font></b></u><br />
+        <u><b><font color="#ff9900">Интеграция с календарями не настроена.</font></b></u><br />
         <br />
         Эта функция теперь доступна в виде <a href="moreInfoLink">отдельного приложения</a>.
     ]]></string>
@@ -1620,8 +1626,8 @@
     <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
     <string name="calculator_displayString_time4a_simple">Простой, относительно быстрый, но неточный калькулятор.</string>
     <string name="calculator_displayString_time4a_noaa">Следует алгоритмам, опубликованным Национальным управлением океанических и атмосферных исследований США (NOAA).</string>
-    <string name="calculator_displayString_time4a_cc">Следует алгоритмам, опубликованным N. Dershowitz и E.M. Reingold в книге "Calendrical Calculations" (3-е издание).</string>
-    <string name="calculator_displayString_time4a_4j">Основан на астрономических расчетах, опубликованных Jean Meeus в книге "Astronomical Algorithms" (2-е издание).</string>
+    <string name="calculator_displayString_time4a_cc">Следует алгоритмам, опубликованным N.&#160;Dershowitz и E.M.&#160;Reingold в книге \"Calendrical&#160;Calculations\" (3-е издание).</string>
+    <string name="calculator_displayString_time4a_4j">Основан на астрономических расчетах, опубликованных Jean Meeus в книге \"Astronomical Algorithms\" (2-е издание).</string>
 
 
 </resources>
