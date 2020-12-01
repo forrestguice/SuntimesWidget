@@ -22,10 +22,10 @@
     <string name="configAction_setTimeZone">Выбрать часовой пояс</string>
     <string name="configAction_setDate">Выбрать дату</string>
     <string name="configAction_viewDate">Отобразить дату</string>
-    <string name="configAction_sunDialog">Позиция солнца</string>
+    <string name="configAction_sunDialog">Солнечная позиция</string>
     <string name="configAction_equinoxDialog">Солнцест. / Равнод.</string>
     <string name="configAction_worldMap">Карта мира</string>
-    <string name="configAction_moon">Луна</string>
+    <string name="configAction_moon">Лунная позиция</string>
     <string name="configAction_help">Справка</string>
     <string name="configAction_overflow">Больше</string>
     <string name="configAction_settings">Настройки</string>
@@ -309,7 +309,7 @@
     <string name="configLabel_general_showTimeDate">Показывать время рядом с датой</string>        <!-- checkbox label -->
     <string name="configLabel_general_showTimeDate_summary">Включить время в отображение дат.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showWeeks">Дни в недели</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showWeeks">Использовать недели</string>        <!-- checkbox label -->
     <string name="configLabel_general_showWeeks_summary">Промежутки времени длиной более 7 дней показывать как недели (15 дн. -> 2 нед. 1 д.).</string>    <!-- checkbox label -->
 
     <string name="configLabel_general_showHours">Показывать часы</string>        <!-- checkbox label -->
@@ -340,23 +340,23 @@
     <string name="risesetorder_lastnext">Прош./след. событие</string>           <!-- setting -->
 
     <!-- Widget Setting: time mode -->
-    <string name="timeMode_noon_short">Солн.&#160;полдень</string>                    <!-- setting -->
+    <string name="timeMode_noon_short">Солн. полд.</string>                    <!-- setting -->
     <string name="timeMode_noon">Солнечный полдень</string>                    <!-- setting -->
-    <string name="timeMode_official_short">Фактич.&#160;вр.</string>              <!-- setting -->
+    <string name="timeMode_official_short">Фактич. вр.</string>              <!-- setting -->
     <string name="timeMode_official">Фактическое время</string>               <!-- setting -->
-    <string name="timeMode_civil_short">Гражд.&#160;сум.</string>                  <!-- setting -->
+    <string name="timeMode_civil_short">Гражд. сум.</string>                  <!-- setting -->
     <string name="timeMode_civil">Гражданские сумерки</string>               <!-- setting -->
-    <string name="timeMode_nautical_short">Навигац.&#160;сум.</string>            <!-- setting -->
+    <string name="timeMode_nautical_short">Навигац. сум.</string>            <!-- setting -->
     <string name="timeMode_nautical">Навигационные сумерки</string>         <!-- setting -->
-    <string name="timeMode_astronomical_short">Астроном.&#160;сум.</string>    <!-- setting -->
+    <string name="timeMode_astronomical_short">Астроном. сум.</string>    <!-- setting -->
     <string name="timeMode_astronomical">Астрономические сумерки</string> <!-- setting -->
     <string name="timeMode_night">Ночь</string>                   <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_day">День</string>                       <!-- a label (not an actual timeMode setting) -->
-    <string name="timeMode_golden_short">Золот.&#160;час</string>                <!-- setting -->
+    <string name="timeMode_golden_short">Золотой час</string>                <!-- setting -->
     <string name="timeMode_golden">Золотой час</string>                 <!-- setting -->
-    <string name="timeMode_blue8_short">Реж.вр. (8\u00B0)</string>                    <!-- setting -->
+    <string name="timeMode_blue8_short">Режимн. вр. (8\u00B0)</string>                    <!-- setting -->
     <string name="timeMode_blue8">Режимное время (8\u00B0)</string>                     <!-- setting -->
-    <string name="timeMode_blue4_short">Реж.вр. (4\u00B0)</string>                    <!-- setting -->
+    <string name="timeMode_blue4_short">Режимн. вр. (4\u00B0)</string>                    <!-- setting -->
     <string name="timeMode_blue4">Режимное время (4\u00B0)</string>                     <!-- setting -->
 
     <string name="timeMode_equinox_vernal">Весеннее равноденствие</string>      <!-- setting -->
@@ -815,10 +815,10 @@
     <string name="configLabel_alarms_notifications_summary0">%1$s</string>                    <!-- "On", "Off" -->
     <string name="configLabel_alarms_notifications_summary1">На экране блокировки: %1$s</string>    <!-- "On lock screen: Off -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Уведомления запрещены. Сигналы могут работать некорректно.</string>  <!-- snackbar message -->
-
+    <!-- TODO: Check all "..._summary" strings up to "configLabel_alarms_hardwarebuttons" for correctness of display (I'm not sure) -->
     <string name="configLabel_alarms_silenceAfter">Уведомление о сигнале</string>
     <string name="configLabel_alarms_silenceAfter_summary">Начать показывать уведомление о сигнале за <xliff:g id="timePeriod" example="10 minutes">%s</xliff:g> до его начала.</string>
-Отключать звук будильника через
+
     <string name="configLabel_alarms_timeoutAfter">Автовыключение</string>
     <string name="configLabel_alarms_timeoutAfter_summary">Выключать сигнал автоматически после <xliff:g id="timePeriod" example="10 minutes">%s</xliff:g> работы.</string>
 
@@ -871,7 +871,7 @@
 
     <string name="configLabel_alarmMisc">Прочие настройки</string>
     <string name="configLabel_alarms_showlauncher">Отображать ярлык</string>
-    <string name="configLabel_alarms_showlauncher_summary">Отображать приложение будильников Suntimes Alarms в списке приложений отдельно.</string>
+    <string name="configLabel_alarms_showlauncher_summary">Показывать ярлык приложения будильников Suntimes Alarms в общем списке приложений.</string>
 
     <!--
          APP SETTINGS
@@ -888,7 +888,7 @@
     <string name="configLabel_widgetList_emptyMsg">Виджетов нет</string>          <!-- a label that is displayed in place of an empty listview -->
 
     <!-- App Setting: Places -->
-    <string name="configLabel_places">Местоположения</string>                           <!-- group title -->
+    <string name="configLabel_places">Местоположение</string>                           <!-- group title -->
     <string name="configLabel_places_manage">Редактировать места</string>             <!-- group title -->
     <!-- TODO for Forrest: please remove the line below if it's no longer needed. -->
     <!-- <string name="configLabel_places_emptyMsg">@string/configLabel_places</string> --> 
@@ -908,7 +908,7 @@
 
 
     <!-- App Setting: UI -->
-    <string name="configLabel_ui">Дополнительная информация</string>                       <!-- group title -->
+    <string name="configLabel_ui">Настройки отображения</string>                       <!-- group title -->
     <string name="configLabel_ui_fields">Главный экран</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
     <string name="configLabel_ui_misc">Прочее</string>
 
@@ -952,7 +952,7 @@
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
         <item>@string/appThemes_lightTheme</item>
         <item>@string/appThemes_darkTheme</item>
-        <item>Выбирать по времени (темная&#160;-&#160;ночью)</item>
+        <item>Выбирать по времени (темная - ночью)</item>
     </string-array>
 
     <!-- App Setting: time format -->
@@ -1414,17 +1414,17 @@
     <string name="about_dialog_title">О приложении</string>
     <string name="app_name">Suntimes</string>
     <string name="app_name_alarmclock">Suntimes Alarms</string>
-    <string name="app_name_widget0">Стандартный</string>
+    <string name="app_name_widget0">Стандартный виджет</string>
     <string name="app_name_widget1">Стандартный (переключаемый)</string>
-    <string name="app_name_widget2">Солнечная позиция</string>
-    <string name="app_name_clockwidget0">Часы</string>
-    <string name="app_name_solsticewidget0">Солнцестояние</string>
-    <string name="app_name_moonwidget0">Луна</string>
+    <string name="app_name_widget2">Солнечная позиция (виджет)</string>
+    <string name="app_name_clockwidget0">Часы (виджет)</string>
+    <string name="app_name_solsticewidget0">Солнцестояние (виджет)</string>
+    <string name="app_name_moonwidget0">Лунный виджет</string>
     <string name="app_version"><![CDATA[<b>Версия:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
-    <string name="app_shortdesc">Отображает время солнечного и лунного освещения.</string>
+    <string name="app_shortdesc">Показывает время солнечного и лунного освещения.</string>
     <string name="app_support_url"><![CDATA[
         <b>Поддержка:</b> посетите
-        <a href="https://github.com/forrestguice/SuntimesWidget/issues">трекер отслеживания проблем</a> для создания запроса.
+        <a href="https://github.com/forrestguice/SuntimesWidget/issues">трекер отслеживания проблем</a> на GitHub для создания запроса.
     ]]></string>
     <string name="app_source_url"><xliff:g id="url"><![CDATA[
         <a href="https://github.com/forrestguice/SuntimesWidget/">github.com/forrestguice/SuntimesWidget/</a>
@@ -1603,8 +1603,8 @@
         Эта функция теперь доступна в виде <a href="moreInfoLink">отдельного приложения</a>.
     ]]></string>
 
-    <string name="privacy_policy"><![CDATA[<b>Заявление о приватности:</b><br/>Suntimes не собирает, не хранит и не передает личные данные пользователя. Приложение не содержит <b>рекламы</b>, <b>аналитики</b>, <b>трекеров</b> и не требует <b>лишних разрешений</b>. <br/><br/>Приложение настраивается на основе данных о местоположении. Эта информация (и другие данные конфигурации, используемые приложением) хранятся локально и не покидают устройство.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
-    <string name="privacy_permission_location"><![CDATA[Suntimes запрашивает разрешение на <b>определение местоположения</b>, чтобы узнать вашу текущую долготу и широту. <br/><br/>Это разрешение является необязательным: по умолчанию местоположение настраивается вручную.]]></string>
+    <string name="privacy_policy"><![CDATA[<b>Заявление о конфиденциальности:</b><br/>Suntimes <b>не собирает, не хранит и не передает</b> личные данные пользователя. Приложение <b>не содержит рекламы</b>, <b>аналитики</b>, <b>трекеров</b> и <b>не требует лишних разрешений</b>. <br/><br/>Приложение настраивается на основе данных о местоположении. Эта информация (и другие данные конфигурации, используемые приложением) хранятся локально и не покидают устройство.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
+    <string name="privacy_permission_location"><![CDATA[Suntimes запрашивает разрешение на <b>определение местоположения</b>, чтобы узнать вашу текущую долготу и широту. <br/>Данное разрешение является необязательным: по умолчанию местоположение настраивается вручную.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes запрашивает разрешение на <b>использование внешнего хранилища</b> для резервного копирования или экспорта данных в файл (например, мест и тем оформления).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms запрашивает разрешение на <b>использование внешнего хранилища</b> для воспроизведения звуков, находящихся на SD-карте. <br/><br/>Это разрешение является необязательным: если доступ запрещен, будет воспроизводиться звук по умолчанию. Это разрешение не требуется для использования встроенных (системных) звуков, размещенных в Media Storage.]]></string>
     <string name="privacy_permissiondialog_prompt"><![CDATA[Запросить разрешения?]]></string>
@@ -1627,7 +1627,7 @@
     <string name="calculator_displayString_time4a_simple">Простой, относительно быстрый, но неточный калькулятор.</string>
     <string name="calculator_displayString_time4a_noaa">Следует алгоритмам, опубликованным Национальным управлением океанических и атмосферных исследований США (NOAA).</string>
     <string name="calculator_displayString_time4a_cc">Следует алгоритмам, опубликованным N.&#160;Dershowitz и E.M.&#160;Reingold в книге \"Calendrical&#160;Calculations\" (3-е издание).</string>
-    <string name="calculator_displayString_time4a_4j">Основан на астрономических расчетах, опубликованных Jean Meeus в книге \"Astronomical Algorithms\" (2-е издание).</string>
+    <string name="calculator_displayString_time4a_4j">Основан на астрономических расчетах, опубликованных Jean Meeus в книге \"Astronomical&#160;Algorithms\" (2-е издание).</string>
 
 
 </resources>
