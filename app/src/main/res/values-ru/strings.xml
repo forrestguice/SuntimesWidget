@@ -619,7 +619,7 @@
     <string name="configLabel_themeBackground_color">Пользовательский</string>      <!-- custom background -->
     <string name="configLabel_themeColorBackground">Цвет</string>      <!-- color label -->
 
-    <string name="configLabel_themeColorTitle">Названия</string>     <!-- color label -->
+    <string name="configLabel_themeColorTitle">Название</string>     <!-- color label -->
     <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
 
     <string name="configLabel_themeColorText">Текст</string>       <!-- color label -->
@@ -640,8 +640,8 @@
 
     <string name="configLabel_themeColorMoonrise">Восход луны</string> <!-- color label -->
     <string name="configLabel_themeColorMoonset">Заход луны</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonWaxing">Растущий(ая)</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonWaning">Убывающий(ая)</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaxing">Растущая</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaning">Убывающая</string> <!-- color label -->
     <string name="configLabel_themeColorMoonFull">Полнолуние</string> <!-- color label -->
     <string name="configLabel_themeColorMoonNew">Новолуние</string> <!-- color label -->
 
@@ -660,9 +660,9 @@
     <string name="configLabel_themeColorBorder">Граница</string>         <!-- color label -->
     <string name="configHint_themeColorBorder">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeBorderWidthRiseSet">Ширина границы (восход/заход)</string>  <!-- size label -->
+    <string name="configLabel_themeBorderWidthRiseSet">Ширина границ (восх/зах)</string>  <!-- size label -->
     <string name="configHint_themeBorderWidthRiseSet">2</string>                          <!-- size hint -->
-    <string name="configLabel_themeBorderWidthNoon">Ширина границы (полдень)</string>         <!-- size label -->
+    <string name="configLabel_themeBorderWidthNoon">Ширина границ (полдень)</string>         <!-- size label -->
     <string name="configHint_themeBorderWidthNoon">3</string>                             <!-- size hint -->
 
     <string name="configLabel_themeColorSuffix">Суффикс</string>   <!-- color label -->
@@ -671,20 +671,20 @@
     <string name="configLabel_themeColorTime">Текст 2</string>      <!-- color label -->
     <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeSizeTitle">Название - размер шрифта:</string>  <!-- edit label -->
+    <string name="configLabel_themeSizeTitle">Название (размер шрифта):</string>  <!-- edit label -->
     <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
 
     <string name="configLabel_themeBoldTitle">Жирный</string>          <!-- checkbox label -->
 
-    <string name="configLabel_themeSizeText">Текст - размер шрифта:</string>    <!-- edit label -->
+    <string name="configLabel_themeSizeText">Текст (размер шрифта):</string>    <!-- edit label -->
     <string name="configHint_themeSizeText">10</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themeSizeTime">Время - размер шрифта:</string>    <!-- edit label -->
+    <string name="configLabel_themeSizeTime">Время (размер шрифта):</string>    <!-- edit label -->
     <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint -->
 
     <string name="configLabel_themeBoldTime">Жирный</string>          <!-- checkbox label -->
 
-    <string name="configLabel_themeSizeSuffix">Суффикс - размер шрифта:</string> <!-- edit label -->
+    <string name="configLabel_themeSizeSuffix">Суффикс (размер шрифта):</string> <!-- edit label -->
     <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
 
     <string name="configLabel_themePadding">Отступ от края:</string>            <!-- edit label -->
@@ -815,7 +815,7 @@
     <string name="configLabel_alarms_notifications_summary0">%1$s</string>                    <!-- "On", "Off" -->
     <string name="configLabel_alarms_notifications_summary1">На экране блокировки: %1$s</string>    <!-- "On lock screen: Off -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Уведомления запрещены. Сигналы могут работать некорректно.</string>  <!-- snackbar message -->
-    <!-- TODO: Check all "..._summary" strings up to "configLabel_alarms_hardwarebuttons" for correctness of display (I'm not sure) -->
+    <!-- TODO for Forrest: Please. check all "..._summary" strings up to "configLabel_alarms_hardwarebuttons" for correctness of displaying comments around the time periods. -->
     <string name="configLabel_alarms_silenceAfter">Уведомление о сигнале</string>
     <string name="configLabel_alarms_silenceAfter_summary">Начать показывать уведомление о сигнале за <xliff:g id="timePeriod" example="10 minutes">%s</xliff:g> до его начала.</string>
 
@@ -918,7 +918,7 @@
 
     <!-- App Setting: UI Warnings -->
     <string name="configLabel_ui_showWarnings">Показывать предупреждения</string>
-    <string name="configLabel_ui_showWarnings_summary">Предупреждать о расхождении выбранной вручную конфигурации с расчитанной автоматически (время, дата, местоположение).</string>
+    <string name="configLabel_ui_showWarnings_summary">Предупреждать о расхождении выбранной вручную конфигурации с рассчитанной автоматически (время, дата, местоположение).</string>
 
     <!-- App Setting: Show Lightmap -->
     <string name="configLabel_ui_showLightmap">Карта освещенности (линия)</string>
@@ -934,7 +934,7 @@
 
     <!-- App Setting: Solstice Tracking Mode -->
     <string name="configLabel_ui_solsticeTrackingMode">Выбор солнцест. / равнод.</string>
-    <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g> отображается.</string>
+    <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
 
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Источник расчетов</string>
@@ -1604,7 +1604,7 @@
     ]]></string>
 
     <string name="privacy_policy"><![CDATA[<b>Заявление о конфиденциальности:</b><br/>Suntimes <b>не собирает, не хранит и не передает</b> личные данные пользователя. Приложение <b>не содержит рекламы</b>, <b>аналитики</b>, <b>трекеров</b> и <b>не требует лишних разрешений</b>. <br/><br/>Приложение настраивается на основе данных о местоположении. Эта информация (и другие данные конфигурации, используемые приложением) хранятся локально и не покидают устройство.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
-    <string name="privacy_permission_location"><![CDATA[Suntimes запрашивает разрешение на <b>определение местоположения</b>, чтобы узнать вашу текущую долготу и широту. <br/>Данное разрешение является необязательным: по умолчанию местоположение настраивается вручную.]]></string>
+    <string name="privacy_permission_location"><![CDATA[Suntimes запрашивает разрешение на <b>определение местоположения</b>, чтобы узнать вашу текущую долготу и широту. Данное разрешение является <b>необязательным</b>: по умолчанию местоположение настраивается вручную.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes запрашивает разрешение на <b>использование внешнего хранилища</b> для резервного копирования или экспорта данных в файл (например, мест и тем оформления).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms запрашивает разрешение на <b>использование внешнего хранилища</b> для воспроизведения звуков, находящихся на SD-карте. <br/><br/>Это разрешение является необязательным: если доступ запрещен, будет воспроизводиться звук по умолчанию. Это разрешение не требуется для использования встроенных (системных) звуков, размещенных в Media Storage.]]></string>
     <string name="privacy_permissiondialog_prompt"><![CDATA[Запросить разрешения?]]></string>
