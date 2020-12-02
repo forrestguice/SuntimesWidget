@@ -869,9 +869,13 @@
     <string name="configLabel_places">Lugares</string>                           <!-- group title -->
     <string name="configLabel_places_manage">Gerenciar Lugares</string>             <!-- group title -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
-    <string name="configLabel_places_multiSelect">%s lugares</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->
     <string name="configLabel_places_build">Adicionar Lugares</string>
     <string name="configLabel_places_build_summary">Verificar lugares e adicionar cidades à base de dados.</string>
+
+    <plurals name="placePlural">
+        <item quantity="one">%d lugar</item>
+        <item quantity="other">%d lugares</item>
+    </plurals>  <!-- TODO: verify -->
 
     <string name="configAction_addPlace">Adicionar</string>              <!-- button (contentDescription) -->
     <string name="configAction_copyPlace">Copiar</string>            <!-- button (contentDescription) -->
@@ -1227,8 +1231,10 @@
     <string name="locationdelete_dialog_title">Remover Local?</string>   <!-- title; remove 1 place -->
     <string name="locationdelete_dialog_title1">Remover Locais?</string>  <!-- title; remove multiple places -->
     <string name="locationdelete_dialog_message">Tem certeza que deseja remover %s?</string>
-    <string name="locationdelete_dialog_success">Local foi removido.</string>   <!-- toast -->
-    <string name="locationdelete_dialog_success1">%s locais foram removidos.</string>   <!-- toast; e.g. 2 places were deleted -->
+    <plurals name="locationdelete_dialog_success">
+        <item quantity="one">Local foi removido.</item>
+        <item quantity="other">%s locais foram removidos.</item>
+    </plurals>  <!-- TODO: verify -->
     <string name="locationdelete_dialog_ok">Apagar</string>
     <string name="locationdelete_dialog_cancel">Cancelar</string>
 

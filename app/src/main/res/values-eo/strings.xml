@@ -815,9 +815,13 @@
     <string name="configLabel_places">Lokoj</string>                           <!-- group title -->
     <string name="configLabel_places_manage">Administri lokojn</string>             <!-- group title -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
-    <string name="configLabel_places_multiSelect">%s lokoj</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->
     <string name="configLabel_places_build">Aldoni mondajn lokojn</string>
     <string name="configLabel_places_build_summary">Skani lokojn kaj aldoni urbojn al la datumbazo.</string>
+
+    <plurals name="placePlural">
+        <item quantity="one">%d lokoj</item>
+        <item quantity="other">%d lokoj</item>
+    </plurals>  <!-- TODO: verify -->
 
     <string name="configAction_addPlace">Aldoni</string>              <!-- button (contentDescription) -->
     <string name="configAction_copyPlace">Kopii</string>            <!-- button (contentDescription) -->
@@ -1145,8 +1149,10 @@
     <string name="locationdelete_dialog_title">Ĉu forigi lokon?</string>   <!-- title; remove 1 place -->
     <string name="locationdelete_dialog_title1">Ĉu forigi lokojn?</string>  <!-- title; remove multiple places -->
     <string name="locationdelete_dialog_message">Ĉu vi certe volas forigi: %s?</string>
-    <string name="locationdelete_dialog_success">Forigis lokon.</string>   <!-- toast -->
-    <string name="locationdelete_dialog_success1">Forigis %s lokojn.</string>   <!-- toast; e.g. 2 places were deleted -->
+    <plurals name="locationdelete_dialog_success">
+        <item quantity="one">Forigis lokon.</item>
+        <item quantity="other">Forigis %d lokojn.</item>
+    </plurals>  <!-- TODO: verify -->
     <string name="locationdelete_dialog_ok">Forigi</string>
     <string name="locationdelete_dialog_cancel">Nuligi</string>
 

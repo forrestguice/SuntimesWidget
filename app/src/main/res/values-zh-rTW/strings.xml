@@ -834,9 +834,13 @@
     <string name="configLabel_places">地點</string>                           <!-- group title -->
     <string name="configLabel_places_manage">Manage Places</string>             <!-- group title -->  <!-- TODO -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
-    <string name="configLabel_places_multiSelect">%s places</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->   <!-- TODO -->
     <string name="configLabel_places_build">添加世界地點</string>
     <string name="configLabel_places_build_summary">掃描本地並添加城市到數據庫。</string>
+
+    <plurals name="placePlural">
+        <item quantity="other">%d places</item>
+    </plurals>  <!-- TODO -->
+
 
     <string name="configAction_addPlace">添加</string>              <!-- button (contentDescription) -->
     <string name="configAction_copyPlace">複製</string>            <!-- button (contentDescription) -->
@@ -1192,8 +1196,9 @@
     <string name="locationdelete_dialog_title">Remove Place?</string>   <!-- title; remove 1 place --> <!-- TODO -->
     <string name="locationdelete_dialog_title1">Remove Places?</string>  <!-- title; remove multiple places --> <!-- TODO -->
     <string name="locationdelete_dialog_message">Are you sure you want to remove %s?</string>   <!-- TODO -->
-    <string name="locationdelete_dialog_success">Place was removed.</string>   <!-- toast --> <!-- TODO -->
-    <string name="locationdelete_dialog_success1">%s places were removed.</string>   <!-- toast; e.g. 2 places were deleted --> <!-- TODO -->
+    <plurals name="locationdelete_dialog_success">
+        <item quantity="other">%d places were removed.</item>
+    </plurals>  <!-- TODO -->
     <string name="locationdelete_dialog_ok">刪除</string>
     <string name="locationdelete_dialog_cancel">取消</string>
 

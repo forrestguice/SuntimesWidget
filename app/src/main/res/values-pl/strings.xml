@@ -828,9 +828,15 @@
     <string name="configLabel_places">Miejsca</string>                           <!-- group title -->
     <string name="configLabel_places_manage">Zarządzaj miejscami</string>             <!-- group title -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
-    <string name="configLabel_places_multiSelect">wiele miejsc (%s)</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->
     <string name="configLabel_places_build">Dodaj światowe miejsca</string>
     <string name="configLabel_places_build_summary">Przeskanuj miejsca i dodaj miasta do bazy danych.</string>
+
+    <plurals name="placePlural">
+        <item quantity="one">wiele miejsc (%s)</item>
+        <item quantity="other">wiele miejsc (%d)</item>
+        <item quantity="few">wiele miejsc (%d)</item>
+        <item quantity="many">wiele miejsc (%d)</item>
+    </plurals>  <!-- TODO: verify -->
 
     <string name="configAction_addPlace">Dodaj</string>              <!-- button (contentDescription) -->
     <string name="configAction_copyPlace">Kopiuj</string>            <!-- button (contentDescription) -->
@@ -1165,8 +1171,12 @@
     <string name="locationdelete_dialog_title">Czy usunąć miejsce?</string>   <!-- title; remove 1 place -->
     <string name="locationdelete_dialog_title1">Czy usunąć miejsca?</string>  <!-- title; remove multiple places -->
     <string name="locationdelete_dialog_message">Czy na pewno chcesz usunąć: %s?</string>
-    <string name="locationdelete_dialog_success">Usunięto miejsce.</string>   <!-- toast -->
-    <string name="locationdelete_dialog_success1">Usunięto kilka (%s) miejsc.</string>   <!-- toast; e.g. 2 places were deleted -->
+    <plurals name="locationdelete_dialog_success">
+        <item quantity="one">Usunięto miejsce.</item>
+        <item quantity="other">Usunięto kilka (%d) miejsc.</item>
+        <item quantity="few">Usunięto kilka (%d) miejsc.</item>
+        <item quantity="many">Usunięto kilka (%d) miejsc.</item>
+    </plurals>  <!-- TODO: verify -->
     <string name="locationdelete_dialog_ok">Usuń</string>
     <string name="locationdelete_dialog_cancel">Anuluj</string>
 

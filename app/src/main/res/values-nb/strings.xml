@@ -828,9 +828,13 @@
     <string name="configLabel_places">Steder</string>                           <!-- group title -->
     <string name="configLabel_places_manage">Håndter steder</string>             <!-- group title -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
-    <string name="configLabel_places_multiSelect">%s steder</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->
     <string name="configLabel_places_build">Legg til verdenssteder</string>
     <string name="configLabel_places_build_summary">Skann standardsteder og legg til byer i databasen.</string>
+
+    <plurals name="placePlural">
+        <item quantity="one">%d steder</item>
+        <item quantity="other">%d steder</item>
+    </plurals>  <!-- TODO: verify -->
 
     <string name="configAction_addPlace">Legg til</string>              <!-- button (contentDescription) -->
     <string name="configAction_copyPlace">Kopier</string>            <!-- button (contentDescription) -->
@@ -1177,8 +1181,10 @@
     <string name="locationdelete_dialog_title">Fjerne sted?</string>   <!-- title; remove 1 place -->
     <string name="locationdelete_dialog_title1">Fjerne steder?</string>  <!-- title; remove multiple places -->
     <string name="locationdelete_dialog_message">Er du sikker på at du vil fjerne %s?</string>
-    <string name="locationdelete_dialog_success">Sted ble fjernet.</string>   <!-- toast -->
-    <string name="locationdelete_dialog_success1">%s steder ble fjernet.</string>   <!-- toast; e.g. 2 places were deleted -->
+    <plurals name="locationdelete_dialog_success">
+        <item quantity="one">Sted ble fjernet.</item>
+        <item quantity="other">%d steder ble fjernet.</item>
+    </plurals>  <!-- TODO: verify -->
     <string name="locationdelete_dialog_ok">Fjern</string>
     <string name="locationdelete_dialog_cancel">Avbryt</string>
 

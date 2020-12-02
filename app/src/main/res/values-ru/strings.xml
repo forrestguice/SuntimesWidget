@@ -890,10 +890,15 @@
     <!-- App Setting: Places -->
     <string name="configLabel_places">Places</string>                           <!-- group title -->
     <string name="configLabel_places_emptyMsg">@string/configLabel_places</string>
-    <string name="configLabel_places_multiSelect">%s places</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->
     <string name="configLabel_places_build">Add World Places</string>
     <string name="configLabel_places_build_summary">Scan locales and add cities to the database.</string>
 
+    <plurals name="placePlural">
+        <item quantity="one">%d place</item>
+        <item quantity="other">%d places</item>
+        <item quantity="few">%d places</item>
+        <item quantity="many">%d places</item>
+    </plurals>  <!-- TODO -->
 
     <string name="configAction_addPlace">Add</string>              <!-- button (contentDescription) -->
     <string name="configAction_copyPlace">Copy</string>            <!-- button (contentDescription) -->
@@ -1343,8 +1348,12 @@
     <string name="locationdelete_dialog_title">Remove Place?</string>   <!-- title; remove 1 place -->
     <string name="locationdelete_dialog_title1">Remove Places?</string>  <!-- title; remove multiple places -->
     <string name="locationdelete_dialog_message">Are you sure you want to remove %s?</string>
-    <string name="locationdelete_dialog_success">Place was removed.</string>   <!-- toast -->
-    <string name="locationdelete_dialog_success1">%s places were removed.</string>   <!-- toast; e.g. 2 places were deleted -->
+    <plurals name="locationdelete_dialog_success">
+        <item quantity="one">Place was removed.</item>
+        <item quantity="other">%d places were removed.</item>
+        <item quantity="few">%d places were removed.</item>
+        <item quantity="many">%d places were removed.</item>
+    </plurals>
     <string name="locationdelete_dialog_ok">Remove</string>
     <string name="locationdelete_dialog_cancel">Cancel</string>
 
