@@ -1240,7 +1240,6 @@
     <string name="msg_import_noresults">Import skipped; no new themes were found.</string>  <!-- TODO -->
 
     <plurals name="themePlural">
-        <item quantity="one">%d theme</item>
         <item quantity="other">%d themes</item>
     </plurals>  <!-- TODO -->
 

@@ -1232,8 +1232,8 @@
     <string name="locationdelete_dialog_title1">Remover Locais?</string>  <!-- title; remove multiple places -->
     <string name="locationdelete_dialog_message">Tem certeza que deseja remover %s?</string>
     <plurals name="locationdelete_dialog_success">
-        <item quantity="one">Local foi removido.</item>
-        <item quantity="other">%s locais foram removidos.</item>
+        <item quantity="one">%d local foi removido.</item>
+        <item quantity="other">%d locais foram removidos.</item>
     </plurals>  <!-- TODO: verify -->
     <string name="locationdelete_dialog_ok">Apagar</string>
     <string name="locationdelete_dialog_cancel">Cancelar</string>

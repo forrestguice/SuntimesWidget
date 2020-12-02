@@ -1349,7 +1349,7 @@
     <string name="locationdelete_dialog_title1">Remove Places?</string>  <!-- title; remove multiple places -->
     <string name="locationdelete_dialog_message">Are you sure you want to remove %s?</string>
     <plurals name="locationdelete_dialog_success">
-        <item quantity="one">Place was removed.</item>
+        <item quantity="one">%d place was removed.</item>
         <item quantity="other">%d places were removed.</item>
         <item quantity="few">%d places were removed.</item>
         <item quantity="many">%d places were removed.</item>
