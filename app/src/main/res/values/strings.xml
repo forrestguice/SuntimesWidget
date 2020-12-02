@@ -808,6 +808,7 @@
     <string name="configLabel_alarms_notifications_summary1">On lock screen: %1$s</string>    <!-- "On lock screen: Off -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Notifications are off. Alarms may fail to display correctly.</string>  <!-- snackbar message -->
 
+    <!-- TODO: fix displaying comments in "..._summary" strings (text around %s) (MillisecondPickerPreference) -->
     <string name="configLabel_alarms_silenceAfter">Go silent after</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 

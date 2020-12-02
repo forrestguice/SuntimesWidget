@@ -817,7 +817,7 @@
     <string name="configLabel_alarms_notifications_summary0">%1$s</string>                    <!-- "On", "Off" -->
     <string name="configLabel_alarms_notifications_summary1">На экране блокировки: %1$s</string>    <!-- "On lock screen: Off -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Уведомления запрещены. Сигналы могут работать некорректно.</string>  <!-- snackbar message -->
-    <!-- TODO for Forrest: Please. check all "..._summary" strings up to "configLabel_alarms_hardwarebuttons" for correctness of displaying comments around the time periods. -->
+
     <string name="configLabel_alarms_silenceAfter">Воспроизводить сигнал в течение</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 hours">%s</xliff:g></string>
 
