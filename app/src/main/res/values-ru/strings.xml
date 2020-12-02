@@ -890,8 +890,7 @@
     <!-- App Setting: Places -->
     <string name="configLabel_places">Местоположение</string>                           <!-- group title -->
     <string name="configLabel_places_manage">Редактировать места</string>             <!-- group title -->
-    <!-- TODO for Forrest: please remove the line below if it's no longer needed. -->
-    <!-- <string name="configLabel_places_emptyMsg">@string/configLabel_places</string> --> 
+    <!-- <string name="configLabel_places_emptyMsg">@string/configLabel_places</string> -->   <!-- a label that is displayed in place of an empty listview (uncomment to override) -->
     <string name="configLabel_places_multiSelect">%s мест</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->
     <string name="configLabel_places_build">Добавить местоположения</string>
     <string name="configLabel_places_build_summary">Просканировать локали и добавить города в базу.</string>
@@ -1226,7 +1225,7 @@
     <string name="worldmap_dialog_option_all">Оба</string>
     <string name="worldmap_dialog_option_location">Местоположение</string>
     <string name="worldmap_dialog_option_latitudes">Линии широт</string>
-    <string name="worldmap_dialog_speed_15m">&#215; 15 мин.</string> <!-- TODO for Forrest: please, add a comment to basic strings.xml that it is minutes (for translators) -->
+    <string name="worldmap_dialog_speed_15m">&#215; 15 мин.</string>
     <string name="worldmap_dialog_speed_1d">&#215; 1 день</string>
     <string name="configAction_shareMap">Поделиться</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 

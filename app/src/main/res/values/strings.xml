@@ -880,7 +880,7 @@
     <!-- App Setting: Places -->
     <string name="configLabel_places">Places</string>                           <!-- group title -->
     <string name="configLabel_places_manage">Manage Places</string>             <!-- group title -->
-    <string name="configLabel_places_emptyMsg">@string/configLabel_places</string>
+    <string name="configLabel_places_emptyMsg">@string/configLabel_places</string>  <!-- a label that is displayed in place of an empty listview -->
     <string name="configLabel_places_multiSelect">%s places</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->   <!-- TODO: needs to be a plural? -->
     <string name="configLabel_places_build">Add World Places</string>
     <string name="configLabel_places_build_summary">Scan locales and add cities to the database.</string>
@@ -1332,8 +1332,8 @@
     <string name="worldmap_dialog_option_all">Both</string>
     <string name="worldmap_dialog_option_location">Location</string>
     <string name="worldmap_dialog_option_latitudes">Latitudes</string>
-    <string name="worldmap_dialog_speed_15m">&#215; 15m</string>
-    <string name="worldmap_dialog_speed_1d">&#215; 1d</string>
+    <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- menu item; "x 15m"; increments of 15 minutes -->
+    <string name="worldmap_dialog_speed_1d">&#215; 1d</string>      <!-- menu item; "x 1d"; increments of 1 day -->
     <string name="configAction_shareMap">Share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <!-- Dialog: Set Alarm -->
