@@ -504,10 +504,12 @@
 
     <string name="clearactions_dialog_msg">Are you sure you want to reset to defaults?\n\nAll custom actions will be removed.</string>    <!-- TODO -->
     <string name="clearactions_dialog_ok">Clear</string>    <!-- TODO -->
+    <!--<string name="clearactions_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="clearactions_toast">Actions reset to defaults.</string>    <!-- TODO -->
 
     <string name="saveaction_dialog_title">Add Action</string>    <!-- TODO -->
     <string name="saveaction_dialog_ok">保存</string>
+    <!--<string name="saveaction_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="saveaction_dialog_suggest">Suggest</string>                  <!-- TODO -->
     <string name="saveaction_toast">Saved action \"%1$s\" (%2$s).</string>    <!-- TODO -->
 
@@ -832,9 +834,13 @@
     <string name="configLabel_places">地點</string>                           <!-- group title -->
     <string name="configLabel_places_manage">Manage Places</string>             <!-- group title -->  <!-- TODO -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
-    <string name="configLabel_places_multiSelect">%s places</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->   <!-- TODO -->
     <string name="configLabel_places_build">添加世界地點</string>
     <string name="configLabel_places_build_summary">掃描本地並添加城市到數據庫。</string>
+
+    <plurals name="placePlural">
+        <item quantity="other">%d places</item>
+    </plurals>  <!-- TODO -->
+
 
     <string name="configAction_addPlace">添加</string>              <!-- button (contentDescription) -->
     <string name="configAction_copyPlace">複製</string>            <!-- button (contentDescription) -->
@@ -1190,8 +1196,9 @@
     <string name="locationdelete_dialog_title">Remove Place?</string>   <!-- title; remove 1 place --> <!-- TODO -->
     <string name="locationdelete_dialog_title1">Remove Places?</string>  <!-- title; remove multiple places --> <!-- TODO -->
     <string name="locationdelete_dialog_message">Are you sure you want to remove %s?</string>   <!-- TODO -->
-    <string name="locationdelete_dialog_success">Place was removed.</string>   <!-- toast --> <!-- TODO -->
-    <string name="locationdelete_dialog_success1">%s places were removed.</string>   <!-- toast; e.g. 2 places were deleted --> <!-- TODO -->
+    <plurals name="locationdelete_dialog_success">
+        <item quantity="other">%d places were removed.</item>
+    </plurals>  <!-- TODO -->
     <string name="locationdelete_dialog_ok">刪除</string>
     <string name="locationdelete_dialog_cancel">取消</string>
 
@@ -1233,7 +1240,6 @@
     <string name="msg_import_noresults">Import skipped; no new themes were found.</string>  <!-- TODO -->
 
     <plurals name="themePlural">
-        <item quantity="one">%d theme</item>
         <item quantity="other">%d themes</item>
     </plurals>  <!-- TODO -->
 
@@ -1400,6 +1406,9 @@
     <string name="feature_not_supported_by_api">This feature is not supported by API %1$s.</string>  <!-- TODO -->
     <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>  <!-- TODO -->
     <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>  <!-- TODO -->
+
+    <string name="dialog_ok">OK</string>  <!-- TODO -->
+    <string name="dialog_cancel">取消</string>
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

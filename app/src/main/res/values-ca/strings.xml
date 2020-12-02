@@ -493,10 +493,12 @@
 
     <string name="clearactions_dialog_msg">Are you sure you want to reset to defaults?\n\nAll custom actions will be removed.</string>    <!-- TODO -->
     <string name="clearactions_dialog_ok">Clear</string>    <!-- TODO -->
+    <!--<string name="clearactions_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="clearactions_toast">Actions reset to defaults.</string>    <!-- TODO -->
 
     <string name="saveaction_dialog_title">Add Action</string>    <!-- TODO -->
     <string name="saveaction_dialog_ok">Guardar</string>
+    <!--<string name="saveaction_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="saveaction_dialog_suggest">Suggest</string>                  <!-- TODO -->
     <string name="saveaction_toast">Saved action \"%1$s\" (%2$s).</string>    <!-- TODO -->
 
@@ -817,9 +819,13 @@
     <string name="configLabel_places">Llocs</string>                           <!-- group title -->
     <string name="configLabel_places_manage">Manage Places</string>             <!-- group title -->  <!-- TODO -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
-    <string name="configLabel_places_multiSelect">%s places</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->   <!-- TODO -->
     <string name="configLabel_places_build">Afegir llocs del món</string>
     <string name="configLabel_places_build_summary">Cerca locals i afegeix ciutats a la base de dades.</string>
+
+    <plurals name="placePlural">
+        <item quantity="one">%d place</item>
+        <item quantity="other">%d places</item>
+    </plurals>  <!-- TODO -->
 
     <string name="configAction_addPlace">Afegir</string>              <!-- button (contentDescription) -->
     <string name="configAction_copyPlace">Copiar</string>            <!-- button (contentDescription) -->
@@ -1175,8 +1181,10 @@
     <string name="locationdelete_dialog_title">Remove Place?</string>   <!-- title; remove 1 place --> <!-- TODO -->
     <string name="locationdelete_dialog_title1">Remove Places?</string>  <!-- title; remove multiple places --> <!-- TODO -->
     <string name="locationdelete_dialog_message">Are you sure you want to remove %s?</string>   <!-- TODO -->
-    <string name="locationdelete_dialog_success">Place was removed.</string>   <!-- toast --> <!-- TODO -->
-    <string name="locationdelete_dialog_success1">%s places were removed.</string>   <!-- toast; e.g. 2 places were deleted --> <!-- TODO -->
+    <plurals name="locationdelete_dialog_success">
+        <item quantity="one">Place was removed.</item>
+        <item quantity="other">%d places were removed.</item>
+    </plurals>  <!-- TODO -->
     <string name="locationdelete_dialog_ok">Remove</string>  <!-- TODO -->
     <string name="locationdelete_dialog_cancel">Canceŀlar</string>
 
@@ -1367,6 +1375,9 @@
     <string name="feature_not_supported_by_api">Aquesta caracteristica no està suportada per l\'API %1$s.</string>
     <string name="feature_not_supported_by_source">Aquesta caracteristica no està suportada per la font de dades actual.</string>
     <string name="reboot_required_message">És possible que es necessiti reiniciar per fer efectius els canvis.</string>
+
+    <string name="dialog_ok">OK</string>  <!-- TODO -->
+    <string name="dialog_cancel">Canceŀlar</string>
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
