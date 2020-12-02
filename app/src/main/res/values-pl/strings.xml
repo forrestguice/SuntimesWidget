@@ -497,10 +497,12 @@
 
     <string name="clearactions_dialog_msg">Czy na pewno chcesz przywrócić wartości domyślne?\n\nWszystkie własne czynności zostaną nadpisane.</string>
     <string name="clearactions_dialog_ok">Wyczyść</string>
+    <!--<string name="clearactions_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="clearactions_toast">Przywrócono czynności do wartości domyślnych.</string>
 
     <string name="saveaction_dialog_title">Dodaj czynność</string>
     <string name="saveaction_dialog_ok">Zapisz</string>
+    <!--<string name="saveaction_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="saveaction_dialog_suggest">Zaproponuj</string>
     <string name="saveaction_toast">Zapisano czynność „%1$s” (%2$s).</string>
 
@@ -1359,7 +1361,10 @@
     <string name="feature_not_supported_by_api">Ta funkcja nie jest wspierana przez API %1$s.</string>
     <string name="feature_not_supported_by_source">Ta funkcja nie jest wspierana przez obecne źródło danych.</string>
     <string name="reboot_required_message">Restart może być wymagany, aby zmiany zostały zastosowane.</string>
-    
+
+    <string name="dialog_ok">OK</string>  <!-- TODO -->
+    <string name="dialog_cancel">Cancel</string>  <!-- TODO -->
+
     <!-- calculator implemenations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
     <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>

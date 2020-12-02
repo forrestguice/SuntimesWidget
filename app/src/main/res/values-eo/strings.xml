@@ -489,10 +489,12 @@
 
     <string name="clearactions_dialog_msg">Ĉu vi certe volas restarigi implicitajn valorojn?\n\nĈiuj propraj agoj foriĝos.</string>
     <string name="clearactions_dialog_ok">Forigi ĉiujn</string>
+    <!--<string name="clearactions_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="clearactions_toast">Reagordis agojn al implicitaj valoroj.</string>
 
     <string name="saveaction_dialog_title">Aldoni agon</string>
     <string name="saveaction_dialog_ok">Konservi</string>
+    <!--<string name="saveaction_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="saveaction_dialog_suggest">Proponi</string>
     <string name="saveaction_toast">Konservis agon “%1$s” (%2$s).</string>
 
@@ -1345,6 +1347,9 @@
     <string name="feature_not_supported_by_api">Tiu ĉi eblaĵo ne estas subtenata per API %1$s.</string>
     <string name="feature_not_supported_by_source">Tiu ĉi eblaĵo ne estas subtenata per la nuna datum‑fonto.</string>
     <string name="reboot_required_message">Restarto povas esti bezonata por apliki ŝanĝojn.</string>
+
+    <string name="dialog_ok">OK</string>  <!-- TODO -->
+    <string name="dialog_cancel">Cancel</string>  <!-- TODO -->
 
     <!-- calculator implemenations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
