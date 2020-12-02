@@ -1373,7 +1373,7 @@
     <string name="reboot_required_message">Restart może być wymagany, aby zmiany zostały zastosowane.</string>
 
     <string name="dialog_ok">OK</string>  <!-- TODO -->
-    <string name="dialog_cancel">Cancel</string>  <!-- TODO -->
+    <string name="dialog_cancel">Anuluj</string>
 
     <!-- calculator implemenations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

@@ -1472,7 +1472,7 @@
     <string name="reboot_required_message">Pode ser necessário o reinício do app para que as mudanças sejam aplicadas..</string>
 
     <string name="dialog_ok">OK</string>  <!-- TODO -->
-    <string name="dialog_cancel">Cancel</string>  <!-- TODO -->
+    <string name="dialog_cancel">Cancelar</string>
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

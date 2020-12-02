@@ -1377,7 +1377,7 @@
     <string name="reboot_required_message">És possible que es necessiti reiniciar per fer efectius els canvis.</string>
 
     <string name="dialog_ok">OK</string>  <!-- TODO -->
-    <string name="dialog_cancel">Cancel</string>  <!-- TODO -->
+    <string name="dialog_cancel">Canceŀlar</string>
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
