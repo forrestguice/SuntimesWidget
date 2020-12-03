@@ -169,6 +169,7 @@ Norwegian translation by <u>FTno</u>.<br/>
 Italian translation by <u>Matteo Caoduro</u>.<br/>
 Traditional Chinese translation by <u><a href=https://github.com/pggdt>ft42</a></u>.<br />
 Brazilian Portuguese translation by <u><a href=https://github.com/netosilva15>NetoSilva</a></u>, <u>Nelson A. de Oliveira</u>, and <u>Enrico S. B. Fraletti</u>.<br />
+Russian translation by <u><a href=https://github.com/rchintsov>Ruslan Chintsov</a></u>.<br />
 
 [Contributions to the project](CONTRIBUTING.md) are welcome.
 
