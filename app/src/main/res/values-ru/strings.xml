@@ -1579,7 +1579,7 @@
         Все поля необязательны (значения могут быть оставлены пустыми для использования значений по умолчанию).
         <br/>
         <br/>
-        <b>Действие:</b> Строка действия. <br/><small>напр. <em>android.intent.action.VIEW</em></small>
+        <b>Action:</b> Строка действия. <br/><small>напр. <em>android.intent.action.VIEW</em></small>
         <br/>
         <br/>
         <b>Class:</b> Полное имя класса. <br/><small>напр. <em>suntimeswidget.SuntimesActivity</em></small>
