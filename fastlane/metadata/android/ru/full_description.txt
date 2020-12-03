@@ -1,0 +1,15 @@
+Tracks sunlight and moonlight times. Features an app, alarm clock, and widget collection.
+
+Suntimes displays sunrise and sunset, twilight (civil / nautical / astronomical), blue and golden hour, the solstices and equinoxes, moonrise and moonset, moon phases and illumination. The alarm clock schedules daily repeating alarms (or notifications) for sunrise, sunset, and other events. The app includes many features commonly associated with a world clock.
+
+The times reported by this app are approximate. The app doesn't require network connectivity, GPS is optional.
+
+The app benefits from the following permissions:
+* <small><u>ACCESS_FINE_LOCATION</u></small> is used to obtain the current position (latitude, longitude, altitude).
+* <small><u>BOOT_COMPLETED</u></small> is used to restore active alarms after a reboot.
+* <small><u>SET_ALARM</u></small> is used to schedule alarms using the AlarmClock app.
+* <small><u>VIBRATE</u></small> is used by alarm notifications.
+* <small><u>READ_EXTERNAL_STORAGE</u></small> is used to play alarm sounds located on the SD card.
+* <small><u>WRITE_EXTERNAL_STORAGE</u></small> is used to backup data to file (places, themes, etc) <small>(api&le;=18 only)</small>.
+
+Note: The "Calendar Integration" and permissions added in v0.9.0 were removed in v0.10.0. This feature is now available as a separate add-on app; <a href="https://f-droid.org/en/packages/com.forrestguice.suntimescalendars">Suntimes Calendars</a>.
