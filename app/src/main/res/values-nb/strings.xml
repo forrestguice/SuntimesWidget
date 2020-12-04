@@ -136,12 +136,12 @@
     <string name="untilEnd_astroTwilight">astronomisk tussmørke</string>
     <string name="until_goldhour">gylne time</string>
     <string name="untilEnd_goldhour">gylne time</string>
-    <string name="until_bluehour">blå time</string>
-    <string name="untilEnd_bluehour">blå time</string>
+    <string name="until_bluehour">blåtimen</string>
+    <string name="untilEnd_bluehour">blåtimen</string>
     <string name="until_moonrise">måneoppgang</string>
     <string name="until_moonset">månenedgang</string>
-    <string name="until_moonnoon">måne-middag</string>
-    <string name="until_moonnight">måne-midnatt</string>
+    <string name="until_moonnoon">månens kulminasjon</string>
+    <string name="until_moonnight">månens nedre kulminasjon</string>
 
     <!-- Table -->
     <string name="sunrise">Soloppgang</string>                             <!-- contentDescription -->
@@ -296,9 +296,9 @@
     <string name="timeMode_golden_short">Gylne</string>                <!-- setting -->
     <string name="timeMode_golden">Gylne time</string>                 <!-- setting -->
     <string name="timeMode_blue8_short">Blå (8\u00B0)</string>                    <!-- setting -->
-    <string name="timeMode_blue8">Blå time (8\u00B0)</string>                     <!-- setting -->
+    <string name="timeMode_blue8">Blåtimen (8\u00B0)</string>                     <!-- setting -->
     <string name="timeMode_blue4_short">Blå (4\u00B0)</string>                    <!-- setting -->
-    <string name="timeMode_blue4">Blå time (4\u00B0)</string>                     <!-- setting -->
+    <string name="timeMode_blue4">Blåtimen (4\u00B0)</string>                     <!-- setting -->
 
     <string name="timeMode_equinox_vernal">Vårjevndøgn</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Jevndøgn</string>       <!-- setting -->
@@ -311,21 +311,21 @@
 
     <string name="timeMode_moon">Månen</string>                               <!-- label -->
     <string name="timeMode_moon_new">Nymåne</string>                               <!-- setting -->
-    <string name="timeMode_moon_new_short">Ny</string>                              <!-- setting -->
-    <string name="timeMode_moon_waxingcrescent_short">Ny, månesigd</string>               <!-- label -->
-    <string name="timeMode_moon_waxingcrescent">Ny, månesigd</string>                     <!-- label -->
-    <string name="timeMode_moon_firstquarter">Ny, halvmåne</string>                 <!-- setting -->
-    <string name="timeMode_moon_firstquarter_short">Ny, halvmåne</string>           <!-- setting -->
-    <string name="timeMode_moon_waxinggibbous_short">Ny, trekvart</string>               <!-- label -->
-    <string name="timeMode_moon_waxinggibbous">Ny, trekvart</string>                     <!-- label -->
+    <string name="timeMode_moon_new_short">Nymåne</string>                              <!-- setting -->
+    <string name="timeMode_moon_waxingcrescent_short">Månesigd (ny)</string>               <!-- label -->
+    <string name="timeMode_moon_waxingcrescent">Månesigd (ny)</string>                     <!-- label -->
+    <string name="timeMode_moon_firstquarter">Halvmåne (ny)</string>                 <!-- setting -->
+    <string name="timeMode_moon_firstquarter_short">Halvmåne (ny)</string>           <!-- setting -->
+    <string name="timeMode_moon_waxinggibbous_short">Voksende måne (ny)</string>               <!-- label -->
+    <string name="timeMode_moon_waxinggibbous">Voksende måne (ny)</string>                     <!-- label -->
     <string name="timeMode_moon_full">Fullmåne</string>                             <!-- setting -->
-    <string name="timeMode_moon_full_short">Full</string>                            <!-- setting -->
-    <string name="timeMode_moon_waninggibbous_short">Ne, trekvart</string>               <!-- label -->
-    <string name="timeMode_moon_waninggibbous">Ne, trekvart</string>                     <!-- label -->
-    <string name="timeMode_moon_thirdquarter">Ne, halvmåne</string>                 <!-- setting -->
-    <string name="timeMode_moon_thirdquarter_short">Ne, halvmåne</string>           <!-- setting -->
-    <string name="timeMode_moon_waningcrescent_short">Ne, månesigd</string>               <!-- label -->
-    <string name="timeMode_moon_waningcrescent">Ne, månesigd</string>                     <!-- label -->
+    <string name="timeMode_moon_full_short">Fullmåne</string>                            <!-- setting -->
+    <string name="timeMode_moon_waninggibbous_short">Minkende måne (ne)</string>               <!-- label -->
+    <string name="timeMode_moon_waninggibbous">Minkende måne (ne)</string>                     <!-- label -->
+    <string name="timeMode_moon_thirdquarter">Halvmåne (ne)</string>                 <!-- setting -->
+    <string name="timeMode_moon_thirdquarter_short">Halvmåne (ne)</string>           <!-- setting -->
+    <string name="timeMode_moon_waningcrescent_short">Månesigd (ne)</string>               <!-- label -->
+    <string name="timeMode_moon_waningcrescent">Månesigd (ne)</string>                     <!-- label -->
 
     <string name="timeMode_moon_super">Supermåne</string>               <!-- label -->
     <string name="timeMode_moon_micro">Mikromåne</string>               <!-- label -->
@@ -519,7 +519,6 @@
     <string name="configAction_deleteAction">Slett</string>         <!-- button (contentDescription) -->
     <string name="configAction_clearActions">Fjern alle</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportActions">Eksporter</string>         <!-- button (contentDescription) -->
-    <string name="configAction_shareTheme">Del</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
     <string name="configAction_importActions">Importer</string>         <!-- button (contentDescription) -->
 
     <!-- App Setting: WidgetThemes -->
@@ -531,6 +530,7 @@
     <string name="configAction_deleteTheme">Slett</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Kopier</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportThemes">Eksporter</string>    <!-- button (contentDescription) -->
+    <string name="configAction_shareTheme">Del</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
     <string name="configAction_importThemes">Importer</string>    <!-- button (contentDescription) -->
 
     <string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
@@ -832,9 +832,9 @@
     <string name="configLabel_places_build_summary">Skann standardsteder og legg til byer i databasen.</string>
 
     <plurals name="placePlural">
-        <item quantity="one">%d steder</item>
+        <item quantity="one">%d sted</item>
         <item quantity="other">%d steder</item>
-    </plurals>  <!-- TODO: verify -->
+    </plurals>
 
     <string name="configAction_addPlace">Legg til</string>              <!-- button (contentDescription) -->
     <string name="configAction_copyPlace">Kopier</string>            <!-- button (contentDescription) -->
@@ -882,7 +882,7 @@
     <string name="configLabel_ui_showgoldhour">Gylne time</string>
 
     <!-- App Setting: show blue hour -->
-    <string name="configLabel_ui_showbluehour">Blå time</string>
+    <string name="configLabel_ui_showbluehour">Blåtimen</string>
 
     <!-- App Setting: UI Theme -->
     <string name="appThemes_lightTheme">Lyst tema</string>
@@ -992,7 +992,7 @@
         <item>Norsk</item>
         <item>Tradisjonell kinesisk</item>
         <item>Portugisisk</item>
-        <item>Russian</item>  <!-- TODO -->
+        <item>Russisk</item>
     </string-array>
 
     <!-- position formats -->
@@ -1082,17 +1082,17 @@
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
         <item>astronomisk tussmørke</item>
         <item>nautisk tussmørke</item>
-        <item>blå time</item>
+        <item>blåtimen</item>
         <item>alminnelig tussmørke</item>
-        <item>blå time</item>
+        <item>blåtimen</item>
         <item>soloppgang</item>
         <item>gylne time</item>
         <item>lokal middag</item>
         <item>gylne time</item>
         <item>solnedgang</item>
-        <item>blå time</item>
+        <item>blåtimen</item>
         <item>alminnelig tussmørke</item>
-        <item>blå time</item>
+        <item>blåtimen</item>
         <item>nautisk tussmørke</item>
         <item>astronomisk tussmørke</item>
         <item>måneoppgang</item>
@@ -1105,23 +1105,23 @@
         <item>sommersolverv</item>
         <item>høstjevndøgn</item>
         <item>vintersolverv</item>
-        <item>måne-middag</item>
-        <item>måne-midnatt</item>
+        <item>månens kulminasjon</item>
+        <item>månens nedre kulminasjon</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>astronomisk tussmørke morgen (start)</item>
         <item>nautisk tussmørke morgen (start)</item>
-        <item>blå time morgen (start)</item>
+        <item>blåtimen morgen (start)</item>
         <item>alminnelig tussmørke morgen (start)</item>
-        <item>blå time morgen (slutt)</item>
+        <item>blåtimen morgen (slutt)</item>
         <item>soloppgang</item>
         <item>gylne time morgen (slutt)</item>
         <item>lokal middag</item>
         <item>gylne time kveld (start)</item>
         <item>solnedgang</item>
-        <item>blå time kveld (start)</item>
+        <item>blåtimen kveld (start)</item>
         <item>alminnelig tussmørke kveld (slutt)</item>
-        <item>blå time kveld (slutt)</item>
+        <item>blåtimen kveld (slutt)</item>
         <item>nautisk tussmørke kveld (slutt)</item>
         <item>astronomisk tussmørke kveld (slutt)</item>
         <item>måneoppgang</item>
@@ -1134,8 +1134,8 @@
         <item>sommersolverv</item>
         <item>høstjevndøgn</item>
         <item>vintersolverv</item>
-        <item>måne-middag</item>
-        <item>måne-midnatt</item>
+        <item>månens kulminasjon</item>
+        <item>månens nedre kulminasjon</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
@@ -1185,7 +1185,7 @@
     <plurals name="locationdelete_dialog_success">
         <item quantity="one">Sted ble fjernet.</item>
         <item quantity="other">%d steder ble fjernet.</item>
-    </plurals>  <!-- TODO: verify -->
+    </plurals>
     <string name="locationdelete_dialog_ok">Fjern</string>
     <string name="locationdelete_dialog_cancel">Avbryt</string>
 
@@ -1357,7 +1357,7 @@
         <b>Gylne time:</b> Solen er mellom 6 grader over eller under horisonten. Om morgenen begynner den gylne timen med alminnelig tussmørke og slutter kort tid etter soloppgang. Om kvelden begynner den gylne timen kort tid før solnedgang og slutter med alminnelig tussmørke.<br/>
     ]]></string>
     <string name="help_general_bluehour"><![CDATA[
-        <b>Blå time:</b> Solen er mellom 8 grader og 4 grader under horisonten. Starten og slutten på den blå timen faller mellom nautisk og alminnelig tussmørke.<br/>
+        <b>Blåtimen:</b> Solen er mellom 8 grader og 4 grader under horisonten. Starten og slutten på blåtimen faller mellom nautisk og alminnelig tussmørke.<br/>
     ]]></string>
     <string name="help_action_launch"><![CDATA[
         The fully qualified class name of the Activity to be launched.<br/>
@@ -1395,7 +1395,7 @@
     <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>  <!-- TODO -->
     <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>  <!-- TODO -->
 
-    <string name="dialog_ok">OK</string>  <!-- TODO -->
+    <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Avbryt</string>
 
     <!-- calculator implementations -->
