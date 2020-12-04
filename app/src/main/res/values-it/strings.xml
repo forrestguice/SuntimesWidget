@@ -1007,6 +1007,7 @@
         <item>Norwegian</item>
         <item>Traditional Chinese</item>
         <item>Portuguese</item>  <!-- TODO -->
+        <item>Russian</item>  <!-- TODO -->
     </string-array>  <!-- TODO: these should be language/locale names as written/understood in Italian -->
 
     <!-- position formats -->

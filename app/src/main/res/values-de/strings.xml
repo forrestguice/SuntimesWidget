@@ -976,6 +976,7 @@
       <item>Norwegisch</item>
       <item>Traditionelles Chinesisch</item>
       <item>Portugiesisch</item>
+      <item>Russian</item>  <!-- TODO -->
   </string-array>
 
   <!--<string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>-->  <!-- e.g. 45° -->

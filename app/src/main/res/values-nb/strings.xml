@@ -992,6 +992,7 @@
         <item>Norsk</item>
         <item>Tradisjonell kinesisk</item>
         <item>Portugisisk</item>
+        <item>Russian</item>  <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
