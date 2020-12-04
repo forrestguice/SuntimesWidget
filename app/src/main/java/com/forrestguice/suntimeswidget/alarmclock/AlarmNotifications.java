@@ -852,6 +852,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                     } else if (Intent.ACTION_TIME_CHANGED.equals(action)) {
                         Log.d(TAG, "TIME_SET received");
+                        stopSelf(startId);
                         // TODO: reschedule alarms (but only when deltaT is >reminderPeriod to avoid rescheduling alarms dismissed early)
 
                     } else if (AlarmNotifications.ACTION_DELETE.equals(action)) {

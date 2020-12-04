@@ -27,7 +27,7 @@
 
         <ImageButton android:id="@+id/dialog_button_cancel" style="?attr/actionOverflowButtonStyle"
             android:layout_width="56dp" android:layout_height="match_parent"
-            android:src="?attr/icActionBack" android:contentDescription="@android:string/cancel" />
+            android:src="?attr/icActionBack" android:contentDescription="@string/dialog_cancel" />
 
         <TextView
             android:id="@+id/dialog_title"

@@ -551,10 +551,12 @@
 
     <string name="clearactions_dialog_msg">Are you sure you want to reset to defaults?\n\nAll custom actions will be removed.</string>
     <string name="clearactions_dialog_ok">Clear</string>
+    <!--<string name="clearactions_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="clearactions_toast">Actions reset to defaults.</string>
 
     <string name="saveaction_dialog_title">Add Action</string>
     <string name="saveaction_dialog_ok">Save</string>
+    <!--<string name="saveaction_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="saveaction_dialog_suggest">Suggest</string>
     <string name="saveaction_toast">Saved action \"%1$s\" (%2$s).</string>
 
@@ -888,10 +890,15 @@
     <!-- App Setting: Places -->
     <string name="configLabel_places">Places</string>                           <!-- group title -->
     <string name="configLabel_places_emptyMsg">@string/configLabel_places</string>
-    <string name="configLabel_places_multiSelect">%s places</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->
     <string name="configLabel_places_build">Add World Places</string>
     <string name="configLabel_places_build_summary">Scan locales and add cities to the database.</string>
 
+    <plurals name="placePlural">
+        <item quantity="one">%d place</item>
+        <item quantity="other">%d places</item>
+        <item quantity="few">%d places</item>
+        <item quantity="many">%d places</item>
+    </plurals>  <!-- TODO -->
 
     <string name="configAction_addPlace">Add</string>              <!-- button (contentDescription) -->
     <string name="configAction_copyPlace">Copy</string>            <!-- button (contentDescription) -->
@@ -1341,8 +1348,12 @@
     <string name="locationdelete_dialog_title">Remove Place?</string>   <!-- title; remove 1 place -->
     <string name="locationdelete_dialog_title1">Remove Places?</string>  <!-- title; remove multiple places -->
     <string name="locationdelete_dialog_message">Are you sure you want to remove %s?</string>
-    <string name="locationdelete_dialog_success">Place was removed.</string>   <!-- toast -->
-    <string name="locationdelete_dialog_success1">%s places were removed.</string>   <!-- toast; e.g. 2 places were deleted -->
+    <plurals name="locationdelete_dialog_success">
+        <item quantity="one">%d place was removed.</item>
+        <item quantity="other">%d places were removed.</item>
+        <item quantity="few">%d places were removed.</item>
+        <item quantity="many">%d places were removed.</item>
+    </plurals>
     <string name="locationdelete_dialog_ok">Remove</string>
     <string name="locationdelete_dialog_cancel">Cancel</string>
 
@@ -1612,6 +1623,9 @@
     <string name="feature_not_supported_by_api">This feature is not supported by API %1$s.</string>
     <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>
     <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>
+
+    <string name="dialog_ok">OK</string>  <!-- TODO -->
+    <string name="dialog_cancel">Cancel</string>  <!-- TODO -->
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

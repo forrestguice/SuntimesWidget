@@ -65,7 +65,7 @@
             android:id="@+id/dialog_button_cancel"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@android:string/cancel"
+            android:text="@string/dialog_cancel"
             tools:ignore="ButtonOrder" />
 
         <Button
@@ -73,7 +73,7 @@
             android:id="@+id/dialog_button_accept"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@android:string/ok" />
+            android:text="@string/dialog_ok" />
 
     </LinearLayout>
 

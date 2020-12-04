@@ -483,11 +483,11 @@
     <string name="configLabel_action_item_desc">(%1$s)</string>  <!-- TODO -->
     <string name="configLabel_action_item_none">Ingen handling</string>
 
-    <string name="addaction_custname">custom<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="addaction_custname">egendefinert<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
     <string name="addaction_custtitle">Egendefinert handling <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
     <string name="addaction_error_id">ID must not be empty (or contain spaces).</string>
     <string name="addaction_error_title">Display string must not be empty.</string>  <!-- TODO -->
-    <string name="addaction_error_exists">ID is already taken. This action will be overwritten.</string> <!-- TODO -->
+    <string name="addaction_error_exists">ID er tatt allerede. Denne handlingen blir overskrevet.</string>
 
     <string name="delaction_dialog_msg">Er du sikker på at du vil slette %1$s (%2$s)?</string>
     <string name="delaction_dialog_msg1">Standardhandlinger kan ikke fjernes.\n\nGå tilbake til standardverdier?</string>
@@ -497,10 +497,12 @@
 
     <string name="clearactions_dialog_msg">Er du sikker på at du vil tilbakestille til standardverdier?\n\nAlle egendefinerte handlinger blir fjernet.</string>
     <string name="clearactions_dialog_ok">Fjern</string>
+    <!--<string name="clearactions_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="clearactions_toast">Handlinger tilbakestilt til standardverdier.</string>
 
     <string name="saveaction_dialog_title">Legg til handling</string>
     <string name="saveaction_dialog_ok">Lagre</string>
+    <!--<string name="saveaction_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="saveaction_dialog_suggest">Foreslå</string>
     <string name="saveaction_toast">Lagret handling \"%1$s\" (%2$s).</string>
 
@@ -517,6 +519,7 @@
     <string name="configAction_deleteAction">Slett</string>         <!-- button (contentDescription) -->
     <string name="configAction_clearActions">Fjern alle</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportActions">Eksporter</string>         <!-- button (contentDescription) -->
+    <string name="configAction_shareTheme">Del</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
     <string name="configAction_importActions">Importer</string>         <!-- button (contentDescription) -->
 
     <!-- App Setting: WidgetThemes -->
@@ -825,9 +828,13 @@
     <string name="configLabel_places">Steder</string>                           <!-- group title -->
     <string name="configLabel_places_manage">Håndter steder</string>             <!-- group title -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
-    <string name="configLabel_places_multiSelect">%s steder</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->
     <string name="configLabel_places_build">Legg til verdenssteder</string>
     <string name="configLabel_places_build_summary">Skann standardsteder og legg til byer i databasen.</string>
+
+    <plurals name="placePlural">
+        <item quantity="one">%d steder</item>
+        <item quantity="other">%d steder</item>
+    </plurals>  <!-- TODO: verify -->
 
     <string name="configAction_addPlace">Legg til</string>              <!-- button (contentDescription) -->
     <string name="configAction_copyPlace">Kopier</string>            <!-- button (contentDescription) -->
@@ -840,8 +847,8 @@
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Brukerflate</string>                       <!-- group title -->
-    <string name="configLabel_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->   <!-- TODO -->
-    <string name="configLabel_ui_misc">Miscellaneous</string>   <!-- TODO -->
+    <string name="configLabel_ui_fields">Vis</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
+    <string name="configLabel_ui_misc">Diverse</string>
 
     <!-- App Setting: Verbose Accessibility -->
     <string name="configLabel_accessibility_verbose">Verbose TalkBack</string>
@@ -872,7 +879,7 @@
     <string name="configLabel_ui_showdatasource_summary">Vis en påskrift som angir den gjeldende innstillingen.</string>
 
     <!-- App Setting: show golden hour -->
-    <string name="configLabel_ui_showgoldhour">@string/timeMode_golden</string>
+    <string name="configLabel_ui_showgoldhour">Gylne time</string>
 
     <!-- App Setting: show blue hour -->
     <string name="configLabel_ui_showbluehour">Blå time</string>
@@ -902,6 +909,10 @@
     <string name="configActionDesc_setLocation">Still inn sted</string>
     <string name="configActionDesc_swapCards">Bytt visning (i dag / i morgen)</string>
     <string name="configActionDesc_setAlarmForNote">Still inn alarm for notis</string>
+    <string name="configActionDesc_alarmList">Alarmliste</string>
+    <string name="configActionDesc_themeList">Temaliste</string>
+    <string name="configActionDesc_actionList">Handlingsliste</string>
+    <string name="configActionDesc_widgetList">Modulliste</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">etter forskyvning</string>
@@ -1170,8 +1181,10 @@
     <string name="locationdelete_dialog_title">Fjerne sted?</string>   <!-- title; remove 1 place -->
     <string name="locationdelete_dialog_title1">Fjerne steder?</string>  <!-- title; remove multiple places -->
     <string name="locationdelete_dialog_message">Er du sikker på at du vil fjerne %s?</string>
-    <string name="locationdelete_dialog_success">Sted ble fjernet.</string>   <!-- toast -->
-    <string name="locationdelete_dialog_success1">%s steder ble fjernet.</string>   <!-- toast; e.g. 2 places were deleted -->
+    <plurals name="locationdelete_dialog_success">
+        <item quantity="one">Sted ble fjernet.</item>
+        <item quantity="other">%d steder ble fjernet.</item>
+    </plurals>  <!-- TODO: verify -->
     <string name="locationdelete_dialog_ok">Fjern</string>
     <string name="locationdelete_dialog_cancel">Avbryt</string>
 
@@ -1316,7 +1329,7 @@
     </string>
 
     <string name="help_general_timeMode"><![CDATA[
-          <b>Faktisk tid:</b> Solen er i horisonten; dette er den omtrentlige tiden for soloppgang og solnedgang.<br/><br/>
+          <b>Faktisk tid:</b> Den omtrentlige tiden for soloppgang og solnedgang.<br/><br/>
           <b>Alminnelig tussmørke:</b> Solen er 6 grader under horisonten; de lyseste stjernene er synlige. Det er nok lys for de fleste utendørsaktiviteter uten å kreve ekstra lys.<br/><br/>
           <b>Nautisk tussmørke:</b> Solen er 12 grader under horisonten; objektomriss og horisonten blir stadig mer utydelig. Det er ikke nok lys for de fleste utendørsaktiviteter uten å kreve ekstra lys.<br/><br/>
           <b>Astronomisk tussmørke:</b> Solen er 18 grader under horisonten. Nær nattens mørke.<br/>
@@ -1359,12 +1372,12 @@
           [Icon Default] Standardtemaer kan ikke endres.
     </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  -->
 
-    <string name="help_calendar"><![CDATA[Supply events to the Calendar app (moon phases, solstices, and equinoxes).<br />
+    <string name="help_calendar"><![CDATA[Lever hendelser til Kalender-appen (månefaser, solverv, jevndøgn).<br />
         <br />
-        <u><b><font color="#ff9900">Calendar permissions have been removed.</font></b></u><br />
+        <u><b><font color="#ff9900">Kalenderintegrasjon er fjernet.</font></b></u><br />
         <br />
-        This feature is now available as a <a href="moreInfoLink">separate app</a>.
-    ]]></string>  <!-- TODO -->
+        Denne funksjonen er nå tilgjengelig som en <a href="moreInfoLink">separat app</a>.
+    ]]></string>
 
     <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. <br/><br/>The app is configured from location data. This information (and other configuration data used by the app) is stored locally and does not leave the device.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string> <!-- TODO -->
     <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string> <!-- TODO -->
@@ -1380,6 +1393,9 @@
     <string name="feature_not_supported_by_api">This feature is not supported by API %1$s.</string>  <!-- TODO -->
     <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>  <!-- TODO -->
     <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>  <!-- TODO -->
+
+    <string name="dialog_ok">OK</string>  <!-- TODO -->
+    <string name="dialog_cancel">Avbryt</string>
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

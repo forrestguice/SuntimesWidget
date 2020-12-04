@@ -538,10 +538,12 @@
 
     <string name="clearactions_dialog_msg">Tem certeza que deseja redefinir para o padrão?\n\nTodas as ações personalizadas serão removidas.</string>
     <string name="clearactions_dialog_ok">Limpar</string>
+    <!--<string name="clearactions_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="clearactions_toast">Ações redefinidas para o padrão.</string>
 
     <string name="saveaction_dialog_title">Adicionar Ação</string>
     <string name="saveaction_dialog_ok">Salvar</string>
+    <!--<string name="saveaction_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="saveaction_dialog_suggest">Sugerir</string>
     <string name="saveaction_toast">Ação salva \"%1$s\" (%2$s).</string>
 
@@ -724,7 +726,7 @@
     <string name="configAction_disableAlarm">Salvar &amp; Desabilitar</string>               <!-- button (contentDescription) -->
     <string name="configAction_undo">Desfazer</string>               <!-- button (contentDescription) -->
 
-    <string name="alarmAction_dismiss">Ignorar</string>                <!-- notification action button -->
+    <string name="alarmAction_dismiss">Dispensar</string>                <!-- notification action button -->
     <string name="alarmAction_snooze">Soneca</string>                  <!-- notification action button -->
     <string name="alarmAction_timeout">Tempo esgotado</string>                  <!-- notification action button -->
 
@@ -817,7 +819,7 @@
     <string name="configLabel_alarms_hardwarebuttons">Botões Físicos</string>
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>
     <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->
-        <item>Ignorar</item>
+        <item>Dispensar</item>
         <item>Silenciar</item>
         <item>Soneca</item>
         <item>Fazer Nada</item>
@@ -865,11 +867,15 @@
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Lugares</string>                           <!-- group title -->
-    <string name="configLabel_places_manage">Manage Places</string>             <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_places_manage">Gerenciar Lugares</string>             <!-- group title -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
-    <string name="configLabel_places_multiSelect">%s lugares</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->
     <string name="configLabel_places_build">Adicionar Lugares</string>
     <string name="configLabel_places_build_summary">Verificar lugares e adicionar cidades à base de dados.</string>
+
+    <plurals name="placePlural">
+        <item quantity="one">%d lugar</item>
+        <item quantity="other">%d lugares</item>
+    </plurals>  <!-- TODO: verify -->
 
     <string name="configAction_addPlace">Adicionar</string>              <!-- button (contentDescription) -->
     <string name="configAction_copyPlace">Copiar</string>            <!-- button (contentDescription) -->
@@ -882,8 +888,8 @@
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interface do Usuário</string>                       <!-- group title -->
-    <string name="configLabel_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->   <!-- TODO -->
-    <string name="configLabel_ui_misc">Miscellaneous</string>   <!-- TODO -->
+    <string name="configLabel_ui_fields">Exibir</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
+    <string name="configLabel_ui_misc">Diversos</string>
 
     <!-- App Setting: Verbose Accessibility -->
     <string name="configLabel_accessibility_verbose">TalkBack Detalhado</string>
@@ -1224,9 +1230,11 @@
     <!-- Dialog: Delete Place -->
     <string name="locationdelete_dialog_title">Remover Local?</string>   <!-- title; remove 1 place -->
     <string name="locationdelete_dialog_title1">Remover Locais?</string>  <!-- title; remove multiple places -->
-    <string name="locationdelete_dialog_message">Tem certea que deseja remover %s?</string>
-    <string name="locationdelete_dialog_success">Local foi removido.</string>   <!-- toast -->
-    <string name="locationdelete_dialog_success1">%s locais foram removidos.</string>   <!-- toast; e.g. 2 places were deleted -->
+    <string name="locationdelete_dialog_message">Tem certeza que deseja remover %s?</string>
+    <plurals name="locationdelete_dialog_success">
+        <item quantity="one">%d local foi removido.</item>
+        <item quantity="other">%d locais foram removidos.</item>
+    </plurals>  <!-- TODO: verify -->
     <string name="locationdelete_dialog_ok">Apagar</string>
     <string name="locationdelete_dialog_cancel">Cancelar</string>
 
@@ -1462,6 +1470,9 @@
     <string name="feature_not_supported_by_api">Essa função não é permitida pela API %1$s.</string>
     <string name="feature_not_supported_by_source">Essa função não é suportada pela fonte de dados atual.</string>
     <string name="reboot_required_message">Pode ser necessário o reinício do app para que as mudanças sejam aplicadas..</string>
+
+    <string name="dialog_ok">OK</string>  <!-- TODO -->
+    <string name="dialog_cancel">Cancelar</string>
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
