@@ -821,7 +821,7 @@
     <plurals name="placePlural">
         <item quantity="one">%d lokoj</item>
         <item quantity="other">%d lokoj</item>
-    </plurals>  <!-- TODO: verify -->
+    </plurals>
 
     <string name="configAction_addPlace">Aldoni</string>              <!-- button (contentDescription) -->
     <string name="configAction_copyPlace">Kopii</string>            <!-- button (contentDescription) -->
@@ -1153,7 +1153,7 @@
     <plurals name="locationdelete_dialog_success">
         <item quantity="one">Forigis lokon.</item>
         <item quantity="other">Forigis %d lokojn.</item>
-    </plurals>  <!-- TODO: verify -->
+    </plurals>
     <string name="locationdelete_dialog_ok">Forigi</string>
     <string name="locationdelete_dialog_cancel">Nuligi</string>
 
@@ -1355,7 +1355,7 @@
     <string name="feature_not_supported_by_source">Tiu ĉi eblaĵo ne estas subtenata per la nuna datum‑fonto.</string>
     <string name="reboot_required_message">Restarto povas esti bezonata por apliki ŝanĝojn.</string>
 
-    <string name="dialog_ok">OK</string>  <!-- TODO -->
+    <string name="dialog_ok">Bone</string>
     <string name="dialog_cancel">Nuligi</string>
 
     <!-- calculator implemenations -->
