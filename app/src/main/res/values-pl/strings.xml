@@ -832,11 +832,11 @@
     <string name="configLabel_places_build_summary">Przeskanuj miejsca i dodaj miasta do bazy danych.</string>
 
     <plurals name="placePlural">
-        <item quantity="one">wiele miejsc (%s)</item>
-        <item quantity="other">wiele miejsc (%d)</item>
-        <item quantity="few">wiele miejsc (%d)</item>
-        <item quantity="many">wiele miejsc (%d)</item>
-    </plurals>  <!-- TODO: verify -->
+        <item quantity="one">%d miejsce</item>
+        <item quantity="other">%d miejsc</item>
+        <item quantity="few">%d miejsca</item>
+        <item quantity="many">%d miejsc</item>
+    </plurals>
 
     <string name="configAction_addPlace">Dodaj</string>              <!-- button (contentDescription) -->
     <string name="configAction_copyPlace">Kopiuj</string>            <!-- button (contentDescription) -->
@@ -1173,10 +1173,10 @@
     <string name="locationdelete_dialog_message">Czy na pewno chcesz usunąć: %s?</string>
     <plurals name="locationdelete_dialog_success">
         <item quantity="one">Usunięto miejsce.</item>
-        <item quantity="other">Usunięto kilka (%d) miejsc.</item>
-        <item quantity="few">Usunięto kilka (%d) miejsc.</item>
-        <item quantity="many">Usunięto kilka (%d) miejsc.</item>
-    </plurals>  <!-- TODO: verify -->
+        <item quantity="other">Usunięto %d miejsc.</item>
+        <item quantity="few">Usunięto %d miejsca.</item>
+        <item quantity="many">Usunięto %d miejsc.</item>
+    </plurals>
     <string name="locationdelete_dialog_ok">Usuń</string>
     <string name="locationdelete_dialog_cancel">Anuluj</string>
 
@@ -1372,7 +1372,7 @@
     <string name="feature_not_supported_by_source">Ta funkcja nie jest wspierana przez obecne źródło danych.</string>
     <string name="reboot_required_message">Restart może być wymagany, aby zmiany zostały zastosowane.</string>
 
-    <string name="dialog_ok">OK</string>  <!-- TODO -->
+    <string name="dialog_ok">Potwierdź</string>
     <string name="dialog_cancel">Anuluj</string>
 
     <!-- calculator implemenations -->
