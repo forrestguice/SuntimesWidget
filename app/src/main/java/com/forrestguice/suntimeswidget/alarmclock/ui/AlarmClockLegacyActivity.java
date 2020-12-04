@@ -1290,7 +1290,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
                 {
                     AlertDialog.Builder requestDialog = new AlertDialog.Builder(this);
                     requestDialog.setMessage(Html.fromHtml(getString(R.string.privacy_permission_storage1) + "<br/><br/>" + getString(R.string.privacy_permissiondialog_prompt)));
-                    requestDialog.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+                    requestDialog.setPositiveButton(getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //noinspection ConstantConditions

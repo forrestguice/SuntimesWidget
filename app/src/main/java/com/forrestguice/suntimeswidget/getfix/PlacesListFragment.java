@@ -255,7 +255,7 @@ public class PlacesListFragment extends Fragment
 
             if (rowID.length > 1)
             {
-                actionMode.setTitle( context.getString(R.string.configLabel_places_multiSelect, Integer.toString(rowID.length)));
+                actionMode.setTitle(context.getResources().getQuantityString(R.plurals.placePlural, rowID.length, rowID.length));
                 actionMode.setSubtitle("");
 
             } else {
@@ -680,7 +680,9 @@ public class PlacesListFragment extends Fragment
 
             final boolean multiDelete = (items.length > 1);
             String title = context.getString(multiDelete ? R.string.locationdelete_dialog_title1 : R.string.locationdelete_dialog_title);
-            String desc = (multiDelete ? context.getString(R.string.configLabel_places_multiSelect, Integer.toString(items.length)) : items[0].location.getLabel());
+            String desc = (multiDelete
+                    ? context.getResources().getQuantityString(R.plurals.placePlural, items.length, items.length)
+                    : items[0].location.getLabel());
             String message = context.getString(R.string.locationdelete_dialog_message, desc);
 
             AlertDialog.Builder confirm = new AlertDialog.Builder(context)
@@ -728,8 +730,7 @@ public class PlacesListFragment extends Fragment
         View view = getView();
         if (context != null && view != null && deletedItems != null)
         {
-            final boolean multiDelete = (deletedItems.length > 1);
-            Snackbar snackbar = Snackbar.make(view, multiDelete ? context.getString(R.string.locationdelete_dialog_success1, Integer.toString(deletedItems.length)) : context.getString(R.string.locationdelete_dialog_success), Snackbar.LENGTH_INDEFINITE);
+            Snackbar snackbar = Snackbar.make(view, context.getResources().getQuantityString(R.plurals.locationdelete_dialog_success, deletedItems.length, deletedItems.length), Snackbar.LENGTH_INDEFINITE);
             snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
                 @Override
                 public void onClick(View v)

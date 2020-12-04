@@ -497,10 +497,12 @@
 
     <string name="clearactions_dialog_msg">Er du sikker på at du vil tilbakestille til standardverdier?\n\nAlle egendefinerte handlinger blir fjernet.</string>
     <string name="clearactions_dialog_ok">Fjern</string>
+    <!--<string name="clearactions_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="clearactions_toast">Handlinger tilbakestilt til standardverdier.</string>
 
     <string name="saveaction_dialog_title">Legg til handling</string>
     <string name="saveaction_dialog_ok">Lagre</string>
+    <!--<string name="saveaction_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="saveaction_dialog_suggest">Foreslå</string>
     <string name="saveaction_toast">Lagret handling \"%1$s\" (%2$s).</string>
 
@@ -826,9 +828,13 @@
     <string name="configLabel_places">Steder</string>                           <!-- group title -->
     <string name="configLabel_places_manage">Håndter steder</string>             <!-- group title -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
-    <string name="configLabel_places_multiSelect">%s steder</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->
     <string name="configLabel_places_build">Legg til verdenssteder</string>
     <string name="configLabel_places_build_summary">Skann standardsteder og legg til byer i databasen.</string>
+
+    <plurals name="placePlural">
+        <item quantity="one">%d steder</item>
+        <item quantity="other">%d steder</item>
+    </plurals>  <!-- TODO: verify -->
 
     <string name="configAction_addPlace">Legg til</string>              <!-- button (contentDescription) -->
     <string name="configAction_copyPlace">Kopier</string>            <!-- button (contentDescription) -->
@@ -986,6 +992,7 @@
         <item>Norsk</item>
         <item>Tradisjonell kinesisk</item>
         <item>Portugisisk</item>
+        <item>Russian</item>  <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
@@ -1175,8 +1182,10 @@
     <string name="locationdelete_dialog_title">Fjerne sted?</string>   <!-- title; remove 1 place -->
     <string name="locationdelete_dialog_title1">Fjerne steder?</string>  <!-- title; remove multiple places -->
     <string name="locationdelete_dialog_message">Er du sikker på at du vil fjerne %s?</string>
-    <string name="locationdelete_dialog_success">Sted ble fjernet.</string>   <!-- toast -->
-    <string name="locationdelete_dialog_success1">%s steder ble fjernet.</string>   <!-- toast; e.g. 2 places were deleted -->
+    <plurals name="locationdelete_dialog_success">
+        <item quantity="one">Sted ble fjernet.</item>
+        <item quantity="other">%d steder ble fjernet.</item>
+    </plurals>  <!-- TODO: verify -->
     <string name="locationdelete_dialog_ok">Fjern</string>
     <string name="locationdelete_dialog_cancel">Avbryt</string>
 
@@ -1385,6 +1394,9 @@
     <string name="feature_not_supported_by_api">This feature is not supported by API %1$s.</string>  <!-- TODO -->
     <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>  <!-- TODO -->
     <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>  <!-- TODO -->
+
+    <string name="dialog_ok">OK</string>  <!-- TODO -->
+    <string name="dialog_cancel">Avbryt</string>
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

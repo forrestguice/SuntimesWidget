@@ -543,10 +543,12 @@
 
     <string name="clearactions_dialog_msg">Are you sure you want to reset to defaults?\n\nAll custom actions will be removed.</string>
     <string name="clearactions_dialog_ok">Clear</string>
+    <string name="clearactions_dialog_cancel">@string/dialog_cancel</string>
     <string name="clearactions_toast">Actions reset to defaults.</string>
 
     <string name="saveaction_dialog_title">Add Action</string>
     <string name="saveaction_dialog_ok">Save</string>
+    <string name="saveaction_dialog_cancel">@string/dialog_cancel</string>
     <string name="saveaction_dialog_suggest">Suggest</string>
     <string name="saveaction_toast">Saved action \"%1$s\" (%2$s).</string>
 
@@ -806,6 +808,7 @@
     <string name="configLabel_alarms_notifications_summary1">On lock screen: %1$s</string>    <!-- "On lock screen: Off -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Notifications are off. Alarms may fail to display correctly.</string>  <!-- snackbar message -->
 
+    <!-- TODO: fix displaying comments in "..._summary" strings (text around %s) (MillisecondPickerPreference) -->
     <string name="configLabel_alarms_silenceAfter">Go silent after</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
@@ -880,11 +883,16 @@
     <!-- App Setting: Places -->
     <string name="configLabel_places">Places</string>                           <!-- group title -->
     <string name="configLabel_places_manage">Manage Places</string>             <!-- group title -->
-    <string name="configLabel_places_emptyMsg">@string/configLabel_places</string>
-    <string name="configLabel_places_multiSelect">%s places</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->   <!-- TODO: needs to be a plural? -->
+    <string name="configLabel_places_emptyMsg">@string/configLabel_places</string>  <!-- a label that is displayed in place of an empty listview -->
     <string name="configLabel_places_build">Add World Places</string>
     <string name="configLabel_places_build_summary">Scan locales and add cities to the database.</string>
 
+    <plurals name="placePlural">
+        <item quantity="one">%d place</item>
+        <item quantity="other">%d places</item>
+        <item quantity="few">%d places</item>
+        <item quantity="many">%d places</item>
+    </plurals>
 
     <string name="configAction_addPlace">Add</string>              <!-- button (contentDescription) -->
     <string name="configAction_copyPlace">Copy</string>            <!-- button (contentDescription) -->
@@ -1215,6 +1223,7 @@
         <item>Norwegian</item>
         <item>Traditional Chinese</item>
         <item>Portuguese</item>
+        <item>Russian</item>
     </string-array>
     <string-array name="locale_display_native" translatable="false">             <!-- one-to-one with locale_values -->
         <item>English</item>
@@ -1230,6 +1239,7 @@
         <item>Norsk</item>
         <item>正體中文</item>
         <item>Português Brasileiro</item>
+        <item>Русский</item>
     </string-array>
     <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
         <item>en</item>
@@ -1245,6 +1255,7 @@
         <item>nb</item>
         <item>zh_TW</item>
         <item>pt_BR</item>
+        <item>ru</item>
     </string-array>
     <string-array name="locale_credits" translatable="false">  <!-- one-to-one with locale_display -->
         <item />
@@ -1260,6 +1271,7 @@
         <item><![CDATA[<a href=https://github.com/FTno>FTno</a>]]></item>
         <item><![CDATA[<a href=https://github.com/pggdt>ft42</a>]]></item>
         <item><![CDATA[<a href=https://github.com/NetoSilva>Neto Silva</a>|<a href=https://github.com/naoliv>Nelson&#160;A.&#160;de&#160;Oliveira</a>|<a href=https://github.com/efraletti>Enrico S. B. Fraletti</a>]]></item>
+        <item><![CDATA[<a href=https://github.com/rchintsov>Ruslan&#160;Chintsov</a>]]></item>
     </string-array>
 
     <!-- position formats -->
@@ -1328,8 +1340,8 @@
     <string name="worldmap_dialog_option_all">Both</string>
     <string name="worldmap_dialog_option_location">Location</string>
     <string name="worldmap_dialog_option_latitudes">Latitudes</string>
-    <string name="worldmap_dialog_speed_15m">&#215; 15m</string>
-    <string name="worldmap_dialog_speed_1d">&#215; 1d</string>
+    <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- menu item; "x 15m"; increments of 15 minutes -->
+    <string name="worldmap_dialog_speed_1d">&#215; 1d</string>      <!-- menu item; "x 1d"; increments of 1 day -->
     <string name="configAction_shareMap">Share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <!-- Dialog: Set Alarm -->
@@ -1450,8 +1462,12 @@
     <string name="locationdelete_dialog_title">Remove Place?</string>   <!-- title; remove 1 place -->
     <string name="locationdelete_dialog_title1">Remove Places?</string>  <!-- title; remove multiple places -->
     <string name="locationdelete_dialog_message">Are you sure you want to remove %s?</string>
-    <string name="locationdelete_dialog_success">Place was removed.</string>   <!-- toast -->
-    <string name="locationdelete_dialog_success1">%s places were removed.</string>   <!-- toast; e.g. 2 places were deleted -->
+    <plurals name="locationdelete_dialog_success">
+        <item quantity="one">Place was removed.</item>
+        <item quantity="other">%d places were removed.</item>
+        <item quantity="few">%d places were removed.</item>
+        <item quantity="many">%d places were removed.</item>
+    </plurals>
     <string name="locationdelete_dialog_ok">Remove</string>
     <string name="locationdelete_dialog_cancel">Cancel</string>
 
@@ -1720,6 +1736,9 @@
     <string name="feature_not_supported_by_api">This feature is not supported by API %1$s.</string>
     <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>
     <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>
+
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

@@ -489,10 +489,12 @@
 
     <string name="clearactions_dialog_msg">Ĉu vi certe volas restarigi implicitajn valorojn?\n\nĈiuj propraj agoj foriĝos.</string>
     <string name="clearactions_dialog_ok">Forigi ĉiujn</string>
+    <!--<string name="clearactions_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="clearactions_toast">Reagordis agojn al implicitaj valoroj.</string>
 
     <string name="saveaction_dialog_title">Aldoni agon</string>
     <string name="saveaction_dialog_ok">Konservi</string>
+    <!--<string name="saveaction_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="saveaction_dialog_suggest">Proponi</string>
     <string name="saveaction_toast">Konservis agon “%1$s” (%2$s).</string>
 
@@ -813,9 +815,13 @@
     <string name="configLabel_places">Lokoj</string>                           <!-- group title -->
     <string name="configLabel_places_manage">Administri lokojn</string>             <!-- group title -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
-    <string name="configLabel_places_multiSelect">%s lokoj</string>     <!-- displayed in actionBar and by confirmation messags; e.g. "are you sure you want to delete '2 places'" -->
     <string name="configLabel_places_build">Aldoni mondajn lokojn</string>
     <string name="configLabel_places_build_summary">Skani lokojn kaj aldoni urbojn al la datumbazo.</string>
+
+    <plurals name="placePlural">
+        <item quantity="one">%d lokoj</item>
+        <item quantity="other">%d lokoj</item>
+    </plurals>
 
     <string name="configAction_addPlace">Aldoni</string>              <!-- button (contentDescription) -->
     <string name="configAction_copyPlace">Kopii</string>            <!-- button (contentDescription) -->
@@ -1049,6 +1055,7 @@
         <item>Norvega</item>
         <item>Ĉina tradicia</item>
         <item>Portugala</item>
+        <item>Russian</item>  <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
@@ -1143,8 +1150,10 @@
     <string name="locationdelete_dialog_title">Ĉu forigi lokon?</string>   <!-- title; remove 1 place -->
     <string name="locationdelete_dialog_title1">Ĉu forigi lokojn?</string>  <!-- title; remove multiple places -->
     <string name="locationdelete_dialog_message">Ĉu vi certe volas forigi: %s?</string>
-    <string name="locationdelete_dialog_success">Forigis lokon.</string>   <!-- toast -->
-    <string name="locationdelete_dialog_success1">Forigis %s lokojn.</string>   <!-- toast; e.g. 2 places were deleted -->
+    <plurals name="locationdelete_dialog_success">
+        <item quantity="one">Forigis lokon.</item>
+        <item quantity="other">Forigis %d lokojn.</item>
+    </plurals>
     <string name="locationdelete_dialog_ok">Forigi</string>
     <string name="locationdelete_dialog_cancel">Nuligi</string>
 
@@ -1345,6 +1354,9 @@
     <string name="feature_not_supported_by_api">Tiu ĉi eblaĵo ne estas subtenata per API %1$s.</string>
     <string name="feature_not_supported_by_source">Tiu ĉi eblaĵo ne estas subtenata per la nuna datum‑fonto.</string>
     <string name="reboot_required_message">Restarto povas esti bezonata por apliki ŝanĝojn.</string>
+
+    <string name="dialog_ok">Bone</string>
+    <string name="dialog_cancel">Nuligi</string>
 
     <!-- calculator implemenations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

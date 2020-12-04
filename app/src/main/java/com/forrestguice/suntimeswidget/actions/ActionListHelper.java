@@ -380,7 +380,7 @@ public class ActionListHelper
         {
             AlertDialog.Builder dialog = new AlertDialog.Builder(context);
             dialog.setMessage(context.getString(R.string.clearactions_dialog_msg))
-                    .setNegativeButton(context.getString(android.R.string.cancel), null)
+                    .setNegativeButton(context.getString(R.string.clearactions_dialog_cancel), null)
                     .setPositiveButton(context.getString(R.string.clearactions_dialog_ok),
                             new DialogInterface.OnClickListener()
                             {
