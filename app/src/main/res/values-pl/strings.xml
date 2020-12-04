@@ -202,13 +202,13 @@
       <item quantity="many">%s metrów</item>
     </plurals>
 
-    <string name="units_kilometers">kilemetry</string>
+    <string name="units_kilometers">kilometry</string>
     <string name="units_kilometers_short">km</string>
     <plurals name="units_kilometers_long">
         <item quantity="one">%s kilometr</item>
         <item quantity="few">%s kilometry</item>
-        <item quantity="other">%s kilemetrów</item>
-        <item quantity="many">%s kilemetrów</item>
+        <item quantity="other">%s kilometrów</item>
+        <item quantity="many">%s kilometrów</item>
     </plurals>
 
     <!--
@@ -449,7 +449,7 @@
     <string name="compareMode_yesterday">Wczoraj</string>                     <!-- setting -->
     <string name="compareMode_tomorrow">Jutro</string>                       <!-- setting -->
     <string name="configLabel_general_compareMode">Porównaj z:</string>    <!-- spinner label -->
-    <string name="configLabel_general_showComparison">Pokaż porównianie</string>  <!-- checkbox label -->
+    <string name="configLabel_general_showComparison">Pokaż porównanie</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_closest">Najbliższe wydarzenie</string>                 <!-- setting -->
