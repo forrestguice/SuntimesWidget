@@ -1,15 +1,15 @@
-Tracks sunlight and moonlight times. Features an app, alarm clock, and widget collection.
+Отслеживает время солнечного и лунного света. Содержит информационное приложение, будильники и коллекцию виджетов.
 
-Suntimes displays sunrise and sunset, twilight (civil / nautical / astronomical), blue and golden hour, the solstices and equinoxes, moonrise and moonset, moon phases and illumination. The alarm clock schedules daily repeating alarms (or notifications) for sunrise, sunset, and other events. The app includes many features commonly associated with a world clock.
+Suntimes показывает восход и закат солнца, длину тени, сумерки (гражданские, морские, астрономические), режимное время и "золотой час", солнцестояния и равноденствия, восход и заход луны, фазы луны и ее освещенность. Будильники можно настраивать на ежедневные повторяющиеся сигналы (или просто уведомления) о восходе, закате и других событиях. Приложение включает в себя множество функций, связанных с мировым временем.
 
-The times reported by this app are approximate. The app doesn't require network connectivity, GPS is optional.
+Время, рассчитываемое приложением, является приблизительным. Приложение не требует подключения к интернету, использование GPS не обязательно.
 
-The app benefits from the following permissions:
-* <small><u>ACCESS_FINE_LOCATION</u></small> is used to obtain the current position (latitude, longitude, altitude).
-* <small><u>BOOT_COMPLETED</u></small> is used to restore active alarms after a reboot.
-* <small><u>SET_ALARM</u></small> is used to schedule alarms using the AlarmClock app.
-* <small><u>VIBRATE</u></small> is used by alarm notifications.
-* <small><u>READ_EXTERNAL_STORAGE</u></small> is used to play alarm sounds located on the SD card.
-* <small><u>WRITE_EXTERNAL_STORAGE</u></small> is used to backup data to file (places, themes, etc) <small>(api&le;=18 only)</small>.
+Приложение может запрашивать разрешения:
+&bull; <small>ACCESS_FINE_LOCATION</small> для получения текущего местоположения (широта, долгота, высота).
+&bull; <small>BOOT_COMPLETED</small> для восстановления активности будильников после перезагрузки устройства.
+&bull; <small>SET_ALARM</small> для настройки сигналов с использованием стандартного приложения будильника.
+&bull; <small>VIBRATE</small> для использования вибросигнала.
+&bull; <small>READ_EXTERNAL_STORAGE</small> для воспроизведения звуковых сигналов, находящихся на SD-карте.
+&bull; <small>WRITE_EXTERNAL_STORAGE</small> для резервного копирования данных (места, темы интерфейса и т. д.) <em>(API&le;18)</em>.
 
-Note: The "Calendar Integration" and permissions added in v0.9.0 were removed in v0.10.0. This feature is now available as a separate add-on app; <a href="https://f-droid.org/en/packages/com.forrestguice.suntimescalendars">Suntimes Calendars</a>.
+Примечание: интеграция с календарями и разрешения, добавленные в приложении версии 0.9.0 были удалены в версии 0.10.0. Эта функция теперь доступна в виде отдельного приложения Suntimes Calendars (https://f-droid.org/ru/packages/com.forrestguice.suntimescalendars).
