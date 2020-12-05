@@ -1,5 +1,12 @@
 ### ~
 
+### v0.13.5 (2020-12-04)
+* adds translation to Russian (ru) (contributed by Ruslan Chintsov) (#458).
+* updates translation to Brazilian Portuguese (pt-br) (#453 by efraletti).
+* updates translation to Polish and Esperanto (eo, pl) (#460 by Verdulo).
+* updates translation to Norwegian (nb) (#461 by FTno).
+* fixes bug "NotificationService keeps running in background" (#456, #323).
+
 ### v0.13.4 (2020-11-16)
 * updates translation to Brazilian Portuguese (pt-br) (#450 by naoliv). 
 * updates translation to Norwegian (nb) (#447 by FTno).
