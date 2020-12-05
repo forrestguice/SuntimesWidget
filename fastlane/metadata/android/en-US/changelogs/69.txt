@@ -1,4 +1,5 @@
 - adds translation to Russian.
 - updates translation to Brazilian Portuguese.
 - updates translation to Polish and Esperanto.
+- updates translation to Norwegian.
 - fixes bug "NotificationService keeps running in background" (#456, #323).
