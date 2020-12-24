@@ -1050,6 +1050,7 @@
     <string name="configActionDesc_swapCards">Swap cards (today/tomorrow)</string>
     <string name="configActionDesc_nextCard">Show next card</string>
     <string name="configActionDesc_prevCard">Show previous card</string>
+    <string name="configActionDesc_showCard">@string/configAction_viewDate</string>
     <string name="configActionDesc_setAlarmForNote">Set alarm for note</string>
     <string name="configActionDesc_alarmList">Alarm List</string>
     <string name="configActionDesc_themeList">Theme List</string>
@@ -1060,6 +1061,7 @@
         <item>@string/configActionDesc_doNothing</item>
         <item>@string/app_name</item>
 
+        <item>@string/app_name</item>
         <item>@string/app_name</item>
         <item>@string/app_name</item>
         <item>@string/app_name</item>
@@ -1092,6 +1094,7 @@
         <item>@string/configActionDesc_nextCard</item>
         <item>@string/configActionDesc_prevCard</item>
         <item>@string/configActionDesc_swapCards</item>
+        <item>@string/configActionDesc_showCard</item>
 
         <item>@string/configActionDesc_nextNote</item>
         <item>@string/configActionDesc_prevNote</item>

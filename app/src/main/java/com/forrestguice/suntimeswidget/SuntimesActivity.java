@@ -125,6 +125,8 @@ public class SuntimesActivity extends AppCompatActivity
     public static final String ACTION_CARD_NEXT = "com.forrestguice.suntimeswidget.CARD_NEXT";
     public static final String ACTION_CARD_PREV = "com.forrestguice.suntimeswidget.CARD_PREV";
     public static final String ACTION_CARD_RESET = "com.forrestguice.suntimeswidget.SWAP_CARD";
+    public static final String ACTION_CARD_SHOW = "com.forrestguice.suntimeswidget.SHOW_CARD";
+    public static final String EXTRA_SHOW_DATE = "dateMillis";
 
     public static final String ACTION_NOTE_NEXT = "com.forrestguice.suntimeswidget.NEXT_NOTE";
     public static final String ACTION_NOTE_PREV = "com.forrestguice.suntimeswidget.PREV_NOTE";
@@ -321,6 +323,22 @@ public class SuntimesActivity extends AppCompatActivity
                 if (card_layout.findFirstVisibleItemPosition() == CardAdapter.TODAY_POSITION)
                     scrollTo(CardAdapter.TODAY_POSITION + 1);
                 else scrollTo(CardAdapter.TODAY_POSITION);
+
+            } else if (action.equals(ACTION_CARD_SHOW)) {
+                final long dateMillis = intent.getLongExtra(EXTRA_SHOW_DATE, -1);
+                if (dateMillis >= 0)
+                {
+                    txt_time.post(new Runnable() {    // must be run after onCreate or onNewIntent has finished (and data is initialized)
+                        @Override
+                        public void run() {
+                            int position = card_adapter.findPositionForDate(SuntimesActivity.this, dateMillis);
+                            if (position >= 0 && position < CardAdapter.MAX_POSITIONS) {
+                                setUserSwappedCard(true, ACTION_CARD_SHOW);
+                                scrollTo(position);
+                            }
+                        }
+                    });
+                }
 
             } else if (action.equals(ACTION_CONFIG_LOCATION)) {
                 configLocation();
