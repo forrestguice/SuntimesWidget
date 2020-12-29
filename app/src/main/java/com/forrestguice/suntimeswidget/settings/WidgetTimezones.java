@@ -132,7 +132,7 @@ public class WidgetTimezones
          */
         public int findOffset( double longitude )
         {
-            double offsetHrs = longitude * 24 / 360;           // offset from gmt in hrs
+            double offsetHrs = longitude * 24 / 360d;           // offset from gmt in hrs
             //noinspection UnnecessaryLocalVariable
             int offsetMs = (int)(offsetHrs * 60 * 60 * 1000);  // hrs * 60min in a day * 60s in a min * 1000ms in a second
             //Log.d("DEBUG", "offset: " + offsetHrs + " (" + offsetMs + ")");
