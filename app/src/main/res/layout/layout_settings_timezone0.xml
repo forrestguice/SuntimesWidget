@@ -84,7 +84,7 @@
                       android:labelFor="@+id/appwidget_solartime"
                       android:layout_gravity="center_vertical"
                       android:layout_width="wrap_content"
-                      android:layout_height="wrap_content" android:text="@string/configLabel_solartime" />
+                      android:layout_height="wrap_content" android:text="@string/configLabel_timezone_standard" />
 
             <Spinner android:id="@+id/appwidget_solartime"
                 android:layout_width="0dp" android:layout_weight="1" android:layout_gravity="center"

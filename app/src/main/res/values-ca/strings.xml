@@ -423,7 +423,7 @@
     <string name="configLabel_timezone">Opcions de zona horària</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Mode:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Zona horària:</string>              <!-- spinner label -->
-    <string name="configLabel_solartime">Temps solar:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Temps solar:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Format del sistema</string>          <!-- setting -->

@@ -421,7 +421,7 @@
     <string name="configLabel_timezone">Opciones de zona horaria</string>
     <string name="configLabel_timezone_mode">Modo:</string>       
     <string name="configLabel_timezone_custom">Zona horaria:</string>
-    <string name="configLabel_solartime">Hora solar:</string>           
+    <string name="configLabel_timezone_standard">Hora solar:</string>
 
     
     <string name="timeFormatMode_system">Formato del sistema</string>

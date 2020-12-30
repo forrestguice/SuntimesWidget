@@ -468,7 +468,7 @@
     <string name="configLabel_timezone">Configurações de Fuso Horário</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Modo:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Fuso Horário:</string>              <!-- spinner label -->
-    <string name="configLabel_solartime">Tempo Solar:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Tempo Solar:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Do sistema</string>          <!-- setting -->

@@ -484,7 +484,7 @@
     <string name="configLabel_timezone">Настройки часового пояса</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Режим:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Часовой пояс:</string>              <!-- spinner label -->
-    <string name="configLabel_solartime">Солнечное время:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Солнечное время:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Системный</string>          <!-- setting -->

@@ -427,7 +427,7 @@
     <string name="configLabel_timezone">Ustawienia strefy czasowej</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Tryb:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Strefa czasowa:</string>              <!-- spinner label -->
-    <string name="configLabel_solartime">Czas słoneczny:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Czas słoneczny:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Systemowy</string>

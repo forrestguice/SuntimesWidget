@@ -419,7 +419,7 @@
     <string name="configLabel_timezone">Agordoj pri horzono</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Reĝimo:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Horzono:</string>              <!-- spinner label -->
-    <string name="configLabel_solartime">Suntempo:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Suntempo:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Sistema formo</string>          <!-- setting -->

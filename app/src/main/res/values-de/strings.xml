@@ -413,7 +413,7 @@
   <string name="configLabel_timezone">Zeitzone</string>             <!-- group title -->
   <string name="configLabel_timezone_mode">Modus:</string>                     <!-- spinner label -->
   <string name="configLabel_timezone_custom">Zeitzone:</string>              <!-- spinner label -->
-  <string name="configLabel_solartime">Istzeit:</string>                   <!-- spinner label -->
+  <string name="configLabel_timezone_standard">Istzeit:</string>                   <!-- spinner label -->
 
   <!-- Widget Setting: timeFormat mode -->
   <string name="timeFormatMode_system">Systemformat</string>          <!-- setting -->

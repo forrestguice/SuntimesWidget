@@ -434,7 +434,7 @@
     <string name="configLabel_timezone">時區設置</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">模式：</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">時區：</string>              <!-- spinner label -->
-    <string name="configLabel_solartime">太陽時：</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">太陽時：</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">系統格式</string>          <!-- setting -->

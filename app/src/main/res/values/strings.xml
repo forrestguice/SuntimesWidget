@@ -474,7 +474,7 @@
     <string name="configLabel_timezone">Time Zone Settings</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Mode:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Time Zone:</string>              <!-- spinner label -->
-    <string name="configLabel_solartime">Solar Time:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Time System:</string>                   <!-- spinner label -->   <!-- TODO: "solar time" -> "time system" -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">System format</string>          <!-- setting -->

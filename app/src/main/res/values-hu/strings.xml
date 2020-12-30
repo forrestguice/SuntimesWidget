@@ -413,7 +413,7 @@
     <string name="configLabel_timezone">Időzóna beállítások:</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Mód:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Időzóna:</string>              <!-- spinner label -->
-    <string name="configLabel_solartime">Szoláris idő:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Szoláris idő:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Idő megjelenítése</string>          <!-- setting -->

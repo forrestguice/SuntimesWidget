@@ -427,7 +427,7 @@
     <string name="configLabel_timezone">Ordu eremuen ezarpenak</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Modua:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Ordu eremua:</string>              <!-- spinner label -->
-    <string name="configLabel_solartime">Eguzkiaren ordua:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Eguzkiaren ordua:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Sistemaren formatua</string>          <!-- setting -->
