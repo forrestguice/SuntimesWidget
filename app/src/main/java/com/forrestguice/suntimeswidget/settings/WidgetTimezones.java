@@ -417,34 +417,45 @@ public class WidgetTimezones
         private TimeZoneSort sortBy = null;
         private String line1, line2;
         private List<TimeZoneItem> items;
+        private int resID;
+
+        public TimeZoneItemAdapter(Context context)
+        {
+            super(context, R.layout.layout_listitem_timezone);
+            this.resID = R.layout.layout_listitem_timezone;
+            init(context, R.string.timezoneCustom_line1, R.string.timezoneCustom_line2);
+        }
 
         public TimeZoneItemAdapter(Context context, int resource)
         {
             super(context, resource);
-            init(context);
+            this.resID = resource;
+            init(context, R.string.timezoneCustom_line1, R.string.timezoneCustom_line2);
         }
 
-        public TimeZoneItemAdapter(Context context, int resource, List<TimeZoneItem> items)
+        public TimeZoneItemAdapter(Context context, int resource, List<TimeZoneItem> items, int resource_line1, int resource_line2)
         {
             super(context, resource, items);
+            this.resID = resource;
             this.items = items;
-            init(context);
+            init(context, resource_line1, resource_line2);
         }
 
         public TimeZoneItemAdapter(Context context, int resource, List<TimeZoneItem> items, TimeZoneSort sortBy)
         {
             super(context, resource, items);
+            this.resID = resource;
             this.items = items;
             this.sortBy = sortBy;
-            init(context);
+            init(context, R.string.timezoneCustom_line1, R.string.timezoneCustom_line2);
             sort();
         }
 
-        private void init(Context context)
+        private void init(Context context, int resource_line1, int resource_line2)
         {
             colors = context.getResources().getIntArray(R.array.utcOffsetColors);
-            line1 = context.getString(R.string.timezoneCustom_line1);
-            line2 = context.getString(R.string.timezoneCustom_line2);
+            line1 = context.getString(resource_line1);
+            line2 = context.getString(resource_line2);
         }
 
         public int getColorForTimeZoneOffset( double utcHour )
@@ -474,7 +485,7 @@ public class WidgetTimezones
         private View getItemView(int position, View convertView, @NonNull ViewGroup parent, boolean colorize)
         {
             LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-            View view = layoutInflater.inflate(R.layout.layout_listitem_timezone, parent, false);
+            View view = layoutInflater.inflate(resID, parent, false);
 
             TimeZoneItem timezone = getItem(position);
             if (timezone == null)
@@ -829,7 +840,7 @@ public class WidgetTimezones
 
             Context context = contextRef.get();
             if (context != null)
-                return new WidgetTimezones.TimeZoneItemAdapter(context, 0, timezones, sortBy);
+                return new WidgetTimezones.TimeZoneItemAdapter(context, R.layout.layout_listitem_timezone, timezones, sortBy);
             else return null;
         }
 
