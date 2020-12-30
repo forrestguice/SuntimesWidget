@@ -557,7 +557,7 @@ public class WidgetSettings
      */
     public static enum TimezoneMode
     {
-        SOLAR_TIME("Solar"),
+        SOLAR_TIME("Time Standards"),   // TODO: misnomer (no longer accurate); rename this value
         CURRENT_TIMEZONE("Current"),
         CUSTOM_TIMEZONE("Custom");
 
@@ -594,11 +594,13 @@ public class WidgetSettings
     /**
      * SolarTimeMode
      */
-    public static enum SolarTimeMode
+    public static enum SolarTimeMode         // TODO: misnomer (no longer accurate); rename this enum
     {
-        APPARENT_SOLAR_TIME("Current"),
-        LOCAL_MEAN_TIME("Solar");
+        APPARENT_SOLAR_TIME("Apparent Solar Time"),
+        LOCAL_MEAN_TIME("Local Mean Time"),
         UTC("Coordinated Universal Time"),
+        LMST("Local Sidereal Time"),
+        GMST("Greenwich Sidereal Time");
 
         private String displayString;
 
@@ -626,6 +628,8 @@ public class WidgetSettings
         {
             LOCAL_MEAN_TIME.setDisplayString(context.getString(R.string.time_localMean));
             APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.time_apparent));
+            LMST.setDisplayString(context.getString(R.string.time_lmst));
+            GMST.setDisplayString(context.getString(R.string.time_gmst));
             UTC.setDisplayString(context.getString(R.string.time_utc));
         }
     }

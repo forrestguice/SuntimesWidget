@@ -246,6 +246,14 @@ public class SuntimesData
                         timezone = WidgetTimezones.apparentSolarTime(context, location, calculator);
                         break;
 
+                    case GMST:
+                        timezone = WidgetTimezones.siderealTime(context);
+                        break;
+
+                    case LMST:
+                        timezone = WidgetTimezones.siderealTime(context, location);
+                        break;
+
                     case UTC:
                         timezone = TimeZone.getTimeZone("UTC");
                         break;

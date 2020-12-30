@@ -43,6 +43,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.graphics.drawable.GradientDrawable;
 
+import net.time4j.TemporalType;
+import net.time4j.calendar.astro.JulianDay;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -100,6 +103,14 @@ public class WidgetTimezones
         return new LocalMeanTime(location.getLongitudeAsDouble(), context.getString(R.string.time_localMean));
     }
 
+    public static TimeZone siderealTime(Context context) {
+        return new LocalMeanTime(0, SiderealTime.TZID_GMST);
+    }
+
+    public static TimeZone siderealTime(Context context, Location location) {
+        return new LocalMeanTime(location.getLongitudeAsDouble(), SiderealTime.TZID_LMST);
+    }
+
     public static TimeZone apparentSolarTime(Context context, Location location)
     {
         return new ApparentSolarTime(location.getLongitudeAsDouble(), context.getString(R.string.time_apparent));
@@ -130,7 +141,7 @@ public class WidgetTimezones
          * @param longitude a longitude value; degrees [-180, 180]
          * @return the offset of this longitude from utc (in milliseconds)
          */
-        public int findOffset( double longitude )
+        public static int findOffset( double longitude )
         {
             double offsetHrs = longitude * 24 / 360d;           // offset from gmt in hrs
             //noinspection UnnecessaryLocalVariable
@@ -303,6 +314,52 @@ public class WidgetTimezones
             return eotOffset;
         }
         private int eotOffset = 0;
+    }
+
+    ///////////////////////////////////////
+    ///////////////////////////////////////
+
+    /**
+     * SiderealTime
+     */
+    public static class SiderealTime
+    {
+        public static final String TZID_GMST = "Greenwich Sidereal Time";
+        public static final String TZID_LMST = "Local Sidereal Time";
+
+        public static int gmstOffset(long dateMillis)
+        {
+            double julianDay = julianDay(dateMillis);
+            double d = julianDay - 2451545d;
+            double t = (d / 36525d);
+            double gmst_degrees = 280.46061837 + (360.98564736629 * d) + (0.000387933 * t * t) - ((t * t * t) / 38710000d);
+            double gmst_hours = simplifyHours(gmst_degrees * (24 / 360d));
+            double utc_hours = simplifyHours(dateMillis / (60d * 60d * 1000d));
+            double offset_hours = simplifyHours(gmst_hours - utc_hours);
+            return (int)(offset_hours * 60d * 60d * 1000d);
+        }
+
+        public static int lmstOffset(long dateMillis, double longitude) {
+            return gmstOffset(dateMillis) + LocalMeanTime.findOffset(longitude);
+        }
+
+        public static double julianDay(long date)
+        {
+            Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            calendar.setTimeInMillis(date);
+            return JulianDay.ofEphemerisTime((TemporalType.JAVA_UTIL_DATE.translate(calendar.getTime()))).getValue();
+        }
+
+        private static double simplifyHours(double hours)
+        {
+            while (hours >= 24) {
+                hours -= 24;
+            }
+            while (hours < 0) {
+                hours += 24;
+            }
+            return hours;
+        }
     }
 
     ///////////////////////////////////////
