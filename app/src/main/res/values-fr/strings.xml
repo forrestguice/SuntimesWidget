@@ -403,7 +403,7 @@
     <string name="configAction_savePlace">Enregistrer</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_solar">Heure solaire</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Heure solaire</string>                       <!-- setting -->
     <string name="timezoneMode_current">Fuseau horaire du système</string>               <!-- setting -->
     <string name="timezoneMode_custom">Défini par l\'utilisateur</string>                    <!-- setting -->
 

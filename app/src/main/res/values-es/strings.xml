@@ -409,7 +409,7 @@
     <string name="configAction_savePlace">Guardar</string>         
 
     
-    <string name="timezoneMode_solar">Hora solar</string>
+    <string name="timezoneMode_standard">Hora solar</string>
     <string name="timezoneMode_current">Zona horaria de sistema</string>               
     <string name="timezoneMode_custom">Definida por usuario</string>                    
 

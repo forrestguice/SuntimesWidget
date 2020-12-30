@@ -415,7 +415,7 @@
     <string name="configAction_savePlace">Zapisz</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_solar">Czas słoneczny</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Czas słoneczny</string>                       <!-- setting -->
     <string name="timezoneMode_current">Systemowa</string>                         <!-- setting -->
     <string name="timezoneMode_custom">Użytkownika</string>                    <!-- setting -->
 

@@ -415,7 +415,7 @@
     <string name="configAction_savePlace">Gorde</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_solar">Eguzkiaren ordua</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Eguzkiaren ordua</string>                       <!-- setting -->
     <string name="timezoneMode_current">Sistemaren ordu eremua</string>               <!-- setting -->
     <string name="timezoneMode_custom">Erabiltzaileak ezarria</string>                    <!-- setting -->
 

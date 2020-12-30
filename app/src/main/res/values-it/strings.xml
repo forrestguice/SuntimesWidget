@@ -422,7 +422,7 @@
     <string name="configAction_savePlace">Salva</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_solar">Orario solare</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Orario solare</string>                       <!-- setting -->
     <string name="timezoneMode_current">Fuso orario di sistema</string>               <!-- setting -->
     <string name="timezoneMode_custom">Definito dall\'utente</string>                    <!-- setting -->
 

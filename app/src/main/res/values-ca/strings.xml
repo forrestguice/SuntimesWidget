@@ -411,7 +411,7 @@
     <string name="configAction_savePlace">Guardar</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_solar">Horari solar</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Horari solar</string>                       <!-- setting -->
     <string name="timezoneMode_current">Zona horària de sistema</string>               <!-- setting -->
     <string name="timezoneMode_custom">Definida per l\'usuari</string>                    <!-- setting -->
 

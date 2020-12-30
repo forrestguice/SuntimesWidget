@@ -401,7 +401,7 @@
   <string name="configAction_savePlace">speichern</string>         <!-- button (contentDescription) -->
 
   <!-- Widget Setting: timezone -->
-  <string name="timezoneMode_solar">Istzeit</string>                       <!-- setting -->
+  <string name="timezoneMode_standard">Istzeit</string>                       <!-- setting -->
   <string name="timezoneMode_current">System</string>                         <!-- setting -->
   <string name="timezoneMode_custom">Benutzerdefiniert</string>                    <!-- setting -->
 

@@ -585,7 +585,7 @@ public class WidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
-            SOLAR_TIME.setDisplayString(context.getString(R.string.timezoneMode_solar));
+            SOLAR_TIME.setDisplayString(context.getString(R.string.timezoneMode_standard));
             CURRENT_TIMEZONE.setDisplayString(context.getString(R.string.timezoneMode_current));
             CUSTOM_TIMEZONE.setDisplayString(context.getString(R.string.timezoneMode_custom));
         }

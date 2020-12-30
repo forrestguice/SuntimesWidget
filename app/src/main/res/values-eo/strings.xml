@@ -407,7 +407,7 @@
     <string name="configAction_savePlace">Konservi</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_solar">Suntempo</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Suntempo</string>                       <!-- setting -->
     <string name="timezoneMode_current">Sistema</string>                         <!-- setting -->
     <string name="timezoneMode_custom">Propra</string>                    <!-- setting -->
 

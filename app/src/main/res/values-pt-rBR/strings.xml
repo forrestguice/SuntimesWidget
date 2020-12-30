@@ -456,7 +456,7 @@
     <string name="configAction_savePlace">Salvar</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_solar">Hora Solar</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Hora Solar</string>                       <!-- setting -->
     <string name="timezoneMode_current">Fuso Horário do Sistema</string>               <!-- setting -->
     <string name="timezoneMode_custom">Definido pelo Usuário</string>                    <!-- setting -->
 

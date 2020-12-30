@@ -422,7 +422,7 @@
     <string name="configAction_savePlace">保存</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_solar">太陽時</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">太陽時</string>                       <!-- setting -->
     <string name="timezoneMode_current">系統時區</string>               <!-- setting -->
     <string name="timezoneMode_custom">用戶自定</string>                    <!-- setting -->
 

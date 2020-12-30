@@ -415,7 +415,7 @@
     <string name="configAction_savePlace">Lagre</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_solar">Soltid</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Soltid</string>                       <!-- setting -->
     <string name="timezoneMode_current">System-tidssone</string>               <!-- setting -->
     <string name="timezoneMode_custom">Brukerdefinert</string>                    <!-- setting -->
 
