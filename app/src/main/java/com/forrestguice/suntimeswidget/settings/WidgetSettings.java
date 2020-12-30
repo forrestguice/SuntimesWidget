@@ -598,6 +598,7 @@ public class WidgetSettings
     {
         APPARENT_SOLAR_TIME("Current"),
         LOCAL_MEAN_TIME("Solar");
+        UTC("Coordinated Universal Time"),
 
         private String displayString;
 
@@ -625,6 +626,7 @@ public class WidgetSettings
         {
             LOCAL_MEAN_TIME.setDisplayString(context.getString(R.string.time_localMean));
             APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.time_apparent));
+            UTC.setDisplayString(context.getString(R.string.time_utc));
         }
     }
 

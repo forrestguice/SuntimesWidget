@@ -466,6 +466,7 @@
     <string name="timezoneMode_current">System Time Zone</string>               <!-- setting -->
     <string name="timezoneMode_custom">User Defined</string>                    <!-- setting -->
 
+    <string name="time_utc">Coordinated Universal Time</string>            <!-- setting / custom timezone id -->  <!-- TODO -->
     <string name="time_localMean">Local Mean Time</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">Apparent Solar Time</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
