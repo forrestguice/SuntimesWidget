@@ -50,11 +50,10 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <Spinner android:id="@+id/appwidget_timezone_custom" android:layout_width="match_parent"
-                    android:dropDownVerticalOffset="32sp"
-                    android:layout_height="wrap_content" />
+                    android:dropDownVerticalOffset="32sp" android:layout_height="wrap_content" />
 
                 <ProgressBar android:id="@+id/appwidget_timezone_progress" android:visibility="gone"
                     android:layout_width="wrap_content" android:layout_height="match_parent"
