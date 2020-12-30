@@ -460,8 +460,8 @@
     <string name="timezoneMode_current">Fuso Horário do Sistema</string>               <!-- setting -->
     <string name="timezoneMode_custom">Definido pelo Usuário</string>                    <!-- setting -->
 
-    <string name="solartime_localMean">Hora Local</string>                 <!-- setting / custom timezone id -->
-    <string name="solartime_apparent">Horário Solar Aparente</string>              <!-- setting / custom timezone id -->
+    <string name="time_localMean">Hora Local</string>                 <!-- setting / custom timezone id -->
+    <string name="time_apparent">Horário Solar Aparente</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="America/Sao_Paulo">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 

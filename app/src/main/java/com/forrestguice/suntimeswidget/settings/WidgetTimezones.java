@@ -97,17 +97,17 @@ public class WidgetTimezones
 
     public static TimeZone localMeanTime( Context context, Location location )
     {
-        return new LocalMeanTime(location.getLongitudeAsDouble(), context.getString(R.string.solartime_localMean));
+        return new LocalMeanTime(location.getLongitudeAsDouble(), context.getString(R.string.time_localMean));
     }
 
     public static TimeZone apparentSolarTime(Context context, Location location)
     {
-        return new ApparentSolarTime(location.getLongitudeAsDouble(), context.getString(R.string.solartime_apparent));
+        return new ApparentSolarTime(location.getLongitudeAsDouble(), context.getString(R.string.time_apparent));
     }
 
     public static TimeZone apparentSolarTime(Context context, Location location, SuntimesCalculator calculator)
     {
-        return new ApparentSolarTime(location.getLongitudeAsDouble(), context.getString(R.string.solartime_apparent), calculator);
+        return new ApparentSolarTime(location.getLongitudeAsDouble(), context.getString(R.string.time_apparent), calculator);
     }
 
     /**

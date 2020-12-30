@@ -623,8 +623,8 @@ public class WidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
-            LOCAL_MEAN_TIME.setDisplayString(context.getString(R.string.solartime_localMean));
-            APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.solartime_apparent));
+            LOCAL_MEAN_TIME.setDisplayString(context.getString(R.string.time_localMean));
+            APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.time_apparent));
         }
     }
 

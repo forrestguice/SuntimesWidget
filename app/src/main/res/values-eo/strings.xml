@@ -411,8 +411,8 @@
     <string name="timezoneMode_current">Sistema</string>                         <!-- setting -->
     <string name="timezoneMode_custom">Propra</string>                    <!-- setting -->
 
-    <string name="solartime_localMean">mezuma suntempo</string>                 <!-- setting / custom timezone id -->
-    <string name="solartime_apparent">ŝajna suntempo</string>              <!-- setting / custom timezone id -->
+    <string name="time_localMean">mezuma suntempo</string>                 <!-- setting / custom timezone id -->
+    <string name="time_apparent">ŝajna suntempo</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
