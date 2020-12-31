@@ -43,9 +43,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.graphics.drawable.GradientDrawable;
 
-import net.time4j.TemporalType;
-import net.time4j.calendar.astro.JulianDay;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -347,11 +344,11 @@ public class WidgetTimezones
             return gmstOffset(dateMillis) + LocalMeanTime.findOffset(longitude);
         }
 
-        public static double julianDay(long date)
-        {
-            Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-            calendar.setTimeInMillis(date);
-            return JulianDay.ofEphemerisTime((TemporalType.JAVA_UTIL_DATE.translate(calendar.getTime()))).getValue();
+        /**
+         * https://stackoverflow.com/questions/11759992/calculating-jdayjulian-day-in-javascript
+         */
+        public static double julianDay(long dateMillis) {
+            return (dateMillis / (24d * 60d * 60d * 1000d)) + 2440587.5;  // days + julianDay(epoch)
         }
 
         private static double simplifyHours(double hours)
