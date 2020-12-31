@@ -334,8 +334,8 @@ public class WidgetTimezones
             double d = julianDay - 2451545d;
             double t = (d / 36525d);
             double gmst_degrees = 280.46061837 + (360.98564736629 * d) + (0.000387933 * t * t) - ((t * t * t) / 38710000d);
-            double gmst_hours = simplifyHours(gmst_degrees * (24 / 360d));
-            double utc_hours = simplifyHours(dateMillis / (60d * 60d * 1000d));
+            double gmst_hours = gmst_degrees * (24 / 360d);
+            double utc_hours = dateMillis / (60d * 60d * 1000d);
             double offset_hours = simplifyHours(gmst_hours - utc_hours);
             return (int)(offset_hours * 60d * 60d * 1000d);
         }
