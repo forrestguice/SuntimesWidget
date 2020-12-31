@@ -1493,6 +1493,7 @@ public class SuntimesActivity extends AppCompatActivity
             AlarmCreateDialog dialog = new AlarmCreateDialog();
             dialog.loadSettings(SuntimesActivity.this);
             dialog.setEvent((event != null ? event : dialog.getEvent()), WidgetSettings.loadLocationPref(this, 0));
+            dialog.setShowAlarmListButton(true);
             dialog.setOnAcceptedListener(onScheduleAlarm);
             dialog.setOnNeutralListener(onManageAlarms);
             dialog.show(getSupportFragmentManager(), DIALOGTAG_ALARM);
