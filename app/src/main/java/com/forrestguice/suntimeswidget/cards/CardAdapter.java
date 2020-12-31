@@ -141,10 +141,21 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
     public int findPositionForDate(Context context, long dateMillis)
     {
         Pair<SuntimesRiseSetDataset, SuntimesMoonData> data_today = initData(context, TODAY_POSITION);
-        Calendar today = data_today.first.calendar();
+        Calendar today = Calendar.getInstance(data_today.first.timezone());
+        today.setTimeInMillis(data_today.first.calendar().getTimeInMillis());
+        today.set(Calendar.HOUR_OF_DAY, 12);
+        today.set(Calendar.MINUTE, 0);
+        today.set(Calendar.SECOND, 0);
 
-        int diff = (int)((dateMillis - today.getTimeInMillis()) / (1000L * 60L * 60L * 24L));
-        return CardAdapter.TODAY_POSITION + diff;
+        Calendar date = Calendar.getInstance(data_today.first.timezone());
+        date.setTimeInMillis(dateMillis);
+        date.set(Calendar.HOUR_OF_DAY, 12);
+        date.set(Calendar.MINUTE, 0);
+        date.set(Calendar.SECOND, 0);
+
+        long delta = date.getTimeInMillis() - today.getTimeInMillis();
+        double offset= delta / (1000d * 60d * 60d * 24d);
+        return CardAdapter.TODAY_POSITION + (int) Math.round(offset);
     }
 
     /**
