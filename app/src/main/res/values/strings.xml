@@ -462,19 +462,23 @@
     <string name="configAction_savePlace">Save</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_solar">Solar Time</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Time Standard</string>                   <!-- setting -->    <!-- TODO: "solar time" -> "time standard" -->
     <string name="timezoneMode_current">System Time Zone</string>               <!-- setting -->
     <string name="timezoneMode_custom">User Defined</string>                    <!-- setting -->
 
-    <string name="solartime_localMean">Local Mean Time</string>                 <!-- setting / custom timezone id -->
-    <string name="solartime_apparent">Apparent Solar Time</string>              <!-- setting / custom timezone id -->
+    <string name="time_lmst">Local Sidereal Time</string>                  <!-- timezone label -->  <!-- TODO -->
+    <string name="time_gmst">Greenwich Sidereal Time</string>              <!-- timezone label -->  <!-- TODO -->
+    <string name="time_utc">Coordinated Universal Time</string>            <!-- timezone label -->  <!-- TODO -->
+    <string name="time_localMean">Local Mean Time</string>                 <!-- setting / custom timezone id -->
+    <string name="time_apparent">Apparent Solar Time</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
+    <string name="timezoneCustom_line2b"><xliff:g id="timezoneID" example="US/Arizona">%2$s</xliff:g></string>                                                                    <!-- selector item format (e.g. "US/Arizona" ) .. same as above but omits first arg -->
 
     <string name="configLabel_timezone">Time Zone Settings</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Mode:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Time Zone:</string>              <!-- spinner label -->
-    <string name="configLabel_solartime">Solar Time:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Standard:</string>                   <!-- spinner label -->   <!-- TODO: "solar time" -> "time standard" -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">System format</string>          <!-- setting -->

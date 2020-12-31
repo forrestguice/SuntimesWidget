@@ -409,19 +409,19 @@
     <string name="configAction_savePlace">Guardar</string>         
 
     
-    <string name="timezoneMode_solar">Hora solar</string>
+    <string name="timezoneMode_standard">Hora solar</string>
     <string name="timezoneMode_current">Zona horaria de sistema</string>               
     <string name="timezoneMode_custom">Definida por usuario</string>                    
 
-    <string name="solartime_localMean">Hora solar media</string>                 
-    <string name="solartime_apparent">Hora solar aparente</string>              
+    <string name="time_localMean">Hora solar media</string>
+    <string name="time_apparent">Hora solar aparente</string>
     <string name="timezoneCustom_line1"><xliff:g example="US/Arizona" id="timezoneID">%1$s</xliff:g></string>                                                                     
     <string name="timezoneCustom_line2">El <xliff:g example="-7" id="utmOffset">%1$s</xliff:g>] <xliff:g example="Mountain Standard Time" id="timezoneName">%2$s</xliff:g></string>
 
     <string name="configLabel_timezone">Opciones de zona horaria</string>
     <string name="configLabel_timezone_mode">Modo:</string>       
     <string name="configLabel_timezone_custom">Zona horaria:</string>
-    <string name="configLabel_solartime">Hora solar:</string>           
+    <string name="configLabel_timezone_standard">Hora solar:</string>
 
     
     <string name="timeFormatMode_system">Formato del sistema</string>

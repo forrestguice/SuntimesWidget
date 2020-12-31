@@ -415,19 +415,19 @@
     <string name="configAction_savePlace">Zapisz</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_solar">Czas słoneczny</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Czas słoneczny</string>                       <!-- setting -->
     <string name="timezoneMode_current">Systemowa</string>                         <!-- setting -->
     <string name="timezoneMode_custom">Użytkownika</string>                    <!-- setting -->
 
-    <string name="solartime_localMean">średni czas słoneczny</string>                 <!-- setting / custom timezone id -->
-    <string name="solartime_apparent">prawdziwy czas słoneczny</string>              <!-- setting / custom timezone id -->
+    <string name="time_localMean">średni czas słoneczny</string>                 <!-- setting / custom timezone id -->
+    <string name="time_apparent">prawdziwy czas słoneczny</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
     <string name="configLabel_timezone">Ustawienia strefy czasowej</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Tryb:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Strefa czasowa:</string>              <!-- spinner label -->
-    <string name="configLabel_solartime">Czas słoneczny:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Czas słoneczny:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Systemowy</string>

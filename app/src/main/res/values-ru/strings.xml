@@ -472,19 +472,19 @@
     <string name="configAction_savePlace">Сохранить</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_solar">Солнечное время</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Солнечное время</string>                       <!-- setting -->
     <string name="timezoneMode_current">Системный часовой пояс</string>               <!-- setting -->
     <string name="timezoneMode_custom">Пользовательский</string>                    <!-- setting -->
 
-    <string name="solartime_localMean">Среднее солнечное время</string>                 <!-- setting / custom timezone id -->
-    <string name="solartime_apparent">Истинное солнечное время</string>              <!-- setting / custom timezone id -->
+    <string name="time_localMean">Среднее солнечное время</string>                 <!-- setting / custom timezone id -->
+    <string name="time_apparent">Истинное солнечное время</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
     <string name="configLabel_timezone">Настройки часового пояса</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Режим:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Часовой пояс:</string>              <!-- spinner label -->
-    <string name="configLabel_solartime">Солнечное время:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Солнечное время:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Системный</string>          <!-- setting -->
