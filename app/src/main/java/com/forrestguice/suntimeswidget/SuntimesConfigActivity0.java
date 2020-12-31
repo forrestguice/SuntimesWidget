@@ -72,6 +72,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.TimeZone;
 
 import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PICK_THEME_REQUEST;
@@ -279,12 +280,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return adapter;
     }
 
-    protected ArrayAdapter<WidgetSettings.SolarTimeMode> createAdapter_solarTimeMode()
+    protected WidgetTimezones.TimeZoneItemAdapter createAdapter_solarTimeMode()
     {
-        WidgetSettings.SolarTimeMode[] modes = WidgetSettings.SolarTimeMode.values();
-        ArrayAdapter<WidgetSettings.SolarTimeMode> adapter = new ArrayAdapter<WidgetSettings.SolarTimeMode>(this, R.layout.layout_listitem_oneline, modes);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        return adapter;
+        int c = 0;
+        ArrayList<WidgetTimezones.TimeZoneItem> items = new ArrayList<>();
+        for (WidgetSettings.SolarTimeMode value : WidgetSettings.SolarTimeMode.values()) {
+            items.add(new WidgetTimezones.TimeZoneItem(value.getID(), value.getDisplayString(), c++));
+        }
+        return new WidgetTimezones.TimeZoneItemAdapter(this, R.layout.layout_listitem_timezone, items, R.string.timezoneCustom_line1, R.string.timezoneCustom_line2b);
     }
 
     protected ArrayAdapter<WidgetSettings.TrackingMode> createAdapter_trackingMode()
