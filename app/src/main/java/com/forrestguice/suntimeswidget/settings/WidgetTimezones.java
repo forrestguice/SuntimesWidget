@@ -341,7 +341,7 @@ public class WidgetTimezones
         }
 
         public static int lmstOffset(long dateMillis, double longitude) {
-            return gmstOffset(dateMillis) + LocalMeanTime.findOffset(longitude);
+            return gmstOffset(dateMillis) + (int)((longitude * 24 / 360d) * 60 * 60 * 1000);
         }
 
         /**
