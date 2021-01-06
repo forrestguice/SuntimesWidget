@@ -557,7 +557,7 @@ public class WidgetSettings
      */
     public static enum TimezoneMode
     {
-        SOLAR_TIME("Solar"),
+        SOLAR_TIME("Time Standards"),   // TODO: misnomer (no longer accurate); rename this value
         CURRENT_TIMEZONE("Current"),
         CUSTOM_TIMEZONE("Custom");
 
@@ -585,7 +585,7 @@ public class WidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
-            SOLAR_TIME.setDisplayString(context.getString(R.string.timezoneMode_solar));
+            SOLAR_TIME.setDisplayString(context.getString(R.string.timezoneMode_standard));
             CURRENT_TIMEZONE.setDisplayString(context.getString(R.string.timezoneMode_current));
             CUSTOM_TIMEZONE.setDisplayString(context.getString(R.string.timezoneMode_custom));
         }
@@ -594,21 +594,35 @@ public class WidgetSettings
     /**
      * SolarTimeMode
      */
-    public static enum SolarTimeMode
+    public static enum SolarTimeMode         // TODO: misnomer (no longer accurate); rename this enum
     {
-        APPARENT_SOLAR_TIME("Current"),
-        LOCAL_MEAN_TIME("Solar");
+        APPARENT_SOLAR_TIME("Apparent Solar", "Apparent Solar Time"),
+        LOCAL_MEAN_TIME("Local Mean", "Local Mean Time"),
+        LMST("LMST", "Local Sidereal Time"),
+        GMST("GMST", "Greenwich Sidereal Time"),
+        UTC("UTC", "Coordinated Universal Time");
 
+        private String id;
         private String displayString;
 
-        private SolarTimeMode(String displayString)
+        private SolarTimeMode(String id, String displayString)
         {
+            this.id = id;
             this.displayString = displayString;
         }
 
         public String toString()
         {
             return displayString;
+        }
+
+        public String getID()
+        {
+            return id;
+        }
+        public void setID(String value)
+        {
+            id = value;
         }
 
         public String getDisplayString()
@@ -623,8 +637,13 @@ public class WidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
-            LOCAL_MEAN_TIME.setDisplayString(context.getString(R.string.solartime_localMean));
-            APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.solartime_apparent));
+            LOCAL_MEAN_TIME.setDisplayString(context.getString(R.string.time_localMean));
+            LOCAL_MEAN_TIME.setID(LOCAL_MEAN_TIME.getDisplayString());
+            APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.time_apparent));
+            APPARENT_SOLAR_TIME.setID(APPARENT_SOLAR_TIME.getDisplayString());
+            LMST.setDisplayString(context.getString(R.string.time_lmst));
+            GMST.setDisplayString(context.getString(R.string.time_gmst));
+            UTC.setDisplayString(context.getString(R.string.time_utc));
         }
     }
 

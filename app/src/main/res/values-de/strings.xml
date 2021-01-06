@@ -401,19 +401,19 @@
   <string name="configAction_savePlace">speichern</string>         <!-- button (contentDescription) -->
 
   <!-- Widget Setting: timezone -->
-  <string name="timezoneMode_solar">Istzeit</string>                       <!-- setting -->
+  <string name="timezoneMode_standard">Istzeit</string>                       <!-- setting -->
   <string name="timezoneMode_current">System</string>                         <!-- setting -->
   <string name="timezoneMode_custom">Benutzerdefiniert</string>                    <!-- setting -->
 
-  <string name="solartime_localMean">Mittlere Ortszeit</string>                 <!-- setting / custom timezone id -->
-  <string name="solartime_apparent">Sonnenzeit</string>              <!-- setting / custom timezone id -->
+  <string name="time_localMean">Mittlere Ortszeit</string>                 <!-- setting / custom timezone id -->
+  <string name="time_apparent">Sonnenzeit</string>              <!-- setting / custom timezone id -->
   <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
   <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
   <string name="configLabel_timezone">Zeitzone</string>             <!-- group title -->
   <string name="configLabel_timezone_mode">Modus:</string>                     <!-- spinner label -->
   <string name="configLabel_timezone_custom">Zeitzone:</string>              <!-- spinner label -->
-  <string name="configLabel_solartime">Istzeit:</string>                   <!-- spinner label -->
+  <string name="configLabel_timezone_standard">Istzeit:</string>                   <!-- spinner label -->
 
   <!-- Widget Setting: timeFormat mode -->
   <string name="timeFormatMode_system">Systemformat</string>          <!-- setting -->
@@ -976,6 +976,7 @@
       <item>Norwegisch</item>
       <item>Traditionelles Chinesisch</item>
       <item>Portugiesisch</item>
+      <item>Russian</item>  <!-- TODO -->
   </string-array>
 
   <!--<string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>-->  <!-- e.g. 45° -->

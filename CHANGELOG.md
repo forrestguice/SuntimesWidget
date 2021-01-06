@@ -1,5 +1,19 @@
 ### ~
 
+### v0.13.6 (2020-12-31)
+* adds support for sidereal time (GMST, LMST) (#463).
+* adds "alarm list" button to the alarm dialog (#455); shortcut to Suntimes Alarms.
+* adds "SHOW_CARD" action to main activity; allows other apps to scroll to a given date.
+* fixes widget click action so that it also triggers an update (#459).
+* misc time zone dialog improvements.
+
+### v0.13.5 (2020-12-04)
+* adds translation to Russian (ru) (contributed by Ruslan Chintsov) (#458).
+* updates translation to Brazilian Portuguese (pt-br) (#453 by efraletti).
+* updates translation to Polish and Esperanto (eo, pl) (#460 by Verdulo).
+* updates translation to Norwegian (nb) (#461 by FTno).
+* fixes bug "NotificationService keeps running in background" (#456, #323).
+
 ### v0.13.4 (2020-11-16)
 * updates translation to Brazilian Portuguese (pt-br) (#450 by naoliv). 
 * updates translation to Norwegian (nb) (#447 by FTno).

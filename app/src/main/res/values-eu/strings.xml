@@ -415,19 +415,19 @@
     <string name="configAction_savePlace">Gorde</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_solar">Eguzkiaren ordua</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Eguzkiaren ordua</string>                       <!-- setting -->
     <string name="timezoneMode_current">Sistemaren ordu eremua</string>               <!-- setting -->
     <string name="timezoneMode_custom">Erabiltzaileak ezarria</string>                    <!-- setting -->
 
-    <string name="solartime_localMean">Batez besteko tokiko ordua</string>                 <!-- setting / custom timezone id -->
-    <string name="solartime_apparent">Itxurako eguzkiaren ordua</string>              <!-- setting / custom timezone id -->
+    <string name="time_localMean">Batez besteko tokiko ordua</string>                 <!-- setting / custom timezone id -->
+    <string name="time_apparent">Itxurako eguzkiaren ordua</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
     <string name="configLabel_timezone">Ordu eremuen ezarpenak</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Modua:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Ordu eremua:</string>              <!-- spinner label -->
-    <string name="configLabel_solartime">Eguzkiaren ordua:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Eguzkiaren ordua:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Sistemaren formatua</string>          <!-- setting -->
@@ -1000,6 +1000,7 @@
         <item>Norvegiera</item>
         <item>Txinera tradizionala</item>
         <item>Portuguese</item>  <!-- TODO -->
+        <item>Russian</item>  <!-- TODO -->
     </string-array>
 
     <!-- position formats -->

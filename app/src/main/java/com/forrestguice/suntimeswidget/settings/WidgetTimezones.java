@@ -58,8 +58,12 @@ public class WidgetTimezones
 {
     public static boolean isProbablyNotLocal(TimeZone timezone, Location atLocation, Date onDate )
     {
-        double zoneOffset = timezone.getOffset(onDate.getTime()) / (1000 * 60 * 60);   // timezone offset in hrs
-        double lonOffset = atLocation.getLongitudeAsDouble() * 24 / 360;               // longitude offset in hrs
+        if (timezone.getID().equals("UTC") || timezone.getID().equals(SiderealTime.TZID_GMST) || timezone.getID().equals(SiderealTime.TZID_LMST)) {
+            return false;
+        }
+
+        double zoneOffset = timezone.getOffset(onDate.getTime()) / (1000d * 60d * 60d);   // timezone offset in hrs
+        double lonOffset = atLocation.getLongitudeAsDouble() * 24d / 360d;               // longitude offset in hrs
         double offsetDiff = Math.abs(lonOffset - zoneOffset);
 
         double offsetTolerance = 3;    // tolerance in hrs
@@ -97,17 +101,25 @@ public class WidgetTimezones
 
     public static TimeZone localMeanTime( Context context, Location location )
     {
-        return new LocalMeanTime(location.getLongitudeAsDouble(), context.getString(R.string.solartime_localMean));
+        return new LocalMeanTime(location.getLongitudeAsDouble(), context.getString(R.string.time_localMean));
+    }
+
+    public static TimeZone siderealTime(Context context) {
+        return new LocalMeanTime(0, SiderealTime.TZID_GMST);
+    }
+
+    public static TimeZone siderealTime(Context context, Location location) {
+        return new LocalMeanTime(location.getLongitudeAsDouble(), SiderealTime.TZID_LMST);
     }
 
     public static TimeZone apparentSolarTime(Context context, Location location)
     {
-        return new ApparentSolarTime(location.getLongitudeAsDouble(), context.getString(R.string.solartime_apparent));
+        return new ApparentSolarTime(location.getLongitudeAsDouble(), context.getString(R.string.time_apparent));
     }
 
     public static TimeZone apparentSolarTime(Context context, Location location, SuntimesCalculator calculator)
     {
-        return new ApparentSolarTime(location.getLongitudeAsDouble(), context.getString(R.string.solartime_apparent), calculator);
+        return new ApparentSolarTime(location.getLongitudeAsDouble(), context.getString(R.string.time_apparent), calculator);
     }
 
     /**
@@ -130,9 +142,9 @@ public class WidgetTimezones
          * @param longitude a longitude value; degrees [-180, 180]
          * @return the offset of this longitude from utc (in milliseconds)
          */
-        public int findOffset( double longitude )
+        public static int findOffset( double longitude )
         {
-            double offsetHrs = longitude * 24 / 360;           // offset from gmt in hrs
+            double offsetHrs = longitude * 24 / 360d;           // offset from gmt in hrs
             //noinspection UnnecessaryLocalVariable
             int offsetMs = (int)(offsetHrs * 60 * 60 * 1000);  // hrs * 60min in a day * 60s in a min * 1000ms in a second
             //Log.d("DEBUG", "offset: " + offsetHrs + " (" + offsetMs + ")");
@@ -308,6 +320,52 @@ public class WidgetTimezones
     ///////////////////////////////////////
     ///////////////////////////////////////
 
+    /**
+     * SiderealTime
+     */
+    public static class SiderealTime
+    {
+        public static final String TZID_GMST = "Greenwich Sidereal Time";
+        public static final String TZID_LMST = "Local Sidereal Time";
+
+        public static int gmstOffset(long dateMillis)
+        {
+            double julianDay = julianDay(dateMillis);
+            double d = julianDay - 2451545d;
+            double t = (d / 36525d);
+            double gmst_degrees = 280.46061837 + (360.98564736629 * d) + (0.000387933 * t * t) - ((t * t * t) / 38710000d);
+            double gmst_hours = gmst_degrees * (24 / 360d);
+            double utc_hours = dateMillis / (60d * 60d * 1000d);
+            double offset_hours = simplifyHours(gmst_hours - utc_hours);
+            return (int)(offset_hours * 60d * 60d * 1000d);
+        }
+
+        public static int lmstOffset(long dateMillis, double longitude) {
+            return gmstOffset(dateMillis) + (int)((longitude * 24 / 360d) * 60 * 60 * 1000);
+        }
+
+        /**
+         * https://stackoverflow.com/questions/11759992/calculating-jdayjulian-day-in-javascript
+         */
+        public static double julianDay(long dateMillis) {
+            return (dateMillis / (24d * 60d * 60d * 1000d)) + 2440587.5;  // days + julianDay(epoch)
+        }
+
+        private static double simplifyHours(double hours)
+        {
+            while (hours >= 24) {
+                hours -= 24;
+            }
+            while (hours < 0) {
+                hours += 24;
+            }
+            return hours;
+        }
+    }
+
+    ///////////////////////////////////////
+    ///////////////////////////////////////
+
     public static class TimeZoneItem
     {
         private final String timeZoneID;
@@ -356,34 +414,45 @@ public class WidgetTimezones
         private TimeZoneSort sortBy = null;
         private String line1, line2;
         private List<TimeZoneItem> items;
+        private int resID;
+
+        public TimeZoneItemAdapter(Context context)
+        {
+            super(context, R.layout.layout_listitem_timezone);
+            this.resID = R.layout.layout_listitem_timezone;
+            init(context, R.string.timezoneCustom_line1, R.string.timezoneCustom_line2);
+        }
 
         public TimeZoneItemAdapter(Context context, int resource)
         {
             super(context, resource);
-            init(context);
+            this.resID = resource;
+            init(context, R.string.timezoneCustom_line1, R.string.timezoneCustom_line2);
         }
 
-        public TimeZoneItemAdapter(Context context, int resource, List<TimeZoneItem> items)
+        public TimeZoneItemAdapter(Context context, int resource, List<TimeZoneItem> items, int resource_line1, int resource_line2)
         {
             super(context, resource, items);
+            this.resID = resource;
             this.items = items;
-            init(context);
+            init(context, resource_line1, resource_line2);
         }
 
         public TimeZoneItemAdapter(Context context, int resource, List<TimeZoneItem> items, TimeZoneSort sortBy)
         {
             super(context, resource, items);
+            this.resID = resource;
             this.items = items;
             this.sortBy = sortBy;
-            init(context);
+            init(context, R.string.timezoneCustom_line1, R.string.timezoneCustom_line2);
             sort();
         }
 
-        private void init(Context context)
+        private void init(Context context, int resource_line1, int resource_line2)
         {
             colors = context.getResources().getIntArray(R.array.utcOffsetColors);
-            line1 = context.getString(R.string.timezoneCustom_line1);
-            line2 = context.getString(R.string.timezoneCustom_line2);
+            line1 = context.getString(resource_line1);
+            line2 = context.getString(resource_line2);
         }
 
         public int getColorForTimeZoneOffset( double utcHour )
@@ -413,7 +482,7 @@ public class WidgetTimezones
         private View getItemView(int position, View convertView, @NonNull ViewGroup parent, boolean colorize)
         {
             LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-            View view = layoutInflater.inflate(R.layout.layout_listitem_timezone, parent, false);
+            View view = layoutInflater.inflate(resID, parent, false);
 
             TimeZoneItem timezone = getItem(position);
             if (timezone == null)
@@ -768,7 +837,7 @@ public class WidgetTimezones
 
             Context context = contextRef.get();
             if (context != null)
-                return new WidgetTimezones.TimeZoneItemAdapter(context, 0, timezones, sortBy);
+                return new WidgetTimezones.TimeZoneItemAdapter(context, R.layout.layout_listitem_timezone, timezones, sortBy);
             else return null;
         }
 

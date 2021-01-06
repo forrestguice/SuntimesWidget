@@ -403,19 +403,19 @@
     <string name="configAction_savePlace">Enregistrer</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_solar">Heure solaire</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Heure solaire</string>                       <!-- setting -->
     <string name="timezoneMode_current">Fuseau horaire du système</string>               <!-- setting -->
     <string name="timezoneMode_custom">Défini par l\'utilisateur</string>                    <!-- setting -->
 
-    <string name="solartime_localMean">Temps moyen local</string>                 <!-- setting / custom timezone id -->
-    <string name="solartime_apparent">Temps solaire apparent</string>              <!-- setting / custom timezone id -->
+    <string name="time_localMean">Temps moyen local</string>                 <!-- setting / custom timezone id -->
+    <string name="time_apparent">Temps solaire apparent</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g example="US/Arizona" id="timezoneID">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g example="-7" id="utmOffset">%1$s</xliff:g>] <xliff:g example="Mountain Standard Time" id="timezoneName">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
     <string name="configLabel_timezone">Fuseau horaire</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Mode :</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Fuseau horaire :</string>              <!-- spinner label -->
-    <string name="configLabel_solartime">Temps solaire :</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Temps solaire :</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Format de l\'heure</string>          <!-- setting -->
@@ -971,6 +971,7 @@
         <item>Norvégien</item>
         <item>Traditional Chinese</item> <!-- TODO -->
         <item>Portuguese</item>  <!-- TODO -->
+        <item>Russian</item>  <!-- TODO -->
     </string-array>
 
     <!-- position formats -->

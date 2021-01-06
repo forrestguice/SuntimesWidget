@@ -407,19 +407,19 @@
     <string name="configAction_savePlace">Konservi</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_solar">Suntempo</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Suntempo</string>                       <!-- setting -->
     <string name="timezoneMode_current">Sistema</string>                         <!-- setting -->
     <string name="timezoneMode_custom">Propra</string>                    <!-- setting -->
 
-    <string name="solartime_localMean">mezuma suntempo</string>                 <!-- setting / custom timezone id -->
-    <string name="solartime_apparent">ŝajna suntempo</string>              <!-- setting / custom timezone id -->
+    <string name="time_localMean">mezuma suntempo</string>                 <!-- setting / custom timezone id -->
+    <string name="time_apparent">ŝajna suntempo</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
     <string name="configLabel_timezone">Agordoj pri horzono</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Reĝimo:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Horzono:</string>              <!-- spinner label -->
-    <string name="configLabel_solartime">Suntempo:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Suntempo:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Sistema formo</string>          <!-- setting -->
@@ -1055,6 +1055,7 @@
         <item>Norvega</item>
         <item>Ĉina tradicia</item>
         <item>Portugala</item>
+        <item>Russian</item>  <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
