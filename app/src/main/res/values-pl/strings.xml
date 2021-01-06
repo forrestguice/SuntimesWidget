@@ -418,7 +418,10 @@
     <string name="timezoneMode_standard">Czas słoneczny</string>                       <!-- setting -->
     <string name="timezoneMode_current">Systemowa</string>                         <!-- setting -->
     <string name="timezoneMode_custom">Użytkownika</string>                    <!-- setting -->
-
+    
+    <string name="time_lmst">lokalny czas gwiazdowy</string>                  <!-- timezone label -->
+    <string name="time_gmst">czas gwiazdowy Greenwich</string>              <!-- timezone label -->
+    <string name="time_utc">uniwersalny czas koordynowany</string>            <!-- timezone label -->
     <string name="time_localMean">średni czas słoneczny</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">prawdziwy czas słoneczny</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
@@ -910,7 +913,13 @@
     <string name="configActionDesc_setTimeZone">Ustaw strefę czasową</string>>
     <string name="configActionDesc_setLocation">Ustaw lokalizację</string>
     <string name="configActionDesc_swapCards">Przełącz karty (dziś/jutro)</string>
+    <string name="configActionDesc_nextCard">Pokaż następną kartę</string>
+    <string name="configActionDesc_prevCard">Pokaż poprzednią kartę</string>
     <string name="configActionDesc_setAlarmForNote">Ustaw alarm dla notatki</string>
+    <string name="configActionDesc_alarmList">Lista alarmów</string>
+    <string name="configActionDesc_themeList">Lista skórek</string>
+    <string name="configActionDesc_actionList">Lista akcji</string>
+    <string name="configActionDesc_widgetList">Lista widżetów</string>
 
     <!-- App Setting: time zone sort -->
     <string name="timezone_sort_byOffset">wg przesunięcia</string>
@@ -983,7 +992,7 @@
         <item>Norweski</item>
         <item>Chiński tradycyjny</item>
         <item>Portugalski</item>
-        <item>Russian</item>  <!-- TODO -->
+        <item>Rosyjski</item>
     </string-array>
 
     <!-- position formats -->
