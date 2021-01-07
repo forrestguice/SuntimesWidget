@@ -411,6 +411,9 @@
     <string name="timezoneMode_current">Sistema</string>                         <!-- setting -->
     <string name="timezoneMode_custom">Propra</string>                    <!-- setting -->
 
+    <string name="time_lmst">loka laŭstela tempo</string>                  <!-- timezone label -->
+    <string name="time_gmst">Grenviĉa laŭstela tempo</string>              <!-- timezone label -->
+    <string name="time_utc">universala tempo kunordigita</string>            <!-- timezone label -->
     <string name="time_localMean">mezuma suntempo</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">ŝajna suntempo</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
@@ -895,7 +898,13 @@
     <string name="configActionDesc_setTimeZone">Agordi horzonon</string>
     <string name="configActionDesc_setLocation">Agordi pozicion</string>
     <string name="configActionDesc_swapCards">Baskuli langetojn (hodiaŭ/morgaŭ)</string>
+    <string name="configActionDesc_nextCard">Montri sekvan langeton</string>
+    <string name="configActionDesc_prevCard">Montri antaŭan langeton</string>
     <string name="configActionDesc_setAlarmForNote">Agordi averton pri noto</string>
+    <string name="configActionDesc_alarmList">Listo de alarmoj</string>
+    <string name="configActionDesc_themeList">Listo de etosoj</string>
+    <string name="configActionDesc_actionList">Listo de agoj</string>
+    <string name="configActionDesc_widgetList">Listo de fenestraĵoj</string>
 
     <!-- App Setting: GPS fix time limit -->
     <string name="configLabel_getFix_maxElapse">Tempolimo de GPS</string>
@@ -1055,7 +1064,7 @@
         <item>Norvega</item>
         <item>Ĉina tradicia</item>
         <item>Portugala</item>
-        <item>Russian</item>  <!-- TODO -->
+        <item>Rusa</item>
     </string-array>
 
     <!-- position formats -->
