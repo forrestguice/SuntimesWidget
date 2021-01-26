@@ -1,5 +1,10 @@
 ### ~
 
+### v0.13.7 (2021-01-26)
+* fixes bug "alarm vibration stops after screen is off" (#470).
+* fixes broken build caused by failing `colorpicker` dependency.
+* updates translation to Polish and Esperanto (eo, pl) (#468 by Verdulo).
+
 ### v0.13.6 (2020-12-31)
 * adds support for sidereal time (GMST, LMST) (#463).
 * adds "alarm list" button to the alarm dialog (#455); shortcut to Suntimes Alarms.
