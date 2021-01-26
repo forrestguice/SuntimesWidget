@@ -1,7 +1,8 @@
 ### ~
 
-### v0.13.7 (2020-01-25)
-* fixes bug "alarm vibration turning off after screen is off" (#470).
+### v0.13.7 (2021-01-26)
+* fixes bug "alarm vibration stops after screen is off" (#470).
+* fixes broken build caused by failing `colorpicker` dependency.
 * updates translation to Polish and Esperanto (eo, pl) (#468 by Verdulo).
 
 ### v0.13.6 (2020-12-31)

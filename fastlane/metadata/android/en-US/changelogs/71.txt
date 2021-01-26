@@ -1,2 +1,2 @@
-- fixes bug "alarm vibration turning off after screen is off" (#470).
+- fixes bug "alarm vibration stops after screen is off" (#470).
 - updates translation to Polish and Esperanto.
