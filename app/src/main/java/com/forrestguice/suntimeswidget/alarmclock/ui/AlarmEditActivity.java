@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -83,6 +84,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     public static final String EXTRA_ISNEW = "isnew";
 
     public static final int REQUEST_RINGTONE = 10;
+    public static final int REQUEST_RINGTONE1 = 12;
     public static final int REQUEST_SETTINGS = 20;
     public static final int REQUEST_STORAGE_PERMISSION = 30;
     public static final int REQUEST_ACTION0 = 40;
@@ -163,6 +165,10 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         {
             case REQUEST_RINGTONE:
                 onRingtoneResult(resultCode, data);
+                break;
+
+            case REQUEST_RINGTONE1:
+                onRingtoneResult1(resultCode, data);
                 break;
 
             case REQUEST_ACTION0:
@@ -515,11 +521,11 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                         return true;
 
                     case R.id.action_alarmsound_file:
-                        //audioFilePicker(item);  // TODO
+                        audioFilePicker(item);
                         return true;
 
                     case R.id.action_alarmsound_none:
-                        //onRingtoneResult(null);  // TODO
+                        onRingtoneResult(null);
                         return true;
                 }
                 return false;
@@ -634,9 +640,29 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         }
     }
 
+    @TargetApi(19)
+    protected void audioFilePicker(@NonNull AlarmClockItem item)
+    {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("audio/*");
+        intent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+        startActivityForResult(intent, REQUEST_RINGTONE1);
+    }
 
-
-
+    protected void onRingtoneResult1(int resultCode, Intent data)
+    {
+        if (resultCode == RESULT_OK && editor != null && data != null && data.getData() != null)
+        {
+            Uri uri = data.getData();
+            if (Build.VERSION.SDK_INT >= 19) {
+                getContentResolver().takePersistableUriPermission(uri, 0);
+            }
+            onRingtoneResult(uri);
+        } else {
+            Log.d(TAG, "onActivityResult: bad result: " + resultCode + ", " + data);
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
