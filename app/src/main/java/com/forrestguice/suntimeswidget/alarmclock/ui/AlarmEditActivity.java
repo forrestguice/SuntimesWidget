@@ -86,7 +86,6 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     public static final int REQUEST_RINGTONE = 10;
     public static final int REQUEST_RINGTONE1 = 12;
     public static final int REQUEST_SETTINGS = 20;
-    public static final int REQUEST_STORAGE_PERMISSION = 30;
     public static final int REQUEST_ACTION0 = 40;
     public static final int REQUEST_ACTION1 = 50;
 
@@ -177,17 +176,6 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
             case REQUEST_ACTION1:
                 onActionResult(resultCode, data, 1);
-                break;
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
-    {
-        switch (requestCode)
-        {
-            case REQUEST_STORAGE_PERMISSION:
-                onRingtonePermissionResult(permissions, grantResults);
                 break;
         }
     }
@@ -539,38 +527,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
      * pickRingtone
      * @param item apply ringtone to AlarmClockItem
      */
-    protected void pickRingtone(@NonNull final AlarmClockItem item)
-    {
-        if (Build.VERSION.SDK_INT >= 16)
-        {
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-            {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.READ_EXTERNAL_STORAGE))
-                {
-                    AlertDialog.Builder requestDialog = new AlertDialog.Builder(this);
-                    requestDialog.setMessage(Html.fromHtml(getString(R.string.privacy_permission_storage1) + "<br/><br/>" + getString(R.string.privacy_permissiondialog_prompt)));
-                    requestDialog.setPositiveButton(getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //noinspection ConstantConditions
-                            if (Build.VERSION.SDK_INT >= 16) {
-                                ActivityCompat.requestPermissions(AlarmEditActivity.this, new String[] { android.Manifest.permission.READ_EXTERNAL_STORAGE }, REQUEST_STORAGE_PERMISSION );
-                            }
-                        }
-                    });
-                    requestDialog.setNegativeButton(getString(R.string.privacy_permissiondialog_ignore), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ringtonePicker(item);
-                        }
-                    });
-                    requestDialog.show();
-
-                } else {
-                    ActivityCompat.requestPermissions(this, new String[] { android.Manifest.permission.READ_EXTERNAL_STORAGE }, REQUEST_STORAGE_PERMISSION );
-                }
-            } else ringtonePicker(item);
-        } else ringtonePicker(item);
+    protected void pickRingtone(@NonNull final AlarmClockItem item) {
+        showAlarmSoundPopup(editor.itemView.chip_ringtone, item);
     }
 
     protected void ringtonePicker(@NonNull AlarmClockItem item)
