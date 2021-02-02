@@ -593,39 +593,50 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
     protected void onRingtoneResult(int resultCode, Intent data)
     {
-        if (resultCode == RESULT_OK && editor != null && data != null)
-        {
-            AlarmClockItem item = editor.getItem();
-            Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-            if (uri != null)
-            {
-                Ringtone ringtone = RingtoneManager.getRingtone(this, uri);
-                if (ringtone != null)
-                {
-                    String ringtoneName = ringtone.getTitle(this);
-                    ringtone.stop();
-
-                    item.ringtoneName = ringtoneName;
-                    item.ringtoneURI = uri.toString();
-                    Log.d(TAG, "onActivityResult: uri: " + item.ringtoneURI + ", title: " + ringtoneName);
-
-                } else {
-                    item.ringtoneName = null;
-                    item.ringtoneURI = null;
-                    Log.d(TAG, "onActivityResult: uri: " + uri + " <null ringtone>");
-                }
-
-            } else {
-                item.ringtoneName = null;
-                item.ringtoneURI = null;
-                Log.d(TAG, "onActivityResult: null uri");
-            }
-            editor.notifyItemChanged();
-
+        if (resultCode == RESULT_OK && editor != null && data != null) {
+            onRingtoneResult((Uri)(data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)));
         } else {
             Log.d(TAG, "onActivityResult: bad result: " + resultCode + ", " + data);
         }
     }
+    protected void onRingtoneResult(final Uri uri)
+    {
+        final AlarmClockItem item = editor.getItem();
+        if (uri != null)
+        {
+            Log.d(TAG, "onActivityResult: uri: " + uri);
+            Ringtone ringtone = RingtoneManager.getRingtone(this, uri);
+            if (ringtone != null)
+            {
+                String ringtoneName = ringtone.getTitle(this);
+                ringtone.stop();
+                Log.d(TAG, "onActivityResult: uri: " + item.ringtoneURI + ", title: " + ringtoneName);
+
+                String[] filePath = ringtoneName.split("/");
+                String fileName = filePath[filePath.length - 1];
+                item.ringtoneName = fileName == null ? null
+                        : ((fileName.contains(".")) ? fileName.substring(0, fileName.lastIndexOf(".")) : fileName);
+                item.ringtoneURI = uri.toString();
+                editor.notifyItemChanged();
+
+            } else {
+                item.ringtoneName = null;
+                item.ringtoneURI = null;
+                editor.notifyItemChanged();
+                Log.d(TAG, "onActivityResult: uri: " + uri + " <null ringtone>");
+            }
+
+        } else {
+            item.ringtoneName = null;
+            item.ringtoneURI = null;
+            editor.notifyItemChanged();
+            Log.d(TAG, "onActivityResult: null uri");
+        }
+    }
+
+
+
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
