@@ -549,7 +549,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, AlarmSettings.getDefaultRingtoneUri(this, item.type));
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (item.ringtoneURI != null ? Uri.parse(item.ringtoneURI) : null));
-        startActivityForResult(intent, REQUEST_RINGTONE);
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.configAction_setAlarmSound)), REQUEST_RINGTONE);
     }
 
     protected void onRingtonePermissionResult(@NonNull String[] permissions, @NonNull int[] grantResults)
