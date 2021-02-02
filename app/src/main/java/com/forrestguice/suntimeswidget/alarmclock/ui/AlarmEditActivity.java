@@ -497,6 +497,12 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         PopupMenu popup = new PopupMenu(this, v);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.alarmsound, popup.getMenu());
+
+        MenuItem menuItem_file = (MenuItem)popup.getMenu().findItem(R.id.action_alarmsound_file);
+        if (menuItem_file != null) {
+            menuItem_file.setVisible((Build.VERSION.SDK_INT >= 19));
+        }
+
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {
             @Override
@@ -509,7 +515,9 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                         return true;
 
                     case R.id.action_alarmsound_file:
-                        audioFilePicker(item);
+                        if (Build.VERSION.SDK_INT >= 19) {
+                            audioFilePicker(item);
+                        }
                         return true;
 
                     case R.id.action_alarmsound_none:
