@@ -42,6 +42,7 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
@@ -496,6 +497,37 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void showAlarmSoundPopup(View v, @NonNull final AlarmClockItem item)
+    {
+        PopupMenu popup = new PopupMenu(this, v);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.alarmsound, popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem)
+            {
+                switch (menuItem.getItemId())
+                {
+                    case R.id.action_alarmsound_ringtone:
+                        ringtonePicker(item);
+                        return true;
+
+                    case R.id.action_alarmsound_file:
+                        //audioFilePicker(item);  // TODO
+                        return true;
+
+                    case R.id.action_alarmsound_none:
+                        //onRingtoneResult(null);  // TODO
+                        return true;
+                }
+                return false;
+            }
+        });
+        SuntimesUtils.forceActionBarIcons(popup.getMenu());
+        popup.show();
+    }
 
     /**
      * pickRingtone
