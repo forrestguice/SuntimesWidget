@@ -12,7 +12,7 @@
          The text that appears in the overflow menu / menuItem contentDescription.
     -->
     <string name="configAction_refreshLocation">Refresh</string>
-    <string name="configAction_addLocation">Location</string>
+    <string name="configAction_addLocation">Locatie</string>
     <string name="configAction_mapLocation">Show Map</string>
     <string name="configAction_mapLocation_chooser">View location using</string>
     <string name="configAction_mapLocation_noapp">Unable to find map application!</string>
@@ -28,7 +28,7 @@
     <string name="configAction_help">Help</string>
     <string name="configAction_overflow">More</string>
     <string name="configAction_settings">Settings</string>
-    <string name="configAction_aboutWidget">About</string>
+    <string name="configAction_aboutWidget">Over</string>
 
 
     <!-- Shortcuts -->
@@ -154,33 +154,33 @@
     <!-- NoteBody: sunset/sunrise/twilight string
          The note body text; appears next to the prefix (layout/info_time_note.xml)
     -->
-    <string name="until_astroTwilight">astronomical twilight</string>
-    <string name="until_civilTwilight">civil twilight</string>
-    <string name="until_nauticalTwilight">nautical twilight</string>
-    <string name="until_sunrise">sunrise</string>
+    <string name="until_astroTwilight">Astronomische Schemering</string>
+    <string name="until_civilTwilight">Civiele Schemering</string>
+    <string name="until_nauticalTwilight">Nautische Schemering</string>
+    <string name="until_sunrise">Zonsopgang</string>
     <string name="until_noon">solar noon</string>
-    <string name="until_sunset">sunset</string>
-    <string name="untilEnd_civilTwilight">civil twilight</string>
-    <string name="untilEnd_nauticalTwilight">nautical twilight</string>
-    <string name="untilEnd_astroTwilight">astronomical twilight</string>
+    <string name="until_sunset">Zonsondergang</string>
+    <string name="untilEnd_civilTwilight">Civiele Schemering</string>
+    <string name="untilEnd_nauticalTwilight">Nautische Schemering</string>
+    <string name="untilEnd_astroTwilight">Astronomische Schemering</string>
     <string name="until_goldhour">golden hour</string>
     <string name="untilEnd_goldhour">golden hour</string>
     <string name="until_bluehour">blue hour</string>
     <string name="untilEnd_bluehour">blue hour</string>
-    <string name="until_moonrise">moonrise</string>
-    <string name="until_moonset">moonset</string>
+    <string name="until_moonrise">Maanopkomst</string>
+    <string name="until_moonset">Maansondergang</string>
     <string name="until_moonnoon">lunar noon</string>
     <string name="until_moonnight">lunar midnight</string>
 
     <!-- Table -->
-    <string name="sunrise">Sunrise</string>                             <!-- contentDescription -->
-    <string name="sunrise_short">Sunrise</string>                          <!-- table title -->
-    <string name="sunset">Sunset</string>                               <!-- contentDescription -->
-    <string name="sunset_short">Sunset</string>                            <!-- table title -->
-    <string name="moonrise">Moonrise</string>                             <!-- contentDescription -->
-    <string name="moonrise_short">Moonrise</string>                             <!-- table title -->
-    <string name="moonset">Moonset</string>                             <!-- contentDescription -->
-    <string name="moonset_short">Moonset</string>                             <!-- table title -->
+    <string name="sunrise">Zonsopgang</string>                             <!-- contentDescription -->
+    <string name="sunrise_short">Zonsopgang</string>                          <!-- table title -->
+    <string name="sunset">Zonsondergang</string>                               <!-- contentDescription -->
+    <string name="sunset_short">Zonsondergang</string>                            <!-- table title -->
+    <string name="moonrise">Maanopkomst</string>                             <!-- contentDescription -->
+    <string name="moonrise_short">Maanopkomst</string>                             <!-- table title -->
+    <string name="moonset">Maansondergang</string>                             <!-- contentDescription -->
+    <string name="moonset_short">Maansondergang</string>                             <!-- table title -->
 
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
@@ -328,11 +328,11 @@
     <string name="timeMode_official_short">Actual</string>              <!-- setting -->
     <string name="timeMode_official">Actual Time</string>               <!-- setting -->
     <string name="timeMode_civil_short">Civil</string>                  <!-- setting -->
-    <string name="timeMode_civil">Civil Twilight</string>               <!-- setting -->
+    <string name="timeMode_civil">Civiele Schemering</string>               <!-- setting -->
     <string name="timeMode_nautical_short">Nautical</string>            <!-- setting -->
-    <string name="timeMode_nautical">Nautical Twilight</string>         <!-- setting -->
+    <string name="timeMode_nautical">Nautische Schemering</string>         <!-- setting -->
     <string name="timeMode_astronomical_short">Astronomical</string>    <!-- setting -->
-    <string name="timeMode_astronomical">Astronomical Twilight</string> <!-- setting -->
+    <string name="timeMode_astronomical">Astronomische Schemering</string> <!-- setting -->
     <string name="timeMode_night">Night</string>                   <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_day">Day</string>                       <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_golden_short">Golden</string>                <!-- setting -->
@@ -342,48 +342,48 @@
     <string name="timeMode_blue4_short">Blue (4\u00B0)</string>                    <!-- setting -->
     <string name="timeMode_blue4">Blue Hour (4\u00B0)</string>                     <!-- setting -->
 
-    <string name="timeMode_equinox_vernal">Spring Equinox</string>      <!-- setting -->
+    <string name="timeMode_equinox_vernal">Lente Equinox</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting -->
-    <string name="timeMode_equinox_autumnal">Autumn Equinox</string>  <!-- setting -->
+    <string name="timeMode_equinox_autumnal">Herfst Equinox</string>  <!-- setting -->
     <string name="timeMode_equinox_autumnal_short">Equinox</string>     <!-- setting -->
-    <string name="timeMode_solstice_summer">Summer Solstice</string>    <!-- setting -->
+    <string name="timeMode_solstice_summer">Zomerwende</string>    <!-- setting -->
     <string name="timeMode_solstice_summer_short">Solstice</string>     <!-- setting -->
-    <string name="timeMode_solstice_winter">Winter Solstice</string>    <!-- setting -->
+    <string name="timeMode_solstice_winter">Winterwende</string>    <!-- setting -->
     <string name="timeMode_solstice_winter_short">Solstice</string>     <!-- setting -->
 
-    <string name="timeMode_moon">Moon</string>                               <!-- label -->
-    <string name="timeMode_moon_new">New Moon</string>                               <!-- setting -->
+    <string name="timeMode_moon">Maan</string>                               <!-- label -->
+    <string name="timeMode_moon_new">Nieuwe Maan</string>                               <!-- setting -->
     <string name="timeMode_moon_new_short">New</string>                              <!-- setting -->
-    <string name="timeMode_moon_waxingcrescent_short">Waxing Crescent</string>               <!-- label -->
-    <string name="timeMode_moon_waxingcrescent">Waxing Crescent</string>                     <!-- label -->
-    <string name="timeMode_moon_firstquarter">First Quarter</string>                 <!-- setting -->
-    <string name="timeMode_moon_firstquarter_short">First Quarter</string>           <!-- setting -->
-    <string name="timeMode_moon_waxinggibbous_short">Waxing Gibbous</string>               <!-- label -->
-    <string name="timeMode_moon_waxinggibbous">Waxing Gibbous</string>                     <!-- label -->
-    <string name="timeMode_moon_full">Full Moon</string>                             <!-- setting -->
+    <string name="timeMode_moon_waxingcrescent_short">Jonge Maansikkel</string>               <!-- label -->
+    <string name="timeMode_moon_waxingcrescent">Jonge Maansikkel</string>                     <!-- label -->
+    <string name="timeMode_moon_firstquarter">Eerste Kwartier</string>                 <!-- setting -->
+    <string name="timeMode_moon_firstquarter_short">Eerste Kwartier</string>           <!-- setting -->
+    <string name="timeMode_moon_waxinggibbous_short">Wassende Maan</string>               <!-- label -->
+    <string name="timeMode_moon_waxinggibbous">Wassende Maan</string>                     <!-- label -->
+    <string name="timeMode_moon_full">Volle Maan</string>                             <!-- setting -->
     <string name="timeMode_moon_full_short">Full</string>                            <!-- setting -->
-    <string name="timeMode_moon_waninggibbous_short">Waning Gibbous</string>               <!-- label -->
-    <string name="timeMode_moon_waninggibbous">Waning Gibbous</string>                     <!-- label -->
-    <string name="timeMode_moon_thirdquarter">Third Quarter</string>                 <!-- setting -->
-    <string name="timeMode_moon_thirdquarter_short">Third Quarter</string>           <!-- setting -->
-    <string name="timeMode_moon_waningcrescent_short">Waning Crescent</string>               <!-- label -->
-    <string name="timeMode_moon_waningcrescent">Waning Crescent</string>                     <!-- label -->
+    <string name="timeMode_moon_waninggibbous_short">Krimpende Maan</string>               <!-- label -->
+    <string name="timeMode_moon_waninggibbous">Krimpende Maan</string>                     <!-- label -->
+    <string name="timeMode_moon_thirdquarter">Laatste Kwartier</string>                 <!-- setting -->
+    <string name="timeMode_moon_thirdquarter_short">Laatste Kwartier</string>           <!-- setting -->
+    <string name="timeMode_moon_waningcrescent_short">Asgrauwe Maan</string>               <!-- label -->
+    <string name="timeMode_moon_waningcrescent">Asgrauwe Maan</string>                     <!-- label -->
 
-    <string name="timeMode_moon_super">Supermoon</string>               <!-- label -->
-    <string name="timeMode_moon_micro">Micromoon</string>               <!-- label -->
-    <string name="timeMode_moon_superfull">Super Full Moon</string>                             <!-- setting -->
+    <string name="timeMode_moon_super">Supermaan</string>               <!-- label -->
+    <string name="timeMode_moon_micro">Micromaan</string>               <!-- label -->
+    <string name="timeMode_moon_superfull">Super Volle Maan</string>                             <!-- setting -->
     <string name="timeMode_moon_superfull_short">@string/timeMode_moon_super</string>     <!-- label -->
-    <string name="timeMode_moon_supernew">Super New Moon</string>                             <!-- setting -->
+    <string name="timeMode_moon_supernew">Super Nieuwe Maan</string>                             <!-- setting -->
     <string name="timeMode_moon_supernew_short">@string/timeMode_moon_super</string>     <!-- label -->
-    <string name="timeMode_moon_microfull">Micro Full Moon</string>                             <!-- setting -->
+    <string name="timeMode_moon_microfull">Micro Volle Maan</string>                             <!-- setting -->
     <string name="timeMode_moon_microfull_short">@string/timeMode_moon_micro</string>     <!-- label -->
-    <string name="timeMode_moon_micronew">Micro New Moon</string>                             <!-- setting -->
+    <string name="timeMode_moon_micronew">Micro Nieuwe Maan</string>                             <!-- setting -->
     <string name="timeMode_moon_micronew_short">@string/timeMode_moon_micro</string>     <!-- label -->
 
     <string name="timeMode_moon_perigee">@string/label_perigee</string>                             <!-- label -->
     <string name="timeMode_moon_apogee">@string/label_apogee</string>                             <!-- label -->
-    <string name="label_apogee">Apogee</string>
-    <string name="label_perigee">Perigee</string>
+    <string name="label_apogee">Apogeum</string>
+    <string name="label_perigee">Perigeum</string>
 
     <string name="configLabel_general_timeMode">Mode:</string>          <!-- spinner label -->
 
@@ -538,7 +538,7 @@
     <string name="delaction_dialog_msg1">Default actions cannot be removed.\n\nRevert to defaults?</string>
     <string name="delaction_dialog_ok">Delete</string>
     <string name="delaction_dialog_ok1">Revert</string>
-    <string name="delaction_dialog_cancel">Cancel</string>
+    <string name="delaction_dialog_cancel">@string/dialog_cancel</string>
 
     <string name="clearactions_dialog_msg">Are you sure you want to reset to defaults?\n\nAll custom actions will be removed.</string>
     <string name="clearactions_dialog_ok">Clear</string>
@@ -596,7 +596,7 @@
     <string name="deletetheme_dialog_title">Delete Theme</string>        <!-- dialog title -->
     <string name="deletetheme_dialog_message">Are you sure you want to delete <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
     <string name="deletetheme_dialog_ok">Delete</string>        <!-- button -->
-    <string name="deletetheme_dialog_cancel">Cancel</string>    <!-- button -->
+    <string name="deletetheme_dialog_cancel">@string/dialog_cancel</string>    <!-- button -->
 
     <string name="configLabel_widgetThemeAdd">Add Theme</string>     <!-- title text -->
     <string name="configLabel_widgetThemeEdit">Edit Theme</string>   <!-- title text -->
@@ -760,38 +760,38 @@
     <string name="deletealarm_dialog_title">Delete</string>        <!-- dialog title -->
     <string name="deletealarm_dialog_message">Are you sure you want to delete <xliff:g id="type">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg -->
     <string name="deletealarm_dialog_ok">Delete</string>        <!-- button -->
-    <string name="deletealarm_dialog_cancel">Cancel</string>    <!-- button -->
+    <string name="deletealarm_dialog_cancel">@string/dialog_cancel</string>    <!-- button -->
     <string name="deletealarm_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) was deleted.</string> <!-- toast msg -->
     <string name="deletealarm_toast_success1"><xliff:g id="type" example="Notification">%1$s</xliff:g> was deleted.</string> <!-- toast msg -->
 
     <string name="discardchanges_dialog_message">There are unsaved changes.</string>      <!-- dialog message -->
     <string name="discardchanges_dialog_ok">Discard</string>                              <!-- button -->
-    <string name="discardchanges_dialog_cancel">Cancel</string>                           <!-- button -->
+    <string name="discardchanges_dialog_cancel">@string/dialog_cancel</string>                           <!-- button -->
     <string name="discardchanges_dialog_neutral">Save</string>                            <!-- button -->
 
     <string name="clearalarms_dialog_title">Clear Alarms</string>        <!-- dialog title -->
     <string name="clearalarms_dialog_message">Are you sure you want to delete all alarms?</string>   <!-- dialog msg -->
     <string name="clearalarms_dialog_ok">Clear</string>        <!-- button -->
-    <string name="clearalarms_dialog_cancel">Cancel</string>    <!-- button -->
+    <string name="clearalarms_dialog_cancel">@string/dialog_cancel</string>    <!-- button -->
     <string name="clearalarms_toast_success">Alarms cleared.</string> <!-- toast msg -->
 
     <string name="alarmlabel_dialog_title">Label</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Apply</string>        <!-- button -->
-    <string name="alarmlabel_dialog_cancel">Cancel</string>    <!-- button -->
+    <string name="alarmlabel_dialog_cancel">@string/dialog_cancel</string>    <!-- button -->
     <string name="alarmlabel_hint">Label</string>        <!-- EditText hint -->
 
     <string name="alarmrepeat_dialog_title">Repeat Alarm</string>        <!-- dialog title -->
     <string name="alarmrepeat_dialog_ok">Apply</string>        <!-- button -->
-    <string name="alarmrepeat_dialog_cancel">Cancel</string>    <!-- button -->
+    <string name="alarmrepeat_dialog_cancel">@string/dialog_cancel</string>    <!-- button -->
 
     <string name="alarmtime_dialog_title">Alarm Time</string>        <!-- dialog title -->
     <string name="alarmtime_dialog_ok">Override</string>        <!-- button -->
-    <string name="alarmtime_dialog_cancel">Cancel</string>    <!-- button -->
+    <string name="alarmtime_dialog_cancel">@string/dialog_cancel</string>    <!-- button -->
     <string name="alarmtime_dialog_message">Override the alarm time?\n\nThis alarm will no longer be scheduled by event.</string>   <!-- dialog msg -->
 
     <string name="alarmoffset_dialog_title">Alarm Offset</string>        <!-- dialog title -->
     <string name="alarmoffset_dialog_ok">Apply</string>        <!-- button -->
-    <string name="alarmoffset_dialog_cancel">Cancel</string>    <!-- button -->
+    <string name="alarmoffset_dialog_cancel">@string/dialog_cancel</string>    <!-- button -->
 
     <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> set for <xliff:g id="duration" example="8h">%2$s</xliff:g> from now.</string> <!-- toast msg -->
     <string name="alarmdetails_snack"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> in <xliff:g id="duration" example="8h">%2$s</xliff:g></string> <!-- snackbar msg -->
@@ -989,7 +989,7 @@
     <string name="configActionDesc_nextNote">Show next note</string>
     <string name="configActionDesc_prevNote">Show previous note</string>
     <string name="configActionDesc_resetNote">Show upcoming event</string>
-    <string name="configActionDesc_showCalendar">Open calendar</string>
+    <string name="configActionDesc_showCalendar">Open kalender</string>
     <string name="configActionDesc_mapLocation">Show location on map</string>
     <string name="configActionDesc_setAlarm">Set an alarm</string>
     <string name="configActionDesc_worldMap">World Map Dialog</string>
@@ -1114,8 +1114,8 @@
     </string-array>
 
     <!-- App Setting: calendars -->
-    <string name="configLabel_calendars">Calendars</string>   <!-- group title -->
-    <string name="configLabel_calendars_enabled">Calendar Integration</string>
+    <string name="configLabel_calendars">Kalenders</string>   <!-- group title -->
+    <string name="configLabel_calendars_enabled">Agenda-intergratie</string>
 
     <!-- App Setting: passive location mode -->
     <string name="configLabel_getFix_passiveMode">Passive Location</string>
@@ -1135,21 +1135,21 @@
     <string name="configLabel_localeSelect">Language</string>
     <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
     <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits -->
-        <item>English</item>
+        <item>Engels</item>
         <item>Esperanto</item>
-        <item>French</item>
-        <item>German</item>
-        <item>Hungarian</item>
-        <item>Italian</item>
-        <item>Polish</item>
-        <item>Spanish</item>
-        <item>Catalan</item>
-        <item>Basque</item>
-        <item>Norwegian</item>
-        <item>Traditional Chinese</item>
-        <item>Portuguese</item>
-        <item>Russian</item>
-        <item>Dutch</item>  <!-- TODO -->
+        <item>Frans</item>
+        <item>Duits</item>
+        <item>Hongaars</item>
+        <item>Italiaans</item>
+        <item>Pools</item>
+        <item>Spaans</item>
+        <item>Catalaans</item>
+        <item>Baskisch</item>
+        <item>Noors</item>
+        <item>Traditioneel Chinees</item>
+        <item>Portugees</item>
+        <item>Russian</item>  <!-- TODO -->
+        <item>Nederlands</item>
     </string-array>
 
     <!-- position formats -->
@@ -1212,11 +1212,11 @@
     <string name="worldmap_dialog_action_next">Next</string>       <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_prev">Previous</string>   <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_reset">Reset</string>     <!-- button (contentDescription) -->
-    <string name="worldmap_dialog_action_menu">Options</string>       <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_menu">Opties</string>       <!-- button (contentDescription) -->
     <string name="worldmap_dialog_option_sunlight">Sunlight</string>
     <string name="worldmap_dialog_option_moonlight">Moonlight</string>
     <string name="worldmap_dialog_option_all">Both</string>
-    <string name="worldmap_dialog_option_location">Location</string>
+    <string name="worldmap_dialog_option_location">Locatie</string>
     <string name="worldmap_dialog_option_latitudes">Latitudes</string>
     <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- menu item; "x 15m"; increments of 15 minutes -->
     <string name="worldmap_dialog_speed_1d">&#215; 1d</string>      <!-- menu item; "x 1d"; increments of 1 day -->
@@ -1229,7 +1229,7 @@
     <string name="schedalarm_dialog_tab_event">Event</string>                      <!-- tab text -->
     <string name="schedalarm_dialog_tab_time">Time</string>                        <!-- tab text -->
     <string name="schedalarm_dialog_ok">Schedule</string>                          <!-- button text -->
-    <string name="schedalarm_dialog_cancel">Cancel</string>
+    <string name="schedalarm_dialog_cancel">@string/dialog_cancel</string>
     <string name="schedalarm_dialog_error">Alarm was not set…</string>
     <string name="schedalarm_dialog_error2">Alarm cannot be set…</string>
     <string name="schedalarm_dialog_note">about <xliff:g id="timetext" example="6h 30m">%s</xliff:g> from now.</string>
@@ -1238,23 +1238,23 @@
     <string name="schedalarm_labelformat"><xliff:g id="solarevents_short" example="sunrise">%1$s</xliff:g> (<xliff:g id="shortDate" example="4/6/2018">%2$s</xliff:g>)</string>
     <string name="schedalarm_labelformat2"><xliff:g id="solarevents_short" example="sunrise">%1$s</xliff:g></string>
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
-        <item>astronomical twilight</item>
-        <item>nautical twilight</item>
+        <item>Astronomische Schemering</item>
+        <item>Nautische Schemering</item>
         <item>blue hour</item>
-        <item>civil twilight</item>
+        <item>Civiele Schemering</item>
         <item>blue hour</item>
-        <item>sunrise</item>
+        <item>Zonsopgang</item>
         <item>golden hour</item>
         <item>solar noon</item>
         <item>golden hour</item>
-        <item>sunset</item>
+        <item>Zonsondergang</item>
         <item>blue hour</item>
-        <item>civil twilight</item>
+        <item>Civiele Schemering</item>
         <item>blue hour</item>
-        <item>nautical twilight</item>
-        <item>astronomical twilight</item>
-        <item>moonrise</item>
-        <item>moonset</item>
+        <item>Nautische Schemering</item>
+        <item>Astronomische Schemering</item>
+        <item>Maanopkomst</item>
+        <item>Maansondergang</item>
         <item>new moon</item>
         <item>first quarter</item>
         <item>full moon</item>
@@ -1272,18 +1272,18 @@
         <item>morning blue hour (start)</item>
         <item>morning civil twilight (start)</item>
         <item>morning blue hour (end)</item>
-        <item>sunrise</item>
+        <item>Zonsopgang</item>
         <item>morning golden hour (end)</item>
         <item>solar noon</item>
         <item>evening golden hour (start)</item>
-        <item>sunset</item>
+        <item>Zonsondergang</item>
         <item>evening blue hour (start)</item>
         <item>evening civil twilight (end)</item>
         <item>evening blue hour (end)</item>
         <item>evening nautical twilight (end)</item>
         <item>evening astronomical twilight (end)</item>
-        <item>moonrise</item>
-        <item>moonset</item>
+        <item>Maanopkomst</item>
+        <item>Maansondergang</item>
         <item>new moon</item>
         <item>first quarter</item>
         <item>full moon</item>
@@ -1318,17 +1318,17 @@
     <!-- Dialog: Use Date -->
     <string name="timedate_dialog_title">Set Date</string>
     <string name="timedate_dialog_ok">Set</string>
-    <string name="timedate_dialog_cancel">Cancel</string>
+    <string name="timedate_dialog_cancel">@string/dialog_cancel</string>
 
     <!-- Dialog: Use Timezone -->
     <string name="timezone_dialog_title">Time Zone</string>
     <string name="timezone_dialog_ok">Set</string>
-    <string name="timezone_dialog_cancel">Cancel</string>
+    <string name="timezone_dialog_cancel">@string/dialog_cancel</string>
 
     <!-- Dialog: Set Location -->
-    <string name="location_dialog_title">Location</string>
+    <string name="location_dialog_title">Locatie</string>
     <string name="location_dialog_ok">Update</string>
-    <string name="location_dialog_cancel">Cancel</string>
+    <string name="location_dialog_cancel">@string/dialog_cancel</string>
     <string name="location_dialog_error_lat">This is not a valid latitude.</string>
     <string name="location_dialog_error_lon">This is not a valid longitude.</string>
     <string name="location_dialog_error_alt">This is not a valid elevation.</string>
@@ -1345,13 +1345,13 @@
         <item quantity="other">%d places were removed.</item>
     </plurals>
     <string name="locationdelete_dialog_ok">Remove</string>
-    <string name="locationdelete_dialog_cancel">Cancel</string>
+    <string name="locationdelete_dialog_cancel">@string/dialog_cancel</string>
 
     <!-- Dialog: Clear Places -->
     <string name="locationclear_dialog_title">Clear Places?</string>
     <string name="locationclear_dialog_message">Are you sure you want to clear the list of places?</string>
     <string name="locationclear_dialog_ok">Clear</string>
-    <string name="locationclear_dialog_cancel">Cancel</string>
+    <string name="locationclear_dialog_cancel">@string/dialog_cancel</string>
 
     <!-- Dialog: Clear Places (progress) -->
     <string name="locationcleared_dialog_title">Clearing Places</string>
@@ -1390,9 +1390,9 @@
     </plurals>
 
     <!-- Dialog: Color -->
-    <string name="color_dialog_msg">Choose Colour</string>
-    <string name="color_dialog_ok">Select</string>
-    <string name="color_dialog_cancel">Cancel</string>
+    <string name="color_dialog_msg">Kies kleur</string>
+    <string name="color_dialog_ok">Selecteer</string>
+    <string name="color_dialog_cancel">@string/dialog_cancel</string>
     <string name="color_dialog_tab1">1</string>
     <string name="color_dialog_tab2">2</string>
     <string name="color_dialog_tab3">3</string>
@@ -1404,7 +1404,7 @@
     <string name="color_dialog_hint_hex">#FFFFFF</string>
 
     <!-- Dialog: About -->
-    <string name="about_dialog_title">About</string>
+    <string name="about_dialog_title">Over</string>
     <string name="app_name">Suntimes</string>
     <string name="app_name_alarmclock">Suntimes Alarms</string>
     <string name="app_name_widget0">Suntimes Widget</string>
@@ -1413,11 +1413,11 @@
     <string name="app_name_clockwidget0">Clock Widget</string>
     <string name="app_name_solsticewidget0">Solstice Widget</string>
     <string name="app_name_moonwidget0">Moon Widget</string>
-    <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
+    <string name="app_version"><![CDATA[<b>Versie:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Displays sunlight and moonlight times.</string>
     <string name="app_support_url"><![CDATA[
-        <b>Support:</b> visit the
-        <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> to submit a request.
+        <b>Ondersteuning:</b> bezoek de
+        <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> om een verzoek in te dienen.
     ]]></string>
     <!--<string name="app_source_url"><xliff:g id="url"><![CDATA[
         <a href="https://github.com/forrestguice/SuntimesWidget/">github.com/forrestguice/SuntimesWidget/</a>
@@ -1431,8 +1431,8 @@
         Source code available under GPLv3.
     ]]></string>
 
-    <string name="app_legal2"><![CDATA[<b>Translations to:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
-    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> by <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
+    <string name="app_legal2"><![CDATA[<b>Vertalingen:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
+    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> door <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
     <string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>  <!-- e.g. "name1, name2, name3, ..." -->
     <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, and <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
     <string name="creditsTab">Credits</string>
@@ -1601,7 +1601,7 @@
     <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>
     <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignore</string>
-    <string name="privacy_permissiondialog_title">Permissions</string>
+    <string name="privacy_permissiondialog_title">Toestemmingen</string>
     <!--<string name="privacy_url"><xliff:g id="url"><![CDATA[
         <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Privacy">github.com/forrestguice/SuntimesWidget/wiki/Privacy</a>
     ]]></xliff:g></string>-->
@@ -1614,7 +1614,7 @@
     <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>
 
     <string name="dialog_ok">OK</string>
-    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_cancel">Annuleer</string>
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
