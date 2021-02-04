@@ -1115,7 +1115,7 @@
 
     <!-- App Setting: calendars -->
     <string name="configLabel_calendars">Kalenders</string>   <!-- group title -->
-    <string name="configLabel_calendars_enabled">Agenda-intergratie</string>
+    <string name="configLabel_calendars_enabled">Agenda-integratie</string>
 
     <!-- App Setting: passive location mode -->
     <string name="configLabel_getFix_passiveMode">Passive Location</string>
