@@ -131,8 +131,8 @@
                   sunset
          The relative order is defined by the layout (layout/info_time_note.xml).
     -->
-    <string name="sinds"></string>
-    <string name="tot">until</string>
+    <string name="since"></string>
+    <string name="until">until</string>
     <string name="until_end">tot einde</string>
 
     <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. the time component is shown on the next line -->
