@@ -1231,6 +1231,7 @@
         <item>Traditional Chinese</item>
         <item>Portuguese</item>
         <item>Russian</item>
+        <item>Dutch</item>  <!-- TODO -->
     </string-array>
     <string-array name="locale_display_native" translatable="false">             <!-- one-to-one with locale_values -->
         <item>English</item>
@@ -1247,6 +1248,7 @@
         <item>正體中文</item>
         <item>Português Brasileiro</item>
         <item>Русский</item>
+        <item>Dutch</item>  <!-- TODO -->
     </string-array>
     <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
         <item>en</item>
@@ -1263,6 +1265,7 @@
         <item>zh_TW</item>
         <item>pt_BR</item>
         <item>ru</item>
+        <item>nl</item>  <!-- TODO -->
     </string-array>
     <string-array name="locale_credits" translatable="false">  <!-- one-to-one with locale_display -->
         <item />
@@ -1279,6 +1282,7 @@
         <item><![CDATA[<a href=https://github.com/pggdt>ft42</a>]]></item>
         <item><![CDATA[<a href=https://github.com/NetoSilva>Neto Silva</a>|<a href=https://github.com/naoliv>Nelson&#160;A.&#160;de&#160;Oliveira</a>|<a href=https://github.com/efraletti>Enrico S. B. Fraletti</a>]]></item>
         <item><![CDATA[<a href=https://github.com/rchintsov>Ruslan&#160;Chintsov</a>]]></item>
+        <item><![CDATA[<a href=TODO>TODO</a>]]></item>  <!-- TODO -->
     </string-array>
 
     <!-- position formats -->

@@ -1172,6 +1172,7 @@
         <item>Китайский (традиционный)</item>
         <item>Португальский</item>
         <item>Русский</item>
+        <item>Dutch</item>  <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
