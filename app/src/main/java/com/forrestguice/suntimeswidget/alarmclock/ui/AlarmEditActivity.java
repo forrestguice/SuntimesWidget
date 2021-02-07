@@ -498,11 +498,6 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.alarmsound, popup.getMenu());
 
-        MenuItem menuItem_file = (MenuItem)popup.getMenu().findItem(R.id.action_alarmsound_file);
-        if (menuItem_file != null) {
-            menuItem_file.setVisible((Build.VERSION.SDK_INT >= 19));
-        }
-
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
         {
             @Override
@@ -515,9 +510,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                         return true;
 
                     case R.id.action_alarmsound_file:
-                        if (Build.VERSION.SDK_INT >= 19) {
-                            audioFilePicker(item);
-                        }
+                        audioFilePicker(item);
                         return true;
 
                     case R.id.action_alarmsound_none:
@@ -606,15 +599,27 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         }
     }
 
-    @TargetApi(19)
     protected void audioFilePicker(@NonNull AlarmClockItem item)
     {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        Intent intent;
+        if (Build.VERSION.SDK_INT >= 19)
+        {
+            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
+
+        } else {
+            intent = new Intent(Intent.ACTION_GET_CONTENT);
+        }
+
+        if (Build.VERSION.SDK_INT >= 11) {
+            intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+        }
+
         intent.setType("audio/*");
-        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-        intent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-        startActivityForResult(intent, REQUEST_RINGTONE1);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.configAction_setAlarmSound)), REQUEST_RINGTONE1);
     }
 
     protected void onRingtoneResult1(int resultCode, Intent data)
