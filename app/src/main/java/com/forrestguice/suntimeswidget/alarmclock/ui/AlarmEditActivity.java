@@ -612,6 +612,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("audio/*");
+        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
         intent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
         startActivityForResult(intent, REQUEST_RINGTONE1);
     }
