@@ -622,7 +622,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         {
             Uri uri = data.getData();
             if (Build.VERSION.SDK_INT >= 19) {
-                getContentResolver().takePersistableUriPermission(uri, 0);
+                final int flags = data.getFlags() & Intent.FLAG_GRANT_READ_URI_PERMISSION;
+                getContentResolver().takePersistableUriPermission(uri, flags);
             }
             onRingtoneResult(uri);
         } else {
