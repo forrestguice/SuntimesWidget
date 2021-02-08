@@ -659,8 +659,8 @@
     <string name="configAction_deleteAlarm">Elimina</string>               <!-- button (contentDescription) -->  
     <string name="configAction_clearAlarms">Elimina tot</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms">Ordena</string>                <!-- action button / menu item -->  
-    <string name="configAction_sortAlarms_by_time">Data de l\'alarma</string>                <!-- action button / menu item -->  
-    <string name="configAction_sortAlarms_by_creation">Data de creació</string>                <!-- action button / menu item -->  
+    <string name="configAction_sortAlarms_by_time">Per data de l\'alarma</string>                <!-- action button / menu item -->  
+    <string name="configAction_sortAlarms_by_creation">Per data de creació</string>                <!-- action button / menu item -->  
     <string name="configAction_clearOffset">Elimina</string>                <!-- action button / menu item -->  
     <string name="configAction_setAlarmOffset">Retard</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmType">Tipus</string>         <!-- button (contentDescription) -->  
