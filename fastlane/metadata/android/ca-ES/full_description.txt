@@ -1,6 +1,6 @@
 Realitza un seguiment dels temps de llum solar i de lluna. Inclou una aplicació, un despertador i una col·lecció de widgets.
 
-Suntimes mostra la sortida i la posta de sol, el crepuscle (civil / nàutic / astronòmic), l’hora blava i daurada, els solsticis i els equinoccis, la sortida i la posta de la lluna, les fases de la lluna i la iŀluminació. El despertador pot programar alarmes (o notificacions) diàries amb o sense repetició per a la sortida del sol, la posta de sol i altres esdeveniments. L'aplicació inclou moltes funcions comunament associades a un rellotge mundial.
+Suntimes mostra la sortida i la posta de sol, el crepuscle (civil / nàutic / astronòmic), l’hora blava i daurada, els solsticis i els equinoccis, la sortida i la posta de la lluna, les fases de la lluna i la iŀluminació. El despertador pot programar alarmes (o notificacions) amb o sense repetició diària per a la sortida del sol, la posta de sol i altres esdeveniments. L'aplicació inclou moltes funcions comunament associades a un rellotge mundial.
 
 Els temps indicats per aquesta aplicació són aproximats. L'aplicació no requereix connectivitat de xarxa, el GPS és opcional.
 
