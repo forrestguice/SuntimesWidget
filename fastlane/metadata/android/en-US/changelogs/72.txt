@@ -1,0 +1,3 @@
+- adds translation to Dutch.
+- improves alarm sound selection ("No Sound", "Ringtone", "Audio File").
+- removes READ_EXTERNAL_STORAGE permission (api≥19); no longer required when playing audio from external storage (#472).
