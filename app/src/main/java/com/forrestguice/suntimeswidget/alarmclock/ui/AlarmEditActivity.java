@@ -20,16 +20,19 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
@@ -502,7 +505,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                         return true;
 
                     case R.id.action_alarmsound_none:
-                        onRingtoneResult(null);
+                        onRingtoneResult(null, false);
                         return true;
                 }
                 return false;
@@ -547,12 +550,12 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     protected void onRingtoneResult(int resultCode, Intent data)
     {
         if (resultCode == RESULT_OK && editor != null && data != null) {
-            onRingtoneResult((Uri)(data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)));
+            onRingtoneResult((Uri)(data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)), false);
         } else {
             Log.d(TAG, "onActivityResult: bad result: " + resultCode + ", " + data);
         }
     }
-    protected void onRingtoneResult(final Uri uri)
+    protected void onRingtoneResult(final Uri uri, boolean isAudioFile)
     {
         final AlarmClockItem item = editor.getItem();
         if (uri != null)
@@ -561,16 +564,11 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             Ringtone ringtone = RingtoneManager.getRingtone(this, uri);
             if (ringtone != null)
             {
-                String ringtoneName = ringtone.getTitle(this);
                 ringtone.stop();
-                Log.d(TAG, "onActivityResult: uri: " + item.ringtoneURI + ", title: " + ringtoneName);
-
-                String[] filePath = ringtoneName.split("/");
-                String fileName = filePath[filePath.length - 1];
-                item.ringtoneName = fileName == null ? null
-                        : ((fileName.contains(".")) ? fileName.substring(0, fileName.lastIndexOf(".")) : fileName);
+                item.ringtoneName = ringtoneTitle(getContentResolver(), uri, ringtone, isAudioFile);
                 item.ringtoneURI = uri.toString();
                 editor.notifyItemChanged();
+                Log.d(TAG, "onActivityResult: uri: " + item.ringtoneURI + ", title: " + item.ringtoneName);
 
             } else {
                 item.ringtoneName = null;
@@ -585,6 +583,38 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             editor.notifyItemChanged();
             Log.d(TAG, "onActivityResult: null uri");
         }
+    }
+
+    protected String ringtoneTitle(@NonNull ContentResolver resolver, @NonNull Uri uri, @NonNull Ringtone ringtone, boolean isAudioFile)
+    {
+        String ringtoneTitle = ringtone.getTitle(this);
+        ringtone.stop();
+
+        String retValue = ringtoneTitle;
+        if (isAudioFile)
+        {
+            Cursor cursor = null;
+            try {
+                cursor = resolver.query(uri, null, null, null, null);
+                if (cursor != null) {
+                    cursor.moveToFirst();
+                    retValue = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
+                    cursor.close();
+                }
+
+            } catch (IllegalArgumentException e) {
+                String[] filePath = ringtoneTitle.split("/");
+                String fileName = filePath[filePath.length - 1];
+                retValue = fileName == null ? null
+                                            : ((fileName.contains(".")) ? fileName.substring(0, fileName.lastIndexOf(".")) : fileName);
+
+            } finally {
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }
+        }
+        return retValue;
     }
 
     protected void audioFilePicker(@NonNull AlarmClockItem item)
@@ -619,7 +649,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 final int flags = data.getFlags() & Intent.FLAG_GRANT_READ_URI_PERMISSION;
                 getContentResolver().takePersistableUriPermission(uri, flags);
             }
-            onRingtoneResult(uri);
+            onRingtoneResult(uri, true);
         } else {
             Log.d(TAG, "onActivityResult: bad result: " + resultCode + ", " + data);
         }
