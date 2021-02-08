@@ -1,12 +1,15 @@
-<p>Mostra els calendaris solars i lunars. Conté una app i un una coŀlecció de ginys.</p>
-<p>Mostra quan és l'alba, capvespre, crepuscles (civil / nàutic / astronòmic), hores blava i daurada, els solsticis i equinoccis, sortida i posta de la Lluna, les fases de la Lluna i la intensitat d'iŀluminació.</p>
-<p>Els temps donats per l'aplicació són aproximats. L'aplicació no necessita connexió a una xarxa, el GPS és opcional.</p>
-L'aplicació requereix una sèrie de permissos per a que algunes característiques funcionin correctament:
-<ul>
-<li><small><u>ACCESS_FINE_LOCATION</u></small> és utilitzat per obtenir la posició actual (latitud, longitud, altitud).</li>
-<li><small><u>BOOT_COMPLETED</u></small>.</li>
-<li><small><u>SET_ALARM</u></small> és utilitzat per planificar alarmes emprant l'aplicació Rellotge.</li>
-<li><small><u>VIBRATE</u></small>.</li>
-<li><small><u>WRITE_EXTERNAL_STORAGE</u></small> és utilitzat per fer còpies de seguretat a un arxiu (llocs, temes, etc.) <small>(només api<=18)</small>.</li>
-</ul>
-<p><a href="https://f-droid.org/en/packages/com.forrestguice.suntimescalendars">Suntimes Calendars</a></p>
+Realitza un seguiment dels temps de llum solar i de lluna. Inclou una aplicació, un despertador i una col·lecció de widgets.
+
+Suntimes mostra la sortida i la posta de sol, el crepuscle (civil / nàutic / astronòmic), l’hora blava i daurada, els solsticis i els equinoccis, la sortida i la posta de la lluna, les fases de la lluna i la iŀluminació. El despertador programa diàriament alarmes amb repetició (o notificacions) per a la sortida del sol, la posta de sol i altres esdeveniments. L'aplicació inclou moltes funcions comunament associades a un rellotge mundial.
+
+Els temps indicats per aquesta aplicació són aproximats. L'aplicació no requereix connectivitat de xarxa, el GPS és opcional.
+
+L'aplicació es beneficia dels permisos següents:
+* <small><u>ACCESS_FINE_LOCATION</u> </small> s’utilitza per obtenir la posició actual (latitud, longitud, altitud).
+* <small><u>BOOT_COMPLETED</u> </small> s’utilitza per restaurar les alarmes actives després d’un reinici.
+* <small><u>SET_ALARM</u> </small> s'utilitza per programar alarmes mitjançant l'aplicació AlarmClock.
+* <small><u> VIBRAR</u> </small> s’utilitza per a les notificacions d’alarma.
+* <small><u>READ_EXTERNAL_STORAGE</u> </small> s’utilitza per reproduir sons d’alarma ubicats a la targeta SD.
+* <small><u>WRITE_EXTERNAL_STORAGE</u> </small> s'utilitza per fer còpies de seguretat de dades al fitxer (llocs, temes, etc.) <small> (només api & le; = 18) </small>.
+
+Nota: la «Integració del calendari» i els permisos afegits a la v0.9.0 s'han eliminat a la v0.10.0. Aquesta funció ja està disponible com a aplicació complementària independent; <a href="https://f-droid.org/en/packages/com.forrestguice.suntimescalendars"> Calendaris Suntimes </a>.

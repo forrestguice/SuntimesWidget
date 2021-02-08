@@ -1,1 +1,1 @@
-Mostra horaris solars i lunars
+Hores de llum del sol i de lluna (i alarmes)
