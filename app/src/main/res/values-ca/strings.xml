@@ -17,17 +17,17 @@
     <string name="configAction_mapLocation">Mostrar Mapa</string>
     <string name="configAction_mapLocation_chooser">Veure posició amb</string>
     <string name="configAction_mapLocation_noapp">No és va trobar cap aplicació de mapes!</string>
-    <string name="configAction_showCalendar">Calendar</string>  <!-- TODO -->
+    <string name="configAction_showCalendar">Calendari</string>  
     <string name="configAction_setAlarm">Configurar alarma</string>
     <string name="configAction_setTimeZone">Configurar zona horària</string>
     <string name="configAction_setDate">Configurar data</string>
-    <string name="configAction_viewDate">View Date</string>    <!-- TODO -->
+    <string name="configAction_viewDate">Veure data</string>    
     <string name="configAction_sunDialog">Posició del Sol</string>
     <string name="configAction_equinoxDialog">Solstici / equinocci</string>
     <string name="configAction_worldMap">Mapa del món</string>
     <string name="configAction_moon">Lluna</string>
     <string name="configAction_help">Ajuda</string>
-    <string name="configAction_overflow">More</string>  <!-- TODO -->
+    <string name="configAction_overflow">Més</string>  
     <string name="configAction_settings">Configuració</string>
     <string name="configAction_aboutWidget">Quant a</string>
 
@@ -136,8 +136,8 @@
     <string name="untilEnd_bluehour">Hora blava</string>
     <string name="until_moonrise">Sortida de la Lluna</string>
     <string name="until_moonset">Posta de la Lluna</string>
-    <string name="until_moonnoon">lunar noon</string>   <!-- TODO -->
-    <string name="until_moonnight">lunar midnight</string>   <!-- TODO -->
+    <string name="until_moonnoon">Migdia lunar</string>   
+    <string name="until_moonnight">Mitjanit lunar</string>   
 
     <!-- Table -->
     <string name="sunrise">Alba</string>                             <!-- contentDescription -->
@@ -186,12 +186,12 @@
         <item quantity="other">%s peus</item>
     </plurals>
 
-    <string name="units_miles">miles</string>    <!-- TODO -->
-    <string name="units_miles_short">mi</string>    <!-- TODO -->
+    <string name="units_miles">milles</string>    
+    <string name="units_miles_short">mi</string>    
     <plurals name="units_miles_long">
-        <item quantity="one">%s mile</item>
-        <item quantity="other">%s miles</item>
-    </plurals>                                     <!-- TODO -->
+        <item quantity="one">%s milla</item>
+        <item quantity="other">%s milles</item>
+    </plurals>                                     
 
     <string name="units_meters">metres</string>
     <string name="units_meters_short">m</string>
@@ -200,12 +200,12 @@
         <item quantity="other">%s metres</item>
     </plurals>
 
-    <string name="units_kilometers">kilometers</string>    <!-- TODO -->
-    <string name="units_kilometers_short">km</string>    <!-- TODO -->
+    <string name="units_kilometers">Quilòmetres</string>    
+    <string name="units_kilometers_short">km</string>    
     <plurals name="units_kilometers_long">
-        <item quantity="one">%s kilometer</item>
-        <item quantity="other">%s kilometers</item>
-    </plurals>                                            <!-- TODO -->
+        <item quantity="one">%s quilòmetre</item>
+        <item quantity="other">%s quilòmetres</item>
+    </plurals>                                            
 
     <!--
          WIDGET CONFIG
@@ -323,21 +323,21 @@
     <string name="timeMode_moon_waningcrescent_short">Minvant</string>               <!-- label -->
     <string name="timeMode_moon_waningcrescent">Lluna minvant</string>                     <!-- label -->
 
-    <string name="timeMode_moon_super">Supermoon</string>               <!-- label -->    <!-- TODO -->
-    <string name="timeMode_moon_micro">Micromoon</string>               <!-- label -->    <!-- TODO -->
-    <string name="timeMode_moon_superfull">Super Full Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_moon_super">Superlluna</string>               <!-- label -->    
+    <string name="timeMode_moon_micro">Microlluna</string>               <!-- label -->    
+    <string name="timeMode_moon_superfull">Superlluna plena</string>                             <!-- setting -->    
     <!--<string name="timeMode_moon_superfull_short">@string/timeMode_moon_super</string>-->     <!-- label -->
-    <string name="timeMode_moon_supernew">Super New Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_moon_supernew">Superlluna nova</string>                             <!-- setting -->    
     <!--<string name="timeMode_moon_supernew_short">@string/timeMode_moon_super</string>-->     <!-- label -->
-    <string name="timeMode_moon_microfull">Micro Full Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_moon_microfull">Microlluna plena</string>                             <!-- setting -->    
     <!--<string name="timeMode_moon_microfull_short">@string/timeMode_moon_micro</string>-->     <!-- label -->
-    <string name="timeMode_moon_micronew">Micro New Moon</string>                             <!-- setting -->    <!-- TODO -->
+    <string name="timeMode_moon_micronew">Microlluna nova</string>                             <!-- setting -->    
     <!--<string name="timeMode_moon_micronew_short">@string/timeMode_moon_micro</string>-->     <!-- label -->
 
     <!--<string name="timeMode_moon_perigee">@string/label_perigee</string>-->                             <!-- label -->
     <!--<string name="timeMode_moon_apogee">@string/label_apogee</string>-->                             <!-- label -->
-    <string name="label_apogee">Apogee</string>      <!-- TODO -->
-    <string name="label_perigee">Perigee</string>    <!-- TODO -->
+    <string name="label_apogee">Apogeu</string>      
+    <string name="label_perigee">Perigeu</string>    
 
     <string name="configLabel_general_timeMode">Mode:</string>          <!-- spinner label -->
 
@@ -349,12 +349,12 @@
 
     <string name="widgetMode1x1_altaz">Altitud i Azimut</string>     <!-- setting -->
     <string name="widgetMode1x1_decright">Inclinació i ascensió correcta</string>     <!-- setting -->
-    <string name="widgetMode1x1_distance">Current distance</string>     <!-- setting -->    <!-- TODO -->
-    <string name="widgetMode1x1_apsis">Next apogee or perigee</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode1x1_distance">Distància actual</string>     <!-- setting -->    
+    <string name="widgetMode1x1_apsis">Següent apogeu o perigeu</string>     <!-- setting -->    
 
     <string name="widgetMode_sunPosMap_simplerectangular">Bàsic</string>  <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [north]</string>     <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [south]</string>     <!-- setting -->  <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [nord]</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [sud]</string>     <!-- setting -->  
     <string name="widgetMode_sunPosMap_bluemarble">Bola blava</string>    <!-- setting -->
 
     <string name="widgetMode1x1_moonriseset">Sortida i posta de la Lluna</string>     <!-- setting -->
@@ -374,12 +374,12 @@
     <string name="actionMode_launchActivity">Iniciar app</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Intercanviar vista</string>      <!-- setting -->
 
-    <string name="launchType_activity">Activity</string>           <!-- setting -->  <!-- TODO -->
-    <string name="launchType_broadcast">Broadcast</string>           <!-- setting -->  <!-- TODO -->
-    <string name="launchType_service">Service</string>           <!-- setting -->  <!-- TODO -->
+    <string name="launchType_activity">Activitat</string>           <!-- setting -->  
+    <string name="launchType_broadcast">Emisió</string>           <!-- setting -->  
+    <string name="launchType_service">Servei</string>           <!-- setting -->  
 
-    <string name="expandMore">More</string>  <!-- contentDescription -->  <!-- TODO -->
-    <string name="expandLess">Less</string>  <!-- contentDescription -->  <!-- TODO -->
+    <string name="expandMore">Més</string>  <!-- contentDescription -->  
+    <string name="expandLess">Menys</string>  <!-- contentDescription -->  
     <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
     <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
@@ -404,7 +404,7 @@
     <string name="configHint_location_alt">0</string> <!-- edittext hint -->
     <string name="configLabel_location_name">Nom:</string>                      <!-- edittext label -->
     <string name="configHint_location_name">(opcional)</string>                  <!-- edittext hint -->
-    <string name="configHint_location_name0">Place Name</string>                  <!-- edittext hint -->  <!-- TODO -->
+    <string name="configHint_location_name0">Nom del lloc</string>                  <!-- edittext hint -->  
 
     <string name="configAction_getFix">Adquirir localització</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">Editar</string>         <!-- button (contentDescription) -->
@@ -459,61 +459,61 @@
     <string name="configLabel_general_showNoon">Mostrar migdia solar</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
-    <string name="configLabel_action_id">ID:</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configLabel_action_launch">Class:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configLabel_action_id">ID:</string>                 <!-- edittext label -->  
+    <string name="configLabel_action_launch">Class:</string>                 <!-- edittext label -->  
     <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
 
-    <string name="configHint_action_launch_title">Action Title</string>                 <!-- edittext hint -->  <!-- TODO -->
-    <string name="configHint_action_launch_desc">Short description</string>                 <!-- edittext hint -->  <!-- TODO -->
-    <string name="configLabel_action_launch_type">Type:</string>                 <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_action_launch_action">Action:</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configHint_action_launch_action">&lt;none&gt;</string> <!-- editText hint (and default) -->  <!-- TODO -->
-    <string name="configLabel_action_launch_data">Data:</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configHint_action_launch_data">&lt;none&gt;</string> <!-- editText hint (and default) -->  <!-- TODO -->
-    <string name="configLabel_action_launch_datatype">Mime:</string>                 <!-- edittext label -->  <!-- TODO -->
-    <string name="configHint_action_launch_datatype">text/plain</string> <!-- editText hint (and default) -->  <!-- TODO -->
-    <string name="configLabel_action_launch_extras">Extras:</string>                 <!-- edittext label -->  <!-- TODO -->
+    <string name="configHint_action_launch_title">Títol de l\'acció</string>                 <!-- edittext hint -->  
+    <string name="configHint_action_launch_desc">Descripció curta</string>                 <!-- edittext hint -->  
+    <string name="configLabel_action_launch_type">Tipus:</string>                 <!-- spinner label -->  
+    <string name="configLabel_action_launch_action">Acció:</string>                 <!-- edittext label -->  
+    <string name="configHint_action_launch_action">&lt;cap&gt;</string> <!-- editText hint (and default) -->  
+    <string name="configLabel_action_launch_data">Dada:</string>                 <!-- edittext label -->  
+    <string name="configHint_action_launch_data">&lt;cap&gt;</string> <!-- editText hint (and default) -->  
+    <string name="configLabel_action_launch_datatype">MIME:</string>                 <!-- edittext label -->  
+    <string name="configHint_action_launch_datatype">text/plain</string> <!-- editText hint (and default) -->  
+    <string name="configLabel_action_launch_extras">Extres:</string>                 <!-- edittext label -->  
     <string name="configHint_action_launch_extras"><![CDATA[<none>]]></string> <!-- editText hint (and default) -->
 
-    <string name="configLabel_action_item">%1$s %2$s</string>  <!-- TODO -->
-    <string name="configLabel_action_item_desc">(%1$s)</string>  <!-- TODO -->
-    <string name="configLabel_action_item_none">No Action</string>  <!-- TODO -->
+    <string name="configLabel_action_item">%1$s %2$s</string>  
+    <string name="configLabel_action_item_desc">(%1$s)</string>  
+    <string name="configLabel_action_item_none">Cap acció</string>  
 
-    <string name="addaction_custname">custom<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="addaction_custtitle">Custom Action <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="addaction_error_id">ID must not be empty (or contain spaces).</string>
-    <string name="addaction_error_title">Display string must not be empty.</string>  <!-- TODO -->
-    <string name="addaction_error_exists">ID is already taken. This action will be overwritten.</string> <!-- TODO -->
+    <string name="addaction_custname">personalitzat<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->  
+    <string name="addaction_custtitle">Acció personalitzada <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->  
+    <string name="addaction_error_id">L\'ID no pot estar buit (o contenir espais).</string>
+    <string name="addaction_error_title">La cadena a mostrar no pot estar buida.</string>  
+    <string name="addaction_error_exists">L\'ID ja existeix. Aquesta acció es sobrescriurà.</string> 
 
-    <string name="delaction_dialog_msg">Are you sure you want to delete %1$s (%2$s)?</string>    <!-- TODO -->
-    <string name="delaction_dialog_msg1">Default actions cannot be removed.\n\nRevert to defaults?</string>    <!-- TODO -->
+    <string name="delaction_dialog_msg">Estàs segur de voler esborrar %1$s (%2$s)?</string>    
+    <string name="delaction_dialog_msg1">Les accions predefinides no es poden eliminar.\n\nRevertir a predefinida?</string>    
     <string name="delaction_dialog_ok">Elimina</string>
-    <string name="delaction_dialog_ok1">Revert</string>    <!-- TODO -->
-    <string name="delaction_dialog_cancel">Canceŀlar</string>
+    <string name="delaction_dialog_ok1">Reverteix</string>    
+    <string name="delaction_dialog_cancel">Canceŀla</string>
 
-    <string name="clearactions_dialog_msg">Are you sure you want to reset to defaults?\n\nAll custom actions will be removed.</string>    <!-- TODO -->
-    <string name="clearactions_dialog_ok">Clear</string>    <!-- TODO -->
+    <string name="clearactions_dialog_msg">Estàs segur de restablir a accions predefinides?\n\nTotes les accions personalitzades seràn esborrades.</string>    
+    <string name="clearactions_dialog_ok">Buida</string>    
     <!--<string name="clearactions_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
-    <string name="clearactions_toast">Actions reset to defaults.</string>    <!-- TODO -->
+    <string name="clearactions_toast">Accions restablertes a predefinides.</string>    
 
-    <string name="saveaction_dialog_title">Add Action</string>    <!-- TODO -->
-    <string name="saveaction_dialog_ok">Guardar</string>
+    <string name="saveaction_dialog_title">Afegir acció</string>    
+    <string name="saveaction_dialog_ok">Desar</string>
     <!--<string name="saveaction_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
-    <string name="saveaction_dialog_suggest">Suggest</string>                  <!-- TODO -->
-    <string name="saveaction_toast">Saved action \"%1$s\" (%2$s).</string>    <!-- TODO -->
+    <string name="saveaction_dialog_suggest">Suggerir</string>                  
+    <string name="saveaction_toast">Acció desada \"%1$s\" (%2$s).</string>    
 
-    <string name="loadaction_dialog_title">Actions</string>    <!-- TODO -->
-    <string name="loadaction_toast">Loaded action \"%1$s\".</string>    <!-- TODO -->
+    <string name="loadaction_dialog_title">Accions</string>    
+    <string name="loadaction_toast">Acció carregada \"%1$s\".</string>    
 
-    <string name="startaction_failed_toast">Failed to start %s!</string>         <!-- error toast -->  <!-- TODO -->
+    <string name="startaction_failed_toast">Ha fallat l\'inici de %s!</string>         <!-- error toast -->  
 
     <string name="configAction_addAction">Afegir</string>           <!-- button (contentDescription) -->
     <string name="configAction_editAction">Editar</string>           <!-- button (contentDescription) -->
-    <string name="configAction_testAction">Test</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_saveAction">Guardar</string>         <!-- button (contentDescription) -->
-    <string name="configAction_loadAction">Load</string>         <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_deleteAction">Elimina</string>         <!-- button (contentDescription) -->
-    <string name="configAction_clearActions">Elimina tot</string>         <!-- button (contentDescription) -->
+    <string name="configAction_testAction">Test</string>         <!-- button (contentDescription) -->  
+    <string name="configAction_saveAction">Desar</string>         <!-- button (contentDescription) -->
+    <string name="configAction_loadAction">Carregar</string>         <!-- button (contentDescription) -->  
+    <string name="configAction_deleteAction">Eliminar</string>         <!-- button (contentDescription) -->
+    <string name="configAction_clearActions">Eliminar tot</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportActions">Exportar</string>         <!-- button (contentDescription) -->
     <string name="configAction_importActions">Importar</string>         <!-- button (contentDescription) -->
 
@@ -533,29 +533,29 @@
     <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (còpia)</string>                            <!-- copied theme name (display string) -->
 
     <string name="addtheme_toast_success">Afegit <xliff:g id="themeName">%1$s</xliff:g>.</string>          <!-- toast msg -->
-    <string name="edittheme_toast_success">Guardat <xliff:g id="themeName">%1$s</xliff:g>.</string>         <!-- toast msg -->
+    <string name="edittheme_toast_success">Desat <xliff:g id="themeName">%1$s</xliff:g>.</string>         <!-- toast msg -->
     <string name="deletetheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> va ser esborrat.</string> <!-- toast msg -->
 
     <string name="edittheme_error_themeName_empty">L\'ID ha de ser únic (requerit).</string>        <!-- error hint (themeName empty) -->
     <string name="edittheme_error_themeName_unique">L\'ID ha de ser únic (ja existeix).</string>  <!-- error hint (themeName taken) -->
-    <string name="edittheme_error_displaytext">El text a mostrar no ha de ser buit.</string>  <!-- error hint (display text is empty) -->
-    <string name="edittheme_error_textsize_min">El tamany ha ser un enter &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
-    <string name="edittheme_error_textsize_max">El tamany ha ser un enter &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
-    <string name="edittheme_flag_default">per defecte</string>  <!-- content description -->
+    <string name="edittheme_error_displaytext">El text a mostrar no pot ser buit.</string>  <!-- error hint (display text is empty) -->
+    <string name="edittheme_error_textsize_min">La mida ha ser entera &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
+    <string name="edittheme_error_textsize_max">La mida ha ser entera &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
+    <string name="edittheme_flag_default">predefinit</string>  <!-- content description -->
 
     <string name="deletetheme_dialog_title">Esborrar tema</string>        <!-- dialog title -->
-    <string name="deletetheme_dialog_message">¿Estàs segur que vols esborrar <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
+    <string name="deletetheme_dialog_message">Estàs segur que vols esborrar <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
     <string name="deletetheme_dialog_ok">Esborrar</string>        <!-- button -->
     <string name="deletetheme_dialog_cancel">Canceŀlar</string>    <!-- button -->
 
     <string name="configLabel_widgetThemeAdd">Afegir tema</string>     <!-- title text -->
     <string name="configLabel_widgetThemeEdit">Editar tema</string>   <!-- title text -->
-    <string name="configAction_saveTheme">Guardar</string>           <!-- button (contentDescription) -->
+    <string name="configAction_saveTheme">Desar</string>           <!-- button (contentDescription) -->
     <string name="configAction_chooseColor">Escollir color</string> <!-- button (contentDescription) -->
 
     <string name="configLabel_themeBackgroundId">Base:</string>    <!-- spinner label -->
     <string name="configLabel_themeBackground_light">Clar</string>        <!-- light background -->
-    <string name="configLabel_themeBackground_dark">Oscur</string>          <!-- dark background -->
+    <string name="configLabel_themeBackground_dark">Fosc</string>          <!-- dark background -->
     <string name="configLabel_themeBackground_trans">Transparent</string>  <!-- transparent background -->
     <string name="configLabel_themeBackground_color">Color</string>      <!-- custom background -->
     <string name="configLabel_themeColorBackground">Color:</string>      <!-- color label -->
@@ -612,24 +612,24 @@
     <string name="configLabel_themeColorTime">Color de text2</string>      <!-- color label -->
     <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeSizeTitle">Tamany del títol:</string>  <!-- edit label -->
+    <string name="configLabel_themeSizeTitle">Mida del títol:</string>  <!-- edit label -->
     <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
 
     <string name="configLabel_themeBoldTitle">Negreta</string>          <!-- checkbox label -->
 
-    <string name="configLabel_themeSizeText">Tamany del text:</string>    <!-- edit label -->
+    <string name="configLabel_themeSizeText">Mida del text:</string>    <!-- edit label -->
     <string name="configHint_themeSizeText">10</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themeSizeTime">Tamany del temps:</string>    <!-- edit label -->
+    <string name="configLabel_themeSizeTime">Mida del temps:</string>    <!-- edit label -->
     <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint -->
 
     <string name="configLabel_themeBoldTime">Negreta</string>          <!-- checkbox label -->
 
-    <string name="configLabel_themeSizeSuffix">Tamany del sufix:</string> <!-- edit label -->
+    <string name="configLabel_themeSizeSuffix">Mida del sufix:</string> <!-- edit label -->
     <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
 
     <string name="configLabel_themePadding">Espaiat:</string>            <!-- edit label -->
-    <string name="configHint_themePadding">[esquerra, damunt, dreta, abaix]</string> <!-- edit hint -->
+    <string name="configHint_themePadding">[esquerra, dalt, dreta, baix]</string> <!-- edit hint -->
 
     <string name="configLabel_themeID">ID:</string>                      <!-- edit label -->
     <string name="configHint_themeID">ID del tema</string>                  <!-- edit hint -->
@@ -646,7 +646,7 @@
     <string name="widgetLabel_rightAscension_short">AR</string>    <!-- label -->
     <string name="widgetLabel_declination">Inclinació</string>           <!-- label -->
     <string name="widgetLabel_declination_short">Inc</string>           <!-- label -->
-    <string name="widgetLabel_distance">Distance</string>           <!-- label -->    <!-- TODO -->
+    <string name="widgetLabel_distance">Distància</string>           <!-- label -->    
 
     <!--
         ALARM CLOCK
@@ -658,9 +658,9 @@
     <string name="configAction_editAlarm">Editar</string>               <!-- button (contentDescription) -->
     <string name="configAction_deleteAlarm">Elimina</string>               <!-- button (contentDescription) -->  
     <string name="configAction_clearAlarms">Elimina tot</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms">Sort</string>                <!-- action button / menu item -->  <!-- TODO -->
-    <string name="configAction_sortAlarms_by_time">Alarm Time</string>                <!-- action button / menu item -->  <!-- TODO -->
-    <string name="configAction_sortAlarms_by_creation">Creation Date</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="configAction_sortAlarms">Ordena</string>                <!-- action button / menu item -->  
+    <string name="configAction_sortAlarms_by_time">Data de l\'alarma</string>                <!-- action button / menu item -->  
+    <string name="configAction_sortAlarms_by_creation">Data de creació</string>                <!-- action button / menu item -->  
     <string name="configAction_clearOffset">Elimina</string>                <!-- action button / menu item -->  
     <string name="configAction_setAlarmOffset">Retard</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmType">Tipus</string>         <!-- button (contentDescription) -->  
@@ -669,13 +669,13 @@
     <string name="configAction_setAlarmRepeat">Repetició</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmEvent">Event</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmTime">Hora</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmAction">Set Action</string>         <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_setAlarmAction">Configura una acció</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmSound">So</string>         <!-- button (contentDescription) -->
     <string name="configAction_alarmMenu">Menú d\'alarmes</string>         <!-- button (contentDescription) -->
-    <string name="configAction_saveAlarm">Guardar</string>               <!-- button (contentDescription) -->
-    <string name="configAction_enableAlarm">Save &amp; Enable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_disableAlarm">Save &amp; Disable</string>               <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_undo">Undo</string>               <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_saveAlarm">Desar</string>               <!-- button (contentDescription) -->
+    <string name="configAction_enableAlarm">Desa i habilita</string>               <!-- button (contentDescription) -->  
+    <string name="configAction_disableAlarm">Desa i deshabilita</string>               <!-- button (contentDescription) -->  
+    <string name="configAction_undo">Desfer</string>               <!-- button (contentDescription) -->  
 
     <string name="alarmAction_dismiss">Ignorar</string>                <!-- notification action button -->  
     <string name="alarmAction_snooze">Posposar</string>                  <!-- notification action button -->  
@@ -690,55 +690,55 @@
     <string name="alarmMode_alarm">Alarma</string>                <!-- alarm type (setting) -->  
     <string name="alarmMode_notification">Notificació</string>                <!-- alarm type (setting) -->
 
-    <string name="configLabel_alarmEdit_scheduleTray">Schedule:</string>               <!-- group title -->  <!-- TODO -->
-    <string name="configLabel_alarmEdit_onAlertTray">On Alert:</string>               <!-- group title -->  <!-- TODO -->
-    <string name="configLabel_alarmEdit_onDismissTray">On Dismiss:</string>               <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_alarmEdit_scheduleTray">Planificació:</string>               <!-- group title -->  
+    <string name="configLabel_alarmEdit_onAlertTray">Al activar-se:</string>               <!-- group title -->  
+    <string name="configLabel_alarmEdit_onDismissTray">Al rebutjar:</string>               <!-- group title -->  
 
     <string name="alarmOption_vibrate">Vibrar</string>                <!-- checkbox text -->
     <string name="alarmOption_ringtone_none">Sense so</string>          <!-- ringtone label (none) -->  
-    <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
+    <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icona]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
     <string name="alarmOption_solarevent_none">Rellotge</string>          <!-- ringtone label (none) -->  
 
-    <string name="alarmOption_repeat">Repeteix</string>                <!-- checkbox text; an alarm that repeats -->  
-    <string name="alarmOption_repeat_none">No repeteixis</string>         <!-- label text; an alarm that does not repeat (occurs once) -->  
-    <string name="alarmOption_repeat_all">Cada dia</string>         <!-- label text; an alarm that repeats every day -->  
+    <string name="alarmOption_repeat">Amb repetició</string>                <!-- checkbox text; an alarm that repeats -->  
+    <string name="alarmOption_repeat_none">Sense repetició</string>         <!-- label text; an alarm that does not repeat (occurs once) -->  
+    <string name="alarmOption_repeat_all">Diària</string>         <!-- label text; an alarm that repeats every day -->  
 
     <string name="deletealarm_dialog_title">Esborra</string>        <!-- dialog title -->  
-    <string name="deletealarm_dialog_message">Estàs segur de voler esborrar <xliff:g id="type">%1$s</xliff:g> de les <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg --> 
+    <string name="deletealarm_dialog_message">Estàs segur d\'esborrar <xliff:g id="type">%1$s</xliff:g> de les <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg --> 
     <string name="deletealarm_dialog_ok">Esborra</string>        <!-- button --> 
-    <string name="deletealarm_dialog_cancel">Canceŀlar</string>    <!-- button -->
+    <string name="deletealarm_dialog_cancel">Canceŀla</string>    <!-- button -->
     <string name="deletealarm_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> de les <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) s\'ha esborrat.</string> <!-- toast msg -->
 
-    <string name="discardchanges_dialog_message">There are unsaved changes.</string>      <!-- dialog message -->  <!-- TODO -->
-    <string name="discardchanges_dialog_ok">Discard</string>                              <!-- button -->  <!-- TODO -->
+    <string name="discardchanges_dialog_message">Hi ha canvis sense desar.</string>      <!-- dialog message -->  
+    <string name="discardchanges_dialog_ok">Descartar</string>                              <!-- button -->  
     <string name="discardchanges_dialog_cancel">Canceŀlar</string>                           <!-- button -->
     <string name="discardchanges_dialog_neutral">Guardar</string>                            <!-- button -->
 
     <string name="clearalarms_dialog_title">Elimina les alarmes</string>        <!-- dialog title -->  
     <string name="clearalarms_dialog_message">Estàs segur de voler esborrar totes les alarmes?</string>   <!-- dialog msg --> 
     <string name="clearalarms_dialog_ok">Esborra</string>        <!-- button --> 
-    <string name="clearalarms_dialog_cancel">Canceŀlar</string>    <!-- button -->
+    <string name="clearalarms_dialog_cancel">Canceŀla</string>    <!-- button -->
     <string name="clearalarms_toast_success">Alarmes esborrades.</string> <!-- toast msg --> 
 
     <string name="alarmlabel_dialog_title">Etiqueta</string>        <!-- dialog title -->  
     <string name="alarmlabel_dialog_ok">Aplica</string>        <!-- button --> 
-    <string name="alarmlabel_dialog_cancel">Canceŀlar</string>    <!-- button -->
+    <string name="alarmlabel_dialog_cancel">Canceŀla</string>    <!-- button -->
     <string name="alarmlabel_hint">Etiqueta</string>        <!-- EditText hint -->
 
     <string name="alarmrepeat_dialog_title">Repeteix l\'alarma</string>        <!-- dialog title -->  
     <string name="alarmrepeat_dialog_ok">Aplica</string>        <!-- button --> 
-    <string name="alarmrepeat_dialog_cancel">Canceŀlar</string>    <!-- button -->
+    <string name="alarmrepeat_dialog_cancel">Canceŀla</string>    <!-- button -->
 
     <string name="alarmtime_dialog_title">Hora de l\'alarma</string>        <!-- dialog title -->  
     <string name="alarmtime_dialog_ok">Modifica</string>        <!-- button --> 
-    <string name="alarmtime_dialog_cancel">Canceŀlar</string>    <!-- button -->
-    <string name="alarmtime_dialog_message">Modificar l\'hora de l\'alarma?\n\nAquesta alarma ja no estarà planificada per events astronòmics.</string>   <!-- dialog msg --> 
+    <string name="alarmtime_dialog_cancel">Canceŀla</string>    <!-- button -->
+    <string name="alarmtime_dialog_message">Modificar l\'hora de l\'alarma?\n\nAquesta alarma ja no estarà planificada per a events astronòmics.</string>   <!-- dialog msg --> 
 
     <string name="alarmoffset_dialog_title">Retard de l\'alarma</string>        <!-- dialog title -->  
     <string name="alarmoffset_dialog_ok">Aplica</string>        <!-- button --> 
-    <string name="alarmoffset_dialog_cancel">Canceŀlar</string>    <!-- button -->
+    <string name="alarmoffset_dialog_cancel">Canceŀla</string>    <!-- button -->
 
-    <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> posada per a dintre de <xliff:g id="duration" example="8h">%2$s</xliff:g>.</string> <!-- toast msg --> 
+    <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> Fixada per a dintre de <xliff:g id="duration" example="8h">%2$s</xliff:g>.</string> <!-- toast msg --> 
 
     <string name="configLabel_alarms_optWhiteList">Optimització de bateria</string>  
     <string name="configLabel_alarms_optWhiteList_listed">Sense optimitzar (recomanat)</string>  
@@ -763,9 +763,9 @@
     <string name="configLabel_alarms_upcoming">Recordatori previ</string>
     <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_fadein">Gradually increase volume</string>  <!-- TODO -->
+    <string name="configLabel_alarms_fadein">Incrementar el volum gradualment</string>  
     <!--<string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>-->
-    <string name="configLabel_alarms_fadein_disabled">Off</string>  <!-- TODO -->
+    <string name="configLabel_alarms_fadein_disabled">Apagat</string>  
 
     <string name="configLabel_alarms_hardwarebuttons">Botons físics</string>  
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>  
@@ -778,7 +778,7 @@
 
     <string name="configLabel_alarmSounds">Sons</string>            <!-- group title -->
     <string name="configLabel_alarms_volumes">Volums</string>
-    <string name="configLabel_alarms_allRingtones">Mostra tots els tons de trucada</string>  
+    <string name="configLabel_alarms_allRingtones">Mostra tots els sons de trucada</string>  
     <string name="configLabel_alarms_allRingtones_summary">Mostra tots els sons del sistema durant la selecció (ignora el tipus de to de trucada).</string>  
 
     <string name="no_reminder">Mai</string> 
@@ -817,20 +817,20 @@
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">Llocs</string>                           <!-- group title -->
-    <string name="configLabel_places_manage">Manage Places</string>             <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_places_manage">Gestionar llocs</string>             <!-- group title -->  
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
     <string name="configLabel_places_build">Afegir llocs del món</string>
     <string name="configLabel_places_build_summary">Cerca locals i afegeix ciutats a la base de dades.</string>
 
     <plurals name="placePlural">
-        <item quantity="one">%d place</item>
-        <item quantity="other">%d places</item>
-    </plurals>  <!-- TODO -->
+        <item quantity="one">%d lloc</item>
+        <item quantity="other">%d llocs</item>
+    </plurals>  
 
     <string name="configAction_addPlace">Afegir</string>              <!-- button (contentDescription) -->
     <string name="configAction_copyPlace">Copiar</string>            <!-- button (contentDescription) -->
     <string name="configAction_selectPlace">Seleccionar</string>        <!-- button (contentDescription) -->
-    <string name="configAction_searchPlace">Search</string>              <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_searchPlace">Search</string>              <!-- button (contentDescription) -->  
     <string name="configAction_sharePlace">Compartir</string>          <!-- button (contentDescription) -->
     <string name="configAction_deletePlace">Elimina</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Elimina tot</string>         <!-- button (contentDescription) -->
@@ -838,8 +838,8 @@
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interfície d\'usuari</string>                       <!-- group title -->
-    <string name="configLabel_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->   <!-- TODO -->
-    <string name="configLabel_ui_misc">Miscellaneous</string>   <!-- TODO -->
+    <string name="configLabel_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->   
+    <string name="configLabel_ui_misc">Misceŀlani</string>   
 
     <!-- App Setting: Verbose Accessibility -->
     <string name="configLabel_accessibility_verbose">Retroalimentació detallada</string>
@@ -900,22 +900,22 @@
     <string name="configActionDesc_doNothing">No fer res</string>
     <string name="configActionDesc_nextNote">Mostrar nota següent</string>
     <string name="configActionDesc_prevNote">Mostrar nota anterior</string>
-    <string name="configActionDesc_resetNote">Reset note</string>  <!-- TODO -->
+    <string name="configActionDesc_resetNote">Restableix la nota</string>  
     <string name="configActionDesc_showCalendar">Mostra aplicació de calendari</string>
-    <string name="configActionDesc_mapLocation">Show location on map</string>  <!-- TODO -->
-    <string name="configActionDesc_setAlarm">Set an alarm</string>  <!-- TODO -->
-    <string name="configActionDesc_worldMap">World Map Dialog</string>  <!-- TODO -->
-    <string name="configActionDesc_equinoxDialog">Solstices Dialog</string>  <!-- TODO -->
-    <string name="configActionDesc_moon">Moon Dialog</string>  <!-- TODO -->
-    <string name="configActionDesc_sunDialog">Sun Dialog</string>  <!-- TODO -->
-    <string name="configActionDesc_setDate">Set date</string>  <!-- TODO -->
-    <string name="configActionDesc_setTimeZone">Set time zone</string>  <!-- TODO -->
-    <string name="configActionDesc_setLocation">Set location</string>  <!-- TODO -->
+    <string name="configActionDesc_mapLocation">Mostra localització al mapa</string>  
+    <string name="configActionDesc_setAlarm">Estableix una alarma</string>  
+    <string name="configActionDesc_worldMap">Diàleg del mapa mundial</string>  
+    <string name="configActionDesc_equinoxDialog">Diàleg dels solsticis</string>  
+    <string name="configActionDesc_moon">Diàleg de la Lluna</string>  
+    <string name="configActionDesc_sunDialog">Diàleg del Sol</string>  
+    <string name="configActionDesc_setDate">Estableix data</string>  
+    <string name="configActionDesc_setTimeZone">Estableix zona horària</string>  
+    <string name="configActionDesc_setLocation">Estableix localització</string>  
     <string name="configActionDesc_swapCards">Intercanviar targetes (avui/demà)</string>
     <string name="configActionDesc_setAlarmForNote">Posar una alarma a la nota</string>
 
     <!-- App Setting: time zone sort modes -->
-    <string name="timezone_sort_byOffset">per desfase</string>
+    <string name="timezone_sort_byOffset">per desplaçament</string>
     <string name="timezone_sort_byId">per id</string>
     <string name="timezone_sort_byName">per nombre</string>
 
@@ -929,8 +929,8 @@
     <string name="timezone_sort_msg">Zones horàries ordenades (%1$s).</string>      <!-- toast msg -->
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">Límit de temps d\'intent de posicionament amb GPS</string>
-    <string name="configLabel_getFix_maxElapse_summary">Abandonar rere <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
+    <string name="configLabel_getFix_maxElapse">Termini per obtenir posició amb GPS</string>
+    <string name="configLabel_getFix_maxElapse_summary">Intentar durant <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
     <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
         <item>15 segons</item>
         <item>30 segons</item>
@@ -940,10 +940,10 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">Límit d\'antiguitat de la posició GPS</string>
-    <string name="configLabel_getFix_maxAge_summary">Límit de <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
+    <string name="configLabel_getFix_maxAge">Antiguitat de la posició GPS</string>
+    <string name="configLabel_getFix_maxAge_summary">Actualitzar al cap de <xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g></string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
-        <item>none</item>  <!-- TODO -->
+        <item>mai</item>  
         <item>1 minut</item>
         <item>5 minuts</item>
         <item>15 minuts</item>
@@ -954,7 +954,7 @@
         <item>dos dies (48 hores)</item>
         <item>una setmana (168 hores)</item>
         <item>un mes (672 hores)</item>
-        <item>any age</item>  <!-- TODO -->
+        <item>qualsevol moment</item>  
     </string-array>
 
     <!-- App Setting: calendars -->
@@ -991,8 +991,8 @@
         <item>Basc</item>
         <item>Noruec</item>
         <item>Xinès tradicional</item>
-        <item>Portuguès</item>  <!-- TODO -->
-        <item>Russian</item>  <!-- TODO -->
+        <item>Portuguès</item>  
+        <item>Rus</item>  
     </string-array>
 
     <!-- position formats -->
@@ -1049,32 +1049,32 @@
 
     <!-- Dialog: World Map -->
     <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
-    <string name="worldmap_dialog_action_play">Play</string>       <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="worldmap_dialog_action_pause">Pause</string>     <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="worldmap_dialog_action_record">Record</string>   <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="worldmap_dialog_action_next">Next</string>       <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="worldmap_dialog_action_prev">Previous</string>   <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="worldmap_dialog_action_reset">Reset</string>     <!-- button (contentDescription) --> <!-- TODO -->
-    <string name="worldmap_dialog_action_menu">Options</string>       <!-- button (contentDescription) --> <!-- TODO -->
+    <string name="worldmap_dialog_action_play">Reproduïr</string>       <!-- button (contentDescription) --> 
+    <string name="worldmap_dialog_action_pause">Pausar</string>     <!-- button (contentDescription) --> 
+    <string name="worldmap_dialog_action_record">Enrregistrar</string>   <!-- button (contentDescription) --> 
+    <string name="worldmap_dialog_action_next">Següent</string>       <!-- button (contentDescription) --> 
+    <string name="worldmap_dialog_action_prev">Anterior</string>   <!-- button (contentDescription) --> 
+    <string name="worldmap_dialog_action_reset">Restablir</string>     <!-- button (contentDescription) --> 
+    <string name="worldmap_dialog_action_menu">Opcions</string>       <!-- button (contentDescription) --> 
     <string name="worldmap_dialog_option_sunlight">Llum solar</string>
     <string name="worldmap_dialog_option_moonlight">Llum lunar</string>
     <string name="worldmap_dialog_option_all">Ambdòs</string>
-    <string name="worldmap_dialog_option_location">Location</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_latitudes">Latitudes</string>    <!-- TODO -->
-    <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- TODO -->
-    <string name="worldmap_dialog_speed_1d">&#215; 1d</string>    <!-- TODO -->
-    <string name="configAction_shareMap">Comparteix</string>   <!-- button (contentDescription) -->  <!-- export (share) -->  
+    <string name="worldmap_dialog_option_location">Localització</string>    
+    <string name="worldmap_dialog_option_latitudes">Latituds</string>    
+    <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    
+    <string name="worldmap_dialog_speed_1d">&#215; 1d</string>    
+    <string name="configAction_shareMap">Compartir</string>   <!-- button (contentDescription) -->  <!-- export (share) -->  
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Planificar alarma per a</string>
     <string name="configLabel_schednotify_mode">Planificar una notificació per a</string>
-    <string name="schedalarm_dialog_title">Posar alarma</string>
-    <string name="schedalarm_dialog_tab_event">Event</string>                      <!-- tab text -->  <!-- TODO -->
-    <string name="schedalarm_dialog_tab_time">Time</string>                        <!-- tab text -->  <!-- TODO -->
-    <string name="schedalarm_dialog_ok">Posar alarma</string>
-    <string name="schedalarm_dialog_cancel">Canceŀlar</string>
-    <string name="schedalarm_dialog_error">No es va configurar l\'alarma</string>
-    <string name="schedalarm_dialog_error2">L\'alarma no és pot configurar…</string>
+    <string name="schedalarm_dialog_title">Establir alarma</string>
+    <string name="schedalarm_dialog_tab_event">Event</string>                      <!-- tab text -->  
+    <string name="schedalarm_dialog_tab_time">Data</string>                        <!-- tab text -->  
+    <string name="schedalarm_dialog_ok">D\'acord</string>
+    <string name="schedalarm_dialog_cancel">Canceŀla</string>
+    <string name="schedalarm_dialog_error">No es va establir l\'alarma</string>
+    <string name="schedalarm_dialog_error2">L\'alarma no és pot establir…</string>
     <string name="schedalarm_dialog_note">En <xliff:g id="timetext" example="6h 30m">%s</xliff:g>, aproximadament.</string>
     <string name="schedalarm_dialog_note1">~<xliff:g id="timetext" example="6h 30m">%s</xliff:g>, aproximadament.</string>
     <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g> no succeïx.</string>
@@ -1105,8 +1105,8 @@
         <item>solstici d\'estiu</item>
         <item>equinocci de tardor</item>
         <item>solstici d\'hivern</item>
-        <item>lunar noon</item>    <!-- TODO -->
-        <item>lunar midnight</item>    <!-- TODO -->
+        <item>Migdia lunar</item>    
+        <item>Mitjanit lunar</item>    
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
         <item>sortida de sol astronòmica</item>
@@ -1134,8 +1134,8 @@
         <item>solstici d\'estiu</item>
         <item>equinocci de tardor</item>
         <item>solstici d\'hivern</item>
-        <item>lunar noon</item>    <!-- TODO -->
-        <item>lunar midnight</item>    <!-- TODO -->
+        <item>Migdia lunar</item>    
+        <item>Mitjanit lunar</item>    
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
@@ -1147,15 +1147,15 @@
     <string name="gps_lastfix_title_set">Configurar posició</string>               <!-- may appear as place name when location set by intent -->
     <string name="gps_lastfix_title_found">Última posició</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">Obtenint posició</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">El GPS no va poder obtenir posició; utilizant l\'última posició coneguda.</string>  <!-- displayed briefly after gps has failed to get a location -->
-    <string name="gps_lastfix_toast_cancelled">Actualizació de GPS cancel·lada.</string> <!-- displayed briefly when gps refresh cancelled -->
+    <string name="gps_lastfix_toast_notfound">Posició no trobada; utilizant l\'última posició coneguda.</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="gps_lastfix_toast_cancelled">Actualizació de GPS canceŀlada.</string> <!-- displayed briefly when gps refresh cancelled -->
 
     <!-- Dialog: KeepTrying GPS? -->
     <string name="gps_keeptrying_title">Sense posició</string>
     <string name="gps_keeptrying_msg">Incapaç d\'obtenir posició</string>
     <string name="gps_keeptrying_ok">Segueix intentant</string>
     <string name="gps_keeptrying_cancel">Abandonar</string>
-    <string name="gps_keeptrying_fallback">Use Last Position</string>  <!-- TODO -->
+    <string name="gps_keeptrying_fallback">Utilitza última posició coneguda</string>  
 
     <!-- Dialog: Use Date -->
     <string name="timedate_dialog_title">Configurar data</string>
@@ -1174,31 +1174,31 @@
     <string name="location_dialog_error_lat">No és una latitud vàlida.</string>
     <string name="location_dialog_error_lon">No és una longitud vàlida.</string>
     <string name="location_dialog_error_alt">No és una elevació vàlida.</string>
-    <string name="location_dialog_error_name">Enter a place name.</string>  <!-- TODO -->
+    <string name="location_dialog_error_name">Introdueix un nom de lloc.</string>  
 
     <string name="location_dialog_toast_copied">Copiada al porta-retalls<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
 
     <!-- Dialog: Delete Place -->
-    <string name="locationdelete_dialog_title">Remove Place?</string>   <!-- title; remove 1 place --> <!-- TODO -->
-    <string name="locationdelete_dialog_title1">Remove Places?</string>  <!-- title; remove multiple places --> <!-- TODO -->
-    <string name="locationdelete_dialog_message">Are you sure you want to remove %s?</string>   <!-- TODO -->
+    <string name="locationdelete_dialog_title">Eliminar lloc?</string>   <!-- title; remove 1 place --> 
+    <string name="locationdelete_dialog_title1">Eliminar llocs?</string>  <!-- title; remove multiple places --> 
+    <string name="locationdelete_dialog_message">Estàs segur de voler eliminar %s?</string>   
     <plurals name="locationdelete_dialog_success">
-        <item quantity="one">Place was removed.</item>
-        <item quantity="other">%d places were removed.</item>
-    </plurals>  <!-- TODO -->
-    <string name="locationdelete_dialog_ok">Remove</string>  <!-- TODO -->
+        <item quantity="one">El lloc s\'ha eliminat.</item>
+        <item quantity="other">%d llocs s\'han eliminat.</item>
+    </plurals>  
+    <string name="locationdelete_dialog_ok">Eliminar</string>  
     <string name="locationdelete_dialog_cancel">Canceŀlar</string>
 
     <!-- Dialog: Clear Places -->
-    <string name="locationclear_dialog_title">Netejar llocs?</string>
-    <string name="locationclear_dialog_message">Estàs segur de voler esborrar la base de dades de llocs?</string>
-    <string name="locationclear_dialog_ok">Esborrar</string>
+    <string name="locationclear_dialog_title">Buidar llocs?</string>
+    <string name="locationclear_dialog_message">Estàs segur de voler buidar la base de dades de llocs?</string>
+    <string name="locationclear_dialog_ok">Buidar</string>
     <string name="locationclear_dialog_cancel">Canceŀlar</string>
 
     <!-- Dialog: Clear Places (progress) -->
-    <string name="locationcleared_dialog_title">Esborrant llocs</string>
-    <string name="locationcleared_dialog_message">Esborrant base de dades…</string>
-    <string name="locationcleared_toast_success">La base de dades de llocs s\'ha esborrat.</string>
+    <string name="locationcleared_dialog_title">Buidant llocs</string>
+    <string name="locationcleared_dialog_message">Buidant base de dades…</string>
+    <string name="locationcleared_toast_success">La base de dades de llocs s\'ha buidat.</string>
 
     <!-- Dialog: Build Places List (progress) -->
     <string name="locationbuild_dialog_title">Construint base de dades</string>
@@ -1207,7 +1207,7 @@
 
     <!-- Dialog: export Places -->
     <string name="locationexport_dialog_title">Exportant llocs</string>
-    <string name="locationexport_dialog_message">Exportant base de dades a un arxiu csv.</string>
+    <string name="locationexport_dialog_message">Exportant base de dades a un arxiu CSV.</string>
 
     <!-- Dialog: export Themes -->
     <string name="themesexport_dialog_title">Exportant temes</string>
@@ -1235,14 +1235,14 @@
     <string name="color_dialog_msg">Escollir color</string>
     <string name="color_dialog_ok">Seleccionar</string>
     <string name="color_dialog_cancel">Canceŀlar</string>
-    <string name="color_dialog_tab1">1</string>  <!-- TODO -->
-    <string name="color_dialog_tab2">2</string>  <!-- TODO -->
-    <string name="color_dialog_tab3">3</string>  <!-- TODO -->
-    <string name="color_dialog_label_r">R</string>  <!-- TODO -->
-    <string name="color_dialog_label_g">G</string>  <!-- TODO -->
-    <string name="color_dialog_label_b">B</string>  <!-- TODO -->
-    <string name="color_dialog_label_a">A</string>  <!-- TODO -->
-    <string name="color_dialog_hint_rgba">0–255</string>  <!-- TODO -->
+    <string name="color_dialog_tab1">1</string>  
+    <string name="color_dialog_tab2">2</string>  
+    <string name="color_dialog_tab3">3</string>  
+    <string name="color_dialog_label_r">R</string>  
+    <string name="color_dialog_label_g">G</string>  
+    <string name="color_dialog_label_b">B</string>  
+    <string name="color_dialog_label_a">A</string>  
+    <string name="color_dialog_hint_rgba">0–255</string>  
     <!--<string name="color_dialog_hint_hex">#FFFFFF</string>-->
 
     <!-- Dialog: About -->
@@ -1271,7 +1271,7 @@
     <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> per <xliff:g id="authorList">%2$s</xliff:g>.]]></string>   <!-- TODO: review -->
     <!--<string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>-->  <!-- e.g. "name1, name2, name3, ..." -->
     <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, i <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->   <!-- TODO: review -->
-    <string name="creditsTab">Credits</string>   <!-- TODO -->
+    <string name="creditsTab">Crèdits</string>   
     
     <string name="app_legal3"><![CDATA[ <b>Biblioteques:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
 
@@ -1324,9 +1324,9 @@
       <b>solstici d\'hivern:</b> TODO.<br/>
 ]]></string>
     <string name="help_general_riseSetOrder"><![CDATA[
-          <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
-          <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
-    ]]></string>  <!-- TODO -->
+          <b>Today:</b> Events de sortida i posta per a la data d\'avui.<br/><br/>
+          <b>Last / Next:</b> L\'hora de l\'últim event, i del pròxim event.<br/>
+    ]]></string>  
     <string name="help_general_daylength"><![CDATA[
     <b>Duració del dia:</b> la quantitat de temps entre la sortida i la posta de Sol.<br/><br/>
     <b>Llum usable:</b> la quantitat de temps entre el crepuscle civil diürn i el nocturn.</br>
@@ -1342,7 +1342,7 @@
         <b>Hora blava:</b> El Sol està entre 8 i 4 graus per sota de l\'horitzó. L\'inici i final de l\'hora blava està entre el crepuscle nàutic i civil.<br/>
     ]]></string>
     <string name="help_action_launch"><![CDATA[
-    El nom qualificat de la classe de la Activitat a ser llençada.<br/>
+    El nom qualificat de la classe de l\'activitat a ser llençada.<br/>
 ]]></string>
     <string name="help_widgetlist"><![CDATA[
       Per <b>afegir un giny</b> has d\'anar a l\'escriptori.<br/><br/>
@@ -1365,11 +1365,11 @@
     <string name="privacy_policy"><![CDATA[<b>Privadesa:</b><br/>Suntimes no coŀlecta, emmagatzema, o transmet dades personals. <b>No contè anuncis</b>, <b>càlculs estadístics</b>, <b>rastrejadors</b>, i <b>no utilitza permissos innecessaris</b>. <br/><br/>L\'aplicació es configura amb dades de localització. Aquesta informació (i qualsevol altra dada configurada emprada per l\'aplicació) s\'emmagatzema localment i no surt del dispositiu.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes utilitza el permís de <b>localització</b> per determinar la teva longitud i latitud.<br/><br/>Aquest permís és opcional; la localització es configura manualment per defecte.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes utilitza el permís d\'<b>emmagatzematge extern</b> per fer una còpia de seguretat o exportar dades a un arxiu (p. ex. llocs, temes).]]></string>
-    <string name="privacy_permission_storage1"><![CDATA[Alarmes Suntimes utilitza el permís d\'<b>emmagatzematge extern</b> per reproduïr sons localitzats en la targeta SD.<br/><br/> Aquest permís és opcional; es reproduirà el so predeterminat si l\'accès és denegat. Aquest permís no és un requisit per als sons del sistema (emmagatzematge multimèdia).]]></string>    <!-- TODO -->
+    <string name="privacy_permission_storage1"><![CDATA[Alarmes Suntimes utilitza el permís d\'<b>emmagatzematge extern</b> per reproduïr sons localitzats en la targeta SD.<br/><br/> Aquest permís és opcional; es reproduirà el so predeterminat si l\'accès és denegat. Aquest permís no és un requisit per als sons del sistema (emmagatzematge multimèdia).]]></string>    
     <string name="privacy_permissiondialog_prompt"><![CDATA[Demanar permisos ara?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignorar</string>
     <string name="privacy_permissiondialog_title">Permisos</string>
-    <string name="privacyTab">Privacy</string>   <!-- TODO -->
+    <string name="privacyTab">Privacitat</string>   
 
     <string name="security_dialog_title">Alerta de seguretat</string>  
     <string name="security_duplicate_permissions">Un permís que pertany a Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\ntambé està definit per: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  
@@ -1377,7 +1377,7 @@
     <string name="feature_not_supported_by_source">Aquesta caracteristica no està suportada per la font de dades actual.</string>
     <string name="reboot_required_message">És possible que es necessiti reiniciar per fer efectius els canvis.</string>
 
-    <string name="dialog_ok">OK</string>  <!-- TODO -->
+    <string name="dialog_ok">D\'acord</string>  
     <string name="dialog_cancel">Canceŀlar</string>
 
     <!-- calculator implementations -->
