@@ -165,13 +165,14 @@ German translation by <u>Henrik "HerHde" Hüttemann</u>, <u>Wolkenschieber</u>, 
 Polish and Esperanto translations by <u>Verdulo</u>.<br/>
 French translation by <u>Jej</u> and <u>Aloha</u>.<br/>
 Hungarian translation by <u>Erci</u>.<br/>
-Catalan and Spanish translations by <u><a href="https://github.com/Raulvo">Raulvo</a></u>.<br/>
+Catalan and Spanish translations by <u><a href="https://github.com/Raulvo">Raulvo</a></u> and <u><a href=https://github.com/gnusuari0>gnusuari0</a></u>.<br/>
 Basque translation by <u>beriain</u>.<br/>
 Norwegian translation by <u>FTno</u>.<br/>
 Italian translation by <u>Matteo Caoduro</u>.<br/>
 Traditional Chinese translation by <u><a href=https://github.com/pggdt>ft42</a></u>.<br />
 Brazilian Portuguese translation by <u><a href=https://github.com/netosilva15>NetoSilva</a></u>, <u>Nelson A. de Oliveira</u>, and <u>Enrico S. B. Fraletti</u>.<br />
 Russian translation by <u><a href=https://github.com/rchintsov>Ruslan Chintsov</a></u>.<br />
+Dutch translation by <u><a href=https://github.com/joppla>Joppla</a></u>.<br />
 
 [Contributions to the project](CONTRIBUTING.md) are welcome.
 
