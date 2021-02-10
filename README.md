@@ -43,7 +43,7 @@ The app:
 
 Widgets are (re)configurable:
 * location (latitude, longitude, elevation).
-* time zone (system / custom), or solar time (local mean time, apparent solar time).
+* time zone (system / custom), sidereal time (lmst, gmst), or solar time (local mean time, apparent solar time).
 * user-defined titles (supporting limited substitutions).
 * misc. options: "use elevation", "show seconds", "show noon", and "show comparison", etc.
 
