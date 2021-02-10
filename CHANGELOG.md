@@ -1,10 +1,10 @@
 ### ~
 
 ### v0.13.8 (2021-02-09)
+* adds translation to Dutch (nl) (contributed by Joppla) (#474, #480).
+* updates translation to Catalan (ca) and Spanish (es) (contributed by gnusuari0) (#478, #479).
 * improves alarm sound selection; adds menu: "No Sound", "Ringtone", "Audio File".
 * removes READ_EXTERNAL_STORAGE permission (api≥19) (#473); alarm sounds now use persistent URI permissions instead. [PERMISSION]
-* adds translation to Dutch (nl) (contributed by Joppla) (#474).
-* updates translation to Catalan (ca) and Spanish (es) (contributed by gnusuari0) (#478, #479).
 
 ### v0.13.7 (2021-01-26)
 * fixes bug "alarm vibration stops after screen is off" (#470).
