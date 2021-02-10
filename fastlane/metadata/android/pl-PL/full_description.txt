@@ -7,6 +7,7 @@ Aplikacja korzysta z następujących uprawnień
 <li><small><u>BOOT_COMPLETED</u></small> jest używany do przywracania alarmów po restarcie.</li>
 <li><small><u>SET_ALARM</u></small> jest używany do planowania alarmów prze aplikację „Czasy Słońca: alarmy”.</li>
 <li><small><u>VIBRATE</u></small> jest używany przez powiadomienia alarmów.</li>
+<li><small><u>READ_EXTERNAL_STORAGE</u> </small> is used to play alarm sounds located on the SD card <small>(api&le;=18 only)</small></li>.
 <li><small><u>WRITE_EXTERNAL_STORAGE</u></small> jest używany do tworzenia kopii zapasowej danych (miejsc, skórek, itp.) do pliku <small>(tylko API≤18)</small>.</li>
 </ul>
 <p>Uwaga: integracja z kalendarzem i uprawnienia dodane do wersji v0.9.0 zostały usunięte w v0.10.0. Ta funkcja jest teraz dostępna jako oddzielna aplikacja: <a href="https://f-droid.org/pl/packages/com.forrestguice.suntimescalendars">Czasy Słońca: kalendarz</a> (Suntimes Calendars).</p>
