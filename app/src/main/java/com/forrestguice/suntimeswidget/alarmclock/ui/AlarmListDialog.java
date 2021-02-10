@@ -503,6 +503,7 @@ public class AlarmListDialog extends DialogFragment
 
                 cursor.moveToNext();
             }
+            db.releaseUnusedUriPermissions(contextRef.get());
             db.close();
             return items;
         }
