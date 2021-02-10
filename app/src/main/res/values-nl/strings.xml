@@ -112,7 +112,7 @@
     <string name="length_delimiter">|</string>
 
     <!-- Field: moon illumination (as seen in moon widget) -->
-    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> illuminated</string>  <!-- used in 2x1 widget -->
+    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> verlicht</string>  <!-- used in 2x1 widget -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- used in 1x1 widget -->
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
@@ -132,7 +132,7 @@
          The relative order is defined by the layout (layout/info_time_note.xml).
     -->
     <string name="since"></string>
-    <string name="until">until</string>
+    <string name="until">tot</string>
     <string name="until_end">tot einde</string>
 
     <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. the time component is shown on the next line -->
@@ -169,8 +169,8 @@
     <string name="untilEnd_bluehour">blauwe uur</string>
     <string name="until_moonrise">Maanopkomst</string>
     <string name="until_moonset">Maansondergang</string>
-    <string name="until_moonnoon">lunar noon</string>
-    <string name="until_moonnight">lunar midnight</string>
+    <string name="until_moonnoon">maansnoen</string>
+    <string name="until_moonnight">maansmiddernacht</string>
 
     <!-- Table -->
     <string name="sunrise">Zonsopgang</string>                             <!-- contentDescription -->
@@ -191,11 +191,11 @@
     <string name="delta_minutes">m</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
 
-    <string name="hence"><xliff:g id="timeSpan">%1$s</xliff:g>  from now</string>  <!-- e.g. 15d 23h from now -->
-    <string name="ago"><xliff:g id="timeSpan">%1$s</xliff:g>  ago</string>         <!-- e.g. 1y 15d 12h ago -->
+    <string name="hence"><xliff:g id="timeSpan">%1$s</xliff:g>  vanaf nu</string>  <!-- e.g. 15d 23h from now -->
+    <string name="ago"><xliff:g id="timeSpan">%1$s</xliff:g>  geleden</string>         <!-- e.g. 1y 15d 12h ago -->
 
     <!-- misc time values: might be displayed in a timeField in place of an actual time -->
-    <string name="time_none">none</string>  <!-- no time / time does not occur -->
+    <string name="time_none">geen</string>  <!-- no time / time does not occur -->
     <string name="time_loading">…</string>  <!-- calculating / time is loading -->
     <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
     <string name="time_format_12hr_veryshort_withseconds"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- shortest 12hr time format (w/ seconds); should omit am/pm -->
@@ -217,8 +217,8 @@
     <string name="location_format_latlonalt"><xliff:g id="latlon">%1$s</xliff:g> <xliff:g id="altitudeTag">%2$s</xliff:g></string>        <!-- latitude, longitude [altitude] -->
 
     <!-- distances (meters, feet, etc) -->
-    <string name="lengthUnits_metric">Metric</string>
-    <string name="lengthUnits_imperial">Imperial</string>
+    <string name="lengthUnits_metric">Metrisch</string>
+    <string name="lengthUnits_imperial">Brits-Amerikaans</string>
     <string-array name="lengthUnits_display"> <!-- one-to-one with lengthUnits_values -->
         <item>@string/lengthUnits_metric</item>
         <item>@string/lengthUnits_imperial</item>
@@ -256,56 +256,56 @@
          WIDGET CONFIG
     -->
 
-    <string name="configAction_restoreDefaults">Restore Defaults</string>   <!-- button / menu text -->
+    <string name="configAction_restoreDefaults">Herstel standaardinstellingen</string>   <!-- button / menu text -->
 
-    <string name="configLabel_tagDefault">[default]</string>
+    <string name="configLabel_tagDefault">[standaard]</string>
     <string name="configLabel_tagPlugin">[plugin]</string>
     <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
 
     <!-- WidgetConfig Activity -->
-    <string name="configAction_addWidget">Add Widget</string>                   <!-- Button: Add -->
-    <string name="configAction_reconfigWidget_short">Reconfigure</string>       <!-- Button: Reconfigure -->
-    <string name="configAction_reconfigWidget">Reconfigure Widget</string>      <!-- used as title when reconfiguring -->
+    <string name="configAction_addWidget">Invoegen Widget</string>                   <!-- Button: Add -->
+    <string name="configAction_reconfigWidget_short">Herconfigureer</string>       <!-- Button: Reconfigure -->
+    <string name="configAction_reconfigWidget">Herconfigureer Widget</string>      <!-- used as title when reconfiguring -->
     <string name="configLabel_title0">@string/app_name_widget0</string>         <!-- used as title when adding -->
-    <string name="configLabel_title1">Flippable Widget</string>                 <!-- used as title when adding -->
+    <string name="configLabel_title1">Draaibare Widget</string>                 <!-- used as title when adding -->
     <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->
     <string name="configLabel_clockwidget0">@string/app_name_clockwidget0</string>                  <!-- used as title when adding -->
     <string name="configLabel_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding -->
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">General Settings</string>                <!-- group title -->
-    <string name="configLabel_general_calculator">Data Source:</string>         <!-- spinner label -->
-    <string name="configLabel_general_calculator_sun">Sun Data Source</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_moon">Moon Data Source</string>         <!-- preference label -->
+    <string name="configLabel_general">Algemene Instellingen</string>                <!-- group title -->
+    <string name="configLabel_general_calculator">Databron:</string>         <!-- spinner label -->
+    <string name="configLabel_general_calculator_sun">Databron Zon</string>         <!-- preference label -->
+    <string name="configLabel_general_calculator_moon">Databron Maan</string>         <!-- preference label -->
 
-    <string name="configLabel_general_timeFormatMode">Time Format:</string>         <!-- spinner label -->
+    <string name="configLabel_general_timeFormatMode">Tijd formaat:</string>         <!-- spinner label -->
 
-    <string name="configLabel_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label -->
-    <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label -->
+    <string name="configLabel_general_altitude_enabled">Gebruik hoogte</string>        <!-- checkbox label -->
+    <string name="configLabel_general_altitude_enabled_summary">Pas op hoogte gebaseerde verfijningen toe.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->
+    <string name="configLabel_general_lengthUnits">Eenheid van lengte</string>        <!-- spinner label -->
 
-    <string name="configLabel_general_showSeconds">Show Seconds</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showSeconds_summary">Include seconds when displaying times.</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showSeconds">Toon seconden</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showSeconds_summary">Voeg seconden toe bij het weergeven van tijden.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showTimeDate">Show Time (with dates)</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showTimeDate_summary">Include the time when displaying dates.</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showTimeDate">Toon tijd (mat datum)</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showTimeDate_summary">Voeg de tijd toe bij het weergeven van datums.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showWeeks">Show Weeks</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showWeeks_summary">Divide time spans greater than 7 days into weeks (e.g. 15d becomes 2w 1d).</string>    <!-- checkbox label -->
+    <string name="configLabel_general_showWeeks">Toon weken</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showWeeks_summary">Verdeel tijdspannes van meer dan 7 dagen in weken (bijv. 15d wordt 2w 1d).</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_showHours">Show Hours</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showHours_summary">Include hours and minutes in time spans greater than a day.</string>    <!-- checkbox label -->
+    <string name="configLabel_general_showHours">Toonj ueren</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showHours_summary">Voeg uren en minuten toe aan tijdvakken van meer dan een dag.</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_observerheight">Object Shadow</string>        <!-- checkbox label -->
-    <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
+    <string name="configLabel_general_observerheight">Schaduwobject</string>        <!-- checkbox label -->
+    <string name="configLabel_general_observerheight_summary">Geef de lengte weer van de schaduwen die worden geworpen door een object met een hoogte van <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Advanced Settings</string>                        <!-- group title -->
-    <string name="configLabel_experimental">Experimental Settings</string>                <!-- group title -->
-    <string name="configLabel_general_scanPlugins">Data Source Plugins</string>                                <!-- checkbox label -->
-    <string name="configLabel_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary -->
+    <string name="configLabel_advanced">Geavenceerde Instellingen</string>                        <!-- group title -->
+    <string name="configLabel_experimental">Experimentele Instellingen</string>                <!-- group title -->
+    <string name="configLabel_general_scanPlugins">Databron Plugins</string>                                <!-- checkbox label -->
+    <string name="configLabel_general_scanPlugins_summary">Scan naar plug-ins van derden en laad deze.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Appearance Settings</string>           <!-- group title -->
