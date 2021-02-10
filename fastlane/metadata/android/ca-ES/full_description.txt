@@ -9,7 +9,7 @@ L'aplicació es beneficia dels permisos següents:
 * <small><u>BOOT_COMPLETED</u> </small> s’utilitza per restaurar les alarmes actives després d’un reinici.
 * <small><u>SET_ALARM</u> </small> s'utilitza per programar alarmes mitjançant l'aplicació AlarmClock.
 * <small><u> VIBRAR</u> </small> s’utilitza per a les notificacions d’alarma.
-* <small><u>READ_EXTERNAL_STORAGE</u> </small> s’utilitza per reproduir sons d’alarma ubicats a la targeta SD.
+* <small><u>READ_EXTERNAL_STORAGE</u> </small> s’utilitza per reproduir sons d’alarma ubicats a la targeta SD <small>(api&le;=18 only)</small>.
 * <small><u>WRITE_EXTERNAL_STORAGE</u> </small> s'utilitza per fer còpies de seguretat de dades al fitxer (llocs, temes, etc.) <small> (només api & le; = 18) </small>.
 
 Nota: la «Integració del calendari» i els permisos afegits a la v0.9.0 s'han eliminat a la v0.10.0. Aquesta funció ja està disponible com a aplicació complementària independent; <a href="https://f-droid.org/en/packages/com.forrestguice.suntimescalendars"> Calendaris Suntimes </a>.

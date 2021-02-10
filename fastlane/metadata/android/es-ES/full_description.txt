@@ -9,7 +9,7 @@ La aplicación se beneficia de los siguientes permisos:
 * <small><u>BOOT_COMPLETED</u> </small> se usa para restaurar las alarmas activas después de un reinicio.
 * <small><u>SET_ALARM</u> </small> se usa para programar alarmas usando la aplicación AlarmClock.
 * <small><u>VIBRATE</u> </small> es usado por notificaciones de alarma.
-* <small><u>READ_EXTERNAL_STORAGE</u> </small> se utiliza para reproducir sonidos de alarma ubicados en la tarjeta SD.
+* <small><u>READ_EXTERNAL_STORAGE</u> </small> se utiliza para reproducir sonidos de alarma ubicados en la tarjeta SD <small>(api&le;=18 only)</small>.
 * <small><u>WRITE_EXTERNAL_STORAGE</u> </small> se usa para respaldar datos en archivos (lugares, temas, etc.) <small> (api & le; = 18 solamente) </small>.
 
 Nota: La "Integración de calendario" y los permisos agregados en v0.9.0 se eliminaron en v0.10.0. Esta función ahora está disponible como una aplicación complementaria separada; <a href="https://f-droid.org/en/packages/com.forrestguice.suntimescalendars"> Calendarios de Suntimes </a>.
