@@ -8,6 +8,7 @@ O app pode solicitar as seguintes permissões:
 <li><small><u>BOOT_COMPLETED</u></small> para restaurar alarmes ativos após iniciar o sistema.</li>
 <li><small><u>SET_ALARM</u></small> para programar alarmes usando o app de despertador.</li>
 <li><small><u>VIBRATE</u></small> usado para notificar alarme.</li>
+<li><small><u>READ_EXTERNAL_STORAGE</u> </small> is used to play alarm sounds located on the SD card <small>(api&le;=18 only)</small></li>.
 <li><small><u>WRITE_EXTERNAL_STORAGE</u></small> para realizar backup para arquivos (locais, temas, etc)<small>(api<=apenas 18)</small>.</li>
 </ul>
 <p>Observação: A "Integração com Calendário" e permissões adicionadas na versão 0.9.0 foram removidos na edição posterior. Agora a função está disponível através de um app separado: o <a href="https://f-droid.org/en/packages/com.forrestguice.suntimescalendars">Calendário Suntimes</a>.</p>
