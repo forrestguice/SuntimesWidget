@@ -46,7 +46,7 @@
          The time zone field that appears below the clock (main activity).
     -->
     <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
-    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> La zona horària pot estar malament per a aquesta localització.</string>  <!-- snackbar message -->
+    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> La zona horària pot estar malament per a aquesta ubicació.</string>  <!-- snackbar message -->
     <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Horari d\'estiu</string>  <!-- timezone dialog label -->
     <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> equació del temps</string>  <!-- timezone dialog label -->
 
@@ -394,7 +394,7 @@
     <string name="locationMode_current">Actual (última coneguda)</string>  <!-- setting -->
     <string name="locationMode_custom">Definida per usuari</string>           <!-- setting -->
 
-    <string name="configLabel_location">Opcions de localització</string>               <!-- group title -->
+    <string name="configLabel_location">Opcions d\'ubicació</string>               <!-- group title -->
     <string name="configLabel_location_mode">Mode:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">Latitud:</string>                   <!-- edittext label -->
     <string name="configHint_location_lat">graus decimals</string>      <!-- edittext hint -->
@@ -406,7 +406,7 @@
     <string name="configHint_location_name">(opcional)</string>                  <!-- edittext hint -->
     <string name="configHint_location_name0">Nom del lloc</string>                  <!-- edittext hint -->  
 
-    <string name="configAction_getFix">Adquirir localització</string>    <!-- button (contentDescription) -->
+    <string name="configAction_getFix">Adquirir ubicació</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">Editar</string>         <!-- button (contentDescription) -->
     <string name="configAction_savePlace">Guardar</string>         <!-- button (contentDescription) -->
 
@@ -665,7 +665,7 @@
     <string name="configAction_setAlarmOffset">Retard</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmType">Tipus</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmLabel">Etiqueta</string>         <!-- button (contentDescription) -->  
-    <string name="configAction_setAlarmLocation">Localització</string>         <!-- button (contentDescription) -->  
+    <string name="configAction_setAlarmLocation">Ubicació</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmRepeat">Repetició</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmEvent">Event</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmTime">Hora</string>         <!-- button (contentDescription) -->
@@ -902,7 +902,7 @@
     <string name="configActionDesc_prevNote">Mostrar nota anterior</string>
     <string name="configActionDesc_resetNote">Restableix la nota</string>  
     <string name="configActionDesc_showCalendar">Mostra aplicació de calendari</string>
-    <string name="configActionDesc_mapLocation">Mostra localització al mapa</string>  
+    <string name="configActionDesc_mapLocation">Mostra ubicació al mapa</string>  
     <string name="configActionDesc_setAlarm">Estableix una alarma</string>  
     <string name="configActionDesc_worldMap">Diàleg del mapa mundial</string>  
     <string name="configActionDesc_equinoxDialog">Diàleg dels solsticis</string>  
@@ -910,7 +910,7 @@
     <string name="configActionDesc_sunDialog">Diàleg del Sol</string>  
     <string name="configActionDesc_setDate">Estableix data</string>  
     <string name="configActionDesc_setTimeZone">Estableix zona horària</string>  
-    <string name="configActionDesc_setLocation">Estableix localització</string>  
+    <string name="configActionDesc_setLocation">Estableix ubicació</string>  
     <string name="configActionDesc_swapCards">Intercanviar targetes (avui/demà)</string>
     <string name="configActionDesc_setAlarmForNote">Posar una alarma a la nota</string>
 
@@ -962,8 +962,8 @@
     <string name="configLabel_calendars_enabled">Integració amb el calendari</string>
 
     <!-- App Setting: passive location mode -->
-    <string name="configLabel_getFix_passiveMode">Localització passiva</string>
-    <string name="configLabel_getFix_passiveMode_summary">Utilitza el proveïdor de localització passiva.</string>
+    <string name="configLabel_getFix_passiveMode">Ubicació passiva</string>
+    <string name="configLabel_getFix_passiveMode_summary">Utilitza el proveïdor d\'ubicació passiva.</string>
 
     <!-- App Setting: locale mode -->
     <string name="configLabel_locale">Opcions d\'idioma</string>   <!-- group title -->
@@ -1060,7 +1060,7 @@
     <string name="worldmap_dialog_option_sunlight">Llum solar</string>
     <string name="worldmap_dialog_option_moonlight">Llum lunar</string>
     <string name="worldmap_dialog_option_all">Ambdòs</string>
-    <string name="worldmap_dialog_option_location">Localització</string>    
+    <string name="worldmap_dialog_option_location">Ubicació</string>    
     <string name="worldmap_dialog_option_latitudes">Latituds</string>    
     <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    
     <string name="worldmap_dialog_speed_1d">&#215; 1d</string>    
@@ -1169,7 +1169,7 @@
     <string name="timezone_dialog_cancel">Canceŀlar</string>
 
     <!-- Dialog: Set Location -->
-    <string name="location_dialog_title">Localització</string>
+    <string name="location_dialog_title">Ubicació</string>
     <string name="location_dialog_ok">Actualizar</string>
     <string name="location_dialog_cancel">Canceŀlar</string>
     <string name="location_dialog_error_lat">No és una latitud vàlida.</string>
@@ -1363,8 +1363,8 @@
         Aquesta caracteristica està disponible en una <a href="moreInfoLink">aplicació separada</a>.
     ]]></string>  
 
-    <string name="privacy_policy"><![CDATA[<b>Privadesa:</b><br/>Suntimes no coŀlecta, emmagatzema, o transmet dades personals. <b>No contè anuncis</b>, <b>càlculs estadístics</b>, <b>rastrejadors</b>, i <b>no utilitza permissos innecessaris</b>. <br/><br/>L\'aplicació es configura amb dades de localització. Aquesta informació (i qualsevol altra dada configurada emprada per l\'aplicació) s\'emmagatzema localment i no surt del dispositiu.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
-    <string name="privacy_permission_location"><![CDATA[Suntimes utilitza el permís de <b>localització</b> per determinar la teva longitud i latitud.<br/><br/>Aquest permís és opcional; la localització es configura manualment per defecte.]]></string>
+    <string name="privacy_policy"><![CDATA[<b>Privadesa:</b><br/>Suntimes no coŀlecta, emmagatzema, o transmet dades personals. <b>No contè anuncis</b>, <b>càlculs estadístics</b>, <b>rastrejadors</b>, i <b>no utilitza permissos innecessaris</b>. <br/><br/>L\'aplicació es configura amb dades d\'ubicació. Aquesta informació (i qualsevol altra dada configurada emprada per l\'aplicació) s\'emmagatzema localment i no surt del dispositiu.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
+    <string name="privacy_permission_location"><![CDATA[Suntimes utilitza el permís d\'<b>ubicació</b> per determinar la teva longitud i latitud.<br/><br/>Aquest permís és opcional; l\'ubicació es configura manualment per defecte.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes utilitza el permís d\'<b>emmagatzematge extern</b> per fer una còpia de seguretat o exportar dades a un arxiu (p. ex. llocs, temes).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[Alarmes Suntimes utilitza el permís d\'<b>emmagatzematge extern</b> per reproduïr sons localitzats en la targeta SD.<br/><br/> Aquest permís és opcional; es reproduirà el so predeterminat si l\'accès és denegat. Aquest permís no és un requisit per als sons del sistema (emmagatzematge multimèdia).]]></string>    
     <string name="privacy_permissiondialog_prompt"><![CDATA[Demanar permisos ara?]]></string>
