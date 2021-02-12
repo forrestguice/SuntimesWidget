@@ -48,7 +48,7 @@
          The time zone field that appears below the clock (main activity).
     -->
     <string name="timezoneField"><xliff:g example="US/Mountain" id="timezone">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
-    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> La zona horaria puede no ser la de esta localización.</string>
+    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> La zona horaria puede no ser la de esta ubicación.</string>
     <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> horario de verano</string>  <!-- timezone dialog label -->  
     <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> ecuación del tiempo</string>  <!-- timezone dialog label -->  
 
@@ -392,7 +392,7 @@
     <string name="locationMode_current">Actual (última conocida)</string>  
     <string name="locationMode_custom">Definida por usuario</string>           
 
-    <string name="configLabel_location">Opciones de localización</string>               
+    <string name="configLabel_location">Opciones de ubicación</string>               
     <string name="configLabel_location_mode">Modo:</string>                      
     <string name="configLabel_location_lat">Latitud:</string>                   
     <string name="configHint_location_lat">Grados decimales</string>
@@ -404,7 +404,7 @@
     <string name="configHint_location_name">(opcional)</string>
     <string name="configHint_location_name0">Nombre del lugar</string>                  <!-- edittext hint -->  
 
-    <string name="configAction_getFix">Adquirir localización</string>
+    <string name="configAction_getFix">Adquirir ubicación</string>
     <string name="configAction_editPlace">Editar</string>         
     <string name="configAction_savePlace">Guardar</string>         
 
@@ -665,7 +665,7 @@
     <string name="configAction_setAlarmOffset">Retardo</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmType">Tipo</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmLabel">Etiqueta</string>         <!-- button (contentDescription) -->  
-    <string name="configAction_setAlarmLocation">Localización</string>         <!-- button (contentDescription) -->  
+    <string name="configAction_setAlarmLocation">Ubicación</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmRepeat">Repetición</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmEvent">Evento</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmTime">Hora</string>         <!-- button (contentDescription) -->
@@ -901,7 +901,7 @@
     <string name="configActionDesc_prevNote">Mostrar nota anterior</string>
     <string name="configActionDesc_resetNote">Restablecer nota</string>  
     <string name="configActionDesc_showCalendar">Muestra aplicación de calendario</string>
-    <string name="configActionDesc_mapLocation">Mostrar localización en el mapa</string>  
+    <string name="configActionDesc_mapLocation">Mostrar ubicación en el mapa</string>  
     <string name="configActionDesc_setAlarm">Establecer una alarma</string>  
     <string name="configActionDesc_worldMap">Diálogo del mapa mundial</string>  
     <string name="configActionDesc_equinoxDialog">Diálogo de solsticios</string>  
@@ -909,7 +909,7 @@
     <string name="configActionDesc_sunDialog">Diálogo solar</string>  
     <string name="configActionDesc_setDate">Establecer fecha</string>  
     <string name="configActionDesc_setTimeZone">Establecer zona horaria</string>  
-    <string name="configActionDesc_setLocation">Establecer localización</string>  
+    <string name="configActionDesc_setLocation">Establecer ubicación</string>  
     <string name="configActionDesc_swapCards">Intercambiar tarjetas (hoy/mañana)</string>
     <string name="configActionDesc_setAlarmForNote">Añadir alarma a la nota</string>
 
@@ -961,8 +961,8 @@
     <string name="configLabel_calendars_enabled">Integración con el calendario</string>
 
     
-    <string name="configLabel_getFix_passiveMode">Localización pasiva</string>
-    <string name="configLabel_getFix_passiveMode_summary">Utiliza el proveedor de localización pasiva.</string>
+    <string name="configLabel_getFix_passiveMode">Ubicación pasiva</string>
+    <string name="configLabel_getFix_passiveMode_summary">Utiliza el proveedor de ubicación pasiva.</string>
 
     
     <string name="configLabel_locale">Opciones de idioma</string>
@@ -1058,7 +1058,7 @@
     <string name="worldmap_dialog_option_sunlight">Luz solar</string>
     <string name="worldmap_dialog_option_moonlight">Luz lunar</string>
     <string name="worldmap_dialog_option_all">Ambos</string>
-    <string name="worldmap_dialog_option_location">Localización</string>    
+    <string name="worldmap_dialog_option_location">Ubicación</string>    
     <string name="worldmap_dialog_option_latitudes">Latitudes</string>    
     <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    
     <string name="worldmap_dialog_speed_1d">&#215; 1d</string>    
@@ -1167,7 +1167,7 @@
     <string name="timezone_dialog_cancel">Cancelar</string>
 
     
-    <string name="location_dialog_title">Localización</string>
+    <string name="location_dialog_title">Ubicación</string>
     <string name="location_dialog_ok">Actualizar</string>
     <string name="location_dialog_cancel">Cancelar</string>
     <string name="location_dialog_error_lat">No es una latitud válida.</string>
@@ -1360,8 +1360,8 @@
         Esta característica está disponible en una <a href="moreInfoLink">aplicación separada</a>.
     ]]></string>  
 
-    <string name="privacy_policy"><![CDATA[<b>Privacidad:</b> <br /> Suntimes no colectivo, almacena, o transmite datos personales. <b>No contiene anuncios</b>, <b>cálculos estadísticos</b>, <b>rastreadores</b>, y <b>no utiliza permisos innecesarios</b>. <br/><br/> La aplicación se configura con datos de localización. Esta información (y cualquier otro dato configurada empleada por la aplicación) se almacena localmente y no sale del dispositivo. <br/><br/> <xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
-    <string name="privacy_permission_location"><![CDATA[Suntimes utiliza el permiso de <b>localización</b> para determinar tu longitud y latitud. <br /> Este permiso es opcional; la localización se configura manualmente por defecto.]]></string>
+    <string name="privacy_policy"><![CDATA[<b>Privacidad:</b> <br /> Suntimes no colectivo, almacena, o transmite datos personales. <b>No contiene anuncios</b>, <b>cálculos estadísticos</b>, <b>rastreadores</b>, y <b>no utiliza permisos innecesarios</b>. <br/><br/> La aplicación se configura con datos de ubicación. Esta información (y cualquier otro dato configurada empleada por la aplicación) se almacena localmente y no sale del dispositivo. <br/><br/> <xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
+    <string name="privacy_permission_location"><![CDATA[Suntimes utiliza el permiso de <b>ubicación</b> para determinar tu longitud y latitud. <br /> Este permiso es opcional; la ubicación se configura manualmente por defecto.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes utiliza el permiso de <b>almacenamiento externo</b> para hacer una copia de seguridad o exportar datos a un archivo (p. Ej. Lugares, temas).]]></string>
 
     <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms utiliza el permiso <b>almacenamiento externo</b> para reproducir sonidos en la tarjeta SD.<br/><br/>Este permiso es opcional; se reproducirá el sonido por defecto si se deniega el acceso. Este permiso no es necesario para los sonidos de sistema. (almacenamiento de medios).]]></string>    
