@@ -302,28 +302,28 @@
     <string name="configLabel_general_observerheight_summary">Geef de lengte weer van de schaduwen die worden geworpen door een object met een hoogte van <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Geavenceerde Instellingen</string>                        <!-- group title -->
+    <string name="configLabel_advanced">Geavanceerde Instellingen</string>                        <!-- group title -->
     <string name="configLabel_experimental">Experimentele Instellingen</string>                <!-- group title -->
     <string name="configLabel_general_scanPlugins">Databron Plugins</string>                                <!-- checkbox label -->
     <string name="configLabel_general_scanPlugins_summary">Scan naar plug-ins van derden en laad deze.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_appearance">Appearance Settings</string>           <!-- group title -->
-    <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_theme">Theme:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Grow with available space (resizeable)</string>  <!-- checkbox label -->
-    <string name="configLabel_appearance_showLabels">Show Labels</string>          <!-- checkbox label -->
-    <string name="configLabel_appearance_showTitle">Show Title</string>          <!-- checkbox label -->
-    <string name="configLabel_appearance_titleText">Title:</string>              <!-- edittext label -->
+    <string name="configLabel_appearance">Vormgevingsinstellingen</string>           <!-- group title -->
+    <string name="configLabel_appearance_mode">Vormgeving</string>                  <!-- spinner label -->
+    <string name="configLabel_appearance_theme">Thema:</string>                  <!-- spinner label -->
+    <string name="configLabel_appearance_allowResize">Groeien tot de beschikbare ruimte (aanpasbaar)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_showLabels">Toon Labels</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_showTitle">Toon Titel</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_titleText">Titel:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
 
     <!-- Widget Setting: riseSetOrder -->
-    <string name="configLabel_general_riseSetOrder">Order:</string>     <!-- label -->
-    <string name="risesetorder_today">Today</string>                    <!-- setting -->
-    <string name="risesetorder_lastnext">Last / Next</string>           <!-- setting -->
+    <string name="configLabel_general_riseSetOrder">Volgorde:</string>     <!-- label -->
+    <string name="risesetorder_today">Vandaag</string>                    <!-- setting -->
+    <string name="risesetorder_lastnext">Vorig / Volgend</string>           <!-- setting -->
 
     <!-- Widget Setting: time mode -->
-    <string name="timeMode_noon_short">Noon</string>                    <!-- setting -->
+    <string name="timeMode_noon_short">Noen</string>                    <!-- setting -->
     <string name="timeMode_noon">Solar Noon</string>                    <!-- setting -->
     <string name="timeMode_official_short">Actual</string>              <!-- setting -->
     <string name="timeMode_official">Actual Time</string>               <!-- setting -->
