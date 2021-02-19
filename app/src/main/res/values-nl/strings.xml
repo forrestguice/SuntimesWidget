@@ -323,24 +323,24 @@
     <string name="risesetorder_lastnext">Vorig / Volgend</string>           <!-- setting -->
 
     <!-- Widget Setting: time mode -->
-    <string name="timeMode_noon_short">Noen</string>                    <!-- setting -->
-    <string name="timeMode_noon">Solar Noon</string>                    <!-- setting -->
-    <string name="timeMode_official_short">Actual</string>              <!-- setting -->
-    <string name="timeMode_official">Actual Time</string>               <!-- setting -->
-    <string name="timeMode_civil_short">Civil</string>                  <!-- setting -->
+    <string name="timeMode_noon_short">Middaghoogte</string>                    <!-- setting -->
+    <string name="timeMode_noon">Zonne-middag</string>                    <!-- setting -->
+    <string name="timeMode_official_short">Actueel</string>              <!-- setting -->
+    <string name="timeMode_official">Actuele tijd</string>               <!-- setting -->
+    <string name="timeMode_civil_short">Civiel</string>                  <!-- setting -->
     <string name="timeMode_civil">Civiele Schemering</string>               <!-- setting -->
-    <string name="timeMode_nautical_short">Nautical</string>            <!-- setting -->
+    <string name="timeMode_nautical_short">Nautisch</string>            <!-- setting -->
     <string name="timeMode_nautical">Nautische Schemering</string>         <!-- setting -->
-    <string name="timeMode_astronomical_short">Astronomical</string>    <!-- setting -->
+    <string name="timeMode_astronomical_short">Astronomisch</string>    <!-- setting -->
     <string name="timeMode_astronomical">Astronomische Schemering</string> <!-- setting -->
-    <string name="timeMode_night">Night</string>                   <!-- a label (not an actual timeMode setting) -->
-    <string name="timeMode_day">Day</string>                       <!-- a label (not an actual timeMode setting) -->
-    <string name="timeMode_golden_short">Golden</string>                <!-- setting -->
-    <string name="timeMode_golden">Golden Hour</string>                 <!-- setting -->
-    <string name="timeMode_blue8_short">Blue (8\u00B0)</string>                    <!-- setting -->
-    <string name="timeMode_blue8">Blue Hour (8\u00B0)</string>                     <!-- setting -->
-    <string name="timeMode_blue4_short">Blue (4\u00B0)</string>                    <!-- setting -->
-    <string name="timeMode_blue4">Blue Hour (4\u00B0)</string>                     <!-- setting -->
+    <string name="timeMode_night">Nacht</string>                   <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_day">Dag</string>                       <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_golden_short">Gouden</string>                <!-- setting -->
+    <string name="timeMode_golden">Gouden uur</string>                 <!-- setting -->
+    <string name="timeMode_blue8_short">Blauw (8\u00B0)</string>                    <!-- setting -->
+    <string name="timeMode_blue8">Blauwe uur (8\u00B0)</string>                     <!-- setting -->
+    <string name="timeMode_blue4_short">Blauw (4\u00B0)</string>                    <!-- setting -->
+    <string name="timeMode_blue4">Blauwe uur (4\u00B0)</string>                     <!-- setting -->
 
     <string name="timeMode_equinox_vernal">Lente Equinox</string>      <!-- setting -->
     <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting -->
@@ -353,7 +353,7 @@
 
     <string name="timeMode_moon">Maan</string>                               <!-- label -->
     <string name="timeMode_moon_new">Nieuwe Maan</string>                               <!-- setting -->
-    <string name="timeMode_moon_new_short">New</string>                              <!-- setting -->
+    <string name="timeMode_moon_new_short">Nieuw</string>                              <!-- setting -->
     <string name="timeMode_moon_waxingcrescent_short">Jonge Maansikkel</string>               <!-- label -->
     <string name="timeMode_moon_waxingcrescent">Jonge Maansikkel</string>                     <!-- label -->
     <string name="timeMode_moon_firstquarter">Eerste Kwartier</string>                 <!-- setting -->
@@ -385,47 +385,47 @@
     <string name="label_apogee">Apogeum</string>
     <string name="label_perigee">Perigeum</string>
 
-    <string name="configLabel_general_timeMode">Mode:</string>          <!-- spinner label -->
+    <string name="configLabel_general_timeMode">Modus:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: layout mode -->
-    <string name="widgetMode1x1_sunrise">Sunrise only</string>             <!-- setting -->
-    <string name="widgetMode1x1_sunset">Sunset only</string>               <!-- setting -->
-    <string name="widgetMode1x1_both_1">Sunrise &amp; Sunset (1)</string>  <!-- setting -->
-    <string name="widgetMode1x1_both_2">Sunrise &amp; Sunset (2)</string>  <!-- setting -->
+    <string name="widgetMode1x1_sunrise">Alleen zonsopgang</string>             <!-- setting -->
+    <string name="widgetMode1x1_sunset">Alleen zonsondergang</string>               <!-- setting -->
+    <string name="widgetMode1x1_both_1">Zonsopgang &amp; Zonsondergang (1)</string>  <!-- setting -->
+    <string name="widgetMode1x1_both_2">Zonsopgang &amp; Zonsondergang (2)</string>  <!-- setting -->
 
-    <string name="widgetMode1x1_altaz">Altitude &amp; Azimuth</string>     <!-- setting -->
-    <string name="widgetMode1x1_decright">Declination &amp; Right Ascension</string>     <!-- setting -->
-    <string name="widgetMode1x1_distance">Current distance</string>     <!-- setting -->
-    <string name="widgetMode1x1_apsis">Next apogee or perigee</string>     <!-- setting -->
+    <string name="widgetMode1x1_altaz">Hoogte &amp; Azimut</string>     <!-- setting -->
+    <string name="widgetMode1x1_decright">Declinatie &amp; Rechte Klimming</string>     <!-- setting -->
+    <string name="widgetMode1x1_distance">Actuele afstand</string>     <!-- setting -->
+    <string name="widgetMode1x1_apsis">Volgende apogeum of perigeum</string>     <!-- setting -->
 
-    <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [north]</string>     <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [south]</string>     <!-- setting -->
-    <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->
+    <string name="widgetMode_sunPosMap_simplerectangular">Basis</string>  <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Pool [nood]</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_south">Pool [zuid]</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_bluemarble">Blauwe Knikker</string>    <!-- setting -->
 
-    <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->
-    <string name="widgetMode1x1_moonphaseillum">Moon phase &amp; illumination</string>     <!-- setting -->
-    <string name="widgetMode1x1_moonphase">Moon phase only</string>     <!-- setting -->
-    <string name="widgetMode1x1_moonillum">Moon illumination only</string>     <!-- setting -->
-    <string name="widgetMode1x1_moonphasenext">Next major phase</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonriseset">Maansopkomst &amp; Maansondergang</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphaseillum">Maanfase &amp; verlichting</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphase">Alleen Maanfase</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonillum">Allen Maanverlichting</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphasenext">Volgende Hoofdfase</string>     <!-- setting -->
 
-    <string name="configLabel_appearance_1x1mode">1x1 Layout:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x2mode">3x2 Layout:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x3mode">3x3 Layout:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_1x1mode">1x1 Opmaak:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x2mode">3x2 Opmaak:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x3mode">3x3 Opmaak:</string>     <!-- spinner label -->
 
     <!-- Widget Setting: widget tap action -->
-    <string name="actionMode_doNothing">Do Nothing</string>           <!-- setting -->
+    <string name="actionMode_doNothing">Doe niets</string>           <!-- setting -->
     <string name="actionMode_update">Update Widget</string>           <!-- setting -->
-    <string name="actionMode_config">Reconfigure Widget</string>      <!-- setting -->
-    <string name="actionMode_launchActivity">Perform Action</string>      <!-- setting -->
+    <string name="actionMode_config">Herconfigureer Widget</string>      <!-- setting -->
+    <string name="actionMode_launchActivity">Voer actie uit</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">Flip Views</string>      <!-- setting -->
 
-    <string name="launchType_activity">Activity</string>           <!-- setting -->
-    <string name="launchType_broadcast">Broadcast</string>           <!-- setting -->
+    <string name="launchType_activity">Activiteit</string>           <!-- setting -->
+    <string name="launchType_broadcast">Uitzending</string>           <!-- setting -->
     <string name="launchType_service">Service</string>           <!-- setting -->
 
-    <string name="expandMore">More</string>  <!-- contentDescription -->
-    <string name="expandLess">Less</string>  <!-- contentDescription -->
+    <string name="expandMore">Meer</string>  <!-- contentDescription -->
+    <string name="expandLess">Minder</string>  <!-- contentDescription -->
     <string name="increment">@string/expandMore</string>  <!-- contentDescription for (+>) type buttons -->
     <string name="decrement">@string/expandLess</string>  <!-- contentDescription for (-<) type buttons -->
 
