@@ -418,7 +418,7 @@
     <string name="timezoneMode_standard">Tidsstandard</string>                       <!-- setting -->
     <string name="timezoneMode_current">System-tidssone</string>               <!-- setting -->
     <string name="timezoneMode_custom">Brukerdefinert</string>                    <!-- setting -->
-    
+
     <string name="time_lmst">Lokal siderisk tid</string>                  <!-- timezone label -->
     <string name="time_gmst">Greenwich siderisk tid</string>              <!-- timezone label -->
     <string name="time_utc">Koordinert universaltid</string>            <!-- timezone label -->
@@ -646,9 +646,9 @@
     <string name="configHint_themeName">Påskrift</string>                   <!-- edit hint -->
 
     <string name="widgetLabel_azimuth">Asimut</string>                   <!-- label -->
-    <string name="widgetLabel_azimuth_short">Az</string>                   <!-- label -->
+    <string name="widgetLabel_azimuth_short">Asimut</string>                   <!-- label -->
     <string name="widgetLabel_altitude">Høyde</string>               <!-- label -->
-    <string name="widgetLabel_altitude_short">Alt</string>               <!-- label -->
+    <string name="widgetLabel_altitude_short">Høyde</string>               <!-- label -->
     <string name="widgetLabel_altitude_symbol">∠</string>               <!-- label/suffix -->
 
     <string name="widgetLabel_rightAscension">Rektasensjon</string>    <!-- label -->
