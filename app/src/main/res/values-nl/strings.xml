@@ -429,81 +429,81 @@
     <string name="increment">@string/expandMore</string>  <!-- contentDescription for (+>) type buttons -->
     <string name="decrement">@string/expandLess</string>  <!-- contentDescription for (-<) type buttons -->
 
-    <string name="configLabel_action">Action Settings</string>                  <!-- group title -->
-    <string name="configLabel_action_onTap">On Tap:</string>                    <!-- spinner label -->
-    <string name="configLabel_action_onClockTap">On Clock Tap</string>         <!-- spinner label -->
-    <string name="configLabel_action_onNoteTap">On Note Tap</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap">On Date Tap</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap1">On Date Long Press</string>   <!-- spinner label -->
+    <string name="configLabel_action">Actie-instellingen</string>                  <!-- group title -->
+    <string name="configLabel_action_onTap">Bij aantikken:</string>                    <!-- spinner label -->
+    <string name="configLabel_action_onClockTap">Bij klok aantikken</string>         <!-- spinner label -->
+    <string name="configLabel_action_onNoteTap">Bij notitie aantikken</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap">Bij datum aantikken</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap1">Bij datum lang aanraken</string>   <!-- spinner label -->
 
     <!-- Widget Setting: location -->
-    <string name="locationMode_current">Current (last known)</string>  <!-- setting -->
-    <string name="locationMode_custom">User Defined</string>           <!-- setting -->
+    <string name="locationMode_current">Huidige (laatst bekende)</string>  <!-- setting -->
+    <string name="locationMode_custom">Gebruiker gedefinieerd</string>           <!-- setting -->
 
-    <string name="configLabel_location">Location Settings</string>               <!-- group title -->
-    <string name="configLabel_location_mode">Mode:</string>                      <!-- spinner label -->
-    <string name="configLabel_location_lat">Latitude:</string>                   <!-- edittext label -->
-    <string name="configHint_location_lat">decimal degrees</string>      <!-- edittext hint -->
-    <string name="configLabel_location_lon">Longitude:</string>                          <!-- edittext label -->
-    <string name="configHint_location_lon">decimal degrees</string> <!-- edittext hint -->
-    <string name="configLabel_location_alt">Elevation:</string>                          <!-- edittext label -->
+    <string name="configLabel_location">Locatie-instellingen</string>               <!-- group title -->
+    <string name="configLabel_location_mode">Modus:</string>                      <!-- spinner label -->
+    <string name="configLabel_location_lat">Breedtegraad:</string>                   <!-- edittext label -->
+    <string name="configHint_location_lat">decimale graden</string>      <!-- edittext hint -->
+    <string name="configLabel_location_lon">Lengtegraad:</string>                          <!-- edittext label -->
+    <string name="configHint_location_lon">decimale graden</string> <!-- edittext hint -->
+    <string name="configLabel_location_alt">Hoogte:</string>                          <!-- edittext label -->
     <string name="configHint_location_alt">0</string>                                    <!-- edittext hint -->
-    <string name="configLabel_location_name">Name:</string>                      <!-- edittext label -->
-    <string name="configHint_location_name">(optional)</string>                  <!-- edittext hint -->
-    <string name="configHint_location_name0">Place Name</string>                  <!-- edittext hint -->
+    <string name="configLabel_location_name">Naam:</string>                      <!-- edittext label -->
+    <string name="configHint_location_name">(optioneel)</string>                  <!-- edittext hint -->
+    <string name="configHint_location_name0">Plaatsnaam</string>                  <!-- edittext hint -->
 
-    <string name="configAction_getFix">Get Location</string>    <!-- button (contentDescription) -->
-    <string name="configAction_editPlace">Edit</string>         <!-- button (contentDescription) -->
-    <string name="configAction_savePlace">Save</string>         <!-- button (contentDescription) -->
+    <string name="configAction_getFix">Verkrijg locatie</string>    <!-- button (contentDescription) -->
+    <string name="configAction_editPlace">Bewerk</string>         <!-- button (contentDescription) -->
+    <string name="configAction_savePlace">Opslaan</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Time Standard</string>                   <!-- setting -->
-    <string name="timezoneMode_current">System Time Zone</string>               <!-- setting -->
-    <string name="timezoneMode_custom">User Defined</string>                    <!-- setting -->
+    <string name="timezoneMode_standard">Tijdstandaard</string>                   <!-- setting -->
+    <string name="timezoneMode_current">Tijdzone systeem</string>               <!-- setting -->
+    <string name="timezoneMode_custom">Gebruiker gedefinieerd</string>                    <!-- setting -->
 
-    <string name="time_lmst">Local Sidereal Time</string>                  <!-- timezone label -->
-    <string name="time_gmst">Greenwich Sidereal Time</string>              <!-- timezone label -->
-    <string name="time_utc">Coordinated Universal Time</string>            <!-- timezone label -->
-    <string name="time_localMean">Local Mean Time</string>                 <!-- setting / custom timezone id -->
-    <string name="time_apparent">Apparent Solar Time</string>              <!-- setting / custom timezone id -->
+    <string name="time_lmst">Lokale sterrentijd</string>                  <!-- timezone label -->
+    <string name="time_gmst">Greenwich sterrentijd</string>              <!-- timezone label -->
+    <string name="time_utc">UTC (standaardtijd)</string>            <!-- timezone label -->
+    <string name="time_localMean">Lokale gemiddelde tijd</string>                 <!-- setting / custom timezone id -->
+    <string name="time_apparent">Schijnbare zonnetijd</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
     <string name="timezoneCustom_line2b"><xliff:g id="timezoneID" example="US/Arizona">%2$s</xliff:g></string>                                                                    <!-- selector item format (e.g. "US/Arizona" ) .. same as above but omits first arg -->
 
-    <string name="configLabel_timezone">Time Zone Settings</string>             <!-- group title -->
-    <string name="configLabel_timezone_mode">Mode:</string>                     <!-- spinner label -->
-    <string name="configLabel_timezone_custom">Time Zone:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Standard:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone">Tijdzone instellingen</string>             <!-- group title -->
+    <string name="configLabel_timezone_mode">Modus:</string>                     <!-- spinner label -->
+    <string name="configLabel_timezone_custom">Tijdzone:</string>              <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Standaard:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
-    <string name="timeFormatMode_system">System format</string>          <!-- setting -->
-    <string name="timeFormatMode_12hr">12-hour</string>                  <!-- setting -->
-    <string name="timeFormatMode_24hr">24-hour</string>                  <!-- setting -->
+    <string name="timeFormatMode_system">Systeemformaat</string>          <!-- setting -->
+    <string name="timeFormatMode_12hr">12-uurs</string>                  <!-- setting -->
+    <string name="timeFormatMode_24hr">24-uurs</string>                  <!-- setting -->
 
-    <string name="configLabel_timeFormatMode">Time Format</string>             <!-- preference label -->
+    <string name="configLabel_timeFormatMode">Tijdformaat</string>             <!-- preference label -->
     <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: date mode -->
-    <string name="dateMode_current">Today</string>                  <!-- setting -->
-    <string name="dateMode_custom">User Defined</string>            <!-- setting -->
+    <string name="dateMode_current">Vandaag</string>                  <!-- setting -->
+    <string name="dateMode_custom">Gebruiker gedefinieerd</string>            <!-- setting -->
 
-    <string name="configLabel_date">Date Settings</string>                      <!-- group title -->
-    <string name="configLabel_date_mode">Mode:</string>                         <!-- spinner label -->
-    <string name="configLabel_date_custom">Date:</string>                       <!-- dateSelector label -->
+    <string name="configLabel_date">Datuminstellingen</string>                      <!-- group title -->
+    <string name="configLabel_date_mode">Modus:</string>                         <!-- spinner label -->
+    <string name="configLabel_date_custom">Datum:</string>                       <!-- dateSelector label -->
 
     <!-- Widget Setting: compare mode -->
-    <string name="compareMode_yesterday">Yesterday</string>                     <!-- setting -->
-    <string name="compareMode_tomorrow">Tomorrow</string>                       <!-- setting -->
-    <string name="configLabel_general_compareMode">Compare Against:</string>    <!-- spinner label -->
-    <string name="configLabel_general_showComparison">Show Comparison</string>  <!-- checkbox label -->
+    <string name="compareMode_yesterday">Gisteren</string>                     <!-- setting -->
+    <string name="compareMode_tomorrow">Morgen</string>                       <!-- setting -->
+    <string name="configLabel_general_compareMode">Vergelijk met:</string>    <!-- spinner label -->
+    <string name="configLabel_general_showComparison">Vergelijking tonen</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_closest">Closest Event</string>                 <!-- setting -->
-    <string name="trackingMode_soonest">Upcoming Event</string>                <!-- setting -->
+    <string name="trackingMode_closest">Dichtstbijzijnde gebeurtenis</string>                 <!-- setting -->
+    <string name="trackingMode_soonest">Aankomende gebeurtenis</string>                <!-- setting -->
     <string name="configLabel_general_trackingMode">Track:</string>            <!-- spinner label -->
 
     <!-- Widget Setting: timeMode override -->
-    <string name="configLabel_general_timeMode_override">Tracking overrides mode</string>     <!-- checkbox label -->
+    <string name="configLabel_general_timeMode_override">Tracking overschrijft modus</string>     <!-- checkbox label -->
 
     <!-- Widget Settings: noon -->
     <string name="configLabel_general_showNoon">Show Solar Noon</string>        <!-- checkbox label -->
