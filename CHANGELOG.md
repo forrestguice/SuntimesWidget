@@ -1,5 +1,10 @@
 ### ~
 
+### v0.13.9 (2021-03-03)
+* updates translation to Catalan (ca) and Spanish (es) (#478, #479 by gnusuari0).
+* updates translation to Dutch (nl) (#486, #487 by Joppla).
+* updates translation to Norwegian (nb) (#488 by FTno).
+
 ### v0.13.8 (2021-02-09)
 * adds translation to Dutch (nl) (contributed by Joppla) (#474, #480).
 * updates translation to Catalan (ca) and Spanish (es) (contributed by gnusuari0) (#478, #479).
