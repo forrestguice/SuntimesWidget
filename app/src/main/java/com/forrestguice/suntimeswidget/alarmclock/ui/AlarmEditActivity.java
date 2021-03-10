@@ -20,30 +20,28 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
-import android.graphics.Color;
+import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.AlarmClock;
+import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -52,19 +50,14 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.AboutActivity;
-import com.forrestguice.suntimeswidget.AlarmDialog;
 import com.forrestguice.suntimeswidget.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
-import com.forrestguice.suntimeswidget.actions.LoadActionDialog;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
-import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
-import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
-import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -82,8 +75,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     public static final String EXTRA_ISNEW = "isnew";
 
     public static final int REQUEST_RINGTONE = 10;
+    public static final int REQUEST_RINGTONE1 = 12;
     public static final int REQUEST_SETTINGS = 20;
-    public static final int REQUEST_STORAGE_PERMISSION = 30;
     public static final int REQUEST_ACTION0 = 40;
     public static final int REQUEST_ACTION1 = 50;
 
@@ -164,23 +157,16 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
                 onRingtoneResult(resultCode, data);
                 break;
 
+            case REQUEST_RINGTONE1:
+                onRingtoneResult1(resultCode, data);
+                break;
+
             case REQUEST_ACTION0:
                 onActionResult(resultCode, data, 0);
                 break;
 
             case REQUEST_ACTION1:
                 onActionResult(resultCode, data, 1);
-                break;
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
-    {
-        switch (requestCode)
-        {
-            case REQUEST_STORAGE_PERMISSION:
-                onRingtonePermissionResult(permissions, grantResults);
                 break;
         }
     }
@@ -497,42 +483,44 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public void showAlarmSoundPopup(View v, @NonNull final AlarmClockItem item)
+    {
+        PopupMenu popup = new PopupMenu(this, v);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.alarmsound, popup.getMenu());
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+        {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem)
+            {
+                switch (menuItem.getItemId())
+                {
+                    case R.id.action_alarmsound_ringtone:
+                        ringtonePicker(item);
+                        return true;
+
+                    case R.id.action_alarmsound_file:
+                        audioFilePicker(item);
+                        return true;
+
+                    case R.id.action_alarmsound_none:
+                        onRingtoneResult(null, false);
+                        return true;
+                }
+                return false;
+            }
+        });
+        SuntimesUtils.forceActionBarIcons(popup.getMenu());
+        popup.show();
+    }
+
     /**
      * pickRingtone
      * @param item apply ringtone to AlarmClockItem
      */
-    protected void pickRingtone(@NonNull final AlarmClockItem item)
-    {
-        if (Build.VERSION.SDK_INT >= 16)
-        {
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-            {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.READ_EXTERNAL_STORAGE))
-                {
-                    AlertDialog.Builder requestDialog = new AlertDialog.Builder(this);
-                    requestDialog.setMessage(Html.fromHtml(getString(R.string.privacy_permission_storage1) + "<br/><br/>" + getString(R.string.privacy_permissiondialog_prompt)));
-                    requestDialog.setPositiveButton(getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //noinspection ConstantConditions
-                            if (Build.VERSION.SDK_INT >= 16) {
-                                ActivityCompat.requestPermissions(AlarmEditActivity.this, new String[] { android.Manifest.permission.READ_EXTERNAL_STORAGE }, REQUEST_STORAGE_PERMISSION );
-                            }
-                        }
-                    });
-                    requestDialog.setNegativeButton(getString(R.string.privacy_permissiondialog_ignore), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ringtonePicker(item);
-                        }
-                    });
-                    requestDialog.show();
-
-                } else {
-                    ActivityCompat.requestPermissions(this, new String[] { android.Manifest.permission.READ_EXTERNAL_STORAGE }, REQUEST_STORAGE_PERMISSION );
-                }
-            } else ringtonePicker(item);
-        } else ringtonePicker(item);
+    protected void pickRingtone(@NonNull final AlarmClockItem item) {
+        showAlarmSoundPopup(editor.itemView.chip_ringtone, item);
     }
 
     protected void ringtonePicker(@NonNull AlarmClockItem item)
@@ -549,7 +537,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, AlarmSettings.getDefaultRingtoneUri(this, item.type));
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (item.ringtoneURI != null ? Uri.parse(item.ringtoneURI) : null));
-        startActivityForResult(intent, REQUEST_RINGTONE);
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.configAction_setAlarmSound)), REQUEST_RINGTONE);
     }
 
     protected void onRingtonePermissionResult(@NonNull String[] permissions, @NonNull int[] grantResults)
@@ -561,35 +549,107 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
     protected void onRingtoneResult(int resultCode, Intent data)
     {
-        if (resultCode == RESULT_OK && editor != null && data != null)
+        if (resultCode == RESULT_OK && editor != null && data != null) {
+            onRingtoneResult((Uri)(data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)), false);
+        } else {
+            Log.d(TAG, "onActivityResult: bad result: " + resultCode + ", " + data);
+        }
+    }
+    protected void onRingtoneResult(final Uri uri, boolean isAudioFile)
+    {
+        final AlarmClockItem item = editor.getItem();
+        if (uri != null)
         {
-            AlarmClockItem item = editor.getItem();
-            Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-            if (uri != null)
+            Log.d(TAG, "onActivityResult: uri: " + uri);
+            Ringtone ringtone = RingtoneManager.getRingtone(this, uri);
+            if (ringtone != null)
             {
-                Ringtone ringtone = RingtoneManager.getRingtone(this, uri);
-                if (ringtone != null)
-                {
-                    String ringtoneName = ringtone.getTitle(this);
-                    ringtone.stop();
-
-                    item.ringtoneName = ringtoneName;
-                    item.ringtoneURI = uri.toString();
-                    Log.d(TAG, "onActivityResult: uri: " + item.ringtoneURI + ", title: " + ringtoneName);
-
-                } else {
-                    item.ringtoneName = null;
-                    item.ringtoneURI = null;
-                    Log.d(TAG, "onActivityResult: uri: " + uri + " <null ringtone>");
-                }
+                ringtone.stop();
+                item.ringtoneName = ringtoneTitle(getContentResolver(), uri, ringtone, isAudioFile);
+                item.ringtoneURI = uri.toString();
+                editor.notifyItemChanged();
+                Log.d(TAG, "onActivityResult: uri: " + item.ringtoneURI + ", title: " + item.ringtoneName);
 
             } else {
                 item.ringtoneName = null;
                 item.ringtoneURI = null;
-                Log.d(TAG, "onActivityResult: null uri");
+                editor.notifyItemChanged();
+                Log.d(TAG, "onActivityResult: uri: " + uri + " <null ringtone>");
             }
-            editor.notifyItemChanged();
 
+        } else {
+            item.ringtoneName = null;
+            item.ringtoneURI = null;
+            editor.notifyItemChanged();
+            Log.d(TAG, "onActivityResult: null uri");
+        }
+    }
+
+    protected String ringtoneTitle(@NonNull ContentResolver resolver, @NonNull Uri uri, @NonNull Ringtone ringtone, boolean isAudioFile)
+    {
+        String ringtoneTitle = ringtone.getTitle(this);
+        ringtone.stop();
+
+        String retValue = ringtoneTitle;
+        if (isAudioFile)
+        {
+            Cursor cursor = null;
+            try {
+                cursor = resolver.query(uri, null, null, null, null);
+                if (cursor != null) {
+                    cursor.moveToFirst();
+                    retValue = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
+                    cursor.close();
+                }
+
+            } catch (IllegalArgumentException e) {
+                String[] filePath = ringtoneTitle.split("/");
+                String fileName = filePath[filePath.length - 1];
+                retValue = fileName == null ? null
+                                            : ((fileName.contains(".")) ? fileName.substring(0, fileName.lastIndexOf(".")) : fileName);
+
+            } finally {
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }
+        }
+        return retValue;
+    }
+
+    protected void audioFilePicker(@NonNull AlarmClockItem item)
+    {
+        Intent intent;
+        if (Build.VERSION.SDK_INT >= 19)
+        {
+            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
+
+        } else {
+            intent = new Intent(Intent.ACTION_GET_CONTENT);
+        }
+
+        if (Build.VERSION.SDK_INT >= 11) {
+            intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+        }
+
+        intent.setType("audio/*");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.configAction_setAlarmSound)), REQUEST_RINGTONE1);
+    }
+
+    protected void onRingtoneResult1(int resultCode, Intent data)
+    {
+        if (resultCode == RESULT_OK && editor != null && data != null && data.getData() != null)
+        {
+            Uri uri = data.getData();
+            if (Build.VERSION.SDK_INT >= 19) {
+                final int flags = data.getFlags() & Intent.FLAG_GRANT_READ_URI_PERMISSION;
+                getContentResolver().takePersistableUriPermission(uri, flags);
+            }
+            onRingtoneResult(uri, true);
         } else {
             Log.d(TAG, "onActivityResult: bad result: " + resultCode + ", " + data);
         }

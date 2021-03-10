@@ -1001,6 +1001,7 @@
         <item>Txinera tradizionala</item>
         <item>Portuguese</item>  <!-- TODO -->
         <item>Russian</item>  <!-- TODO -->
+        <item>Dutch</item>  <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
@@ -1274,7 +1275,7 @@
     ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
         <b>Iturburu kodea:</b><br />
-        Copyright &#169 2014-2020 Forrest Guice <br />
+        Copyright &#169 2014-2021 Forrest Guice <br />
         Iturburu kodea GPLv3 lizentziapean eskuragarri dago.
     ]]></string>
 

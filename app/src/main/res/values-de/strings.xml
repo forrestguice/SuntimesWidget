@@ -977,6 +977,7 @@
       <item>Traditionelles Chinesisch</item>
       <item>Portugiesisch</item>
       <item>Russian</item>  <!-- TODO -->
+      <item>Dutch</item>  <!-- TODO -->
   </string-array>
 
   <!--<string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>-->  <!-- e.g. 45° -->
@@ -1240,7 +1241,7 @@
       <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> um eine Anfrage zu stellen.
   ]]></string>
   <string name="app_legal1"><![CDATA[
-      Copyright &#169 2014-2020 Forrest Guice <br />
+      Copyright &#169 2014-2021 Forrest Guice <br />
       Quellcode verf&uuml;gbar unter GPLv3.
   ]]></string>
 

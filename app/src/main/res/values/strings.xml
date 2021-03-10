@@ -754,6 +754,8 @@
 
     <string name="alarmOption_vibrate">Vibrate</string>                <!-- checkbox text -->
     <string name="alarmOption_ringtone_none">No Sound</string>          <!-- ringtone label (none) -->
+    <string name="alarmOption_ringtone_ringtone">Ringtone</string>          <!-- menu item; Select a "Ringtone" -->  <!-- TODO -->
+    <string name="alarmOption_ringtone_file">Audio File</string>          <!-- menu item; Select an "Audio File" -->  <!-- TODO -->
     <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
     <string name="alarmOption_action_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- action label format -->
     <string name="alarmOption_solarevent_none">Clock Time</string>          <!-- ringtone label (none) -->
@@ -1231,6 +1233,7 @@
         <item>Traditional Chinese</item>
         <item>Portuguese</item>
         <item>Russian</item>
+        <item>Dutch</item>
     </string-array>
     <string-array name="locale_display_native" translatable="false">             <!-- one-to-one with locale_values -->
         <item>English</item>
@@ -1247,6 +1250,7 @@
         <item>正體中文</item>
         <item>Português Brasileiro</item>
         <item>Русский</item>
+        <item>Nederlands</item>
     </string-array>
     <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
         <item>en</item>
@@ -1263,6 +1267,7 @@
         <item>zh_TW</item>
         <item>pt_BR</item>
         <item>ru</item>
+        <item>nl</item>
     </string-array>
     <string-array name="locale_credits" translatable="false">  <!-- one-to-one with locale_display -->
         <item />
@@ -1272,13 +1277,14 @@
         <item><![CDATA[Erci]]></item>
         <item><![CDATA[<a href=https://github.com/cao->Matteo Caoduro</a>]]></item>
         <item><![CDATA[<a href=https://github.com/Verdulo>Verdulo</a>]]></item>
-        <item><![CDATA[<a href=https://github.com/Raulvo>Raulvo</a>]]></item>
-        <item><![CDATA[<a href=https://github.com/Raulvo>Raulvo</a>]]></item>
+        <item><![CDATA[<a href=https://github.com/Raulvo>Raulvo</a>|<a href=https://github.com/gnusuari0>gnusuari0</a>]]></item>
+        <item><![CDATA[<a href=https://github.com/Raulvo>Raulvo</a>|<a href=https://github.com/gnusuari0>gnusuari0</a>]]></item>
         <item><![CDATA[<a href=https://github.com/beriain>beriain</a>]]></item>
         <item><![CDATA[<a href=https://github.com/FTno>FTno</a>]]></item>
         <item><![CDATA[<a href=https://github.com/pggdt>ft42</a>]]></item>
         <item><![CDATA[<a href=https://github.com/NetoSilva>Neto Silva</a>|<a href=https://github.com/naoliv>Nelson&#160;A.&#160;de&#160;Oliveira</a>|<a href=https://github.com/efraletti>Enrico S. B. Fraletti</a>]]></item>
         <item><![CDATA[<a href=https://github.com/rchintsov>Ruslan&#160;Chintsov</a>]]></item>
+        <item><item><![CDATA[<a href=https://github.com/Joppla>Joppla</a>]]></item></item>
     </string-array>
 
     <!-- position formats -->
@@ -1558,7 +1564,7 @@
     ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
         <b>Source Code:</b><br />
-        Copyright &#169 2014-2020 Forrest Guice <br />
+        Copyright &#169 2014-2021 Forrest Guice <br />
         Source code available under GPLv3.
     ]]></string>
 

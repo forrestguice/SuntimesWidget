@@ -1008,6 +1008,7 @@
         <item>Traditional Chinese</item>
         <item>Portuguese</item>  <!-- TODO -->
         <item>Russian</item>  <!-- TODO -->
+        <item>Dutch</item>  <!-- TODO -->
     </string-array>  <!-- TODO: these should be language/locale names as written/understood in Italian -->
 
     <!-- position formats -->
@@ -1281,7 +1282,7 @@
     ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
         <b>Codice sorgente:</b><br />
-        Copyright &#169 2014-2020 Forrest Guice <br />
+        Copyright &#169 2014-2021 Forrest Guice <br />
         Codice sorgente disponibile con licenza GPLv3.
     ]]></string>
 
