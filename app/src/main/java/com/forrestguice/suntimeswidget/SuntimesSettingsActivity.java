@@ -220,6 +220,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 pref.putString(prefKeyForRequestCode(requestCode), selection);
                 pref.apply();
                 rebuildActivity();
+                Toast.makeText(context, context.getString(R.string.restart_required_message), Toast.LENGTH_LONG).show();
 
             } else if (adapterModified) {
                 rebuildActivity();
@@ -1381,6 +1382,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 overridePref.setActionButtonPreferenceListener(createThemeListPreferenceListener(activity, (String)newValue, requestCode));
+                Toast.makeText(activity, activity.getString(R.string.restart_required_message), Toast.LENGTH_LONG).show();
                 return true;
             }
         };
