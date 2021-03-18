@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2019-2020 Forrest Guice
+    Copyright (C) 2019-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -310,9 +310,17 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         int color_sunrise = theme.getSunriseTextColor();
         int color_sunset = theme.getSunsetTextColor();
         int color_action = theme.getActionColor();
+        float titleSizeSp = theme.getTitleSizeSp();
+        float textSizeSp = theme.getTextSizeSp();
+        float timeSizeSp = theme.getTimeSizeSp();
+        //boolean boldTime = theme.getTimeBold();
+        boolean boldTitle = theme.getTitleBold();
 
         txt_daylength.setTextColor(color_text);
+        txt_daylength.setTextSize(textSizeSp);
+
         txt_lightlength.setTextColor(color_text);
+        txt_lightlength.setTextSize(textSizeSp);
 
         row_actual.getField(0).setTextColor(color_sunrise);
         row_civil.getField(0).setTextColor(color_sunrise);
@@ -332,27 +340,45 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         row_blue4.getField(1).setTextColor(color_sunrise);
 
         int labelColor = theme.getTitleColor();
-        for (CardViewHolder.TimeFieldRow row : rows) {
+        for (CardViewHolder.TimeFieldRow row : rows)
+        {
             row.label.setTextColor(labelColor);
+            row.label.setTextSize(titleSizeSp);
+            row.label.setTypeface(row.label.getTypeface(), (boldTitle ? Typeface.BOLD : Typeface.NORMAL));
+
+            for (int i=0; i<2; i++) {
+                if (row.getField(i) != null) {
+                    row.getField(i).setTextSize(timeSizeSp);
+                    //row.getField(i).setTypeface(row.getField(i).getTypeface(), (timeBold ? Typeface.BOLD : Typeface.NORMAL));
+                }
+            }
         }
 
         txt_date.setTextColor(SuntimesUtils.colorStateList(labelColor, options.color_disabled, color_action));
+        txt_date.setTextSize(titleSizeSp);
+        txt_date.setTypeface(txt_date.getTypeface(), (boldTitle ? Typeface.BOLD : Typeface.NORMAL));
 
         int sunriseIconColor = theme.getSunriseIconColor();
         int sunriseIconColor2 = theme.getSunriseIconStrokeColor();
         int sunriseIconStrokeWidth = theme.getSunriseIconStrokePixels(context);
         SuntimesUtils.tintDrawable((InsetDrawable)icon_sunrise.getBackground(), sunriseIconColor, sunriseIconColor2, sunriseIconStrokeWidth);
         header_sunrise.setTextColor(color_sunrise);
+        header_sunrise.setTextSize(titleSizeSp);
+        header_sunrise.setTypeface(header_sunrise.getTypeface(), (boldTitle ? Typeface.BOLD : Typeface.NORMAL));
 
         int sunsetIconColor = theme.getSunsetIconColor();
         int sunsetIconColor2 = theme.getSunsetIconStrokeColor();
         int sunsetIconStrokeWidth = theme.getSunsetIconStrokePixels(context);
         SuntimesUtils.tintDrawable((InsetDrawable)icon_sunset.getBackground(), sunsetIconColor, sunsetIconColor2, sunsetIconStrokeWidth);
         header_sunset.setTextColor(color_sunset);
+        header_sunset.setTextSize(titleSizeSp);
+        header_sunset.setTypeface(header_sunset.getTypeface(), (boldTitle ? Typeface.BOLD : Typeface.NORMAL));
 
         moonrise.themeViews(context, theme);
         moonphase.themeViews(context, theme);
         moonlabel.setTextColor(labelColor);
+        moonlabel.setTextSize(titleSizeSp);
+        moonlabel.setTypeface(moonlabel.getTypeface(), (boldTitle ? Typeface.BOLD : Typeface.NORMAL));
 
         lightmap.themeViews(context, theme);
     }

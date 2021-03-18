@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -25,6 +25,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PagerSnapHelper;
@@ -377,7 +378,7 @@ public class EquinoxView extends LinearLayout
             labelView.setLayoutParams(layoutParams);
         }
 
-        public void themeViews(Integer labelColor, Integer timeColor, Integer textColor)
+        public void themeViews(@Nullable Integer labelColor, @Nullable Integer timeColor, @Nullable Integer textColor, @Nullable Float textSizeSp, @Nullable Float titleSizeSp, boolean titleBold)
         {
             if (labelColor != null) {
                 labelView.setTextColor(SuntimesUtils.colorStateList(labelColor, options.disabledColor));
@@ -389,6 +390,16 @@ public class EquinoxView extends LinearLayout
 
             if (textColor != null) {
                 noteView.setTextColor(SuntimesUtils.colorStateList(textColor, options.disabledColor));
+            } //else Log.w("EquinoxView", "themeViews: null color, ignoring...");
+
+            if (textSizeSp != null) {
+                noteView.setTextSize(textSizeSp);
+                timeView.setTextSize(textSizeSp);
+            } //else Log.w("EquinoxView", "themeViews: null color, ignoring...");
+
+            if (titleSizeSp != null) {
+                labelView.setTextSize(titleSizeSp);
+                labelView.setTypeface(labelView.getTypeface(), (titleBold ? Typeface.BOLD : Typeface.NORMAL));
             } //else Log.w("EquinoxView", "themeViews: null color, ignoring...");
         }
 
@@ -774,7 +785,7 @@ public class EquinoxView extends LinearLayout
         {
             EquinoxNote note = new EquinoxNote(labelView, timeView, noteView, pageIndex, options);
             if (timeColor != null) {
-                note.themeViews(options.labelColor, timeColor, options.textColor);
+                note.themeViews(options.labelColor, timeColor, options.textColor, options.timeSizeSp, options.titleSizeSp, options.titleBold);
             }
             notes.add(note);
             return note;
@@ -890,14 +901,19 @@ public class EquinoxView extends LinearLayout
         public void themeViews( EquinoxViewOptions options, int position )
         {
             title.setTextColor(SuntimesUtils.colorStateList((position  < EquinoxViewAdapter.CENTER_POSITION ? options.disabledColor : options.titleColor), options.disabledColor, options.pressedColor));
+            if (options.titleSizeSp != null)
+            {
+                title.setTextSize(options.titleSizeSp);
+                title.setTypeface(title.getTypeface(), (options.titleBold ? Typeface.BOLD : Typeface.NORMAL));
+            }
 
             ImageViewCompat.setImageTintList(btn_flipperNext, SuntimesUtils.colorStateList(options.titleColor, options.disabledColor, options.pressedColor));
             ImageViewCompat.setImageTintList(btn_flipperPrev, SuntimesUtils.colorStateList(options.titleColor, options.disabledColor, options.pressedColor));
 
-            note_equinox_vernal.themeViews(options.labelColor, options.seasonColors[0], options.textColor);
-            note_solstice_summer.themeViews(options.labelColor, options.seasonColors[1], options.textColor);
-            note_equinox_autumnal.themeViews(options.labelColor, options.seasonColors[2], options.textColor);
-            note_solstice_winter.themeViews(options.labelColor, options.seasonColors[3], options.textColor);
+            note_equinox_vernal.themeViews(options.labelColor, options.seasonColors[0], options.textColor, options.timeSizeSp, options.titleSizeSp, options.titleBold);
+            note_solstice_summer.themeViews(options.labelColor, options.seasonColors[1], options.textColor, options.timeSizeSp, options.titleSizeSp, options.titleBold);
+            note_equinox_autumnal.themeViews(options.labelColor, options.seasonColors[2], options.textColor, options.timeSizeSp, options.titleSizeSp, options.titleBold);
+            note_solstice_winter.themeViews(options.labelColor, options.seasonColors[3], options.textColor, options.timeSizeSp, options.titleSizeSp, options.titleBold);
         }
     }
 
@@ -919,6 +935,10 @@ public class EquinoxView extends LinearLayout
         public Integer labelColor, textColor;
         public int resID_buttonPressColor;
 
+        public Float timeSizeSp = null;
+        public Float titleSizeSp = null;
+        public boolean titleBold = false;
+
         private SuntimesTheme themeOverride = null;
 
         @SuppressLint("ResourceType")
@@ -932,6 +952,7 @@ public class EquinoxView extends LinearLayout
             resID_buttonPressColor = typedArray.getResourceId(2, R.color.btn_tint_pressed_dark);
             pressedColor = ContextCompat.getColor(context, resID_buttonPressColor);
             labelColor = textColor = seasonColors[0] = seasonColors[1] = seasonColors[2] = seasonColors[3] = null;
+            titleSizeSp = timeSizeSp = null;
             typedArray.recycle();
         }
 
@@ -948,6 +969,9 @@ public class EquinoxView extends LinearLayout
                 seasonColors[1] = theme.getSummerColor();
                 seasonColors[2] = theme.getFallColor();
                 seasonColors[3] = theme.getWinterColor();
+                timeSizeSp = theme.getTimeSizeSp();
+                titleSizeSp = theme.getTitleSizeSp();
+                titleBold = theme.getTitleBold();
             }
         }
     }

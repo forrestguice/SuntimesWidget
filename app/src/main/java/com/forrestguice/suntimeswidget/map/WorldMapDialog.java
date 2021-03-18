@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -27,6 +27,7 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -392,7 +393,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             color_accent = themeOverride.getAccentColor();
 
             dialogTitle.setTextColor(themeOverride.getTitleColor());
+            dialogTitle.setTextSize(themeOverride.getTitleSizeSp());
+            dialogTitle.setTypeface(dialogTitle.getTypeface(), (themeOverride.getTitleBold() ? Typeface.BOLD : Typeface.NORMAL));
+
             utcTime.setTextColor(themeOverride.getTimeColor());
+            utcTime.setTextSize(themeOverride.getTimeSizeSp());
+            utcTime.setTypeface(utcTime.getTypeface(), (themeOverride.getTimeBold() ? Typeface.BOLD : Typeface.NORMAL));
+
             worldmap.themeViews(context, themeOverride);
         }
 

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -23,7 +23,9 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v4.widget.ImageViewCompat;
@@ -279,6 +281,8 @@ public class MoonPhasesView1 extends LinearLayout
 
         private int colorNote, colorTitle, colorTime, colorText, colorWaxing, colorWaning, colorFull, colorNew, colorDisabled;
         private float strokePixelsNew, strokePixelsFull;
+        private Float spTime = null, spText = null, spTitle = null, spSuffix = null;
+        private boolean boldTime, boldTitle;
 
         public PhaseAdapter(Context context) {
             contextRef = new WeakReference<>(context);
@@ -420,6 +424,12 @@ public class MoonPhasesView1 extends LinearLayout
             colorNew = theme.getMoonNewColor();
             strokePixelsNew = theme.getMoonNewStrokePixels(context);
             strokePixelsFull = theme.getMoonFullStrokePixels(context);
+            spTime = theme.getTimeSizeSp();
+            spText = theme.getTextSizeSp();
+            spTitle = theme.getTitleSizeSp();
+            spSuffix = theme.getTimeSuffixSizeSp();
+            boldTitle = theme.getTitleBold();
+            boldTime = theme.getTimeBold();
         }
 
         protected void themeViews(Context context, @NonNull PhaseField holder, boolean isAgo)
@@ -438,7 +448,7 @@ public class MoonPhasesView1 extends LinearLayout
             int titleColor = isAgo ? colorDisabled : colorTitle;
             int timeColor = isAgo ? colorDisabled : colorTime;
             int textColor = isAgo ? colorDisabled : colorText;
-            holder.themeViews(titleColor, timeColor, textColor, bitmap);
+            holder.themeViews(titleColor, spTitle, boldTitle, timeColor, spTime, boldTime, textColor, bitmap);
         }
     }
 
@@ -525,11 +535,23 @@ public class MoonPhasesView1 extends LinearLayout
             setLabel(phaseLabel);
         }
 
-        public void themeViews(int labelColor, int timeColor, int textColor, @NonNull Bitmap bitmap)
+        public void themeViews(int labelColor, @Nullable Float labelSizeSp, boolean labelBold, int timeColor, @Nullable Float timeSizeSp, boolean timeBold, int textColor, @NonNull Bitmap bitmap)
         {
             label.setTextColor(labelColor);
+            if (labelSizeSp != null) {
+                label.setTextSize(labelSizeSp);
+                label.setTypeface(label.getTypeface(), (labelBold ? Typeface.BOLD : Typeface.NORMAL));
+            }
+
             field.setTextColor(timeColor);
             note.setTextColor(textColor);
+
+            if (timeSizeSp != null) {
+                note.setTextSize(timeSizeSp);
+                field.setTextSize(timeSizeSp);
+                field.setTypeface(field.getTypeface(), (timeBold ? Typeface.BOLD : Typeface.NORMAL));
+            }
+
             icon.setImageBitmap(bitmap);
         }
 
