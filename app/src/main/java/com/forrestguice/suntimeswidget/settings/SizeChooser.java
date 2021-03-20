@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -42,7 +42,7 @@ public class SizeChooser implements TextWatcher, View.OnFocusChangeListener
 {
     private String chooserID = "0";
     private final Context context;
-    private int value;
+    private float value;
     private final EditText edit;
     private final float min, max;
 
@@ -102,12 +102,12 @@ public class SizeChooser implements TextWatcher, View.OnFocusChangeListener
         return edit;
     }
 
-    public int getValue()
+    public float getValue()
     {
         return value;
     }
 
-    public void setValue( int value )
+    public void setValue( float value )
     {
         this.value = value;
         updateViews();
@@ -115,14 +115,14 @@ public class SizeChooser implements TextWatcher, View.OnFocusChangeListener
 
     public void setValue( Bundle savedState )
     {
-        setValue(savedState.getInt(chooserID, getValue()));
+        setValue(savedState.getFloat(chooserID, getValue()));
     }
 
     public void updateViews()
     {
         if (edit != null)
         {
-            edit.setText(String.format(Locale.US, "%d", value));
+            edit.setText(String.format(Locale.US, "%.1f", value));
         }
     }
 
@@ -147,7 +147,7 @@ public class SizeChooser implements TextWatcher, View.OnFocusChangeListener
     {
         String rawValue = editable.toString();
         try {
-            value = Integer.parseInt(rawValue);
+            value = Float.parseFloat(rawValue);
         } catch (NumberFormatException e) {
             Log.w("setTextSize", "Invalid size! " + rawValue + " ignoring...");
         }
@@ -192,7 +192,7 @@ public class SizeChooser implements TextWatcher, View.OnFocusChangeListener
         editValue.setError(null);
 
         try {
-            int textSize = Integer.parseInt(editValue.getText().toString());
+            float textSize = Float.parseFloat(editValue.getText().toString());
             if (textSize < min)
             {
                 isValid = false;       // too small

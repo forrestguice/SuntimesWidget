@@ -419,7 +419,7 @@
         <item name="android:layout_width">50dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:minEms">2</item>
-        <item name="android:inputType">number</item>
+        <item name="android:inputType">numberDecimal</item>
     </style>
 
     <style name="SizeEditLabel">

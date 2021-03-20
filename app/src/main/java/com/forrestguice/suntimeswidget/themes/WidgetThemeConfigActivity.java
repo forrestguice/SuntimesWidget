@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -1282,7 +1282,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         for (SizeChooser chooser : sizeChoosers)
         {
-            outState.putInt(chooser.getID(), chooser.getValue());
+            outState.putFloat(chooser.getID(), chooser.getValue());
         }
         for (ColorChooser chooser : colorChoosers)
         {
@@ -1430,10 +1430,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             {
                 editDisplay.setText((mode == UIMode.ADD_THEME) ? generateThemeDisplayString(theme.themeDisplayString()) : theme.themeDisplayString());
             }
-            chooseTitleSize.setValue((int)theme.getTitleSizeSp());
-            chooseTextSize.setValue((int)theme.getTextSizeSp());
-            chooseTimeSize.setValue((int)theme.getTimeSizeSp());
-            chooseSuffixSize.setValue((int)theme.getTimeSuffixSizeSp());
+            chooseTitleSize.setValue(theme.getTitleSizeSp());
+            chooseTextSize.setValue(theme.getTextSizeSp());
+            chooseTimeSize.setValue(theme.getTimeSizeSp());
+            chooseSuffixSize.setValue(theme.getTimeSuffixSizeSp());
             chooseColorTitle.setColor(theme.getTitleColor());
             chooseColorText.setColor(theme.getTextColor());
             chooseColorTime.setColor(theme.getTimeColor());
@@ -1532,17 +1532,17 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 this.themeSunriseTextColor = chooseColorRise.getColor();
                 this.themeSunriseIconColor = chooseColorRiseIconFill.getColor();
                 this.themeSunriseIconStrokeColor = chooseColorRiseIconStroke.getColor();
-                this.themeSunriseIconStrokeWidth = chooseIconStroke.getValue();
+                this.themeSunriseIconStrokeWidth = (int)chooseIconStroke.getValue();
 
                 this.themeNoonTextColor = chooseColorNoon.getColor();
                 this.themeNoonIconColor = chooseColorNoonIconFill.getColor();
                 this.themeNoonIconStrokeColor = chooseColorNoonIconStroke.getColor();
-                this.themeNoonIconStrokeWidth = chooseNoonIconStroke.getValue();
+                this.themeNoonIconStrokeWidth = (int)chooseNoonIconStroke.getValue();
 
                 this.themeSunsetTextColor = chooseColorSet.getColor();
                 this.themeSunsetIconColor = chooseColorSetIconFill.getColor();
                 this.themeSunsetIconStrokeColor = chooseColorSetIconStroke.getColor();
-                this.themeSunsetIconStrokeWidth = chooseIconStroke.getValue();
+                this.themeSunsetIconStrokeWidth = (int)chooseIconStroke.getValue();
 
                 this.themeDayColor = chooseColorDay.getColor();
                 this.themeCivilColor = chooseColorCivil.getColor();
@@ -1567,8 +1567,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 this.themeMoonWaxingColor = chooseColorMoonWaxing.getColor();
                 this.themeMoonFullColor = chooseColorMoonFull.getColor();
 
-                this.themeMoonFullStroke = chooseMoonStroke.getValue();
-                this.themeMoonNewStroke = chooseMoonStroke.getValue();
+                this.themeMoonFullStroke = (int)chooseMoonStroke.getValue();
+                this.themeMoonNewStroke = (int)chooseMoonStroke.getValue();
 
                 this.themePadding = choosePadding.getPadding();
                 ThemeBackground backgroundItem = (ThemeBackground)spinBackground.getSelectedItem();
