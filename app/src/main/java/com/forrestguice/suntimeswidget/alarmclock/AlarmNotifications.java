@@ -357,10 +357,8 @@ public class AlarmNotifications extends BroadcastReceiver
             Log.w(TAG, "startAlert: blocked by `Do Not Disturb`: " + alarm.rowID);
         }
 
-        if (alarm.vibrate && vibrator != null && passesFilter)
-        {
-            int repeatFrom = (alarm.type == AlarmClockItem.AlarmType.ALARM ? 0 : -1);
-            vibrator.vibrate(AlarmSettings.loadPrefVibratePattern(context, alarm.type), repeatFrom);
+        if (alarm.vibrate && passesFilter) {
+            startVibration(context, alarm);
         }
 
         Uri soundUri = ((alarm.ringtoneURI != null && !alarm.ringtoneURI.isEmpty()) ? Uri.parse(alarm.ringtoneURI) : null);
@@ -423,6 +421,42 @@ public class AlarmNotifications extends BroadcastReceiver
         }
     }
 
+    private static Handler vibrationHandler;
+    private static Runnable vibration;
+    private static Runnable vibrate(final long[] pattern, final int repeat)
+    {
+        return vibration = new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                if (isPlaying && vibrator != null)
+                {
+                    vibrator.vibrate(pattern, -1);   // manually loop vibration; this triggers a (re)start if vibration was stopped by screen-off.
+                    if (isPlaying && repeat >= 0) {             // TODO: better workaround?
+                        vibrationHandler.postDelayed(vibration, vibrationLength(pattern));
+                    }
+                }
+            }
+        };
+    }
+    private static long vibrationLength(long[] pattern)
+    {
+        long length = 0;
+        for (long duration : pattern) {
+            length += duration;
+        }
+        return length;
+    }
+    private static void startVibration(@NonNull final Context context, @NonNull final AlarmClockItem alarm)
+    {
+        if (vibrationHandler == null) {
+            vibrationHandler = new Handler();
+        }
+        int repeatFrom = (alarm.type == AlarmClockItem.AlarmType.ALARM) ? 0 : -1;
+        vibrationHandler.post(vibrate(AlarmSettings.loadPrefVibratePattern(context, alarm.type), repeatFrom));
+    }
+
     private static int FADEIN_STEP_MILLIS = 50;
     private static Handler fadeHandler;
     private static Runnable fadein;
@@ -464,8 +498,12 @@ public class AlarmNotifications extends BroadcastReceiver
     }
     public static void stopAlert(boolean stopVibrate)
     {
-        if (vibrator != null && stopVibrate) {
+        if (vibrator != null && stopVibrate)
+        {
             vibrator.cancel();
+            if (vibrationHandler != null) {
+                vibrationHandler.removeCallbacks(vibration);
+            }
         }
 
         if (player != null)

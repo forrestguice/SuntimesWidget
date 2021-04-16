@@ -530,8 +530,8 @@ public class AlarmClockItem implements Parcelable
         public static void initDisplayStrings( Context context )
         {
             SYSTEM_TIME.setDisplayString(context.getString(R.string.timezoneMode_current));
-            LOCAL_MEAN_TIME.setDisplayString(context.getString(R.string.solartime_localMean));
-            APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.solartime_apparent));
+            LOCAL_MEAN_TIME.setDisplayString(context.getString(R.string.time_localMean));
+            APPARENT_SOLAR_TIME.setDisplayString(context.getString(R.string.time_apparent));
         }
 
         public TimeZone getTimeZone(Location location) {

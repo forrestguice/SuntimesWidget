@@ -23,8 +23,8 @@ android
         minSdkVersion 10
         //noinspection ExpiredTargetSdkVersion,OldTargetApi
         targetSdkVersion 25
-        versionCode 69
-        versionName "0.13.5"
+        versionCode 73
+        versionName "0.13.9"
 
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
 
@@ -58,8 +58,8 @@ dependencies
     implementation 'com.github.forrestguice:sunrisesunsetlib-java:SunriseSunsetCalculator-1.2-p0-fixdst'
     implementation 'com.github.caarmen.SunriseSunset:lib-sunrise-sunset:1.1.0'
     implementation group: 'net.time4j', name: 'time4j-android', version: '4.4.2-2019c'
-
-    implementation 'com.github.QuadFlask:colorpicker:0.0.13'
+    
+    implementation 'com.github.forrestguice:colorpicker:0.0.13post1'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.jraska:falcon:1.0.4'

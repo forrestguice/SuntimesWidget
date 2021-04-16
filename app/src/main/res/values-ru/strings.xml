@@ -472,19 +472,19 @@
     <string name="configAction_savePlace">Сохранить</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_solar">Солнечное время</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Солнечное время</string>                       <!-- setting -->
     <string name="timezoneMode_current">Системный часовой пояс</string>               <!-- setting -->
     <string name="timezoneMode_custom">Пользовательский</string>                    <!-- setting -->
 
-    <string name="solartime_localMean">Среднее солнечное время</string>                 <!-- setting / custom timezone id -->
-    <string name="solartime_apparent">Истинное солнечное время</string>              <!-- setting / custom timezone id -->
+    <string name="time_localMean">Среднее солнечное время</string>                 <!-- setting / custom timezone id -->
+    <string name="time_apparent">Истинное солнечное время</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
     <string name="configLabel_timezone">Настройки часового пояса</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Режим:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Часовой пояс:</string>              <!-- spinner label -->
-    <string name="configLabel_solartime">Солнечное время:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Солнечное время:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Системный</string>          <!-- setting -->
@@ -1027,10 +1027,13 @@
     <string name="configActionDesc_actionList">Список действий</string>
     <string name="configActionDesc_widgetList">Список виджетов</string>
 
-    <string-array name="tapActions_titles">    <!-- must be in same order as enum TapActions -->
+    <!-- must be in same order as enum TapActions -->
+    <!-- uncomment to override:
+    <string-array name="tapActions_titles">
         <item>@string/configActionDesc_doNothing</item>
         <item>@string/app_name</item>
 
+        <item>@string/app_name</item>
         <item>@string/app_name</item>
         <item>@string/app_name</item>
         <item>@string/app_name</item>
@@ -1055,14 +1058,18 @@
 
         <item>@string/configAction_showCalendar</item>
         <item>@string/configAction_mapLocation</item>
-    </string-array>
-    <string-array name="tapActions_display">    <!-- must be in same order as enum TapActions -->
+    </string-array>-->
+
+    <!-- must be in same order as enum TapActions -->
+    <!-- uncomment to override:
+    <string-array name="tapActions_display">
         <item>@string/configActionDesc_doNothing</item>
         <item>@string/configActionDesc_setAlarm</item>
 
         <item>@string/configActionDesc_nextCard</item>
         <item>@string/configActionDesc_prevCard</item>
         <item>@string/configActionDesc_swapCards</item>
+        <item>@string/configActionDesc_showCard</item>
 
         <item>@string/configActionDesc_nextNote</item>
         <item>@string/configActionDesc_prevNote</item>
@@ -1084,7 +1091,7 @@
 
         <item>@string/configActionDesc_showCalendar</item>
         <item>@string/configActionDesc_mapLocation</item>
-    </string-array>
+    </string-array>-->
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">по смещению</string>
@@ -1165,6 +1172,7 @@
         <item>Китайский (традиционный)</item>
         <item>Португальский</item>
         <item>Русский</item>
+        <item>Dutch</item>  <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
@@ -1444,7 +1452,7 @@
     ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
         <b>Исходный код:</b><br />
-        Copyright &#169 2014-2020 Forrest Guice <br />
+        Copyright &#169 2014-2021 Forrest Guice <br />
         Исходный код доступен под лицензией GPLv3.
     ]]></string>
 

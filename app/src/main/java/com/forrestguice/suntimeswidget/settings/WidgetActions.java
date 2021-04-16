@@ -564,6 +564,7 @@ public class WidgetActions
         CARD_NEXT("Suntimes", "Show next card", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, false),
         CARD_PREV("Suntimes", "Show previous card", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, false),
         SWAP_CARD("Suntimes", "Swap cards", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, false),
+        SHOW_CARD("Suntimes", "View date", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, false),
 
         NEXT_NOTE("Suntimes", "Show next note", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, false),
         PREV_NOTE("Suntimes", "Show previous note", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, false),
@@ -693,6 +694,11 @@ public class WidgetActions
                         case CARD_NEXT: launchAction = SuntimesActivity.ACTION_CARD_NEXT; break;
                         case CARD_PREV: launchAction = SuntimesActivity.ACTION_CARD_PREV; break;
                         case SWAP_CARD: launchAction = SuntimesActivity.ACTION_CARD_RESET; break;
+
+                        case SHOW_CARD:
+                            launchAction = SuntimesActivity.ACTION_CARD_SHOW;
+                            launchExtras = SuntimesActivity.EXTRA_SHOW_DATE + "=%dm";
+                            break;
 
                         case NOTHING:
                             launchType = null;

@@ -19,8 +19,12 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.content.UriPermission;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.SQLException;
@@ -221,6 +225,22 @@ public class AlarmDatabaseAdapter
     }
 
     /**
+     * Get the number of alarms in the database where..
+     * @param soundUri is equal to given value
+     * @return number of alarms using this uri
+     */
+    public int getAlarmCount(String soundUri)
+    {
+        int count = 0;
+        Cursor cursor = database.query(TABLE_ALARMS, QUERY_ALARMS_MINENTRY, KEY_ALARM_RINGTONE_URI + " = ?", new String[] { soundUri }, null, null, null);
+        if (cursor != null) {
+            count = cursor.getCount();
+            cursor.close();
+        }
+        return count;
+    }
+
+    /**
      * Get a Cursor over alarms in the database.
      * @param n get first n results (n <= 0 for complete list)
      * @param fullEntry true get all alarm data, false get display name only
@@ -391,6 +411,24 @@ public class AlarmDatabaseAdapter
     {
         return (database.delete(TABLE_ALARMS, null, null) > 0) &&
                (database.delete(TABLE_ALARMSTATE, null, null) > 0);
+    }
+
+    @TargetApi(19)
+    public void releaseUnusedUriPermissions(Context context)
+    {
+        ContentResolver resolver = (context != null) ? context.getContentResolver() : null;
+        if (resolver != null)
+        {
+            List<UriPermission> permissions = resolver.getPersistedUriPermissions();
+            for (UriPermission permission : permissions)
+            {
+                int alarmCount = getAlarmCount(permission.getUri().toString());
+                if (alarmCount <= 0) {
+                    resolver.releasePersistableUriPermission(permission.getUri(), Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    Log.i("AlarmDatabaseAdapter", "released uri permission " + permission.getUri().toString());
+                } // else Log.d("AlarmDatabaseAdapter", "retaining uri permission " + permission.getUri().toString() + ", used by " + alarmCount + " alarms.");
+            }
+        }
     }
 
     /**

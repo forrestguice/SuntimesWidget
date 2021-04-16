@@ -50,7 +50,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.AlarmDialog;
 import com.forrestguice.suntimeswidget.LocationConfigDialog;
@@ -87,6 +86,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     public static final AlarmClockItem.AlarmType DEF_ALARMTYPE = AlarmClockItem.AlarmType.ALARM;
 
     public static final String EXTRA_PREVIEW_OFFSET = "previewOffset";
+    public static final String EXTRA_BUTTON_ALARMLIST = "showAlarmListButton";
 
     public static final String DIALOG_LOCATION = "locationDialog";
 
@@ -97,6 +97,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     protected TextSwitcher text_time;
     protected ImageView icon_offset;
     protected Spinner spin_type;
+    protected ImageButton btn_alarms;
     protected SuntimesUtils utils = new SuntimesUtils();
 
     public AlarmCreateDialog() {
@@ -105,6 +106,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         Bundle args = new Bundle();
         args.putInt(EXTRA_MODE, DEF_MODE);
         args.putBoolean(EXTRA_PREVIEW_OFFSET, false);
+        args.putBoolean(EXTRA_BUTTON_ALARMLIST, false);
 
         args.putInt(EXTRA_HOUR, DEF_HOUR);
         args.putInt(EXTRA_MINUTE, DEF_MINUTE);
@@ -315,9 +317,8 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             layout_time.setOnClickListener(onDialogBottomBarClick);
         }
 
-        ImageButton btn_alarms = (ImageButton) dialogContent.findViewById(R.id.dialog_button_alarms);
-        if (btn_alarms != null)
-        {
+        btn_alarms = (ImageButton) dialogContent.findViewById(R.id.dialog_button_alarms);
+        if (btn_alarms != null) {
             btn_alarms.setOnClickListener(onDialogNeutralClick);
         }
     }
@@ -337,6 +338,10 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     private void updateViews(Context context)
     {
         detachListeners();
+
+        if (btn_alarms != null) {
+            btn_alarms.setVisibility(showAlarmListButton() ? View.VISIBLE : View.GONE);
+        }
 
         AlarmClockItem.AlarmType alarmType = getAlarmType();
         AlarmClockItem item = createAlarm(AlarmCreateDialog.this, alarmType);
@@ -691,6 +696,13 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     }
     public void setPreviewOffset(boolean value) {
         getArguments().putBoolean(EXTRA_PREVIEW_OFFSET, value);
+    }
+
+    public boolean showAlarmListButton() {
+        return getArguments().getBoolean(EXTRA_BUTTON_ALARMLIST, false);
+    }
+    public void setShowAlarmListButton(boolean value) {
+        getArguments().putBoolean(EXTRA_BUTTON_ALARMLIST, value);
     }
 
     public int getMode() {

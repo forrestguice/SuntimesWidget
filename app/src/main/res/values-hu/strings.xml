@@ -401,19 +401,19 @@
     <string name="configAction_savePlace">Ment</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_solar">Szoláris idő</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Szoláris idő</string>                       <!-- setting -->
     <string name="timezoneMode_current">Zónaidő</string>               <!-- setting -->
     <string name="timezoneMode_custom">Felhasználó által megadott</string>                    <!-- setting -->
 
-    <string name="solartime_localMean">Helyi idő</string>                 <!-- setting / custom timezone id -->
-    <string name="solartime_apparent">Valódi szoláris idő</string>              <!-- setting / custom timezone id -->
+    <string name="time_localMean">Helyi idő</string>                 <!-- setting / custom timezone id -->
+    <string name="time_apparent">Valódi szoláris idő</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
     <string name="configLabel_timezone">Időzóna beállítások:</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Mód:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Időzóna:</string>              <!-- spinner label -->
-    <string name="configLabel_solartime">Szoláris idő:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Szoláris idő:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Idő megjelenítése</string>          <!-- setting -->
@@ -977,6 +977,7 @@
         <item>Traditional Chinese</item>
         <item>Portuguese</item>  <!-- TODO -->
         <item>Russian</item>  <!-- TODO -->
+        <item>Dutch</item>  <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
@@ -1242,7 +1243,7 @@
     ]]></string>
     <string name="app_legal1"><![CDATA[
         <b>Source Code:</b><br />
-        Copyright &#169 2014-2020 Forrest Guice <br />
+        Copyright &#169 2014-2021 Forrest Guice <br />
         Source code available under GPLv3.
     ]]></string>
 

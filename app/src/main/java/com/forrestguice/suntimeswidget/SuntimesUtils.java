@@ -76,6 +76,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings.TimeFormatMode;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import java.text.DateFormatSymbols;
 import java.text.NumberFormat;
@@ -86,6 +87,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.IllegalFormatConversionException;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class SuntimesUtils
 {
@@ -543,8 +545,10 @@ public class SuntimesUtils
     public TimeDisplayText calendarTimeSysDisplayString(Context context, @NonNull Calendar cal)
     {
         DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(context);
+        Date time = cal.getTime();
+        applyTimeZone(time, cal.getTimeZone());
         timeFormat.setTimeZone(cal.getTimeZone());
-        TimeDisplayText retValue = new TimeDisplayText(timeFormat.format(cal.getTime()), "", "");
+        TimeDisplayText retValue = new TimeDisplayText(timeFormat.format(time), "", "");
         retValue.setRawValue(cal.getTimeInMillis());
         return retValue;
     }
@@ -568,8 +572,24 @@ public class SuntimesUtils
         Locale locale = getLocale();
         String format = (showSeconds ? strTimeVeryShortFormat24s : strTimeVeryShortFormat24);  // HH:mm or HH:mm:ss
         SimpleDateFormat timeFormat = new SimpleDateFormat(format, locale);
+
+        Date time = cal.getTime();
+        applyTimeZone(time, cal.getTimeZone());
         timeFormat.setTimeZone(cal.getTimeZone());
-        return timeFormat.format(cal.getTime());
+        return timeFormat.format(time);
+    }
+
+    /**
+     * applyTimeZone
+     * An opportunity to directly modify the Date before its formatted/displayed; apply special
+     * timezone rules here.
+     */
+    protected void applyTimeZone(@NonNull Date time, @NonNull TimeZone timezone)
+    {
+        String tzID = timezone.getID();
+        if (tzID.equals(WidgetTimezones.SiderealTime.TZID_GMST) || tzID.equals(WidgetTimezones.SiderealTime.TZID_LMST)) {
+            time.setTime(WidgetTimezones.SiderealTime.gmstOffset(time.getTime()) + time.getTime());   // these already extend LocalMeanTime (so apply gmst offset only)
+        }
     }
 
     /**
@@ -624,6 +644,7 @@ public class SuntimesUtils
         suffixFormat.setTimeZone(cal.getTimeZone());
 
         Date time = cal.getTime();
+        applyTimeZone(time, cal.getTimeZone());
         TimeDisplayText retValue = new TimeDisplayText(timeFormat.format(time), "", suffixFormat.format(time));
         retValue.setRawValue(cal.getTimeInMillis());
         return retValue;
@@ -633,8 +654,11 @@ public class SuntimesUtils
     {
         Locale locale = getLocale();
         SimpleDateFormat timeFormat = new SimpleDateFormat(strTimeShortFormat12, locale); // h:mm a
+
+        Date time = cal.getTime();
+        applyTimeZone(time, cal.getTimeZone());
         timeFormat.setTimeZone(cal.getTimeZone());
-        return timeFormat.format(cal.getTime());
+        return timeFormat.format(time);
     }
 
     /**
@@ -653,8 +677,10 @@ public class SuntimesUtils
         Locale locale = getLocale();
         SimpleDateFormat dayFormat = new SimpleDateFormat((abbreviate ? "E" : "EEEE"), locale);
 
+        Date time = calendar.getTime();
+        applyTimeZone(time, calendar.getTimeZone());
         dayFormat.setTimeZone(calendar.getTimeZone());
-        TimeDisplayText displayText = new TimeDisplayText(dayFormat.format(calendar.getTime()), "", "");
+        TimeDisplayText displayText = new TimeDisplayText(dayFormat.format(time), "", "");
         displayText.setRawValue(calendar.getTimeInMillis());
         return displayText;
     }
@@ -682,8 +708,10 @@ public class SuntimesUtils
             dateFormat = new SimpleDateFormat(strDateLongFormat, locale);
         else dateFormat = new SimpleDateFormat(strDateShortFormat, locale);
 
+        Date time = calendar.getTime();
+        applyTimeZone(time, calendar.getTimeZone());
         dateFormat.setTimeZone(calendar.getTimeZone());
-        TimeDisplayText displayText = new TimeDisplayText(dateFormat.format(calendar.getTime()), "", "");
+        TimeDisplayText displayText = new TimeDisplayText(dateFormat.format(time), "", "");
         displayText.setRawValue(calendar.getTimeInMillis());
         return displayText;
     }
@@ -725,8 +753,10 @@ public class SuntimesUtils
         } else dateTimeFormat = new SimpleDateFormat((showYear ? strDateLongFormat : strDateShortFormat), locale);
         //Log.d("DEBUG","DateTimeFormat: " + dateTimeFormat.toPattern() + " (" + locale.toString() + ")");
 
+        Date time = cal.getTime();
+        applyTimeZone(time, cal.getTimeZone());
         dateTimeFormat.setTimeZone(cal.getTimeZone());
-        TimeDisplayText displayText = new TimeDisplayText(dateTimeFormat.format(cal.getTime()), "", "");
+        TimeDisplayText displayText = new TimeDisplayText(dateTimeFormat.format(time), "", "");
         displayText.setRawValue(cal.getTimeInMillis());
         return displayText;
 

@@ -415,19 +415,22 @@
     <string name="configAction_savePlace">Zapisz</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_solar">Czas słoneczny</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Czas słoneczny</string>                       <!-- setting -->
     <string name="timezoneMode_current">Systemowa</string>                         <!-- setting -->
     <string name="timezoneMode_custom">Użytkownika</string>                    <!-- setting -->
-
-    <string name="solartime_localMean">średni czas słoneczny</string>                 <!-- setting / custom timezone id -->
-    <string name="solartime_apparent">prawdziwy czas słoneczny</string>              <!-- setting / custom timezone id -->
+    
+    <string name="time_lmst">lokalny czas gwiazdowy</string>                  <!-- timezone label -->
+    <string name="time_gmst">czas gwiazdowy Greenwich</string>              <!-- timezone label -->
+    <string name="time_utc">uniwersalny czas koordynowany</string>            <!-- timezone label -->
+    <string name="time_localMean">średni czas słoneczny</string>                 <!-- setting / custom timezone id -->
+    <string name="time_apparent">prawdziwy czas słoneczny</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
     <string name="configLabel_timezone">Ustawienia strefy czasowej</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Tryb:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Strefa czasowa:</string>              <!-- spinner label -->
-    <string name="configLabel_solartime">Czas słoneczny:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Czas słoneczny:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Systemowy</string>
@@ -910,7 +913,13 @@
     <string name="configActionDesc_setTimeZone">Ustaw strefę czasową</string>>
     <string name="configActionDesc_setLocation">Ustaw lokalizację</string>
     <string name="configActionDesc_swapCards">Przełącz karty (dziś/jutro)</string>
+    <string name="configActionDesc_nextCard">Pokaż następną kartę</string>
+    <string name="configActionDesc_prevCard">Pokaż poprzednią kartę</string>
     <string name="configActionDesc_setAlarmForNote">Ustaw alarm dla notatki</string>
+    <string name="configActionDesc_alarmList">Lista alarmów</string>
+    <string name="configActionDesc_themeList">Lista skórek</string>
+    <string name="configActionDesc_actionList">Lista akcji</string>
+    <string name="configActionDesc_widgetList">Lista widżetów</string>
 
     <!-- App Setting: time zone sort -->
     <string name="timezone_sort_byOffset">wg przesunięcia</string>
@@ -983,7 +992,8 @@
         <item>Norweski</item>
         <item>Chiński tradycyjny</item>
         <item>Portugalski</item>
-        <item>Russian</item>  <!-- TODO -->
+        <item>Rosyjski</item>
+        <item>Holenderski</item>
     </string-array>
 
     <!-- position formats -->
@@ -1252,7 +1262,7 @@
     <string name="app_version"><![CDATA[<b>Wersja:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
     <string name="app_shortdesc">Wyświetla czasy świecenia Słońca i Księżyca.</string>
     <string name="app_support_url"><![CDATA[<b>Wsparcie:</b> odwiedź <a href="https://github.com/forrestguice/SuntimesWidget/issues">stronę trackera błędów</a> aby zgłosić błąd/sugestię.]]></string>
-    <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014–2020 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>
+    <string name="app_legal1"><![CDATA[Prawo autorskie &#169 2014–2021 Forrest Guice <br />Kod źródłowy dostępny na licencji GPLv3.]]></string>
 
     <string name="app_legal2"><![CDATA[<b>Tłumaczenia na:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
     <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b>: <xliff:g id="authorList">%2$s</xliff:g>.]]></string>

@@ -1,5 +1,28 @@
 ### ~
 
+### v0.13.9 (2021-03-03)
+* updates translation to Catalan (ca) and Spanish (es) (#478, #479 by gnusuari0).
+* updates translation to Dutch (nl) (#486, #487 by Joppla).
+* updates translation to Norwegian (nb) (#488 by FTno).
+
+### v0.13.8 (2021-02-09)
+* adds translation to Dutch (nl) (contributed by Joppla) (#474, #480).
+* updates translation to Catalan (ca) and Spanish (es) (contributed by gnusuari0) (#478, #479).
+* improves alarm sound selection; adds menu: "No Sound", "Ringtone", "Audio File".
+* removes READ_EXTERNAL_STORAGE permission (api≥19) (#473); alarm sounds now use persistent URI permissions instead. [PERMISSION]
+
+### v0.13.7 (2021-01-26)
+* fixes bug "alarm vibration stops after screen is off" (#470).
+* fixes broken build caused by failing `colorpicker` dependency.
+* updates translation to Polish and Esperanto (eo, pl) (#468 by Verdulo).
+
+### v0.13.6 (2020-12-31)
+* adds support for sidereal time (GMST, LMST) (#463).
+* adds "alarm list" button to the alarm dialog (#455); shortcut to Suntimes Alarms.
+* adds "SHOW_CARD" action to main activity; allows other apps to scroll to a given date.
+* fixes widget click action so that it also triggers an update (#459).
+* misc time zone dialog improvements.
+
 ### v0.13.5 (2020-12-04)
 * adds translation to Russian (ru) (contributed by Ruslan Chintsov) (#458).
 * updates translation to Brazilian Portuguese (pt-br) (#453 by efraletti).

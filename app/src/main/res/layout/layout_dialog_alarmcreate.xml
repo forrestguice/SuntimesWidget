@@ -71,11 +71,11 @@
         <include layout="@layout/layout_listitem_alarmtime"
             android:layout_marginTop="8dp" android:layout_height="wrap_content" android:layout_width="match_parent" />
 
-        <ImageButton android:id="@+id/dialog_button_alarms" android:visibility="gone"
+        <ImageButton android:id="@+id/dialog_button_alarms"
             style="?attr/actionOverflowButtonStyle"
             android:contentDescription="@string/app_name_alarmclock"
             android:layout_width="48dp" android:layout_height="48dp"
-            android:layout_gravity="center|start" android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+            android:layout_gravity="bottom|start" android:layout_margin="8dp"
             android:src="@drawable/ic_suntimesalarms" />
 
     </FrameLayout>

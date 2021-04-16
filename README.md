@@ -43,7 +43,7 @@ The app:
 
 Widgets are (re)configurable:
 * location (latitude, longitude, elevation).
-* time zone (system / custom), or solar time (local mean time, apparent solar time).
+* time zone (system / custom), sidereal time (lmst, gmst), or solar time (local mean time, apparent solar time).
 * user-defined titles (supporting limited substitutions).
 * misc. options: "use elevation", "show seconds", "show noon", and "show comparison", etc.
 
@@ -107,9 +107,11 @@ The app benefits from the following permissions...
 |ACCESS_COARSE_LOCATION|To get current location.|v0.1.0|
 |ACCESS_FINE_LOCATION|To get current location (GPS).|v0.1.0|
 |BOOT_COMPLETED|To restore active alarms when the device boots.|v0.11.0|
-|READ_EXTERNAL_STORAGE|To play alarm sounds located on the SD card.|v0.11.5|
+|READ_EXTERNAL_STORAGE|To play alarm sounds located on the SD card.|v0.11.5, v0.13.8 (api&le;18)|
 |SET_ALARM|To interact with the system AlarmClock app.|v0.1.0|
 |WRITE_EXTERNAL_STORAGE|To export data (places, themes, etc.) to file.|v0.2.2 (api&le;18)|
+
+Version `v0.13.8` removed READ_EXTERNAL_STORAGE for api&ge;19 (replaced with persistent URI permissions). 
 
 Version `0.9.*` contained the following additional permissions (removed in v0.10.0)...
 
@@ -137,7 +139,7 @@ When reporting a bug **please be detailed as possible**. What did you expect the
 
 ## Legal Stuff
 
-Copyright &#169; 2014-2020 Forrest Guice<br/>
+Copyright &#169; 2014-2021 Forrest Guice<br/>
 
 The source code is available under [GPLv3](LICENSE) (https://github.com/forrestguice/SuntimesWidget).
 > This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the [GNU General Public License](LICENSE) for more details.
@@ -163,13 +165,14 @@ German translation by <u>Henrik "HerHde" Hüttemann</u>, <u>Wolkenschieber</u>, 
 Polish and Esperanto translations by <u>Verdulo</u>.<br/>
 French translation by <u>Jej</u> and <u>Aloha</u>.<br/>
 Hungarian translation by <u>Erci</u>.<br/>
-Catalan and Spanish translations by <u><a href="https://github.com/Raulvo">Raulvo</a></u>.<br/>
+Catalan and Spanish translations by <u><a href="https://github.com/Raulvo">Raulvo</a></u> and <u><a href=https://github.com/gnusuari0>gnusuari0</a></u>.<br/>
 Basque translation by <u>beriain</u>.<br/>
 Norwegian translation by <u>FTno</u>.<br/>
 Italian translation by <u>Matteo Caoduro</u>.<br/>
 Traditional Chinese translation by <u><a href=https://github.com/pggdt>ft42</a></u>.<br />
 Brazilian Portuguese translation by <u><a href=https://github.com/netosilva15>NetoSilva</a></u>, <u>Nelson A. de Oliveira</u>, and <u>Enrico S. B. Fraletti</u>.<br />
 Russian translation by <u><a href=https://github.com/rchintsov>Ruslan Chintsov</a></u>.<br />
+Dutch translation by <u><a href=https://github.com/joppla>Joppla</a></u>.<br />
 
 [Contributions to the project](CONTRIBUTING.md) are welcome.
 

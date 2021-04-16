@@ -58,6 +58,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -219,9 +220,12 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         layout_solartime = (LinearLayout) dialogContent.findViewById(R.id.appwidget_solartime_layout);
         label_solartime = (TextView) dialogContent.findViewById(R.id.appwidget_solartime_label);
 
-        ArrayAdapter<WidgetSettings.SolarTimeMode> spinner_solartimeAdapter;
-        spinner_solartimeAdapter = new ArrayAdapter<WidgetSettings.SolarTimeMode>(context, R.layout.layout_listitem_oneline, WidgetSettings.SolarTimeMode.values());
-        spinner_solartimeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        int c = 0;
+        ArrayList<WidgetTimezones.TimeZoneItem> items = new ArrayList<>();
+        for (WidgetSettings.SolarTimeMode value : WidgetSettings.SolarTimeMode.values()) {
+            items.add(new WidgetTimezones.TimeZoneItem(value.getID(), value.getDisplayString(), c++));
+        }
+        WidgetTimezones.TimeZoneItemAdapter spinner_solartimeAdapter = new WidgetTimezones.TimeZoneItemAdapter(getActivity(), R.layout.layout_listitem_timezone, items, R.string.timezoneCustom_line1, R.string.timezoneCustom_line2b);
 
         spinner_solartime = (Spinner) dialogContent.findViewById(R.id.appwidget_solartime);
         spinner_solartime.setAdapter(spinner_solartimeAdapter);
@@ -277,8 +281,8 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     {
         if (solarTime)
         {
-            WidgetSettings.SolarTimeMode item = (WidgetSettings.SolarTimeMode)item0;
-            if (item != null && item == WidgetSettings.SolarTimeMode.APPARENT_SOLAR_TIME)
+            WidgetTimezones.TimeZoneItem item = (WidgetTimezones.TimeZoneItem)item0;
+            if (item != null && item.getID().equals(WidgetSettings.SolarTimeMode.APPARENT_SOLAR_TIME.getID()))
             {
                 int eot = WidgetTimezones.ApparentSolarTime.equationOfTimeOffset(now.getTimeInMillis(), calculator);
                 updateExtrasLabel(getContext(), R.string.timezoneExtraApparentSolar, eot);

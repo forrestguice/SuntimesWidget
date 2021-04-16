@@ -7,6 +7,7 @@ La aplikaĵo postulas la jenajn permesojn:
 <li><small><u>BOOT_COMPLETED</u></small> por restarigi aktivajn alarmojn post restarto.</li>
 <li><small><u>SET_ALARM</u></small> por plani alarmojn per la aplikaĵo “Suntempoj: alarmoj”.</li>
 <li><small><u>VIBRATE</u></small> por alarmaj sciigoj.</li>
-<li><small><u>WRITE_EXTERNAL_STORAGE</u></small> por sekurkopii datumojn (lokojn, etosojn, ktp) al dosiero  <small>(nur api≤18)</small>.</li>
+<li><small><u>READ_EXTERNAL_STORAGE</u> </small> por ludi alarmajn sonojn troviĝantajn en la SD‑karto <small>(nur API≤18)</small>.</li>
+<li><small><u>WRITE_EXTERNAL_STORAGE</u></small> por sekurkopii datumojn (lokojn, etosojn, ktp) al dosiero  <small>(nur API≤18)</small>.</li>
 </ul>
 <p>Rimarko: interago kun kalendaro kaj permesoj aldonitaj en v0.9.0 estis forigitaj en v0.10.0. Tiu eblaĵo estas nun disponebla kiel aparta aplikaĵo: <a href="https://f-droid.org/eo/packages/com.forrestguice.suntimescalendars">Suntempoj: kalendaro</a> (Suntimes Calendars).</p>
