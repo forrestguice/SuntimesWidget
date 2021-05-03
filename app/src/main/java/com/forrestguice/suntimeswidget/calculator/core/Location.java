@@ -188,7 +188,13 @@ public class Location implements Parcelable
     {
         if (!useAltitude || altitude.isEmpty())
             return 0.0;
-        else return Double.parseDouble(altitude);
+        else {
+            try {
+                return Double.parseDouble(altitude);
+            } catch (NumberFormatException e) {
+                return 0.0;
+            }
+        }
     }
     public Integer getAltitudeAsInteger()
     {
