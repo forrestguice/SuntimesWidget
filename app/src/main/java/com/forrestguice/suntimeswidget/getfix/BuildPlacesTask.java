@@ -18,13 +18,17 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
@@ -75,33 +79,52 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         return (result ? 1 : 0);
     }
 
-    private int buildPlaces()
+    /**
+     * @param context context
+     * @param locations added to the given ArrayList
+     */
+    private void addPlacesFromRes(Context context, @NonNull ArrayList<Location> locations)
+    {
+        for (Locale locale : Locale.getAvailableLocales())
+        {
+            Location location = null;
+            if (Build.VERSION.SDK_INT >= 17 && context != null)
+            {
+                Configuration config = new Configuration(context.getResources().getConfiguration());
+                config.setLocale(locale);
+
+                Resources resources = context.createConfigurationContext(config).getResources();
+                String label = resources.getString(R.string.default_location_label);
+                String lat = resources.getString(R.string.default_location_latitude);
+                String lon = resources.getString(R.string.default_location_longitude);
+                String alt = resources.getString(R.string.default_location_altitude);
+                location = new Location(label, lat, lon, alt);
+            } // else    // TODO: legacy support
+
+            if (location != null && !locations.contains(location))
+            {
+                locations.add(location);
+            }
+        }
+    }
+
+    private void addPlacesFromUri(Context context, @NonNull ArrayList<Location> locations)
+    {
+        // TODO
+    }
+
+    private int buildPlaces(@Nullable Uri uri)
     {
         int result = 0;
         ArrayList<Location> locations = new ArrayList<>();
         try {
             Context context = contextRef.get();
             db.open();
-            for (Locale locale : Locale.getAvailableLocales())
-            {
-                Location location = null;
-                if (Build.VERSION.SDK_INT >= 17 && context != null)
-                {
-                    Configuration config = new Configuration(context.getResources().getConfiguration());
-                    config.setLocale(locale);
 
-                    Resources resources = context.createConfigurationContext(config).getResources();
-                    String label = resources.getString(R.string.default_location_label);
-                    String lat = resources.getString(R.string.default_location_latitude);
-                    String lon = resources.getString(R.string.default_location_longitude);
-                    String alt = resources.getString(R.string.default_location_altitude);
-                    location = new Location(label, lat, lon, alt);
-                } // else    // TODO: legacy support
-
-                if (location != null && !locations.contains(location))
-                {
-                    locations.add(location);
-                }
+            if (uri != null) {
+                addPlacesFromUri(context, locations);
+            } else {
+                addPlacesFromRes(context, locations);
             }
 
             Collections.sort(locations, new Comparator<Location>()
@@ -145,8 +168,13 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
             param_clearPlaces = (Boolean)params[0];
         }
 
+        Uri param_source = null;
+        if (params.length > 1) {
+            param_source = (Uri)params[1];
+        }
+
         int result = param_clearPlaces ? clearPlaces()
-                                       : buildPlaces();
+                                       : buildPlaces(param_source);
 
         long endTime = System.currentTimeMillis();
         while ((endTime - startTime) < MIN_WAIT_TIME || isPaused)
