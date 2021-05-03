@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -77,6 +78,8 @@ public class PlacesListFragment extends Fragment
     public static final String KEY_MODIFIED = "isModified";
 
     public static final String DIALOG_EDITPLACE = "placedialog";
+
+    public static final int IMPORT_REQUEST = 100;
 
     protected FragmentListener listener;
     protected PlacesListAdapter adapter;
@@ -147,6 +150,24 @@ public class PlacesListFragment extends Fragment
     {
         state.putLongArray(KEY_SELECTED_ROWID, adapter.getSelectedRowID());
         super.onSaveInstanceState(state);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode)
+        {
+            case IMPORT_REQUEST:
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    Uri uri = (data != null ? data.getData() : null);
+                    if (uri != null) {
+                        importPlaces(getActivity(), uri);
+                    }
+                }
+                break;
+        }
     }
 
     @Override
@@ -892,8 +913,21 @@ public class PlacesListFragment extends Fragment
 
     public boolean importPlaces(Context context)
     {
+        if (context != null)
+        {
+            Intent intent = new Intent((Build.VERSION.SDK_INT >= 19 ? Intent.ACTION_OPEN_DOCUMENT : Intent.ACTION_GET_CONTENT));
+            intent.setType("text/*");
+            startActivityForResult(intent, IMPORT_REQUEST);
+            return true;
+        }
         return false;
     }
+
+    public boolean importPlaces(Context context, @NonNull Uri uri)
+    {
+        return true;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
