@@ -925,6 +925,10 @@ public class PlacesListFragment extends Fragment
 
     public boolean importPlaces(Context context, @NonNull Uri uri)
     {
+        Log.i("importPlaces", "Starting import task: " + uri);
+        BuildPlacesTask task = new BuildPlacesTask(context);
+        task.setTaskListener(buildPlacesListener);
+        task.execute(false, uri);
         return true;
     }
 
