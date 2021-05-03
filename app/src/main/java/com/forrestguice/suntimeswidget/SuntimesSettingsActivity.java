@@ -78,6 +78,7 @@ import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
 import java.io.File;
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -1409,16 +1410,25 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         if (listPref != null)
         {
             WidgetThemes.initThemes(activity);
-            SuntimesTheme.ThemeDescriptor[] themes = WidgetThemes.sortedValues(true);
-            String[] themeEntries = new String[themes.length + 1];
-            String[] themeValues = new String[themes.length + 1];
+            List<SuntimesTheme.ThemeDescriptor> themes0 = WidgetThemes.getSortedValues(true);
+            ArrayList<SuntimesTheme.ThemeDescriptor> themes = new ArrayList<>();
+
+            for (SuntimesTheme.ThemeDescriptor theme : themes0)
+            {
+                if (!theme.isDefault()) {
+                    themes.add(theme);    // hide default widget themes, show only user-created themes
+                }                            // this is a workaround - the defaults have tiny (unreadable) font sizes, so we won't advertise their use
+            }
+
+            String[] themeEntries = new String[themes.size() + 1];
+            String[] themeValues = new String[themes.size() + 1];
 
             themeValues[0] = "default";
             themeEntries[0] = activity.getString(R.string.configLabel_tagDefault);
-            for (int i=0; i<themes.length; i++)                // i:0 is reserved for "default"
+            for (int i=0; i<themes.size(); i++)                // i:0 is reserved for "default"
             {
-                themeValues[i + 1] = themes[i].name();
-                themeEntries[i + 1] = themes[i].displayString();
+                themeValues[i + 1] = themes.get(i).name();
+                themeEntries[i + 1] = themes.get(i).displayString();
             }
 
             listPref.setEntries(themeEntries);
