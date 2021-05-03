@@ -28,6 +28,12 @@
             app:showAsAction="never"
             android:orderInCategory="300" />
 
+        <item android:id="@+id/importPlaces"
+            android:icon="?attr/icActionNew"
+            android:title="@string/configAction_importPlaces"
+            app:showAsAction="never"
+            android:orderInCategory="390" />
+
         <item android:id="@+id/exportPlaces"
             android:icon="?attr/icActionSave"
             android:title="@string/configAction_exportPlaces"
