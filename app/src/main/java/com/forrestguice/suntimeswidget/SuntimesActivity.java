@@ -1602,8 +1602,9 @@ public class SuntimesActivity extends AppCompatActivity
         dateWarning.setShouldShow(false);
         timezoneWarning.setShouldShow(false);
 
+        WidgetSettings.LocationMode locationMode = WidgetSettings.loadLocationModePref(context, 0);
         location = WidgetSettings.loadLocationPref(context, AppWidgetManager.INVALID_APPWIDGET_ID);
-        String locationTitle = location.getLabel();
+        String locationTitle = (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION ? getString(R.string.gps_lastfix_title_found) : location.getLabel());
 
         SpannableString locationSubtitle;
         String locationString = getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
