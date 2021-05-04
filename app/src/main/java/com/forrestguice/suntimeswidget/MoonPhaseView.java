@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -238,16 +238,30 @@ public class MoonPhaseView extends LinearLayout
     {
         if (data != null && data.isCalculated())
         {
-            double illumination = (!illumAtNoon ? data.getMoonIlluminationNow()
-                    : (tomorrowMode ? data.getMoonIlluminationTomorrow()
-                    : data.getMoonIlluminationToday()));
-
             NumberFormat formatter = NumberFormat.getPercentInstance();
             formatter.setMinimumFractionDigits(0);
             formatter.setMaximumFractionDigits((illumAtNoon ? 0 : 1));
 
-            String illum = formatter.format(illumination);
-            String illumNote = (context == null ? illum : context.getString(R.string.moon_illumination, illum));
+            String illum, illumNote;
+            if (!illumAtNoon)
+            {
+                illum = formatter.format(data.getMoonIlluminationNow());
+                illumNote = (context == null ? illum : context.getString(R.string.moon_illumination, illum));
+
+            } else {
+                String illumTime;
+                if (tomorrowMode)
+                {
+                    illum = formatter.format(data.getMoonIlluminationTomorrow());
+                    illumTime = utils.calendarTimeShortDisplayString(context, data.getLunarNoonTomorrow()).toString();
+
+                } else {
+                    illum = formatter.format(data.getMoonIlluminationToday());
+                    illumTime = utils.calendarTimeShortDisplayString(context, data.getLunarNoonToday()).toString();
+                }
+                illumNote = (context == null ? illum : context.getString(R.string.moon_illumination_at, illum, illumTime));
+            }
+
             SpannableString illumNoteSpan = SuntimesUtils.createColorSpan(null, illumNote, illum, noteColor);
             illumText.setText(illumNoteSpan);
 
