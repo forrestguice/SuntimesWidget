@@ -18,18 +18,28 @@
 
 package com.forrestguice.suntimeswidget.getfix;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -75,33 +85,105 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
         return (result ? 1 : 0);
     }
 
-    private int buildPlaces()
+    /**
+     * @param context context
+     * @param locations added to the given ArrayList
+     */
+    private void addPlacesFromRes(Context context, @NonNull ArrayList<Location> locations)
+    {
+        for (Locale locale : Locale.getAvailableLocales())
+        {
+            Location location = null;
+            if (Build.VERSION.SDK_INT >= 17 && context != null)
+            {
+                Configuration config = new Configuration(context.getResources().getConfiguration());
+                config.setLocale(locale);
+
+                Resources resources = context.createConfigurationContext(config).getResources();
+                String label = resources.getString(R.string.default_location_label);
+                String lat = resources.getString(R.string.default_location_latitude);
+                String lon = resources.getString(R.string.default_location_longitude);
+                String alt = resources.getString(R.string.default_location_altitude);
+                location = new Location(label, lat, lon, alt);
+            } // else    // TODO: legacy support
+
+            if (location != null && !locations.contains(location))
+            {
+                locations.add(location);
+            }
+        }
+    }
+
+    private void addPlacesFromUri(Context context, @NonNull Uri uri, @NonNull ArrayList<Location> locations)
+    {
+        try {
+            InputStream in = context.getContentResolver().openInputStream(uri);
+            if (in != null)
+            {
+                BufferedInputStream input = new BufferedInputStream(in);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+
+                String line = reader.readLine();
+                while (line != null)
+                {
+                    String[] parts = line.split(",");
+                    if (parts.length < 3) {
+                        Log.e("BuildPlacesTask", "Ignoring malformed line; " + line);
+                        line = reader.readLine();
+                        continue;
+                    }
+
+                    String label = parts[0];
+                    if (label.startsWith("\"")) {
+                        label = label.substring(1);
+                    }
+                    if (label.endsWith("\"")) {
+                        label = label.substring(0, label.length()-1);
+                    }
+
+                    String lat, lon;
+                    String alt = "0";
+                    try {
+                        lat = "" + Double.parseDouble(parts[1]);
+                        lon = "" + Double.parseDouble(parts[2]);
+                        if (parts.length >= 4) {
+                            alt = "" + Double.parseDouble(parts[3]);
+                        }
+                    } catch (NumberFormatException e) {
+                        Log.e("BuildPlacesTask", "Ignoring line " + line + " .. " + e);
+                        line = reader.readLine();
+                        continue;
+                    }
+
+                    Location location = new Location(label, lat, lon, alt);
+                    if (!locations.contains(location)) {
+                        locations.add(location);
+                    }
+                    line = reader.readLine();
+                }
+
+            } else {
+                Log.e("BuildPlacesTask", "Failed to import from " + uri + " (null)");
+            }
+        } catch (FileNotFoundException e) {
+            Log.e("BuildPlacesTask", "Failed to import from " + uri + ": " + e);
+        } catch (IOException e) {
+            Log.e("BuildPlacesTask", "Failed to import from " + uri + ": " + e);
+        }
+    }
+
+    private int buildPlaces(@Nullable Uri uri)
     {
         int result = 0;
         ArrayList<Location> locations = new ArrayList<>();
         try {
             Context context = contextRef.get();
             db.open();
-            for (Locale locale : Locale.getAvailableLocales())
-            {
-                Location location = null;
-                if (Build.VERSION.SDK_INT >= 17 && context != null)
-                {
-                    Configuration config = new Configuration(context.getResources().getConfiguration());
-                    config.setLocale(locale);
 
-                    Resources resources = context.createConfigurationContext(config).getResources();
-                    String label = resources.getString(R.string.default_location_label);
-                    String lat = resources.getString(R.string.default_location_latitude);
-                    String lon = resources.getString(R.string.default_location_longitude);
-                    String alt = resources.getString(R.string.default_location_altitude);
-                    location = new Location(label, lat, lon, alt);
-                } // else    // TODO: legacy support
-
-                if (location != null && !locations.contains(location))
-                {
-                    locations.add(location);
-                }
+            if (uri != null) {
+                addPlacesFromUri(context, uri, locations);
+            } else {
+                addPlacesFromRes(context, locations);
             }
 
             Collections.sort(locations, new Comparator<Location>()
@@ -145,8 +227,13 @@ public class BuildPlacesTask extends AsyncTask<Object, Object, Integer>
             param_clearPlaces = (Boolean)params[0];
         }
 
+        Uri param_source = null;
+        if (params.length > 1) {
+            param_source = (Uri)params[1];
+        }
+
         int result = param_clearPlaces ? clearPlaces()
-                                       : buildPlaces();
+                                       : buildPlaces(param_source);
 
         long endTime = System.currentTimeMillis();
         while ((endTime - startTime) < MIN_WAIT_TIME || isPaused)
