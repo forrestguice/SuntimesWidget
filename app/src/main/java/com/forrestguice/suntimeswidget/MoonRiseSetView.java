@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Typeface;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -431,7 +432,10 @@ public class MoonRiseSetView extends LinearLayout
         {
             int color = (rising ? theme.getMoonriseTextColor() : theme.getMoonsetTextColor());
             timeView.setTextColor(color);
+            timeView.setTextSize(theme.getTimeSizeSp());
+            timeView.setTypeface(timeView.getTypeface(), theme.getTimeBold() ? Typeface.BOLD : Typeface.NORMAL);
             positionView.setTextColor(color);
+            positionView.setTextSize(theme.getTimeSuffixSizeSp());
             SuntimesUtils.tintDrawable((LayerDrawable)iconView.getBackground(), color, color, 0);
         }
 

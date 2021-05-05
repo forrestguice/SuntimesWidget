@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2020 Forrest Guice
+    Copyright (C) 2017-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -362,9 +362,20 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
         } else {
             int titleColor = themeOverride.getTitleColor();
+            float textSizeSp = themeOverride.getTextSizeSp();
+            float titleSizeSp = themeOverride.getTitleSizeSp();
+            float timeSizeSp = themeOverride.getTimeSizeSp();
+            float suffixSizeSp = themeOverride.getTimeSuffixSizeSp();
+
             dialogTitle.setTextColor(titleColor);
+            dialogTitle.setTextSize(titleSizeSp);
+            dialogTitle.setTypeface(dialogTitle.getTypeface(), (themeOverride.getTitleBold() ? Typeface.BOLD : Typeface.NORMAL));
+
             sunElevationLabel.setTextColor(titleColor);
+            sunElevationLabel.setTextSize(suffixSizeSp);
+
             sunAzimuthLabel.setTextColor(titleColor);
+            sunAzimuthLabel.setTextSize(suffixSizeSp);
 
             lightmap.themeViews(context, themeOverride);
             colorNight = themeOverride.getNightColor();
@@ -382,11 +393,25 @@ public class LightMapDialog extends BottomSheetDialogFragment
             field_night.themeViews(themeOverride);
 
             sunAzimuth.setTextColor(themeOverride.getTimeColor());
+            sunAzimuth.setTextSize(timeSizeSp);
+            sunAzimuthRising.setTextSize(timeSizeSp);
+            sunAzimuthSetting.setTextSize(timeSizeSp);
+
             sunElevation.setTextColor(themeOverride.getTimeColor());
+            sunElevation.setTextSize(timeSizeSp);
+            sunElevationAtNoon.setTextSize(timeSizeSp);
+
             sunAzimuthAtNoon.setTextColor(themeOverride.getTimeColor());
+            sunAzimuthAtNoon.setTextSize(timeSizeSp);
+
             sunShadowObj.setTextColor(themeOverride.getTitleColor());
+            sunShadowObj.setTextSize(timeSizeSp);
+
             sunShadowLength.setTextColor(themeOverride.getTimeColor());
+            sunShadowLength.setTextSize(timeSizeSp);
+
             sunShadowLengthAtNoon.setTextColor(themeOverride.getSunsetTextColor());
+            sunShadowLengthAtNoon.setTextSize(timeSizeSp);
 
             SuntimesUtils.tintDrawable((InsetDrawable)riseIcon.getBackground(), themeOverride.getSunriseIconColor(), themeOverride.getSunriseIconStrokeColor(), themeOverride.getSunriseIconStrokePixels(context));
             SuntimesUtils.tintDrawable((InsetDrawable)setIcon.getBackground(), themeOverride.getSunsetIconColor(), themeOverride.getSunsetIconStrokeColor(), themeOverride.getSunsetIconStrokePixels(context));
@@ -644,7 +669,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
             if (theme != null)
             {
                 label.setTextColor(theme.getTextColor());
+                label.setTextSize(theme.getTextSizeSp());
                 text.setTextColor(theme.getTimeColor());
+                text.setTextSize(theme.getTimeSizeSp());
+                text.setTypeface(text.getTypeface(), (theme.getTimeBold() ? Typeface.BOLD : Typeface.NORMAL));
             }
         }
 

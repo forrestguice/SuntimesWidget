@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2019 Forrest Guice
+    Copyright (C) 2014-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -33,6 +33,7 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
@@ -776,6 +777,10 @@ public class SuntimesActivity extends AppCompatActivity
             int textColor = appThemeOverride.getTextColor();
             int disabledColor = ContextCompat.getColor(context, resID_buttonDisabledColor);
             int pressedColor = appThemeOverride.getActionColor();
+            float suffixSizeSp = appThemeOverride.getTimeSuffixSizeSp();
+            float textSizeSp = appThemeOverride.getTextSizeSp();
+            float titleSizeSp = appThemeOverride.getTitleSizeSp();
+            boolean titleBold = appThemeOverride.getTitleBold();
 
             Toolbar actionBar = (Toolbar) findViewById(R.id.app_menubar);
             actionBar.setTitleTextColor(titleColor);
@@ -783,15 +788,32 @@ public class SuntimesActivity extends AppCompatActivity
 
             txt_time.setTextColor(timeColor);
             txt_time_suffix.setTextColor(timeColor);
+
             txt_timezone.setTextColor(SuntimesUtils.colorStateList(textColor, disabledColor, pressedColor));
+            txt_timezone.setTextSize(suffixSizeSp);
 
             txt_time1_note1.setTextColor(timeColor);
-            txt_time1_note2.setTextColor(textColor);
+            txt_time1_note1.setTextSize(titleSizeSp);
+            txt_time1_note1.setTypeface(txt_time1_note1.getTypeface(), (titleBold ? Typeface.BOLD : Typeface.NORMAL));
             txt_time2_note1.setTextColor(timeColor);
+            txt_time2_note1.setTextSize(titleSizeSp);
+            txt_time2_note1.setTypeface(txt_time2_note1.getTypeface(), (titleBold ? Typeface.BOLD : Typeface.NORMAL));
+
+            txt_time1_note2.setTextColor(textColor);
+            txt_time1_note2.setTextSize(textSizeSp);
             txt_time2_note2.setTextColor(textColor);
+            txt_time2_note2.setTextSize(textSizeSp);
+
+            txt_time1_note3.setTextSize(titleSizeSp);
+            txt_time1_note3.setTypeface(txt_time1_note3.getTypeface(), (titleBold ? Typeface.BOLD : Typeface.NORMAL));
+            txt_time2_note3.setTextSize(titleSizeSp);
+            txt_time2_note3.setTypeface(txt_time2_note3.getTypeface(), (titleBold ? Typeface.BOLD : Typeface.NORMAL));
 
             txt_datasource.setTextColor(SuntimesUtils.colorStateList(textColor, disabledColor, pressedColor));
+            txt_datasource.setTextSize(suffixSizeSp);
+
             txt_altitude.setTextColor(timeColor);
+            txt_altitude.setTextSize(suffixSizeSp);
 
             color_textTimeDelta = appThemeOverride.getTimeColor();
             card_adapter.setThemeOverride(appThemeOverride);

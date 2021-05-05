@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.util.AttributeSet;
@@ -115,11 +116,22 @@ public class MoonPhaseView extends LinearLayout
     {
         noteColor = theme.getTimeColor();
         int textColor = theme.getTextColor();
+        int timeColor = theme.getTimeColor();
+        float suffixSizeSp = theme.getTimeSuffixSizeSp();
+        float timeSizeSp = theme.getTimeSizeSp();
 
         illumText.setTextColor(textColor);
+        illumText.setTextSize(suffixSizeSp);
+
         azimuthText.setTextColor(textColor);
+        azimuthText.setTextSize(suffixSizeSp);
+
         elevationText.setTextColor(textColor);
-        phaseText.setTextColor(theme.getTimeColor());
+        elevationText.setTextSize(suffixSizeSp);
+
+        phaseText.setTextColor(timeColor);
+        phaseText.setTextSize(timeSizeSp);
+        phaseText.setTypeface(phaseText.getTypeface(), (theme.getTimeBold() ? Typeface.BOLD : Typeface.NORMAL));
 
         int[] viewID = getIconViewIDs();
         Bitmap[] bitmaps = getThemedBitmaps(context, theme);

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -187,14 +188,22 @@ public class MoonDialog extends BottomSheetDialogFragment
             setColor = themeOverride.getMoonsetTextColor();
 
             dialogTitle.setTextColor(titleColor);
+            dialogTitle.setTextSize(themeOverride.getTitleSizeSp());
+            dialogTitle.setTypeface(dialogTitle.getTypeface(), (themeOverride.getTitleBold() ? Typeface.BOLD : Typeface.NORMAL));
+
             moonriseset.themeViews(context, themeOverride);
             currentphase.themeViews(context, themeOverride);
             moonphases.themeViews(context, themeOverride);
             moonapsis.themeViews(context, themeOverride);
 
             moondistance_label.setTextColor(titleColor);
+            moondistance_label.setTextSize(themeOverride.getTitleSizeSp());
+
             moondistance.setTextColor(textColor);
+            moondistance.setTextSize(themeOverride.getTimeSuffixSizeSp());
+
             moondistance_note.setTextColor(timeColor);
+            moondistance_note.setTextSize(themeOverride.getTextSizeSp());
 
         } else {
             int[] colorAttrs = { android.R.attr.textColorPrimary, R.attr.moonriseColor, R.attr.moonsetColor };
