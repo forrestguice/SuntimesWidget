@@ -1,5 +1,17 @@
 ### ~
 
+### v0.13.10 (2021-05-05)
+* adds 'import places'; import from a previously exported csv (#419).
+* changes moon illumination message; "% illuminated" to "% @ <lunarNoon>" (#384).
+* miscellaneous theme fixes and improvements (#492):
+ ** app now applies theme text sizes.
+ ** app now hides default widget themes from list (recommended for widgets only).
+ ** app now shows a warning when the theme is changed; "app restart may be needed for changes to take effect".
+ ** theme editor now allows choosing fractional sp values.
+ ** theme editor now changes previews when map/graph colors are modified.
+* fixes bug "current location title not translated" (#467).
+* updates translation to Polish and Esperanto (eo, pl) (#491 by Verdulo).
+
 ### v0.13.9 (2021-03-03)
 * updates translation to Catalan (ca) and Spanish (es) (#478, #479 by gnusuari0).
 * updates translation to Dutch (nl) (#486, #487 by Joppla).
