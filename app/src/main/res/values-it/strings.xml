@@ -501,8 +501,7 @@
     <string name="delaction_dialog_ok">Elimina</string>
     <string name="delaction_dialog_ok1">Ripristina</string>
     <string name="delaction_dialog_cancel">Cancella</string>
-
-    <string name="delaction_dialog_msg"> %1$s (%2$s)?</string>
+    
     <string name="clearactions_dialog_msg">Sei sicuro di voler tornare ai default?\n\nTutte le azioni personalizzate saranno eliminate.</string>
     <string name="clearactions_dialog_ok">Clear</string>
     <!--<string name="clearactions_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
