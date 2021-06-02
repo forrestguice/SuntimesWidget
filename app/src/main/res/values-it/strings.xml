@@ -53,7 +53,7 @@
          The date field that appears above the table (main activity).
          e.g. [dateDesc] \n [date]
              where [dateDesc] is a yesterday/today/tomorrow, past_, or future_ string.
-             where [date] is a dateString formatted by app using user\'s locale
+             where [date] is a dateString formatted by app using user's locale
     -->
     <string name="dateField"><xliff:g id="dateDesc" example="Today" >%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016" >%2$s</xliff:g> <xliff:g id="warningTag" >[w]</xliff:g></string>
     <string name="dateWarning"><xliff:g id="warningTag" >[w]</xliff:g> La data non è impostata sul giorno che effettivamente è oggi.</string>  <!-- snackbar message -->
@@ -87,7 +87,7 @@
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%" >%1$s</xliff:g></string>  <!-- used in 1x1 widget -->
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
-         e.g. \'Tomorrow will be\' + \' 2m \' + \'shorter\'
+         e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
          The relative order is defined by the layout (layout/info_time_daydelta.xml).
     -->
     <string name="delta_day_tomorrow">Domani sarà</string>
