@@ -705,7 +705,7 @@
     <string name="alarmMode_notification">Notifica</string>                <!-- alarm type (setting) -->
 
     <string name="configLabel_alarmEdit_scheduleTray">Pianifica:</string>               <!-- group title -->
-    <string name="configLabel_alarmEdit_onAlertTray">All'Allarme:</string>               <!-- group title -->
+    <string name="configLabel_alarmEdit_onAlertTray">All\'Allarme:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_onDismissTray">Al termine:</string>               <!-- group title -->  <!-- TODO: review -->
 
     <string name="alarmOption_vibrate">Vibra</string>                <!-- checkbox text -->
@@ -1399,7 +1399,7 @@
     <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes non raccoglie, memorizza, né trasmette dati personali dell\'utente. Non contiene <b>nessuna pubblicità</b>, <b>nessuna analitica</b>, <b>nessun tracker</b>, e <b>nessun permesso superfluo</b>. <br/><br/>L\'applicazione si configura in base alla località.  Queste informazioni (e altri dati di configurazione utilizzati dall\'applicazione) sono memorizzate localmente e non vengono trasmesse altrove.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes utilizza il permesso di accesso alla <b>posizione</b> per determinare la tua latitudine e longitudine correnti.<br/><br/> Questo permesso è opzionale; la posizione viene configurata manualmente di default.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes utilizza il permesso di accesso alla <b>memoria esterna</b> per effettuare backup e esportare dati su file (e.g. località, temi).]]></string>
-    <string name="privacy_permission_storage1"><![CDATA[Suntimes utilizza il permesso di accesso alla <b>memoria esterna</b> per riprodurre suoni che si trovano sulla scheda SD.<br/><br/>Questo permesso è opzionale; i suoni di default saranno riprodotti se l'accesso è negato. Questo permesso non è necessario per i suoni di sistema (Media Storage).]]></string>
+    <string name="privacy_permission_storage1"><![CDATA[Suntimes utilizza il permesso di accesso alla <b>memoria esterna</b> per riprodurre suoni che si trovano sulla scheda SD.<br/><br/>Questo permesso è opzionale; i suoni di default saranno riprodotti se l\'accesso è negato. Questo permesso non è necessario per i suoni di sistema (Media Storage).]]></string>
     <string name="privacy_permissiondialog_prompt"><![CDATA[Richiedi permesso ora?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignora</string>
     <string name="privacy_permissiondialog_title">Permessi</string>
