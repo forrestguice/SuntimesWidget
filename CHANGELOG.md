@@ -1,5 +1,8 @@
 ### ~
 
+### v0.13.11 (2021-06-07)
+* updates translation to Italian (it) (contributed by GiovaGa) (#499).
+
 ### v0.13.10 (2021-05-05)
 * adds 'import places'; import from a previously exported csv (#419).
 * changes moon illumination message; "% illuminated" to "% @ <lunarNoon>" (#384).
