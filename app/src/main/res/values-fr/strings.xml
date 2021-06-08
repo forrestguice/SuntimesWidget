@@ -225,7 +225,7 @@
     <string name="configLabel_general_calculator_sun">Source de données pour le soleil</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Source de données pour la lune</string>         <!-- preference label -->
 
-    <string name="configLabel_general_timeFormatMode">Forfait d\'eheure :</string>         <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_general_timeFormatMode">Format des heures :</string>         <!-- spinner label -->  <!-- TODO -->
 
     <string name="configLabel_general_altitude_enabled">Utiliser l\'altitude</string>        <!-- checkbox label --> <!-- TODO -->
     <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label --> <!-- TODO -->
