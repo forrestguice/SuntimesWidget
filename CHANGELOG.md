@@ -1,7 +1,8 @@
 ### ~
 
-### v0.13.11 (2021-06-07)
+### v0.13.11 (2021-06-08)
 * updates translation to Italian (it) (contributed by GiovaGa) (#499).
+* updates translation to French (fr) (contributed by ldmpub) (#501).
 
 ### v0.13.10 (2021-05-05)
 * adds 'import places'; import from a previously exported csv (#419).
