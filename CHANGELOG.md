@@ -1,5 +1,8 @@
 ### ~
 
+### v0.13.12 (2021-06-20)
+* updates translation to German (de) (#503 by wolkenschieber).
+
 ### v0.13.11 (2021-06-08)
 * updates translation to Italian (it) (contributed by GiovaGa) (#499).
 * updates translation to French (fr) (contributed by ldmpub) (#501).
