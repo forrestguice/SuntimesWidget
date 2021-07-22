@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2014-2018 Forrest Guice
+   Copyright (C) 2014-2021 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -37,6 +37,7 @@ import java.util.Calendar;
 
 public class SunLayout_2x1_0 extends SunLayout
 {
+    private float iconSizeDp = 32;
     private float textSizeSp = 12;
     private float timeSizeSp = 12;
     private float suffixSizeSp = 8;
@@ -66,6 +67,38 @@ public class SunLayout_2x1_0 extends SunLayout
         boolean showSolarNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
         boolean showDayDelta = WidgetSettings.loadShowComparePref(context, appWidgetId);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            if (WidgetSettings.loadScaleTextPref(context, appWidgetId))
+            {
+                int numRows = 1;
+                numRows += showSolarNoon ? 1 : 0;
+                int[] maxDp = new int[] {(maxDimensionsDp[0] / 2) - paddingDp[0] - (int)Math.ceil(iconSizeDp),
+                                         (maxDimensionsDp[1] / numRows)};
+                float maxSp = ClockLayout.CLOCKFACE_MAX_SP;
+                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime,(showSeconds ? "00:00:00" : "00:00"), timeSizeSp, maxSp, "MM", suffixSizeSp);
+                if (adjustedSizeSp[0] != timeSizeSp)
+                {
+                    views.setTextViewTextSize(R.id.text_time_rise, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+                    views.setTextViewTextSize(R.id.text_time_rise_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
+
+                    views.setTextViewTextSize(R.id.text_time_set, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+                    views.setTextViewTextSize(R.id.text_time_set_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
+
+                    views.setTextViewTextSize(R.id.text_time_noon, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+                    views.setTextViewTextSize(R.id.text_time_noon_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
+
+                    //float timeSizeRatio = (adjustedSizeSp[0] / timeSizeSp);
+                    //float textSize = timeSizeRatio * textSizeSp;
+                    //views.setTextViewTextSize(R.id.text_delta_day_prefix, TypedValue.COMPLEX_UNIT_DIP, textSize);
+                    //views.setTextViewTextSize(R.id.text_delta_day_value, TypedValue.COMPLEX_UNIT_DIP, textSize);
+                    //views.setTextViewTextSize(R.id.text_delta_day_units, TypedValue.COMPLEX_UNIT_DIP, textSize);
+                    //views.setTextViewTextSize(R.id.text_delta_day_suffix, TypedValue.COMPLEX_UNIT_DIP, textSize);
+                }
+            }
+        }
+
         updateViewsSunRiseSetText(context, views, data, showSeconds, order);
 
         // update day delta
