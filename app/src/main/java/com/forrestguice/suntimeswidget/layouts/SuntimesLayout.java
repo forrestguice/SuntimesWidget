@@ -168,13 +168,23 @@ public abstract class SuntimesLayout
         float stepSizeSp = 0.1f;                                      // upscale by stepSize (until maxWidth is filled)
         float suffixRatio = suffixSizeSp / timeSizeSp;                // preserve suffix proportions while scaling
         float maxWidthDp = (maxDimensionsDp[0] - paddingDp[0] - 8);   // maxWidth is adjusted for padding and margins
+        float maxHeightDp = (maxDimensionsDp[1] - paddingDp[1] - 8);  // maxHeight is adjusted for padding and margins
         float maxWidthPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, maxWidthDp, context.getResources().getDisplayMetrics());
+        float maxHeightPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, maxHeightDp, context.getResources().getDisplayMetrics());
 
-        while ((timeBounds.width() + suffixBounds.width()) < maxWidthPixels
+        while ((timeBounds.width() + suffixBounds.width()) < maxWidthPixels                         // scale up to fill width
                 && (adjustedTimeSizeSp < timeSizeMaxSp || timeSizeMaxSp == -1))
         {
             adjustedTimeSizeSp += stepSizeSp;
             adjustedSuffixSizeSp += stepSizeSp * suffixRatio;
+            getTextBounds(context,  timeText, adjustedTimeSizeSp, timePaint, timeBounds);
+            getTextBounds(context, suffixText, adjustedSuffixSizeSp, suffixPaint, suffixBounds);
+        }
+
+        while ((timeBounds.height() + suffixBounds.height()) > maxHeightPixels)
+        {
+            adjustedTimeSizeSp -= stepSizeSp;
+            adjustedSuffixSizeSp -= stepSizeSp * suffixRatio;
             getTextBounds(context,  timeText, adjustedTimeSizeSp, timePaint, timeBounds);
             getTextBounds(context, suffixText, adjustedSuffixSizeSp, suffixPaint, suffixBounds);
         }
