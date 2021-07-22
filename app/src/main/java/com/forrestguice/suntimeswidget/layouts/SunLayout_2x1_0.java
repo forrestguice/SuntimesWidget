@@ -62,11 +62,13 @@ public class SunLayout_2x1_0 extends SunLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetData data)
     {
         super.updateViews(context, appWidgetId, views, data);
+
+        boolean showSolarNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
+        boolean showDayDelta = WidgetSettings.loadShowComparePref(context, appWidgetId);
         updateViewsSunRiseSetText(context, views, data, showSeconds, order);
 
         // update day delta
-        boolean showDayDelta = WidgetSettings.loadShowComparePref(context, appWidgetId);
         TimeDisplayText dayDeltaDisplay = utils.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther(), true);
         String dayDeltaValue = dayDeltaDisplay.getValue();
         String dayDeltaUnits = dayDeltaDisplay.getUnits();
@@ -80,12 +82,9 @@ public class SunLayout_2x1_0 extends SunLayout
 
         // update solar noon
         SuntimesRiseSetData noonData = data.getLinked();
-        boolean showSolarNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
-        if (showSolarNoon && noonData != null)
-        {
+        if (showSolarNoon && noonData != null) {
             updateViewsNoonText(context, views, noonData.sunsetCalendarToday(), showSeconds);
             views.setViewVisibility(R.id.layout_noon, View.VISIBLE);
-
         } else {
             views.setViewVisibility(R.id.layout_noon, View.GONE);
         }
