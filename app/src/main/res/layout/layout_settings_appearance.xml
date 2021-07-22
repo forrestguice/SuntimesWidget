@@ -108,6 +108,11 @@
                   android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
                   android:layout_height="wrap_content" android:text="@string/configLabel_appearance_allowResize" />
 
+        <CheckBox android:id="@+id/appwidget_appearance_scaleText" android:layout_width="match_parent"
+            android:paddingTop="@dimen/settingsGroup_padding"
+            android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+            android:layout_height="wrap_content" android:text="@string/configLabel_appearance_scaleText" />
+
         <CheckBox android:id="@+id/appwidget_appearance_showLabels" android:layout_width="match_parent"
             android:paddingTop="@dimen/settingsGroup_padding"
             android:layout_marginLeft="8dp" android:layout_marginRight="8dp" android:visibility="gone"

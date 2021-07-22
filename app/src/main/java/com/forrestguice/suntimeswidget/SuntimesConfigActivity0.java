@@ -123,6 +123,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected Spinner spinner_1x1mode, spinner_3x2mode, spinner_3x3mode;
     protected CheckBox checkbox_allowResize;
+    protected CheckBox checkbox_scaleText;
     protected CheckBox checkbox_showTitle;
     protected TextView label_titleText;
     protected EditText text_titleText;
@@ -655,6 +656,15 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
         //
+        // widget: scale text
+        //
+        checkbox_scaleText = (CheckBox) findViewById(R.id.appwidget_appearance_scaleText);
+        if (checkbox_scaleText != null && Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+        {
+            disableOptionScaleText();  // scalable text require api14+
+        }
+
+        //
         // widget: tracking mode
         //
         spinner_trackingMode = (Spinner) findViewById(R.id.appwidget_general_trackingMode);
@@ -1077,7 +1087,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         WidgetSettings.saveAllowResizePref(context, appWidgetId, allowResize);
 
         // save: scale text
-        boolean scaleText = false;  // TODO
+        boolean scaleText = checkbox_scaleText.isChecked();
         WidgetSettings.saveScaleTextPref(context, appWidgetId, scaleText);
 
         // save: show title
@@ -1129,6 +1139,15 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             checkbox_allowResize.setChecked(allowResize);
         } else {
             disableOptionAllowResize();
+        }
+
+        // load: scale text
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            boolean scaleText = WidgetSettings.loadScaleTextPref(context, appWidgetId);
+            checkbox_scaleText.setChecked(scaleText);
+        } else {
+            disableOptionScaleText();
         }
 
         loadTitleSettings(context);
@@ -1481,6 +1500,15 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             checkbox_allowResize.setChecked(false);
             checkbox_allowResize.setEnabled(false);
+        }
+    }
+
+    protected void disableOptionScaleText()
+    {
+        if (checkbox_scaleText != null)
+        {
+            checkbox_scaleText.setChecked(false);
+            checkbox_scaleText.setEnabled(false);
         }
     }
 
