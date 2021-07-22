@@ -50,6 +50,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 @SuppressWarnings("ConstantConditions")
@@ -602,6 +603,22 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         WidgetSettings.deleteAllowResizePref(context, appWidgetId);
         boolean pref0 = WidgetSettings.loadAllowResizePref(context, appWidgetId);
         assertTrue("mode should be default (true) but was " + pref0, pref0 && pref0 == WidgetSettings.PREF_DEF_APPEARANCE_ALLOWRESIZE);
+    }
+
+    @Test
+    public void test_scaleTextPref()
+    {
+        WidgetSettings.saveScaleTextPref(context, appWidgetId, false);
+        boolean pref1 = WidgetSettings.loadScaleTextPref(context, appWidgetId);
+        assertFalse("pref should be false but was " + pref1, pref1);
+
+        WidgetSettings.saveScaleTextPref(context, appWidgetId, true);
+        boolean pref2 = WidgetSettings.loadScaleTextPref(context, appWidgetId);
+        assertTrue("pref should be true but was " + pref2, pref2);
+
+        WidgetSettings.deleteScaleTextPref(context, appWidgetId);
+        boolean pref0 = WidgetSettings.loadScaleTextPref(context, appWidgetId);
+        assertFalse("mode should be default (false) but was " + pref0, pref0 && pref0 == WidgetSettings.PREF_DEF_APPEARANCE_ALLOWRESIZE);
     }
 
     @Test

@@ -1076,6 +1076,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         boolean allowResize = checkbox_allowResize.isChecked();
         WidgetSettings.saveAllowResizePref(context, appWidgetId, allowResize);
 
+        // save: scale text
+        boolean scaleText = false;  // TODO
+        WidgetSettings.saveScaleTextPref(context, appWidgetId, scaleText);
+
         // save: show title
         boolean showTitle = checkbox_showTitle.isChecked();
         WidgetSettings.saveShowTitlePref(context, appWidgetId, showTitle);
