@@ -43,6 +43,19 @@ public abstract class SuntimesLayout
     protected boolean boldTitle = false;
     protected boolean boldTime = false;
 
+    protected int category = -1;
+    public void setCategory(int category)
+    {
+        this.category = category;
+    }
+
+    protected int[] maxDimensionsDp = new int[] {40, 40};
+    public void setMaxDimensionsDp(int[] size)
+    {
+        maxDimensionsDp[0] = size[0];
+        maxDimensionsDp[1] = size[1];
+    }
+
     /**
      * All SuntimesLayout subclasses must implement this method and provide a value for
      * the layoutID. The initLayoutID method should be called from the constructor.

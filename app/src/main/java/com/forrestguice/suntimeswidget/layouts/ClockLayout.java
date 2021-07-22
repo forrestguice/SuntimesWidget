@@ -43,19 +43,6 @@ public abstract class ClockLayout extends SuntimesLayout
         initLayoutID();
     }
 
-    protected int category = -1;
-    public void setCategory(int category)
-    {
-        this.category = category;
-    }
-
-    protected int[] maxDimensionsDp = new int[] {40, 40};
-    public void setMaxDimensionsDp(int[] size)
-    {
-        maxDimensionsDp[0] = size[0];
-        maxDimensionsDp[1] = size[1];
-    }
-
     /**
      * Called by widget before themeViews and updateViews to give the layout obj an opportunity to
      * modify its state based on the supplied data.
