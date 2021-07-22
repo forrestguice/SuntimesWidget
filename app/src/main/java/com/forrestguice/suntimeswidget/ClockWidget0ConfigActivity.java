@@ -112,6 +112,11 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
     }
 
     @Override
+    protected boolean getDefaultScaleText() {
+        return true;
+    }
+
+    @Override
     protected Intent themeEditorIntent(Context context)
     {
         Intent intent = super.themeEditorIntent(context);

@@ -72,7 +72,7 @@ public class ClockLayout_1x1_0 extends ClockLayout
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            if (WidgetSettings.loadScaleTextPref(context, appWidgetId))
+            if (WidgetSettings.loadScaleTextPref(context, appWidgetId, true))
             {
                 float maxSp = ClockLayout.CLOCKFACE_MAX_SP;  // ((category == AppWidgetProviderInfo.WIDGET_CATEGORY_KEYGUARD) ? CLOCKFACE_MAX_SP : -1);
                 float[] adjustedSizeSp = adjustTextSize(context, maxDimensionsDp, paddingDp, "sans-serif", boldTime,"00:00", timeSizeSp, maxSp, "MM", suffixSizeSp);

@@ -1126,11 +1126,14 @@ public class WidgetSettings
         prefs.putBoolean(prefs_prefix + PREF_KEY_APPEARANCE_SCALETEXT, scaleText);
         prefs.apply();
     }
-    public static boolean loadScaleTextPref(Context context, int appWidgetId)
+    public static boolean loadScaleTextPref(Context context, int appWidgetId) {
+        return loadScaleTextPref(context, appWidgetId, PREF_DEF_APPEARANCE_SCALETEXT);
+    }
+    public static boolean loadScaleTextPref(Context context, int appWidgetId, boolean defValue)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        return prefs.getBoolean(prefs_prefix + PREF_KEY_APPEARANCE_SCALETEXT, PREF_DEF_APPEARANCE_SCALETEXT);
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_APPEARANCE_SCALETEXT, defValue);
     }
     public static void deleteScaleTextPref(Context context, int appWidgetId)
     {

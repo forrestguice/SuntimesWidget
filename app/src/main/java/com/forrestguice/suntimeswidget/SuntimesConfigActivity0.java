@@ -1144,7 +1144,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // load: scale text
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            boolean scaleText = WidgetSettings.loadScaleTextPref(context, appWidgetId);
+            boolean scaleText = WidgetSettings.loadScaleTextPref(context, appWidgetId, getDefaultScaleText());
             checkbox_scaleText.setChecked(scaleText);
         } else {
             disableOptionScaleText();
@@ -1510,6 +1510,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             checkbox_scaleText.setChecked(false);
             checkbox_scaleText.setEnabled(false);
         }
+    }
+
+    protected boolean getDefaultScaleText() {
+        return WidgetSettings.PREF_DEF_APPEARANCE_SCALETEXT;
     }
 
     protected void hideGeneralSettings()
