@@ -463,6 +463,8 @@ public class SuntimesWidget0 extends AppWidgetProvider
             layout = defLayout; // WidgetSettings.loadSun1x1ModePref_asLayout(context, appWidgetId);
         }
         //Log.d("getWidgetLayout", "layout is: " + layout);
+        layout.setMaxDimensionsDp(widgetSizeDp(context, appWidgetManager, appWidgetId, defSize));
+        layout.setCategory(widgetCategory(appWidgetManager, appWidgetId));
         return layout;
     }
 
