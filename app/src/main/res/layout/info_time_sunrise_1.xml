@@ -21,11 +21,12 @@
     <LinearLayout
         style="@style/SunsetTimeLayout"
         android:layout_gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical" android:minWidth="300dp">
 
         <ImageView
             android:id="@+id/icon_time_sunrise"
             style="@style/SunsetTimeImageView2"
+            android:layout_gravity="center_horizontal"
             android:layout_width="@dimen/sunIconLarge_width"
             android:layout_marginTop="4dp"
             android:height="@dimen/sunIconLarge_height"
@@ -34,7 +35,7 @@
 
         <LinearLayout
             style="@style/SunsetTimeLayout"
-            android:orientation="horizontal">
+            android:orientation="horizontal" android:layout_gravity="center_horizontal">
 
             <TextView
                 android:id="@+id/text_time_rise"
