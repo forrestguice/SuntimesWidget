@@ -20,7 +20,10 @@ package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
@@ -37,6 +40,10 @@ import java.util.Calendar;
  */
 public class SunLayout_1x1_1 extends SunLayout
 {
+    protected int sunriseIconColor = Color.YELLOW;
+    protected int sunriseIconStrokeColor = Color.YELLOW;
+    protected int sunriseIconStrokePixels = 0;
+
     public SunLayout_1x1_1()
     {
         super();
@@ -71,6 +78,11 @@ public class SunLayout_1x1_1 extends SunLayout
                 {
                     views.setTextViewTextSize(R.id.text_time_rise, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
                     views.setTextViewTextSize(R.id.text_time_rise_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
+                    
+                    Drawable d = ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunrise2, null);
+                    SuntimesUtils.tintDrawable(d, sunriseIconColor);
+                    float iconScale = Math.max(adjustedSizeSp[0] / timeSizeSp, 1);
+                    views.setImageViewBitmap(R.id.icon_time_sunrise, SuntimesUtils.drawableToBitmap(context, d, (int)(iconSizeDp * iconScale), (int)(iconSizeDp * iconScale) / 4, false));
                 }
             }
         }
@@ -99,7 +111,11 @@ public class SunLayout_1x1_1 extends SunLayout
             views.setTextViewTextSize(R.id.text_time_rise, TypedValue.COMPLEX_UNIT_DIP, theme.getTimeSizeSp());
         }
 
-        Bitmap sunriseIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_sunrise_large0, theme.getSunriseIconColor(), theme.getSunriseIconStrokeColor(), theme.getSunriseIconStrokePixels(context));
+        sunriseIconColor = theme.getSunriseIconColor();
+        sunriseIconStrokeColor = theme.getSunriseIconStrokeColor();
+        sunriseIconStrokePixels = theme.getSunriseIconStrokePixels(context);
+
+        Bitmap sunriseIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_sunrise_large0, sunriseIconColor, sunriseIconStrokeColor, sunriseIconStrokePixels);
         views.setImageViewBitmap(R.id.icon_time_sunrise, sunriseIcon);
     }
 }
