@@ -37,13 +37,6 @@ import java.util.Calendar;
 
 public class SunLayout_2x1_0 extends SunLayout
 {
-    private float iconSizeDp = 32;
-    private float textSizeSp = 12;
-    private float timeSizeSp = 12;
-    private float suffixSizeSp = 8;
-    private boolean boldTime = false;
-    private int[] paddingDp = new int[] {0, 0};
-
     @Override
     public void initLayoutID()
     {
@@ -77,7 +70,7 @@ public class SunLayout_2x1_0 extends SunLayout
                 int[] maxDp = new int[] {(maxDimensionsDp[0] / 2) - paddingDp[0] - (int)Math.ceil(iconSizeDp),
                                          (maxDimensionsDp[1] / numRows)};
                 float maxSp = ClockLayout.CLOCKFACE_MAX_SP;
-                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime,(showSeconds ? "00:00:00" : "00:00"), timeSizeSp, maxSp, "MM", suffixSizeSp);
+                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, (showSeconds ? "00:00:00" : "00:00"), timeSizeSp, maxSp, "MM", suffixSizeSp);
                 if (adjustedSizeSp[0] != timeSizeSp)
                 {
                     views.setTextViewTextSize(R.id.text_time_rise, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
@@ -134,8 +127,6 @@ public class SunLayout_2x1_0 extends SunLayout
         int suffixColor = theme.getTimeSuffixColor();
         int timeColor = theme.getTimeColor();
         int textColor = theme.getTextColor();
-        boldTime = theme.getTimeBold();
-        paddingDp = theme.getPadding();
 
         // theme sunrise text
         views.setTextColor(R.id.text_time_rise_suffix, suffixColor);

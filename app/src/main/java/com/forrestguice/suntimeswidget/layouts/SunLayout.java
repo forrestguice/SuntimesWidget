@@ -18,17 +18,27 @@
 
 package com.forrestguice.suntimeswidget.layouts;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
+import android.util.TypedValue;
 import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
 
 public abstract class SunLayout extends SuntimesLayout
 {
+    protected float textSizeSp = 12;
+    protected float timeSizeSp = 12;
+    protected float suffixSizeSp = 8;
+    protected float iconSizeDp = 32;
+    protected int[] paddingDp = new int[] {0, 0};
+
     /**
      * Called by widget before themeViews and updateViews to give the layout obj an opportunity to
      * modify its state based on the supplied data.
@@ -37,6 +47,20 @@ public abstract class SunLayout extends SuntimesLayout
     public void prepareForUpdate(Context context, int appWidgetId, SuntimesRiseSetData data)
     {
         // EMPTY
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
+    {
+        super.themeViews(context, views, theme);
+        paddingDp = theme.getPadding();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            textSizeSp = theme.getTextSizeSp();
+            timeSizeSp = theme.getTimeSizeSp();
+            suffixSizeSp = theme.getTimeSuffixSizeSp();
+        }
     }
 
     /**
