@@ -34,7 +34,7 @@
             android:scaleType="fitStart" />
 
         <LinearLayout
-            style="@style/SunsetTimeLayout"
+            style="@style/SunsetTimeLayout" android:layout_marginTop="2dp"
             android:orientation="horizontal" android:layout_gravity="center_horizontal">
 
             <TextView
