@@ -38,6 +38,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.Html;
 import android.text.Spannable;
 
@@ -1654,6 +1655,19 @@ public class SuntimesUtils
             }
         }
         return d;
+    }
+
+    public static void tintDrawable(Drawable d, int color)
+    {
+        if (d != null)
+        {
+            if (Build.VERSION.SDK_INT >= 21) {
+                DrawableCompat.setTint(d, color);
+                DrawableCompat.setTintMode(d, PorterDuff.Mode.SRC_IN);
+            } else {
+                d.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+            }
+        }
     }
 
     /**
