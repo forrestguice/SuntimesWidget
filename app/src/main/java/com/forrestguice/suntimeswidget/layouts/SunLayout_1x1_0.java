@@ -96,14 +96,11 @@ public class SunLayout_1x1_0 extends SunLayout
     {
         super.themeViews(context, views, theme);
 
-        int sunriseColor = theme.getSunriseTextColor();
         int suffixColor = theme.getTimeSuffixColor();
         views.setTextColor(R.id.text_time_rise_suffix, suffixColor);
-        views.setTextColor(R.id.text_time_rise, sunriseColor);
-
-        int sunsetColor = theme.getSunsetTextColor();
+        views.setTextColor(R.id.text_time_rise, theme.getSunriseTextColor());
         views.setTextColor(R.id.text_time_set_suffix, suffixColor);
-        views.setTextColor(R.id.text_time_set, sunsetColor);
+        views.setTextColor(R.id.text_time_set, theme.getSunsetTextColor());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {

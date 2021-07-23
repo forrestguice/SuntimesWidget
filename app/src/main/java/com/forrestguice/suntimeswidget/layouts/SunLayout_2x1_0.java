@@ -121,10 +121,7 @@ public class SunLayout_2x1_0 extends SunLayout
     {
         super.themeViews(context, views, theme);
 
-        int sunriseColor = theme.getSunriseTextColor();
-        int sunsetColor = theme.getSunsetTextColor();
         int noonColor = theme.getNoonTextColor();
-        int suffixColor = theme.getTimeSuffixColor();
         int timeColor = theme.getTimeColor();
         int textColor = theme.getTextColor();
 

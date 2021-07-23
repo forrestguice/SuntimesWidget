@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.layouts;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
@@ -33,6 +34,10 @@ import java.util.Calendar;
 
 public abstract class SunLayout extends SuntimesLayout
 {
+    protected int suffixColor = Color.GRAY;
+    protected int sunriseColor = Color.YELLOW;
+    protected int sunsetColor = Color.YELLOW;
+
     protected float textSizeSp = 12;
     protected float timeSizeSp = 12;
     protected float suffixSizeSp = 8;
@@ -54,6 +59,10 @@ public abstract class SunLayout extends SuntimesLayout
     {
         super.themeViews(context, views, theme);
         paddingDp = theme.getPadding();
+
+        suffixColor = theme.getTimeSuffixColor();
+        sunriseColor = theme.getSunriseTextColor();
+        sunsetColor = theme.getSunsetTextColor();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
