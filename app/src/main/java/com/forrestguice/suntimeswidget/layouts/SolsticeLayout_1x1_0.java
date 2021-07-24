@@ -84,7 +84,7 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
                     views.setTextViewTextSize(R.id.text_time_event, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
                     views.setTextViewTextSize(R.id.text_time_event_note, TypedValue.COMPLEX_UNIT_DIP, textSizeSp * textScale);
                     views.setTextViewTextSize(R.id.text_time_event_label, TypedValue.COMPLEX_UNIT_DIP, textSizeSp * textScale);
-                    //views.setViewPadding(R.id.info_sun_azimuth_current, (int)(scaledPadding), 0, (int)(scaledPadding), (int)(scaledPadding));
+                    views.setViewPadding(R.id.text_time_event_note, (int)(scaledPadding), 0, (int)(scaledPadding), (int)(scaledPadding / 2));
                 }
             }
         }
