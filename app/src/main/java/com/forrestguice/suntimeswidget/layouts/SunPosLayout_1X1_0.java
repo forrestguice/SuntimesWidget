@@ -75,7 +75,7 @@ public class SunPosLayout_1X1_0 extends SunPosLayout
             if (WidgetSettings.loadScaleTextPref(context, appWidgetId))
             {
                 int[] maxDp = new int[] {maxDimensionsDp[0], (maxDimensionsDp[1] / (showLabels ? 3 : 2))};
-                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, "00000000", timeSizeSp, ClockLayout.CLOCKFACE_MAX_SP, "", suffixSizeSp);
+                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, "0000000000", timeSizeSp, ClockLayout.CLOCKFACE_MAX_SP, "", suffixSizeSp);
                 if (adjustedSizeSp[0] > timeSizeSp)
                 {
                     float textScale = Math.max(adjustedSizeSp[0] / timeSizeSp, 1);

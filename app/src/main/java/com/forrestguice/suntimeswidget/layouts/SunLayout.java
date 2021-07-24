@@ -42,7 +42,6 @@ public abstract class SunLayout extends SuntimesLayout
     protected float timeSizeSp = 12;
     protected float suffixSizeSp = 8;
     protected float iconSizeDp = 32;
-    protected int[] paddingDp = new int[] {0, 0};
 
     /**
      * Called by widget before themeViews and updateViews to give the layout obj an opportunity to
@@ -58,7 +57,6 @@ public abstract class SunLayout extends SuntimesLayout
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
-        paddingDp = theme.getPadding();
 
         suffixColor = theme.getTimeSuffixColor();
         sunriseColor = theme.getSunriseTextColor();

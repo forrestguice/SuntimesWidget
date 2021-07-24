@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2018 Forrest Guice
+   Copyright (C) 2018-2021 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -41,6 +41,10 @@ import java.util.Calendar;
  */
 public class MoonLayout_1x1_6 extends MoonLayout
 {
+    protected float textSizeSp = 12;
+    protected float timeSizeSp = 12;
+    protected float suffixSizeSp = 8;
+
     public MoonLayout_1x1_6()
     {
         super();
@@ -61,12 +65,38 @@ public class MoonLayout_1x1_6 extends MoonLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesMoonData data)
     {
         super.updateViews(context, appWidgetId, views, data);
+        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            if (WidgetSettings.loadScaleTextPref(context, appWidgetId))
+            {
+                int[] maxDp = new int[] {maxDimensionsDp[0], (maxDimensionsDp[1] / (showLabels ? 3 : 2))};
+                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, "0000000000", timeSizeSp, ClockLayout.CLOCKFACE_MAX_SP, "", suffixSizeSp);
+                if (adjustedSizeSp[0] > timeSizeSp)
+                {
+                    float textScale = Math.max(adjustedSizeSp[0] / timeSizeSp, 1);
+                    float scaledPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textScale * 2, context.getResources().getDisplayMetrics());
+
+                    views.setTextViewTextSize(R.id.info_moon_declination_current, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+                    views.setViewPadding(R.id.info_moon_declination_current, (int)(scaledPadding), 0, (int)(scaledPadding), 0);
+
+                    views.setTextViewTextSize(R.id.info_moon_declination_current_label, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
+                    views.setViewPadding(R.id.info_moon_declination_current_label, (int)(scaledPadding), 0, (int)(scaledPadding), 0);
+
+                    views.setTextViewTextSize(R.id.info_moon_rightascension_current, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+                    views.setViewPadding(R.id.info_moon_rightascension_current, (int)(scaledPadding), 0, (int)(scaledPadding), (int)(scaledPadding / 2));
+
+                    views.setTextViewTextSize(R.id.info_moon_rightascension_current_label, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
+                    views.setViewPadding(R.id.info_moon_rightascension_current_label, (int)(scaledPadding), 0, (int)(scaledPadding), 0);
+                }
+            }
+        }
 
         SuntimesCalculator calculator = data.calculator();
         SuntimesCalculator.MoonPosition moonPosition = calculator.getMoonPosition(data.now());
         updateViewsRightAscDeclinationText(context, views, moonPosition);
 
-        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         int visibility = (showLabels ? View.VISIBLE : View.GONE);
         views.setViewVisibility(R.id.info_moon_rightascension_current_label, visibility);
         views.setViewVisibility(R.id.info_moon_declination_current_label, visibility);
@@ -90,13 +120,14 @@ public class MoonLayout_1x1_6 extends MoonLayout
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            float textSize = theme.getTextSizeSp();
-            views.setTextViewTextSize(R.id.info_moon_rightascension_current_label, TypedValue.COMPLEX_UNIT_DIP, textSize);
-            views.setTextViewTextSize(R.id.info_moon_declination_current_label, TypedValue.COMPLEX_UNIT_DIP, textSize);
+            textSizeSp = theme.getTextSizeSp();
+            views.setTextViewTextSize(R.id.info_moon_rightascension_current_label, TypedValue.COMPLEX_UNIT_DIP, textSizeSp);
+            views.setTextViewTextSize(R.id.info_moon_declination_current_label, TypedValue.COMPLEX_UNIT_DIP, textSizeSp);
 
-            float timeSize = theme.getTimeSizeSp();
-            views.setTextViewTextSize(R.id.info_moon_rightascension_current, TypedValue.COMPLEX_UNIT_DIP, timeSize);
-            views.setTextViewTextSize(R.id.info_moon_declination_current, TypedValue.COMPLEX_UNIT_DIP, timeSize);
+            timeSizeSp = theme.getTimeSizeSp();
+            suffixSizeSp = theme.getTimeSuffixSizeSp();
+            views.setTextViewTextSize(R.id.info_moon_rightascension_current, TypedValue.COMPLEX_UNIT_DIP, timeSizeSp);
+            views.setTextViewTextSize(R.id.info_moon_declination_current, TypedValue.COMPLEX_UNIT_DIP, timeSizeSp);
         }
     }
 

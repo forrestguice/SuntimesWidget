@@ -120,6 +120,8 @@ public class MoonWidget0 extends SuntimesWidget0
         } else {
             layout = defLayout;
         }
+        layout.setMaxDimensionsDp(widgetSizeDp(context, appWidgetManager, appWidgetId, defSize));
+        layout.setCategory(widgetCategory(appWidgetManager, appWidgetId));
         //Log.d("getWidgetLayout", "layout is: " + layout);
         return layout;
     }

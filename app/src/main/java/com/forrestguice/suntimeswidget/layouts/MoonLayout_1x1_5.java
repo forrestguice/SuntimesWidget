@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2018 Forrest Guice
+   Copyright (C) 2018-2021 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.layouts;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -40,6 +41,13 @@ import java.util.Calendar;
  */
 public class MoonLayout_1x1_5 extends MoonLayout
 {
+    protected float textSizeSp = 12;
+    protected float timeSizeSp = 12;
+    protected float suffixSizeSp = 8;
+
+    protected int suffixColor = Color.GRAY;
+    protected int highlightColor = Color.WHITE;
+
     public MoonLayout_1x1_5()
     {
         super();
@@ -60,19 +68,42 @@ public class MoonLayout_1x1_5 extends MoonLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesMoonData data)
     {
         super.updateViews(context, appWidgetId, views, data);
+        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            if (WidgetSettings.loadScaleTextPref(context, appWidgetId))
+            {
+                int[] maxDp = new int[] {maxDimensionsDp[0], (maxDimensionsDp[1] / (showLabels ? 3 : 2))};
+                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, "0000000000", timeSizeSp, ClockLayout.CLOCKFACE_MAX_SP, "", suffixSizeSp);
+                if (adjustedSizeSp[0] > timeSizeSp)
+                {
+                    float textScale = Math.max(adjustedSizeSp[0] / timeSizeSp, 1);
+                    float scaledPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textScale * 2, context.getResources().getDisplayMetrics());
+
+                    views.setTextViewTextSize(R.id.info_moon_elevation_current, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+                    views.setViewPadding(R.id.info_moon_elevation_current, (int)(scaledPadding), 0, (int)(scaledPadding), 0);
+
+                    views.setTextViewTextSize(R.id.info_moon_elevation_current_label, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
+                    views.setViewPadding(R.id.info_moon_elevation_current_label, (int)(scaledPadding), 0, (int)(scaledPadding), 0);
+
+                    views.setTextViewTextSize(R.id.info_moon_azimuth_current, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+                    views.setViewPadding(R.id.info_moon_azimuth_current, (int)(scaledPadding), 0, (int)(scaledPadding), (int)(scaledPadding / 2));
+
+                    views.setTextViewTextSize(R.id.info_moon_azimuth_current_label, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
+                    views.setViewPadding(R.id.info_moon_azimuth_current_label, (int)(scaledPadding), 0, (int)(scaledPadding), 0);
+                }
+            }
+        }
 
         SuntimesCalculator calculator = data.calculator();
         SuntimesCalculator.MoonPosition moonPosition = (calculator != null ? calculator.getMoonPosition(data.now()) : null);
         updateViewsAzimuthElevationText(context, views, moonPosition);
 
-        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         int visibility = (showLabels ? View.VISIBLE : View.GONE);
         views.setViewVisibility(R.id.info_moon_azimuth_current_label, visibility);
         views.setViewVisibility(R.id.info_moon_elevation_current_label, visibility);
     }
-
-    protected int suffixColor = Color.GRAY;
-    protected int highlightColor = Color.WHITE;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
@@ -90,13 +121,14 @@ public class MoonLayout_1x1_5 extends MoonLayout
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            float textSize = theme.getTextSizeSp();
-            views.setTextViewTextSize(R.id.info_moon_azimuth_current_label, TypedValue.COMPLEX_UNIT_DIP, textSize);
-            views.setTextViewTextSize(R.id.info_moon_elevation_current_label, TypedValue.COMPLEX_UNIT_DIP, textSize);
+            textSizeSp = theme.getTextSizeSp();
+            views.setTextViewTextSize(R.id.info_moon_azimuth_current_label, TypedValue.COMPLEX_UNIT_DIP, textSizeSp);
+            views.setTextViewTextSize(R.id.info_moon_elevation_current_label, TypedValue.COMPLEX_UNIT_DIP, textSizeSp);
 
-            float timeSize = theme.getTimeSizeSp();
-            views.setTextViewTextSize(R.id.info_moon_azimuth_current, TypedValue.COMPLEX_UNIT_DIP, timeSize);
-            views.setTextViewTextSize(R.id.info_moon_elevation_current, TypedValue.COMPLEX_UNIT_DIP, timeSize);
+            timeSizeSp = theme.getTimeSizeSp();
+            suffixSizeSp = theme.getTimeSuffixSizeSp();
+            views.setTextViewTextSize(R.id.info_moon_azimuth_current, TypedValue.COMPLEX_UNIT_DIP, timeSizeSp);
+            views.setTextViewTextSize(R.id.info_moon_elevation_current, TypedValue.COMPLEX_UNIT_DIP, timeSizeSp);
         }
     }
 
@@ -107,16 +139,24 @@ public class MoonLayout_1x1_5 extends MoonLayout
         // EMPTY
     }
 
-    protected void updateViewsAzimuthElevationText(Context context, RemoteViews views, SuntimesCalculator.MoonPosition moonPosition)
+    protected void updateViewsAzimuthElevationText(Context context, RemoteViews views, @Nullable SuntimesCalculator.MoonPosition moonPosition)
     {
-        SuntimesUtils.TimeDisplayText azimuthDisplay = utils.formatAsDirection2(moonPosition.azimuth, PositionLayout.DECIMAL_PLACES, false);
-        views.setTextViewText(R.id.info_moon_azimuth_current, PositionLayout.styleAzimuthText(azimuthDisplay, highlightColor, suffixColor, boldTime));
+        if (moonPosition != null)
+        {
+            SuntimesUtils.TimeDisplayText azimuthDisplay = utils.formatAsDirection2(moonPosition.azimuth, PositionLayout.DECIMAL_PLACES, false);
+            views.setTextViewText(R.id.info_moon_azimuth_current, PositionLayout.styleAzimuthText(azimuthDisplay, highlightColor, suffixColor, boldTime));
 
-        if (Build.VERSION.SDK_INT >= 15) {
-            SuntimesUtils.TimeDisplayText azimuthDescription = utils.formatAsDirection2(moonPosition.azimuth, PositionLayout.DECIMAL_PLACES, true);
-            views.setContentDescription(R.id.info_moon_azimuth_current, utils.formatAsDirection(azimuthDescription.getValue(), azimuthDescription.getSuffix()));
+            if (Build.VERSION.SDK_INT >= 15) {
+                SuntimesUtils.TimeDisplayText azimuthDescription = utils.formatAsDirection2(moonPosition.azimuth, PositionLayout.DECIMAL_PLACES, true);
+                views.setContentDescription(R.id.info_moon_azimuth_current, utils.formatAsDirection(azimuthDescription.getValue(), azimuthDescription.getSuffix()));
+            }
+            views.setTextViewText(R.id.info_moon_elevation_current, PositionLayout.styleElevationText(moonPosition.elevation, highlightColor, suffixColor, boldTime));
+
+        } else {
+            views.setTextViewText(R.id.info_moon_elevation_current, "");
+            views.setTextViewText(R.id.info_moon_azimuth_current, "");
+            views.setContentDescription(R.id.info_moon_azimuth_current, "");
         }
-        views.setTextViewText(R.id.info_moon_elevation_current, PositionLayout.styleElevationText(moonPosition.elevation, highlightColor, suffixColor, boldTime));
     }
 
     @Override

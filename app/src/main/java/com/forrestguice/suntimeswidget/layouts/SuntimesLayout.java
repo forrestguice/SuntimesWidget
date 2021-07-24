@@ -61,6 +61,8 @@ public abstract class SuntimesLayout
         maxDimensionsDp[1] = size[1];
     }
 
+    protected int[] paddingDp = new int[] {0, 0};
+
     /**
      * All SuntimesLayout subclasses must implement this method and provide a value for
      * the layoutID. The initLayoutID method should be called from the constructor.
@@ -137,6 +139,7 @@ public abstract class SuntimesLayout
         views.setTextColor(R.id.text_title, titleColor);
         boldTitle = theme.getTitleBold();
         boldTime = theme.getTimeBold();
+        paddingDp = theme.getPadding();
     }
 
     /**
