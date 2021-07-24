@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2017 Forrest Guice
+   Copyright (C) 2017-2021 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,15 +19,22 @@
 package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
+import android.os.Build;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 public abstract class SolsticeLayout extends SuntimesLayout
 {
+    protected float textSizeSp = 12;
+    protected float timeSizeSp = 12;
+    protected float suffixSizeSp = 8;
+    protected int[] paddingDp = new int[] {0, 0};
+
     public SolsticeLayout()
     {
         initLayoutID();
@@ -60,5 +67,18 @@ public abstract class SolsticeLayout extends SuntimesLayout
         //Log.v("DEBUG", "title text: " + titleText);
     }
 
+    @Override
+    public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
+    {
+        super.themeViews(context, views, theme);
+        paddingDp = theme.getPadding();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            textSizeSp = theme.getTextSizeSp();
+            timeSizeSp = theme.getTimeSizeSp();
+            suffixSizeSp = theme.getTimeSuffixSizeSp();
+        }
+    }
 
 }

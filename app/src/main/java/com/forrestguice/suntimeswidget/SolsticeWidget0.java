@@ -1,7 +1,7 @@
 package com.forrestguice.suntimeswidget;
 
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -119,8 +119,8 @@ public class SolsticeWidget0 extends SuntimesWidget0
 
     protected static SolsticeLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        //int minWidth = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
-        //int minHeight = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
+        int minWidth = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
+        int minHeight = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
         //int[] mustFitWithinDp = {minWidth, minHeight};
         //Log.d("getWidgetLayout2", "0: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
 
@@ -152,6 +152,8 @@ public class SolsticeWidget0 extends SuntimesWidget0
         //}
 
         //Log.d("getWidgetLayout2", "layout is: " + layout);
+        layout.setMaxDimensionsDp(widgetSizeDp(context, appWidgetManager, appWidgetId, new int[] { minWidth, minHeight }));
+        layout.setCategory(widgetCategory(appWidgetManager, appWidgetId));
         return layout;
     }
 

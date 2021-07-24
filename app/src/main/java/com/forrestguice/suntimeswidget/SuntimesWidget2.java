@@ -127,6 +127,8 @@ public class SuntimesWidget2 extends SuntimesWidget0
             layout = defLayout;
         }
         //Log.d("getWidgetLayout", "layout is: " + layout);
+        layout.setMaxDimensionsDp(widgetSizeDp(context, appWidgetManager, appWidgetId, defSize));
+        layout.setCategory(widgetCategory(appWidgetManager, appWidgetId));
         return layout;
     }
 

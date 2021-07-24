@@ -36,6 +36,11 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 public abstract class SunPosLayout extends PositionLayout
 {
+    protected float textSizeSp = 12;
+    protected float timeSizeSp = 12;
+    protected float suffixSizeSp = 8;
+    protected int[] paddingDp = new int[] {0, 0};
+
     public void prepareForUpdate(SuntimesRiseSetDataset dataset, int[] widgetSize)
     {
         dataset.calculateData();
@@ -134,8 +139,16 @@ public abstract class SunPosLayout extends PositionLayout
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
+        paddingDp = theme.getPadding();
         risingColor = theme.getSunriseTextColor();
         settingColor = theme.getSunsetTextColor();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            textSizeSp = theme.getTextSizeSp();
+            timeSizeSp = theme.getTimeSizeSp();
+            suffixSizeSp = theme.getTimeSuffixSizeSp();
+        }
     }
 
     protected void themeViewsAzimuthElevationText(Context context, @NonNull RemoteViews views, @NonNull SuntimesTheme theme)

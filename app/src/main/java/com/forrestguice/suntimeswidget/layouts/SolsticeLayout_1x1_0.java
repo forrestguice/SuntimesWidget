@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2017-2018 Forrest Guice
+   Copyright (C) 2017-2021 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -40,6 +40,9 @@ import java.util.Calendar;
  */
 public class SolsticeLayout_1x1_0 extends SolsticeLayout
 {
+    protected WidgetSettings.SolsticeEquinoxMode timeMode = WidgetSettings.SolsticeEquinoxMode.EQUINOX_SPRING;
+    protected int timeColor = Color.WHITE;
+
     public SolsticeLayout_1x1_0()
     {
         super();
@@ -61,22 +64,39 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
     {
         super.updateViews(context, appWidgetId, views, data);
 
+        boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, appWidgetId);
+        boolean showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
+        boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
+        boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
+        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            if (WidgetSettings.loadScaleTextPref(context, appWidgetId))
+            {
+                int[] maxDp = new int[] {maxDimensionsDp[0], (maxDimensionsDp[1] / (showLabels ? 3 : 2))};
+                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, "MMMMMMMMMMMM", timeSizeSp, ClockLayout.CLOCKFACE_MAX_SP, "", suffixSizeSp);
+                if (adjustedSizeSp[0] > timeSizeSp)
+                {
+                    float textScale = Math.max(adjustedSizeSp[0] / timeSizeSp, 1);
+                    float scaledPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textScale * 2, context.getResources().getDisplayMetrics());
+
+                    views.setTextViewTextSize(R.id.text_time_event, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+                    views.setTextViewTextSize(R.id.text_time_event_note, TypedValue.COMPLEX_UNIT_DIP, textSizeSp * textScale);
+                    views.setTextViewTextSize(R.id.text_time_event_label, TypedValue.COMPLEX_UNIT_DIP, textSizeSp * textScale);
+                    //views.setViewPadding(R.id.info_sun_azimuth_current, (int)(scaledPadding), 0, (int)(scaledPadding), (int)(scaledPadding));
+                }
+            }
+        }
+
         if (data != null && data.isCalculated())
         {
             Calendar now = Calendar.getInstance();
-
             WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, appWidgetId);
             Calendar event = (trackingMode == WidgetSettings.TrackingMode.SOONEST ? data.eventCalendarUpcoming(now)
                                                                                   : data.eventCalendarClosest(now));
-
             if (event != null)
             {
-                boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, appWidgetId);
-                boolean showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
-                boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
-                boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
-                boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
-
                 views.setTextViewText(R.id.text_time_event_label, data.timeMode().getLongDisplayString());
                 views.setViewVisibility(R.id.text_time_event_label, (showLabels ? View.VISIBLE : View.GONE));
 
@@ -108,10 +128,6 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
         }
     }
 
-    private WidgetSettings.SolsticeEquinoxMode timeMode = WidgetSettings.SolsticeEquinoxMode.EQUINOX_SPRING;
-    private int timeColor = Color.WHITE;
-    private boolean boldTime = false;
-
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
@@ -120,7 +136,6 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
         timeColor = theme.getTimeColor();
         int textColor = theme.getTextColor();
         int eventColor = theme.getSeasonColor(timeMode);
-        boldTime = theme.getTimeBold();
 
         views.setTextColor(R.id.text_time_event_note, textColor);
         views.setTextColor(R.id.text_time_event, eventColor);
@@ -128,12 +143,9 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            float textSize = theme.getTextSizeSp();
-            float timeSize = theme.getTimeSizeSp();
-
-            views.setTextViewTextSize(R.id.text_time_event_label, TypedValue.COMPLEX_UNIT_DIP, textSize);
-            views.setTextViewTextSize(R.id.text_time_event_note, TypedValue.COMPLEX_UNIT_DIP, textSize);
-            views.setTextViewTextSize(R.id.text_time_event, TypedValue.COMPLEX_UNIT_DIP, timeSize);
+            views.setTextViewTextSize(R.id.text_time_event_label, TypedValue.COMPLEX_UNIT_DIP, theme.getTextSizeSp());
+            views.setTextViewTextSize(R.id.text_time_event_note, TypedValue.COMPLEX_UNIT_DIP, theme.getTextSizeSp());
+            views.setTextViewTextSize(R.id.text_time_event, TypedValue.COMPLEX_UNIT_DIP, theme.getTimeSizeSp());
         }
     }
 

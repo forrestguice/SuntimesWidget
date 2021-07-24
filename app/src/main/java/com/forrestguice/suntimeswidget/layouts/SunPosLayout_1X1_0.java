@@ -19,10 +19,15 @@
 package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.v4.content.res.ResourcesCompat;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -63,6 +68,34 @@ public class SunPosLayout_1X1_0 extends SunPosLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetDataset dataset)
     {
         super.updateViews(context, appWidgetId, views, dataset);
+        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            if (WidgetSettings.loadScaleTextPref(context, appWidgetId))
+            {
+                int[] maxDp = new int[] {maxDimensionsDp[0], (maxDimensionsDp[1] / (showLabels ? 3 : 2))};
+                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, "00000000", timeSizeSp, ClockLayout.CLOCKFACE_MAX_SP, "", suffixSizeSp);
+                if (adjustedSizeSp[0] > timeSizeSp)
+                {
+                    float textScale = Math.max(adjustedSizeSp[0] / timeSizeSp, 1);
+                    float scaledPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textScale * 2, context.getResources().getDisplayMetrics());
+
+                    views.setTextViewTextSize(R.id.info_sun_azimuth_current, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+                    views.setViewPadding(R.id.info_sun_azimuth_current, (int)(scaledPadding), 0, (int)(scaledPadding), (int)(scaledPadding));
+
+                    views.setTextViewTextSize(R.id.info_sun_azimuth_current_label, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
+                    views.setViewPadding(R.id.info_sun_azimuth_current_label, (int)(scaledPadding), 0, (int)(scaledPadding), 0);
+
+                    views.setTextViewTextSize(R.id.info_sun_elevation_current, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+                    views.setViewPadding(R.id.info_sun_elevation_current, (int)(scaledPadding), 0, (int)(scaledPadding), 0);
+
+                    views.setTextViewTextSize(R.id.info_sun_elevation_current_label, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
+                    views.setViewPadding(R.id.info_sun_elevation_current_label, (int)(scaledPadding), 0, (int)(scaledPadding), 0);
+                }
+            }
+        }
+
         SuntimesCalculator calculator = dataset.calculator();
         SuntimesCalculator.SunPosition sunPosition = (calculator != null ? calculator.getSunPosition(dataset.now()) : null);
 
@@ -72,7 +105,6 @@ public class SunPosLayout_1X1_0 extends SunPosLayout
 
         updateViewsAzimuthElevationText(context, views, sunPosition, noonPosition);
 
-        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         int visibility = (showLabels ? View.VISIBLE : View.GONE);
         views.setViewVisibility(R.id.info_sun_azimuth_current_label, visibility);
         views.setViewVisibility(R.id.info_sun_elevation_current_label, visibility);
