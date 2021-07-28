@@ -21,8 +21,11 @@ package com.forrestguice.suntimeswidget.layouts;
 import android.content.Context;
 import android.graphics.Bitmap;
 
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
@@ -40,6 +43,14 @@ import java.util.Calendar;
  */
 public class SunLayout_1x1_0 extends SunLayout
 {
+    protected int sunriseIconColor = Color.YELLOW;
+    protected int sunriseIconStrokeColor = Color.YELLOW;
+    protected int sunriseIconStrokePixels = 0;
+
+    protected int sunsetIconColor = Color.YELLOW;
+    protected int sunsetIconStrokeColor = Color.YELLOW;
+    protected int sunsetIconStrokePixels = 0;
+
     public SunLayout_1x1_0()
     {
         super();
@@ -75,15 +86,34 @@ public class SunLayout_1x1_0 extends SunLayout
         {
             if (WidgetSettings.loadScaleTextPref(context, appWidgetId))
             {
-                int[] maxDp = new int[] {(maxDimensionsDp[0] - (int)Math.ceil(iconSizeDp)), (maxDimensionsDp[1] / 2)};
-                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, (showSeconds ? "00:00:00" : "00:00"), timeSizeSp, ClockLayout.CLOCKFACE_MAX_SP, "MM", suffixSizeSp);
-                if (adjustedSizeSp[0] != timeSizeSp)
+                int[] maxDp = new int[] {(maxDimensionsDp[0] - (2 * paddingDp[0]) - (int)Math.ceil(iconSizeDp)), (maxDimensionsDp[1] - (2 * paddingDp[1]))};
+                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, (showSeconds ? "00:00:00" : "00:00"), timeSizeSp, ClockLayout.CLOCKFACE_MAX_SP, "MM", suffixSizeSp, iconSizeDp);
+                if (adjustedSizeSp[0] > timeSizeSp)
                 {
+                    float textScale = Math.max(adjustedSizeSp[0] / timeSizeSp, 1);
+                    float scaledPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textScale * 2, context.getResources().getDisplayMetrics());
+
                     views.setTextViewTextSize(R.id.text_time_rise, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
                     views.setTextViewTextSize(R.id.text_time_rise_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
 
                     views.setTextViewTextSize(R.id.text_time_set, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
                     views.setTextViewTextSize(R.id.text_time_set_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
+
+                    views.setViewPadding(R.id.text_time_set, 0, 0, (int)scaledPadding/2, 0);
+                    views.setViewPadding(R.id.text_time_set_suffix, 0, 0, (int)scaledPadding, 0);
+                    views.setViewPadding(R.id.icon_time_sunset, (int)(scaledPadding), 0, 0, 0);
+
+                    views.setViewPadding(R.id.text_time_rise, 0, 0, (int)scaledPadding/2, 0);
+                    views.setViewPadding(R.id.text_time_rise_suffix, 0, 0, (int)scaledPadding, 0);
+                    views.setViewPadding(R.id.icon_time_sunrise, (int)(scaledPadding), 0, 0, 0);
+
+                    Drawable sunriseIcon = ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunrise1, null);
+                    SuntimesUtils.tintDrawable(sunriseIcon, sunriseIconColor);
+                    views.setImageViewBitmap(R.id.icon_time_sunrise, SuntimesUtils.drawableToBitmap(context, sunriseIcon, (int)(iconSizeDp * textScale), (int)(iconSizeDp * textScale) / 2, false));
+
+                    Drawable sunsetIcon = ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null);
+                    SuntimesUtils.tintDrawable(sunsetIcon, sunsetIconColor);
+                    views.setImageViewBitmap(R.id.icon_time_sunset, SuntimesUtils.drawableToBitmap(context, sunsetIcon, (int)(iconSizeDp * textScale), (int)(iconSizeDp * textScale) / 2, false));
                 }
             }
         }
@@ -96,6 +126,7 @@ public class SunLayout_1x1_0 extends SunLayout
     {
         super.themeViews(context, views, theme);
 
+        iconSizeDp = 18;   // override 32
         int suffixColor = theme.getTimeSuffixColor();
         views.setTextColor(R.id.text_time_rise_suffix, suffixColor);
         views.setTextColor(R.id.text_time_rise, theme.getSunriseTextColor());
@@ -114,10 +145,18 @@ public class SunLayout_1x1_0 extends SunLayout
             views.setTextViewTextSize(R.id.text_time_set_suffix, TypedValue.COMPLEX_UNIT_DIP, suffixSizeSp);
         }
 
-        Bitmap sunriseIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_sunrise0, theme.getSunriseIconColor(), theme.getSunriseIconStrokeColor(), theme.getSunriseIconStrokePixels(context));
+        sunriseIconColor = theme.getSunriseIconColor();
+        sunriseIconStrokeColor = theme.getSunriseIconStrokeColor();
+        sunriseIconStrokePixels = theme.getSunriseIconStrokePixels(context);
+
+        sunsetIconColor = theme.getSunsetIconColor();
+        sunsetIconStrokeColor = theme.getSunsetIconStrokeColor();
+        sunsetIconStrokePixels = theme.getSunsetIconStrokePixels(context);
+
+        Bitmap sunriseIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_sunrise0, sunriseIconColor, sunriseIconStrokeColor, sunriseIconStrokePixels);
         views.setImageViewBitmap(R.id.icon_time_sunrise, sunriseIcon);
 
-        Bitmap sunsetIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_sunset0, theme.getSunsetIconColor(), theme.getSunsetIconStrokeColor(), theme.getSunsetIconStrokePixels(context));
+        Bitmap sunsetIcon = SuntimesUtils.layerDrawableToBitmap(context, R.drawable.ic_sunset0, sunsetIconColor, sunsetIconStrokeColor, sunsetIconStrokePixels);
         views.setImageViewBitmap(R.id.icon_time_sunset, sunsetIcon);
     }
 }
