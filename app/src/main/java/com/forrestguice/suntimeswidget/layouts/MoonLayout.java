@@ -40,6 +40,7 @@ public abstract class MoonLayout extends SuntimesLayout
     protected float textSizeSp = 12;
     protected float timeSizeSp = 12;
     protected float suffixSizeSp = 8;
+    protected float iconSizeDp = 32;
 
     public MoonLayout()
     {

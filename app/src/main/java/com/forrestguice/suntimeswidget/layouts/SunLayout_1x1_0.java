@@ -116,7 +116,7 @@ public class SunLayout_1x1_0 extends SunLayout
 
                     Drawable sunsetIcon = ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null);
                     SuntimesUtils.tintDrawable(sunsetIcon, sunsetIconColor);
-                    views.setImageViewBitmap(R.id.icon_time_sunset, SuntimesUtils.drawableToBitmap(context, sunsetIcon, (int)(iconSizeDp * textScale), (int)(iconSizeDp * textScale) / 2, false));
+                    views.setImageViewBitmap(R.id.icon_time_sunset, SuntimesUtils.drawableToBitmap(context, sunsetIcon, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
                 }
             }
         }
