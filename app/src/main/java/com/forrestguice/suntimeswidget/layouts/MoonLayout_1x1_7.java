@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2019 Forrest Guice
+   Copyright (C) 2019-2021 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -56,6 +56,33 @@ public class MoonLayout_1x1_7 extends MoonLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesMoonData data)
     {
         super.updateViews(context, appWidgetId, views, data);
+        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            if (WidgetSettings.loadScaleTextPref(context, appWidgetId))
+            {
+                int showTitle = (WidgetSettings.loadShowTitlePref(context, appWidgetId) ? 1 : 0);
+                int[] maxDp = new int[] {maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), ((maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle)) / (showLabels ? 2 : 1))};
+                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, "000,000.0 MM", timeSizeSp, ClockLayout.CLOCKFACE_MAX_SP, "", suffixSizeSp);
+                if (adjustedSizeSp[0] > timeSizeSp)
+                {
+                    float textScale = Math.max(adjustedSizeSp[0] / timeSizeSp, 1);
+                    float scaledPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textScale * 2, context.getResources().getDisplayMetrics());
+
+                    views.setViewPadding(R.id.text_title, (int)(scaledPadding), 0, (int)(scaledPadding), 0);
+
+                    views.setTextViewTextSize(R.id.info_moon_distance_current, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+                    views.setTextViewTextSize(R.id.text_time_moonrise_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
+
+                    views.setTextViewTextSize(R.id.info_moon_distance_current, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+                    views.setViewPadding(R.id.info_moon_distance_current, (int)(scaledPadding), 0, (int)(scaledPadding), (int)(scaledPadding));
+
+                    views.setTextViewTextSize(R.id.info_moon_distance_current_label, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
+                    views.setViewPadding(R.id.info_moon_distance_current_label, (int)(scaledPadding), 0, (int)(scaledPadding), 0);
+                }
+            }
+        }
 
         SuntimesCalculator calculator = data.calculator();
         SuntimesCalculator.MoonPosition moonPosition = calculator.getMoonPosition(data.now());
@@ -71,7 +98,6 @@ public class MoonLayout_1x1_7 extends MoonLayout
         distance = SuntimesUtils.createRelativeSpan(distance, distanceString, unitsSymbol, PositionLayout.SYMBOL_RELATIVE_SIZE);
         views.setTextViewText(R.id.info_moon_distance_current, distance);
 
-        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         int visibility = (showLabels ? View.VISIBLE : View.GONE);
         views.setViewVisibility(R.id.info_moon_distance_current_label, visibility);
     }
