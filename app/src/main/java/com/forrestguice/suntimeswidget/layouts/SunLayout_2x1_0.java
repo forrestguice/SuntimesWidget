@@ -71,7 +71,7 @@ public class SunLayout_2x1_0 extends SunLayout
                 numRows += showSolarNoon ? 1 : 0;
                 numRows += showDayDelta ? 1 : 0;
 
-                int[] maxDp = new int[] {(maxDimensionsDp[0] - (4*(paddingDp[0] + paddingDp[2]))) / 2,
+                int[] maxDp = new int[] {(maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2] + 32)) / 2,
                                          ((maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3])) / numRows)};
                 float maxSp = ClockLayout.CLOCKFACE_MAX_SP;
                 float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, (showSeconds ? "00:00:00" : "00:00"), timeSizeSp, maxSp, "MM", suffixSizeSp, iconSizeDp);
@@ -111,7 +111,11 @@ public class SunLayout_2x1_0 extends SunLayout
 
                     Drawable d2 = ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null);
                     SuntimesUtils.tintDrawable(d2, sunsetColor);
-                    views.setImageViewBitmap(R.id.icon_time_sunset, SuntimesUtils.drawableToBitmap(context, d2, (int)(iconSizeDp * textScale), (int)(iconSizeDp * textScale) / 2, false));
+                    views.setImageViewBitmap(R.id.icon_time_sunset, SuntimesUtils.drawableToBitmap(context, d2, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
+
+                    //Drawable d3 = ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null);
+                    //SuntimesUtils.tintDrawable(d3, sunriseColor);
+                    //views.setImageViewBitmap(R.id.icon_time_noon, SuntimesUtils.drawableToBitmap(context, d3, (int)(iconSizeDp * textScale), (int)(iconSizeDp * textScale)/2, false));
                 }
             }
         }
