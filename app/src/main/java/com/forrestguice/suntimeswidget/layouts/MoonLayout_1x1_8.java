@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2019 Forrest Guice
+   Copyright (C) 2019-2021 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -58,6 +58,42 @@ public class MoonLayout_1x1_8 extends MoonLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesMoonData data)
     {
         super.updateViews(context, appWidgetId, views, data);
+        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
+        boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            if (WidgetSettings.loadScaleTextPref(context, appWidgetId))
+            {
+                int numRows = 4;
+                if (showLabels) {
+                    numRows++;
+                }
+                int[] maxDp = new int[] {(maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2])),
+                        ((maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3])) / numRows)};
+                float maxSp = ClockLayout.CLOCKFACE_MAX_SP;
+                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, (showSeconds ? "September MM, 00:00:00 MM" : "September MM, 00:00 MM"), timeSizeSp, maxSp, "", suffixSizeSp);
+                if (adjustedSizeSp[0] > timeSizeSp)
+                {
+                    float textScale = Math.max(adjustedSizeSp[0] / timeSizeSp, 1);
+                    float scaledPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textScale * 2, context.getResources().getDisplayMetrics());
+
+                    views.setTextViewTextSize(R.id.moonapsis_apogee_date, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+                    views.setTextViewTextSize(R.id.moonapsis_apogee_label, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
+                    views.setTextViewTextSize(R.id.moonapsis_apogee_distance, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
+                    views.setTextViewTextSize(R.id.moonapsis_apogee_note, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
+
+                    views.setTextViewTextSize(R.id.moonapsis_perigee_date, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+                    views.setTextViewTextSize(R.id.moonapsis_perigee_label, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
+                    views.setTextViewTextSize(R.id.moonapsis_perigee_distance, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
+                    views.setTextViewTextSize(R.id.moonapsis_perigee_note, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
+
+                    views.setViewPadding(R.id.text_title, (int)(scaledPadding), 0, (int)(scaledPadding), 0);
+                    views.setViewPadding(R.id.moonapsis_apogee_layout, 0, 0, 0, (int)scaledPadding/2);
+                    views.setViewPadding(R.id.moonapsis_perigee_layout, 0, 0, 0, (int)scaledPadding/2);
+                }
+            }
+        }
 
         if (data != null && data.isCalculated())
         {
