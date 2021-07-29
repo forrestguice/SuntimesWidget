@@ -70,12 +70,20 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
         boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
 
+        WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, appWidgetId);
+        Calendar event = null;
+        if (data != null && data.isCalculated()) {
+            event = (trackingMode == WidgetSettings.TrackingMode.SOONEST ? data.eventCalendarUpcoming(Calendar.getInstance())
+                    : data.eventCalendarClosest(Calendar.getInstance()));
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
             if (WidgetSettings.loadScaleTextPref(context, appWidgetId))
             {
-                int[] maxDp = new int[] {maxDimensionsDp[0], (maxDimensionsDp[1] / (showLabels ? 3 : 2))};
-                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, "MMMMMMMMMMMM", timeSizeSp, ClockLayout.CLOCKFACE_MAX_SP, "", suffixSizeSp);
+                int showTitle = (WidgetSettings.loadShowTitlePref(context, appWidgetId) ? 1 : 0);
+                int[] maxDp = new int[] {maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), ((maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle)) / (showLabels ? 4 : 3))};
+                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, " September 22, ", timeSizeSp, ClockLayout.CLOCKFACE_MAX_SP, "", suffixSizeSp);
                 if (adjustedSizeSp[0] > timeSizeSp)
                 {
                     float textScale = Math.max(adjustedSizeSp[0] / timeSizeSp, 1);
@@ -84,45 +92,37 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
                     views.setTextViewTextSize(R.id.text_time_event, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
                     views.setTextViewTextSize(R.id.text_time_event_note, TypedValue.COMPLEX_UNIT_DIP, textSizeSp * textScale);
                     views.setTextViewTextSize(R.id.text_time_event_label, TypedValue.COMPLEX_UNIT_DIP, textSizeSp * textScale);
+
+                    views.setViewPadding(R.id.text_title, (int)(scaledPadding), 0, (int)(scaledPadding), 0);
+                    views.setViewPadding(R.id.text_time_event_label, (int)(2*scaledPadding), 0, (int)(2*scaledPadding), 0);
                     views.setViewPadding(R.id.text_time_event_note, (int)(scaledPadding), 0, (int)(scaledPadding), (int)(scaledPadding / 2));
                 }
             }
         }
 
-        if (data != null && data.isCalculated())
+        if (event != null)
         {
             Calendar now = Calendar.getInstance();
-            WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, appWidgetId);
-            Calendar event = (trackingMode == WidgetSettings.TrackingMode.SOONEST ? data.eventCalendarUpcoming(now)
-                                                                                  : data.eventCalendarClosest(now));
-            if (event != null)
-            {
-                views.setTextViewText(R.id.text_time_event_label, data.timeMode().getLongDisplayString());
-                views.setViewVisibility(R.id.text_time_event_label, (showLabels ? View.VISIBLE : View.GONE));
 
-                TimeDisplayText eventString = utils.calendarDateTimeDisplayString(context, event, showTimeDate, showSeconds);
-                views.setTextViewText(R.id.text_time_event, eventString.getValue());
+            views.setTextViewText(R.id.text_time_event_label, data.timeMode().getLongDisplayString());
+            views.setViewVisibility(R.id.text_time_event_label, (showLabels ? View.VISIBLE : View.GONE));
 
-                int noteStringId = R.string.hence;
-                if (event.before(now))
-                {
-                    noteStringId = R.string.ago;
-                }
+            TimeDisplayText eventString = utils.calendarDateTimeDisplayString(context, event, showTimeDate, showSeconds);
+            views.setTextViewText(R.id.text_time_event, eventString.getValue());
 
-                String noteTime = utils.timeDeltaDisplayString(now.getTime(), event.getTime(), showWeeks, showHours).toString();
-                String noteString = context.getString(noteStringId, noteTime);
-                SpannableString noteSpan = (boldTime ? SuntimesUtils.createBoldColorSpan(null, noteString, noteTime, timeColor) : SuntimesUtils.createColorSpan(null, noteString, noteTime, timeColor));
-                views.setTextViewText(R.id.text_time_event_note, noteSpan);
-
-            } else {
-                views.setTextViewText(R.id.text_time_event, "");
-                views.setTextViewText(R.id.text_time_event_note, context.getString(R.string.feature_not_supported_by_source));
-                views.setTextViewText(R.id.text_time_event_label, "");
-                views.setViewVisibility(R.id.text_time_event_label, View.GONE);
+            int noteStringId = R.string.hence;
+            if (event.before(now)) {
+                noteStringId = R.string.ago;
             }
+
+            String noteTime = utils.timeDeltaDisplayString(now.getTime(), event.getTime(), showWeeks, showHours).toString();
+            String noteString = context.getString(noteStringId, noteTime);
+            SpannableString noteSpan = (boldTime ? SuntimesUtils.createBoldColorSpan(null, noteString, noteTime, timeColor) : SuntimesUtils.createColorSpan(null, noteString, noteTime, timeColor));
+            views.setTextViewText(R.id.text_time_event_note, noteSpan);
+
         } else {
             views.setTextViewText(R.id.text_time_event, "");
-            views.setTextViewText(R.id.text_time_event_note, context.getString(R.string.time_loading));
+            views.setTextViewText(R.id.text_time_event_note, context.getString(R.string.feature_not_supported_by_source));
             views.setTextViewText(R.id.text_time_event_label, "");
             views.setViewVisibility(R.id.text_time_event_label, View.GONE);
         }

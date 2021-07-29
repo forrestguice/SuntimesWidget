@@ -74,8 +74,10 @@ public class ClockLayout_1x1_0 extends ClockLayout
         {
             if (WidgetSettings.loadScaleTextPref(context, appWidgetId, true))
             {
+                int showTitle = (WidgetSettings.loadShowTitlePref(context, appWidgetId) ? 1 : 0);
                 float maxSp = ClockLayout.CLOCKFACE_MAX_SP;  // ((category == AppWidgetProviderInfo.WIDGET_CATEGORY_KEYGUARD) ? CLOCKFACE_MAX_SP : -1);
-                float[] adjustedSizeSp = adjustTextSize(context, maxDimensionsDp, paddingDp, "sans-serif", boldTime,"00:00", timeSizeSp, maxSp, "MM", suffixSizeSp);
+                int[] maxDp = new int[] {maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), (maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle))};
+                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime,"00:00", timeSizeSp, maxSp, "MM", suffixSizeSp);
                 if (adjustedSizeSp[0] != timeSizeSp) {
                     views.setTextViewTextSize(R.id.text_time, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
                     views.setTextViewTextSize(R.id.text_time_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
@@ -122,13 +124,13 @@ public class ClockLayout_1x1_0 extends ClockLayout
         }
     }
 
-    private int timeColor = Color.WHITE;
-    private int textColor = Color.WHITE;
-    private int suffixColor = Color.GRAY;
+    protected int timeColor = Color.WHITE;
+    protected int textColor = Color.WHITE;
+    protected int suffixColor = Color.GRAY;
     private boolean boldTime = false;
-    private float timeSizeSp = 12;
-    private float suffixSizeSp = 8;
-    private int[] paddingDp = new int[] {0, 0};
+    protected float titleSizeSp = 10;
+    protected float timeSizeSp = 12;
+    protected float suffixSizeSp = 8;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)

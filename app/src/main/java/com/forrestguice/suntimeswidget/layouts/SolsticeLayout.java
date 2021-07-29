@@ -30,6 +30,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 public abstract class SolsticeLayout extends SuntimesLayout
 {
+    protected float titleSizeSp = 12;
     protected float textSizeSp = 12;
     protected float timeSizeSp = 12;
     protected float suffixSizeSp = 8;
@@ -75,6 +76,7 @@ public abstract class SolsticeLayout extends SuntimesLayout
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
+            titleSizeSp = theme.getTitleSizeSp();
             textSizeSp = theme.getTextSizeSp();
             timeSizeSp = theme.getTimeSizeSp();
             suffixSizeSp = theme.getTimeSuffixSizeSp();

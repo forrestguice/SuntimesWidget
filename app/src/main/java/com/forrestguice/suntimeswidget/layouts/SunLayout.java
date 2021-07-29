@@ -38,6 +38,7 @@ public abstract class SunLayout extends SuntimesLayout
     protected int sunriseColor = Color.YELLOW;
     protected int sunsetColor = Color.YELLOW;
 
+    protected float titleSizeSp = 10;
     protected float textSizeSp = 12;
     protected float timeSizeSp = 12;
     protected float suffixSizeSp = 8;
@@ -64,6 +65,7 @@ public abstract class SunLayout extends SuntimesLayout
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
+            titleSizeSp = theme.getTitleSizeSp();
             textSizeSp = theme.getTextSizeSp();
             timeSizeSp = theme.getTimeSizeSp();
             suffixSizeSp = theme.getTimeSuffixSizeSp();

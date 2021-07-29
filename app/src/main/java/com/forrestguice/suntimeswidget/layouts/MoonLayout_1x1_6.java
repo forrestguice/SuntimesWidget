@@ -41,10 +41,6 @@ import java.util.Calendar;
  */
 public class MoonLayout_1x1_6 extends MoonLayout
 {
-    protected float textSizeSp = 12;
-    protected float timeSizeSp = 12;
-    protected float suffixSizeSp = 8;
-
     public MoonLayout_1x1_6()
     {
         super();
@@ -71,12 +67,15 @@ public class MoonLayout_1x1_6 extends MoonLayout
         {
             if (WidgetSettings.loadScaleTextPref(context, appWidgetId))
             {
-                int[] maxDp = new int[] {maxDimensionsDp[0], (maxDimensionsDp[1] / (showLabels ? 3 : 2))};
+                int showTitle = (WidgetSettings.loadShowTitlePref(context, appWidgetId) ? 1 : 0);
+                int[] maxDp = new int[] {maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), ((maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle)) / (showLabels ? 4 : 2))};
                 float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, "0000000000", timeSizeSp, ClockLayout.CLOCKFACE_MAX_SP, "", suffixSizeSp);
                 if (adjustedSizeSp[0] > timeSizeSp)
                 {
                     float textScale = Math.max(adjustedSizeSp[0] / timeSizeSp, 1);
                     float scaledPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textScale * 2, context.getResources().getDisplayMetrics());
+
+                    views.setViewPadding(R.id.text_title, (int)(scaledPadding), 0, (int)(scaledPadding), 0);
 
                     views.setTextViewTextSize(R.id.info_moon_declination_current, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
                     views.setViewPadding(R.id.info_moon_declination_current, (int)(scaledPadding), 0, (int)(scaledPadding), 0);
@@ -120,12 +119,9 @@ public class MoonLayout_1x1_6 extends MoonLayout
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            textSizeSp = theme.getTextSizeSp();
             views.setTextViewTextSize(R.id.info_moon_rightascension_current_label, TypedValue.COMPLEX_UNIT_DIP, textSizeSp);
             views.setTextViewTextSize(R.id.info_moon_declination_current_label, TypedValue.COMPLEX_UNIT_DIP, textSizeSp);
 
-            timeSizeSp = theme.getTimeSizeSp();
-            suffixSizeSp = theme.getTimeSuffixSizeSp();
             views.setTextViewTextSize(R.id.info_moon_rightascension_current, TypedValue.COMPLEX_UNIT_DIP, timeSizeSp);
             views.setTextViewTextSize(R.id.info_moon_declination_current, TypedValue.COMPLEX_UNIT_DIP, timeSizeSp);
         }

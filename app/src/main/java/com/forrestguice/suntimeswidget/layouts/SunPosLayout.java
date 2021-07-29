@@ -36,6 +36,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 public abstract class SunPosLayout extends PositionLayout
 {
+    protected float titleSizeSp = 10;
     protected float textSizeSp = 12;
     protected float timeSizeSp = 12;
     protected float suffixSizeSp = 8;
@@ -143,6 +144,7 @@ public abstract class SunPosLayout extends PositionLayout
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
+            titleSizeSp = theme.getTitleSizeSp();
             textSizeSp = theme.getTextSizeSp();
             timeSizeSp = theme.getTimeSizeSp();
             suffixSizeSp = theme.getTimeSuffixSizeSp();

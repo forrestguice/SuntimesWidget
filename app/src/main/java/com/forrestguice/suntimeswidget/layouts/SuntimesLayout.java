@@ -61,7 +61,7 @@ public abstract class SuntimesLayout
         maxDimensionsDp[1] = size[1];
     }
 
-    protected int[] paddingDp = new int[] {0, 0};
+    protected int[] paddingDp = new int[] {0, 0, 0, 0};    // left, top, right, bottom
 
     /**
      * All SuntimesLayout subclasses must implement this method and provide a value for
@@ -154,9 +154,17 @@ public abstract class SuntimesLayout
         return false;
     }
 
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static float[] adjustTextSize(Context context, int[] maxDimensionsDp, int[] paddingDp,
                                          String fontFamily, boolean bold, String timeText, float timeSizeSp, float timeSizeMaxSp, String suffixText, float suffixSizeSp)
+    {
+        return adjustTextSize(context, maxDimensionsDp, paddingDp, fontFamily, bold, timeText, timeSizeSp, timeSizeMaxSp, suffixText, suffixSizeSp, 0);
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public static float[] adjustTextSize(Context context, int[] maxDimensionsDp, int[] paddingDp,
+                                         String fontFamily, boolean bold, String timeText, float timeSizeSp, float timeSizeMaxSp, String suffixText, float suffixSizeSp, float iconWidthDp)
     {
         float adjustedTimeSizeSp = timeSizeSp;
         Rect timeBounds = new Rect();
@@ -168,35 +176,45 @@ public abstract class SuntimesLayout
         Paint suffixPaint = new Paint();
         suffixPaint.setTypeface(Typeface.create(fontFamily, Typeface.BOLD));
 
+        float adjustedIconWidthDp = iconWidthDp;
+        float adjustedIconWidthPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, adjustedIconWidthDp, context.getResources().getDisplayMetrics());
+
         float stepSizeSp = 0.1f;                                      // upscale by stepSize (until maxWidth is filled)
         float suffixRatio = suffixSizeSp / timeSizeSp;                // preserve suffix proportions while scaling
-        float maxWidthDp = (maxDimensionsDp[0] - paddingDp[0] - 8);   // maxWidth is adjusted for padding and margins
-        float maxHeightDp = (maxDimensionsDp[1] - paddingDp[1] - 8);  // maxHeight is adjusted for padding and margins
+        float iconRatio = iconWidthDp / timeSizeSp;
+        //float maxWidthDp = (maxDimensionsDp[0] - paddingDp[0] - 8);   // maxWidth is adjusted for padding and margins
+        //float maxHeightDp = (maxDimensionsDp[1] - paddingDp[1] - 8);  // maxHeight is adjusted for padding and margins
+        float maxWidthDp = maxDimensionsDp[0];
+        float maxHeightDp = maxDimensionsDp[1];
         float maxWidthPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, maxWidthDp, context.getResources().getDisplayMetrics());
         float maxHeightPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, maxHeightDp, context.getResources().getDisplayMetrics());
 
-        while ((timeBounds.width() + suffixBounds.width()) < maxWidthPixels                         // scale up to fill width
+        while ((timeBounds.width() + suffixBounds.width() + adjustedIconWidthPx) < maxWidthPixels                         // scale up to fill width
                 && (adjustedTimeSizeSp < timeSizeMaxSp || timeSizeMaxSp == -1))
         {
             adjustedTimeSizeSp += stepSizeSp;
             adjustedSuffixSizeSp += stepSizeSp * suffixRatio;
+            adjustedIconWidthDp += stepSizeSp * iconRatio;
+            adjustedIconWidthPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, adjustedIconWidthDp, context.getResources().getDisplayMetrics());
             getTextBounds(context,  timeText, adjustedTimeSizeSp, timePaint, timeBounds);
             getTextBounds(context, suffixText, adjustedSuffixSizeSp, suffixPaint, suffixBounds);
         }
 
-        while ((timeBounds.height() + suffixBounds.height()) > maxHeightPixels)
+        while (timeBounds.height() > maxHeightPixels)
         {
             adjustedTimeSizeSp -= stepSizeSp;
-            adjustedSuffixSizeSp -= stepSizeSp * suffixRatio;
+            adjustedSuffixSizeSp -= (stepSizeSp * suffixRatio);
+            adjustedIconWidthDp -= (stepSizeSp * iconRatio);
             getTextBounds(context,  timeText, adjustedTimeSizeSp, timePaint, timeBounds);
             getTextBounds(context, suffixText, adjustedSuffixSizeSp, suffixPaint, suffixBounds);
         }
 
-        float[] retValue = new float[2];
+        float[] retValue = new float[3];
         retValue[0] = adjustedTimeSizeSp;
         retValue[1] = adjustedSuffixSizeSp;
+        retValue[2] = adjustedIconWidthDp;
 
-        Log.d("ClockLayout", "adjustTextSize: within " + maxDimensionsDp[0] + "," + maxDimensionsDp[1] + " .. baseSp:" + timeSizeSp + ", adjustedSp:" + retValue[0]);
+        Log.d("ClockLayout", "adjustTextSize: within " + maxDimensionsDp[0] + "," + maxDimensionsDp[1] + " .. baseSp:" + timeSizeSp + ", adjustedSp:" + retValue[0] + ", baseIconDp: " + iconWidthDp +  ", adjustedIconDp: " + retValue[2]);
         return retValue;
     }
 

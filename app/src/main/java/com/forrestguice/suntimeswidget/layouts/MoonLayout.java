@@ -36,6 +36,11 @@ import java.util.HashMap;
 
 public abstract class MoonLayout extends SuntimesLayout
 {
+    protected float titleSizeSp = 10;
+    protected float textSizeSp = 12;
+    protected float timeSizeSp = 12;
+    protected float suffixSizeSp = 8;
+
     public MoonLayout()
     {
         initLayoutID();
@@ -157,11 +162,16 @@ public abstract class MoonLayout extends SuntimesLayout
         views.setTextViewText(R.id.text_time_moonset_suffix, setText.getSuffix());
     }
 
-    /**@Override
+    @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
-    }*/
+
+        titleSizeSp = theme.getTitleSizeSp();
+        textSizeSp = theme.getTextSizeSp();
+        timeSizeSp = theme.getTimeSizeSp();
+        suffixSizeSp = theme.getTimeSuffixSizeSp();
+    }
 
     protected HashMap<MoonPhaseDisplay, Integer> phaseColors = new HashMap<>();
 
