@@ -1069,16 +1069,31 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void saveLayoutSettings(Context context)
     {
-        saveWidgetMode1x1(context);    // save: widgetmode_1x1, 3x2, 3x3
+        // save: widgetmode_1x1, 3x2, 3x3
+        saveWidgetMode1x1(context);
         saveWidgetMode3x2(context);
         saveWidgetMode3x3(context);
+
+        // save: allow resize
+        boolean allowResize = checkbox_allowResize.isChecked();
+        WidgetSettings.saveAllowResizePref(context, appWidgetId, allowResize);
     }
 
     protected void loadLayoutSettings(Context context)
     {
-        loadWidgetMode1x1(context);    // load: widgetmode_1x1, 3x2, 3x3
+        // load: widgetmode_1x1, 3x2, 3x3
+        loadWidgetMode1x1(context);
         loadWidgetMode3x2(context);
         loadWidgetMode3x3(context);
+
+        // load: allow resize
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            boolean allowResize = WidgetSettings.loadAllowResizePref(context, appWidgetId);
+            checkbox_allowResize.setChecked(allowResize);
+        } else {
+            disableOptionAllowResize();
+        }
     }
 
     /**
@@ -1088,16 +1103,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected void saveAppearanceSettings(Context context)
     {
-
-
         // save: theme
         ThemeDescriptor theme = (ThemeDescriptor)spinner_theme.getSelectedItem();
         WidgetSettings.saveThemePref(context, appWidgetId, theme.name());
         //Log.d("DEBUG", "Saved theme: " + theme.name());
-
-        // save: allow resize
-        boolean allowResize = checkbox_allowResize.isChecked();
-        WidgetSettings.saveAllowResizePref(context, appWidgetId, allowResize);
 
         // save: scale text
         boolean scaleText = checkbox_scaleText.isChecked();
@@ -1138,15 +1147,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             spinner_theme.setSelection(themeDescriptor.ordinal(spinner_themeAdapter.values()));
         } else {
             Log.e("loadAppearanceSettings", "theme is not installed! " + theme.themeName());
-        }
-
-        // load: allow resize
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
-        {
-            boolean allowResize = WidgetSettings.loadAllowResizePref(context, appWidgetId);
-            checkbox_allowResize.setChecked(allowResize);
-        } else {
-            disableOptionAllowResize();
         }
 
         // load: scale text
