@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -48,65 +48,6 @@
                      android:layout_width="match_parent" android:layout_height="wrap_content" />
 
         </LinearLayout>
-
-        <LinearLayout android:id="@+id/appwidget_appearance_1x1mode_layout"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="16dp" android:paddingRight="8dp"
-            android:paddingStart="16dp" android:paddingEnd="8dp"
-            android:paddingTop="@dimen/settingsGroup_padding">
-
-            <TextView android:labelFor="@+id/appwidget_appearance_1x1mode"
-                android:id="@+id/appwidget_appearance_1x1mode_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/configLabel_appearance_1x1mode" />
-
-            <Spinner android:id="@+id/appwidget_appearance_1x1mode" android:layout_width="match_parent"
-                android:dropDownVerticalOffset="16sp"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-        <LinearLayout android:id="@+id/appwidget_appearance_3x2mode_layout"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal" android:visibility="gone"
-            android:paddingLeft="16dp" android:paddingRight="8dp"
-            android:paddingStart="16dp" android:paddingEnd="8dp"
-            android:paddingTop="@dimen/settingsGroup_padding">
-
-            <TextView android:labelFor="@+id/appwidget_appearance_3x2mode"
-                android:id="@+id/appwidget_appearance_3x2mode_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/configLabel_appearance_3x2mode" />
-
-            <Spinner android:id="@+id/appwidget_appearance_3x2mode" android:layout_width="match_parent"
-                android:dropDownVerticalOffset="16sp"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-        <LinearLayout android:id="@+id/appwidget_appearance_3x3mode_layout"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal" android:visibility="gone"
-            android:paddingLeft="16dp" android:paddingRight="8dp"
-            android:paddingStart="16dp" android:paddingEnd="8dp"
-            android:paddingTop="@dimen/settingsGroup_padding">
-
-            <TextView android:labelFor="@+id/appwidget_appearance_3x3mode"
-                android:id="@+id/appwidget_appearance_3x3mode_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/configLabel_appearance_3x3mode" />
-
-            <Spinner android:id="@+id/appwidget_appearance_3x3mode" android:layout_width="match_parent"
-                android:dropDownVerticalOffset="16sp"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-        <CheckBox android:id="@+id/appwidget_appearance_allowResize" android:layout_width="match_parent"
-                  android:paddingTop="@dimen/settingsGroup_padding"
-                  android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-                  android:layout_height="wrap_content" android:text="@string/configLabel_appearance_allowResize" />
 
         <CheckBox android:id="@+id/appwidget_appearance_scaleText" android:layout_width="match_parent"
             android:paddingTop="@dimen/settingsGroup_padding"
