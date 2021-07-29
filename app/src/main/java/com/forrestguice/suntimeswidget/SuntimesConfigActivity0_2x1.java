@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.widget.CompoundButton;
 
 /**
  * Widget config activity (for resizable widget that falls back to 2x1 layout).
@@ -62,4 +63,32 @@ public class SuntimesConfigActivity0_2x1 extends SuntimesConfigActivity0
         minSize[1] = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
         return minSize;
     }
+
+    protected void initWidgetModeLayout(Context context)
+    {
+        if (checkbox_allowResize != null)
+        {
+            checkbox_allowResize.setOnCheckedChangeListener(onAllowResizeChecked);
+            onAllowResizeChecked.onCheckedChanged(null, checkbox_allowResize.isChecked());
+        }
+    }
+
+    protected CompoundButton.OnCheckedChangeListener onAllowResizeChecked = new CompoundButton.OnCheckedChangeListener()
+    {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+        {
+            if (spinner_1x1mode != null) {
+                spinner_1x1mode.setEnabled(isChecked);
+            }
+            if (spinner_3x2mode != null) {
+                spinner_3x2mode.setEnabled(isChecked);
+            }
+            if (spinner_3x3mode != null) {
+                spinner_3x3mode.setEnabled(isChecked);
+            }
+        }
+    };
+
+
 }

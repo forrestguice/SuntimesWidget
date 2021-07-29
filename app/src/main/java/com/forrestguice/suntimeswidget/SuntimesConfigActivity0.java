@@ -612,6 +612,16 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         initWidgetMode3x3(context);
 
         //
+        // widget: allow resize
+        //
+        checkbox_allowResize = (CheckBox) findViewById(R.id.appwidget_appearance_allowResize);
+        if (checkbox_allowResize != null && Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            disableOptionAllowResize();  // resizable widgets require api14+
+        }
+
+        initWidgetModeLayout(context);
+
+        //
         // widget: title text
         //
         label_titleText = (TextView) findViewById(R.id.appwidget_appearance_titleText_label);
@@ -647,15 +657,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         checkbox_showLabels = (CheckBox) findViewById(R.id.appwidget_appearance_showLabels);
         showOptionLabels(false);
 
-
-        //
-        // widget: allow resize
-        //
-        checkbox_allowResize = (CheckBox) findViewById(R.id.appwidget_appearance_allowResize);
-        if (checkbox_allowResize != null && Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
-        {
-            disableOptionAllowResize();  // resizable widgets require api14+
-        }
 
         //
         // widget: scale text
@@ -832,6 +833,28 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // EMPTY
     }
 
+    protected void initWidgetModeLayout(Context context)
+    {
+        if (checkbox_allowResize != null)
+        {
+            checkbox_allowResize.setOnCheckedChangeListener(onAllowResizeChecked);
+            onAllowResizeChecked.onCheckedChanged(null, checkbox_allowResize.isChecked());
+        }
+    }
+
+    protected CompoundButton.OnCheckedChangeListener onAllowResizeChecked = new CompoundButton.OnCheckedChangeListener()
+    {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+        {
+            if (spinner_3x2mode != null) {
+                spinner_3x2mode.setEnabled(isChecked);
+            }
+            if (spinner_3x3mode != null) {
+                spinner_3x3mode.setEnabled(isChecked);
+            }
+        }
+    };
 
     /**
      * @param context a context used to access resources
@@ -1522,6 +1545,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected boolean getDefaultScaleText() {
         return WidgetSettings.PREF_DEF_APPEARANCE_SCALETEXT;
+    }
+
+    protected void hideLayoutSettings()
+    {
+        View layoutSettings = findViewById(R.id.appwidget_widget_layout);
+        if (layoutSettings != null) {
+            layoutSettings.setVisibility(View.GONE);
+        }
     }
 
     protected void hideGeneralSettings()

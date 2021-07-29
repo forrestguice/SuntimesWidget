@@ -58,6 +58,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
         showOptionTrackingMode(true);
         showOptionTimeModeOverride(true);
         showDataSource(false);  // temporarily hidden; atm all entries point to same implementation (false choice)
+        hideLayoutSettings();
     }
 
     @Override
@@ -155,6 +156,10 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
 
         String titleText = WidgetSettings.loadTitleTextPref(context, appWidgetId, DEF_TITLETEXT);
         text_titleText.setText(titleText);
+    }
+
+    @Override
+    protected void initWidgetModeLayout(Context context) {
     }
 
 }

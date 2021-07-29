@@ -22,6 +22,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.widget.CompoundButton;
 
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
 
@@ -72,5 +73,31 @@ public class SuntimesConfigActivity2_3x3 extends SuntimesConfigActivity2
         configThemesIntent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_SUNPOS_3x2);  // TODO: preview
         startActivityForResult(configThemesIntent, PICK_THEME_REQUEST);
     }
+
+
+    private CompoundButton.OnCheckedChangeListener onAllowResizeChecked = new CompoundButton.OnCheckedChangeListener()
+    {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+        {
+            if (spinner_1x1mode != null) {
+                spinner_1x1mode.setEnabled(isChecked);
+            }
+            if (spinner_3x2mode != null) {
+                spinner_3x2mode.setEnabled(isChecked);
+            }
+        }
+    };
+
+    @Override
+    protected void initWidgetModeLayout(Context context)
+    {
+        if (checkbox_allowResize != null)
+        {
+            checkbox_allowResize.setOnCheckedChangeListener(onAllowResizeChecked);
+            onAllowResizeChecked.onCheckedChanged(null, checkbox_allowResize.isChecked());
+        }
+    }
+
 
 }

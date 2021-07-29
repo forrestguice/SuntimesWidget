@@ -22,6 +22,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.widget.CompoundButton;
 
 public class MoonWidget0ConfigActivity_2x1 extends MoonWidget0ConfigActivity
 {
@@ -58,5 +59,33 @@ public class MoonWidget0ConfigActivity_2x1 extends MoonWidget0ConfigActivity
         minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
         minSize[1] = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
         return minSize;
+    }
+
+
+    private CompoundButton.OnCheckedChangeListener onAllowResizeChecked = new CompoundButton.OnCheckedChangeListener()
+    {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+        {
+            if (spinner_1x1mode != null) {
+                spinner_1x1mode.setEnabled(isChecked);
+            }
+            if (spinner_3x2mode != null) {
+                spinner_3x2mode.setEnabled(isChecked);
+            }
+            if (spinner_3x3mode != null) {
+                spinner_3x3mode.setEnabled(isChecked);
+            }
+        }
+    };
+
+    @Override
+    protected void initWidgetModeLayout(Context context)
+    {
+        if (checkbox_allowResize != null)
+        {
+            checkbox_allowResize.setOnCheckedChangeListener(onAllowResizeChecked);
+            onAllowResizeChecked.onCheckedChanged(null, checkbox_allowResize.isChecked());
+        }
     }
 }
