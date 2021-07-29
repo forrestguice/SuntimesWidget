@@ -72,6 +72,9 @@ public class MoonLayout_2x1_0 extends MoonLayout
             if (WidgetSettings.loadScaleTextPref(context, appWidgetId))
             {
                 int numRows = 2;
+                if (showLabels) {
+                    numRows++;
+                }
                 int[] maxDp = new int[] {(maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2] + 32)) / 2,
                         ((maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3])) / numRows)};
                 float maxSp = ClockLayout.CLOCKFACE_MAX_SP;
