@@ -234,6 +234,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected void saveSettings(Context context)
     {
+        saveLayoutSettings(context);
         saveGeneralSettings(context);
         locationConfig.saveSettings(context);
         saveTimezoneSettings(context);
@@ -248,6 +249,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected void loadSettings(Context context)
     {
+        loadLayoutSettings(context);
         loadGeneralSettings(context);
         loadAppearanceSettings(context);
         locationConfig.loadSettings(context);
@@ -1065,6 +1067,20 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     };
 
+    protected void saveLayoutSettings(Context context)
+    {
+        saveWidgetMode1x1(context);    // save: widgetmode_1x1, 3x2, 3x3
+        saveWidgetMode3x2(context);
+        saveWidgetMode3x3(context);
+    }
+
+    protected void loadLayoutSettings(Context context)
+    {
+        loadWidgetMode1x1(context);    // load: widgetmode_1x1, 3x2, 3x3
+        loadWidgetMode3x2(context);
+        loadWidgetMode3x3(context);
+    }
+
     /**
      * Save UI state to settings (appearance group).
      *
@@ -1072,10 +1088,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected void saveAppearanceSettings(Context context)
     {
-        // save: widgetmode_1x1, 3x2, 3x3
-        saveWidgetMode1x1(context);
-        saveWidgetMode3x2(context);
-        saveWidgetMode3x3(context);
+
 
         // save: theme
         ThemeDescriptor theme = (ThemeDescriptor)spinner_theme.getSelectedItem();
@@ -1110,11 +1123,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected void loadAppearanceSettings(Context context)
     {
-        // load: widgetmode_1x1, 3x2, 3x3
-        loadWidgetMode1x1(context);
-        loadWidgetMode3x2(context);
-        loadWidgetMode3x3(context);
-
         // load: theme
         SuntimesTheme theme = WidgetSettings.loadThemePref(context, appWidgetId);
         ThemeDescriptor themeDescriptor;
