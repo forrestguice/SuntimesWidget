@@ -22,13 +22,17 @@ import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -70,6 +74,8 @@ import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
+
+import org.w3c.dom.Text;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -121,7 +127,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     private WidgetThemes.ThemeListAdapter spinner_themeAdapter;
     protected Spinner spinner_theme;
 
-    protected Spinner spinner_1x1mode, spinner_3x2mode, spinner_3x3mode;
+    protected TextView label_1x1mode, label_2x1mode, label_3x1mode, label_3x2mode, label_3x3mode;
+    protected Spinner spinner_1x1mode, spinner_2x1mode, spinner_3x1mode, spinner_3x2mode, spinner_3x3mode;
     protected CheckBox checkbox_allowResize;
     protected CheckBox checkbox_scaleText;
     protected CheckBox checkbox_showTitle;
@@ -313,6 +320,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         return adapter;
     }
+
+    protected ArrayAdapter<WidgetSettings.WidgetModeSun2x1> createAdapter_widgetModeSun2x1()
+    {
+        ArrayAdapter<WidgetSettings.WidgetModeSun2x1> adapter = new ArrayAdapter<WidgetSettings.WidgetModeSun2x1>(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSun2x1.values());
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        return adapter;
+    }
+
 
     protected ArrayAdapter<WidgetSettings.ActionMode> createAdapter_actionMode()
     {
@@ -600,14 +615,25 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
         //
-        // widget: 1x1 widget mode, 3x2 widget mode
+        // widget: 1x1, 2x1, 3x1, 3x2, 3x3 widget modes
         //
+        label_1x1mode = (TextView) findViewById(R.id.appwidget_appearance_1x1mode_label);
         spinner_1x1mode = (Spinner) findViewById(R.id.appwidget_appearance_1x1mode);
         initWidgetMode1x1(context);
 
+        label_2x1mode = (TextView) findViewById(R.id.appwidget_appearance_2x1mode_label);
+        spinner_2x1mode = (Spinner) findViewById(R.id.appwidget_appearance_2x1mode);
+        initWidgetMode2x1(context);
+
+        label_3x1mode = (TextView) findViewById(R.id.appwidget_appearance_3x1mode_label);
+        spinner_3x1mode = (Spinner) findViewById(R.id.appwidget_appearance_3x1mode);
+        initWidgetMode3x1(context);
+
+        label_3x2mode = (TextView) findViewById(R.id.appwidget_appearance_3x2mode_label);
         spinner_3x2mode = (Spinner) findViewById(R.id.appwidget_appearance_3x2mode);
         initWidgetMode3x2(context);
 
+        label_3x3mode = (TextView) findViewById(R.id.appwidget_appearance_3x3mode_label);
         spinner_3x3mode = (Spinner) findViewById(R.id.appwidget_appearance_3x3mode);
         initWidgetMode3x3(context);
 
@@ -617,6 +643,21 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         checkbox_allowResize = (CheckBox) findViewById(R.id.appwidget_appearance_allowResize);
         if (checkbox_allowResize != null && Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
             disableOptionAllowResize();  // resizable widgets require api14+
+        }
+
+        ImageButton button_allowResizeHelp = (ImageButton) findViewById(R.id.appwidget_appearance_allowResize_helpButton);
+        if (button_allowResizeHelp != null)
+        {
+            button_allowResizeHelp.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    HelpDialog helpDialog = new HelpDialog();
+                    helpDialog.setContent(getString(R.string.help_appearance_allowresize));
+                    helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
+                }
+            });
         }
 
         initWidgetModeLayout(context);
@@ -794,6 +835,36 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         spinner_1x1mode.setSelection(mode1x1.ordinal());
     }
 
+    protected void initWidgetMode2x1(Context context)
+    {
+        if (spinner_2x1mode != null) {
+            spinner_2x1mode.setAdapter(createAdapter_widgetModeSun2x1());
+        }
+    }
+    protected void loadWidgetMode2x1(Context context)
+    {
+        //WidgetSettings.WidgetModeSun1x1 mode1x1 = WidgetSettings.loadSun1x1ModePref(context, appWidgetId);
+        //spinner_1x1mode.setSelection(mode1x1.ordinal());
+    }
+    protected void saveWidgetMode2x1(Context context)
+    {
+        // EMPTY
+    }
+
+    protected void initWidgetMode3x1(Context context)
+    {
+        // EMPTY
+    }
+    protected void loadWidgetMode3x1(Context context)
+    {
+        //WidgetSettings.WidgetModeSun1x1 mode1x1 = WidgetSettings.loadSun1x1ModePref(context, appWidgetId);
+        //spinner_1x1mode.setSelection(mode1x1.ordinal());
+    }
+    protected void saveWidgetMode3x1(Context context)
+    {
+        // EMPTY
+    }
+
     /**
      * @param context a context used to access resources
      */
@@ -801,18 +872,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         // EMPTY
     }
-
-    /**
-     * @param context a context used to access resources
-     */
     protected void saveWidgetMode3x2(Context context)
     {
         // EMPTY
     }
-
-    /**
-     * @param context a context used to access resources
-     */
     protected void loadWidgetMode3x2(Context context)
     {
         // EMPTY
@@ -822,12 +885,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         // EMPTY
     }
-
     protected void saveWidgetMode3x3(Context context)
     {
         // EMPTY
     }
-
     protected void loadWidgetMode3x3(Context context)
     {
         // EMPTY
@@ -835,6 +896,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected void initWidgetModeLayout(Context context)
     {
+        showOption2x1LayoutMode(true);
         if (checkbox_allowResize != null)
         {
             checkbox_allowResize.setOnCheckedChangeListener(onAllowResizeChecked);
@@ -847,14 +909,33 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
         {
-            if (spinner_3x2mode != null) {
-                spinner_3x2mode.setEnabled(isChecked);
+            TextView label = getPrimaryWidgetModeLabel();
+            if (label != null) {
+                label.setTypeface(label.getTypeface(), Typeface.BOLD);
+                label.setPaintFlags(label.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             }
-            if (spinner_3x3mode != null) {
-                spinner_3x3mode.setEnabled(isChecked);
+            for (View v : getPrimaryWidgetModeViews()) {
+                if (v != null) {
+                    v.setEnabled(true);
+                }
+            }
+            for (View v : getSecondaryWidgetModeViews()) {
+                if (v != null) {
+                    v.setEnabled(isChecked);
+                }
             }
         }
     };
+
+    protected TextView getPrimaryWidgetModeLabel() {
+        return label_1x1mode;
+    }
+    protected View[] getPrimaryWidgetModeViews() {
+        return new View[] { label_1x1mode, spinner_1x1mode };
+    }
+    protected View[] getSecondaryWidgetModeViews() {
+        return new View[] { label_2x1mode, spinner_2x1mode, label_3x1mode, spinner_3x1mode, label_3x2mode, spinner_3x2mode, label_3x3mode, spinner_3x3mode };
+    }
 
     /**
      * @param context a context used to access resources
@@ -1094,6 +1175,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         // save: widgetmode_1x1, 3x2, 3x3
         saveWidgetMode1x1(context);
+        saveWidgetMode2x1(context);
+        saveWidgetMode3x1(context);
         saveWidgetMode3x2(context);
         saveWidgetMode3x3(context);
 
@@ -1106,6 +1189,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         // load: widgetmode_1x1, 3x2, 3x3
         loadWidgetMode1x1(context);
+        loadWidgetMode2x1(context);
+        loadWidgetMode3x1(context);
         loadWidgetMode3x2(context);
         loadWidgetMode3x3(context);
 
@@ -1734,6 +1819,22 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         View layout_mode = findViewById(R.id.appwidget_appearance_1x1mode_layout);
         if (layout_mode != null) {
             layout_mode.setVisibility(View.GONE);
+        }
+    }
+
+    protected void showOption2x1LayoutMode(boolean show)
+    {
+        View layout_mode = findViewById(R.id.appwidget_appearance_2x1mode_layout);
+        if (layout_mode != null) {
+            layout_mode.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    protected void showOption3x1LayoutMode(boolean show)
+    {
+        View layout_mode = findViewById(R.id.appwidget_appearance_3x1mode_layout);
+        if (layout_mode != null) {
+            layout_mode.setVisibility(show ? View.VISIBLE : View.GONE);
         }
     }
 

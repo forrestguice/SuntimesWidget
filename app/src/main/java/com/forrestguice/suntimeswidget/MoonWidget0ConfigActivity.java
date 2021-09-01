@@ -49,6 +49,8 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
         hideOptionCompareAgainst();
         showOptionTrackingMode(false);
         showOptionTimeModeOverride(false);
+        showOption2x1LayoutMode(true);
+        showOption3x1LayoutMode(true);
         //showDataSource(false);
     }
 
@@ -94,14 +96,12 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
             spinner_1x1mode.setAdapter(createAdapter_widgetModeMoon1x1());
         }
     }
-
     protected ArrayAdapter<WidgetSettings.WidgetModeMoon1x1> createAdapter_widgetModeMoon1x1()
     {
         ArrayAdapter<WidgetSettings.WidgetModeMoon1x1> adapter = new ArrayAdapter<WidgetSettings.WidgetModeMoon1x1>(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeMoon1x1.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         return adapter;
     }
-
     @Override
     protected void saveWidgetMode1x1(Context context)
     {
@@ -110,12 +110,39 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
         WidgetSettings.saveMoon1x1ModePref(context, appWidgetId, mode);
         //Log.d("DEBUG", "Saved mode: " + mode.name());
     }
-
     @Override
     protected void loadWidgetMode1x1(Context context)
     {
         WidgetSettings.WidgetModeMoon1x1 mode1x1 = WidgetSettings.loadMoon1x1ModePref(context, appWidgetId);
         spinner_1x1mode.setSelection(mode1x1.ordinal());
+    }
+
+    @Override
+    protected void initWidgetMode2x1(Context context)
+    {
+        if (spinner_2x1mode != null) {
+            spinner_2x1mode.setAdapter(createAdapter_widgetModeMoon2x1());
+        }
+    }
+    protected ArrayAdapter<WidgetSettings.WidgetModeMoon2x1> createAdapter_widgetModeMoon2x1()
+    {
+        ArrayAdapter<WidgetSettings.WidgetModeMoon2x1> adapter = new ArrayAdapter<WidgetSettings.WidgetModeMoon2x1>(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeMoon2x1.values());
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        return adapter;
+    }
+
+    @Override
+    protected void initWidgetMode3x1(Context context)
+    {
+        if (spinner_3x1mode != null) {
+            spinner_3x1mode.setAdapter(createAdapter_widgetModeMoon3x1());
+        }
+    }
+    protected ArrayAdapter<WidgetSettings.WidgetModeMoon3x1> createAdapter_widgetModeMoon3x1()
+    {
+        ArrayAdapter<WidgetSettings.WidgetModeMoon3x1> adapter = new ArrayAdapter<WidgetSettings.WidgetModeMoon3x1>(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeMoon3x1.values());
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        return adapter;
     }
 
     @Override

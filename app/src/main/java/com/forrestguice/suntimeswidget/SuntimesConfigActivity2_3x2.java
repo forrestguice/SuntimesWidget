@@ -22,7 +22,9 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
 
@@ -73,29 +75,19 @@ public class SuntimesConfigActivity2_3x2 extends SuntimesConfigActivity2
         return intent;
     }
 
-    private CompoundButton.OnCheckedChangeListener onAllowResizeChecked = new CompoundButton.OnCheckedChangeListener()
-    {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-        {
-            if (spinner_1x1mode != null) {
-                spinner_1x1mode.setEnabled(isChecked);
-            }
-            if (spinner_3x3mode != null) {
-                spinner_3x3mode.setEnabled(isChecked);
-            }
-        }
-    };
-
     @Override
-    protected void initWidgetModeLayout(Context context)
-    {
-        if (checkbox_allowResize != null)
-        {
-            checkbox_allowResize.setOnCheckedChangeListener(onAllowResizeChecked);
-            onAllowResizeChecked.onCheckedChanged(null, checkbox_allowResize.isChecked());
-        }
+    protected TextView getPrimaryWidgetModeLabel() {
+        return label_3x2mode;
     }
 
+    @Override
+    protected View[] getPrimaryWidgetModeViews() {
+        return new View[] { label_3x2mode, spinner_3x2mode };
+    }
+
+    @Override
+    protected View[] getSecondaryWidgetModeViews() {
+        return new View[] { label_1x1mode, spinner_1x1mode, label_2x1mode, spinner_2x1mode, label_3x1mode, spinner_3x1mode, label_3x3mode, spinner_3x3mode };
+    }
 
 }

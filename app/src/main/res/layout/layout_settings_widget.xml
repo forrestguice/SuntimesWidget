@@ -24,7 +24,7 @@
         android:layout_marginBottom="@dimen/settingsGroup_margin"
         android:paddingLeft="5dp" android:paddingRight="5dp">
 
-        <TextView style="@style/SunsetTimeSettingsGroupTitle" android:visibility="gone"
+        <TextView style="@style/SunsetTimeSettingsGroupTitle"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="@string/configLabel_widgetlayout" />
 
@@ -40,8 +40,44 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="@string/configLabel_appearance_1x1mode" />
 
-            <Spinner android:id="@+id/appwidget_appearance_1x1mode" android:layout_width="match_parent"
-                android:dropDownVerticalOffset="16sp"
+            <Spinner android:id="@+id/appwidget_appearance_1x1mode" android:layout_width="0dp"
+                android:dropDownVerticalOffset="16sp" android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/appwidget_appearance_2x1mode_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:visibility="gone"
+            android:paddingLeft="16dp" android:paddingRight="8dp"
+            android:paddingStart="16dp" android:paddingEnd="8dp"
+            android:paddingTop="@dimen/settingsGroup_padding">
+
+            <TextView android:labelFor="@+id/appwidget_appearance_2x1mode"
+                android:id="@+id/appwidget_appearance_2x1mode_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="@string/configLabel_appearance_2x1mode" />
+
+            <Spinner android:id="@+id/appwidget_appearance_2x1mode" android:layout_width="0dp"
+                android:dropDownVerticalOffset="16sp" android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/appwidget_appearance_3x1mode_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:visibility="gone"
+            android:paddingLeft="16dp" android:paddingRight="8dp"
+            android:paddingStart="16dp" android:paddingEnd="8dp"
+            android:paddingTop="@dimen/settingsGroup_padding">
+
+            <TextView android:labelFor="@+id/appwidget_appearance_2x1mode"
+                android:id="@+id/appwidget_appearance_3x1mode_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="@string/configLabel_appearance_3x1mode" />
+
+            <Spinner android:id="@+id/appwidget_appearance_3x1mode" android:layout_width="0dp"
+                android:dropDownVerticalOffset="16sp" android:layout_weight="1"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
@@ -58,8 +94,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="@string/configLabel_appearance_3x2mode" />
 
-            <Spinner android:id="@+id/appwidget_appearance_3x2mode" android:layout_width="match_parent"
-                android:dropDownVerticalOffset="16sp"
+            <Spinner android:id="@+id/appwidget_appearance_3x2mode" android:layout_width="0dp"
+                android:dropDownVerticalOffset="16sp" android:layout_weight="1"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
@@ -82,11 +118,24 @@
 
         </LinearLayout>
 
-        <CheckBox android:id="@+id/appwidget_appearance_allowResize" android:layout_width="match_parent"
-            android:paddingTop="@dimen/settingsGroup_padding"
-            android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-            android:layout_height="wrap_content" android:text="@string/configLabel_appearance_allowResize" />
 
+        <LinearLayout android:orientation="horizontal"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingRight="8dp" android:paddingEnd="8dp">
+
+            <CheckBox android:id="@+id/appwidget_appearance_allowResize" android:layout_width="0dp"
+                android:paddingTop="@dimen/settingsGroup_padding"  android:layout_weight="1"
+                android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+                android:layout_height="wrap_content" android:text="@string/configLabel_appearance_allowResize" />
+
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_appearance_allowResize_helpButton"
+                style="@style/Widget.AppCompat.ActionButton"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
+                android:contentDescription="@string/configAction_help" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

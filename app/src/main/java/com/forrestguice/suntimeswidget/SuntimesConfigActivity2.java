@@ -53,6 +53,8 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         showTimeMode(false);
         showOptionShowNoon(false);
         showOptionLabels(true);
+        showOption2x1LayoutMode(false);
+        showOption3x1LayoutMode(true);
         showOption3x2LayoutMode(true);
         showOption3x3LayoutMode(true);
     }
@@ -128,6 +130,17 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         int pos = searchForIndex(spinner_1x1mode, mode);
         if (pos >= 0) {
             spinner_1x1mode.setSelection(pos);
+        }
+    }
+
+    @Override
+    protected void initWidgetMode3x1(Context context)
+    {
+        if (spinner_3x1mode != null)
+        {
+            ArrayAdapter<WidgetSettings.WidgetModeSunPos3x1> adapter = new ArrayAdapter<WidgetSettings.WidgetModeSunPos3x1>(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSunPos3x1.values());
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner_3x1mode.setAdapter(adapter);
         }
     }
 
@@ -214,5 +227,4 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
             }
         }
     }
-
 }

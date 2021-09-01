@@ -321,7 +321,7 @@
     <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Theme:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Grow with available space (resizeable)</string>  <!-- checkbox label -->
-    <string name="configLabel_appearance_scaleText">Scale text to available space</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_appearance_scaleText">Scale text and icons to fill extra space</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_showLabels">Show Labels</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">Show Title</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Title:</string>              <!-- edittext label -->
@@ -419,9 +419,11 @@
     <string name="widgetMode1x1_moonillum">Moon illumination only</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphasenext">Next major phase</string>     <!-- setting -->
 
-    <string name="configLabel_appearance_1x1mode">1x1 Layout:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x2mode">3x2 Layout:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x3mode">3x3 Layout:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_1x1mode">1x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_2x1mode">2x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x1mode">3x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x2mode">3x2:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x3mode">3x3:</string>     <!-- spinner label -->  <!-- TODO -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Do Nothing</string>           <!-- setting -->
@@ -1592,6 +1594,11 @@
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Help</string>
+    <string name="help_appearance_allowresize"><![CDATA[
+      <big>Grow with available space (resizable)</big><br/><br/>
+      <i><b>[enabled]</b></i> The widget will switch between layouts depending on available space.<br/><br/>
+      <i><b>[disabled]</b></i> The widget maintains its initial layout when resized. Use this with the \"<i>scale text and icons</i>\" option for extra large widgets.<br/>
+    ]]></string>  <!-- TODO -->
     <string name="help_appearance_title"><![CDATA[
         The following title substitutions are supported:<br/>
         <br/>

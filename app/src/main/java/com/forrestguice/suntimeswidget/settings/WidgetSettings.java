@@ -350,6 +350,46 @@ public class WidgetSettings
         }
     }
 
+    /**
+     * WidgetModeSun2x1
+     */
+    public static enum WidgetModeSun2x1
+    {
+        WIDGETMODE2x1_BOTH_1("Sunrise & Sunset", R.layout.layout_widget_2x1_0);
+
+        private final int layoutID;
+        private String displayString;
+
+        private WidgetModeSun2x1(String displayString, int layoutID)
+        {
+            this.displayString = displayString;
+            this.layoutID = layoutID;
+        }
+
+        public int getLayoutID()
+        {
+            return layoutID;
+        }
+
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+
+        public void setDisplayString( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public static void initDisplayStrings( Context context ) {
+            WIDGETMODE2x1_BOTH_1.setDisplayString(context.getString(R.string.widgetMode1x1_both_1));
+        }
+    }
 
     /**
      * WidgetModeSunPos1x1
@@ -395,6 +435,47 @@ public class WidgetSettings
         }
     }
 
+    /**
+     * WidgetModeSunPos3x1
+     */
+    public static enum WidgetModeSunPos3x1
+    {
+        MODE3x1_LIGHTMAP("Lightmap", R.layout.layout_widget_sunpos_3x1_0);
+
+        private final int layoutID;
+        private String displayString;
+
+        private WidgetModeSunPos3x1(String displayString, int layoutID)
+        {
+            this.displayString = displayString;
+            this.layoutID = layoutID;
+        }
+
+        public int getLayoutID()
+        {
+            return layoutID;
+        }
+
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+
+        public void setDisplayString( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            //MODE3x1_LIGHTMAP.setDisplayString(context.getString(R.string.widgetMode1x1_altaz));   // TODO
+        }
+    }
 
     /**
      * WidgetModeMoon1x1
@@ -454,6 +535,87 @@ public class WidgetSettings
         }
     }
 
+    /**
+     * WidgetModeMoon2x1
+     */
+    public static enum WidgetModeMoon2x1
+    {
+        WIDGETMODE2x1_BOTH_1("Moonrise, moonset, phase & illumination", R.layout.layout_widget_2x1_0);
+
+        private final int layoutID;
+        private String displayString;
+
+        private WidgetModeMoon2x1(String displayString, int layoutID)
+        {
+            this.displayString = displayString;
+            this.layoutID = layoutID;
+        }
+
+        public int getLayoutID()
+        {
+            return layoutID;
+        }
+
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+
+        public void setDisplayString( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public static void initDisplayStrings( Context context ) {
+            //WIDGETMODE2x1_BOTH_1.setDisplayString(context.getString(R.string.widgetMode1x1_moonriseset));   // TODO
+        }
+    }
+
+    /**
+     * WidgetModeMoon3x1
+     */
+    public static enum WidgetModeMoon3x1
+    {
+        WIDGETMODE3x1_BOTH_1("Major Phases", R.layout.layout_widget_moon_3x1_0);
+
+        private final int layoutID;
+        private String displayString;
+
+        private WidgetModeMoon3x1(String displayString, int layoutID)
+        {
+            this.displayString = displayString;
+            this.layoutID = layoutID;
+        }
+
+        public int getLayoutID()
+        {
+            return layoutID;
+        }
+
+        public String toString()
+        {
+            return displayString;
+        }
+
+        public String getDisplayString()
+        {
+            return displayString;
+        }
+
+        public void setDisplayString( String displayString )
+        {
+            this.displayString = displayString;
+        }
+
+        public static void initDisplayStrings( Context context ) {
+            //WIDGETMODE3x1_BOTH_1.setDisplayString(context.getString(R.string.widgetMode1x1_moonphase));   // TODO
+        }
+    }
 
     /**
      * DateMode
@@ -2451,8 +2613,11 @@ public class WidgetSettings
         LengthUnit.initDisplayStrings(context);
         ActionMode.initDisplayStrings(context);
         WidgetModeSun1x1.initDisplayStrings(context);
+        WidgetModeSun2x1.initDisplayStrings(context);
         WidgetModeSunPos1x1.initDisplayStrings(context);
         WidgetModeMoon1x1.initDisplayStrings(context);
+        WidgetModeMoon2x1.initDisplayStrings(context);
+        WidgetModeMoon3x1.initDisplayStrings(context);
         TrackingMode.initDisplayStrings(context);
         CompareMode.initDisplayStrings(context);
         TimeMode.initDisplayStrings(context);
