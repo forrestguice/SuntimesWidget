@@ -16,22 +16,18 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/itemLayout" android:layout_width="match_parent" android:layout_height="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/itemLayout" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical"
                 android:padding="4dp" android:background="?attr/selectableItemBackground">
 
-    <LinearLayout android:id="@+id/preview_area"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:orientation="vertical" android:gravity="center"
-        android:layout_alignParentLeft="true" android:layout_alignParentStart="true">
-
-    </LinearLayout>
-
     <TextView android:id="@android:id/text1" style="?android:attr/dropDownItemStyle"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceSmallPopupMenu" android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
+        android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center"
+        android:textAppearance="?attr/textAppearanceSmallPopupMenu" android:layout_margin="4dp"
         android:singleLine="true" android:textStyle="bold" android:duplicateParentState="true"
-        android:layout_toRightOf="@+id/preview_area" android:layout_toEndOf="@+id/preview_area" android:layout_centerVertical="true"
         tools:text="title" />
 
-</RelativeLayout>
+    <LinearLayout android:id="@+id/preview_area" android:minWidth="80dp"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:gravity="center" android:layout_margin="4dp" />
+
+</LinearLayout>
