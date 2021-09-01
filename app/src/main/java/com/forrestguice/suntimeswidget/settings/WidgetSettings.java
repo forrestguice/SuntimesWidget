@@ -302,10 +302,17 @@ public class WidgetSettings
         }
     }
 
+    public interface WidgetModeDisplay
+    {
+        int getLayoutID();
+        String getDisplayString();
+        String name();
+    }
+
     /**
      * WidgetModeSun1x1
      */
-    public static enum WidgetModeSun1x1
+    public static enum WidgetModeSun1x1 implements WidgetModeDisplay
     {
         WIDGETMODE1x1_SUNRISE("Sunrise only", R.layout.layout_widget_1x1_1),
         WIDGETMODE1x1_SUNSET("Sunset only", R.layout.layout_widget_1x1_2),
@@ -353,7 +360,7 @@ public class WidgetSettings
     /**
      * WidgetModeSun2x1
      */
-    public static enum WidgetModeSun2x1
+    public static enum WidgetModeSun2x1 implements WidgetModeDisplay
     {
         WIDGETMODE2x1_BOTH_1("Sunrise & Sunset", R.layout.layout_widget_2x1_0);
 
@@ -394,7 +401,7 @@ public class WidgetSettings
     /**
      * WidgetModeSunPos1x1
      */
-    public static enum WidgetModeSunPos1x1
+    public static enum WidgetModeSunPos1x1 implements WidgetModeDisplay
     {
         MODE1x1_ALTAZ("Altitude & Azimuth", R.layout.layout_widget_sunpos_1x1_5),
         MODE1x1_DECRIGHT("Declination & Right Ascension", R.layout.layout_widget_sunpos_1x1_6);
@@ -438,7 +445,7 @@ public class WidgetSettings
     /**
      * WidgetModeSunPos3x1
      */
-    public static enum WidgetModeSunPos3x1
+    public static enum WidgetModeSunPos3x1 implements WidgetModeDisplay
     {
         MODE3x1_LIGHTMAP("Lightmap", R.layout.layout_widget_sunpos_3x1_0);
 
@@ -480,7 +487,7 @@ public class WidgetSettings
     /**
      * WidgetModeMoon1x1
      */
-    public static enum WidgetModeMoon1x1
+    public static enum WidgetModeMoon1x1 implements WidgetModeDisplay
     {
         MODE1x1_RISESET("Moonrise & moonset", R.layout.layout_widget_moon_1x1_0),
         MODE1x1_PHASEILLUM("Moon phase & illumination", R.layout.layout_widget_moon_1x1_1),
@@ -538,7 +545,7 @@ public class WidgetSettings
     /**
      * WidgetModeMoon2x1
      */
-    public static enum WidgetModeMoon2x1
+    public static enum WidgetModeMoon2x1 implements WidgetModeDisplay
     {
         WIDGETMODE2x1_BOTH_1("Moonrise, moonset, phase & illumination", R.layout.layout_widget_2x1_0);
 
@@ -579,7 +586,7 @@ public class WidgetSettings
     /**
      * WidgetModeMoon3x1
      */
-    public static enum WidgetModeMoon3x1
+    public static enum WidgetModeMoon3x1 implements WidgetModeDisplay
     {
         WIDGETMODE3x1_BOTH_1("Major Phases", R.layout.layout_widget_moon_3x1_0);
 
