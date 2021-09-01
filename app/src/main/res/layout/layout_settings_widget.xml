@@ -37,11 +37,11 @@
 
             <TextView android:labelFor="@+id/appwidget_appearance_1x1mode"
                 android:id="@+id/appwidget_appearance_1x1mode_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/configLabel_appearance_1x1mode" />
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical" android:text="@string/configLabel_appearance_1x1mode" />
 
             <Spinner android:id="@+id/appwidget_appearance_1x1mode" android:layout_width="0dp"
-                android:dropDownVerticalOffset="16sp" android:layout_weight="1"
+                android:dropDownVerticalOffset="16sp" android:layout_weight="1" android:layout_gravity="center_vertical"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
