@@ -87,12 +87,10 @@ public class MoonLayout_1x1_0 extends MoonLayout
                     views.setViewPadding(R.id.text_time_moonrise_suffix, 0, 0, (int)scaledPadding, 0);
                     views.setViewPadding(R.id.icon_time_moonrise, (int)(scaledPadding), 0, (int)scaledPadding/2, 0);
 
-                    Drawable moonriseIcon = ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunrise1, null);
-                    SuntimesUtils.tintDrawable(moonriseIcon, moonriseColor);
+                    Drawable moonriseIcon = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunrise1, null), moonriseColor);
                     views.setImageViewBitmap(R.id.icon_time_moonrise, SuntimesUtils.drawableToBitmap(context, moonriseIcon, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
 
-                    Drawable moonsetIcon = ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null);
-                    SuntimesUtils.tintDrawable(moonsetIcon, moonsetColor);
+                    Drawable moonsetIcon = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null), moonsetColor);
                     views.setImageViewBitmap(R.id.icon_time_moonset, SuntimesUtils.drawableToBitmap(context, moonsetIcon, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
                 }
             }

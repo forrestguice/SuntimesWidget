@@ -99,12 +99,10 @@ public class MoonLayout_2x1_0 extends MoonLayout
 
                     views.setViewPadding(R.id.text_info_moonillum, (int)scaledPadding/2, 0, (int)scaledPadding, 0);
 
-                    Drawable d1 = ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunrise1, null);
-                    SuntimesUtils.tintDrawable(d1, moonriseColor);
+                    Drawable d1 = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunrise1, null), moonriseColor);
                     views.setImageViewBitmap(R.id.icon_time_moonrise, SuntimesUtils.drawableToBitmap(context, d1, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
 
-                    Drawable d2 = ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null);
-                    SuntimesUtils.tintDrawable(d2, moonsetColor);
+                    Drawable d2 = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null), moonsetColor);
                     views.setImageViewBitmap(R.id.icon_time_moonset, SuntimesUtils.drawableToBitmap(context, d2, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
 
                     // TODO: scale moonphase icon

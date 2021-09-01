@@ -105,12 +105,10 @@ public class SunLayout_2x1_0 extends SunLayout
                     //views.setTextViewTextSize(R.id.text_delta_day_units, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
                     //views.setTextViewTextSize(R.id.text_delta_day_suffix, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
 
-                    Drawable d1 = ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunrise1, null);
-                    SuntimesUtils.tintDrawable(d1, sunriseColor);
+                    Drawable d1 = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunrise1, null), sunriseColor);
                     views.setImageViewBitmap(R.id.icon_time_sunrise, SuntimesUtils.drawableToBitmap(context, d1, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
 
-                    Drawable d2 = ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null);
-                    SuntimesUtils.tintDrawable(d2, sunsetColor);
+                    Drawable d2 = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null), sunsetColor);
                     views.setImageViewBitmap(R.id.icon_time_sunset, SuntimesUtils.drawableToBitmap(context, d2, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
 
                     //Drawable d3 = ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null);

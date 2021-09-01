@@ -88,8 +88,7 @@ public class SunLayout_1x1_2 extends SunLayout
                     views.setTextViewTextSize(R.id.text_time_set, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
                     views.setTextViewTextSize(R.id.text_time_set_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
 
-                    Drawable d = ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset2, null);
-                    SuntimesUtils.tintDrawable(d, sunsetIconColor);
+                    Drawable d = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset2, null), sunsetIconColor);
                     views.setImageViewBitmap(R.id.icon_time_sunset, SuntimesUtils.drawableToBitmap(context, d, (int)(iconSizeDp * textScale), (int)(iconSizeDp * textScale) / 4, false));
                 }
             }

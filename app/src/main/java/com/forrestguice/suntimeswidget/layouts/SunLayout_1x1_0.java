@@ -26,6 +26,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
@@ -110,12 +111,10 @@ public class SunLayout_1x1_0 extends SunLayout
                     views.setViewPadding(R.id.text_time_rise_suffix, 0, 0, (int)scaledPadding, 0);
                     views.setViewPadding(R.id.icon_time_sunrise, (int)(scaledPadding), 0, (int)scaledPadding/2, 0);
 
-                    Drawable sunriseIcon = ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunrise1, null);
-                    SuntimesUtils.tintDrawable(sunriseIcon, sunriseIconColor);
+                    Drawable sunriseIcon = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunrise1, null), sunriseIconColor);
                     views.setImageViewBitmap(R.id.icon_time_sunrise, SuntimesUtils.drawableToBitmap(context, sunriseIcon, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
 
-                    Drawable sunsetIcon = ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null);
-                    SuntimesUtils.tintDrawable(sunsetIcon, sunsetIconColor);
+                    Drawable sunsetIcon = SuntimesUtils.tintDrawableCompat(ResourcesCompat.getDrawable(context.getResources(), R.drawable.svg_sunset1, null), sunsetIconColor);
                     views.setImageViewBitmap(R.id.icon_time_sunset, SuntimesUtils.drawableToBitmap(context, sunsetIcon, (int)adjustedSizeSp[2], (int)adjustedSizeSp[2] / 2, false));
                 }
             }

@@ -1657,17 +1657,16 @@ public class SuntimesUtils
         return d;
     }
 
-    public static void tintDrawable(Drawable d, int color)
+    @Nullable
+    public static Drawable tintDrawableCompat(Drawable d, int color)
     {
         if (d != null)
         {
-            if (Build.VERSION.SDK_INT >= 21) {
-                DrawableCompat.setTint(d, color);
-                DrawableCompat.setTintMode(d, PorterDuff.Mode.SRC_IN);
-            } else {
-                d.setColorFilter(color, PorterDuff.Mode.SRC_IN);
-            }
-        }
+            Drawable tinted = DrawableCompat.wrap(d.mutate());
+            DrawableCompat.setTint(tinted, color);
+            DrawableCompat.setTintMode(tinted, PorterDuff.Mode.SRC_IN);
+            return tinted;
+        } else return null;
     }
 
     /**
