@@ -28,7 +28,7 @@
         <TextView style="@style/SunsetTimeTextTitleView"
             android:id="@+id/text_title"
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:gravity="start"
+            android:gravity="start" android:visibility="gone"
             tools:text="title" />
 
         <LinearLayout style="@style/SunsetTimeLayout"
