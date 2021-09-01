@@ -355,6 +355,16 @@ public class WidgetSettings
             WIDGETMODE1x1_BOTH_1.setDisplayString(context.getString(R.string.widgetMode1x1_both_1));
             WIDGETMODE1x1_BOTH_2.setDisplayString(context.getString(R.string.widgetMode1x1_both_2));
         }
+
+        public static boolean supportsLayout(int layoutID)
+        {
+            for (WidgetModeDisplay mode : values()) {
+                if (mode.getLayoutID() == layoutID) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     /**
@@ -395,6 +405,16 @@ public class WidgetSettings
 
         public static void initDisplayStrings( Context context ) {
             WIDGETMODE2x1_BOTH_1.setDisplayString(context.getString(R.string.widgetMode1x1_both_1));
+        }
+
+        public static boolean supportsLayout(int layoutID)
+        {
+            for (WidgetModeDisplay mode : values()) {
+                if (mode.getLayoutID() == layoutID) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 
@@ -440,6 +460,16 @@ public class WidgetSettings
             MODE1x1_ALTAZ.setDisplayString(context.getString(R.string.widgetMode1x1_altaz));
             MODE1x1_DECRIGHT.setDisplayString(context.getString(R.string.widgetMode1x1_decright));
         }
+
+        public static boolean supportsLayout(int layoutID)
+        {
+            for (WidgetModeDisplay mode : values()) {
+                if (mode.getLayoutID() == layoutID) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     /**
@@ -481,6 +511,16 @@ public class WidgetSettings
         public static void initDisplayStrings( Context context )
         {
             //MODE3x1_LIGHTMAP.setDisplayString(context.getString(R.string.widgetMode1x1_altaz));   // TODO
+        }
+
+        public static boolean supportsLayout(int layoutID)
+        {
+            for (WidgetModeDisplay mode : values()) {
+                if (mode.getLayoutID() == layoutID) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 
@@ -540,6 +580,16 @@ public class WidgetSettings
             MODE1x1_DISTANCE.setDisplayString(context.getString(R.string.widgetMode1x1_distance));
             MODE1x1_APSIS.setDisplayString(context.getString(R.string.widgetMode1x1_apsis));
         }
+
+        public static boolean supportsLayout(int layoutID)
+        {
+            for (WidgetModeDisplay mode : values()) {
+                if (mode.getLayoutID() == layoutID) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     /**
@@ -547,7 +597,7 @@ public class WidgetSettings
      */
     public static enum WidgetModeMoon2x1 implements WidgetModeDisplay
     {
-        WIDGETMODE2x1_BOTH_1("Moonrise, moonset, phase & illumination", R.layout.layout_widget_2x1_0);
+        WIDGETMODE2x1_BOTH_1("Moonrise, moonset, phase & illumination", R.layout.layout_widget_moon_2x1_0);
 
         private final int layoutID;
         private String displayString;
@@ -580,6 +630,16 @@ public class WidgetSettings
 
         public static void initDisplayStrings( Context context ) {
             //WIDGETMODE2x1_BOTH_1.setDisplayString(context.getString(R.string.widgetMode1x1_moonriseset));   // TODO
+        }
+
+        public static boolean supportsLayout(int layoutID)
+        {
+            for (WidgetModeDisplay mode : values()) {
+                if (mode.getLayoutID() == layoutID) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 
@@ -621,6 +681,16 @@ public class WidgetSettings
 
         public static void initDisplayStrings( Context context ) {
             //WIDGETMODE3x1_BOTH_1.setDisplayString(context.getString(R.string.widgetMode1x1_moonphase));   // TODO
+        }
+
+        public static boolean supportsLayout(int layoutID)
+        {
+            for (WidgetModeDisplay mode : values()) {
+                if (mode.getLayoutID() == layoutID) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 
