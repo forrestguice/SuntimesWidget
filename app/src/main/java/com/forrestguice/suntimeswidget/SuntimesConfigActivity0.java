@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -33,10 +34,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -44,6 +47,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.ProgressBar;
@@ -79,6 +83,7 @@ import org.w3c.dom.Text;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.TimeZone;
 
 import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PICK_THEME_REQUEST;
@@ -314,20 +319,20 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return adapter;
     }
 
-    protected ArrayAdapter<WidgetSettings.WidgetModeSun1x1> createAdapter_widgetModeSun1x1()
+    // TODO: enhanced adapter
+    protected ArrayAdapter<WidgetSettings.WidgetModeDisplay> createAdapter_widgetModeSun1x1()
     {
-        ArrayAdapter<WidgetSettings.WidgetModeSun1x1> adapter = new ArrayAdapter<WidgetSettings.WidgetModeSun1x1>(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSun1x1.values());
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSun1x1.values());
+        adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
         return adapter;
     }
 
-    protected ArrayAdapter<WidgetSettings.WidgetModeSun2x1> createAdapter_widgetModeSun2x1()
+    protected ArrayAdapter<WidgetSettings.WidgetModeDisplay> createAdapter_widgetModeSun2x1()
     {
-        ArrayAdapter<WidgetSettings.WidgetModeSun2x1> adapter = new ArrayAdapter<WidgetSettings.WidgetModeSun2x1>(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSun2x1.values());
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSun2x1.values());
+        adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
         return adapter;
     }
-
 
     protected ArrayAdapter<WidgetSettings.ActionMode> createAdapter_actionMode()
     {
@@ -2029,6 +2034,92 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.transition_cancel_in, R.anim.transition_cancel_out);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * WidgetLayoutAdapter
+     */
+    public static class WidgetModeAdapter extends ArrayAdapter<WidgetSettings.WidgetModeDisplay>
+    {
+        private int resourceID, dropDownResourceID;
+        private WidgetSettings.WidgetModeDisplay[] objects;
+        //private WidgetSettings.WidgetModeDisplay selectedItem;
+
+        public WidgetModeAdapter(@NonNull Context context, int resource) {
+            super(context, resource);
+            init(context, resource);
+        }
+
+        public WidgetModeAdapter(@NonNull Context context, int resource, @NonNull WidgetSettings.WidgetModeDisplay[] objects) {
+            super(context, resource, objects);
+            init(context, resource);
+        }
+
+        public WidgetModeAdapter(@NonNull Context context, int resource, @NonNull List<WidgetSettings.WidgetModeDisplay> objects) {
+            super(context, resource, objects);
+            init(context, resource);
+        }
+
+        private void init(@NonNull Context context, int resource) {
+            resourceID = dropDownResourceID = resource;
+        }
+
+        //public void setSelected( WidgetSettings.WidgetModeSun1x1 item ) {
+        //    selectedItem = item;
+        //    notifyDataSetChanged();
+        //}
+        //public WidgetSettings.WidgetModeSun1x1 getSelected() {
+        //    return selectedItem;
+        //}
+
+        @Override
+        public void setDropDownViewResource(int resID) {
+            super.setDropDownViewResource(resID);
+            dropDownResourceID = resID;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+            return getItemView(position, convertView, parent, true, dropDownResourceID);
+        }
+
+        @Override
+        @NonNull
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+            return getItemView(position, convertView, parent, true, resourceID);
+        }
+
+        private View getItemView(int position, View convertView, @NonNull ViewGroup parent, boolean colorize, int resID)
+        {
+            LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+            View view = layoutInflater.inflate(resID, parent, false);
+
+            WidgetSettings.WidgetModeDisplay item = getItem(position);
+            if (item == null) {
+                Log.w("getItemView", "item at position " + position + " is null.");
+                return view;
+            }
+
+            //if (selectedItem != null && item.name().equals(selectedItem.name())) {
+            //    view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.text_accent_dark));
+            //} else
+            //    view.setBackgroundColor(Color.TRANSPARENT);
+
+            TextView primaryText = (TextView)view.findViewById(android.R.id.text1);
+            primaryText.setText(item.toString());
+
+            LinearLayout previewArea = (LinearLayout) view.findViewById(R.id.preview_area);
+            if (previewArea != null && colorize)
+            {
+                View preview = layoutInflater.inflate(item.getLayoutID(), parent, false);
+                previewArea.addView(preview);
+            }
+
+            return view;
+        }
+
     }
 
 }
