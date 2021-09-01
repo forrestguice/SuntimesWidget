@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget;
 
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -74,6 +75,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import com.forrestguice.suntimeswidget.settings.WidgetThemes;
 import com.forrestguice.suntimeswidget.themes.SuntimesThemeContract;
+import com.forrestguice.suntimeswidget.themes.WidgetThemePreview;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
@@ -101,6 +103,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     protected boolean reconfigure = false;
+    protected ContentValues themeValues;
 
     private ActionBar actionBar;
     protected TextView text_appWidgetID;
@@ -206,6 +209,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         setResult(RESULT_CANCELED, cancelIntent);
 
         WidgetThemes.initThemes(context);
+        themeValues = WidgetSettings.loadThemePref(this, appWidgetId).toContentValues();
 
         initViews(context);
         loadSettings(context);
@@ -324,6 +328,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSun1x1.values());
         adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
+        adapter.setThemeValues(themeValues);
         return adapter;
     }
 
@@ -331,6 +336,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSun2x1.values());
         adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
+        adapter.setThemeValues(themeValues);
         return adapter;
     }
 
@@ -2045,7 +2051,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         private int resourceID, dropDownResourceID;
         private WidgetSettings.WidgetModeDisplay[] objects;
-        //private WidgetSettings.WidgetModeDisplay selectedItem;
+        private WidgetThemePreview preview;
+        private ContentValues themeValues = null;
 
         public WidgetModeAdapter(@NonNull Context context, int resource) {
             super(context, resource);
@@ -2064,15 +2071,13 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         private void init(@NonNull Context context, int resource) {
             resourceID = dropDownResourceID = resource;
+            preview = new WidgetThemePreview(context);
+            preview.setShowTitle(false);
         }
 
-        //public void setSelected( WidgetSettings.WidgetModeSun1x1 item ) {
-        //    selectedItem = item;
-        //    notifyDataSetChanged();
-        //}
-        //public WidgetSettings.WidgetModeSun1x1 getSelected() {
-        //    return selectedItem;
-        //}
+        public void setThemeValues(ContentValues values) {
+            themeValues = values;
+        }
 
         @Override
         public void setDropDownViewResource(int resID) {
@@ -2094,7 +2099,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         private View getItemView(int position, View convertView, @NonNull ViewGroup parent, boolean colorize, int resID)
         {
             LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-            View view = layoutInflater.inflate(resID, parent, false);
+            View view = (convertView == null) ? layoutInflater.inflate(resID, parent, false) : convertView;
 
             WidgetSettings.WidgetModeDisplay item = getItem(position);
             if (item == null) {
@@ -2102,24 +2107,25 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 return view;
             }
 
-            //if (selectedItem != null && item.name().equals(selectedItem.name())) {
-            //    view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.text_accent_dark));
-            //} else
-            //    view.setBackgroundColor(Color.TRANSPARENT);
-
-            TextView primaryText = (TextView)view.findViewById(android.R.id.text1);
-            primaryText.setText(item.toString());
-
-            LinearLayout previewArea = (LinearLayout) view.findViewById(R.id.preview_area);
-            if (previewArea != null && colorize)
+            Object tag = view.getTag();
+            if (tag == null || !tag.equals(item.name()))
             {
-                View preview = layoutInflater.inflate(item.getLayoutID(), parent, false);
-                previewArea.addView(preview);
-            }
+                TextView primaryText = (TextView)view.findViewById(android.R.id.text1);
+                primaryText.setText(item.toString());
 
+                LinearLayout previewArea = (LinearLayout) view.findViewById(R.id.preview_area);
+                if (previewArea != null && colorize)
+                {
+                    previewArea.removeAllViewsInLayout();
+                    View previewView = layoutInflater.inflate(item.getLayoutID(), previewArea, true);
+                    if (themeValues != null) {
+                        preview.updatePreview(item.getLayoutID(), previewView, themeValues);
+                    }
+                }
+                view.setTag(item.name());
+            }
             return view;
         }
-
     }
 
 }
