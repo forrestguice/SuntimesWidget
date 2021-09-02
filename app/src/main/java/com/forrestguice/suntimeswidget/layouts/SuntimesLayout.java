@@ -184,8 +184,8 @@ public abstract class SuntimesLayout
         float iconRatio = iconWidthDp / timeSizeSp;
         //float maxWidthDp = (maxDimensionsDp[0] - paddingDp[0] - 8);   // maxWidth is adjusted for padding and margins
         //float maxHeightDp = (maxDimensionsDp[1] - paddingDp[1] - 8);  // maxHeight is adjusted for padding and margins
-        float maxWidthDp = maxDimensionsDp[0];
-        float maxHeightDp = maxDimensionsDp[1];
+        float maxWidthDp = Math.max(maxDimensionsDp[0], 0);
+        float maxHeightDp = Math.max(maxDimensionsDp[1], 0);
         float maxWidthPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, maxWidthDp, context.getResources().getDisplayMetrics());
         float maxHeightPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, maxHeightDp, context.getResources().getDisplayMetrics());
 
@@ -218,7 +218,7 @@ public abstract class SuntimesLayout
             getTextBounds(context, suffixText, adjustedSuffixSizeSp, suffixPaint, suffixBounds);
 
             if (c > limit) {
-                Log.w("SuntimesLayout", "adjustTextSize stuck in a loop.. breaking [1]");
+                Log.w("SuntimesLayout", "adjustTextSize stuck in a loop.. breaking [1] .. " + timeBounds.height() + "px > " + maxHeightPixels + "px [" + maxHeightDp + "dp]");
                 break;
             } else c++;
         }
