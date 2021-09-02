@@ -320,7 +320,7 @@
     <string name="configLabel_appearance">Appearance</string>           <!-- group title -->  <!-- TODO -->
     <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Theme:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Swap between layouts to fill available space</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_appearance_allowResize">Swap layouts to fill available space</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_showLabels">Show Labels</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">Show Title</string>          <!-- checkbox label -->
@@ -1595,7 +1595,7 @@
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Help</string>
     <string name="help_appearance_allowresize"><![CDATA[
-      <big>Swap between layouts to fill available space</big><br/><br/>
+      <big>Swap layouts to fill available space</big><br/><br/>
       <i><b>[enabled]</b></i> The widget will switch between layouts depending on available space.<br/><br/>
       <i><b>[disabled]</b></i> The widget maintains its initial layout when resized. Use this with the \"<i>scale text and icons</i>\" option for extra large widgets.<br/>
     ]]></string>  <!-- TODO -->
