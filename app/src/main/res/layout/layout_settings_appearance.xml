@@ -54,40 +54,6 @@
             android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
             android:layout_height="wrap_content" android:text="@string/configLabel_appearance_scaleText" />
 
-        <CheckBox android:id="@+id/appwidget_appearance_showLabels" android:layout_width="match_parent"
-            android:paddingTop="@dimen/settingsGroup_padding"
-            android:layout_marginLeft="8dp" android:layout_marginRight="8dp" android:visibility="gone"
-            android:layout_height="wrap_content" android:text="@string/configLabel_appearance_showLabels" />
-
-        <CheckBox android:id="@+id/appwidget_appearance_showTitle" android:layout_width="match_parent"
-            android:paddingTop="@dimen/settingsGroup_padding"
-            android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
-            android:layout_height="wrap_content" android:text="@string/configLabel_appearance_showTitle" />
-
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="16dp" android:paddingRight="8dp"
-            android:paddingStart="16dp" android:paddingEnd="8dp">
-
-            <TextView android:labelFor="@+id/appwidget_appearance_titleText"
-                android:id="@+id/appwidget_appearance_titleText_label"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/configLabel_appearance_titleText" />
-
-            <EditText android:id="@+id/appwidget_appearance_titleText" android:layout_width="0dp"
-                android:layout_height="wrap_content" android:layout_weight="1"
-                android:hint="@string/configHint_appearance_titleText" android:text=""
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:inputType="textVisiblePassword" />
-
-            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_appearance_titleText_helpButton"
-                style="@style/Widget.AppCompat.ActionButton"
-                android:layout_height="wrap_content" android:layout_width="wrap_content"
-                android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
-                android:contentDescription="@string/configAction_help" />
-
-        </LinearLayout>
-
     </LinearLayout>
 
 </merge>

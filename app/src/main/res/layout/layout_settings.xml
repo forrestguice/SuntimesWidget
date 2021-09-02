@@ -88,9 +88,23 @@
                     android:layout_marginBottom="@dimen/settingsGroup_margin"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:background="?attr/settingsCardBackground">
-
                     <include layout="@layout/layout_settings_widget" />
+                </LinearLayout>
 
+                <LinearLayout android:id="@+id/appwidget_appearance_layout"
+                    style="@style/SunsetTimeWidget_dark"
+                    android:layout_marginBottom="@dimen/settingsGroup_margin"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:background="?attr/settingsCardBackground">
+                    <include layout="@layout/layout_settings_appearance" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/appwidget_timezone_layout"
+                    style="@style/SunsetTimeWidget_dark"
+                    android:layout_marginBottom="@dimen/settingsGroup_margin"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:background="?attr/settingsCardBackground">
+                    <include layout="@layout/layout_settings_timezone" />
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/appwidget_location_layout"
@@ -112,22 +126,6 @@
                     android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:background="?attr/settingsCardBackground">
                     <include layout="@layout/layout_settings_general" />
-                </LinearLayout>
-
-                <LinearLayout android:id="@+id/appwidget_timezone_layout"
-                    style="@style/SunsetTimeWidget_dark"
-                    android:layout_marginBottom="@dimen/settingsGroup_margin"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:background="?attr/settingsCardBackground">
-                    <include layout="@layout/layout_settings_timezone" />
-                </LinearLayout>
-
-                <LinearLayout android:id="@+id/appwidget_appearance_layout"
-                    style="@style/SunsetTimeWidget_dark"
-                    android:layout_marginBottom="@dimen/settingsGroup_margin"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:background="?attr/settingsCardBackground">
-                    <include layout="@layout/layout_settings_appearance" />
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/appwidget_action_layout"
