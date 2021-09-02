@@ -189,6 +189,9 @@ public abstract class SuntimesLayout
         float maxWidthPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, maxWidthDp, context.getResources().getDisplayMetrics());
         float maxHeightPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, maxHeightDp, context.getResources().getDisplayMetrics());
 
+        int c = 0;
+        int limit = 1000;
+
         while ((timeBounds.width() + suffixBounds.width() + adjustedIconWidthPx) < maxWidthPixels                         // scale up to fill width
                 && (adjustedTimeSizeSp < timeSizeMaxSp || timeSizeMaxSp == -1))
         {
@@ -198,8 +201,14 @@ public abstract class SuntimesLayout
             adjustedIconWidthPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, adjustedIconWidthDp, context.getResources().getDisplayMetrics());
             getTextBounds(context,  timeText, adjustedTimeSizeSp, timePaint, timeBounds);
             getTextBounds(context, suffixText, adjustedSuffixSizeSp, suffixPaint, suffixBounds);
+
+            if (c > limit) {
+                Log.w("SuntimesLayout", "adjustTextSize stuck in a loop.. breaking [0]");
+                break;
+            } else c++;
         }
 
+        c = 0;
         while (timeBounds.height() > maxHeightPixels)
         {
             adjustedTimeSizeSp -= stepSizeSp;
@@ -207,6 +216,11 @@ public abstract class SuntimesLayout
             adjustedIconWidthDp -= (stepSizeSp * iconRatio);
             getTextBounds(context,  timeText, adjustedTimeSizeSp, timePaint, timeBounds);
             getTextBounds(context, suffixText, adjustedSuffixSizeSp, suffixPaint, suffixBounds);
+
+            if (c > limit) {
+                Log.w("SuntimesLayout", "adjustTextSize stuck in a loop.. breaking [1]");
+                break;
+            } else c++;
         }
 
         float[] retValue = new float[3];
