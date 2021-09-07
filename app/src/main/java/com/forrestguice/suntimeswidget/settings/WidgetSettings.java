@@ -2261,7 +2261,9 @@ public class WidgetSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_GENERAL;
-        return getLengthUnit(prefs.getString(prefs_prefix + PREF_KEY_GENERAL_UNITS_LENGTH, PREF_DEF_GENERAL_UNITS_LENGTH.name()));
+        String defaultValue = (appWidgetId == 0) ? PREF_DEF_GENERAL_UNITS_LENGTH.name()             // prefer the current app setting [0] as the default value
+                : prefs.getString(PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_GENERAL + PREF_KEY_GENERAL_UNITS_LENGTH, PREF_DEF_GENERAL_UNITS_LENGTH.name());
+        return getLengthUnit(prefs.getString(prefs_prefix + PREF_KEY_GENERAL_UNITS_LENGTH, defaultValue));
     }
 
     public static LengthUnit getLengthUnit(String unitName)
