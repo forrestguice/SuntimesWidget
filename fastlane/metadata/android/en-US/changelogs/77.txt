@@ -1,0 +1,1 @@
+- fixes a bug where the moon widgets display distances using the wrong units (#506).

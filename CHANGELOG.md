@@ -1,5 +1,8 @@
 ### ~
 
+### v0.13.13 (2021-09-08)
+* fixes bug "1x1 moon widget uses imperial units while the app metric" (#506).
+
 ### v0.13.12 (2021-06-20)
 * updates translation to German (de) (#503 by wolkenschieber).
 
