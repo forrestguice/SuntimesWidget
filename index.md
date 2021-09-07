@@ -6,6 +6,8 @@
  <br /> <br />
   <a href="https://github.com/forrestguice/SolunarPeriods"><img align="left" src="{{ 'assets/images/ic_solunar.png' | relative_url }}" hspace="8" height="64" /></a>  <br/>[Solunar Periods](https://github.com/forrestguice/SolunarPeriods) <br />A hunting and fishing add-on app.
  <br /> <br />
+  <a href="https://github.com/forrestguice/NaturalHour"><img align="left" src="{{ 'assets/images/ic_naturalhour.png' | relative_url }}" hspace="8" height="64" /></a>  <br/>[Natural Hour](https://github.com/forrestguice/NaturalHour) <br />A 24-hour clock & roman timekeeping add-on app.
+ <br /> <br />
 <hr />
 <hr />
 {% include donate.html %}
