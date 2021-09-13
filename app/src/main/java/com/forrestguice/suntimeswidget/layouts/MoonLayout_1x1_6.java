@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.layouts;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
 import android.util.TypedValue;
@@ -134,7 +135,7 @@ public class MoonLayout_1x1_6 extends MoonLayout
         // EMPTY
     }
 
-    protected void updateViewsRightAscDeclinationText(Context context, RemoteViews views, SuntimesCalculator.MoonPosition moonPosition)
+    public static Spannable formatRightAscText(SuntimesCalculator.MoonPosition moonPosition, boolean boldTime, int highlightColor, int suffixColor)
     {
         SuntimesUtils.TimeDisplayText rightAscDisplay = utils.formatAsRightAscension(moonPosition.rightAscension, PositionLayout.DECIMAL_PLACES);
         String rightAscSymbol = rightAscDisplay.getSuffix();
@@ -142,15 +143,24 @@ public class MoonLayout_1x1_6 extends MoonLayout
         SpannableString rightAsc = SuntimesUtils.createColorSpan(null, rightAscString, rightAscString, highlightColor, boldTime);
         rightAsc = SuntimesUtils.createBoldColorSpan(rightAsc, rightAscString, rightAscSymbol, suffixColor);
         rightAsc = SuntimesUtils.createRelativeSpan(rightAsc, rightAscString, rightAscSymbol, PositionLayout.SYMBOL_RELATIVE_SIZE);
-        views.setTextViewText(R.id.info_moon_rightascension_current, rightAsc);
+        return rightAsc;
+    }
 
+    public static Spannable formatDeclinationText(SuntimesCalculator.MoonPosition moonPosition, boolean boldTime, int highlightColor, int suffixColor)
+    {
         SuntimesUtils.TimeDisplayText declinationDisplay = utils.formatAsDeclination(moonPosition.declination, PositionLayout.DECIMAL_PLACES);
         String declinationSymbol = declinationDisplay.getSuffix();
         String declinationString = utils.formatAsDeclination(declinationDisplay.getValue(), declinationSymbol);
         SpannableString declination = SuntimesUtils.createColorSpan(null, declinationString, declinationString, highlightColor, boldTime);
         declination = SuntimesUtils.createBoldColorSpan(declination, declinationString, declinationSymbol, suffixColor);
         declination = SuntimesUtils.createRelativeSpan(declination, declinationString, declinationSymbol, PositionLayout.SYMBOL_RELATIVE_SIZE);
-        views.setTextViewText(R.id.info_moon_declination_current, declination);
+        return declination;
+    }
+
+    protected void updateViewsRightAscDeclinationText(Context context, RemoteViews views, SuntimesCalculator.MoonPosition moonPosition)
+    {
+        views.setTextViewText(R.id.info_moon_rightascension_current, formatRightAscText(moonPosition, boldTime, highlightColor, suffixColor));
+        views.setTextViewText(R.id.info_moon_declination_current, formatDeclinationText(moonPosition, boldTime, highlightColor, suffixColor));
     }
 
     @Override
