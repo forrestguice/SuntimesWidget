@@ -86,17 +86,8 @@ public class MoonLayout_1x1_7 extends MoonLayout
 
         SuntimesCalculator calculator = data.calculator();
         SuntimesCalculator.MoonPosition moonPosition = calculator.getMoonPosition(data.now());
-
         WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
-        SuntimesUtils.TimeDisplayText distanceDisplay = SuntimesUtils.formatAsDistance(context, moonPosition.distance, units, PositionLayout.DECIMAL_PLACES, true);
-
-        String unitsSymbol = distanceDisplay.getUnits();
-        String distanceString = SuntimesUtils.formatAsDistance(context, distanceDisplay);
-
-        SpannableString distance = SuntimesUtils.createColorSpan(null, distanceString, distanceString, highlightColor, boldTime);
-        distance = SuntimesUtils.createBoldColorSpan(distance, distanceString, unitsSymbol, suffixColor);
-        distance = SuntimesUtils.createRelativeSpan(distance, distanceString, unitsSymbol, PositionLayout.SYMBOL_RELATIVE_SIZE);
-        views.setTextViewText(R.id.info_moon_distance_current, distance);
+        views.setTextViewText(R.id.info_moon_distance_current, styleDistanceText(context, moonPosition, units, highlightColor, suffixColor, boldTime));
 
         int visibility = (showLabels ? View.VISIBLE : View.GONE);
         views.setViewVisibility(R.id.info_moon_distance_current_label, visibility);
@@ -141,5 +132,16 @@ public class MoonLayout_1x1_7 extends MoonLayout
         WidgetSettings.saveNextSuggestedUpdate(context, appWidgetId, nextUpdate);
         Log.d("MoonLayout", "saveNextSuggestedUpdate: " + utils.calendarDateTimeDisplayString(context, nextUpdate).toString());
         return true;
+    }
+
+    public static SpannableString styleDistanceText(Context context, SuntimesCalculator.MoonPosition moonPosition, WidgetSettings.LengthUnit units, int highlightColor, int suffixColor, boolean boldTime)
+    {
+        SuntimesUtils.TimeDisplayText distanceDisplay = SuntimesUtils.formatAsDistance(context, moonPosition.distance, units, PositionLayout.DECIMAL_PLACES, true);
+        String unitsSymbol = distanceDisplay.getUnits();
+        String distanceString = SuntimesUtils.formatAsDistance(context, distanceDisplay);
+        SpannableString distance = SuntimesUtils.createColorSpan(null, distanceString, distanceString, highlightColor, boldTime);
+        distance = SuntimesUtils.createBoldColorSpan(distance, distanceString, unitsSymbol, suffixColor);
+        distance = SuntimesUtils.createRelativeSpan(distance, distanceString, unitsSymbol, PositionLayout.SYMBOL_RELATIVE_SIZE);
+        return distance;
     }
 }
