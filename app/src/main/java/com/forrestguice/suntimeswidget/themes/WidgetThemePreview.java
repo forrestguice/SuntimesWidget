@@ -25,7 +25,9 @@ import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.DisplayMetrics;
+import android.util.Pair;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
@@ -42,6 +44,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_5;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_6;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_7;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_8;
 import com.forrestguice.suntimeswidget.layouts.PositionLayout;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
@@ -53,11 +56,16 @@ import java.util.Calendar;
 
 public class WidgetThemePreview
 {
-    public WidgetThemePreview(Context context) {
-        initData(context);
+    public WidgetThemePreview(Context context, int appWidgetId) {
+        initData(context, appWidgetId);
     }
 
     private SuntimesUtils utils = new SuntimesUtils();
+
+    private int appWidgetId = 0;
+    public int getAppWidgetId() {
+        return appWidgetId;
+    }
 
     private boolean showTitle = true;
     public void setShowTitle(boolean value) {
@@ -67,14 +75,24 @@ public class WidgetThemePreview
         return showTitle;
     }
 
+    private boolean showLabels = true;
+    private boolean showWeeks = false;
+    private boolean showHours = false;
+    private boolean showTimeDate = false;
+    private boolean showSeconds = false;
+    private WidgetSettings.LengthUnit units = WidgetSettings.LengthUnit.METRIC;
+
     private SuntimesRiseSetDataset data0;
     private SuntimesRiseSetData data1;
     private SuntimesMoonData data2;
     private SuntimesCalculator.MoonPosition moonPosition = null;
+    private Pair<Calendar, SuntimesCalculator.MoonPosition> apogee = null;
+    private Pair<Calendar, SuntimesCalculator.MoonPosition> perigee = null;
 
-    protected void initData(Context context)
+    protected void initData(Context context, int appWidgetId)
     {
-        data0 = new SuntimesRiseSetDataset(context, 0);  // use app configuration
+        this.appWidgetId = appWidgetId;
+        data0 = new SuntimesRiseSetDataset(context, appWidgetId);  // use app configuration
         data0.calculateData();
 
         data1 = data0.dataActual;
@@ -83,8 +101,14 @@ public class WidgetThemePreview
         noonData.calculate();
         data1.linkData(noonData);
 
-        data2 = new SuntimesMoonData(context, 0, "moon");
+        data2 = new SuntimesMoonData(context, appWidgetId, "moon");
         data2.calculate();
+
+        showWeeks = WidgetSettings.loadShowWeeksPref(context, appWidgetId);
+        showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
+        showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
+        showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
+        units = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
     }
 
     /**
@@ -413,11 +437,6 @@ public class WidgetThemePreview
     {
         Context context = previewLayout.getContext();
 
-        boolean boldTime = values.getAsBoolean(SuntimesThemeContract.THEME_TIMEBOLD);
-        int highlightColor = values.getAsInteger(SuntimesThemeContract.THEME_TIMECOLOR);
-        int suffixColor = values.getAsInteger(SuntimesThemeContract.THEME_TIMESUFFIXCOLOR);
-        int textColor = values.getAsInteger(SuntimesThemeContract.THEME_TEXTCOLOR);
-
         // Moonrise
         TextView previewMoonrise = (TextView)previewLayout.findViewById(R.id.text_time_moonrise);
         TextView previewMoonriseSuffix = (TextView)previewLayout.findViewById(R.id.text_time_moonrise_suffix);
@@ -478,82 +497,8 @@ public class WidgetThemePreview
         }
 
         // Position
-        TextView previewMoonElevation = (TextView)previewLayout.findViewById(R.id.info_moon_elevation_current);
-        TextView previewMoonAzimuth = (TextView)previewLayout.findViewById(R.id.info_moon_azimuth_current);
-        TextView previewMoonDeclination = (TextView)previewLayout.findViewById(R.id.info_moon_declination_current);
-        TextView previewMoonRightAsc = (TextView)previewLayout.findViewById(R.id.info_moon_rightascension_current);
-        if (previewMoonDeclination != null || previewMoonRightAsc != null || previewMoonElevation != null || previewMoonAzimuth != null)
-        {
-            if (moonPosition == null) {
-                moonPosition = data2.calculator().getMoonPosition(data2.now());    // lazy init
-            }
-
-            if (previewMoonDeclination != null) {
-                previewMoonDeclination.setTextColor(textColor);
-                previewMoonDeclination.setText(MoonLayout_1x1_6.styleDeclinationText(moonPosition, boldTime, highlightColor, suffixColor));
-                updateSize(previewMoonDeclination, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
-
-                TextView previewMoonDeclinationLabel = (TextView)previewLayout.findViewById(R.id.info_moon_declination_current_label);
-                if (previewMoonDeclinationLabel != null) {
-                    previewMoonDeclinationLabel.setTextColor(textColor);
-                    updateSize(previewMoonDeclinationLabel, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
-                }
-            }
-
-            if (previewMoonRightAsc != null) {
-                previewMoonRightAsc.setTextColor(textColor);
-                previewMoonRightAsc.setText(MoonLayout_1x1_6.styleRightAscText(moonPosition, boldTime, highlightColor, suffixColor));
-                updateSize(previewMoonRightAsc, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
-
-                TextView previewMoonRightAscLabel = (TextView)previewLayout.findViewById(R.id.info_moon_rightascension_current_label);
-                if (previewMoonRightAscLabel != null) {
-                    previewMoonRightAscLabel.setTextColor(textColor);
-                    updateSize(previewMoonRightAscLabel, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
-                }
-            }
-
-            if (previewMoonAzimuth != null)
-            {
-                SuntimesUtils.TimeDisplayText azimuthDisplay = utils.formatAsDirection2(moonPosition.azimuth, PositionLayout.DECIMAL_PLACES, false);
-                previewMoonAzimuth.setTextColor(textColor);
-                previewMoonAzimuth.setText(PositionLayout.styleAzimuthText(azimuthDisplay, highlightColor, suffixColor, boldTime));
-                updateSize(previewMoonAzimuth, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
-
-                TextView previewMoonAzimuthLabel = (TextView)previewLayout.findViewById(R.id.info_moon_azimuth_current_label);
-                if (previewMoonAzimuthLabel != null) {
-                    previewMoonAzimuthLabel.setTextColor(textColor);
-                    updateSize(previewMoonAzimuthLabel, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
-                }
-            }
-
-            if (previewMoonElevation != null)
-            {
-                previewMoonElevation.setTextColor(textColor);
-                previewMoonElevation.setText(PositionLayout.styleElevationText(moonPosition.elevation, highlightColor, suffixColor, boldTime));
-                updateSize(previewMoonElevation, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
-
-                TextView previewMoonElevationLabel = (TextView)previewLayout.findViewById(R.id.info_moon_elevation_current_label);
-                if (previewMoonElevationLabel != null) {
-                    previewMoonElevationLabel.setTextColor(textColor);
-                    updateSize(previewMoonElevationLabel, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
-                }
-            }
-        }
-
-        // Distance
-        TextView previewMoonDistance = (TextView)previewLayout.findViewById(R.id.info_moon_distance_current);
-        if (previewMoonDistance != null)
-        {
-            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
-            previewMoonDistance.setText(MoonLayout_1x1_7.styleDistanceText(context, moonPosition, units, highlightColor, suffixColor, boldTime));
-            updateSize(previewMoonDistance, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
-
-            TextView previewMoonDistanceLabel = (TextView)previewLayout.findViewById(R.id.info_moon_distance_current_label);
-            if (previewMoonDistanceLabel != null) {
-                previewMoonDistanceLabel.setTextColor(textColor);
-                updateSize(previewMoonDistanceLabel, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
-            }
-        }
+        updatePreview_moonPosition(previewLayout, values);
+        updatePreview_moonApogeePerigee(previewLayout, values);
 
         // Moon Labels
         updatePreview_moonPhaseLabel((TextView)previewLayout.findViewById(R.id.moonphase_new_label), values);
@@ -655,6 +600,189 @@ public class WidgetThemePreview
         ImageView previewMoonWaningQuarterIcon1 = (ImageView)previewLayout.findViewById(R.id.moonphase_thirdquarter_icon);
         if (previewMoonWaningQuarterIcon1 != null) {
             previewMoonWaningQuarterIcon1.setImageBitmap(SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.THIRD_QUARTER.getIcon(), colorWaning, colorWaning, 0));
+        }
+    }
+
+    public void updatePreview_moonPosition(View previewLayout, ContentValues values)
+    {
+        Context context = previewLayout.getContext();
+        boolean boldTime = values.getAsBoolean(SuntimesThemeContract.THEME_TIMEBOLD);
+        int highlightColor = values.getAsInteger(SuntimesThemeContract.THEME_TIMECOLOR);
+        int suffixColor = values.getAsInteger(SuntimesThemeContract.THEME_TIMESUFFIXCOLOR);
+        int textColor = values.getAsInteger(SuntimesThemeContract.THEME_TEXTCOLOR);
+
+        TextView previewMoonElevation = (TextView)previewLayout.findViewById(R.id.info_moon_elevation_current);
+        TextView previewMoonAzimuth = (TextView)previewLayout.findViewById(R.id.info_moon_azimuth_current);
+        TextView previewMoonDeclination = (TextView)previewLayout.findViewById(R.id.info_moon_declination_current);
+        TextView previewMoonRightAsc = (TextView)previewLayout.findViewById(R.id.info_moon_rightascension_current);
+        if (previewMoonDeclination != null || previewMoonRightAsc != null || previewMoonElevation != null || previewMoonAzimuth != null)
+        {
+            if (moonPosition == null) {
+                moonPosition = data2.calculator().getMoonPosition(data2.now());    // lazy init
+            }
+
+            if (previewMoonDeclination != null) {
+                previewMoonDeclination.setTextColor(textColor);
+                previewMoonDeclination.setText(MoonLayout_1x1_6.styleDeclinationText(moonPosition, boldTime, highlightColor, suffixColor));
+                updateSize(previewMoonDeclination, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
+
+                TextView previewMoonDeclinationLabel = (TextView)previewLayout.findViewById(R.id.info_moon_declination_current_label);
+                if (previewMoonDeclinationLabel != null) {
+                    previewMoonDeclinationLabel.setTextColor(textColor);
+                    updateSize(previewMoonDeclinationLabel, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
+                }
+            }
+
+            if (previewMoonRightAsc != null) {
+                previewMoonRightAsc.setTextColor(textColor);
+                previewMoonRightAsc.setText(MoonLayout_1x1_6.styleRightAscText(moonPosition, boldTime, highlightColor, suffixColor));
+                updateSize(previewMoonRightAsc, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
+
+                TextView previewMoonRightAscLabel = (TextView)previewLayout.findViewById(R.id.info_moon_rightascension_current_label);
+                if (previewMoonRightAscLabel != null) {
+                    previewMoonRightAscLabel.setTextColor(textColor);
+                    updateSize(previewMoonRightAscLabel, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
+                }
+            }
+
+            if (previewMoonAzimuth != null)
+            {
+                SuntimesUtils.TimeDisplayText azimuthDisplay = utils.formatAsDirection2(moonPosition.azimuth, PositionLayout.DECIMAL_PLACES, false);
+                previewMoonAzimuth.setTextColor(textColor);
+                previewMoonAzimuth.setText(PositionLayout.styleAzimuthText(azimuthDisplay, highlightColor, suffixColor, boldTime));
+                updateSize(previewMoonAzimuth, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
+
+                TextView previewMoonAzimuthLabel = (TextView)previewLayout.findViewById(R.id.info_moon_azimuth_current_label);
+                if (previewMoonAzimuthLabel != null) {
+                    previewMoonAzimuthLabel.setTextColor(textColor);
+                    updateSize(previewMoonAzimuthLabel, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
+                }
+            }
+
+            if (previewMoonElevation != null)
+            {
+                previewMoonElevation.setTextColor(textColor);
+                previewMoonElevation.setText(PositionLayout.styleElevationText(moonPosition.elevation, highlightColor, suffixColor, boldTime));
+                updateSize(previewMoonElevation, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
+
+                TextView previewMoonElevationLabel = (TextView)previewLayout.findViewById(R.id.info_moon_elevation_current_label);
+                if (previewMoonElevationLabel != null) {
+                    previewMoonElevationLabel.setTextColor(textColor);
+                    updateSize(previewMoonElevationLabel, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
+                }
+            }
+        }
+
+        TextView previewMoonDistance = (TextView)previewLayout.findViewById(R.id.info_moon_distance_current);
+        if (previewMoonDistance != null)
+        {
+            if (moonPosition == null) {
+                moonPosition = data2.calculator().getMoonPosition(data2.now());    // lazy init
+            }
+
+            previewMoonDistance.setText(MoonLayout_1x1_7.styleDistanceText(context, moonPosition, units, highlightColor, suffixColor, boldTime));
+            updateSize(previewMoonDistance, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
+
+            TextView previewMoonDistanceLabel = (TextView)previewLayout.findViewById(R.id.info_moon_distance_current_label);
+            if (previewMoonDistanceLabel != null) {
+                previewMoonDistanceLabel.setTextColor(textColor);
+                updateSize(previewMoonDistanceLabel, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
+            }
+        }
+    }
+
+    public void updatePreview_moonApogeePerigee(View previewLayout, ContentValues values)
+    {
+        Context context = previewLayout.getContext();
+
+        boolean boldTime = values.getAsBoolean(SuntimesThemeContract.THEME_TIMEBOLD);
+        int suffixColor = values.getAsInteger(SuntimesThemeContract.THEME_TIMESUFFIXCOLOR);
+        int textColor = values.getAsInteger(SuntimesThemeContract.THEME_TEXTCOLOR);
+        int timeColor = values.getAsInteger(SuntimesThemeContract.THEME_TIMECOLOR);
+
+        TextView previewMoonApogee = (TextView)previewLayout.findViewById(R.id.moonapsis_apogee_distance);
+        if (previewMoonApogee != null)
+        {
+            TextView previewMoonApogeeLabel = (TextView)previewLayout.findViewById(R.id.moonapsis_apogee_label);
+            TextView previewMoonApogeeDate = (TextView)previewLayout.findViewById(R.id.moonapsis_apogee_date);
+            TextView previewMoonApogeeNote = (TextView)previewLayout.findViewById(R.id.moonapsis_apogee_note);
+
+            previewMoonApogeeLabel.setTextColor(textColor);
+            previewMoonApogeeDate.setTextColor(timeColor);
+            previewMoonApogeeNote.setTextColor(textColor);
+            previewMoonApogee.setTextColor(textColor);
+
+            if (apogee == null) {
+                apogee = data2.getMoonApogee();
+            }
+            if (apogee != null)
+            {
+                SuntimesUtils.TimeDisplayText perigeeString = utils.calendarDateTimeDisplayString(context, apogee.first, showTimeDate, showSeconds);
+                previewMoonApogeeDate.setText(perigeeString.getValue());
+                previewMoonApogeeNote.setText(MoonLayout_1x1_8.noteSpan(context, data2.now(), apogee.first, showWeeks, showHours, timeColor, boldTime));
+
+                if (apogee.second != null) {
+                    int risingColor = values.getAsInteger(SuntimesThemeContract.THEME_MOONRISECOLOR);
+                    previewMoonApogee.setText(MoonLayout_1x1_8.distanceSpan(context, apogee.second.distance, units, risingColor, suffixColor, boldTime));
+                }
+            }
+
+            updateSize(previewMoonApogeeLabel, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
+            updateSize(previewMoonApogeeDate, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
+            updateSize(previewMoonApogeeNote, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
+            updateSize(previewMoonApogee, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
+        }
+
+        TextView previewMoonPerigee = (TextView)previewLayout.findViewById(R.id.moonapsis_perigee_distance);
+        if (previewMoonPerigee != null)
+        {
+            TextView previewMoonPerigeeLabel = (TextView)previewLayout.findViewById(R.id.moonapsis_perigee_label);
+            TextView previewMoonPerigeeDate = (TextView)previewLayout.findViewById(R.id.moonapsis_perigee_date);
+            TextView previewMoonPerigeeNote = (TextView)previewLayout.findViewById(R.id.moonapsis_perigee_note);
+
+            previewMoonPerigeeLabel.setTextColor(textColor);
+            previewMoonPerigeeDate.setTextColor(timeColor);
+            previewMoonPerigeeNote.setTextColor(textColor);
+            previewMoonPerigee.setTextColor(textColor);
+
+            if (perigee == null) {
+                perigee = data2.getMoonPerigee();
+            }
+            if (perigee != null)
+            {
+                SuntimesUtils.TimeDisplayText perigeeString = utils.calendarDateTimeDisplayString(context, perigee.first, showTimeDate, showSeconds);
+                previewMoonPerigeeDate.setText(perigeeString.getValue());
+                previewMoonPerigeeNote.setText(MoonLayout_1x1_8.noteSpan(context, data2.now(), perigee.first, showWeeks, showHours, timeColor, boldTime));
+
+                if (perigee.second != null) {
+                    int risingColor = values.getAsInteger(SuntimesThemeContract.THEME_MOONRISECOLOR);
+                    previewMoonPerigee.setText(MoonLayout_1x1_8.distanceSpan(context, perigee.second.distance, units, risingColor, suffixColor, boldTime));
+                }
+            }
+
+            updateSize(previewMoonPerigeeLabel, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
+            updateSize(previewMoonPerigeeDate, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
+            updateSize(previewMoonPerigeeNote, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
+            updateSize(previewMoonPerigee, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
+        }
+
+        View previewMoonPerigeeLayout = previewLayout.findViewById(R.id.moonapsis_perigee_layout);
+        View previewMoonApogeeLayout = previewLayout.findViewById(R.id.moonapsis_apogee_layout);
+        if (previewMoonApogeeLayout != null && previewMoonPerigeeLayout != null)
+        {
+            if (apogee != null && apogee.first != null && perigee != null)
+            {
+                if (apogee.first.before(perigee.first)) {
+                    previewMoonApogeeLayout.setVisibility(View.VISIBLE);
+                    previewMoonPerigeeLayout.setVisibility( View.GONE);
+                } else {
+                    previewMoonApogeeLayout.setVisibility(View.GONE);
+                    previewMoonPerigeeLayout.setVisibility( View.VISIBLE);
+                }
+            } else {
+                previewMoonApogeeLayout.setVisibility(View.GONE);
+                previewMoonPerigeeLayout.setVisibility( View.VISIBLE);
+            }
         }
     }
 

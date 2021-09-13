@@ -2071,7 +2071,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         private void init(@NonNull Context context, int resource) {
             resourceID = dropDownResourceID = resource;
-            preview = new WidgetThemePreview(context);
+            preview = new WidgetThemePreview(context, 0);
             preview.setShowTitle(false);
         }
 
