@@ -24,6 +24,9 @@ A calendar provider add-on for Suntimes.<br/><br />
 
 <a href="https://github.com/forrestguice/SolunarPeriods/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/assets/images/ic_solunar.png" height="64" /></a> <a href="https://github.com/forrestguice/SolunarPeriods/">Solunar Periods</a> <br />
 A hunting and fishing add-on for Suntimes.<br/><br />
+
+<a href="https://github.com/forrestguice/NaturalHour/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/assets/images/ic_naturalhour.png" height="64" /></a> <a href="https://github.com/forrestguice/NaturalHour/">Natural Hour</a> <br />
+A 24-hour clock & roman timekeeping add-on for Suntimes.<br/><br />
     
 The app:
 * displays the current time (system time zone, custom time zone, or solar time) 
