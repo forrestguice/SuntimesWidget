@@ -135,7 +135,7 @@ public class MoonLayout_1x1_6 extends MoonLayout
         // EMPTY
     }
 
-    public static Spannable formatRightAscText(SuntimesCalculator.MoonPosition moonPosition, boolean boldTime, int highlightColor, int suffixColor)
+    public static SpannableString styleRightAscText(SuntimesCalculator.MoonPosition moonPosition, boolean boldTime, int highlightColor, int suffixColor)
     {
         SuntimesUtils.TimeDisplayText rightAscDisplay = utils.formatAsRightAscension(moonPosition.rightAscension, PositionLayout.DECIMAL_PLACES);
         String rightAscSymbol = rightAscDisplay.getSuffix();
@@ -146,7 +146,7 @@ public class MoonLayout_1x1_6 extends MoonLayout
         return rightAsc;
     }
 
-    public static Spannable formatDeclinationText(SuntimesCalculator.MoonPosition moonPosition, boolean boldTime, int highlightColor, int suffixColor)
+    public static SpannableString styleDeclinationText(SuntimesCalculator.MoonPosition moonPosition, boolean boldTime, int highlightColor, int suffixColor)
     {
         SuntimesUtils.TimeDisplayText declinationDisplay = utils.formatAsDeclination(moonPosition.declination, PositionLayout.DECIMAL_PLACES);
         String declinationSymbol = declinationDisplay.getSuffix();
@@ -159,8 +159,8 @@ public class MoonLayout_1x1_6 extends MoonLayout
 
     protected void updateViewsRightAscDeclinationText(Context context, RemoteViews views, SuntimesCalculator.MoonPosition moonPosition)
     {
-        views.setTextViewText(R.id.info_moon_rightascension_current, formatRightAscText(moonPosition, boldTime, highlightColor, suffixColor));
-        views.setTextViewText(R.id.info_moon_declination_current, formatDeclinationText(moonPosition, boldTime, highlightColor, suffixColor));
+        views.setTextViewText(R.id.info_moon_rightascension_current, styleRightAscText(moonPosition, boldTime, highlightColor, suffixColor));
+        views.setTextViewText(R.id.info_moon_declination_current, styleDeclinationText(moonPosition, boldTime, highlightColor, suffixColor));
     }
 
     @Override
