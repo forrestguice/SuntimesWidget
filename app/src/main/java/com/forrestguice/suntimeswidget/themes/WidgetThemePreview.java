@@ -41,6 +41,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_5;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_6;
+import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_7;
 import com.forrestguice.suntimeswidget.layouts.PositionLayout;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
@@ -412,6 +413,11 @@ public class WidgetThemePreview
     {
         Context context = previewLayout.getContext();
 
+        boolean boldTime = values.getAsBoolean(SuntimesThemeContract.THEME_TIMEBOLD);
+        int highlightColor = values.getAsInteger(SuntimesThemeContract.THEME_TIMECOLOR);
+        int suffixColor = values.getAsInteger(SuntimesThemeContract.THEME_TIMESUFFIXCOLOR);
+        int textColor = values.getAsInteger(SuntimesThemeContract.THEME_TEXTCOLOR);
+
         // Moonrise
         TextView previewMoonrise = (TextView)previewLayout.findViewById(R.id.text_time_moonrise);
         TextView previewMoonriseSuffix = (TextView)previewLayout.findViewById(R.id.text_time_moonrise_suffix);
@@ -481,10 +487,6 @@ public class WidgetThemePreview
             if (moonPosition == null) {
                 moonPosition = data2.calculator().getMoonPosition(data2.now());    // lazy init
             }
-            boolean boldTime = values.getAsBoolean(SuntimesThemeContract.THEME_TIMEBOLD);
-            int highlightColor = values.getAsInteger(SuntimesThemeContract.THEME_TIMECOLOR);
-            int suffixColor = values.getAsInteger(SuntimesThemeContract.THEME_TIMESUFFIXCOLOR);
-            int textColor = values.getAsInteger(SuntimesThemeContract.THEME_TEXTCOLOR);
 
             if (previewMoonDeclination != null) {
                 previewMoonDeclination.setTextColor(textColor);
@@ -535,6 +537,21 @@ public class WidgetThemePreview
                     previewMoonElevationLabel.setTextColor(textColor);
                     updateSize(previewMoonElevationLabel, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
                 }
+            }
+        }
+
+        // Distance
+        TextView previewMoonDistance = (TextView)previewLayout.findViewById(R.id.info_moon_distance_current);
+        if (previewMoonDistance != null)
+        {
+            WidgetSettings.LengthUnit units = WidgetSettings.loadLengthUnitsPref(context, 0);
+            previewMoonDistance.setText(MoonLayout_1x1_7.styleDistanceText(context, moonPosition, units, highlightColor, suffixColor, boldTime));
+            updateSize(previewMoonDistance, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
+
+            TextView previewMoonDistanceLabel = (TextView)previewLayout.findViewById(R.id.info_moon_distance_current_label);
+            if (previewMoonDistanceLabel != null) {
+                previewMoonDistanceLabel.setTextColor(textColor);
+                updateSize(previewMoonDistanceLabel, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
             }
         }
 
