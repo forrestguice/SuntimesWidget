@@ -46,6 +46,7 @@ import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_6;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_7;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_8;
 import com.forrestguice.suntimeswidget.layouts.PositionLayout;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
@@ -85,6 +86,8 @@ public class WidgetThemePreview
     private SuntimesRiseSetDataset data0;
     private SuntimesRiseSetData data1;
     private SuntimesMoonData data2;
+
+    private SuntimesCalculator.SunPosition sunPosition = null;
     private SuntimesCalculator.MoonPosition moonPosition = null;
     private Pair<Calendar, SuntimesCalculator.MoonPosition> apogee = null;
     private Pair<Calendar, SuntimesCalculator.MoonPosition> perigee = null;
@@ -161,6 +164,7 @@ public class WidgetThemePreview
             updatePreview_clock(previewLayout, values);
             updatePreview_position0(previewLayout, values);
             updatePreview_position1(previewLayout, values);
+            updatePreview_position2(previewLayout, values);
             //updatePreview_solstice(previewLayout);  // TODO
 
         } else if (WidgetSettings.WidgetModeSun1x1.supportsLayout(layoutID) || WidgetSettings.WidgetModeSun2x1.supportsLayout(layoutID)) {
@@ -172,6 +176,9 @@ public class WidgetThemePreview
         } else if (WidgetSettings.WidgetModeSunPos3x1.supportsLayout(layoutID)) {
             updatePreview_position0(previewLayout, values);
             updatePreview_position1(previewLayout, values);
+
+        } else if (WidgetSettings.WidgetModeSunPos1x1.supportsLayout(layoutID)) {
+            updatePreview_position2(previewLayout, values);
 
         } else {
             updatePreview_clock(previewLayout, values);
@@ -245,6 +252,85 @@ public class WidgetThemePreview
                 }
             });
             drawTask.execute(data0,  SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options, projection);
+        }
+    }
+
+    public void updatePreview_position2(View previewLayout, ContentValues values)
+    {
+        boolean boldTime = values.getAsBoolean(SuntimesThemeContract.THEME_TIMEBOLD);
+        int highlightColor = values.getAsInteger(SuntimesThemeContract.THEME_TIMECOLOR);
+        int suffixColor = values.getAsInteger(SuntimesThemeContract.THEME_TIMESUFFIXCOLOR);
+        int textColor = values.getAsInteger(SuntimesThemeContract.THEME_TEXTCOLOR);
+
+        TextView previewAzimuth = (TextView) previewLayout.findViewById(R.id.info_sun_azimuth_current);
+        TextView previewElevation = (TextView) previewLayout.findViewById(R.id.info_sun_elevation_current);
+        TextView previewRightAsc = (TextView) previewLayout.findViewById(R.id.info_sun_rightascension_current);
+        TextView previewDeclination = (TextView) previewLayout.findViewById(R.id.info_sun_declination_current);
+
+        if (previewAzimuth != null || previewElevation != null || previewRightAsc != null || previewDeclination != null)
+        {
+            if (sunPosition == null) {
+                sunPosition = data0.calculator().getSunPosition(data0.now());
+            }
+            if (sunPosition == null) {
+                return;
+            }
+
+            if (previewAzimuth != null)
+            {
+                previewAzimuth.setTextColor(textColor);
+                previewAzimuth.setText(SunPosLayout.styleAzimuthText(utils.formatAsDirection2(sunPosition.azimuth, PositionLayout.DECIMAL_PLACES, false), highlightColor, suffixColor, boldTime));
+                updateSize(previewAzimuth, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
+
+                TextView previewAzimuthLabel = (TextView) previewLayout.findViewById(R.id.info_sun_azimuth_current_label);
+                if (previewAzimuthLabel != null)
+                {
+                    previewAzimuthLabel.setTextColor(textColor);
+                    updateSize(previewAzimuthLabel, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
+                }
+            }
+
+            if (previewElevation != null)
+            {
+                previewElevation.setTextColor(textColor);
+                previewElevation.setText(SunPosLayout.styleElevationText(sunPosition.elevation, highlightColor, suffixColor, boldTime));
+                updateSize(previewElevation, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
+
+                TextView previewElevationLabel = (TextView) previewLayout.findViewById(R.id.info_sun_elevation_current_label);
+                if (previewElevationLabel != null)
+                {
+                    previewElevationLabel.setTextColor(textColor);
+                    updateSize(previewElevationLabel, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
+                }
+            }
+
+            if (previewRightAsc != null)
+            {
+                previewRightAsc.setTextColor(textColor);
+                previewRightAsc.setText(SunPosLayout.styleRightAscText(sunPosition, highlightColor, suffixColor, boldTime));
+                updateSize(previewRightAsc, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
+
+                TextView previewRightAscLabel = (TextView) previewLayout.findViewById(R.id.info_sun_rightascension_current_label);
+                if (previewRightAscLabel != null)
+                {
+                    previewRightAscLabel.setTextColor(textColor);
+                    updateSize(previewRightAscLabel, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
+                }
+            }
+
+            if (previewDeclination != null)
+            {
+                previewDeclination.setTextColor(textColor);
+                previewDeclination.setText(SunPosLayout.styleDeclinationText(sunPosition, highlightColor, suffixColor, boldTime));
+                updateSize(previewDeclination, values.getAsFloat(SuntimesThemeContract.THEME_TIMESIZE), SuntimesThemeContract.THEME_TIMESIZE_MIN, SuntimesThemeContract.THEME_TIMESIZE_MAX);
+
+                TextView previewDeclinationLabel = (TextView) previewLayout.findViewById(R.id.info_sun_declination_current_label);
+                if (previewDeclinationLabel != null)
+                {
+                    previewDeclinationLabel.setTextColor(textColor);
+                    updateSize(previewDeclinationLabel, values.getAsFloat(SuntimesThemeContract.THEME_TEXTSIZE), SuntimesThemeContract.THEME_TEXTSIZE_MIN, SuntimesThemeContract.THEME_TEXTSIZE_MAX);
+                }
+            }
         }
     }
 
