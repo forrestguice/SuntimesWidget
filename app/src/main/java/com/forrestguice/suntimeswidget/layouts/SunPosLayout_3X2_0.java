@@ -66,11 +66,8 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
         }
     }
 
-    @Override
-    public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetDataset dataset)
+    public static WorldMapTask.WorldMapProjection createProjectionForMode(Context context, WorldMapWidgetSettings.WorldMapWidgetMode mapMode, WorldMapTask.WorldMapOptions options)
     {
-        super.updateViews(context, appWidgetId, views, dataset);
-        WorldMapWidgetSettings.WorldMapWidgetMode mapMode = getMapMode(context, appWidgetId);
         WorldMapTask.WorldMapProjection projection;
         switch (mapMode)
         {
@@ -104,6 +101,15 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
                 projection = new WorldMapEquirectangular();
                 break;
         }
+        return projection;
+    }
+
+    @Override
+    public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetDataset dataset)
+    {
+        super.updateViews(context, appWidgetId, views, dataset);
+        WorldMapWidgetSettings.WorldMapWidgetMode mapMode = getMapMode(context, appWidgetId);
+        WorldMapTask.WorldMapProjection projection = createProjectionForMode(context, mapMode, options);
 
         boolean showLocation = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, getMapTag());
         if (showLocation) {
