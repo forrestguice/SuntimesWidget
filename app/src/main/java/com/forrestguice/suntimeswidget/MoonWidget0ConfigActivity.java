@@ -140,10 +140,11 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
             spinner_3x1mode.setAdapter(createAdapter_widgetModeMoon3x1());
         }
     }
-    protected ArrayAdapter<WidgetSettings.WidgetModeMoon3x1> createAdapter_widgetModeMoon3x1()
+    protected WidgetModeAdapter createAdapter_widgetModeMoon3x1()
     {
-        ArrayAdapter<WidgetSettings.WidgetModeMoon3x1> adapter = new ArrayAdapter<WidgetSettings.WidgetModeMoon3x1>(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeMoon3x1.values());
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeMoon3x1.values());
+        adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
+        adapter.setThemeValues(themeValues);
         return adapter;
     }
 
