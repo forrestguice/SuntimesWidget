@@ -106,12 +106,16 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     @Override
     protected void initWidgetMode1x1(Context context)
     {
-        if (spinner_1x1mode != null)
-        {
-            ArrayAdapter<WidgetSettings.WidgetModeSunPos1x1> adapter = new ArrayAdapter<WidgetSettings.WidgetModeSunPos1x1>(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSunPos1x1.values());
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner_1x1mode.setAdapter(adapter);
+        if (spinner_1x1mode != null) {
+            spinner_1x1mode.setAdapter(createAdapter_widgetMode1x1());
         }
+    }
+    protected WidgetModeAdapter createAdapter_widgetMode1x1()
+    {
+        WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSunPos1x1.values());
+        adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
+        adapter.setThemeValues(themeValues);
+        return adapter;
     }
 
     @Override
