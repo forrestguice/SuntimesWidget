@@ -81,25 +81,34 @@ public abstract class SunPosLayout extends PositionLayout
         }
     }
 
+    public static SpannableString styleRightAscText(@NonNull SuntimesCalculator.SunPosition sunPosition, int highlightColor, int suffixColor, boolean boldTime)
+    {
+        SuntimesUtils.TimeDisplayText rightAscDisplay = utils.formatAsRightAscension(sunPosition.rightAscension, DECIMAL_PLACES);
+        String rightAscSymbol = rightAscDisplay.getSuffix();
+        String rightAscString = utils.formatAsRightAscension(rightAscDisplay.getValue(), rightAscSymbol);
+        SpannableString rightAsc = SuntimesUtils.createColorSpan(null, rightAscString, rightAscString, highlightColor, boldTime);
+        rightAsc = SuntimesUtils.createBoldColorSpan(rightAsc, rightAscString, rightAscSymbol, suffixColor);
+        rightAsc = SuntimesUtils.createRelativeSpan(rightAsc, rightAscString, rightAscSymbol, SYMBOL_RELATIVE_SIZE);
+        return rightAsc;
+    }
+
+    public static SpannableString styleDeclinationText(@NonNull SuntimesCalculator.SunPosition sunPosition, int highlightColor, int suffixColor, boolean boldTime)
+    {
+        SuntimesUtils.TimeDisplayText declinationDisplay = utils.formatAsDeclination(sunPosition.declination, DECIMAL_PLACES);
+        String declinationSymbol = declinationDisplay.getSuffix();
+        String declinationString = utils.formatAsDeclination(declinationDisplay.getValue(), declinationSymbol);
+        SpannableString declination = SuntimesUtils.createColorSpan(null, declinationString, declinationString, highlightColor, boldTime);
+        declination = SuntimesUtils.createBoldColorSpan(declination, declinationString, declinationSymbol, suffixColor);
+        declination = SuntimesUtils.createRelativeSpan(declination, declinationString, declinationSymbol, SYMBOL_RELATIVE_SIZE);
+        return declination;
+    }
+
     protected void updateViewsRightAscDeclinationText(Context context, @NonNull RemoteViews views, @Nullable SuntimesCalculator.SunPosition sunPosition)
     {
         if (sunPosition != null)
         {
-            SuntimesUtils.TimeDisplayText rightAscDisplay = utils.formatAsRightAscension(sunPosition.rightAscension, DECIMAL_PLACES);
-            String rightAscSymbol = rightAscDisplay.getSuffix();
-            String rightAscString = utils.formatAsRightAscension(rightAscDisplay.getValue(), rightAscSymbol);
-            SpannableString rightAsc = SuntimesUtils.createColorSpan(null, rightAscString, rightAscString, highlightColor, boldTime);
-            rightAsc = SuntimesUtils.createBoldColorSpan(rightAsc, rightAscString, rightAscSymbol, suffixColor);
-            rightAsc = SuntimesUtils.createRelativeSpan(rightAsc, rightAscString, rightAscSymbol, SYMBOL_RELATIVE_SIZE);
-            views.setTextViewText(R.id.info_sun_rightascension_current, rightAsc);
-
-            SuntimesUtils.TimeDisplayText declinationDisplay = utils.formatAsDeclination(sunPosition.declination, DECIMAL_PLACES);
-            String declinationSymbol = declinationDisplay.getSuffix();
-            String declinationString = utils.formatAsDeclination(declinationDisplay.getValue(), declinationSymbol);
-            SpannableString declination = SuntimesUtils.createColorSpan(null, declinationString, declinationString, highlightColor, boldTime);
-            declination = SuntimesUtils.createBoldColorSpan(declination, declinationString, declinationSymbol, suffixColor);
-            declination = SuntimesUtils.createRelativeSpan(declination, declinationString, declinationSymbol, SYMBOL_RELATIVE_SIZE);
-            views.setTextViewText(R.id.info_sun_declination_current, declination);
+            views.setTextViewText(R.id.info_sun_rightascension_current, styleRightAscText(sunPosition, highlightColor, suffixColor, boldTime));
+            views.setTextViewText(R.id.info_sun_declination_current, styleDeclinationText(sunPosition, highlightColor, suffixColor, boldTime));
         }
     }
 
