@@ -27,7 +27,7 @@
         android:textStyle="normal" android:duplicateParentState="true"
         tools:text="one line two line three line or more" />
 
-    <LinearLayout android:id="@+id/preview_area" android:minWidth="80dp"
+    <LinearLayout android:id="@+id/preview_area" android:minWidth="80dp" android:minHeight="40dp"
         android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
         android:orientation="vertical" android:gravity="center" android:layout_margin="4dp" />
 

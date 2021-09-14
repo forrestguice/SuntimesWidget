@@ -216,7 +216,12 @@ public class WidgetThemePreview
                     view.setImageBitmap(result);
                 }
             });
-            drawTask.execute(data0, SuntimesUtils.dpToPixels(context, widthDp), SuntimesUtils.dpToPixels(context, heightDp), colors);
+
+            int widthPx = SuntimesUtils.dpToPixels(context, widthDp);
+            int heightPx = SuntimesUtils.dpToPixels(context, heightDp);
+            view.setMinimumWidth(widthPx);
+            view.setMinimumHeight(heightPx);
+            drawTask.execute(data0, widthPx, heightPx, colors);
         }
     }
 
@@ -254,7 +259,12 @@ public class WidgetThemePreview
                     view.setImageBitmap(lastFrame);
                 }
             });
-            drawTask.execute(data0,  SuntimesUtils.dpToPixels(context, sizeDp[0]), SuntimesUtils.dpToPixels(context, sizeDp[1]), options, projection);
+
+            int widthPx = SuntimesUtils.dpToPixels(context, sizeDp[0]);
+            int heightPx = SuntimesUtils.dpToPixels(context, sizeDp[1]);
+            view.setMinimumWidth(widthPx);
+            view.setMinimumHeight(heightPx);
+            drawTask.execute(data0,  widthPx, heightPx, options, projection);
         }
     }
 
