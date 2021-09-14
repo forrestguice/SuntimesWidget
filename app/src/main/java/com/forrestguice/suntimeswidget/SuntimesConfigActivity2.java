@@ -147,7 +147,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     protected WidgetModeAdapter createAdapter_widgetMode3x1()
     {
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSunPos3x1.values());
-        adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
+        adapter.setDropDownViewResource(R.layout.layout_listitem_layouts1);
         adapter.setThemeValues(themeValues);
         return adapter;
     }
