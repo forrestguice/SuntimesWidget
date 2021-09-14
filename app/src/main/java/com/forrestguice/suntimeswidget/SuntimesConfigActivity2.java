@@ -155,15 +155,19 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     @Override
     protected void initWidgetMode3x2(Context context)
     {
-        if (spinner_3x2mode != null)
-        {
-            ArrayList<WorldMapWidgetSettings.WorldMapWidgetMode> modes = new ArrayList<>();
-            modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE);
-            modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE);
-            ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode> adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, modes);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner_3x2mode.setAdapter(adapter);
+        if (spinner_3x2mode != null) {
+            spinner_3x2mode.setAdapter(createAdapter_widgetMode3x2());
         }
+    }
+    protected WidgetModeAdapter createAdapter_widgetMode3x2()
+    {
+        ArrayList<WorldMapWidgetSettings.WorldMapWidgetMode> modes = new ArrayList<>();
+        modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE);
+        modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE);
+        WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, modes.toArray(new WidgetSettings.WidgetModeDisplay[0]));
+        adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
+        adapter.setThemeValues(themeValues);
+        return adapter;
     }
 
     @Override
@@ -202,15 +206,19 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     @Override
     protected void initWidgetMode3x3(Context context)
     {
-        if (spinner_3x3mode != null)
-        {
-            ArrayList<WorldMapWidgetSettings.WorldMapWidgetMode> modes = new ArrayList<>();
-            modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE);
-            modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE1);
-            ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode> adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, modes);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner_3x3mode.setAdapter(adapter);
+        if (spinner_3x3mode != null) {
+            spinner_3x3mode.setAdapter(createAdapter_widgetMode3x3());
         }
+    }
+    protected WidgetModeAdapter createAdapter_widgetMode3x3()
+    {
+        ArrayList<WorldMapWidgetSettings.WorldMapWidgetMode> modes = new ArrayList<>();
+        modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE);
+        modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE1);
+        WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, modes.toArray(new WidgetSettings.WidgetModeDisplay[0]));
+        adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
+        adapter.setThemeValues(themeValues);
+        return adapter;
     }
 
     @Override
