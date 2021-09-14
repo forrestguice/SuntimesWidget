@@ -53,12 +53,12 @@ public class WorldMapWidgetSettings
     /**
      * WorldMapWidgetMode
      */
-    public static enum WorldMapWidgetMode
+    public static enum WorldMapWidgetMode implements WidgetSettings.WidgetModeDisplay
     {
         EQUIRECTANGULAR_SIMPLE("Simple", R.layout.layout_widget_sunpos_3x2_0),
-        EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", R.layout.layout_widget_sunpos_3x2_0),
+        EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", R.layout.layout_widget_sunpos_3x2_1),
         EQUIAZIMUTHAL_SIMPLE("Polar [north]", R.layout.layout_widget_sunpos_3x3_0),
-        EQUIAZIMUTHAL_SIMPLE1("Polar [south]", R.layout.layout_widget_sunpos_3x3_0);
+        EQUIAZIMUTHAL_SIMPLE1("Polar [south]", R.layout.layout_widget_sunpos_3x3_1);
 
         private final int layoutID;
         private String displayString;
@@ -72,6 +72,11 @@ public class WorldMapWidgetSettings
         public String toString()
         {
             return displayString;
+        }
+
+        @Override
+        public int getLayoutID() {
+            return layoutID;
         }
 
         public String getDisplayString()
@@ -90,6 +95,26 @@ public class WorldMapWidgetSettings
             EQUIAZIMUTHAL_SIMPLE1.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simpleazimuthal_south));
             EQUIRECTANGULAR_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simplerectangular));
             EQUIRECTANGULAR_BLUEMARBLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_bluemarble));
+        }
+
+        public static WorldMapWidgetMode findMode(int layoutID)
+        {
+            for (WorldMapWidgetMode mode : values()) {
+                if (mode.layoutID == layoutID) {
+                    return mode;
+                }
+            }
+            return null;
+        }
+
+        public static boolean supportsLayout(int layoutID)
+        {
+            for (WidgetSettings.WidgetModeDisplay mode : values()) {
+                if (mode.getLayoutID() == layoutID) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 
