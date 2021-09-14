@@ -47,9 +47,11 @@ import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_7;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_8;
 import com.forrestguice.suntimeswidget.layouts.PositionLayout;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X2_0;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
+import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.text.NumberFormat;
@@ -163,7 +165,7 @@ public class WidgetThemePreview
             updatePreview_moon(previewLayout, values);
             updatePreview_clock(previewLayout, values);
             updatePreview_position0(previewLayout, values, 256, 32);
-            updatePreview_position1(previewLayout, values);
+            updatePreview_position1(previewLayout, values, WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE);
             updatePreview_position2(previewLayout, values);
             //updatePreview_solstice(previewLayout);  // TODO
 
@@ -174,8 +176,11 @@ public class WidgetThemePreview
             updatePreview_moon(previewLayout, values);
 
         } else if (WidgetSettings.WidgetModeSunPos3x1.supportsLayout(layoutID)) {
-            updatePreview_position0(previewLayout, values, 256, 32);
-            updatePreview_position1(previewLayout, values);
+            updatePreview_position0(previewLayout, values, 128, 32);
+
+        } else if (WorldMapWidgetSettings.WorldMapWidgetMode.supportsLayout(layoutID)) {
+            WorldMapWidgetSettings.WorldMapWidgetMode mode = WorldMapWidgetSettings.WorldMapWidgetMode.findMode(layoutID);
+            updatePreview_position1(previewLayout, values, (mode != null ? mode : WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE));
 
         } else if (WidgetSettings.WidgetModeSunPos1x1.supportsLayout(layoutID)) {
             updatePreview_position2(previewLayout, values);
@@ -215,12 +220,13 @@ public class WidgetThemePreview
         }
     }
 
-    public void updatePreview_position1(View previewLayout, ContentValues values)
+    public void updatePreview_position1(View previewLayout, ContentValues values, WorldMapWidgetSettings.WorldMapWidgetMode mode)
     {
         final ImageView view = (ImageView)previewLayout.findViewById(R.id.info_time_worldmap);
         if (view != null)
         {
             Context context = previewLayout.getContext();
+
             WorldMapTask.WorldMapOptions options = new WorldMapTask.WorldMapOptions();
             options.map = ContextCompat.getDrawable(context, R.drawable.worldmap);
             options.backgroundColor = values.getAsInteger(SuntimesThemeContract.THEME_MAP_BACKGROUNDCOLOR);
@@ -236,9 +242,8 @@ public class WidgetThemePreview
             options.moonStrokeColor = values.getAsInteger(SuntimesThemeContract.THEME_MOONWANINGCOLOR);
             options.moonScale = 32;
 
-            int dpWidth = 128;
-            int dpHeight = 64;
-            WorldMapTask.WorldMapProjection projection = new WorldMapEquirectangular();
+            int[] sizeDp = suggestedPreviewSizeDp(mode);
+            WorldMapTask.WorldMapProjection projection = SunPosLayout_3X2_0.createProjectionForMode(context, mode, options);
             WorldMapTask drawTask = new WorldMapTask();
             drawTask.setListener(new WorldMapTask.WorldMapTaskListener()
             {
@@ -249,7 +254,21 @@ public class WidgetThemePreview
                     view.setImageBitmap(lastFrame);
                 }
             });
-            drawTask.execute(data0,  SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), options, projection);
+            drawTask.execute(data0,  SuntimesUtils.dpToPixels(context, sizeDp[0]), SuntimesUtils.dpToPixels(context, sizeDp[1]), options, projection);
+        }
+    }
+
+    public static int[] suggestedPreviewSizeDp(WorldMapWidgetSettings.WorldMapWidgetMode mode)
+    {
+        switch (mode)
+        {
+            case EQUIAZIMUTHAL_SIMPLE:
+            case EQUIAZIMUTHAL_SIMPLE1:
+                return new int[] { 128, 128 };
+            case EQUIRECTANGULAR_BLUEMARBLE:
+            case EQUIRECTANGULAR_SIMPLE:
+            default:
+                return new int[] { 128, 64 };
         }
     }
 
