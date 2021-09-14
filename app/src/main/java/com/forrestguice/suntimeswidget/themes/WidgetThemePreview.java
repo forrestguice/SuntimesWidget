@@ -162,7 +162,7 @@ public class WidgetThemePreview
             updatePreview_sun(previewLayout, values);
             updatePreview_moon(previewLayout, values);
             updatePreview_clock(previewLayout, values);
-            updatePreview_position0(previewLayout, values);
+            updatePreview_position0(previewLayout, values, 256, 32);
             updatePreview_position1(previewLayout, values);
             updatePreview_position2(previewLayout, values);
             //updatePreview_solstice(previewLayout);  // TODO
@@ -174,7 +174,7 @@ public class WidgetThemePreview
             updatePreview_moon(previewLayout, values);
 
         } else if (WidgetSettings.WidgetModeSunPos3x1.supportsLayout(layoutID)) {
-            updatePreview_position0(previewLayout, values);
+            updatePreview_position0(previewLayout, values, 256, 32);
             updatePreview_position1(previewLayout, values);
 
         } else if (WidgetSettings.WidgetModeSunPos1x1.supportsLayout(layoutID)) {
@@ -186,7 +186,7 @@ public class WidgetThemePreview
         }
     }
 
-    public void updatePreview_position0(View previewLayout, ContentValues values)
+    public void updatePreview_position0(View previewLayout, ContentValues values, int widthDp, int heightDp)
     {
         final ImageView view = (ImageView)previewLayout.findViewById(R.id.info_time_lightmap);
         if (view != null)
@@ -201,8 +201,6 @@ public class WidgetThemePreview
             colors.colorAstro = values.getAsInteger(SuntimesThemeContract.THEME_ASTROCOLOR);;
             colors.colorNight = values.getAsInteger(SuntimesThemeContract.THEME_NIGHTCOLOR);;
 
-            int dpWidth = 256;
-            int dpHeight = 64;
             LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask();
             drawTask.setListener(new LightMapView.LightMapTaskListener()
             {
@@ -213,7 +211,7 @@ public class WidgetThemePreview
                     view.setImageBitmap(result);
                 }
             });
-            drawTask.execute(data0, SuntimesUtils.dpToPixels(context, dpWidth), SuntimesUtils.dpToPixels(context, dpHeight), colors);
+            drawTask.execute(data0, SuntimesUtils.dpToPixels(context, widthDp), SuntimesUtils.dpToPixels(context, heightDp), colors);
         }
     }
 
