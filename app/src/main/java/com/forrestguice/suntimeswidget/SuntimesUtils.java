@@ -186,15 +186,13 @@ public class SuntimesUtils
         strDateShortFormat = context.getString(R.string.date_format_short);
         strDateLongFormat = context.getString(R.string.date_format_long);
 
-        strTimeShortFormat12 = context.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12, strTimeSuffixFormat);
-        String timeFormat = (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12);
-        strDateTimeShortFormat = context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormat);
-        strDateTimeLongFormat = context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormat);
+        strTimeShortFormat12 = context.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12, strTimeSuffixFormat);        //String timeFormat = (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12);
+        strDateTimeShortFormat = dateTimeFormatShort(context, is24, false);  //  context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormat);
+        strDateTimeLongFormat = dateTimeFormatLong(context, is24, false);    // context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormat);
 
-        strTimeShortFormat12s = context.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12s, strTimeSuffixFormat);
-        String timeFormatSec = (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s);
-        strDateTimeShortFormatSec = context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormatSec);
-        strDateTimeLongFormatSec = context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormatSec);
+        strTimeShortFormat12s = context.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12s, strTimeSuffixFormat);        //String timeFormatSec = (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s);
+        strDateTimeShortFormatSec = dateTimeFormatShort(context, is24, true);  // context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormatSec);
+        strDateTimeLongFormatSec = dateTimeFormatLong(context, is24, true);    // context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormatSec);
 
         CardinalDirection.initDisplayStrings(context);
 
@@ -202,6 +200,17 @@ public class SuntimesUtils
         ///initCount++;
         //long bench_end = System.nanoTime();
         //Log.d("DEBUG", "SuntimesUtils initialized: " + initCount + " :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+    }
+
+    public static String dateTimeFormatShort(Context context, boolean is24, boolean showSeconds)
+    {
+        String timeFormat = (showSeconds ? (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s) : (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12));
+        return context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormat);
+    }
+    public static String dateTimeFormatLong(Context context, boolean is24, boolean showSeconds)
+    {
+        String timeFormat = (showSeconds ? (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s) : (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12));
+        return context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormat);
     }
 
     public static boolean isInitialized()
