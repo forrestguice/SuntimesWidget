@@ -787,6 +787,37 @@ public class SuntimesUtils
         String value = timeFormat.format(cal.getTime());*/
     }
 
+    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showTime, boolean showSeconds, TimeFormatMode format) {
+        return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != Calendar.getInstance().get(Calendar.YEAR))), showTime, showSeconds, format);
+    }
+    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showYear, boolean showTime, boolean showSeconds, TimeFormatMode format)
+    {
+        if (cal == null || context == null) {
+            return new TimeDisplayText(strTimeNone);
+        }
+
+        boolean formatIs24;
+        switch (format) {
+            case MODE_12HR: formatIs24 = false; break;
+            case MODE_SYSTEM: formatIs24 = android.text.format.DateFormat.is24HourFormat(context); break;
+            case MODE_24HR: default: formatIs24 = true; break;
+        }
+
+        Locale locale = getLocale();
+        SimpleDateFormat dateTimeFormat;
+        if (showTime) {
+            dateTimeFormat = new SimpleDateFormat((showYear ? dateTimeFormatLong(context, formatIs24, showSeconds) : dateTimeFormatShort(context, formatIs24, showSeconds)), locale);
+        } else dateTimeFormat = new SimpleDateFormat((showYear ? strDateLongFormat : strDateShortFormat), locale);
+        //Log.d("DEBUG","DateTimeFormat: " + dateTimeFormat.toPattern() + " (" + locale.toString() + ")");
+
+        Date time = cal.getTime();
+        applyTimeZone(time, cal.getTimeZone());
+        dateTimeFormat.setTimeZone(cal.getTimeZone());
+        TimeDisplayText displayText = new TimeDisplayText(dateTimeFormat.format(time), "", "");
+        displayText.setRawValue(cal.getTimeInMillis());
+        return displayText;
+    }
+
     /**
      * @param context a context
      * @param cal a Calendar representing some year
