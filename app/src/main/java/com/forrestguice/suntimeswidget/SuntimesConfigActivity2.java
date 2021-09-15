@@ -57,6 +57,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         showOption3x1LayoutMode(true);
         showOption3x2LayoutMode(true);
         showOption3x3LayoutMode(true);
+        showTimeFormatMode(false);
     }
 
     @Override

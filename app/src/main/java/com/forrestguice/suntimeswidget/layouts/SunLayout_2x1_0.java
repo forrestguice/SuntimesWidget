@@ -62,6 +62,7 @@ public class SunLayout_2x1_0 extends SunLayout
         boolean showSolarNoon = WidgetSettings.loadShowNoonPref(context, appWidgetId);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
         boolean showDayDelta = WidgetSettings.loadShowComparePref(context, appWidgetId);
+        WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
@@ -118,7 +119,7 @@ public class SunLayout_2x1_0 extends SunLayout
             }
         }
 
-        updateViewsSunRiseSetText(context, views, data, showSeconds, order);
+        updateViewsSunRiseSetText(context, views, data, showSeconds, order, timeFormat);
 
         // update day delta
         TimeDisplayText dayDeltaDisplay = utils.timeDeltaLongDisplayString(data.dayLengthToday(), data.dayLengthOther(), true);
@@ -135,7 +136,7 @@ public class SunLayout_2x1_0 extends SunLayout
         // update solar noon
         SuntimesRiseSetData noonData = data.getLinked();
         if (showSolarNoon && noonData != null) {
-            updateViewsNoonText(context, views, noonData.sunsetCalendarToday(), showSeconds);
+            updateViewsNoonText(context, views, noonData.sunsetCalendarToday(), showSeconds, timeFormat);
             views.setViewVisibility(R.id.layout_noon, View.VISIBLE);
         } else {
             views.setViewVisibility(R.id.layout_noon, View.GONE);

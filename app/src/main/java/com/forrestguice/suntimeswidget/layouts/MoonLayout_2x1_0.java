@@ -66,6 +66,7 @@ public class MoonLayout_2x1_0 extends MoonLayout
         super.updateViews(context, appWidgetId, views, data);
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
+        WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
@@ -110,7 +111,7 @@ public class MoonLayout_2x1_0 extends MoonLayout
             }
         }
 
-        updateViewsMoonRiseSetText(context, views, data, showSeconds, order);
+        updateViewsMoonRiseSetText(context, views, data, showSeconds, order, timeFormat);
 
         NumberFormat percentage = NumberFormat.getPercentInstance();
         String illum = percentage.format(data.getMoonIlluminationToday());

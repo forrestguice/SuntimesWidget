@@ -66,6 +66,7 @@ public class SunLayout_1x1_2 extends SunLayout
         super.updateViews(context, appWidgetId, views, data);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
         WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
@@ -102,7 +103,7 @@ public class SunLayout_1x1_2 extends SunLayout
                 event = data.sunsetCalendar(2);
             }
         }
-        updateViewsSunsetText(context, views, event, showSeconds);
+        updateViewsSunsetText(context, views, event, showSeconds, timeFormat);
     }
 
     @Override

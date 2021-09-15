@@ -59,7 +59,7 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
         showTimeMode(false);
         showOptionShowNoon(false);
 
-        showTimeFormatMode(true);
+        //showTimeFormatMode(true);
         showOptionLabels(true);
         hideLayoutSettings();
 

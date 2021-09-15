@@ -82,6 +82,7 @@ public class SunLayout_1x1_0 extends SunLayout
     {
         super.updateViews(context, appWidgetId, views, data);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
+        WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
@@ -120,7 +121,7 @@ public class SunLayout_1x1_0 extends SunLayout
             }
         }
 
-        updateViewsSunRiseSetText(context, views, data, showSeconds, order);
+        updateViewsSunRiseSetText(context, views, data, showSeconds, order, timeFormat);
     }
 
     @Override

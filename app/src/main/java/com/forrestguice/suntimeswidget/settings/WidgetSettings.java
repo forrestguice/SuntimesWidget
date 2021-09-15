@@ -896,7 +896,8 @@ public class WidgetSettings
     {
         MODE_SYSTEM("System"),
         MODE_12HR("12 hr"),
-        MODE_24HR("24 hr");
+        MODE_24HR("24 hr"),
+        MODE_SUNTIMES("Suntimes");
 
         private String displayString;
 
@@ -908,7 +909,6 @@ public class WidgetSettings
         public String getDisplayString()
         {
             return displayString;
-
         }
 
         public void setDisplayString( String displayString )
@@ -921,6 +921,7 @@ public class WidgetSettings
             MODE_SYSTEM.setDisplayString(context.getString(R.string.timeFormatMode_system));
             MODE_12HR.setDisplayString(context.getString(R.string.timeFormatMode_12hr));
             MODE_24HR.setDisplayString(context.getString(R.string.timeFormatMode_24hr));
+            MODE_SUNTIMES.setDisplayString(context.getString(R.string.timeFormatMode_suntimes));
         }
 
         public String toString()

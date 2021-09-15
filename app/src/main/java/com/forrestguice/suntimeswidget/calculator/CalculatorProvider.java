@@ -435,7 +435,7 @@ public class CalculatorProvider extends ContentProvider
 
                         case COLUMN_CONFIG_OPTION_TIME_IS24:
                             WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
-                            boolean is24 = (mode == WidgetSettings.TimeFormatMode.MODE_SYSTEM) ? android.text.format.DateFormat.is24HourFormat(context)
+                            boolean is24 = (mode == WidgetSettings.TimeFormatMode.MODE_SYSTEM || mode == WidgetSettings.TimeFormatMode.MODE_SUNTIMES) ? android.text.format.DateFormat.is24HourFormat(context)
                                     : (mode == WidgetSettings.TimeFormatMode.MODE_24HR);
                             row[i] = (is24 ? 1 : 0);
                             break;

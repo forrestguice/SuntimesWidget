@@ -151,7 +151,7 @@ public class SuntimesUtils
         //long bench_start = System.nanoTime();
 
         WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
-        is24 = (mode == TimeFormatMode.MODE_SYSTEM) ? android.text.format.DateFormat.is24HourFormat(context)
+        is24 = (mode == TimeFormatMode.MODE_SYSTEM || mode == TimeFormatMode.MODE_SUNTIMES) ? android.text.format.DateFormat.is24HourFormat(context)
                                                     : (mode == TimeFormatMode.MODE_24HR);
 
         strTimeShorter = context.getString(R.string.delta_day_shorter);
@@ -507,6 +507,10 @@ public class SuntimesUtils
                 case MODE_12HR:
                     return calendarTime12HrDisplayString(context, cal, showSeconds);
 
+                case MODE_SUNTIMES:
+                    return (is24 ? calendarTime24HrDisplayString(context, cal, showSeconds)
+                            : calendarTime12HrDisplayString(context, cal, showSeconds));
+
                 case MODE_SYSTEM:
                     boolean sysIs24 = android.text.format.DateFormat.is24HourFormat(context);
                     return (sysIs24 ? calendarTime24HrDisplayString(context, cal, showSeconds)
@@ -798,8 +802,9 @@ public class SuntimesUtils
 
         boolean formatIs24;
         switch (format) {
-            case MODE_12HR: formatIs24 = false; break;
+            case MODE_SUNTIMES: formatIs24 = is24; break;
             case MODE_SYSTEM: formatIs24 = android.text.format.DateFormat.is24HourFormat(context); break;
+            case MODE_12HR: formatIs24 = false; break;
             case MODE_24HR: default: formatIs24 = true; break;
         }
 
