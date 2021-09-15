@@ -1,5 +1,12 @@
 ### ~
 
+--
+* adds widget option to override 12h/24h time format setting.
+* adds widget option to "scale text and icons".
+* renames widget option "grow with available space" to "swap layouts to fill space"; adds help text.
+* enhances widget layout selector to show a themed preview.
+* reorganizes widget options.
+
 ### v0.13.13 (2021-09-09)
 * fixes bug "1x1 moon widget uses imperial units while the app metric" (#506).
 
