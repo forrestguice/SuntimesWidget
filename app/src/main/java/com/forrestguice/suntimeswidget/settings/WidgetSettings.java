@@ -95,7 +95,7 @@ public class WidgetSettings
     public static final WidgetModeMoon1x1 PREF_DEF_APPEARANCE_WIDGETMODE_MOON1x1 = WidgetModeMoon1x1.MODE1x1_RISESET;
 
     public static final String PREF_KEY_APPEARANCE_ALLOWRESIZE = "allowresize";
-    public static final boolean PREF_DEF_APPEARANCE_ALLOWRESIZE = true;
+    public static final boolean PREF_DEF_APPEARANCE_ALLOWRESIZE = false;
 
     public static final String PREF_KEY_APPEARANCE_SCALETEXT = "scaletext";
     public static final boolean PREF_DEF_APPEARANCE_SCALETEXT = false;
