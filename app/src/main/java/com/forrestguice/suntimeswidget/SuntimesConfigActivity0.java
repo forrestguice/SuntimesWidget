@@ -23,6 +23,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -647,6 +648,29 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         label_3x3mode = (TextView) findViewById(R.id.appwidget_appearance_3x3mode_label);
         spinner_3x3mode = (Spinner) findViewById(R.id.appwidget_appearance_3x3mode);
         initWidgetMode3x3(context);
+
+        final TextView primaryWidgetModeLabel = (TextView) getPrimaryWidgetModeLabel();
+        if (primaryWidgetModeLabel != null)
+        {
+            int[] colorAttrs = { R.attr.text_accentColor, R.attr.text_disabledColor, R.attr.buttonPressColor };
+            TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+            int accentColor = ContextCompat.getColor(context, typedArray.getResourceId(0, R.color.text_accent_light));
+            int disabledColor = ContextCompat.getColor(context, typedArray.getResourceId(1, R.color.text_disabled_dark));
+            int pressedColor = ContextCompat.getColor(context, typedArray.getResourceId(2, R.color.btn_tint_pressed_dark));
+            typedArray.recycle();
+            primaryWidgetModeLabel.setTextColor(SuntimesUtils.colorStateList(accentColor, disabledColor, pressedColor));
+
+            primaryWidgetModeLabel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    String modeDesc = primaryWidgetModeLabel.getText().toString().replace(":", "");
+                    HelpDialog helpDialog = new HelpDialog();
+                    helpDialog.setContent(getString(R.string.help_appearance_widgetlayout, modeDesc));
+                    helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
+                }
+            });
+        }
 
         //
         // widget: allow resize
