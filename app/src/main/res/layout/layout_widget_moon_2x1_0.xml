@@ -21,7 +21,7 @@
 
     <LinearLayout android:id="@+id/widgetframe_inner" style="@style/SunsetTimeWidget"
         android:orientation="vertical">
-        <include layout="@layout/layout_widget_moon_2x1_01_content" />
+        <include layout="@layout/layout_widget_moon_2x1_0_content" />
     </LinearLayout>
 
 </FrameLayout>
