@@ -618,7 +618,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
         WidgetSettings.deleteScaleTextPref(context, appWidgetId);
         boolean pref0 = WidgetSettings.loadScaleTextPref(context, appWidgetId);
-        assertFalse("mode should be default (false) but was " + pref0, pref0 && pref0 == WidgetSettings.PREF_DEF_APPEARANCE_ALLOWRESIZE);
+        assertFalse("mode should be default (false) but was " + pref0, pref0 && pref0 == WidgetSettings.PREF_DEF_APPEARANCE_SCALETEXT);
     }
 
     @Test
