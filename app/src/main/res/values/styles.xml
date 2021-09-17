@@ -286,6 +286,7 @@
     </style>
     <style name="SunsetTimeWidgetFrame1" parent="SunsetTimeWidgetFrame">
         <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
     </style>
 
     <!-- The inner frame around the widget -->
