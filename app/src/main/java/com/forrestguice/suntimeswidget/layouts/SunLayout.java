@@ -44,6 +44,8 @@ public abstract class SunLayout extends SuntimesLayout
     protected float suffixSizeSp = 8;
     protected float iconSizeDp = 32;
 
+    protected boolean scaleBase = false;
+
     /**
      * Called by widget before themeViews and updateViews to give the layout obj an opportunity to
      * modify its state based on the supplied data.
@@ -51,7 +53,7 @@ public abstract class SunLayout extends SuntimesLayout
      */
     public void prepareForUpdate(Context context, int appWidgetId, SuntimesRiseSetData data)
     {
-        // EMPTY
+        this.scaleBase = WidgetSettings.loadScaleBasePref(context, appWidgetId);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
