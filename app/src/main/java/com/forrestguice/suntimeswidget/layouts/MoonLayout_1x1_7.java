@@ -52,6 +52,14 @@ public class MoonLayout_1x1_7 extends MoonLayout
         this.layoutID = R.layout.layout_widget_moon_1x1_7;
     }
 
+    @SuppressWarnings("EmptyMethod")
+    @Override
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
+    {
+        super.prepareForUpdate(context, appWidgetId, data);
+        this.layoutID = (scaleBase ? R.layout.layout_widget_moon_1x1_7_align_fill : R.layout.layout_widget_moon_1x1_7);
+    }
+
     @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesMoonData data)
     {
@@ -115,13 +123,6 @@ public class MoonLayout_1x1_7 extends MoonLayout
             float timeSize = theme.getTimeSizeSp();
             views.setTextViewTextSize(R.id.info_moon_distance_current, TypedValue.COMPLEX_UNIT_DIP, timeSize);
         }
-    }
-
-    @SuppressWarnings("EmptyMethod")
-    @Override
-    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
-    {
-        // EMPTY
     }
 
     @Override
