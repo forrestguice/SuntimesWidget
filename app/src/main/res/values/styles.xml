@@ -284,6 +284,9 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">@dimen/widget_margin</item>
     </style>
+    <style name="SunsetTimeWidgetFrame1" parent="SunsetTimeWidgetFrame">
+        <item name="android:layout_width">match_parent</item>
+    </style>
 
     <!-- The inner frame around the widget -->
     <style name="SunsetTimeWidgetBase">

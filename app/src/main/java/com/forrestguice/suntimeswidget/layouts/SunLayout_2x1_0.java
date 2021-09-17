@@ -52,7 +52,9 @@ public class SunLayout_2x1_0 extends SunLayout
     {
         super.prepareForUpdate(context, appWidgetID, data);
         order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetID);
-        this.layoutID = chooseSunLayout(R.layout.layout_widget_2x1_0, R.layout.layout_widget_2x1_01, data, order);
+        this.layoutID = (scaleBase
+                ? chooseSunLayout(R.layout.layout_widget_2x1_0_align_fill, R.layout.layout_widget_2x1_01_align_fill, data, order)
+                : chooseSunLayout(R.layout.layout_widget_2x1_0, R.layout.layout_widget_2x1_01, data, order));
     }
 
     @Override
