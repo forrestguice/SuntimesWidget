@@ -61,6 +61,7 @@ public class SunPosLayout_1X1_0 extends SunPosLayout
     public void prepareForUpdate(Context context, int appWidgetId, SuntimesRiseSetDataset dataset, int[] widgetSize)
     {
         super.prepareForUpdate(context, appWidgetId, dataset, widgetSize);
+        this.layoutID = (scaleBase ?  R.layout.layout_widget_sunpos_1x1_5_align_fill : R.layout.layout_widget_sunpos_1x1_5);
         dataset.dataActual.calculate();
         dataset.dataNoon.calculate();
     }
