@@ -44,7 +44,7 @@ public abstract class SunLayout extends SuntimesLayout
     protected float suffixSizeSp = 8;
     protected float iconSizeDp = 32;
 
-    protected boolean scaleBase = false;
+    protected boolean scaleBase = WidgetSettings.PREF_DEF_APPEARANCE_SCALEBASE;
 
     /**
      * Called by widget before themeViews and updateViews to give the layout obj an opportunity to

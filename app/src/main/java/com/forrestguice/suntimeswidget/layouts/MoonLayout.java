@@ -42,6 +42,8 @@ public abstract class MoonLayout extends SuntimesLayout
     protected float suffixSizeSp = 8;
     protected float iconSizeDp = 32;
 
+    protected boolean scaleBase = WidgetSettings.PREF_DEF_APPEARANCE_SCALEBASE;
+
     public MoonLayout()
     {
         initLayoutID();
@@ -54,7 +56,7 @@ public abstract class MoonLayout extends SuntimesLayout
      */
     public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
     {
-        // EMPTY
+        this.scaleBase = WidgetSettings.loadScaleBasePref(context, appWidgetId);
     }
 
     /**
