@@ -35,6 +35,7 @@ public abstract class SolsticeLayout extends SuntimesLayout
     protected float timeSizeSp = 12;
     protected float suffixSizeSp = 8;
     protected int[] paddingDp = new int[] {0, 0};
+    protected boolean scaleBase = WidgetSettings.PREF_DEF_APPEARANCE_SCALEBASE;
 
     public SolsticeLayout()
     {
@@ -46,9 +47,9 @@ public abstract class SolsticeLayout extends SuntimesLayout
      * modify its state based on the supplied data.
      * @param data the data object (should be the same as supplied to updateViews)
      */
-    public void prepareForUpdate(SuntimesEquinoxSolsticeData data)
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesEquinoxSolsticeData data)
     {
-        // EMPTY
+        this.scaleBase = WidgetSettings.loadScaleBasePref(context, appWidgetId);
     }
 
     /**

@@ -60,6 +60,14 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
     }
 
     @Override
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesEquinoxSolsticeData data)
+    {
+        super.prepareForUpdate(context, appWidgetId, data);
+        this.layoutID = (scaleBase ? R.layout.layout_widget_solstice_1x1_0_align_fill : R.layout.layout_widget_solstice_1x1_0);
+        timeMode = data.timeMode();
+    }
+
+    @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesEquinoxSolsticeData data)
     {
         super.updateViews(context, appWidgetId, views, data);
@@ -150,9 +158,4 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
         }
     }
 
-    @Override
-    public void prepareForUpdate(SuntimesEquinoxSolsticeData data)
-    {
-        timeMode = data.timeMode();
-    }
 }

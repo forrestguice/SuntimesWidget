@@ -83,11 +83,6 @@ public class SolsticeWidget0 extends SuntimesWidget0
 
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SolsticeLayout layout)
     {
-        RemoteViews views = layout.getViews(context);
-
-        boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
-        views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
-
         SuntimesEquinoxSolsticeData data;
         boolean overrideMode = WidgetSettings.loadTimeMode2OverridePref(context, appWidgetId);
         if (overrideMode)
@@ -105,8 +100,12 @@ public class SolsticeWidget0 extends SuntimesWidget0
             data.calculate();
         }
 
+        layout.prepareForUpdate(context, appWidgetId, data);
+        RemoteViews views = layout.getViews(context);
+
+        boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
+        views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
         views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, SolsticeWidget0.class));
-        layout.prepareForUpdate(data);
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, data);
         appWidgetManager.updateAppWidget(appWidgetId, views);
