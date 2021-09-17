@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.layouts;
 
+import android.content.Context;
 import android.os.Build;
 
 import com.forrestguice.suntimeswidget.R;
@@ -42,9 +43,9 @@ public class SunPosLayout_3X3_0 extends SunPosLayout_3X2_0
     }
 
     @Override
-    public void prepareForUpdate(SuntimesRiseSetDataset dataset, int[] widgetSize)
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesRiseSetDataset dataset, int[] widgetSize)
     {
-        super.prepareForUpdate(dataset, widgetSize);
+        super.prepareForUpdate(context, appWidgetId, dataset, widgetSize);
 
         if (Build.VERSION.SDK_INT >= 16) {
             this.dpWidth = this.dpHeight = Math.min(widgetSize[0], widgetSize[1]);

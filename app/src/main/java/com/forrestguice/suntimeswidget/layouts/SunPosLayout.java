@@ -41,8 +41,11 @@ public abstract class SunPosLayout extends PositionLayout
     protected float timeSizeSp = 12;
     protected float suffixSizeSp = 8;
 
-    public void prepareForUpdate(SuntimesRiseSetDataset dataset, int[] widgetSize)
+    protected boolean scaleBase = WidgetSettings.PREF_DEF_APPEARANCE_SCALEBASE;
+
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesRiseSetDataset dataset, int[] widgetSize)
     {
+        this.scaleBase = WidgetSettings.loadScaleBasePref(context, appWidgetId);
         dataset.calculateData();
     }
 

@@ -58,9 +58,9 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
     }
 
     @Override
-    public void prepareForUpdate(SuntimesRiseSetDataset dataset, int[] widgetSize)
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesRiseSetDataset dataset, int[] widgetSize)
     {
-        super.prepareForUpdate(dataset, widgetSize);
+        super.prepareForUpdate(context, appWidgetId, dataset, widgetSize);
         if (Build.VERSION.SDK_INT >= 16)
         {
             this.dpWidth = widgetSize[0];
