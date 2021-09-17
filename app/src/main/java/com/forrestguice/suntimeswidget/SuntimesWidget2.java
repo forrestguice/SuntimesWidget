@@ -93,7 +93,7 @@ public class SuntimesWidget2 extends SuntimesWidget0
         SuntimesRiseSetDataset dataset = new SuntimesRiseSetDataset(context, appWidgetId);
 
         views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, widgetClass));
-        layout.prepareForUpdate(dataset, widgetMaxSizeDp(context, appWidgetManager, appWidgetId, new int[] {40, 40}));
+        layout.prepareForUpdate(context, appWidgetId, dataset, widgetMaxSizeDp(context, appWidgetManager, appWidgetId, new int[] {40, 40}));
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, dataset);
         appWidgetManager.updateAppWidget(appWidgetId, views);
