@@ -622,6 +622,23 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     }
 
     @Test
+    public void test_scaleBasePref()
+    {
+        WidgetSettings.saveScaleBasePref(context, appWidgetId, false);
+        boolean pref1 = WidgetSettings.loadScaleBasePref(context, appWidgetId);
+        assertFalse("pref should be false but was " + pref1, pref1);
+
+        WidgetSettings.saveScaleBasePref(context, appWidgetId, true);
+        boolean pref2 = WidgetSettings.loadScaleBasePref(context, appWidgetId);
+        assertTrue("pref should be true but was " + pref2, pref2);
+
+        WidgetSettings.deleteScaleBasePref(context, appWidgetId);
+        boolean pref0 = WidgetSettings.loadScaleBasePref(context, appWidgetId);
+        assertFalse("mode should be default (false) but was " + pref0, pref0 && pref0 == WidgetSettings.PREF_DEF_APPEARANCE_SCALEBASE);
+    }
+
+
+    @Test
     public void test_1x1ModePref()
     {
         WidgetSettings.saveSun1x1ModePref(context, appWidgetId, WidgetSettings.WidgetModeSun1x1.WIDGETMODE1x1_SUNRISE);

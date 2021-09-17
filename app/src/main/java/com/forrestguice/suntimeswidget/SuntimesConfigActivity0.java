@@ -140,6 +140,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected Spinner spinner_1x1mode, spinner_2x1mode, spinner_3x1mode, spinner_3x2mode, spinner_3x3mode;
     protected CheckBox checkbox_allowResize;
     protected CheckBox checkbox_scaleText;
+    protected CheckBox checkbox_scaleBase;
     protected CheckBox checkbox_showTitle;
     protected TextView label_titleText;
     protected EditText text_titleText;
@@ -744,6 +745,15 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
         //
+        // widget: scale base
+        //
+        checkbox_scaleBase = (CheckBox) findViewById(R.id.appwidget_appearance_scaleBase);
+        if (checkbox_scaleBase != null && Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+        {
+            disableOptionScaleBase();  // scalable text require api14+
+        }
+
+        //
         // widget: tracking mode
         //
         spinner_trackingMode = (Spinner) findViewById(R.id.appwidget_general_trackingMode);
@@ -1255,6 +1265,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         boolean scaleText = checkbox_scaleText.isChecked();
         WidgetSettings.saveScaleTextPref(context, appWidgetId, scaleText);
 
+        // save: scale base
+        boolean scaleBase = checkbox_scaleBase.isChecked();
+        WidgetSettings.saveScaleBasePref(context, appWidgetId, scaleBase);
+
         // save: show title
         boolean showTitle = checkbox_showTitle.isChecked();
         WidgetSettings.saveShowTitlePref(context, appWidgetId, showTitle);
@@ -1297,8 +1311,13 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             boolean scaleText = WidgetSettings.loadScaleTextPref(context, appWidgetId, getDefaultScaleText());
             checkbox_scaleText.setChecked(scaleText);
+
+            boolean scaleBase = WidgetSettings.loadScaleBasePref(context, appWidgetId, getDefaultScaleBase());
+            checkbox_scaleBase.setChecked(scaleBase);
+
         } else {
             disableOptionScaleText();
+            disableOptionScaleBase();
         }
 
         loadTitleSettings(context);
@@ -1663,8 +1682,21 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
+    protected void disableOptionScaleBase()
+    {
+        if (checkbox_scaleBase != null)
+        {
+            checkbox_scaleBase.setChecked(false);
+            checkbox_scaleBase.setEnabled(false);
+        }
+    }
+
     protected boolean getDefaultScaleText() {
         return WidgetSettings.PREF_DEF_APPEARANCE_SCALETEXT;
+    }
+
+    protected boolean getDefaultScaleBase() {
+        return WidgetSettings.PREF_DEF_APPEARANCE_SCALEBASE;
     }
 
     protected void hideLayoutSettings()

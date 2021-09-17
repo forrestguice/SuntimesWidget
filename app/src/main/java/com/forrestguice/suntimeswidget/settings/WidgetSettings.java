@@ -100,6 +100,9 @@ public class WidgetSettings
     public static final String PREF_KEY_APPEARANCE_SCALETEXT = "scaletext";
     public static final boolean PREF_DEF_APPEARANCE_SCALETEXT = false;
 
+    public static final String PREF_KEY_APPEARANCE_SCALEBASE = "scalebase";
+    public static final boolean PREF_DEF_APPEARANCE_SCALEBASE =  false;
+
     public static final String PREF_KEY_APPEARANCE_TIMEFORMATMODE = "timeformatmode";
     public static final TimeFormatMode PREF_DEF_APPEARANCE_TIMEFORMATMODE = TimeFormatMode.MODE_SYSTEM;
 
@@ -1386,6 +1389,32 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static void saveScaleBasePref(Context context, int appWidgetId, boolean scaleBase)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_APPEARANCE_SCALEBASE, scaleBase);
+        prefs.apply();
+    }
+    public static boolean loadScaleBasePref(Context context, int appWidgetId) {
+        return loadScaleBasePref(context, appWidgetId, PREF_DEF_APPEARANCE_SCALEBASE);
+    }
+    public static boolean loadScaleBasePref(Context context, int appWidgetId, boolean defValue)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        return prefs.getBoolean(prefs_prefix + PREF_KEY_APPEARANCE_SCALEBASE, defValue);
+    }
+    public static void deleteScaleBasePref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_SCALEBASE);
+        prefs.apply();
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
     public static void saveSun1x1ModePref(Context context, int appWidgetId, WidgetModeSun1x1 mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
@@ -2634,6 +2663,7 @@ public class WidgetSettings
         deleteMoon1x1ModePref(context, appWidgetId);
         deleteAllowResizePref(context, appWidgetId);
         deleteScaleTextPref(context, appWidgetId);
+        deleteScaleBasePref(context, appWidgetId);
 
         deleteThemePref(context, appWidgetId);
         deleteShowLabelsPref(context, appWidgetId);
