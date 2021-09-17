@@ -85,15 +85,15 @@ public class SuntimesWidget2 extends SuntimesWidget0
 
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SunPosLayout layout, Class widgetClass)
     {
-        RemoteViews views = layout.getViews(context);
+        SuntimesRiseSetDataset dataset = new SuntimesRiseSetDataset(context, appWidgetId);
+        layout.prepareForUpdate(context, appWidgetId, dataset, widgetMaxSizeDp(context, appWidgetManager, appWidgetId, new int[] {40, 40}));
 
+        RemoteViews views = layout.getViews(context);
         boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
         views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
 
-        SuntimesRiseSetDataset dataset = new SuntimesRiseSetDataset(context, appWidgetId);
-
         views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, widgetClass));
-        layout.prepareForUpdate(context, appWidgetId, dataset, widgetMaxSizeDp(context, appWidgetManager, appWidgetId, new int[] {40, 40}));
+
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, dataset);
         appWidgetManager.updateAppWidget(appWidgetId, views);
