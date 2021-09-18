@@ -967,6 +967,7 @@ public class SuntimesTheme
     {
         private final String name;
         private String displayString;
+        private int color0, color1;
         private final int version;
         private final boolean isDefault;
 
@@ -979,12 +980,15 @@ public class SuntimesTheme
             {
                 this.name = name;
                 this.displayString = themesPref.getString(themePrefix + THEME_DISPLAYSTRING, "");
+                this.color0 = themesPref.getInt(themePrefix + THEME_BACKGROUND_COLOR, Color.TRANSPARENT);
+                this.color1 = themesPref.getInt(themePrefix + THEME_TIMECOLOR, Color.TRANSPARENT);
                 this.version = themesPref.getInt(themePrefix + THEME_VERSION, -1);
                 this.isDefault = themesPref.getBoolean(themePrefix + THEME_ISDEFAULT, false);
 
             } else {
                 this.name = "";
                 this.displayString = "";
+                this.color0 = this.color1 = Color.TRANSPARENT;
                 this.version = -1;
                 this.isDefault = false;
             }
@@ -994,6 +998,7 @@ public class SuntimesTheme
         {
             this.name = name;
             this.displayString = displayString;
+            this.color0 = this.color1 = Color.TRANSPARENT;
             this.version = version;
             this.isDefault = false;
         }
@@ -1012,6 +1017,14 @@ public class SuntimesTheme
 
         public String name() {
             return name;
+        }
+
+        public int getColor0() {
+            return color0;
+        }
+
+        public int getColor1() {
+            return color1;
         }
 
         public String displayString()
