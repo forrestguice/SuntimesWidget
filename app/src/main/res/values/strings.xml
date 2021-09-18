@@ -322,7 +322,7 @@
     <string name="configLabel_appearance_theme">Theme:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Swap layouts to fill available space</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_appearance_scaleBase">Fill background (fit widget cell)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_scaleBase">Background fills entire cell</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_showLabels">Show Labels</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">Show Title</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Title:</string>              <!-- edittext label -->
@@ -442,7 +442,7 @@
     <string name="increment">@string/expandMore</string>  <!-- contentDescription for (+>) type buttons -->
     <string name="decrement">@string/expandLess</string>  <!-- contentDescription for (-<) type buttons -->
 
-    <string name="configLabel_action">Action Settings</string>                  <!-- group title -->
+    <string name="configLabel_action">Action</string>                  <!-- group title -->  <!-- TODO: shortened -->
     <string name="configLabel_action_onTap">On Tap:</string>                    <!-- spinner label -->
     <string name="configLabel_action_onClockTap">On Clock Tap</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">On Note Tap</string>           <!-- spinner label -->
