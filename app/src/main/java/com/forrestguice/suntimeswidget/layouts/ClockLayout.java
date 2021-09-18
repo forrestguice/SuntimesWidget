@@ -30,6 +30,8 @@ public abstract class ClockLayout extends SuntimesLayout
 {
     public static final int CLOCKFACE_MAX_SP = 72;
 
+    protected boolean scaleBase = WidgetSettings.PREF_DEF_APPEARANCE_SCALEBASE;
+
     public ClockLayout()
     {
         initLayoutID();
@@ -39,9 +41,8 @@ public abstract class ClockLayout extends SuntimesLayout
      * Called by widget before themeViews and updateViews to give the layout obj an opportunity to
      * modify its state based on the supplied data.
      */
-    public void prepareForUpdate(SuntimesClockData data)
-    {
-        // EMPTY
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesClockData data) {
+        this.scaleBase = WidgetSettings.loadScaleBasePref(context, appWidgetId);
     }
 
     /**

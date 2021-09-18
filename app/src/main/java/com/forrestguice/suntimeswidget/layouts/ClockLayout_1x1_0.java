@@ -57,6 +57,13 @@ public class ClockLayout_1x1_0 extends ClockLayout
     }
 
     @Override
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesClockData data)
+    {
+        super.prepareForUpdate(context, appWidgetId, data);
+        this.layoutID = (scaleBase ? R.layout.layout_widget_clock_1x1_0_align_fill : R.layout.layout_widget_clock_1x1_0);
+    }
+
+    @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)
     {
         super.updateViews(context, appWidgetId, views, data);
@@ -157,9 +164,4 @@ public class ClockLayout_1x1_0 extends ClockLayout
         }
     }
 
-    @Override
-    public void prepareForUpdate(SuntimesClockData data)
-    {
-        /* EMPTY */
-    }
 }
