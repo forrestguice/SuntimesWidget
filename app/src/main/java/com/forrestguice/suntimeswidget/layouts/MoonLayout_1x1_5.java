@@ -59,6 +59,14 @@ public class MoonLayout_1x1_5 extends MoonLayout
     {
         this.layoutID = R.layout.layout_widget_moon_1x1_5;
     }
+    
+    @Override
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
+    {
+        super.prepareForUpdate(context, appWidgetId, data);
+        this.layoutID = (scaleBase ? R.layout.layout_widget_moon_1x1_5_align_fill : R.layout.layout_widget_moon_1x1_5);
+    }
+
 
     @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesMoonData data)
@@ -126,13 +134,6 @@ public class MoonLayout_1x1_5 extends MoonLayout
             views.setTextViewTextSize(R.id.info_moon_azimuth_current, TypedValue.COMPLEX_UNIT_DIP, timeSizeSp);
             views.setTextViewTextSize(R.id.info_moon_elevation_current, TypedValue.COMPLEX_UNIT_DIP, timeSizeSp);
         }
-    }
-
-    @SuppressWarnings("EmptyMethod")
-    @Override
-    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
-    {
-        // EMPTY
     }
 
     protected void updateViewsAzimuthElevationText(Context context, RemoteViews views, @Nullable SuntimesCalculator.MoonPosition moonPosition)

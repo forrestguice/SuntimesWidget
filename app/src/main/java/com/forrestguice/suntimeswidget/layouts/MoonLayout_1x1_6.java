@@ -59,6 +59,13 @@ public class MoonLayout_1x1_6 extends MoonLayout
     }
 
     @Override
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
+    {
+        super.prepareForUpdate(context, appWidgetId, data);
+        this.layoutID = (scaleBase ? R.layout.layout_widget_moon_1x1_6_align_fill : R.layout.layout_widget_moon_1x1_6);
+    }
+
+    @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesMoonData data)
     {
         super.updateViews(context, appWidgetId, views, data);
@@ -126,13 +133,6 @@ public class MoonLayout_1x1_6 extends MoonLayout
             views.setTextViewTextSize(R.id.info_moon_rightascension_current, TypedValue.COMPLEX_UNIT_DIP, timeSizeSp);
             views.setTextViewTextSize(R.id.info_moon_declination_current, TypedValue.COMPLEX_UNIT_DIP, timeSizeSp);
         }
-    }
-
-    @SuppressWarnings("EmptyMethod")
-    @Override
-    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
-    {
-        // EMPTY
     }
 
     public static SpannableString styleRightAscText(SuntimesCalculator.MoonPosition moonPosition, boolean boldTime, int highlightColor, int suffixColor)

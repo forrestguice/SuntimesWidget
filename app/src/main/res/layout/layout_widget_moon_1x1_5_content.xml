@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -17,9 +17,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/widgetframe_inner" style="@style/SunsetTimeWidget"
-    android:orientation="vertical" android:layout_width="match_parent">
+<merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
     <TextView android:id="@+id/text_title" style="@style/SunsetTimeTextTitleView"
         android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -36,15 +34,14 @@
             android:orientation="vertical">
 
             <TextView style="@style/SunsetTimeTextView" android:visibility="visible"
-                android:id="@+id/info_moon_declination_current_label"
-                android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
-                android:layout_marginTop="0dp" android:layout_marginBottom="0dp"
+                android:id="@+id/info_moon_elevation_current_label"
+                android:text="@string/widgetLabel_altitude" android:labelFor="@+id/info_moon_elevation_current"
                 android:maxLines="1" android:singleLine="true" android:ellipsize="end"
-                android:text="@string/widgetLabel_declination" android:labelFor="@+id/info_moon_declination_current"
-                android:gravity="start" />
+                android:gravity="start" android:layout_marginTop="0dp" android:layout_marginBottom="0dp"
+                android:layout_marginRight="8dp" android:layout_marginEnd="8dp" />
 
             <TextView style="@style/SunsetTimeTextView"
-                android:id="@+id/info_moon_declination_current"
+                android:id="@+id/info_moon_elevation_current"
                 android:layout_marginLeft="2dp" android:layout_marginStart="2dp"
                 android:layout_marginRight="2dp" android:layout_marginEnd="2dp"
                 android:layout_marginTop="0dp"
@@ -56,15 +53,14 @@
             android:orientation="vertical">
 
             <TextView style="@style/SunsetTimeTextView" android:visibility="visible"
-                android:id="@+id/info_moon_rightascension_current_label"
-                android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
-                android:layout_marginBottom="0dp"
+                android:id="@+id/info_moon_azimuth_current_label"
+                android:text="@string/widgetLabel_azimuth" android:labelFor="@+id/info_moon_azimuth_current"
                 android:maxLines="1" android:singleLine="true" android:ellipsize="end"
-                android:text="@string/widgetLabel_rightAscension" android:labelFor="@+id/info_moon_rightascension_current"
-                android:gravity="start" />
+                android:gravity="start" android:layout_marginBottom="0dp"
+                android:layout_marginRight="8dp" android:layout_marginEnd="8dp" />
 
             <TextView style="@style/SunsetTimeTextView"
-                android:id="@+id/info_moon_rightascension_current"
+                android:id="@+id/info_moon_azimuth_current"
                 android:layout_marginLeft="2dp" android:layout_marginStart="2dp"
                 android:layout_marginRight="2dp" android:layout_marginEnd="2dp"
                 android:layout_marginTop="0dp"
@@ -73,4 +69,5 @@
         </LinearLayout>
 
     </LinearLayout>
-</LinearLayout>
+
+</merge>
