@@ -55,6 +55,14 @@ public class MoonLayout_1x1_8 extends MoonLayout
     }
 
     @Override
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
+    {
+        super.prepareForUpdate(context, appWidgetId, data);
+        this.layoutID = (scaleBase ? R.layout.layout_widget_moon_1x1_8_align_fill : R.layout.layout_widget_moon_1x1_8);
+    }
+
+
+    @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesMoonData data)
     {
         super.updateViews(context, appWidgetId, views, data);
@@ -224,13 +232,6 @@ public class MoonLayout_1x1_8 extends MoonLayout
             views.setTextViewTextSize(R.id.moonapsis_apogee_date, TypedValue.COMPLEX_UNIT_DIP, timeSize);
             views.setTextViewTextSize(R.id.moonapsis_perigee_date, TypedValue.COMPLEX_UNIT_DIP, timeSize);
         }
-    }
-
-    @SuppressWarnings("EmptyMethod")
-    @Override
-    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
-    {
-        // EMPTY
     }
 
     @Override

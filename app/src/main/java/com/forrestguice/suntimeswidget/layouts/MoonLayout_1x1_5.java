@@ -59,7 +59,7 @@ public class MoonLayout_1x1_5 extends MoonLayout
     {
         this.layoutID = R.layout.layout_widget_moon_1x1_5;
     }
-    
+
     @Override
     public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
     {
