@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014-2019 Forrest Guice
+    Copyright (C) 2014-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -99,6 +99,14 @@
                     <include layout="@layout/layout_settings_appearance" />
                 </LinearLayout>
 
+                <LinearLayout android:id="@+id/appwidget_general_layout"
+                    style="@style/SunsetTimeWidget_dark"
+                    android:layout_marginBottom="@dimen/settingsGroup_margin"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:background="?attr/settingsCardBackground">
+                    <include layout="@layout/layout_settings_general" />
+                </LinearLayout>
+
                 <LinearLayout android:id="@+id/appwidget_timezone_layout"
                     style="@style/SunsetTimeWidget_dark"
                     android:layout_marginBottom="@dimen/settingsGroup_margin"
@@ -118,14 +126,6 @@
                         android:layout_width="match_parent" android:layout_height="wrap_content" />
                     <!-- <include layout="@layout/layout_settings_location" /> -->
 
-                </LinearLayout>
-
-                <LinearLayout android:id="@+id/appwidget_general_layout"
-                    style="@style/SunsetTimeWidget_dark"
-                    android:layout_marginBottom="@dimen/settingsGroup_margin"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:background="?attr/settingsCardBackground">
-                    <include layout="@layout/layout_settings_general" />
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/appwidget_action_layout"
