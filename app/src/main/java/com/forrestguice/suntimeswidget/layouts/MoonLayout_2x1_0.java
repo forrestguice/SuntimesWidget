@@ -58,6 +58,17 @@ public class MoonLayout_2x1_0 extends MoonLayout
         this.layoutID = R.layout.layout_widget_moon_2x1_0;
     }
 
+    @Override
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
+    {
+        super.prepareForUpdate(context, appWidgetId, data);
+        order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
+        this.layoutID = (scaleBase
+                ? chooseMoonLayout(R.layout.layout_widget_moon_2x1_0_align_fill, R.layout.layout_widget_moon_2x1_01_align_fill, data, order)
+                : chooseMoonLayout(R.layout.layout_widget_moon_2x1_0, R.layout.layout_widget_moon_2x1_01, data, order));
+
+    }
+
     private WidgetSettings.RiseSetOrder order = WidgetSettings.RiseSetOrder.TODAY;
 
     @Override
@@ -159,15 +170,5 @@ public class MoonLayout_2x1_0 extends MoonLayout
         themeViewsMoonRiseSetIcons(context, views, theme);
     }
 
-    @Override
-    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
-    {
-        super.prepareForUpdate(context, appWidgetId, data);
-        order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
-        this.layoutID = (scaleBase
-                ? chooseMoonLayout(R.layout.layout_widget_moon_2x1_0_align_fill, R.layout.layout_widget_moon_2x1_01_align_fill, data, order)
-                : chooseMoonLayout(R.layout.layout_widget_moon_2x1_0, R.layout.layout_widget_moon_2x1_01, data, order));
-
-    }
 }
 
