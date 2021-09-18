@@ -21,8 +21,10 @@ package com.forrestguice.suntimeswidget.settings;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -612,6 +614,15 @@ public class WidgetThemes
             }
             TextView textView = (TextView) view.findViewById(android.R.id.text1);
             textView.setText(themes[position].displayString());
+
+            ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
+            if (icon != null)
+            {
+                GradientDrawable d = (GradientDrawable) icon.getBackground().mutate();
+                d.setColor(themes[position].getColor0());
+                d.invalidateSelf();
+            }
+
             return view;
         }
     }

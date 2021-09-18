@@ -845,7 +845,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected void initThemeAdapter(final Context context)
     {
-        spinner_themeAdapter = new WidgetThemes.ThemeListAdapter(this, R.layout.layout_listitem_oneline, android.R.layout.simple_spinner_dropdown_item, WidgetThemes.sortedValues(false));
+        spinner_themeAdapter = new WidgetThemes.ThemeListAdapter(this, R.layout.layout_listitem_oneline, R.layout.layout_listitem_themes, WidgetThemes.sortedValues(false));
         spinner_theme.setAdapter(spinner_themeAdapter);
     }
 
