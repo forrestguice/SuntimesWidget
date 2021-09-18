@@ -67,7 +67,6 @@ public class MoonLayout_1x1_5 extends MoonLayout
         this.layoutID = (scaleBase ? R.layout.layout_widget_moon_1x1_5_align_fill : R.layout.layout_widget_moon_1x1_5);
     }
 
-
     @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesMoonData data)
     {
