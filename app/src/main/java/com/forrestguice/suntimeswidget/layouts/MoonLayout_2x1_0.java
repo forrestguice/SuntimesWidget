@@ -65,13 +65,13 @@ public class MoonLayout_2x1_0 extends MoonLayout
         order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
 
         int position = scaleBase ? 0 : WidgetSettings.loadWidgetGravityPref(context, appWidgetId);
-        this.layoutID = chooseLayout(context, position, data);
+        this.layoutID = chooseLayout(position, data);
         //this.layoutID = (scaleBase
         //        ? chooseMoonLayout(R.layout.layout_widget_moon_2x1_0_align_fill, R.layout.layout_widget_moon_2x1_01_align_fill, data, order)
         //        : chooseMoonLayout(R.layout.layout_widget_moon_2x1_0, R.layout.layout_widget_moon_2x1_01, data, order));
     }
 
-    protected int chooseLayout(Context context, int position, SuntimesMoonData data)
+    protected int chooseLayout(int position, SuntimesMoonData data)
     {
         switch (position) {
             case 0: return chooseMoonLayout(R.layout.layout_widget_moon_2x1_0_align_fill, R.layout.layout_widget_moon_2x1_01_align_fill, data, order);
