@@ -63,8 +63,28 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
     public void prepareForUpdate(Context context, int appWidgetId, SuntimesEquinoxSolsticeData data)
     {
         super.prepareForUpdate(context, appWidgetId, data);
-        this.layoutID = (scaleBase ? R.layout.layout_widget_solstice_1x1_0_align_fill : R.layout.layout_widget_solstice_1x1_0);
+        int position = 3;   // TODO: from pref
+        this.layoutID = chooseLayout(scaleBase, position); //(scaleBase ? R.layout.layout_widget_solstice_1x1_0_align_fill : R.layout.layout_widget_solstice_1x1_0);
         timeMode = data.timeMode();
+    }
+
+    protected int chooseLayout(boolean fill, int position)
+    {
+        if (fill) {
+            return R.layout.layout_widget_solstice_1x1_0_align_fill;
+        } else {
+            switch (position) {
+                case 1: return R.layout.layout_widget_solstice_1x1_0_align_float_1;
+                case 2: return R.layout.layout_widget_solstice_1x1_0_align_float_2;
+                case 3: return R.layout.layout_widget_solstice_1x1_0_align_float_3;
+                case 4: return R.layout.layout_widget_solstice_1x1_0_align_float_4;
+                case 6: return R.layout.layout_widget_solstice_1x1_0_align_float_6;
+                case 7: return R.layout.layout_widget_solstice_1x1_0_align_float_7;
+                case 8: return R.layout.layout_widget_solstice_1x1_0_align_float_8;
+                case 9: return R.layout.layout_widget_solstice_1x1_0_align_float_9;
+                case 5: case 0: default: return R.layout.layout_widget_solstice_1x1_0;
+            }
+        }
     }
 
     @Override

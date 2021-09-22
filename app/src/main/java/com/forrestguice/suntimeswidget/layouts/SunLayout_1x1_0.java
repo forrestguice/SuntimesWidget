@@ -89,12 +89,15 @@ public class SunLayout_1x1_0 extends SunLayout
             return chooseSunLayout(R.layout.layout_widget_1x1_0_align_fill, R.layout.layout_widget_1x1_01_align_fill, data, order);
         } else {
             switch (position) {
+                case 1: return chooseSunLayout(R.layout.layout_widget_1x1_0_align_float_1, R.layout.layout_widget_1x1_01_align_float_1, data, order);
                 case 2: return chooseSunLayout(R.layout.layout_widget_1x1_0_align_float_2, R.layout.layout_widget_1x1_01_align_float_2, data, order);
+                case 3: return chooseSunLayout(R.layout.layout_widget_1x1_0_align_float_3, R.layout.layout_widget_1x1_01_align_float_3, data, order);
                 case 4: return chooseSunLayout(R.layout.layout_widget_1x1_0_align_float_4, R.layout.layout_widget_1x1_01_align_float_4, data, order);
                 case 6: return chooseSunLayout(R.layout.layout_widget_1x1_0_align_float_6, R.layout.layout_widget_1x1_01_align_float_6, data, order);
+                case 7: return chooseSunLayout(R.layout.layout_widget_1x1_0_align_float_7, R.layout.layout_widget_1x1_01_align_float_7, data, order);
                 case 8: return chooseSunLayout(R.layout.layout_widget_1x1_0_align_float_8, R.layout.layout_widget_1x1_01_align_float_8, data, order);
                 case 9: return chooseSunLayout(R.layout.layout_widget_1x1_0_align_float_9, R.layout.layout_widget_1x1_01_align_float_9, data, order);
-                case 5: default: return chooseSunLayout(R.layout.layout_widget_1x1_0, R.layout.layout_widget_1x1_01, data, order);
+                case 5: case 0: default: return chooseSunLayout(R.layout.layout_widget_1x1_0, R.layout.layout_widget_1x1_01, data, order);
             }
         }
     }
