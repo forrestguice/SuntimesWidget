@@ -316,6 +316,18 @@
     <!-- Widget Setting: appearance -->
     <string name="configLabel_widgetlayout">Layout</string>           <!-- group title -->  <!-- TODO -->
 
+    <string-array name="widgetgravity">
+        <item>Top Left</item>
+        <item>Top</item>
+        <item>Top Right</item>
+        <item>Left</item>
+        <item>Center</item>
+        <item>Right</item>
+        <item>Bottom Left</item>
+        <item>Bottom</item>
+        <item>Bottom Right</item>
+    </string-array>
+
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Appearance</string>           <!-- group title -->  <!-- TODO -->
     <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->

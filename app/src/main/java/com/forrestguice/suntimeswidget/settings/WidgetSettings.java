@@ -103,6 +103,9 @@ public class WidgetSettings
     public static final String PREF_KEY_APPEARANCE_SCALEBASE = "scalebase";
     public static final boolean PREF_DEF_APPEARANCE_SCALEBASE =  false;
 
+    public static final String PREF_KEY_APPEARANCE_GRAVITY = "gravity";
+    public static final int PREF_DEF_APPEARANCE_GRAVITY = WidgetGravity.CENTER.getPosition();
+
     public static final String PREF_KEY_APPEARANCE_TIMEFORMATMODE = "timeformatmode";
     public static final TimeFormatMode PREF_DEF_APPEARANCE_TIMEFORMATMODE = TimeFormatMode.MODE_SYSTEM;
 
@@ -694,6 +697,56 @@ public class WidgetSettings
                 }
             }
             return false;
+        }
+    }
+
+    /**
+     * WidgetGravity
+     */
+    public static enum WidgetGravity
+    {
+        TOP_LEFT("top-left", 1),
+        TOP("top", 2),
+        TOP_RIGHT("top-right", 3),
+        LEFT("left", 4),
+        CENTER("center", 5),
+        RIGHT("right", 6),
+        BOTTOM_LEFT("bottom-left", 7),
+        BOTTOM("bottom", 8),
+        BOTTOM_RIGHT("bottom-right", 9);
+
+        private String displayString;
+        private int position;
+
+        private WidgetGravity(String displayString, int position)
+        {
+            this.displayString = displayString;
+            this.position = position;
+        }
+
+        public int getPosition() {
+            return position;
+        }
+
+        public String toString() {
+            return displayString;
+        }
+        public String getDisplayString() {
+            return displayString;
+        }
+        public void setDisplayString( String displayString ) {
+            this.displayString = displayString;
+        }
+
+        public static void initDisplayStrings( Context context )
+        {
+            WidgetGravity[] values = WidgetGravity.values();
+            String[] display = context.getResources().getStringArray(R.array.widgetgravity);
+            for (int i=0; i<values.length; i++) {
+                if (i < display.length) {
+                    values[i].setDisplayString(display[i]);
+                } else break;
+            }
         }
     }
 
@@ -1412,6 +1465,32 @@ public class WidgetSettings
         prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_SCALEBASE);
         prefs.apply();
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void saveWidgetGravityPref(Context context, int appWidgetId, int gravity)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.putInt(prefs_prefix + PREF_KEY_APPEARANCE_GRAVITY, gravity);
+        prefs.apply();
+    }
+
+    public static int loadWidgetGravityPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        return prefs.getInt(prefs_prefix + PREF_KEY_APPEARANCE_GRAVITY, PREF_DEF_APPEARANCE_GRAVITY);
+    }
+    public static void deleteWidgetGravityPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_GRAVITY);
+        prefs.apply();
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -2664,6 +2743,7 @@ public class WidgetSettings
         deleteAllowResizePref(context, appWidgetId);
         deleteScaleTextPref(context, appWidgetId);
         deleteScaleBasePref(context, appWidgetId);
+        deleteWidgetGravityPref(context, appWidgetId);
 
         deleteThemePref(context, appWidgetId);
         deleteShowLabelsPref(context, appWidgetId);

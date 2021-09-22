@@ -637,6 +637,24 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         assertFalse("mode should be default (false) but was " + pref0, pref0 && pref0 == WidgetSettings.PREF_DEF_APPEARANCE_SCALEBASE);
     }
 
+    @Test
+    public void test_widgetGravityPref()
+    {
+        WidgetSettings.saveWidgetGravityPref(context, appWidgetId, WidgetSettings.WidgetGravity.TOP.getPosition());
+        int pref2 = WidgetSettings.loadWidgetGravityPref(context, appWidgetId);
+        assertEquals(WidgetSettings.WidgetGravity.TOP.getPosition(), pref2);
+
+        WidgetSettings.WidgetGravity[] values = WidgetSettings.WidgetGravity.values();
+        for (int i=0; i<values.length; i++)
+        {
+            WidgetSettings.saveWidgetGravityPref(context, appWidgetId, values[i].getPosition());
+            assertEquals(values[i].getPosition(), WidgetSettings.loadWidgetGravityPref(context, appWidgetId));
+        }
+
+        WidgetSettings.deleteWidgetGravityPref(context, appWidgetId);
+        int pref0 = WidgetSettings.loadWidgetGravityPref(context, appWidgetId);
+        assertEquals(WidgetSettings.PREF_DEF_APPEARANCE_GRAVITY, pref0);
+    }
 
     @Test
     public void test_1x1ModePref()
