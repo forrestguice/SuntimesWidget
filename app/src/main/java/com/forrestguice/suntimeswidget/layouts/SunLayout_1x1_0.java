@@ -75,9 +75,28 @@ public class SunLayout_1x1_0 extends SunLayout
     {
         super.prepareForUpdate(context, appWidgetID, data);
         order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetID);
-        this.layoutID = (scaleBase
-                ? chooseSunLayout(R.layout.layout_widget_1x1_0_align_fill, R.layout.layout_widget_1x1_01_align_fill, data, order)
-                : chooseSunLayout(R.layout.layout_widget_1x1_0, R.layout.layout_widget_1x1_01, data, order));
+
+        int position = 9;  // TODO: from prefs
+        this.layoutID = chooseSunLayout(scaleBase, position, data);
+        //this.layoutID = (scaleBase
+        //        ? chooseSunLayout(R.layout.layout_widget_1x1_0_align_fill, R.layout.layout_widget_1x1_01_align_fill, data, order)
+        //        : chooseSunLayout(R.layout.layout_widget_1x1_0, R.layout.layout_widget_1x1_01, data, order));
+    }
+
+    protected int chooseSunLayout(boolean fill, int position, SuntimesRiseSetData data)
+    {
+        if (fill) {
+            return chooseSunLayout(R.layout.layout_widget_1x1_0_align_fill, R.layout.layout_widget_1x1_01_align_fill, data, order);
+        } else {
+            switch (position) {
+                case 2: return chooseSunLayout(R.layout.layout_widget_1x1_0_align_float_2, R.layout.layout_widget_1x1_01_align_float_2, data, order);
+                case 4: return chooseSunLayout(R.layout.layout_widget_1x1_0_align_float_4, R.layout.layout_widget_1x1_01_align_float_4, data, order);
+                case 6: return chooseSunLayout(R.layout.layout_widget_1x1_0_align_float_6, R.layout.layout_widget_1x1_01_align_float_6, data, order);
+                case 8: return chooseSunLayout(R.layout.layout_widget_1x1_0_align_float_8, R.layout.layout_widget_1x1_01_align_float_8, data, order);
+                case 9: return chooseSunLayout(R.layout.layout_widget_1x1_0_align_float_9, R.layout.layout_widget_1x1_01_align_float_9, data, order);
+                case 5: default: return chooseSunLayout(R.layout.layout_widget_1x1_0, R.layout.layout_widget_1x1_01, data, order);
+            }
+        }
     }
 
     @Override
