@@ -306,6 +306,38 @@
         <item name="android:background">@null</item>
     </style>
 
+    <style name="SunsetTimeWidget_float" parent="SunsetTimeWidget">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="SunsetTimeWidget_float_1" parent="SunsetTimeWidget_float">
+        <item name="android:layout_gravity">top|left|start</item>
+    </style>
+    <style name="SunsetTimeWidget_float_2" parent="SunsetTimeWidget_float">
+        <item name="android:layout_gravity">top|center_horizontal</item>
+    </style>
+    <style name="SunsetTimeWidget_float_3" parent="SunsetTimeWidget_float">
+        <item name="android:layout_gravity">top|right|end</item>
+    </style>
+    <style name="SunsetTimeWidget_float_4" parent="SunsetTimeWidget_float">
+        <item name="android:layout_gravity">center_vertical|left|start</item>
+    </style>
+    <style name="SunsetTimeWidget_float_5" parent="SunsetTimeWidget_float">
+        <item name="android:layout_gravity">center</item>
+    </style>
+    <style name="SunsetTimeWidget_float_6" parent="SunsetTimeWidget_float">
+        <item name="android:layout_gravity">center_vertical|right|end</item>
+    </style>
+    <style name="SunsetTimeWidget_float_7" parent="SunsetTimeWidget_float">
+        <item name="android:layout_gravity">bottom|left|start</item>
+    </style>
+    <style name="SunsetTimeWidget_float_8" parent="SunsetTimeWidget_float">
+        <item name="android:layout_gravity">bottom|center_horizontal</item>
+    </style>
+    <style name="SunsetTimeWidget_float_9" parent="SunsetTimeWidget_float">
+        <item name="android:layout_gravity">bottom|right|end</item>
+    </style>
+
     <!-- A layout for widget content within the inner frame -->
     <style name="SunsetTimeLayout">
         <item name="android:layout_width">wrap_content</item>
