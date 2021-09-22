@@ -57,6 +57,77 @@ public class MoonLayout_3x1_0 extends MoonLayout
     }
 
     @Override
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
+    {
+        super.prepareForUpdate(context, appWidgetId, data);
+
+        Calendar midnight = data.midnight();
+        SuntimesCalculator.MoonPhase nextPhase = data.nextPhase(midnight);
+
+        int position = scaleBase ? 0 : WidgetSettings.loadWidgetGravityPref(context, appWidgetId);
+        this.layoutID = chooseLayout(nextPhase, position);
+        /*switch (nextPhase)
+        {
+            case THIRD_QUARTER:
+                this.layoutID = R.layout.layout_widget_moon_3x1_03;
+                break;
+
+            case FULL:
+                this.layoutID = R.layout.layout_widget_moon_3x1_02;
+                break;
+
+            case FIRST_QUARTER:
+                this.layoutID = R.layout.layout_widget_moon_3x1_01;
+                break;
+
+            case NEW:
+            default:
+                this.layoutID = R.layout.layout_widget_moon_3x1_0;
+                break;
+        }*/
+    }
+
+    protected int chooseLayout(SuntimesCalculator.MoonPhase nextPhase, int position)
+    {
+        switch (nextPhase)
+        {
+            case THIRD_QUARTER:
+                switch (position)
+                {
+                    case 0: return R.layout.layout_widget_moon_3x1_03_align_fill;
+                    case 1: case 2: case 3: return R.layout.layout_widget_moon_3x1_03_align_float_2;
+                    case 7: case 8: case 9: return R.layout.layout_widget_moon_3x1_03_align_float_8;
+                    case 5: default: return R.layout.layout_widget_moon_3x1_03;
+                }
+
+            case FULL:
+                switch (position) {
+                    case 0: return R.layout.layout_widget_moon_3x1_02_align_fill;
+                    case 1: case 2: case 3: return R.layout.layout_widget_moon_3x1_02_align_float_2;
+                    case 7: case 8: case 9: return R.layout.layout_widget_moon_3x1_02_align_float_8;
+                    case 5: default: return R.layout.layout_widget_moon_3x1_02;
+                }
+
+            case FIRST_QUARTER:
+                switch (position) {
+                    case 0: return R.layout.layout_widget_moon_3x1_01_align_fill;
+                    case 1: case 2: case 3: return R.layout.layout_widget_moon_3x1_01_align_float_2;
+                    case 7: case 8: case 9: return R.layout.layout_widget_moon_3x1_01_align_float_8;
+                    case 5: default: return R.layout.layout_widget_moon_3x1_01;
+                }
+
+            case NEW:
+            default:
+                switch (position) {
+                    case 0: return R.layout.layout_widget_moon_3x1_0_align_fill;
+                    case 1: case 2: case 3: return R.layout.layout_widget_moon_3x1_0_align_float_2;
+                    case 7: case 8: case 9: return R.layout.layout_widget_moon_3x1_0_align_float_8;
+                    case 5: default: return R.layout.layout_widget_moon_3x1_0;
+                }
+        }
+    }
+
+    @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesMoonData data)
     {
         super.updateViews(context, appWidgetId, views, data);
@@ -134,30 +205,5 @@ public class MoonLayout_3x1_0 extends MoonLayout
         views.setImageViewBitmap(R.id.moonphase_thirdquarter_icon, waningQuarter);
     }
 
-    @Override
-    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
-    {
-        Calendar midnight = data.midnight();
-        SuntimesCalculator.MoonPhase nextPhase = data.nextPhase(midnight);
-        switch (nextPhase)
-        {
-            case THIRD_QUARTER:
-                this.layoutID = R.layout.layout_widget_moon_3x1_03;
-                break;
-                
-            case FULL:
-                this.layoutID = R.layout.layout_widget_moon_3x1_02;
-                break;
-
-            case FIRST_QUARTER:
-                this.layoutID = R.layout.layout_widget_moon_3x1_01;
-                break;
-
-            case NEW:
-            default:
-                this.layoutID = R.layout.layout_widget_moon_3x1_0;
-                break;
-        }
-    }
 }
 
