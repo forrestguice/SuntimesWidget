@@ -61,11 +61,25 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
     public void prepareForUpdate(Context context, int appWidgetId, SuntimesRiseSetDataset dataset, int[] widgetSize)
     {
         super.prepareForUpdate(context, appWidgetId, dataset, widgetSize);
-        this.layoutID = (scaleBase ? R.layout.layout_widget_sunpos_3x1_0_align_fill : R.layout.layout_widget_sunpos_3x1_0);
+        int position = 8; // TODO: from prefs
+        this.layoutID = chooseLayout(scaleBase, position); //(scaleBase ? R.layout.layout_widget_sunpos_3x1_0_align_fill : R.layout.layout_widget_sunpos_3x1_0);
         if (Build.VERSION.SDK_INT >= 16)
         {
             this.dpWidth = widgetSize[0];
             //this.dpHeight = widgetSize[1];
+        }
+    }
+
+    protected int chooseLayout(boolean fill, int position)
+    {
+        if (fill) {
+            return R.layout.layout_widget_sunpos_3x1_0_align_fill;
+        } else {
+            switch (position) {
+                case 1: case 2: case 3: return R.layout.layout_widget_sunpos_3x1_0_align_float_2;    // top
+                case 7: case 8: case 9: return R.layout.layout_widget_sunpos_3x1_0_align_float_8;    // bottom
+                case 4: case 6: case 5: case 0: default: return R.layout.layout_widget_sunpos_3x1_0; // center
+            }
         }
     }
 
