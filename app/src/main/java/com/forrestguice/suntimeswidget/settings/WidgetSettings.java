@@ -706,6 +706,7 @@ public class WidgetSettings
      */
     public static enum WidgetGravity
     {
+        FILL("fill", 0),
         TOP_LEFT("top-left", 1),
         TOP("top", 2),
         TOP_RIGHT("top-right", 3),

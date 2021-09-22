@@ -60,20 +60,17 @@ public class ClockLayout_1x1_0 extends ClockLayout
     public void prepareForUpdate(Context context, int appWidgetId, SuntimesClockData data)
     {
         super.prepareForUpdate(context, appWidgetId, data);
-        int position = WidgetSettings.loadWidgetGravityPref(context, appWidgetId);
-        this.layoutID = chooseLayout(scaleBase, position);  //(scaleBase ? R.layout.layout_widget_clock_1x1_0_align_fill : R.layout.layout_widget_clock_1x1_0);
+        int position = scaleBase ? 0 : WidgetSettings.loadWidgetGravityPref(context, appWidgetId);
+        this.layoutID = chooseLayout(position);  //(scaleBase ? R.layout.layout_widget_clock_1x1_0_align_fill : R.layout.layout_widget_clock_1x1_0);
     }
 
-    protected int chooseLayout(boolean fill, int position)
+    protected int chooseLayout(int position)
     {
-        if (fill) {
-            return R.layout.layout_widget_clock_1x1_0_align_fill;
-        } else {
-            switch (position) {
-                case 1: case 2: case 3: return R.layout.layout_widget_clock_1x1_0_align_float_2;         // top
-                case 7: case 8: case 9: return R.layout.layout_widget_clock_1x1_0_align_float_8;         // bottom
-                case 4: case 6: case 5: case 0: default: return R.layout.layout_widget_clock_1x1_0; // center
-            }
+        switch (position) {
+            case 0: return R.layout.layout_widget_clock_1x1_0_align_fill;                       // fill
+            case 1: case 2: case 3: return R.layout.layout_widget_clock_1x1_0_align_float_2;    // top
+            case 7: case 8: case 9: return R.layout.layout_widget_clock_1x1_0_align_float_8;    // bottom
+            case 4: case 6: case 5: default: return R.layout.layout_widget_clock_1x1_0;         // center
         }
     }
 
