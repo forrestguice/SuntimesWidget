@@ -63,7 +63,7 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
     public void prepareForUpdate(Context context, int appWidgetId, SuntimesEquinoxSolsticeData data)
     {
         super.prepareForUpdate(context, appWidgetId, data);
-        int position = 3;   // TODO: from pref
+        int position = WidgetSettings.loadWidgetGravityPref(context, appWidgetId);
         this.layoutID = chooseLayout(scaleBase, position); //(scaleBase ? R.layout.layout_widget_solstice_1x1_0_align_fill : R.layout.layout_widget_solstice_1x1_0);
         timeMode = data.timeMode();
     }

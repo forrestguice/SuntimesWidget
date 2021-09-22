@@ -76,14 +76,14 @@ public class SunLayout_1x1_0 extends SunLayout
         super.prepareForUpdate(context, appWidgetID, data);
         order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetID);
 
-        int position = 9;  // TODO: from prefs
-        this.layoutID = chooseSunLayout(scaleBase, position, data);
+        int position = WidgetSettings.loadWidgetGravityPref(context, appWidgetID);
+        this.layoutID = chooseLayout(scaleBase, position, data);
         //this.layoutID = (scaleBase
         //        ? chooseSunLayout(R.layout.layout_widget_1x1_0_align_fill, R.layout.layout_widget_1x1_01_align_fill, data, order)
         //        : chooseSunLayout(R.layout.layout_widget_1x1_0, R.layout.layout_widget_1x1_01, data, order));
     }
 
-    protected int chooseSunLayout(boolean fill, int position, SuntimesRiseSetData data)
+    protected int chooseLayout(boolean fill, int position, SuntimesRiseSetData data)
     {
         if (fill) {
             return chooseSunLayout(R.layout.layout_widget_1x1_0_align_fill, R.layout.layout_widget_1x1_01_align_fill, data, order);

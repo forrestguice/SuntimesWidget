@@ -60,7 +60,7 @@ public class ClockLayout_1x1_0 extends ClockLayout
     public void prepareForUpdate(Context context, int appWidgetId, SuntimesClockData data)
     {
         super.prepareForUpdate(context, appWidgetId, data);
-        int position = 2;  // TODO: from prefs
+        int position = WidgetSettings.loadWidgetGravityPref(context, appWidgetId);
         this.layoutID = chooseLayout(scaleBase, position);  //(scaleBase ? R.layout.layout_widget_clock_1x1_0_align_fill : R.layout.layout_widget_clock_1x1_0);
     }
 

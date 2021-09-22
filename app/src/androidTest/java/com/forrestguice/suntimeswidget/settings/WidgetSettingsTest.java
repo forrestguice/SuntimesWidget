@@ -653,7 +653,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
         WidgetSettings.deleteWidgetGravityPref(context, appWidgetId);
         int pref0 = WidgetSettings.loadWidgetGravityPref(context, appWidgetId);
-        assertEquals(WidgetSettings.PREF_DEF_APPEARANCE_GRAVITY, pref0);
+        assertEquals(WidgetSettings.PREF_DEF_APPEARANCE_GRAVITY.getPosition(), pref0);
     }
 
     @Test

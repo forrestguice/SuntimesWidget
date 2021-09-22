@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
@@ -104,7 +105,7 @@ public class WidgetSettings
     public static final boolean PREF_DEF_APPEARANCE_SCALEBASE =  false;
 
     public static final String PREF_KEY_APPEARANCE_GRAVITY = "gravity";
-    public static final int PREF_DEF_APPEARANCE_GRAVITY = WidgetGravity.CENTER.getPosition();
+    public static final WidgetGravity PREF_DEF_APPEARANCE_GRAVITY = WidgetGravity.CENTER;
 
     public static final String PREF_KEY_APPEARANCE_TIMEFORMATMODE = "timeformatmode";
     public static final TimeFormatMode PREF_DEF_APPEARANCE_TIMEFORMATMODE = TimeFormatMode.MODE_SYSTEM;
@@ -747,6 +748,18 @@ public class WidgetSettings
                     values[i].setDisplayString(display[i]);
                 } else break;
             }
+        }
+
+        @Nullable
+        public static WidgetGravity findPosition( int position )
+        {
+            WidgetGravity[] values = WidgetGravity.values();
+            for (int i=0; i<values.length; i++) {
+                if (values[i].getPosition() == position) {
+                     return values[i];
+                }
+            }
+            return null;
         }
     }
 
@@ -1481,7 +1494,7 @@ public class WidgetSettings
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
-        return prefs.getInt(prefs_prefix + PREF_KEY_APPEARANCE_GRAVITY, PREF_DEF_APPEARANCE_GRAVITY);
+        return prefs.getInt(prefs_prefix + PREF_KEY_APPEARANCE_GRAVITY, PREF_DEF_APPEARANCE_GRAVITY.getPosition());
     }
     public static void deleteWidgetGravityPref(Context context, int appWidgetId)
     {
@@ -2808,6 +2821,7 @@ public class WidgetSettings
         WidgetModeMoon1x1.initDisplayStrings(context);
         WidgetModeMoon2x1.initDisplayStrings(context);
         WidgetModeMoon3x1.initDisplayStrings(context);
+        WidgetGravity.initDisplayStrings(context);
         TrackingMode.initDisplayStrings(context);
         CompareMode.initDisplayStrings(context);
         TimeMode.initDisplayStrings(context);

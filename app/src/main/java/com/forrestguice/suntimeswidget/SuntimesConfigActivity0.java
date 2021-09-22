@@ -141,6 +141,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_allowResize;
     protected CheckBox checkbox_scaleText;
     protected CheckBox checkbox_scaleBase;
+    protected Spinner spinner_gravity;
+
     protected CheckBox checkbox_showTitle;
     protected TextView label_titleText;
     protected EditText text_titleText;
@@ -699,6 +701,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         initWidgetModeLayout(context);
 
         //
+        // widget: gravity/alignment
+        //
+        spinner_gravity = (Spinner) findViewById(R.id.appwidget_appearance_gravity);
+        if (spinner_gravity != null) {
+            initGravityAdapter(context);
+        }
+
+        //
         // widget: title text
         //
         label_titleText = (TextView) findViewById(R.id.appwidget_appearance_titleText_label);
@@ -847,6 +857,13 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         spinner_themeAdapter = new WidgetThemes.ThemeListAdapter(this, R.layout.layout_listitem_oneline, R.layout.layout_listitem_themes, WidgetThemes.sortedValues(false));
         spinner_theme.setAdapter(spinner_themeAdapter);
+    }
+
+    protected void initGravityAdapter(final Context context)
+    {
+        ArrayAdapter<WidgetSettings.WidgetGravity> adapter = new ArrayAdapter<WidgetSettings.WidgetGravity>(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetGravity.values());
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_gravity.setAdapter(adapter);
     }
 
     /**
@@ -1269,6 +1286,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         boolean scaleBase = checkbox_scaleBase.isChecked();
         WidgetSettings.saveScaleBasePref(context, appWidgetId, scaleBase);
 
+        // save: gravity
+        WidgetSettings.WidgetGravity gravity = (WidgetSettings.WidgetGravity)spinner_gravity.getSelectedItem();
+        WidgetSettings.saveWidgetGravityPref(context, appWidgetId, gravity.getPosition());
+
         // save: show title
         boolean showTitle = checkbox_showTitle.isChecked();
         WidgetSettings.saveShowTitlePref(context, appWidgetId, showTitle);
@@ -1319,6 +1340,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             disableOptionScaleText();
             disableOptionScaleBase();
         }
+
+        // load: gravity
+        WidgetSettings.WidgetGravity gravity = WidgetSettings.WidgetGravity.findPosition(WidgetSettings.loadWidgetGravityPref(context, appWidgetId));
+        spinner_gravity.setSelection(gravity != null ? gravity.ordinal() : WidgetSettings.PREF_DEF_APPEARANCE_GRAVITY.ordinal());
 
         loadTitleSettings(context);
         loadShowLabels(context);
