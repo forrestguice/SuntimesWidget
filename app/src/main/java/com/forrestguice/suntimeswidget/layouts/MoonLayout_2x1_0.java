@@ -63,10 +63,28 @@ public class MoonLayout_2x1_0 extends MoonLayout
     {
         super.prepareForUpdate(context, appWidgetId, data);
         order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
-        this.layoutID = (scaleBase
-                ? chooseMoonLayout(R.layout.layout_widget_moon_2x1_0_align_fill, R.layout.layout_widget_moon_2x1_01_align_fill, data, order)
-                : chooseMoonLayout(R.layout.layout_widget_moon_2x1_0, R.layout.layout_widget_moon_2x1_01, data, order));
 
+        int position = scaleBase ? 0 : WidgetSettings.loadWidgetGravityPref(context, appWidgetId);
+        this.layoutID = chooseLayout(context, position, data);
+        //this.layoutID = (scaleBase
+        //        ? chooseMoonLayout(R.layout.layout_widget_moon_2x1_0_align_fill, R.layout.layout_widget_moon_2x1_01_align_fill, data, order)
+        //        : chooseMoonLayout(R.layout.layout_widget_moon_2x1_0, R.layout.layout_widget_moon_2x1_01, data, order));
+    }
+
+    protected int chooseLayout(Context context, int position, SuntimesMoonData data)
+    {
+        switch (position) {
+            case 0: return chooseMoonLayout(R.layout.layout_widget_moon_2x1_0_align_fill, R.layout.layout_widget_moon_2x1_01_align_fill, data, order);
+            case 1: return chooseMoonLayout(R.layout.layout_widget_moon_2x1_0_align_float_1, R.layout.layout_widget_moon_2x1_01_align_float_1, data, order);
+            case 2: return chooseMoonLayout(R.layout.layout_widget_moon_2x1_0_align_float_2, R.layout.layout_widget_moon_2x1_01_align_float_2, data, order);
+            case 3: return chooseMoonLayout(R.layout.layout_widget_moon_2x1_0_align_float_3, R.layout.layout_widget_moon_2x1_01_align_float_3, data, order);
+            case 4: return chooseMoonLayout(R.layout.layout_widget_moon_2x1_0_align_float_4, R.layout.layout_widget_moon_2x1_01_align_float_4, data, order);
+            case 6: return chooseMoonLayout(R.layout.layout_widget_moon_2x1_0_align_float_6, R.layout.layout_widget_moon_2x1_01_align_float_6, data, order);
+            case 7: return chooseMoonLayout(R.layout.layout_widget_moon_2x1_0_align_float_7, R.layout.layout_widget_moon_2x1_01_align_float_7, data, order);
+            case 8: return chooseMoonLayout(R.layout.layout_widget_moon_2x1_0_align_float_8, R.layout.layout_widget_moon_2x1_01_align_float_8, data, order);
+            case 9: return chooseMoonLayout(R.layout.layout_widget_moon_2x1_0_align_float_9, R.layout.layout_widget_moon_2x1_01_align_float_9, data, order);
+            case 5: default: return chooseMoonLayout(R.layout.layout_widget_moon_2x1_0, R.layout.layout_widget_moon_2x1_01, data, order);
+        }
     }
 
     private WidgetSettings.RiseSetOrder order = WidgetSettings.RiseSetOrder.TODAY;
