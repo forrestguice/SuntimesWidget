@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2019 Forrest Guice
+   Copyright (C) 2019-2021 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -60,7 +60,21 @@ public class ClockLayout_1x1_0 extends ClockLayout
     public void prepareForUpdate(Context context, int appWidgetId, SuntimesClockData data)
     {
         super.prepareForUpdate(context, appWidgetId, data);
-        this.layoutID = (scaleBase ? R.layout.layout_widget_clock_1x1_0_align_fill : R.layout.layout_widget_clock_1x1_0);
+        int position = 2;  // TODO: from prefs
+        this.layoutID = chooseLayout(scaleBase, position);  //(scaleBase ? R.layout.layout_widget_clock_1x1_0_align_fill : R.layout.layout_widget_clock_1x1_0);
+    }
+
+    protected int chooseLayout(boolean fill, int position)
+    {
+        if (fill) {
+            return R.layout.layout_widget_clock_1x1_0_align_fill;
+        } else {
+            switch (position) {
+                case 1: case 2: case 3: return R.layout.layout_widget_clock_1x1_0_align_float_2;         // top
+                case 7: case 8: case 9: return R.layout.layout_widget_clock_1x1_0_align_float_8;         // bottom
+                case 4: case 6: case 5: case 0: default: return R.layout.layout_widget_clock_1x1_0; // center
+            }
+        }
     }
 
     @Override
