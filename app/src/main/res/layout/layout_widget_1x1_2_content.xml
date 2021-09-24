@@ -16,7 +16,23 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/widgetframe_inner" style="@style/SunsetTimeWidget">
-    <include layout="@layout/layout_widget_1x1_2_content" />
-</LinearLayout>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView style="@style/SunsetTimeTextTitleView"
+        android:id="@+id/text_title"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:gravity="start" android:visibility="gone"
+        tools:text="title" android:layout_marginBottom="-3dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_marginTop="3dp">
+
+        <include layout="@layout/info_time_sunset_1" />
+
+    </LinearLayout>
+
+</merge>
