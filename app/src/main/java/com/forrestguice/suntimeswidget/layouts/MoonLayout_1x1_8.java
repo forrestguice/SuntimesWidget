@@ -58,9 +58,25 @@ public class MoonLayout_1x1_8 extends MoonLayout
     public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
     {
         super.prepareForUpdate(context, appWidgetId, data);
-        this.layoutID = (scaleBase ? R.layout.layout_widget_moon_1x1_8_align_fill : R.layout.layout_widget_moon_1x1_8);
+        int position = scaleBase ? 0 : WidgetSettings.loadWidgetGravityPref(context, appWidgetId);
+        this.layoutID = chooseLayout(position);  // (scaleBase ? R.layout.layout_widget_moon_1x1_8_align_fill : R.layout.layout_widget_moon_1x1_8);
     }
 
+    protected int chooseLayout(int position)
+    {
+        switch (position) {
+            case 0: return R.layout.layout_widget_moon_1x1_8_align_fill;
+            case 1: return R.layout.layout_widget_moon_1x1_8_align_float_1;
+            case 2: return R.layout.layout_widget_moon_1x1_8_align_float_2;
+            case 3: return R.layout.layout_widget_moon_1x1_8_align_float_3;
+            case 4: return R.layout.layout_widget_moon_1x1_8_align_float_4;
+            case 6: return R.layout.layout_widget_moon_1x1_8_align_float_6;
+            case 7: return R.layout.layout_widget_moon_1x1_8_align_float_7;
+            case 8: return R.layout.layout_widget_moon_1x1_8_align_float_8;
+            case 9: return R.layout.layout_widget_moon_1x1_8_align_float_9;
+            case 5: default: return R.layout.layout_widget_moon_1x1_8;
+        }
+    }
 
     @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesMoonData data)
