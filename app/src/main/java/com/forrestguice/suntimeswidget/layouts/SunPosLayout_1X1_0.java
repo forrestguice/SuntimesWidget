@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2018 Forrest Guice
+   Copyright (C) 2018-2021 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -61,9 +61,26 @@ public class SunPosLayout_1X1_0 extends SunPosLayout
     public void prepareForUpdate(Context context, int appWidgetId, SuntimesRiseSetDataset dataset, int[] widgetSize)
     {
         super.prepareForUpdate(context, appWidgetId, dataset, widgetSize);
-        this.layoutID = (scaleBase ? R.layout.layout_widget_sunpos_1x1_5_align_fill : R.layout.layout_widget_sunpos_1x1_5);
+        int position = scaleBase ? 0 : WidgetSettings.loadWidgetGravityPref(context, appWidgetId);
+        this.layoutID = chooseLayout(position);  // (scaleBase ? R.layout.layout_widget_sunpos_1x1_5_align_fill : R.layout.layout_widget_sunpos_1x1_5);
         dataset.dataActual.calculate();
         dataset.dataNoon.calculate();
+    }
+
+    protected int chooseLayout(int position)
+    {
+        switch (position) {
+            case 0: return R.layout.layout_widget_sunpos_1x1_5_align_fill;
+            case 1: return R.layout.layout_widget_sunpos_1x1_5_align_float_1;
+            case 2: return R.layout.layout_widget_sunpos_1x1_5_align_float_2;
+            case 3: return R.layout.layout_widget_sunpos_1x1_5_align_float_3;
+            case 4: return R.layout.layout_widget_sunpos_1x1_5_align_float_4;
+            case 6: return R.layout.layout_widget_sunpos_1x1_5_align_float_6;
+            case 7: return R.layout.layout_widget_sunpos_1x1_5_align_float_7;
+            case 8: return R.layout.layout_widget_sunpos_1x1_5_align_float_8;
+            case 9: return R.layout.layout_widget_sunpos_1x1_5_align_float_9;
+            case 5: default: return R.layout.layout_widget_sunpos_1x1_5;
+        }
     }
 
     @Override
