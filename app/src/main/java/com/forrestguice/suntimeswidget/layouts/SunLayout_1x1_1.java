@@ -60,6 +60,29 @@ public class SunLayout_1x1_1 extends SunLayout
         this.layoutID = R.layout.layout_widget_1x1_1;
     }
 
+    @Override
+    public void prepareForUpdate(Context context, int appWidgetID, SuntimesRiseSetData data)
+    {
+        super.prepareForUpdate(context, appWidgetID, data);
+        int position = scaleBase ? 0 : WidgetSettings.loadWidgetGravityPref(context, appWidgetID);
+        this.layoutID = chooseLayout(position);
+    }
+
+    protected int chooseLayout(int position)
+    {
+        switch (position) {
+            case 0: return R.layout.layout_widget_1x1_1_align_fill;
+            case 1: return R.layout.layout_widget_1x1_1_align_float_1;
+            case 2: return R.layout.layout_widget_1x1_1_align_float_2;
+            case 3: return R.layout.layout_widget_1x1_1_align_float_3;
+            case 4: return R.layout.layout_widget_1x1_1_align_float_4;
+            case 6: return R.layout.layout_widget_1x1_1_align_float_6;
+            case 7: return R.layout.layout_widget_1x1_1_align_float_7;
+            case 8: return R.layout.layout_widget_1x1_1_align_float_8;
+            case 9: return R.layout.layout_widget_1x1_1_align_float_9;
+            case 5: default: return R.layout.layout_widget_1x1_1;
+        }
+    }
 
     @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetData data)
