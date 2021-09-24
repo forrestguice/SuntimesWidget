@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -51,7 +51,6 @@
                 android:contentDescription="@string/configAction_help" />
 
         </LinearLayout>
-
 
         <LinearLayout android:id="@+id/appwidget_general_riseSetOrder_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -211,17 +210,6 @@
 
         </LinearLayout>
 
-        <LinearLayout android:id="@+id/appwidget_general_showSeconds_layout"
-                      android:layout_width="match_parent" android:layout_height="wrap_content"
-                      android:orientation="horizontal"
-		              android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
-
-	      <CheckBox android:id="@+id/appwidget_general_showSeconds"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="@string/configLabel_general_showSeconds" />
-
-        </LinearLayout>
-
         <LinearLayout android:id="@+id/appwidget_general_showTimeDate_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -233,10 +221,11 @@
 
         </LinearLayout>
 
+
         <LinearLayout android:id="@+id/appwidget_general_timeformatmode_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding">
+            android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="8dp">
 
             <TextView android:labelFor="@+id/appwidget_general_timeformatmode"
                 android:id="@+id/appwidget_general_timeformatmode_label"
@@ -248,6 +237,7 @@
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
+
 
         <View android:layout_width="match_parent" android:layout_height="1dp" android:background="?attr/colorControlHighlight"
             android:layout_marginRight="8dp" android:layout_marginLeft="8dp"
@@ -271,7 +261,7 @@
 
         <LinearLayout android:id="@+id/appwidget_general_useAltitude_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
 
             <CheckBox android:id="@+id/appwidget_general_useAltitude"
@@ -280,6 +270,16 @@
 
         </LinearLayout>
 
+        <LinearLayout android:id="@+id/appwidget_general_showSeconds_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+            <CheckBox android:id="@+id/appwidget_general_showSeconds"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/configLabel_general_showSeconds" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </merge>
