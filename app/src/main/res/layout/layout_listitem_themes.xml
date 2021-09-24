@@ -25,9 +25,9 @@
         android:orientation="vertical" android:gravity="center" android:layout_margin="8dp"
         android:layout_alignParentLeft="true" android:layout_alignParentStart="true">
 
-        <ImageView android:id="@android:id/icon1"
+        <View android:id="@+id/icon" android:background="@color/deep_teal_200"
             android:layout_width="32dp" android:layout_height="32dp"
-            android:src="@drawable/ic_colortab" tools:ignore="contentDescription" />
+            tools:ignore="contentDescription" />
 
     </LinearLayout>
 

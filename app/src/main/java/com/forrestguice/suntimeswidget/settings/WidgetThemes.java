@@ -27,6 +27,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -48,6 +49,7 @@ import java.util.Set;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
+import com.forrestguice.suntimeswidget.themes.SuntimesThemeContract;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkThemeTranslucent;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
@@ -600,6 +602,9 @@ public class WidgetThemes
             }
             TextView textView = (TextView) view.findViewById(android.R.id.text1);
             textView.setText(themes[position].displayString());
+
+            View icon = view.findViewById(R.id.icon);
+            applyBackgroundToIcon(icon, themes[position]);
             return view;
         }
 
@@ -612,18 +617,31 @@ public class WidgetThemes
                 LayoutInflater layoutInflater = LayoutInflater.from(context);
                 view = layoutInflater.inflate(layoutId, parent, false);
             }
+
             TextView textView = (TextView) view.findViewById(android.R.id.text1);
             textView.setText(themes[position].displayString());
 
-            ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
+            View icon = view.findViewById(R.id.icon);
+            applyBackgroundToIcon(icon, themes[position]);
+            return view;
+        }
+
+        protected void applyBackgroundToIcon(@Nullable View icon, @NonNull ThemeDescriptor theme)
+        {
             if (icon != null)
             {
-                GradientDrawable d = (GradientDrawable) icon.getBackground().mutate();
-                d.setColor(themes[position].getColor0());
-                d.invalidateSelf();
-            }
+                String backgroundName = theme.getBackgroundName();
+                if (backgroundName != null)
+                {
+                    SuntimesTheme.ThemeBackground background = SuntimesTheme.ThemeBackground.valueOf(backgroundName);
+                    if (background.supportsCustomColors())
+                        icon.setBackgroundColor(theme.getBackgroundColor());
+                    else icon.setBackgroundResource(background.getResID());
 
-            return view;
+                } else {
+                    icon.setBackgroundColor(Color.TRANSPARENT);
+                }
+            }
         }
     }
 
