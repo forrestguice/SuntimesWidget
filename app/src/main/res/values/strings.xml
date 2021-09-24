@@ -506,7 +506,7 @@
     <string name="timeFormatMode_system">System format</string>          <!-- setting -->
     <string name="timeFormatMode_12hr">12-hour</string>                  <!-- setting -->
     <string name="timeFormatMode_24hr">24-hour</string>                  <!-- setting -->
-    <string name="timeFormatMode_suntimes">@string/app_name</string>     <!-- setting -->  <!-- TODO -->
+    <string name="timeFormatMode_suntimes">Suntimes format</string>     <!-- setting -->  <!-- TODO -->
 
     <string name="configLabel_timeFormatMode">Time Format</string>             <!-- preference label -->
     <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
