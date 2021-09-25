@@ -863,6 +863,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         spinner_themeAdapter = new WidgetThemes.ThemeListAdapter(this, R.layout.layout_listitem_oneline, R.layout.layout_listitem_themes, WidgetThemes.sortedValues(false));
         spinner_theme.setAdapter(spinner_themeAdapter);
+        spinner_theme.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                onThemeSelectionChanged();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
     }
 
     protected void initGravityAdapter(final Context context)
@@ -2033,8 +2041,21 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             if (themeName != null)
             {
                 selectTheme(themeName);
+                onThemeSelectionChanged();
             }
         }
+    }
+
+    protected void onThemeSelectionChanged()
+    {
+        // refresh widget previews
+        ThemeDescriptor theme = (ThemeDescriptor) spinner_theme.getSelectedItem();
+        this.themeValues = WidgetThemes.loadTheme(this, theme.name()).toContentValues();
+        initWidgetMode1x1(this);
+        initWidgetMode2x1(this);
+        initWidgetMode3x1(this);
+        initWidgetMode3x2(this);
+        initWidgetMode3x3(this);
     }
 
     private void selectTheme(String themeName)
