@@ -1,10 +1,13 @@
 ### ~
 
 --
+* adds widget option to "use the app location"; defaults false.
 * adds widget option to override 12h/24h time format setting.
-* adds widget option to "scale text and icons".
-* renames widget option "grow with available space" to "swap layouts to fill space"; adds help text.
+* adds widget option to "fill entire cell" or "align base" to top-left, right, bottom, etc.
+* adds widget option to "scale text and icons"; extra large widgets.
+* renames widget option "grow with available space" to "swap layouts to fill space"; default changed to false; adds help text.
 * enhances widget layout selector to show a themed preview.
+* enhances widget theme selector to show background preview.
 * reorganizes widget options.
 
 ### v0.13.13 (2021-09-09)
