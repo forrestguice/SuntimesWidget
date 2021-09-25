@@ -145,14 +145,14 @@ public class SuntimesRiseSetData extends SuntimesData
 
     public Calendar sunriseCalendar(int i)
     {
-        if (i == 0)
+        if (i == 1)
             return sunriseCalendarToday;
         else return sunriseCalendarOther;
     }
 
     public Calendar sunsetCalendar(int i)
     {
-        if (i == 0)
+        if (i == 1)
             return sunsetCalendarToday;
         else return sunsetCalendarOther;
     }
