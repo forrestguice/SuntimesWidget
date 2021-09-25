@@ -125,6 +125,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_showWeeks;
     protected CheckBox checkbox_showHours;
     protected CheckBox checkbox_useAltitude;
+    protected CheckBox checkbox_locationFromApp;
 
     protected Spinner spinner_riseSetOrder;
     protected ImageButton button_riseSetOrderHelp;
@@ -269,10 +270,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected void loadSettings(Context context)
     {
+        locationConfig.loadSettings(context);
         loadLayoutSettings(context);
         loadGeneralSettings(context);
         loadAppearanceSettings(context);
-        locationConfig.loadSettings(context);
         loadTimezoneSettings(context);
         loadActionSettings(context);
     }
@@ -832,6 +833,24 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // widget: useAltitude
         //
         checkbox_useAltitude = (CheckBox)findViewById(R.id.appwidget_general_useAltitude);
+
+        // widget: locationFromApp
+        checkbox_locationFromApp = (CheckBox)findViewById(R.id.appwidget_location_fromapp);
+        if (checkbox_locationFromApp != null)
+        {
+            checkbox_locationFromApp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+                {
+                    locationConfig.setMode(isChecked ? LocationConfigView.LocationViewMode.MODE_DISABLED : LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT);
+                    if (isChecked) {
+                        locationConfig.updateViews(WidgetSettings.loadLocationPref(context, 0));
+                    } else {
+                        locationConfig.updateViews();
+                    }
+                }
+            });
+        }
 
         //
         // widget: about button
@@ -1436,6 +1455,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         boolean useAltitude = checkbox_useAltitude.isChecked();
         WidgetSettings.saveLocationAltitudeEnabledPref(context, appWidgetId, useAltitude);
 
+        // save: locationFromApp
+        boolean locationFromApp = checkbox_locationFromApp.isChecked();
+        WidgetSettings.saveLocationFromAppPref(context, appWidgetId, locationFromApp);
+
         // save: time mode
         saveTimeMode(context);
         saveTimeModeOverride(context);
@@ -1496,6 +1519,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // load: useAltitude
         boolean useAltitude = WidgetSettings.loadLocationAltitudeEnabledPref(context, appWidgetId);
         checkbox_useAltitude.setChecked(useAltitude);
+
+        // load: locationFromApp
+        boolean locationFromApp = WidgetSettings.loadLocationFromAppPref(context, appWidgetId);
+        checkbox_locationFromApp.setChecked(locationFromApp);
 
         // load: time mode
         loadTimeMode(context);

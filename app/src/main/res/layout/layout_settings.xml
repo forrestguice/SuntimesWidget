@@ -126,6 +126,18 @@
                         android:layout_width="match_parent" android:layout_height="wrap_content" />
                     <!-- <include layout="@layout/layout_settings_location" /> -->
 
+                    <LinearLayout
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingRight="12dp" android:paddingLeft="12dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+                        <CheckBox
+                            android:id="@+id/appwidget_location_fromapp"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/configLabel_location_fromapp" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/appwidget_action_layout"

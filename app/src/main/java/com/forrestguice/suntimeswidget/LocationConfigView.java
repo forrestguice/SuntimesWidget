@@ -258,6 +258,29 @@ public class LocationConfigView extends LinearLayout
                 flipper2.setDisplayedChild(1);
                 break;
 
+            case MODE_DISABLED:
+                labl_locationLon.setEnabled(false);
+                text_locationLon.setEnabled(false);
+                labl_locationLat.setEnabled(false);
+                text_locationLat.setEnabled(false);
+                labl_locationAlt.setEnabled(false);
+                text_locationAlt.setEnabled(false);
+                inputOverlay.setVisibility(View.GONE);
+
+                labl_locationName.setEnabled(false);
+                text_locationName.setEnabled(false);
+                spin_locationName.setEnabled(false);
+                spin_locationName.setVisibility(View.GONE);
+                flipper.setDisplayedChild(0);
+
+                autoButtonLayout.setVisibility(View.GONE);
+                button_list.setVisibility(View.INVISIBLE);
+                button_edit.setVisibility(View.INVISIBLE);
+                button_save.setVisibility(View.GONE);
+                button_cancel.setVisibility(View.GONE);
+                flipper2.setDisplayedChild(1);
+                break;
+
             case MODE_CUSTOM_ADD:
             case MODE_CUSTOM_EDIT:
                 labl_locationLon.setEnabled(true);
@@ -576,7 +599,7 @@ public class LocationConfigView extends LinearLayout
      * @param location a WidgetSettings.Location instance to update from
      */
     @SuppressLint("SetTextI18n")
-    private void updateViews(com.forrestguice.suntimeswidget.calculator.core.Location location)
+    public void updateViews(com.forrestguice.suntimeswidget.calculator.core.Location location)
     {
         text_locationLat.setText(location.getLatitude());
         text_locationLon.setText(location.getLongitude());
@@ -601,7 +624,7 @@ public class LocationConfigView extends LinearLayout
             }
         }
     }
-    private void updateViews()
+    public void updateViews()
     {
         int position = spin_locationName.getSelectedItemPosition();
         if (position >= 0)
@@ -954,7 +977,7 @@ public class LocationConfigView extends LinearLayout
      */
     public static enum LocationViewMode
     {
-        MODE_AUTO(), MODE_CUSTOM_SELECT(), MODE_CUSTOM_ADD(), MODE_CUSTOM_EDIT();
+        MODE_AUTO(), MODE_CUSTOM_SELECT(), MODE_CUSTOM_ADD(), MODE_CUSTOM_EDIT(), MODE_DISABLED;
         private LocationViewMode() {}
 
         public String toString()

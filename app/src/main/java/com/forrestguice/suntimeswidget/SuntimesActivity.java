@@ -985,6 +985,10 @@ public class SuntimesActivity extends AppCompatActivity
                     SuntimesActivity.this.calculateData(SuntimesActivity.this);
                     SuntimesActivity.this.setUpdateAlarms(SuntimesActivity.this);
                     SuntimesActivity.this.updateViews(SuntimesActivity.this);
+
+                    Intent updateWidgets = new Intent();
+                    updateWidgets.setAction(SuntimesWidget0.SUNTIMES_ALARM_UPDATE);
+                    sendBroadcast(updateWidgets);
                 }
             }
         });
@@ -1357,6 +1361,11 @@ public class SuntimesActivity extends AppCompatActivity
                 if (locationMode == WidgetSettings.LocationMode.CURRENT_LOCATION)
                 {
                     getFixHelper.getFix();
+
+                } else {
+                    Intent updateWidgets = new Intent();
+                    updateWidgets.setAction(SuntimesWidget0.SUNTIMES_ALARM_UPDATE);
+                    sendBroadcast(updateWidgets);
                 }
             }
         };
