@@ -182,6 +182,9 @@ public class WidgetSettings
     public static final String PREF_KEY_LOCATION_LABEL = "label";
     public static String PREF_DEF_LOCATION_LABEL = "Prescott, AZ";       // reassigned later by initDefaults
 
+    public static final String PREF_KEY_LOCATION_FROMAPP = "useapp";
+    public static final boolean PREF_DEF_LOCATION_FROMAPP = false;
+
     public static final String PREF_KEY_TIMEZONE_MODE = "timezoneMode";
     public static final TimezoneMode PREF_DEF_TIMEZONE_MODE = TimezoneMode.CURRENT_TIMEZONE;
 
@@ -2273,6 +2276,10 @@ public class WidgetSettings
     }
     public static Location loadLocationPref(Context context, int appWidgetId)
     {
+        if (loadLocationFromAppPref(context, appWidgetId)) {
+            appWidgetId = 0;
+        }
+
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
 
@@ -2335,6 +2342,30 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
         prefs.remove(prefs_prefix + PREF_KEY_LOCATION_ALTITUDE_ENABLED);
+        prefs.apply();
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void saveLocationFromAppPref(Context context, int appWidgetId, boolean enabled)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
+        prefs.putBoolean(prefs_prefix + PREF_KEY_LOCATION_FROMAPP, enabled);
+        prefs.apply();
+    }
+    public static boolean loadLocationFromAppPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
+        boolean enabled = prefs.getBoolean(prefs_prefix + PREF_KEY_LOCATION_FROMAPP, PREF_DEF_LOCATION_FROMAPP);
+        return enabled;
+    }
+    public static void deleteLocationFromAppPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_LOCATION;
+        prefs.remove(prefs_prefix + PREF_KEY_LOCATION_FROMAPP);
         prefs.apply();
     }
 
@@ -2786,6 +2817,7 @@ public class WidgetSettings
 
         deleteLocationModePref(context, appWidgetId);
         deleteLocationAltitudeEnabledPref(context, appWidgetId);
+        deleteLocationFromAppPref(context, appWidgetId);
         deleteLocationPref(context, appWidgetId);
 
         deleteTimezoneModePref(context, appWidgetId);
