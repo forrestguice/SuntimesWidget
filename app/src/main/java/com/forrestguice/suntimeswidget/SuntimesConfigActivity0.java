@@ -31,6 +31,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -329,7 +330,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     }
 
     // TODO: enhanced adapter
-    protected ArrayAdapter<WidgetSettings.WidgetModeDisplay> createAdapter_widgetModeSun1x1()
+    protected WidgetModeAdapter createAdapter_widgetModeSun1x1()
     {
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSun1x1.values());
         adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
@@ -337,7 +338,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return adapter;
     }
 
-    protected ArrayAdapter<WidgetSettings.WidgetModeDisplay> createAdapter_widgetModeSun2x1()
+    protected WidgetModeAdapter createAdapter_widgetModeSun2x1()
     {
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSun2x1.values());
         adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
@@ -1355,7 +1356,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
         if (themeDescriptor != null)
         {
-            spinner_theme.setSelection(themeDescriptor.ordinal(spinner_themeAdapter.values()));
+            spinner_theme.setSelection(themeDescriptor.ordinal(spinner_themeAdapter.values()), false);
         } else {
             Log.e("loadAppearanceSettings", "theme is not installed! " + theme.themeName());
         }
@@ -2068,21 +2069,44 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             if (themeName != null)
             {
                 selectTheme(themeName);
-                onThemeSelectionChanged();
             }
         }
     }
 
     protected void onThemeSelectionChanged()
     {
-        // refresh widget previews
+        Log.d("DEBUG", "onThemeSelectionChanged");
         ThemeDescriptor theme = (ThemeDescriptor) spinner_theme.getSelectedItem();
         this.themeValues = WidgetThemes.loadTheme(this, theme.name()).toContentValues();
-        initWidgetMode1x1(this);
-        initWidgetMode2x1(this);
-        initWidgetMode3x1(this);
-        initWidgetMode3x2(this);
-        initWidgetMode3x3(this);
+
+        // refresh widget previews
+        if (spinner_1x1mode != null) {
+            updateWidgetModeAdapter(spinner_1x1mode, themeValues);
+        }
+        if (spinner_2x1mode != null) {
+            updateWidgetModeAdapter(spinner_2x1mode, themeValues);
+        }
+        if (spinner_3x1mode != null) {
+            updateWidgetModeAdapter(spinner_3x1mode, themeValues);
+        }
+        if (spinner_3x2mode != null) {
+            updateWidgetModeAdapter(spinner_3x2mode, themeValues);
+        }
+        if (spinner_3x3mode != null) {
+            updateWidgetModeAdapter(spinner_3x3mode, themeValues);
+        }
+    }
+
+    private void updateWidgetModeAdapter(@NonNull Spinner spinner, ContentValues themeValues)
+    {
+        WidgetModeAdapter adapter = (WidgetModeAdapter) spinner.getAdapter();
+        if (adapter != null)
+        {
+            WidgetSettings.WidgetModeDisplay selected = (WidgetSettings.WidgetModeDisplay) spinner.getSelectedItem();
+            adapter.setThemeValues(themeValues);
+            spinner.setAdapter(adapter);
+            spinner.setSelection(adapter.getPosition(selected));
+        }
     }
 
     private void selectTheme(String themeName)
