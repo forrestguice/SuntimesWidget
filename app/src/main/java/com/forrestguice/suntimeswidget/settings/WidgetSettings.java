@@ -182,7 +182,7 @@ public class WidgetSettings
     public static final String PREF_KEY_LOCATION_LABEL = "label";
     public static String PREF_DEF_LOCATION_LABEL = "Prescott, AZ";       // reassigned later by initDefaults
 
-    public static final String PREF_KEY_LOCATION_FROMAPP = "useapp";
+    public static final String PREF_KEY_LOCATION_FROMAPP = "fromapp";
     public static final boolean PREF_DEF_LOCATION_FROMAPP = false;
 
     public static final String PREF_KEY_TIMEZONE_MODE = "timezoneMode";
