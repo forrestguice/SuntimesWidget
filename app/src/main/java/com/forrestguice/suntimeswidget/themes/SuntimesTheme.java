@@ -66,6 +66,7 @@ import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_NOONICON_STROKE_WIDTH_MIN;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_PADDING_BOTTOM;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_PADDING_LEFT;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_PADDING_PIXELS;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_PADDING_RIGHT;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_PADDING_TOP;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_RISEICON_FILL_COLOR;
@@ -456,10 +457,15 @@ public class SuntimesTheme
         values.put(THEME_BACKGROUND, this.themeBackground.name());
         values.put(THEME_BACKGROUND_COLOR, this.themeBackgroundColor);
 
-        values.put(THEME_PADDING_LEFT, this.themePadding[0]);
-        values.put(THEME_PADDING_TOP, this.themePadding[1]);
-        values.put(THEME_PADDING_RIGHT, this.themePadding[2]);
-        values.put(THEME_PADDING_BOTTOM, this.themePadding[3]);
+        values.put(THEME_PADDING_LEFT, this.themePaddingPixels[0]);
+        values.put(THEME_PADDING_TOP, this.themePaddingPixels[1]);
+        values.put(THEME_PADDING_RIGHT, this.themePaddingPixels[2]);
+        values.put(THEME_PADDING_BOTTOM, this.themePaddingPixels[3]);
+
+        values.put(THEME_PADDING_LEFT + THEME_PADDING_PIXELS, this.themePadding[0]);
+        values.put(THEME_PADDING_TOP + THEME_PADDING_PIXELS, this.themePadding[1]);
+        values.put(THEME_PADDING_RIGHT + THEME_PADDING_PIXELS, this.themePadding[2]);
+        values.put(THEME_PADDING_BOTTOM + THEME_PADDING_PIXELS, this.themePadding[3]);
 
         values.put(THEME_TEXTCOLOR, this.themeTextColor);
         values.put(THEME_TITLECOLOR, this.themeTitleColor);
