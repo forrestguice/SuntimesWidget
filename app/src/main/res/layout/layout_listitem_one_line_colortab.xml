@@ -18,18 +18,15 @@
         android:orientation="vertical">
 
         <TextView
-            style="?android:attr/dropDownItemStyle"
+            style="?attr/spinnerDropDownItemStyle"
             android:id="@android:id/text1"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:singleLine="true"
-            android:textStyle="bold"
+            android:singleLine="true" android:ellipsize="marquee"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dropdownListPreferredItemHeight"
             android:duplicateParentState="true"
             android:paddingTop="8dp" android:paddingBottom="8dp"
             tools:text="Primary"
             android:text="@string/time_loading" />
-
 
     </LinearLayout>
 
