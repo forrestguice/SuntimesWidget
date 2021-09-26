@@ -468,6 +468,28 @@ public class SuntimesWidget0 extends AppWidgetProvider
         return layout;
     }
 
+    public static int[] getWidgetSize( Context context, AppWidgetManager appWidgetManager, int appWidgetId )
+    {
+        int[] defSize = new int[] { context.getResources().getInteger(R.integer.widget_size_minWidthDp),
+                                    context.getResources().getInteger(R.integer.widget_size_minHeightDp) };
+        int[] maxDp = widgetSizeDp(context, appWidgetManager, appWidgetId, defSize);
+        int minDp_x2 = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
+        int minDp_x3 = context.getResources().getInteger(R.integer.widget_size_minWidthDp3x1);
+
+        int[] retValue = new int[] {1, 1};
+        if (maxDp[0] >= minDp_x3) {
+            retValue[0] = 3;
+        } else if (maxDp[0] >= minDp_x2) {
+            retValue[0] = 2;
+        }
+        if (maxDp[1] >= minDp_x3) {
+            retValue[1] = 3;
+        } else if (maxDp[1] >= minDp_x2) {
+            retValue[1] = 2;
+        }
+        return retValue;
+    }
+
     /**
      * @param context the application context
      * @param appWidgetManager widget manager
