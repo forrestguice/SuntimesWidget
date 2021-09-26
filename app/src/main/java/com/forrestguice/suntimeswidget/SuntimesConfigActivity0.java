@@ -1080,9 +1080,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (spinner_timeMode != null)
         {
-            final ArrayAdapter<WidgetSettings.TimeMode> spinner_timeModeAdapter;
-            spinner_timeModeAdapter = new ArrayAdapter<WidgetSettings.TimeMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.TimeMode.values());
-            spinner_timeModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            //final ArrayAdapter<WidgetSettings.TimeMode> spinner_timeModeAdapter;
+            //spinner_timeModeAdapter = new ArrayAdapter<WidgetSettings.TimeMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.TimeMode.values());
+            final TimeModeAdapter spinner_timeModeAdapter;
+            spinner_timeModeAdapter = new TimeModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.TimeMode.values());
+            spinner_timeModeAdapter.setDropDownViewResource(R.layout.layout_listitem_one_line_colortab);
+            spinner_timeModeAdapter.setThemeValues(themeValues);
             spinner_timeMode.setAdapter(spinner_timeModeAdapter);
 
             spinner_timeMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
@@ -1120,6 +1123,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         showOptionTimeModeOverride(false);
         showOptionTrackingMode(false);
     }
+
+
+
 
     /**
      * @param context a context used to access shared prefs
@@ -2095,6 +2101,21 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (spinner_3x3mode != null) {
             updateWidgetModeAdapter(spinner_3x3mode, themeValues);
         }
+        if (spinner_timeMode != null) {
+            updateTimeModeAdapter(spinner_timeMode, themeValues);
+        }
+    }
+
+    private void updateTimeModeAdapter(@NonNull Spinner spinner, ContentValues themeValues)
+    {
+        TimeModeAdapter adapter = (TimeModeAdapter)spinner_timeMode.getAdapter();
+        if (adapter != null)
+        {
+            WidgetSettings.TimeMode selected = (WidgetSettings.TimeMode) spinner.getSelectedItem();
+            adapter.setThemeValues(themeValues);
+            spinner.setAdapter(adapter);
+            spinner.setSelection(adapter.getPosition(selected));
+        }
     }
 
     private void updateWidgetModeAdapter(@NonNull Spinner spinner, ContentValues themeValues)
@@ -2284,6 +2305,100 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 view.setTag(item.name());
             }
             return view;
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * TimeModeAdapter
+     */
+    public static class TimeModeAdapter extends ArrayAdapter<WidgetSettings.TimeMode>
+    {
+        private int resourceID, dropDownResourceID;
+        private WidgetSettings.TimeMode[] objects;
+        private ContentValues themeValues = null;
+
+        public TimeModeAdapter(@NonNull Context context, int resource) {
+            super(context, resource);
+            init(context, resource);
+        }
+
+        public TimeModeAdapter(@NonNull Context context, int resource, @NonNull WidgetSettings.TimeMode[] objects) {
+            super(context, resource, objects);
+            init(context, resource);
+        }
+
+        public TimeModeAdapter(@NonNull Context context, int resource, @NonNull List<WidgetSettings.TimeMode> objects) {
+            super(context, resource, objects);
+            init(context, resource);
+        }
+
+        private void init(@NonNull Context context, int resource) {
+            resourceID = dropDownResourceID = resource;
+        }
+
+        public void setThemeValues(ContentValues values) {
+            themeValues = values;
+        }
+
+        @Override
+        public void setDropDownViewResource(int resID) {
+            super.setDropDownViewResource(resID);
+            dropDownResourceID = resID;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+            return getItemView(position, convertView, parent, dropDownResourceID);
+        }
+
+        @Override
+        @NonNull
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+            return getItemView(position, convertView, parent, resourceID);
+        }
+
+        private View getItemView(int position, View convertView, @NonNull ViewGroup parent, int resID)
+        {
+            LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+            View view = (convertView == null) ? layoutInflater.inflate(resID, parent, false) : convertView;
+
+            WidgetSettings.TimeMode item = getItem(position);
+            if (item == null) {
+                Log.w("getItemView", "item at position " + position + " is null.");
+                return view;
+            }
+
+            Object tag = view.getTag();
+            if (tag == null || !tag.equals(item.name()))
+            {
+                TextView primaryText = (TextView)view.findViewById(android.R.id.text1);
+                primaryText.setText(item.toString());
+
+                View colorTab = view.findViewById(R.id.icon1);
+                if (colorTab != null && themeValues != null) {
+                    colorTab.setBackgroundColor(getColorForMode(item));
+                }
+                view.setTag(item.name());
+            }
+            return view;
+        }
+
+        private int getColorForMode(WidgetSettings.TimeMode mode)
+        {
+            if (themeValues == null) {
+                 return Color.TRANSPARENT;
+            }
+            switch (mode)
+            {
+                case ASTRONOMICAL: return themeValues.getAsInteger(SuntimesThemeContract.THEME_ASTROCOLOR);
+                case NAUTICAL: case BLUE8: return themeValues.getAsInteger(SuntimesThemeContract.THEME_NAUTICALCOLOR);
+                case CIVIL: case BLUE4: return themeValues.getAsInteger(SuntimesThemeContract.THEME_CIVILCOLOR);
+                case GOLD: return themeValues.getAsInteger(SuntimesThemeContract.THEME_SUNRISECOLOR);
+                case NOON: return themeValues.getAsInteger(SuntimesThemeContract.THEME_SUNSETCOLOR);
+                case OFFICIAL: default: return themeValues.getAsInteger(SuntimesThemeContract.THEME_DAYCOLOR);
+            }
         }
     }
 

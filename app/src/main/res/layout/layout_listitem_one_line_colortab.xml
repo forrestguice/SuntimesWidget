@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:baselineAligned="false">
+
+    <View
+        android:id="@+id/icon1" android:background="@color/accent"
+        android:layout_width="8dp" android:layout_height="match_parent"
+        tools:ignore="ContentDescription"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="?android:attr/dropDownItemStyle"
+            android:id="@android:id/text1"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:singleLine="true"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:duplicateParentState="true"
+            android:paddingTop="8dp" android:paddingBottom="8dp"
+            tools:text="Primary"
+            android:text="@string/time_loading" />
+
+
+    </LinearLayout>
+
+</LinearLayout>
