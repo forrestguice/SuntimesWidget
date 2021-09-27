@@ -37,7 +37,7 @@
 
     <dimen name="alarmcreate_bottomsheet_peek">56dip</dimen>
 
-    <dimen name="dropdownListPreferredItemHeight">64dip</dimen>
+    <dimen name="dropdownListPreferredItemHeight">48dip</dimen>
 
     <dimen name="sunIcon_inset">-9dip</dimen> <!-- this should be the same as sunicon_height to produce a half circle -->
     <dimen name="sunIcon_height">9dip</dimen>
