@@ -2084,6 +2084,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         Log.d("DEBUG", "onThemeSelectionChanged");
         ThemeDescriptor theme = (ThemeDescriptor) spinner_theme.getSelectedItem();
         this.themeValues = WidgetThemes.loadTheme(this, theme.name()).toContentValues();
+        themeViews(themeValues);
 
         // refresh widget previews
         if (spinner_1x1mode != null) {
@@ -2103,6 +2104,42 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
         if (spinner_timeMode != null) {
             updateTimeModeAdapter(spinner_timeMode, themeValues);
+        }
+    }
+
+    protected void themeViews(ContentValues themeValues)
+    {
+        int backgroundColor = themeValues.getAsInteger(SuntimesThemeContract.THEME_BACKGROUND_COLOR);
+        String backgroundName = themeValues.getAsString(SuntimesThemeContract.THEME_BACKGROUND);
+        SuntimesTheme.ThemeBackground background = null;
+        if (backgroundName != null) {
+            background = SuntimesTheme.ThemeBackground.valueOf(backgroundName);
+        }
+        int[] paddingPixels = new int[] {
+                themeValues.getAsInteger(SuntimesThemeContract.THEME_PADDING_LEFT + SuntimesThemeContract.THEME_PADDING_PIXELS),
+                themeValues.getAsInteger(SuntimesThemeContract.THEME_PADDING_TOP + SuntimesThemeContract.THEME_PADDING_PIXELS),
+                themeValues.getAsInteger(SuntimesThemeContract.THEME_PADDING_RIGHT + SuntimesThemeContract.THEME_PADDING_PIXELS),
+                themeValues.getAsInteger(SuntimesThemeContract.THEME_PADDING_BOTTOM + SuntimesThemeContract.THEME_PADDING_PIXELS),
+        };
+
+        // findViewById(R.id.appwidget_widget_layout),
+        View[] groups = new View[] { null };
+        //View[] groups = new View[] { findViewById(R.id.root_layout) };
+        //View[] groups = new View[] {  findViewById(R.id.appwidget_appearance_layout),
+        //        findViewById(R.id.appwidget_general_layout), findViewById(R.id.appwidget_timezone_layout),
+        //        findViewById(R.id.appwidget_location_layout), findViewById(R.id.appwidget_action_layout)};   // TODO: all groups
+        for (View group : groups)
+        {
+            if (group != null) {
+                if (background != null)
+                {
+                    if (background.supportsCustomColors())
+                        group.setBackgroundColor(backgroundColor);
+                    else group.setBackgroundResource(background.getResID());
+
+                    group.setPadding(paddingPixels[0], paddingPixels[1], paddingPixels[2], paddingPixels[3]);
+                }
+            }
         }
     }
 
