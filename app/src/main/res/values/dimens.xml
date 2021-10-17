@@ -26,6 +26,9 @@
     <dimen name="widget_layout_spacing_small">4dp</dimen>
     <dimen name="widget_layout_spacing">8dp</dimen>
 
+    <dimen name="widget_settings_check_padding_left">8dp</dimen>
+    <dimen name="widget_settings_label_padding_left">12dp</dimen>
+
     <dimen name="sunIconLarge_width">32dip</dimen>
     <dimen name="sunIconLarge_height">8dip</dimen>
 
