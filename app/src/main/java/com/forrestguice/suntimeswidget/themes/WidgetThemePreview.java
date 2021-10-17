@@ -133,13 +133,13 @@ public class WidgetThemePreview
                     previewBackground.setBackgroundColor(values.getAsInteger(SuntimesThemeContract.THEME_BACKGROUND_COLOR));
                 else previewBackground.setBackgroundResource(background.getResID());
 
-                int[] padding = new int[] {
-                        values.getAsInteger(SuntimesThemeContract.THEME_PADDING_LEFT),
-                        values.getAsInteger(SuntimesThemeContract.THEME_PADDING_TOP),
-                        values.getAsInteger(SuntimesThemeContract.THEME_PADDING_RIGHT),
-                        values.getAsInteger(SuntimesThemeContract.THEME_PADDING_BOTTOM),
+                int[] paddingPx = new int[] {
+                        values.getAsInteger(SuntimesThemeContract.THEME_PADDING_LEFT + SuntimesThemeContract.THEME_PADDING_PIXELS),
+                        values.getAsInteger(SuntimesThemeContract.THEME_PADDING_TOP + SuntimesThemeContract.THEME_PADDING_PIXELS),
+                        values.getAsInteger(SuntimesThemeContract.THEME_PADDING_RIGHT + SuntimesThemeContract.THEME_PADDING_PIXELS),
+                        values.getAsInteger(SuntimesThemeContract.THEME_PADDING_BOTTOM + SuntimesThemeContract.THEME_PADDING_PIXELS),
                 };
-                previewBackground.setPadding(padding[0], padding[1], padding[2], padding[3]);
+                previewBackground.setPadding(paddingPx[0], paddingPx[1], paddingPx[2], paddingPx[3]);
             }
         }
 
