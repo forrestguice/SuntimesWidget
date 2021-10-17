@@ -44,6 +44,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -1405,7 +1406,10 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         };
     }
 
-    private static void initPref_ui_themeOverride(Activity activity, ActionButtonPreference listPref, String key)
+    private static void initPref_ui_themeOverride(Activity activity, ActionButtonPreference listPref, String key) {
+        initPref_ui_themeOverride(activity, listPref, key, null);
+    }
+    private static void initPref_ui_themeOverride(Activity activity, ActionButtonPreference listPref, String key, @Nullable String mustIncludeTheme)
     {
         if (listPref != null)
         {
@@ -1415,7 +1419,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
             for (SuntimesTheme.ThemeDescriptor theme : themes0)
             {
-                if (!theme.isDefault()) {
+                if (!theme.isDefault() || theme.name().equals(mustIncludeTheme)) {
                     themes.add(theme);    // hide default widget themes, show only user-created themes
                 }                            // this is a workaround - the defaults have tiny (unreadable) font sizes, so we won't advertise their use
             }
@@ -1452,8 +1456,16 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 listPref.setOnPreferenceChangeListener(onOverrideThemeChanged(activity, listPref, requestCode));
 
             } else {
-                Log.w(LOG_TAG, "loadPref: Unable to load " + key + "... The list is missing an entry for the descriptor: " + themeName);
-                listPref.setValueIndex(0);
+                if (WidgetThemes.valueOf(themeName) != null) {    // the theme exists but is missing from the list; reload the adapter
+                    initPref_ui_themeOverride(activity, listPref, key, themeName);   // it mustInclude: themeName
+                    loadPref_ui_themeOverride(activity, listPref, key);    // !! potential for recursive loop if initPref_ui_themeOverride fails to include themeName
+
+                } else {
+                    Log.w(LOG_TAG, "loadPref: Unable to load " + key + "... The list is missing an entry for the descriptor: " + themeName);
+                    listPref.setValueIndex(0);
+                    listPref.setActionButtonPreferenceListener(createThemeListPreferenceListener(activity, themeName, requestCode));
+                    listPref.setOnPreferenceChangeListener(onOverrideThemeChanged(activity, listPref, requestCode));
+                }
             }
         }
     }
