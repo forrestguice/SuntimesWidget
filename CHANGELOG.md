@@ -8,6 +8,7 @@
 * renames widget option "grow with available space" to "swap layouts to fill space"; default changed to false; adds help text.
 * enhances widget layout selector to show a themed preview.
 * enhances widget theme selector to show background preview.
+* enhances widget time mode selector (color tabs).
 * reorganizes widget options.
 
 ### v0.13.13 (2021-09-09)
