@@ -159,7 +159,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         SuntimesRiseSetDataset sun = ((data == null) ? null : data.first);
         SuntimesMoonData moon = ((data == null) ? null : data.second);
 
-        updateHeaderViews(context, options);
+        updateHeaderViews(options);
         row_actual.setVisible(options.showActual);
         row_civil.setVisible(options.showCivil);
         row_nautical.setVisible(options.showNautical);
@@ -405,33 +405,15 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         return new Pair<>(label, null);
     }
 
-    protected void updateHeaderViews(Context context, CardAdapter.CardAdapterOptions options)
+    protected void updateHeaderViews(CardAdapter.CardAdapterOptions options)
     {
-        if (options.showHeaders == 1)             // 1: icon-only
-        {
-            header_sunrise.setVisibility(View.GONE);
-            header_sunset.setVisibility(View.GONE);
-            icon_sunrise.setVisibility(View.VISIBLE);
-            icon_sunset.setVisibility(View.VISIBLE);
+        int textVisibility = (options.showHeaderText ? View.VISIBLE : View.GONE);
+        header_sunrise.setVisibility(textVisibility);
+        header_sunset.setVisibility(textVisibility);
 
-        } else if (options.showHeaders == 2) {    // 2: text-only
-            header_sunrise.setVisibility(View.VISIBLE);
-            header_sunset.setVisibility(View.VISIBLE);
-            icon_sunrise.setVisibility(View.GONE);
-            icon_sunset.setVisibility(View.GONE);
-
-        } else if (options.showHeaders == 3) {    // 3: no-headers
-            header_sunrise.setVisibility(View.GONE);
-            header_sunset.setVisibility(View.GONE);
-            icon_sunrise.setVisibility(View.GONE);
-            icon_sunset.setVisibility(View.GONE);
-
-        } else {                                  // 0: text+icon
-            header_sunrise.setVisibility(View.VISIBLE);
-            header_sunset.setVisibility(View.VISIBLE);
-            icon_sunrise.setVisibility(View.VISIBLE);
-            icon_sunset.setVisibility(View.VISIBLE);
-        }
+        int iconVisibility = (options.showHeaderIcon ? View.VISIBLE : View.GONE);
+        icon_sunrise.setVisibility(iconVisibility);
+        icon_sunset.setVisibility(iconVisibility);
     }
 
     private void updateDayLengthViews(Context context, TextView textView, long dayLength, int labelID, boolean showSeconds, int highlightColor)
