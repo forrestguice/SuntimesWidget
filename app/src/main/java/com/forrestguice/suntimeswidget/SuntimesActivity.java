@@ -309,7 +309,9 @@ public class SuntimesActivity extends AppCompatActivity
                 setUserSwappedCard(false, "handleIntent (resetNote)");
                 notes.resetNoteIndex();
                 NoteData note = notes.getNote();
-                highlightTimeField1(note.noteMode);
+                if (note != null) {
+                    highlightTimeField1(note.noteMode);
+                }
 
             } else if (action.equals(ACTION_CARD_NEXT)) {
                 setUserSwappedCard( true, "handleIntent (nextCard)" );
@@ -1862,14 +1864,18 @@ public class SuntimesActivity extends AppCompatActivity
             setUserSwappedCard(false, "onSunriseClick");
             notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNRISE));
             NoteData note = notes.getNote();
-            highlightTimeField1(note.noteMode);
+            if (note != null) {
+                highlightTimeField1(note.noteMode);
+            }
         }
         @Override
         public boolean onSunriseHeaderLongClick(CardAdapter adapter, int position) {
             setUserSwappedCard(false, "onSunriseClick");
             notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNRISE));
             NoteData note = notes.getNote();
-            highlightTimeField1(note.noteMode);
+            if (note != null) {
+                highlightTimeField1(note.noteMode);
+            }
             return true;
         }
 
@@ -1879,7 +1885,9 @@ public class SuntimesActivity extends AppCompatActivity
             setUserSwappedCard(false, "onSunsetClick");
             notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNSET));
             NoteData note = notes.getNote();
-            highlightTimeField1(note.noteMode);
+            if (note != null) {
+                highlightTimeField1(note.noteMode);
+            }
         }
         @Override
         public boolean onSunsetHeaderLongClick(CardAdapter adapter, int position)
@@ -1887,7 +1895,9 @@ public class SuntimesActivity extends AppCompatActivity
             setUserSwappedCard(false, "onSunsetClick");
             notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNSET));
             NoteData note = notes.getNote();
-            highlightTimeField1(note.noteMode);
+            if (note != null) {
+                highlightTimeField1(note.noteMode);
+            }
             return true;
         }
 
@@ -1937,7 +1947,9 @@ public class SuntimesActivity extends AppCompatActivity
             setUserSwappedCard(false, "onCenterClick");
             notes.resetNoteIndex();
             NoteData note = notes.getNote();
-            highlightTimeField1(note.noteMode);
+            if (note != null) {
+                highlightTimeField1(note.noteMode);
+            }
         }
     };
 
