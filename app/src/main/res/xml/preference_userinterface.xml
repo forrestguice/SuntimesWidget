@@ -69,6 +69,21 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/configLabel_ui_showheaders">
+
+        <CheckBoxPreference
+            android:key="app_ui_showheader_icon"
+            android:title="@string/configLabel_ui_showheader_icon"
+            android:defaultValue="@string/def_app_ui_showheader_icon" />
+
+        <CheckBoxPreference
+            android:key="app_ui_showheader_text"
+            android:title="@string/configLabel_ui_showheader_text"
+            android:defaultValue="@string/def_app_ui_showheader_text" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/configLabel_ui">
 
         <CheckBoxPreference

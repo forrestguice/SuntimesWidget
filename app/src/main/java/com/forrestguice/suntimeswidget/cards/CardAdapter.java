@@ -558,6 +558,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             showNoon = showFields[AppSettings.FIELD_NOON];
             showGold = showFields[AppSettings.FIELD_GOLD] && supportsGoldBlue;
             showBlue = showFields[AppSettings.FIELD_BLUE] && supportsGoldBlue;
+
+            showHeaderText = AppSettings.loadShowHeaderTextPref(context);
+            showHeaderIcon = AppSettings.loadShowHeaderIconPref(context);
         }
     }
 }

@@ -93,6 +93,12 @@ public class AppSettings
     public static final String PREF_KEY_UI_SHOWDATASOURCE = "app_ui_showdatasource";
     public static final boolean PREF_DEF_UI_SHOWDATASOURCE = true;
 
+    public static final String PREF_KEY_UI_SHOWHEADER_TEXT = "app_ui_showheader_text";
+    public static final boolean PREF_DEF_UI_SHOWHEADER_TEXT = true;
+
+    public static final String PREF_KEY_UI_SHOWHEADER_ICON = "app_ui_showheader_icon";
+    public static final boolean PREF_DEF_UI_SHOWHEADER_ICON = true;
+
     public static final String PREF_KEY_UI_SHOWFIELDS = "app_ui_showfields";
     public static final byte PREF_DEF_UI_SHOWFIELDS = 0b00111111;
     public static final int FIELD_ACTUAL = 0;  // bit positions
@@ -336,6 +342,18 @@ public class AppSettings
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean(PREF_KEY_UI_SHOWMOON, PREF_DEF_UI_SHOWMOON);
+    }
+
+    public static boolean loadShowHeaderIconPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_UI_SHOWHEADER_ICON, PREF_DEF_UI_SHOWHEADER_ICON);
+    }
+
+    public static boolean loadShowHeaderTextPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_UI_SHOWHEADER_TEXT, PREF_DEF_UI_SHOWHEADER_TEXT);
     }
 
     public static boolean loadDatasourceUIPref( Context context )
