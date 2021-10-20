@@ -159,6 +159,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         SuntimesRiseSetDataset sun = ((data == null) ? null : data.first);
         SuntimesMoonData moon = ((data == null) ? null : data.second);
 
+        updateHeaderViews(context, options);
         row_actual.setVisible(options.showActual);
         row_civil.setVisible(options.showCivil);
         row_nautical.setVisible(options.showNautical);
@@ -402,6 +403,35 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             return new Pair<>(context.getString(R.string.past_n, dayOffset), dayOffset);
         }
         return new Pair<>(label, null);
+    }
+
+    protected void updateHeaderViews(Context context, CardAdapter.CardAdapterOptions options)
+    {
+        if (options.showHeaders == 1)             // 1: icon-only
+        {
+            header_sunrise.setVisibility(View.GONE);
+            header_sunset.setVisibility(View.GONE);
+            icon_sunrise.setVisibility(View.VISIBLE);
+            icon_sunset.setVisibility(View.VISIBLE);
+
+        } else if (options.showHeaders == 2) {    // 2: text-only
+            header_sunrise.setVisibility(View.VISIBLE);
+            header_sunset.setVisibility(View.VISIBLE);
+            icon_sunrise.setVisibility(View.GONE);
+            icon_sunset.setVisibility(View.GONE);
+
+        } else if (options.showHeaders == 3) {    // 3: no-headers
+            header_sunrise.setVisibility(View.GONE);
+            header_sunset.setVisibility(View.GONE);
+            icon_sunrise.setVisibility(View.GONE);
+            icon_sunset.setVisibility(View.GONE);
+
+        } else {                                  // 0: text+icon
+            header_sunrise.setVisibility(View.VISIBLE);
+            header_sunset.setVisibility(View.VISIBLE);
+            icon_sunrise.setVisibility(View.VISIBLE);
+            icon_sunset.setVisibility(View.VISIBLE);
+        }
     }
 
     private void updateDayLengthViews(Context context, TextView textView, long dayLength, int labelID, boolean showSeconds, int highlightColor)
