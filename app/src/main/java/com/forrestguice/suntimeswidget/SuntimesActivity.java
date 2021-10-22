@@ -38,6 +38,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import android.os.Parcelable;
+import android.os.SystemClock;
 import android.preference.PreferenceActivity;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
@@ -204,7 +205,7 @@ public class SuntimesActivity extends AppCompatActivity
     private View layout_altitude;
 
     private boolean isRtl = false;
-    private boolean userSwappedCard = false;
+    private long userSwappedCard = -1L;
 
     private boolean showWarnings = false;
     private SuntimesWarning timezoneWarning;
@@ -643,7 +644,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         super.onSaveInstanceState(outState);
         saveWarnings(outState);
-        outState.putBoolean(KEY_UI_USERSWAPPEDCARD, userSwappedCard);
+        outState.putLong(KEY_UI_USERSWAPPEDCARD, userSwappedCard);
         outState.putInt(KEY_UI_CARDPOSITION, ((card_layout.findFirstVisibleItemPosition() + card_layout.findLastVisibleItemPosition()) / 2));
         card_equinoxSolstice.saveState(outState);
     }
@@ -653,7 +654,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         super.onRestoreInstanceState(savedInstanceState);
         restoreWarnings(savedInstanceState);
-        setUserSwappedCard(savedInstanceState.getBoolean(KEY_UI_USERSWAPPEDCARD, false), "onRestoreInstanceState");
+        userSwappedCard = savedInstanceState.getLong(KEY_UI_USERSWAPPEDCARD, -1L);
         card_equinoxSolstice.loadState(savedInstanceState);
 
         int cardPosition = savedInstanceState.getInt(KEY_UI_CARDPOSITION, CardAdapter.TODAY_POSITION);
@@ -2112,7 +2113,7 @@ public class SuntimesActivity extends AppCompatActivity
     public void highlightTimeField1(SolarEvents event)
     {
         int cardPosition = card_adapter.highlightField(this, event);
-        if (!userSwappedCard && cardPosition != -1) {
+        if (!checkUserSwappedCard() && cardPosition != -1) {
             scrollTo(cardPosition);
         }
     }
@@ -2231,9 +2232,21 @@ public class SuntimesActivity extends AppCompatActivity
 
     private void setUserSwappedCard( boolean value, String tag )
     {
-        userSwappedCard = value;
-        Log.d("DEBUG", "userSwappedCard set " + value + " (" + tag + " )");
+        userSwappedCard = (value ? SystemClock.elapsedRealtime() : -1L);
+        //Log.d("DEBUG", "userSwappedCard set " + value + " (" + tag + " )");
     }
+
+    private boolean checkUserSwappedCard()
+    {
+        long d = (userSwappedCard < 0) ? 0 : SystemClock.elapsedRealtime() - userSwappedCard;
+        if (d < 0 || d >= RESET_USERSWAPPEDCARD_AFTER_T) {
+            userSwappedCard = -1L;
+            //Log.d("DEBUG", "userSwappedCard set false (checkUserSwappedCard)");
+        }
+        //Log.d("DEBUG", "userSwappedCard check " + (userSwappedCard >= 0));
+        return (userSwappedCard >= 0);
+    }
+    private static final long RESET_USERSWAPPEDCARD_AFTER_T = 60 * 60 * 1000;  // 1h
 
     /**
      * Get the current theme's resource id (used by test verification).
