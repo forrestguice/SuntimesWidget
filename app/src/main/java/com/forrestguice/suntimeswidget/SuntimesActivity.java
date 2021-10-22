@@ -18,13 +18,11 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,8 +39,6 @@ import android.os.Bundle;
 
 import android.os.Parcelable;
 import android.preference.PreferenceActivity;
-import android.provider.AlarmClock;
-import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
@@ -103,11 +99,9 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.lang.reflect.Method;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
@@ -143,7 +137,6 @@ public class SuntimesActivity extends AppCompatActivity
 
     public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedCard";
     public static final String KEY_UI_CARDPOSITION = "cardPosition";
-    public static final String KEY_UI_RESETNOTE = "resetNote";
 
     public static final String WARNINGID_DATE = "Date";
     public static final String WARNINGID_TIMEZONE = "Timezone";
@@ -254,7 +247,6 @@ public class SuntimesActivity extends AppCompatActivity
 
         initGetFix();
         getFixHelper.loadSettings(savedState);
-        onStart_resetNoteIndex = true;
 
         handleIntent(getIntent());
     }
@@ -400,7 +392,6 @@ public class SuntimesActivity extends AppCompatActivity
 
         updateViews(SuntimesActivity.this);
     }
-    private boolean onStart_resetNoteIndex = false;
 
     /**
      * OnResume: the user is now interacting w/ the Activity (running state)
@@ -411,11 +402,7 @@ public class SuntimesActivity extends AppCompatActivity
         super.onResume();
         updateActionBar(this);
         getFixHelper.onResume();
-
-        if (onStart_resetNoteIndex) {
-            notes.resetNoteIndex();
-            onStart_resetNoteIndex = false;
-        }
+        notes.resetNoteIndex();
 
         // restore open dialogs
         updateDialogs(this);
@@ -636,9 +623,7 @@ public class SuntimesActivity extends AppCompatActivity
                 }
 
                 setPartialUpdateAlarm(SuntimesActivity.this);
-                if (!userSwappedCard) {
-                    notes.resetNoteIndex();
-                }
+                notes.resetNoteIndex();
                 updateViews(SuntimesActivity.this);
             }
         }
@@ -660,7 +645,6 @@ public class SuntimesActivity extends AppCompatActivity
         saveWarnings(outState);
         outState.putBoolean(KEY_UI_USERSWAPPEDCARD, userSwappedCard);
         outState.putInt(KEY_UI_CARDPOSITION, ((card_layout.findFirstVisibleItemPosition() + card_layout.findLastVisibleItemPosition()) / 2));
-        outState.putBoolean(KEY_UI_RESETNOTE, onStart_resetNoteIndex);
         card_equinoxSolstice.saveState(outState);
     }
 
@@ -669,7 +653,6 @@ public class SuntimesActivity extends AppCompatActivity
     {
         super.onRestoreInstanceState(savedInstanceState);
         restoreWarnings(savedInstanceState);
-        onStart_resetNoteIndex = savedInstanceState.getBoolean(KEY_UI_RESETNOTE, onStart_resetNoteIndex);
         setUserSwappedCard(savedInstanceState.getBoolean(KEY_UI_USERSWAPPEDCARD, false), "onRestoreInstanceState");
         card_equinoxSolstice.loadState(savedInstanceState);
 
