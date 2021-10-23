@@ -1974,6 +1974,12 @@ public class SuntimesActivity extends AppCompatActivity
                         String actionID = AppSettings.loadNoteTapActionPref(SuntimesActivity.this);
                         if (WidgetActions.SuntimesAction.ALARM.name().equals(actionID)) {
                             scheduleAlarmFromNote();
+                        } else if (WidgetActions.SuntimesAction.NEXT_NOTE.name().equals(actionID)) {
+                            setUserSwappedCard(false, "noteTouchListener (next note)");
+                            notes.showNextNote();    // call next/prev methods directly; using onTapAction (re)triggers the activity lifecycle (onResume)
+                        } else if (WidgetActions.SuntimesAction.PREV_NOTE.name().equals(actionID)) {
+                            setUserSwappedCard(false, "noteTouchListener (prev note)");
+                            notes.showPrevNote();
                         } else {
                             onTapAction(actionID, "onNoteTouch");
                         }
