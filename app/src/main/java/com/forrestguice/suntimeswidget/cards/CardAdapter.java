@@ -525,6 +525,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         public boolean showGold = false;
         public boolean showBlue = false;
 
+        public boolean showHeaderText = true;
+        public boolean showHeaderIcon = true;
+
         public SuntimesTheme themeOverride = null;
         public int color_textTimeDelta, color_enabled, color_disabled, color_pressed, color_warning, color_accent, color_background;
 
@@ -555,6 +558,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             showNoon = showFields[AppSettings.FIELD_NOON];
             showGold = showFields[AppSettings.FIELD_GOLD] && supportsGoldBlue;
             showBlue = showFields[AppSettings.FIELD_BLUE] && supportsGoldBlue;
+
+            showHeaderText = AppSettings.loadShowHeaderTextPref(context);
+            showHeaderIcon = AppSettings.loadShowHeaderIconPref(context);
         }
     }
 }

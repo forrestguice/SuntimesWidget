@@ -945,6 +945,11 @@
     <string name="configLabel_ui_showdatasource">Show Data Source</string>
     <string name="configLabel_ui_showdatasource_summary">Show a label indicating the current configuration.</string>
 
+    <!-- App Setting: show headers -->
+    <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
+    <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_ui_showheader_text">Show Header Text</string> <!-- checkbox label --> <!-- TODO -->
+
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Golden Hour</string>
 
@@ -1791,6 +1796,8 @@
     <string name="def_app_ui_showlightmap" translatable="false">true</string>
     <string name="def_app_ui_showgoldhour" translatable="false">true</string>
     <string name="def_app_ui_showbluehour" translatable="false">false</string>
+    <string name="def_app_ui_showheader_icon" translatable="false">true</string>
+    <string name="def_app_ui_showheader_text" translatable="false">true</string>
     <string name="def_app_ui_showdatasource" translatable="false">true</string>
     <string name="def_app_ui_datetapaction" translatable="false">SWAP_CARD</string>
     <string name="def_app_ui_datetapaction1" translatable="false">SHOW_CALENDAR</string>
