@@ -136,6 +136,7 @@ public class SuntimesActivity extends AppCompatActivity
     public static final String SUNTIMES_APP_UPDATE_PARTIAL = "suntimes.SUNTIMES_APP_UPDATE_PARTIAL";
     public static final int SUNTIMES_SETTINGS_REQUEST = 10;
 
+    public static final String KEY_UI_NOTEINDEX = "noteIndex";
     public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedCard";
     public static final String KEY_UI_CARDPOSITION = "cardPosition";
 
@@ -206,6 +207,7 @@ public class SuntimesActivity extends AppCompatActivity
 
     private boolean isRtl = false;
     private long userSwappedCard = -1L;
+    private boolean onResume_resetNoteIndex = true;
 
     private boolean showWarnings = false;
     private SuntimesWarning timezoneWarning;
@@ -222,6 +224,7 @@ public class SuntimesActivity extends AppCompatActivity
     @Override
     protected void attachBaseContext(Context newBase)
     {
+        //Log.d("DEBUG", "attachBaseContext");
         Context context = AppSettings.initLocale(newBase, localeInfo = new AppSettings.LocaleInfo());
         isRtl = AppSettings.isLocaleRtl(context);
         super.attachBaseContext(context);
@@ -234,6 +237,7 @@ public class SuntimesActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle savedState)
     {
+        //Log.d("DEBUG", "onCreate");
         Context context = SuntimesActivity.this;
         initTheme();
         super.onCreate(savedState);
@@ -386,12 +390,15 @@ public class SuntimesActivity extends AppCompatActivity
     public void onStart()
     {
         super.onStart();
+        //Log.d("DEBUG", "onStart");
+
         calculateData(SuntimesActivity.this);
 
         registerReceivers(SuntimesActivity.this);
         setUpdateAlarms(SuntimesActivity.this);
 
         updateViews(SuntimesActivity.this);
+        onResume_resetNoteIndex = true;        // reset to true (to be set false again by onRestoreInstanceState if needed)
     }
 
     /**
@@ -401,9 +408,14 @@ public class SuntimesActivity extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
+        //Log.d("DEBUG", "onResume");
+
         updateActionBar(this);
         getFixHelper.onResume();
-        notes.resetNoteIndex();
+
+        if (onResume_resetNoteIndex) {
+            notes.resetNoteIndex();
+        }
 
         // restore open dialogs
         updateDialogs(this);
@@ -633,17 +645,21 @@ public class SuntimesActivity extends AppCompatActivity
     /**
      * OnPause: the user about to interact w/ another Activity
      */
-    @Override
+    /*@Override
     public void onPause()
     {
         super.onPause();
-    }
+        //Log.d("DEBUG", "onPause");
+    }*/
 
     @Override
     public void onSaveInstanceState( Bundle outState )
     {
         super.onSaveInstanceState(outState);
+        //Log.d("DEBUG", "onSaveInstanceState");
+
         saveWarnings(outState);
+        outState.putInt(KEY_UI_NOTEINDEX, notes.getNoteIndex());
         outState.putLong(KEY_UI_USERSWAPPEDCARD, userSwappedCard);
         outState.putInt(KEY_UI_CARDPOSITION, ((card_layout.findFirstVisibleItemPosition() + card_layout.findLastVisibleItemPosition()) / 2));
         card_equinoxSolstice.saveState(outState);
@@ -653,9 +669,17 @@ public class SuntimesActivity extends AppCompatActivity
     public void onRestoreInstanceState(@NonNull Bundle savedInstanceState)
     {
         super.onRestoreInstanceState(savedInstanceState);
+        //Log.d("DEBUG", "onRestoreInstanceState");
+
         restoreWarnings(savedInstanceState);
         userSwappedCard = savedInstanceState.getLong(KEY_UI_USERSWAPPEDCARD, -1L);
         card_equinoxSolstice.loadState(savedInstanceState);
+
+        int noteIndex = savedInstanceState.getInt(KEY_UI_NOTEINDEX);
+        if (noteIndex >= 0 && noteIndex != notes.getNoteIndex()) {
+            notes.setNoteIndex(noteIndex);
+        }
+        onResume_resetNoteIndex = false;
 
         int cardPosition = savedInstanceState.getInt(KEY_UI_CARDPOSITION, CardAdapter.TODAY_POSITION);
         if (cardPosition == RecyclerView.NO_POSITION) {
@@ -671,6 +695,7 @@ public class SuntimesActivity extends AppCompatActivity
     @Override
     public void onStop()
     {
+        //Log.d("DEBUG", "onStop");
         unregisterReceivers(SuntimesActivity.this);
         unsetUpdateAlarms(SuntimesActivity.this);
 
@@ -682,11 +707,12 @@ public class SuntimesActivity extends AppCompatActivity
     /**
      * OnDestroy: the activity destroyed
      */
-    @Override
+    /*@Override
     public void onDestroy()
     {
         super.onDestroy();
-    }
+        //Log.d("DEBUG", "onDestroy");
+    }*/
 
     /**
      * @param requestCode the request code that was passed to requestPermissions
