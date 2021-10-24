@@ -42,13 +42,16 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
+import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.regex.Pattern;
@@ -159,7 +162,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         SuntimesRiseSetDataset sun = ((data == null) ? null : data.first);
         SuntimesMoonData moon = ((data == null) ? null : data.second);
 
-        updateHeaderViews(options);
+        updateHeaderViews(context, data, options);
         row_actual.setVisible(options.showActual);
         row_civil.setVisible(options.showCivil);
         row_nautical.setVisible(options.showNautical);
@@ -405,15 +408,60 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         return new Pair<>(label, null);
     }
 
-    protected void updateHeaderViews(CardAdapter.CardAdapterOptions options)
+    protected void updateHeaderViews(Context context, Pair<SuntimesRiseSetDataset, SuntimesMoonData> data, CardAdapter.CardAdapterOptions options)
     {
-        int textVisibility = (options.showHeaderText ? View.VISIBLE : View.GONE);
+        int textVisibility = (options.showHeaderText != 0 ? View.VISIBLE : View.GONE);
         header_sunrise.setVisibility(textVisibility);
         header_sunset.setVisibility(textVisibility);
 
         int iconVisibility = (options.showHeaderIcon ? View.VISIBLE : View.GONE);
         icon_sunrise.setVisibility(iconVisibility);
         icon_sunset.setVisibility(iconVisibility);
+
+        boolean showPosition = (options.showHeaderText == 2);
+        SuntimesRiseSetDataset sun = ((data == null) ? null : data.first);
+        if (showPosition && sun != null)
+        {
+            SuntimesCalculator calculator = sun.calculator();
+            SuntimesRiseSetData d = sun.dataCivil;
+
+            Calendar riseTime = (d != null ? d.sunriseCalendarToday() : null);
+            SuntimesCalculator.SunPosition positionRising = (riseTime != null && calculator != null ? calculator.getSunPosition(riseTime) : null);
+            if (positionRising != null) {
+                styleAzimuthText(header_sunrise, positionRising.azimuth, null, 1);
+            } else {
+                header_sunrise.setText(context.getString(R.string.sunrise_short));
+            }
+
+            Calendar setTime = (d != null ? d.sunsetCalendarToday() : null);
+            SuntimesCalculator.SunPosition positionSetting = (setTime != null && calculator != null ? calculator.getSunPosition(setTime) : null);
+            if (positionSetting != null) {
+                styleAzimuthText(header_sunset, positionSetting.azimuth, null, 1);
+            } else {
+                header_sunset.setText(context.getString(R.string.sunset_short));
+            }
+
+        } else {
+            header_sunrise.setText(context.getString(R.string.sunrise_short));
+            header_sunset.setText(context.getString(R.string.sunset_short));
+        }
+    }
+
+    public static void styleAzimuthText(TextView view, double azimuth, Integer color, int places)
+    {
+        SuntimesUtils.TimeDisplayText azimuthText = utils.formatAsDirection2(azimuth, places, false);
+        String azimuthString = utils.formatAsDirection(azimuthText.getValue(), azimuthText.getSuffix());
+        SpannableString azimuthSpan = null;
+        if (color != null) {
+            //noinspection ConstantConditions
+            azimuthSpan = SuntimesUtils.createColorSpan(azimuthSpan, azimuthString, azimuthString, color);
+        }
+        azimuthSpan = SuntimesUtils.createRelativeSpan(azimuthSpan, azimuthString, azimuthText.getSuffix(), 0.7f);
+        azimuthSpan = SuntimesUtils.createBoldSpan(azimuthSpan, azimuthString, azimuthText.getSuffix());
+        view.setText(azimuthSpan);
+
+        SuntimesUtils.TimeDisplayText azimuthDesc = utils.formatAsDirection2(azimuth, places, true);
+        view.setContentDescription(utils.formatAsDirection(azimuthDesc.getValue(), azimuthDesc.getSuffix()));
     }
 
     private void updateDayLengthViews(Context context, TextView textView, long dayLength, int labelID, boolean showSeconds, int highlightColor)

@@ -80,9 +80,11 @@
             android:title="@string/configLabel_ui_showheader_icon"
             android:defaultValue="@string/def_app_ui_showheader_icon" />
 
-        <CheckBoxPreference
-            android:key="app_ui_showheader_text"
+        <com.forrestguice.suntimeswidget.settings.ListPreference
+            android:key="app_ui_showheader_text1"
             android:title="@string/configLabel_ui_showheader_text"
+            android:summary="@string/configLabel_ui_showheader_text_summary"
+            android:entries="@array/headerText_display" android:entryValues="@array/headerText_values"
             android:defaultValue="@string/def_app_ui_showheader_text" />
 
         <CheckBoxPreference
