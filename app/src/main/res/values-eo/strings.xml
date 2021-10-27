@@ -79,15 +79,16 @@
     <!-- Field: moon illumination (as seen in moon widget) -->
     <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> prilumata</string>  <!-- "50% illuminated" .. used in 2x1 widget -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50%" .. used in 1x1 widget -->
+    <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> je <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
          The relative order is defined by the layout (layout/info_time_daydelta.xml).
     -->
-    <string name="delta_day_tomorrow">Morgaŭo estos</string>
-    <string name="delta_day_yesterday">Hieraŭo estis</string>
-    <string name="delta_day_shorter">malpli longa</string>
-    <string name="delta_day_longer">pli longa</string>
+    <string name="delta_day_tomorrow">Morgaŭo estos je</string>
+    <string name="delta_day_yesterday">Hieraŭo estis je</string>
+    <string name="delta_day_shorter">malpli longa.</string>
+    <string name="delta_day_longer">pli longa.</string>
 
     <!-- NotePrefix: since/until/untilEnd
          The note prefix text. e.g.
@@ -225,7 +226,7 @@
     <string name="configLabel_general_timeFormatMode">Formo de tempo:</string>         <!-- spinner label -->
 
     <string name="configLabel_general_altitude_enabled">Uzi altitudon</string>        <!-- checkbox label -->
-    <string name="configLabel_general_altitude_enabled_summary">Apliki plibonigojn surbaze de altitudo.</string>        <!-- checkbox label -->
+    <string name="configLabel_general_altitude_enabled_summary">Apliki korektojn surbaze de altitudo.</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_lengthUnits">Unuoj de longo</string>        <!-- spinner label -->
 
@@ -236,7 +237,7 @@
     <string name="configLabel_general_showTimeDate_summary">Ampleksi la horon dum montrado de datoj.</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_showWeeks">Montri semajnojn</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showWeeks_summary">Dividi temp-intervalojn longaj ol 7 tagoj inter semajnoj (ekz. 15t iĝas 2sem 1t).</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showWeeks_summary">Dividi temp-intervalojn pli longajn ol 7 tagoj inter semajnoj (ekz. 15 t iĝas 2 sem 1 t).</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_showHours">Montri horojn</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">Ampleksi horojn kaj minutojn por temp-intervaloj pli longaj ol tagnokto.</string>    <!-- checkbox label -->
@@ -696,6 +697,8 @@
 
     <string name="alarmOption_vibrate">vibri</string>                <!-- checkbox text -->
     <string name="alarmOption_ringtone_none">sen sono</string>          <!-- ringtone label (none) -->
+    <string name="alarmOption_ringtone_ringtone">voksono</string>          <!-- menu item; Select a "Ringtone" -->
+    <string name="alarmOption_ringtone_file">son-dosiero</string>          <!-- menu item; Select an "Audio File" -->
     <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
     <string name="alarmOption_solarevent_none">konstanta tempo</string>          <!-- ringtone label (none) -->
 
@@ -799,8 +802,8 @@
     </plurals>
     
     <string name="configLabel_alarmMisc">Diversaj</string>
-    <string name="configLabel_alarms_showlauncher">Piktogramo en lanĉilo</string>
-    <string name="configLabel_alarms_showlauncher_summary">Montri la piktogramon “Suntempoj: alarmoj” en aplikaĵa lanĉilo.</string>
+    <string name="configLabel_alarms_showlauncher">Bildsimbolo en lanĉilo</string>
+    <string name="configLabel_alarms_showlauncher_summary">Montri la bildsimbolon “Suntempoj: alarmoj” en aplikaĵlanĉilo.</string>
     
     <!--
          APP SETTINGS
