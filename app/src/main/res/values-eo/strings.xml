@@ -688,8 +688,8 @@
     <string name="alarmAction_timeoutMsg">Alarmo silentiĝis.</string>     <!-- notification msg -->
     <string name="alarmAction_upcomingMsg">Alarmo baldaŭas</string>     <!-- notification msg -->
 
-    <string name="alarmMode_alarm">Alarmo</string>                <!-- alarm type (setting) -->
-    <string name="alarmMode_notification">Sciigo</string>                <!-- alarm type (setting) -->
+    <string name="alarmMode_alarm">alarmo</string>                <!-- alarm type (setting) -->
+    <string name="alarmMode_notification">sciigo</string>                <!-- alarm type (setting) -->
 
     <string name="configLabel_alarmEdit_scheduleTray">Plani:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_onAlertTray">Ludi sonon &#47; ekigi:</string>               <!-- group title -->
@@ -710,7 +710,8 @@
     <string name="deletealarm_dialog_message">Ĉu vi certe volas forigi la <xliff:g id="type">%1$s</xliff:g>n je <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg -->
     <string name="deletealarm_dialog_ok">Forigi</string>        <!-- button -->
     <string name="deletealarm_dialog_cancel">Nuligi</string>    <!-- button -->
-    <string name="deletealarm_toast_success">Forigis <xliff:g id="type" example="sciigo">%1$s</xliff:g>n je <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>).</string> <!-- toast msg -->
+    <string name="deletealarm_toast_success">Forigita: <xliff:g id="type" example="sciigo">%1$s</xliff:g> je <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>).</string> <!-- toast msg -->
+    <string name="deletealarm_toast_success1">Forigita: <xliff:g id="type" example="Notification">%1$s</xliff:g>.</string> <!-- toast msg -->
 
     <string name="discardchanges_dialog_message">Estas nekonservitaj ŝanĝoj.</string>      <!-- dialog message -->
     <string name="discardchanges_dialog_ok">Ne konservi</string>                              <!-- button -->
@@ -742,6 +743,7 @@
     <string name="alarmoffset_dialog_cancel">Nuligi</string>    <!-- button -->
 
     <string name="alarmenabled_toast">Agordis <xliff:g id="alarmType" example="sciigo">%1$s</xliff:g>n post <xliff:g id="duration" example="8h">%2$s</xliff:g>.</string> <!-- toast msg -->
+    <string name="alarmdetails_snack"><La xliff:g id="alarmType" example="Notification">%1$s</xliff:g> aktiviĝos post <xliff:g id="duration" example="8h">%2$s</xliff:g></string> <!-- snackbar msg -->
 
     <string name="configLabel_alarms_optWhiteList">Optimumigo de baterio</string>
     <string name="configLabel_alarms_optWhiteList_listed">Ne optimumigita (konsilinde)</string>
