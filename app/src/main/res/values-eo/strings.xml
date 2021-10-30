@@ -743,7 +743,7 @@
     <string name="alarmoffset_dialog_cancel">Nuligi</string>    <!-- button -->
 
     <string name="alarmenabled_toast">Agordis <xliff:g id="alarmType" example="sciigo">%1$s</xliff:g>n post <xliff:g id="duration" example="8h">%2$s</xliff:g>.</string> <!-- toast msg -->
-    <string name="alarmdetails_snack"><La xliff:g id="alarmType" example="Notification">%1$s</xliff:g> aktiviĝos post <xliff:g id="duration" example="8h">%2$s</xliff:g></string> <!-- snackbar msg -->
+    <string name="alarmdetails_snack"><La <xliff:g id="alarmType" example="Notification">%1$s</xliff:g> aktiviĝos post <xliff:g id="duration" example="8h">%2$s</xliff:g></string> <!-- snackbar msg -->
 
     <string name="configLabel_alarms_optWhiteList">Optimumigo de baterio</string>
     <string name="configLabel_alarms_optWhiteList_listed">Ne optimumigita (konsilinde)</string>
@@ -839,6 +839,7 @@
     <string name="configAction_deletePlace">Forigi</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Forigi ĉiujn</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportPlaces">Elporti</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">Enporti</string>       <!-- button (contentDescription) -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Fasado</string>                       <!-- group title -->
@@ -872,6 +873,11 @@
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Montri fonton de datumoj</string>
     <string name="configLabel_ui_showdatasource_summary">Montri etikedon indikantan la nunan agordaron.</string>
+
+    <!-- App Setting: show headers -->
+    <string name="configLabel_ui_showheaders">Kolumn-titoloj</string>              <!-- group title -->
+    <string name="configLabel_ui_showheader_icon">Montri bildsimbolon en kulumn-titolo</string> <!-- checkbox label -->
+    <string name="configLabel_ui_showheader_text">Montri tekston en kolumn-titolo</string> <!-- checkbox label -->
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Ora horo</string>
@@ -1355,9 +1361,9 @@
         Tiu eblaĵo estas nun disponebla kiel <a href="moreInfoLink">aparta aplikaĵo</a>.
     ]]></string>
 
-    <string name="privacy_policy"><![CDATA[<b>Privateco:</b><br/>La aplikaĵo Suntempoj ne kolektas, konservas aŭ transigas personajn informojn de la uzanto. Ĝi enhavas <b>neniujn reklamojn</b>, <b>neniujn analizilojn</b>, <b>neniujn spurilojn</b> kaj <b>neniujn malnecesajn permesojn</b>. <br/><br/>La aplikaĵo agordiĝas de lokaj datumoj. Tiuj informoj (kaj aliaj agordoj uzataj de la aplikaĵo) estas konservataj loke kaj ne eliras el la aparato.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
+    <string name="privacy_policy"><![CDATA[<b>Privateco:</b><br/>La aplikaĵo Suntempoj ne kolektas, konservas aŭ transigas personajn informojn de la uzanto. Ĝi enhavas <b>neniun reklamon</b>, <b>neniun analizilon</b>, <b>neniun spurilon</b> kaj <b>neniun malnecesan permeson</b>. <br/><br/>La aplikaĵo agordiĝas de lokaj datumoj. Tiuj informoj (kaj aliaj agordoj uzataj de la aplikaĵo) estas konservataj loke kaj ne eliras el la aparato.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[La permeso por <b>determini pozicion</b> estas uzata por trovi vian nunan longitudon kaj latitudon. Tiu permeso estas malnepra, pozicio estas implicite agordita permane.]]></string>
-    <string name="privacy_permission_storage"><![CDATA[La permeso por aliri <b>eksteran konservejon</b> estas uzato por elpori/sekurkopii datumojn al dosieroj (ekz. lokojn, etosojn).]]></string>
+    <string name="privacy_permission_storage"><![CDATA[La permeso por aliri <b>eksteran konservejon</b> estas uzata por elpori/sekurkopii datumojn al dosieroj (ekz. lokojn, etosojn).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[La permeso por <b>legi eksteran konservejon</b> estas uzata por ludi sonojn troviĝantajn en la SD‑karto. <br/><br/>Tiu permeso estas malnepra, la implicita sono estos ludata, se tiu permeso mankas. Tiu permeso ne estas bezonata por ludi sonojn de la sistemo (konservo de aŭdvidaĵoj).]]></string>
     <string name="privacy_permissiondialog_prompt"><![CDATA[Ĉu peti la permeson nun?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignori</string>
@@ -1368,7 +1374,8 @@
     <string name="security_duplicate_permissions">La permeso, kiu apartenas al la programo Suntempoj:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nestas ankaŭ difinita de: <xliff:g id="packageName" example="iu.alia.aplikajho">%2$s</xliff:g></string>
     <string name="feature_not_supported_by_api">Tiu ĉi eblaĵo ne estas subtenata per API %1$s.</string>
     <string name="feature_not_supported_by_source">Tiu ĉi eblaĵo ne estas subtenata per la nuna datum‑fonto.</string>
-    <string name="reboot_required_message">Restarto povas esti bezonata por apliki ŝanĝojn.</string>
+    <string name="reboot_required_message">Restarto de la aparato povas esti necesa por apliki ŝanĝojn.</string>    <!-- toast; device off/on may be required -->
+    <string name="restart_required_message">Restarto de la aplikaĵo povas esti necesa por apliki ŝanĝojn.</string>   <!-- toast; app restart may be required -->
 
     <string name="dialog_ok">Bone</string>
     <string name="dialog_cancel">Nuligi</string>
