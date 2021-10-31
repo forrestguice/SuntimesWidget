@@ -80,6 +80,7 @@
     <!-- Field: moon illumination (as seen in moon widget) -->
     <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> oświetlenia</string>  <!-- "50% illuminated" .. used in 2x1 widget -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50%" .. used in 1x1 widget -->
+    <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> o <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
@@ -415,9 +416,9 @@
     <string name="configAction_savePlace">Zapisz</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Czas słoneczny</string>                       <!-- setting -->
-    <string name="timezoneMode_current">Systemowa</string>                         <!-- setting -->
-    <string name="timezoneMode_custom">Użytkownika</string>                    <!-- setting -->
+    <string name="timezoneMode_standard">czas słoneczny</string>                       <!-- setting -->
+    <string name="timezoneMode_current">systemowa</string>                         <!-- setting -->
+    <string name="timezoneMode_custom">użytkownika</string>                    <!-- setting -->
     
     <string name="time_lmst">lokalny czas gwiazdowy</string>                  <!-- timezone label -->
     <string name="time_gmst">czas gwiazdowy Greenwich</string>              <!-- timezone label -->
@@ -533,6 +534,7 @@
     <string name="configAction_deleteTheme">Usuń</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Kopiuj</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportThemes">Eksportuj</string>    <!-- button (contentDescription) -->
+    <string name="configAction_shareTheme">Udostępnij</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
     <string name="configAction_importThemes">Importuj</string>    <!-- button (contentDescription) -->
 
     <!--<string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>-->                                        <!-- suggested new theme id -->
@@ -694,8 +696,8 @@
     <string name="alarmAction_timeoutMsg">Przegapiono alarm.</string>     <!-- notification msg -->
     <string name="alarmAction_upcomingMsg">Nadchodzący alarm</string>     <!-- notification msg -->
 
-    <string name="alarmMode_alarm">Alarm</string>                <!-- alarm type (setting) -->
-    <string name="alarmMode_notification">Powiadomienie</string>                <!-- alarm type (setting) -->
+    <string name="alarmMode_alarm">alarm</string>                <!-- alarm type (setting) -->
+    <string name="alarmMode_notification">powiadomienie</string>                <!-- alarm type (setting) -->
 
     <string name="configLabel_alarmEdit_scheduleTray">Zaplanuj:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_onAlertTray">Odtwórz dźwięk &#47; wywołaj:</string>               <!-- group title -->
@@ -703,6 +705,8 @@
 
     <string name="alarmOption_vibrate">Wibruj</string>                <!-- checkbox text -->
     <string name="alarmOption_ringtone_none">Bez dźwięku</string>          <!-- ringtone label (none) -->
+    <string name="alarmOption_ringtone_ringtone">Dzwonek</string>          <!-- menu item; Select a "Ringtone" -->
+    <string name="alarmOption_ringtone_file">Plik dźwiękowy</string>          <!-- menu item; Select an "Audio File" -->
     <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
     <string name="alarmOption_solarevent_none">stała godzina</string>          <!-- ringtone label (none) -->
 
@@ -715,6 +719,7 @@
     <string name="deletealarm_dialog_ok">Usuń</string>        <!-- button -->
     <string name="deletealarm_dialog_cancel">Anuluj</string>    <!-- button -->
     <string name="deletealarm_toast_success">Usunięto <xliff:g id="type" example="powiadomienie">%1$s</xliff:g> z <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>).</string> <!-- toast msg -->
+    <string name="deletealarm_toast_success1">Usunięto <xliff:g id="type" example="Notification">%1$s</xliff:g>.</string> <!-- toast msg -->
 
     <string name="discardchanges_dialog_message">Są niezapisane zmiany.</string>      <!-- dialog message -->
     <string name="discardchanges_dialog_ok">Nie zapisuj</string>                              <!-- button -->
@@ -849,6 +854,7 @@
     <string name="configAction_deletePlace">Usuń</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Czyść</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportPlaces">Eksportuj</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">Importuj</string>       <!-- button (contentDescription) -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interfejs użytkownika</string>                       <!-- group title -->
@@ -883,6 +889,11 @@
     <string name="configLabel_ui_showdatasource">Wyświetl źródło danych</string>
     <string name="configLabel_ui_showdatasource_summary">Pokaż etykietę wyświetlającą obecną konfigurację.</string>
 
+    <!-- App Setting: show headers -->
+    <string name="configLabel_ui_showheaders">Nagłówki</string>              <!-- group title -->
+    <string name="configLabel_ui_showheader_icon">Wyświetl ikonę nagłówka</string> <!-- checkbox label -->
+    <string name="configLabel_ui_showheader_text">Wyświetl tekst nagłówka</string> <!-- checkbox label -->
+    
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Złota godzina</string>
 
@@ -1062,8 +1073,8 @@
     <string name="worldmap_dialog_option_all">Oba</string>
     <string name="worldmap_dialog_option_location">Położenie</string>
     <string name="worldmap_dialog_option_latitudes">Równoleżniki</string>
-    <string name="worldmap_dialog_speed_15m">&#215; 15min</string>
-    <string name="worldmap_dialog_speed_1d">&#215; 1d</string>
+    <string name="worldmap_dialog_speed_15m">&#215; 15 min</string>
+    <string name="worldmap_dialog_speed_1d">&#215; 1 d</string>
     <string name="configAction_shareMap">Udostępnij</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <!-- Dialog: Set Alarm -->
@@ -1139,7 +1150,7 @@
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">GPS jest wyłączony? Włączyć go?</string>
+    <string name="gps_dialog_msg">GPS jest wyłączony. Czy włączyć go?</string>
     <string name="gps_dialog_ok">Tak</string>
     <string name="gps_dialog_cancel">Nie</string>
 
@@ -1381,7 +1392,8 @@
     <string name="security_duplicate_permissions">Uprawnienie należące do aplikacji Czasy Słońca:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\njest także zdefiniowane przez aplikację: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
     <string name="feature_not_supported_by_api">Ta funkcja nie jest wspierana przez API %1$s.</string>
     <string name="feature_not_supported_by_source">Ta funkcja nie jest wspierana przez obecne źródło danych.</string>
-    <string name="reboot_required_message">Restart może być wymagany, aby zmiany zostały zastosowane.</string>
+    <string name="reboot_required_message">Aby zastosować zmiany, może być konieczne ponowne uruchomienie urządzenia.</string>    <!-- toast; device off/on may be required -->
+    <string name="restart_required_message">Aby zostosować zmiany, może być konieczne ponowne uruchomienie aplikacji.</string>   <!-- toast; app restart may be required -->
 
     <string name="dialog_ok">Potwierdź</string>
     <string name="dialog_cancel">Anuluj</string>

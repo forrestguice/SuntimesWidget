@@ -1,13 +1,13 @@
 <p>Wyświetla czasy świecenia Słońca i Księżyca. Zawiera aplikację, budzik i zestaw widżetów.</p>
 <p>Aplikacja <b>Czasy Słońca</b> wyświetla wschód i zachód Słońca, świt/zmierzch (cywilny, żeglarski, astronomiczny), złotą i błękitną godzinę, przesilenia i równonoce, wschód i zachód Księżyca, fazy i oświetlenie Księżyca. Pozwala też ustawić codzienny alarm (lub powiadomienie) dla wschodu/zachodu Słońca lub innych wydarzeń.</p>
 <p>Czasy podawane przez aplikację są przybliżone. Nie jest wymagane połączenie z internetem, GPS jest opcjonalny.</p>
-Aplikacja korzysta z następujących uprawnień
+Aplikacja korzysta z następujących uprawnień:
 <ul>
 <li><small><u>ACCESS_FINE_LOCATION</u></small> jest używane do określenia bieżącej lokalizacji (szer., dług., i wys. geograficznej).</li>
 <li><small><u>BOOT_COMPLETED</u></small> jest używane do przywracania alarmów po restarcie.</li>
 <li><small><u>SET_ALARM</u></small> jest używane do planowania alarmów prze aplikację „Czasy Słońca: alarmy”.</li>
 <li><small><u>VIBRATE</u></small> jest używane przez powiadomienia alarmów.</li>
-<li><small><u>READ_EXTERNAL_STORAGE</u> </small> jest używane do odtwarzania dźwięków alarmów zanjdujących się na karcie SD <small>(tylko API≤18)</small></li>.
+<li><small><u>READ_EXTERNAL_STORAGE</u></small> jest używane do odtwarzania dźwięków alarmów zanjdujących się na karcie SD <small>(tylko API≤18)</small>.</li>
 <li><small><u>WRITE_EXTERNAL_STORAGE</u></small> jest używane do tworzenia kopii zapasowej danych (miejsc, skórek, itp.) do pliku <small>(tylko API≤18)</small>.</li>
 </ul>
 <p>Uwaga: integracja z kalendarzem i uprawnienia dodane do wersji 0.9.0 zostały usunięte w 0.10.0. Ta funkcja jest teraz dostępna jako oddzielna aplikacja: <a href="https://f-droid.org/pl/packages/com.forrestguice.suntimescalendars">Czasy Słońca: kalendarz</a> (Suntimes Calendars).</p>
