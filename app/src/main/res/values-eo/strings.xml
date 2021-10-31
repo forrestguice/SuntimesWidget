@@ -408,9 +408,9 @@
     <string name="configAction_savePlace">Konservi</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Suntempo</string>                       <!-- setting -->
-    <string name="timezoneMode_current">Sistema</string>                         <!-- setting -->
-    <string name="timezoneMode_custom">Propra</string>                    <!-- setting -->
+    <string name="timezoneMode_standard">suntempo</string>                       <!-- setting -->
+    <string name="timezoneMode_current">laŭ operaciumo</string>                         <!-- setting -->
+    <string name="timezoneMode_custom">propra</string>                    <!-- setting -->
 
     <string name="time_lmst">loka laŭstela tempo</string>                  <!-- timezone label -->
     <string name="time_gmst">Grenviĉa laŭstela tempo</string>              <!-- timezone label -->
@@ -426,7 +426,7 @@
     <string name="configLabel_timezone_standard">Suntempo:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
-    <string name="timeFormatMode_system">Sistema formo</string>          <!-- setting -->
+    <string name="timeFormatMode_system">Laŭ operaciumo</string>          <!-- setting -->
     <string name="timeFormatMode_12hr">12‑hora</string>                  <!-- setting -->
     <string name="timeFormatMode_24hr">24‑hora</string>                  <!-- setting -->
 
@@ -972,8 +972,8 @@
     <string name="worldmap_dialog_option_all">Ambaŭ</string>
     <string name="worldmap_dialog_option_location">Pozicio</string>
     <string name="worldmap_dialog_option_latitudes">Cirkloj de latitudo</string>
-    <string name="worldmap_dialog_speed_15m">&#215; 15min</string>
-    <string name="worldmap_dialog_speed_1d">&#215; 1t</string>
+    <string name="worldmap_dialog_speed_15m">&#215; 15 min</string>
+    <string name="worldmap_dialog_speed_1d">&#215; 1 t</string>
     <string name="configAction_shareMap">Kunhavigi</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <!-- Dialog: Set Alarm -->
@@ -1054,7 +1054,7 @@
   <string name="configLabel_localeMode">Reĝimo</string>
   <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
   <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
-      <item>Sistema</item>
+      <item>Laŭ operaciumo</item>
       <item>Propra</item>
   </string-array>
 
