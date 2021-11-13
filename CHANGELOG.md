@@ -1,5 +1,9 @@
 ### ~
 
+### v0.13.15 (2021-11-15)
+* updates translation to Norwegian (nb) (#515 by FTno).
+* updates translations to Polish (pl) and Esperanto (eo) (#514 by Verdulo).
+
 ### v0.13.14 (2021-10-26)
 * adds "Show Header Icon" and "Show Header Text" options to User Interface settings (#509, #511).
 * fixes bug "twilight duration fails to switch to the next event" (#508).
