@@ -37,6 +37,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.settings.SolarEventIcons;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -185,7 +186,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
             text_event.setText(displayEvent(context, item));
 
-            SolarEvents event = item.getEvent() != null ? SolarEvents.valueOf(item.getEvent(), null) : null;
+            SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
             if (event != null)
             {
                 Drawable eventIcon = SolarEventIcons.getIconDrawable(context, event, (int)iconSize, (int)iconSize);
@@ -293,7 +294,6 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public static CharSequence displayAlarmNote(Context context, AlarmClockItem item, boolean isSchedulable)
     {
-        SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
         if (isSchedulable)
         {
             int[] attrs = { android.R.attr.textColorPrimary };   // TODO: from SuntimesTheme
@@ -305,10 +305,10 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             String displayString = context.getString(R.string.schedalarm_dialog_note1, timeString);
             return SuntimesUtils.createBoldColorSpan(null, displayString, timeString, noteColor);
 
-        } else if (event != null) {
-            String eventString = event.getLongDisplayString();
-            String displayString = context.getString(R.string.schedalarm_dialog_note2, eventString);
-            return SuntimesUtils.createBoldSpan(null, displayString, eventString);
+        } else if (item.getEvent() != null) {
+            AlarmEvent.AlarmEventItem eventItem = new AlarmEvent.AlarmEventItem(item.getEvent(), context.getContentResolver());
+            String displayString = context.getString(R.string.schedalarm_dialog_note2, eventItem.getTitle());
+            return SuntimesUtils.createBoldSpan(null, displayString, eventItem.getTitle());
 
         } else {
             return "";
@@ -406,12 +406,9 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     public static CharSequence displayEvent(Context context, AlarmClockItem item)
     {
         String eventString = item.getEvent();
-        SolarEvents event = SolarEvents.valueOf(eventString, null);
-        if (event != null) {
-            return event.getLongDisplayString();
-
-        } else if (eventString != null) {
-            return eventString;                 // TODO
+        if (eventString != null) {
+            AlarmEvent.AlarmEventItem eventItem = new AlarmEvent.AlarmEventItem(eventString, context.getContentResolver());
+            return eventItem.getTitle();
 
         } else if (item.timezone != null) {
             Calendar adjustedTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(item.timezone, item.location));

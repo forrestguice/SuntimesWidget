@@ -53,27 +53,37 @@ public class AlarmEvent
             this.event = event;
         }
 
-        public AlarmEventItem( @NonNull String eventUri, @NonNull ContentResolver resolver)
+        public AlarmEventItem( @Nullable String eventUri, @Nullable ContentResolver resolver)
         {
-            this.event = null;
-            this.uri = eventUri;
-            queryDisplayStrings(resolver);
+            event = SolarEvents.valueOf(eventUri, null);
+            if (event == null)
+            {
+                uri = eventUri;
+                queryDisplayStrings(resolver);
+            }
         }
 
-        private void queryDisplayStrings(@NonNull ContentResolver resolver)
+        private void queryDisplayStrings(@Nullable ContentResolver resolver)
         {
             Uri info_uri = Uri.parse(uri);
             String name = info_uri.getLastPathSegment();
 
-            Cursor cursor = resolver.query(info_uri, AlarmAddon.QUERY_ALARM_INFO_PROJECTION, null, null, null);
-            if (cursor != null)
+            if (resolver != null)
             {
-                cursor.moveToFirst();
-                int i_title = cursor.getColumnIndex(AlarmAddon.COLUMN_ALARM_TITLE);
-                int i_summary = cursor.getColumnIndex(AlarmAddon.COLUMN_ALARM_SUMMARY);
-                this.title = (i_title >= 0) ? cursor.getString(i_title) : name;
-                this.summary = (i_summary >= 0) ? cursor.getString(i_summary) : "";
-                cursor.close();
+                Cursor cursor = resolver.query(info_uri, AlarmAddon.QUERY_ALARM_INFO_PROJECTION, null, null, null);
+                if (cursor != null)
+                {
+                    cursor.moveToFirst();
+                    int i_title = cursor.getColumnIndex(AlarmAddon.COLUMN_ALARM_TITLE);
+                    int i_summary = cursor.getColumnIndex(AlarmAddon.COLUMN_ALARM_SUMMARY);
+                    this.title = (i_title >= 0) ? cursor.getString(i_title) : name;
+                    this.summary = (i_summary >= 0) ? cursor.getString(i_summary) : "";
+                    cursor.close();
+                }
+
+            } else {
+                this.title = name;
+                this.summary = "";
             }
         }
 

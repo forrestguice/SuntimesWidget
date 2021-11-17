@@ -26,6 +26,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 
 import android.content.Context;
@@ -650,10 +651,9 @@ public class AlarmNotifications extends BroadcastReceiver
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
         String eventString = alarm.getEvent();
-        SolarEvents event = SolarEvents.valueOf(alarm.getEvent(), null);
-        String eventDisplayString = event != null ? event.getShortDisplayString() : eventString;     // TODO: non SolarEventsEnum
+        AlarmEvent.AlarmEventItem eventItem = new AlarmEvent.AlarmEventItem(eventString, context.getContentResolver());
 
-        String emptyLabel = ((eventString != null) ? eventDisplayString : context.getString(R.string.alarmOption_solarevent_none));
+        String emptyLabel = ((eventString != null) ? eventItem.getTitle() : context.getString(R.string.alarmOption_solarevent_none));
         String notificationTitle = (alarm.label == null || alarm.label.isEmpty() ? emptyLabel : alarm.label);
         String notificationMsg = notificationTitle;
         int notificationIcon = ((alarm.type == AlarmClockItem.AlarmType.NOTIFICATION) ? R.drawable.ic_action_notification : R.drawable.ic_action_alarms);

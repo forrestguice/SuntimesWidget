@@ -57,6 +57,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
@@ -532,14 +533,10 @@ public class AlarmDismissActivity extends AppCompatActivity
         alarmTitle.setText((item.label == null || item.label.isEmpty()) ? emptyLabel : item.label);
 
         String eventString = alarm.getEvent();
-        SolarEvents event = SolarEvents.valueOf(eventString, null);
-        if (event != null)
+        if (eventString != null)
         {
-            alarmSubtitle.setText(event.getLongDisplayString());
-            alarmSubtitle.setVisibility(View.VISIBLE);
-
-        } else if (eventString != null) {
-            alarmSubtitle.setText(eventString);          // TODO: non SolarEvents enum
+            AlarmEvent.AlarmEventItem eventItem = new AlarmEvent.AlarmEventItem(eventString, context.getContentResolver());
+            alarmSubtitle.setText(eventItem.getTitle());
             alarmSubtitle.setVisibility(View.VISIBLE);
 
         } else if (alarm.timezone != null) {
