@@ -373,7 +373,7 @@ public class AlarmListDialog extends DialogFragment
         alarm.hour = hour;
         alarm.minute = minute;
         alarm.timezone = timezone;
-        alarm.event = event;
+        alarm.setEvent(event != null ? event.name() : null);
         alarm.location = (location != null ? location : WidgetSettings.loadLocationPref(context, 0));
         alarm.repeating = false;
         alarm.vibrate = vibrate;
@@ -1138,7 +1138,8 @@ public class AlarmListDialog extends DialogFragment
 
         protected void updateView(Context context, AlarmListDialogItem view, @NonNull final AlarmClockItem item)
         {
-            int eventType = item.event == null ? -1 : item.event.getType();
+            SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
+            int eventType = event == null ? -1 : event.getType();
             boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item, Calendar.getInstance(), false);
 
             // spannable icons
@@ -1194,10 +1195,10 @@ public class AlarmListDialog extends DialogFragment
                 view.text_event.setTextColor(item.enabled ? color_on : color_off);
 
                 float eventIconSize = context.getResources().getDimension(R.dimen.eventIcon_width);
-                if (item.event != null)
+                if (event != null)
                 {
-                    Drawable eventIcon = SolarEventIcons.getIconDrawable(context, item.event, (int)eventIconSize, (int)eventIconSize);
-                    view.text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, item.event));
+                    Drawable eventIcon = SolarEventIcons.getIconDrawable(context, event, (int)eventIconSize, (int)eventIconSize);
+                    view.text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, event));
                     view.text_event.setCompoundDrawables(eventIcon, null, null, null);
 
                 } else {
@@ -1236,7 +1237,7 @@ public class AlarmListDialog extends DialogFragment
 
             // location
             if (view.text_location != null) {
-                view.text_location.setVisibility((item.event == null && item.timezone == null) ? View.INVISIBLE : View.VISIBLE);
+                view.text_location.setVisibility((item.getEvent() == null && item.timezone == null) ? View.INVISIBLE : View.VISIBLE);
                 view.text_location.setText(item.location.getLabel());
                 view.text_location.setTextColor(item.enabled ? color_on : color_off);
 

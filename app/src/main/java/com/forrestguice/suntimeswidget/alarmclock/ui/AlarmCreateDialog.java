@@ -861,13 +861,14 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             item.hour = -1;
             item.minute = -1;
             item.timezone = null;
-            item.event = dialog.getEvent();
+            SolarEvents event = dialog.getEvent();
+            item.setEvent(event != null ? event.name() : null);
 
         } else {
             item.hour = dialog.getHour();
             item.minute = dialog.getMinute();
             item.timezone = dialog.getTimeZone();
-            item.event = null;
+            item.setEvent(null);
         }
     }
 

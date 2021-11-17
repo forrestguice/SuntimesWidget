@@ -555,7 +555,8 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
      */
     private void updateView(AlarmClockItemView view, @NonNull final AlarmClockItem item)
     {
-        int eventType = item.event == null ? -1 : item.event.getType();
+        SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
+        int eventType = event == null ? -1 : event.getType();
         final boolean isSelected = (item.rowID == selectedItem);
         view.cardBackdrop.setBackgroundColor( isSelected ? ColorUtils.setAlphaComponent(alarmSelectedColor, 170) : Color.TRANSPARENT );  // 66% alpha
 
@@ -653,7 +654,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         // location
         if (view.text_location != null)
         {
-            view.text_location.setVisibility((item.event == null && item.timezone == null) ? View.INVISIBLE : View.VISIBLE);
+            view.text_location.setVisibility((item.getEvent() == null && item.timezone == null) ? View.INVISIBLE : View.VISIBLE);
             AlarmDialog.updateLocationLabel(context, view.text_location, item.location);
 
             if (!isSelected || item.enabled) {

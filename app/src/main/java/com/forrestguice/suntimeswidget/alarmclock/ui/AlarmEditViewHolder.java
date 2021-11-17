@@ -185,10 +185,11 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
             text_event.setText(displayEvent(context, item));
 
-            if (item.event != null)
+            SolarEvents event = item.getEvent() != null ? SolarEvents.valueOf(item.getEvent(), null) : null;
+            if (event != null)
             {
-                Drawable eventIcon = SolarEventIcons.getIconDrawable(context, item.event, (int)iconSize, (int)iconSize);
-                text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, item.event));
+                Drawable eventIcon = SolarEventIcons.getIconDrawable(context, event, (int)iconSize, (int)iconSize);
+                text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, event));
                 text_event.setCompoundDrawables(eventIcon, null, null, null);
 
             } else {
@@ -292,6 +293,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public static CharSequence displayAlarmNote(Context context, AlarmClockItem item, boolean isSchedulable)
     {
+        SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
         if (isSchedulable)
         {
             int[] attrs = { android.R.attr.textColorPrimary };   // TODO: from SuntimesTheme
@@ -303,8 +305,8 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             String displayString = context.getString(R.string.schedalarm_dialog_note1, timeString);
             return SuntimesUtils.createBoldColorSpan(null, displayString, timeString, noteColor);
 
-        } else if (item.event != null) {
-            String eventString = item.event.getLongDisplayString();
+        } else if (event != null) {
+            String eventString = event.getLongDisplayString();
             String displayString = context.getString(R.string.schedalarm_dialog_note2, eventString);
             return SuntimesUtils.createBoldSpan(null, displayString, eventString);
 
@@ -335,7 +337,8 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public static boolean showAlarmDate(Context context, AlarmClockItem item)
     {
-        int eventType = item.event == null ? -1 : item.event.getType();
+        SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
+        int eventType = event == null ? -1 : event.getType();
         long now = Calendar.getInstance(TimeZone.getDefault()).getTimeInMillis();
         long delta = item.timestamp - now;
         boolean isDistant = (delta >= (48 * 60 * 60 * 1000));
@@ -361,7 +364,8 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public static CharSequence displayRepeating(Context context, AlarmClockItem item, boolean isSelected)
     {
-        int eventType = item.event == null ? -1 : item.event.getType();
+        SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
+        int eventType = event == null ? -1 : event.getType();
         boolean noRepeat = item.repeatingDays == null || item.repeatingDays.isEmpty();
         String repeatText = AlarmClockItem.repeatsEveryDay(item.repeatingDays)
                 ? context.getString(R.string.alarmOption_repeat_all)
@@ -401,8 +405,9 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public static CharSequence displayEvent(Context context, AlarmClockItem item)
     {
-        if (item.event != null) {
-            return item.event.getLongDisplayString();
+        SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
+        if (event != null) {
+            return event.getLongDisplayString();
 
         } else if (item.timezone != null) {
             Calendar adjustedTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(item.timezone, item.location));

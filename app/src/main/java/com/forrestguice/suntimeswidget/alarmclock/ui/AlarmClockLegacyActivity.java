@@ -682,7 +682,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
 
         alarm.hour = hour;
         alarm.minute = minute;
-        alarm.event = event;
+        alarm.setEvent(event != null ? event.name() : null);
         alarm.location = WidgetSettings.loadLocationPref(this, 0);
 
         alarm.repeating = false;
@@ -734,7 +734,8 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
 
             if (item != null && dialog != null)
             {
-                item.event = dialog.getChoice();
+                SolarEvents event = dialog.getChoice();
+                item.setEvent(event != null ? event.name() : null);
                 item.modified = true;
                 AlarmNotifications.updateAlarmTime(AlarmClockLegacyActivity.this, item);
 
@@ -822,7 +823,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         @Override
         public void onRequestTime(final AlarmClockItem forItem)
         {
-            if (forItem.event != null)
+            if (forItem.getEvent() != null)
             {
                 AlertDialog.Builder confirmOverride = new AlertDialog.Builder(AlarmClockLegacyActivity.this);
                 confirmOverride.setIcon(android.R.drawable.ic_dialog_alert);
@@ -965,7 +966,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         final AlarmDialog dialog = new AlarmDialog();
         dialog.setDialogTitle((item.type == AlarmClockItem.AlarmType.NOTIFICATION) ? getString(R.string.configAction_addNotification) : getString(R.string.configAction_addAlarm));
         initEventDialog(dialog, item.location);
-        dialog.setChoice(item.event);
+        dialog.setChoice(SolarEvents.valueOf(item.getEvent(), null));
         dialog.setOnAcceptedListener(onSolarEventChanged);
 
         t_selectedItem = item.rowID;
@@ -1077,7 +1078,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
 
             if (item != null && timeDialog != null)
             {
-                item.event = null;
+                item.setEvent(null);
                 item.hour = timeDialog.getHour();
                 item.minute = timeDialog.getMinute();
                 item.timezone = timeDialog.getTimeZone();
@@ -1109,7 +1110,8 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     {
         if (Build.VERSION.SDK_INT >= 11)
         {
-            int eventType = item.event != null ? item.event.getType() : -1;
+            SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
+            int eventType = event != null ? event.getType() : -1;
             AlarmOffsetDialog offsetDialog = new AlarmOffsetDialog();
             offsetDialog.setShowDays(eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON);
             offsetDialog.setOffset(item.offset);
@@ -1692,7 +1694,8 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     {
         if (Build.VERSION.SDK_INT >= 11)
         {
-            int eventType = item.event != null ? item.event.getType() : -1;
+            SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
+            int eventType = event != null ? event.getType() : -1;
             AlarmOffsetDialog offsetDialog = new AlarmOffsetDialog();
             offsetDialog.setShowDays(eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON);
             offsetDialog.setOffset(item.offset);

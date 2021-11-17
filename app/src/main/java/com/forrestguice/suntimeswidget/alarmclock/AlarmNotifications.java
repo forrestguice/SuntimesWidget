@@ -649,7 +649,8 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
-        String emptyLabel = ((alarm.event != null) ? alarm.event.getShortDisplayString() : context.getString(R.string.alarmOption_solarevent_none));
+        SolarEvents event = SolarEvents.valueOf(alarm.getEvent(), null);
+        String emptyLabel = ((event != null) ? event.getShortDisplayString() : context.getString(R.string.alarmOption_solarevent_none));
         String notificationTitle = (alarm.label == null || alarm.label.isEmpty() ? emptyLabel : alarm.label);
         String notificationMsg = notificationTitle;
         int notificationIcon = ((alarm.type == AlarmClockItem.AlarmType.NOTIFICATION) ? R.drawable.ic_action_notification : R.drawable.ic_action_alarms);
@@ -1400,24 +1401,25 @@ public class AlarmNotifications extends BroadcastReceiver
     public static boolean updateAlarmTime(Context context, final AlarmClockItem item, Calendar now, boolean modifyItem)
     {
         Calendar eventTime = Calendar.getInstance();
-        if (item.location != null && item.event != null)
+        SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
+        if (item.location != null && event != null)
         {
-            switch (item.event.getType())
+            switch (event.getType())
             {
                 case SolarEvents.TYPE_MOON:
-                    eventTime = updateAlarmTime_moonEvent(context, item.event, item.location, item.offset, item.repeating, item.repeatingDays, now);
+                    eventTime = updateAlarmTime_moonEvent(context, event, item.location, item.offset, item.repeating, item.repeatingDays, now);
                     break;
 
                 case SolarEvents.TYPE_MOONPHASE:
-                    eventTime = updateAlarmTime_moonPhaseEvent(context, item.event, item.location, item.offset, item.repeating, item.repeatingDays, now);
+                    eventTime = updateAlarmTime_moonPhaseEvent(context, event, item.location, item.offset, item.repeating, item.repeatingDays, now);
                     break;
 
                 case SolarEvents.TYPE_SEASON:
-                    eventTime = updateAlarmTime_seasonEvent(context, item.event, item.location, item.offset, item.repeating, item.repeatingDays, now);
+                    eventTime = updateAlarmTime_seasonEvent(context, event, item.location, item.offset, item.repeating, item.repeatingDays, now);
                     break;
 
                 case SolarEvents.TYPE_SUN:
-                    eventTime = updateAlarmTime_sunEvent(context, item.event, item.location, item.offset, item.repeating, item.repeatingDays, now);
+                    eventTime = updateAlarmTime_sunEvent(context, event, item.location, item.offset, item.repeating, item.repeatingDays, now);
                     break;
             }
         } else {
@@ -1425,7 +1427,7 @@ public class AlarmNotifications extends BroadcastReceiver
         }
 
         if (eventTime == null) {
-            Log.e(TAG, "updateAlarmTime: failed to update " + item + " :: " + item.event + "@" + item.location);
+            Log.e(TAG, "updateAlarmTime: failed to update " + item + " :: " + item.getEvent() + "@" + item.location);
             return false;
         }
 
@@ -1652,17 +1654,18 @@ public class AlarmNotifications extends BroadcastReceiver
 
     private static SuntimesData getData(Context context, @NonNull AlarmClockItem alarm)
     {
-        if (alarm.location != null && alarm.event != null)
+        SolarEvents event = SolarEvents.valueOf(alarm.getEvent(), null);
+        if (alarm.location != null && event != null)
         {
-            switch (alarm.event.getType())
+            switch (event.getType())
             {
                 case SolarEvents.TYPE_MOON:
                 case SolarEvents.TYPE_MOONPHASE:
                     return getData_moonEvent(context, alarm.location);
                 case SolarEvents.TYPE_SEASON:
-                    return getData_seasons(context, alarm.event, alarm.location);
+                    return getData_seasons(context, event, alarm.location);
                 case SolarEvents.TYPE_SUN:
-                    return getData_sunEvent(context, alarm.event, alarm.location);
+                    return getData_sunEvent(context, event, alarm.location);
                 default:
                     return getData_clockEvent(context, alarm.location);
             }

@@ -531,8 +531,10 @@ public class AlarmDismissActivity extends AppCompatActivity
         String emptyLabel = context.getString(R.string.alarmMode_alarm);
         alarmTitle.setText((item.label == null || item.label.isEmpty()) ? emptyLabel : item.label);
 
-        if (alarm.event != null) {
-            alarmSubtitle.setText(item.event.getLongDisplayString());
+        SolarEvents event = SolarEvents.valueOf(alarm.getEvent(), null);
+        if (event != null)
+        {
+            alarmSubtitle.setText(event.getLongDisplayString());
             alarmSubtitle.setVisibility(View.VISIBLE);
 
         } else {
