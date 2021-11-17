@@ -1526,7 +1526,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             AlarmCreateDialog dialog = new AlarmCreateDialog();
             dialog.loadSettings(SuntimesActivity.this);
-            dialog.setEvent((event != null ? event : dialog.getEvent()), WidgetSettings.loadLocationPref(this, 0));
+            dialog.setEvent((event != null ? event.name() : dialog.getEvent()), WidgetSettings.loadLocationPref(this, 0));
             dialog.setShowAlarmListButton(true);
             dialog.setOnAcceptedListener(onScheduleAlarm);
             dialog.setOnNeutralListener(onManageAlarms);
@@ -1562,9 +1562,8 @@ public class SuntimesActivity extends AppCompatActivity
 
                     case 0:
                     default:
-                        SolarEvents event = dialog.getEvent();
-                        String alarmLabel = context.getString(R.string.schedalarm_labelformat2, event.getShortDisplayString());
-                        AlarmClockActivity.scheduleAlarm(context, type, alarmLabel, event, location);
+                        SolarEvents event = SolarEvents.valueOf(dialog.getEvent(), null);  // TODO: non SolarEvents enum
+                        String alarmLabel = event != null ? context.getString(R.string.schedalarm_labelformat2, event.getShortDisplayString()) : "";
                         break;
                 }
             }

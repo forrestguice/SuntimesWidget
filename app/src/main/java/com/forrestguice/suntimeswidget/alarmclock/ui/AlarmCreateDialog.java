@@ -82,7 +82,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     public static final int DEF_MODE = 1;
     public static final int DEF_HOUR = 6;
     public static final int DEF_MINUTE = 30;
-    public static final SolarEvents DEF_EVENT = SolarEvents.SUNRISE;
+    public static final String DEF_EVENT = SolarEvents.SUNRISE.name();
     public static final AlarmClockItem.AlarmType DEF_ALARMTYPE = AlarmClockItem.AlarmType.ALARM;
 
     public static final String EXTRA_PREVIEW_OFFSET = "previewOffset";
@@ -112,7 +112,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         args.putInt(EXTRA_MINUTE, DEF_MINUTE);
         args.putLong(EXTRA_OFFSET, 0);
         args.putString(EXTRA_TIMEZONE, null);
-        args.putSerializable(EXTRA_EVENT, DEF_EVENT);
+        args.putString(EXTRA_EVENT, DEF_EVENT);
         args.putSerializable(EXTRA_ALARMTYPE, DEF_ALARMTYPE);
 
         setArguments(args);
@@ -476,7 +476,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         args.putInt(EXTRA_HOUR, prefs.getInt(EXTRA_HOUR, getHour()));
         args.putInt(EXTRA_MINUTE, prefs.getInt(EXTRA_MINUTE, getMinute()));
         args.putString(EXTRA_TIMEZONE, prefs.getString(EXTRA_TIMEZONE, getTimeZone()));
-        args.putSerializable(EXTRA_EVENT, SolarEvents.valueOf(prefs.getString(EXTRA_EVENT, SolarEvents.SUNRISE.name())));;
+        args.putString(EXTRA_EVENT, prefs.getString(EXTRA_EVENT, DEF_EVENT));
         args.putSerializable(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.valueOf(prefs.getString(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.ALARM.name())));
 
         if (isAdded())
@@ -515,7 +515,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         out.putInt(EXTRA_HOUR, getHour());
         out.putInt(EXTRA_MINUTE, getMinute());
         out.putString(EXTRA_TIMEZONE, getTimeZone());
-        out.putString(EXTRA_EVENT, getEvent().name());
+        out.putString(EXTRA_EVENT, getEvent());
         out.putString(EXTRA_ALARMTYPE, getAlarmType().name());
         out.apply();
     }
@@ -709,9 +709,9 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         return tabs.getSelectedTabPosition();
     }
 
-    public SolarEvents getEvent()
+    public String getEvent()
     {
-        SolarEvents event = (SolarEvents) getArguments().getSerializable(EXTRA_EVENT);
+        String event = getArguments().getString(EXTRA_EVENT);
         return (event != null ? event : DEF_EVENT);
     }
     public Location getLocation()
@@ -719,10 +719,10 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         Location location = getArguments().getParcelable(EXTRA_LOCATION);
         return (location != null ? location : WidgetSettings.loadLocationPref(getActivity(), 0));
     }
-    public void setEvent( SolarEvents event, Location location )
+    public void setEvent( String event, Location location )
     {
         Bundle args = getArguments();
-        args.putSerializable(EXTRA_EVENT, event);
+        args.putString(EXTRA_EVENT, event);
         args.putParcelable(EXTRA_LOCATION, location);
 
         if (isAdded())
@@ -831,7 +831,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     {
         int hour;
         int minute;
-        SolarEvents event;
+        String event;
         String timezone;
 
         if (dialog.getMode() == 0)
@@ -861,8 +861,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             item.hour = -1;
             item.minute = -1;
             item.timezone = null;
-            SolarEvents event = dialog.getEvent();
-            item.setEvent(event != null ? event.name() : null);
+            item.setEvent(dialog.getEvent());
 
         } else {
             item.hour = dialog.getHour();

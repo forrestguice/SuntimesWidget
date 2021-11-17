@@ -731,7 +731,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         dialog.loadSettings(AlarmEditActivity.this);
         dialog.setAlarmType(item.type);
         dialog.setDialogMode(item.getEvent() != null ? 0 : 1);
-        dialog.setEvent(SolarEvents.valueOf(item.getEvent(), null), item.location);  // TODO
+
+        dialog.setEvent(item.getEvent(), item.location);
         dialog.setAlarmTime(item.hour, item.minute, item.timezone);
         dialog.setOffset(item.offset);
         dialog.setOnAcceptedListener(onPickEventAccepted);

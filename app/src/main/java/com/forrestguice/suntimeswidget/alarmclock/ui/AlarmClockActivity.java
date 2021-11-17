@@ -265,9 +265,9 @@ public class AlarmClockActivity extends AppCompatActivity
                     param_skipUI = intent.getBooleanExtra(AlarmClock.EXTRA_SKIP_UI, false);
                 }
                 if (param_skipUI) {
-                    list.createAlarm(context, param_type, param_label, param_event, param_location, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_days, true);
+                    list.createAlarm(context, param_type, param_label, param_event.name(), param_location, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_days, true);
                 } else {
-                    AlarmClockItem item = AlarmListDialog.createAlarm(context, param_type, param_label, param_event, param_location, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_days);
+                    AlarmClockItem item = AlarmListDialog.createAlarm(context, param_type, param_label, param_event.name(), param_location, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_days);
                     AlarmNotifications.updateAlarmTime(context, item);
                     showAlarmEditActivity(item, null, REQUEST_ADDALARM, true);
                 }
@@ -815,7 +815,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
     public static void scheduleAlarm(Activity context, AlarmClockItem.AlarmType type, String label, @NonNull SolarEvents event, @NonNull com.forrestguice.suntimeswidget.calculator.core.Location location)
     {
-        AlarmClockItem item = AlarmListDialog.createAlarm(context, type, label, event, location);
+        AlarmClockItem item = AlarmListDialog.createAlarm(context, type, label, event.name(), location);
         boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item);
         int hour = 6, minutes = 30;    // fallback to an arbitrary alarm time if event does not occur
 
