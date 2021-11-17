@@ -27,6 +27,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -44,6 +45,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.text.SpannableString;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -77,6 +79,8 @@ import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -151,50 +155,49 @@ public class AlarmDialog extends BottomSheetDialogFragment
 
     public void updateAdapter(Context context)
     {
-        adapter = SolarEvents.createAdapter(context);
+        adapter = createAdapter(context);
         if (dataset != null)
         {
             boolean supportsGoldBlue = dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);
             if (!supportsGoldBlue)
             {
-                adapter.remove(SolarEvents.MORNING_BLUE8);
-                adapter.remove(SolarEvents.MORNING_BLUE4);
-                adapter.remove(SolarEvents.EVENING_BLUE4);
-                adapter.remove(SolarEvents.EVENING_BLUE8);
-                adapter.remove(SolarEvents.MORNING_GOLDEN);
-                adapter.remove(SolarEvents.EVENING_GOLDEN);
+                adapter.removeItem(SolarEvents.MORNING_BLUE8);
+                adapter.removeItem(SolarEvents.MORNING_BLUE4);
+                adapter.removeItem(SolarEvents.EVENING_BLUE4);
+                adapter.removeItem(SolarEvents.EVENING_BLUE8);
+                adapter.removeItem(SolarEvents.MORNING_GOLDEN);
+                adapter.removeItem(SolarEvents.EVENING_GOLDEN);
             }
 
             boolean supportsMoon = moondata != null && moondata.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_MOON);
             if (!supportsMoon)
             {
-                adapter.remove(SolarEvents.MOONRISE);
-                adapter.remove(SolarEvents.MOONSET);
-                adapter.remove(SolarEvents.MOONNOON);
-                adapter.remove(SolarEvents.MOONNIGHT);
-                adapter.remove(SolarEvents.NEWMOON);
-                adapter.remove(SolarEvents.FIRSTQUARTER);
-                adapter.remove(SolarEvents.FULLMOON);
-                adapter.remove(SolarEvents.THIRDQUARTER);
+                adapter.removeItem(SolarEvents.MOONRISE);
+                adapter.removeItem(SolarEvents.MOONSET);
+                adapter.removeItem(SolarEvents.MOONNOON);
+                adapter.removeItem(SolarEvents.MOONNIGHT);
+                adapter.removeItem(SolarEvents.NEWMOON);
+                adapter.removeItem(SolarEvents.FIRSTQUARTER);
+                adapter.removeItem(SolarEvents.FULLMOON);
+                adapter.removeItem(SolarEvents.THIRDQUARTER);
             }
 
             boolean supportsSolstice = equinoxdata != null && equinoxdata.dataEquinoxSpring.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_SOLSTICE);
             if (!supportsSolstice)
             {
-                adapter.remove(SolarEvents.EQUINOX_SPRING);
-                adapter.remove(SolarEvents.SOLSTICE_SUMMER);
-                adapter.remove(SolarEvents.EQUINOX_AUTUMNAL);
-                adapter.remove(SolarEvents.SOLSTICE_WINTER);
+                adapter.removeItem(SolarEvents.EQUINOX_SPRING);
+                adapter.removeItem(SolarEvents.SOLSTICE_SUMMER);
+                adapter.removeItem(SolarEvents.EQUINOX_AUTUMNAL);
+                adapter.removeItem(SolarEvents.SOLSTICE_WINTER);
             }
         }
 
-        if (spinner_scheduleMode != null)
-        {
+        if (spinner_scheduleMode != null) {
             spinner_scheduleMode.setAdapter(adapter);
         }
     }
 
-    private ArrayAdapter<SolarEvents> adapter = null;
+    private AlarmEventAdapter adapter = null;
 
     /**
      * The user's alarm choice.
@@ -213,8 +216,9 @@ public class AlarmDialog extends BottomSheetDialogFragment
                 {
                     for (int i = 0; i < adapter.getCount(); i++)
                     {
-                        SolarEvents event = (SolarEvents) adapter.getItem(i);
-                        if (event.equals(choice))
+                        AlarmEventItem item = (AlarmEventItem) adapter.getItem(i);
+                        SolarEvents event = item.getEvent();
+                        if (choice.equals(event))
                         {
                             spinner_scheduleMode.setSelection(i);
                             break;
@@ -327,7 +331,15 @@ public class AlarmDialog extends BottomSheetDialogFragment
                     {
                         updateLocationLabel(context, txt_location, dataset.location());
 
-                        choice = (SolarEvents)spinner_scheduleMode.getSelectedItem();
+                        AlarmEventItem item = (AlarmEventItem)spinner_scheduleMode.getSelectedItem();
+                        if (item.getEvent() != null) {
+                            choice = item.getEvent();
+                        }
+                        if (choice == null) {
+                            Log.d("DEBUG", "null selection");
+                            return;
+                        }
+
                         Log.d("DEBUG", "onItemSelected: " + choice);
                         if (listener != null) {
                             listener.onChanged(AlarmDialog.this);
@@ -510,6 +522,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
         }
 
         // Uri calc_uri = Uri.parse("content://" + reference + "/" + AlarmAddon.QUERY_ALARM_CALC + "/" + name);
+        Toast.makeText(getActivity(), "picker result: \n" + title + " \n" + summary + "\n" + name + "\n" + reference, Toast.LENGTH_LONG).show();   // TODO
         // TODO: add alarm to selector; select it!
     }
 
@@ -968,6 +981,137 @@ public class AlarmDialog extends BottomSheetDialogFragment
             behavior.setSkipCollapsed(true);
             behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
+    }
+
+    /**
+     * AlarmEventItem
+     * wraps SolarEvent or addon-alarm URI
+     */
+    public static class AlarmEventItem
+    {
+        protected SolarEvents event;
+        protected String title = null, summary = null;
+        protected String uri = null;
+
+        public AlarmEventItem( @NonNull SolarEvents event ) {
+            this.event = event;
+        }
+
+        public AlarmEventItem( @NonNull String eventUri, @NonNull String title, @Nullable String summary )
+        {
+            this.event = null;
+            this.uri = eventUri;
+            this.title = title;
+            this.summary = summary;
+        }
+
+        @NonNull
+        public String getTitle() {
+            return (event != null ? event.getLongDisplayString() : title);
+        }
+
+        @Nullable
+        public String getSummary() {
+            return (event != null ? "" : summary);
+        }
+
+        public int getIcon() {
+            return (event != null ? event.getIcon() : 0);
+        }
+
+        public String toString() {
+            return getTitle();
+        }
+
+        public String getEventID() {
+            return (event != null ? event.name() : uri);
+        }
+
+        @Nullable
+        public SolarEvents getEvent() {
+            return event;
+        }
+
+        @Nullable
+        public String getUri() {
+            return uri;
+        }
+    }
+
+    /**
+     * AlarmEventAdapter
+     */
+    public static class AlarmEventAdapter extends ArrayAdapter<AlarmEventItem>
+    {
+        private final Context context;
+        private final ArrayList<AlarmEventItem> items;
+
+        public AlarmEventAdapter(Context context, ArrayList<AlarmEventItem> items)
+        {
+            super(context, R.layout.layout_listitem_solarevent, items);
+            this.context = context;
+            this.items = items;
+        }
+
+        public boolean removeItem(SolarEvents event)
+        {
+            for (AlarmEventItem item : items)
+            {
+                if (event == item.getEvent())
+                {
+                    items.remove(item);
+                    notifyDataSetChanged();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        @Override
+        @NonNull
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+            return itemView(position, convertView, parent);
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+            return itemView(position, convertView, parent);
+        }
+
+        private View itemView(int position, View convertView, @NonNull ViewGroup parent)
+        {
+            View view = convertView;
+            if (view == null)
+            {
+                LayoutInflater inflater = LayoutInflater.from(context);
+                view = inflater.inflate(R.layout.layout_listitem_solarevent, parent, false);
+            }
+
+            int[] iconAttr = { items.get(position).getIcon() };
+            TypedArray typedArray = context.obtainStyledAttributes(iconAttr);
+            int def = R.drawable.ic_moon_rise;
+            int iconResource = typedArray.getResourceId(0, def);
+            typedArray.recycle();
+
+            ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
+            SolarEvents event = items.get(position).getEvent();   // TODO: nullcheck event
+            SolarEvents.SolarEventsAdapter.adjustIcon(iconResource, icon, event);
+
+            TextView text = (TextView) view.findViewById(android.R.id.text1);
+            text.setText(event.getLongDisplayString());
+
+            return view;
+        }
+    }
+
+    public static AlarmEventAdapter createAdapter(Context context)
+    {
+        SolarEvents.SolarEventsAdapter solarEventsAdapter = SolarEvents.createAdapter(context);
+        ArrayList<AlarmEventItem> items = new ArrayList<>();
+        for (SolarEvents event : solarEventsAdapter.getChoices()) {
+            items.add(new AlarmEventItem(event));
+        }
+        return new AlarmEventAdapter(context, items);
     }
 
 }

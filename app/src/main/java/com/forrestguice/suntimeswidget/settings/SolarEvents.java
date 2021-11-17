@@ -293,6 +293,10 @@ public enum SolarEvents
             icon.setImageDrawable(null);
             icon.setBackgroundResource(iconResource);
         }
+
+        public ArrayList<SolarEvents> getChoices() {
+            return choices;
+        }
     }
 
     /**
