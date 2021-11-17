@@ -21,12 +21,14 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.TypedArray;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -451,17 +453,65 @@ public class AlarmDialog extends BottomSheetDialogFragment
             case REQUEST_ADDON_ALARMPICKER:
                 if (resultCode == Activity.RESULT_OK)
                 {
-                    Uri uri = (data != null ? data.getData() : null);
-                    if (uri != null) {
-                        Toast.makeText(getActivity(), "picker result: " + uri, Toast.LENGTH_LONG).show();   // TODO
+                    if (data != null)
+                    {
+                        Uri uri = data.getData();
+                        String reference = data.getStringExtra(AlarmAddon.COLUMN_CONFIG_PROVIDER);
+                        String name = data.getStringExtra(AlarmAddon.COLUMN_ALARM_NAME);
+                        String title = data.getStringExtra(AlarmAddon.COLUMN_ALARM_TITLE);
+                        String summary = data.getStringExtra(AlarmAddon.COLUMN_ALARM_SUMMARY);
+                        Toast.makeText(getActivity(), "picker result: \n" + title + " \n" + summary + "\n" + name + "\n" + reference + "\n" + uri, Toast.LENGTH_LONG).show();   // TODO
+
+                        if ((reference != null && name != null)) {
+                            selectAddonAlarm(reference, name, title, summary);
+
+                        } else if (uri != null) {
+                            selectAddonAlarm(uri);
+
+                        } else {
+                            Log.w(getClass().getSimpleName(), "onActivityResult: missing addon alarm data; ignoring result");
+                        }
+                    } else {
+                        Log.w(getClass().getSimpleName(), "onActivityResult: missing addon alarm data; ignoring result");
                     }
-                } else {
-                    Toast.makeText(getActivity(), "picker canceled", Toast.LENGTH_LONG).show();   // TODO
                 }
                 break;
         }
     }
 
+    protected void selectAddonAlarm(@NonNull Uri uri)
+    {
+        String reference = uri.getAuthority();
+        String alarmName = uri.getLastPathSegment();
+        if (reference != null && alarmName != null) {
+            selectAddonAlarm(reference, alarmName, null, null);
+        }
+    }
+    protected void selectAddonAlarm(@NonNull String reference, @NonNull String name, @Nullable String title, @Nullable String summary)
+    {
+        if (title == null || summary == null)
+        {
+            Context context = getActivity();
+            ContentResolver resolver = context != null ? context.getContentResolver() : null;
+            if (resolver != null)
+            {
+                Uri info_uri = Uri.parse("content://" + reference + "/" + AlarmAddon.QUERY_ALARM_INFO + "/" + name);
+                Cursor cursor = resolver.query(info_uri, AlarmAddon.QUERY_ALARM_INFO_PROJECTION, null, null, null);
+                if (cursor != null)
+                {
+                    cursor.moveToFirst();
+                    int i_title = cursor.getColumnIndex(AlarmAddon.COLUMN_ALARM_TITLE);
+                    int i_summary = cursor.getColumnIndex(AlarmAddon.COLUMN_ALARM_SUMMARY);
+                    title = (i_title >= 0) ? cursor.getString(i_title) : name;
+                    summary = (i_summary >= 0) ? cursor.getString(i_summary) : "";
+                    cursor.close();
+                }
+            }
+        }
+
+        // Uri calc_uri = Uri.parse("content://" + reference + "/" + AlarmAddon.QUERY_ALARM_CALC + "/" + name);
+        // TODO: add alarm to selector; select it!
+    }
 
     public void updateViews(Context context)
     {

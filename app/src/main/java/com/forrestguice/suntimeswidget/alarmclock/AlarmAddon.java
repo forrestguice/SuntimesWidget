@@ -49,6 +49,21 @@ public class AlarmAddon
     public static final String ACTION_SUNTIMES_PICK_ALARM = "suntimes.action.PICK_ALARM";
     public static final String KEY_ALARM_PICKER_TITLE = "SuntimesAlarmPickerTitle";
 
+    public static final String COLUMN_CONFIG_PROVIDER = "provider";         // String (provider reference)
+    public static final String COLUMN_ALARM_NAME = "alarm_name";            // String (alarm/event ID)
+    public static final String COLUMN_ALARM_TITLE = "alarm_title";          // String (display string)
+    public static final String COLUMN_ALARM_SUMMARY = "alarm_summary";      // String (extended display string)
+    public static final String COLUMN_ALARM_TIMEMILLIS = "alarm_time";      // long (timestamp millis)
+
+    public static final String QUERY_ALARM_INFO = "alarmInfo";
+    public static final String[] QUERY_ALARM_INFO_PROJECTION = new String[] {
+            COLUMN_ALARM_NAME, COLUMN_ALARM_TITLE, COLUMN_ALARM_SUMMARY
+    };
+    public static final String QUERY_ALARM_CALC = "alarmCalc";
+    public static final String[] QUERY_ALARM_CALC_PROJECTION = new String[] {
+            COLUMN_ALARM_NAME, COLUMN_ALARM_TIMEMILLIS
+    };
+
     /**
      * queryAlarmPickers
      */
