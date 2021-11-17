@@ -405,9 +405,13 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public static CharSequence displayEvent(Context context, AlarmClockItem item)
     {
-        SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
+        String eventString = item.getEvent();
+        SolarEvents event = SolarEvents.valueOf(eventString, null);
         if (event != null) {
             return event.getLongDisplayString();
+
+        } else if (eventString != null) {
+            return eventString;                 // TODO
 
         } else if (item.timezone != null) {
             Calendar adjustedTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(item.timezone, item.location));

@@ -531,24 +531,26 @@ public class AlarmDismissActivity extends AppCompatActivity
         String emptyLabel = context.getString(R.string.alarmMode_alarm);
         alarmTitle.setText((item.label == null || item.label.isEmpty()) ? emptyLabel : item.label);
 
-        SolarEvents event = SolarEvents.valueOf(alarm.getEvent(), null);
+        String eventString = alarm.getEvent();
+        SolarEvents event = SolarEvents.valueOf(eventString, null);
         if (event != null)
         {
             alarmSubtitle.setText(event.getLongDisplayString());
             alarmSubtitle.setVisibility(View.VISIBLE);
 
-        } else {
-            if (alarm.timezone != null)
-            {
-                Calendar eventTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(item.timezone, item.location));
-                eventTime.set(Calendar.HOUR_OF_DAY, item.hour);
-                eventTime.set(Calendar.MINUTE, item.minute);
-                alarmSubtitle.setText(utils.calendarTimeShortDisplayString(context, eventTime) + "\n" + AlarmClockItem.AlarmTimeZone.displayString(item.timezone));
-                alarmSubtitle.setVisibility(View.VISIBLE);
+        } else if (eventString != null) {
+            alarmSubtitle.setText(eventString);          // TODO: non SolarEvents enum
+            alarmSubtitle.setVisibility(View.VISIBLE);
 
-            } else {
-                alarmSubtitle.setVisibility(View.GONE);
-            }
+        } else if (alarm.timezone != null) {
+            Calendar eventTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(item.timezone, item.location));
+            eventTime.set(Calendar.HOUR_OF_DAY, item.hour);
+            eventTime.set(Calendar.MINUTE, item.minute);
+            alarmSubtitle.setText(utils.calendarTimeShortDisplayString(context, eventTime) + "\n" + AlarmClockItem.AlarmTimeZone.displayString(item.timezone));
+            alarmSubtitle.setVisibility(View.VISIBLE);
+
+         } else {
+            alarmSubtitle.setVisibility(View.GONE);
         }
 
         Spannable offsetSpan = new SpannableString("");

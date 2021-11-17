@@ -649,8 +649,11 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
+        String eventString = alarm.getEvent();
         SolarEvents event = SolarEvents.valueOf(alarm.getEvent(), null);
-        String emptyLabel = ((event != null) ? event.getShortDisplayString() : context.getString(R.string.alarmOption_solarevent_none));
+        String eventDisplayString = event != null ? event.getShortDisplayString() : eventString;     // TODO: non SolarEventsEnum
+
+        String emptyLabel = ((eventString != null) ? eventDisplayString : context.getString(R.string.alarmOption_solarevent_none));
         String notificationTitle = (alarm.label == null || alarm.label.isEmpty() ? emptyLabel : alarm.label);
         String notificationMsg = notificationTitle;
         int notificationIcon = ((alarm.type == AlarmClockItem.AlarmType.NOTIFICATION) ? R.drawable.ic_action_notification : R.drawable.ic_action_alarms);
@@ -1401,7 +1404,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static boolean updateAlarmTime(Context context, final AlarmClockItem item, Calendar now, boolean modifyItem)
     {
         Calendar eventTime = Calendar.getInstance();
-        SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
+        SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);   // TODO: non SolarEvents enum
         if (item.location != null && event != null)
         {
             switch (event.getType())
@@ -1654,7 +1657,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
     private static SuntimesData getData(Context context, @NonNull AlarmClockItem alarm)
     {
-        SolarEvents event = SolarEvents.valueOf(alarm.getEvent(), null);
+        SolarEvents event = SolarEvents.valueOf(alarm.getEvent(), null);   // TODO: non SolarEventsEnum
         if (alarm.location != null && event != null)
         {
             switch (event.getType())

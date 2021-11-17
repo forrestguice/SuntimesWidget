@@ -1562,8 +1562,12 @@ public class SuntimesActivity extends AppCompatActivity
 
                     case 0:
                     default:
-                        SolarEvents event = SolarEvents.valueOf(dialog.getEvent(), null);  // TODO: non SolarEvents enum
-                        String alarmLabel = event != null ? context.getString(R.string.schedalarm_labelformat2, event.getShortDisplayString()) : "";
+                        String eventString = dialog.getEvent();
+                        SolarEvents event = SolarEvents.valueOf(eventString, null);
+                        String eventTitle = event != null ? event.getShortDisplayString() : eventString;  // TODO: non SolarEvents enum
+
+                        String alarmLabel = eventString != null ? context.getString(R.string.schedalarm_labelformat2, eventTitle) : "";
+                        AlarmClockActivity.scheduleAlarm(context, type, alarmLabel, eventString, location);
                         break;
                 }
             }

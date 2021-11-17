@@ -285,10 +285,10 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
                     }
                 }
 
-                SolarEvents param_event = SolarEvents.valueOf(intent.getStringExtra(AlarmClockActivity.EXTRA_SOLAREVENT), null);
+                String param_event = intent.getStringExtra(AlarmClockActivity.EXTRA_SOLAREVENT);
 
                 //Log.i(TAG, "ACTION_SET_ALARM :: " + param_label + ", " + param_hour + ", " + param_minute + ", " + param_event);
-                addAlarm(AlarmClockItem.AlarmType.ALARM, param_label, param_event.name(), param_hour, param_minute, param_vibrate, param_ringtoneUri, param_days);
+                addAlarm(AlarmClockItem.AlarmType.ALARM, param_label, param_event, param_hour, param_minute, param_vibrate, param_ringtoneUri, param_days);
 
             } else if (param_action.equals(ACTION_ADD_ALARM)) {
                 //Log.d(TAG, "handleIntent: add alarm");
@@ -734,9 +734,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
 
             if (item != null && dialog != null)
             {
-                String eventString = dialog.getChoice();
-                SolarEvents event = SolarEvents.valueOf(eventString, null);
-                item.setEvent(event != null ? event.name() : eventString);
+                item.setEvent(dialog.getChoice());
                 item.modified = true;
                 AlarmNotifications.updateAlarmTime(AlarmClockLegacyActivity.this, item);
 
@@ -967,8 +965,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         final AlarmDialog dialog = new AlarmDialog();
         dialog.setDialogTitle((item.type == AlarmClockItem.AlarmType.NOTIFICATION) ? getString(R.string.configAction_addNotification) : getString(R.string.configAction_addAlarm));
         initEventDialog(dialog, item.location);
-        SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
-        dialog.setChoice(event != null ? event.name() : item.getEvent());
+        dialog.setChoice(item.getEvent());
         dialog.setOnAcceptedListener(onSolarEventChanged);
 
         t_selectedItem = item.rowID;
