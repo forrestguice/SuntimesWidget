@@ -25,8 +25,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.AlarmClock;
@@ -37,22 +39,27 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.content.ContextCompat;
 
+import android.support.v7.widget.PopupMenu;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
@@ -71,10 +78,13 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.TimeZone;
 
 public class AlarmDialog extends BottomSheetDialogFragment
 {
+    public static final int REQUEST_ADDON_ALARMPICKER = 3000;
+
     public static final String KEY_ALARM_TYPE = "alarmdialog_alarmtype";
     public static final AlarmClockItem.AlarmType DEF_ALARM_TYPE = AlarmClockItem.AlarmType.ALARM;
 
@@ -272,6 +282,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
     private TextView txt_location;
     private TextView txt_modeLabel;
     private TextView txt_title;
+    private ImageButton btn_more;
 
     protected void initViews( final Context context, View dialogContent )
     {
@@ -290,6 +301,13 @@ public class AlarmDialog extends BottomSheetDialogFragment
         if (txt_location != null) {
             txt_location.setText("");
             txt_location.setOnClickListener(onLocationClicked);
+        }
+
+        alarmPickers = AlarmAddon.queryAlarmPickers(context);
+        btn_more = (ImageButton) dialogContent.findViewById(R.id.appwidget_schedalarm_more);
+        if (btn_more != null) {
+            btn_more.setOnClickListener(onMoreButtonClicked);
+            btn_more.setVisibility(alarmPickers.size() > 0 ? View.VISIBLE : View.GONE);
         }
 
         spinner_scheduleMode = (Spinner) dialogContent.findViewById(R.id.appwidget_schedalarm_mode);
@@ -378,6 +396,72 @@ public class AlarmDialog extends BottomSheetDialogFragment
             txt_modeLabel.setVisibility(View.GONE);
         }
     }
+
+    private View.OnClickListener onMoreButtonClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v)
+        {
+            Context context = getActivity();
+            PopupMenu popup = new PopupMenu(context, v);
+            Menu menu = popup.getMenu();
+
+            if (alarmPickers == null) {
+                alarmPickers = AlarmAddon.queryAlarmPickers(context);
+            }
+            for (int i=0; i<alarmPickers.size(); i++) {
+                menu.add(0, i, i, alarmPickers.get(i).getTitle());
+            }
+
+            popup.setOnMenuItemClickListener(onMoreMenuClick);
+            popup.show();
+        }
+    };
+    private List<AlarmAddon.AlarmPickerInfo> alarmPickers = null;
+
+    private PopupMenu.OnMenuItemClickListener onMoreMenuClick = new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            Context context = getContext();
+            if (context == null || alarmPickers == null) {
+                return false;
+            }
+
+            int i = item.getItemId();
+            if (i >= 0 && i < alarmPickers.size())
+            {
+                AlarmAddon.AlarmPickerInfo picker = alarmPickers.get(item.getItemId());
+                startActivityForResult(picker.getIntent(), REQUEST_ADDON_ALARMPICKER);
+                return true;
+
+            } else {
+                Log.d(getClass().getSimpleName(), "Invalid AlarmPicker index; ignoring selection..");
+                return false;
+            }
+        }
+    };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode)
+        {
+            case REQUEST_ADDON_ALARMPICKER:
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    Uri uri = (data != null ? data.getData() : null);
+                    if (uri != null) {
+                        Toast.makeText(getActivity(), "picker result: " + uri, Toast.LENGTH_LONG).show();   // TODO
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "picker canceled", Toast.LENGTH_LONG).show();   // TODO
+                }
+                break;
+        }
+    }
+
 
     public void updateViews(Context context)
     {

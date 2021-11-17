@@ -104,6 +104,13 @@ public class AlarmAddon
             return info;
         }
 
+        public Intent getIntent()
+        {
+            Intent intent = new Intent(AlarmAddon.ACTION_SUNTIMES_PICK_ALARM);
+            intent.setClassName(info.packageName, info.name);
+            return intent;
+        }
+
         public String toString() {
             return title;
         }

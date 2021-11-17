@@ -50,10 +50,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="@string/configLabel_schedalarm_mode" />
 
-            <Spinner android:id="@+id/appwidget_schedalarm_mode"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
+            <LinearLayout android:orientation="horizontal"
+                android:layout_width="match_parent" android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:layout_marginRight="8dp" android:layout_marginLeft="0dp"
-                android:layout_marginEnd="8dp" android:layout_marginStart="0dp" />
+                android:layout_marginEnd="8dp" android:layout_marginStart="0dp">
+
+                <Spinner android:id="@+id/appwidget_schedalarm_mode"
+                    android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <ImageButton android:id="@+id/appwidget_schedalarm_more"
+                    style="@style/ActionButton" android:src="?attr/icActionSearch"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/appwidget_schedalarm_location" android:background="?attr/selectableItemBackground"
