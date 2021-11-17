@@ -472,10 +472,10 @@ public class AlarmDialog extends BottomSheetDialogFragment
                         String name = data.getStringExtra(AlarmAddon.COLUMN_ALARM_NAME);
                         String title = data.getStringExtra(AlarmAddon.COLUMN_ALARM_TITLE);
                         String summary = data.getStringExtra(AlarmAddon.COLUMN_ALARM_SUMMARY);
-                        Toast.makeText(getActivity(), "picker result: \n" + title + " \n" + summary + "\n" + name + "\n" + reference + "\n" + uri, Toast.LENGTH_LONG).show();   // TODO
+                        //Toast.makeText(getActivity(), "picker result: \n" + title + " \n" + summary + "\n" + name + "\n" + reference + "\n" + uri, Toast.LENGTH_LONG).show();
 
                         if ((reference != null && name != null)) {
-                            selectAddonAlarm(reference, name, title, summary);
+                            selectAddonAlarm(reference, name);
 
                         } else if (uri != null) {
                             selectAddonAlarm(uri);
@@ -496,34 +496,20 @@ public class AlarmDialog extends BottomSheetDialogFragment
         String reference = uri.getAuthority();
         String alarmName = uri.getLastPathSegment();
         if (reference != null && alarmName != null) {
-            selectAddonAlarm(reference, alarmName, null, null);
+            selectAddonAlarm(reference, alarmName);
         }
     }
-    protected void selectAddonAlarm(@NonNull String reference, @NonNull String name, @Nullable String title, @Nullable String summary)
+    protected void selectAddonAlarm(@NonNull String reference, @NonNull String name)
     {
-        if (title == null || summary == null)
+        Context context = getActivity();
+        ContentResolver resolver = context != null ? context.getContentResolver() : null;
+        if (resolver != null)
         {
-            Context context = getActivity();
-            ContentResolver resolver = context != null ? context.getContentResolver() : null;
-            if (resolver != null)
-            {
-                Uri info_uri = Uri.parse("content://" + reference + "/" + AlarmAddon.QUERY_ALARM_INFO + "/" + name);
-                Cursor cursor = resolver.query(info_uri, AlarmAddon.QUERY_ALARM_INFO_PROJECTION, null, null, null);
-                if (cursor != null)
-                {
-                    cursor.moveToFirst();
-                    int i_title = cursor.getColumnIndex(AlarmAddon.COLUMN_ALARM_TITLE);
-                    int i_summary = cursor.getColumnIndex(AlarmAddon.COLUMN_ALARM_SUMMARY);
-                    title = (i_title >= 0) ? cursor.getString(i_title) : name;
-                    summary = (i_summary >= 0) ? cursor.getString(i_summary) : "";
-                    cursor.close();
-                }
-            }
+            AlarmEventItem item = new AlarmEventItem("content://" + reference + "/" + AlarmAddon.QUERY_ALARM_INFO + "/" + name, resolver);
+            adapter.add(item);
+            adapter.notifyDataSetChanged();
+            spinner_scheduleMode.setSelection(adapter.getPosition(item));
         }
-
-        // Uri calc_uri = Uri.parse("content://" + reference + "/" + AlarmAddon.QUERY_ALARM_CALC + "/" + name);
-        Toast.makeText(getActivity(), "picker result: \n" + title + " \n" + summary + "\n" + name + "\n" + reference, Toast.LENGTH_LONG).show();   // TODO
-        // TODO: add alarm to selector; select it!
     }
 
     public void updateViews(Context context)
@@ -997,12 +983,28 @@ public class AlarmDialog extends BottomSheetDialogFragment
             this.event = event;
         }
 
-        public AlarmEventItem( @NonNull String eventUri, @NonNull String title, @Nullable String summary )
+        public AlarmEventItem( @NonNull String eventUri, @NonNull ContentResolver resolver)
         {
             this.event = null;
             this.uri = eventUri;
-            this.title = title;
-            this.summary = summary;
+            queryDisplayStrings(resolver);
+        }
+
+        private void queryDisplayStrings(@NonNull ContentResolver resolver)
+        {
+            Uri info_uri = Uri.parse(uri);
+            String name = info_uri.getLastPathSegment();
+
+            Cursor cursor = resolver.query(info_uri, AlarmAddon.QUERY_ALARM_INFO_PROJECTION, null, null, null);
+            if (cursor != null)
+            {
+                cursor.moveToFirst();
+                int i_title = cursor.getColumnIndex(AlarmAddon.COLUMN_ALARM_TITLE);
+                int i_summary = cursor.getColumnIndex(AlarmAddon.COLUMN_ALARM_SUMMARY);
+                this.title = (i_title >= 0) ? cursor.getString(i_title) : name;
+                this.summary = (i_summary >= 0) ? cursor.getString(i_summary) : "";
+                cursor.close();
+            }
         }
 
         @NonNull
@@ -1094,12 +1096,14 @@ public class AlarmDialog extends BottomSheetDialogFragment
             typedArray.recycle();
 
             ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
-            SolarEvents event = items.get(position).getEvent();   // TODO: nullcheck event
-            SolarEvents.SolarEventsAdapter.adjustIcon(iconResource, icon, event);
-
             TextView text = (TextView) view.findViewById(android.R.id.text1);
-            text.setText(event.getLongDisplayString());
 
+            AlarmEventItem item = items.get(position);
+            SolarEvents event = item.getEvent();
+            if (event != null) {
+                SolarEvents.SolarEventsAdapter.adjustIcon(iconResource, icon, event);
+            }
+            text.setText(item.getTitle());
             return view;
         }
     }
