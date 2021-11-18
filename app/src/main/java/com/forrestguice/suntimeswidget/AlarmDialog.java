@@ -535,13 +535,10 @@ public class AlarmDialog extends BottomSheetDialogFragment
             AlarmEvent.AlarmEventItem item = new AlarmEvent.AlarmEventItem(reference, name, resolver);
             if (item.isResolved())
             {
-                int position = adapter.findItemPosition(item.getEventID());
-                if (position < 0) {
-                    position = 0;
-                    adapter.insert(item, position);
-                    adapter.notifyDataSetChanged();
+                setChoice(item.getEventID());
+                if (listener != null) {
+                    listener.onChanged(this);
                 }
-                spinner_scheduleMode.setSelection(position);
             } else {
                 Toast.makeText(context, context.getString(R.string.schedalarm_dialog_error2), Toast.LENGTH_LONG).show();
             }

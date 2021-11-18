@@ -182,7 +182,8 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         fragment.setDialogListener(new AlarmDialog.DialogListener() {
             @Override
             public void onChanged(AlarmDialog dialog) {
-                getArguments().putSerializable(EXTRA_EVENT, dialog.getChoice());
+                getArguments().putString(EXTRA_EVENT, dialog.getChoice());
+                Log.d("DEBUG", "AlarmCreateDialog: onChanged: " + dialog.getChoice());
                 getArguments().putParcelable(EXTRA_LOCATION, dialog.getLocation());
                 updateViews(getActivity());
             }
