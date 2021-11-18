@@ -19,11 +19,13 @@ package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,7 +100,7 @@ public class AlarmEvent
         }
 
         public int getIcon() {
-            return (event != null ? event.getIcon() : 0);
+            return (event != null ? event.getIcon() : R.attr.icActionExtension);
         }
 
         public String toString() {
@@ -175,17 +177,43 @@ public class AlarmEvent
             int iconResource = typedArray.getResourceId(0, def);
             typedArray.recycle();
 
-            ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
+            ImageView iconView = (ImageView) view.findViewById(android.R.id.icon1);
             TextView text = (TextView) view.findViewById(android.R.id.text1);
 
             AlarmEventItem item = items.get(position);
             SolarEvents event = item.getEvent();
             if (event != null) {
-                SolarEvents.SolarEventsAdapter.adjustIcon(iconResource, icon, event);
-            }  // TODO: icons for non SolarEvent enum
+                SolarEvents.SolarEventsAdapter.adjustIcon(iconResource, iconView, event);
+
+            } else {
+                Resources resources = context.getResources();
+                int s = (int)resources.getDimension(R.dimen.sunIconLarge_width);
+                int[] iconDimen = new int[] {s,s};
+                adjustIcon(iconResource, iconView, iconDimen, 8);
+            }
+
             text.setText(item.getTitle());
             return view;
         }
+    }
+
+    public static void adjustIcon(int iconRes, ImageView iconView, int[] dimen, int marginDp)
+    {
+        Resources resources = iconView.getContext().getResources();
+        ViewGroup.LayoutParams iconParams = iconView.getLayoutParams();
+        iconParams.width = dimen[0];
+        iconParams.height = dimen[1];
+
+        if (iconParams instanceof ViewGroup.MarginLayoutParams)
+        {
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) iconParams;
+            float vertMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, marginDp, resources.getDisplayMetrics());
+            float horizMargin = vertMargin / 2f;
+            params.setMargins((int)horizMargin, (int)vertMargin, (int)horizMargin, (int)vertMargin);
+        }
+
+        iconView.setImageDrawable(null);
+        iconView.setBackgroundResource(iconRes);
     }
 
     public static AlarmEventAdapter createAdapter(Context context)
