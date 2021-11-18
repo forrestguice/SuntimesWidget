@@ -77,6 +77,14 @@ public class AlarmAddon
     public static final String EXTRA_LOCATION_LON = AlarmClockActivity.EXTRA_LOCATION_LON;
     public static final String EXTRA_LOCATION_ALT = AlarmClockActivity.EXTRA_LOCATION_ALT;
 
+    public static String getAlarmInfoUri(String authority, String alarmID) {
+        return "content://" + authority + "/" + AlarmAddon.QUERY_ALARM_INFO + "/" + alarmID;
+    }
+
+    public static String getAlarmCalcUri(String authority, String alarmID) {
+        return "content://" + authority + "/" + AlarmAddon.QUERY_ALARM_CALC + "/" + alarmID;
+    }
+
     /**
      * queryAlarmPickers
      */
