@@ -176,6 +176,7 @@ package com.forrestguice.suntimeswidget.calculator.core;
  *     String selection = COLUMN_CONFIG_CALCULATOR +=? AND "      // any combination of these CONFIG_COLUMNS
  *                      + COLUMN_CONFIG_LATITUDE + "=? AND "
  *                      + COLUMN_CONFIG_LONGITUDE + "=? AND "
+ *                      + COLUMN_CONFIG_ALTITUDE + "=? AND "
  *                      + COLUMN_CONFIG_TIMEZONE + "=?";
  *     String[] selectionArgs = new String[] {"time4a-cc", "33.45", "-111.94", "US/Arizona"};
  *
