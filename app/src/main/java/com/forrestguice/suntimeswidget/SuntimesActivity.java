@@ -74,6 +74,7 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialog;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
@@ -1563,11 +1564,11 @@ public class SuntimesActivity extends AppCompatActivity
                     case 0:
                     default:
                         String eventString = dialog.getEvent();
-                        SolarEvents event = SolarEvents.valueOf(eventString, null);
-                        String eventTitle = event != null ? event.getShortDisplayString() : eventString;  // TODO: non SolarEvents enum
-
-                        String alarmLabel = eventString != null ? context.getString(R.string.schedalarm_labelformat2, eventTitle) : "";
-                        AlarmClockActivity.scheduleAlarm(context, type, alarmLabel, eventString, location);
+                        AlarmEvent.AlarmEventItem eventItem = new AlarmEvent.AlarmEventItem(eventString, getContentResolver());
+                        String alarmLabel = eventString != null ? context.getString(R.string.schedalarm_labelformat2, eventItem.getTitle()) : "";
+                        if (eventString != null) {
+                            AlarmClockActivity.scheduleAlarm(context, type, alarmLabel, eventString, location);
+                        }
                         break;
                 }
             }
