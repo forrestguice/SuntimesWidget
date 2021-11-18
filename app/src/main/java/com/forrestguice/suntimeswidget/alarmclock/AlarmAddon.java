@@ -32,6 +32,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
+import com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -67,6 +71,11 @@ public class AlarmAddon
     public static final String[] QUERY_ALARM_CALC_PROJECTION = new String[] {
             COLUMN_ALARM_NAME, COLUMN_ALARM_TIMEMILLIS
     };
+
+    public static final String EXTRA_LOCATION_LABEL = AlarmClockActivity.EXTRA_LOCATION_LABEL;
+    public static final String EXTRA_LOCATION_LAT = AlarmClockActivity.EXTRA_LOCATION_LAT;
+    public static final String EXTRA_LOCATION_LON = AlarmClockActivity.EXTRA_LOCATION_LON;
+    public static final String EXTRA_LOCATION_ALT = AlarmClockActivity.EXTRA_LOCATION_ALT;
 
     /**
      * queryAlarmPickers
@@ -123,10 +132,22 @@ public class AlarmAddon
             return info;
         }
 
-        public Intent getIntent()
+        public Intent getIntent() {
+            return getIntent(null);
+        }
+        public Intent getIntent(@Nullable Location location)
         {
             Intent intent = new Intent(AlarmAddon.ACTION_SUNTIMES_PICK_ALARM);
             intent.setClassName(info.packageName, info.name);
+
+            if (location != null)
+            {
+                intent.putExtra(EXTRA_LOCATION_LABEL, location.getLabel());
+                intent.putExtra(EXTRA_LOCATION_LAT, location.getLatitudeAsDouble());
+                intent.putExtra(EXTRA_LOCATION_LON, location.getLongitudeAsDouble());
+                intent.putExtra(EXTRA_LOCATION_ALT, location.getAltitudeAsDouble());
+            }
+
             return intent;
         }
 

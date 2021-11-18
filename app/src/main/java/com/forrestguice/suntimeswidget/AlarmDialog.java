@@ -473,7 +473,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
             if (i >= 0 && i < alarmPickers.size())
             {
                 AlarmAddon.AlarmPickerInfo picker = alarmPickers.get(item.getItemId());
-                startActivityForResult(picker.getIntent(), REQUEST_ADDON_ALARMPICKER);
+                startActivityForResult(picker.getIntent(getLocation()), REQUEST_ADDON_ALARMPICKER);
                 return true;
 
             } else {
