@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -439,10 +440,19 @@ public class AlarmDialog extends BottomSheetDialogFragment
             if (alarmPickers == null) {
                 alarmPickers = AlarmAddon.queryAlarmPickers(context);
             }
-            for (int i=0; i<alarmPickers.size(); i++) {
-                menu.add(0, i, i, alarmPickers.get(i).getTitle());
+
+            int[] attr = { R.attr.icActionExtension };
+            TypedArray typedArray = context.obtainStyledAttributes(attr);
+            Drawable icon = ContextCompat.getDrawable(context, typedArray.getResourceId(0, R.drawable.ic_action_extension));
+            typedArray.recycle();
+
+            for (int i=0; i<alarmPickers.size(); i++)
+            {
+                MenuItem item = menu.add(0, i, i, alarmPickers.get(i).getTitle());
+                item.setIcon(icon);
             }
 
+            SuntimesUtils.forceActionBarIcons(menu);
             popup.setOnMenuItemClickListener(onMoreMenuClick);
             popup.show();
         }
