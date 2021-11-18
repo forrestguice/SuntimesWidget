@@ -32,6 +32,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 
+import android.database.Cursor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -1404,7 +1405,8 @@ public class AlarmNotifications extends BroadcastReceiver
     public static boolean updateAlarmTime(Context context, final AlarmClockItem item, Calendar now, boolean modifyItem)
     {
         Calendar eventTime = Calendar.getInstance();
-        SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);   // TODO: non SolarEvents enum
+        String eventID = item.getEvent();
+        SolarEvents event = SolarEvents.valueOf(eventID, null);
         if (item.location != null && event != null)
         {
             switch (event.getType())
@@ -1425,6 +1427,10 @@ public class AlarmNotifications extends BroadcastReceiver
                     eventTime = updateAlarmTime_sunEvent(context, event, item.location, item.offset, item.repeating, item.repeatingDays, now);
                     break;
             }
+
+        } else if (eventID != null) {
+            eventTime = updateAlarmTime_addonEvent(context.getContentResolver(), eventID, item.location, item.offset, item.repeating, item.repeatingDays, now);
+
         } else {
             eventTime = updateAlarmTime_clockTime(item.hour, item.minute, item.timezone, item.location, item.offset, item.repeating, item.repeatingDays, now);
         }
@@ -1618,6 +1624,43 @@ public class AlarmNotifications extends BroadcastReceiver
             eventTime = data.eventCalendarUpcoming(day);
             eventTime.set(Calendar.SECOND, 0);
             alarmTime.setTimeInMillis(eventTime.getTimeInMillis() + offset);
+        }
+        return eventTime;
+    }
+
+    private static Calendar updateAlarmTime_addonEvent(@Nullable ContentResolver resolver, @NonNull String eventID, @Nullable Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
+    {
+        Log.d(TAG, "updateAlarmTime_addonEvent: eventID: " + eventID + ", offset: " + offset + ", repeating: " + repeating);
+        Calendar eventTime = Calendar.getInstance();
+
+        Uri uri_id = Uri.parse(eventID);
+        Uri uri_calc = Uri.parse(AlarmAddon.getAlarmCalcUri(uri_id.getAuthority(), uri_id.getLastPathSegment()));
+        if (resolver != null)
+        {
+            // TODO: selection args; lat, lon, alt, offset, repeating, repeatingDays, nowMillis
+            Cursor cursor = resolver.query(uri_calc, AlarmAddon.QUERY_ALARM_CALC_PROJECTION, null, null, null);
+            if (cursor != null)
+            {
+                cursor.moveToFirst();
+                int i_alarmTime = cursor.getColumnIndex(AlarmAddon.COLUMN_ALARM_TIMEMILLIS);
+                Long alarmTime = i_alarmTime >= 0 ? cursor.getLong(i_alarmTime) : null;
+                cursor.close();
+
+                if (alarmTime != null) {
+                    // TODO: sanity check required!
+                    eventTime.setTimeInMillis(alarmTime);
+
+                } else {
+                    Log.e(TAG, "updateAlarmTime: failed to query alarm time; result is missing " + AlarmAddon.COLUMN_ALARM_TIMEMILLIS + " :: " + uri_calc);
+                    return null;
+                }
+            } else {
+                Log.e(TAG, "updateAlarmTime: failed to query alarm time; null cursor!" + uri_calc);
+                return null;
+            }
+        } else {
+            Log.e(TAG, "updateAlarmTime: failed to query alarm time; null ContentResolver! " + uri_calc);
+            return null;
         }
         return eventTime;
     }
