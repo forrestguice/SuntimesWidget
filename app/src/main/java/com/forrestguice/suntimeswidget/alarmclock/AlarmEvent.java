@@ -50,23 +50,32 @@ public class AlarmEvent
         protected SolarEvents event;
         protected String title = null, summary = null;
         protected String uri = null;
+        protected boolean resolved = false;
 
         public AlarmEventItem( @NonNull SolarEvents event ) {
             this.event = event;
+            resolved = true;
+        }
+
+        public AlarmEventItem( @NonNull String authority, @NonNull String name, @Nullable ContentResolver resolver)
+        {
+            event = null;
+            uri = "content://" + authority + "/" + AlarmAddon.QUERY_ALARM_INFO + "/" + name;
+            resolved = queryDisplayStrings(resolver);
         }
 
         public AlarmEventItem( @Nullable String eventUri, @Nullable ContentResolver resolver)
         {
             event = SolarEvents.valueOf(eventUri, null);
-            if (event == null)
-            {
+            if (event == null) {
                 uri = eventUri;
-                queryDisplayStrings(resolver);
+                resolved = queryDisplayStrings(resolver);
             }
         }
 
-        private void queryDisplayStrings(@Nullable ContentResolver resolver)
+        private boolean queryDisplayStrings(@Nullable ContentResolver resolver)
         {
+            boolean retValue = false;
             Uri info_uri = Uri.parse(uri);
             String name = info_uri.getLastPathSegment();
 
@@ -81,12 +90,14 @@ public class AlarmEvent
                     this.title = (i_title >= 0) ? cursor.getString(i_title) : name;
                     this.summary = (i_summary >= 0) ? cursor.getString(i_summary) : "";
                     cursor.close();
+                    retValue = (i_title >= 0);
                 }
 
             } else {
                 this.title = name;
                 this.summary = "";
             }
+            return retValue;
         }
 
         @NonNull
@@ -120,6 +131,10 @@ public class AlarmEvent
         public String getUri() {
             return uri;
         }
+
+        public boolean isResolved() {
+            return resolved;
+        }
     }
 
     /**
@@ -137,11 +152,16 @@ public class AlarmEvent
             this.items = items;
         }
 
-        public boolean removeItem(SolarEvents event)
+        public boolean removeItem(SolarEvents event) {
+            return event != null && removeItem(event.name());
+        }
+
+        public boolean removeItem(String event)
         {
             for (AlarmEventItem item : items)
             {
-                if (event == item.getEvent())
+                String eventID = item.getEventID();
+                if (eventID != null && eventID.equals(event))
                 {
                     items.remove(item);
                     notifyDataSetChanged();
@@ -149,6 +169,22 @@ public class AlarmEvent
                 }
             }
             return false;
+        }
+
+        public boolean containsItem(String eventID) {
+            return findItemPosition(eventID) >= 0;
+        }
+
+        public int findItemPosition(String eventID)
+        {
+            for (int i=0; i<items.size(); i++)
+            {
+                AlarmEventItem item = items.get(i);
+                if (item.getEventID().equals(eventID)) {
+                    return i;
+                }
+            }
+            return -1;
         }
 
         @Override
@@ -164,6 +200,7 @@ public class AlarmEvent
 
         private View itemView(int position, View convertView, @NonNull ViewGroup parent)
         {
+            AlarmEventItem item = items.get(position);
             View view = convertView;
             if (view == null)
             {
@@ -171,20 +208,16 @@ public class AlarmEvent
                 view = inflater.inflate(R.layout.layout_listitem_solarevent, parent, false);
             }
 
+            ImageView iconView = (ImageView) view.findViewById(android.R.id.icon1);   // retrieve icon
             int[] iconAttr = { items.get(position).getIcon() };
             TypedArray typedArray = context.obtainStyledAttributes(iconAttr);
             int def = R.drawable.ic_moon_rise;
             int iconResource = typedArray.getResourceId(0, def);
             typedArray.recycle();
 
-            ImageView iconView = (ImageView) view.findViewById(android.R.id.icon1);
-            TextView text = (TextView) view.findViewById(android.R.id.text1);
-
-            AlarmEventItem item = items.get(position);
-            SolarEvents event = item.getEvent();
+            SolarEvents event = item.getEvent();                                      // apply icon
             if (event != null) {
                 SolarEvents.SolarEventsAdapter.adjustIcon(iconResource, iconView, event);
-
             } else {
                 Resources resources = context.getResources();
                 int s = (int)resources.getDimension(R.dimen.sunIconLarge_width);
@@ -192,7 +225,8 @@ public class AlarmEvent
                 adjustIcon(iconResource, iconView, iconDimen, 8);
             }
 
-            text.setText(item.getTitle());
+            TextView textView = (TextView) view.findViewById(android.R.id.text1);     // apply text
+            textView.setText(item.getTitle());
             return view;
         }
     }

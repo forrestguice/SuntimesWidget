@@ -205,24 +205,39 @@ public class AlarmDialog extends BottomSheetDialogFragment
         {
             this.choice = choice;
             Log.d("DEBUG", "setChoice: " + choice);
-            if (spinner_scheduleMode != null)
+
+            if (adapter != null)
             {
-                SpinnerAdapter adapter = spinner_scheduleMode.getAdapter();
-                if (adapter != null)
+                Context context = getActivity();
+                if (context != null && !adapter.containsItem(choice))
                 {
+                    AlarmEvent.AlarmEventItem item = new AlarmEvent.AlarmEventItem(choice, context.getContentResolver());
+                    if (item.isResolved()) {
+                        adapter.insert(item, 0);
+                        Log.d("DEBUG", "inserting event into adapter: " + choice);
+                    } else Log.w(getClass().getSimpleName(), "omitting unresolved event from adapter: " + choice);
+                }
+
+                if (spinner_scheduleMode != null)
+                {
+                    boolean found = false;
                     for (int i = 0; i < adapter.getCount(); i++)
                     {
-                        AlarmEvent.AlarmEventItem item = (AlarmEvent.AlarmEventItem) adapter.getItem(i);
-                        SolarEvents event = item.getEvent();
-                        if (event != null && choice.equals(event.name()))
+                        AlarmEvent.AlarmEventItem item = adapter.getItem(i);
+                        String eventID = item != null ? item.getEventID() : null;
+                        if (eventID != null && choice.equals(item.getEventID()))
                         {
+                            found = true;
                             spinner_scheduleMode.setSelection(i);
-                            break;
-
-                        } else if (choice.equals(item.getUri())) {
-                            spinner_scheduleMode.setSelection(i);
+                            Log.d("DEBUG", "setting spinner to position: " + i);
                             break;
                         }
+                    }
+
+                    if (!found)
+                    {
+                        // TODO: fallback action when the choice isn't in the adapter because it wasn't added for some reason, or it failed to resolve.. maybe display a message
+                        // for now do nothing.. the spinner won't match the custom selection (instead displaying an arbitrary item), and will eventually overwrite it.
                     }
                 }
             }
@@ -507,10 +522,19 @@ public class AlarmDialog extends BottomSheetDialogFragment
         ContentResolver resolver = context != null ? context.getContentResolver() : null;
         if (resolver != null)
         {
-            AlarmEvent.AlarmEventItem item = new AlarmEvent.AlarmEventItem("content://" + reference + "/" + AlarmAddon.QUERY_ALARM_INFO + "/" + name, resolver);
-            adapter.add(item);
-            adapter.notifyDataSetChanged();
-            spinner_scheduleMode.setSelection(adapter.getPosition(item));
+            AlarmEvent.AlarmEventItem item = new AlarmEvent.AlarmEventItem(reference, name, resolver);
+            if (item.isResolved())
+            {
+                int position = adapter.findItemPosition(item.getEventID());
+                if (position < 0) {
+                    position = 0;
+                    adapter.insert(item, position);
+                    adapter.notifyDataSetChanged();
+                }
+                spinner_scheduleMode.setSelection(position);
+            } else {
+                Toast.makeText(context, context.getString(R.string.schedalarm_dialog_error2), Toast.LENGTH_LONG).show();
+            }
         }
     }
 
