@@ -332,9 +332,8 @@ public class AlarmDialog extends BottomSheetDialogFragment
                         updateLocationLabel(context, txt_location, dataset.location());
 
                         AlarmEvent.AlarmEventItem item = (AlarmEvent.AlarmEventItem)spinner_scheduleMode.getSelectedItem();
-                        if (item.getEvent() != null) {
-                            choice = item.getEventID();
-                        }
+                        choice = item.getEventID();
+
                         if (choice == null) {
                             Log.d("DEBUG", "null selection");
                             return;
