@@ -21,7 +21,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -61,7 +60,7 @@ public class AlarmEvent
         {
             event = null;
             uri = "content://" + authority + "/" + AlarmAddon.QUERY_ALARM_INFO + "/" + name;
-            resolved = queryDisplayStrings(resolver);
+            resolved = AlarmAddon.queryDisplayStrings(this, resolver);
         }
 
         public AlarmEventItem( @Nullable String eventUri, @Nullable ContentResolver resolver)
@@ -69,35 +68,9 @@ public class AlarmEvent
             event = SolarEvents.valueOf(eventUri, null);
             if (event == null) {
                 uri = eventUri;
-                resolved = queryDisplayStrings(resolver);
+                title = eventUri != null ? Uri.parse(eventUri).getLastPathSegment() : null;
+                resolved = AlarmAddon.queryDisplayStrings(this, resolver);
             }
-        }
-
-        private boolean queryDisplayStrings(@Nullable ContentResolver resolver)
-        {
-            boolean retValue = false;
-            Uri info_uri = Uri.parse(uri);
-            String name = info_uri.getLastPathSegment();
-
-            if (resolver != null)
-            {
-                Cursor cursor = resolver.query(info_uri, AlarmAddon.QUERY_ALARM_INFO_PROJECTION, null, null, null);
-                if (cursor != null)
-                {
-                    cursor.moveToFirst();
-                    int i_title = cursor.getColumnIndex(AlarmAddon.COLUMN_ALARM_TITLE);
-                    int i_summary = cursor.getColumnIndex(AlarmAddon.COLUMN_ALARM_SUMMARY);
-                    this.title = (i_title >= 0) ? cursor.getString(i_title) : name;
-                    this.summary = (i_summary >= 0) ? cursor.getString(i_summary) : "";
-                    cursor.close();
-                    retValue = (i_title >= 0);
-                }
-
-            } else {
-                this.title = name;
-                this.summary = "";
-            }
-            return retValue;
         }
 
         @NonNull

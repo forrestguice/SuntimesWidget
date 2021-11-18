@@ -17,6 +17,7 @@
 */
 package com.forrestguice.suntimeswidget.alarmclock;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -24,8 +25,11 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.database.Cursor;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -163,6 +167,28 @@ public class AlarmAddon
             }
         }
         return references;
+    }
+
+    public static boolean queryDisplayStrings(@NonNull AlarmEvent.AlarmEventItem item, @Nullable ContentResolver resolver)
+    {
+        boolean retValue = false;
+        String uriString = item.getUri();
+        if (resolver != null && uriString != null)
+        {
+            Uri info_uri = Uri.parse(uriString);
+            Cursor cursor = resolver.query(info_uri, AlarmAddon.QUERY_ALARM_INFO_PROJECTION, null, null, null);
+            if (cursor != null)
+            {
+                cursor.moveToFirst();
+                int i_title = cursor.getColumnIndex(AlarmAddon.COLUMN_ALARM_TITLE);
+                int i_summary = cursor.getColumnIndex(AlarmAddon.COLUMN_ALARM_SUMMARY);
+                item.title = (i_title >= 0) ? cursor.getString(i_title) : info_uri.getLastPathSegment();
+                item.summary = (i_summary >= 0) ? cursor.getString(i_summary) : null;
+                cursor.close();
+                retValue = (i_title >= 0);
+            }
+        }
+        return retValue;
     }
 
     /**
