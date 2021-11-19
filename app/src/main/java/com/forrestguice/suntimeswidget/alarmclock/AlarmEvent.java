@@ -199,7 +199,15 @@ public class AlarmEvent
             }
 
             TextView textView = (TextView) view.findViewById(android.R.id.text1);     // apply text
-            textView.setText(item.getTitle());
+            if (textView != null) {
+                textView.setText(item.getTitle());
+            }
+
+            TextView textView2 = (TextView) view.findViewById(android.R.id.text2);
+            if (textView2 != null) {
+                textView2.setText(item.getSummary());
+            }
+
             return view;
         }
     }
