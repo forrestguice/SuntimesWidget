@@ -12,24 +12,24 @@
     <!-- Action Bar
          The text that appears in the overflow menu / menuItem contentDescription.
     -->
-    <string name="configAction_refreshLocation">Refresh</string>
-    <string name="configAction_addLocation">Location</string>
-    <string name="configAction_mapLocation">Show Map</string>
-    <string name="configAction_mapLocation_chooser">View location using</string>
-    <string name="configAction_mapLocation_noapp">Unable to find map application!</string>
-    <string name="configAction_showCalendar">Calendar</string>
-    <string name="configAction_setAlarm">Set Alarm</string>
-    <string name="configAction_setTimeZone">Set Time Zone</string>
-    <string name="configAction_setDate">Set Date</string>
-    <string name="configAction_viewDate">View Date</string>
-    <string name="configAction_sunDialog">Sun Position</string>
-    <string name="configAction_equinoxDialog">Solstice / Equinox</string>
-    <string name="configAction_worldMap">World Map</string>
-    <string name="configAction_moon">Moon</string>
-    <string name="configAction_help">Help</string>
-    <string name="configAction_overflow">More</string>
-    <string name="configAction_settings">Settings</string>
-    <string name="configAction_aboutWidget">About</string>
+    <string name="configAction_refreshLocation">Obnovit</string>
+    <string name="configAction_addLocation">Poloha</string>
+    <string name="configAction_mapLocation">Zobrazit mapu</string>
+    <string name="configAction_mapLocation_chooser">Zobrazit polohu pomocí</string>
+    <string name="configAction_mapLocation_noapp">Nepodařilo se najít žádnou aplikaci pro zobrazení map!</string>
+    <string name="configAction_showCalendar">Kalendář</string>
+    <string name="configAction_setAlarm">Nastavit budík</string>
+    <string name="configAction_setTimeZone">Nastavení časového pásma</string>
+    <string name="configAction_setDate">Nastavit datum</string>
+    <string name="configAction_viewDate">Zobrazit datum</string>
+    <string name="configAction_sunDialog">Poloha slunce</string>
+    <string name="configAction_equinoxDialog">Slunovrat / Rovnodennost</string>
+    <string name="configAction_worldMap">Mapa světa</string>
+    <string name="configAction_moon">Měsíc</string>
+    <string name="configAction_help">Nápověda</string>
+    <string name="configAction_overflow">Více</string>
+    <string name="configAction_settings">Nastavení</string>
+    <string name="configAction_aboutWidget">O aplikaci</string>
 
 
     <!-- Shortcuts -->
@@ -61,23 +61,23 @@
     <!-- Button: Next/Prev Date
          The next/prev button contentDescription (accessibility).
     -->
-    <string name="nextDay">Next Day</string>
-    <string name="prevDay">Previous Day</string>
-    <string name="nextYear">Next Year</string>
-    <string name="prevYear">Previous Year</string>
+    <string name="nextDay">Další den</string>
+    <string name="prevDay">Předchozí den</string>
+    <string name="nextYear">Další rok</string>
+    <string name="prevYear">Předchozí rok</string>
 
     <!-- Warnings -->
-    <string name="spanTag_warning">Warning!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
+    <string name="spanTag_warning">Pozor!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
     -->
-    <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
-    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> The time zone may be wrong for this location.</string>  <!-- snackbar message -->
-    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> daylight saving</string>  <!-- timezone dialog label -->
-    <string name="timezoneExtraDST_short"><xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> dst</string>  <!-- timezone dialog label -->
-    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> equation of time</string>  <!-- timezone dialog label -->
-    <string name="timezoneExtraApparentSolar_short"><xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> eot</string>  <!-- timezone dialog label -->
+    <string name="timezoneField"><xliff:g id="timezone" example="Europe/Prague">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
+    <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Časové pásmo může být pro tuto polohu špatně nastaveno.</string>  <!-- snackbar message -->
+    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> letní čas</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraDST_short"><xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> SELČ</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> rovnice času</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraApparentSolar_short"><xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> RČ</string>  <!-- timezone dialog label -->
 
     <!-- Field: date
          The date field that appears above the table (main activity).
@@ -86,26 +86,26 @@
              where [date] is a dateString formatted by app using user's locale
     -->
     <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
-    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> The date is set to a day other than today.</string>  <!-- snackbar message -->
+    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> Nastavené datum je jiné než dnešní</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
-    <string name="past_today">Past</string>
-    <string name="past_n">Past (%1$s)</string>
+    <string name="past_today">Minulost</string>
+    <string name="past_n">Minulost (%1$s)</string>
 
     <!-- DateDesc: yesterday/today/tomorrow (appears in dateField) -->
-    <string name="yesterday">Yesterday</string>
-    <string name="today">Today</string>
-    <string name="tomorrow">Tomorrow</string>
+    <string name="yesterday">Včera</string>
+    <string name="today">Dnes</string>
+    <string name="tomorrow">Zítra</string>
 
     <!-- DateDesc: some day in the future (appears in dateField) -->
-    <string name="future_today">Future</string>
-    <string name="future_n">Future (%1$s)</string>
+    <string name="future_today">Budoucnost</string>
+    <string name="future_n">Budoucnost (%1$s)</string>
 
     <!-- Field: length of day
          The hours in the day field(s) that appears below the table (main activity)
     -->
-    <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> in the day</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
-    <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> of usable light</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
+    <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> dne</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
+    <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> použitelného světla</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
     <string name="length_twilight1"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g></string>
     <string name="length_twilight1e_pos"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g> [+<xliff:g id="timeSpan1" example="+30s">%2$s</xliff:g>]</string>
     <string name="length_twilight1e_neg"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g> [-<xliff:g id="timeSpan1" example="+30s">%2$s</xliff:g>]</string>
@@ -113,7 +113,7 @@
     <string name="length_delimiter">|</string>
 
     <!-- Field: moon illumination (as seen in moon widget) -->
-    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> illuminated</string>  <!-- used in 2x1 widget -->
+    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> osvětleno</string>  <!-- used in 2x1 widget -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- used in 1x1 widget -->
     <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> \@ <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>  <!-- TODO -->
 
@@ -121,10 +121,10 @@
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
          The relative order is defined by the layout (layout/info_time_daydelta.xml).
     -->
-    <string name="delta_day_tomorrow">Tomorrow will be</string>
-    <string name="delta_day_yesterday">Yesterday was</string>
-    <string name="delta_day_shorter">shorter</string>
-    <string name="delta_day_longer">longer</string>
+    <string name="delta_day_tomorrow">Zítřek bude o</string>
+    <string name="delta_day_yesterday">Včerejšek byl o</string>
+    <string name="delta_day_shorter">kratší</string>
+    <string name="delta_day_longer">delší</string>
 
     <!-- NotePrefix: since/until/untilEnd
          The note prefix text. e.g.
@@ -133,71 +133,71 @@
                   sunset
          The relative order is defined by the layout (layout/info_time_note.xml).
     -->
-    <string name="since">since</string>
-    <string name="until">until</string>
-    <string name="until_end">until end</string>
+    <string name="since">ode</string>
+    <string name="until">do</string>
+    <string name="until_end">do konce</string>
 
     <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. the time component is shown on the next line -->
-        <item quantity="one">at</item>
-        <item quantity="other">at</item>
+        <item quantity="one">v</item>
+        <item quantity="other">v</item>
     </plurals>
     <plurals name="offset_before_plural">      <!-- e.g. "30m before \n 5:30PM" .. the time component is shown on the next line -->
-        <item quantity="one">%1$s before</item>
-        <item quantity="other">%1$s before</item>
+        <item quantity="one">%1$s před</item>
+        <item quantity="other">%1$s před</item>
     </plurals>
     <plurals name="offset_after_plural">      <!-- e.g. "30m after \n 5:30PM" .. the time component is shown on the next line -->
-        <item quantity="one">%1$s after</item>
-        <item quantity="other">%1$s after</item>
+        <item quantity="one">%1$s po</item>
+        <item quantity="other">%1$s po</item>
     </plurals>
 
-    <string name="offset_button_before">before</string>    <!-- button label; [1h] [5m] [before] (-) -->
-    <string name="offset_button_after">after</string>      <!-- button label; [1h] [5m] [after] (+) -->
+    <string name="offset_button_before">před</string>    <!-- button label; [1h] [5m] [before] (-) -->
+    <string name="offset_button_after">po</string>      <!-- button label; [1h] [5m] [after] (+) -->
 
     <!-- NoteBody: sunset/sunrise/twilight string
          The note body text; appears next to the prefix (layout/info_time_note.xml)
     -->
-    <string name="until_astroTwilight">astronomical twilight</string>
-    <string name="until_civilTwilight">civil twilight</string>
-    <string name="until_nauticalTwilight">nautical twilight</string>
-    <string name="until_sunrise">sunrise</string>
-    <string name="until_noon">solar noon</string>
-    <string name="until_sunset">sunset</string>
-    <string name="untilEnd_civilTwilight">civil twilight</string>
-    <string name="untilEnd_nauticalTwilight">nautical twilight</string>
-    <string name="untilEnd_astroTwilight">astronomical twilight</string>
-    <string name="until_goldhour">golden hour</string>
-    <string name="untilEnd_goldhour">golden hour</string>
-    <string name="until_bluehour">blue hour</string>
-    <string name="untilEnd_bluehour">blue hour</string>
-    <string name="until_moonrise">moonrise</string>
-    <string name="until_moonset">moonset</string>
-    <string name="until_moonnoon">lunar noon</string>
-    <string name="until_moonnight">lunar midnight</string>
+    <string name="until_astroTwilight">astronomického soumraku</string>
+    <string name="until_civilTwilight">občanského soumraku</string>
+    <string name="until_nauticalTwilight">nautického soumraku</string>
+    <string name="until_sunrise">východu slunce</string>
+    <string name="until_noon">solárního poledne</string>
+    <string name="until_sunset">západu slunce</string>
+    <string name="untilEnd_civilTwilight">astronomického soumraku</string>
+    <string name="untilEnd_nauticalTwilight">občanského soumraku</string>
+    <string name="untilEnd_astroTwilight">nautického soumraku</string>
+    <string name="until_goldhour">zlaté hodiny</string>
+    <string name="untilEnd_goldhour">zlaté hodiny</string>
+    <string name="until_bluehour">modré hodiny</string>
+    <string name="untilEnd_bluehour">modré hodiny</string>
+    <string name="until_moonrise">východu měsíce</string>
+    <string name="until_moonset">západu měsíce</string>
+    <string name="until_moonnoon">lunárního poledne</string>
+    <string name="until_moonnight">lunární půlnoci</string>
 
     <!-- Table -->
-    <string name="sunrise">Sunrise</string>                             <!-- contentDescription -->
-    <string name="sunrise_short">Sunrise</string>                          <!-- table title -->
-    <string name="sunset">Sunset</string>                               <!-- contentDescription -->
-    <string name="sunset_short">Sunset</string>                            <!-- table title -->
-    <string name="moonrise">Moonrise</string>                             <!-- contentDescription -->
-    <string name="moonrise_short">Moonrise</string>                             <!-- table title -->
-    <string name="moonset">Moonset</string>                             <!-- contentDescription -->
-    <string name="moonset_short">Moonset</string>                             <!-- table title -->
+    <string name="sunrise">Východ slunce</string>                             <!-- contentDescription -->
+    <string name="sunrise_short">Východ s.</string>                          <!-- table title -->
+    <string name="sunset">Západ slunce</string>                               <!-- contentDescription -->
+    <string name="sunset_short">Západ s.</string>                            <!-- table title -->
+    <string name="moonrise">Východ měsíce</string>                             <!-- contentDescription -->
+    <string name="moonrise_short">Východ m.</string>                             <!-- table title -->
+    <string name="moonset">Západ měsíce</string>                             <!-- contentDescription -->
+    <string name="moonset_short">Západ m.</string>                             <!-- table title -->
 
     <!-- Time spans: as seen in length of day, today/tomorrow time delta, and note. -->
     <string name="delta_format"><xliff:g id="value" example="3">%1$s</xliff:g><xliff:g id="units" example="m">%2$s</xliff:g></string>
-    <string name="delta_years">y</string>    <!-- e.g. 1y -->
-    <string name="delta_weeks">w</string>    <!-- e.g. 2w -->
+    <string name="delta_years">r</string>    <!-- e.g. 1y -->
+    <string name="delta_weeks">t</string>    <!-- e.g. 2w -->
     <string name="delta_days">d</string>     <!-- e.g. 1d -->
     <string name="delta_hours">h</string>    <!-- e.g. 2h -->
     <string name="delta_minutes">m</string>  <!-- e.g. 3m -->
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
 
-    <string name="hence"><xliff:g id="timeSpan">%1$s</xliff:g>  from now</string>  <!-- e.g. 15d 23h from now -->
-    <string name="ago"><xliff:g id="timeSpan">%1$s</xliff:g>  ago</string>         <!-- e.g. 1y 15d 12h ago -->
+    <string name="hence"><xliff:g id="timeSpan">%1$s</xliff:g>  od teď</string>  <!-- e.g. 15d 23h from now -->
+    <string name="ago">Před<xliff:g id="timeSpan">%1$s</xliff:g></string>         <!-- e.g. 1y 15d 12h ago -->
 
     <!-- misc time values: might be displayed in a timeField in place of an actual time -->
-    <string name="time_none">none</string>  <!-- no time / time does not occur -->
+    <string name="time_none">žádný</string>  <!-- no time / time does not occur -->
     <string name="time_loading">…</string>  <!-- calculating / time is loading -->
     <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
     <string name="time_format_12hr_veryshort_withseconds"><xliff:g id="patternHours">h</xliff:g>:<xliff:g id="patternMinutes">mm</xliff:g>:<xliff:g id="patternSeconds">ss</xliff:g></string>  <!-- shortest 12hr time format (w/ seconds); should omit am/pm -->
@@ -219,8 +219,8 @@
     <string name="location_format_latlonalt"><xliff:g id="latlon">%1$s</xliff:g> <xliff:g id="altitudeTag">%2$s</xliff:g></string>        <!-- latitude, longitude [altitude] -->
 
     <!-- distances (meters, feet, etc) -->
-    <string name="lengthUnits_metric">Metric</string>
-    <string name="lengthUnits_imperial">Imperial</string>
+    <string name="lengthUnits_metric">Metrické</string>
+    <string name="lengthUnits_imperial">Imperiální</string>
     <string-array name="lengthUnits_values" translatable="false">
         <item>METRIC</item>
         <item>IMPERIAL</item>
@@ -230,179 +230,179 @@
         <item>@string/lengthUnits_imperial</item>
     </string-array>
 
-    <string name="units_feet">feet</string>
+    <string name="units_feet">stopy</string>
     <string name="units_feet_short">ft</string>
     <plurals name="units_feet_long">
-        <item quantity="one">%s foot</item>
-        <item quantity="other">%s feet</item>
+        <item quantity="one">%s stopa</item>
+        <item quantity="other">%s stop/y</item>
     </plurals>
 
-    <string name="units_miles">miles</string>
-    <string name="units_miles_short">mi</string>
+    <string name="units_miles">míle</string>
+    <string name="units_miles_short">mil</string>
     <plurals name="units_miles_long">
-        <item quantity="one">%s mile</item>
-        <item quantity="other">%s miles</item>
+        <item quantity="one">%s míle</item>
+        <item quantity="other">%s mil/míle</item>
     </plurals>
 
-    <string name="units_meters">meters</string>
+    <string name="units_meters">metry</string>
     <string name="units_meters_short">m</string>
     <plurals name="units_meters_long">
-        <item quantity="one">%s meter</item>
-        <item quantity="other">%s meters</item>
+        <item quantity="one">%s metr</item>
+        <item quantity="other">%s metry/metrů</item>
     </plurals>
 
-    <string name="units_kilometers">kilometers</string>
+    <string name="units_kilometers">kilometry</string>
     <string name="units_kilometers_short">km</string>
     <plurals name="units_kilometers_long">
-        <item quantity="one">%s kilometer</item>
-        <item quantity="other">%s kilometers</item>
+        <item quantity="one">%s kilometr</item>
+        <item quantity="other">%s kilometry/kilometrů</item>
     </plurals>
 
     <!--
          WIDGET CONFIG
     -->
 
-    <string name="configAction_restoreDefaults">Restore Defaults</string>   <!-- button / menu text -->
+    <string name="configAction_restoreDefaults">Obnovit výchozí</string>   <!-- button / menu text -->
 
     <string name="configLabel_tagDefault">[default]</string>
     <string name="configLabel_tagPlugin">[plugin]</string>
     <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
 
     <!-- WidgetConfig Activity -->
-    <string name="configAction_addWidget">Add Widget</string>                   <!-- Button: Add -->
-    <string name="configAction_reconfigWidget_short">Reconfigure</string>       <!-- Button: Reconfigure -->
-    <string name="configAction_reconfigWidget">Reconfigure Widget</string>      <!-- used as title when reconfiguring -->
+    <string name="configAction_addWidget">Přidat widget</string>                   <!-- Button: Add -->
+    <string name="configAction_reconfigWidget_short">Přenastavit</string>       <!-- Button: Reconfigure -->
+    <string name="configAction_reconfigWidget">Přenastavit widget</string>      <!-- used as title when reconfiguring -->
     <string name="configLabel_title0">@string/app_name_widget0</string>         <!-- used as title when adding -->
-    <string name="configLabel_title1">Flippable Widget</string>                 <!-- used as title when adding -->
+    <string name="configLabel_title1">Přetočitelný widget</string>                 <!-- used as title when adding -->
     <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->
     <string name="configLabel_clockwidget0">@string/app_name_clockwidget0</string>                  <!-- used as title when adding -->
     <string name="configLabel_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding -->
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">General Settings</string>                <!-- group title -->
-    <string name="configLabel_general_calculator">Data Source:</string>         <!-- spinner label -->
-    <string name="configLabel_general_calculator_sun">Sun Data Source</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_moon">Moon Data Source</string>         <!-- preference label -->
+    <string name="configLabel_general">Základní nastavení</string>                <!-- group title -->
+    <string name="configLabel_general_calculator">Zdroj dat:</string>         <!-- spinner label -->
+    <string name="configLabel_general_calculator_sun">Zdroj slunečních dat</string>         <!-- preference label -->
+    <string name="configLabel_general_calculator_moon">Zdroj lunárních dat</string>         <!-- preference label -->
 
-    <string name="configLabel_general_timeFormatMode">Time Format:</string>         <!-- spinner label -->
+    <string name="configLabel_general_timeFormatMode">Formát času:</string>         <!-- spinner label -->
 
-    <string name="configLabel_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label -->
-    <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label -->
+    <string name="configLabel_general_altitude_enabled">Použít nadm. výšku</string>        <!-- checkbox label -->
+    <string name="configLabel_general_altitude_enabled_summary">Použít upřesnění založená na nadmořské výšce.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->
+    <string name="configLabel_general_lengthUnits">Jednotky délky</string>        <!-- spinner label -->
 
-    <string name="configLabel_general_showSeconds">Show Seconds</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showSeconds_summary">Include seconds when displaying times.</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showSeconds">Zobrazit sekundy</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showSeconds_summary">Zahrnout sekundy při zobrazení času.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showTimeDate">Show Time (with dates)</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showTimeDate_summary">Include the time when displaying dates.</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showTimeDate">Zobrazit čas (s datumy)</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showTimeDate_summary">Zahrnout čas při zobrazení datumů.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_showWeeks">Show Weeks</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showWeeks_summary">Divide time spans greater than 7 days into weeks (e.g. 15d becomes 2w 1d).</string>    <!-- checkbox label -->
+    <string name="configLabel_general_showWeeks">Zobrazit týdny</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showWeeks_summary">Rozdělit časové úseky větší než 7 dní na týdny (např. 15d se změní na 2t 1d).</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_showHours">Show Hours</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showHours_summary">Include hours and minutes in time spans greater than a day.</string>    <!-- checkbox label -->
+    <string name="configLabel_general_showHours">Zobrazit hodiny</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showHours_summary">Zahrnout hodiny a minuty v časových úsecích větších než den.</string>    <!-- checkbox label -->
 
-    <string name="configLabel_general_observerheight">Object Shadow</string>        <!-- checkbox label -->
-    <string name="configLabel_general_observerheight_summary">Display the length of shadows cast by an object with a height of <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
+    <string name="configLabel_general_observerheight">Stíny objektů</string>        <!-- checkbox label -->
+    <string name="configLabel_general_observerheight_summary">Zobraz délku stínu vrženého objektem o výšce <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Advanced Settings</string>                        <!-- group title -->
-    <string name="configLabel_experimental">Experimental Settings</string>                <!-- group title -->
-    <string name="configLabel_general_scanPlugins">Data Source Plugins</string>                                <!-- checkbox label -->
-    <string name="configLabel_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary -->
+    <string name="configLabel_advanced">Pokročilá nastavení</string>                        <!-- group title -->
+    <string name="configLabel_experimental">Experimentální nastavení</string>                <!-- group title -->
+    <string name="configLabel_general_scanPlugins">Pluginy zdrojů dat</string>                                <!-- checkbox label -->
+    <string name="configLabel_general_scanPlugins_summary">Naskenuj pro načtení pluginů třetích stran.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_appearance">Appearance Settings</string>           <!-- group title -->
-    <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_theme">Theme:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Grow with available space (resizeable)</string>  <!-- checkbox label -->
-    <string name="configLabel_appearance_showLabels">Show Labels</string>          <!-- checkbox label -->
-    <string name="configLabel_appearance_showTitle">Show Title</string>          <!-- checkbox label -->
-    <string name="configLabel_appearance_titleText">Title:</string>              <!-- edittext label -->
+    <string name="configLabel_appearance">Nastavení vzhledu</string>           <!-- group title -->
+    <string name="configLabel_appearance_mode">Vzhled</string>                  <!-- spinner label -->
+    <string name="configLabel_appearance_theme">Téma:</string>                  <!-- spinner label -->
+    <string name="configLabel_appearance_allowResize">Zvětšit s dostupným místem na obrazovce (zvětšitelné)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_showLabels">Zobrazovat popisky</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_showTitle">Zobrazit nadpis</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_titleText">Nadpis:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
 
     <!-- Widget Setting: riseSetOrder -->
-    <string name="configLabel_general_riseSetOrder">Order:</string>     <!-- label -->
-    <string name="risesetorder_today">Today</string>                    <!-- setting -->
-    <string name="risesetorder_lastnext">Last / Next</string>           <!-- setting -->
+    <string name="configLabel_general_riseSetOrder">Pořadí:</string>     <!-- label -->
+    <string name="risesetorder_today">Dnes</string>                    <!-- setting -->
+    <string name="risesetorder_lastnext">Předchozí / Další</string>           <!-- setting -->
 
     <!-- Widget Setting: time mode -->
-    <string name="timeMode_noon_short">Noon</string>                    <!-- setting -->
-    <string name="timeMode_noon">Solar Noon</string>                    <!-- setting -->
-    <string name="timeMode_official_short">Actual</string>              <!-- setting -->
-    <string name="timeMode_official">Actual Time</string>               <!-- setting -->
-    <string name="timeMode_civil_short">Civil</string>                  <!-- setting -->
-    <string name="timeMode_civil">Civil Twilight</string>               <!-- setting -->
-    <string name="timeMode_nautical_short">Nautical</string>            <!-- setting -->
-    <string name="timeMode_nautical">Nautical Twilight</string>         <!-- setting -->
-    <string name="timeMode_astronomical_short">Astronomical</string>    <!-- setting -->
-    <string name="timeMode_astronomical">Astronomical Twilight</string> <!-- setting -->
-    <string name="timeMode_night">Night</string>                   <!-- a label (not an actual timeMode setting) -->
-    <string name="timeMode_day">Day</string>                       <!-- a label (not an actual timeMode setting) -->
-    <string name="timeMode_golden_short">Golden</string>                <!-- setting -->
-    <string name="timeMode_golden">Golden Hour</string>                 <!-- setting -->
-    <string name="timeMode_blue8_short">Blue (8\u00B0)</string>                    <!-- setting -->
-    <string name="timeMode_blue8">Blue Hour (8\u00B0)</string>                     <!-- setting -->
-    <string name="timeMode_blue4_short">Blue (4\u00B0)</string>                    <!-- setting -->
-    <string name="timeMode_blue4">Blue Hour (4\u00B0)</string>                     <!-- setting -->
+    <string name="timeMode_noon_short">Poledne</string>                    <!-- setting -->
+    <string name="timeMode_noon">Solarní poledne</string>                    <!-- setting -->
+    <string name="timeMode_official_short">Skutečný</string>              <!-- setting -->
+    <string name="timeMode_official">Skutečný čas</string>               <!-- setting -->
+    <string name="timeMode_civil_short">Občanský</string>                  <!-- setting -->
+    <string name="timeMode_civil">Občanský soumrak</string>               <!-- setting -->
+    <string name="timeMode_nautical_short">Nautický</string>            <!-- setting -->
+    <string name="timeMode_nautical">Nautický soumrak</string>         <!-- setting -->
+    <string name="timeMode_astronomical_short">Astronomický</string>    <!-- setting -->
+    <string name="timeMode_astronomical">Astronomický soumrak</string> <!-- setting -->
+    <string name="timeMode_night">Noc</string>                   <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_day">Den</string>                       <!-- a label (not an actual timeMode setting) -->
+    <string name="timeMode_golden_short">Zlatá</string>                <!-- setting -->
+    <string name="timeMode_golden">Zlatá hodina</string>                 <!-- setting -->
+    <string name="timeMode_blue8_short">Modrá (8\u00B0)</string>                    <!-- setting -->
+    <string name="timeMode_blue8">Modrá hodina (8\u00B0)</string>                     <!-- setting -->
+    <string name="timeMode_blue4_short">Modrá (4\u00B0)</string>                    <!-- setting -->
+    <string name="timeMode_blue4">Modrá hodina (4\u00B0)</string>                     <!-- setting -->
 
-    <string name="timeMode_equinox_vernal">Spring Equinox</string>      <!-- setting -->
-    <string name="timeMode_equinox_vernal_short">Equinox</string>       <!-- setting -->
-    <string name="timeMode_equinox_autumnal">Autumn Equinox</string>  <!-- setting -->
-    <string name="timeMode_equinox_autumnal_short">Equinox</string>     <!-- setting -->
-    <string name="timeMode_solstice_summer">Summer Solstice</string>    <!-- setting -->
-    <string name="timeMode_solstice_summer_short">Solstice</string>     <!-- setting -->
-    <string name="timeMode_solstice_winter">Winter Solstice</string>    <!-- setting -->
-    <string name="timeMode_solstice_winter_short">Solstice</string>     <!-- setting -->
+    <string name="timeMode_equinox_vernal">Jarní rovnodennost</string>      <!-- setting -->
+    <string name="timeMode_equinox_vernal_short">Rovnodennost</string>       <!-- setting -->
+    <string name="timeMode_equinox_autumnal">Podzimní rovnodennost</string>  <!-- setting -->
+    <string name="timeMode_equinox_autumnal_short">Rovnodennost</string>     <!-- setting -->
+    <string name="timeMode_solstice_summer">Letní slunovrat</string>    <!-- setting -->
+    <string name="timeMode_solstice_summer_short">Slunovrat</string>     <!-- setting -->
+    <string name="timeMode_solstice_winter">Zimní slunovrat</string>    <!-- setting -->
+    <string name="timeMode_solstice_winter_short">Slunovrat</string>     <!-- setting -->
 
-    <string name="timeMode_moon">Moon</string>                               <!-- label -->
-    <string name="timeMode_moon_new">New Moon</string>                               <!-- setting -->
-    <string name="timeMode_moon_new_short">New</string>                              <!-- setting -->
-    <string name="timeMode_moon_waxingcrescent_short">Waxing Crescent</string>               <!-- label -->
-    <string name="timeMode_moon_waxingcrescent">Waxing Crescent</string>                     <!-- label -->
-    <string name="timeMode_moon_firstquarter">First Quarter</string>                 <!-- setting -->
-    <string name="timeMode_moon_firstquarter_short">First Quarter</string>           <!-- setting -->
-    <string name="timeMode_moon_waxinggibbous_short">Waxing Gibbous</string>               <!-- label -->
-    <string name="timeMode_moon_waxinggibbous">Waxing Gibbous</string>                     <!-- label -->
-    <string name="timeMode_moon_full">Full Moon</string>                             <!-- setting -->
-    <string name="timeMode_moon_full_short">Full</string>                            <!-- setting -->
-    <string name="timeMode_moon_waninggibbous_short">Waning Gibbous</string>               <!-- label -->
-    <string name="timeMode_moon_waninggibbous">Waning Gibbous</string>                     <!-- label -->
-    <string name="timeMode_moon_thirdquarter">Third Quarter</string>                 <!-- setting -->
-    <string name="timeMode_moon_thirdquarter_short">Third Quarter</string>           <!-- setting -->
-    <string name="timeMode_moon_waningcrescent_short">Waning Crescent</string>               <!-- label -->
-    <string name="timeMode_moon_waningcrescent">Waning Crescent</string>                     <!-- label -->
+    <string name="timeMode_moon">Měsíc</string>                               <!-- label -->
+    <string name="timeMode_moon_new">Nov</string>                               <!-- setting -->
+    <string name="timeMode_moon_new_short">Nov</string>                              <!-- setting -->
+    <string name="timeMode_moon_waxingcrescent_short">Dorůstající srpek</string>               <!-- label -->
+    <string name="timeMode_moon_waxingcrescent">Dorůstající srpek</string>                     <!-- label -->
+    <string name="timeMode_moon_firstquarter">První čtvrť</string>                 <!-- setting -->
+    <string name="timeMode_moon_firstquarter_short">První čtvrť</string>           <!-- setting -->
+    <string name="timeMode_moon_waxinggibbous_short">Dorůstající měsíc</string>               <!-- label -->
+    <string name="timeMode_moon_waxinggibbous">Dorůstající měsíc</string>                     <!-- label -->
+    <string name="timeMode_moon_full">Úplněk</string>                             <!-- setting -->
+    <string name="timeMode_moon_full_short">Úplněk</string>                            <!-- setting -->
+    <string name="timeMode_moon_waninggibbous_short">Couvající měsíc</string>               <!-- label -->
+    <string name="timeMode_moon_waninggibbous">Couvající měsíc</string>                     <!-- label -->
+    <string name="timeMode_moon_thirdquarter">Poslední čtvrť</string>                 <!-- setting -->
+    <string name="timeMode_moon_thirdquarter_short">Poslední čtvrť</string>           <!-- setting -->
+    <string name="timeMode_moon_waningcrescent_short">Couvající srpek</string>               <!-- label -->
+    <string name="timeMode_moon_waningcrescent">Couvající srpek</string>                     <!-- label -->
 
-    <string name="timeMode_moon_super">Supermoon</string>               <!-- label -->
-    <string name="timeMode_moon_micro">Micromoon</string>               <!-- label -->
-    <string name="timeMode_moon_superfull">Super Full Moon</string>                             <!-- setting -->
+    <string name="timeMode_moon_super">Superměsíc</string>               <!-- label -->
+    <string name="timeMode_moon_micro">Mikroměsíc</string>               <!-- label -->
+    <string name="timeMode_moon_superfull">Superúplněk</string>                             <!-- setting -->
     <string name="timeMode_moon_superfull_short">@string/timeMode_moon_super</string>     <!-- label -->
-    <string name="timeMode_moon_supernew">Super New Moon</string>                             <!-- setting -->
+    <string name="timeMode_moon_supernew">Supernov</string>                             <!-- setting -->
     <string name="timeMode_moon_supernew_short">@string/timeMode_moon_super</string>     <!-- label -->
-    <string name="timeMode_moon_microfull">Micro Full Moon</string>                             <!-- setting -->
+    <string name="timeMode_moon_microfull">Mikroúplněk</string>                             <!-- setting -->
     <string name="timeMode_moon_microfull_short">@string/timeMode_moon_micro</string>     <!-- label -->
-    <string name="timeMode_moon_micronew">Micro New Moon</string>                             <!-- setting -->
+    <string name="timeMode_moon_micronew">Mikronov</string>                             <!-- setting -->
     <string name="timeMode_moon_micronew_short">@string/timeMode_moon_micro</string>     <!-- label -->
 
     <string name="timeMode_moon_perigee">@string/label_perigee</string>                             <!-- label -->
     <string name="timeMode_moon_apogee">@string/label_apogee</string>                             <!-- label -->
-    <string name="label_apogee">Apogee</string>
-    <string name="label_perigee">Perigee</string>
+    <string name="label_apogee">Apogeum</string>
+    <string name="label_perigee">Perigeum</string>
 
-    <string name="configLabel_general_timeMode">Mode:</string>          <!-- spinner label -->
+    <string name="configLabel_general_timeMode">Režim:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: layout mode -->
-    <string name="widgetMode1x1_sunrise">Sunrise only</string>             <!-- setting -->
-    <string name="widgetMode1x1_sunset">Sunset only</string>               <!-- setting -->
-    <string name="widgetMode1x1_both_1">Sunrise &amp; Sunset (1)</string>  <!-- setting -->
-    <string name="widgetMode1x1_both_2">Sunrise &amp; Sunset (2)</string>  <!-- setting -->
+    <string name="widgetMode1x1_sunrise">Pouze východ slunce</string>             <!-- setting -->
+    <string name="widgetMode1x1_sunset">Pouze západ slunce</string>               <!-- setting -->
+    <string name="widgetMode1x1_both_1">Východ slunce &amp; Západ slunce (1)</string>  <!-- setting -->
+    <string name="widgetMode1x1_both_2">Východ slunce &amp; Západ slunce (2)</string>  <!-- setting -->
 
-    <string name="widgetMode1x1_altaz">Altitude &amp; Azimuth</string>     <!-- setting -->
-    <string name="widgetMode1x1_decright">Declination &amp; Right Ascension</string>     <!-- setting -->
-    <string name="widgetMode1x1_distance">Current distance</string>     <!-- setting -->
-    <string name="widgetMode1x1_apsis">Next apogee or perigee</string>     <!-- setting -->
+    <string name="widgetMode1x1_altaz">Výška &amp; Azimut</string>     <!-- setting -->
+    <string name="widgetMode1x1_decright">Deklinace &amp; Rektascenze</string>     <!-- setting -->
+    <string name="widgetMode1x1_distance">Aktualní vzdálenost</string>     <!-- setting -->
+    <string name="widgetMode1x1_apsis">Další apogeum nebo perigeum</string>     <!-- setting -->
 
     <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [north]</string>     <!-- setting -->
