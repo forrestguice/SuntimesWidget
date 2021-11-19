@@ -72,6 +72,11 @@ public class AlarmAddon
             COLUMN_ALARM_NAME, COLUMN_ALARM_TIMEMILLIS
     };
 
+    public static final String EXTRA_ALARM_NOW = "alarm_now";                  // long (millis)
+    public static final String EXTRA_ALARM_REPEAT = "alarm_repeat";            // boolean
+    public static final String EXTRA_ALARM_REPEAT_DAYS = "alarm_repeat_days";  // Integer[] as String; e.g. "[1,2,3]"
+    public static final String EXTRA_ALARM_OFFSET = "alarm_offset";            // long (millis)
+
     public static final String EXTRA_LOCATION_LABEL = AlarmClockActivity.EXTRA_LOCATION_LABEL;
     public static final String EXTRA_LOCATION_LAT = AlarmClockActivity.EXTRA_LOCATION_LAT;
     public static final String EXTRA_LOCATION_LON = AlarmClockActivity.EXTRA_LOCATION_LON;

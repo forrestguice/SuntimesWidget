@@ -62,6 +62,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -1637,8 +1638,34 @@ public class AlarmNotifications extends BroadcastReceiver
         Uri uri_calc = Uri.parse(AlarmAddon.getAlarmCalcUri(uri_id.getAuthority(), uri_id.getLastPathSegment()));
         if (resolver != null)
         {
-            // TODO: selection args; lat, lon, alt, offset, repeating, repeatingDays, nowMillis
-            Cursor cursor = resolver.query(uri_calc, AlarmAddon.QUERY_ALARM_CALC_PROJECTION, null, null, null);
+            StringBuilder repeatingDaysString = new StringBuilder("[");
+            if (repeating) {
+                for (int i = 0; i < repeatingDays.size(); i++) {
+                    repeatingDaysString.append(repeatingDays.get(i));
+                    if (i != repeatingDays.size() - 1) {
+                        repeatingDaysString.append(",");
+                    }
+                }
+            }
+            repeatingDaysString.append("]");
+
+            String[] selectionArgs = new String[] { Long.toString(now.getTimeInMillis()), Long.toString(offset), Boolean.toString(repeating), repeatingDaysString.toString() };
+            String selection = AlarmAddon.EXTRA_ALARM_NOW + "=? AND "
+                             + AlarmAddon.EXTRA_ALARM_OFFSET + "=? AND "
+                             + AlarmAddon.EXTRA_ALARM_REPEAT + "=? AND "
+                             + AlarmAddon.EXTRA_ALARM_REPEAT_DAYS + "=?";
+
+            if (location != null)
+            {
+                selectionArgs = new String[] { Long.toString(now.getTimeInMillis()), Long.toString(offset), Boolean.toString(repeating), repeatingDaysString.toString(),
+                                               location.getLatitude(), location.getLongitude(), location.getAltitude() };
+                selection += " AND "
+                        + CalculatorProviderContract.COLUMN_CONFIG_LATITUDE + "=? AND "
+                        + CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE + "=? AND "
+                        + CalculatorProviderContract.COLUMN_CONFIG_ALTITUDE + "=?";
+            }
+
+            Cursor cursor = resolver.query(uri_calc, AlarmAddon.QUERY_ALARM_CALC_PROJECTION, selection, selectionArgs, null);
             if (cursor != null)
             {
                 cursor.moveToFirst();
