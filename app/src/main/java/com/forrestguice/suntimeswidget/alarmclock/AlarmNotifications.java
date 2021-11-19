@@ -1633,6 +1633,7 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         Log.d(TAG, "updateAlarmTime_addonEvent: eventID: " + eventID + ", offset: " + offset + ", repeating: " + repeating);
         Calendar eventTime = Calendar.getInstance();
+        long nowMillis = now.getTimeInMillis();
 
         Uri uri_id = Uri.parse(eventID);
         Uri uri_calc = Uri.parse(AlarmAddon.getAlarmCalcUri(uri_id.getAuthority(), uri_id.getLastPathSegment()));
@@ -1649,7 +1650,7 @@ public class AlarmNotifications extends BroadcastReceiver
             }
             repeatingDaysString.append("]");
 
-            String[] selectionArgs = new String[] { Long.toString(now.getTimeInMillis()), Long.toString(offset), Boolean.toString(repeating), repeatingDaysString.toString() };
+            String[] selectionArgs = new String[] { Long.toString(nowMillis), Long.toString(offset), Boolean.toString(repeating), repeatingDaysString.toString() };
             String selection = AlarmAddon.EXTRA_ALARM_NOW + "=? AND "
                              + AlarmAddon.EXTRA_ALARM_OFFSET + "=? AND "
                              + AlarmAddon.EXTRA_ALARM_REPEAT + "=? AND "
@@ -1657,7 +1658,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
             if (location != null)
             {
-                selectionArgs = new String[] { Long.toString(now.getTimeInMillis()), Long.toString(offset), Boolean.toString(repeating), repeatingDaysString.toString(),
+                selectionArgs = new String[] { Long.toString(nowMillis), Long.toString(offset), Boolean.toString(repeating), repeatingDaysString.toString(),
                                                location.getLatitude(), location.getLongitude(), location.getAltitude() };
                 selection += " AND "
                         + CalculatorProviderContract.COLUMN_CONFIG_LATITUDE + "=? AND "
@@ -1669,13 +1670,17 @@ public class AlarmNotifications extends BroadcastReceiver
             if (cursor != null)
             {
                 cursor.moveToFirst();
-                int i_alarmTime = cursor.getColumnIndex(AlarmAddon.COLUMN_ALARM_TIMEMILLIS);
-                Long alarmTime = i_alarmTime >= 0 ? cursor.getLong(i_alarmTime) : null;
+                int i_eventTime = cursor.getColumnIndex(AlarmAddon.COLUMN_ALARM_TIMEMILLIS);
+                Long eventTimeMillis = i_eventTime >= 0 ? cursor.getLong(i_eventTime) : null;
                 cursor.close();
 
-                if (alarmTime != null) {
-                    // TODO: sanity check required!
-                    eventTime.setTimeInMillis(alarmTime);
+                if (eventTimeMillis != null)
+                {
+                    if (nowMillis > (eventTimeMillis + offset)) {
+                        Log.e(TAG, "updateAlarmTime: failed to query alarm time; result is invalid (past) :: " + uri_calc);
+                        return null;
+                    }
+                    eventTime.setTimeInMillis(eventTimeMillis);
 
                 } else {
                     Log.e(TAG, "updateAlarmTime: failed to query alarm time; result is missing " + AlarmAddon.COLUMN_ALARM_TIMEMILLIS + " :: " + uri_calc);
