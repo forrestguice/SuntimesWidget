@@ -76,7 +76,7 @@
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Časové pásmo může být pro tuto polohu špatně nastaveno.</string>  <!-- snackbar message -->
     <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> letní čas</string>  <!-- timezone dialog label -->
     <string name="timezoneExtraDST_short"><xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> SELČ</string>  <!-- timezone dialog label -->
-    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> rovnice času</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> časové rovnice</string>  <!-- timezone dialog label -->
     <string name="timezoneExtraApparentSolar_short"><xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> RČ</string>  <!-- timezone dialog label -->
 
     <!-- Field: date
@@ -113,7 +113,7 @@
     <string name="length_delimiter">|</string>
 
     <!-- Field: moon illumination (as seen in moon widget) -->
-    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> osvětleno</string>  <!-- used in 2x1 widget -->
+    <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> osvíceno</string>  <!-- used in 2x1 widget -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- used in 1x1 widget -->
     <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> \@ <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>  <!-- TODO -->
 
@@ -160,7 +160,7 @@
     <string name="until_civilTwilight">občanského soumraku</string>
     <string name="until_nauticalTwilight">nautického soumraku</string>
     <string name="until_sunrise">východu slunce</string>
-    <string name="until_noon">solárního poledne</string>
+    <string name="until_noon">pravého poledne</string>
     <string name="until_sunset">západu slunce</string>
     <string name="untilEnd_civilTwilight">astronomického soumraku</string>
     <string name="untilEnd_nauticalTwilight">občanského soumraku</string>
@@ -176,9 +176,9 @@
 
     <!-- Table -->
     <string name="sunrise">Východ slunce</string>                             <!-- contentDescription -->
-    <string name="sunrise_short">Východ s.</string>                          <!-- table title -->
+    <string name="sunrise_short">Východ sl.</string>                          <!-- table title -->
     <string name="sunset">Západ slunce</string>                               <!-- contentDescription -->
-    <string name="sunset_short">Západ s.</string>                            <!-- table title -->
+    <string name="sunset_short">Západ sl.</string>                            <!-- table title -->
     <string name="moonrise">Východ měsíce</string>                             <!-- contentDescription -->
     <string name="moonrise_short">Východ m.</string>                             <!-- table title -->
     <string name="moonset">Západ měsíce</string>                             <!-- contentDescription -->
@@ -194,7 +194,7 @@
     <string name="delta_seconds">s</string>  <!-- e.g. 4s -->
 
     <string name="hence"><xliff:g id="timeSpan">%1$s</xliff:g>  od teď</string>  <!-- e.g. 15d 23h from now -->
-    <string name="ago">Před<xliff:g id="timeSpan">%1$s</xliff:g></string>         <!-- e.g. 1y 15d 12h ago -->
+    <string name="ago">Před <xliff:g id="timeSpan">%1$s</xliff:g></string>         <!-- e.g. 1y 15d 12h ago -->
 
     <!-- misc time values: might be displayed in a timeField in place of an actual time -->
     <string name="time_none">žádný</string>  <!-- no time / time does not occur -->
@@ -330,7 +330,7 @@
 
     <!-- Widget Setting: time mode -->
     <string name="timeMode_noon_short">Poledne</string>                    <!-- setting -->
-    <string name="timeMode_noon">Solarní poledne</string>                    <!-- setting -->
+    <string name="timeMode_noon">Pravé poledne</string>                    <!-- setting -->
     <string name="timeMode_official_short">Skutečný</string>              <!-- setting -->
     <string name="timeMode_official">Skutečný čas</string>               <!-- setting -->
     <string name="timeMode_civil_short">Občanský</string>                  <!-- setting -->
@@ -341,7 +341,7 @@
     <string name="timeMode_astronomical">Astronomický soumrak</string> <!-- setting -->
     <string name="timeMode_night">Noc</string>                   <!-- a label (not an actual timeMode setting) -->
     <string name="timeMode_day">Den</string>                       <!-- a label (not an actual timeMode setting) -->
-    <string name="timeMode_golden_short">Zlatá</string>                <!-- setting -->
+    <string name="timeMode_golden_short">Zlatá hodina</string>                <!-- setting -->
     <string name="timeMode_golden">Zlatá hodina</string>                 <!-- setting -->
     <string name="timeMode_blue8_short">Modrá (8\u00B0)</string>                    <!-- setting -->
     <string name="timeMode_blue8">Modrá hodina (8\u00B0)</string>                     <!-- setting -->
@@ -404,185 +404,185 @@
     <string name="widgetMode1x1_distance">Aktualní vzdálenost</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">Další apogeum nebo perigeum</string>     <!-- setting -->
 
-    <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [north]</string>     <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [south]</string>     <!-- setting -->
-    <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->
+    <string name="widgetMode_sunPosMap_simplerectangular">Základní</string>  <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal">Polární [severní]</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polární [jižní]</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_bluemarble">Modrá skleněnka</string>    <!-- setting -->
 
-    <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->
-    <string name="widgetMode1x1_moonphaseillum">Moon phase &amp; illumination</string>     <!-- setting -->
-    <string name="widgetMode1x1_moonphase">Moon phase only</string>     <!-- setting -->
-    <string name="widgetMode1x1_moonillum">Moon illumination only</string>     <!-- setting -->
-    <string name="widgetMode1x1_moonphasenext">Next major phase</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonriseset">Východ &amp; západ měsíce</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphaseillum">Fáze měsíce &amp; osvícenost</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphase">Pouze fáze měsíce</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonillum">Pouze osvícenost</string>     <!-- setting -->
+    <string name="widgetMode1x1_moonphasenext">Další hlavní fáze</string>     <!-- setting -->
 
-    <string name="configLabel_appearance_1x1mode">1x1 Layout:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x2mode">3x2 Layout:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x3mode">3x3 Layout:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_1x1mode">1x1 rozložení:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x2mode">3x2 rozložení:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x3mode">3x3 rozložení:</string>     <!-- spinner label -->
 
     <!-- Widget Setting: widget tap action -->
-    <string name="actionMode_doNothing">Do Nothing</string>           <!-- setting -->
-    <string name="actionMode_update">Update Widget</string>           <!-- setting -->
-    <string name="actionMode_config">Reconfigure Widget</string>      <!-- setting -->
-    <string name="actionMode_launchActivity">Perform Action</string>      <!-- setting -->  <!-- TODO: update -->
-    <string name="actionMode_flipToNextItem">Flip Views</string>      <!-- setting -->
+    <string name="actionMode_doNothing">Nedělat nic</string>           <!-- setting -->
+    <string name="actionMode_update">Aktualizovat widget</string>           <!-- setting -->
+    <string name="actionMode_config">Přenastavit widget</string>      <!-- setting -->
+    <string name="actionMode_launchActivity">Učiň akci</string>      <!-- setting -->
+    <string name="actionMode_flipToNextItem">Měň pohledy</string>      <!-- setting -->
 
-    <string name="launchType_activity">Activity</string>           <!-- setting -->
-    <string name="launchType_broadcast">Broadcast</string>           <!-- setting -->
-    <string name="launchType_service">Service</string>           <!-- setting -->
+    <string name="launchType_activity">Aktivita</string>           <!-- setting -->
+    <string name="launchType_broadcast">Vysílání</string>           <!-- setting -->
+    <string name="launchType_service">Služba</string>           <!-- setting -->
 
-    <string name="expandMore">More</string>  <!-- contentDescription -->
-    <string name="expandLess">Less</string>  <!-- contentDescription -->
+    <string name="expandMore">Více</string>  <!-- contentDescription -->
+    <string name="expandLess">Méně</string>  <!-- contentDescription -->
     <string name="increment">@string/expandMore</string>  <!-- contentDescription for (+>) type buttons -->
     <string name="decrement">@string/expandLess</string>  <!-- contentDescription for (-<) type buttons -->
 
-    <string name="configLabel_action">Action Settings</string>                  <!-- group title -->
-    <string name="configLabel_action_onTap">On Tap:</string>                    <!-- spinner label -->
-    <string name="configLabel_action_onClockTap">On Clock Tap</string>         <!-- spinner label -->
-    <string name="configLabel_action_onNoteTap">On Note Tap</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap">On Date Tap</string>           <!-- spinner label -->
-    <string name="configLabel_action_onDateTap1">On Date Long Press</string>   <!-- spinner label -->
+    <string name="configLabel_action">Nastavení akce</string>                  <!-- group title -->
+    <string name="configLabel_action_onTap">Při doteku:</string>                    <!-- spinner label -->
+    <string name="configLabel_action_onClockTap">Při dotknutí hodin</string>         <!-- spinner label -->
+    <string name="configLabel_action_onNoteTap">Při dotknutí poznámky</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap">Při dotknutí data</string>           <!-- spinner label -->
+    <string name="configLabel_action_onDateTap1">Při dlouhém podržení data</string>   <!-- spinner label -->
 
     <!-- Widget Setting: location -->
-    <string name="locationMode_current">Current (last known)</string>  <!-- setting -->
-    <string name="locationMode_custom">User Defined</string>           <!-- setting -->
+    <string name="locationMode_current">Aktuální (poslední známa)</string>  <!-- setting -->
+    <string name="locationMode_custom">Uživatelem definovaná</string>           <!-- setting -->
 
-    <string name="configLabel_location">Location Settings</string>               <!-- group title -->
-    <string name="configLabel_location_mode">Mode:</string>                      <!-- spinner label -->
-    <string name="configLabel_location_lat">Latitude:</string>                   <!-- edittext label -->
-    <string name="configHint_location_lat">decimal degrees</string>      <!-- edittext hint -->
-    <string name="configLabel_location_lon">Longitude:</string>                          <!-- edittext label -->
-    <string name="configHint_location_lon">decimal degrees</string> <!-- edittext hint -->
-    <string name="configLabel_location_alt">Elevation:</string>                          <!-- edittext label -->
+    <string name="configLabel_location">Nastavení polohy</string>               <!-- group title -->
+    <string name="configLabel_location_mode">Režim:</string>                      <!-- spinner label -->
+    <string name="configLabel_location_lat">Zeměpisná šířka:</string>                   <!-- edittext label -->
+    <string name="configHint_location_lat">desetinné stupně</string>      <!-- edittext hint -->
+    <string name="configLabel_location_lon">Zeměpisná délka:</string>                          <!-- edittext label -->
+    <string name="configHint_location_lon">desetinné stupně</string> <!-- edittext hint -->
+    <string name="configLabel_location_alt">Nadmořská výška:</string>                          <!-- edittext label -->
     <string name="configHint_location_alt">0</string>                                    <!-- edittext hint -->
-    <string name="configLabel_location_name">Name:</string>                      <!-- edittext label -->
-    <string name="configHint_location_name">(optional)</string>                  <!-- edittext hint -->
-    <string name="configHint_location_name0">Place Name</string>                  <!-- edittext hint -->
+    <string name="configLabel_location_name">Název:</string>                      <!-- edittext label -->
+    <string name="configHint_location_name">(volitelné)</string>                  <!-- edittext hint -->
+    <string name="configHint_location_name0">Název místa</string>                  <!-- edittext hint -->
 
-    <string name="configAction_getFix">Get Location</string>    <!-- button (contentDescription) -->
-    <string name="configAction_editPlace">Edit</string>         <!-- button (contentDescription) -->
-    <string name="configAction_savePlace">Save</string>         <!-- button (contentDescription) -->
+    <string name="configAction_getFix">Získat polohu</string>    <!-- button (contentDescription) -->
+    <string name="configAction_editPlace">Upravit</string>         <!-- button (contentDescription) -->
+    <string name="configAction_savePlace">Uložit</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Time Standard</string>                   <!-- setting -->    <!-- TODO: "solar time" -> "time standard" -->
-    <string name="timezoneMode_current">System Time Zone</string>               <!-- setting -->
-    <string name="timezoneMode_custom">User Defined</string>                    <!-- setting -->
+    <string name="timezoneMode_standard">Časový standard</string>                   <!-- setting -->
+    <string name="timezoneMode_current">Časové pásmo systému</string>               <!-- setting -->
+    <string name="timezoneMode_custom">Uživatelem definované</string>                    <!-- setting -->
 
-    <string name="time_lmst">Local Sidereal Time</string>                  <!-- timezone label -->  <!-- TODO -->
-    <string name="time_gmst">Greenwich Sidereal Time</string>              <!-- timezone label -->  <!-- TODO -->
-    <string name="time_utc">Coordinated Universal Time</string>            <!-- timezone label -->  <!-- TODO -->
-    <string name="time_localMean">Local Mean Time</string>                 <!-- setting / custom timezone id -->
-    <string name="time_apparent">Apparent Solar Time</string>              <!-- setting / custom timezone id -->
+    <string name="time_lmst">Místní hvězdný čas</string>                  <!-- timezone label -->
+    <string name="time_gmst">Greenwichský hvězdný čas</string>              <!-- timezone label -->
+    <string name="time_utc">Koordinovaný světový čas</string>            <!-- timezone label -->
+    <string name="time_localMean">Střední sluneční čas</string>                 <!-- setting / custom timezone id -->
+    <string name="time_apparent">Pravý sluneční čas</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
     <string name="timezoneCustom_line2b"><xliff:g id="timezoneID" example="US/Arizona">%2$s</xliff:g></string>                                                                    <!-- selector item format (e.g. "US/Arizona" ) .. same as above but omits first arg -->
 
-    <string name="configLabel_timezone">Time Zone Settings</string>             <!-- group title -->
-    <string name="configLabel_timezone_mode">Mode:</string>                     <!-- spinner label -->
-    <string name="configLabel_timezone_custom">Time Zone:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Standard:</string>                   <!-- spinner label -->   <!-- TODO: "solar time" -> "time standard" -->
+    <string name="configLabel_timezone">Nastavení časového pásma</string>             <!-- group title -->
+    <string name="configLabel_timezone_mode">Režim:</string>                     <!-- spinner label -->
+    <string name="configLabel_timezone_custom">Časové pásmo:</string>              <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Standard:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
-    <string name="timeFormatMode_system">System format</string>          <!-- setting -->
-    <string name="timeFormatMode_12hr">12-hour</string>                  <!-- setting -->
-    <string name="timeFormatMode_24hr">24-hour</string>                  <!-- setting -->
+    <string name="timeFormatMode_system">Systémový formát</string>          <!-- setting -->
+    <string name="timeFormatMode_12hr">12 hodinový</string>                  <!-- setting -->
+    <string name="timeFormatMode_24hr">24 hodinový</string>                  <!-- setting -->
 
-    <string name="configLabel_timeFormatMode">Time Format</string>             <!-- preference label -->
+    <string name="configLabel_timeFormatMode">Formát času</string>             <!-- preference label -->
     <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: date mode -->
-    <string name="dateMode_current">Today</string>                  <!-- setting -->
-    <string name="dateMode_custom">User Defined</string>            <!-- setting -->
+    <string name="dateMode_current">Dnes</string>                  <!-- setting -->
+    <string name="dateMode_custom">Uživatelem definované</string>            <!-- setting -->
 
-    <string name="configLabel_date">Date Settings</string>                      <!-- group title -->
-    <string name="configLabel_date_mode">Mode:</string>                         <!-- spinner label -->
-    <string name="configLabel_date_custom">Date:</string>                       <!-- dateSelector label -->
+    <string name="configLabel_date">Nastavení data:</string>                      <!-- group title -->
+    <string name="configLabel_date_mode">Režim:</string>                         <!-- spinner label -->
+    <string name="configLabel_date_custom">Datum:</string>                       <!-- dateSelector label -->
 
     <!-- Widget Setting: compare mode -->
-    <string name="compareMode_yesterday">Yesterday</string>                     <!-- setting -->
-    <string name="compareMode_tomorrow">Tomorrow</string>                       <!-- setting -->
-    <string name="configLabel_general_compareMode">Compare Against:</string>    <!-- spinner label -->
-    <string name="configLabel_general_showComparison">Show Comparison</string>  <!-- checkbox label -->
+    <string name="compareMode_yesterday">Včerejšku</string>                     <!-- setting -->
+    <string name="compareMode_tomorrow">Zítřku</string>                       <!-- setting -->
+    <string name="configLabel_general_compareMode">Porovnat oproti:</string>    <!-- spinner label -->
+    <string name="configLabel_general_showComparison">Zobrazit porovnání</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_closest">Closest Event</string>                 <!-- setting -->
-    <string name="trackingMode_soonest">Upcoming Event</string>                <!-- setting -->
-    <string name="configLabel_general_trackingMode">Track:</string>            <!-- spinner label -->
+    <string name="trackingMode_closest">Nejbližší událost</string>                 <!-- setting -->
+    <string name="trackingMode_soonest">Nadcházející událost</string>                <!-- setting -->
+    <string name="configLabel_general_trackingMode">Sledovat:</string>            <!-- spinner label -->
 
     <!-- Widget Setting: timeMode override -->
-    <string name="configLabel_general_timeMode_override">Tracking overrides mode</string>     <!-- checkbox label -->
+    <string name="configLabel_general_timeMode_override">Sledování přepíše režim</string>     <!-- checkbox label -->
 
     <!-- Widget Settings: noon -->
-    <string name="configLabel_general_showNoon">Show Solar Noon</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showNoon">Zobrazit pravé poledne</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: Launch App -->
     <string name="configLabel_action_id">ID:</string>                 <!-- edittext label -->
-    <string name="configLabel_action_launch">Class:</string>                 <!-- edittext label -->
+    <string name="configLabel_action_launch">Třída:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch" /> <!-- editText hint (and default) -->
-    <string name="configHint_action_launch_title">Action Title</string>                 <!-- edittext hint -->
-    <string name="configHint_action_launch_desc">Short description</string>                 <!-- edittext hint -->
-    <string name="configLabel_action_launch_type">Type:</string>                 <!-- spinner label -->
-    <string name="configLabel_action_launch_action">Action:</string>                 <!-- edittext label -->
-    <string name="configHint_action_launch_action">&lt;none&gt;</string> <!-- editText hint (and default) -->
+    <string name="configHint_action_launch_title">Název akce</string>                 <!-- edittext hint -->
+    <string name="configHint_action_launch_desc">Krátký popis</string>                 <!-- edittext hint -->
+    <string name="configLabel_action_launch_type">Typ:</string>                 <!-- spinner label -->
+    <string name="configLabel_action_launch_action">Akce:</string>                 <!-- edittext label -->
+    <string name="configHint_action_launch_action">&lt;žádná&gt;</string> <!-- editText hint (and default) -->
     <string name="configLabel_action_launch_data">Data:</string>                 <!-- edittext label -->
-    <string name="configHint_action_launch_data">&lt;none&gt;</string> <!-- editText hint (and default) -->
+    <string name="configHint_action_launch_data">&lt;žádná&gt;</string> <!-- editText hint (and default) -->
     <string name="configLabel_action_launch_datatype">Mime:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch_datatype">text/plain</string> <!-- editText hint (and default) -->
-    <string name="configLabel_action_launch_extras">Extras:</string>                 <!-- edittext label -->
-    <string name="configHint_action_launch_extras"><![CDATA[<none>]]></string> <!-- editText hint (and default) -->
+    <string name="configLabel_action_launch_extras">Extra:</string>                 <!-- edittext label -->
+    <string name="configHint_action_launch_extras"><![CDATA[<žádné>]]></string> <!-- editText hint (and default) -->
 
     <string name="configLabel_action_item">%1$s %2$s</string>
     <string name="configLabel_action_item_desc">(%1$s)</string>
-    <string name="configLabel_action_item_none">No Action</string>
+    <string name="configLabel_action_item_none">Žádná akce</string>
 
-    <string name="addaction_custname">custom<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
-    <string name="addaction_custtitle">Custom Action <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
-    <string name="addaction_error_id">ID must not be empty (or contain spaces).</string>
-    <string name="addaction_error_title">Display string must not be empty.</string>
-    <string name="addaction_error_exists">ID is already taken. This action will be overwritten.</string>
+    <string name="addaction_custname">vlastní<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
+    <string name="addaction_custtitle">Vlastní akce <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
+    <string name="addaction_error_id">ID nesmí být prázdné (nebo obsahovat mezery).</string>
+    <string name="addaction_error_title">Zobrazovaný řetězec nesmí být prázdný.</string>
+    <string name="addaction_error_exists">ID již existuje. Tato akce bude přepsána.</string>
 
-    <string name="delaction_dialog_msg">Are you sure you want to delete %1$s (%2$s)?</string>
-    <string name="delaction_dialog_msg1">Default actions cannot be removed.\n\nRevert to defaults?</string>
-    <string name="delaction_dialog_ok">Delete</string>
-    <string name="delaction_dialog_ok1">Revert</string>
-    <string name="delaction_dialog_cancel">Cancel</string>
+    <string name="delaction_dialog_msg">Opravdu chcete smazat %1$s (%2$s)?</string>
+    <string name="delaction_dialog_msg1">Výchozí akce nemohou být smazány.\n\nVrátit na výchozí nastavení?</string>
+    <string name="delaction_dialog_ok">Smazat</string>
+    <string name="delaction_dialog_ok1">Vrátit</string>
+    <string name="delaction_dialog_cancel">Zrušit</string>
 
-    <string name="clearactions_dialog_msg">Are you sure you want to reset to defaults?\n\nAll custom actions will be removed.</string>
-    <string name="clearactions_dialog_ok">Clear</string>
+    <string name="clearactions_dialog_msg">Opravdu se chcete vrátit do výchozího nastavení?\n\nVšechny vlastní akce budou odstraněny.</string>
+    <string name="clearactions_dialog_ok">Vyčistit</string>
     <string name="clearactions_dialog_cancel">@string/dialog_cancel</string>
-    <string name="clearactions_toast">Actions reset to defaults.</string>
+    <string name="clearactions_toast">Akce byly vyresetovány do výchozího nastavení.</string>
 
-    <string name="saveaction_dialog_title">Add Action</string>
-    <string name="saveaction_dialog_ok">Save</string>
+    <string name="saveaction_dialog_title">Přidat akci</string>
+    <string name="saveaction_dialog_ok">Uložit</string>
     <string name="saveaction_dialog_cancel">@string/dialog_cancel</string>
-    <string name="saveaction_dialog_suggest">Suggest</string>
-    <string name="saveaction_toast">Saved action \"%1$s\" (%2$s).</string>
+    <string name="saveaction_dialog_suggest">Navrhnout</string>
+    <string name="saveaction_toast">Akce \"%1$s\" (%2$s) byla uložena.</string>
 
-    <string name="loadaction_dialog_title">Actions</string>
-    <string name="loadaction_toast">Loaded action \"%1$s\".</string>
+    <string name="loadaction_dialog_title">Akce</string>
+    <string name="loadaction_toast">Akce \"%1$s\" byla načtena.</string>
 
-    <string name="startaction_failed_toast">Failed to start %s!</string>         <!-- error toast -->
+    <string name="startaction_failed_toast">Spuštění %s selhalo!</string>         <!-- error toast -->
 
-    <string name="configAction_addAction">Add</string>           <!-- button (contentDescription) -->
-    <string name="configAction_editAction">Edit</string>           <!-- button (contentDescription) -->
-    <string name="configAction_testAction">Test</string>         <!-- button (contentDescription) -->
-    <string name="configAction_saveAction">Save</string>         <!-- button (contentDescription) -->
-    <string name="configAction_loadAction">Load</string>         <!-- button (contentDescription) -->
-    <string name="configAction_deleteAction">Delete</string>         <!-- button (contentDescription) -->
-    <string name="configAction_clearActions">Clear All</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportActions">Export</string>         <!-- button (contentDescription) -->
-    <string name="configAction_importActions">Import</string>         <!-- button (contentDescription) -->
+    <string name="configAction_addAction">Přidat</string>           <!-- button (contentDescription) -->
+    <string name="configAction_editAction">Upravit</string>           <!-- button (contentDescription) -->
+    <string name="configAction_testAction">Otestovat</string>         <!-- button (contentDescription) -->
+    <string name="configAction_saveAction">Uložit</string>         <!-- button (contentDescription) -->
+    <string name="configAction_loadAction">Načíst</string>         <!-- button (contentDescription) -->
+    <string name="configAction_deleteAction">Smazat</string>         <!-- button (contentDescription) -->
+    <string name="configAction_clearActions">Vyčistit vše</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportActions">Exportovat</string>         <!-- button (contentDescription) -->
+    <string name="configAction_importActions">Importovat</string>         <!-- button (contentDescription) -->
 
     <!-- App Setting: WidgetThemes -->
-    <string name="configLabel_widgetThemeList">Themes</string>
-    <string name="configLabel_widgetThemeListSelect">Select a theme</string>
-    <string name="configAction_addTheme">Add</string>           <!-- button (contentDescription) -->
-    <string name="configAction_selectTheme">Select</string>     <!-- button (contentDescription) -->
-    <string name="configAction_editTheme">Edit</string>         <!-- button (contentDescription) -->
-    <string name="configAction_deleteTheme">Delete</string>     <!-- button (contentDescription) -->
-    <string name="configAction_copyTheme">Copy</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportThemes">Export</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
-    <string name="configAction_shareTheme">Share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
-    <string name="configAction_importThemes">Import</string>    <!-- button (contentDescription) -->
+    <string name="configLabel_widgetThemeList">Témata</string>
+    <string name="configLabel_widgetThemeListSelect">Vybrat téma</string>
+    <string name="configAction_addTheme">Přidat</string>           <!-- button (contentDescription) -->
+    <string name="configAction_selectTheme">Vybrat</string>     <!-- button (contentDescription) -->
+    <string name="configAction_editTheme">Upravit</string>         <!-- button (contentDescription) -->
+    <string name="configAction_deleteTheme">Smazat</string>     <!-- button (contentDescription) -->
+    <string name="configAction_copyTheme">Kopírovat</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportThemes">Exportovat</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
+    <string name="configAction_shareTheme">Sdílet</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
+    <string name="configAction_importThemes">Importovat</string>    <!-- button (contentDescription) -->
 
     <string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
     <string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>   <!-- copied theme id -->
@@ -592,40 +592,40 @@
     <string name="edittheme_toast_success">Saved <xliff:g id="themeName">%1$s</xliff:g>.</string>         <!-- toast msg -->
     <string name="deletetheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> was deleted.</string> <!-- toast msg -->
 
-    <string name="edittheme_error_themeName_empty">ID must be unique (required).</string>        <!-- error hint (themeName empty) -->
-    <string name="edittheme_error_themeName_unique">ID must be unique (already taken).</string>  <!-- error hint (themeName taken) -->
-    <string name="edittheme_error_displaytext">Display string must not be empty.</string>  <!-- error hint (display text is empty) -->
-    <string name="edittheme_error_textsize_min">Size must be &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->  <!-- TODO: drop "an integer" from translations -->
-    <string name="edittheme_error_textsize_max">Size must be &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->    <!-- TODO: drop "an integer" from translations -->
+    <string name="edittheme_error_themeName_empty">ID musí být jedinečné (vyžadováno).</string>        <!-- error hint (themeName empty) -->
+    <string name="edittheme_error_themeName_unique">ID musí být jedinečné (již existuje).</string>  <!-- error hint (themeName taken) -->
+    <string name="edittheme_error_displaytext">Zobrazovaný řetězec nesmí být prázdný.</string>  <!-- error hint (display text is empty) -->
+    <string name="edittheme_error_textsize_min">Velikost musí být &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
+    <string name="edittheme_error_textsize_max">Velikost musí být &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
     <string name="edittheme_flag_default">default</string>  <!-- content description -->
 
-    <string name="deletetheme_dialog_title">Delete Theme</string>        <!-- dialog title -->
-    <string name="deletetheme_dialog_message">Are you sure you want to delete <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
-    <string name="deletetheme_dialog_ok">Delete</string>        <!-- button -->
-    <string name="deletetheme_dialog_cancel">Cancel</string>    <!-- button -->
+    <string name="deletetheme_dialog_title">Smazat téma</string>        <!-- dialog title -->
+    <string name="deletetheme_dialog_message">Opravdu chcete smazat <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
+    <string name="deletetheme_dialog_ok">Smazat</string>        <!-- button -->
+    <string name="deletetheme_dialog_cancel">Zrušit</string>    <!-- button -->
 
-    <string name="configLabel_widgetThemeAdd">Add Theme</string>     <!-- title text -->
-    <string name="configLabel_widgetThemeEdit">Edit Theme</string>   <!-- title text -->
-    <string name="configAction_saveTheme">Save</string>           <!-- button (contentDescription) -->
-    <string name="configAction_chooseColor">Choose Colour</string> <!-- button (contentDescription) -->
+    <string name="configLabel_widgetThemeAdd">Přidat téma</string>     <!-- title text -->
+    <string name="configLabel_widgetThemeEdit">Upravit téma</string>   <!-- title text -->
+    <string name="configAction_saveTheme">Uložit</string>           <!-- button (contentDescription) -->
+    <string name="configAction_chooseColor">Vybrat barvu</string> <!-- button (contentDescription) -->
 
-    <string name="configLabel_themeBackgroundId">Base:</string>    <!-- spinner label -->
-    <string name="configLabel_themeBackground_light">Light</string>        <!-- light background -->
-    <string name="configLabel_themeBackground_dark">Dark</string>          <!-- dark background -->
-    <string name="configLabel_themeBackground_trans">Transparent</string>  <!-- transparent background -->
-    <string name="configLabel_themeBackground_color">Colour</string>      <!-- custom background -->
-    <string name="configLabel_themeColorBackground">Colour</string>      <!-- color label -->
+    <string name="configLabel_themeBackgroundId">Základ:</string>    <!-- spinner label -->
+    <string name="configLabel_themeBackground_light">Světlá</string>        <!-- light background -->
+    <string name="configLabel_themeBackground_dark">Tmavá</string>          <!-- dark background -->
+    <string name="configLabel_themeBackground_trans">Průhledná</string>  <!-- transparent background -->
+    <string name="configLabel_themeBackground_color">Barva</string>      <!-- custom background -->
+    <string name="configLabel_themeColorBackground">Barva</string>      <!-- color label -->
 
-    <string name="configLabel_themeColorTitle">Title Colour</string>     <!-- color label -->
+    <string name="configLabel_themeColorTitle">Barva nadpisu</string>     <!-- color label -->
     <string name="configHint_themeColorTitle">#FFFFFFFF</string>         <!-- color hint -->
 
-    <string name="configLabel_themeColorText">Text Colour</string>       <!-- color label -->
+    <string name="configLabel_themeColorText">Barva textu</string>       <!-- color label -->
     <string name="configHint_themeColorText">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeColorSpring">Spring</string> <!-- color label -->
-    <string name="configLabel_themeColorSummer">Summer</string> <!-- color label -->
-    <string name="configLabel_themeColorFall">Autumn</string> <!-- color label -->
-    <string name="configLabel_themeColorWinter">Winter</string> <!-- color label -->
+    <string name="configLabel_themeColorSpring">Jaro</string> <!-- color label -->
+    <string name="configLabel_themeColorSummer">Léto</string> <!-- color label -->
+    <string name="configLabel_themeColorFall">Podzim</string> <!-- color label -->
+    <string name="configLabel_themeColorWinter">Zima</string> <!-- color label -->
 
     <string name="configLabel_themeColorAccent">Accent</string> <!-- color label -->
     <string name="configLabel_themeColorAction">Action</string> <!-- color label -->
@@ -1241,23 +1241,25 @@
         <item>Portuguese</item>
         <item>Russian</item>
         <item>Dutch</item>
+        <item>Czech</item>
     </string-array>
     <string-array name="locale_display_native" translatable="false">             <!-- one-to-one with locale_values -->
-        <item>English</item>
+        <item>Angličtina</item>
         <item>Esperanto</item>
-        <item>Français</item>
-        <item>Deutsch</item>
-        <item>Magyar</item>
-        <item>Italiano</item>
-        <item>Polski</item>
-        <item>Español</item>
-        <item>Català</item>
-        <item>Euskara</item>
-        <item>Norsk</item>
-        <item>正體中文</item>
-        <item>Português Brasileiro</item>
-        <item>Русский</item>
-        <item>Nederlands</item>
+        <item>Francouzština</item>
+        <item>Němčina</item>
+        <item>Maďarština</item>
+        <item>Italština</item>
+        <item>Polština</item>
+        <item>Španělština</item>
+        <item>Katalánština</item>
+        <item>Baskičtina</item>
+        <item>Norština</item>
+        <item>Čínština (tradiční)</item>
+        <item>Portugalština</item>
+        <item>Ruština</item>
+        <item>Nizozemština</item>
+        <item>Čeština</item>
     </string-array>
     <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
         <item>en</item>
@@ -1275,6 +1277,7 @@
         <item>pt_BR</item>
         <item>ru</item>
         <item>nl</item>
+        <item>cs</item>
     </string-array>
     <string-array name="locale_credits" translatable="false">  <!-- one-to-one with locale_display -->
         <item />
@@ -1292,6 +1295,7 @@
         <item><![CDATA[<a href=https://github.com/NetoSilva>Neto Silva</a>|<a href=https://github.com/naoliv>Nelson&#160;A.&#160;de&#160;Oliveira</a>|<a href=https://github.com/efraletti>Enrico S. B. Fraletti</a>]]></item>
         <item><![CDATA[<a href=https://github.com/rchintsov>Ruslan&#160;Chintsov</a>]]></item>
         <item><item><![CDATA[<a href=https://github.com/Joppla>Joppla</a>]]></item></item>
+        <item><![CDATA[<a href=https://github.com/utaxiu>utaxiu</a>]]></item>
     </string-array>
 
     <!-- position formats -->

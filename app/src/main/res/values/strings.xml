@@ -1241,6 +1241,7 @@
         <item>Portuguese</item>
         <item>Russian</item>
         <item>Dutch</item>
+        <item>Czech</item>
     </string-array>
     <string-array name="locale_display_native" translatable="false">             <!-- one-to-one with locale_values -->
         <item>English</item>
@@ -1258,6 +1259,7 @@
         <item>Português Brasileiro</item>
         <item>Русский</item>
         <item>Nederlands</item>
+        <item>Čeština</item>
     </string-array>
     <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
         <item>en</item>
@@ -1275,6 +1277,7 @@
         <item>pt_BR</item>
         <item>ru</item>
         <item>nl</item>
+        <item>cs</item>
     </string-array>
     <string-array name="locale_credits" translatable="false">  <!-- one-to-one with locale_display -->
         <item />
@@ -1292,6 +1295,7 @@
         <item><![CDATA[<a href=https://github.com/NetoSilva>Neto Silva</a>|<a href=https://github.com/naoliv>Nelson&#160;A.&#160;de&#160;Oliveira</a>|<a href=https://github.com/efraletti>Enrico S. B. Fraletti</a>]]></item>
         <item><![CDATA[<a href=https://github.com/rchintsov>Ruslan&#160;Chintsov</a>]]></item>
         <item><item><![CDATA[<a href=https://github.com/Joppla>Joppla</a>]]></item></item>
+        <item><![CDATA[<a href=https://github.com/utaxiu>utaxiu</a>]]></item>
     </string-array>
 
     <!-- position formats -->
