@@ -597,7 +597,7 @@
     <string name="edittheme_error_displaytext">Zobrazovaný řetězec nesmí být prázdný.</string>  <!-- error hint (display text is empty) -->
     <string name="edittheme_error_textsize_min">Velikost musí být &gt;= <xliff:g id="minSize">%1$s</xliff:g>.</string>  <!-- error hint (size is smaller than min) -->
     <string name="edittheme_error_textsize_max">Velikost musí být &lt;= <xliff:g id="maxSize">%1$s</xliff:g>.</string>  <!-- error hint (size is larger than max) -->
-    <string name="edittheme_flag_default">default</string>  <!-- content description -->
+    <string name="edittheme_flag_default">výchozí</string>  <!-- content description -->
 
     <string name="deletetheme_dialog_title">Smazat téma</string>        <!-- dialog title -->
     <string name="deletetheme_dialog_message">Opravdu chcete smazat <xliff:g id="themeName">%1$s</xliff:g>?</string>   <!-- dialog msg -->
@@ -627,218 +627,217 @@
     <string name="configLabel_themeColorFall">Podzim</string> <!-- color label -->
     <string name="configLabel_themeColorWinter">Zima</string> <!-- color label -->
 
-    <string name="configLabel_themeColorAccent">Accent</string> <!-- color label -->
-    <string name="configLabel_themeColorAction">Action</string> <!-- color label -->
+    <string name="configLabel_themeColorAccent">Zvýraznění</string> <!-- color label -->
+    <string name="configLabel_themeColorAction">Akce</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMapBackground">Map Background</string> <!-- color label -->
-    <string name="configLabel_themeColorMapForeground">Map Foreground</string> <!-- color label -->
-    <string name="configLabel_themeColorMapSunShadow">Shadow</string> <!-- color label -->
-    <string name="configLabel_themeColorMapMoonHighlight">Highlight</string> <!-- color label -->
+    <string name="configLabel_themeColorMapBackground">Pozadí mapy</string> <!-- color label -->
+    <string name="configLabel_themeColorMapForeground">Popředí mapy</string> <!-- color label -->
+    <string name="configLabel_themeColorMapSunShadow">Stín</string> <!-- color label -->
+    <string name="configLabel_themeColorMapMoonHighlight">Zvýraznění</string> <!-- color label -->
 
-    <string name="configLabel_themeColorMoonrise">Moonrise</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonset">Moonset</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonWaxing">Waxing</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonWaning">Waning</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonFull">Full</string> <!-- color label -->
-    <string name="configLabel_themeColorMoonNew">New</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonrise">Východ měsíce</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonset">Západ měsíce</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaxing">Dorůstající</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonWaning">Couvající</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonFull">Úplný</string> <!-- color label -->
+    <string name="configLabel_themeColorMoonNew">Nov</string> <!-- color label -->
 
-    <string name="configLabel_themeColorSunrise">Sunrise</string> <!-- color label -->
+    <string name="configLabel_themeColorSunrise">Východ slunce</string> <!-- color label -->
     <string name="configHint_themeColorSunrise">#FFFFFFFF</string>       <!-- color hint -->
 
-    <string name="configLabel_themeColorSunset">Sunset</string>   <!-- color label -->
+    <string name="configLabel_themeColorSunset">Západ slunce</string>   <!-- color label -->
     <string name="configHint_themeColorSunset">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorNoon">Noon</string>      <!-- color label -->
+    <string name="configLabel_themeColorNoon">Pravé poledne</string>      <!-- color label -->
     <string name="configHint_themeColorNoon">#FFFFFFFF</string>         <!-- color hint -->
 
-    <string name="configLabel_themeColorFill">Fill</string>         <!-- color label -->
+    <string name="configLabel_themeColorFill">Vyplnit</string>         <!-- color label -->
     <string name="configHint_themeColorFill">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorBorder">Border</string>         <!-- color label -->
+    <string name="configLabel_themeColorBorder">Ohraničení</string>         <!-- color label -->
     <string name="configHint_themeColorBorder">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeBorderWidthRiseSet">Border Width (rise/set)</string>  <!-- size label -->
+    <string name="configLabel_themeBorderWidthRiseSet">Tloušťka ohraničení (východ/západ)</string>  <!-- size label -->
     <string name="configHint_themeBorderWidthRiseSet">2</string>                          <!-- size hint -->
-    <string name="configLabel_themeBorderWidthNoon">Border Width (noon)</string>         <!-- size label -->
+    <string name="configLabel_themeBorderWidthNoon">Tloušťka ohraničení (pravé poledne)</string>         <!-- size label -->
     <string name="configHint_themeBorderWidthNoon">3</string>                             <!-- size hint -->
 
-    <string name="configLabel_themeColorSuffix">Suffix Colour</string>   <!-- color label -->
+    <string name="configLabel_themeColorSuffix">Barva suffixu</string>   <!-- color label -->
     <string name="configHint_themeColorSuffix">#FFFFFFFF</string>        <!-- color hint -->
 
-    <string name="configLabel_themeColorTime">Text Colour2</string>      <!-- color label -->
+    <string name="configLabel_themeColorTime">Barva textu2</string>      <!-- color label -->
     <string name="configHint_themeColorTime">#FFFFFFFF</string>          <!-- color hint -->
 
-    <string name="configLabel_themeSizeTitle">Title Size:</string>  <!-- edit label -->
+    <string name="configLabel_themeSizeTitle">Velikost nadpisu:</string>  <!-- edit label -->
     <string name="configHint_themeSizeTitle">14</string>                 <!-- edit hint -->
 
-    <string name="configLabel_themeBoldTitle">Bold</string>          <!-- checkbox label -->
+    <string name="configLabel_themeBoldTitle">Tučně</string>          <!-- checkbox label -->
 
-    <string name="configLabel_themeSizeText">Text Size:</string>    <!-- edit label -->
+    <string name="configLabel_themeSizeText">Velikost textu:</string>    <!-- edit label -->
     <string name="configHint_themeSizeText">10</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themeSizeTime">Time Size:</string>    <!-- edit label -->
+    <string name="configLabel_themeSizeTime">Velikost času:</string>    <!-- edit label -->
     <string name="configHint_themeSizeTime">12</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themeBoldTime">Bold</string>          <!-- checkbox label -->
+    <string name="configLabel_themeBoldTime">Tučně</string>          <!-- checkbox label -->
 
-    <string name="configLabel_themeSizeSuffix">Suffix Size:</string> <!-- edit label -->
+    <string name="configLabel_themeSizeSuffix">Velikost suffixu:</string> <!-- edit label -->
     <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themePadding">Padding:</string>            <!-- edit label -->
-    <string name="configHint_themePadding">[left, top, right, bottom]</string> <!-- edit hint -->
+    <string name="configLabel_themePadding">Odsazení:</string>            <!-- edit label -->
+    <string name="configHint_themePadding">[levé, horní, pravé, spodní]</string> <!-- edit hint -->
 
     <string name="configLabel_themeID">ID:</string>                      <!-- edit label -->
-    <string name="configHint_themeID">Theme ID</string>                  <!-- edit hint -->
+    <string name="configHint_themeID">ID tématu</string>                  <!-- edit hint -->
 
-    <string name="configLabel_themeName">Display:</string>               <!-- edit label -->
-    <string name="configHint_themeName">Label</string>                   <!-- edit hint -->
+    <string name="configLabel_themeName">Zobrazit:</string>               <!-- edit label -->
+    <string name="configHint_themeName">Popisek</string>                   <!-- edit hint -->
 
-    <string name="widgetLabel_azimuth">Azimuth</string>                   <!-- label -->
+    <string name="widgetLabel_azimuth">Azimut</string>                   <!-- label -->
     <string name="widgetLabel_azimuth_short">Az</string>                   <!-- label -->
-    <string name="widgetLabel_altitude">Altitude</string>               <!-- label -->
+    <string name="widgetLabel_altitude">Výška</string>               <!-- label -->
     <string name="widgetLabel_altitude_short">Alt</string>               <!-- label -->
     <string name="widgetLabel_altitude_symbol">∠</string>               <!-- label/suffix -->
 
-    <string name="widgetLabel_rightAscension">Right Ascension</string>    <!-- label -->
+    <string name="widgetLabel_rightAscension">Rektascenze</string>    <!-- label -->
     <string name="widgetLabel_rightAscension_short">RA</string>    <!-- label -->
     <string name="widgetLabel_rightAscension_symbol">α</string>    <!-- label/suffix -->
-    <string name="widgetLabel_declination">Declination</string>           <!-- label -->
+    <string name="widgetLabel_declination">Deklinace</string>           <!-- label -->
     <string name="widgetLabel_declination_short">Dec</string>           <!-- label -->
     <string name="widgetLabel_declination_symbol">δ</string>           <!-- label/suffix -->
-    <string name="widgetLabel_distance">Distance</string>           <!-- label -->
+    <string name="widgetLabel_distance">Vzdálenost</string>           <!-- label -->
 
     <!--
          ALARM CLOCK
     -->
-    <string name="configLabel_alarmClock">Alarms</string>            <!-- group title -->
-    <string name="configLabel_alarmClock_emptyMsg">No Alarms</string>     <!-- a label that is displayed in place of an empty listview -->
-    <string name="configAction_addAlarm">Set Alarm</string>               <!-- button (contentDescription) -->
-    <string name="configAction_addNotification">Set Notification</string> <!-- button (contentDescription) -->
-    <string name="configAction_editAlarm">Edit</string>               <!-- button (contentDescription) -->
-    <string name="configAction_deleteAlarm">Delete</string>               <!-- button (contentDescription) -->
-    <string name="configAction_clearAlarms">Clear</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms">Sort</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_by_time">Alarm Time</string>                <!-- action button / menu item -->
-    <string name="configAction_sortAlarms_by_creation">Creation Date</string>                <!-- action button / menu item -->
-    <string name="configAction_clearOffset">Clear</string>                <!-- action button / menu item -->
-    <string name="configAction_setAlarmOffset">Set Offset</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmType">Set Type</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmLabel">Set Label</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmLocation">Set Location</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmRepeat">Set Repeating</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmEvent">Set Event</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmTime">Override Time</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmAction">Set Action</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmSound">Set Sound</string>         <!-- button (contentDescription) -->
-    <string name="configAction_alarmMenu">Alarm Menu</string>         <!-- button (contentDescription) -->
-    <string name="configAction_saveAlarm">Save</string>               <!-- button (contentDescription) -->
-    <string name="configAction_enableAlarm">Save &amp; Enable</string>               <!-- button (contentDescription) -->
-    <string name="configAction_disableAlarm">Save &amp; Disable</string>               <!-- button (contentDescription) -->
-    <string name="configAction_undo">Undo</string>               <!-- button (contentDescription) -->
+    <string name="configLabel_alarmClock">Budíky</string>            <!-- group title -->
+    <string name="configLabel_alarmClock_emptyMsg">Žádné budíky</string>     <!-- a label that is displayed in place of an empty listview -->
+    <string name="configAction_addAlarm">Nastavit budík</string>               <!-- button (contentDescription) -->
+    <string name="configAction_addNotification">Nastavit upozornění</string> <!-- button (contentDescription) -->
+    <string name="configAction_editAlarm">Upravit</string>               <!-- button (contentDescription) -->
+    <string name="configAction_deleteAlarm">Smazat</string>               <!-- button (contentDescription) -->
+    <string name="configAction_clearAlarms">Vyčistit</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms">Seřadit</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms_by_time">Čas budíku</string>                <!-- action button / menu item -->
+    <string name="configAction_sortAlarms_by_creation">Datum vytvoření</string>                <!-- action button / menu item -->
+    <string name="configAction_clearOffset">Vyčistit</string>                <!-- action button / menu item -->
+    <string name="configAction_setAlarmOffset">Nastavit posun</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmType">Nastavit typ</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmLabel">Nastavit popisek</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmLocation">Nastavit polohu</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmRepeat">Nastavit opakování</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmEvent">Nastavit událost</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmTime">Přepsat čas</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmAction">Nastavit akci</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmSound">Nastavit zvuk</string>         <!-- button (contentDescription) -->
+    <string name="configAction_alarmMenu">Menu budíků</string>         <!-- button (contentDescription) -->
+    <string name="configAction_saveAlarm">Uložit</string>               <!-- button (contentDescription) -->
+    <string name="configAction_enableAlarm">Uložit &amp; zapnout</string>               <!-- button (contentDescription) -->
+    <string name="configAction_disableAlarm">Uložit &amp; vypnout</string>               <!-- button (contentDescription) -->
+    <string name="configAction_undo">Vrátit</string>               <!-- button (contentDescription) -->
 
-    <string name="alarmAction_dismiss">Dismiss</string>                <!-- notification action button -->
-    <string name="alarmAction_snooze">Snooze</string>                  <!-- notification action button -->
-    <string name="alarmAction_timeout">Timeout</string>                  <!-- notification action button -->
+    <string name="alarmAction_dismiss">Zrušit</string>                <!-- notification action button -->
+    <string name="alarmAction_snooze">Šlofík</string>                  <!-- notification action button -->
+    <string name="alarmAction_timeout">Vypršet</string>                  <!-- notification action button -->
 
     <string name="alarmAction_playingMsg"><xliff:g id="label">%1$s</xliff:g></string>          <!-- toast message -->
-    <string name="alarmAction_silencedMsg">Alarm silenced</string>          <!-- toast message -->
-    <string name="alarmAction_snoozeMsg">Snoozing for <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->
-    <string name="alarmAction_timeoutMsg">The alarm timed out.</string>     <!-- notification msg -->
-    <string name="alarmAction_upcomingMsg">Upcoming Alarm</string>     <!-- notification msg -->
+    <string name="alarmAction_silencedMsg">Budík umlčen</string>          <!-- toast message -->
+    <string name="alarmAction_snoozeMsg">Odloženo na <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->
+    <string name="alarmAction_timeoutMsg">Budík vypršel.</string>     <!-- notification msg -->
+    <string name="alarmAction_upcomingMsg">Nadcházející budík</string>     <!-- notification msg -->
 
-    <string name="alarmMode_alarm">Alarm</string>                <!-- alarm type (setting) -->
-    <string name="alarmMode_notification">Notification</string>                <!-- alarm type (setting) -->
+    <string name="alarmMode_alarm">Budík</string>                <!-- alarm type (setting) -->
+    <string name="alarmMode_notification">Notifikace</string>                <!-- alarm type (setting) -->
 
-    <string name="configLabel_alarmEdit_scheduleTray">Schedule:</string>               <!-- group title -->
-    <string name="configLabel_alarmEdit_onAlertTray">On Alert:</string>               <!-- group title -->
-    <string name="configLabel_alarmEdit_onDismissTray">On Dismiss:</string>               <!-- group title -->
+    <string name="configLabel_alarmEdit_scheduleTray">Plán:</string>               <!-- group title -->
+    <string name="configLabel_alarmEdit_onAlertTray">Při zvonění:</string>               <!-- group title -->
+    <string name="configLabel_alarmEdit_onDismissTray">Při zrušení:</string>               <!-- group title -->
 
-    <string name="alarmOption_vibrate">Vibrate</string>                <!-- checkbox text -->
-    <string name="alarmOption_ringtone_none">No Sound</string>          <!-- ringtone label (none) -->
-    <string name="alarmOption_ringtone_ringtone">Ringtone</string>          <!-- menu item; Select a "Ringtone" -->  <!-- TODO -->
-    <string name="alarmOption_ringtone_file">Audio File</string>          <!-- menu item; Select an "Audio File" -->  <!-- TODO -->
+    <string name="alarmOption_vibrate">Vibrovat</string>                <!-- checkbox text -->
+    <string name="alarmOption_ringtone_none">Bez zvuk</string>          <!-- ringtone label (none) -->
+    <string name="alarmOption_ringtone_ringtone">Vyzváněcí tón</string>          <!-- menu item; Select a "Ringtone" -->
+    <string name="alarmOption_ringtone_file">Zvukový soubor</string>          <!-- menu item; Select an "Audio File" -->
     <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
     <string name="alarmOption_action_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- action label format -->
-    <string name="alarmOption_solarevent_none">Clock Time</string>          <!-- ringtone label (none) -->
+    <string name="alarmOption_solarevent_none">Čas</string>          <!-- ringtone label (none) -->
 
-    <string name="alarmOption_repeat">Repeat</string>                <!-- checkbox text; an alarm that repeats -->
-    <string name="alarmOption_repeat_none">No Repeat</string>         <!-- label text; an alarm that does not repeat (occurs once) -->
-    <string name="alarmOption_repeat_all">Every Day</string>         <!-- label text; an alarm that repeats every day -->
+    <string name="alarmOption_repeat">Opakovat</string>                <!-- checkbox text; an alarm that repeats -->
+    <string name="alarmOption_repeat_none">Neopakovat</string>         <!-- label text; an alarm that does not repeat (occurs once) -->
+    <string name="alarmOption_repeat_all">Každý den</string>         <!-- label text; an alarm that repeats every day -->
 
-    <string name="deletealarm_dialog_title">Delete</string>        <!-- dialog title -->
-    <string name="deletealarm_dialog_message">Are you sure you want to delete <xliff:g id="type">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg -->
-    <string name="deletealarm_dialog_ok">Delete</string>        <!-- button -->
-    <string name="deletealarm_dialog_cancel">Cancel</string>    <!-- button -->
-    <string name="deletealarm_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) was deleted.</string> <!-- toast msg -->
-    <string name="deletealarm_toast_success1"><xliff:g id="type" example="Notification">%1$s</xliff:g> was deleted.</string> <!-- toast msg -->
+    <string name="deletealarm_dialog_title">Smazat</string>        <!-- dialog title -->
+    <string name="deletealarm_dialog_message">Opravdu chcete smazat <xliff:g id="type">%1$s</xliff:g> at <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg -->
+    <string name="deletealarm_dialog_ok">Smazat</string>        <!-- button -->
+    <string name="deletealarm_dialog_cancel">Zrušit</string>    <!-- button -->
+    <string name="deletealarm_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> v <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) byl smazán.</string> <!-- toast msg -->
+    <string name="deletealarm_toast_success1"><xliff:g id="type" example="Notification">%1$s</xliff:g> byl smazán.</string> <!-- toast msg -->
 
-    <string name="discardchanges_dialog_message">There are unsaved changes.</string>      <!-- dialog message -->
-    <string name="discardchanges_dialog_ok">Discard</string>                              <!-- button -->
-    <string name="discardchanges_dialog_cancel">Cancel</string>                           <!-- button -->
-    <string name="discardchanges_dialog_neutral">Save</string>                            <!-- button -->
+    <string name="discardchanges_dialog_message">Jsou zde neuložené změny.</string>      <!-- dialog message -->
+    <string name="discardchanges_dialog_ok">Zahodit</string>                              <!-- button -->
+    <string name="discardchanges_dialog_cancel">Zrušit</string>                           <!-- button -->
+    <string name="discardchanges_dialog_neutral">Uložit</string>                            <!-- button -->
 
-    <string name="clearalarms_dialog_title">Clear Alarms</string>        <!-- dialog title -->
-    <string name="clearalarms_dialog_message">Are you sure you want to delete all alarms?</string>   <!-- dialog msg -->
-    <string name="clearalarms_dialog_ok">Clear</string>        <!-- button -->
-    <string name="clearalarms_dialog_cancel">Cancel</string>    <!-- button -->
-    <string name="clearalarms_toast_success">Alarms cleared.</string> <!-- toast msg -->
+    <string name="clearalarms_dialog_title">Vymazat budíky</string>        <!-- dialog title -->
+    <string name="clearalarms_dialog_message">Opravdu chcete smazat VŠECHNY budíky?</string>   <!-- dialog msg -->
+    <string name="clearalarms_dialog_ok">Vymazat</string>        <!-- button -->
+    <string name="clearalarms_dialog_cancel">Zrušit</string>    <!-- button -->
+    <string name="clearalarms_toast_success">Budíky smazány.</string> <!-- toast msg -->
 
-    <string name="alarmlabel_dialog_title">Label</string>        <!-- dialog title -->
-    <string name="alarmlabel_dialog_ok">Apply</string>        <!-- button -->
-    <string name="alarmlabel_dialog_cancel">Cancel</string>    <!-- button -->
-    <string name="alarmlabel_hint">Label</string>        <!-- EditText hint -->
+    <string name="alarmlabel_dialog_title">Popisek</string>        <!-- dialog title -->
+    <string name="alarmlabel_dialog_ok">Použít</string>        <!-- button -->
+    <string name="alarmlabel_dialog_cancel">Zrušit</string>    <!-- button -->
+    <string name="alarmlabel_hint">Popisek</string>        <!-- EditText hint -->
 
-    <string name="alarmrepeat_dialog_title">Repeat Alarm</string>        <!-- dialog title -->
-    <string name="alarmrepeat_dialog_ok">Apply</string>        <!-- button -->
-    <string name="alarmrepeat_dialog_cancel">Cancel</string>    <!-- button -->
+    <string name="alarmrepeat_dialog_title">Opakovat budík</string>        <!-- dialog title -->
+    <string name="alarmrepeat_dialog_ok">Použít</string>        <!-- button -->
+    <string name="alarmrepeat_dialog_cancel">Zrušit</string>    <!-- button -->
 
-    <string name="alarmtime_dialog_title">Alarm Time</string>        <!-- dialog title -->
-    <string name="alarmtime_dialog_ok">Override</string>        <!-- button -->
-    <string name="alarmtime_dialog_cancel">Cancel</string>    <!-- button -->
-    <string name="alarmtime_dialog_message">Override the alarm time?\n\nThis alarm will no longer be scheduled by event.</string>   <!-- dialog msg -->
+    <string name="alarmtime_dialog_title">Čas budíku</string>        <!-- dialog title -->
+    <string name="alarmtime_dialog_ok">Přepsat</string>        <!-- button -->
+    <string name="alarmtime_dialog_cancel">Zrušit</string>    <!-- button -->
+    <string name="alarmtime_dialog_message">Přepsat čas budíku?\n\nTento budík již nebude naplánován podle události.</string>   <!-- dialog msg -->
 
-    <string name="alarmoffset_dialog_title">Alarm Offset</string>        <!-- dialog title -->
-    <string name="alarmoffset_dialog_ok">Apply</string>        <!-- button -->
-    <string name="alarmoffset_dialog_cancel">Cancel</string>    <!-- button -->
+    <string name="alarmoffset_dialog_title">Posun budíku</string>        <!-- dialog title -->
+    <string name="alarmoffset_dialog_ok">Použít</string>        <!-- button -->
+    <string name="alarmoffset_dialog_cancel">Zrušit</string>    <!-- button -->
 
-    <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> set for <xliff:g id="duration" example="8h">%2$s</xliff:g> from now.</string> <!-- toast msg -->
-    <string name="alarmdetails_snack"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> in <xliff:g id="duration" example="8h">%2$s</xliff:g></string> <!-- snackbar msg -->
+    <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> nastaven za <xliff:g id="duration" example="8h">%2$s</xliff:g> od teď.</string> <!-- toast msg -->
+    <string name="alarmdetails_snack"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> v <xliff:g id="duration" example="8h">%2$s</xliff:g></string> <!-- snackbar msg -->
 
-    <string name="configLabel_alarms_optWhiteList">Battery optimization</string>
-    <string name="configLabel_alarms_optWhiteList_listed">Not optimized (recommended)</string>
-    <string name="configLabel_alarms_optWhiteList_unlisted">Optimizing battery use.\nAlarms may be delayed up to 15 minutes.</string>
+    <string name="configLabel_alarms_optWhiteList">Optimalizace baterie</string>
+    <string name="configLabel_alarms_optWhiteList_listed">Neoptimalizováno (doporučeno)</string>
+    <string name="configLabel_alarms_optWhiteList_unlisted">Využití baterie je optimalizováno.\nBudíky mohou být zpožděny až o 15 minut.</string>
 
-    <string name="configLabel_alarms_notifications">Notifications</string>
-    <string name="configLabel_alarms_notifications_on">On</string>
-    <string name="configLabel_alarms_notifications_off">Off.\nAlarms may fail to display correctly.</string>
+    <string name="configLabel_alarms_notifications">Notifikace</string>
+    <string name="configLabel_alarms_notifications_on">Zapnuty</string>
+    <string name="configLabel_alarms_notifications_off">Vypnuty.\nNemusí dojít ke správnému zobrazení budíku.</string>
     <string name="configLabel_alarms_notifications_summary0">%1$s</string>                    <!-- "On", "Off" -->
-    <string name="configLabel_alarms_notifications_summary1">On lock screen: %1$s</string>    <!-- "On lock screen: Off -->
-    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Notifications are off. Alarms may fail to display correctly.</string>  <!-- snackbar message -->
+    <string name="configLabel_alarms_notifications_summary1">Na zamykací obrazovce: %1$s</string>    <!-- "On lock screen: Off -->
+    <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> Notifikace jsou vypnuty. Nemusí dojít ke správnému zobrazení budíku.</string>  <!-- snackbar message -->
 
-    <!-- TODO: fix displaying comments in "..._summary" strings (text around %s) (MillisecondPickerPreference) -->
-    <string name="configLabel_alarms_silenceAfter">Go silent after</string>
+    <string name="configLabel_alarms_silenceAfter">Utišit po</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_timeoutAfter">Timeout after</string>
+    <string name="configLabel_alarms_timeoutAfter">Zrušit po</string>
     <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_snooze">Snooze for</string>
+    <string name="configLabel_alarms_snooze">Posunout o</string>
     <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_upcoming">Reminder within</string>
+    <string name="configLabel_alarms_upcoming">Upozornění během</string>
     <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_fadein">Gradually increase volume</string>
+    <string name="configLabel_alarms_fadein">Postupně zvyšovat hlasitost</string>
     <string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>
-    <string name="configLabel_alarms_fadein_disabled">Off</string>
+    <string name="configLabel_alarms_fadein_disabled">Vypnuto</string>
 
-    <string name="configLabel_alarms_hardwarebuttons">Hardware Buttons</string>
+    <string name="configLabel_alarms_hardwarebuttons">Hardwarové tlačítka</string>
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>
     <string-array name="alarm_hardwarebutton_actions_display">      <!-- one-to-one with alarm_hardwarebutton_actions_values -->
-        <item>Dismiss</item>
-        <item>Silence</item>
-        <item>Snooze</item>
-        <item>Do Nothing</item>
+        <item>Zrušit</item>
+        <item>Umlčet</item>
+        <item>Posunout</item>
+        <item>Nedělat nic</item>
     </string-array>
     <string-array name="alarm_hardwarebutton_actions_values" translatable="false">
         <item>suntimeswidget.alarm.dismiss</item>
@@ -847,31 +846,31 @@
         <item>suntimeswidget.alarm.none</item>
     </string-array>
 
-    <string name="configLabel_alarmSounds">Sounds</string>            <!-- group title -->
-    <string name="configLabel_alarms_volumes">Volumes</string>
-    <string name="configLabel_alarms_allRingtones">Show all ringtones</string>
-    <string name="configLabel_alarms_allRingtones_summary">Show all system sounds during selection (ignore ringtone type).</string>
+    <string name="configLabel_alarmSounds">Zvuky</string>            <!-- group title -->
+    <string name="configLabel_alarms_volumes">Hlasitosti</string>
+    <string name="configLabel_alarms_allRingtones">Zobrazit všechny vyzváněcí tóny</string>
+    <string name="configLabel_alarms_allRingtones_summary">Během výběru zobrazit všechny systémové zvuky (ignorovat vyzváněcí tóny).</string>
 
-    <string name="no_reminder">Never</string>
+    <string name="no_reminder">Nikdy</string>
 
     <plurals name="units_hours">
-        <item quantity="one">%d hour</item>
-        <item quantity="other">%d hours</item>
+        <item quantity="one">%d hodina</item>
+        <item quantity="other">%d hodin</item>
     </plurals>
 
     <plurals name="units_minutes">
-        <item quantity="one">%d minute</item>
-        <item quantity="other">%d minutes</item>
+        <item quantity="one">%d minuta</item>
+        <item quantity="other">%d minut</item>
     </plurals>
 
     <plurals name="units_seconds">
-        <item quantity="one">%d second</item>
-        <item quantity="other">%d seconds</item>
+        <item quantity="one">%d sekunda</item>
+        <item quantity="other">%d sekund</item>
     </plurals>
 
-    <string name="configLabel_alarmMisc">Miscellaneous</string>
-    <string name="configLabel_alarms_showlauncher">Launcher Icon</string>
-    <string name="configLabel_alarms_showlauncher_summary">Show alarm clock icon in the app tray.</string>
+    <string name="configLabel_alarmMisc">Různé</string>
+    <string name="configLabel_alarms_showlauncher">Ikona spouštěče</string>
+    <string name="configLabel_alarms_showlauncher_summary">Zobrazovat ikonu budíku v seznamu aplikací.</string>
 
     <!--
          APP SETTINGS
