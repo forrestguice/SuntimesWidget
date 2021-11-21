@@ -72,6 +72,7 @@ public class AlarmAddon
             COLUMN_ALARM_NAME, COLUMN_ALARM_TIMEMILLIS
     };
 
+    public static final String EXTRA_ALARM_EVENT = "alarm_event";              // eventID
     public static final String EXTRA_ALARM_NOW = "alarm_now";                  // long (millis)
     public static final String EXTRA_ALARM_REPEAT = "alarm_repeat";            // boolean
     public static final String EXTRA_ALARM_REPEAT_DAYS = "alarm_repeat_days";  // Integer[] as String; e.g. "[1,2,3]"
