@@ -111,6 +111,23 @@ public class AlarmEvent
     }
 
     /**
+     * isValidEventID
+     */
+    public static boolean isValidEventID(Context context, String eventID)
+    {
+        if (eventID == null) {
+            return true;
+        } else {
+            SolarEvents solarEvent = SolarEvents.valueOf(eventID, null);
+            if (solarEvent != null) {
+                return true;
+            } else {
+                return AlarmAddon.checkUriPermission(context, eventID);
+            }
+        }
+    }
+
+    /**
      * AlarmEventAdapter
      */
     public static class AlarmEventAdapter extends ArrayAdapter<AlarmEventItem>

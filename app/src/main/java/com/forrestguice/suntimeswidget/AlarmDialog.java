@@ -534,12 +534,18 @@ public class AlarmDialog extends BottomSheetDialogFragment
         ContentResolver resolver = context != null ? context.getContentResolver() : null;
         if (resolver != null)
         {
-            AlarmEvent.AlarmEventItem item = new AlarmEvent.AlarmEventItem(reference, name, resolver);
-            if (item.isResolved())
+            if (AlarmAddon.checkUriPermission(context, AlarmAddon.getAlarmInfoUri(reference, name)))
             {
-                setChoice(item.getEventID());
-                if (listener != null) {
-                    listener.onChanged(this);
+                AlarmEvent.AlarmEventItem item = new AlarmEvent.AlarmEventItem(reference, name, resolver);
+                if (item.isResolved())
+                {
+                    setChoice(item.getEventID());
+                    if (listener != null) {
+                        listener.onChanged(this);
+                    }
+                } else {
+                    Log.w(getClass().getSimpleName(), "selectAddonAlarm: permission denied! " + reference);
+                    Toast.makeText(context, context.getString(R.string.schedalarm_dialog_error2), Toast.LENGTH_LONG).show();
                 }
             } else {
                 Toast.makeText(context, context.getString(R.string.schedalarm_dialog_error2), Toast.LENGTH_LONG).show();

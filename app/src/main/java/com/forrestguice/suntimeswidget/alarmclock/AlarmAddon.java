@@ -17,6 +17,7 @@
 */
 package com.forrestguice.suntimeswidget.alarmclock;
 
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +25,7 @@ import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ProviderInfo;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
@@ -161,7 +163,6 @@ public class AlarmAddon
                 intent.putExtra(EXTRA_LOCATION_LON, location.getLongitudeAsDouble());
                 intent.putExtra(EXTRA_LOCATION_ALT, location.getAltitudeAsDouble());
             }
-
             return intent;
         }
 
@@ -202,6 +203,25 @@ public class AlarmAddon
             }
         }
         return references;
+    }
+
+    public static boolean checkUriPermission(@NonNull Context context, @NonNull String eventUri)
+    {
+        Log.w("DEBUG", "checkUriPermission: eventUri: " + eventUri);
+        boolean hasPermission = false;
+        Uri uri = Uri.parse(eventUri);
+        PackageManager packageManager = context.getPackageManager();
+        try {
+            ProviderInfo providerInfo = packageManager.resolveContentProvider(uri.getAuthority(), 0);
+            PackageInfo packageInfo = packageManager.getPackageInfo(providerInfo.packageName, PackageManager.GET_PERMISSIONS);
+
+            if (!(hasPermission = hasPermission(packageInfo))) {
+                Log.w("AlarmAddon", "checkUriPermission: Permission denied! " + packageInfo.packageName + " does not have required permissions.");
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("AlarmAddon", "checkUriPermission: Package not found! " + e);
+        }
+        return hasPermission;
     }
 
     public static boolean queryDisplayStrings(@NonNull AlarmEvent.AlarmEventItem item, @Nullable ContentResolver resolver)

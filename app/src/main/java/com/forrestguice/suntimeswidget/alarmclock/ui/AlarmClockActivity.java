@@ -56,8 +56,10 @@ import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesWarning;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -256,8 +258,12 @@ public class AlarmClockActivity extends AppCompatActivity
                 }
 
                 String param_event = intent.getStringExtra(AlarmClockActivity.EXTRA_SOLAREVENT);
-                intent.setExtrasClassLoader(getClassLoader());
+                if (!AlarmEvent.isValidEventID(context, param_event)) {
+                    Log.w(TAG, "handleIntent: ignoring invalid event " + param_event);
+                    param_event = null;
+                }
 
+                intent.setExtrasClassLoader(getClassLoader());
                 Location param_location = locationFromIntentExtras(context, intent);
 
                 boolean param_skipUI = false;
