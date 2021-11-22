@@ -877,91 +877,90 @@
     -->
 
     <!--App Setting: WidgetList -->
-    <string name="configLabel_widgetList">Widgets</string>               <!-- group title -->
+    <string name="configLabel_widgetList">Widgety</string>               <!-- group title -->
     <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
     <string name="configLabel_widgetList_itemTitlePattern" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
     <string name="configLabel_widgetList_itemTitlePattern1" formatted="false"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
     <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
-    <string name="configLabel_widgetListHelp_title">Help</string>               <!-- always the first item in the widgetList -->
-    <string name="configLabel_widgetListHelp_summary">Show widget help</string>
-    <string name="configLabel_widgetList_emptyMsg">No Widgets</string>          <!-- a label that is displayed in place of an empty listview -->
+    <string name="configLabel_widgetListHelp_title">Nápověda</string>               <!-- always the first item in the widgetList -->
+    <string name="configLabel_widgetListHelp_summary">Zobrazit nápovědu widgetu</string>
+    <string name="configLabel_widgetList_emptyMsg">Žádné widgety</string>          <!-- a label that is displayed in place of an empty listview -->
 
     <!-- App Setting: Places -->
-    <string name="configLabel_places">Places</string>                           <!-- group title -->
-    <string name="configLabel_places_manage">Manage Places</string>             <!-- group title -->
+    <string name="configLabel_places">Místa</string>                           <!-- group title -->
+    <string name="configLabel_places_manage">Spravovat místa</string>             <!-- group title -->
     <string name="configLabel_places_emptyMsg">@string/configLabel_places</string>  <!-- a label that is displayed in place of an empty listview -->
-    <string name="configLabel_places_build">Add World Places</string>
-    <string name="configLabel_places_build_summary">Scan locales and add cities to the database.</string>
+    <string name="configLabel_places_build">Přidat místa ve světě</string>
+    <string name="configLabel_places_build_summary">Přidat města do seznamu na základě dostupných jazyků.</string>
 
     <plurals name="placePlural">
-        <item quantity="one">%d place</item>
-        <item quantity="other">%d places</item>
-        <item quantity="few">%d places</item>
-        <item quantity="many">%d places</item>
+        <item quantity="one">%d místo</item>
+        <item quantity="other">%d místa</item>
+        <item quantity="few">%d místa</item>
     </plurals>
 
-    <string name="configAction_addPlace">Add</string>              <!-- button (contentDescription) -->
-    <string name="configAction_copyPlace">Copy</string>            <!-- button (contentDescription) -->
-    <string name="configAction_selectPlace">Select</string>        <!-- button (contentDescription) -->
-    <string name="configAction_searchPlace">Search</string>        <!-- button (contentDescription) -->
-    <string name="configAction_sharePlace">Share</string>          <!-- button (contentDescription) -->
-    <string name="configAction_deletePlace">Delete</string>        <!-- button (contentDescription) -->
-    <string name="configAction_clearPlaces">Clear</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportPlaces">Export</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_addPlace">Přidat</string>              <!-- button (contentDescription) -->
+    <string name="configAction_copyPlace">Kopírovat</string>            <!-- button (contentDescription) -->
+    <string name="configAction_selectPlace">Vybrat</string>        <!-- button (contentDescription) -->
+    <string name="configAction_searchPlace">Hledat</string>        <!-- button (contentDescription) -->
+    <string name="configAction_sharePlace">Sdílet</string>          <!-- button (contentDescription) -->
+    <string name="configAction_deletePlace">Smazat</string>        <!-- button (contentDescription) -->
+    <string name="configAction_clearPlaces">Vyčistit</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportPlaces">Exportovat</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">Importovat</string>       <!-- button (contentDescription) -->
 
 
     <!-- App Setting: UI -->
-    <string name="configLabel_ui">User Interface</string>                       <!-- group title -->
-    <string name="configLabel_ui_fields">Display</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
-    <string name="configLabel_ui_misc">Miscellaneous</string>
+    <string name="configLabel_ui">Uživatelské prostředí</string>                       <!-- group title -->
+    <string name="configLabel_ui_fields">Zobrazit</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
+    <string name="configLabel_ui_misc">Různé</string>
 
     <!-- App Setting: Verbose Accessibility -->
-    <string name="configLabel_accessibility_verbose">Verbose TalkBack</string>
-    <string name="configLabel_accessibility_verbose_summary">Announce automated changes to the UI.</string>
+    <string name="configLabel_accessibility_verbose">Upovídaný TalkBack</string>
+    <string name="configLabel_accessibility_verbose_summary">Oznámit automatické změny uživatelskému prostředí.</string>
 
     <!-- App Setting: UI Warnings -->
-    <string name="configLabel_ui_showWarnings">Show Warnings</string>
-    <string name="configLabel_ui_showWarnings_summary">Show configuration warning messages.</string>
+    <string name="configLabel_ui_showWarnings">Zobrazit varování</string>
+    <string name="configLabel_ui_showWarnings_summary">Zobrazovat varování týkající se nastavení.</string>
 
     <!-- App Setting: Show Lightmap -->
-    <string name="configLabel_ui_showLightmap">Show Light Map</string>
-    <string name="configLabel_ui_showLightmap_summary">Show a stacked bar chart of day, night, and twilight periods.</string>
+    <string name="configLabel_ui_showLightmap">Zobrazit mapu světla</string>
+    <string name="configLabel_ui_showLightmap_summary">Zobrazit skládaný sloupcový graf období dne, noci a soumraku.</string>
 
     <!-- App Setting: Show Moon -->
-    <string name="configLabel_ui_showmoon">Show Moon</string>
-    <string name="configLabel_ui_showmoon_summary">Show rise and set times, phase, and illumination.</string>
+    <string name="configLabel_ui_showmoon">Zobrazit měsíc</string>
+    <string name="configLabel_ui_showmoon_summary">Zobrazit časy východu a západu, fázi a osvícenost.</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
-    <string name="configLabel_ui_showEquinox">Show Solstice / Equinox</string>
-    <string name="configLabel_ui_showEquinox_summary">Show time until next solstice or equinox.</string>
+    <string name="configLabel_ui_showEquinox">Zobrazit slunovrat a rovnodennost</string>
+    <string name="configLabel_ui_showEquinox_summary">Zobrazit čas do dalšího slunovratu nebo rovnodennosti.</string>
 
     <!-- App Setting: Solstice Tracking Mode -->
-    <string name="configLabel_ui_solsticeTrackingMode">Solstice Tracking</string>
+    <string name="configLabel_ui_solsticeTrackingMode">Sledování slunovratu</string>
     <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
 
     <!-- App Setting: show data source -->
-    <string name="configLabel_ui_showdatasource">Show Data Source</string>
-    <string name="configLabel_ui_showdatasource_summary">Show a label indicating the current configuration.</string>
+    <string name="configLabel_ui_showdatasource">Zobrazit zdroj dat</string>
+    <string name="configLabel_ui_showdatasource_summary">Zobrazit popisek označující aktuální nastavení.</string>
 
     <!-- App Setting: show headers -->
-    <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
-    <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label --> <!-- TODO -->
-    <string name="configLabel_ui_showheader_text">Show Header Text</string> <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_ui_showheaders">Hlavičky</string>              <!-- group title -->
+    <string name="configLabel_ui_showheader_icon">Zobrazit ikonu hlavičky</string> <!-- checkbox label -->
+    <string name="configLabel_ui_showheader_text">Zobrazit text hlavičky</string> <!-- checkbox label -->
 
     <!-- App Setting: show golden hour -->
-    <string name="configLabel_ui_showgoldhour">Golden Hour</string>
+    <string name="configLabel_ui_showgoldhour">Zlatá hodina</string>
 
     <!-- App Setting: show blue hour -->
-    <string name="configLabel_ui_showbluehour">Blue Hour</string>
+    <string name="configLabel_ui_showbluehour">Modrá hodina</string>
 
     <!-- App Setting: UI Theme -->
-    <string name="appThemes_lightTheme">Light Theme</string>
-    <string name="appThemes_darkTheme">Dark Theme</string>
+    <string name="appThemes_lightTheme">Světlé téma</string>
+    <string name="appThemes_darkTheme">Tmavé téma</string>
     <string-array name="appThemes_display"> <!-- display values (one-to-one with appThemes_values) -->
         <item>@string/appThemes_lightTheme</item>
         <item>@string/appThemes_darkTheme</item>
-        <item>Light Theme / Dark Theme (Night&#160;Mode)</item>
+        <item>Světlé téma / Tmavé téma (Noční&#160;režim)</item>
     </string-array>
     <string-array name="appThemes_values" translatable="false">  <!-- config values (one-to-one with appThemes_display) -->
         <item>light</item>
@@ -1045,29 +1044,29 @@
         <item>RESET_NOTE</item>
     </string-array>
 
-    <string name="configActionDesc_doNothing">Do nothing</string>
-    <string name="configActionDesc_nextNote">Show next note</string>
-    <string name="configActionDesc_prevNote">Show previous note</string>
-    <string name="configActionDesc_resetNote">Show upcoming event</string>
-    <string name="configActionDesc_showCalendar">Open calendar</string>
-    <string name="configActionDesc_mapLocation">Show location on map</string>
-    <string name="configActionDesc_setAlarm">Set an alarm</string>
-    <string name="configActionDesc_worldMap">World Map Dialog</string>
-    <string name="configActionDesc_equinoxDialog">Solstices Dialog</string>
-    <string name="configActionDesc_moon">Moon Dialog</string>
-    <string name="configActionDesc_sunDialog">Sun Dialog</string>
-    <string name="configActionDesc_setDate">Set date</string>
-    <string name="configActionDesc_setTimeZone">Set time zone</string>
-    <string name="configActionDesc_setLocation">Set location</string>
-    <string name="configActionDesc_swapCards">Swap cards (today/tomorrow)</string>
-    <string name="configActionDesc_nextCard">Show next card</string>
-    <string name="configActionDesc_prevCard">Show previous card</string>
+    <string name="configActionDesc_doNothing">Nedělat nic</string>
+    <string name="configActionDesc_nextNote">Zobrazit další poznámku</string>
+    <string name="configActionDesc_prevNote">Zobrazit předchozí poznámku</string>
+    <string name="configActionDesc_resetNote">Zobrazit nadcházející událost</string>
+    <string name="configActionDesc_showCalendar">Otevřít kalendář</string>
+    <string name="configActionDesc_mapLocation">Zobrazit pozici na mapě</string>
+    <string name="configActionDesc_setAlarm">Nastavit budík</string>
+    <string name="configActionDesc_worldMap">Dialog mapy světa</string>
+    <string name="configActionDesc_equinoxDialog">Dialog slunovratu</string>
+    <string name="configActionDesc_moon">Dialog Měsíce</string>
+    <string name="configActionDesc_sunDialog">Dialog Slunce</string>
+    <string name="configActionDesc_setDate">Nastavit datum</string>
+    <string name="configActionDesc_setTimeZone">Nastavit časové pásmo</string>
+    <string name="configActionDesc_setLocation">Nastavit pozici</string>
+    <string name="configActionDesc_swapCards">Prohodit karty (dnes/zítra)</string>
+    <string name="configActionDesc_nextCard">Zobrazit další kartu</string>
+    <string name="configActionDesc_prevCard">Zobrazit předchozí kartu</string>
     <string name="configActionDesc_showCard">@string/configAction_viewDate</string>
-    <string name="configActionDesc_setAlarmForNote">Set alarm for note</string>
-    <string name="configActionDesc_alarmList">Alarm List</string>
-    <string name="configActionDesc_themeList">Theme List</string>
-    <string name="configActionDesc_actionList">Action List</string>
-    <string name="configActionDesc_widgetList">Widget List</string>
+    <string name="configActionDesc_setAlarmForNote">Nastavit budík pro poznámku</string>
+    <string name="configActionDesc_alarmList">Seznam budíků</string>
+    <string name="configActionDesc_themeList">Seznam témat</string>
+    <string name="configActionDesc_actionList">Seznam akcí</string>
+    <string name="configActionDesc_widgetList">Seznam widgetů</string>
 
     <string-array name="tapActions_titles">    <!-- must be in same order as enum TapActions -->
         <item>@string/configActionDesc_doNothing</item>
@@ -1146,18 +1145,18 @@
         <item>SORT_BY_DISPLAYNAME</item>
     </string-array>
 
-    <string name="timezone_sort_contextAction">Sort zones</string>           <!-- action bar title -->
-    <string name="timezone_sort_msg">Time zones sorted (%1$s).</string>      <!-- toast msg -->
+    <string name="timezone_sort_contextAction">Seřadit pásma</string>           <!-- action bar title -->
+    <string name="timezone_sort_msg">Časová pásma seřazena (%1$s).</string>      <!-- toast msg -->
 
     <!-- App Setting: GPS fix time limit -->
-    <string name="configLabel_getFix_maxElapse">GPS time limit</string>
-    <string name="configLabel_getFix_maxElapse_summary">Give up after <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
+    <string name="configLabel_getFix_maxElapse">Časový limit pro GPS</string>
+    <string name="configLabel_getFix_maxElapse_summary">Vzdát to po <xliff:g id="maxElapseDisplay" example="15 seconds">%s</xliff:g></string>
     <string-array name="getFix_maxElapse_display">  <!-- display values (one-to-one with getFix_maxElapse_values) -->
-        <item>15 seconds</item>
-        <item>30 seconds</item>
-        <item>1 minute</item>
-        <item>5 minutes</item>
-        <item>10 minutes</item>
+        <item>15 sekundách</item>
+        <item>30 sekundách</item>
+        <item>1 minutě</item>
+        <item>5 minutách</item>
+        <item>10 minutách</item>
     </string-array>
     <string-array name="getFix_maxElapse_values" translatable="false">   <!-- ms config values (one-to-one with getFix_maxElapse_display) -->
         <item>15000</item>
@@ -1168,21 +1167,21 @@
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
-    <string name="configLabel_getFix_maxAge">GPS recent max age</string>
-    <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> considered recent</string>
+    <string name="configLabel_getFix_maxAge">Maximální stáří polohy z GPS</string>
+    <string name="configLabel_getFix_maxAge_summary"><xliff:g id="maxAgeDisplay" example="1 minute">%s</xliff:g> považováno za nedávné</string>
     <string-array name="getFix_maxAge_display">   <!-- display values (one-to-one with getFix_maxAge_values) -->
-        <item>none</item>
-        <item>1 minute</item>
-        <item>5 minutes</item>
-        <item>15 minutes</item>
-        <item>1 hour</item>
-        <item>4 hours</item>
-        <item>12 hours</item>
-        <item>one day (24 hours)</item>
-        <item>two days (48 hours)</item>
-        <item>one week (168 hours)</item>
-        <item>one month (672 hours)</item>
-        <item>any age</item>
+        <item>žádné</item>
+        <item>1 minuta</item>
+        <item>5 minut</item>
+        <item>15 minut</item>
+        <item>1 hodina</item>
+        <item>4 hodiny</item>
+        <item>12 hodin</item>
+        <item>jeden den (24 hodin)</item>
+        <item>dva dny (48 hodin)</item>
+        <item>jeden týden (168 hodin)</item>
+        <item>jeden měsíc (672 hodin)</item>
+        <item>jakékoliv stáří</item>
     </string-array>
     <string-array name="getFix_maxAge_values" translatable="false">     <!-- ms config values (one-to-one with getFix_maxAge_display) -->
         <item>0</item>
@@ -1200,21 +1199,21 @@
     </string-array>
 
     <!-- App Setting: calendars -->
-    <string name="configLabel_calendars">Calendars</string>   <!-- group title -->
-    <string name="configLabel_calendars_enabled">Calendar Integration</string>
+    <string name="configLabel_calendars">Kalendáře</string>   <!-- group title -->
+    <string name="configLabel_calendars_enabled">Integrace kalendáře</string>
 
     <!-- App Setting: passive location mode -->
-    <string name="configLabel_getFix_passiveMode">Passive Location</string>
-    <string name="configLabel_getFix_passiveMode_summary">Use the passive location provider.</string>
+    <string name="configLabel_getFix_passiveMode">Pasivní poloha</string>
+    <string name="configLabel_getFix_passiveMode_summary">Použít pasivního poskytovatele polohy.</string>
 
     <!-- App Setting: locale mode -->
-    <string name="configLabel_locale">Language Settings</string>   <!-- group title -->
+    <string name="configLabel_locale">Nastavení jazyka</string>   <!-- group title -->
 
-    <string name="configLabel_localeMode">Mode</string>
+    <string name="configLabel_localeMode">Režim</string>
     <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
     <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
-        <item>System</item>
-        <item>User Defined</item>
+        <item>Systém</item>
+        <item>Uživatelem definováno</item>
     </string-array>
     <string-array name="localeMode_values" translatable="false">  <!-- one-to-one with localeMode_display -->
         <item>SYSTEM_LOCALE</item>
@@ -1222,27 +1221,9 @@
     </string-array>
 
     <!-- App Setting: custom Locale -->
-    <string name="configLabel_localeSelect">Language</string>
+    <string name="configLabel_localeSelect">Jazyk</string>
     <string name="configLabel_localeSelect_summary"><xliff:g id="locale_display" example="English">%s</xliff:g></string>
     <string-array name="locale_display">                      <!-- one-to-one with locale_values and locale_credits -->
-        <item>English</item>
-        <item>Esperanto</item>
-        <item>French</item>
-        <item>German</item>
-        <item>Hungarian</item>
-        <item>Italian</item>
-        <item>Polish</item>
-        <item>Spanish</item>
-        <item>Catalan</item>
-        <item>Basque</item>
-        <item>Norwegian</item>
-        <item>Traditional Chinese</item>
-        <item>Portuguese</item>
-        <item>Russian</item>
-        <item>Dutch</item>
-        <item>Czech</item>
-    </string-array>
-    <string-array name="locale_display_native" translatable="false">             <!-- one-to-one with locale_values -->
         <item>Angličtina</item>
         <item>Esperanto</item>
         <item>Francouzština</item>
@@ -1259,6 +1240,24 @@
         <item>Ruština</item>
         <item>Nizozemština</item>
         <item>Čeština</item>
+    </string-array>
+    <string-array name="locale_display_native" translatable="false">             <!-- one-to-one with locale_values -->
+        <item>English</item>
+        <item>Esperanto</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Hungarian</item>
+        <item>Italian</item>
+        <item>Polish</item>
+        <item>Spanish</item>
+        <item>Catalan</item>
+        <item>Basque</item>
+        <item>Norwegian</item>
+        <item>Traditional Chinese</item>
+        <item>Portuguese</item>
+        <item>Russian</item>
+        <item>Dutch</item>
+        <item>Czech</item>
     </string-array>
     <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
         <item>en</item>
@@ -1307,42 +1306,42 @@
 
     <!-- cardinal directions -->
     <string-array name="directions_short">  <!-- one-to-one with directions_long -->
-        <item>N</item>
-        <item>NNE</item>
-        <item>NE</item>
-        <item>ENE</item>
-        <item>E</item>
-        <item>ESE</item>
-        <item>SE</item>
-        <item>SSE</item>
         <item>S</item>
-        <item>SSW</item>
-        <item>SW</item>
-        <item>WSW</item>
-        <item>W</item>
-        <item>WNW</item>
-        <item>NW</item>
-        <item>NNW</item>
-        <item>N</item>
+        <item>SSV</item>
+        <item>SV</item>
+        <item>VSV</item>
+        <item>V</item>
+        <item>VJV</item>
+        <item>JV</item>
+        <item>JJV</item>
+        <item>J</item>
+        <item>JJZ</item>
+        <item>JZ</item>
+        <item>ZJZ</item>
+        <item>Z</item>
+        <item>ZSZ</item>
+        <item>SZ</item>
+        <item>SSZ</item>
+        <item>S</item>
     </string-array>
     <string-array name="directions_long">   <!-- one-to-one with directions_short -->
-        <item>North</item>
-        <item>North North East</item>
-        <item>North East</item>
-        <item>East North East</item>
-        <item>East</item>
-        <item>East South East</item>
-        <item>South East</item>
-        <item>South South East</item>
-        <item>South</item>
-        <item>South South West</item>
-        <item>South West</item>
-        <item>West South West</item>
-        <item>West</item>
-        <item>West North West</item>
-        <item>North West</item>
-        <item>North North West</item>
-        <item>North</item>
+        <item>Sever</item>
+        <item>Severoseverovýchod</item>
+        <item>Severovýchod</item>
+        <item>Východoseverovýchod</item>
+        <item>Východ</item>
+        <item>Východojihovýchod</item>
+        <item>Jihovýchod</item>
+        <item>Jihojihovýchod</item>
+        <item>Jih</item>
+        <item>Jihojihozápad</item>
+        <item>Jihozápad</item>
+        <item>Západojihozápad</item>
+        <item>Západ</item>
+        <item>Západoseverozápad</item>
+        <item>Severozápad</item>
+        <item>Severoseverozápad</item>
+        <item>Sever</item>
     </string-array>
 
     <!--
@@ -1351,35 +1350,35 @@
 
     <!-- Dialog: World Map -->
     <string name="worldmap_dialog_title">@string/configAction_worldMap</string>
-    <string name="worldmap_dialog_action_play">Play</string>       <!-- button (contentDescription) -->
-    <string name="worldmap_dialog_action_pause">Pause</string>     <!-- button (contentDescription) -->
-    <string name="worldmap_dialog_action_record">Record</string>   <!-- button (contentDescription) -->
-    <string name="worldmap_dialog_action_next">Next</string>       <!-- button (contentDescription) -->
-    <string name="worldmap_dialog_action_prev">Previous</string>   <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_play">Přehrát</string>       <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_pause">Pauza</string>     <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_record">Nahrát</string>   <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_next">Další</string>       <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_action_prev">Předchozí</string>   <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_reset">Reset</string>     <!-- button (contentDescription) -->
-    <string name="worldmap_dialog_action_menu">Options</string>       <!-- button (contentDescription) -->
-    <string name="worldmap_dialog_option_sunlight">Sunlight</string>
-    <string name="worldmap_dialog_option_moonlight">Moonlight</string>
-    <string name="worldmap_dialog_option_all">Both</string>
-    <string name="worldmap_dialog_option_location">Location</string>
-    <string name="worldmap_dialog_option_latitudes">Latitudes</string>
+    <string name="worldmap_dialog_action_menu">Možnosti</string>       <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_option_sunlight">Sluneční svit</string>
+    <string name="worldmap_dialog_option_moonlight">Měsíční svit</string>
+    <string name="worldmap_dialog_option_all">Obojí</string>
+    <string name="worldmap_dialog_option_location">Pozice</string>
+    <string name="worldmap_dialog_option_latitudes">Zeměpisné šířky</string>
     <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- menu item; "x 15m"; increments of 15 minutes -->
     <string name="worldmap_dialog_speed_1d">&#215; 1d</string>      <!-- menu item; "x 1d"; increments of 1 day -->
-    <string name="configAction_shareMap">Share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+    <string name="configAction_shareMap">Sdílet</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <!-- Dialog: Set Alarm -->
-    <string name="configLabel_schedalarm_mode">Schedule an alarm for</string>
-    <string name="configLabel_schednotify_mode">Schedule a notification for</string>
-    <string name="schedalarm_dialog_title">@string/configAction_setAlarm</string>  <!-- may also be set to configAction_setNotification -->  <!-- TODO -->
-    <string name="schedalarm_dialog_tab_event">Event</string>                      <!-- tab text -->
-    <string name="schedalarm_dialog_tab_time">Time</string>                        <!-- tab text -->
-    <string name="schedalarm_dialog_ok">Schedule</string>                          <!-- button text --> <!-- TODO -->
-    <string name="schedalarm_dialog_cancel">Cancel</string>
-    <string name="schedalarm_dialog_error">Alarm was not set…</string>
-    <string name="schedalarm_dialog_error2">Alarm cannot be set…</string>
-    <string name="schedalarm_dialog_note">about <xliff:g id="timetext" example="6h 30m">%s</xliff:g> from now.</string>
-    <string name="schedalarm_dialog_note1">~<xliff:g id="timetext" example="6h 30m">%s</xliff:g> from&#160;now</string>
-    <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g> does not occur.</string>
+    <string name="configLabel_schedalarm_mode">Naplánovat budík pro</string>
+    <string name="configLabel_schednotify_mode">Naplánovat oznámení pro</string>
+    <string name="schedalarm_dialog_title">@string/configAction_setAlarm</string>  <!-- may also be set to configAction_setNotification -->
+    <string name="schedalarm_dialog_tab_event">Událost</string>                      <!-- tab text -->
+    <string name="schedalarm_dialog_tab_time">Čas</string>                        <!-- tab text -->
+    <string name="schedalarm_dialog_ok">Plán</string>                          <!-- button text -->
+    <string name="schedalarm_dialog_cancel">Zrušit</string>
+    <string name="schedalarm_dialog_error">Budík nebyl nastaven…</string>
+    <string name="schedalarm_dialog_error2">Budík nemohl být nastaven…</string>
+    <string name="schedalarm_dialog_note">zhruba <xliff:g id="timetext" example="6h 30m">%s</xliff:g> od teď.</string>
+    <string name="schedalarm_dialog_note1">~<xliff:g id="timetext" example="6h 30m">%s</xliff:g> od&#160;teď</string>
+    <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g> nenastává.</string>
     <string name="schedalarm_labelformat"><xliff:g id="solarevents_short" example="sunrise">%1$s</xliff:g> (<xliff:g id="shortDate" example="4/6/2018">%2$s</xliff:g>)</string>
     <string name="schedalarm_labelformat2"><xliff:g id="solarevents_short" example="sunrise">%1$s</xliff:g></string>
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
