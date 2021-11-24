@@ -339,7 +339,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     {
         SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
         int eventType = event == null ? -1 : event.getType();
-        long now = Calendar.getInstance(TimeZone.getDefault()).getTimeInMillis();
+        long now = System.currentTimeMillis();
         long delta = item.timestamp - now;
         boolean isDistant = (delta >= (48 * 60 * 60 * 1000));
         return (eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON || isDistant);
