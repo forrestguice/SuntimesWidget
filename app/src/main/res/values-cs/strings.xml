@@ -140,14 +140,17 @@
     <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. the time component is shown on the next line -->
         <item quantity="one">v</item>
         <item quantity="other">v</item>
+        <item quantity="few">ve</item>
     </plurals>
     <plurals name="offset_before_plural">      <!-- e.g. "30m before \n 5:30PM" .. the time component is shown on the next line -->
         <item quantity="one">%1$s před</item>
         <item quantity="other">%1$s před</item>
+        <item quantity="few">%1$s před</item>
     </plurals>
     <plurals name="offset_after_plural">      <!-- e.g. "30m after \n 5:30PM" .. the time component is shown on the next line -->
         <item quantity="one">%1$s po</item>
         <item quantity="other">%1$s po</item>
+        <item quantity="few">%1$s po</item>
     </plurals>
 
     <string name="offset_button_before">před</string>    <!-- button label; [1h] [5m] [before] (-) -->
@@ -234,28 +237,32 @@
     <string name="units_feet_short">ft</string>
     <plurals name="units_feet_long">
         <item quantity="one">%s stopa</item>
-        <item quantity="other">%s stop/y</item>
+        <item quantity="other">%s stopy</item>
+        <item quantity="few">%s stop</item>
     </plurals>
 
     <string name="units_miles">míle</string>
     <string name="units_miles_short">mil</string>
     <plurals name="units_miles_long">
         <item quantity="one">%s míle</item>
-        <item quantity="other">%s mil/míle</item>
+        <item quantity="other">%s mil</item>
+        <item quantity="few">%s míle</item>
     </plurals>
 
     <string name="units_meters">metry</string>
     <string name="units_meters_short">m</string>
     <plurals name="units_meters_long">
         <item quantity="one">%s metr</item>
-        <item quantity="other">%s metry/metrů</item>
+        <item quantity="other">%s metrů</item>
+        <item quantity="few">%s metry</item>
     </plurals>
 
     <string name="units_kilometers">kilometry</string>
     <string name="units_kilometers_short">km</string>
     <plurals name="units_kilometers_long">
         <item quantity="one">%s kilometr</item>
-        <item quantity="other">%s kilometry/kilometrů</item>
+        <item quantity="other">%s kilometrů</item>
+        <item quantity="few">%s kilometry</item>
     </plurals>
 
     <!--
@@ -856,16 +863,19 @@
     <plurals name="units_hours">
         <item quantity="one">%d hodina</item>
         <item quantity="other">%d hodin</item>
+        <item quantity="few">%d hodiny</item>
     </plurals>
 
     <plurals name="units_minutes">
         <item quantity="one">%d minuta</item>
         <item quantity="other">%d minut</item>
+        <item quantity="few">%d minuty</item>
     </plurals>
 
     <plurals name="units_seconds">
         <item quantity="one">%d sekunda</item>
         <item quantity="other">%d sekund</item>
+        <item quantity="few">%d sekundy</item>
     </plurals>
 
     <string name="configLabel_alarmMisc">Různé</string>
@@ -1382,163 +1392,163 @@
     <string name="schedalarm_labelformat"><xliff:g id="solarevents_short" example="sunrise">%1$s</xliff:g> (<xliff:g id="shortDate" example="4/6/2018">%2$s</xliff:g>)</string>
     <string name="schedalarm_labelformat2"><xliff:g id="solarevents_short" example="sunrise">%1$s</xliff:g></string>
     <string-array name="solarevents_short">  <!-- one-to-one with solarevents_long -->
-        <item>astronomical twilight</item>
-        <item>nautical twilight</item>
-        <item>blue hour</item>
-        <item>civil twilight</item>
-        <item>blue hour</item>
-        <item>sunrise</item>
-        <item>golden hour</item>
-        <item>solar noon</item>
-        <item>golden hour</item>
-        <item>sunset</item>
-        <item>blue hour</item>
-        <item>civil twilight</item>
-        <item>blue hour</item>
-        <item>nautical twilight</item>
-        <item>astronomical twilight</item>
-        <item>moonrise</item>
-        <item>moonset</item>
-        <item>new moon</item>
-        <item>first quarter</item>
-        <item>full moon</item>
-        <item>third quarter</item>
-        <item>spring equinox</item>
-        <item>summer solstice</item>
-        <item>autumn equinox</item>
-        <item>winter solstice</item>
-        <item>lunar noon</item>
-        <item>lunar midnight</item>
+        <item>astronomický soumrak</item>
+        <item>nautický soumrak</item>
+        <item>modrá hodina</item>
+        <item>občanský soumrak</item>
+        <item>modrá hodina</item>
+        <item>východ slunce</item>
+        <item>zlatá hodina</item>
+        <item>pravé poledne</item>
+        <item>zlatá hodina</item>
+        <item>západ slunce</item>
+        <item>modrá hodina</item>
+        <item>občanský soumrak</item>
+        <item>modrá hodina</item>
+        <item>nautický soumrak</item>
+        <item>astronomický soumrak</item>
+        <item>východ měsíce</item>
+        <item>západ měsíce</item>
+        <item>Nov</item>
+        <item>první čtvrť</item>
+        <item>úplněk</item>
+        <item>třetí čtvrť</item>
+        <item>jarní rovnodennost</item>
+        <item>letní slunovrat</item>
+        <item>podzimní rovnodennost</item>
+        <item>zimní slunovrat</item>
+        <item>lunární poledne</item>
+        <item>lunární půlnoc</item>
     </string-array>
     <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
-        <item>morning astronomical twilight (start)</item>
-        <item>morning nautical twilight (start)</item>
-        <item>morning blue hour (start)</item>
-        <item>morning civil twilight (start)</item>
-        <item>morning blue hour (end)</item>
-        <item>sunrise</item>
-        <item>morning golden hour (end)</item>
-        <item>solar noon</item>
-        <item>evening golden hour (start)</item>
-        <item>sunset</item>
-        <item>evening blue hour (start)</item>
-        <item>evening civil twilight (end)</item>
-        <item>evening blue hour (end)</item>
-        <item>evening nautical twilight (end)</item>
-        <item>evening astronomical twilight (end)</item>
-        <item>moonrise</item>
-        <item>moonset</item>
-        <item>new moon</item>
-        <item>first quarter</item>
-        <item>full moon</item>
-        <item>third quarter</item>
-        <item>spring equinox</item>
-        <item>summer solstice</item>
-        <item>autumn equinox</item>
-        <item>winter solstice</item>
-        <item>lunar noon</item>
-        <item>lunar midnight</item>
+        <item>ranní astronomický soumrak (začátek)</item>
+        <item>ranní nautický soumrak (začátek)</item>
+        <item>ranní modrá hodina (začátek)</item>
+        <item>ranní občanský soumrak (začátek)</item>
+        <item>ranní modrá hodina (konec)</item>
+        <item>východ slunce</item>
+        <item>ranní zlatá hodina (konec)</item>
+        <item>pravé poledne</item>
+        <item>noční zlatá hodina (začátek)</item>
+        <item>západ slunce</item>
+        <item>noční modrá hodina (začátek)</item>
+        <item>noční občanský soumrak (konec)</item>
+        <item>noční modrá hodina (konec)</item>
+        <item>noční nautický soumrak (konec)</item>
+        <item>noční astronomický soumrak (konec)</item>
+        <item>východ měsíce</item>
+        <item>západ měsíce</item>
+        <item>Nov</item>
+        <item>první čtvrť</item>
+        <item>úplněk</item>
+        <item>třetí čtvrť</item>
+        <item>jarní rovnodennost</item>
+        <item>letní slunovrat</item>
+        <item>podzimní rovnodennost</item>
+        <item>zimní slunovrat</item>
+        <item>lunární poledne</item>
+        <item>lunární půlnoc</item>
     </string-array>
 
     <!-- Dialog: Enable GPS? -->
-    <string name="gps_dialog_msg">GPS is disabled. Enable it?</string>
-    <string name="gps_dialog_ok">Yes</string>
-    <string name="gps_dialog_cancel">No</string>
+    <string name="gps_dialog_msg">GPS je vypnuta. Chcete ji zapnout?</string>
+    <string name="gps_dialog_ok">Ano</string>
+    <string name="gps_dialog_cancel">Ne</string>
 
     <!-- gps_lastfix (current location mode) -->
-    <string name="gps_lastfix_title_set">Set Position</string>               <!-- may appear as place name when location set by intent -->
-    <string name="gps_lastfix_title_found">Last Position</string>            <!-- may appear as place name when location set by gps -->
-    <string name="gps_lastfix_title_searching">Getting Position</string>     <!-- may appear in ActionBar title while gps in progress -->
-    <string name="gps_lastfix_toast_notfound">GPS failed to get location; falling back to last known position.</string>  <!-- displayed briefly after gps has failed to get a location -->
-    <string name="gps_lastfix_toast_cancelled">GPS update cancelled.</string> <!-- displayed briefly when gps refresh cancelled -->
+    <string name="gps_lastfix_title_set">Nastavit polohu</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_found">Poslední poloha</string>            <!-- may appear as place name when location set by gps -->
+    <string name="gps_lastfix_title_searching">Získávaní polohy</string>     <!-- may appear in ActionBar title while gps in progress -->
+    <string name="gps_lastfix_toast_notfound">GPS selhala při získávaní polohy; vracím se k poslední známé poloze</string>  <!-- displayed briefly after gps has failed to get a location -->
+    <string name="gps_lastfix_toast_cancelled">Aktualizace GPS zrušena</string> <!-- displayed briefly when gps refresh cancelled -->
 
     <!-- Dialog: KeepTrying GPS? -->
-    <string name="gps_keeptrying_title">No Fix</string>
-    <string name="gps_keeptrying_msg">Unable to get a fix.</string>
-    <string name="gps_keeptrying_ok">Keep Trying</string>
-    <string name="gps_keeptrying_cancel">Give Up</string>
-    <string name="gps_keeptrying_fallback">Use Last Position</string>
+    <string name="gps_keeptrying_title">Nezaměřeno</string>
+    <string name="gps_keeptrying_msg">Nebylo možno zaměřit zařízení.</string>
+    <string name="gps_keeptrying_ok">Pokračovat v pokusu o zaměření</string>
+    <string name="gps_keeptrying_cancel">Vzdát pokus o zaměření</string>
+    <string name="gps_keeptrying_fallback">Použít poslední polohu</string>
 
     <!-- Dialog: Use Date -->
-    <string name="timedate_dialog_title">Set Date</string>
-    <string name="timedate_dialog_ok">Set</string>
-    <string name="timedate_dialog_cancel">Cancel</string>
+    <string name="timedate_dialog_title">Nastavit datum</string>
+    <string name="timedate_dialog_ok">Nastavit</string>
+    <string name="timedate_dialog_cancel">Zrušit</string>
 
     <!-- Dialog: Use Timezone -->
-    <string name="timezone_dialog_title">Time Zone</string>
-    <string name="timezone_dialog_ok">Set</string>
-    <string name="timezone_dialog_cancel">Cancel</string>
+    <string name="timezone_dialog_title">Časové pásmo</string>
+    <string name="timezone_dialog_ok">Nastavit</string>
+    <string name="timezone_dialog_cancel">Zrušit</string>
 
     <!-- Dialog: Set Location -->
-    <string name="location_dialog_title">Location</string>
-    <string name="location_dialog_ok">Update</string>
-    <string name="location_dialog_cancel">Cancel</string>
-    <string name="location_dialog_error_lat">This is not a valid latitude.</string>
-    <string name="location_dialog_error_lon">This is not a valid longitude.</string>
-    <string name="location_dialog_error_alt">This is not a valid elevation.</string>
-    <string name="location_dialog_error_name">Enter a place name.</string>
+    <string name="location_dialog_title">Poloha</string>
+    <string name="location_dialog_ok">Aktualizovat</string>
+    <string name="location_dialog_cancel">Zrušit</string>
+    <string name="location_dialog_error_lat">Toto není platná zeměpisná šířka.</string>
+    <string name="location_dialog_error_lon">Toto není platná zeměpisná délka.</string>
+    <string name="location_dialog_error_alt">Toto není platná nadmořská výška</string>
+    <string name="location_dialog_error_name">Zadejte název místa.</string>
 
-    <string name="location_dialog_toast_copied">Copied to clipboard<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
+    <string name="location_dialog_toast_copied">Zkopírováno do schránky<![CDATA[<br/>]]><xliff:g id="value">%1$s</xliff:g></string>
 
     <!-- Dialog: Delete Place -->
-    <string name="locationdelete_dialog_title">Remove Place?</string>   <!-- title; remove 1 place -->
-    <string name="locationdelete_dialog_title1">Remove Places?</string>  <!-- title; remove multiple places -->
-    <string name="locationdelete_dialog_message">Are you sure you want to remove %s?</string>
+    <string name="locationdelete_dialog_title">Odstranit místo?</string>   <!-- title; remove 1 place -->
+    <string name="locationdelete_dialog_title1">Odstranit místa?</string>  <!-- title; remove multiple places -->
+    <string name="locationdelete_dialog_message">Opravdu chcete smazat %s?</string>
     <plurals name="locationdelete_dialog_success">
-        <item quantity="one">Place was removed.</item>
-        <item quantity="other">%d places were removed.</item>
-        <item quantity="few">%d places were removed.</item>
-        <item quantity="many">%d places were removed.</item>
+        <item quantity="one">Misto bylo odstraněno.</item>
+        <item quantity="other">%d místa byla odstraněna.</item>
+        <item quantity="few">%d míst bylo odstraněno.</item>
     </plurals>
-    <string name="locationdelete_dialog_ok">Remove</string>
-    <string name="locationdelete_dialog_cancel">Cancel</string>
+    <string name="locationdelete_dialog_ok">Odstranit</string>
+    <string name="locationdelete_dialog_cancel">Zrušit</string>
 
     <!-- Dialog: Clear Places -->
-    <string name="locationclear_dialog_title">Clear Places?</string>
-    <string name="locationclear_dialog_message">Are you sure you want to clear the list of places?</string>
-    <string name="locationclear_dialog_ok">Clear</string>
-    <string name="locationclear_dialog_cancel">Cancel</string>
+    <string name="locationclear_dialog_title">Vyčistit místa?</string>
+    <string name="locationclear_dialog_message">Opravdu chcete vyčistit seznam míst?</string>
+    <string name="locationclear_dialog_ok">Vyčistit</string>
+    <string name="locationclear_dialog_cancel">Zrušit</string>
 
     <!-- Dialog: Clear Places (progress) -->
-    <string name="locationcleared_dialog_title">Clearing Places</string>
-    <string name="locationcleared_dialog_message">Clearing the list of places…</string>
-    <string name="locationcleared_toast_success">The list of places has been cleared.</string>
+    <string name="locationcleared_dialog_title">Čistění míst</string>
+    <string name="locationcleared_dialog_message">Provádím čištění míst…</string>
+    <string name="locationcleared_toast_success">Seznam míst byl vyčištěn.</string>
 
     <!-- Dialog: Build Places List (progress) -->
-    <string name="locationbuild_dialog_title">Building Database</string>
-    <string name="locationbuild_dialog_message">Building a list of places…</string>
-    <string name="locationbuild_toast_success">Added <xliff:g id="n">%1$s</xliff:g> places.</string>
+    <string name="locationbuild_dialog_title">Sestavuji databázi</string>
+    <string name="locationbuild_dialog_message">Sestavuji seznam míst…</string>
+    <string name="locationbuild_toast_success">Přidáno <xliff:g id="n">%1$s</xliff:g> míst.</string>
 
     <!-- Dialog: Export Places -->
-    <string name="locationexport_dialog_title">Exporting Places</string>
-    <string name="locationexport_dialog_message">Exporting places to csv file.</string>
+    <string name="locationexport_dialog_title">Exportování míst</string>
+    <string name="locationexport_dialog_message">Exportuji místa do csv souboru.</string>
 
     <!-- Dialog: Export Themes -->
-    <string name="themesexport_dialog_title">Exporting Themes</string>
-    <string name="themesexport_dialog_message">Exporting themes to file.</string>
+    <string name="themesexport_dialog_title">Export témat</string>
+    <string name="themesexport_dialog_message">Exportuji témata do souboru.</string>
 
     <!-- Dialog: Import / Export -->
-    <string name="msg_export_success">Temporary copy at <xliff:g id="filepath">%s</xliff:g></string>
-    <string name="msg_export_failure">Export to <xliff:g id="filepath">%s</xliff:g> failed!</string>
-    <string name="msg_export_to">Export with</string>  <!-- title displayed over "share action" chooser -->
+    <string name="msg_export_success">Dočasná kopie v <xliff:g id="filepath">%s</xliff:g></string>
+    <string name="msg_export_failure">Export do <xliff:g id="filepath">%s</xliff:g> selhal!</string>
+    <string name="msg_export_to">Exportovat přes</string>  <!-- title displayed over "share action" chooser -->
 
     <!-- Dialog: Import Themes -->
-    <string name="themesimport_dialog_title">Importing Themes</string>
-    <string name="themesimport_dialog_message">Importing themes from file…</string>
+    <string name="themesimport_dialog_title">Import témat</string>
+    <string name="themesimport_dialog_message">Importuji témata ze souboru…</string>
 
-    <string name="msg_import_success">Imported <xliff:g id="themePlural">%s</xliff:g>.</string>
-    <string name="msg_import_failure">Import from <xliff:g id="filepath">%s</xliff:g> failed!</string>
-    <string name="msg_import_noresults">Import skipped; no new themes were found.</string>
+    <string name="msg_import_success">Importováno <xliff:g id="themePlural">%s</xliff:g>.</string>
+    <string name="msg_import_failure">Import z <xliff:g id="filepath">%s</xliff:g> selhal!</string>
+    <string name="msg_import_noresults">Import přeskočen; nenalezena žádná nová témata.</string>
 
     <plurals name="themePlural">
-        <item quantity="one">%d theme</item>
-        <item quantity="other">%d themes</item>
+        <item quantity="one">%d téma</item>
+        <item quantity="other">%d témat</item>
+        <item quantity="few">%d témata</item>
     </plurals>
 
     <!-- Dialog: Color -->
-    <string name="color_dialog_msg">Choose Colour</string>
-    <string name="color_dialog_ok">Select</string>
-    <string name="color_dialog_cancel">Cancel</string>
+    <string name="color_dialog_msg">Vybrat barvu</string>
+    <string name="color_dialog_ok">Vybrat</string>
+    <string name="color_dialog_cancel">Zrušit</string>
     <string name="color_dialog_tab1">1</string>
     <string name="color_dialog_tab2">2</string>
     <string name="color_dialog_tab3">3</string>
@@ -1550,20 +1560,20 @@
     <string name="color_dialog_hint_hex">#FFFFFF</string>
 
     <!-- Dialog: About -->
-    <string name="about_dialog_title">About</string>
+    <string name="about_dialog_title">O aplikaci</string>
     <string name="app_name">Suntimes</string>
-    <string name="app_name_alarmclock">Suntimes Alarms</string>
-    <string name="app_name_widget0">Suntimes Widget</string>
-    <string name="app_name_widget1">Suntimes Widget (flippable)</string>
-    <string name="app_name_widget2">Sun Position Widget</string>
-    <string name="app_name_clockwidget0">Clock Widget</string>
-    <string name="app_name_solsticewidget0">Solstice Widget</string>
-    <string name="app_name_moonwidget0">Moon Widget</string>
-    <string name="app_version"><![CDATA[<b>Version:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
-    <string name="app_shortdesc">Displays sunlight and moonlight times.</string>
+    <string name="app_name_alarmclock">Suntimes budíky</string>
+    <string name="app_name_widget0">Suntimes widgety</string>
+    <string name="app_name_widget1">Suntimes widgety (překlopitelný)</string>
+    <string name="app_name_widget2">Widget pozice slunce</string>
+    <string name="app_name_clockwidget0">Widget hodin</string>
+    <string name="app_name_solsticewidget0">Widget slunovratu</string>
+    <string name="app_name_moonwidget0">Widget měsíce</string>
+    <string name="app_version"><![CDATA[<b>Verze:</b>]]> <xliff:g id="versionString">%s</xliff:g></string>
+    <string name="app_shortdesc">Zobrazuje časy slunečního a měsíčního svitu.</string>
     <string name="app_support_url"><![CDATA[
-        <b>Support:</b> visit the
-        <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> to submit a request.
+        <b>Podpora:</b> navštivte
+        <a href="https://github.com/forrestguice/SuntimesWidget/issues">issue tracker</a> pro podání žádosti.
     ]]></string>
     <string name="app_source_url"><xliff:g id="url"><![CDATA[
         <a href="https://github.com/forrestguice/SuntimesWidget/">github.com/forrestguice/SuntimesWidget/</a>
@@ -1572,18 +1582,18 @@
         <a href="https://forrestguice.github.io/SuntimesWidget/">forrestguice.github.io/SuntimesWidget</a>
     ]]></xliff:g></string>
     <string name="app_legal1"><![CDATA[
-        <b>Source Code:</b><br />
+        <b>Zdrojový kód:</b><br />
         Copyright &#169 2014-2021 Forrest Guice <br />
-        Source code available under GPLv3.
+        Zdorjový kód dostupný pod licencí GPLv3.
     ]]></string>
 
-    <string name="app_legal2"><![CDATA[<b>Translations to:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
-    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> by <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
+    <string name="app_legal2"><![CDATA[<b>Překlady:</b><br/>]]><xliff:g id="locale_credits">%1$s</xliff:g></string>
+    <string name="translationCreditsFormat"><![CDATA[&#8226;&nbsp;<b><xliff:g id="languageName">%1$s</xliff:g></b> díky <xliff:g id="authorList">%2$s</xliff:g>.]]></string>
     <string name="authorListFormat_i"><xliff:g id="authorName1">%1$s</xliff:g>, <xliff:g id="authorName2">%2$s</xliff:g></string>  <!-- e.g. "name1, name2, name3, ..." -->
     <string name="authorListFormat_n"><xliff:g id="authorListFormat_i">%1$s</xliff:g>, and <xliff:g id="authorName">%2$s</xliff:g></string>  <!-- e.g. "..., and nameN" -->
     <string name="creditsTab">Credits</string>
 
-    <string name="app_legal3"><![CDATA[ <b>Libraries:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
+    <string name="app_legal3"><![CDATA[ <b>Knihovny:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
     <string name="libraryCreditsFormat"><![CDATA[<xliff:g id="libraryURL">%1$s</xliff:g>]]></string>
     <string-array name="app_libraries">
         <item><![CDATA[ github.com/MenoData/Time4A ]]></item>
@@ -1594,43 +1604,43 @@
     </string-array>
 
     <!-- Dialog: Help -->
-    <string name="help_dialog_title">Help</string>
+    <string name="help_dialog_title">Nápověda</string>
     <string name="help_appearance_title"><![CDATA[
-        The following title substitutions are supported:<br/>
+        Jsou podporovány následující záměny:<br/>
         <br/>
-        <b>All Widgets:</b> <br />
-                * <b>%d</b> for date (e.g. February 12) <br/>
-                * <b>%dd</b> for day (short) (e.g. Mon) <br/>
-                * <b>%dD</b> for day (long) (e.g. Monday) <br/>
-                * <b>%dY</b> for year (e.g. 2018) <br/>
-                * <b>%dt</b> for time (of last update) <br/>
-                * <b>%dT</b> for time with seconds (of last update) <br/>
-                * <b>%dm</b> for milliseconds (of last update) <br/>
+        <b>Všechny widgety:</b> <br />
+                * <b>%d</b> pro datum (např. 12. prosince) <br/>
+                * <b>%dd</b> pro den (krátké) (např. Pon) <br/>
+                * <b>%dD</b> pro den (dlouhé) (např. Pondělí) <br/>
+                * <b>%dY</b> pro rok (např. 2018) <br/>
+                * <b>%dt</b> pro čas (poslední aktualizace) <br/>
+                * <b>%dT</b> pro čas včetně vteřin (poslední aktualizace) <br/>
+                * <b>%dm</b> pro milisekundy (poslední aktualizace) <br/>
                 <br/>
-                * <b>%loc</b> for label (e.g. Prescott) <br />
-                * <b>%lat</b> for latitude (e.g. 35.5409) <br />
-                * <b>%lon</b> for longitude (e.g. -112.4691) <br/>
-                * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
+                * <b>%loc</b> pro nadpis (např. Prescott) <br />
+                * <b>%lat</b> pro zeměpisnou šířku (např. 35.5409) <br />
+                * <b>%lon</b> pro zeměpisnou délku (např. -112.4691) <br/>
+                * <b>%lel</b> pro nadmořskou výšku (např. 385 metrů) <br/>
                 <br/>
-                * <b>%s</b> for data source (e.g. sunrisesunsetlib) <br/>
-                * <b>%t</b> for time zone (id) (e.g. US/Arizona) <br/>
-                * <b>%id</b> for appWidgetID <br/>
+                * <b>%s</b> pro zdroj dat (např. sunrisesunsetlib) <br/>
+                * <b>%t</b> pro časové pásmo (id) (např. US/Arizona) <br/>
+                * <b>%id</b> pro appWidgetID <br/>
          <br/>
-         <b>Sun Widgets:</b> <br/>
-                * <b>%m</b> for mode (short) (e.g. Civil) <br/>
-                * <b>%M</b> for mode (long) (e.g. Civil Twilight) <br/>
-                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
+         <b>Sluneční widget:</b> <br/>
+                * <b>%m</b> pro režim (krátký) (např. Občasnký) <br/>
+                * <b>%M</b> pro režim (dlouhý) (např. Občanský soumrak) <br/>
+                * <b>%o</b> pro pořadí (např. Poslední/Další, Dnes) <br/>
          <br/>
-         <b>Moon Widgets:</b> <br/>
-                * <b>%i</b> for moon illumination (e.g. 25%) <br/>
-                * <b>%M</b> for moon phase (e.g. Waxing Crescent) <br/>
-                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
+         <b>Měsíční widget:</b> <br/>
+                * <b>%i</b> pro osvícenost Měsíce (např. 25%) <br/>
+                * <b>%M</b> pro fázi Měsíce (např Dorůstající srpek) <br/>
+                * <b>%o</b> pro pořadí (např. Poslední/Další, Dnes) <br/>
          <br/>
-         <b>Solstice Widgets:</b> <br/>
-                * <b>%m</b> for mode (short) (e.g. Solstice) <br/>
-                * <b>%M</b> for mode (long) (e.g. Winter Solstice) <br/>
-                * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
-    ]]></string>  <!-- TODO: %o is new and isn't advertised in any of the translations -->
+         <b>Widget slunovratů:</b> <br/>
+                * <b>%m</b> pro režim (krátký) (např. Slunovrat) <br/>
+                * <b>%M</b> pro režim (dlouhý) (např. Zimní slunovrat) <br/>
+                * <b>%o</b> pro pořadí (např. Nejbližší událost, Nadcházející událost) <br/>
+    ]]></string>
 
     <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
@@ -1649,127 +1659,127 @@
     </string>
 
     <string name="help_general_timeMode"><![CDATA[
-          <b>Actual Time:</b> The approximate time of sunrise and sunset.<br/><br/>
-          <b>Civil Twilight:</b> The sun is 6 degrees below the horizon; the brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
-          <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
-          <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon. Near darkness of night.<br/>
+          <b>Skutečný čas:</b> Přibližný čas východu a západu slunce.<br/><br/>
+          <b>Občanský soumrak:</b> Slunce je 6 stupňů pod obzorem; jsou vidět nejjasnější hvězdy. Je zde dostatek světla pro většinu outdoorových aktivit, aniž byste potřebovali světlo.<br/><br/>
+          <b>Nautický soumrak:</b> Slunce je 12 stupňů pod obzorem; obrysy objektu a horizont jsou čím dál méně jasné. Pro většinu outdoorových aktivit není dostatek světla, aniž byste potřebovali dodatečné světlo.<br/><br/>
+          <b>Astronomický soumrak:</b> Slunce je 18 stupňů pod obzorem. Tma je blízká noci.<br/>
     ]]></string>
     <string name="help_general_riseSetOrder"><![CDATA[
-          <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
-          <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
+          <b>Dnešní:</b> Časy východů a západů událostí pro dnešní datum.<br/><br/>
+          <b>Poslední / Další:</b> Čas poslední události a další nadcházející událost.<br/>
     ]]></string>
 
     <string name="help_general_timeMode2"><![CDATA[
-          <b>Spring Equinox:</b> TODO.<br/><br/>
-          <b>Summer Solstice:</b> TODO.<br/><br/>
-          <b>Autumn Equinox:</b> TODO.<br/><br/>
-          <b>Winter Solstice:</b> TODO.<br/>
+          <b>Jarní rovnodennost:</b> TODO.<br/><br/>
+          <b>Letní slunovrat:</b> TODO.<br/><br/>
+          <b>Podzimní rovnodennost:</b> TODO.<br/><br/>
+          <b>Zimní slunovrat:</b> TODO.<br/>
     ]]></string>
     <string name="help_general_solartime"><![CDATA[
-          <b>Apparent Solar Time:</b> Sundial time. The time determined by tracking the motion of the apparent sun with respect to a given longitude and latitude.
+          <b>Pravý sluneční čas:</b> Čas slunečních hodin. Čas určený sledováním pohybu zdánlivého slunce vzhledem k dané zeměpisné délce a šířce.
           <br/><br/>
-          The motion of the apparent sun is not constant. It varies seasonally due to the obliquity of the ecliptic and eccentricity of the Earth\'s orbit.
-          The length of each apparent solar day, measured from one noon to the next, may be slightly longer or shorter than 24 hours (up to 30s).
-          These small variations accumulate with each passing day (and average out over the course of the year).
-          <br/><br/>
-
-          <b>Local Mean Time:</b> Clock time. The time determined from the position of the mean sun with respect to a given longitude.
-          <br/><br/>
-          The motion of the mean sun corrects for obliquity and eccentricity and is uniform.
-          The length of each mean solar day is exactly 24 hours.<br/><br/>
-
-          <b>Equation of Time (EOT):</b> The difference between local mean time and apparent solar time.
-          This is the accumulated variation of the apparent solar day.
-          <br/><br/>
-          Apparent solar time may differ from local mean time by up to 16 minutes depending on the season.
+          Pohyb pravého slunečního času není konstantní. Sezónně se mění v důsledku šikmosti ekliptiky a excentricity zemské oběžné dráhy.
+          Délka každého zdánlivého slunečního dne, měřená od jednoho poledne do druhého, může být o něco delší nebo kratší než 24 hodin (až 30 s).
+          Tyto malé odchylky se hromadí s každým dalším dnem (a v průběhu roku se zprůměrují).
           <br/><br/>
 
-          <i>This app uses an algorithm to calculate the equation of time (and derive the apparent solar time).
-          Your location is used to determine the local mean time.</i>
+          <b>Střední sluneční čas:</b> Čas na hodinách. Čas určený z polohy středního slunce vzhledem k dané zeměpisné délce.
+          <br/><br/>
+          Pohyb středního slunce koriguje šikmost a excentricitu a je rovnoměrný.
+          Délka každého středního slunečního dne je přesně 24 hodin.<br/><br/>
+
+          <b>Časová rovnice (EOT):</b> Rozdíl mezi místním středním časem a pravým slunečním časem.
+          Toto je akumulovaná změna pravého slunečního dne.
+          <br/><br/>
+          Pravý sluneční čas se může lišit od místního středního času až o 16 minut v závislosti na ročním období.
           <br/><br/>
 
-    ]]></string> <!-- TODO -->
+          <i>Tato aplikace používá algoritmus k výpočtu časové rovnice (a odvození pravého slunečního času).
+          Vaše poloha se používá k určení místního středního času.</i>
+          <br/><br/>
+
+    ]]></string>
     <string name="help_general_daylength"><![CDATA[
-        <b>Length of day:</b> The amount of time between sunrise and sunset.<br/><br/>
-        <b>Usable light:</b> The amount of time between morning and evening civil twilight.<br/>
+        <b>Délka dne:</b> Doba mezi východem a západem slunce.<br/><br/>
+        <b>Použitelné světlo:</b> Doba mezi ranním a večerním občanským soumrakem.<br/>
     ]]></string>
     <string name="help_general_moonillum"><![CDATA[
-        <b>Moon Illumination:</b> The main page displays the moon\'s illumination at lunar noon, while the moon dialog displays the moon\'s current illumination.<br/>
+        <b>Osvícenost měsíce:</b> Hlavní stránka zobrazuje osvícení měsíce v měsíční poledne, zatímco dialogové okno Měsíc zobrazuje aktuální osvícení Měsíce.<br/>
     ]]></string>
     <string name="help_general_goldhour"><![CDATA[
-        <b>Golden Hour:</b> The sun is between 6 degrees above or below the horizon. In the morning the golden hour begins with civil twilight and ends a short time after sunrise. In the evening the golden hour begins a short time before sunset and ends with civil twilight.<br/>
+        <b>Zlatá hodina:</b> Slunce je mezi 6 stupni nad nebo pod obzorem. Ráno zlatá hodina začíná občanským soumrakem a končí krátce po východu slunce. Večer zlatá hodina začíná krátce před západem slunce a končí občanským soumrakem.<br/>
     ]]></string>
     <string name="help_general_bluehour"><![CDATA[
-        <b>Blue Hour:</b> The sun is between 8 degrees and 4 degrees below the horizon. The start and end of the blue hour falls between nautical and civil twilight.<br/>
+        <b>Modrá hodina:</b> Slunce je mezi 8 a 4 stupni pod obzorem. Začátek a konec modré hodiny spadá mezi nautický a civilní soumrak.<br/>
     ]]></string>
     <string name="help_action_launch"><![CDATA[
-        See <b>Intents and Intent Filters</b> <small>(https://developer.android.com/guide/components/intents-filters)</small>.
+        Navštivte <b>Intents and Intent Filters</b> <small>(https://developer.android.com/guide/components/intents-filters)</small>.
         <br/><br/>
-        All fields are optional (values may be left empty for an <em>implicit intent</em>).
+        Všechna pole jsou volitelná (hodnoty mohou být ponechány prázdné pro <em>implicit intent</em>).
         <br/>
         <br/>
-        <b>Action:</b> An action string.<br/><small>e.g. <em>android.intent.action.VIEW</em></small>
+        <b>Akce:</b> Řetězec pro akci.<br/><small>např. <em>android.intent.action.VIEW</em></small>
         <br/>
         <br/>
-        <b>Class:</b> A fully qualified class name.<br/><small>e.g. <em>suntimeswidget.SuntimesActivity</em></small>
+        <b>Třída:</b> Plně kvalifikovaný název třídy.<br/><small>např. <em>suntimeswidget.SuntimesActivity</em></small>
         <br/>
         <br/>
-        <b>Data:</b> A Uri that contains or points to attached data. Supports <em>%s</em>ubstitutions. <small>e.g. <em>geo:%lat,%lon</em></small>
+        <b>Data:</b> Uri, který obsahuje připojená data nebo na ně odkazuje. Podporuje <em>%s</em>ubstitutions. <small>např. <em>geo:%lat,%lon</em></small>
         <br/>
         <br/>
-        <b>Mime:</b> The mime type of attached data.
+        <b>Mime:</b> MIME typ přiložených dat.
         <br/>
         <br/>
-        <b>Extras:</b> An <em>&amp;</em> delimited string containing extra values. Supports <em>%s</em>ubstitutions.<br/><br/>Values may be <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> or String. <small>e.g. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>
-    ]]></string> <!-- TODO -->
+        <b>Extra:</b> Řetězec oddělený <em>&amp;</em> obsahující extra parametry. Podporuje <em>%s</em>ubstitutions.<br/><br/>Hodnoty mohou být <em>int</em>, <em>long</em>, <em>double</em>, <em>float</em>, <em>boolean</em> nebo String. <small>e.g. <em>key1=value1 & int=1 & long=1L & double=1D & float=1F & bool=true & etc=%dm</em></small>
+    ]]></string>
     <string name="help_widgetlist"><![CDATA[
-          To <b>add</b> or <b>remove</b> a widget you must navigate to the home screen.<br/><br/>
-          To <b>reconfigure</b> an existing widget you can select from the following list.<br/>
+          Pro <b>přidání</b> nebo <b>odebrání</b> widgetu musíte být na domovské obrazovce.<br/><br/>
+          Pro <b>přenastavení</b> existujícího widgetu ho můžete vybrat z následujícího seznamu.<br/>
     ]]></string>
     <!--<string name="help_alarmclock" />-->
     <string name="help_themelist">
-          [Icon Add] Add a new theme or [Icon Copy] copy from an existing theme.\n
+          [Icon Add] Přidat nové téma nebo [Icon Copy] kopírovat z exitujícího tématu.\n
           \n
-          [Icon Edit] Edit or [Icon Delete] delete themes.\n
-          The [Icon Default] default themes cannot be modified.\n
+          [Icon Edit] Upravit nebo [Icon Delete] smazat témata.\n
+          [Icon Default] výchozí témata nemohou být upravena.\n
     </string>
 
-    <string name="help_calendar"><![CDATA[Supply events to the Calendar app (moon phases, solstices, and equinoxes).<br />
+    <string name="help_calendar"><![CDATA[Přidejte událost do kalendářní aplikace (fáze Měsíce, slunovraty a rovnodennosti).<br />
         <br />
-        <u><b><font color="#ff9900">Calendar integration has been removed.</font></b></u><br />
+        <u><b><font color="#ff9900">Integrace s kalendářem byla odstaněna.</font></b></u><br />
         <br />
-        This feature is now available as a <a href="moreInfoLink">separate app</a>.
+        Tato funkce je nyní dostupná jako <a href="moreInfoLink">oddělená aplikace</a>.
     ]]></string>
 
-    <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. <br/><br/>The app is configured from location data. This information (and other configuration data used by the app) is stored locally and does not leave the device.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
-    <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string>
-    <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string>
-    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>
-    <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>
-    <string name="privacy_permissiondialog_ignore">Ignore</string>
-    <string name="privacy_permissiondialog_title">Permissions</string>
+    <string name="privacy_policy"><![CDATA[<b>Soukromí:</b><br/>Suntimes neshromažďuje, neukládá ani nepřenáší osobní uživatelská data. Neobsahuje <b>žádnou reklamu</b>, <b>žádnou analýzu</b>, <b>žádné sledovače</b> a <b>žádná zbytečná oprávnění</b>. <br/><br/>Aplikace je nakonfigurována na základě údajů o poloze. Tyto informace (a další konfigurační data používaná aplikací) jsou uloženy lokálně a neopouštějí zařízení.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
+    <string name="privacy_permission_location"><![CDATA[Suntimes používá oprávnění k <b>poloze</b> k určení vaší aktuální zeměpisné délky a šířky.<br/><br/>Toto oprávnění je volitelné; umístění je ve výchozím nastavení nakonfigurováno ručně.]]></string>
+    <string name="privacy_permission_storage"><![CDATA[Suntimes používá oprávnění <b>externího úložiště</b> k zálohování/exportu dat do souboru (např. míst, motivů).]]></string>
+    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms využívá oprávnění <b>externího úložiště</b> k přehrávání zvuků umístěných na SD kartě.<br/><br/>Toto oprávnění je volitelné; je-li přístup odepřen, přehraje se výchozí zvuk. Toto oprávnění není potřeba pro systémové zvuky (úložiště médií).]]></string>
+    <string name="privacy_permissiondialog_prompt"><![CDATA[Vyžádat oprávnění nyní?]]></string>
+    <string name="privacy_permissiondialog_ignore">Ignorovat</string>
+    <string name="privacy_permissiondialog_title">Oprávnění</string>
     <string name="privacy_url"><xliff:g id="url"><![CDATA[
         <a href="https://github.com/forrestguice/SuntimesWidget/wiki/Privacy">github.com/forrestguice/SuntimesWidget/wiki/Privacy</a>
     ]]></xliff:g></string>
-    <string name="privacyTab">Privacy</string>
+    <string name="privacyTab">Sourkomí</string>
 
-    <string name="security_dialog_title">Security Alert</string>
-    <string name="security_duplicate_permissions">A permission that belongs to Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis also defined by: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
-    <string name="feature_not_supported_by_api">This feature is not supported by API %1$s.</string>
-    <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>
-    <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>    <!-- toast; device off/on may be required -->
-    <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
+    <string name="security_dialog_title">Bezpečnostní upozornění</string>
+    <string name="security_duplicate_permissions">Povolení, které patří Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nis také definováno: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
+    <string name="feature_not_supported_by_api">Tato funkce není podporována rozhraním API %1$s.</string>
+    <string name="feature_not_supported_by_source">Tato funkce není podporována aktuálním zdrojem dat.</string>
+    <string name="reboot_required_message">Aby se změny projevily, může být nutné restartovat zařízení.</string>    <!-- toast; device off/on may be required -->
+    <string name="restart_required_message">Aby se změny plně projevily, může být nutné restartovat aplikaci.</string>   <!-- toast; app restart may be required -->
 
     <string name="dialog_ok">OK</string>
-    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_cancel">Zrušit</string>
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
     <string name="calculator_displayString_caarmensunrisesunset">github.com/caarmen/SunriseSunset</string>
-    <string name="calculator_displayString_time4a_simple">A simple, relatively fast, but imprecise calculator.</string>
-    <string name="calculator_displayString_time4a_noaa">Follows algorithms published by the National Oceanic and Atmospheric Administration.</string>
-    <string name="calculator_displayString_time4a_cc">Follows algorithms published by Dershowitz/Reingold in their book "Calendrical Calculations" (third edition).</string>
-    <string name="calculator_displayString_time4a_4j">Based on astronomical calculations published by Jean Meeus in his book "Astronomical Algorithms" (second edition).</string>
+    <string name="calculator_displayString_time4a_simple">Jednoduchý, poměrně rychlý, ale nepřesný kalkulátor.</string>
+    <string name="calculator_displayString_time4a_noaa">Řídí se algoritmy zveřejněnými Národním úřadem pro oceán a atmosféru.</string>
+    <string name="calculator_displayString_time4a_cc">Dodržuje algoritmy publikované Dershowitzem/Reingoldem v jejich knize "Calendrical Calculations" (třetí vydání).</string>
+    <string name="calculator_displayString_time4a_4j">Na základě astronomických výpočtů publikovaných Jeanem Meeusem ve své knize "Astronomické algoritmy" (druhé vydání).</string>
 
     <!-- pref defaults -->
     <string name="def_appwidget_0_general_calculator" translatable="false">time4a-time4j</string>
