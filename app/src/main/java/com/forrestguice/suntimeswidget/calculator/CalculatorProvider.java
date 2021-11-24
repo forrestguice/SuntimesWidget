@@ -966,7 +966,7 @@ public class CalculatorProvider extends ContentProvider
             if (timezone == null) {
                 timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
             }
-            if (descriptor != null) {
+            if (descriptor == null) {
                 descriptor = (calculatorName == null ? WidgetSettings.loadCalculatorModePref(context, appWidgetID)
                         : WidgetSettings.loadCalculatorModePref(context, appWidgetID, calculatorName));
             }
