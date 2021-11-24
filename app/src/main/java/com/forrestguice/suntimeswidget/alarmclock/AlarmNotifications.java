@@ -1405,7 +1405,7 @@ public class AlarmNotifications extends BroadcastReceiver
     }
     public static boolean updateAlarmTime(Context context, final AlarmClockItem item, Calendar now, boolean modifyItem)
     {
-        Calendar eventTime = Calendar.getInstance();
+        Calendar eventTime = null;
         String eventID = item.getEvent();
         SolarEvents event = SolarEvents.valueOf(eventID, null);
         if (item.location != null && event != null)
@@ -1632,7 +1632,6 @@ public class AlarmNotifications extends BroadcastReceiver
     private static Calendar updateAlarmTime_addonEvent(@Nullable ContentResolver resolver, @NonNull String eventID, @Nullable Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
         Log.d(TAG, "updateAlarmTime_addonEvent: eventID: " + eventID + ", offset: " + offset + ", repeating: " + repeating);
-        Calendar eventTime = Calendar.getInstance();
         long nowMillis = now.getTimeInMillis();
 
         Uri uri_id = Uri.parse(eventID);
@@ -1680,7 +1679,9 @@ public class AlarmNotifications extends BroadcastReceiver
                         Log.e(TAG, "updateAlarmTime: failed to query alarm time; result is invalid (past) :: " + uri_calc);
                         return null;
                     }
+                    Calendar eventTime = Calendar.getInstance();
                     eventTime.setTimeInMillis(eventTimeMillis);
+                    return eventTime;
 
                 } else {
                     Log.e(TAG, "updateAlarmTime: failed to query alarm time; result is missing " + AlarmAddon.COLUMN_ALARM_TIMEMILLIS + " :: " + uri_calc);
@@ -1694,7 +1695,6 @@ public class AlarmNotifications extends BroadcastReceiver
             Log.e(TAG, "updateAlarmTime: failed to query alarm time; null ContentResolver! " + uri_calc);
             return null;
         }
-        return eventTime;
     }
 
     @Nullable
