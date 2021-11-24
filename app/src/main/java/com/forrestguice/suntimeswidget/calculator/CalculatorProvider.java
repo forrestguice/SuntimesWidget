@@ -240,87 +240,87 @@ public class CalculatorProvider extends ContentProvider
         switch (uriMatch)
         {
             case URIMATCH_CONFIG:
-                Log.d("CalculatorProvider", "URIMATCH_CONFIG");
+                //Log.d("CalculatorProvider", "URIMATCH_CONFIG");
                 retValue = queryConfig(uri, projection, selectionMap, sortOrder);
                 break;
 
             case URIMATCH_SEASONS:
-                Log.d("CalculatorProvider", "URIMATCH_SEASONS");
+                //Log.d("CalculatorProvider", "URIMATCH_SEASONS");
                 retValue = querySeasons(new long[] {now, now}, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_SEASONS_FOR_YEAR:
-                Log.d("CalculatorProvider", "URIMATCH_SEASONS_FOR_YEAR");
+                //Log.d("CalculatorProvider", "URIMATCH_SEASONS_FOR_YEAR");
                 Calendar dateTime = now(selectionMap);
                 dateTime.set(Calendar.YEAR, (int)ContentUris.parseId(uri));
                 retValue = querySeasons(new long[] { dateTime.getTimeInMillis(), dateTime.getTimeInMillis() }, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_SEASONS_FOR_RANGE:
-                Log.d("CalculatorProvider", "URIMATCH_SEASONS_FOR_RANGE");
+                //Log.d("CalculatorProvider", "URIMATCH_SEASONS_FOR_RANGE");
                 range = parseYearRange(uri.getLastPathSegment());
                 retValue = querySeasons(range, uri, projection, selectionMap, sortOrder);
                 break;
 
             case URIMATCH_SUN:
-                Log.d("CalculatorProvider", "URIMATCH_SUN");
+                //Log.d("CalculatorProvider", "URIMATCH_SUN");
                 retValue = querySun(new long[] {now, now}, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_SUN_FOR_DATE:
-                Log.d("CalculatorProvider", "URIMATCH_SUN_FOR_DATE");
+                //Log.d("CalculatorProvider", "URIMATCH_SUN_FOR_DATE");
                 date = ContentUris.parseId(uri);
                 retValue = querySun(new long[] {date, date}, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_SUN_FOR_RANGE:
-                Log.d("CalculatorProvider", "URIMATCH_SUN_FOR_RANGE");
+                //Log.d("CalculatorProvider", "URIMATCH_SUN_FOR_RANGE");
                 range = parseDateRange(uri.getLastPathSegment());
                 retValue = querySun(range, uri, projection, selectionMap, sortOrder);
                 break;
 
             case URIMATCH_SUNPOS:
-                Log.d("CalculatorProvider", "URIMATCH_SUNPOS");
+                //Log.d("CalculatorProvider", "URIMATCH_SUNPOS");
                 retValue = querySunPos(now, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_SUNPOS_FOR_DATE:
-                Log.d("CalculatorProvider", "URIMATCH_SUNPOS_FOR_DATE");
+                //Log.d("CalculatorProvider", "URIMATCH_SUNPOS_FOR_DATE");
                 date = ContentUris.parseId(uri);
                 retValue = querySunPos(date, uri, projection, selectionMap, sortOrder);
                 break;
 
             case URIMATCH_MOON:
-                Log.d("CalculatorProvider", "URIMATCH_MOON");
+                //Log.d("CalculatorProvider", "URIMATCH_MOON");
                 retValue = queryMoon(new long[] {now, now}, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_MOON_FOR_DATE:
-                Log.d("CalculatorProvider", "URIMATCH_MOON_FOR_DATE");
+                //Log.d("CalculatorProvider", "URIMATCH_MOON_FOR_DATE");
                 date = ContentUris.parseId(uri);
                 retValue = queryMoon(new long[] {date, date}, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_MOON_FOR_RANGE:
-                Log.d("CalculatorProvider", "URIMATCH_MOON_FOR_RANGE");
+                //Log.d("CalculatorProvider", "URIMATCH_MOON_FOR_RANGE");
                 range = parseDateRange(uri.getLastPathSegment());
                 retValue = queryMoon(range, uri, projection, selectionMap, sortOrder);
                 break;
 
             case URIMATCH_MOONPOS:
-                Log.d("CalculatorProvider", "URIMATCH_MOONPOS");
+                //Log.d("CalculatorProvider", "URIMATCH_MOONPOS");
                 retValue = queryMoonPos(now, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_MOONPOS_FOR_DATE:
-                Log.d("CalculatorProvider", "URIMATCH_MOONPOS_FOR_DATE");
+                //Log.d("CalculatorProvider", "URIMATCH_MOONPOS_FOR_DATE");
                 date = ContentUris.parseId(uri);
                 retValue = queryMoonPos(date, uri, projection, selectionMap, sortOrder);
                 break;
 
             case URIMATCH_MOONPHASE:
-                Log.d("CalculatorProvider", "URIMATCH_MOONPHASE");
+                //Log.d("CalculatorProvider", "URIMATCH_MOONPHASE");
                 retValue = queryMoonPhase(new long[] {now, now}, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_MOONPHASE_FOR_DATE:
-                Log.d("CalculatorProvider", "URIMATCH_MOONPHASE_FOR_DATE");
+                //Log.d("CalculatorProvider", "URIMATCH_MOONPHASE_FOR_DATE");
                 date = ContentUris.parseId(uri);
                 retValue = queryMoonPhase(new long[] {date, date}, uri, projection, selectionMap, sortOrder);
                 break;
             case URIMATCH_MOONPHASE_FOR_RANGE:
-                Log.d("CalculatorProvider", "URIMATCH_MOONPHASE_FOR_RANGE");
+                //Log.d("CalculatorProvider", "URIMATCH_MOONPHASE_FOR_RANGE");
                 range = parseDateRange(uri.getLastPathSegment());
                 retValue = queryMoonPhase(range, uri, projection, selectionMap, sortOrder);
                 break;
@@ -488,8 +488,8 @@ public class CalculatorProvider extends ContentProvider
                 }
                 retValue.addRow(row);
 
-            } else Log.e("queryConfig", "sunSource " + appWidgetID + " is null!");
-        } else Log.e("queryConfig", "context is null!");
+            } else Log.e("CalculatorProvider", "queryConfig: sunSource " + appWidgetID + " is null!");
+        } else Log.e("CalculatorProvider", "queryConfig: context is null!");
         return retValue;
     }
     private static final String COLUMN_CONFIG_PROVIDER_VERSION_CODE_V2 = "config_pvodier_version_code";    // key has typo in v0-v2; fixed v3
@@ -603,7 +603,7 @@ public class CalculatorProvider extends ContentProvider
                 day.add(Calendar.DAY_OF_YEAR, 1);
             } while (day.before(endDay));
 
-        } else Log.d("DEBUG", "sunSource is null!");
+        } else Log.w("CalculatorProvider", "querySun: sunSource is null!");
         return retValue;
     }
 
@@ -658,8 +658,8 @@ public class CalculatorProvider extends ContentProvider
                 }
                 retValue.addRow(row);
 
-            } else Log.d("DEBUG", "sunSource returned null position! " + calculator.name());
-        } else Log.d("DEBUG", "sunSource is null!");
+            } else Log.w("CalculatorProvider", "querySunPos: sunSource returned null position! " + calculator.name());
+        } else Log.w("CalculatorProvider", "querySunPos: sunSource is null!");
         return retValue;
     }
 
@@ -704,7 +704,7 @@ public class CalculatorProvider extends ContentProvider
                 day.add(Calendar.DAY_OF_YEAR, 1);
             } while (day.before(endDay));
 
-        } else Log.d("DEBUG", "moonSource is null!");
+        } else Log.w("CalculatorProvider", "queryMoon: moonSource is null!");
         return retValue;
     }
 
@@ -771,8 +771,8 @@ public class CalculatorProvider extends ContentProvider
                 }
                 retValue.addRow(row);
 
-            } else Log.d("DEBUG", "moonSource returned null position! " + calculator.name());
-        } else Log.d("DEBUG", "moonSource is null!");
+            } else Log.w("CalculatorProvider", "queryMoonPos: moonSource returned null position! " + calculator.name());
+        } else Log.w("CalculatorProvider", "queryMoonPos: moonSource is null!");
         return retValue;
     }
 
@@ -864,7 +864,7 @@ public class CalculatorProvider extends ContentProvider
                                                     : range[1] + 1000);
             } while (date.before(endDate));
 
-        } else Log.d("DEBUG", "moonSource is null!");
+        } else Log.w("CalculatorProvider", "queryMoonPhase: moonSource is null!");
         return retValue;
     }
 
@@ -928,7 +928,7 @@ public class CalculatorProvider extends ContentProvider
                 year.add(Calendar.YEAR, 1);
             } while (year.before(endYear));
 
-        } else Log.d("DEBUG", "sunSource is null!");
+        } else Log.w("CalculatorProvider", "querySeasons: sunSource is null!");
         return retValue;
     }
 
@@ -988,7 +988,7 @@ public class CalculatorProvider extends ContentProvider
             SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(context, appWidgetID);
             SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
             sunSource.put(appWidgetID, (retValue = factory.createCalculator(location, timezone)));
-            Log.d("CalculatorProvider", "initSunCalculator: " + location.getLabel() + " :: " + location.toString());
+            //Log.d("CalculatorProvider", "initSunCalculator: " + location.getLabel() + " :: " + location.toString());
         } //else Log.d("CalculatorProvider", "initSunCalculator: using pre-existing calculator");
         return retValue;
     }
@@ -1134,7 +1134,7 @@ public class CalculatorProvider extends ContentProvider
             Log.w("CalculatorProvider", "Invalid range! " + rangeSegment);
             retValue[0] = retValue[1] = Calendar.getInstance().getTimeInMillis();
         }
-        Log.d("DEBUG", "startDate: " + retValue[0] + ", endDate: " + retValue[1]);
+        //Log.d("DEBUG", "startDate: " + retValue[0] + ", endDate: " + retValue[1]);
         return retValue;
     }
 
@@ -1165,7 +1165,7 @@ public class CalculatorProvider extends ContentProvider
             Log.w("CalculatorProvider", "Invalid range! " + rangeSegment);
             retValue[0] = retValue[1] = Calendar.getInstance();
         }
-        Log.d("DEBUG", "startDate: " + retValue[0].get(Calendar.YEAR) + ", endDate: " + retValue[1].get(Calendar.YEAR));
+        //Log.d("DEBUG", "startDate: " + retValue[0].get(Calendar.YEAR) + ", endDate: " + retValue[1].get(Calendar.YEAR));
         return new long[] { retValue[0].getTimeInMillis(), retValue[1].getTimeInMillis() };
     }
 
