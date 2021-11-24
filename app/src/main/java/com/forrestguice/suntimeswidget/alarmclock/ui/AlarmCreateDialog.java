@@ -128,6 +128,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         }
 
         Context context = getActivity();
+        SuntimesUtils.initDisplayStrings(context);
         SolarEvents.initDisplayStrings(context);
         AlarmClockItem.AlarmType.initDisplayStrings(context);
         AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);

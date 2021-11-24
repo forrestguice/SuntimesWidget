@@ -280,7 +280,6 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
         CharSequence alarmDesc;
         SuntimesUtils utils = new SuntimesUtils();
-        SuntimesUtils.initDisplayStrings(context);
         SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, alarmTime, false);
         if (SuntimesUtils.is24()) {
             alarmDesc = timeText.getValue();
