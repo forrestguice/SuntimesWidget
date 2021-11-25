@@ -1150,6 +1150,7 @@
         <item>Portugees</item>
         <item>Russian</item>  <!-- TODO -->
         <item>Nederlands</item>
+        <item>Czech</item>  <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
