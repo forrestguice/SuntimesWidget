@@ -224,10 +224,6 @@
     <!-- distances (meters, feet, etc) -->
     <string name="lengthUnits_metric">Metrické</string>
     <string name="lengthUnits_imperial">Imperiální</string>
-    <string-array name="lengthUnits_values" translatable="false">
-        <item>METRIC</item>
-        <item>IMPERIAL</item>
-    </string-array>
     <string-array name="lengthUnits_display"> <!-- one-to-one with lengthUnits_values -->
         <item>@string/lengthUnits_metric</item>
         <item>@string/lengthUnits_imperial</item>
@@ -846,12 +842,6 @@
         <item>Posunout</item>
         <item>Nedělat nic</item>
     </string-array>
-    <string-array name="alarm_hardwarebutton_actions_values" translatable="false">
-        <item>suntimeswidget.alarm.dismiss</item>
-        <item>suntimeswidget.alarm.silent</item>
-        <item>suntimeswidget.alarm.snooze</item>
-        <item>suntimeswidget.alarm.none</item>
-    </string-array>
 
     <string name="configLabel_alarmSounds">Zvuky</string>            <!-- group title -->
     <string name="configLabel_alarms_volumes">Hlasitosti</string>
@@ -972,11 +962,6 @@
         <item>@string/appThemes_darkTheme</item>
         <item>Světlé téma / Tmavé téma (Noční&#160;režim)</item>
     </string-array>
-    <string-array name="appThemes_values" translatable="false">  <!-- config values (one-to-one with appThemes_display) -->
-        <item>light</item>
-        <item>dark</item>
-        <item>daynight</item>
-    </string-array>
 
     <!-- App Setting: time format -->
     <string-array name="timeFormatMode_display">                      <!-- one-to-one with timeFormatMode_values -->
@@ -984,20 +969,11 @@
         <item>@string/timeFormatMode_12hr</item>
         <item>@string/timeFormatMode_24hr</item>
     </string-array>
-    <string-array name="timeFormatMode_values" translatable="false">  <!-- one-to-one with timeFormatMode_display -->
-        <item>MODE_SYSTEM</item>
-        <item>MODE_12HR</item>
-        <item>MODE_24HR</item>
-    </string-array>
 
     <!-- App Setting: solstice tracking mode -->
     <string-array name="solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
         <item>@string/trackingMode_closest</item>
         <item>@string/trackingMode_soonest</item>
-    </string-array>
-    <string-array name="solsticeTrackingMode_values" translatable="false">  <!-- one-to-one with solsticeTrackingMode_display -->
-        <item>CLOSEST</item>
-        <item>SOONEST</item>
     </string-array>
 
     <!-- App Setting: Date "on tap" action -->
@@ -1008,14 +984,6 @@
         <item>@string/configActionDesc_setDate</item>
         <item>@string/configActionDesc_swapCards</item>
         <item>@string/configActionDesc_resetNote</item>
-    </string-array>
-    <string-array name="dateTapActions_values" translatable="false"> <!-- config values (one-to-one with dateTapActions_display) -->
-        <item>NOTHING</item>
-        <item>SHOW_CALENDAR</item>
-        <item>ALARM</item>
-        <item>CONFIG_DATE</item>
-        <item>SWAP_CARD</item>
-        <item>RESET_NOTE</item>
     </string-array>
 
     <!-- App Setting: Clock UI "on tap" action -->
@@ -1028,15 +996,6 @@
         <item>@string/configActionDesc_prevNote</item>
         <item>@string/configActionDesc_resetNote</item>
     </string-array>
-    <string-array name="clockTapActions_values" translatable="false">  <!-- config values (one-to-one with clockTapActions_display) -->
-        <item>NOTHING</item>
-        <item>SHOW_CALENDAR</item>
-        <item>ALARM</item>
-        <item>TIMEZONE</item>
-        <item>NEXT_NOTE</item>
-        <item>PREV_NOTE</item>
-        <item>RESET_NOTE</item>
-    </string-array>
 
     <!-- App Setting: Note UI "on tap" action -->
     <string-array name="noteTapActions_display">  <!-- display values (one-to-one with noteTapActions_values) -->
@@ -1045,13 +1004,6 @@
         <item>@string/configActionDesc_nextNote</item>
         <item>@string/configActionDesc_prevNote</item>
         <item>@string/configActionDesc_resetNote</item>
-    </string-array>
-    <string-array name="noteTapActions_values" translatable="false">   <!-- config values (one-to-one with noteTapActions_display) -->
-        <item>NOTHING</item>
-        <item>ALARM</item>
-        <item>NEXT_NOTE</item>
-        <item>PREV_NOTE</item>
-        <item>RESET_NOTE</item>
     </string-array>
 
     <string name="configActionDesc_doNothing">Nedělat nic</string>
@@ -1149,11 +1101,6 @@
         <item>@string/timezone_sort_byId</item>
         <item>@string/timezone_sort_byName</item>
     </string-array>
-    <string-array name="timezoneSort_values" translatable="false">   <!-- config values (one-to-one with timezoneSort_display) -->
-        <item>SORT_BY_OFFSET</item>
-        <item>SORT_BY_ID</item>
-        <item>SORT_BY_DISPLAYNAME</item>
-    </string-array>
 
     <string name="timezone_sort_contextAction">Seřadit pásma</string>           <!-- action bar title -->
     <string name="timezone_sort_msg">Časová pásma seřazena (%1$s).</string>      <!-- toast msg -->
@@ -1167,13 +1114,6 @@
         <item>1 minutě</item>
         <item>5 minutách</item>
         <item>10 minutách</item>
-    </string-array>
-    <string-array name="getFix_maxElapse_values" translatable="false">   <!-- ms config values (one-to-one with getFix_maxElapse_display) -->
-        <item>15000</item>
-        <item>30000></item>
-        <item>60000</item>
-        <item>300000</item>
-        <item>600000</item>
     </string-array>
 
     <!-- App Setting: GPS fix max age -->
@@ -1193,20 +1133,6 @@
         <item>jeden měsíc (672 hodin)</item>
         <item>jakékoliv stáří</item>
     </string-array>
-    <string-array name="getFix_maxAge_values" translatable="false">     <!-- ms config values (one-to-one with getFix_maxAge_display) -->
-        <item>0</item>
-        <item>60000</item>
-        <item>300000</item>
-        <item>900000</item>
-        <item>3600000</item>
-        <item>14400000</item>
-        <item>43200000</item>
-        <item>86400000</item>
-        <item>172800000</item>
-        <item>604800000</item>
-        <item>2419200000</item>
-        <item>-1</item>
-    </string-array>
 
     <!-- App Setting: calendars -->
     <string name="configLabel_calendars">Kalendáře</string>   <!-- group title -->
@@ -1224,10 +1150,6 @@
     <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
         <item>Systém</item>
         <item>Uživatelem definováno</item>
-    </string-array>
-    <string-array name="localeMode_values" translatable="false">  <!-- one-to-one with localeMode_display -->
-        <item>SYSTEM_LOCALE</item>
-        <item>CUSTOM_LOCALE</item>
     </string-array>
 
     <!-- App Setting: custom Locale -->
@@ -1250,60 +1172,6 @@
         <item>Ruština</item>
         <item>Nizozemština</item>
         <item>Čeština</item>
-    </string-array>
-    <string-array name="locale_display_native" translatable="false">             <!-- one-to-one with locale_values -->
-        <item>English</item>
-        <item>Esperanto</item>
-        <item>French</item>
-        <item>German</item>
-        <item>Hungarian</item>
-        <item>Italian</item>
-        <item>Polish</item>
-        <item>Spanish</item>
-        <item>Catalan</item>
-        <item>Basque</item>
-        <item>Norwegian</item>
-        <item>Traditional Chinese</item>
-        <item>Portuguese</item>
-        <item>Russian</item>
-        <item>Dutch</item>
-        <item>Czech</item>
-    </string-array>
-    <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
-        <item>en</item>
-        <item>eo</item>
-        <item>fr</item>
-        <item>de</item>
-        <item>hu</item>
-        <item>it</item>
-        <item>pl</item>
-        <item>es_ES</item>
-        <item>ca</item>
-        <item>eu</item>
-        <item>nb</item>
-        <item>zh_TW</item>
-        <item>pt_BR</item>
-        <item>ru</item>
-        <item>nl</item>
-        <item>cs</item>
-    </string-array>
-    <string-array name="locale_credits" translatable="false">  <!-- one-to-one with locale_display -->
-        <item />
-        <item><![CDATA[<a href=https://github.com/Verdulo>Verdulo</a>]]></item>
-        <item><![CDATA[<a href=https://github.com/Jej>Jej</a>|<a href=https://github.com/Aloha>Aloha</a>|<a href=https://github.com/ldmpub>ldmpub</a>]]></item>
-        <item><![CDATA[<a href=https://github.com/HerHde>Henrik "HerHde" Hüttemann</a>|<a href=https://github.com/Wolkenschieber>Wolkenschieber</a>|<a href=https://github.com/xnumad>xnumad</a>]]></item>
-        <item><![CDATA[Erci]]></item>
-        <item><![CDATA[<a href=https://github.com/cao->Matteo Caoduro</a>|<a href=https://github.com/GiovaGa>GiovaGa</a>]]></item>
-        <item><![CDATA[<a href=https://github.com/Verdulo>Verdulo</a>]]></item>
-        <item><![CDATA[<a href=https://github.com/Raulvo>Raulvo</a>|<a href=https://github.com/gnusuari0>gnusuari0</a>]]></item>
-        <item><![CDATA[<a href=https://github.com/Raulvo>Raulvo</a>|<a href=https://github.com/gnusuari0>gnusuari0</a>]]></item>
-        <item><![CDATA[<a href=https://github.com/beriain>beriain</a>]]></item>
-        <item><![CDATA[<a href=https://github.com/FTno>FTno</a>]]></item>
-        <item><![CDATA[<a href=https://github.com/pggdt>ft42</a>]]></item>
-        <item><![CDATA[<a href=https://github.com/NetoSilva>Neto Silva</a>|<a href=https://github.com/naoliv>Nelson&#160;A.&#160;de&#160;Oliveira</a>|<a href=https://github.com/efraletti>Enrico S. B. Fraletti</a>]]></item>
-        <item><![CDATA[<a href=https://github.com/rchintsov>Ruslan&#160;Chintsov</a>]]></item>
-        <item><item><![CDATA[<a href=https://github.com/Joppla>Joppla</a>]]></item></item>
-        <item><![CDATA[<a href=https://github.com/utaxiu>utaxiu</a>]]></item>
     </string-array>
 
     <!-- position formats -->
@@ -1781,51 +1649,5 @@
     <string name="calculator_displayString_time4a_cc">Dodržuje algoritmy publikované Dershowitzem/Reingoldem v jejich knize "Calendrical Calculations" (třetí vydání).</string>
     <string name="calculator_displayString_time4a_4j">Na základě astronomických výpočtů publikovaných Jeanem Meeusem ve své knize "Astronomické algoritmy" (druhé vydání).</string>
 
-    <!-- pref defaults -->
-    <string name="def_appwidget_0_general_calculator" translatable="false">time4a-time4j</string>
-    <string name="def_appwidget_0_general_calculator_moon" translatable="false">time4a-time4j</string>
-    <string name="def_appwidget_0_general_altitude_enabled" translatable="false">true</string>
-    <string name="def_appwidget_0_appearance_timeformatmode" translatable="false">MODE_SYSTEM</string>
-    <string name="def_appwidget_0_general_showweeks" translatable="false">false</string>
-    <string name="def_appwidget_0_general_showhours" translatable="false">true</string>
-    <string name="def_appwidget_0_general_showseconds" translatable="false">false</string>
-    <string name="def_appwidget_0_general_showtimedate" translatable="false">true</string>
-    <string name="def_appwidget_0_general_trackingmode" translatable="false">SOONEST</string>
-    <string name="def_appwidget_0_general_observerheight" translatable="false">1.8288</string>
-
-    <string name="def_app_plugins_enabled" translatable="false">false</string>
-
-    <string name="def_app_locale_mode" translatable="false">SYSTEM_LOCALE</string>
-    <string name="def_app_locale" translatable="false">en</string>
-
-    <string name="def_getFix_maxElapsed" translatable="false">60000</string>
-    <string name="def_getFix_maxAge" translatable="false">300000</string>
-    <string name="def_getFix_passiveMode" translatable="false">false</string>
-
-    <string name="def_app_ui_showwarnings" translatable="false">true</string>
-    <string name="def_app_ui_showmoon" translatable="false">true</string>
-    <string name="def_app_ui_showequinox" translatable="false">true</string>
-    <string name="def_app_ui_showlightmap" translatable="false">true</string>
-    <string name="def_app_ui_showgoldhour" translatable="false">true</string>
-    <string name="def_app_ui_showbluehour" translatable="false">false</string>
-    <string name="def_app_ui_showheader_icon" translatable="false">true</string>
-    <string name="def_app_ui_showheader_text" translatable="false">true</string>
-    <string name="def_app_ui_showdatasource" translatable="false">true</string>
-    <string name="def_app_ui_datetapaction" translatable="false">SWAP_CARD</string>
-    <string name="def_app_ui_datetapaction1" translatable="false">SHOW_CALENDAR</string>
-    <string name="def_app_ui_notetapaction" translatable="false">NEXT_NOTE</string>
-    <string name="def_app_ui_clocktapaction" translatable="false">RESET_NOTE</string>
-    <string name="def_app_appearance_theme" translatable="false">dark</string>
-    <string name="def_app_accessibility_verbose" translatable="false">false</string>
-
-    <string name="def_app_alarms_silence" translatable="false">-1</string>         <!-- silence disabled -->
-    <string name="def_app_alarms_timeout" translatable="false">1200000</string>    <!-- dismiss after 20m -->
-    <string name="def_app_alarms_snooze" translatable="false">600000</string>      <!-- snooze for 10m -->
-    <string name="def_app_alarms_upcoming" translatable="false">36000000</string>  <!-- show reminder within 10h -->
-    <string name="def_app_alarms_fadein" translatable="false">10000</string>       <!-- fade-in 10s to full volume -->
-    <string name="def_app_alarms_hardwarebuttons_action" translatable="false">suntimeswidget.alarm.snooze</string>
-    <string name="def_app_alarms_autoenable" translatable="false">false</string>   <!-- automatically enable new alarms (false) -->
-    <string name="def_app_alarms_allringtones" translatable="false">false</string>   <!-- show all ringtones during selection (ignore ringtone type) -->
-    <string name="def_app_alarms_showlauncher" translatable="false">true</string>
 
 </resources>
