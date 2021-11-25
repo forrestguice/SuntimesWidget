@@ -1048,7 +1048,7 @@ public class CalculatorProvider extends ContentProvider
                 if (selectionArgs[i] != null)
                 {
                     if (retValue.contains("?")) {
-                        retValue = retValue.replaceFirst("\\?", selectionArgs[i]);
+                        retValue = retValue.replaceFirst("\\?", selectionArgs[i]);         // TODO: optimize; String.replace taking up most of the query time..
 
                     } else {
                         Log.w("CalendarProvider", "processSelectionArgs: Too many arguments! Given " + selectionArgs.length + " arguments, but selection contains only " + (i+1));

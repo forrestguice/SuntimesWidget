@@ -381,9 +381,9 @@ public class AlarmListDialog extends DialogFragment
         alarm.ringtoneURI = (ringtoneUri != null ? ringtoneUri.toString() : null);
         if (alarm.ringtoneURI != null)
         {
-            Ringtone ringtone = RingtoneManager.getRingtone(context, ringtoneUri);
-            alarm.ringtoneName = ringtone.getTitle(context);
-            ringtone.stop();
+            Ringtone ringtone = RingtoneManager.getRingtone(context, ringtoneUri);     // TODO: optimize.. getRingtone takes up to 100ms!
+            alarm.ringtoneName = ringtone.getTitle(context);                           // another ~10ms
+            ringtone.stop();                                                           // another ~30ms
         }
 
         alarm.setState(alarm.enabled ? AlarmState.STATE_NONE : AlarmState.STATE_DISABLED);
