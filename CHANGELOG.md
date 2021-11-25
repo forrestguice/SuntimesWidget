@@ -1,5 +1,9 @@
 ### ~
 
+### v0.13.16 (2021-11-29)
+* adds translation to Czech (cs) (contributed by utaxiu) (#520).
+* fixes bug where CalculatorProvider fails to apply altitude refinements. 
+
 ### v0.13.15 (2021-11-15)
 * updates translation to Norwegian (nb) (#515 by FTno).
 * updates translations to Polish (pl) and Esperanto (eo) (#514 by Verdulo).
