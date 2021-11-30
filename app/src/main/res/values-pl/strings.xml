@@ -1005,6 +1005,7 @@
         <item>Portugalski</item>
         <item>Rosyjski</item>
         <item>Holenderski</item>
+        <item>Czech</item>  <!-- TODO -->
     </string-array>
 
     <!-- position formats -->

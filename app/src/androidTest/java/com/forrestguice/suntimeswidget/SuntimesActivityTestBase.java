@@ -275,33 +275,36 @@ public abstract class SuntimesActivityTestBase
         public Location location;
         public String timezoneID;
         public WidgetSettings.TimeFormatMode timeformat;
+        public WidgetSettings.LengthUnit lengthUnits;
 
-        public SuntimesTestConfig(Location location, String timezoneID, boolean format24)
+        public SuntimesTestConfig(Location location, String timezoneID, boolean format24, String units)
         {
             this.location = location;
             this.timezoneID = timezoneID;
             this.timeformat = (format24 ? WidgetSettings.TimeFormatMode.MODE_24HR : WidgetSettings.TimeFormatMode.MODE_12HR);
+            this.lengthUnits = WidgetSettings.LengthUnit.valueOf(units);
         }
     }
 
     protected static String version = BuildConfig.VERSION_NAME;
     protected HashMap<String, SuntimesTestConfig> config;
-    protected SuntimesTestConfig defaultConfig = new SuntimesTestConfig(new Location("Phoenix", "33.45579", "-111.94580", "385"), "US/Arizona", false);
+    protected SuntimesTestConfig defaultConfig = new SuntimesTestConfig(new Location("Phoenix", "33.45579", "-111.94580", "385"), "US/Arizona", false, "IMPERIAL");
 
     public void initConfigurations()
     {
         config = new HashMap<String, SuntimesTestConfig>();
-        config.put("ca", new SuntimesTestConfig(new Location("Barcelona", "41.3825", "2.1769", "31"), "CET", true));
-        config.put("de", new SuntimesTestConfig(new Location("Berlin", "52.5243", "13.4105", "40"), "Europe/Berlin", true));
-        config.put("es_ES", new SuntimesTestConfig(new Location("Madrid", "40.4378", "-3.8196", "681"), "Europe/Madrid", false));
-        config.put("eu", new SuntimesTestConfig(new Location("Euskal Herriko erdigunea", "42.883008", "-1.935491", "1258"), "CET", true));
-        config.put("fr", new SuntimesTestConfig(new Location("Paris", "48.8566", "2.3518", "41"), "Europe/Paris", true));
-        config.put("hu", new SuntimesTestConfig(new Location("Budapest", "47.4811", "18.9902", "225"), "Europe/Budapest", true));
-        config.put("it", new SuntimesTestConfig(new Location("Roma", "41.9099", "12.3959", "79"), "CET", false));
-        config.put("pl", new SuntimesTestConfig(new Location("Warszawa", "52.2319", "21.0067", "143"), "Poland", true));
-        config.put("nb", new SuntimesTestConfig(new Location("Oslo", "59.8937", "10.6450", "0"), "Europe/Oslo", true));
-        config.put("zh_TW", new SuntimesTestConfig(new Location("Taiwan", "23.5491", "119.8998", "0"), "Asia/Taipei", false));
-        config.put("pt_BR", new SuntimesTestConfig(new Location("São Paulo", "-23.6821", "-46.8754", "815"), "Brazil/East", true));
+        config.put("ca", new SuntimesTestConfig(new Location("Barcelona", "41.3825", "2.1769", "31"), "CET", true, "METRIC"));
+        config.put("de", new SuntimesTestConfig(new Location("Berlin", "52.5243", "13.4105", "40"), "Europe/Berlin", true, "METRIC"));
+        config.put("es_ES", new SuntimesTestConfig(new Location("Madrid", "40.4378", "-3.8196", "681"), "Europe/Madrid", false, "METRIC"));
+        config.put("eu", new SuntimesTestConfig(new Location("Euskal Herriko erdigunea", "42.883008", "-1.935491", "1258"), "CET", true, "METRIC"));
+        config.put("fr", new SuntimesTestConfig(new Location("Paris", "48.8566", "2.3518", "41"), "Europe/Paris", true, "METRIC"));
+        config.put("hu", new SuntimesTestConfig(new Location("Budapest", "47.4811", "18.9902", "225"), "Europe/Budapest", true, "METRIC"));
+        config.put("it", new SuntimesTestConfig(new Location("Roma", "41.9099", "12.3959", "79"), "CET", false, "METRIC"));
+        config.put("pl", new SuntimesTestConfig(new Location("Warszawa", "52.2319", "21.0067", "143"), "Poland", true, "METRIC"));
+        config.put("nb", new SuntimesTestConfig(new Location("Oslo", "59.8937", "10.6450", "0"), "Europe/Oslo", true, "METRIC"));
+        config.put("zh_TW", new SuntimesTestConfig(new Location("Taiwan", "23.5491", "119.8998", "0"), "Asia/Taipei", false, "METRIC"));
+        config.put("pt_BR", new SuntimesTestConfig(new Location("São Paulo", "-23.6821", "-46.8754", "815"), "Brazil/East", true, "METRIC"));
+        config.put("cs", new SuntimesTestConfig(new Location("Prague", "50.0595", "14.3255", "361"), "CET", true, "METRIC"));
 
         if (!version.startsWith("v"))
             version = "v" + version;
@@ -332,6 +335,7 @@ public abstract class SuntimesActivityTestBase
         prefs.apply();
 
         WidgetSettings.saveTimeFormatModePref(context, 0, configuration.timeformat);
+        WidgetSettings.saveLengthUnitsPref(context, 0, configuration.lengthUnits);
 
         WidgetSettings.saveLocationModePref(context, 0, WidgetSettings.LocationMode.CUSTOM_LOCATION);
         WidgetSettings.saveLocationPref(context, 0, configuration.location);

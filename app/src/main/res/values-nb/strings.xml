@@ -1002,6 +1002,7 @@
         <item>Portugisisk</item>
         <item>Russisk</item>
         <item>Dutch</item>  <!-- TODO -->
+        <item>Czech</item>  <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
