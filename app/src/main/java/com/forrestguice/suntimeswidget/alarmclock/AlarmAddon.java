@@ -17,7 +17,6 @@
 */
 package com.forrestguice.suntimeswidget.alarmclock;
 
-import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -35,11 +34,12 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
-import com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -114,8 +114,9 @@ public class AlarmAddon
                     PackageInfo packageInfo0 = packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, PackageManager.GET_PERMISSIONS);
                     if (hasPermission(packageInfo0))
                     {
-                        String title = resolveInfo.activityInfo.metaData.getString(KEY_ALARM_PICKER_TITLE);
+                        String title = resolveInfo.activityInfo.metaData.getString(KEY_ALARM_PICKER_TITLE, resolveInfo.activityInfo.name);
                         matches.add(new AlarmPickerInfo(title, resolveInfo.activityInfo));
+
                     } else {
                         Log.w("queryAlarmPickers", "Permission denied! " + packageInfo0.packageName + " does not have required permissions.");
                     }
@@ -124,6 +125,12 @@ public class AlarmAddon
                 }
             }
         }
+        Collections.sort(matches, new Comparator<AlarmPickerInfo>() {
+            @Override
+            public int compare(AlarmPickerInfo o1, AlarmPickerInfo o2) {
+                return o1.getTitle().compareTo(o2.getTitle());
+            }
+        });
         return matches;
     }
 
@@ -132,13 +139,14 @@ public class AlarmAddon
      */
     public static class AlarmPickerInfo
     {
-        public AlarmPickerInfo(String title, ActivityInfo info)
+        public AlarmPickerInfo(@NonNull String title, ActivityInfo info)
         {
             this.title = title;
             this.info = info;
         }
 
         protected String title;
+        @NonNull
         public String getTitle() {
             return title;
         }
