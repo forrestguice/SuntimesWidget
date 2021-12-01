@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2019 Forrest Guice
+    Copyright (C) 2014-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -17,7 +17,6 @@
 */
 package com.forrestguice.suntimeswidget;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
@@ -30,9 +29,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.AlarmClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -56,7 +53,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,7 +60,9 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
-import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmRepeatDialog;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -76,13 +74,8 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
-import java.text.DateFormat;
-
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.TimeZone;
 
 public class AlarmDialog extends BottomSheetDialogFragment
 {
@@ -360,39 +353,40 @@ public class AlarmDialog extends BottomSheetDialogFragment
                             listener.onChanged(AlarmDialog.this);
                         }
 
-                        String displayString = item.getTitle();
-
-                        Calendar now0 = dataset.nowThen(dataset.calendar());
-                        Calendar alarmCalendar = getCalendarForAlarmChoice(choice, now0);
-
-                        if (alarmCalendar != null)
+                        if (showDesc)
                         {
-                            Calendar now = dataset.now();
-                            if (now.after(alarmCalendar))      // getCalendarForAlarmChoice should return a datetime in the future..
-                            {                                      // but supposing it doesn't (due to user defined date) then adjust alarmTime to be today
-                                alarmCalendar = SuntimesData.nowThen(alarmCalendar, now);  // and if that is also past, adjust alarmTime to be tomorrow
-                                if (now.after(alarmCalendar))
-                                {
-                                    Calendar tomorrow = (Calendar)now.clone();
-                                    tomorrow.add(Calendar.DAY_OF_YEAR, 1);
-                                    alarmCalendar = SuntimesData.nowThen(alarmCalendar, tomorrow);
+                            String displayString = item.getTitle();
+                            Calendar now0 = dataset.nowThen(dataset.calendar());
+                            Calendar alarmCalendar = getCalendarForAlarmChoice(choice, now0);
+                            if (alarmCalendar != null)
+                            {
+                                Calendar now = dataset.now();
+                                if (now.after(alarmCalendar))      // getCalendarForAlarmChoice should return a datetime in the future..
+                                {                                      // but supposing it doesn't (due to user defined date) then adjust alarmTime to be today
+                                    alarmCalendar = SuntimesData.nowThen(alarmCalendar, now);  // and if that is also past, adjust alarmTime to be tomorrow
+                                    if (now.after(alarmCalendar))
+                                    {
+                                        Calendar tomorrow = (Calendar)now.clone();
+                                        tomorrow.add(Calendar.DAY_OF_YEAR, 1);
+                                        alarmCalendar = SuntimesData.nowThen(alarmCalendar, tomorrow);
+                                    }
                                 }
+
+                                String timeString =" " + utils.timeDeltaDisplayString(now.getTime(), alarmCalendar.getTime()).getValue() + " ";
+                                String noteString = context.getString(R.string.schedalarm_dialog_note, timeString);
+                                txt_note.setText(SuntimesUtils.createBoldColorSpan(null, noteString, timeString, color_textTimeDelta));
+                                icon_note.setVisibility(View.GONE);
+
+                                String modeDescription = (type == AlarmClockItem.AlarmType.NOTIFICATION) ? context.getString(R.string.configLabel_schednotify_mode) : context.getString(R.string.configLabel_schedalarm_mode);
+                                SuntimesUtils.announceForAccessibility(txt_note,  modeDescription + " " + displayString + ", " + txt_note.getText());   // TODO: does AlarmCreateDialog also announce?
+
+                            } else {
+                                String timeString = " " + displayString + " ";
+                                String noteString = context.getString(R.string.schedalarm_dialog_note2, timeString);
+                                txt_note.setText(SuntimesUtils.createBoldColorSpan(null, noteString, timeString, color_textTimeDelta));
+                                icon_note.setVisibility(View.VISIBLE);
+                                SuntimesUtils.announceForAccessibility(txt_note, displayString + ", " + txt_note.getText());
                             }
-
-                            String timeString =" " + utils.timeDeltaDisplayString(now.getTime(), alarmCalendar.getTime()).getValue() + " ";
-                            String noteString = context.getString(R.string.schedalarm_dialog_note, timeString);
-                            txt_note.setText(SuntimesUtils.createBoldColorSpan(null, noteString, timeString, color_textTimeDelta));
-                            icon_note.setVisibility(View.GONE);
-
-                            String modeDescription = (type == AlarmClockItem.AlarmType.NOTIFICATION) ? context.getString(R.string.configLabel_schednotify_mode) : context.getString(R.string.configLabel_schedalarm_mode);
-                            SuntimesUtils.announceForAccessibility(txt_note,  modeDescription + " " + displayString + ", " + txt_note.getText());
-
-                        } else {
-                            String timeString = " " + displayString + " ";
-                            String noteString = context.getString(R.string.schedalarm_dialog_note2, timeString);
-                            txt_note.setText(SuntimesUtils.createBoldColorSpan(null, noteString, timeString, color_textTimeDelta));
-                            icon_note.setVisibility(View.VISIBLE);
-                            SuntimesUtils.announceForAccessibility(txt_note, displayString + ", " + txt_note.getText());
                         }
                     }
 
@@ -669,262 +663,13 @@ public class AlarmDialog extends BottomSheetDialogFragment
 
     public Calendar getCalendarForAlarmChoice( String choice, Calendar now )
     {
-        SolarEvents event = SolarEvents.valueOf(choice, null);
-        if (event != null) {
-            return getCalendarForAlarmChoice(event, now);
-
-        } else {
-            // TODO: non SolarEvents enum
-            return Calendar.getInstance();
-        }
+        AlarmClockItem item = createAlarmItem();
+        boolean isSchedulable = AlarmNotifications.updateAlarmTime(getActivity(), item);
+        return (isSchedulable) ? item.getCalendar() : null;
     }
 
-    /**
-     * @param choice a SolarEvent "alarm choice"
-     * @param now a Calendar representing "right now"
-     * @return a Calendar representing the alarm selection
-     */
-    public Calendar getCalendarForAlarmChoice( SolarEvents choice, Calendar now )
-    {
-        Date time = now.getTime();
-        Calendar calendar = null;
-        switch (choice)
-        {
-            case EQUINOX_SPRING:
-                if (equinoxdata != null) {
-                    calendar = equinoxdata.dataEquinoxSpring.eventCalendarThisYear();
-                    if (calendar == null || time.after(calendar.getTime())) {
-                        calendar = equinoxdata.dataEquinoxSpring.eventCalendarOtherYear();
-                    }
-                }
-                break;
-            case SOLSTICE_SUMMER:
-                if (equinoxdata != null) {
-                    calendar = equinoxdata.dataSolsticeSummer.eventCalendarThisYear();
-                    if (calendar == null || time.after(calendar.getTime())) {
-                        calendar = equinoxdata.dataSolsticeSummer.eventCalendarOtherYear();
-                    }
-                }
-                break;
-            case EQUINOX_AUTUMNAL:
-                if (equinoxdata != null) {
-                    calendar = equinoxdata.dataEquinoxAutumnal.eventCalendarThisYear();
-                    if (calendar == null || time.after(calendar.getTime())) {
-                        calendar = equinoxdata.dataEquinoxAutumnal.eventCalendarOtherYear();
-                    }
-                }
-                break;
-            case SOLSTICE_WINTER:
-                if (equinoxdata != null) {
-                    calendar = equinoxdata.dataSolsticeWinter.eventCalendarThisYear();
-                    if (calendar == null || time.after(calendar.getTime())) {
-                        calendar = equinoxdata.dataSolsticeWinter.eventCalendarOtherYear();
-                    }
-                }
-                break;
-            case NEWMOON:
-            case FIRSTQUARTER:
-            case FULLMOON:
-            case THIRDQUARTER:
-                if (moondata != null) {
-                    calendar = moondata.moonPhaseCalendar(choice.toMoonPhase());
-                }
-                break;
-            case MOONRISE:
-            case MOONSET:
-            case MOONNOON:
-            case MOONNIGHT:
-                if (moondata != null)
-                {
-                    calendar = AlarmNotifications.moonEventCalendar(choice, moondata, true);
-                    if (calendar == null || time.after(calendar.getTime())) {
-                        calendar = AlarmNotifications.moonEventCalendar(choice, moondata, false);
-                    }
-                }
-                break;
-            case MORNING_ASTRONOMICAL:
-                calendar = dataset.dataAstro.sunriseCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataAstro.sunriseCalendarOther();
-                }
-                break;
-            case MORNING_NAUTICAL:
-                calendar = dataset.dataNautical.sunriseCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataNautical.sunriseCalendarOther();
-                }
-                break;
-            case MORNING_BLUE8:
-                calendar = dataset.dataBlue8.sunriseCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataBlue8.sunriseCalendarOther();
-                }
-                break;
-            case MORNING_CIVIL:
-                calendar = dataset.dataCivil.sunriseCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataCivil.sunriseCalendarOther();
-                }
-                break;
-            case MORNING_BLUE4:
-                calendar = dataset.dataBlue4.sunriseCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataBlue4.sunriseCalendarOther();
-                }
-                break;
-            case MORNING_GOLDEN:
-                calendar = dataset.dataGold.sunriseCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataGold.sunriseCalendarOther();
-                }
-                break;
-            case NOON:
-                calendar = dataset.dataNoon.sunriseCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataNoon.sunriseCalendarOther();
-                }
-                break;
-            case SUNSET:
-                calendar = dataset.dataActual.sunsetCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataActual.sunsetCalendarOther();
-                }
-                break;
-            case EVENING_GOLDEN:
-                calendar = dataset.dataGold.sunsetCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataGold.sunsetCalendarOther();
-                }
-                break;
-            case EVENING_BLUE4:
-                calendar = dataset.dataBlue4.sunsetCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataBlue4.sunsetCalendarOther();
-                }
-                break;
-            case EVENING_CIVIL:
-                calendar = dataset.dataCivil.sunsetCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataCivil.sunsetCalendarOther();
-                }
-                break;
-            case EVENING_BLUE8:
-                calendar = dataset.dataBlue8.sunsetCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataBlue8.sunsetCalendarOther();
-                }
-                break;
-            case EVENING_NAUTICAL:
-                calendar = dataset.dataNautical.sunsetCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataNautical.sunsetCalendarOther();
-                }
-                break;
-            case EVENING_ASTRONOMICAL:
-                calendar = dataset.dataAstro.sunsetCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataAstro.sunsetCalendarOther();
-                }
-                break;
-            case SUNRISE:
-            default:
-                calendar = dataset.dataActual.sunriseCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataActual.sunriseCalendarOther();
-                }
-                break;
-        }
-        return calendar;
-    }
-
-    /**
-     * Schedule the selected alarm on click.
-     */
-    public DialogInterface.OnClickListener scheduleAlarmClickListener = new DialogInterface.OnClickListener()
-    {
-        @Override
-        public void onClick(DialogInterface dialogInterface, int i)
-        {
-            Context context = getContext();
-            if (context != null)
-            {
-                String choice = getChoice();
-                SolarEvents event = SolarEvents.valueOf(choice, null);
-                String shortDisplayString = event != null ? event.getLongDisplayString() : choice;   // TODO: non SolarEvents enum display string
-                String longDisplayString = event != null ? event.getLongDisplayString() : choice;    // TODO
-
-                Calendar now = dataset.nowThen(dataset.calendar());
-                Calendar calendar = getCalendarForAlarmChoice(getChoice(), now);
-
-                if (calendar != null)
-                {
-                    DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
-                    String alarmLabel = context.getString(R.string.schedalarm_labelformat, shortDisplayString, dateFormat.format(calendar.getTime()));
-                    AlarmDialog.scheduleAlarm(getActivity(), alarmLabel, calendar, choice);
-
-                } else {
-                    String alarmErrorTxt = getString(R.string.schedalarm_dialog_error) + "\n" + getString(R.string.schedalarm_dialog_note2, longDisplayString);
-                    Toast alarmError = Toast.makeText(getActivity(), alarmErrorTxt, Toast.LENGTH_LONG);
-                    alarmError.show();
-                }
-            }
-        }
-    };
-
-    public static void scheduleAlarm(Activity context, String label, Calendar calendar, String event)
-    {
-        if (calendar == null)
-            return;
-
-        Calendar alarm = new GregorianCalendar(TimeZone.getDefault());
-        alarm.setTimeInMillis(calendar.getTimeInMillis());
-        int hour = alarm.get(Calendar.HOUR_OF_DAY);
-        int minutes = alarm.get(Calendar.MINUTE);
-
-        Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
-        alarmIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //alarmIntent.putExtra(AlarmClock.EXTRA_MESSAGE, label);
-        alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, hour);
-        alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
-        alarmIntent.putExtra(AlarmClockActivity.EXTRA_SOLAREVENT, event);
-
-        if (alarmIntent.resolveActivity(context.getPackageManager()) != null)
-        {
-            context.startActivity(alarmIntent);
-        }
-    }
-
-    /**
-     * @param context a context used to start the "show alarm" intent
-     */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    public static void showAlarms(Activity context)
-    {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-        {
-            Intent alarmsIntent = new Intent(AlarmClock.ACTION_SHOW_ALARMS);
-            alarmsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-            if (alarmsIntent.resolveActivity(context.getPackageManager()) != null)
-            {
-                context.startActivity(alarmsIntent);
-            }
-        }
+    protected AlarmClockItem createAlarmItem() {
+        return AlarmListDialog.createAlarm(getActivity(), AlarmClockItem.AlarmType.ALARM, "", getChoice(), getLocation(), -1, -1, null, AlarmSettings.loadPrefVibrateDefault(getActivity()), AlarmSettings.getDefaultRingtoneUri(getActivity(), AlarmClockItem.AlarmType.ALARM), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
 
     private View.OnClickListener onLocationClicked = new View.OnClickListener() {
