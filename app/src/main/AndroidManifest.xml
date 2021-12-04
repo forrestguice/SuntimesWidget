@@ -70,6 +70,14 @@
             android:exported="true"
             android:syncable="false" />
 
+        <!-- Action Provider -->
+        <provider
+            android:name="com.forrestguice.suntimeswidget.actions.SuntimesActionsProvider"
+            android:authorities="suntimeswidget.action.provider"
+            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:exported="true"
+            android:syncable="false" />
+
         <!-- Calculator Plugins -->
         <!--EXAMPLE:
         <activity android:name=".calculator.ca.rmen.sunrisesunset.CalculatorPlugin">  ..where CalculatorPlugin is an empty activity
