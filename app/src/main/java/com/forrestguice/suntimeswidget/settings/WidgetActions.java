@@ -305,17 +305,20 @@ public class WidgetActions
             prefs.apply();
 
         } else {
-            if (values != null)
-            {
-                StringBuilder s = new StringBuilder();
-                for (String v : values) {
-                    s.append(v).append("|");
-                }
-                prefs.putString(key, s.toString());
-            } else {
-                prefs.putString(key, null);
-            }
+            prefs.putString(key, stringSetToString(values));
             prefs.apply();
+        }
+    }
+    public static String stringSetToString(@Nullable Set<String> values)
+    {
+        if (values != null) {
+            StringBuilder s = new StringBuilder();
+            for (String v : values) {
+                s.append(v).append("|");
+            }
+            return s.toString();
+        } else {
+            return null;
         }
     }
 

@@ -33,6 +33,7 @@ import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 
 import java.util.HashMap;
+import java.util.Set;
 
 import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.COLUMN_ACTION_ACTION;
@@ -166,7 +167,8 @@ public class SuntimesActionsProvider extends ContentProvider
                     values.put(column, Integer.parseInt(WidgetActions.loadActionLaunchPref(context, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR)));
                     break;
                 case COLUMN_ACTION_TAGS:
-                    // TODO
+                    Set<String> tags = WidgetActions.loadActionTags(context, 0, actionID);
+                    values.put(column, WidgetActions.stringSetToString(tags));
                     break;
 
                 case COLUMN_ACTION_TITLE:
