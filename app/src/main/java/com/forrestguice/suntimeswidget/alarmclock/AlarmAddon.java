@@ -51,12 +51,12 @@ import java.util.List;
 public class AlarmAddon
 {
     public static final String CATEGORY_SUNTIMES_ALARM = "suntimes.SUNTIMES_ALARM";
-    public static final String ACTION_SUNTIMES_ADDON_ALARM = "suntimes.action.ADDON_ALARM";
-    public static final String KEY_ALARM_INFO_PROVIDER = "AlarmInfoProvider";
+    public static final String ACTION_SUNTIMES_ADDON_EVENT = "suntimes.action.ADDON_EVENT";
+    public static final String KEY_EVENT_INFO_PROVIDER = "EventInfoProvider";
 
     public static final String CATEGORY_SUNTIMES_ADDON = "suntimes.SUNTIMES_ADDON";
-    public static final String ACTION_SUNTIMES_PICK_ALARM = "suntimes.action.PICK_ALARM";
-    public static final String KEY_ALARM_PICKER_TITLE = "SuntimesAlarmPickerTitle";
+    public static final String ACTION_SUNTIMES_PICK_EVENT = "suntimes.action.PICK_EVENT";
+    public static final String KEY_EVENT_PICKER_TITLE = "SuntimesEventPickerTitle";
 
     public static String getAlarmInfoUri(String authority, String alarmID) {
         return "content://" + authority + "/" + AlarmEventContract.QUERY_EVENT_INFO + "/" + alarmID;
@@ -72,7 +72,7 @@ public class AlarmAddon
     public static List<AlarmPickerInfo> queryAlarmPickers(@NonNull Context context)
     {
         Intent intent = new Intent();
-        intent.setAction(ACTION_SUNTIMES_PICK_ALARM);
+        intent.setAction(ACTION_SUNTIMES_PICK_EVENT);
         intent.addCategory(CATEGORY_SUNTIMES_ADDON);
 
         PackageManager packageManager = context.getPackageManager();
@@ -81,13 +81,13 @@ public class AlarmAddon
         for (ResolveInfo resolveInfo : packageInfo)
         {
             IntentFilter filter = resolveInfo.filter;
-            if (filter != null && filter.hasAction(ACTION_SUNTIMES_PICK_ALARM) && filter.hasCategory(CATEGORY_SUNTIMES_ADDON))
+            if (filter != null && filter.hasAction(ACTION_SUNTIMES_PICK_EVENT) && filter.hasCategory(CATEGORY_SUNTIMES_ADDON))
             {
                 try {
                     PackageInfo packageInfo0 = packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, PackageManager.GET_PERMISSIONS);
                     if (hasPermission(packageInfo0))
                     {
-                        String title = resolveInfo.activityInfo.metaData.getString(KEY_ALARM_PICKER_TITLE, resolveInfo.activityInfo.name);
+                        String title = resolveInfo.activityInfo.metaData.getString(KEY_EVENT_PICKER_TITLE, resolveInfo.activityInfo.name);
                         matches.add(new AlarmPickerInfo(title, resolveInfo.activityInfo));
 
                     } else {
@@ -134,7 +134,7 @@ public class AlarmAddon
         }
         public Intent getIntent(@Nullable Location location)
         {
-            Intent intent = new Intent(AlarmAddon.ACTION_SUNTIMES_PICK_ALARM);
+            Intent intent = new Intent(AlarmAddon.ACTION_SUNTIMES_PICK_EVENT);
             intent.setClassName(info.packageName, info.name);
 
             if (location != null)
@@ -159,7 +159,7 @@ public class AlarmAddon
     {
         ArrayList<String> references = new ArrayList<>();
         PackageManager packageManager = context.getPackageManager();
-        Intent packageQuery = new Intent(ACTION_SUNTIMES_ADDON_ALARM);
+        Intent packageQuery = new Intent(ACTION_SUNTIMES_ADDON_EVENT);
         packageQuery.addCategory(CATEGORY_SUNTIMES_ALARM);
         List<ResolveInfo> packages = packageManager.queryIntentActivities(packageQuery, PackageManager.GET_META_DATA);
         Log.i("queryAlarmInfo", "Scanning for AlarmInfoProvider references... found " + packages.size());
@@ -172,7 +172,7 @@ public class AlarmAddon
                     PackageInfo packageInfo = packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, PackageManager.GET_PERMISSIONS);
                     if (hasPermission(packageInfo))
                     {
-                        String metaData = resolveInfo.activityInfo.metaData.getString(KEY_ALARM_INFO_PROVIDER);
+                        String metaData = resolveInfo.activityInfo.metaData.getString(KEY_EVENT_INFO_PROVIDER);
                         String[] values = (metaData != null) ? metaData.replace(" ","").split("\\|") : new String[0];
                         references.addAll(Arrays.asList(values));
                     } else {
