@@ -35,7 +35,7 @@ public interface AlarmEventContract
     String COLUMN_EVENT_TIMEMILLIS = "event_time";      // long (timestamp millis)
 
     String QUERY_EVENT_INFO = "eventInfo";
-    String[] QUERY_ALARM_INFO_PROJECTION = new String[] {
+    String[] QUERY_EVENT_INFO_PROJECTION = new String[] {
             COLUMN_EVENT_NAME, COLUMN_EVENT_TITLE, COLUMN_EVENT_SUMMARY
     };
     String QUERY_EVENT_CALC = "eventCalc";

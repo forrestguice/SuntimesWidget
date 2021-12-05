@@ -212,7 +212,7 @@ public class AlarmAddon
         if (resolver != null && uriString != null)
         {
             Uri info_uri = Uri.parse(uriString);
-            Cursor cursor = resolver.query(info_uri, AlarmEventContract.QUERY_ALARM_INFO_PROJECTION, null, null, null);
+            Cursor cursor = resolver.query(info_uri, AlarmEventContract.QUERY_EVENT_INFO_PROJECTION, null, null, null);
             if (cursor != null)
             {
                 cursor.moveToFirst();
