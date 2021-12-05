@@ -58,18 +58,18 @@ public class AlarmAddon
     public static final String ACTION_SUNTIMES_PICK_EVENT = "suntimes.action.PICK_EVENT";
     public static final String KEY_EVENT_PICKER_TITLE = "SuntimesEventPickerTitle";
 
-    public static String getAlarmInfoUri(String authority, String alarmID) {
-        return "content://" + authority + "/" + AlarmEventContract.QUERY_EVENT_INFO + "/" + alarmID;
+    public static String getEventInfoUri(String authority, String eventID) {
+        return "content://" + authority + "/" + AlarmEventContract.QUERY_EVENT_INFO + "/" + eventID;
     }
 
-    public static String getAlarmCalcUri(String authority, String alarmID) {
-        return "content://" + authority + "/" + AlarmEventContract.QUERY_EVENT_CALC + "/" + alarmID;
+    public static String getEventCalcUri(String authority, String eventID) {
+        return "content://" + authority + "/" + AlarmEventContract.QUERY_EVENT_CALC + "/" + eventID;
     }
 
     /**
-     * queryAlarmPickers
+     * queryEventPickers
      */
-    public static List<AlarmPickerInfo> queryAlarmPickers(@NonNull Context context)
+    public static List<EventPickerInfo> queryEventPickers(@NonNull Context context)
     {
         Intent intent = new Intent();
         intent.setAction(ACTION_SUNTIMES_PICK_EVENT);
@@ -77,7 +77,7 @@ public class AlarmAddon
 
         PackageManager packageManager = context.getPackageManager();
         List<ResolveInfo> packageInfo = packageManager.queryIntentActivities(intent, PackageManager.GET_RESOLVED_FILTER | PackageManager.GET_META_DATA);
-        ArrayList<AlarmPickerInfo> matches = new ArrayList<>();
+        ArrayList<EventPickerInfo> matches = new ArrayList<>();
         for (ResolveInfo resolveInfo : packageInfo)
         {
             IntentFilter filter = resolveInfo.filter;
@@ -88,19 +88,19 @@ public class AlarmAddon
                     if (hasPermission(packageInfo0))
                     {
                         String title = resolveInfo.activityInfo.metaData.getString(KEY_EVENT_PICKER_TITLE, resolveInfo.activityInfo.name);
-                        matches.add(new AlarmPickerInfo(title, resolveInfo.activityInfo));
+                        matches.add(new EventPickerInfo(title, resolveInfo.activityInfo));
 
                     } else {
-                        Log.w("queryAlarmPickers", "Permission denied! " + packageInfo0.packageName + " does not have required permissions.");
+                        Log.w("queryEventPickers", "Permission denied! " + packageInfo0.packageName + " does not have required permissions.");
                     }
                 } catch (PackageManager.NameNotFoundException e) {
-                    Log.e("queryAlarmPickers", "Package not found! " + e);
+                    Log.e("queryEventPickers", "Package not found! " + e);
                 }
             }
         }
-        Collections.sort(matches, new Comparator<AlarmPickerInfo>() {
+        Collections.sort(matches, new Comparator<EventPickerInfo>() {
             @Override
-            public int compare(AlarmPickerInfo o1, AlarmPickerInfo o2) {
+            public int compare(EventPickerInfo o1, EventPickerInfo o2) {
                 return o1.getTitle().compareTo(o2.getTitle());
             }
         });
@@ -108,11 +108,11 @@ public class AlarmAddon
     }
 
     /**
-     * AlarmPickerInfo
+     * EventPickerInfo
      */
-    public static class AlarmPickerInfo
+    public static class EventPickerInfo
     {
-        public AlarmPickerInfo(@NonNull String title, ActivityInfo info)
+        public EventPickerInfo(@NonNull String title, ActivityInfo info)
         {
             this.title = title;
             this.info = info;
@@ -153,16 +153,16 @@ public class AlarmAddon
     }
 
     /**
-     * queryAlarmInfoProviders
+     * queryEventInfoProviders
      */
-    public static List<String> queryAlarmInfoProviders(@NonNull Context context)
+    public static List<String> queryEventInfoProviders(@NonNull Context context)
     {
         ArrayList<String> references = new ArrayList<>();
         PackageManager packageManager = context.getPackageManager();
         Intent packageQuery = new Intent(ACTION_SUNTIMES_ADDON_EVENT);
         packageQuery.addCategory(CATEGORY_SUNTIMES_ALARM);
         List<ResolveInfo> packages = packageManager.queryIntentActivities(packageQuery, PackageManager.GET_META_DATA);
-        Log.i("queryAlarmInfo", "Scanning for AlarmInfoProvider references... found " + packages.size());
+        Log.i("queryEventInfo", "Scanning for EventInfoProvider references... found " + packages.size());
 
         for (ResolveInfo resolveInfo : packages)
         {
@@ -176,10 +176,10 @@ public class AlarmAddon
                         String[] values = (metaData != null) ? metaData.replace(" ","").split("\\|") : new String[0];
                         references.addAll(Arrays.asList(values));
                     } else {
-                        Log.w("queryAlarmInfo", "Permission denied! " + packageInfo.packageName + " does not have required permissions.");
+                        Log.w("queryEventInfo", "Permission denied! " + packageInfo.packageName + " does not have required permissions.");
                     }
                 } catch (PackageManager.NameNotFoundException e) {
-                    Log.e("queryAlarmInfo", "Package not found! " + e);
+                    Log.e("queryEventInfo", "Package not found! " + e);
                 }
             }
         }

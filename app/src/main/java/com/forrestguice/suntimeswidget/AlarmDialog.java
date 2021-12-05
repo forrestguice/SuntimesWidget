@@ -319,7 +319,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
             txt_location.setOnClickListener(onLocationClicked);
         }
 
-        alarmPickers = AlarmAddon.queryAlarmPickers(context);
+        alarmPickers = AlarmAddon.queryEventPickers(context);
         btn_more = (ImageButton) dialogContent.findViewById(R.id.appwidget_schedalarm_more);
         if (btn_more != null) {
             btn_more.setOnClickListener(onMoreButtonClicked);
@@ -433,7 +433,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
             Menu menu = popup.getMenu();
 
             if (alarmPickers == null) {
-                alarmPickers = AlarmAddon.queryAlarmPickers(context);
+                alarmPickers = AlarmAddon.queryEventPickers(context);
             }
 
             int[] attr = { R.attr.icActionExtension };
@@ -452,7 +452,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
             popup.show();
         }
     };
-    private List<AlarmAddon.AlarmPickerInfo> alarmPickers = null;
+    private List<AlarmAddon.EventPickerInfo> alarmPickers = null;
 
     private PopupMenu.OnMenuItemClickListener onMoreMenuClick = new PopupMenu.OnMenuItemClickListener()
     {
@@ -467,7 +467,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
             int i = item.getItemId();
             if (i >= 0 && i < alarmPickers.size())
             {
-                AlarmAddon.AlarmPickerInfo picker = alarmPickers.get(item.getItemId());
+                AlarmAddon.EventPickerInfo picker = alarmPickers.get(item.getItemId());
                 Intent intent = picker.getIntent(getLocation());
                 intent.putExtra(AlarmEventContract.EXTRA_ALARM_EVENT, getChoice());
                 startActivityForResult(intent, REQUEST_ADDON_ALARMPICKER);
@@ -529,7 +529,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
         ContentResolver resolver = context != null ? context.getContentResolver() : null;
         if (resolver != null)
         {
-            if (AlarmAddon.checkUriPermission(context, AlarmAddon.getAlarmInfoUri(reference, name)))
+            if (AlarmAddon.checkUriPermission(context, AlarmAddon.getEventInfoUri(reference, name)))
             {
                 AlarmEvent.AlarmEventItem item = new AlarmEvent.AlarmEventItem(reference, name, resolver);
                 if (item.isResolved())

@@ -1635,7 +1635,7 @@ public class AlarmNotifications extends BroadcastReceiver
         long nowMillis = now.getTimeInMillis();
 
         Uri uri_id = Uri.parse(eventID);
-        Uri uri_calc = Uri.parse(AlarmAddon.getAlarmCalcUri(uri_id.getAuthority(), uri_id.getLastPathSegment()));
+        Uri uri_calc = Uri.parse(AlarmAddon.getEventCalcUri(uri_id.getAuthority(), uri_id.getLastPathSegment()));
         if (resolver != null)
         {
             StringBuilder repeatingDaysString = new StringBuilder("[");

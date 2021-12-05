@@ -59,7 +59,7 @@ public class AlarmEvent
         public AlarmEventItem( @NonNull String authority, @NonNull String name, @Nullable ContentResolver resolver)
         {
             event = null;
-            uri = AlarmAddon.getAlarmInfoUri(authority, name);
+            uri = AlarmAddon.getEventInfoUri(authority, name);
             resolved = AlarmAddon.queryDisplayStrings(this, resolver);
         }
 
