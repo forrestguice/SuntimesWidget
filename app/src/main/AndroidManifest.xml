@@ -78,6 +78,14 @@
             android:exported="true"
             android:syncable="false" />
 
+        <!-- Alarm Provider -->
+        <provider
+            android:name="com.forrestguice.suntimeswidget.alarmclock.SuntimesAlarmsProvider"
+            android:authorities="suntimeswidget.alarm.provider"
+            android:permission="suntimes.permission.READ_CALCULATOR"
+            android:exported="true"
+            android:syncable="false" />
+
         <!-- Calculator Plugins -->
         <!--EXAMPLE:
         <activity android:name=".calculator.ca.rmen.sunrisesunset.CalculatorPlugin">  ..where CalculatorPlugin is an empty activity
