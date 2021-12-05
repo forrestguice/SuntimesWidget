@@ -59,6 +59,7 @@ import android.widget.Toast;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
@@ -468,7 +469,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
             {
                 AlarmAddon.AlarmPickerInfo picker = alarmPickers.get(item.getItemId());
                 Intent intent = picker.getIntent(getLocation());
-                intent.putExtra(AlarmAddon.EXTRA_ALARM_EVENT, getChoice());
+                intent.putExtra(AlarmEventContract.EXTRA_ALARM_EVENT, getChoice());
                 startActivityForResult(intent, REQUEST_ADDON_ALARMPICKER);
                 return true;
 
@@ -491,8 +492,8 @@ public class AlarmDialog extends BottomSheetDialogFragment
                     if (data != null)
                     {
                         Uri uri = data.getData();
-                        String reference = data.getStringExtra(AlarmAddon.COLUMN_CONFIG_PROVIDER);
-                        String name = data.getStringExtra(AlarmAddon.COLUMN_ALARM_NAME);
+                        String reference = data.getStringExtra(AlarmEventContract.COLUMN_CONFIG_PROVIDER);
+                        String name = data.getStringExtra(AlarmEventContract.COLUMN_EVENT_NAME);
                         //String title = data.getStringExtra(AlarmAddon.COLUMN_ALARM_TITLE);
                         //String summary = data.getStringExtra(AlarmAddon.COLUMN_ALARM_SUMMARY);
                         //Toast.makeText(getActivity(), "picker result: \n" + title + " \n" + summary + "\n" + name + "\n" + reference + "\n" + uri, Toast.LENGTH_LONG).show();

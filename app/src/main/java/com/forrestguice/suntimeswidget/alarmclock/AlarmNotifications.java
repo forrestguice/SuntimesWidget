@@ -1650,10 +1650,10 @@ public class AlarmNotifications extends BroadcastReceiver
             repeatingDaysString.append("]");
 
             String[] selectionArgs = new String[] { Long.toString(nowMillis), Long.toString(offset), Boolean.toString(repeating), repeatingDaysString.toString() };
-            String selection = AlarmAddon.EXTRA_ALARM_NOW + "=? AND "
-                             + AlarmAddon.EXTRA_ALARM_OFFSET + "=? AND "
-                             + AlarmAddon.EXTRA_ALARM_REPEAT + "=? AND "
-                             + AlarmAddon.EXTRA_ALARM_REPEAT_DAYS + "=?";
+            String selection = AlarmEventContract.EXTRA_ALARM_NOW + "=? AND "
+                             + AlarmEventContract.EXTRA_ALARM_OFFSET + "=? AND "
+                             + AlarmEventContract.EXTRA_ALARM_REPEAT + "=? AND "
+                             + AlarmEventContract.EXTRA_ALARM_REPEAT_DAYS + "=?";
 
             if (location != null)
             {
@@ -1665,11 +1665,11 @@ public class AlarmNotifications extends BroadcastReceiver
                         + CalculatorProviderContract.COLUMN_CONFIG_ALTITUDE + "=?";
             }
 
-            Cursor cursor = resolver.query(uri_calc, AlarmAddon.QUERY_ALARM_CALC_PROJECTION, selection, selectionArgs, null);
+            Cursor cursor = resolver.query(uri_calc, AlarmEventContract.QUERY_EVENT_CALC_PROJECTION, selection, selectionArgs, null);
             if (cursor != null)
             {
                 cursor.moveToFirst();
-                int i_eventTime = cursor.getColumnIndex(AlarmAddon.COLUMN_ALARM_TIMEMILLIS);
+                int i_eventTime = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_TIMEMILLIS);
                 Long eventTimeMillis = i_eventTime >= 0 ? cursor.getLong(i_eventTime) : null;
                 cursor.close();
 
@@ -1684,7 +1684,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     return eventTime;
 
                 } else {
-                    Log.e(TAG, "updateAlarmTime: failed to query alarm time; result is missing " + AlarmAddon.COLUMN_ALARM_TIMEMILLIS + " :: " + uri_calc);
+                    Log.e(TAG, "updateAlarmTime: failed to query alarm time; result is missing " + AlarmEventContract.COLUMN_EVENT_TIMEMILLIS + " :: " + uri_calc);
                     return null;
                 }
             } else {

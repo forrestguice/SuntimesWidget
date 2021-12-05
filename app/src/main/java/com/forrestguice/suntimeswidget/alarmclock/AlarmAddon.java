@@ -33,7 +33,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import java.util.ArrayList;
@@ -45,12 +44,12 @@ import java.util.List;
 /**
  * AlarmAddon
  * Helper methods for extending alarm functionality to addon apps (via ContentProvider, Intent, etc).
+ *
+ * @see AlarmEventContract
  */
 @SuppressWarnings("Convert2Diamond")
 public class AlarmAddon
 {
-    public static final String REQUIRED_PERMISSION = "suntimes.permission.READ_CALCULATOR";
-
     public static final String CATEGORY_SUNTIMES_ALARM = "suntimes.SUNTIMES_ALARM";
     public static final String ACTION_SUNTIMES_ADDON_ALARM = "suntimes.action.ADDON_ALARM";
     public static final String KEY_ALARM_INFO_PROVIDER = "AlarmInfoProvider";
@@ -59,38 +58,12 @@ public class AlarmAddon
     public static final String ACTION_SUNTIMES_PICK_ALARM = "suntimes.action.PICK_ALARM";
     public static final String KEY_ALARM_PICKER_TITLE = "SuntimesAlarmPickerTitle";
 
-    public static final String COLUMN_CONFIG_PROVIDER = "provider";         // String (provider reference)
-    public static final String COLUMN_ALARM_NAME = "alarm_name";            // String (alarm/event ID)
-    public static final String COLUMN_ALARM_TITLE = "alarm_title";          // String (display string)
-    public static final String COLUMN_ALARM_SUMMARY = "alarm_summary";      // String (extended display string)
-    public static final String COLUMN_ALARM_TIMEMILLIS = "alarm_time";      // long (timestamp millis)
-
-    public static final String QUERY_ALARM_INFO = "alarmInfo";
-    public static final String[] QUERY_ALARM_INFO_PROJECTION = new String[] {
-            COLUMN_ALARM_NAME, COLUMN_ALARM_TITLE, COLUMN_ALARM_SUMMARY
-    };
-    public static final String QUERY_ALARM_CALC = "alarmCalc";
-    public static final String[] QUERY_ALARM_CALC_PROJECTION = new String[] {
-            COLUMN_ALARM_NAME, COLUMN_ALARM_TIMEMILLIS
-    };
-
-    public static final String EXTRA_ALARM_EVENT = "alarm_event";              // eventID
-    public static final String EXTRA_ALARM_NOW = "alarm_now";                  // long (millis)
-    public static final String EXTRA_ALARM_REPEAT = "alarm_repeat";            // boolean
-    public static final String EXTRA_ALARM_REPEAT_DAYS = "alarm_repeat_days";  // Integer[] as String; e.g. "[1,2,3]"
-    public static final String EXTRA_ALARM_OFFSET = "alarm_offset";            // long (millis)
-
-    public static final String EXTRA_LOCATION_LABEL = AlarmClockActivity.EXTRA_LOCATION_LABEL;
-    public static final String EXTRA_LOCATION_LAT = AlarmClockActivity.EXTRA_LOCATION_LAT;
-    public static final String EXTRA_LOCATION_LON = AlarmClockActivity.EXTRA_LOCATION_LON;
-    public static final String EXTRA_LOCATION_ALT = AlarmClockActivity.EXTRA_LOCATION_ALT;
-
     public static String getAlarmInfoUri(String authority, String alarmID) {
-        return "content://" + authority + "/" + AlarmAddon.QUERY_ALARM_INFO + "/" + alarmID;
+        return "content://" + authority + "/" + AlarmEventContract.QUERY_EVENT_INFO + "/" + alarmID;
     }
 
     public static String getAlarmCalcUri(String authority, String alarmID) {
-        return "content://" + authority + "/" + AlarmAddon.QUERY_ALARM_CALC + "/" + alarmID;
+        return "content://" + authority + "/" + AlarmEventContract.QUERY_EVENT_CALC + "/" + alarmID;
     }
 
     /**
@@ -166,10 +139,10 @@ public class AlarmAddon
 
             if (location != null)
             {
-                intent.putExtra(EXTRA_LOCATION_LABEL, location.getLabel());
-                intent.putExtra(EXTRA_LOCATION_LAT, location.getLatitudeAsDouble());
-                intent.putExtra(EXTRA_LOCATION_LON, location.getLongitudeAsDouble());
-                intent.putExtra(EXTRA_LOCATION_ALT, location.getAltitudeAsDouble());
+                intent.putExtra(AlarmEventContract.EXTRA_LOCATION_LABEL, location.getLabel());
+                intent.putExtra(AlarmEventContract.EXTRA_LOCATION_LAT, location.getLatitudeAsDouble());
+                intent.putExtra(AlarmEventContract.EXTRA_LOCATION_LON, location.getLongitudeAsDouble());
+                intent.putExtra(AlarmEventContract.EXTRA_LOCATION_ALT, location.getAltitudeAsDouble());
             }
             return intent;
         }
@@ -239,12 +212,12 @@ public class AlarmAddon
         if (resolver != null && uriString != null)
         {
             Uri info_uri = Uri.parse(uriString);
-            Cursor cursor = resolver.query(info_uri, AlarmAddon.QUERY_ALARM_INFO_PROJECTION, null, null, null);
+            Cursor cursor = resolver.query(info_uri, AlarmEventContract.QUERY_ALARM_INFO_PROJECTION, null, null, null);
             if (cursor != null)
             {
                 cursor.moveToFirst();
-                int i_title = cursor.getColumnIndex(AlarmAddon.COLUMN_ALARM_TITLE);
-                int i_summary = cursor.getColumnIndex(AlarmAddon.COLUMN_ALARM_SUMMARY);
+                int i_title = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_TITLE);
+                int i_summary = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_SUMMARY);
                 item.title = (i_title >= 0) ? cursor.getString(i_title) : info_uri.getLastPathSegment();
                 item.summary = (i_summary >= 0) ? cursor.getString(i_summary) : null;
                 cursor.close();
@@ -263,7 +236,7 @@ public class AlarmAddon
         if (packageInfo.requestedPermissions != null)
         {
             for (String permission : packageInfo.requestedPermissions) {
-                if (permission != null && permission.equals(REQUIRED_PERMISSION)) {
+                if (permission != null && permission.equals(AlarmEventContract.REQUIRED_PERMISSION)) {
                     hasPermission = true;
                     break;
                 }
