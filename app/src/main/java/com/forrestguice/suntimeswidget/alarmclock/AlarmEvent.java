@@ -47,7 +47,7 @@ public class AlarmEvent
     public static class AlarmEventItem
     {
         protected SolarEvents event;
-        protected String title = null, summary = null;
+        protected String title = "", summary = null;
         protected String uri = null;
         protected boolean resolved = false;
 
@@ -68,7 +68,7 @@ public class AlarmEvent
             event = SolarEvents.valueOf(eventUri, null);
             if (event == null) {
                 uri = eventUri;
-                title = eventUri != null ? Uri.parse(eventUri).getLastPathSegment() : null;
+                title = eventUri != null ? Uri.parse(eventUri).getLastPathSegment() : "";
                 resolved = AlarmAddon.queryDisplayStrings(this, resolver);
             }
         }

@@ -218,10 +218,13 @@ public class AlarmAddon
                 cursor.moveToFirst();
                 int i_title = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_TITLE);
                 int i_summary = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_SUMMARY);
-                item.title = (i_title >= 0) ? cursor.getString(i_title) : info_uri.getLastPathSegment();
+
+                String titleValue = (i_title >= 0) ? cursor.getString(i_title) : null;
+                item.title = titleValue != null ? titleValue : info_uri.getLastPathSegment();
                 item.summary = (i_summary >= 0) ? cursor.getString(i_summary) : null;
+
                 cursor.close();
-                retValue = (i_title >= 0);
+                retValue = (titleValue != null);
             }
         }
         return retValue;
