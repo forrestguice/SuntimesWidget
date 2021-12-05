@@ -26,6 +26,7 @@ package com.forrestguice.suntimeswidget.alarmclock;
  */
 public interface AlarmEventContract
 {
+    String AUTHORITY = "suntimeswidget.event.provider";
     String REQUIRED_PERMISSION = "suntimes.permission.READ_CALCULATOR";
 
     String COLUMN_CONFIG_PROVIDER = "provider";         // String (provider reference)

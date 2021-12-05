@@ -1410,24 +1410,7 @@ public class AlarmNotifications extends BroadcastReceiver
         SolarEvents event = SolarEvents.valueOf(eventID, null);
         if (item.location != null && event != null)
         {
-            switch (event.getType())
-            {
-                case SolarEvents.TYPE_MOON:
-                    eventTime = updateAlarmTime_moonEvent(context, event, item.location, item.offset, item.repeating, item.repeatingDays, now);
-                    break;
-
-                case SolarEvents.TYPE_MOONPHASE:
-                    eventTime = updateAlarmTime_moonPhaseEvent(context, event, item.location, item.offset, item.repeating, item.repeatingDays, now);
-                    break;
-
-                case SolarEvents.TYPE_SEASON:
-                    eventTime = updateAlarmTime_seasonEvent(context, event, item.location, item.offset, item.repeating, item.repeatingDays, now);
-                    break;
-
-                case SolarEvents.TYPE_SUN:
-                    eventTime = updateAlarmTime_sunEvent(context, event, item.location, item.offset, item.repeating, item.repeatingDays, now);
-                    break;
-            }
+            eventTime = updateAlarmTime_solarEvent(context, event, item.location, item.offset, item.repeating, item.repeatingDays, now);
 
         } else if (eventID != null) {
             eventTime = updateAlarmTime_addonEvent(context.getContentResolver(), eventID, item.location, item.offset, item.repeating, item.repeatingDays, now);
@@ -1449,6 +1432,31 @@ public class AlarmNotifications extends BroadcastReceiver
             item.modified = true;
         }
         return true;
+    }
+
+    @Nullable
+    protected static Calendar updateAlarmTime_solarEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
+    {
+        Calendar eventTime = null;
+        switch (event.getType())
+        {
+            case SolarEvents.TYPE_MOON:
+                eventTime = updateAlarmTime_moonEvent(context, event, location, offset, repeating, repeatingDays, now);
+                break;
+
+            case SolarEvents.TYPE_MOONPHASE:
+                eventTime = updateAlarmTime_moonPhaseEvent(context, event, location, offset, repeating, repeatingDays, now);
+                break;
+
+            case SolarEvents.TYPE_SEASON:
+                eventTime = updateAlarmTime_seasonEvent(context, event, location, offset, repeating, repeatingDays, now);
+                break;
+
+            case SolarEvents.TYPE_SUN:
+                eventTime = updateAlarmTime_sunEvent(context, event, location, offset, repeating, repeatingDays, now);
+                break;
+        }
+        return eventTime;
     }
 
     @Nullable
@@ -1629,7 +1637,7 @@ public class AlarmNotifications extends BroadcastReceiver
         return eventTime;
     }
 
-    private static Calendar updateAlarmTime_addonEvent(@Nullable ContentResolver resolver, @NonNull String eventID, @Nullable Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
+    protected static Calendar updateAlarmTime_addonEvent(@Nullable ContentResolver resolver, @NonNull String eventID, @Nullable Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
         Log.d(TAG, "updateAlarmTime_addonEvent: eventID: " + eventID + ", offset: " + offset + ", repeating: " + repeating);
         long nowMillis = now.getTimeInMillis();
@@ -1698,7 +1706,7 @@ public class AlarmNotifications extends BroadcastReceiver
     }
 
     @Nullable
-    private static Calendar updateAlarmTime_clockTime(int hour, int minute, String tzID, @Nullable Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
+    protected static Calendar updateAlarmTime_clockTime(int hour, int minute, String tzID, @Nullable Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
         TimeZone timezone = AlarmClockItem.AlarmTimeZone.getTimeZone(tzID, location);
         Log.d(TAG, "updateAlarmTime_clockTime: hour: " + hour + ", minute: " + minute + ", timezone: " + timezone.getID() + ", offset: " + offset + ", repeating: " + repeating);
