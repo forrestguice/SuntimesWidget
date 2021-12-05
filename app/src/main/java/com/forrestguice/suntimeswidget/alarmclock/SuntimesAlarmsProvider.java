@@ -162,6 +162,7 @@ public class SuntimesAlarmsProvider extends ContentProvider
             cursor0.moveToFirst();
             while (!cursor0.isAfterLast()) {
                 cursor1.addRow(createRowFromCursor(columns, cursor0));
+                cursor0.moveToNext();
             }
         }
     }

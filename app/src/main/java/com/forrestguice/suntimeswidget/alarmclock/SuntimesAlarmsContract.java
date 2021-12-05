@@ -22,6 +22,8 @@ package com.forrestguice.suntimeswidget.alarmclock;
  * SuntimesAlarmsContract
  * @version 1 (0.1.0)
  *
+ * @see AlarmDatabaseAdapter
+ *
  * CHANGES
  *   1 initial version
  */
