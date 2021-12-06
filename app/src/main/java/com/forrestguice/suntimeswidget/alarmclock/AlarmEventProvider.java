@@ -134,18 +134,29 @@ public class AlarmEventProvider extends ContentProvider
     /**
      * queryEvents
      */
-    private Cursor queryEvents(String eventID, @NonNull Uri uri, @Nullable String[] projection, @Nullable HashMap<String,String> selectionMap, @Nullable String sortOrder)
+    private Cursor queryEvents(@Nullable String eventID, @NonNull Uri uri, @Nullable String[] projection, @Nullable HashMap<String,String> selectionMap, @Nullable String sortOrder)
     {
         String[] columns = (projection != null ? projection : QUERY_EVENT_INFO_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
         Context context = getContext();
         if (context != null)
         {
-            SolarEvents[] events = ((eventID != null)
-                    ? new SolarEvents[] {SolarEvents.valueOf(eventID)}
-                    : SolarEvents.values());
-            for (SolarEvents event : events) {
-                retValue.addRow(createRow(context, event, columns, selectionMap));
+            SolarEvents event0 = (eventID != null) ? SolarEvents.valueOf(eventID, null) : null;
+            if (eventID == null || event0 != null)
+            {
+                // eventID is null (list all SolarEvents), or eventID is a SolarEvents enum (list one)
+                SolarEvents[] events = ((event0 != null) ? new SolarEvents[] { event0 } : SolarEvents.values());
+                for (SolarEvents event : events) {
+                    retValue.addRow(createRow(context, event, columns, selectionMap));
+                }
+
+            } else {   // eventID is not null, but also not a SolarEvents enum
+                try {      // so assume its a timestamp; try parsing to Long
+                    retValue.addRow(createRow(context, Long.parseLong(eventID), columns, selectionMap));
+
+                } catch (NumberFormatException e) {
+                    Log.w("AlarmEventsProvider", "queryEvents: unrecognized event: " + eventID);
+                }
             }
         }
         return retValue;
@@ -159,8 +170,19 @@ public class AlarmEventProvider extends ContentProvider
         String[] columns = (projection != null ? projection : QUERY_EVENT_CALC_PROJECTION);
         MatrixCursor retValue = new MatrixCursor(columns);
         Context context = getContext();
-        if (context != null) {
-            retValue.addRow(createRow(context, SolarEvents.valueOf(eventID), columns, selectionMap));
+        if (context != null)
+        {
+            SolarEvents event0 = (eventID != null) ? SolarEvents.valueOf(eventID, null) : null;
+            if (event0 != null) {
+                retValue.addRow(createRow(context, event0, columns, selectionMap));
+
+            } else if (eventID != null) {
+                try {
+                    retValue.addRow(createRow(context, Long.parseLong(eventID), columns, selectionMap));
+                } catch (NumberFormatException e) {
+                    Log.w("AlarmEventsProvider", "calculateEvents: unrecognized event: " + eventID);
+                }
+            }
         }
         return retValue;
     }
@@ -175,14 +197,6 @@ public class AlarmEventProvider extends ContentProvider
         {
             switch (columns[i])
             {
-                case COLUMN_EVENT_NAME:
-                    row[i] = event.name();
-                    break;
-
-                case COLUMN_EVENT_TITLE:
-                    row[i] = event.getLongDisplayString();
-                    break;
-
                 case COLUMN_EVENT_TIMEMILLIS:
                     Location location = (selectionMap != null) ? CalculatorProvider.processSelection_location(selectionMap) : null;
                     if (location == null) {
@@ -197,6 +211,36 @@ public class AlarmEventProvider extends ContentProvider
                     row[i] = AlarmNotifications.updateAlarmTime_solarEvent(context, event, location, offset, repeating, repeatingDays, now);
                     break;
 
+                case COLUMN_EVENT_NAME:
+                    row[i] = event.name();
+                    break;
+                case COLUMN_EVENT_TITLE:
+                    row[i] = event.getLongDisplayString();
+                    break;
+                case COLUMN_EVENT_SUMMARY:
+                default:
+                    row[i] = null;
+                    break;
+            }
+        }
+        return row;
+    }
+    private Object[] createRow(@NonNull Context context, long timedatemillis, String[] columns, @Nullable HashMap<String,String> selectionMap)
+    {
+        Object[] row = new Object[columns.length];
+        for (int i=0; i<columns.length; i++)
+        {
+            switch (columns[i])
+            {
+                case COLUMN_EVENT_TIMEMILLIS:
+                    row[i] = timedatemillis;
+                    break;
+                case COLUMN_EVENT_NAME:
+                    row[i] = Long.toString(timedatemillis);
+                    break;
+                case COLUMN_EVENT_TITLE:
+                    row[i] = timedatemillis + " Date Time";   // TODO: display string
+                    break;
                 case COLUMN_EVENT_SUMMARY:
                 default:
                     row[i] = null;
