@@ -37,9 +37,18 @@ import com.forrestguice.suntimeswidget.settings.SolarEvents;
 
 import java.util.ArrayList;
 
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.REPEAT_SUPPORT_BASIC;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.REPEAT_SUPPORT_DAILY;
+
 @SuppressWarnings("Convert2Diamond")
 public class AlarmEvent
 {
+    public static int supportsRepeating(@NonNull SolarEvents event) {
+        return supportsRepeating(event.getType());
+    }
+    public static int supportsRepeating(int eventType) {
+        return (eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON) ? REPEAT_SUPPORT_BASIC : REPEAT_SUPPORT_DAILY;
+    }
     /**
      * AlarmEventItem
      * wraps SolarEvent or addon-alarm URI

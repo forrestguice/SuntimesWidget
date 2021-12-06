@@ -41,6 +41,7 @@ import java.util.HashMap;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_NAME;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_SUMMARY;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_SUPPORTS_REPEATING;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_TIMEMILLIS;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_TITLE;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.EXTRA_ALARM_NOW;
@@ -51,6 +52,9 @@ import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.QUER
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.QUERY_EVENT_CALC_PROJECTION;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.QUERY_EVENT_INFO;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.QUERY_EVENT_INFO_PROJECTION;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.REPEAT_SUPPORT_BASIC;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.REPEAT_SUPPORT_DAILY;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.REPEAT_SUPPORT_NONE;
 
 /**
  * AlarmEventProvider
@@ -188,7 +192,7 @@ public class AlarmEventProvider extends ContentProvider
     }
 
     /**
-     * createRow
+     * createRow( SolarEvent )
      */
     private Object[] createRow(@NonNull Context context, @NonNull SolarEvents event, String[] columns, @Nullable HashMap<String,String> selectionMap)
     {
@@ -217,6 +221,9 @@ public class AlarmEventProvider extends ContentProvider
                 case COLUMN_EVENT_TITLE:
                     row[i] = event.getLongDisplayString();
                     break;
+                case COLUMN_EVENT_SUPPORTS_REPEATING:
+                    row[i] = AlarmEvent.supportsRepeating(event);
+                    break;
                 case COLUMN_EVENT_SUMMARY:
                 default:
                     row[i] = null;
@@ -225,6 +232,12 @@ public class AlarmEventProvider extends ContentProvider
         }
         return row;
     }
+
+
+
+    /**
+     * createRow( date+time )
+     */
     private Object[] createRow(@NonNull Context context, long timedatemillis, String[] columns, @Nullable HashMap<String,String> selectionMap)
     {
         Object[] row = new Object[columns.length];
@@ -240,6 +253,8 @@ public class AlarmEventProvider extends ContentProvider
                     break;
                 case COLUMN_EVENT_TITLE:
                     row[i] = timedatemillis + " Date Time";   // TODO: display string
+                case COLUMN_EVENT_SUPPORTS_REPEATING:
+                    row[i] = REPEAT_SUPPORT_NONE;
                     break;
                 case COLUMN_EVENT_SUMMARY:
                 default:

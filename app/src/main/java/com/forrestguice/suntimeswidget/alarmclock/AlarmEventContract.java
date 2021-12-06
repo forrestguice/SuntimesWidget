@@ -29,16 +29,23 @@ public interface AlarmEventContract
     String AUTHORITY = "suntimeswidget.event.provider";
     String REQUIRED_PERMISSION = "suntimes.permission.READ_CALCULATOR";
 
-    String COLUMN_CONFIG_PROVIDER = "provider";         // String (provider reference)
-    String COLUMN_EVENT_NAME = "event_name";            // String (alarm/event ID)
-    String COLUMN_EVENT_TITLE = "event_title";          // String (display string)
-    String COLUMN_EVENT_SUMMARY = "event_summary";      // String (extended display string)
-    String COLUMN_EVENT_TIMEMILLIS = "event_time";      // long (timestamp millis)
+    String COLUMN_CONFIG_PROVIDER = "provider";                  // String (provider reference)
+    String COLUMN_EVENT_NAME = "event_name";                     // String (alarm/event ID)
+    String COLUMN_EVENT_TITLE = "event_title";                   // String (display string)
+    String COLUMN_EVENT_SUMMARY = "event_summary";               // String (extended display string)
+    String COLUMN_EVENT_SUPPORTS_REPEATING = "event_repeats";    // int; REPEAT_SUPPORT_*; 0 (none), 1 (basic), 2 (daily)
+
+    int REPEAT_SUPPORT_NONE = 0;
+    int REPEAT_SUPPORT_BASIC = 1;
+    int REPEAT_SUPPORT_DAILY = 2;
 
     String QUERY_EVENT_INFO = "eventInfo";
     String[] QUERY_EVENT_INFO_PROJECTION = new String[] {
-            COLUMN_EVENT_NAME, COLUMN_EVENT_TITLE, COLUMN_EVENT_SUMMARY
+            COLUMN_EVENT_NAME, COLUMN_EVENT_TITLE, COLUMN_EVENT_SUMMARY, COLUMN_EVENT_SUPPORTS_REPEATING
     };
+
+    String COLUMN_EVENT_TIMEMILLIS = "event_time";      // long (timestamp millis)
+
     String QUERY_EVENT_CALC = "eventCalc";
     String[] QUERY_EVENT_CALC_PROJECTION = new String[] {
             COLUMN_EVENT_NAME, COLUMN_EVENT_TIMEMILLIS
