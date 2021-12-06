@@ -1100,6 +1100,10 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         @Override
         public void onLocationClick(AlarmTimeDialog dialog) {
         }
+
+        @Override
+        public void onDateClick(AlarmTimeDialog dialog) {
+        }
     };
 
     /**
