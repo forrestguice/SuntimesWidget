@@ -53,6 +53,9 @@ public class TimeDateDialog extends BottomSheetDialogFragment
     public void setTimezone(TimeZone timezone) {
         this.timezone = timezone;
     }
+    public TimeZone getTimeZone() {
+        return timezone;
+    }
 
     public void init(Calendar date)
     {
@@ -157,8 +160,12 @@ public class TimeDateDialog extends BottomSheetDialogFragment
         WidgetSettings.DateMode dateMode = (isToday() ? WidgetSettings.DateMode.CURRENT_DATE : WidgetSettings.DateMode.CUSTOM_DATE);
         WidgetSettings.saveDateModePref(context, appWidgetId, dateMode);
 
-        WidgetSettings.DateInfo dateInfo = new WidgetSettings.DateInfo(picker.getYear(), picker.getMonth(), picker.getDayOfMonth());
+        WidgetSettings.DateInfo dateInfo = getDateInfo();
         WidgetSettings.saveDatePref(context, appWidgetId, dateInfo);
+    }
+
+    public WidgetSettings.DateInfo getDateInfo() {
+        return new WidgetSettings.DateInfo(picker.getYear(), picker.getMonth(), picker.getDayOfMonth());
     }
 
     /**
