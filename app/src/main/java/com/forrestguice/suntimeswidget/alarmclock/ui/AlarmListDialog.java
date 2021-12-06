@@ -1289,8 +1289,14 @@ public class AlarmListDialog extends DialogFragment
                             ? context.getString(R.string.alarmOption_repeat_none)
                             : AlarmRepeatDialog.getDisplayString(context, item.repeatingDays);
 
-                if (item.repeating && AlarmEvent.supportsRepeating(eventType) == AlarmEventContract.REPEAT_SUPPORT_BASIC) {
-                    repeatText = context.getString(R.string.alarmOption_repeat);
+                if (item.repeating)
+                {
+                    int repeatSupport = item.getEventItem(context).getSupportsRepeating();
+                    if (repeatSupport == AlarmEventContract.REPEAT_SUPPORT_BASIC) {
+                        repeatText = context.getString(R.string.alarmOption_repeat);
+                    } else if (repeatSupport == AlarmEventContract.REPEAT_SUPPORT_NONE) {
+                        repeatText = "";
+                    }
                 }
 
                 view.text_repeat.setText(repeatText);

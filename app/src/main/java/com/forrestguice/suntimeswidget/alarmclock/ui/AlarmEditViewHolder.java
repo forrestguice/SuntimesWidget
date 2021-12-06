@@ -307,7 +307,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             return SuntimesUtils.createBoldColorSpan(null, displayString, timeString, noteColor);
 
         } else if (item.getEvent() != null) {
-            AlarmEvent.AlarmEventItem eventItem = new AlarmEvent.AlarmEventItem(item.getEvent(), context.getContentResolver());
+            AlarmEvent.AlarmEventItem eventItem = item.getEventItem(context);
             String displayString = context.getString(R.string.schedalarm_dialog_note2, eventItem.getTitle());
             return SuntimesUtils.createBoldSpan(null, displayString, eventItem.getTitle());
 
@@ -340,7 +340,6 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     {
         String eventString = item.getEvent();
         SolarEvents event = SolarEvents.valueOf(eventString, null);
-        int eventType = event == null ? -1 : event.getType();
         long now = System.currentTimeMillis();
         long delta = item.timestamp - now;
         boolean isDistant = (delta >= (48 * 60 * 60 * 1000));
@@ -352,7 +351,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
                 isTimestamp = true;
             } catch (NumberFormatException e) { /* EMPTY */ }
         }
-        return (AlarmEvent.supportsOffsetDays(eventType) || isDistant || isTimestamp);
+        return (item.getEventItem(context).getSupportsOffsetDays() || isDistant || isTimestamp);
     }
 
     public static CharSequence displayOffset(Context context, AlarmClockItem item)
@@ -375,15 +374,21 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     public static CharSequence displayRepeating(Context context, AlarmClockItem item, boolean isSelected)
     {
         SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
-        int eventType = event == null ? -1 : event.getType();
         boolean noRepeat = item.repeatingDays == null || item.repeatingDays.isEmpty();
         String repeatText = AlarmClockItem.repeatsEveryDay(item.repeatingDays)
                 ? context.getString(R.string.alarmOption_repeat_all)
                 : noRepeat
                 ? context.getString(R.string.alarmOption_repeat_none)
                 : AlarmRepeatDialog.getDisplayString(context, item.repeatingDays);
-        if (item.repeating && AlarmEvent.supportsRepeating(eventType) == AlarmEventContract.REPEAT_SUPPORT_BASIC) {
-            repeatText = context.getString(R.string.alarmOption_repeat);
+        if (item.repeating)
+        {
+            AlarmEvent.AlarmEventItem eventItem = item.getEventItem(context);
+            int repeatSupport = eventItem.getSupportsRepeating();
+            if (repeatSupport == AlarmEventContract.REPEAT_SUPPORT_BASIC) {
+                repeatText = context.getString(R.string.alarmOption_repeat);
+            } else if (repeatSupport == AlarmEventContract.REPEAT_SUPPORT_NONE) {
+                repeatText = context.getString(R.string.alarmOption_repeat_none);
+            }
         }
         return (isSelected || !noRepeat ? repeatText : "");
     }
@@ -417,7 +422,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     {
         String eventString = item.getEvent();
         if (eventString != null) {
-            AlarmEvent.AlarmEventItem eventItem = new AlarmEvent.AlarmEventItem(eventString, context.getContentResolver());
+            AlarmEvent.AlarmEventItem eventItem = item.getEventItem(context);
             return eventItem.getTitle();
 
         } else if (item.timezone != null) {
