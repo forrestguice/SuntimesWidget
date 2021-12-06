@@ -34,7 +34,7 @@ public interface AlarmEventContract
     String COLUMN_EVENT_TITLE = "event_title";                   // String (display string)
     String COLUMN_EVENT_SUMMARY = "event_summary";               // String (extended display string)
     String COLUMN_EVENT_SUPPORTS_REPEATING = "event_supports_repeat";        // int; REPEAT_SUPPORT_*; 0 (none), 1 (basic), 2 (daily)
-    String COLUMN_EVENT_SUPPORTS_OFFSETDAYS = "event_supports_offsetdays";   // boolean
+    String COLUMN_EVENT_SUPPORTS_OFFSETDAYS = "event_supports_offsetdays";   // String (boolean)
 
     int REPEAT_SUPPORT_NONE = 0;
     int REPEAT_SUPPORT_BASIC = 1;

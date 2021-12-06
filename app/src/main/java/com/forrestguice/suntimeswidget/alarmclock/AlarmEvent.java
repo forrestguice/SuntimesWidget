@@ -68,6 +68,9 @@ public class AlarmEvent
         protected String uri = null;
         protected boolean resolved = false;
 
+        protected int supports_repeating = REPEAT_SUPPORT_DAILY;
+        protected boolean supports_offset_days = false;
+
         public AlarmEventItem( @NonNull SolarEvents event ) {
             this.event = event;
             resolved = true;

@@ -231,7 +231,7 @@ public class AlarmEventProvider extends ContentProvider
                     row[i] = AlarmEvent.supportsRepeating(event);
                     break;
                 case COLUMN_EVENT_SUPPORTS_OFFSETDAYS:
-                    row[i] = AlarmEvent.supportsOffsetDays(event);
+                    row[i] = Boolean.toString(AlarmEvent.supportsOffsetDays(event));
                     break;
                 case COLUMN_EVENT_SUMMARY:
                 default:
