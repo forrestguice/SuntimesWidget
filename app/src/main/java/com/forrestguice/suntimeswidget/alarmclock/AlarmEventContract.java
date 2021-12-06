@@ -33,7 +33,8 @@ public interface AlarmEventContract
     String COLUMN_EVENT_NAME = "event_name";                     // String (alarm/event ID)
     String COLUMN_EVENT_TITLE = "event_title";                   // String (display string)
     String COLUMN_EVENT_SUMMARY = "event_summary";               // String (extended display string)
-    String COLUMN_EVENT_SUPPORTS_REPEATING = "event_repeats";    // int; REPEAT_SUPPORT_*; 0 (none), 1 (basic), 2 (daily)
+    String COLUMN_EVENT_SUPPORTS_REPEATING = "event_supports_repeat";        // int; REPEAT_SUPPORT_*; 0 (none), 1 (basic), 2 (daily)
+    String COLUMN_EVENT_SUPPORTS_OFFSETDAYS = "event_supports_offsetdays";   // boolean
 
     int REPEAT_SUPPORT_NONE = 0;
     int REPEAT_SUPPORT_BASIC = 1;
@@ -41,7 +42,8 @@ public interface AlarmEventContract
 
     String QUERY_EVENT_INFO = "eventInfo";
     String[] QUERY_EVENT_INFO_PROJECTION = new String[] {
-            COLUMN_EVENT_NAME, COLUMN_EVENT_TITLE, COLUMN_EVENT_SUMMARY, COLUMN_EVENT_SUPPORTS_REPEATING
+            COLUMN_EVENT_NAME, COLUMN_EVENT_TITLE, COLUMN_EVENT_SUMMARY,
+            COLUMN_EVENT_SUPPORTS_REPEATING, COLUMN_EVENT_SUPPORTS_OFFSETDAYS
     };
 
     String COLUMN_EVENT_TIMEMILLIS = "event_time";      // long (timestamp millis)

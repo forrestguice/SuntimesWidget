@@ -49,6 +49,14 @@ public class AlarmEvent
     public static int supportsRepeating(int eventType) {
         return (eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON) ? REPEAT_SUPPORT_BASIC : REPEAT_SUPPORT_DAILY;
     }
+
+    public static boolean supportsOffsetDays(@NonNull SolarEvents event) {
+        return supportsOffsetDays(event.getType());
+    }
+    public static boolean supportsOffsetDays(int eventType) {
+        return (eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON);
+    }
+
     /**
      * AlarmEventItem
      * wraps SolarEvent or addon-alarm URI
