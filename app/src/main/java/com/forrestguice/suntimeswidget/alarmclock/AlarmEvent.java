@@ -107,6 +107,13 @@ public class AlarmEvent
             return (event != null ? event.getIcon() : R.attr.icActionExtension);
         }
 
+        public int getSupportsRepeating() {
+            return (event != null ? AlarmEvent.supportsRepeating(event) : supports_repeating);
+        }
+        public boolean getSupportsOffsetDays() {
+            return (event != null ? AlarmEvent.supportsOffsetDays(event) : supports_offset_days);
+        }
+
         public String toString() {
             return getTitle();
         }

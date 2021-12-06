@@ -289,6 +289,15 @@ public class AlarmClockItem implements Parcelable
         this.event = event;
     }
 
+    private AlarmEvent.AlarmEventItem eventItem = null;
+    public AlarmEvent.AlarmEventItem getEventItem(Context context)
+    {
+        if (eventItem == null) {
+            eventItem = new AlarmEvent.AlarmEventItem(getEvent(), context.getContentResolver());
+        }
+        return eventItem;
+    }
+
     public int getIcon()
     {
         return ((type == AlarmClockItem.AlarmType.NOTIFICATION) ? ICON_NOTIFICATION : ICON_ALARM);
