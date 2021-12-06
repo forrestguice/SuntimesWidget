@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
@@ -344,6 +345,13 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         long delta = item.timestamp - now;
         boolean isDistant = (delta >= (48 * 60 * 60 * 1000));
         boolean isTimestamp = false;
+        if (event == null && eventString != null) {                   // TODO: use supportOffset exclusively
+            try {
+                Uri uri = Uri.parse(eventString);
+                Long.parseLong(uri.getLastPathSegment());
+                isTimestamp = true;
+            } catch (NumberFormatException e) { /* EMPTY */ }
+        }
         return (AlarmEvent.supportsOffsetDays(eventType) || isDistant || isTimestamp);
     }
 
