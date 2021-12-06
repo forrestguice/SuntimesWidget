@@ -70,6 +70,7 @@ import com.forrestguice.suntimeswidget.SuntimesWarning;
 import com.forrestguice.suntimeswidget.actions.LoadActionDialog;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
@@ -1112,7 +1113,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
             int eventType = event != null ? event.getType() : -1;
             AlarmOffsetDialog offsetDialog = new AlarmOffsetDialog();
-            offsetDialog.setShowDays(eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON);
+            offsetDialog.setShowDays(AlarmEvent.supportsOffsetDays(eventType));
             offsetDialog.setOffset(item.offset);
             offsetDialog.setOnAcceptedListener(onOffsetChanged);
             t_selectedItem = item.rowID;
@@ -1696,7 +1697,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
             int eventType = event != null ? event.getType() : -1;
             AlarmOffsetDialog offsetDialog = new AlarmOffsetDialog();
-            offsetDialog.setShowDays(eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON);
+            offsetDialog.setShowDays(AlarmEvent.supportsOffsetDays(eventType));
             offsetDialog.setOffset(item.offset);
             offsetDialog.setOnAcceptedListener(onOffsetChanged1);
             offsetDialog.show(getSupportFragmentManager(), DIALOGTAG_OFFSET + 1);

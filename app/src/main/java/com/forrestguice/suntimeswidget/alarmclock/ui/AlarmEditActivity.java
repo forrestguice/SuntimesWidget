@@ -56,6 +56,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -695,7 +696,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
             SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
             int eventType = event != null ? event.getType() : -1;
             AlarmOffsetDialog offsetDialog = new AlarmOffsetDialog();
-            offsetDialog.setShowDays(eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON);
+            offsetDialog.setShowDays(AlarmEvent.supportsOffsetDays(eventType));
             offsetDialog.setOffset(item.offset);
             offsetDialog.setOnAcceptedListener(onOffsetChanged);
             offsetDialog.show(getSupportFragmentManager(), DIALOGTAG_OFFSET + 1);

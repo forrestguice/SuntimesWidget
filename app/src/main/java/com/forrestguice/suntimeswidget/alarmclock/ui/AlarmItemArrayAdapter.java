@@ -60,6 +60,8 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -641,7 +643,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         if (view.text_date != null)
         {
             view.text_date.setText(AlarmEditViewHolder.displayAlarmDate(context, item));
-            view.text_date.setVisibility((eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON) ? View.VISIBLE : View.GONE);
+            view.text_date.setVisibility( AlarmEvent.supportsOffsetDays(eventType) ? View.VISIBLE : View.GONE);
             if (!isSelected && !item.enabled) {
                 view.text_date.setTextColor(disabledColor);
             } else if (item.enabled){
@@ -710,7 +712,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                     ? context.getString(R.string.alarmOption_repeat_none)
                     : AlarmRepeatDialog.getDisplayString(context, item.repeatingDays);
 
-            if (item.repeating && (eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON)) {
+            if (item.repeating && AlarmEvent.supportsRepeating(eventType) == AlarmEventContract.REPEAT_SUPPORT_BASIC) {
                 repeatText = context.getString(R.string.alarmOption_repeat);
             }
 
