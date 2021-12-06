@@ -29,6 +29,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -64,6 +65,8 @@ public class AlarmEventProvider extends ContentProvider
     private static final int URIMATCH_EVENTS = 0;
     private static final int URIMATCH_EVENT = 10;
     private static final int URIMATCH_EVENT_CALC = 20;
+
+    private SuntimesUtils utils = null;
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
@@ -106,8 +109,12 @@ public class AlarmEventProvider extends ContentProvider
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder)
     {
-        HashMap<String, String> selectionMap = CalculatorProvider.processSelection(CalculatorProvider.processSelectionArgs(selection, selectionArgs));
+        if (utils == null) {
+            utils = new SuntimesUtils();
+            SuntimesUtils.initDisplayStrings(getContext());
+        }
 
+        HashMap<String, String> selectionMap = CalculatorProvider.processSelection(CalculatorProvider.processSelectionArgs(selection, selectionArgs));
         Cursor retValue = null;
         int uriMatch = uriMatcher.match(uri);
         switch (uriMatch)
@@ -235,8 +242,6 @@ public class AlarmEventProvider extends ContentProvider
         return row;
     }
 
-
-
     /**
      * createRow( date+time )
      */
@@ -254,7 +259,10 @@ public class AlarmEventProvider extends ContentProvider
                     row[i] = Long.toString(timedatemillis);
                     break;
                 case COLUMN_EVENT_TITLE:
-                    row[i] = timedatemillis + " Date Time";   // TODO: display string
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(timedatemillis);
+                    row[i] = utils.calendarDateTimeDisplayString(getContext(), calendar, true, false);
+                    break;
                 case COLUMN_EVENT_SUPPORTS_REPEATING:
                     row[i] = REPEAT_SUPPORT_NONE;
                     break;
