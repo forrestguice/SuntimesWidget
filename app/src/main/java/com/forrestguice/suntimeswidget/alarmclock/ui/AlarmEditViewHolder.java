@@ -38,6 +38,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.settings.SolarEventIcons;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -336,12 +337,14 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public static boolean showAlarmDate(Context context, AlarmClockItem item)
     {
-        SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
+        String eventString = item.getEvent();
+        SolarEvents event = SolarEvents.valueOf(eventString, null);
         int eventType = event == null ? -1 : event.getType();
         long now = System.currentTimeMillis();
         long delta = item.timestamp - now;
         boolean isDistant = (delta >= (48 * 60 * 60 * 1000));
-        return (eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON || isDistant);
+        boolean isTimestamp = false;
+        return (AlarmEvent.supportsOffsetDays(eventType) || isDistant || isTimestamp);
     }
 
     public static CharSequence displayOffset(Context context, AlarmClockItem item)
@@ -371,7 +374,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
                 : noRepeat
                 ? context.getString(R.string.alarmOption_repeat_none)
                 : AlarmRepeatDialog.getDisplayString(context, item.repeatingDays);
-        if (item.repeating && (eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON)) {
+        if (item.repeating && AlarmEvent.supportsRepeating(eventType) == AlarmEventContract.REPEAT_SUPPORT_BASIC) {
             repeatText = context.getString(R.string.alarmOption_repeat);
         }
         return (isSelected || !noRepeat ? repeatText : "");
