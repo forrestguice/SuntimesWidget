@@ -913,8 +913,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             timezone = dialog.getTimeZone();
             event = null;
         }
-
-        return AlarmListDialog.createAlarm(dialog.getActivity(), type, "", event, dialog.getLocation(), hour, minute, timezone, AlarmSettings.loadPrefVibrateDefault(dialog.getActivity()), AlarmSettings.getDefaultRingtoneUri(dialog.getActivity(), type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
+        return AlarmListDialog.createAlarm(dialog.getActivity(), type, "", event, dialog.getLocation(), date, hour, minute, timezone, AlarmSettings.loadPrefVibrateDefault(dialog.getActivity()), AlarmSettings.getDefaultRingtoneUri(dialog.getActivity(), type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
 
     public static void updateAlarmItem(AlarmCreateDialog dialog, AlarmClockItem item)
@@ -933,7 +932,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             item.hour = dialog.getHour();
             item.minute = dialog.getMinute();
             item.timezone = dialog.getTimeZone();
-            item.setEvent(null);
+            item.setEvent(dialog.getDate() != -1L ? AlarmAddon.getEventInfoUri(AlarmEventContract.AUTHORITY, Long.toString(dialog.getDate())) : null);
         }
     }
 

@@ -270,10 +270,10 @@ public class AlarmClockActivity extends AppCompatActivity
                 if (Build.VERSION.SDK_INT >= 11) {
                     param_skipUI = intent.getBooleanExtra(AlarmClock.EXTRA_SKIP_UI, false);
                 }
-                if (param_skipUI) {
-                    list.createAlarm(context, param_type, param_label, param_event, param_location, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_days, true);
+                if (param_skipUI) {   // TODO: support date
+                    list.createAlarm(context, param_type, param_label, param_event, param_location, -1L, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_days, true);
                 } else {
-                    AlarmClockItem item = AlarmListDialog.createAlarm(context, param_type, param_label, param_event, param_location, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_days);
+                    AlarmClockItem item = AlarmListDialog.createAlarm(context, param_type, param_label, param_event, param_location, -1L, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_days);
                     AlarmNotifications.updateAlarmTime(context, item);
                     showAlarmEditActivity(item, null, REQUEST_ADDALARM, true);
                 }
