@@ -47,9 +47,9 @@ public class TimeDateDialog extends BottomSheetDialogFragment
 {
     public static final String KEY_TIMEDATE_APPWIDGETID = "appwidgetid";
 
-    private DatePicker picker;
+    protected DatePicker picker;
 
-    private TimeZone timezone = Calendar.getInstance().getTimeZone();
+    protected TimeZone timezone = Calendar.getInstance().getTimeZone();
     public void setTimezone(TimeZone timezone) {
         this.timezone = timezone;
     }
@@ -74,7 +74,7 @@ public class TimeDateDialog extends BottomSheetDialogFragment
      * @param context a context used to access resources
      * @param dialogContent an inflated layout containing the dialog's other views
      */
-    private void initViews(Context context, View dialogContent)
+    protected void initViews(Context context, View dialogContent)
     {
         picker = (DatePicker) dialogContent.findViewById(R.id.appwidget_date_custom);
 
@@ -226,7 +226,7 @@ public class TimeDateDialog extends BottomSheetDialogFragment
         expandSheet(getDialog());
     }
 
-    private DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
+    protected DialogInterface.OnShowListener onDialogShow = new DialogInterface.OnShowListener()
     {
         @Override
         public void onShow(DialogInterface dialog) {
@@ -234,7 +234,7 @@ public class TimeDateDialog extends BottomSheetDialogFragment
         }
     };
 
-    private View.OnClickListener onDialogNeutralClick = new View.OnClickListener()
+    protected View.OnClickListener onDialogNeutralClick = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
@@ -247,7 +247,7 @@ public class TimeDateDialog extends BottomSheetDialogFragment
         }
     };
 
-    private View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
+    protected View.OnClickListener onDialogCancelClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             getDialog().cancel();
@@ -262,7 +262,7 @@ public class TimeDateDialog extends BottomSheetDialogFragment
         }
     }
 
-    private View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
+    protected View.OnClickListener onDialogAcceptClick = new View.OnClickListener()
     {
         @Override
         public void onClick(View v)
@@ -275,7 +275,7 @@ public class TimeDateDialog extends BottomSheetDialogFragment
         }
     };
 
-    private void expandSheet(DialogInterface dialog)
+    protected void expandSheet(DialogInterface dialog)
     {
         if (dialog == null) {
             return;

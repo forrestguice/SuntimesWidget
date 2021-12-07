@@ -263,7 +263,33 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         });
         dialog.show(getChildFragmentManager(), DIALOG_DATE);
     }
-    public static class AlarmTimeDateDialog extends TimeDateDialog {
+    public static class AlarmTimeDateDialog extends TimeDateDialog
+    {
+        @Override
+        protected void initViews(Context context, View dialogContent)
+        {
+            super.initViews(context, dialogContent);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE, -1);
+            picker.setMinDate(calendar.getTimeInMillis());
+
+            Button btn_neutral = (Button) dialogContent.findViewById(R.id.dialog_button_neutral);
+            if (btn_neutral != null)
+            {
+                btn_neutral.setText(context.getString(R.string.configAction_clearDate));
+                btn_neutral.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        AlarmTimeDateDialog.this.init(Calendar.getInstance(timezone));
+                        AlarmTimeDateDialog.this.onDialogAcceptClick.onClick(v);
+                    }
+                });
+            }
+        }
+
         @Override
         protected void loadSettings(Context context) { /* EMPTY */ }
         @Override
