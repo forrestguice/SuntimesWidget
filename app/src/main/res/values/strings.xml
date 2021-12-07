@@ -211,6 +211,7 @@
     <string name="datetime_format_verylong"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g id="tzID" example="UTC">%2$s</xliff:g>]</string>  <!-- datetime_format and timezone -->
     <string name="datetime_format_verylong1"><xliff:g id="dateFormat">%1$s</xliff:g> [<xliff:g id="tzID" example="UTC">%2$s</xliff:g>] [<xliff:g id="suffix" example="Future">%3$s</xliff:g>]</string>  <!-- datetime_format and timezone (+suffix) -->
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
+    <string name="date_any">Any Date</string>   <!-- no particular date; unset date -->    <!-- TODO -->
 
     <!-- location display formats -->
     <string name="location_format_alt"><xliff:g id="altitude">%1$s</xliff:g><xliff:g id="distanceUnit" example="m">%2$s</xliff:g></string>  <!-- altitude, e.g. 1600m -->
