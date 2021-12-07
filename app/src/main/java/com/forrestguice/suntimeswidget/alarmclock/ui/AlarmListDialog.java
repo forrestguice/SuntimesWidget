@@ -49,7 +49,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.text.style.ImageSpan;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -68,9 +67,7 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
@@ -377,6 +374,7 @@ public class AlarmListDialog extends DialogFragment
         alarm.hour = hour;
         alarm.minute = minute;
         alarm.timezone = timezone;
+        Log.d("DEBUG", "createAlarm: with hour " + hour + " and minute " + minute + " .. timezone " + timezone);
         alarm.setEvent(date != -1L ? AlarmAddon.getEventInfoUri(AlarmEventContract.AUTHORITY, Long.toString(date)) : event);   // TODO: event on date
         alarm.location = (location != null ? location : WidgetSettings.loadLocationPref(context, 0));
         alarm.repeating = false;
@@ -1291,7 +1289,7 @@ public class AlarmListDialog extends DialogFragment
 
                 if (item.repeating)
                 {
-                    int repeatSupport = item.getEventItem(context).getSupportsRepeating();
+                    int repeatSupport = item.getEventItem(context).supportsRepeating();
                     if (repeatSupport == AlarmEventContract.REPEAT_SUPPORT_BASIC) {
                         repeatText = context.getString(R.string.alarmOption_repeat);
                     } else if (repeatSupport == AlarmEventContract.REPEAT_SUPPORT_NONE) {

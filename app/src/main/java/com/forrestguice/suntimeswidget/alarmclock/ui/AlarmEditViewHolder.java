@@ -22,11 +22,11 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
-import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -187,6 +187,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             text_repeat.setText( displayRepeating(context, item, selected));
 
             text_event.setText(displayEvent(context, item));
+            Log.d("DEBUG", "set event text: " + text_event.getText());
 
             SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
             if (event != null)
@@ -341,7 +342,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         long now = System.currentTimeMillis();
         long delta = item.timestamp - now;
         boolean isDistant = (delta >= (48 * 60 * 60 * 1000));
-        return (item.getEventItem(context).getSupportsOffsetDays() || isDistant);
+        return (item.getEventItem(context).supportsOffsetDays() || isDistant);
     }
 
     public static CharSequence displayOffset(Context context, AlarmClockItem item)
@@ -373,7 +374,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         if (item.repeating)
         {
             AlarmEvent.AlarmEventItem eventItem = item.getEventItem(context);
-            int repeatSupport = eventItem.getSupportsRepeating();
+            int repeatSupport = eventItem.supportsRepeating();
             if (repeatSupport == AlarmEventContract.REPEAT_SUPPORT_BASIC) {
                 repeatText = context.getString(R.string.alarmOption_repeat);
             } else if (repeatSupport == AlarmEventContract.REPEAT_SUPPORT_NONE) {

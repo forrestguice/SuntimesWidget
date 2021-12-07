@@ -56,7 +56,6 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -694,7 +693,7 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         if (Build.VERSION.SDK_INT >= 11)
         {
             AlarmOffsetDialog offsetDialog = new AlarmOffsetDialog();
-            offsetDialog.setShowDays(item.getEventItem(AlarmEditActivity.this).getSupportsOffsetDays());
+            offsetDialog.setShowDays(item.getEventItem(AlarmEditActivity.this).supportsOffsetDays());
             offsetDialog.setOffset(item.offset);
             offsetDialog.setOnAcceptedListener(onOffsetChanged);
             offsetDialog.show(getSupportFragmentManager(), DIALOGTAG_OFFSET + 1);
