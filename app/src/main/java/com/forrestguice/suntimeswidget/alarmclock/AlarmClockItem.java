@@ -287,6 +287,7 @@ public class AlarmClockItem implements Parcelable
     }
     public void setEvent(@Nullable String event) {
         this.event = event;
+        eventItem = null;
     }
 
     private AlarmEvent.AlarmEventItem eventItem = null;
