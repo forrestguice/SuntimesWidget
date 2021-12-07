@@ -215,17 +215,22 @@ public class AlarmAddon
             Cursor cursor = resolver.query(info_uri, AlarmEventContract.QUERY_EVENT_INFO_PROJECTION, null, null, null);
             if (cursor != null)
             {
+                String titleValue = null;
                 cursor.moveToFirst();
-                int i_title = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_TITLE);
-                int i_summary = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_SUMMARY);
-                int i_support_repeat = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_SUPPORTS_REPEATING);
-                int i_support_offsetdays = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_SUPPORTS_OFFSETDAYS);
+                if (!cursor.isAfterLast())
+                {
+                    int i_title = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_TITLE);
+                    int i_summary = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_SUMMARY);
+                    int i_support_repeat = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_SUPPORTS_REPEATING);
+                    int i_support_offsetdays = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_SUPPORTS_OFFSETDAYS);
 
-                String titleValue = (i_title >= 0) ? cursor.getString(i_title) : null;
-                item.title = titleValue != null ? titleValue : info_uri.getLastPathSegment();
-                item.summary = (i_summary >= 0) ? cursor.getString(i_summary) : null;
-                item.supports_repeating = (i_support_repeat >= 0) ? cursor.getInt(i_support_repeat) : AlarmEventContract.REPEAT_SUPPORT_DAILY;
-                item.supports_offset_days = (i_support_offsetdays >= 0) && Boolean.parseBoolean(cursor.getString(i_support_offsetdays));
+                    titleValue = (i_title >= 0) ? cursor.getString(i_title) : null;
+                    item.title = titleValue != null ? titleValue : info_uri.getLastPathSegment();
+                    item.summary = (i_summary >= 0) ? cursor.getString(i_summary) : null;
+                    item.supports_repeating = (i_support_repeat >= 0) ? cursor.getInt(i_support_repeat) : AlarmEventContract.REPEAT_SUPPORT_DAILY;
+                    item.supports_offset_days = (i_support_offsetdays >= 0) && Boolean.parseBoolean(cursor.getString(i_support_offsetdays));
+
+                }
 
                 cursor.close();
                 retValue = (titleValue != null);
