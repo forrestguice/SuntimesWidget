@@ -54,6 +54,7 @@ import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.QUER
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.QUERY_EVENT_CALC_PROJECTION;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.QUERY_EVENT_INFO;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.QUERY_EVENT_INFO_PROJECTION;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.REPEAT_SUPPORT_BASIC;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.REPEAT_SUPPORT_NONE;
 
 /**
@@ -165,7 +166,7 @@ public class AlarmEventProvider extends ContentProvider
                     retValue.addRow(createRow(context, Long.parseLong(eventID), columns, selectionMap));
 
                 } catch (NumberFormatException e) {
-                    Log.w("AlarmEventsProvider", "queryEvents: unrecognized event: " + eventID);
+                    Log.w("AlarmEventsProvider", "queryEvents: unrecognized event: " + eventID + " .. " + e);
                 }
             }
         }
@@ -247,24 +248,37 @@ public class AlarmEventProvider extends ContentProvider
      */
     private Object[] createRow(@NonNull Context context, long timedatemillis, String[] columns, @Nullable HashMap<String,String> selectionMap)
     {
+        Calendar now = Calendar.getInstance();
+        Calendar eventCalendar = Calendar.getInstance();
+        eventCalendar.setTimeInMillis(timedatemillis);
+
+        Calendar alarmCalendar = Calendar.getInstance();
+        long offset = Long.parseLong(selectionMap != null && selectionMap.containsKey(EXTRA_ALARM_OFFSET) ? selectionMap.get(EXTRA_ALARM_OFFSET) : "0");
+        alarmCalendar.setTimeInMillis(eventCalendar.getTimeInMillis() + offset);
+
+        while (alarmCalendar.getTimeInMillis() < now.getTimeInMillis()) {
+            eventCalendar.add(Calendar.YEAR, 1);
+            alarmCalendar.setTimeInMillis(eventCalendar.getTimeInMillis() + offset);
+            Log.w("AlarmEventProvider", "updateAlarmTime: " + timedatemillis + ", advancing by 1 year..");
+        }
+
         Object[] row = new Object[columns.length];
         for (int i=0; i<columns.length; i++)
         {
             switch (columns[i])
             {
                 case COLUMN_EVENT_TIMEMILLIS:
-                    row[i] = timedatemillis;
+                    row[i] = eventCalendar.getTimeInMillis();
                     break;
+
                 case COLUMN_EVENT_NAME:
                     row[i] = Long.toString(timedatemillis);
                     break;
                 case COLUMN_EVENT_TITLE:
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTimeInMillis(timedatemillis);
-                    row[i] = utils.calendarDateTimeDisplayString(getContext(), calendar, true, false);
+                    row[i] = utils.calendarDateTimeDisplayString(getContext(), eventCalendar, true, false);
                     break;
                 case COLUMN_EVENT_SUPPORTS_REPEATING:
-                    row[i] = REPEAT_SUPPORT_NONE;
+                    row[i] = REPEAT_SUPPORT_BASIC;
                     break;
                 case COLUMN_EVENT_SUPPORTS_OFFSETDAYS:
                     row[i] = true;
