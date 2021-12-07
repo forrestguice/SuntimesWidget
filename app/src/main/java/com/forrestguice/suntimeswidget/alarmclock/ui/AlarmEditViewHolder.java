@@ -338,20 +338,10 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public static boolean showAlarmDate(Context context, AlarmClockItem item)
     {
-        String eventString = item.getEvent();
-        SolarEvents event = SolarEvents.valueOf(eventString, null);
         long now = System.currentTimeMillis();
         long delta = item.timestamp - now;
         boolean isDistant = (delta >= (48 * 60 * 60 * 1000));
-        boolean isTimestamp = false;
-        if (event == null && eventString != null) {                   // TODO: use supportOffset exclusively
-            try {
-                Uri uri = Uri.parse(eventString);
-                Long.parseLong(uri.getLastPathSegment());
-                isTimestamp = true;
-            } catch (NumberFormatException e) { /* EMPTY */ }
-        }
-        return (item.getEventItem(context).getSupportsOffsetDays() || isDistant || isTimestamp);
+        return (item.getEventItem(context).getSupportsOffsetDays() || isDistant);
     }
 
     public static CharSequence displayOffset(Context context, AlarmClockItem item)
