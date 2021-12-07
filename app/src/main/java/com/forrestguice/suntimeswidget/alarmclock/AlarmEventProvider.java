@@ -42,6 +42,7 @@ import java.util.HashMap;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_NAME;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_SUMMARY;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_SUPPORTS_LOCATION;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_SUPPORTS_OFFSETDAYS;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_SUPPORTS_REPEATING;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_TIMEMILLIS;
@@ -234,6 +235,9 @@ public class AlarmEventProvider extends ContentProvider
                 case COLUMN_EVENT_SUPPORTS_OFFSETDAYS:
                     row[i] = Boolean.toString(AlarmEvent.supportsOffsetDays(event));
                     break;
+                case COLUMN_EVENT_SUPPORTS_LOCATION:
+                    row[i] = Boolean.toString(AlarmEvent.supportsLocation(event));
+                    break;
                 case COLUMN_EVENT_SUMMARY:
                 default:
                     row[i] = null;
@@ -281,7 +285,10 @@ public class AlarmEventProvider extends ContentProvider
                     row[i] = REPEAT_SUPPORT_BASIC;
                     break;
                 case COLUMN_EVENT_SUPPORTS_OFFSETDAYS:
-                    row[i] = true;
+                    row[i] = Boolean.toString(true);
+                    break;
+                case COLUMN_EVENT_SUPPORTS_LOCATION:
+                    row[i] = Boolean.toString(false);
                     break;
                 case COLUMN_EVENT_SUMMARY:
                 default:

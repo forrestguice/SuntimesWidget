@@ -1238,8 +1238,10 @@ public class AlarmListDialog extends DialogFragment
             }
 
             // location
-            if (view.text_location != null) {
-                view.text_location.setVisibility((item.getEvent() == null && item.timezone == null) ? View.INVISIBLE : View.VISIBLE);
+            if (view.text_location != null)
+            {
+                boolean showLocation = (item.getEventItem(context).supportsLocation() || (item.getEvent() == null && item.timezone != null));
+                view.text_location.setVisibility(showLocation ? View.VISIBLE : View.INVISIBLE);
                 view.text_location.setText(item.location.getLabel());
                 view.text_location.setTextColor(item.enabled ? color_on : color_off);
 
