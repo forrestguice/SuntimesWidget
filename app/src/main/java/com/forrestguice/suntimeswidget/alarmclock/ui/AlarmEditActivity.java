@@ -693,10 +693,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     {
         if (Build.VERSION.SDK_INT >= 11)
         {
-            SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
-            int eventType = event != null ? event.getType() : -1;
             AlarmOffsetDialog offsetDialog = new AlarmOffsetDialog();
-            offsetDialog.setShowDays(AlarmEvent.supportsOffsetDays(eventType));
+            offsetDialog.setShowDays(item.getEventItem(AlarmEditActivity.this).getSupportsOffsetDays());
             offsetDialog.setOffset(item.offset);
             offsetDialog.setOnAcceptedListener(onOffsetChanged);
             offsetDialog.show(getSupportFragmentManager(), DIALOGTAG_OFFSET + 1);
