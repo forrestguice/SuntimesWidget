@@ -763,10 +763,10 @@ public class AlarmNotifications extends BroadcastReceiver
      * Use this method to display the notification without a foreground service.
      * @see NotificationService to display a notification that lives longer than the receiver.
      */
-    public static void showNotification(Context context, @NonNull AlarmClockItem item) {
+    public static void showNotification(Service context, @NonNull AlarmClockItem item) {
         showNotification(context, item, false);
     }
-    public static void showNotification(Context context, @NonNull AlarmClockItem item, boolean quiet)
+    public static void showNotification(Service context, @NonNull AlarmClockItem item, boolean quiet)
     {
         Notification notification = createNotification(context, item);
         if (notification != null)
@@ -1155,7 +1155,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                                 } else {
                                     Log.i(TAG, "Show: " + item.rowID + "(Notification)");
-                                    showNotification(context, item);
+                                    showNotification(NotificationService.this, item);
                                 }
 
                                 item.modified = true;
@@ -1379,7 +1379,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         Log.d(TAG, "State Saved (onScheduledSoon)");
                         addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);
                         if (AlarmSettings.loadPrefAlarmUpcoming(context) > 0) {
-                            showNotification(context, item, true);             // show upcoming reminder
+                            showNotification(NotificationService.this, item, true);             // show upcoming reminder
                         }
                     }
                     if (chained != null) {
