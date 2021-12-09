@@ -763,8 +763,7 @@ public class AlarmNotifications extends BroadcastReceiver
      * Use this method to display the notification without a foreground service.
      * @see NotificationService to display a notification that lives longer than the receiver.
      */
-    public static void showNotification(Context context, @NonNull AlarmClockItem item)
-    {
+    public static void showNotification(Context context, @NonNull AlarmClockItem item) {
         showNotification(context, item, false);
     }
     public static void showNotification(Context context, @NonNull AlarmClockItem item, boolean quiet)
@@ -780,6 +779,15 @@ public class AlarmNotifications extends BroadcastReceiver
             startAlert(context, item);
         }
     }
+
+    public static void showForegroundNotification(@NonNull Service service, @NonNull AlarmClockItem item)
+    {
+        Notification notification = AlarmNotifications.createNotification((Context)service, item);
+        if (notification != null) {
+            service.startForeground((int) item.rowID, notification);
+        }
+    }
+
     public static void dismissNotification(Context context, int notificationID)
     {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
@@ -1142,10 +1150,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                     addAlarmTimeouts(context, item.getUri());
 
                                     dismissNotification(context, (int)item.rowID);
-                                    Notification notification = AlarmNotifications.createNotification(context, item);
-                                    if (notification != null) {
-                                        startForeground((int) item.rowID, notification);
-                                    }
+                                    showForegroundNotification(NotificationService.this, item);
                                     AlarmNotifications.startAlert(context, item);
 
                                 } else {
@@ -1206,10 +1211,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     if (item.type == AlarmClockItem.AlarmType.ALARM)
                     {
                         Log.d(TAG, "State Saved (onSnooze)");
-                        Notification notification = AlarmNotifications.createNotification(context, item);
-                        if (notification != null) {
-                            startForeground((int) item.rowID, notification);  // update notification
-                        }
+                        showForegroundNotification(NotificationService.this, item);
                         context.sendBroadcast(getFullscreenBroadcast(item.getUri()));  // update fullscreen activity
                     }
                 }
@@ -1226,10 +1228,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     if (item.type == AlarmClockItem.AlarmType.ALARM)
                     {
                         Log.d(TAG, "State Saved (onTimeout)");
-                        Notification notification = AlarmNotifications.createNotification(context, item);
-                        if (notification != null) {
-                            startForeground((int)item.rowID, notification);  // update notification
-                        }
+                        showForegroundNotification(NotificationService.this, item);
                         context.sendBroadcast(getFullscreenBroadcast(item.getUri()));  // update fullscreen activity
                     }
                 }
