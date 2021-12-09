@@ -41,6 +41,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Vibrator;
+import android.provider.AlarmClock;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -72,10 +73,12 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class AlarmNotifications extends BroadcastReceiver
 {
@@ -780,23 +783,89 @@ public class AlarmNotifications extends BroadcastReceiver
         }
     }
 
-    public static void showForegroundNotification(@NonNull Service service, @NonNull AlarmClockItem item)
+    public static void showForegroundNotification(@NonNull Service service, @NonNull AlarmClockItem item) {
+        showForegroundNotification(service, item, true);
+    }
+    public static void showForegroundNotification(@NonNull Service service, @NonNull AlarmClockItem item, boolean withUpdate)
     {
         Notification notification = AlarmNotifications.createNotification((Context)service, item);
         if (notification != null) {
-            service.startForeground((int) item.rowID, notification);
+            service.startForeground((int)item.rowID, notification);
+            if (withUpdate) {
+                startUpdatingNotification(service, (int) item.rowID, item);
+            }
         }
     }
 
     public static void dismissNotification(Context context, int notificationID)
     {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        stopUpdatingNotification(notificationID);
         notificationManager.cancel(ALARM_NOTIFICATION_TAG, notificationID);
     }
     public static void dismissNotifications(Context context)
     {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        stopUpdatingNotifications();
         notificationManager.cancelAll();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static Handler notificationUpdateHandler;
+    public static final long NOTIFICATION_UPDATE_INTERVAL = 1000;   // 'living notifications' update every second
+
+    private static ConcurrentHashMap<Integer, Runnable> updateRunnables = new ConcurrentHashMap<>();
+
+    public static void startUpdatingNotification(@NonNull Service service, int notificationID, @NonNull final AlarmClockItem alarmItem)
+    {
+        Log.d("DEBUG", "startUpdatingNotification: " + notificationID);
+        if (notificationUpdateHandler == null) {
+            notificationUpdateHandler = new Handler();
+        }
+
+        if (updateRunnables.containsKey(notificationID)) {
+            stopUpdatingNotification(notificationID);
+        }
+        Runnable updateRunnable = notificationUpdate(service, notificationID, alarmItem);
+        updateRunnables.put(notificationID, updateRunnable);
+        notificationUpdateHandler.postDelayed(updateRunnable, NOTIFICATION_UPDATE_INTERVAL);
+    }
+    public static void stopUpdatingNotification(int notificationID)
+    {
+        Log.d("DEBUG", "stopUpdatingNotification: " + notificationID);
+        Runnable r = updateRunnables.remove(notificationID);
+        if (notificationUpdateHandler != null && r != null) {
+            Log.d("DEBUG", "stopUpdatingNotification1: " + notificationID);
+            notificationUpdateHandler.removeCallbacks(r);
+        }
+    }
+    public static void stopUpdatingNotifications()
+    {
+        Log.d("DEBUG", "stopUpdatingNotifications");
+        updateRunnables.clear();
+        if (notificationUpdateHandler != null) {
+            notificationUpdateHandler.removeCallbacksAndMessages(null);
+        }
+    }
+
+    private static Runnable notificationUpdate(final Service service, final int notificationID, final AlarmClockItem item) {
+        return new Runnable() {
+            @Override
+            public void run()
+            {
+                if (updateRunnables.containsKey(notificationID))
+                {
+                    Log.d("DEBUG", "notificationUpdate: " + notificationID + " (foreground)");
+                    showForegroundNotification(service, item, false);   // withUpdate: false .. because we're already in that loop!
+
+                    if (updateRunnables.containsKey(notificationID) && notificationUpdateHandler != null) {
+                        notificationUpdateHandler.postDelayed(notificationUpdate(service, notificationID, item), NOTIFICATION_UPDATE_INTERVAL);
+                    } else Log.d("DEBUG", "notificationUpdate1: not in the list; halting");
+                } else Log.d("DEBUG", "notificationUpdate: not in the list; halting");
+            }
+        };
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
