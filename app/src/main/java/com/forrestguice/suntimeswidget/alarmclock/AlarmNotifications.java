@@ -698,7 +698,8 @@ public class AlarmNotifications extends BroadcastReceiver
                     //{
                         builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
                         builder.setPriority( alarm.repeating ? NotificationCompat.PRIORITY_HIGH : NotificationCompat.PRIORITY_DEFAULT );
-                        notificationMsg = context.getString(R.string.alarmAction_upcomingMsg1, utils.timeDeltaLongDisplayString(System.currentTimeMillis(), alarm.alarmtime).getValue());  // TODO
+
+                        notificationMsg = context.getString(R.string.alarmAction_upcomingMsg1, utils.timeDeltaLongDisplayString(System.currentTimeMillis(), alarm.alarmtime).getValue(), eventItem.getTitle());  // TODO
                         builder.setWhen(alarm.alarmtime);
                         builder.setContentIntent(pendingView);
                         builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);

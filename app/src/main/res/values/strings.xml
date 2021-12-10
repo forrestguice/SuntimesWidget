@@ -748,7 +748,7 @@
     <string name="alarmAction_snoozeMsg1">Snoozing for another <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->   <!-- TODO -->
     <string name="alarmAction_timeoutMsg">The alarm timed out.</string>     <!-- notification msg -->
     <string name="alarmAction_upcomingMsg">Upcoming Alarm</string>     <!-- notification msg -->
-    <string name="alarmAction_upcomingMsg1">Upcoming Alarm in %s</string>     <!-- notification msg -->   <!-- TODO -->
+    <string name="alarmAction_upcomingMsg1">%1$s until %2$s</string>     <!-- notification msg; "'10h 9m' until 'Upcoming Alarm'" -->   <!-- TODO -->
 
     <string name="alarmMode_alarm">Alarm</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">Notification</string>                <!-- alarm type (setting) -->
