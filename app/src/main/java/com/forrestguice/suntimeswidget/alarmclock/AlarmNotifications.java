@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2020 Forrest Guice
+    Copyright (C) 2018-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -662,8 +662,26 @@ public class AlarmNotifications extends BroadcastReceiver
 
         String eventString = alarm.getEvent();
         AlarmEvent.AlarmEventItem eventItem = new AlarmEvent.AlarmEventItem(eventString, context.getContentResolver());
+        String eventTitle, eventDisplay;
 
-        String eventTitle = ((eventString != null) ? eventItem.getVerboseTitle(context) : alarm.type.getDisplayString());
+        if (alarm.offset != 0)
+        {
+            if (eventString != null) {
+                eventTitle = eventItem.getVerboseTitle(context);
+            } else {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(alarm.timestamp);
+                eventTitle = utils.calendarTimeShortDisplayString(context, calendar).toString();
+            }
+
+            String offsetText = utils.timeDeltaLongDisplayString(0, alarm.offset).getValue();
+            int offsetStringResID = ((alarm.offset < 0) ? R.string.offset_before_msg : R.string.offset_after_msg);
+            eventDisplay = context.getString(offsetStringResID, offsetText, eventTitle);
+
+        } else {
+            eventTitle = eventDisplay = ((eventString != null) ? eventItem.getVerboseTitle(context) : alarm.type.getDisplayString());
+        }
+
         String emptyLabel = ((eventString != null) ? eventItem.getTitle() : context.getString(R.string.alarmOption_solarevent_none));
         String notificationTitle = (alarm.label == null || alarm.label.isEmpty() ? emptyLabel : alarm.label);
         String notificationMsg = notificationTitle;
@@ -699,7 +717,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     //{
                         builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
                         builder.setPriority( alarm.repeating ? NotificationCompat.PRIORITY_HIGH : NotificationCompat.PRIORITY_DEFAULT );
-                        notificationMsg = context.getString(R.string.alarmAction_upcomingMsg1, utils.timeDeltaLongDisplayString(System.currentTimeMillis(), alarm.alarmtime).getValue(), eventTitle);
+                        notificationMsg = context.getString(R.string.alarmAction_upcomingMsg1, utils.timeDeltaLongDisplayString(System.currentTimeMillis(), alarm.alarmtime).getValue(), eventDisplay);
                         builder.setWhen(alarm.alarmtime);
                         builder.setContentIntent(pendingView);
                         builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);

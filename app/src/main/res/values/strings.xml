@@ -149,6 +149,9 @@
         <item quantity="one">%1$s after</item>
         <item quantity="other">%1$s after</item>
     </plurals>
+    <string name="offset_at_msg">%1$s at %2$s</string>    <!-- notification msg; 'at Sunset' -->   <!-- TODO -->
+    <string name="offset_before_msg">%1$s before %2$s</string>    <!-- notification msg; '1h 30m before Sunset' -->   <!-- TODO -->
+    <string name="offset_after_msg">%1$s after %2$s</string>    <!-- notification msg; '1h 30m after end of evening civil twilight Sunset' -->   <!-- TODO -->
 
     <string name="offset_button_before">before</string>    <!-- button label; [1h] [5m] [before] (-) -->
     <string name="offset_button_after">after</string>      <!-- button label; [1h] [5m] [after] (+) -->
@@ -748,7 +751,7 @@
     <string name="alarmAction_snoozeMsg1">Snoozing for another <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->   <!-- TODO -->
     <string name="alarmAction_timeoutMsg">The alarm timed out.</string>     <!-- notification msg -->
     <string name="alarmAction_upcomingMsg">Upcoming Alarm</string>     <!-- notification msg -->
-    <string name="alarmAction_upcomingMsg1">%1$s until %2$s</string>     <!-- notification msg; "'10h 9m' until 'Upcoming Alarm'" -->   <!-- TODO -->
+    <string name="alarmAction_upcomingMsg1">%1$s until \'%2$s\'</string>     <!-- notification msg; "'10h 9m' until 'Upcoming Alarm'" -->   <!-- TODO -->
 
     <string name="alarmMode_alarm">Alarm</string>                <!-- alarm type (setting) -->
     <string name="alarmMode_notification">Notification</string>                <!-- alarm type (setting) -->
@@ -1445,7 +1448,7 @@
         <item>lunar noon</item>
         <item>lunar midnight</item>
     </string-array>
-    <string-array name="solarevents_until">   <!-- one-to-one with solarevents_short -->
+    <string-array name="solarevents_until">   <!-- one-to-one with solarevents_short -->  <!-- "<some_span> until <solarevents_until>"; e.g. 10h 30m until start of morning blue hour -->
         <item>start of morning astronomical twilight</item>
         <item>start of morning nautical twilight</item>
         <item>start of morning blue hour</item>
