@@ -183,11 +183,14 @@ public class AlarmNotifications extends BroadcastReceiver
      * @param data alarm Uri
      * @param timeoutAt long timestamp
      */
-    protected static void addAlarmTimeout(Context context, String action, Uri data, long timeoutAt)
+    protected static void addAlarmTimeout(Context context, String action, Uri data, long timeoutAt) {
+        addAlarmTimeout(context, action, data, timeoutAt, AlarmManager.RTC_WAKEUP);
+    }
+    protected static void addAlarmTimeout(Context context, String action, Uri data, long timeoutAt, int type)
     {
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         if (alarmManager != null) {
-            addAlarmTimeout(context, alarmManager, action, data, timeoutAt, AlarmManager.RTC_WAKEUP);
+            addAlarmTimeout(context, alarmManager, action, data, timeoutAt, type);
         } else Log.e(TAG, "addAlarmTimeout: AlarmManager is null!");
     }
     protected static void addAlarmTimeout(Context context, @NonNull AlarmManager alarmManager, String action, Uri data, long timeoutAt, int type)
@@ -1187,7 +1190,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             ////////////////////////////////////////////////////////////////////////////
                             updateNotification(NotificationService.this, item);
                             if (shouldShowNotification(item)) {
-                                addAlarmTimeout(context, ACTION_NOTIFY, item.getUri(), Calendar.getInstance().getTimeInMillis() + NOTIFICATION_UPDATE_INTERVAL);
+                                addAlarmTimeout(context, ACTION_NOTIFY, item.getUri(), Calendar.getInstance().getTimeInMillis() + NOTIFICATION_UPDATE_INTERVAL, AlarmManager.RTC);
                             }
 
                         } else if (action.equals(ACTION_SHOW)) {
@@ -1265,7 +1268,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     {
                         Log.d(TAG, "State Saved (onSnooze)");
                         showForegroundNotification(NotificationService.this, item);
-                        addAlarmTimeout(context, ACTION_NOTIFY, item.getUri(), Calendar.getInstance().getTimeInMillis() + NOTIFICATION_UPDATE_INTERVAL);
+                        addAlarmTimeout(context, ACTION_NOTIFY, item.getUri(), Calendar.getInstance().getTimeInMillis() + NOTIFICATION_UPDATE_INTERVAL, AlarmManager.RTC);
                         context.sendBroadcast(getFullscreenBroadcast(item.getUri()));  // update fullscreen activity
                     }
                 }
@@ -1434,7 +1437,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);
                         if (AlarmSettings.loadPrefAlarmUpcoming(context) > 0) {
                             showNotification(NotificationService.this, item, true);             // show upcoming reminder
-                            addAlarmTimeout(context, ACTION_NOTIFY, item.getUri(), Calendar.getInstance().getTimeInMillis() + NOTIFICATION_UPDATE_INTERVAL);
+                            addAlarmTimeout(context, ACTION_NOTIFY, item.getUri(), Calendar.getInstance().getTimeInMillis() + NOTIFICATION_UPDATE_INTERVAL, AlarmManager.RTC);
                         }
                     }
                     if (chained != null) {
