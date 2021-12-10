@@ -750,6 +750,7 @@
     <string name="alarmAction_snoozeMsg">Snoozing for <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->
     <string name="alarmAction_snoozeMsg1">Snoozing for another <xliff:g id="alarm">%1$s</xliff:g></string>     <!-- notification msg -->   <!-- TODO -->
     <string name="alarmAction_timeoutMsg">The alarm timed out.</string>     <!-- notification msg -->
+    <string name="alarmAction_timeoutMsg1">The alarm timed out %1$s ago.</string>     <!-- notification msg; e.g. alarm timed out '5m ago' -->  <!-- TODO -->
     <string name="alarmAction_upcomingMsg">Upcoming Alarm</string>     <!-- notification msg -->
     <string name="alarmAction_upcomingMsg1">%1$s until \'%2$s\'</string>     <!-- notification msg; "'10h 9m' until 'Upcoming Alarm'" -->   <!-- TODO -->
 
@@ -879,6 +880,8 @@
     <string name="configLabel_alarmMisc">Miscellaneous</string>
     <string name="configLabel_alarms_showlauncher">Launcher Icon</string>
     <string name="configLabel_alarms_showlauncher_summary">Show alarm clock icon in the app tray.</string>
+    <string name="configLabel_alarms_verbose_notifications">Verbose Notifications</string>   <!-- TODO -->
+    <string name="configLabel_alarms_verbose_notifications_summary">Notifications are periodically updated with extra information (e.g. display time remaining).</string>  <!-- TODO -->
 
     <!--
          APP SETTINGS
@@ -1855,5 +1858,6 @@
     <string name="def_app_alarms_autoenable" translatable="false">false</string>   <!-- automatically enable new alarms (false) -->
     <string name="def_app_alarms_allringtones" translatable="false">false</string>   <!-- show all ringtones during selection (ignore ringtone type) -->
     <string name="def_app_alarms_showlauncher" translatable="false">true</string>
+    <string name="def_app_alarms_verbose_notifications" translatable="false">false</string>
 
 </resources>

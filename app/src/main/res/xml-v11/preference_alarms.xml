@@ -16,6 +16,12 @@
             android:title="@string/configLabel_alarms_notifications"
             android:summary="@string/configLabel_alarms_notifications_on" />
 
+        <CheckBoxPreference
+            android:key="app_alarms_notifications_verbose"
+            android:title="@string/configLabel_alarms_verbose_notifications"
+            android:summary="@string/configLabel_alarms_verbose_notifications_summary"
+            android:defaultValue="@string/def_app_alarms_verbose_notifications" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

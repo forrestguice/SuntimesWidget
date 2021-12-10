@@ -72,6 +72,9 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_SORT = "app_alarms_sort";
     public static final int PREF_DEF_ALARM_SORT = SORT_BY_CREATION;
 
+    public static final String PREF_KEY_ALARM_NOTIFICATIONS_VERBOSE = "app_alarms_notifications_verbose";
+    public static final boolean PREF_DEF_ALARM_NOTIFICATIONS_VERBOSE = false;
+
     public static int loadPrefAlarmSort(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -110,6 +113,12 @@ public class AlarmSettings
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getBoolean(PREF_KEY_ALARM_AUTOENABLE, PREF_DEF_ALARM_AUTOENABLE);
+    }
+
+    public static boolean loadPrefVerboseNotifications(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_ALARM_NOTIFICATIONS, PREF_DEF_ALARM_NOTIFICATIONS_VERBOSE);
     }
 
     @TargetApi(10)
