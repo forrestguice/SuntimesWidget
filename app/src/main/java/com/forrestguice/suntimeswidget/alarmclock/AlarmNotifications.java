@@ -656,6 +656,8 @@ public class AlarmNotifications extends BroadcastReceiver
      */
     public static Notification createNotification(Context context, @NonNull AlarmClockItem alarm)
     {
+        AlarmEvent.initDisplayStrings(context);
+        SuntimesUtils.initDisplayStrings(context);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
         String eventString = alarm.getEvent();
@@ -696,7 +698,6 @@ public class AlarmNotifications extends BroadcastReceiver
                     //{
                         builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
                         builder.setPriority( alarm.repeating ? NotificationCompat.PRIORITY_HIGH : NotificationCompat.PRIORITY_DEFAULT );
-                        SuntimesUtils.initDisplayStrings(context);
                         notificationMsg = context.getString(R.string.alarmAction_upcomingMsg1, utils.timeDeltaLongDisplayString(System.currentTimeMillis(), alarm.alarmtime).getValue());  // TODO
                         builder.setWhen(alarm.alarmtime);
                         builder.setContentIntent(pendingView);
@@ -709,7 +710,6 @@ public class AlarmNotifications extends BroadcastReceiver
                 case AlarmState.STATE_SNOOZING:
                     builder.setCategory( NotificationCompat.CATEGORY_ALARM );
                     builder.setPriority( NotificationCompat.PRIORITY_MAX );
-                    SuntimesUtils.initDisplayStrings(context);
                     //SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, AlarmSettings.loadPrefAlarmSnooze(context));
                     long snoozeFor = AlarmSettings.loadPrefAlarmSnooze(context);
                     long snoozeUntil = snoozeFor - ((System.currentTimeMillis() - alarm.alarmtime) % snoozeFor) + 60000;

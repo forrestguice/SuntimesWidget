@@ -43,6 +43,10 @@ import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.REPE
 @SuppressWarnings("Convert2Diamond")
 public class AlarmEvent
 {
+    public static void initDisplayStrings(Context context) {
+        SolarEvents.initDisplayStrings(context);
+    }
+
     public static int supportsRepeating(@NonNull SolarEvents event) {
         return supportsRepeating(event.getType());
     }
