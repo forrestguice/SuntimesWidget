@@ -1445,6 +1445,35 @@
         <item>lunar noon</item>
         <item>lunar midnight</item>
     </string-array>
+    <string-array name="solarevents_until">   <!-- one-to-one with solarevents_short -->
+        <item>start of morning astronomical twilight</item>
+        <item>start of morning nautical twilight</item>
+        <item>start of morning blue hour</item>
+        <item>start of morning civil twilight</item>
+        <item>end of morning blue hour</item>
+        <item>sunrise</item>
+        <item>end of morning golden hour</item>
+        <item>solar noon</item>
+        <item>start of evening golden hour</item>
+        <item>sunset</item>
+        <item>start of evening blue hour</item>
+        <item>end of evening civil twilight</item>
+        <item>end of evening blue hour</item>
+        <item>end of evening nautical twilight</item>
+        <item>end of evening astronomical twilight</item>
+        <item>moonrise</item>
+        <item>moonset</item>
+        <item>new moon</item>
+        <item>first quarter</item>
+        <item>full moon</item>
+        <item>third quarter</item>
+        <item>spring equinox</item>
+        <item>summer solstice</item>
+        <item>autumn equinox</item>
+        <item>winter solstice</item>
+        <item>lunar noon</item>
+        <item>lunar midnight</item>
+    </string-array>   <!-- TODO: -->
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">GPS is disabled. Enable it?</string>

@@ -124,6 +124,23 @@ public enum SolarEvents
         return longDisplayString;
     }
 
+    public String getAlternateDisplayString(Context context) {
+        return getAlternateDisplayString(context, this);
+    }
+
+    public static String getAlternateDisplayString(Context context, SolarEvents event)
+    {
+        String[] displayStrings = context.getResources().getStringArray(R.array.solarevents_until);
+        SolarEvents[] values = values();
+        for (int i=0; i<values.length; i++)
+        {
+            if (values[i] == event) {
+                return displayStrings[i];
+            }
+        }
+        return null;
+    }
+
     public void setDisplayString(String shortDisplayString, String longDisplayString)
     {
         this.shortDisplayString = shortDisplayString;

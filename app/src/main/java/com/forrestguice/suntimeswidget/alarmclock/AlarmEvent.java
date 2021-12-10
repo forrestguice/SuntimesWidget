@@ -110,6 +110,11 @@ public class AlarmEvent
             return (event != null ? event.getLongDisplayString() : title);
         }
 
+        @NonNull
+        public String getVerboseTitle(Context context) {
+            return (event != null ? event.getAlternateDisplayString(context) : getTitle());
+        }
+
         @Nullable
         public String getSummary() {
             return (event != null ? "" : summary);

@@ -663,6 +663,7 @@ public class AlarmNotifications extends BroadcastReceiver
         String eventString = alarm.getEvent();
         AlarmEvent.AlarmEventItem eventItem = new AlarmEvent.AlarmEventItem(eventString, context.getContentResolver());
 
+        String eventTitle = ((eventString != null) ? eventItem.getVerboseTitle(context) : alarm.type.getDisplayString());
         String emptyLabel = ((eventString != null) ? eventItem.getTitle() : context.getString(R.string.alarmOption_solarevent_none));
         String notificationTitle = (alarm.label == null || alarm.label.isEmpty() ? emptyLabel : alarm.label);
         String notificationMsg = notificationTitle;
@@ -698,8 +699,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     //{
                         builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
                         builder.setPriority( alarm.repeating ? NotificationCompat.PRIORITY_HIGH : NotificationCompat.PRIORITY_DEFAULT );
-
-                        notificationMsg = context.getString(R.string.alarmAction_upcomingMsg1, utils.timeDeltaLongDisplayString(System.currentTimeMillis(), alarm.alarmtime).getValue(), eventItem.getTitle());  // TODO
+                        notificationMsg = context.getString(R.string.alarmAction_upcomingMsg1, utils.timeDeltaLongDisplayString(System.currentTimeMillis(), alarm.alarmtime).getValue(), eventTitle);
                         builder.setWhen(alarm.alarmtime);
                         builder.setContentIntent(pendingView);
                         builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
