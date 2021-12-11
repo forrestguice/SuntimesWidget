@@ -57,10 +57,10 @@ public class AlarmEvent
         return (eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON);
     }
 
-    public static boolean supportsLocation(@NonNull SolarEvents event) {
-        return supportsLocation(event.getType());
+    public static boolean requiresLocation(@NonNull SolarEvents event) {
+        return requiresLocation(event.getType());
     }
-    public static boolean supportsLocation(int eventType) {
+    public static boolean requiresLocation(int eventType) {
         return (eventType != SolarEvents.TYPE_MOONPHASE);
     }
 
@@ -77,7 +77,7 @@ public class AlarmEvent
 
         protected int supports_repeating = REPEAT_SUPPORT_DAILY;
         protected boolean supports_offset_days = false;
-        protected boolean supports_location = true;
+        protected boolean requires_location = true;
 
         public AlarmEventItem( @NonNull SolarEvents event ) {
             this.event = event;
@@ -121,8 +121,8 @@ public class AlarmEvent
         public boolean supportsOffsetDays() {
             return (event != null ? AlarmEvent.supportsOffsetDays(event) : supports_offset_days);
         }
-        public boolean supportsLocation() {
-            return (event != null ? AlarmEvent.supportsLocation(event) : supports_location);
+        public boolean requiresLocation() {
+            return (event != null ? AlarmEvent.requiresLocation(event) : requires_location);
         }
 
         public String toString() {

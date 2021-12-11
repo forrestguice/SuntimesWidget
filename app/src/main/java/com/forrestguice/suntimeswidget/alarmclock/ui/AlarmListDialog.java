@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2020 Forrest Guice
+    Copyright (C) 2020-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -1240,7 +1240,7 @@ public class AlarmListDialog extends DialogFragment
             // location
             if (view.text_location != null)
             {
-                boolean showLocation = (item.getEventItem(context).supportsLocation() || (item.getEvent() == null && item.timezone != null));
+                boolean showLocation = (item.getEventItem(context).requiresLocation() || (item.getEvent() == null && item.timezone != null));
                 view.text_location.setVisibility(showLocation ? View.VISIBLE : View.INVISIBLE);
                 view.text_location.setText(item.location.getLabel());
                 view.text_location.setTextColor(item.enabled ? color_on : color_off);

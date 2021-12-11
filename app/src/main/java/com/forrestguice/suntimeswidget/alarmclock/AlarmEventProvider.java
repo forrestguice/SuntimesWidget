@@ -41,8 +41,8 @@ import java.util.HashMap;
 
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_NAME;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_REQUIRES_LOCATION;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_SUMMARY;
-import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_SUPPORTS_LOCATION;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_SUPPORTS_OFFSETDAYS;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_SUPPORTS_REPEATING;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_TIMEMILLIS;
@@ -56,7 +56,6 @@ import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.QUER
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.QUERY_EVENT_INFO;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.QUERY_EVENT_INFO_PROJECTION;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.REPEAT_SUPPORT_BASIC;
-import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.REPEAT_SUPPORT_NONE;
 
 /**
  * AlarmEventProvider
@@ -235,8 +234,8 @@ public class AlarmEventProvider extends ContentProvider
                 case COLUMN_EVENT_SUPPORTS_OFFSETDAYS:
                     row[i] = Boolean.toString(AlarmEvent.supportsOffsetDays(event));
                     break;
-                case COLUMN_EVENT_SUPPORTS_LOCATION:
-                    row[i] = Boolean.toString(AlarmEvent.supportsLocation(event));
+                case COLUMN_EVENT_REQUIRES_LOCATION:
+                    row[i] = Boolean.toString(AlarmEvent.requiresLocation(event));
                     break;
                 case COLUMN_EVENT_SUMMARY:
                 default:
@@ -287,7 +286,7 @@ public class AlarmEventProvider extends ContentProvider
                 case COLUMN_EVENT_SUPPORTS_OFFSETDAYS:
                     row[i] = Boolean.toString(true);
                     break;
-                case COLUMN_EVENT_SUPPORTS_LOCATION:
+                case COLUMN_EVENT_REQUIRES_LOCATION:
                     row[i] = Boolean.toString(false);
                     break;
                 case COLUMN_EVENT_SUMMARY:
