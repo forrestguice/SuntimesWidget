@@ -18,13 +18,11 @@
 
 package com.forrestguice.suntimeswidget;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -40,9 +38,8 @@ import android.os.Build;
 import android.os.Bundle;
 
 import android.os.Parcelable;
+import android.os.SystemClock;
 import android.preference.PreferenceActivity;
-import android.provider.AlarmClock;
-import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
@@ -103,11 +100,9 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.lang.reflect.Method;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
@@ -141,9 +136,9 @@ public class SuntimesActivity extends AppCompatActivity
     public static final String SUNTIMES_APP_UPDATE_PARTIAL = "suntimes.SUNTIMES_APP_UPDATE_PARTIAL";
     public static final int SUNTIMES_SETTINGS_REQUEST = 10;
 
+    public static final String KEY_UI_NOTEINDEX = "noteIndex";
     public static final String KEY_UI_USERSWAPPEDCARD = "userSwappedCard";
     public static final String KEY_UI_CARDPOSITION = "cardPosition";
-    public static final String KEY_UI_RESETNOTE = "resetNote";
 
     public static final String WARNINGID_DATE = "Date";
     public static final String WARNINGID_TIMEZONE = "Timezone";
@@ -211,7 +206,8 @@ public class SuntimesActivity extends AppCompatActivity
     private View layout_altitude;
 
     private boolean isRtl = false;
-    private boolean userSwappedCard = false;
+    private long userSwappedCard = -1L;
+    private boolean onResume_resetNoteIndex = true;
 
     private boolean showWarnings = false;
     private SuntimesWarning timezoneWarning;
@@ -228,6 +224,7 @@ public class SuntimesActivity extends AppCompatActivity
     @Override
     protected void attachBaseContext(Context newBase)
     {
+        //Log.d("DEBUG", "attachBaseContext");
         Context context = AppSettings.initLocale(newBase, localeInfo = new AppSettings.LocaleInfo());
         isRtl = AppSettings.isLocaleRtl(context);
         super.attachBaseContext(context);
@@ -240,6 +237,7 @@ public class SuntimesActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle savedState)
     {
+        //Log.d("DEBUG", "onCreate");
         Context context = SuntimesActivity.this;
         initTheme();
         super.onCreate(savedState);
@@ -254,7 +252,6 @@ public class SuntimesActivity extends AppCompatActivity
 
         initGetFix();
         getFixHelper.loadSettings(savedState);
-        onStart_resetNoteIndex = true;
 
         handleIntent(getIntent());
     }
@@ -309,7 +306,9 @@ public class SuntimesActivity extends AppCompatActivity
                 setUserSwappedCard(false, "handleIntent (resetNote)");
                 notes.resetNoteIndex();
                 NoteData note = notes.getNote();
-                highlightTimeField1(note.noteMode);
+                if (note != null) {
+                    highlightTimeField1(note.noteMode);
+                }
 
             } else if (action.equals(ACTION_CARD_NEXT)) {
                 setUserSwappedCard( true, "handleIntent (nextCard)" );
@@ -391,14 +390,16 @@ public class SuntimesActivity extends AppCompatActivity
     public void onStart()
     {
         super.onStart();
+        //Log.d("DEBUG", "onStart");
+
         calculateData(SuntimesActivity.this);
 
         registerReceivers(SuntimesActivity.this);
         setUpdateAlarms(SuntimesActivity.this);
 
         updateViews(SuntimesActivity.this);
+        onResume_resetNoteIndex = true;        // reset to true (to be set false again by onRestoreInstanceState if needed)
     }
-    private boolean onStart_resetNoteIndex = false;
 
     /**
      * OnResume: the user is now interacting w/ the Activity (running state)
@@ -407,12 +408,13 @@ public class SuntimesActivity extends AppCompatActivity
     public void onResume()
     {
         super.onResume();
+        //Log.d("DEBUG", "onResume");
+
         updateActionBar(this);
         getFixHelper.onResume();
 
-        if (onStart_resetNoteIndex) {
+        if (onResume_resetNoteIndex) {
             notes.resetNoteIndex();
-            onStart_resetNoteIndex = false;
         }
 
         // restore open dialogs
@@ -634,9 +636,7 @@ public class SuntimesActivity extends AppCompatActivity
                 }
 
                 setPartialUpdateAlarm(SuntimesActivity.this);
-                if (!userSwappedCard) {
-                    notes.resetNoteIndex();
-                }
+                notes.resetNoteIndex();
                 updateViews(SuntimesActivity.this);
             }
         }
@@ -645,20 +645,23 @@ public class SuntimesActivity extends AppCompatActivity
     /**
      * OnPause: the user about to interact w/ another Activity
      */
-    @Override
+    /*@Override
     public void onPause()
     {
         super.onPause();
-    }
+        //Log.d("DEBUG", "onPause");
+    }*/
 
     @Override
     public void onSaveInstanceState( Bundle outState )
     {
         super.onSaveInstanceState(outState);
+        //Log.d("DEBUG", "onSaveInstanceState");
+
         saveWarnings(outState);
-        outState.putBoolean(KEY_UI_USERSWAPPEDCARD, userSwappedCard);
+        outState.putInt(KEY_UI_NOTEINDEX, notes.getNoteIndex());
+        outState.putLong(KEY_UI_USERSWAPPEDCARD, userSwappedCard);
         outState.putInt(KEY_UI_CARDPOSITION, ((card_layout.findFirstVisibleItemPosition() + card_layout.findLastVisibleItemPosition()) / 2));
-        outState.putBoolean(KEY_UI_RESETNOTE, onStart_resetNoteIndex);
         card_equinoxSolstice.saveState(outState);
     }
 
@@ -666,10 +669,17 @@ public class SuntimesActivity extends AppCompatActivity
     public void onRestoreInstanceState(@NonNull Bundle savedInstanceState)
     {
         super.onRestoreInstanceState(savedInstanceState);
+        //Log.d("DEBUG", "onRestoreInstanceState");
+
         restoreWarnings(savedInstanceState);
-        onStart_resetNoteIndex = savedInstanceState.getBoolean(KEY_UI_RESETNOTE, onStart_resetNoteIndex);
-        setUserSwappedCard(savedInstanceState.getBoolean(KEY_UI_USERSWAPPEDCARD, false), "onRestoreInstanceState");
+        userSwappedCard = savedInstanceState.getLong(KEY_UI_USERSWAPPEDCARD, -1L);
         card_equinoxSolstice.loadState(savedInstanceState);
+
+        int noteIndex = savedInstanceState.getInt(KEY_UI_NOTEINDEX);
+        if (noteIndex >= 0 && noteIndex != notes.getNoteIndex()) {
+            notes.setNoteIndex(noteIndex);
+        }
+        onResume_resetNoteIndex = false;
 
         int cardPosition = savedInstanceState.getInt(KEY_UI_CARDPOSITION, CardAdapter.TODAY_POSITION);
         if (cardPosition == RecyclerView.NO_POSITION) {
@@ -685,6 +695,7 @@ public class SuntimesActivity extends AppCompatActivity
     @Override
     public void onStop()
     {
+        //Log.d("DEBUG", "onStop");
         unregisterReceivers(SuntimesActivity.this);
         unsetUpdateAlarms(SuntimesActivity.this);
 
@@ -696,11 +707,12 @@ public class SuntimesActivity extends AppCompatActivity
     /**
      * OnDestroy: the activity destroyed
      */
-    @Override
+    /*@Override
     public void onDestroy()
     {
         super.onDestroy();
-    }
+        //Log.d("DEBUG", "onDestroy");
+    }*/
 
     /**
      * @param requestCode the request code that was passed to requestPermissions
@@ -1862,14 +1874,18 @@ public class SuntimesActivity extends AppCompatActivity
             setUserSwappedCard(false, "onSunriseClick");
             notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNRISE));
             NoteData note = notes.getNote();
-            highlightTimeField1(note.noteMode);
+            if (note != null) {
+                highlightTimeField1(note.noteMode);
+            }
         }
         @Override
         public boolean onSunriseHeaderLongClick(CardAdapter adapter, int position) {
             setUserSwappedCard(false, "onSunriseClick");
             notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNRISE));
             NoteData note = notes.getNote();
-            highlightTimeField1(note.noteMode);
+            if (note != null) {
+                highlightTimeField1(note.noteMode);
+            }
             return true;
         }
 
@@ -1879,7 +1895,9 @@ public class SuntimesActivity extends AppCompatActivity
             setUserSwappedCard(false, "onSunsetClick");
             notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNSET));
             NoteData note = notes.getNote();
-            highlightTimeField1(note.noteMode);
+            if (note != null) {
+                highlightTimeField1(note.noteMode);
+            }
         }
         @Override
         public boolean onSunsetHeaderLongClick(CardAdapter adapter, int position)
@@ -1887,7 +1905,9 @@ public class SuntimesActivity extends AppCompatActivity
             setUserSwappedCard(false, "onSunsetClick");
             notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNSET));
             NoteData note = notes.getNote();
-            highlightTimeField1(note.noteMode);
+            if (note != null) {
+                highlightTimeField1(note.noteMode);
+            }
             return true;
         }
 
@@ -1937,7 +1957,9 @@ public class SuntimesActivity extends AppCompatActivity
             setUserSwappedCard(false, "onCenterClick");
             notes.resetNoteIndex();
             NoteData note = notes.getNote();
-            highlightTimeField1(note.noteMode);
+            if (note != null) {
+                highlightTimeField1(note.noteMode);
+            }
         }
     };
 
@@ -1978,6 +2000,12 @@ public class SuntimesActivity extends AppCompatActivity
                         String actionID = AppSettings.loadNoteTapActionPref(SuntimesActivity.this);
                         if (WidgetActions.SuntimesAction.ALARM.name().equals(actionID)) {
                             scheduleAlarmFromNote();
+                        } else if (WidgetActions.SuntimesAction.NEXT_NOTE.name().equals(actionID)) {
+                            setUserSwappedCard(false, "noteTouchListener (next note)");
+                            notes.showNextNote();    // call next/prev methods directly; using onTapAction (re)triggers the activity lifecycle (onResume)
+                        } else if (WidgetActions.SuntimesAction.PREV_NOTE.name().equals(actionID)) {
+                            setUserSwappedCard(false, "noteTouchListener (prev note)");
+                            notes.showPrevNote();
                         } else {
                             onTapAction(actionID, "onNoteTouch");
                         }
@@ -2117,7 +2145,7 @@ public class SuntimesActivity extends AppCompatActivity
     public void highlightTimeField1(SolarEvents event)
     {
         int cardPosition = card_adapter.highlightField(this, event);
-        if (!userSwappedCard && cardPosition != -1) {
+        if (!checkUserSwappedCard() && cardPosition != -1) {
             scrollTo(cardPosition);
         }
     }
@@ -2236,9 +2264,21 @@ public class SuntimesActivity extends AppCompatActivity
 
     private void setUserSwappedCard( boolean value, String tag )
     {
-        userSwappedCard = value;
-        Log.d("DEBUG", "userSwappedCard set " + value + " (" + tag + " )");
+        userSwappedCard = (value ? SystemClock.elapsedRealtime() : -1L);
+        //Log.d("DEBUG", "userSwappedCard set " + value + " (" + tag + " )");
     }
+
+    private boolean checkUserSwappedCard()
+    {
+        long d = (userSwappedCard < 0) ? 0 : SystemClock.elapsedRealtime() - userSwappedCard;
+        if (d < 0 || d >= RESET_USERSWAPPEDCARD_AFTER_T) {
+            userSwappedCard = -1L;
+            //Log.d("DEBUG", "userSwappedCard set false (checkUserSwappedCard)");
+        }
+        //Log.d("DEBUG", "userSwappedCard check " + (userSwappedCard >= 0));
+        return (userSwappedCard >= 0);
+    }
+    private static final long RESET_USERSWAPPEDCARD_AFTER_T = 60 * 60 * 1000;  // 1h
 
     /**
      * Get the current theme's resource id (used by test verification).

@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.notes;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
@@ -200,6 +201,7 @@ public class SuntimesNotes
         return false;
     }
 
+    @Nullable
     public NoteData getNote()
     {
         if (currentNote != null)

@@ -79,15 +79,16 @@
     <!-- Field: moon illumination (as seen in moon widget) -->
     <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> prilumata</string>  <!-- "50% illuminated" .. used in 2x1 widget -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50%" .. used in 1x1 widget -->
+    <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> je <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
          The relative order is defined by the layout (layout/info_time_daydelta.xml).
     -->
-    <string name="delta_day_tomorrow">Morgaŭo estos</string>
-    <string name="delta_day_yesterday">Hieraŭo estis</string>
-    <string name="delta_day_shorter">malpli longa</string>
-    <string name="delta_day_longer">pli longa</string>
+    <string name="delta_day_tomorrow">Morgaŭo estos je</string>
+    <string name="delta_day_yesterday">Hieraŭo estis je</string>
+    <string name="delta_day_shorter">malpli longa.</string>
+    <string name="delta_day_longer">pli longa.</string>
 
     <!-- NotePrefix: since/until/untilEnd
          The note prefix text. e.g.
@@ -225,7 +226,7 @@
     <string name="configLabel_general_timeFormatMode">Formo de tempo:</string>         <!-- spinner label -->
 
     <string name="configLabel_general_altitude_enabled">Uzi altitudon</string>        <!-- checkbox label -->
-    <string name="configLabel_general_altitude_enabled_summary">Apliki plibonigojn surbaze de altitudo.</string>        <!-- checkbox label -->
+    <string name="configLabel_general_altitude_enabled_summary">Apliki korektojn surbaze de altitudo.</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_lengthUnits">Unuoj de longo</string>        <!-- spinner label -->
 
@@ -236,7 +237,7 @@
     <string name="configLabel_general_showTimeDate_summary">Ampleksi la horon dum montrado de datoj.</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_showWeeks">Montri semajnojn</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showWeeks_summary">Dividi temp-intervalojn longaj ol 7 tagoj inter semajnoj (ekz. 15t iĝas 2sem 1t).</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showWeeks_summary">Dividi temp-intervalojn pli longajn ol 7 tagoj inter semajnoj (ekz. 15 t iĝas 2 sem 1 t).</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_showHours">Montri horojn</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">Ampleksi horojn kaj minutojn por temp-intervaloj pli longaj ol tagnokto.</string>    <!-- checkbox label -->
@@ -407,9 +408,9 @@
     <string name="configAction_savePlace">Konservi</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Suntempo</string>                       <!-- setting -->
-    <string name="timezoneMode_current">Sistema</string>                         <!-- setting -->
-    <string name="timezoneMode_custom">Propra</string>                    <!-- setting -->
+    <string name="timezoneMode_standard">suntempo</string>                       <!-- setting -->
+    <string name="timezoneMode_current">laŭ operaciumo</string>                         <!-- setting -->
+    <string name="timezoneMode_custom">propra</string>                    <!-- setting -->
 
     <string name="time_lmst">loka laŭstela tempo</string>                  <!-- timezone label -->
     <string name="time_gmst">Grenviĉa laŭstela tempo</string>              <!-- timezone label -->
@@ -425,7 +426,7 @@
     <string name="configLabel_timezone_standard">Suntempo:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
-    <string name="timeFormatMode_system">Sistema formo</string>          <!-- setting -->
+    <string name="timeFormatMode_system">Laŭ operaciumo</string>          <!-- setting -->
     <string name="timeFormatMode_12hr">12‑hora</string>                  <!-- setting -->
     <string name="timeFormatMode_24hr">24‑hora</string>                  <!-- setting -->
 
@@ -687,8 +688,8 @@
     <string name="alarmAction_timeoutMsg">Alarmo silentiĝis.</string>     <!-- notification msg -->
     <string name="alarmAction_upcomingMsg">Alarmo baldaŭas</string>     <!-- notification msg -->
 
-    <string name="alarmMode_alarm">Alarmo</string>                <!-- alarm type (setting) -->
-    <string name="alarmMode_notification">Sciigo</string>                <!-- alarm type (setting) -->
+    <string name="alarmMode_alarm">alarmo</string>                <!-- alarm type (setting) -->
+    <string name="alarmMode_notification">sciigo</string>                <!-- alarm type (setting) -->
 
     <string name="configLabel_alarmEdit_scheduleTray">Plani:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_onAlertTray">Ludi sonon &#47; ekigi:</string>               <!-- group title -->
@@ -696,6 +697,8 @@
 
     <string name="alarmOption_vibrate">vibri</string>                <!-- checkbox text -->
     <string name="alarmOption_ringtone_none">sen sono</string>          <!-- ringtone label (none) -->
+    <string name="alarmOption_ringtone_ringtone">voksono</string>          <!-- menu item; Select a "Ringtone" -->
+    <string name="alarmOption_ringtone_file">son-dosiero</string>          <!-- menu item; Select an "Audio File" -->
     <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
     <string name="alarmOption_solarevent_none">konstanta tempo</string>          <!-- ringtone label (none) -->
 
@@ -707,7 +710,8 @@
     <string name="deletealarm_dialog_message">Ĉu vi certe volas forigi la <xliff:g id="type">%1$s</xliff:g>n je <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg -->
     <string name="deletealarm_dialog_ok">Forigi</string>        <!-- button -->
     <string name="deletealarm_dialog_cancel">Nuligi</string>    <!-- button -->
-    <string name="deletealarm_toast_success">Forigis <xliff:g id="type" example="sciigo">%1$s</xliff:g>n je <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>).</string> <!-- toast msg -->
+    <string name="deletealarm_toast_success">Forigita: <xliff:g id="type" example="sciigo">%1$s</xliff:g> je <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>).</string> <!-- toast msg -->
+    <string name="deletealarm_toast_success1">Forigita: <xliff:g id="type" example="Notification">%1$s</xliff:g>.</string> <!-- toast msg -->
 
     <string name="discardchanges_dialog_message">Estas nekonservitaj ŝanĝoj.</string>      <!-- dialog message -->
     <string name="discardchanges_dialog_ok">Ne konservi</string>                              <!-- button -->
@@ -739,6 +743,7 @@
     <string name="alarmoffset_dialog_cancel">Nuligi</string>    <!-- button -->
 
     <string name="alarmenabled_toast">Agordis <xliff:g id="alarmType" example="sciigo">%1$s</xliff:g>n post <xliff:g id="duration" example="8h">%2$s</xliff:g>.</string> <!-- toast msg -->
+    <string name="alarmdetails_snack">La <xliff:g id="alarmType" example="Notification">%1$s</xliff:g> aktiviĝos post <xliff:g id="duration" example="8h">%2$s</xliff:g>.</string> <!-- snackbar msg -->
 
     <string name="configLabel_alarms_optWhiteList">Optimumigo de baterio</string>
     <string name="configLabel_alarms_optWhiteList_listed">Ne optimumigita (konsilinde)</string>
@@ -799,8 +804,8 @@
     </plurals>
     
     <string name="configLabel_alarmMisc">Diversaj</string>
-    <string name="configLabel_alarms_showlauncher">Piktogramo en lanĉilo</string>
-    <string name="configLabel_alarms_showlauncher_summary">Montri la piktogramon “Suntempoj: alarmoj” en aplikaĵa lanĉilo.</string>
+    <string name="configLabel_alarms_showlauncher">Bildsimbolo en lanĉilo</string>
+    <string name="configLabel_alarms_showlauncher_summary">Montri la bildsimbolon “Suntempoj: alarmoj” en aplikaĵlanĉilo.</string>
     
     <!--
          APP SETTINGS
@@ -834,6 +839,7 @@
     <string name="configAction_deletePlace">Forigi</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Forigi ĉiujn</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportPlaces">Elporti</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">Enporti</string>       <!-- button (contentDescription) -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Fasado</string>                       <!-- group title -->
@@ -867,6 +873,11 @@
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Montri fonton de datumoj</string>
     <string name="configLabel_ui_showdatasource_summary">Montri etikedon indikantan la nunan agordaron.</string>
+
+    <!-- App Setting: show headers -->
+    <string name="configLabel_ui_showheaders">Kolumn-titoloj</string>              <!-- group title -->
+    <string name="configLabel_ui_showheader_icon">Montri bildsimbolon en kulumn-titolo</string> <!-- checkbox label -->
+    <string name="configLabel_ui_showheader_text">Montri tekston en kolumn-titolo</string> <!-- checkbox label -->
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Ora horo</string>
@@ -961,8 +972,8 @@
     <string name="worldmap_dialog_option_all">Ambaŭ</string>
     <string name="worldmap_dialog_option_location">Pozicio</string>
     <string name="worldmap_dialog_option_latitudes">Cirkloj de latitudo</string>
-    <string name="worldmap_dialog_speed_15m">&#215; 15min</string>
-    <string name="worldmap_dialog_speed_1d">&#215; 1t</string>
+    <string name="worldmap_dialog_speed_15m">&#215; 15 min</string>
+    <string name="worldmap_dialog_speed_1d">&#215; 1 t</string>
     <string name="configAction_shareMap">Kunhavigi</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <!-- Dialog: Set Alarm -->
@@ -1043,7 +1054,7 @@
   <string name="configLabel_localeMode">Reĝimo</string>
   <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
   <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
-      <item>Sistema</item>
+      <item>Laŭ operaciumo</item>
       <item>Propra</item>
   </string-array>
 
@@ -1066,6 +1077,7 @@
         <item>Portugala</item>
         <item>Rusa</item>
         <item>Nederlanda</item>
+        <item>Czech</item>  <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
@@ -1350,9 +1362,9 @@
         Tiu eblaĵo estas nun disponebla kiel <a href="moreInfoLink">aparta aplikaĵo</a>.
     ]]></string>
 
-    <string name="privacy_policy"><![CDATA[<b>Privateco:</b><br/>La aplikaĵo Suntempoj ne kolektas, konservas aŭ transigas personajn informojn de la uzanto. Ĝi enhavas <b>neniujn reklamojn</b>, <b>neniujn analizilojn</b>, <b>neniujn spurilojn</b> kaj <b>neniujn malnecesajn permesojn</b>. <br/><br/>La aplikaĵo agordiĝas de lokaj datumoj. Tiuj informoj (kaj aliaj agordoj uzataj de la aplikaĵo) estas konservataj loke kaj ne eliras el la aparato.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
+    <string name="privacy_policy"><![CDATA[<b>Privateco:</b><br/>La aplikaĵo Suntempoj ne kolektas, konservas aŭ transigas personajn informojn de la uzanto. Ĝi enhavas <b>neniun reklamon</b>, <b>neniun analizilon</b>, <b>neniun spurilon</b> kaj <b>neniun malnecesan permeson</b>. <br/><br/>La aplikaĵo agordiĝas de lokaj datumoj. Tiuj informoj (kaj aliaj agordoj uzataj de la aplikaĵo) estas konservataj loke kaj ne eliras el la aparato.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[La permeso por <b>determini pozicion</b> estas uzata por trovi vian nunan longitudon kaj latitudon. Tiu permeso estas malnepra, pozicio estas implicite agordita permane.]]></string>
-    <string name="privacy_permission_storage"><![CDATA[La permeso por aliri <b>eksteran konservejon</b> estas uzato por elpori/sekurkopii datumojn al dosieroj (ekz. lokojn, etosojn).]]></string>
+    <string name="privacy_permission_storage"><![CDATA[La permeso por aliri <b>eksteran konservejon</b> estas uzata por elpori/sekurkopii datumojn al dosieroj (ekz. lokojn, etosojn).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[La permeso por <b>legi eksteran konservejon</b> estas uzata por ludi sonojn troviĝantajn en la SD‑karto. <br/><br/>Tiu permeso estas malnepra, la implicita sono estos ludata, se tiu permeso mankas. Tiu permeso ne estas bezonata por ludi sonojn de la sistemo (konservo de aŭdvidaĵoj).]]></string>
     <string name="privacy_permissiondialog_prompt"><![CDATA[Ĉu peti la permeson nun?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignori</string>
@@ -1363,7 +1375,8 @@
     <string name="security_duplicate_permissions">La permeso, kiu apartenas al la programo Suntempoj:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nestas ankaŭ difinita de: <xliff:g id="packageName" example="iu.alia.aplikajho">%2$s</xliff:g></string>
     <string name="feature_not_supported_by_api">Tiu ĉi eblaĵo ne estas subtenata per API %1$s.</string>
     <string name="feature_not_supported_by_source">Tiu ĉi eblaĵo ne estas subtenata per la nuna datum‑fonto.</string>
-    <string name="reboot_required_message">Restarto povas esti bezonata por apliki ŝanĝojn.</string>
+    <string name="reboot_required_message">Restarto de la aparato povas esti necesa por apliki ŝanĝojn.</string>    <!-- toast; device off/on may be required -->
+    <string name="restart_required_message">Restarto de la aplikaĵo povas esti necesa por apliki ŝanĝojn.</string>   <!-- toast; app restart may be required -->
 
     <string name="dialog_ok">Bone</string>
     <string name="dialog_cancel">Nuligi</string>

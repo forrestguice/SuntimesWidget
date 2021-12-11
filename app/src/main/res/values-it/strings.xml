@@ -1009,6 +1009,7 @@
         <item>Portoghese</item>
         <item>Russo</item>
         <item>Olandese</item>
+        <item>Czech</item>  <!-- TODO -->
     </string-array>  <!-- these should be language/locale names as written/understood in Italian -->
 
     <!-- position formats -->

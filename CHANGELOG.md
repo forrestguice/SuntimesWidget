@@ -1,5 +1,20 @@
 ### ~
 
+### v0.13.16 (2021-11-29)
+* adds translation to Czech (cs) (contributed by utaxiu) (#520).
+* fixes bug where CalculatorProvider fails to apply altitude refinements. 
+
+### v0.13.15 (2021-11-15)
+* updates translation to Norwegian (nb) (#515 by FTno).
+* updates translations to Polish (pl) and Esperanto (eo) (#514 by Verdulo).
+
+### v0.13.14 (2021-10-26)
+* adds "Show Header Icon" and "Show Header Text" options to User Interface settings (#509, #511).
+* fixes bug "twilight duration fails to switch to the next event" (#508).
+* fixes bug "unable to select default widget themes" when overriding the app theme (#510).
+* fixes bug in "1x1 sunrise/sunset only" widgets where the time displayed is for the wrong day (off-by-one).
+* fixes app crash when table headers are clicked (but the corresponding rows have been hidden).
+
 ### v0.13.13 (2021-09-09)
 * fixes bug "1x1 moon widget uses imperial units while the app metric" (#506).
 

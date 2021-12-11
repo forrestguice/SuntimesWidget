@@ -881,6 +881,11 @@
     <string name="configLabel_ui_showdatasource">Vis datakilde</string>
     <string name="configLabel_ui_showdatasource_summary">Vis en påskrift som angir den gjeldende innstillingen.</string>
 
+    <!-- App Setting: show headers -->
+    <string name="configLabel_ui_showheaders">Overskrifter</string>              <!-- group title -->
+    <string name="configLabel_ui_showheader_icon">Vis overskriftsikon</string> <!-- checkbox label -->
+    <string name="configLabel_ui_showheader_text">Vis overskriftstekst</string> <!-- checkbox label -->
+
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Gylne time</string>
 
@@ -997,6 +1002,7 @@
         <item>Portugisisk</item>
         <item>Russisk</item>
         <item>Dutch</item>  <!-- TODO -->
+        <item>Czech</item>  <!-- TODO -->
     </string-array>
 
     <!-- position formats -->

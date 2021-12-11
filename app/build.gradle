@@ -23,8 +23,8 @@ android
         minSdkVersion 10
         //noinspection ExpiredTargetSdkVersion,OldTargetApi
         targetSdkVersion 25
-        versionCode 77
-        versionName "0.13.13"
+        versionCode 80
+        versionName "0.13.16"
 
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
 
