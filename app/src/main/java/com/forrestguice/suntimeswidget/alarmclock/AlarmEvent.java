@@ -75,7 +75,7 @@ public class AlarmEvent
     public static class AlarmEventItem
     {
         protected SolarEvents event;
-        protected String title = "", summary = null;
+        protected String title = "", title1 = "", summary = null;
         protected String uri = null;
         protected boolean resolved = false;
 
@@ -100,7 +100,7 @@ public class AlarmEvent
             event = SolarEvents.valueOf(eventUri, null);
             if (event == null) {
                 uri = eventUri;
-                title = eventUri != null ? Uri.parse(eventUri).getLastPathSegment() : "";
+                title = title1 = eventUri != null ? Uri.parse(eventUri).getLastPathSegment() : "";
                 resolved = AlarmAddon.queryDisplayStrings(this, resolver);
             }
         }
@@ -112,7 +112,7 @@ public class AlarmEvent
 
         @NonNull
         public String getVerboseTitle(Context context) {
-            return (event != null ? event.getAlternateDisplayString(context) : getTitle());
+            return (event != null ? event.getAlternateDisplayString(context) : title1);
         }
 
         @Nullable

@@ -118,7 +118,7 @@ public class AlarmSettings
     public static boolean loadPrefVerboseNotifications(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getBoolean(PREF_KEY_ALARM_NOTIFICATIONS, PREF_DEF_ALARM_NOTIFICATIONS_VERBOSE);
+        return prefs.getBoolean(PREF_KEY_ALARM_NOTIFICATIONS_VERBOSE, PREF_DEF_ALARM_NOTIFICATIONS_VERBOSE);
     }
 
     @TargetApi(10)

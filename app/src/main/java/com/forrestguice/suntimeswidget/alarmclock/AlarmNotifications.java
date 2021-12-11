@@ -648,13 +648,18 @@ public class AlarmNotifications extends BroadcastReceiver
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static Notification createNotification(Context context, @NonNull AlarmClockItem alarm) {
+        return createNotification(context, alarm, AlarmSettings.loadPrefVerboseNotifications(context));
+    }
+
     /**
      * createNotification
      * @param context Context
      * @param alarm AlarmClockItem
+     * @param verbose false - a simple, static notification that is displayed exactly once; true - a verbose, dynamic notification that is updated repeatedly.
      * @return a Notification object (or null if a notification shouldn't be shown)
      */
-    public static Notification createNotification(Context context, @NonNull AlarmClockItem alarm)
+    public static Notification createNotification(Context context, @NonNull AlarmClockItem alarm, boolean verbose)
     {
         AlarmEvent.initDisplayStrings(context);
         SuntimesUtils.initDisplayStrings(context);
@@ -704,7 +709,8 @@ public class AlarmNotifications extends BroadcastReceiver
                 case AlarmState.STATE_TIMEOUT:
                     builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
                     builder.setPriority( NotificationCompat.PRIORITY_HIGH );
-                    notificationMsg = context.getString(R.string.alarmAction_timeoutMsg);
+                    notificationMsg = verbose ? context.getString(R.string.alarmAction_timeoutMsg1, utils.timeDeltaLongDisplayString(System.currentTimeMillis(), alarm.alarmtime + AlarmSettings.loadPrefAlarmTimeout(context)).getValue())
+                                              : context.getString(R.string.alarmAction_timeoutMsg);
                     notificationIcon = R.drawable.ic_action_timeout;
                     builder.setFullScreenIntent(alarmFullscreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
                     builder.setContentIntent(pendingDismiss);
@@ -717,7 +723,8 @@ public class AlarmNotifications extends BroadcastReceiver
                     //{
                         builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
                         builder.setPriority( alarm.repeating ? NotificationCompat.PRIORITY_HIGH : NotificationCompat.PRIORITY_DEFAULT );
-                        notificationMsg = context.getString(R.string.alarmAction_upcomingMsg1, utils.timeDeltaLongDisplayString(System.currentTimeMillis(), alarm.alarmtime).getValue(), eventDisplay);
+                        notificationMsg = verbose ? context.getString(R.string.alarmAction_upcomingMsg1, utils.timeDeltaLongDisplayString(System.currentTimeMillis(), alarm.alarmtime).getValue(), eventDisplay)
+                                                  : context.getString(R.string.alarmAction_upcomingMsg);
                         builder.setWhen(alarm.alarmtime);
                         builder.setContentIntent(pendingView);
                         builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
@@ -729,11 +736,16 @@ public class AlarmNotifications extends BroadcastReceiver
                 case AlarmState.STATE_SNOOZING:
                     builder.setCategory( NotificationCompat.CATEGORY_ALARM );
                     builder.setPriority( NotificationCompat.PRIORITY_MAX );
-                    //SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, AlarmSettings.loadPrefAlarmSnooze(context));
-                    long snoozeFor = AlarmSettings.loadPrefAlarmSnooze(context);
-                    long snoozeUntil = snoozeFor - ((System.currentTimeMillis() - alarm.alarmtime) % snoozeFor) + 60000;
-                    SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, snoozeUntil);
-                    notificationMsg = context.getString(R.string.alarmAction_snoozeMsg1, snoozeText.getValue());
+                    if (verbose)
+                    {
+                        long snoozeFor = AlarmSettings.loadPrefAlarmSnooze(context);
+                        long snoozeUntil = snoozeFor - ((System.currentTimeMillis() - alarm.alarmtime) % snoozeFor) + 60000;
+                        SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, snoozeUntil);
+                        notificationMsg = context.getString(R.string.alarmAction_snoozeMsg1, snoozeText.getValue());
+                    } else {
+                        SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, AlarmSettings.loadPrefAlarmSnooze(context));
+                        notificationMsg = context.getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
+                    }
                     notificationIcon = R.drawable.ic_action_snooze;
                     builder.setFullScreenIntent(alarmFullscreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
                     builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
@@ -747,6 +759,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 case AlarmState.STATE_SOUNDING:
                     builder.setCategory( NotificationCompat.CATEGORY_ALARM );
                     builder.setPriority( NotificationCompat.PRIORITY_MAX );
+                    notificationMsg = context.getString(R.string.alarmAction_playingMsg, eventDisplay);
                     builder.addAction(R.drawable.ic_action_snooze, context.getString(R.string.alarmAction_snooze), pendingSnooze);
                     builder.setProgress(0,0,true);
                     builder.setFullScreenIntent(alarmFullscreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
@@ -769,6 +782,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
         } else {
             // NOTIFICATION
+            notificationMsg = context.getString(R.string.alarmAction_playingMsg, eventDisplay);
             builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
             builder.setPriority( NotificationCompat.PRIORITY_HIGH );
             builder.setOngoing(false);
@@ -1208,7 +1222,8 @@ public class AlarmNotifications extends BroadcastReceiver
                             // Update Notification
                             ////////////////////////////////////////////////////////////////////////////
                             updateNotification(NotificationService.this, item);
-                            if (shouldShowNotification(item)) {
+                            if (shouldShowNotification(item)
+                                    && AlarmSettings.loadPrefVerboseNotifications(context)) {
                                 addAlarmTimeout(context, ACTION_NOTIFY, item.getUri(), Calendar.getInstance().getTimeInMillis() + NOTIFICATION_UPDATE_INTERVAL, AlarmManager.RTC);
                             }
 
@@ -1287,7 +1302,9 @@ public class AlarmNotifications extends BroadcastReceiver
                     {
                         Log.d(TAG, "State Saved (onSnooze)");
                         showForegroundNotification(NotificationService.this, item);
-                        addAlarmTimeout(context, ACTION_NOTIFY, item.getUri(), Calendar.getInstance().getTimeInMillis() + NOTIFICATION_UPDATE_INTERVAL, AlarmManager.RTC);
+                        if (AlarmSettings.loadPrefVerboseNotifications(context)) {
+                            addAlarmTimeout(context, ACTION_NOTIFY, item.getUri(), Calendar.getInstance().getTimeInMillis() + NOTIFICATION_UPDATE_INTERVAL, AlarmManager.RTC);
+                        }
                         context.sendBroadcast(getFullscreenBroadcast(item.getUri()));  // update fullscreen activity
                     }
                 }
@@ -1456,7 +1473,9 @@ public class AlarmNotifications extends BroadcastReceiver
                         addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);
                         if (AlarmSettings.loadPrefAlarmUpcoming(context) > 0) {
                             showNotification(NotificationService.this, item, true);             // show upcoming reminder
-                            addAlarmTimeout(context, ACTION_NOTIFY, item.getUri(), Calendar.getInstance().getTimeInMillis() + NOTIFICATION_UPDATE_INTERVAL, AlarmManager.RTC);
+                            if (AlarmSettings.loadPrefVerboseNotifications(context)) {
+                                addAlarmTimeout(context, ACTION_NOTIFY, item.getUri(), Calendar.getInstance().getTimeInMillis() + NOTIFICATION_UPDATE_INTERVAL, AlarmManager.RTC);
+                            }
                         }
                     }
                     if (chained != null) {
