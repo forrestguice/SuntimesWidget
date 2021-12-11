@@ -159,6 +159,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         SuntimesRiseSetDataset sun = ((data == null) ? null : data.first);
         SuntimesMoonData moon = ((data == null) ? null : data.second);
 
+        updateHeaderViews(options);
         row_actual.setVisible(options.showActual);
         row_civil.setVisible(options.showCivil);
         row_nautical.setVisible(options.showNautical);
@@ -402,6 +403,17 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             return new Pair<>(context.getString(R.string.past_n, dayOffset), dayOffset);
         }
         return new Pair<>(label, null);
+    }
+
+    protected void updateHeaderViews(CardAdapter.CardAdapterOptions options)
+    {
+        int textVisibility = (options.showHeaderText ? View.VISIBLE : View.GONE);
+        header_sunrise.setVisibility(textVisibility);
+        header_sunset.setVisibility(textVisibility);
+
+        int iconVisibility = (options.showHeaderIcon ? View.VISIBLE : View.GONE);
+        icon_sunrise.setVisibility(iconVisibility);
+        icon_sunset.setVisibility(iconVisibility);
     }
 
     private void updateDayLengthViews(Context context, TextView textView, long dayLength, int labelID, boolean showSeconds, int highlightColor)
