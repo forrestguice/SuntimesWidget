@@ -122,6 +122,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         initViews(dialogContent);
         if (savedState != null) {
             Log.d("DEBUG", "LightMapDialog onCreate (restoreState)");
+            lightmap.loadSettings(getContext(), savedState);
         }
         themeViews(getContext());
         return dialogContent;
@@ -466,7 +467,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     {
         if (mediaGroup != null)
         {
-            boolean isAnimated = false;    // TODO
+            boolean isAnimated = lightmap.isAnimated();
             if (isAnimated)
             {
                 pauseButton.setVisibility(View.VISIBLE);
@@ -490,18 +491,23 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
     private void playMap()
     {
-        // worldmap.startAnimation();   // TODO
+        lightmap.startAnimation();
         updateMediaButtons();
     }
 
     private void stopMap(boolean reset)
     {
         if (reset) {
-            // worldmap.resetAnimation(true);  // TODO
+            lightmap.resetAnimation(true);
         } else {
-            //worldmap.stopAnimation();  // TODO
+            lightmap.stopAnimation();
         }
         updateMediaButtons();
+    }
+
+    @Override
+    public void onSaveInstanceState( Bundle state ) {
+        lightmap.saveSettings(state);
     }
 
     private View.OnClickListener onShadowLayoutClick =  new View.OnClickListener()
@@ -740,6 +746,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         updateLightmapViews(data);
         updateSunPositionViews(data);
         updateTimeText(data);
+        updateMediaButtons();
         startUpdateTask();
     }
 
@@ -883,7 +890,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
     private long getMapTime(long now)
     {
-        return now;  // TODO
+        long offsetMillis = lightmap.getOffsetMinutes() * 60 * 1000;
+        return ((lightmap.getNow() == -1) ? now : lightmap.getNow() + offsetMillis);
     }
 
     protected void updateSunPositionViews(@NonNull SuntimesRiseSetDataset data)

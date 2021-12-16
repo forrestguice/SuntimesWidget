@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.os.AsyncTask;
-//import android.os.Bundle;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 
@@ -57,6 +57,10 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     private SuntimesRiseSetDataset data = null;
     private long lastUpdate = 0;
     private boolean resizable = true;
+
+    private boolean animated = false;
+    private long offsetMinutes = 0;
+    private long now = -1L;
 
     public LightMapView(Context context)
     {
@@ -186,35 +190,72 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         }
     }
 
-    /**
-     * @param context a context used to access resources
-     * @param bundle a Bundle used to load state
-     */
-    /**protected void loadSettings(Context context, Bundle bundle )
+    protected void loadSettings(Context context, @NonNull Bundle bundle )
     {
-        //Log.d("DEBUG", "LightMapView loadSettings (bundle)");
-    }*/
+        Log.d("DEBUG", "LightMapView loadSettings (bundle)");
+        animated = bundle.getBoolean("animated", animated);
+        offsetMinutes = bundle.getLong("offsetMinutes", offsetMinutes);
+        now = bundle.getLong("now", now);
+    }
 
-
-    /**
-     * @param context a context used to access shared prefs
-     * @return true settings were saved
-     */
-    /**protected boolean saveSettings(Context context)
+    protected boolean saveSettings(Bundle bundle)
     {
-        //Log.d("DEBUG", "LightMap loadSettings (prefs)");
+        Log.d("DEBUG", "LightMapView saveSettings (bundle)");
+        bundle.putBoolean("animated", animated);
+        bundle.putLong("offsetMinutes", offsetMinutes);
+        bundle.putLong("now", now);
         return true;
-    }*/
+    }
 
-    /**
-     * @param bundle a Bundle used to save state
-     * @return true settings were saved
-     */
-    /**protected boolean saveSettings(Bundle bundle)
+    public void startAnimation() {
+        animated = true;
+        updateViews(true);
+    }
+
+    public void stopAnimation() {
+        animated = false;
+        if (drawTask != null) {
+            drawTask.cancel(true);
+        }
+    }
+
+    public void resetAnimation( boolean updateTime )
     {
-        //Log.d("DEBUG", "LightMapView saveSettings (bundle)");
-        return true;
-    }*/
+        stopAnimation();
+        offsetMinutes = 0;
+        if (updateTime) {
+            now = -1;
+        }
+        updateViews(true);
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+    }
+
+    @Override
+    protected void onDetachedFromWindow()
+    {
+        super.onDetachedFromWindow();
+        if (drawTask != null) {
+            drawTask.cancel(true);
+        }
+    }
+
+    public void setOffsetMinutes( long value ) {
+        offsetMinutes = value;
+        updateViews(true);
+    }
+    public long getOffsetMinutes() {
+        return offsetMinutes;
+    }
+    public long getNow() {
+        return now;
+    }
+    public boolean isAnimated() {
+        return animated;
+    }
 
     /**
      * LightMapTask
@@ -371,6 +412,9 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         @Override
         protected void onPreExecute()
         {
+            if (listener != null) {
+                listener.onStarted();
+            }
         }
 
         @Override
@@ -502,6 +546,9 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     @SuppressWarnings("EmptyMethod")
     public static abstract class LightMapTaskListener
     {
+        public void onStarted() {}
+        public void onFrame(Bitmap frame, long offsetMinutes ) {}
+        public void afterFrame(Bitmap frame, long offsetMinutes ) {}
         public void onFinished( Bitmap result ) {}
     }
 
