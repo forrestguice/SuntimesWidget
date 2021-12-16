@@ -99,9 +99,9 @@ public class LightMapDialog extends BottomSheetDialogFragment
     private View dialogContent = null;
 
     private SuntimesRiseSetDataset data;
-    public void setData( SuntimesRiseSetDataset data )
-    {
-        this.data = data;
+    public void setData(SuntimesRiseSetDataset data) {
+        this.data = new SuntimesRiseSetDataset(data);
+        this.data.calculateData();
     }
 
     @NonNull @Override

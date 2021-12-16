@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.calculator;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -51,6 +52,18 @@ public class SuntimesRiseSetDataset
     public SuntimesRiseSetDataset(Context context, int appWidgetID)
     {
         init(context, appWidgetID);
+    }
+
+    public SuntimesRiseSetDataset(@NonNull SuntimesRiseSetDataset other)
+    {
+        dataset.add(this.dataActual = new SuntimesRiseSetData(other.dataActual));
+        dataset.add(this.dataCivil = new SuntimesRiseSetData(other.dataCivil));
+        dataset.add(this.dataNautical = new SuntimesRiseSetData(other.dataNautical));
+        dataset.add(this.dataAstro = new SuntimesRiseSetData(other.dataAstro));
+        dataset.add(this.dataNoon = new SuntimesRiseSetData(other.dataNoon));
+        dataset.add(this.dataGold = new SuntimesRiseSetData(other.dataGold));
+        dataset.add(this.dataBlue8 = new SuntimesRiseSetData(other.dataBlue8));
+        dataset.add(this.dataBlue4 = new SuntimesRiseSetData(other.dataBlue4));
     }
 
     private void init(Context context, int appWidgetID)
