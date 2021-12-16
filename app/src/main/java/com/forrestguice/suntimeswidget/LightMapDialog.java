@@ -58,6 +58,8 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
+import com.forrestguice.suntimeswidget.map.WorldMapDialog;
+import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -296,6 +298,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
         mediaGroup = dialogView.findViewById(R.id.media_actions);
     }
 
+    public static final String MAPTAG_LIGHTMAP = "_lightmap";
+
     private View.OnClickListener playClickListener = new View.OnClickListener()
     {
         @Override
@@ -338,7 +342,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
         {
             Context context = getContext();
             if (context != null) {
-                // TODO
+                boolean speed1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP);
+                lightmap.setOffsetMinutes(lightmap.getOffsetMinutes() + (speed1d ? WorldMapDialog.SEEK_STEPSIZE_1d : WorldMapDialog.SEEK_STEPSIZE_15m));
             }
         }
     };
@@ -349,7 +354,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
         {
             Context context = getContext();
             if (context != null) {
-                // TODO
+                boolean speed1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP);
+                lightmap.setOffsetMinutes(lightmap.getOffsetMinutes() - (speed1d ? WorldMapDialog.SEEK_STEPSIZE_1d : WorldMapDialog.SEEK_STEPSIZE_15m));
             }
         }
     };
@@ -410,7 +416,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
     private void updateSpeedMenu(Context context, PopupMenu menu)
     {
         Menu m = menu.getMenu();
-        boolean is1d = false;    // TODO
+        boolean is1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP);
+        Log.d("DEBUG", "updateSpeedMenu: is1d: " + is1d);
 
         MenuItem speed_15m = m.findItem(R.id.mapSpeed_15m);
         if (speed_15m != null) {
@@ -436,11 +443,15 @@ public class LightMapDialog extends BottomSheetDialogFragment
             switch (item.getItemId())
             {
                 case R.id.mapSpeed_1d:
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP, true);
+                    Log.d("DEBUG", "onSpeedMenuClick: is1d: true");
                     item.setChecked(true);
                     updateViews();
                     return true;
 
                 case R.id.mapSpeed_15m:
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP, false);
+                    Log.d("DEBUG", "onSpeedMenuClick: is1d: false");
                     item.setChecked(true);
                     updateViews();
                     return true;
@@ -470,7 +481,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
         Context context = getContext();
         if (speedButton != null && context != null)
         {
-            boolean speed_1d = false;   // TODO
+            boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP);
+            Log.d("DEBUG", "updateMediaButtons: is1d: " + speed_1d);
             speedButton.setText( context.getString(speed_1d ? R.string.worldmap_dialog_speed_1d : R.string.worldmap_dialog_speed_15m));
             speedButton.setTextColor( speed_1d ? color_warning : color_accent );
         }
