@@ -1368,6 +1368,10 @@
     <string name="worldmap_dialog_speed_1d">&#215; 1d</string>      <!-- menu item; "x 1d"; increments of 1 day -->
     <string name="configAction_shareMap">Share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
+    <!-- Dialog: Light Map -->
+    <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
+    <string name="lightmap_dialog_action_menu">Options</string>       <!-- button (contentDescription) -->   <!-- TODO -->f
+
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Schedule an alarm for</string>
     <string name="configLabel_schednotify_mode">Schedule a notification for</string>

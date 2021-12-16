@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:id="@+id/mapOption_group_action" android:checkableBehavior="none">
+
+        <item android:id="@+id/setDate" android:visible="false"
+            android:title="@string/configAction_viewDate"
+            android:icon="?attr/icActionTimeReset"
+            app:showAsAction="never" />
+
+    </group>
+
+</menu>

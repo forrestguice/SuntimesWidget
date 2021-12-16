@@ -36,10 +36,15 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.ImageViewCompat;
+import android.support.v7.widget.PopupMenu;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -76,6 +81,11 @@ public class LightMapDialog extends BottomSheetDialogFragment
     private TextView sunElevation, sunElevationAtNoon, sunElevationLabel;
     private ImageView riseIcon, setIcon;
     private TextView sunShadowObj, sunShadowLength, sunShadowLengthAtNoon;
+
+    private View mediaGroup;
+    private ImageButton playButton, pauseButton, resetButton, nextButton, prevButton, menuButton;
+    private TextView speedButton;
+    private int color_normal, color_disabled, color_pressed, color_warning, color_accent;
 
     private LightMapView lightmap;
     private LightMapKey field_night, field_astro, field_nautical, field_civil, field_day;
@@ -246,6 +256,240 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
         riseIcon = (ImageView)dialogView.findViewById(R.id.sundialog_riseicon);
         setIcon = (ImageView)dialogView.findViewById(R.id.sundialog_seticon);
+
+        playButton = (ImageButton)dialogView.findViewById(R.id.media_play);
+        if (playButton != null) {
+            playButton.setOnClickListener(playClickListener);
+        }
+
+        pauseButton = (ImageButton)dialogView.findViewById(R.id.media_pause);
+        if (pauseButton != null) {
+            pauseButton.setOnClickListener(pauseClickListener);
+        }
+
+        resetButton = (ImageButton)dialogView.findViewById(R.id.media_reset);
+        if (resetButton != null) {
+            resetButton.setEnabled(false);
+            resetButton.setOnClickListener(resetClickListener);
+        }
+
+        nextButton = (ImageButton)dialogView.findViewById(R.id.media_next);
+        if (nextButton != null) {
+            nextButton.setOnClickListener(nextClickListener);
+        }
+
+        prevButton = (ImageButton)dialogView.findViewById(R.id.media_prev);
+        if (prevButton != null) {
+            prevButton.setOnClickListener(prevClickListener);
+        }
+
+        menuButton = (ImageButton)dialogView.findViewById(R.id.media_menu);
+        if (menuButton != null) {
+            menuButton.setOnClickListener(menuClickListener);
+        }
+
+        speedButton = (TextView)dialogView.findViewById(R.id.media_speed);
+        if (speedButton != null) {
+            speedButton.setOnClickListener(speedClickListener);
+        }
+
+        mediaGroup = dialogView.findViewById(R.id.media_actions);
+    }
+
+    private View.OnClickListener playClickListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            playMap();
+        }
+    };
+    private View.OnClickListener pauseClickListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            stopMap(false);
+        }
+    };
+    private View.OnClickListener resetClickListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            stopMap(true);
+        }
+    };
+    private View.OnClickListener menuClickListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            showContextMenu(getContext(), v);
+        }
+    };
+    private View.OnClickListener speedClickListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v) {
+            showSpeedMenu(getContext(), v);
+        }
+    };
+    private View.OnClickListener nextClickListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            Context context = getContext();
+            if (context != null) {
+                // TODO
+            }
+        }
+    };
+    private View.OnClickListener prevClickListener = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View v)
+        {
+            Context context = getContext();
+            if (context != null) {
+                // TODO
+            }
+        }
+    };
+
+    private PopupMenu.OnMenuItemClickListener onContextMenuClick = new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            Context context = getContext();
+            if (context == null) {
+                return false;
+            }
+
+            switch (item.getItemId())
+            {
+                // TODO
+                //case R.id.setDate:
+                //    return true;
+
+                default:
+                    return false;
+            }
+        }
+    };
+
+    private void updateContextMenu(Context context, PopupMenu menu)
+    {
+        Menu m = menu.getMenu();
+        // TODO
+    }
+
+    protected boolean showContextMenu(final Context context, View view)
+    {
+        PopupMenu menu = new PopupMenu(context, view);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.lightmapmenu, menu.getMenu());
+        menu.setOnMenuItemClickListener(onContextMenuClick);
+
+        updateContextMenu(context, menu);
+        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        menu.show();
+        return true;
+    }
+
+    protected boolean showSpeedMenu(final Context context, View view)
+    {
+        PopupMenu menu = new PopupMenu(context, view);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.mapmenu_speed, menu.getMenu());
+        menu.setOnMenuItemClickListener(onSpeedMenuClick);
+
+        updateSpeedMenu(context, menu);
+        menu.show();
+        return true;
+    }
+
+    private void updateSpeedMenu(Context context, PopupMenu menu)
+    {
+        Menu m = menu.getMenu();
+        boolean is1d = false;    // TODO
+
+        MenuItem speed_15m = m.findItem(R.id.mapSpeed_15m);
+        if (speed_15m != null) {
+            speed_15m.setChecked(!is1d);
+        }
+
+        MenuItem speed_1d = m.findItem(R.id.mapSpeed_1d);
+        if (speed_1d != null) {
+            speed_1d.setChecked(is1d);
+        }
+    }
+
+    private PopupMenu.OnMenuItemClickListener onSpeedMenuClick = new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            Context context = getContext();
+            if (context == null) {
+                return false;
+            }
+
+            switch (item.getItemId())
+            {
+                case R.id.mapSpeed_1d:
+                    item.setChecked(true);
+                    updateViews();
+                    return true;
+
+                case R.id.mapSpeed_15m:
+                    item.setChecked(true);
+                    updateViews();
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+    };
+
+    private void updateMediaButtons()
+    {
+        if (mediaGroup != null)
+        {
+            boolean isAnimated = false;    // TODO
+            if (isAnimated)
+            {
+                pauseButton.setVisibility(View.VISIBLE);
+                playButton.setVisibility(View.GONE);
+
+            } else {
+                pauseButton.setVisibility(View.GONE);
+                playButton.setVisibility(View.VISIBLE);
+            }
+        }
+
+        Context context = getContext();
+        if (speedButton != null && context != null)
+        {
+            boolean speed_1d = false;   // TODO
+            speedButton.setText( context.getString(speed_1d ? R.string.worldmap_dialog_speed_1d : R.string.worldmap_dialog_speed_15m));
+            speedButton.setTextColor( speed_1d ? color_warning : color_accent );
+        }
+    }
+
+    private void playMap()
+    {
+        // worldmap.startAnimation();   // TODO
+        updateMediaButtons();
+    }
+
+    private void stopMap(boolean reset)
+    {
+        if (reset) {
+            // worldmap.resetAnimation(true);  // TODO
+        } else {
+            //worldmap.stopAnimation();  // TODO
+        }
+        updateMediaButtons();
     }
 
     private View.OnClickListener onShadowLayoutClick =  new View.OnClickListener()
@@ -344,33 +588,46 @@ public class LightMapDialog extends BottomSheetDialogFragment
     @SuppressWarnings("ResourceType")
     public void themeViews(Context context)
     {
-        if (themeOverride == null)
-        {
-            int[] colorAttrs = { R.attr.graphColor_night,   // 0
-                    R.attr.graphColor_astronomical,         // 1
-                    R.attr.graphColor_nautical,             // 2
-                    R.attr.graphColor_civil,                // 3
-                    R.attr.graphColor_day,                  // 4
-                    R.attr.sunriseColor,                    // 5
-                    R.attr.sunsetColor                      // 6
-            };
-            TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
-            int def = R.color.transparent;
-            colorNight = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
-            colorAstro = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
-            colorNautical = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
-            colorCivil = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
-            colorDay = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
-            colorRising = ContextCompat.getColor(context, typedArray.getResourceId(5, def));
-            colorSetting = ContextCompat.getColor(context, typedArray.getResourceId(6, def));
-            typedArray.recycle();
+        int[] colorAttrs = { R.attr.graphColor_night,   // 0
+                R.attr.graphColor_astronomical,         // 1
+                R.attr.graphColor_nautical,             // 2
+                R.attr.graphColor_civil,                // 3
+                R.attr.graphColor_day,                  // 4
+                R.attr.sunriseColor,                    // 5
+                R.attr.sunsetColor,                     // 6
+                R.attr.text_disabledColor,              // 7
+                R.attr.buttonPressColor,                // 8
+                android.R.attr.textColorPrimary,        // 9
+                R.attr.text_accentColor,                // 10
+                R.attr.tagColor_warning                 /// 11
+        };
+        TypedArray typedArray = context.obtainStyledAttributes(colorAttrs);
+        int def = R.color.transparent;
+        colorNight = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
+        colorAstro = ContextCompat.getColor(context, typedArray.getResourceId(1, def));
+        colorNautical = ContextCompat.getColor(context, typedArray.getResourceId(2, def));
+        colorCivil = ContextCompat.getColor(context, typedArray.getResourceId(3, def));
+        colorDay = ContextCompat.getColor(context, typedArray.getResourceId(4, def));
+        colorRising = ContextCompat.getColor(context, typedArray.getResourceId(5, def));
+        colorSetting = ContextCompat.getColor(context, typedArray.getResourceId(6, def));
+        color_disabled = ContextCompat.getColor(context, typedArray.getResourceId(7, Color.GRAY));
+        color_pressed = ContextCompat.getColor(context, typedArray.getResourceId(8, Color.BLUE));
+        color_normal = ContextCompat.getColor(context, typedArray.getResourceId(9, Color.WHITE));
+        color_accent = ContextCompat.getColor(context, typedArray.getResourceId(10, Color.YELLOW));
+        color_warning = ContextCompat.getColor(context, typedArray.getResourceId(11, Color.YELLOW));
+        typedArray.recycle();
 
-        } else {
+        if (themeOverride != null)
+        {
             int titleColor = themeOverride.getTitleColor();
             float textSizeSp = themeOverride.getTextSizeSp();
             float titleSizeSp = themeOverride.getTitleSizeSp();
             float timeSizeSp = themeOverride.getTimeSizeSp();
             float suffixSizeSp = themeOverride.getTimeSuffixSizeSp();
+
+            color_pressed = color_warning = themeOverride.getActionColor();
+            color_normal = themeOverride.getTitleColor();
+            color_accent = themeOverride.getAccentColor();
 
             dialogTitle.setTextColor(titleColor);
             dialogTitle.setTextSize(titleSizeSp);
@@ -426,6 +683,17 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
             SuntimesUtils.tintDrawable((InsetDrawable)riseIcon.getBackground(), themeOverride.getSunriseIconColor(), themeOverride.getSunriseIconStrokeColor(), themeOverride.getSunriseIconStrokePixels(context));
             SuntimesUtils.tintDrawable((InsetDrawable)setIcon.getBackground(), themeOverride.getSunsetIconColor(), themeOverride.getSunsetIconStrokeColor(), themeOverride.getSunsetIconStrokePixels(context));
+        }
+
+        ImageViewCompat.setImageTintList(playButton, SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
+        ImageViewCompat.setImageTintList(resetButton, SuntimesUtils.colorStateList(color_warning, color_disabled, color_pressed));
+        ImageViewCompat.setImageTintList(pauseButton, SuntimesUtils.colorStateList(color_accent, color_disabled, color_pressed));
+        ImageViewCompat.setImageTintList(nextButton, SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
+        ImageViewCompat.setImageTintList(prevButton, SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
+        ImageViewCompat.setImageTintList(menuButton, SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
+
+        if (speedButton != null) {
+            speedButton.setTextColor(SuntimesUtils.colorStateList(color_normal, color_disabled, color_pressed));
         }
 
         SuntimesUtils.colorizeImageView(field_night.icon, colorNight);
