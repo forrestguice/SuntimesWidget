@@ -121,7 +121,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         rows.add(row_civil = new TimeFieldRow(view, R.id.text_time_label_civil, R.id.text_time_sunrise_civil, R.id.text_time_sunset_civil));
         rows.add(row_nautical = new TimeFieldRow(view, R.id.text_time_label_nautical, R.id.text_time_sunrise_nautical, R.id.text_time_sunset_nautical));
         rows.add(row_astro = new TimeFieldRow(view, R.id.text_time_label_astro, R.id.text_time_sunrise_astro, R.id.text_time_sunset_astro));
-        rows.add(row_solarnoon = new TimeFieldRow(view, R.id.text_time_label_noon, R.id.text_time_noon));
+        rows.add(row_solarnoon = new TimeFieldRow(view, R.id.text_time_label_noon, R.id.text_position_noon, R.id.text_time_noon));
         rows.add(row_gold = new TimeFieldRow(view, R.id.text_time_label_golden, R.id.text_time_golden_morning, R.id.text_time_golden_evening));
         rows.add(row_blue8 = new TimeFieldRow(view, R.id.text_time_label_blue8, R.id.text_time_blue8_morning, R.id.text_time_blue8_evening));
         rows.add(row_blue4 = new TimeFieldRow(view, R.id.text_time_label_blue4, R.id.text_time_blue4_morning, R.id.text_time_blue4_evening));
@@ -135,7 +135,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         timeFields.put(SolarEvents.EVENING_NAUTICAL, row_nautical.getField(1));
         timeFields.put(SolarEvents.MORNING_ASTRONOMICAL, row_astro.getField(0));
         timeFields.put(SolarEvents.EVENING_ASTRONOMICAL, row_astro.getField(1));
-        timeFields.put(SolarEvents.NOON, row_solarnoon.getField(0));
+        timeFields.put(SolarEvents.NOON, row_solarnoon.getField(1));
         timeFields.put(SolarEvents.MORNING_GOLDEN, row_gold.getField(0));
         timeFields.put(SolarEvents.EVENING_GOLDEN, row_gold.getField(1));
         timeFields.put(SolarEvents.MORNING_BLUE8, row_blue8.getField(0));
@@ -205,8 +205,19 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             }
 
             if (options.showNoon) {
-                SuntimesUtils.TimeDisplayText noonString = utils.calendarTimeShortDisplayString(context, sun.dataNoon.sunriseCalendarToday(), options.showSeconds);
-                row_solarnoon.updateFields(noonString.toString());
+                Calendar noonTime = sun.dataNoon.sunriseCalendarToday();
+                String noonString = utils.calendarTimeShortDisplayString(context, noonTime, options.showSeconds).toString();
+
+                SuntimesCalculator calculator = sun.calculator();
+                SpannableString positionSpan = new SpannableString("");
+                SuntimesCalculator.SunPosition positionNoon = (noonTime != null && calculator != null ? calculator.getSunPosition(noonTime) : null);
+                if (positionNoon != null) {
+                    SuntimesUtils.TimeDisplayText elevationText = utils.formatAsElevation(positionNoon.elevation, 1);
+                    String elevationString = utils.formatAsElevation(elevationText.getValue(), elevationText.getSuffix());
+                    positionSpan = SuntimesUtils.createRelativeSpan(null, elevationString, elevationText.getSuffix(), 0.7f);
+                }
+
+                row_solarnoon.updateFields(positionSpan, noonString);
             }
 
             if (options.showBlue) {
@@ -339,6 +350,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         row_nautical.getField(1).setTextColor(color_sunset);
         row_astro.getField(1).setTextColor(color_sunset);
         row_solarnoon.getField(0).setTextColor(color_sunset);
+        row_solarnoon.getField(1).setTextColor(color_sunset);
         row_gold.getField(0).setTextColor(color_sunset);
         row_blue8.getField(1).setTextColor(color_sunset);
         row_blue4.getField(1).setTextColor(color_sunrise);
@@ -568,7 +580,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
             }
         }
 
-        public void updateFields( String ...values )
+        public void updateFields( CharSequence ...values )
         {
             for (int i=0; i<values.length; i++)
             {
