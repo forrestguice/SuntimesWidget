@@ -54,6 +54,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -70,6 +71,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     private TextView dialogTitle;
     private View sunLayout;
 
+    private TextView sunTime, offsetTime;
     private TextView sunAzimuth, sunAzimuthRising, sunAzimuthSetting, sunAzimuthAtNoon, sunAzimuthLabel;
     private TextView sunElevation, sunElevationAtNoon, sunElevationLabel;
     private ImageView riseIcon, setIcon;
@@ -202,6 +204,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
             {
                 updateLightmapViews(data);
                 updateSunPositionViews(data);
+                updateTimeText(data);
             }
             if (sunElevation != null)
                 sunElevation.postDelayed(this, UPDATE_RATE);
@@ -212,6 +215,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
     {
         dialogTitle = (TextView)dialogView.findViewById(R.id.sundialog_title);
         lightmap = (LightMapView)dialogView.findViewById(R.id.info_time_lightmap);
+        sunTime = (TextView)dialogView.findViewById(R.id.info_time_solar);
+        offsetTime = (TextView)dialogView.findViewById(R.id.info_time_offset);
 
         sunLayout = dialogView.findViewById(R.id.info_sun_layout);
         sunElevation = (TextView)dialogView.findViewById(R.id.info_sun_elevation_current);
@@ -371,6 +376,12 @@ public class LightMapDialog extends BottomSheetDialogFragment
             dialogTitle.setTextSize(titleSizeSp);
             dialogTitle.setTypeface(dialogTitle.getTypeface(), (themeOverride.getTitleBold() ? Typeface.BOLD : Typeface.NORMAL));
 
+            sunTime.setTextColor(titleColor);
+            sunTime.setTextSize(timeSizeSp);
+
+            offsetTime.setTextColor(themeOverride.getTimeColor());
+            offsetTime.setTextSize(timeSizeSp);
+
             sunElevationLabel.setTextColor(titleColor);
             sunElevationLabel.setTextSize(suffixSizeSp);
 
@@ -448,6 +459,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         stopUpdateTask();
         updateLightmapViews(data);
         updateSunPositionViews(data);
+        updateTimeText(data);
         startUpdateTask();
     }
 
@@ -544,6 +556,54 @@ public class LightMapDialog extends BottomSheetDialogFragment
             field_astro.highlight(true);
 
         else field_night.highlight(true);
+    }
+
+    protected void updateTimeText(@NonNull SuntimesRiseSetDataset data)
+    {
+        Context context = getContext();
+        if (context == null) {
+            return;
+        }
+
+        Calendar now = Calendar.getInstance();
+        long nowMillis = now.getTimeInMillis();
+        long mapTimeMillis = getMapTime(nowMillis);
+
+        String suffix = "";
+        boolean nowIsAfter = false;
+        Calendar mapTime = Calendar.getInstance(WidgetTimezones.localMeanTime(context, data.location()));
+
+        mapTime.setTimeInMillis(mapTimeMillis);
+        nowIsAfter = now.after(mapTime);
+
+        boolean isOffset = Math.abs(nowMillis - mapTimeMillis) > 60 * 1000;
+        if (isOffset) {
+            suffix = ((nowIsAfter) ? context.getString(R.string.past_today) : context.getString(R.string.future_today));
+        }
+
+        SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, mapTime);
+        if (sunTime != null) {
+            if (suffix.isEmpty())
+                sunTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), mapTime.getTimeZone().getID()));
+            else sunTime.setText(SuntimesUtils.createBoldSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), mapTime.getTimeZone().getID(), suffix), suffix));
+        }
+
+        if (offsetTime != null)
+        {
+            if (isOffset) {
+                SuntimesUtils.TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(nowMillis, mapTimeMillis, false, true, false);
+                offsetText.setSuffix("");
+                String displayString = getContext().getString((nowIsAfter ? R.string.ago : R.string.hence), offsetText.toString() + "\n");
+                offsetTime.setText(displayString);
+            } else {
+                offsetTime.setText("");
+            }
+        }
+    }
+
+    private long getMapTime(long now)
+    {
+        return now;  // TODO
     }
 
     protected void updateSunPositionViews(@NonNull SuntimesRiseSetDataset data)
