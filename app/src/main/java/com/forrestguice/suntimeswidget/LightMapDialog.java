@@ -22,6 +22,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -133,6 +134,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     {
         super.onResume();
         expandSheet(getDialog());
+        updateViews();
     }
 
     private void expandSheet(DialogInterface dialog)
@@ -213,7 +215,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         @Override
         public void run()
         {
-            if (data != null)
+            if (data != null && !lightmap.isAnimated())
             {
                 updateLightmapViews(data);
                 updateSunPositionViews(data);
@@ -297,6 +299,21 @@ public class LightMapDialog extends BottomSheetDialogFragment
         }
 
         mediaGroup = dialogView.findViewById(R.id.media_actions);
+
+        if (lightmap != null)
+        {
+            lightmap.setMapTaskListener(new LightMapView.LightMapTaskListener()
+            {
+                @Override
+                public void onFrame(Bitmap frame, long offsetMinutes)
+                {
+                    updateTimeText(data);
+                    updateSunPositionViews(data);
+                    resetButton.setEnabled(offsetMinutes != 0);
+                }
+            });
+        }
+        updateOptions(getContext());
     }
 
     public static final String MAPTAG_LIGHTMAP = "_lightmap";
@@ -344,7 +361,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
             Context context = getContext();
             if (context != null) {
                 boolean speed1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP);
-                lightmap.setOffsetMinutes(lightmap.getOffsetMinutes() + (speed1d ? WorldMapDialog.SEEK_STEPSIZE_1d : WorldMapDialog.SEEK_STEPSIZE_15m));
+                lightmap.setOffsetMinutes(lightmap.getOffsetMinutes() + (speed1d ? WorldMapDialog.SEEK_STEPSIZE_1d : WorldMapDialog.SEEK_STEPSIZE_5m));
             }
         }
     };
@@ -356,7 +373,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
             Context context = getContext();
             if (context != null) {
                 boolean speed1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP);
-                lightmap.setOffsetMinutes(lightmap.getOffsetMinutes() - (speed1d ? WorldMapDialog.SEEK_STEPSIZE_1d : WorldMapDialog.SEEK_STEPSIZE_15m));
+                lightmap.setOffsetMinutes(lightmap.getOffsetMinutes() - (speed1d ? WorldMapDialog.SEEK_STEPSIZE_1d : WorldMapDialog.SEEK_STEPSIZE_5m));
             }
         }
     };
@@ -406,7 +423,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     {
         PopupMenu menu = new PopupMenu(context, view);
         MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.mapmenu_speed, menu.getMenu());
+        inflater.inflate(R.menu.mapmenu_speed1, menu.getMenu());
         menu.setOnMenuItemClickListener(onSpeedMenuClick);
 
         updateSpeedMenu(context, menu);
@@ -420,9 +437,9 @@ public class LightMapDialog extends BottomSheetDialogFragment
         boolean is1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP);
         Log.d("DEBUG", "updateSpeedMenu: is1d: " + is1d);
 
-        MenuItem speed_15m = m.findItem(R.id.mapSpeed_15m);
-        if (speed_15m != null) {
-            speed_15m.setChecked(!is1d);
+        MenuItem speed_5m = m.findItem(R.id.mapSpeed_5m);
+        if (speed_5m != null) {
+            speed_5m.setChecked(!is1d);
         }
 
         MenuItem speed_1d = m.findItem(R.id.mapSpeed_1d);
@@ -450,7 +467,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     updateViews();
                     return true;
 
-                case R.id.mapSpeed_15m:
+                case R.id.mapSpeed_5m:
                     WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP, false);
                     Log.d("DEBUG", "onSpeedMenuClick: is1d: false");
                     item.setChecked(true);
@@ -484,8 +501,18 @@ public class LightMapDialog extends BottomSheetDialogFragment
         {
             boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP);
             Log.d("DEBUG", "updateMediaButtons: is1d: " + speed_1d);
-            speedButton.setText( context.getString(speed_1d ? R.string.worldmap_dialog_speed_1d : R.string.worldmap_dialog_speed_15m));
+            speedButton.setText( context.getString(speed_1d ? R.string.worldmap_dialog_speed_1d : R.string.worldmap_dialog_speed_5m));
             speedButton.setTextColor( speed_1d ? color_warning : color_accent );
+        }
+    }
+
+    public void updateOptions(Context context)
+    {
+        if (context != null)
+        {
+            LightMapView.LightMapColors options = lightmap.getColors();
+            options.anim_frameOffsetMinutes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP)
+                    ? 24 * 60 : 1;
         }
     }
 
@@ -736,6 +763,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
     public void updateViews()
     {
+        updateOptions(getContext());
+        updateMediaButtons();
         if (data != null)
             updateViews(data);
     }
@@ -746,7 +775,6 @@ public class LightMapDialog extends BottomSheetDialogFragment
         updateLightmapViews(data);
         updateSunPositionViews(data);
         updateTimeText(data);
-        updateMediaButtons();
         startUpdateTask();
     }
 
@@ -854,8 +882,12 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
         Calendar now = Calendar.getInstance();
         long nowMillis = now.getTimeInMillis();
-        long mapTimeMillis = getMapTime(nowMillis);
+        long mapTimeMillis = nowMillis;
 
+        if (lightmap.isAnimated() || lightmap.getOffsetMinutes() != 0) {
+            mapTimeMillis = getMapTime(now.getTimeInMillis());
+        }
+        
         String suffix = "";
         boolean nowIsAfter = false;
         Calendar mapTime = Calendar.getInstance(WidgetTimezones.localMeanTime(context, data.location()));
@@ -899,10 +931,15 @@ public class LightMapDialog extends BottomSheetDialogFragment
         SuntimesCalculator calculator = data.calculator();
         if (sunLayout != null)
         {
+            Calendar now = data.nowThen(data.calendar());
+            if (lightmap.isAnimated() || lightmap.getOffsetMinutes() != 0) {
+                now.setTimeInMillis(getMapTime(now.getTimeInMillis()));
+            }
+
             SuntimesRiseSetData noonData = data.dataNoon;
             Calendar noonTime = (noonData != null ? noonData.sunriseCalendarToday() : null);
             SuntimesCalculator.SunPosition noonPosition = (noonTime != null && calculator != null ? calculator.getSunPosition(noonTime) : null);
-            SuntimesCalculator.SunPosition currentPosition = (calculator != null ? calculator.getSunPosition(data.nowThen(data.calendar())) : null);
+            SuntimesCalculator.SunPosition currentPosition = (calculator != null ? calculator.getSunPosition(now) : null);
 
             if (currentPosition != null)
             {
@@ -960,7 +997,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                         sunShadowObj.setText(styleLengthText(context, objectHeight, units));
                     }
                     if (sunShadowLength != null) {
-                        double shadowLength = calculator.getShadowLength(objectHeight, data.now());
+                        double shadowLength = calculator.getShadowLength(objectHeight, now);
                         sunShadowLength.setText((shadowLength >= 0) ? styleLengthText(context, shadowLength, units) : "");
                     }
                     if (sunShadowLengthAtNoon != null && noonTime != null) {

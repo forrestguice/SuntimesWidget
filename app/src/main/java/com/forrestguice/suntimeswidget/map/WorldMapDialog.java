@@ -809,6 +809,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
     };
 
+    public static final int SEEK_STEPSIZE_5m = 5;
+
     public static final int SEEK_TOTALMINUTES_15m = 12 * 2 * 60;   // +- 12 hours
     public static final int SEEK_STEPSIZE_15m = 15;
 

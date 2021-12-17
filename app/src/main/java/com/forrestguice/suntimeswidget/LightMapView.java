@@ -27,6 +27,7 @@ import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 
 import android.util.AttributeSet;
@@ -59,8 +60,6 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     private boolean resizable = true;
 
     private boolean animated = false;
-    private long offsetMinutes = 0;
-    private long now = -1L;
 
     public LightMapView(Context context)
     {
@@ -163,18 +162,42 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
         if (drawTask != null && drawTask.getStatus() == AsyncTask.Status.RUNNING)
         {
+            Log.w("LightMapView", "updateViews: task already running");
             drawTask.cancel(true);
         }
+
         drawTask = new LightMapTask();
         drawTask.setListener(new LightMapTaskListener()
         {
             @Override
-            public void onFinished(Bitmap result)
+            public void onStarted()
             {
-                setImageBitmap(result);
+                if (mapListener != null) {
+                    mapListener.onStarted();
+                }
+            }
+
+            @Override
+            public void onFrame(Bitmap frame, long offsetMinutes) {
+                setImageBitmap(frame);
+                if (mapListener != null) {
+                    mapListener.onFrame(frame, offsetMinutes);
+                }
+            }
+
+            @Override
+            public void afterFrame(Bitmap frame, long offsetMinutes) {
+            }
+
+            @Override
+            public void onFinished(Bitmap frame) {
+                setImageBitmap(frame);
+                if (mapListener != null) {
+                    mapListener.onFinished(frame);
+                }
             }
         });
-        drawTask.execute(data, getWidth(), getHeight(), colors);
+        drawTask.execute(data, getWidth(), getHeight(), colors, (animated ? 0 : 1), colors.offsetMinutes);
     }
 
     /**
@@ -194,16 +217,16 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     {
         Log.d("DEBUG", "LightMapView loadSettings (bundle)");
         animated = bundle.getBoolean("animated", animated);
-        offsetMinutes = bundle.getLong("offsetMinutes", offsetMinutes);
-        now = bundle.getLong("now", now);
+        colors.offsetMinutes = bundle.getLong("offsetMinutes", colors.offsetMinutes);
+        colors.now = bundle.getLong("now", colors.now);
     }
 
     protected boolean saveSettings(Bundle bundle)
     {
         Log.d("DEBUG", "LightMapView saveSettings (bundle)");
         bundle.putBoolean("animated", animated);
-        bundle.putLong("offsetMinutes", offsetMinutes);
-        bundle.putLong("now", now);
+        bundle.putLong("offsetMinutes", colors.offsetMinutes);
+        bundle.putLong("now", colors.now);
         return true;
     }
 
@@ -222,9 +245,15 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     public void resetAnimation( boolean updateTime )
     {
         stopAnimation();
-        offsetMinutes = 0;
-        if (updateTime) {
-            now = -1;
+        colors.offsetMinutes = 0;
+        if (updateTime)
+        {
+            colors.now = -1;
+            if (data != null) {
+                Calendar calendar = Calendar.getInstance();
+                data.setTodayIs(calendar);
+                data.calculateData();
+            }
         }
         updateViews(true);
     }
@@ -244,14 +273,14 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     }
 
     public void setOffsetMinutes( long value ) {
-        offsetMinutes = value;
+        colors.offsetMinutes = value;
         updateViews(true);
     }
     public long getOffsetMinutes() {
-        return offsetMinutes;
+        return colors.offsetMinutes;
     }
     public long getNow() {
-        return now;
+        return colors.now;
     }
     public boolean isAnimated() {
         return animated;
@@ -260,7 +289,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     /**
      * LightMapTask
      */
-    public static class LightMapTask extends AsyncTask<Object, Void, Bitmap>
+    public static class LightMapTask extends AsyncTask<Object, Bitmap, Bitmap>
     {
         private LightMapColors colors;
 
@@ -274,6 +303,9 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         protected Bitmap doInBackground(Object... params)
         {
             int w, h;
+            int numFrames = 1;
+            long frameDuration = 250000000;    // nanoseconds (250 ms)
+            long initialOffset = 0;
             SuntimesRiseSetDataset data;
             try {
                 data = (SuntimesRiseSetDataset)params[0];
@@ -281,11 +313,63 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 h = (Integer)params[2];
                 colors = (LightMapColors)params[3];
 
+                if (params.length > 4) {
+                    numFrames = (int)params[4];
+                }
+                if (params.length > 5) {
+                    initialOffset = (long)params[5];
+                }
+                frameDuration = colors.anim_frameLengthMs * 1000000;   // ms to ns
+
             } catch (ClassCastException e) {
                 Log.w("LightmapTask", "Invalid params; using [null, 0, 0]");
                 return null;
             }
-            return makeBitmap(data, w, h, colors);
+
+            long time0 = System.nanoTime();
+            Bitmap frame = null;
+            colors.offsetMinutes = initialOffset;
+
+            int i = 0;
+            while (i < numFrames || numFrames <= 0)
+            {
+                Log.w("LightmapTask", "generating frame " + i);
+                if (isCancelled()) {
+                    break;
+                }
+
+                if (data != null && data.dataActual != null)
+                {
+                    Calendar maptime = mapTime(data, colors);
+                    Calendar datatime = data.dataActual.calendar();
+                    long data_age = (maptime.getTimeInMillis() - datatime.getTimeInMillis());
+                    if (data_age >= (12 * 60 * 60 * 1000))
+                    {
+                        Log.d("LightMapTask", "data is more than 12hr old; recalculating");
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTimeInMillis(maptime.getTimeInMillis());
+                        data.setTodayIs(calendar);
+                        data.calculateData();
+                    }
+                }
+
+                frame = makeBitmap(data, w, h, colors);
+
+                long time1 = System.nanoTime();
+                while ((time1 - time0) < frameDuration) {
+                    time1 = System.nanoTime();
+                }
+
+                publishProgress(frame);
+                if (listener != null) {
+                    listener.afterFrame(frame, colors.offsetMinutes);
+                }
+                colors.offsetMinutes += colors.anim_frameOffsetMinutes;
+                time0 = System.nanoTime();
+                i++;
+            }
+            colors.offsetMinutes -= colors.anim_frameOffsetMinutes;
+            return frame;
         }
 
         public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, LightMapColors colors )
@@ -303,6 +387,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             //long bench_start = System.nanoTime();
 
             this.colors = colors;
+            Calendar now = mapTime(data, colors);
             Bitmap b = Bitmap.createBitmap(w, h, Bitmap.Config.RGB_565);
             Canvas c = new Canvas(b);
             Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -393,12 +478,12 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                     switch (colors.option_drawNow) {
                         case LightMapColors.DRAW_SUN2:
                             DashPathEffect dashed = new DashPathEffect(new float[] {4, 2}, 0);
-                            drawPoint(data.now(), pointRadius, pointStroke, c, p, Color.TRANSPARENT, colors.colorPointStroke, dashed);
+                            drawPoint(now, pointRadius, pointStroke, c, p, Color.TRANSPARENT, colors.colorPointStroke, dashed);
                             break;
 
                         case LightMapColors.DRAW_SUN1:
                         default:
-                            drawPoint(data.now(), pointRadius, pointStroke, c, p, colors.colorPointFill, colors.colorPointStroke, null);
+                            drawPoint(now, pointRadius, pointStroke, c, p, colors.colorPointFill, colors.colorPointStroke, null);
                             break;
                     }
                 }
@@ -407,6 +492,37 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             //long bench_end = System.nanoTime();
             //Log.d("BENCH", "make lightmap :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
             return b;
+        }
+
+        protected Calendar mapTime(@Nullable SuntimesRiseSetDataset data, @NonNull LightMapColors options)
+        {
+            Calendar mapTime;
+            if (options.now >= 0)
+            {
+                mapTime = Calendar.getInstance();
+                mapTime.setTimeInMillis(options.now);       // preset time
+
+            } else if (data != null) {
+                mapTime = data.nowThen(data.calendar());    // the current time (maybe on some other day)
+                options.now = mapTime.getTimeInMillis();
+
+            } else {
+                mapTime = Calendar.getInstance();
+                options.now = mapTime.getTimeInMillis();
+            }
+
+            long minutes = options.offsetMinutes;
+            while (minutes > Integer.MAX_VALUE) {
+                minutes = minutes - Integer.MAX_VALUE;
+                mapTime.add(Calendar.MINUTE, Integer.MAX_VALUE);
+            }
+            while (minutes < Integer.MIN_VALUE) {
+                minutes = minutes + Integer.MIN_VALUE;
+                mapTime.add(Calendar.MINUTE, Integer.MIN_VALUE);
+            }
+            mapTime.add(Calendar.MINUTE, (int)minutes);    // remaining minutes
+
+            return mapTime;
         }
 
         @Override
@@ -418,19 +534,25 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         }
 
         @Override
-        protected void onProgressUpdate( Void... progress )
+        protected void onProgressUpdate( Bitmap... frames )
         {
+            if (listener != null)
+            {
+                for (int i=0; i<frames.length; i++) {
+                    listener.onFrame(frames[i], colors.offsetMinutes);
+                }
+            }
         }
 
         @Override
-        protected void onPostExecute( Bitmap result )
+        protected void onPostExecute( Bitmap lastFrame )
         {
-            if (isCancelled())
-            {
-                result = null;
+            if (isCancelled()) {
+                lastFrame = null;
             }
-            onFinished(result);
+            onFinished(lastFrame);
         }
+
 
         /////////////////////////////////////////////
 
@@ -552,6 +674,11 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         public void onFinished( Bitmap result ) {}
     }
 
+    private LightMapTaskListener mapListener = null;
+    public void setMapTaskListener( LightMapTaskListener listener ) {
+        mapListener = listener;
+    }
+
     /**
      * LightMapColors
      */
@@ -565,6 +692,11 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         public int colorDay, colorCivil, colorNautical, colorAstro, colorNight;
         public int colorPointFill, colorPointStroke;
         public int option_drawNow = DRAW_SUN1;
+
+        public long offsetMinutes = 0;
+        public long now = -1L;
+        public int anim_frameLengthMs = 100;         // frames shown for 200 ms
+        public int anim_frameOffsetMinutes = 1;      // each frame 1 minute apart
 
         public LightMapColors() {}
 
