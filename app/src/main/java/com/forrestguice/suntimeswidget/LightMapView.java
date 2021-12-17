@@ -39,6 +39,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 
 /**
  * LightMapView .. a stacked bar graph over the duration of a day showing relative duration of
@@ -499,7 +500,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             Calendar mapTime;
             if (options.now >= 0)
             {
-                mapTime = Calendar.getInstance();
+                mapTime = Calendar.getInstance(data != null ? data.timezone() : TimeZone.getDefault());
                 mapTime.setTimeInMillis(options.now);       // preset time
 
             } else if (data != null) {
