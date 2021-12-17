@@ -920,7 +920,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 String displayString = getContext().getString((nowIsAfter ? R.string.ago : R.string.hence), offsetText.toString() + "\n");
                 offsetTime.setText(displayString);
             } else {
-                offsetTime.setText("");
+                offsetTime.setText(" \n ");
             }
         }
     }

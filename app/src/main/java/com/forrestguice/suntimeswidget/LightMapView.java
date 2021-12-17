@@ -344,13 +344,8 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                     Calendar maptime = mapTime(data, colors);
                     Calendar datatime = data.dataActual.calendar();
                     long data_age = (maptime.getTimeInMillis() - datatime.getTimeInMillis());
-                    if (data_age >= (12 * 60 * 60 * 1000))
-                    {
-                        Log.d("LightMapTask", "data is more than 12hr old; recalculating");
-                        Calendar calendar = Calendar.getInstance(data.timezone());
-                        calendar.setTimeInMillis(maptime.getTimeInMillis());
-                        data.setTodayIs(calendar);
-                        data.calculateData();
+                    if (data_age >= (12 * 60 * 60 * 1000)) {    // TODO: more precise
+                        recalculateData(maptime, data);
                     }
                 }
 
@@ -371,6 +366,15 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             }
             colors.offsetMinutes -= colors.anim_frameOffsetMinutes;
             return frame;
+        }
+
+        protected void recalculateData(Calendar maptime, SuntimesRiseSetDataset data)
+        {
+            Log.d("LightMapTask", "recalculating dataset with adjusted date");
+            Calendar calendar = Calendar.getInstance(data.timezone());
+            calendar.setTimeInMillis(maptime.getTimeInMillis());
+            data.setTodayIs(calendar);
+            data.calculateData();
         }
 
         public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, LightMapColors colors )
