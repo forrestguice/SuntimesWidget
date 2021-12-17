@@ -250,7 +250,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         {
             colors.now = -1;
             if (data != null) {
-                Calendar calendar = Calendar.getInstance();
+                Calendar calendar = Calendar.getInstance(data.timezone());
                 data.setTodayIs(calendar);
                 data.calculateData();
             }
@@ -346,7 +346,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                     if (data_age >= (12 * 60 * 60 * 1000))
                     {
                         Log.d("LightMapTask", "data is more than 12hr old; recalculating");
-                        Calendar calendar = Calendar.getInstance();
+                        Calendar calendar = Calendar.getInstance(data.timezone());
                         calendar.setTimeInMillis(maptime.getTimeInMillis());
                         data.setTodayIs(calendar);
                         data.calculateData();

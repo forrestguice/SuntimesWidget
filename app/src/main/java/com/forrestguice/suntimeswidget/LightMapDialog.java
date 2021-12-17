@@ -69,6 +69,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -100,8 +101,12 @@ public class LightMapDialog extends BottomSheetDialogFragment
     private View dialogContent = null;
 
     private SuntimesRiseSetDataset data;
-    public void setData(SuntimesRiseSetDataset data) {
-        this.data = new SuntimesRiseSetDataset(data);
+    public void setData(@NonNull Context context, @NonNull SuntimesRiseSetDataset values)
+    {
+        this.data = new SuntimesRiseSetDataset(values);
+        this.data.invalidateCalculation();
+        this.data.setTimeZone(context, WidgetTimezones.localMeanTime(context, values.location()));
+        this.data.setTodayIs(Calendar.getInstance(data.timezone()));
         this.data.calculateData();
     }
 
@@ -887,7 +892,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         if (lightmap.isAnimated() || lightmap.getOffsetMinutes() != 0) {
             mapTimeMillis = getMapTime(now.getTimeInMillis());
         }
-        
+
         String suffix = "";
         boolean nowIsAfter = false;
         Calendar mapTime = Calendar.getInstance(WidgetTimezones.localMeanTime(context, data.location()));
