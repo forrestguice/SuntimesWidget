@@ -288,9 +288,15 @@ public class SuntimesRiseSetDataset
         }
     }
 
-    public TimeZone timezone()
-    {
+    public TimeZone timezone() {
         return dataActual.timezone();
+    }
+    public void setTimeZone(Context context, TimeZone value) {
+        for (SuntimesRiseSetData data : dataset) {
+            data.setTimeZoneMode(WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
+            data.setTimezone(value);
+            data.calculator = null;   // reset calculator because it may require re-initialization w/ timezone
+        }
     }
 
     public Date date()
@@ -308,9 +314,14 @@ public class SuntimesRiseSetDataset
         return dataActual.getOtherCalendar();
     }
 
-    public WidgetSettings.TimezoneMode timezoneMode()
-    {
+    public WidgetSettings.TimezoneMode timezoneMode() {
         return dataActual.timezoneMode();
+    }
+    public void setTimeZoneMode(WidgetSettings.TimezoneMode value) {
+        for (SuntimesRiseSetData data : dataset) {
+            data.setTimeZoneMode(value);
+            data.calculator = null;   // reset calculator because it may require re-initialization w/ timezone
+        }
     }
 
     public SuntimesCalculatorDescriptor calculatorMode()
