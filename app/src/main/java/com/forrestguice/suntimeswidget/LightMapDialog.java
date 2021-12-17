@@ -909,7 +909,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         if (sunTime != null) {
             if (suffix.isEmpty())
                 sunTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), mapTime.getTimeZone().getID()));
-            else sunTime.setText(SuntimesUtils.createBoldSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), mapTime.getTimeZone().getID(), suffix), suffix));
+            else sunTime.setText(SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), mapTime.getTimeZone().getID(), suffix), suffix, color_warning));
         }
 
         if (offsetTime != null)
