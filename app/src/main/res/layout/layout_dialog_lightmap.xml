@@ -275,7 +275,7 @@
             android:layout_width="wrap_content" android:minWidth="50dp" android:maxWidth="60dp" android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/media_menu"
-            android:text="@string/worldmap_dialog_speed_15m" android:gravity="center_horizontal" />
+            tools:text="@string/worldmap_dialog_speed_5m" android:gravity="center_horizontal" />
 
         <ImageButton
             android:id="@+id/media_menu"
