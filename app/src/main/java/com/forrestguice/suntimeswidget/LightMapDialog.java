@@ -171,7 +171,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     Rect headerBounds = new Rect();
                     divider1.getDrawingRect(headerBounds);
                     dialogLayout.offsetDescendantRectToMyCoords(divider1, headerBounds);
-                    behavior.setPeekHeight(headerBounds.bottom + (int)getResources().getDimension(R.dimen.dialog_margin));
+                    behavior.setPeekHeight(headerBounds.bottom); // + (int)getResources().getDimension(R.dimen.dialog_margin));
 
                 } else {
                     behavior.setPeekHeight(-1);
