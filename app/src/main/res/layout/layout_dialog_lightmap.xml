@@ -291,7 +291,7 @@
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="horizontal" android:gravity="center_vertical"
         android:background="?attr/dialogBackgroundAlt"
-        android:layout_marginTop="8dp" android:paddingLeft="8dp" android:paddingRight="8dp" android:paddingBottom="8dp"
+        android:layout_marginTop="8dp" android:padding="8dp"
         app:layout_constraintTop_toBottomOf="@+id/media_actions">
 
         <android.support.constraint.Guideline
@@ -303,9 +303,9 @@
         <ImageView
             android:id="@+id/info_time_lightmap_key_night_icon"
             android:layout_width="16dp" android:layout_height="16dp"
-            android:layout_marginTop="14dp"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/info_time_lightmap_key_astro_duration"
             android:layout_gravity="center_vertical"
             android:background="@drawable/ic_colortab"
             android:contentDescription="@string/timeMode_night" />
@@ -339,7 +339,7 @@
             android:id="@+id/info_time_lightmap_key_astro_icon"
             android:layout_width="16dp" android:layout_height="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/info_time_lightmap_key_night_duration"
+            app:layout_constraintTop_toBottomOf="@+id/info_time_lightmap_key_nautical_duration"
             android:layout_gravity="center_vertical"
             android:layout_marginTop="8dp"
             android:background="@drawable/ic_colortab"
@@ -374,7 +374,7 @@
             android:id="@+id/info_time_lightmap_key_nautical_icon"
             android:layout_width="16dp" android:layout_height="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/info_time_lightmap_key_astro_duration"
+            app:layout_constraintTop_toBottomOf="@+id/info_time_lightmap_key_civil_duration"
             android:layout_gravity="center_vertical"
             android:layout_marginTop="8dp"
             android:background="@drawable/ic_colortab"
@@ -409,7 +409,7 @@
             android:id="@+id/info_time_lightmap_key_civil_icon"
             android:layout_width="16dp" android:layout_height="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/info_time_lightmap_key_nautical_duration"
+            app:layout_constraintTop_toBottomOf="@+id/info_time_lightmap_key_day_duration"
             android:layout_gravity="center_vertical"
             android:layout_marginTop="8dp"
             android:background="@drawable/ic_colortab"
@@ -443,8 +443,8 @@
         <ImageView
             android:id="@+id/info_time_lightmap_key_day_icon"
             android:layout_width="16dp" android:layout_height="16dp"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/info_time_lightmap_key_civil_duration"
             android:layout_gravity="center_vertical"
             android:layout_marginTop="8dp"
             android:background="@drawable/ic_colortab"
