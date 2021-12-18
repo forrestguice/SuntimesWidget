@@ -41,6 +41,7 @@ import android.os.Parcelable;
 import android.os.SystemClock;
 import android.preference.PreferenceActivity;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -2074,11 +2075,15 @@ public class SuntimesActivity extends AppCompatActivity
     /**
      * Show the lightmap dialog.
      */
-    protected void showLightMapDialog()
+    protected void showLightMapDialog() {
+        showLightMapDialog(null);
+    }
+    protected void showLightMapDialog(@Nullable Long dateTime)
     {
         final LightMapDialog lightMapDialog = new LightMapDialog();
         lightMapDialog.themeViews(this, appThemeOverride);
         lightMapDialog.setData(SuntimesActivity.this, dataset);
+        lightMapDialog.showPositionAt(dateTime);
         lightMapDialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTMAP);
     }
 

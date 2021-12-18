@@ -69,12 +69,13 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.TimeZone;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class LightMapDialog extends BottomSheetDialogFragment
 {
+    public static final String EXTRA_DATETIME = "datetime";
+
     private static SuntimesUtils utils = new SuntimesUtils();
 
     private TextView dialogTitle;
@@ -99,6 +100,24 @@ public class LightMapDialog extends BottomSheetDialogFragment
     private boolean showSeconds = true;
     private int decimalPlaces = 1;
     private View dialogContent = null;
+
+    public LightMapDialog()
+    {
+        Bundle args = new Bundle();
+        args.putLong(EXTRA_DATETIME, -1L);
+        setArguments(args);
+    }
+
+    public void showPositionAt(@Nullable Long datetime)
+    {
+        getArguments().putLong(EXTRA_DATETIME, (datetime == null ? -1 : datetime));
+        if (isAdded()) {
+            updateViews();
+        }
+    }
+    public long showingPositionAt() {
+        return getArguments().getLong(EXTRA_DATETIME);
+    }
 
     private SuntimesRiseSetDataset data;
     public void setData(@NonNull Context context, @NonNull SuntimesRiseSetDataset values)
@@ -128,7 +147,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         initViews(dialogContent);
         if (savedState != null) {
             Log.d("DEBUG", "LightMapDialog onCreate (restoreState)");
-            lightmap.loadSettings(getContext(), savedState);
+            loadSettings(savedState);
         }
         themeViews(getContext());
         return dialogContent;
@@ -312,6 +331,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 @Override
                 public void onFrame(Bitmap frame, long offsetMinutes)
                 {
+                    getArguments().putLong(EXTRA_DATETIME, lightmap.getNow());
                     updateTimeText(data);
                     updateSunPositionViews(data);
                     resetButton.setEnabled(offsetMinutes != 0);
@@ -499,6 +519,8 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 pauseButton.setVisibility(View.GONE);
                 playButton.setVisibility(View.VISIBLE);
             }
+
+            resetButton.setEnabled(lightmap != null && lightmap.getColors().offsetMinutes != 0);
         }
 
         Context context = getContext();
@@ -516,6 +538,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
         if (context != null)
         {
             LightMapView.LightMapColors options = lightmap.getColors();
+            options.now = showingPositionAt();
+            if (options.now != -1L && options.offsetMinutes == 0) {
+                options.offsetMinutes = 1;
+            }
             options.anim_frameOffsetMinutes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP)
                     ? 24 * 60 : 1;
         }
@@ -540,6 +566,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
     @Override
     public void onSaveInstanceState( Bundle state ) {
         lightmap.saveSettings(state);
+    }
+    protected void loadSettings(Bundle bundle)
+    {
+        lightmap.loadSettings(getContext(), bundle);
     }
 
     private View.OnClickListener onShadowLayoutClick =  new View.OnClickListener()
@@ -889,7 +919,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         long nowMillis = now.getTimeInMillis();
         long mapTimeMillis = nowMillis;
 
-        if (lightmap.isAnimated() || lightmap.getOffsetMinutes() != 0) {
+        if (lightmap.isAnimated() || lightmap.getOffsetMinutes() != 0 || lightmap.getColors().now != -1L) {
             mapTimeMillis = getMapTime(now.getTimeInMillis());
         }
 
@@ -989,7 +1019,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 sunAzimuthAtNoon.setText("");
                 sunAzimuthAtNoon.setContentDescription("");
             }
-
+            
             Context context = getContext();
             if (context != null && calculator != null)
             {
