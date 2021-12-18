@@ -1661,6 +1661,11 @@
           <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
           <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon. Near darkness of night.<br/>
     ]]></string>
+    <string name="help_general_twilight"><![CDATA[
+          <b>Civil Twilight:</b> The sun is 6 degrees below the horizon; the brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
+          <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
+          <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon. Near darkness of night.<br/>
+    ]]></string>   <!-- TODO -->
     <string name="help_general_riseSetOrder"><![CDATA[
           <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
           <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
@@ -1747,6 +1752,8 @@
         <br />
         This feature is now available as a <a href="moreInfoLink">separate app</a>.
     ]]></string>
+
+    <string name="help_shadowlength" translatable="false">[Icon Shadow] %1$s</string>     <!-- e.g. [Icon] [configLabel_general_observerheight_summary] -->    <!-- TODO -->
 
     <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. <br/><br/>The app is configured from location data. This information (and other configuration data used by the app) is stored locally and does not leave the device.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string>
