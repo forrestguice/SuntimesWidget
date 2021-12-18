@@ -760,6 +760,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             boolean toggledValue;
             switch (item.getItemId())
             {
+                case R.id.showSunPosition:
+                    if (dialogListener != null) {
+                        dialogListener.onShowPosition(getMapTime(Calendar.getInstance().getTimeInMillis()));
+                        //collapseSheet(getDialog());
+                    }
+                    return true;
+
                 case R.id.setDate:
                     if (dialogListener != null) {
                         dialogListener.onConfigDate(getMapTime(Calendar.getInstance().getTimeInMillis()));
@@ -992,6 +999,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     public static class WorldMapDialogListener
     {
         public void onConfigDate( long suggestedDate ) {}
+        public void onShowPosition( long suggestDate ) {}
     }
 
 }

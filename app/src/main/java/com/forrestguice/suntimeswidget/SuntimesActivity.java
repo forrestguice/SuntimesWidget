@@ -2086,6 +2086,14 @@ public class SuntimesActivity extends AppCompatActivity
         lightMapDialog.showPositionAt(dateTime);
         lightMapDialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTMAP);
     }
+    public void showSunPositionAt(@Nullable Long dateTime)
+    {
+        FragmentManager fragments = getSupportFragmentManager();
+        LightMapDialog lightMapDialog = (LightMapDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTMAP);
+        if (lightMapDialog != null) {
+            lightMapDialog.showPositionAt(dateTime);
+        } else showLightMapDialog(dateTime);
+    }
 
     protected void showWorldMapDialog()
     {
@@ -2097,6 +2105,11 @@ public class SuntimesActivity extends AppCompatActivity
     }
     private WorldMapDialog.WorldMapDialogListener worldMapListener = new WorldMapDialog.WorldMapDialogListener()
     {
+        @Override
+        public void onShowPosition(long suggested) {
+            showSunPositionAt(suggested);
+        }
+
         @Override
         public void onConfigDate(long suggested)
         {

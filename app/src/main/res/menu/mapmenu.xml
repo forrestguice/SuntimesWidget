@@ -32,6 +32,11 @@
 
     <group android:id="@+id/mapOption_group_action" android:checkableBehavior="none">
 
+        <item android:id="@+id/showSunPosition"
+            android:title="@string/configAction_sunDialog"
+            android:icon="@drawable/ic_sun"
+            app:showAsAction="never" />
+
         <item android:id="@+id/setDate"
             android:title="@string/configAction_viewDate"
             android:icon="?attr/icActionTimeReset"
