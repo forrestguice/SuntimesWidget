@@ -179,6 +179,11 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             }
 
             @Override
+            public void onDataModified( SuntimesRiseSetDataset data ) {
+                LightMapView.this.data = data;
+            }
+
+            @Override
             public void onFrame(Bitmap frame, long offsetMinutes) {
                 setImageBitmap(frame);
                 if (mapListener != null) {
@@ -294,6 +299,8 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     {
         private LightMapColors colors;
 
+        private SuntimesRiseSetDataset t_data = null;
+
         /**
          * @param params 0: SuntimesRiseSetDataset,
          *               1: Integer (width),
@@ -339,13 +346,21 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                     break;
                 }
 
-                if (data != null && data.dataActual != null)
+                if (data != null && data.dataActual != null && i > 1)
                 {
                     Calendar maptime = mapTime(data, colors);
                     Calendar datatime = data.dataActual.calendar();
                     long data_age = (maptime.getTimeInMillis() - datatime.getTimeInMillis());
                     if (data_age >= (12 * 60 * 60 * 1000)) {    // TODO: more precise
-                        recalculateData(maptime, data);
+
+                        Log.d("LightMapTask", "recalculating dataset with adjusted date");
+                        Calendar calendar = Calendar.getInstance(data.timezone());
+                        calendar.setTimeInMillis(maptime.getTimeInMillis());
+
+                        data = new SuntimesRiseSetDataset(data);
+                        data.setTodayIs(calendar);
+                        data.calculateData();
+                        t_data = data;
                     }
                 }
 
@@ -366,15 +381,6 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             }
             colors.offsetMinutes -= colors.anim_frameOffsetMinutes;
             return frame;
-        }
-
-        protected void recalculateData(Calendar maptime, SuntimesRiseSetDataset data)
-        {
-            Log.d("LightMapTask", "recalculating dataset with adjusted date");
-            Calendar calendar = Calendar.getInstance(data.timezone());
-            calendar.setTimeInMillis(maptime.getTimeInMillis());
-            data.setTodayIs(calendar);
-            data.calculateData();
         }
 
         public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, LightMapColors colors )
@@ -543,6 +549,10 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         {
             if (listener != null)
             {
+                if (t_data != null) {
+                    listener.onDataModified(t_data);
+                    t_data = null;
+                }
                 for (int i=0; i<frames.length; i++) {
                     listener.onFrame(frames[i], colors.offsetMinutes);
                 }
@@ -555,9 +565,15 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             if (isCancelled()) {
                 lastFrame = null;
             }
-            onFinished(lastFrame);
+            if (listener != null)
+            {
+                if (t_data != null) {
+                    listener.onDataModified(t_data);
+                    t_data = null;
+                }
+                listener.onFinished(lastFrame);
+            }
         }
-
 
         /////////////////////////////////////////////
 
@@ -648,14 +664,6 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             }
         }
 
-        protected void onFinished( Bitmap result )
-        {
-            if (listener != null)
-            {
-                listener.onFinished(result);
-            }
-        }
-
         private LightMapTaskListener listener = null;
         public void setListener( LightMapTaskListener listener )
         {
@@ -674,6 +682,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     public static abstract class LightMapTaskListener
     {
         public void onStarted() {}
+        public void onDataModified( SuntimesRiseSetDataset data ) {}
         public void onFrame(Bitmap frame, long offsetMinutes ) {}
         public void afterFrame(Bitmap frame, long offsetMinutes ) {}
         public void onFinished( Bitmap result ) {}
