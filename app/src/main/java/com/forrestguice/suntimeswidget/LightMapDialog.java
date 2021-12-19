@@ -39,10 +39,8 @@ import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.widget.PopupMenu;
-import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -421,9 +419,11 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
             switch (item.getItemId())
             {
-                // TODO
-                //case R.id.setDate:
-                //    return true;
+                case R.id.action_worldmap:
+                    if (dialogListener != null) {
+                        dialogListener.onShowMap(getMapTime(System.currentTimeMillis()));
+                    }
+                    return true;
 
                 case R.id.action_help:
                     showHelp(getContext());
@@ -1251,6 +1251,19 @@ public class LightMapDialog extends BottomSheetDialogFragment
             }
         }
         return info.toArray(new LightMapKeyInfo[0]);
+    }
+
+    private LightMapDialogListener dialogListener = null;
+    public void setDialogListener(LightMapDialogListener listener) {
+        dialogListener = listener;
+    }
+
+    /**
+     * LightMapDialogListener
+     */
+    public static class LightMapDialogListener
+    {
+        public void onShowMap( long suggestDate ) {}
     }
 
 }

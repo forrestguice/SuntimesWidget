@@ -466,6 +466,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             lightMapDialog.themeViews(this, appThemeOverride);
             lightMapDialog.setData(context, dataset);
+            lightMapDialog.setDialogListener(lightMapListener);
             lightMapDialog.updateViews();
             //Log.d("DEBUG", "LightMapDialog updated on restore.");
         }
@@ -2083,9 +2084,18 @@ public class SuntimesActivity extends AppCompatActivity
         final LightMapDialog lightMapDialog = new LightMapDialog();
         lightMapDialog.themeViews(this, appThemeOverride);
         lightMapDialog.setData(SuntimesActivity.this, dataset);
+        lightMapDialog.setDialogListener(lightMapListener);
         lightMapDialog.showPositionAt(dateTime);
         lightMapDialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTMAP);
     }
+    private LightMapDialog.LightMapDialogListener lightMapListener = new LightMapDialog.LightMapDialogListener() {
+        @Override
+        public void onShowMap( long suggested)
+        {
+            // TODO
+            Log.d("DEBUG", "click");
+        }
+    };
     public void showSunPositionAt(@Nullable Long dateTime)
     {
         FragmentManager fragments = getSupportFragmentManager();
