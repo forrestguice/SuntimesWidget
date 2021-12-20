@@ -17,6 +17,11 @@
             android:icon="?attr/icActionTimeReset"
             app:showAsAction="never" />
 
+        <item android:id="@+id/action_worldmap"
+            android:icon="?attr/icActionMap"
+            android:title="@string/configAction_worldMap"
+            app:showAsAction="never" />
+
         <item android:id="@+id/action_help"
             android:icon="?attr/icActionHelp"
             android:title="@string/configAction_help"

@@ -2090,10 +2090,8 @@ public class SuntimesActivity extends AppCompatActivity
     }
     private LightMapDialog.LightMapDialogListener lightMapListener = new LightMapDialog.LightMapDialogListener() {
         @Override
-        public void onShowMap( long suggested)
-        {
-            // TODO
-            Log.d("DEBUG", "click");
+        public void onShowMap( long suggested) {
+            showWorldMapDialog();   // TODO: at suggested date
         }
     };
     public void showSunPositionAt(@Nullable Long dateTime)
@@ -2117,7 +2115,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         @Override
         public void onShowPosition(long suggested) {
-            showSunPositionAt(suggested);
+            showSunPositionAt(suggested - (60 * 1000));
         }
 
         @Override

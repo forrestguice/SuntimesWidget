@@ -781,7 +781,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                 case R.id.showSunPosition:
                     if (dialogListener != null) {
                         dialogListener.onShowPosition(getMapTime(Calendar.getInstance().getTimeInMillis()));
-                        //collapseSheet(getDialog());
+                        collapseSheet(getDialog());
                     }
                     return true;
 
