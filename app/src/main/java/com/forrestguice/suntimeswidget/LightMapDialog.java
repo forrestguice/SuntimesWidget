@@ -71,6 +71,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -435,10 +436,16 @@ public class LightMapDialog extends BottomSheetDialogFragment
         }
     };
 
-    private void updateContextMenu(Context context, PopupMenu menu)
+    private void updateContextMenu(Context context, PopupMenu popupMenu)
     {
-        Menu m = menu.getMenu();
-        // TODO
+        Menu menu = popupMenu.getMenu();
+        MenuItem submenuItem = menu.findItem(R.id.addonSubMenu);
+        if (submenuItem != null) {
+            List<WorldMapDialog.ActivityItemInfo> addonMenuItems = WorldMapDialog.queryAddonMenuItems(context);
+            if (!addonMenuItems.isEmpty()) {
+                WorldMapDialog.populateSubMenu(submenuItem.getSubMenu(), addonMenuItems, getMapTime(System.currentTimeMillis()));
+            } else submenuItem.setVisible(false);
+        }
     }
 
     protected boolean showContextMenu(final Context context, View view)
@@ -447,7 +454,6 @@ public class LightMapDialog extends BottomSheetDialogFragment
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.lightmapmenu, menu.getMenu());
         menu.setOnMenuItemClickListener(onContextMenuClick);
-
         updateContextMenu(context, menu);
         SuntimesUtils.forceActionBarIcons(menu.getMenu());
         menu.show();

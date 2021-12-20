@@ -32,6 +32,14 @@
 
     <group android:id="@+id/mapOption_group_action" android:checkableBehavior="none">
 
+        <item android:id="@+id/addonSubMenu"
+            android:icon="?attr/icActionExtension"
+            android:title="@string/configAction_viewDate"
+            app:showAsAction="never"
+            android:orderInCategory="0">
+            <menu />         <!-- submenu is populated at runtime -->
+        </item>
+
         <item android:id="@+id/showSunPosition"
             android:title="@string/configAction_sunDialog"
             android:icon="@drawable/ic_sun"

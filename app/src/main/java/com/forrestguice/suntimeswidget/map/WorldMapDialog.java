@@ -23,6 +23,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -44,6 +50,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -67,6 +74,9 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.TimeZone;
 
 public class WorldMapDialog extends BottomSheetDialogFragment
@@ -735,6 +745,14 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         if (action_date != null) {
             action_date.setEnabled( !WidgetSettings.DateInfo.isToday(getMapDate()) );
         }
+
+        MenuItem addonSubmenuItem = m.findItem(R.id.addonSubMenu);
+        if (addonSubmenuItem != null) {
+            List<ActivityItemInfo> addonMenuItems = queryAddonMenuItems(context);
+            if (!addonMenuItems.isEmpty()) {
+                populateSubMenu(addonSubmenuItem.getSubMenu(), addonMenuItems, getMapTime(System.currentTimeMillis()));
+            } else addonSubmenuItem.setVisible(false);
+        }
     }
 
     private void shareMap()
@@ -1000,6 +1018,116 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     {
         public void onConfigDate( long suggestedDate ) {}
         public void onShowPosition( long suggestDate ) {}
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * ActivityItemInfo
+     */
+    public static final class ActivityItemInfo
+    {
+        public ActivityItemInfo(@NonNull String title, ActivityInfo info)
+        {
+            this.title = title;
+            this.info = info;
+        }
+
+        protected String title;
+        @NonNull
+        public String getTitle() {
+            return title;
+        }
+
+        protected ActivityInfo info;
+        public ActivityInfo getInfo() {
+            return info;
+        }
+
+        public Intent getIntent() {
+            Intent intent = new Intent();
+            intent.setClassName(info.packageName, info.name);
+            return intent;
+        }
+
+        public String toString() {
+            return title;
+        }
+
+        public static final Comparator<ActivityItemInfo> title_comparator = new Comparator<ActivityItemInfo>() {
+            @Override
+            public int compare(ActivityItemInfo o1, ActivityItemInfo o2) {
+                return o1.getTitle().compareTo(o2.getTitle());
+            }
+        };
+    }
+
+    public static void populateSubMenu(@Nullable SubMenu menu, @NonNull List<ActivityItemInfo> addonItems, long datetime)
+    {
+        if (menu != null)
+        {
+            menu.clear();
+            for (ActivityItemInfo addon : addonItems)
+            {
+                MenuItem menuItem = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, addon.getTitle());
+                Intent intent = addon.getIntent();
+                intent.setAction(ACTION_SHOW_DATE);
+                intent.putExtra(EXTRA_SHOW_DATE, datetime);
+                menuItem.setIntent(intent);
+            }
+        }
+    }
+
+    public static final String REQUIRED_PERMISSION = "suntimes.permission.READ_CALCULATOR";   // TODO: move this somewhere else
+    public static final String CATEGORY_SUNTIMES_ADDON = "suntimes.SUNTIMES_ADDON";
+    public static final String ACTION_SHOW_DATE = "suntimes.action.SHOW_DATE";
+    public static final String EXTRA_SHOW_DATE = "dateMillis";
+    public static final String META_MENUITEM_TITLE = "SuntimesMenuItemTitle";
+    public static List<ActivityItemInfo> queryAddonMenuItems(@NonNull Context context)
+    {
+        Intent intent = new Intent();
+        intent.setAction(ACTION_SHOW_DATE);
+        intent.addCategory(CATEGORY_SUNTIMES_ADDON);
+
+        PackageManager packageManager = context.getPackageManager();
+        List<ResolveInfo> packageInfo = packageManager.queryIntentActivities(intent, PackageManager.GET_RESOLVED_FILTER | PackageManager.GET_META_DATA);
+        ArrayList<ActivityItemInfo> matches = new ArrayList<>();
+        for (ResolveInfo resolveInfo : packageInfo)
+        {
+            IntentFilter filter = resolveInfo.filter;
+            if (filter != null && filter.hasAction(ACTION_SHOW_DATE) && filter.hasCategory(CATEGORY_SUNTIMES_ADDON))
+            {
+                try {
+                    PackageInfo packageInfo0 = packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, PackageManager.GET_PERMISSIONS);
+                    if (hasPermission(packageInfo0))
+                    {
+                        String title = resolveInfo.activityInfo.metaData.getString(META_MENUITEM_TITLE, resolveInfo.activityInfo.name);
+                        matches.add(new ActivityItemInfo(title, resolveInfo.activityInfo));
+
+                    } else {
+                        Log.w("queryAddonMenuItems", "Permission denied! " + packageInfo0.packageName + " does not have required permissions.");
+                    }
+                } catch (PackageManager.NameNotFoundException e) {
+                    Log.e("queryAddonMenuItems", "Package not found! " + e);
+                }
+            }
+        }
+        Collections.sort(matches, ActivityItemInfo.title_comparator);
+        return matches;
+    }
+    public static boolean hasPermission(@NonNull PackageInfo packageInfo)
+    {
+        boolean hasPermission = false;
+        if (packageInfo.requestedPermissions != null) {
+            for (String permission : packageInfo.requestedPermissions) {
+                if (permission != null && permission.equals(REQUIRED_PERMISSION)) {
+                    hasPermission = true;
+                    break;
+                }
+            }
+        }
+        return hasPermission;
     }
 
 }
