@@ -1074,6 +1074,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                 Intent intent = addon.getIntent();
                 intent.setAction(ACTION_SHOW_DATE);
                 intent.putExtra(EXTRA_SHOW_DATE, datetime);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 menuItem.setIntent(intent);
             }
         }
