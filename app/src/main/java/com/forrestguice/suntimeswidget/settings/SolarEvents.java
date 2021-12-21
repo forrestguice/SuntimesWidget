@@ -417,4 +417,13 @@ public enum SolarEvents
         }
         return null;
     }
+    public static SolarEvents valueOf(WidgetSettings.SolsticeEquinoxMode mode) {
+        switch (mode) {
+            case EQUINOX_SPRING: return SolarEvents.EQUINOX_SPRING;
+            case SOLSTICE_SUMMER: return SolarEvents.SOLSTICE_SUMMER;
+            case EQUINOX_AUTUMNAL: return SolarEvents.EQUINOX_AUTUMNAL;
+            case SOLSTICE_WINTER: return SolarEvents.SOLSTICE_WINTER;
+            default: return null;
+        }
+    }
 }

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -143,5 +143,22 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     private int overrideColumnWidthPx = -1;
     public void adjustColumnWidth(int columnWidthPx) {
         overrideColumnWidthPx = columnWidthPx;
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private EquinoxDialogListener dialogListener = null;
+    public void setDialogListener( EquinoxDialogListener listener ) {
+        dialogListener = listener;
+    }
+
+    /**
+     * DialogListener
+     */
+    public static class EquinoxDialogListener
+    {
+        public void onSetAlarm( WidgetSettings.SolsticeEquinoxMode suggestedEvent ) {}
+        public void onShowMap( long suggestedDate ) {}
+        public void onShowPosition( long suggestedDate ) {}
     }
 }

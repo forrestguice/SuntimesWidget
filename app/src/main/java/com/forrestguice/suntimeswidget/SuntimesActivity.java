@@ -485,6 +485,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (equinoxDialog != null)
         {
             equinoxDialog.themeViews(this, appThemeOverride);
+            equinoxDialog.setDialogListener(equinoxDialogListener);
             equinoxDialog.updateViews();
             //Log.d("DEBUG", "EquinoxDialog updated on restore.");
         }
@@ -2146,8 +2147,21 @@ public class SuntimesActivity extends AppCompatActivity
         final EquinoxDialog equinoxDialog = new EquinoxDialog();
         updateEquinoxDialogColumnWidth(equinoxDialog);
         equinoxDialog.themeViews(this, appThemeOverride);
+        equinoxDialog.setDialogListener(equinoxDialogListener);
         equinoxDialog.show(getSupportFragmentManager(), DIALOGTAG_EQUINOX);
     }
+    private EquinoxDialog.EquinoxDialogListener equinoxDialogListener = new EquinoxDialog.EquinoxDialogListener()
+    {
+        public void onSetAlarm( WidgetSettings.SolsticeEquinoxMode suggestedEvent ) {
+            scheduleAlarm(SolarEvents.valueOf(suggestedEvent));
+        }
+        public void onShowMap( long suggestDate ) {
+            showWorldMapDialog();   // TODO: at suggested date
+        }
+        public void onShowPosition( long suggested ) {
+            showSunPositionAt(suggested);
+        }
+    };
 
     protected void showMoonDialog()
     {
