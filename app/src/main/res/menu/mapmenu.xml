@@ -40,7 +40,7 @@
             <menu />         <!-- submenu is populated at runtime -->
         </item>
 
-        <item android:id="@+id/showSunPosition"
+        <item android:id="@+id/action_sunposition"
             android:title="@string/configAction_sunDialog"
             android:icon="@drawable/ic_sun"
             app:showAsAction="never" />
