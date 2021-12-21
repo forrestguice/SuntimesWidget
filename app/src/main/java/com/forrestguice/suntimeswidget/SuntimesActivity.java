@@ -495,6 +495,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             moonDialog.themeViews(this, appThemeOverride);
             moonDialog.setData((dataset_moon != null) ? dataset_moon : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
+            moonDialog.setDialogListener(moonDialogListener);
             moonDialog.updateViews();
             //Log.d("DEBUG", "MoonDialog updated on restore.");
         }
@@ -2104,6 +2105,9 @@ public class SuntimesActivity extends AppCompatActivity
         } else showLightMapDialog(dateTime);
     }
 
+    /**
+     * Show the world map dialog.
+     */
     protected void showWorldMapDialog()
     {
         WorldMapDialog worldMapDialog = new WorldMapDialog();
@@ -2137,6 +2141,9 @@ public class SuntimesActivity extends AppCompatActivity
         }
     };
 
+    /**
+     * Show the solstice and equinox view/dialog.
+     */
     protected void showEquinoxView( boolean value )
     {
         equinoxLayout.setVisibility((value ? View.VISIBLE : View.GONE ));
@@ -2152,24 +2159,42 @@ public class SuntimesActivity extends AppCompatActivity
     }
     private EquinoxDialog.EquinoxDialogListener equinoxDialogListener = new EquinoxDialog.EquinoxDialogListener()
     {
+        @Override
         public void onSetAlarm( WidgetSettings.SolsticeEquinoxMode suggestedEvent ) {
             scheduleAlarm(SolarEvents.valueOf(suggestedEvent));
         }
+        @Override
         public void onShowMap( long suggestDate ) {
             showWorldMapDialog();   // TODO: at suggested date
         }
+        @Override
         public void onShowPosition( long suggested ) {
             showSunPositionAt(suggested);
         }
     };
 
+    /**
+     * Show the moon dialog.
+     */
     protected void showMoonDialog()
     {
         MoonDialog moonDialog = new MoonDialog();
         moonDialog.themeViews(this, appThemeOverride);
         moonDialog.setData((dataset_moon != null) ? dataset_moon : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
+        moonDialog.setDialogListener(moonDialogListener);
         moonDialog.show(getSupportFragmentManager(), DIALOGTAG_MOON);
     }
+    private MoonDialog.MoonDialogListener moonDialogListener = new MoonDialog.MoonDialogListener()
+    {
+        @Override
+        public void onSetAlarm( SolarEvents suggestedEvent ) {
+            scheduleAlarm(suggestedEvent);
+        }
+        @Override
+        public void onShowMap( long suggestDate ) {
+            showWorldMapDialog();   // TODO: at suggested date
+        }
+    };
 
     /**
      * Show data source labels / ui.
