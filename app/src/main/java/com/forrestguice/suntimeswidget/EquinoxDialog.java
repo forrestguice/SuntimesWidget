@@ -21,22 +21,30 @@ package com.forrestguice.suntimeswidget;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.forrestguice.suntimeswidget.map.WorldMapDialog;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+
+import java.util.List;
 
 public class EquinoxDialog extends BottomSheetDialogFragment
 {
@@ -144,6 +152,91 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     public void adjustColumnWidth(int columnWidthPx) {
         overrideColumnWidthPx = columnWidthPx;
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    protected boolean showContextMenu(final Context context, View view, final WidgetSettings.SolsticeEquinoxMode mode,  final long datetime)
+    {
+        PopupMenu menu = new PopupMenu(context, view);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.equinoxcontext, menu.getMenu());
+        menu.setOnMenuItemClickListener(onContextMenuClick);
+        updateContextMenu(context, menu, mode, datetime);
+        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        menu.show();
+        return true;
+    }
+
+    private void updateContextMenu(Context context, PopupMenu menu, final WidgetSettings.SolsticeEquinoxMode mode, final long datetime)
+    {
+        Intent data = new Intent();
+        data.putExtra(WorldMapDialog.EXTRA_SHOW_DATE, datetime);
+        data.putExtra("mode", mode.name());
+
+        Menu m = menu.getMenu();
+        MenuItem mapItem = m.findItem(R.id.action_worldmap);
+        if (mapItem != null) {
+            mapItem.setIntent(data);
+        }
+
+        MenuItem positionItem = m.findItem(R.id.action_sunposition);
+        if (positionItem != null) {
+            positionItem.setIntent(data);
+        }
+
+        MenuItem addonSubmenuItem = m.findItem(R.id.addonSubMenu);
+        if (addonSubmenuItem != null) {
+            List<WorldMapDialog.ActivityItemInfo> addonMenuItems = WorldMapDialog.queryAddonMenuItems(context);
+            if (!addonMenuItems.isEmpty()) {
+                WorldMapDialog.populateSubMenu(addonSubmenuItem.getSubMenu(), addonMenuItems, datetime);
+            } else addonSubmenuItem.setVisible(false);
+        }
+    }
+
+    private PopupMenu.OnMenuItemClickListener onContextMenuClick = new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            Context context = getContext();
+            if (context == null) {
+                return false;
+            }
+
+            Intent itemData = item.getIntent();
+            long itemTime = ((itemData != null) ? itemData.getLongExtra(WorldMapDialog.EXTRA_SHOW_DATE, -1L) : -1L);
+            WidgetSettings.SolsticeEquinoxMode itemMode = (itemData != null ? WidgetSettings.SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
+
+            switch (item.getItemId())
+            {
+                case R.id.action_alarm:
+                    if (dialogListener != null) {
+                        dialogListener.onSetAlarm(itemMode);
+                        //collapseSheet(getDialog());
+                    }
+                    return true;
+
+                case R.id.action_sunposition:
+                    if (dialogListener != null) {
+                        dialogListener.onShowPosition(itemTime);
+                        //collapseSheet(getDialog());
+                    }
+                    return true;
+
+                case R.id.action_worldmap:
+                    if (dialogListener != null) {
+                        dialogListener.onShowMap(itemTime);
+                        //collapseSheet(getDialog());
+                    }
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+    };
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
