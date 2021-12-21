@@ -65,7 +65,8 @@ public class EquinoxView extends LinearLayout
     private static SuntimesUtils utils = new SuntimesUtils();
     private boolean userSwappedCard = false;
 
-    private TextView empty;
+    private TextView empty, text_title;
+    private ImageButton btn_next, btn_prev;
     private RecyclerView card_view;
     private CardLayoutManager card_layout;
     private EquinoxViewAdapter card_adapter;
@@ -97,7 +98,7 @@ public class EquinoxView extends LinearLayout
     private void init(Context context, AttributeSet attrs)
     {
         initLocale(context);
-        themeViews(context);
+        options.init(context);
         LayoutInflater.from(context).inflate(R.layout.layout_view_equinox, this, true);
 
         if (attrs != null)
@@ -107,6 +108,21 @@ public class EquinoxView extends LinearLayout
         }
 
         empty = (TextView)findViewById(R.id.txt_empty);
+
+        text_title = (TextView)findViewById(R.id.text_title1);
+        if (text_title != null) {
+            text_title.setOnClickListener(onTitleClicked);
+        }
+
+        btn_next = (ImageButton)findViewById(R.id.info_time_nextbtn1);
+        if (btn_next != null) {
+            btn_next.setOnClickListener(onNextClicked);
+        }
+
+        btn_prev = (ImageButton)findViewById(R.id.info_time_prevbtn1);
+        if (btn_prev != null) {
+            btn_prev.setOnClickListener(onPrevClicked);
+        }
 
         card_view = (RecyclerView)findViewById(R.id.info_equinoxsolstice_flipper1);
         card_view.setHasFixedSize(true);
@@ -132,13 +148,14 @@ public class EquinoxView extends LinearLayout
         if (isInEditMode()) {
             updateViews(context);
         }
+        themeViews(context);
     }
 
     private EquinoxViewOptions options = new EquinoxViewOptions();
 
     @SuppressLint("ResourceType")
     private void themeViews(Context context) {
-        options.init(context);
+        themeHeaderViews();
     }
 
     public void themeViews(Context context, SuntimesTheme theme)
@@ -148,6 +165,20 @@ public class EquinoxView extends LinearLayout
             options.init(theme);
             card_adapter.setThemeOverride(theme);
         }
+        themeHeaderViews();
+    }
+
+    protected void themeHeaderViews()
+    {
+        text_title.setTextColor(options.titleColor);
+        if (options.titleSizeSp != null)
+        {
+            text_title.setTextSize(options.titleSizeSp);
+            text_title.setTypeface(text_title.getTypeface(), (options.titleBold ? Typeface.BOLD : Typeface.NORMAL));
+        }
+
+        ImageViewCompat.setImageTintList(btn_next, SuntimesUtils.colorStateList(options.titleColor, options.disabledColor, options.pressedColor));
+        ImageViewCompat.setImageTintList(btn_prev, SuntimesUtils.colorStateList(options.titleColor, options.disabledColor, options.pressedColor));
     }
 
     public void initLocale(Context context)
@@ -176,9 +207,15 @@ public class EquinoxView extends LinearLayout
         card_view.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 
-    protected void updateViews(Context context) {
+    protected void updateViews(Context context)
+    {
         SuntimesEquinoxSolsticeDataset data = card_adapter.initData(context, EquinoxViewAdapter.CENTER_POSITION);
         showEmptyView(data == null || !data.isImplemented());
+
+        View header = findViewById(R.id.dialog_header);
+        if (header != null) {
+            header.setVisibility(isMinimized() ? View.GONE : View.VISIBLE);
+        }
 
         int position = card_adapter.highlightNote(context);
         if (position != -1 && !userSwappedCard) {
@@ -187,7 +224,12 @@ public class EquinoxView extends LinearLayout
             card_view.setLayoutFrozen(isMinimized());
         }
     }
-    
+
+    protected void updateViews(Context context,  SuntimesEquinoxSolsticeDataset data)
+    {
+        text_title.setText(utils.calendarDateYearDisplayString(context, data.dataEquinoxSpring.eventCalendarThisYear()).toString());
+    }
+
     public boolean isImplemented(Context context)
     {
         SuntimesEquinoxSolsticeDataset data = card_adapter.initData(context, EquinoxViewAdapter.CENTER_POSITION);
@@ -196,7 +238,7 @@ public class EquinoxView extends LinearLayout
 
     public boolean saveState(Bundle bundle)
     {
-        bundle.putInt(EquinoxView.KEY_UI_CARDPOSITION, ((card_layout.findFirstVisibleItemPosition() + card_layout.findLastVisibleItemPosition()) / 2));
+        bundle.putInt(EquinoxView.KEY_UI_CARDPOSITION, currentCardPosition());
         bundle.putBoolean(EquinoxView.KEY_UI_USERSWAPPEDCARD, userSwappedCard);
         bundle.putBoolean(EquinoxView.KEY_UI_MINIMIZED, options.minimized);
         return true;
@@ -250,6 +292,16 @@ public class EquinoxView extends LinearLayout
     private RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
     {
         @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+        {
+            int position = currentCardPosition();
+            if (position >= 0) {
+                SuntimesEquinoxSolsticeDataset data = card_adapter.initData(getContext(), position);
+                updateViews(getContext(), data);
+            }
+        }
+
+        @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState)
         {
             super.onScrollStateChanged(recyclerView, newState);
@@ -275,6 +327,32 @@ public class EquinoxView extends LinearLayout
         }
         @Override
         public void onTitleClick( int position ) {
+            onTitleClicked(position);
+        }
+        @Override
+        public void onNextClick( int position ) {
+            onNextClicked(position);
+        }
+        @Override
+        public void onPrevClick( int position ) {
+            onPrevClicked(position);
+        }
+    };
+
+    protected int currentCardPosition() {
+        return (card_layout.findFirstCompletelyVisibleItemPosition() + card_layout.findLastCompletelyVisibleItemPosition()) / 2;
+    }
+
+    private OnClickListener onTitleClicked = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            onTitleClicked(currentCardPosition());
+        }
+    };
+    protected void onTitleClicked(int position)
+    {
+        if (currentCardPosition() >= 0)
+        {
             if (Math.abs(position - EquinoxViewAdapter.CENTER_POSITION) > SuntimesActivity.HIGHLIGHT_SCROLLING_ITEMS) {
                 card_view.scrollToPosition(EquinoxViewAdapter.CENTER_POSITION);
             } else {
@@ -282,15 +360,31 @@ public class EquinoxView extends LinearLayout
                 card_layout.startSmoothScroll(card_scroller);
             }
         }
+    }
+
+    private OnClickListener onNextClicked = new OnClickListener() {
         @Override
-        public void onNextClick( int position ) {
-            userSwappedCard = showNextCard(position);
-        }
-        @Override
-        public void onPrevClick( int position ) {
-            userSwappedCard = showPreviousCard(position);
+        public void onClick(View v) {
+            onNextClicked(currentCardPosition());
         }
     };
+    protected void onNextClicked(int position) {
+        if (position >= 0) {
+            userSwappedCard = showNextCard(position);
+        }
+    }
+
+    private OnClickListener onPrevClicked = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            onPrevClicked(currentCardPosition());
+        }
+    };
+    protected void onPrevClicked(int position) {
+        if (position >= 0) {
+            userSwappedCard = showPreviousCard(position);
+        }
+    }
 
     public void adjustColumnWidth(int columnWidthPx)
     {
@@ -826,8 +920,11 @@ public class EquinoxView extends LinearLayout
             }
             themeViews(options, position);
 
-            showTitle(!options.minimized);
-            showNextPrevButtons(!options.minimized);
+            showTitle(false);
+            //showTitle(!options.minimized);
+
+            showNextPrevButtons(false);
+            //showNextPrevButtons(!options.minimized);
 
             if (data == null) {
                 disableNotes(context, options);
