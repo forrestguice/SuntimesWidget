@@ -318,6 +318,10 @@ public class EquinoxView extends LinearLayout
             if (onClickListener != null) {
                 onClickListener.onClick(EquinoxView.this);
             }
+            if (viewListener != null) {
+                viewListener.onClick(position);
+            }
+
         }
         @Override
         public boolean onLongClick( int position ) {
@@ -328,19 +332,47 @@ public class EquinoxView extends LinearLayout
         @Override
         public void onTitleClick( int position ) {
             onTitleClicked(position);
+            if (viewListener != null) {
+                viewListener.onTitleClick(position);
+            }
         }
         @Override
         public void onNextClick( int position ) {
             onNextClicked(position);
+            if (viewListener != null) {
+                viewListener.onNextClick(position);
+            }
         }
         @Override
         public void onPrevClick( int position ) {
             onPrevClicked(position);
+            if (viewListener != null) {
+                viewListener.onPrevClick(position);
+            }
+        }
+        @Override
+        public void onMenuClick(View view, int position, WidgetSettings.SolsticeEquinoxMode mode, long datetime) {
+            if (viewListener != null) {
+                viewListener.onMenuClick(view, position, mode, datetime);
+            }
         }
     };
 
-    protected int currentCardPosition() {
-        return (card_layout.findFirstCompletelyVisibleItemPosition() + card_layout.findLastCompletelyVisibleItemPosition()) / 2;
+    public void lockScrolling() {
+        card_view.setLayoutFrozen(true);
+    }
+
+    public void unlockScrolling() {
+        card_view.setLayoutFrozen(isMinimized());
+    }
+
+    public int currentCardPosition()
+    {
+        int first = card_layout.findFirstVisibleItemPosition();
+        int last = card_layout.findLastVisibleItemPosition();
+        int p = (first + last) / 2;
+        //Log.d("DEBUG", "currentCardPosition: " + first + ", " + last + " => " + p);
+        return p;
     }
 
     private OnClickListener onTitleClicked = new OnClickListener() {
@@ -451,16 +483,18 @@ public class EquinoxView extends LinearLayout
     public static class EquinoxNote
     {
         protected TextView labelView, timeView, noteView;
+        protected ImageButton contextMenu;
         protected Calendar time;
         protected boolean highlighted;
         protected int pageIndex;
         private EquinoxViewOptions options;
 
-        public EquinoxNote(TextView labelView, TextView timeView, TextView noteView, int pageIndex, EquinoxViewOptions options)
+        public EquinoxNote(TextView labelView, TextView timeView, TextView noteView, ImageButton contextMenu, int pageIndex, EquinoxViewOptions options)
         {
             this.labelView = labelView;
             this.timeView = timeView;
             this.noteView = noteView;
+            this.contextMenu = contextMenu;
             this.pageIndex = pageIndex;
             this.options = options;
         }
@@ -594,6 +628,16 @@ public class EquinoxView extends LinearLayout
         }
     }
 
+    public WidgetSettings.SolsticeEquinoxMode getSelection() {
+        return card_adapter.getSelection();
+    }
+    public boolean hasSelection() {
+        return card_adapter.hasSelection();
+    }
+    public void setSelection(@Nullable WidgetSettings.SolsticeEquinoxMode mode ) {
+        card_adapter.setSelection(mode);
+    }
+
     public EquinoxViewAdapter getAdapter() {
          return card_adapter;
     }
@@ -639,6 +683,7 @@ public class EquinoxView extends LinearLayout
             }
             SuntimesEquinoxSolsticeDataset dataset = initData(context, position);
             holder.bindDataToPosition(context, dataset, position, options);
+            holder.setSelected(getSelection());
 
             if (dataset.isCalculated() && dataset.isImplemented())
             {
@@ -672,6 +717,18 @@ public class EquinoxView extends LinearLayout
         public int getItemCount() {
             return MAX_POSITIONS;
         }
+
+        public boolean hasSelection() {
+            return (selected_mode != null);
+        }
+        public WidgetSettings.SolsticeEquinoxMode getSelection() {
+            return this.selected_mode;
+        }
+        public void setSelection(@Nullable WidgetSettings.SolsticeEquinoxMode mode ) {
+            this.selected_mode = mode;
+            notifyDataSetChanged();
+        }
+        protected WidgetSettings.SolsticeEquinoxMode selected_mode = null;
 
         /**
          * Clear existing data and initialize the center position.
@@ -742,11 +799,25 @@ public class EquinoxView extends LinearLayout
             viewListener = listener;
         }
 
-        private void attachListeners(EquinoxViewHolder holder, int position)
+        private void attachListeners(final EquinoxViewHolder holder, final int position)
         {
             holder.title.setOnClickListener(onTitleClick(position));
             holder.btn_flipperNext.setOnClickListener(onNextClick(position));
             holder.btn_flipperPrev.setOnClickListener(onPrevClick(position));
+
+            for (int i=0; i <holder.notes.size(); i++) {
+                EquinoxNote note = holder.notes.get(i);
+                if (note.contextMenu != null) {
+                    note.contextMenu.setOnClickListener(onMenuClick(note.contextMenu, position, WidgetSettings.SolsticeEquinoxMode.values()[i], note.time.getTimeInMillis()));
+                }
+            }
+
+            for (int i=0; i <holder.clickAreas.length; i++) {
+                if (holder.clickAreas[i] != null) {
+                    holder.clickAreas[i].setOnClickListener(onNoteClick(holder, position, i));
+                    holder.clickAreas[i].setVisibility(options.minimized ? View.GONE : View.VISIBLE);
+                }
+            }
 
             if (options.minimized) {
                 holder.clickArea.setOnClickListener(onClick(position));
@@ -813,6 +884,35 @@ public class EquinoxView extends LinearLayout
                 }
             };
         }
+        private View.OnClickListener onMenuClick(final View v, final int position, final WidgetSettings.SolsticeEquinoxMode selection, final long selectionTime) {
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (viewListener != null) {
+                        viewListener.onMenuClick(v, position, selection, selectionTime);
+                    }
+                }
+            };
+        }
+        private View.OnClickListener onNoteClick(final EquinoxViewHolder holder, final int position, final int i)
+        {
+            return new OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    WidgetSettings.SolsticeEquinoxMode mode = WidgetSettings.SolsticeEquinoxMode.values()[i];
+                    if (holder.getSelected() == mode) {
+                        holder.notes.get(i).contextMenu.callOnClick();
+
+                    } else {
+                        setSelection(mode);
+                        if (viewListener != null) {
+                            viewListener.onSelected(i, mode);
+                        }
+                    }
+                }
+            };
+        }
     }
 
     /**
@@ -823,6 +923,9 @@ public class EquinoxView extends LinearLayout
         public int position = RecyclerView.NO_POSITION;
 
         public View clickArea;
+        public View[] clickAreas = new View[4];
+        public WidgetSettings.SolsticeEquinoxMode selected = null;
+
         public View container;
         public TextView title;
         public ImageButton btn_flipperNext, btn_flipperPrev;
@@ -834,9 +937,19 @@ public class EquinoxView extends LinearLayout
             super(view);
 
             container = view.findViewById(R.id.card_content);
+
             clickArea = view.findViewById(R.id.clickArea);
             if (!options.minimized) {
                 clickArea.setVisibility(View.GONE);
+            }
+
+            int[] clickResID = new int[] { R.id.click_equinox_vernal, R.id.click_solstice_summer, R.id.click_equinox_autumnal, R.id.click_solstice_winter };
+            for (int i=0; i <clickAreas.length; i++)
+            {
+                clickAreas[i] = view.findViewById(clickResID[i]);
+                if (clickAreas[i] != null) {
+                    clickAreas[i].setVisibility(options.minimized ? View.GONE : View.VISIBLE);
+                }
             }
 
             title = (TextView)view.findViewById(R.id.text_title);
@@ -846,22 +959,26 @@ public class EquinoxView extends LinearLayout
             TextView txt_equinox_vernal_label = (TextView)view.findViewById(R.id.text_date_equinox_vernal_label);
             TextView txt_equinox_vernal = (TextView)view.findViewById(R.id.text_date_equinox_vernal);
             TextView txt_equinox_vernal_note = (TextView)view.findViewById(R.id.text_date_equinox_vernal_note);
-            note_equinox_vernal = addNote(txt_equinox_vernal_label, txt_equinox_vernal, txt_equinox_vernal_note, 0, options.seasonColors[0], options);
+            ImageButton menu_spring = (ImageButton) view.findViewById(R.id.menu_equinox_vernal);
+            note_equinox_vernal = addNote(txt_equinox_vernal_label, txt_equinox_vernal, txt_equinox_vernal_note, menu_spring, 0, options.seasonColors[0], options);
 
             TextView txt_solstice_summer_label = (TextView)view.findViewById(R.id.text_date_solstice_summer_label);
             TextView txt_solstice_summer = (TextView)view.findViewById(R.id.text_date_solstice_summer);
             TextView txt_solstice_summer_note = (TextView)view.findViewById(R.id.text_date_solstice_summer_note);
-            note_solstice_summer = addNote(txt_solstice_summer_label, txt_solstice_summer, txt_solstice_summer_note, 0, options.seasonColors[1], options);
+            ImageButton menu_summer = (ImageButton) view.findViewById(R.id.menu_solstice_summer);
+            note_solstice_summer = addNote(txt_solstice_summer_label, txt_solstice_summer, txt_solstice_summer_note, menu_summer,  0, options.seasonColors[1], options);
 
             TextView txt_equinox_autumnal_label = (TextView)view.findViewById(R.id.text_date_equinox_autumnal_label);
             TextView txt_equinox_autumnal = (TextView)view.findViewById(R.id.text_date_equinox_autumnal);
             TextView txt_equinox_autumnal_note = (TextView)view.findViewById(R.id.text_date_equinox_autumnal_note);
-            note_equinox_autumnal = addNote(txt_equinox_autumnal_label, txt_equinox_autumnal, txt_equinox_autumnal_note, 0, options.seasonColors[2], options);
+            ImageButton menu_autumn = (ImageButton) view.findViewById(R.id.menu_equinox_autumnal);
+            note_equinox_autumnal = addNote(txt_equinox_autumnal_label, txt_equinox_autumnal, txt_equinox_autumnal_note, menu_autumn, 0, options.seasonColors[2], options);
 
             TextView txt_solstice_winter_label = (TextView)view.findViewById(R.id.text_date_solstice_winter_label);
             TextView txt_solstice_winter = (TextView)view.findViewById(R.id.text_date_solstice_winter);
             TextView txt_solstice_winter_note = (TextView)view.findViewById(R.id.text_date_solstice_winter_note);
-            note_solstice_winter = addNote(txt_solstice_winter_label, txt_solstice_winter, txt_solstice_winter_note, 0, options.seasonColors[3], options);
+            ImageButton menu_winter = (ImageButton) view.findViewById(R.id.menu_solstice_winter);
+            note_solstice_winter = addNote(txt_solstice_winter_label, txt_solstice_winter, txt_solstice_winter_note, menu_winter,  0, options.seasonColors[3], options);
 
             if (options.columnWidthPx >= 0) {
                 adjustColumnWidth(options.columnWidthPx);
@@ -875,9 +992,29 @@ public class EquinoxView extends LinearLayout
             }
         }
 
-        private EquinoxNote addNote(TextView labelView, TextView timeView, TextView noteView, int pageIndex, Integer timeColor, EquinoxViewOptions options)
+        public void setSelected(WidgetSettings.SolsticeEquinoxMode mode) {
+            this.selected = mode;
+            updateItemFocus();
+        }
+        public WidgetSettings.SolsticeEquinoxMode getSelected() {
+            return selected;
+        }
+
+        protected void updateItemFocus()
         {
-            EquinoxNote note = new EquinoxNote(labelView, timeView, noteView, pageIndex, options);
+            int p = (selected != null ? selected.ordinal() : -1);
+            for (int i=0; i<notes.size(); i++)
+            {
+                ImageButton menuButton = notes.get(i).contextMenu;
+                if (menuButton != null) {
+                    menuButton.setVisibility((i == p) ? View.VISIBLE : View.GONE);
+                }
+            }
+        }
+
+        private EquinoxNote addNote(TextView labelView, TextView timeView, TextView noteView, ImageButton menuButton, int pageIndex, Integer timeColor, EquinoxViewOptions options)
+        {
+            EquinoxNote note = new EquinoxNote(labelView, timeView, noteView, menuButton, pageIndex, options);
             if (timeColor != null) {
                 note.themeViews(options.labelColor, timeColor, options.textColor, options.timeSizeSp, options.titleSizeSp, options.titleBold);
             }
@@ -958,6 +1095,7 @@ public class EquinoxView extends LinearLayout
             if (options.columnWidthPx >= 0) {
                 adjustColumnWidth(options.columnWidthPx);
             }
+            updateItemFocus();
         }
 
         public void showTitle( boolean show ) {
@@ -1073,6 +1211,11 @@ public class EquinoxView extends LinearLayout
         }
     }
 
+    private EquinoxViewListener viewListener = null;
+    public void setViewListener(EquinoxViewListener listener) {
+        this.viewListener = listener;
+    }
+
     /**
      * EquinoxViewClickListener
      */
@@ -1083,6 +1226,8 @@ public class EquinoxView extends LinearLayout
         public void onTitleClick( int position ) {}
         public void onNextClick( int position ) {}
         public void onPrevClick( int position ) {}
+        public void onSelected( int position, WidgetSettings.SolsticeEquinoxMode mode ) {}
+        public void onMenuClick( View v, int position, WidgetSettings.SolsticeEquinoxMode mode, long datetime ) {}
     }
 
 }

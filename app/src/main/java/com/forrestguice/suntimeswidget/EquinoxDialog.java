@@ -31,6 +31,7 @@ import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -53,7 +54,14 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        BottomSheetDialog dialog = new BottomSheetDialog(getContext(), getTheme()) {
+            @Override
+            public void onBackPressed() {
+                if (equinoxView.hasSelection()) {
+                    equinoxView.setSelection(null);
+                } else super.onBackPressed();
+            }
+        };
         dialog.setOnShowListener(onShowListener);
         return dialog;
     }
@@ -72,6 +80,12 @@ public class EquinoxDialog extends BottomSheetDialogFragment
             overrideColumnWidthPx = savedState.getInt("overrideColumnWidthPx", overrideColumnWidthPx);
             equinoxView.loadState(savedState);
         }
+        equinoxView.setViewListener(new EquinoxView.EquinoxViewListener() {
+            @Override
+            public void onMenuClick(View v, int position, WidgetSettings.SolsticeEquinoxMode mode, long datetime) {
+                showContextMenu(getContext(), v, mode, datetime);
+            }
+        });
         themeViews(getContext());
 
         if (overrideColumnWidthPx >= 0) {
@@ -158,12 +172,15 @@ public class EquinoxDialog extends BottomSheetDialogFragment
 
     protected boolean showContextMenu(final Context context, View view, final WidgetSettings.SolsticeEquinoxMode mode,  final long datetime)
     {
-        PopupMenu menu = new PopupMenu(context, view);
+        PopupMenu menu = new PopupMenu(context, view, Gravity.LEFT);
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.equinoxcontext, menu.getMenu());
         menu.setOnMenuItemClickListener(onContextMenuClick);
+        menu.setOnDismissListener(onContextMenuDismissed);
         updateContextMenu(context, menu, mode, datetime);
         SuntimesUtils.forceActionBarIcons(menu.getMenu());
+
+        equinoxView.lockScrolling();   // prevent the popupmenu from nudging the view
         menu.show();
         return true;
     }
@@ -189,10 +206,23 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         if (addonSubmenuItem != null) {
             List<WorldMapDialog.ActivityItemInfo> addonMenuItems = WorldMapDialog.queryAddonMenuItems(context);
             if (!addonMenuItems.isEmpty()) {
+                SuntimesUtils.forceActionBarIcons(addonSubmenuItem.getSubMenu());
                 WorldMapDialog.populateSubMenu(addonSubmenuItem.getSubMenu(), addonMenuItems, datetime);
             } else addonSubmenuItem.setVisible(false);
         }
     }
+
+    private PopupMenu.OnDismissListener onContextMenuDismissed = new PopupMenu.OnDismissListener() {
+        @Override
+        public void onDismiss(PopupMenu menu) {
+            equinoxView.post(new Runnable() {
+                @Override
+                public void run() {                      // a submenu may be shown after the popup is dismissed
+                    equinoxView.unlockScrolling();           // so defer unlockScrolling until after it is shown
+                }
+            });
+        }
+    };
 
     private PopupMenu.OnMenuItemClickListener onContextMenuClick = new PopupMenu.OnMenuItemClickListener()
     {
@@ -206,7 +236,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
 
             Intent itemData = item.getIntent();
             long itemTime = ((itemData != null) ? itemData.getLongExtra(WorldMapDialog.EXTRA_SHOW_DATE, -1L) : -1L);
-            WidgetSettings.SolsticeEquinoxMode itemMode = (itemData != null ? WidgetSettings.SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
+            WidgetSettings.SolsticeEquinoxMode itemMode = (itemData != null && itemData.hasExtra("mode") ? WidgetSettings.SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
 
             switch (item.getItemId())
             {

@@ -31,10 +31,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+    <TextView android:visibility="visible"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="center" android:gravity="center"
         android:id="@+id/text_title" tools:text="2018"
-        style="@style/TableHeadDateView" android:visibility="visible"
+        style="@style/TableHeadDateView"
         android:paddingTop="8dp" android:paddingBottom="6dp"
         android:paddingLeft="32dp" android:paddingRight="32dp"
         app:layout_constraintHorizontal_chainStyle="spread"
@@ -42,7 +43,7 @@
         app:layout_constraintBottom_toTopOf="@+id/text_date_equinox_vernal_label"
         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageButton
+    <ImageButton android:visibility="gone"
         android:id="@+id/info_time_prevbtn"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -53,7 +54,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/text_title"
         android:contentDescription="@string/prevYear" />
 
-    <ImageButton
+    <ImageButton android:visibility="gone"
         android:id="@+id/info_time_nextbtn"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -77,7 +78,7 @@
         app:layout_constraintStart_toStartOf="parent" />
     <LinearLayout style="@style/SunsetTimeLayout"
         android:id="@+id/text_date_equinox_vernal_layout"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_marginRight="10dp" android:layout_marginEnd="10dp"
         android:layout_marginTop="0dp" android:layout_marginBottom="0dp"
         android:layout_marginStart="0dp" android:layout_marginLeft="0dp"
@@ -86,23 +87,38 @@
         app:layout_constraintStart_toEndOf="@+id/text_date_equinox_vernal_label"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:id="@+id/text_date_equinox_vernal"
-            android:textSize="12sp" android:antialias="true"
-            android:textColor="@drawable/txt_equinox_vernal"
-            android:clickable="true" android:focusable="true" android:focusableInTouchMode="true"
-            android:singleLine="true" android:ellipsize="marquee"
-            tools:text="March 20, 2016; 9:00 PM" />
-
-        <TextView
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:id="@+id/text_date_equinox_vernal_note"
-            tools:text="21d 6h 5m  from now"
-            android:textSize="12sp" android:antialias="true"
-            android:layout_marginBottom="8dp" />
-
+        <LinearLayout android:orientation="vertical" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:id="@+id/text_date_equinox_vernal"
+                android:textSize="12sp" android:antialias="true"
+                android:textColor="@drawable/txt_equinox_vernal"
+                android:clickable="true" android:focusable="true" android:focusableInTouchMode="true"
+                android:singleLine="true" android:ellipsize="marquee"
+                tools:text="March 20, 2016; 9:00 PM" />
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:id="@+id/text_date_equinox_vernal_note"
+                tools:text="21d 6h 5m  from now"
+                android:textSize="12sp" android:antialias="true"
+                android:layout_marginBottom="8dp" />
+        </LinearLayout>
+        <ImageButton android:visibility="gone"
+            android:id="@+id/menu_equinox_vernal"
+            android:layout_width="wrap_content" android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/lightmap_dialog_action_menu"
+            style="?attr/actionOverflowButtonStyle" />
     </LinearLayout>
+    <View android:id="@+id/click_equinox_vernal" android:visibility="gone"
+        android:layout_width="0dp" android:layout_height="0dp" android:elevation="-5dp"
+        android:background="?attr/selectableItemBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_date_equinox_vernal_layout"
+        app:layout_constraintBottom_toBottomOf="@+id/text_date_equinox_vernal_layout" />
 
     <!-- Row 1 (summer solstice) -->
     <TextView style="@style/SunsetTimeTextView"
@@ -116,7 +132,7 @@
         app:layout_constraintStart_toStartOf="parent" />
     <LinearLayout style="@style/SunsetTimeLayout"
         android:id="@+id/text_date_solstice_summer_layout"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_marginRight="10dp" android:layout_marginEnd="10dp"
         android:layout_marginTop="0dp" android:layout_marginBottom="0dp"
         android:layout_marginStart="0dp" android:layout_marginLeft="0dp"
@@ -124,22 +140,40 @@
         app:layout_constraintTop_toTopOf="@+id/text_date_solstice_summer_label"
         app:layout_constraintStart_toEndOf="@+id/text_date_solstice_summer_label"
         app:layout_constraintEnd_toEndOf="parent">
-        <TextView
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:id="@+id/text_date_solstice_summer"
-            android:textSize="12sp" android:antialias="true"
-            android:textColor="@drawable/txt_solstice_summer"
-            android:clickable="true" android:focusable="true" android:focusableInTouchMode="true"
-            android:singleLine="true" android:ellipsize="marquee"
-            tools:text="June 20, 2016; 9:00 PM" />
-        <TextView
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:id="@+id/text_date_solstice_summer_note"
-            tools:text="21d 6h 5m  from now"
-            android:textSize="12sp" android:antialias="true"
-            android:layout_marginBottom="8dp" />
+
+        <LinearLayout android:orientation="vertical" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:id="@+id/text_date_solstice_summer"
+                android:textSize="12sp" android:antialias="true"
+                android:textColor="@drawable/txt_solstice_summer"
+                android:clickable="true" android:focusable="true" android:focusableInTouchMode="true"
+                android:singleLine="true" android:ellipsize="marquee"
+                tools:text="June 20, 2016; 9:00 PM" />
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:id="@+id/text_date_solstice_summer_note"
+                tools:text="21d 6h 5m  from now"
+                android:textSize="12sp" android:antialias="true"
+                android:layout_marginBottom="8dp" />
+        </LinearLayout>
+        <ImageButton
+            android:id="@+id/menu_solstice_summer"
+            android:layout_width="wrap_content" android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/lightmap_dialog_action_menu"
+            style="?attr/actionOverflowButtonStyle" />
 
     </LinearLayout>
+    <View android:id="@+id/click_solstice_summer" android:visibility="gone"
+        android:layout_width="0dp" android:layout_height="0dp" android:elevation="-5dp"
+        android:background="?attr/selectableItemBackground" android:orientation="horizontal" android:gravity="end"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_date_solstice_summer_layout"
+        app:layout_constraintBottom_toBottomOf="@+id/text_date_solstice_summer_layout" />
 
     <!-- Row 2 (autumnal equinox) -->
     <TextView style="@style/SunsetTimeTextView"
@@ -153,7 +187,7 @@
         app:layout_constraintStart_toStartOf="parent" />
     <LinearLayout style="@style/SunsetTimeLayout"
         android:id="@+id/text_date_equinox_autumnal_layout"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_marginRight="10dp" android:layout_marginEnd="10dp"
         android:layout_marginTop="0dp" android:layout_marginBottom="0dp"
         android:layout_marginStart="0dp" android:layout_marginLeft="0dp"
@@ -162,22 +196,39 @@
         app:layout_constraintStart_toEndOf="@+id/text_date_equinox_autumnal_label"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:id="@+id/text_date_equinox_autumnal"
-            android:textSize="12sp" android:antialias="true"
-            android:textColor="@drawable/txt_equinox_autumnal"
-            android:clickable="true" android:focusable="true" android:focusableInTouchMode="true"
-            android:singleLine="true" android:ellipsize="marquee"
-            tools:text="September 22, 2016; 9:00 PM" />
+        <LinearLayout android:orientation="vertical" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:id="@+id/text_date_equinox_autumnal"
+                android:textSize="12sp" android:antialias="true"
+                android:textColor="@drawable/txt_equinox_autumnal"
+                android:clickable="true" android:focusable="true" android:focusableInTouchMode="true"
+                android:singleLine="true" android:ellipsize="marquee"
+                tools:text="September 22, 2016; 9:00 PM" />
 
-        <TextView
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:id="@+id/text_date_equinox_autumnal_note"
-            tools:text="21d 6h 5m  from now"
-            android:textSize="12sp" android:antialias="true"
-            android:layout_marginBottom="8dp" />
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:id="@+id/text_date_equinox_autumnal_note"
+                tools:text="21d 6h 5m  from now"
+                android:textSize="12sp" android:antialias="true"
+                android:layout_marginBottom="8dp" />
+        </LinearLayout>
+        <ImageButton android:visibility="gone"
+            android:id="@+id/menu_equinox_autumnal"
+            android:layout_width="wrap_content" android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/lightmap_dialog_action_menu"
+            style="?attr/actionOverflowButtonStyle" />
     </LinearLayout>
+    <View android:id="@+id/click_equinox_autumnal" android:visibility="gone"
+        android:layout_width="0dp" android:layout_height="0dp" android:elevation="-5dp"
+        android:background="?attr/selectableItemBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_date_equinox_autumnal_layout"
+        app:layout_constraintBottom_toBottomOf="@+id/text_date_equinox_autumnal_layout" />
 
     <!-- Row 3 (winter solstice) -->
     <TextView style="@style/SunsetTimeTextView"
@@ -191,7 +242,7 @@
         app:layout_constraintStart_toStartOf="parent" />
     <LinearLayout style="@style/SunsetTimeLayout"
         android:id="@+id/text_date_solstice_winter_layout"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_marginRight="10dp" android:layout_marginEnd="10dp"
         android:layout_marginTop="0dp" android:layout_marginBottom="0dp"
         android:layout_marginStart="0dp" android:layout_marginLeft="0dp"
@@ -199,21 +250,38 @@
         app:layout_constraintTop_toTopOf="@+id/text_date_solstice_winter_label"
         app:layout_constraintStart_toEndOf="@+id/text_date_solstice_winter_label"
         app:layout_constraintEnd_toEndOf="parent">
-        <TextView
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:id="@+id/text_date_solstice_winter"
-            android:textSize="12sp" android:antialias="true"
-            android:textColor="@drawable/txt_solstice_winter"
-            android:clickable="true" android:focusable="true" android:focusableInTouchMode="true"
-            android:singleLine="true" android:ellipsize="marquee"
-            tools:text="December 21, 2016; 9:00 PM" />
 
-        <TextView
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:id="@+id/text_date_solstice_winter_note"
-            tools:text="21d 6h 5m  from now"
-            android:textSize="12sp" android:antialias="true"
-            android:layout_marginBottom="8dp" />
+        <LinearLayout android:orientation="vertical" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:id="@+id/text_date_solstice_winter"
+                android:textSize="12sp" android:antialias="true"
+                android:textColor="@drawable/txt_solstice_winter"
+                android:clickable="true" android:focusable="true" android:focusableInTouchMode="true"
+                android:singleLine="true" android:ellipsize="marquee"
+                tools:text="December 21, 2016; 9:00 PM" />
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:id="@+id/text_date_solstice_winter_note"
+                tools:text="21d 6h 5m  from now"
+                android:textSize="12sp" android:antialias="true"
+                android:layout_marginBottom="8dp" />
+        </LinearLayout>
+        <ImageButton android:visibility="gone"
+            android:id="@+id/menu_solstice_winter"
+            android:layout_width="wrap_content" android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/lightmap_dialog_action_menu"
+            style="?attr/actionOverflowButtonStyle" />
     </LinearLayout>
+    <View android:id="@+id/click_solstice_winter" android:visibility="gone"
+        android:layout_width="0dp" android:layout_height="0dp" android:elevation="-5dp"
+        android:background="?attr/selectableItemBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_date_solstice_winter_layout"
+        app:layout_constraintBottom_toBottomOf="@+id/text_date_solstice_winter_layout" />
 
 </android.support.constraint.ConstraintLayout>
