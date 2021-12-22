@@ -1034,10 +1034,22 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             this.info = info;
         }
 
+        public ActivityItemInfo(@NonNull String title, int iconResId, ActivityInfo info)
+        {
+            this.title = title;
+            this.icon = iconResId;
+            this.info = info;
+        }
+
         protected String title;
         @NonNull
         public String getTitle() {
             return title;
+        }
+
+        protected int icon = 0;
+        public int getIcon() {
+            return icon;
         }
 
         protected ActivityInfo info;
@@ -1071,6 +1083,9 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             for (ActivityItemInfo addon : addonItems)
             {
                 MenuItem menuItem = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, addon.getTitle());
+                if (addon.getIcon() != 0) {
+                    menuItem.setIcon(addon.getIcon());
+                }
                 Intent intent = addon.getIntent();
                 intent.setAction(ACTION_SHOW_DATE);
                 intent.putExtra(EXTRA_SHOW_DATE, datetime);
@@ -1104,7 +1119,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     if (hasPermission(packageInfo0))
                     {
                         String title = resolveInfo.activityInfo.metaData.getString(META_MENUITEM_TITLE, resolveInfo.activityInfo.name);
-                        matches.add(new ActivityItemInfo(title, resolveInfo.activityInfo));
+                        //int icon = R.drawable.ic_suntimes;    // TODO: icon
+                        matches.add(new ActivityItemInfo(title, 0, resolveInfo.activityInfo));
 
                     } else {
                         Log.w("queryAddonMenuItems", "Permission denied! " + packageInfo0.packageName + " does not have required permissions.");
