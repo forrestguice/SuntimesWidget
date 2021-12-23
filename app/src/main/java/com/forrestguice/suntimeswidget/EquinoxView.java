@@ -65,7 +65,7 @@ public class EquinoxView extends LinearLayout
     private static SuntimesUtils utils = new SuntimesUtils();
     private boolean userSwappedCard = false;
 
-    private TextView empty, text_title;
+    private TextView empty, text_title, text_year_length;
     private ImageButton btn_next, btn_prev;
     private RecyclerView card_view;
     private CardLayoutManager card_layout;
@@ -124,6 +124,8 @@ public class EquinoxView extends LinearLayout
             btn_prev.setOnClickListener(onPrevClicked);
         }
 
+        text_year_length = (TextView)findViewById(R.id.info_time_year_length);
+
         card_view = (RecyclerView)findViewById(R.id.info_equinoxsolstice_flipper1);
         card_view.setHasFixedSize(true);
         card_view.setItemViewCacheSize(7);
@@ -156,6 +158,7 @@ public class EquinoxView extends LinearLayout
     @SuppressLint("ResourceType")
     private void themeViews(Context context) {
         themeHeaderViews();
+        themePanelViews();
     }
 
     public void themeViews(Context context, SuntimesTheme theme)
@@ -166,6 +169,7 @@ public class EquinoxView extends LinearLayout
             card_adapter.setThemeOverride(theme);
         }
         themeHeaderViews();
+        themePanelViews();
     }
 
     protected void themeHeaderViews()
@@ -179,6 +183,15 @@ public class EquinoxView extends LinearLayout
 
         ImageViewCompat.setImageTintList(btn_next, SuntimesUtils.colorStateList(options.titleColor, options.disabledColor, options.pressedColor));
         ImageViewCompat.setImageTintList(btn_prev, SuntimesUtils.colorStateList(options.titleColor, options.disabledColor, options.pressedColor));
+    }
+    protected void themePanelViews()
+    {
+        if (options.textColor != null) {
+            text_year_length.setTextColor(options.textColor);
+        }
+        if (options.timeSizeSp != null) {
+            text_year_length.setTextSize(options.timeSizeSp);
+        }
     }
 
     public void initLocale(Context context)
@@ -217,6 +230,11 @@ public class EquinoxView extends LinearLayout
             header.setVisibility(isMinimized() ? View.GONE : View.VISIBLE);
         }
 
+        View infoPanel = findViewById(R.id.year_info_layout);
+        if (infoPanel != null) {
+            infoPanel.setVisibility(isMinimized() ? View.GONE : View.VISIBLE);
+        }
+
         int position = card_adapter.highlightNote(context);
         if (position != -1 && !userSwappedCard) {
             card_view.setLayoutFrozen(false);
@@ -228,6 +246,15 @@ public class EquinoxView extends LinearLayout
     protected void updateViews(Context context,  SuntimesEquinoxSolsticeDataset data)
     {
         text_title.setText(utils.calendarDateYearDisplayString(context, data.dataEquinoxSpring.eventCalendarThisYear()).toString());
+
+        long yearLengthMillis = data.tropicalYearLength();
+        double yearLengthDays = yearLengthMillis / 1000d / 60d / 60d / 24;
+        String timeString = utils.timeDeltaLongDisplayString(yearLengthMillis);
+        String daysString = context.getResources().getQuantityString(R.plurals.units_days, (int)yearLengthDays, utils.formatDoubleValue(yearLengthDays, 6));
+        String yearString = context.getString(R.string.length_tropical_year, timeString, daysString);
+        CharSequence yearDisplay = SuntimesUtils.createBoldColorSpan(null, yearString, timeString, options.noteColor);
+
+        text_year_length.setText(yearDisplay);
     }
 
     public boolean isImplemented(Context context)
@@ -420,6 +447,13 @@ public class EquinoxView extends LinearLayout
 
     public void adjustColumnWidth(int columnWidthPx)
     {
+        View yearLabel = findViewById(R.id.info_time_year_length_label);
+        if (yearLabel != null) {
+            ViewGroup.LayoutParams layoutParams = yearLabel.getLayoutParams();
+            layoutParams.width = columnWidthPx;
+            yearLabel.setLayoutParams(layoutParams);
+        }
+
         options.columnWidthPx = columnWidthPx;
         card_adapter.notifyDataSetChanged();
     }

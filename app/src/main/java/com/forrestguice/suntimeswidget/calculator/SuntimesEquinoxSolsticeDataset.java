@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.calculator;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -204,6 +205,13 @@ public class SuntimesEquinoxSolsticeDataset
     public Calendar now()
     {
         return Calendar.getInstance(TimeZone.getTimeZone(timezone()));
+    }
+
+    public long tropicalYearLength()
+    {
+        double latitude = dataEquinoxSpring.location.getLatitudeAsDouble();
+        SuntimesEquinoxSolsticeData data = (latitude >= 0) ? dataEquinoxSpring : dataEquinoxAutumnal;
+        return data.eventCalendarOtherYear().getTimeInMillis() - data.eventCalendarThisYear().getTimeInMillis();
     }
 }
 
