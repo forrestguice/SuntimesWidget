@@ -522,13 +522,16 @@ public class EquinoxView extends LinearLayout
         protected boolean highlighted;
         protected int pageIndex;
         private EquinoxViewOptions options;
+        protected View focusView, noteLayout;
 
-        public EquinoxNote(TextView labelView, TextView timeView, TextView noteView, ImageButton contextMenu, int pageIndex, EquinoxViewOptions options)
+        public EquinoxNote(TextView labelView, TextView timeView, TextView noteView, ImageButton contextMenu, View focusView, View noteLayout, int pageIndex, EquinoxViewOptions options)
         {
             this.labelView = labelView;
             this.timeView = timeView;
             this.noteView = noteView;
             this.contextMenu = contextMenu;
+            this.focusView = focusView;
+            this.noteLayout = noteLayout;
             this.pageIndex = pageIndex;
             this.options = options;
         }
@@ -651,9 +654,10 @@ public class EquinoxView extends LinearLayout
 
         public void setVisible( boolean visible )
         {
-            labelView.setVisibility( visible ? View.VISIBLE : View.GONE);
-            timeView.setVisibility( visible ? View.VISIBLE : View.GONE);
-            noteView.setVisibility( visible ? View.VISIBLE : View.GONE);
+            labelView.setVisibility( visible ? View.VISIBLE : View.GONE );
+            timeView.setVisibility( visible ? View.VISIBLE : View.GONE );
+            noteView.setVisibility( visible ? View.VISIBLE : View.GONE );
+            noteLayout.setVisibility( visible ? View.VISIBLE : View.GONE );
         }
 
         public Calendar getTime()
@@ -994,25 +998,33 @@ public class EquinoxView extends LinearLayout
             TextView txt_equinox_vernal = (TextView)view.findViewById(R.id.text_date_equinox_vernal);
             TextView txt_equinox_vernal_note = (TextView)view.findViewById(R.id.text_date_equinox_vernal_note);
             ImageButton menu_spring = (ImageButton) view.findViewById(R.id.menu_equinox_vernal);
-            note_equinox_vernal = addNote(txt_equinox_vernal_label, txt_equinox_vernal, txt_equinox_vernal_note, menu_spring, 0, options.seasonColors[0], options);
+            View focus_spring = view.findViewById(R.id.focus_equinox_vernal);
+            View layout_spring = view.findViewById(R.id.text_date_equinox_vernal_layout);
+            note_equinox_vernal = addNote(txt_equinox_vernal_label, txt_equinox_vernal, txt_equinox_vernal_note, menu_spring, focus_spring, layout_spring, 0, options.seasonColors[0], options);
 
             TextView txt_solstice_summer_label = (TextView)view.findViewById(R.id.text_date_solstice_summer_label);
             TextView txt_solstice_summer = (TextView)view.findViewById(R.id.text_date_solstice_summer);
             TextView txt_solstice_summer_note = (TextView)view.findViewById(R.id.text_date_solstice_summer_note);
             ImageButton menu_summer = (ImageButton) view.findViewById(R.id.menu_solstice_summer);
-            note_solstice_summer = addNote(txt_solstice_summer_label, txt_solstice_summer, txt_solstice_summer_note, menu_summer,  0, options.seasonColors[1], options);
+            View focus_summer = view.findViewById(R.id.focus_solstice_summer);
+            View layout_summer = view.findViewById(R.id.text_date_solstice_summer_layout);
+            note_solstice_summer = addNote(txt_solstice_summer_label, txt_solstice_summer, txt_solstice_summer_note, menu_summer, focus_summer, layout_summer, 0, options.seasonColors[1], options);
 
             TextView txt_equinox_autumnal_label = (TextView)view.findViewById(R.id.text_date_equinox_autumnal_label);
             TextView txt_equinox_autumnal = (TextView)view.findViewById(R.id.text_date_equinox_autumnal);
             TextView txt_equinox_autumnal_note = (TextView)view.findViewById(R.id.text_date_equinox_autumnal_note);
             ImageButton menu_autumn = (ImageButton) view.findViewById(R.id.menu_equinox_autumnal);
-            note_equinox_autumnal = addNote(txt_equinox_autumnal_label, txt_equinox_autumnal, txt_equinox_autumnal_note, menu_autumn, 0, options.seasonColors[2], options);
+            View focus_autumn = view.findViewById(R.id.focus_equinox_autumnal);
+            View layout_autumn = view.findViewById(R.id.text_date_equinox_autumnal_layout);
+            note_equinox_autumnal = addNote(txt_equinox_autumnal_label, txt_equinox_autumnal, txt_equinox_autumnal_note, menu_autumn, focus_autumn, layout_autumn, 0, options.seasonColors[2], options);
 
             TextView txt_solstice_winter_label = (TextView)view.findViewById(R.id.text_date_solstice_winter_label);
             TextView txt_solstice_winter = (TextView)view.findViewById(R.id.text_date_solstice_winter);
             TextView txt_solstice_winter_note = (TextView)view.findViewById(R.id.text_date_solstice_winter_note);
             ImageButton menu_winter = (ImageButton) view.findViewById(R.id.menu_solstice_winter);
-            note_solstice_winter = addNote(txt_solstice_winter_label, txt_solstice_winter, txt_solstice_winter_note, menu_winter,  0, options.seasonColors[3], options);
+            View focus_winter = view.findViewById(R.id.focus_solstice_winter);
+            View layout_winter = view.findViewById(R.id.text_date_solstice_winter_layout);
+            note_solstice_winter = addNote(txt_solstice_winter_label, txt_solstice_winter, txt_solstice_winter_note, menu_winter, focus_winter, layout_winter, 0, options.seasonColors[3], options);
 
             if (options.columnWidthPx >= 0) {
                 adjustColumnWidth(options.columnWidthPx);
@@ -1039,16 +1051,21 @@ public class EquinoxView extends LinearLayout
             int p = (selected != null ? selected.ordinal() : -1);
             for (int i=0; i<notes.size(); i++)
             {
+                int visibility = (i == p) ? View.VISIBLE : View.GONE;
+                View focusView = notes.get(i).focusView;
+                if (focusView != null) {
+                    focusView.setVisibility(visibility);
+                }
                 ImageButton menuButton = notes.get(i).contextMenu;
                 if (menuButton != null) {
-                    menuButton.setVisibility((i == p) ? View.VISIBLE : View.GONE);
+                    menuButton.setVisibility(visibility);
                 }
             }
         }
 
-        private EquinoxNote addNote(TextView labelView, TextView timeView, TextView noteView, ImageButton menuButton, int pageIndex, Integer timeColor, EquinoxViewOptions options)
+        private EquinoxNote addNote(TextView labelView, TextView timeView, TextView noteView, ImageButton menuButton, View focusView, View noteLayout, int pageIndex, Integer timeColor, EquinoxViewOptions options)
         {
-            EquinoxNote note = new EquinoxNote(labelView, timeView, noteView, menuButton, pageIndex, options);
+            EquinoxNote note = new EquinoxNote(labelView, timeView, noteView, menuButton, focusView, noteLayout, pageIndex, options);
             if (timeColor != null) {
                 note.themeViews(options.labelColor, timeColor, options.textColor, options.timeSizeSp, options.titleSizeSp, options.titleBold);
             }
