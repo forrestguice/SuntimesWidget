@@ -22,6 +22,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -111,7 +112,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
             if (layout != null)
             {
                 BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-                behavior.setHideable(true);
+                behavior.setHideable(false);
                 behavior.setSkipCollapsed(true);
                 behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
@@ -124,6 +125,12 @@ public class EquinoxDialog extends BottomSheetDialogFragment
             Context context = getContext();
             if (context != null) {
                 equinoxView.updateViews(getContext());
+                equinoxView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        WorldMapDialog.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
+                    }
+                });
             } else Log.w("EquinoxDialog.onShow", "null context! skipping update");
         }
     };
