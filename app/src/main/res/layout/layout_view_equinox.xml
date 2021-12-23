@@ -36,15 +36,15 @@
                 <ImageButton
                     android:id="@+id/info_time_prevbtn1"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_gravity="end"
+                    android:layout_gravity="end|center_vertical"
                     android:src="?attr/icActionPrevious" android:contentDescription="@string/prevYear"
                     android:background="?attr/selectableItemBackground" />
 
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_gravity="center" android:gravity="center"
-                    android:id="@+id/text_title1" tools:text="2018"
+                    android:id="@+id/text_title1" android:text="2022"
                     style="@style/TableHeadDateView" android:visibility="visible"
-                    android:paddingTop="8dp" android:paddingBottom="6dp"
+                    android:paddingTop="8dp" android:paddingBottom="8dp"
                     android:paddingLeft="32dp" android:paddingRight="32dp"
                     android:background="?attr/selectableItemBackground"
                     app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent" />
@@ -52,7 +52,7 @@
                 <ImageButton
                     android:id="@+id/info_time_nextbtn1"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_gravity="end"
+                    android:layout_gravity="end|center_vertical"
                     android:src="?attr/icActionNext" android:contentDescription="@string/nextYear"
                     android:background="?attr/selectableItemBackground" />
 
@@ -60,8 +60,8 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/info_equinoxsolstice_flipper1"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1"
+                android:layout_marginTop="6dp"
                 tools:listitem="@layout/info_time_solsticequinox1"
                 android:elevation="5dp" />
 
