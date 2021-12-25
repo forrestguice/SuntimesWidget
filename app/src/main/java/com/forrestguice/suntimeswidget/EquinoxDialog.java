@@ -50,6 +50,8 @@ import java.util.List;
 
 public class EquinoxDialog extends BottomSheetDialogFragment
 {
+    public static final String DIALOGTAG_HELP = "equinox_help";
+
     private EquinoxView equinoxView;
 
     @NonNull @Override
@@ -172,6 +174,17 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     private int overrideColumnWidthPx = -1;
     public void adjustColumnWidth(int columnWidthPx) {
         overrideColumnWidthPx = columnWidthPx;
+    }
+
+    protected void showHelp(Context context)
+    {
+        String topic1 = context.getString(R.string.help_general_timeMode2);
+        String topic2 = context.getString(R.string.help_general_tropicalyear);
+        String helpContent = context.getString(R.string.help_general2, topic1, topic2);
+
+        HelpDialog helpDialog = new HelpDialog();
+        helpDialog.setContent(helpContent);
+        helpDialog.show(getChildFragmentManager(), DIALOGTAG_HELP);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
