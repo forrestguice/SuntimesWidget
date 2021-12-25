@@ -458,11 +458,14 @@ public class EquinoxView extends LinearLayout
         card_adapter.notifyDataSetChanged();
     }
 
-    public static EquinoxNote findClosestNote(Calendar now, boolean upcoming, ArrayList<EquinoxNote> notes)
+    public static EquinoxNote findClosestNote(Calendar now, WidgetSettings.TrackingMode mode, ArrayList<EquinoxNote> notes)
     {
         if (notes == null || now == null) {
             return null;
         }
+
+        boolean upcoming = (mode == WidgetSettings.TrackingMode.SOONEST);
+        boolean recent = (mode == WidgetSettings.TrackingMode.RECENT);
 
         EquinoxNote closest = null;
         long timeDeltaMin = Long.MAX_VALUE;
@@ -471,7 +474,7 @@ public class EquinoxView extends LinearLayout
             Calendar noteTime = note.getTime();
             if (noteTime != null)
             {
-                if (upcoming && !noteTime.after(now))
+                if ((upcoming && !noteTime.after(now)) || (recent && noteTime.after(now)))
                     continue;
 
                 long timeDelta = Math.abs(noteTime.getTimeInMillis() - now.getTimeInMillis());
@@ -484,11 +487,14 @@ public class EquinoxView extends LinearLayout
         }
         return closest;
     }
-    public static int findClosestPage(Calendar now, boolean upcoming, ArrayList<Pair<Integer, Calendar>> notes)
+    public static int findClosestPage(Calendar now, WidgetSettings.TrackingMode mode, ArrayList<Pair<Integer, Calendar>> notes)
     {
         if (notes == null || now == null) {
             return -1;
         }
+
+        boolean upcoming = (mode == WidgetSettings.TrackingMode.SOONEST);
+        boolean recent = (mode == WidgetSettings.TrackingMode.RECENT);
 
         Integer closest = null;
         long timeDeltaMin = Long.MAX_VALUE;
@@ -497,7 +503,7 @@ public class EquinoxView extends LinearLayout
             Calendar noteTime = note.second;
             if (noteTime != null)
             {
-                if (upcoming && !noteTime.after(now))
+                if ((upcoming && !noteTime.after(now)) || (recent && noteTime.after(now)))
                     continue;
 
                 long timeDelta = Math.abs(noteTime.getTimeInMillis() - now.getTimeInMillis());
@@ -728,7 +734,7 @@ public class EquinoxView extends LinearLayout
                 holder.enableNotes(!options.minimized);
                 if (position == options.highlightPosition || options.minimized)
                 {
-                    EquinoxNote nextNote = findClosestNote(dataset.now(), options.trackingMode == WidgetSettings.TrackingMode.SOONEST, holder.notes);
+                    EquinoxNote nextNote = findClosestNote(dataset.now(), options.trackingMode, holder.notes);
                     if (nextNote != null) {
                         nextNote.setHighlighted(true);
                     }
@@ -822,7 +828,7 @@ public class EquinoxView extends LinearLayout
             } while (position < CENTER_POSITION + 2);
 
             SuntimesEquinoxSolsticeDataset dataset = initData(context, CENTER_POSITION);
-            options.highlightPosition = findClosestPage(dataset.now(), options.trackingMode == WidgetSettings.TrackingMode.SOONEST, pageInfo);
+            options.highlightPosition = findClosestPage(dataset.now(), options.trackingMode, pageInfo);
 
             notifyDataSetChanged();
             return options.highlightPosition;
