@@ -36,6 +36,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -205,7 +206,57 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         menu.show();
         return true;
     }
-    private void updateOverflowMenu(Context context, PopupMenu menu) { /* EMPTY */ }
+
+    private void updateOverflowMenu(Context context, PopupMenu popup)
+    {
+        Menu menu = popup.getMenu();
+        MenuItem trackingItem = menu.findItem(R.id.action_tracking_mode);
+        if (trackingItem != null) {
+            stripMenuItemLabel(trackingItem);
+            updateTrackingMenu(trackingItem.getSubMenu(), WidgetSettings.loadTrackingModePref(context, 0));
+        }
+    }
+
+    private static void stripMenuItemLabel(MenuItem item) {
+        String title = item.getTitle().toString();
+        if (title.endsWith(":")) {
+            item.setTitle(title.substring(0, title.length()-1));
+        }
+    }
+
+    private void updateTrackingMenu(SubMenu trackingMenu, WidgetSettings.TrackingMode trackingMode)
+    {
+        if (trackingMenu != null)
+        {
+            MenuItem selectedItem;
+            switch (trackingMode) {
+                case RECENT: selectedItem = trackingMenu.findItem(R.id.trackRecent); break;
+                case CLOSEST: selectedItem = trackingMenu.findItem(R.id.trackClosest); break;
+                case SOONEST: default: selectedItem = trackingMenu.findItem(R.id.trackUpcoming); break;
+            }
+            if (selectedItem != null) {
+                selectedItem.setChecked(true);
+            }
+        }
+    }
+
+    private void onTrackingModeChanged(Context context, int id)
+    {
+        WidgetSettings.TrackingMode mode = null;
+        switch (id) {
+            case R.id.trackRecent: mode = WidgetSettings.TrackingMode.RECENT; break;
+            case R.id.trackClosest: mode = WidgetSettings.TrackingMode.CLOSEST; break;
+            case R.id.trackUpcoming: mode = WidgetSettings.TrackingMode.SOONEST; break;
+        }
+        if (mode != null) {
+            WidgetSettings.saveTrackingModePref(context, 0, mode);
+            updateViews();
+            if (dialogListener != null) {
+                dialogListener.onOptionsModified();
+            }
+        } else Log.w("EquinoxDialog", "setTrackingMode: invalid item id " + id);
+    }
+
     private PopupMenu.OnMenuItemClickListener onOverflowMenuClick = new PopupMenu.OnMenuItemClickListener()
     {
         @Override
@@ -213,6 +264,10 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         {
             switch (item.getItemId())
             {
+                case R.id.trackRecent: case R.id.trackClosest: case R.id.trackUpcoming:
+                    onTrackingModeChanged(getContext(), item.getItemId());
+                    return true;
+
                 case R.id.action_help:
                     showHelp(getContext());
                     return true;
@@ -339,5 +394,6 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         public void onSetAlarm( WidgetSettings.SolsticeEquinoxMode suggestedEvent ) {}
         public void onShowMap( long suggestedDate ) {}
         public void onShowPosition( long suggestedDate ) {}
+        public void onOptionsModified() {}
     }
 }

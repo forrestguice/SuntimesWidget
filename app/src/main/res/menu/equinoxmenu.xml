@@ -2,6 +2,34 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/action_tracking_mode"
+        android:title="@string/configLabel_general_trackingMode"
+        android:icon="?attr/icActionSort"
+        app:showAsAction="never">
+
+        <menu>
+            <group android:checkableBehavior="single">
+
+                <item android:id="@+id/trackRecent"
+                    android:title="@string/trackingMode_recent"
+                    android:icon="?attr/icActionSort"
+                    android:checkable="true" />
+
+                <item android:id="@+id/trackClosest"
+                    android:title="@string/trackingMode_closest"
+                    android:icon="?attr/icActionSort"
+                    android:checkable="true" />
+
+                <item android:id="@+id/trackUpcoming"
+                    android:title="@string/trackingMode_soonest"
+                    android:icon="?attr/icActionSort"
+                    android:checkable="true" />
+
+            </group>
+        </menu>
+
+    </item>
+
     <item android:id="@+id/action_help"
         android:title="@string/configAction_help"
         android:icon="?attr/icActionHelp"

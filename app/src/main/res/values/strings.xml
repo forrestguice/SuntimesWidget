@@ -508,7 +508,7 @@
 
     <!-- Widget Setting: tracking mode -->
     <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
-    <string name="trackingMode_closest">Closest Event</string>                 <!-- setting -->
+    <string name="trackingMode_closest">Nearest Event</string>                 <!-- setting -->    <!-- TODO -->
     <string name="trackingMode_soonest">Upcoming Event</string>                <!-- setting -->
     <string name="configLabel_general_trackingMode">Track:</string>            <!-- spinner label -->
 

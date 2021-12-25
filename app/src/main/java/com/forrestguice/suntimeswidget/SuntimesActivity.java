@@ -2157,8 +2157,24 @@ public class SuntimesActivity extends AppCompatActivity
         equinoxDialog.setDialogListener(equinoxDialogListener);
         equinoxDialog.show(getSupportFragmentManager(), DIALOGTAG_EQUINOX);
     }
+    protected void dismissEquinoxDialog()
+    {
+        FragmentManager fragments = getSupportFragmentManager();
+        EquinoxDialog equinoxDialog = (EquinoxDialog) fragments.findFragmentByTag(DIALOGTAG_EQUINOX);
+        if (equinoxDialog != null) {
+            equinoxDialog.dismiss();
+        }
+    }
     private EquinoxDialog.EquinoxDialogListener equinoxDialogListener = new EquinoxDialog.EquinoxDialogListener()
     {
+        @Override
+        public void onOptionsModified() {
+            updateViews(SuntimesActivity.this);
+            if (AppSettings.loadShowEquinoxPref(SuntimesActivity.this)) {
+                dismissEquinoxDialog();   // dismiss the dialog if also showing the view (so any changed options are immediately visible)
+            }
+        }
+
         @Override
         public void onSetAlarm( WidgetSettings.SolsticeEquinoxMode suggestedEvent ) {
             scheduleAlarm(SolarEvents.valueOf(suggestedEvent));
