@@ -972,6 +972,7 @@
 
     <!-- App Setting: solstice tracking mode -->
     <string-array name="solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
+        <item>@string/trackingMode_recent</item>
         <item>@string/trackingMode_closest</item>
         <item>@string/trackingMode_soonest</item>
     </string-array>

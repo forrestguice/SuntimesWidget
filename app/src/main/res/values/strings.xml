@@ -507,6 +507,7 @@
     <string name="configLabel_general_showComparison">Show Comparison</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
+    <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
     <string name="trackingMode_closest">Closest Event</string>                 <!-- setting -->
     <string name="trackingMode_soonest">Upcoming Event</string>                <!-- setting -->
     <string name="configLabel_general_trackingMode">Track:</string>            <!-- spinner label -->
@@ -993,10 +994,12 @@
 
     <!-- App Setting: solstice tracking mode -->
     <string-array name="solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
+        <item>@string/trackingMode_recent</item>
         <item>@string/trackingMode_closest</item>
         <item>@string/trackingMode_soonest</item>
     </string-array>
     <string-array name="solsticeTrackingMode_values" translatable="false">  <!-- one-to-one with solsticeTrackingMode_display -->
+        <item>RECENT</item>
         <item>CLOSEST</item>
         <item>SOONEST</item>
     </string-array>
