@@ -22,7 +22,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -83,7 +82,12 @@ public class EquinoxDialog extends BottomSheetDialogFragment
             overrideColumnWidthPx = savedState.getInt("overrideColumnWidthPx", overrideColumnWidthPx);
             equinoxView.loadState(savedState);
         }
-        equinoxView.setViewListener(new EquinoxView.EquinoxViewListener() {
+        equinoxView.setViewListener(new EquinoxView.EquinoxViewListener()
+        {
+            @Override
+            public void onMenuClick(View v, int position) {
+                showOverflowMenu(getContext(), v);
+            }
             @Override
             public void onMenuClick(View v, int position, WidgetSettings.SolsticeEquinoxMode mode, long datetime) {
                 showContextMenu(getContext(), v, mode, datetime);
@@ -186,6 +190,38 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         helpDialog.setContent(helpContent);
         helpDialog.show(getChildFragmentManager(), DIALOGTAG_HELP);
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    protected boolean showOverflowMenu(final Context context, View view)
+    {
+        PopupMenu menu = new PopupMenu(context, view);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.equinoxmenu, menu.getMenu());
+        menu.setOnMenuItemClickListener(onOverflowMenuClick);
+        updateOverflowMenu(context, menu);
+        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        menu.show();
+        return true;
+    }
+    private void updateOverflowMenu(Context context, PopupMenu menu) { /* EMPTY */ }
+    private PopupMenu.OnMenuItemClickListener onOverflowMenuClick = new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            switch (item.getItemId())
+            {
+                case R.id.action_help:
+                    showHelp(getContext());
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+    };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////

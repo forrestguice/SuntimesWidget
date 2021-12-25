@@ -66,7 +66,7 @@ public class EquinoxView extends LinearLayout
     private boolean userSwappedCard = false;
 
     private TextView empty, text_title, text_year_length;
-    private ImageButton btn_next, btn_prev;
+    private ImageButton btn_next, btn_prev, btn_menu;
     private RecyclerView card_view;
     private CardLayoutManager card_layout;
     private EquinoxViewAdapter card_adapter;
@@ -122,6 +122,11 @@ public class EquinoxView extends LinearLayout
         btn_prev = (ImageButton)findViewById(R.id.info_time_prevbtn1);
         if (btn_prev != null) {
             btn_prev.setOnClickListener(onPrevClicked);
+        }
+
+        btn_menu = (ImageButton)findViewById(R.id.menu_button);
+        if (btn_menu != null) {
+            btn_menu.setOnClickListener(onMenuClicked);
         }
 
         text_year_length = (TextView)findViewById(R.id.info_time_year_length);
@@ -444,6 +449,15 @@ public class EquinoxView extends LinearLayout
             userSwappedCard = showPreviousCard(position);
         }
     }
+
+    private OnClickListener onMenuClicked = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (viewListener != null) {
+                viewListener.onMenuClick(v, currentCardPosition());
+            }
+        }
+    };
 
     public void adjustColumnWidth(int columnWidthPx)
     {
@@ -1284,6 +1298,7 @@ public class EquinoxView extends LinearLayout
         public void onNextClick( int position ) {}
         public void onPrevClick( int position ) {}
         public void onSelected( int position, WidgetSettings.SolsticeEquinoxMode mode ) {}
+        public void onMenuClick( View v, int position ) {}
         public void onMenuClick( View v, int position, WidgetSettings.SolsticeEquinoxMode mode, long datetime ) {}
     }
 
