@@ -1,7 +1,7 @@
 package com.forrestguice.suntimeswidget;
 
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -95,9 +95,7 @@ public class SolsticeWidget0 extends SuntimesWidget0
             SuntimesEquinoxSolsticeDataset dataset = new SuntimesEquinoxSolsticeDataset(context, appWidgetId);
             dataset.calculateData();
 
-            WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, appWidgetId);
-            SuntimesEquinoxSolsticeData nextEvent = (trackingMode == WidgetSettings.TrackingMode.SOONEST ? dataset.findSoonest(dataset.now())
-                                                                                                         : dataset.findClosest(dataset.now()));
+            SuntimesEquinoxSolsticeData nextEvent = findData(dataset, WidgetSettings.loadTrackingModePref(context, appWidgetId));
             data = (nextEvent != null ? nextEvent : dataset.dataEquinoxSpring);
 
         } else {
@@ -115,6 +113,14 @@ public class SolsticeWidget0 extends SuntimesWidget0
     @Override
     protected SuntimesData getData(Context context, int appWidgetId) {
         return new SuntimesEquinoxSolsticeDataset(context, appWidgetId).dataEquinoxSpring;
+    }
+
+    public static SuntimesEquinoxSolsticeData findData(SuntimesEquinoxSolsticeDataset dataset, WidgetSettings.TrackingMode trackingMode) {
+        switch (trackingMode) {
+            case RECENT: return dataset.findRecent(dataset.now());
+            case CLOSEST: return dataset.findClosest(dataset.now());
+            case SOONEST: default: return dataset.findSoonest(dataset.now());
+        }
     }
 
     protected static SolsticeLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId)

@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2017-2018 Forrest Guice
+   Copyright (C) 2017-2021 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -64,10 +64,7 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
         if (data != null && data.isCalculated())
         {
             Calendar now = Calendar.getInstance();
-
-            WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, appWidgetId);
-            Calendar event = (trackingMode == WidgetSettings.TrackingMode.SOONEST ? data.eventCalendarUpcoming(now)
-                                                                                  : data.eventCalendarClosest(now));
+            Calendar event = getEventCalendar(now, data, WidgetSettings.loadTrackingModePref(context, appWidgetId));
 
             if (event != null)
             {
@@ -142,4 +139,14 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
     {
         timeMode = data.timeMode();
     }
+
+    public static Calendar getEventCalendar(Calendar now, SuntimesEquinoxSolsticeData data, WidgetSettings.TrackingMode trackingMode)
+    {
+        switch (trackingMode) {
+            case RECENT: return data.eventCalendarRecent(now);
+            case CLOSEST: return data.eventCalendarClosest(now);
+            case SOONEST: default: return data.eventCalendarUpcoming(now);
+        }
+    }
+
 }

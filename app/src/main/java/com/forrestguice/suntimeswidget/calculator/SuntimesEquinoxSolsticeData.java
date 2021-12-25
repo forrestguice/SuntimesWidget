@@ -83,12 +83,17 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
     /**
      * result: eventCalendarUpcoming
      */
-    public Calendar eventCalendarUpcoming(Calendar now)
-    {
+    public Calendar eventCalendarUpcoming(Calendar now) {
         Calendar event = eventCalendarThisYear();
-        if (now.after(event))
-        {
+        if (now.after(event)) {
             event = eventCalendarOtherYear();
+        }
+        return event;
+    }
+    public Calendar eventCalendarRecent(Calendar now) {
+        Calendar event = eventCalendarOtherYear();
+        if (!now.after(event)) {
+            event = eventCalendarThisYear();
         }
         return event;
     }

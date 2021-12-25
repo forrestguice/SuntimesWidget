@@ -117,17 +117,19 @@ public class SuntimesEquinoxSolsticeDataset
         dataSolsticeWinter.calculate();
     }
 
-    public SuntimesEquinoxSolsticeData findSoonest(Calendar now)
-    {
-        return findClosest(now, true);
+    public SuntimesEquinoxSolsticeData findSoonest(Calendar now) {
+        return findClosest(now, false, true);
     }
 
-    public SuntimesEquinoxSolsticeData findClosest(Calendar now)
-    {
-        return findClosest(now, false);
+    public SuntimesEquinoxSolsticeData findClosest(Calendar now) {
+        return findClosest(now, false, false);
     }
 
-    protected SuntimesEquinoxSolsticeData findClosest(Calendar now, boolean upcoming)
+    public SuntimesEquinoxSolsticeData findRecent(Calendar now) {
+        return findClosest(now, true, false);
+    }
+
+    protected SuntimesEquinoxSolsticeData findClosest(Calendar now, boolean recent, boolean upcoming)
     {
         long timeDeltaMin = Long.MAX_VALUE;
         SuntimesEquinoxSolsticeData closest = null;
@@ -139,7 +141,7 @@ public class SuntimesEquinoxSolsticeDataset
             {
                 if (event != null)
                 {
-                    if (upcoming && !event.after(now))
+                    if ((upcoming && !event.after(now)) || (recent && event.after(now)))
                         continue;
 
                     long timeDelta = Math.abs(event.getTimeInMillis() - now.getTimeInMillis());
