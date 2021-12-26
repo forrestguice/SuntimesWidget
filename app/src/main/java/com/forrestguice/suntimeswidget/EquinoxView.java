@@ -488,7 +488,7 @@ public class EquinoxView extends LinearLayout
             Calendar noteTime = note.getTime();
             if (noteTime != null)
             {
-                if ((upcoming && !noteTime.after(now)) || (recent && noteTime.after(now)))
+                if ((upcoming && !noteTime.after(now)) || (recent && !noteTime.before(now)))
                     continue;
 
                 long timeDelta = Math.abs(noteTime.getTimeInMillis() - now.getTimeInMillis());
@@ -517,7 +517,7 @@ public class EquinoxView extends LinearLayout
             Calendar noteTime = note.second;
             if (noteTime != null)
             {
-                if ((upcoming && !noteTime.after(now)) || (recent && noteTime.after(now)))
+                if ((upcoming && !noteTime.after(now)) || (recent && !noteTime.before(now)))
                     continue;
 
                 long timeDelta = Math.abs(noteTime.getTimeInMillis() - now.getTimeInMillis());
@@ -749,6 +749,9 @@ public class EquinoxView extends LinearLayout
                 if (position == options.highlightPosition || options.minimized)
                 {
                     EquinoxNote nextNote = findClosestNote(dataset.now(), options.trackingMode, holder.notes);
+                    if (nextNote == null) {
+                        nextNote = holder.notes.get(0);
+                    }
                     if (nextNote != null) {
                         nextNote.setHighlighted(true);
                     }
