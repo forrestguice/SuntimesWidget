@@ -64,14 +64,6 @@
 
                 </LinearLayout>
 
-                <ImageButton android:id="@+id/menu_button"
-                    android:layout_width="48dp" android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|end"
-                    style="?attr/actionOverflowButtonStyle" android:background="?attr/selectableItemBackground"
-                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:contentDescription="@string/configAction_overflow" />
-
             </android.support.constraint.ConstraintLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -81,15 +73,17 @@
                 tools:listitem="@layout/info_time_solsticequinox1"
                 android:elevation="5dp" />
 
-            <LinearLayout android:id="@+id/year_info_layout"
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/year_info_layout"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:paddingTop="8dp" android:paddingBottom="8dp" android:layout_marginTop="4dp"
                 android:background="?attr/dialogBackgroundAlt"
                 android:orientation="horizontal">
 
                 <LinearLayout android:orientation="horizontal" android:layout_gravity="center_vertical"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
 
                     <TextView android:id="@+id/info_time_year_length_label"
                         android:layout_width="@dimen/solsticetable_column0_width" android:layout_height="wrap_content"
@@ -107,7 +101,15 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
+                <ImageButton android:id="@+id/menu_button"
+                    android:layout_width="48dp" android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    style="?attr/actionOverflowButtonStyle" android:background="?attr/selectableItemBackground"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:contentDescription="@string/configAction_overflow" />
+
+            </android.support.constraint.ConstraintLayout>
 
         </LinearLayout>
 
