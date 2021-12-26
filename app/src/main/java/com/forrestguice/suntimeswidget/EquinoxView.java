@@ -417,10 +417,11 @@ public class EquinoxView extends LinearLayout
     {
         if (currentCardPosition() >= 0)
         {
-            if (Math.abs(position - EquinoxViewAdapter.CENTER_POSITION) > SuntimesActivity.HIGHLIGHT_SCROLLING_ITEMS) {
-                card_view.scrollToPosition(EquinoxViewAdapter.CENTER_POSITION);
+            int seekPosition = options.highlightPosition;
+            if (Math.abs(position - seekPosition) > SuntimesActivity.HIGHLIGHT_SCROLLING_ITEMS) {
+                card_view.scrollToPosition(seekPosition);
             } else {
-                card_scroller.setTargetPosition(EquinoxViewAdapter.CENTER_POSITION);
+                card_scroller.setTargetPosition(seekPosition);
                 card_layout.startSmoothScroll(card_scroller);
             }
         }
