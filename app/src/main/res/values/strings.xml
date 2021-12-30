@@ -137,18 +137,21 @@
     <string name="until">until</string>
     <string name="until_end">until end</string>
 
-    <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. the time component is shown on the next line -->
+    <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. plural applies to time component (next line) -->
         <item quantity="one">at</item>
         <item quantity="other">at</item>
     </plurals>
-    <plurals name="offset_before_plural">      <!-- e.g. "30m before \n 5:30PM" .. the time component is shown on the next line -->
+    <plurals name="offset_before_plural">      <!-- e.g. "30m before \n 5:30PM" .. plural applies to time component (next line) -->
         <item quantity="one">%1$s before</item>
         <item quantity="other">%1$s before</item>
     </plurals>
-    <plurals name="offset_after_plural">      <!-- e.g. "30m after \n 5:30PM" .. the time component is shown on the next line -->
+    <plurals name="offset_after_plural">      <!-- e.g. "30m after \n 5:30PM" .. plural applies to time component (next line) -->
         <item quantity="one">%1$s after</item>
         <item quantity="other">%1$s after</item>
     </plurals>
+    <string name="offset_at_msg">%1$s at %2$s</string>            <!-- notification msg; 'at Sunset'; second arg is always non-plural -->   <!-- TODO -->
+    <string name="offset_before_msg">%1$s before %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO -->
+    <string name="offset_after_msg">%1$s after %2$s</string>      <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO -->
 
     <string name="offset_button_before">before</string>    <!-- button label; [1h] [5m] [before] (-) -->
     <string name="offset_button_after">after</string>      <!-- button label; [1h] [5m] [after] (+) -->

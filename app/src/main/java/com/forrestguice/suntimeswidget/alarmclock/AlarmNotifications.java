@@ -649,9 +649,22 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
-        String emptyLabel = ((alarm.event != null) ? alarm.event.getShortDisplayString() : context.getString(R.string.alarmOption_solarevent_none));
+        String eventString = (alarm.event != null ? alarm.event.getShortDisplayString() : null);
+        String eventDisplay = eventString;
+        if (alarm.offset != 0) {
+            if (eventString == null) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(alarm.timestamp);
+                eventString = utils.calendarTimeShortDisplayString(context, calendar).toString();
+            }
+            String offsetText = utils.timeDeltaLongDisplayString(0, alarm.offset).getValue();
+            int offsetStringResID = ((alarm.offset < 0) ? R.string.offset_before_msg : R.string.offset_after_msg);
+            eventDisplay = context.getString(offsetStringResID, offsetText, eventString);
+        }
+
+        String emptyLabel = ((eventDisplay != null) ? eventDisplay : context.getString(R.string.alarmOption_solarevent_none));
         String notificationTitle = (alarm.label == null || alarm.label.isEmpty() ? emptyLabel : alarm.label);
-        String notificationMsg = notificationTitle;
+        String notificationMsg = eventDisplay;
         int notificationIcon = ((alarm.type == AlarmClockItem.AlarmType.NOTIFICATION) ? R.drawable.ic_action_notification : R.drawable.ic_action_alarms);
         int notificationColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting_dark);
 
@@ -684,7 +697,8 @@ public class AlarmNotifications extends BroadcastReceiver
                     //{
                         builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
                         builder.setPriority( alarm.repeating ? NotificationCompat.PRIORITY_HIGH : NotificationCompat.PRIORITY_DEFAULT );
-                        notificationMsg = context.getString(R.string.alarmAction_upcomingMsg);
+                        notificationMsg = notificationTitle;
+                        notificationTitle = context.getString(R.string.alarmAction_upcomingMsg);
                         builder.setWhen(alarm.alarmtime);
                         builder.setContentIntent(pendingView);
                         builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDismiss);
