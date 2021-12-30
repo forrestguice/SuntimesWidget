@@ -1242,6 +1242,7 @@
         <item>Russian</item>
         <item>Dutch</item>
         <item>Czech</item>
+        <item>Simplified Chinese</item>
     </string-array>
     <string-array name="locale_display_native" translatable="false">             <!-- one-to-one with locale_values -->
         <item>English</item>
@@ -1260,6 +1261,7 @@
         <item>Русский</item>
         <item>Nederlands</item>
         <item>Čeština</item>
+        <item>简体中文</item>
     </string-array>
     <string-array name="locale_values" translatable="false">  <!-- one-to-one with locale_display -->
         <item>en</item>
@@ -1278,6 +1280,7 @@
         <item>ru</item>
         <item>nl</item>
         <item>cs</item>
+        <item>zh_CN</item>
     </string-array>
     <string-array name="locale_credits" translatable="false">  <!-- one-to-one with locale_display -->
         <item />
@@ -1291,11 +1294,12 @@
         <item><![CDATA[<a href=https://github.com/Raulvo>Raulvo</a>|<a href=https://github.com/gnusuari0>gnusuari0</a>]]></item>
         <item><![CDATA[<a href=https://github.com/beriain>beriain</a>]]></item>
         <item><![CDATA[<a href=https://github.com/FTno>FTno</a>]]></item>
-        <item><![CDATA[<a href=https://github.com/pggdt>ft42</a>]]></item>
+        <item><![CDATA[<a href=https://github.com/pggdt>ft42</a>|<a href=https://github.com/jamesliu96>James Liu</a>]]></item>
         <item><![CDATA[<a href=https://github.com/NetoSilva>Neto Silva</a>|<a href=https://github.com/naoliv>Nelson&#160;A.&#160;de&#160;Oliveira</a>|<a href=https://github.com/efraletti>Enrico S. B. Fraletti</a>]]></item>
         <item><![CDATA[<a href=https://github.com/rchintsov>Ruslan&#160;Chintsov</a>]]></item>
         <item><![CDATA[<a href=https://github.com/Joppla>Joppla</a>]]></item>
         <item><![CDATA[<a href=https://github.com/utaxiu>utaxiu</a>]]></item>
+        <item><![CDATA[<a href=https://github.com/jamesliu96>James Liu</a>]]></item>
     </string-array>
 
     <!-- position formats -->
