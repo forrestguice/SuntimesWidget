@@ -277,7 +277,7 @@
     <string name="configLabel_appearance_mode">外观</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">主题:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">适应可用的空间（可调节大小）</string>  <!-- checkbox label -->
-    <string name="configLabel_appearance_showLabels">显示标籤</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_showLabels">显示标签</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">显示标题</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">标题:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
@@ -363,7 +363,7 @@
     <string name="widgetMode1x1_distance">当前距离</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">下一个远地点或近地点</string>     <!-- setting -->
 
-    <string name="widgetMode_sunPosMap_simplerectangular">预设</string>  <!-- setting -->
+    <string name="widgetMode_sunPosMap_simplerectangular">默认</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">北半球视角</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">南半球视角</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_bluemarble">卫星</string>    <!-- setting -->
@@ -464,7 +464,7 @@
     <string name="configLabel_general_trackingMode">追踪:</string>            <!-- spinner label -->
 
     <!-- Widget Setting: timeMode override -->
-    <string name="configLabel_general_timeMode_override">追踪复盖模式</string>     <!-- checkbox label -->
+    <string name="configLabel_general_timeMode_override">追踪覆盖模式</string>     <!-- checkbox label -->
 
     <!-- Widget Settings: noon -->
     <string name="configLabel_general_showNoon">显示太阳正午</string>        <!-- checkbox label -->
@@ -494,18 +494,18 @@
     <string name="addaction_custtitle">自定义动作 <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
     <string name="addaction_error_id">ID 不能为空（或包含空格）。</string>
     <string name="addaction_error_title">显示字符串不能为空。</string>
-    <string name="addaction_error_exists">ID已被佔用。此动作将被复盖。</string>
+    <string name="addaction_error_exists">ID已被占用。此动作将被覆盖。</string>
 
     <string name="delaction_dialog_msg">你确定你要删除 %1$s 吗 (%2$s)？</string>
-    <string name="delaction_dialog_msg1">无法删除预设操作。\n\n是否恢复为预设值？</string>
+    <string name="delaction_dialog_msg1">无法删除默认操作。\n\n是否恢复为默认值？</string>
     <string name="delaction_dialog_ok">删除</string>
     <string name="delaction_dialog_ok1">复原</string>
     <string name="delaction_dialog_cancel">取消</string>
 
-    <string name="clearactions_dialog_msg">您确定要重置为预设值吗？\n\n所有自定义动作都将被删除。</string>
+    <string name="clearactions_dialog_msg">您确定要重置为默认值吗？\n\n所有自定义动作都将被删除。</string>
     <string name="clearactions_dialog_ok">清空</string>
     <!--<string name="clearactions_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
-    <string name="clearactions_toast">动作已重置为预设值。</string>
+    <string name="clearactions_toast">动作已重置为默认值。</string>
 
     <string name="saveaction_dialog_title">添加动作</string>
     <string name="saveaction_dialog_ok">保存</string>
@@ -552,7 +552,7 @@
     <string name="edittheme_error_displaytext">显示字符不能没有哦。</string>  <!-- error hint (display text is empty) -->
     <string name="edittheme_error_textsize_min">大小必须是一个 &gt;= <xliff:g id="minSize">%1$s</xliff:g>的数字。</string>  <!-- error hint (size is smaller than min) -->
     <string name="edittheme_error_textsize_max">大小必须是一个 &lt;= <xliff:g id="maxSize">%1$s</xliff:g>的数字。</string>  <!-- error hint (size is larger than max) -->
-    <string name="edittheme_flag_default">预设</string>  <!-- content description -->
+    <string name="edittheme_flag_default">默认</string>  <!-- content description -->
 
     <string name="deletetheme_dialog_title">删除主题</string>        <!-- dialog title -->
     <string name="deletetheme_dialog_message">确定要删除 <xliff:g id="themeName">%1$s</xliff:g>？</string>   <!-- dialog msg -->
@@ -646,7 +646,7 @@
     <string name="configHint_themeID">主题ID</string>                  <!-- edit hint -->
 
     <string name="configLabel_themeName">显示:</string>               <!-- edit label -->
-    <string name="configHint_themeName">标籤</string>                   <!-- edit hint -->
+    <string name="configHint_themeName">标签</string>                   <!-- edit hint -->
 
     <string name="widgetLabel_azimuth">方位</string>                   <!-- label -->
     <string name="widgetLabel_azimuth_short">方位</string>                   <!-- label -->
@@ -678,11 +678,11 @@
     <string name="configAction_clearOffset">清空</string>                <!-- action button / menu item -->
     <string name="configAction_setAlarmOffset">设置补偿</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmType">设置类型</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmLabel">设置标籤</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmLabel">设置标签</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLocation">设置位置</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmRepeat">设置重复</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmEvent">设置事件</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmTime">复盖时间</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmTime">覆盖时间</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmAction">设置动作</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmSound">设置声音</string>         <!-- button (contentDescription) -->
     <string name="configAction_alarmMenu">闹钟菜单</string>         <!-- button (contentDescription) -->
@@ -734,19 +734,19 @@
     <string name="clearalarms_dialog_cancel">取消</string>    <!-- button -->
     <string name="clearalarms_toast_success">闹钟已被清空。</string> <!-- toast msg -->
 
-    <string name="alarmlabel_dialog_title">标籤</string>        <!-- dialog title -->
+    <string name="alarmlabel_dialog_title">标签</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">应用</string>        <!-- button -->
     <string name="alarmlabel_dialog_cancel">取消</string>    <!-- button -->
-    <string name="alarmlabel_hint">标籤</string>        <!-- EditText hint -->
+    <string name="alarmlabel_hint">标签</string>        <!-- EditText hint -->
 
     <string name="alarmrepeat_dialog_title">重复闹钟</string>        <!-- dialog title -->
     <string name="alarmrepeat_dialog_ok">应用</string>        <!-- button -->
     <string name="alarmrepeat_dialog_cancel">取消</string>    <!-- button -->
 
     <string name="alarmtime_dialog_title">闹钟时间</string>        <!-- dialog title -->
-    <string name="alarmtime_dialog_ok">复盖</string>        <!-- button -->
+    <string name="alarmtime_dialog_ok">覆盖</string>        <!-- button -->
     <string name="alarmtime_dialog_cancel">取消</string>    <!-- button -->
-    <string name="alarmtime_dialog_message">复盖闹钟时间？\n\n此闹钟将不再按事件安排。</string>   <!-- dialog msg -->
+    <string name="alarmtime_dialog_message">覆盖闹钟时间？\n\n此闹钟将不再按事件安排。</string>   <!-- dialog msg -->
 
     <string name="alarmoffset_dialog_title">闹钟补偿</string>        <!-- dialog title -->
     <string name="alarmoffset_dialog_ok">应用</string>        <!-- button -->
@@ -765,23 +765,23 @@
     <string name="configLabel_alarms_notifications_summary1">锁定屏幕时: %1$s</string>    <!-- "On lock screen: Off -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> 通知已关闭。闹钟可能无法正确显示。</string>  <!-- snackbar message -->
 
-    <string name="configLabel_alarms_silenceAfter">静音在</string>
+    <string name="configLabel_alarms_silenceAfter">在…后静音</string>
     <string name="configLabel_alarms_silenceAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_timeoutAfter">超时在</string>
+    <string name="configLabel_alarms_timeoutAfter">在…后超时</string>
     <string name="configLabel_alarms_timeoutAfter_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
     <string name="configLabel_alarms_snooze">延时</string>
     <string name="configLabel_alarms_snooze_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
-    <string name="configLabel_alarms_upcoming">提醒在</string>
+    <string name="configLabel_alarms_upcoming">在…后提醒</string>
     <string name="configLabel_alarms_upcoming_summary"><xliff:g id="timePeriod" example="10 minutes">%s</xliff:g></string>
 
     <string name="configLabel_alarms_fadein">逐渐增加音量</string>
     <!--<string name="configLabel_alarms_fadein_summary"><xliff:g id="timePeriod" example="30 seconds">%s</xliff:g></string>-->
     <string name="configLabel_alarms_fadein_disabled">关闭</string>
 
-    <string name="configLabel_alarms_hardwarebuttons">硬体按钮</string>
+    <string name="configLabel_alarms_hardwarebuttons">硬件按钮</string>
     <string name="configLabel_alarms_hardwarebuttons_summary"><xliff:g id="action" example="Snooze">%s</xliff:g></string>
     <string-array name="alarm_hardwarebutton_actions_display">     <!-- one-to-one with alarm_hardwarebutton_actions_values -->
         <item>解除</item>
@@ -882,7 +882,7 @@
 
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">显示数据源</string>
-    <string name="configLabel_ui_showdatasource_summary">为当前配置显示一个标籤。</string>
+    <string name="configLabel_ui_showdatasource_summary">为当前配置显示一个标签。</string>
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">显示黄金时刻</string>
@@ -1091,8 +1091,8 @@
     <string name="schedalarm_dialog_tab_time">时间</string>                        <!-- tab text -->
     <string name="schedalarm_dialog_ok">设置闹钟</string>
     <string name="schedalarm_dialog_cancel">取消</string>
-    <string name="schedalarm_dialog_error">闹钟没有设置……</string>
-    <string name="schedalarm_dialog_error2">闹钟无法设置……</string>
+    <string name="schedalarm_dialog_error">闹钟没有设置…</string>
+    <string name="schedalarm_dialog_error2">闹钟无法设置…</string>
     <string name="schedalarm_dialog_note">距离现在大约<xliff:g id="timetext" example="6h 30m">%s</xliff:g>。</string>
     <string name="schedalarm_dialog_note1">@string/schedalarm_dialog_note</string>
     <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g>没有出现。</string>
@@ -1307,7 +1307,7 @@
                 * 时间（最近更新）: <b>%dt</b><br/>
                 * 含秒的时间（最近更新）: <b>%dT</b><br/>
                 <br/>
-                * 标籤: <b>%loc</b>（例如: Prescott）<br />
+                * 标签: <b>%loc</b>（例如: Prescott）<br />
                 * 纬度: <b>%lat</b>（例如: 35.5409）<br />
                 * 经度: <b>%lon</b>（例如: -112.4691）<br/>
                 * 高度: <b>%lel</b>（例如: 385 meters）<br/>
@@ -1386,7 +1386,7 @@
           [Icon Add] 添加一个新主题或[Icon Copy]从已有主题中复制一份。\n
           \n
           [Icon Edit]编辑或[Icon Delete]删除主题。\n
-          [Icon Default]预设主题是不能被删除的。
+          [Icon Default]默认主题是不能被删除的。
     </string>
 
     <string name="help_calendar"><![CDATA[向 Calendar 应用程序提供事件（月相、冬至和春分）。<br />
@@ -1397,9 +1397,9 @@
     ]]></string>
 
     <string name="privacy_policy"><![CDATA[<b>隐私:</b><br/>Suntimes 不会蒐集、储存、传输个人用户数据。它<b>没有广告</b>, <b>没有用户分析</b>, <b>没有跟踪器</b>，并且<b>不使用不必要的权限</b>。<br/><br/>本应用使用位置信息来配置。位置信息（和其他用来配置本应用的数据）保存在本机并且不会离开本机。<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
-    <string name="privacy_permission_location"><![CDATA[Suntimes 使用<b>位置</b>权限来确定您当前的经纬度。<br/><br/>此权限是可选的；位置预设可被手动配置。]]></string>
+    <string name="privacy_permission_location"><![CDATA[Suntimes 使用<b>位置</b>权限来确定您当前的经纬度。<br/><br/>此权限是可选的；位置默认可被手动配置。]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes 使用<b>外部存储</b>权限以备份/导出数据到文档中（例如: 地点、主题）。]]></string>
-    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms 使用<b>外部存储</b>权限以播放位于SD卡中的声音。<br/><br/>此权限是可选的；如果访问被拒绝将播放预设声音。系统声音不需要此权限（媒体存储）。]]></string>
+    <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms 使用<b>外部存储</b>权限以播放位于SD卡中的声音。<br/><br/>此权限是可选的；如果访问被拒绝将播放默认声音。系统声音不需要此权限（媒体存储）。]]></string>
     <string name="privacy_permissiondialog_prompt"><![CDATA[现在请求权限？]]></string>
     <string name="privacy_permissiondialog_ignore">忽略</string>
     <string name="privacy_permissiondialog_title">权限</string>
