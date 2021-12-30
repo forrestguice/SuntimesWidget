@@ -109,7 +109,6 @@ public class LightMapDialog extends BottomSheetDialogFragment
     public LightMapDialog()
     {
         Bundle args = new Bundle();
-        args.putLong(EXTRA_DATETIME, -1L);
         setArguments(args);
     }
 
@@ -121,7 +120,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         }
     }
     public long showingPositionAt() {
-        return getArguments().getLong(EXTRA_DATETIME);
+        return getMapTime(System.currentTimeMillis());
     }
 
     private SuntimesRiseSetDataset data;
@@ -336,7 +335,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 @Override
                 public void onFrame(Bitmap frame, long offsetMinutes)
                 {
-                    getArguments().putLong(EXTRA_DATETIME, lightmap.getNow());
+                    //getArguments().putLong(EXTRA_DATETIME, lightmap.getNow());
                     updateTimeText(data);
                     updateSunPositionViews(data);
                     resetButton.setEnabled(offsetMinutes != 0);
@@ -542,7 +541,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 playButton.setVisibility(View.VISIBLE);
             }
 
-            resetButton.setEnabled(lightmap != null && lightmap.getColors().offsetMinutes != 0);
+            //resetButton.setEnabled(lightmap != null && lightmap.getColors().offsetMinutes != 0);
         }
 
         Context context = getContext();
@@ -560,10 +559,6 @@ public class LightMapDialog extends BottomSheetDialogFragment
         if (context != null)
         {
             LightMapView.LightMapColors options = lightmap.getColors();
-            options.now = showingPositionAt();
-            if (options.now != -1L && options.offsetMinutes == 0) {
-                options.offsetMinutes = 1;
-            }
             options.anim_frameOffsetMinutes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP)
                     ? 24 * 60 : 1;
         }
@@ -941,7 +936,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         long nowMillis = now.getTimeInMillis();
         long mapTimeMillis = nowMillis;
 
-        if (lightmap.isAnimated() || lightmap.getOffsetMinutes() != 0 || lightmap.getColors().now != -1L) {
+        if (lightmap.isAnimated() || lightmap.getOffsetMinutes() != 0) {
             mapTimeMillis = getMapTime(now.getTimeInMillis());
         }
 

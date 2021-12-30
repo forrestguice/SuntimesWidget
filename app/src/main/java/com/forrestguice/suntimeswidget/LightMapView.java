@@ -346,14 +346,14 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                     break;
                 }
 
-                if (data != null && data.dataActual != null && i > 1)
+                if (data != null && data.dataActual != null)
                 {
                     Calendar maptime = mapTime(data, colors);
                     Calendar datatime = data.dataActual.calendar();
                     long data_age = (maptime.getTimeInMillis() - datatime.getTimeInMillis());
                     if (data_age >= (12 * 60 * 60 * 1000)) {    // TODO: more precise
 
-                        Log.d("LightMapTask", "recalculating dataset with adjusted date");
+                        Log.d("LightMapTask", "recalculating dataset with adjusted date: " + data_age);
                         Calendar calendar = Calendar.getInstance(data.timezone());
                         calendar.setTimeInMillis(maptime.getTimeInMillis());
 
