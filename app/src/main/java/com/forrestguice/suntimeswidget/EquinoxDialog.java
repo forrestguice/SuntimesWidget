@@ -208,7 +208,8 @@ public class EquinoxDialog extends BottomSheetDialogFragment
     {
         String topic1 = context.getString(R.string.help_general_timeMode2);
         String topic2 = context.getString(R.string.help_general_tropicalyear);
-        String helpContent = context.getString(R.string.help_general2, topic1, topic2);
+        String topic3 = context.getString(R.string.help_general_leapyear);
+        String helpContent = context.getString(R.string.help_general3, topic1, topic2, topic3);
 
         HelpDialog helpDialog = new HelpDialog();
         helpDialog.setContent(helpContent);

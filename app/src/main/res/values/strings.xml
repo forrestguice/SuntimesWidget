@@ -1694,7 +1694,16 @@
           <b>Winter Solstice:</b> The start of astronomical winter; <em>December</em> [northern hemisphere], or <em>June</em> [southern hemisphere]. The December solstice is also called the <em>southern solstice</em>.<br/>
     ]]></string>    <!-- TODO -->
     <string name="help_general_tropicalyear"><![CDATA[
-          <b>Tropical Year:</b> The length of a <em>tropical year</em> is measured from one <em>March equinox</em> to the next.<br/><br/>
+          <b>Tropical Year:</b> A full cycle of the seasons. The length of the <em>tropical year</em> is measured from one <em>March equinox</em> to the next. It is <em>~365.24 days</em> on average, with an exact length that varies from year to year (up to 30 minutes).<br/>
+    ]]></string>   <!-- TODO -->
+    <string name="help_general_leapyear"><![CDATA[
+          <b>Leap Year:</b> It takes ~365.24 days for a full cycle of seasons, but the Gregorian calendar is only 365 days long, so each passing calendar year drifts another fraction of a day behind the tropical year.<br/>
+          <br/>
+          A <em>leap year</em> adds an extra day to February to keep the calendar synchronized with the seasons.
+          This is typically every four years, but since the difference with the tropical year isn\'t an exact ¼ day, the calendar still drifts over time.
+          As a result the rule to determine leaps years is more complicated.<br/>
+          <br/>
+          The leap years are those that are divisible by 4 but not 100 (unless also divisible by 400).<br/><br/>
     ]]></string>   <!-- TODO -->
     <string name="help_general_solartime"><![CDATA[
           <b>Apparent Solar Time:</b> Sundial time. The time determined by tracking the motion of the apparent sun with respect to a given longitude and latitude.
