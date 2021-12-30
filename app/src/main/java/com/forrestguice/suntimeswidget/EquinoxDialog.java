@@ -40,12 +40,14 @@ import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.map.WorldMapDialog;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class EquinoxDialog extends BottomSheetDialogFragment
@@ -112,6 +114,25 @@ public class EquinoxDialog extends BottomSheetDialogFragment
 
     private void expandSheet(DialogInterface dialog)
     {
+        if (dialog != null) {
+            BottomSheetBehavior bottomSheet = initSheet(dialog);
+            if (bottomSheet != null) {
+                bottomSheet.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+        }
+    }
+    private void collapseSheet(Dialog dialog)
+    {
+        if (dialog != null) {
+            BottomSheetBehavior bottomSheet = initSheet(dialog);
+            if (bottomSheet != null) {
+                bottomSheet.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        }
+    }
+    @Nullable
+    private BottomSheetBehavior initSheet(DialogInterface dialog)
+    {
         if (dialog != null)
         {
             BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
@@ -121,9 +142,11 @@ public class EquinoxDialog extends BottomSheetDialogFragment
                 BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
                 behavior.setHideable(false);
                 behavior.setSkipCollapsed(true);
-                behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                WorldMapDialog.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
+                return behavior;
             }
         }
+        return null;
     }
 
     private DialogInterface.OnShowListener onShowListener = new DialogInterface.OnShowListener() {
@@ -303,14 +326,8 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         data.putExtra("mode", mode.name());
 
         Menu m = menu.getMenu();
-        MenuItem mapItem = m.findItem(R.id.action_worldmap);
-        if (mapItem != null) {
-            mapItem.setIntent(data);
-        }
-
-        MenuItem positionItem = m.findItem(R.id.action_sunposition);
-        if (positionItem != null) {
-            positionItem.setIntent(data);
+        for (int i=0; i<m.size(); i++) {
+            m.getItem(i).setIntent(data);
         }
 
         MenuItem addonSubmenuItem = m.findItem(R.id.addonSubMenu);
@@ -372,11 +389,41 @@ public class EquinoxDialog extends BottomSheetDialogFragment
                     }
                     return true;
 
+                case R.id.action_date:
+                    if (dialogListener != null) {
+                        dialogListener.onShowDate(itemTime);
+                    }
+                    collapseSheet(getDialog());
+                    return true;
+
+                case R.id.action_share:
+                    shareItem(getContext(), itemData);
+                    return true;
+
                 default:
                     return false;
             }
         }
     };
+
+    protected void shareItem(Context context, Intent itemData)
+    {
+        WidgetSettings.SolsticeEquinoxMode itemMode = (itemData != null && itemData.hasExtra("mode") ? WidgetSettings.SolsticeEquinoxMode.valueOf(itemData.getStringExtra("mode")) : null);
+        long itemMillis = itemData != null ? itemData.getLongExtra(WorldMapDialog.EXTRA_SHOW_DATE, -1L) : -1L;
+        if (itemMode != null && itemMillis != -1L)
+        {
+            Calendar itemTime = Calendar.getInstance();
+            itemTime.setTimeInMillis(itemMillis);
+            boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
+            boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
+
+            SuntimesUtils utils = new SuntimesUtils();
+            SuntimesUtils.initDisplayStrings(context);
+            String itemDisplay = context.getString(R.string.share_format_equinox, itemMode, utils.calendarDateTimeDisplayString(context, itemTime, showTime, showSeconds).toString());
+
+            Toast.makeText(getContext(), itemDisplay, Toast.LENGTH_SHORT).show();    // TODO: copy to clipboard
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -394,6 +441,8 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         public void onSetAlarm( WidgetSettings.SolsticeEquinoxMode suggestedEvent ) {}
         public void onShowMap( long suggestedDate ) {}
         public void onShowPosition( long suggestedDate ) {}
+        public void onShowDate( long suggestedDate ) {}
         public void onOptionsModified() {}
     }
+
 }

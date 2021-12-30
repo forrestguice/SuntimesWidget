@@ -420,6 +420,12 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
             switch (item.getItemId())
             {
+                case R.id.action_date:
+                    if (dialogListener != null) {
+                        dialogListener.onShowDate(getMapTime(System.currentTimeMillis()));
+                    }
+                    return true;
+
                 case R.id.action_worldmap:
                     if (dialogListener != null) {
                         dialogListener.onShowMap(getMapTime(System.currentTimeMillis()));
@@ -1269,6 +1275,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
      */
     public static class LightMapDialogListener
     {
+        public void onShowDate( long suggestDate ) {}
         public void onShowMap( long suggestDate ) {}
     }
 

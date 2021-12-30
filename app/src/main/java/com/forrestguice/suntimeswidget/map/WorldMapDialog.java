@@ -742,7 +742,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             option_moonlight.setChecked(options.showMoonLight);
         }
 
-        MenuItem action_date = m.findItem(R.id.setDate);
+        MenuItem action_date = m.findItem(R.id.action_date);
         if (action_date != null) {
             action_date.setEnabled( !WidgetSettings.DateInfo.isToday(getMapDate()) );
         }
@@ -786,9 +786,9 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     }
                     return true;
 
-                case R.id.setDate:
+                case R.id.action_date:
                     if (dialogListener != null) {
-                        dialogListener.onConfigDate(getMapTime(Calendar.getInstance().getTimeInMillis()));
+                        dialogListener.onShowDate(getMapTime(Calendar.getInstance().getTimeInMillis()));
                         collapseSheet(getDialog());
                     }
                     return true;
@@ -1017,7 +1017,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     public static class WorldMapDialogListener
     {
-        public void onConfigDate( long suggestedDate ) {}
+        public void onShowDate( long suggestedDate ) {}
         public void onShowPosition( long suggestDate ) {}
     }
 

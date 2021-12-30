@@ -4,14 +4,6 @@
 
     <group android:id="@+id/mapOption_group_action" android:checkableBehavior="none">
 
-        <item android:id="@+id/addonSubMenu"
-            android:icon="?attr/icActionExtension"
-            android:title="@string/configAction_viewDate"
-            app:showAsAction="never"
-            android:orderInCategory="0">
-            <menu />         <!-- submenu is populated at runtime -->
-        </item>
-
         <item android:id="@+id/action_alarm"
             android:title="@string/configAction_setAlarm"
             android:icon="?attr/icActionAlarm"
@@ -25,6 +17,24 @@
         <item android:id="@+id/action_worldmap"
             android:title="@string/configAction_worldMap"
             android:icon="?attr/icActionMap"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/action_date"
+            android:title="@string/configAction_viewDate"
+            android:icon="?attr/icActionTimeReset"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/addonSubMenu"
+            android:icon="?attr/icActionExtension"
+            android:title="@string/configAction_viewDateWith"
+            app:showAsAction="never"
+            android:orderInCategory="0">
+            <menu />         <!-- submenu is populated at runtime -->
+        </item>
+
+        <item android:id="@+id/action_share"
+            android:title="@string/configAction_share"
+            android:icon="?attr/icActionShare"
             app:showAsAction="never" />
 
     </group>

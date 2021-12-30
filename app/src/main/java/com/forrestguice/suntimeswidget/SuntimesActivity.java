@@ -2078,31 +2078,33 @@ public class SuntimesActivity extends AppCompatActivity
     /**
      * Show the lightmap dialog.
      */
-    protected void showLightMapDialog() {
-        showLightMapDialog(null);
-    }
-    protected void showLightMapDialog(@Nullable Long dateTime)
+    protected LightMapDialog showLightMapDialog()
     {
         final LightMapDialog lightMapDialog = new LightMapDialog();
         lightMapDialog.themeViews(this, appThemeOverride);
         lightMapDialog.setData(SuntimesActivity.this, dataset);
         lightMapDialog.setDialogListener(lightMapListener);
-        lightMapDialog.showPositionAt(dateTime);
         lightMapDialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTMAP);
+        return lightMapDialog;
     }
     private LightMapDialog.LightMapDialogListener lightMapListener = new LightMapDialog.LightMapDialogListener() {
         @Override
         public void onShowMap( long suggested) {
             showWorldMapDialog();   // TODO: at suggested date
         }
+        @Override
+        public void onShowDate(long suggested) {
+            scrollToDate(suggested);
+        }
     };
     public void showSunPositionAt(@Nullable Long dateTime)
     {
         FragmentManager fragments = getSupportFragmentManager();
         LightMapDialog lightMapDialog = (LightMapDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTMAP);
-        if (lightMapDialog != null) {
-            lightMapDialog.showPositionAt(dateTime);
-        } else showLightMapDialog(dateTime);
+        if (lightMapDialog == null) {
+            lightMapDialog = showLightMapDialog();
+        }
+        lightMapDialog.showPositionAt(dateTime);
     }
 
     /**
@@ -2124,7 +2126,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
 
         @Override
-        public void onConfigDate(long suggested)
+        public void onShowDate(long suggested)
         {
             /**WidgetSettings.DateInfo dateInfo = new WidgetSettings.DateInfo(suggested);
             WidgetSettings.saveDateModePref(SuntimesActivity.this, 0,
@@ -2133,11 +2135,7 @@ public class SuntimesActivity extends AppCompatActivity
             WidgetSettings.saveDatePref(SuntimesActivity.this, 0, dateInfo);
             afterConfigDate();*/
 
-            int position = card_adapter.findPositionForDate(SuntimesActivity.this, suggested);
-            if (position >= 0 && position < CardAdapter.MAX_POSITIONS) {
-                setUserSwappedCard(true, "onConfigDate");
-                card_view.scrollToPosition(position);
-            }
+            scrollToDate(suggested);
         }
     };
 
@@ -2174,7 +2172,6 @@ public class SuntimesActivity extends AppCompatActivity
                 dismissEquinoxDialog();   // dismiss the dialog if also showing the view (so any changed options are immediately visible)
             }
         }
-
         @Override
         public void onSetAlarm( WidgetSettings.SolsticeEquinoxMode suggestedEvent ) {
             scheduleAlarm(SolarEvents.valueOf(suggestedEvent));
@@ -2186,6 +2183,10 @@ public class SuntimesActivity extends AppCompatActivity
         @Override
         public void onShowPosition( long suggested ) {
             showSunPositionAt(suggested);
+        }
+        @Override
+        public void onShowDate(long suggested) {
+            scrollToDate(suggested);
         }
     };
 
@@ -2240,6 +2241,14 @@ public class SuntimesActivity extends AppCompatActivity
         } else {
             card_scroller.setTargetPosition(position);   // near; animated scroll to item
             card_layout.startSmoothScroll(card_scroller);
+        }
+    }
+    protected void scrollToDate(long suggested)
+    {
+        int position = card_adapter.findPositionForDate(SuntimesActivity.this, suggested);
+        if (position >= 0 && position < CardAdapter.MAX_POSITIONS) {
+            setUserSwappedCard(true, "scrollToDate");
+            card_view.scrollToPosition(position);
         }
     }
     private RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()
