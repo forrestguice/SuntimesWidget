@@ -989,6 +989,7 @@
       <item>Russisch</item>
       <item>Niederländisch</item>
       <item>Czech</item>  <!-- TODO -->
+      <item>Simplified Chinese</item> <!-- TODO -->
   </string-array>
 
   <!--<string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>-->  <!-- e.g. 45° -->
