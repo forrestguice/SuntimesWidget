@@ -1172,6 +1172,7 @@
         <item>Ruština</item>
         <item>Nizozemština</item>
         <item>Čeština</item>
+        <item>Simplified Chinese</item> <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
