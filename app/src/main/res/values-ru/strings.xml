@@ -1174,6 +1174,7 @@
         <item>Русский</item>
         <item>Dutch</item>  <!-- TODO -->
         <item>Czech</item>  <!-- TODO -->
+        <item>Simplified Chinese</item> <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
