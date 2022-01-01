@@ -115,6 +115,7 @@
     <!-- Field: moon illumination (as seen in moon widget) -->
     <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> освещено</string>  <!-- used in 2x1 widget -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- used in 1x1 widget -->
+    <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> \@ <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
@@ -154,6 +155,11 @@
         <item quantity="few">%1$s после</item>
         <item quantity="many">%1$s после</item>
     </plurals>
+
+    <string name="offset_before_msg">%1$s до %2$s</string>        <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_after_msg">%1$s после %2$s</string>      <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_before_msg1">{0} до {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+    <string name="offset_after_msg1">{0} после {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
 
     <string name="offset_button_before">до</string>    <!-- button label; [1h] [5m] [before] (-) -->
     <string name="offset_button_after">после</string>      <!-- button label; [1h] [5m] [after] (+) -->
@@ -476,6 +482,9 @@
     <string name="timezoneMode_current">Системный часовой пояс</string>               <!-- setting -->
     <string name="timezoneMode_custom">Пользовательский</string>                    <!-- setting -->
 
+    <string name="time_lmst">Local Sidereal Time</string>                  <!-- timezone label -->  <!-- TODO -->
+    <string name="time_gmst">Greenwich Sidereal Time</string>              <!-- timezone label -->  <!-- TODO -->
+    <string name="time_utc">Coordinated Universal Time</string>            <!-- timezone label -->  <!-- TODO -->
     <string name="time_localMean">Среднее солнечное время</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">Истинное солнечное время</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
@@ -760,6 +769,8 @@
 
     <string name="alarmOption_vibrate">Вибросигнал</string>                <!-- checkbox text -->
     <string name="alarmOption_ringtone_none">Без звука</string>          <!-- ringtone label (none) -->
+    <string name="alarmOption_ringtone_ringtone">Ringtone</string>          <!-- menu item; Select a "Ringtone" -->  <!-- TODO -->
+    <string name="alarmOption_ringtone_file">Audio File</string>          <!-- menu item; Select an "Audio File" -->  <!-- TODO -->
     <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
     <string name="alarmOption_action_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- action label format -->
     <string name="alarmOption_solarevent_none">по системному времени</string>          <!-- ringtone label (none) -->
@@ -911,6 +922,7 @@
     <string name="configAction_deletePlace">Удалить</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Очистить</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportPlaces">Экспорт</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->  <!-- TODO -->
 
 
     <!-- App Setting: UI -->
@@ -945,6 +957,11 @@
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Источник расчетов</string>
     <string name="configLabel_ui_showdatasource_summary">Показывать текущий алгоритм и коррекцию по высоте (если доступно).</string>
+
+    <!-- App Setting: show headers -->
+    <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
+    <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_ui_showheader_text">Show Header Text</string> <!-- checkbox label --> <!-- TODO -->
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Золотой час</string>
@@ -1175,6 +1192,7 @@
         <item>Русский</item>
         <item>Dutch</item>  <!-- TODO -->
         <item>Czech</item>  <!-- TODO -->
+        <item>Simplified Chinese</item> <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
@@ -1290,7 +1308,7 @@
         <item>Лунный полдень</item>
         <item>Лунная полночь</item>
     </string-array>
-    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
+    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>Утренние астроном. сум. (начало)</item>
         <item>Утренние навигац. сум. (начало)</item>
         <item>Утреннее режимное время (начало)</item>
@@ -1319,6 +1337,35 @@
         <item>Лунный полдень</item>
         <item>Лунная полночь</item>
     </string-array>
+    <string-array name="solarevents_long1">   <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
+        <item>Утренние астроном. сум. (начало)</item>
+        <item>Утренние навигац. сум. (начало)</item>
+        <item>Утреннее режимное время (начало)</item>
+        <item>Утренние гражданские сум. (начало)</item>
+        <item>Утреннее режимное время (конец)</item>
+        <item>Восход солнца</item>
+        <item>Утренний золотой час (конец)</item>
+        <item>Солнечный полдень</item>
+        <item>Вечерний золотой час (начало)</item>
+        <item>Заход солнца</item>
+        <item>Вечернее режимное время (начало)</item>
+        <item>Вечерние гражданские сум. (конец)</item>
+        <item>Вечернее режимное время (конец)</item>
+        <item>Вечерние навигац. сум. (конец)</item>
+        <item>Вечерние астроном. сум. (конец)</item>
+        <item>Восход луны</item>
+        <item>Заход луны</item>
+        <item>Новолуние</item>
+        <item>Первая четверть</item>
+        <item>Полнолуние</item>
+        <item>Третья четверть</item>
+        <item>Весеннее равноденствие</item>
+        <item>Летнее солнцестояние</item>
+        <item>Осеннее равноденствие</item>
+        <item>Зимнее солнцестояние</item>
+        <item>Лунный полдень</item>
+        <item>Лунная полночь</item>
+    </string-array>  <!-- TODO -->
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">GPS выключен. Включить GPS?</string>
@@ -1640,6 +1687,7 @@
     <string name="feature_not_supported_by_api">Эта функция не поддерживается API %1$s.</string>
     <string name="feature_not_supported_by_source">Эта функция не поддерживается текущим источником данных.</string>
     <string name="reboot_required_message">Для вступления изменений в силу может потребоваться перезагрузка.</string>
+    <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
 
     <string name="dialog_ok">OK</string>  <!-- TODO -->
     <string name="dialog_cancel">Отменить</string>

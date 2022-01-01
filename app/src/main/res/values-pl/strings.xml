@@ -121,6 +121,11 @@
         <item quantity="other">%1$s po</item>
     </plurals>
 
+    <string name="offset_before_msg">%1$s przed %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_after_msg">%1$s po %2$s</string>        <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_before_msg1">{0} przed {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+    <string name="offset_after_msg1">{0} po {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+
     <string name="offset_button_before">przed</string>    <!-- button label; [1h] [5m] [before] (-) -->
     <string name="offset_button_after">po</string>      <!-- button label; [1h] [5m] [after] (+) -->
 
@@ -1006,6 +1011,7 @@
         <item>Rosyjski</item>
         <item>Holenderski</item>
         <item>Czech</item>  <!-- TODO -->
+        <item>Simplified Chinese</item> <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
@@ -1120,7 +1126,7 @@
         <item>górowanie Księżyca</item>
         <item>dołowanie Księżyca</item>
     </string-array>
-    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
+    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>świt astronomiczny</item>
         <item>świt żeglarski</item>
         <item>poranna błękitna godzina (początek)</item>
@@ -1149,6 +1155,35 @@
         <item>kulminacja górna Księżyca</item>
         <item>kulminacja dolna Księżyca</item>
     </string-array>
+    <string-array name="solarevents_long1">   <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
+        <item>świt astronomiczny</item>
+        <item>świt żeglarski</item>
+        <item>poranna błękitna godzina (początek)</item>
+        <item>świt cywilny</item>
+        <item>poranna błękitna godzina (koniec)</item>
+        <item>wschód Słońca</item>
+        <item>poranna złota godzina (koniec)</item>
+        <item>kulminacja Słońca</item>
+        <item>wieczorna złota godzina (początek)</item>
+        <item>zachód Słońca</item>
+        <item>wieczorna błękitna godzina (początek)</item>
+        <item>zmierzch cywilny</item>
+        <item>wieczorna złota godzina (koniec)</item>
+        <item>zmierzch żeglarski</item>
+        <item>zmierzch astronomiczny</item>
+        <item>wschód Księżyca</item>
+        <item>zachód Księżyca</item>
+        <item>nów Księżyca</item>
+        <item>pierwsza kwadra Księżyca</item>
+        <item>pełnia Księżyca</item>
+        <item>ostatnia kwadra Księżyca</item>
+        <item>równonoc wiosenna</item>
+        <item>przesilenie letnie</item>
+        <item>równonoc jesienna</item>
+        <item>przesilenie zimowe</item>
+        <item>kulminacja górna Księżyca</item>
+        <item>kulminacja dolna Księżyca</item>
+    </string-array>   <!-- TODO: review -->
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">GPS jest wyłączony. Czy włączyć go?</string>

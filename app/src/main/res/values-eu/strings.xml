@@ -85,6 +85,7 @@
     <!-- Field: moon illumination (as seen in moon widget) -->
     <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> argituta</string>  <!-- used in 2x1 widget -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- used in 1x1 widget -->
+    <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> \@ <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
@@ -118,6 +119,11 @@
         <item quantity="one">%1$s after</item>
         <item quantity="other">%1$s after</item>
     </plurals>  <!-- TODO -->
+
+    <string name="offset_before_msg">%1$s before %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO -->
+    <string name="offset_after_msg">%1$s after %2$s</string>      <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO -->
+    <string name="offset_before_msg1">{0} before {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO -->
+    <string name="offset_after_msg1">{0} after {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO -->
 
     <string name="offset_button_before">before</string>    <!-- button label; [1h] [5m] [before] (-) -->  <!-- TODO -->
     <string name="offset_button_after">after</string>      <!-- button label; [1h] [5m] [after] (+) -->  <!-- TODO -->
@@ -419,6 +425,9 @@
     <string name="timezoneMode_current">Sistemaren ordu eremua</string>               <!-- setting -->
     <string name="timezoneMode_custom">Erabiltzaileak ezarria</string>                    <!-- setting -->
 
+    <string name="time_lmst">Local Sidereal Time</string>                  <!-- timezone label -->  <!-- TODO -->
+    <string name="time_gmst">Greenwich Sidereal Time</string>              <!-- timezone label -->  <!-- TODO -->
+    <string name="time_utc">Coordinated Universal Time</string>            <!-- timezone label -->  <!-- TODO -->
     <string name="time_localMean">Batez besteko tokiko ordua</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">Itxurako eguzkiaren ordua</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
@@ -703,6 +712,8 @@
 
     <string name="alarmOption_vibrate">Vibrate</string>                <!-- checkbox text -->  <!-- TODO -->
     <string name="alarmOption_ringtone_none">No Sound</string>          <!-- ringtone label (none) -->  <!-- TODO -->
+    <string name="alarmOption_ringtone_ringtone">Ringtone</string>          <!-- menu item; Select a "Ringtone" -->  <!-- TODO -->
+    <string name="alarmOption_ringtone_file">Audio File</string>          <!-- menu item; Select an "Audio File" -->  <!-- TODO -->
     <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->  <!-- TODO -->
     <string name="alarmOption_solarevent_none">Clock Time</string>          <!-- ringtone label (none) -->  <!-- TODO -->
 
@@ -843,6 +854,7 @@
     <string name="configAction_deletePlace">Ezabatu</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Garbitu</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportPlaces">Esportatu</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->  <!-- TODO -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Erabiltzailearen interfazea</string>                       <!-- group title -->
@@ -876,6 +888,11 @@
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Datuen iturria erakutsi</string>
     <string name="configLabel_ui_showdatasource_summary">Oraingo konfigurazioa erakusten duen etiketa bat erakutsi.</string>
+
+    <!-- App Setting: show headers -->
+    <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
+    <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_ui_showheader_text">Show Header Text</string> <!-- checkbox label --> <!-- TODO -->
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Urrezko ordua</string>
@@ -1004,6 +1021,7 @@
         <item>Russian</item>  <!-- TODO -->
         <item>Dutch</item>  <!-- TODO -->
         <item>Czech</item>  <!-- TODO -->
+        <item>Simplified Chinese</item> <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
@@ -1119,7 +1137,7 @@
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
-    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
+    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>goizeko krepuskulu astronomikoa (hasiera)</item>
         <item>goizeko itsas krepuskulua (hasiera)</item>
         <item>goizeko ordu urdina (hasiera)</item>
@@ -1148,6 +1166,35 @@
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
+    <string-array name="solarevents_long1">    <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
+        <item>goizeko krepuskulu astronomikoa (hasiera)</item>
+        <item>goizeko itsas krepuskulua (hasiera)</item>
+        <item>goizeko ordu urdina (hasiera)</item>
+        <item>goizeko krepuskulu zibila (hasiera)</item>
+        <item>goizeko ordu urdina (amaiera)</item>
+        <item>egunsentia</item>
+        <item>goizeko urrezko ordua (amaiera)</item>
+        <item>eguzki eguerdia</item>
+        <item>arratsaldeko urrezko ordua (hasiera)</item>
+        <item>ilunabarra</item>
+        <item>arratsaldeko ordu urdina (hasiera)</item>
+        <item>arratsaldeko krepuskulu zibila (amaiera)</item>
+        <item>arratsaldeko ordu urdina (amaiera)</item>
+        <item>arratsaldeko itsas krepuskulua (amaiera)</item>
+        <item>arratsaldeko krepuskulu astronomikoa (amaiera)</item>
+        <item>ilargiaren irteera</item>
+        <item>ilargia ezkutatzea</item>
+        <item>ilberria</item>
+        <item>lehen laurdena</item>
+        <item>ilbetea</item>
+        <item>hirugarren laurdena</item>
+        <item>udaberriko ekinokzioa</item>
+        <item>udako solstizioa</item>
+        <item>udazkeneko ekinokzioa</item>
+        <item>neguko solstizioa</item>
+        <item>lunar noon</item>    <!-- TODO -->
+        <item>lunar midnight</item>    <!-- TODO -->
+    </string-array>    <!-- TODO -->
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">GPSa ezgaituta dago. Gaitu?</string>
@@ -1405,6 +1452,7 @@
     <string name="feature_not_supported_by_api">This feature is not supported by API %1$s.</string>  <!-- TODO -->
     <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>  <!-- TODO -->
     <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>  <!-- TODO -->
+    <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
 
     <string name="dialog_ok">OK</string>  <!-- TODO -->
     <string name="dialog_cancel">Utzi</string>
