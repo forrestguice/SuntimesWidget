@@ -119,6 +119,11 @@
         <item quantity="other">%1$s 之后</item>
     </plurals>
 
+    <string name="offset_before_msg">%1$s 之前 %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_after_msg">%1$s 之后 %2$s</string>     <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_before_msg1">{0} 之前 {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+    <string name="offset_after_msg1">{0} 之后 {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+
     <string name="offset_button_before">之前</string>    <!-- button label; [1h] [5m] [before] (-) -->
     <string name="offset_button_after">之后</string>      <!-- button label; [1h] [5m] [after] (+) -->
 
@@ -1126,7 +1131,7 @@
         <item>月亮正午</item>
         <item>月夜</item>
     </string-array>
-    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
+    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>天文曙光</item>
         <item>航海曙光</item>
         <item>蓝色时刻（开始）</item>
@@ -1155,6 +1160,35 @@
         <item>月亮正午</item>
         <item>月夜</item>
     </string-array>
+    <string-array name="solarevents_long1">   <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
+        <item>天文曙光</item>
+        <item>航海曙光</item>
+        <item>蓝色时刻（开始）</item>
+        <item>民用曙光</item>
+        <item>蓝色时刻（结束）</item>
+        <item>日出</item>
+        <item>黄金时刻（结束）</item>
+        <item>正午</item>
+        <item>黄金时刻（开始）</item>
+        <item>日落</item>
+        <item>蓝色时刻（开始）</item>
+        <item>民用暮光</item>
+        <item>蓝色时刻（结束）</item>
+        <item>航海暮光</item>
+        <item>天文暮光</item>
+        <item>月出</item>
+        <item>月落</item>
+        <item>新月</item>
+        <item>上弦月</item>
+        <item>满月</item>
+        <item>下弦月</item>
+        <item>春分</item>
+        <item>夏至</item>
+        <item>秋分</item>
+        <item>冬至</item>
+        <item>月亮正午</item>
+        <item>月夜</item>
+    </string-array>  <!-- TODO: review -->
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">GPS已被禁用，要启用吗？</string>

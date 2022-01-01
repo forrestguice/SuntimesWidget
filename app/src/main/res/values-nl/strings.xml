@@ -148,6 +148,11 @@
         <item quantity="other">%1$s na</item>
     </plurals>
 
+    <string name="offset_before_msg">%1$s voor %2$s</string>   <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_after_msg">%1$s na %2$s</string>      <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_before_msg1">{0} voor {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+    <string name="offset_after_msg1">{0} na {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+
     <string name="offset_button_before">voor</string>    <!-- button label; [1h] [5m] [before] (-) -->
     <string name="offset_button_after">na</string>      <!-- button label; [1h] [5m] [after] (+) -->
 
@@ -1268,7 +1273,7 @@
         <item>lunar noon</item>
         <item>lunar midnight</item>
     </string-array>
-    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
+    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>morning astronomical twilight (start)</item>
         <item>morning nautical twilight (start)</item>
         <item>morning blue hour (start)</item>
@@ -1297,6 +1302,35 @@
         <item>lunar noon</item>
         <item>lunar midnight</item>
     </string-array>
+    <string-array name="solarevents_long1">    <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
+        <item>start of morning astronomical twilight</item>
+        <item>start of morning nautical twilight</item>
+        <item>start of morning blue hour</item>
+        <item>start of morning civil twilight</item>
+        <item>end of morning blue hour</item>
+        <item>Zonsopgang</item>
+        <item>end of morning golden hour</item>
+        <item>solar noon</item>
+        <item>start of evening golden hour</item>
+        <item>Zonsondergang</item>
+        <item>start of evening blue hour</item>
+        <item>end of evening civil twilight</item>
+        <item>end of evening blue hour</item>
+        <item>end of evening nautical twilight</item>
+        <item>end of evening astronomical twilight</item>
+        <item>Maanopkomst</item>
+        <item>Maansondergang</item>
+        <item>new moon</item>
+        <item>first quarter</item>
+        <item>full moon</item>
+        <item>third quarter</item>
+        <item>spring equinox</item>
+        <item>summer solstice</item>
+        <item>autumn equinox</item>
+        <item>winter solstice</item>
+        <item>lunar noon</item>
+        <item>lunar midnight</item>
+    </string-array>   <!-- TODO -->
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">GPS is disabled. Enable it?</string>

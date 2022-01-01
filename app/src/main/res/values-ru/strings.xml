@@ -155,6 +155,11 @@
         <item quantity="many">%1$s после</item>
     </plurals>
 
+    <string name="offset_before_msg">%1$s до %2$s</string>        <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_after_msg">%1$s после %2$s</string>      <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_before_msg1">{0} до {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+    <string name="offset_after_msg1">{0} после {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+
     <string name="offset_button_before">до</string>    <!-- button label; [1h] [5m] [before] (-) -->
     <string name="offset_button_after">после</string>      <!-- button label; [1h] [5m] [after] (+) -->
 
@@ -1290,7 +1295,7 @@
         <item>Лунный полдень</item>
         <item>Лунная полночь</item>
     </string-array>
-    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
+    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>Утренние астроном. сум. (начало)</item>
         <item>Утренние навигац. сум. (начало)</item>
         <item>Утреннее режимное время (начало)</item>
@@ -1319,6 +1324,35 @@
         <item>Лунный полдень</item>
         <item>Лунная полночь</item>
     </string-array>
+    <string-array name="solarevents_long1">   <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
+        <item>Утренние астроном. сум. (начало)</item>
+        <item>Утренние навигац. сум. (начало)</item>
+        <item>Утреннее режимное время (начало)</item>
+        <item>Утренние гражданские сум. (начало)</item>
+        <item>Утреннее режимное время (конец)</item>
+        <item>Восход солнца</item>
+        <item>Утренний золотой час (конец)</item>
+        <item>Солнечный полдень</item>
+        <item>Вечерний золотой час (начало)</item>
+        <item>Заход солнца</item>
+        <item>Вечернее режимное время (начало)</item>
+        <item>Вечерние гражданские сум. (конец)</item>
+        <item>Вечернее режимное время (конец)</item>
+        <item>Вечерние навигац. сум. (конец)</item>
+        <item>Вечерние астроном. сум. (конец)</item>
+        <item>Восход луны</item>
+        <item>Заход луны</item>
+        <item>Новолуние</item>
+        <item>Первая четверть</item>
+        <item>Полнолуние</item>
+        <item>Третья четверть</item>
+        <item>Весеннее равноденствие</item>
+        <item>Летнее солнцестояние</item>
+        <item>Осеннее равноденствие</item>
+        <item>Зимнее солнцестояние</item>
+        <item>Лунный полдень</item>
+        <item>Лунная полночь</item>
+    </string-array>  <!-- TODO -->
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">GPS выключен. Включить GPS?</string>

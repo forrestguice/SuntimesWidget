@@ -149,9 +149,11 @@
         <item quantity="one">%1$s after</item>
         <item quantity="other">%1$s after</item>
     </plurals>
-    <string name="offset_at_msg">%1$s at %2$s</string>            <!-- notification msg; 'at Sunset'; second arg is always non-plural -->   <!-- TODO -->
-    <string name="offset_before_msg">%1$s before %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO -->
-    <string name="offset_after_msg">%1$s after %2$s</string>      <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO -->
+
+    <string name="offset_before_msg">%1$s before %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_after_msg">%1$s after %2$s</string>      <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_before_msg1">{0} before {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+    <string name="offset_after_msg1">{0} after {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
 
     <string name="offset_button_before">before</string>    <!-- button label; [1h] [5m] [before] (-) -->
     <string name="offset_button_after">after</string>      <!-- button label; [1h] [5m] [after] (+) -->
@@ -1419,7 +1421,7 @@
         <item>lunar noon</item>
         <item>lunar midnight</item>
     </string-array>
-    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
+    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- short labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>morning astronomical twilight (start)</item>
         <item>morning nautical twilight (start)</item>
         <item>morning blue hour (start)</item>
@@ -1448,6 +1450,95 @@
         <item>lunar noon</item>
         <item>lunar midnight</item>
     </string-array>
+    <string-array name="solarevents_long1">   <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
+        <item>start of morning astronomical twilight</item>
+        <item>start of morning nautical twilight</item>
+        <item>start of morning blue hour</item>
+        <item>start of morning civil twilight</item>
+        <item>end of morning blue hour</item>
+        <item>sunrise</item>
+        <item>end of morning golden hour</item>
+        <item>solar noon</item>
+        <item>start of evening golden hour</item>
+        <item>sunset</item>
+        <item>start of evening blue hour</item>
+        <item>end of evening civil twilight</item>
+        <item>end of evening blue hour</item>
+        <item>end of evening nautical twilight</item>
+        <item>end of evening astronomical twilight</item>
+        <item>moonrise</item>
+        <item>moonset</item>
+        <item>new moon</item>
+        <item>first quarter</item>
+        <item>full moon</item>
+        <item>third quarter</item>
+        <item>spring equinox</item>
+        <item>summer solstice</item>
+        <item>autumn equinox</item>
+        <item>winter solstice</item>
+        <item>lunar noon</item>
+        <item>lunar midnight</item>
+    </string-array>
+
+    <string-array name="solarevents_gender">   <!-- one-to-one with solarevents_long1; values used by SelectFormat (api24+) -->
+        <item>other</item>    <!-- start of astronomical twilight -->
+        <item>other</item>    <!-- start of nautical twilight -->
+        <item>other</item>    <!-- start of morning blue hour -->
+        <item>other</item>    <!-- start of civil twilight -->
+        <item>other</item>    <!-- end of morning blue hour -->
+        <item>other</item>    <!-- sunrise -->
+        <item>other</item>    <!-- start of golden hour -->
+        <item>other</item>    <!-- solar noon -->
+        <item>other</item>    <!-- end of golden hour -->
+        <item>other</item>    <!-- sunset -->
+        <item>other</item>    <!-- start of evening blue hour -->
+        <item>other</item>    <!-- end of civil twilight -->
+        <item>other</item>    <!-- end of evening blue hour -->
+        <item>other</item>    <!-- end of nautical twilight -->
+        <item>other</item>    <!-- end of astronomical twilight -->
+        <item>female</item>   <!-- moonrise -->
+        <item>female</item>   <!-- moonset -->
+        <item>female</item>   <!-- new moon -->
+        <item>other</item>    <!-- first quarter -->
+        <item>female</item>   <!-- full moon -->
+        <item>other</item>    <!-- third quarter -->
+        <item>other</item>    <!-- spring solstice -->
+        <item>other</item>    <!-- summer solstice -->
+        <item>other</item>    <!-- autumn equinox -->
+        <item>other</item>    <!-- winter solstice -->
+        <item>other</item>    <!-- lunar noon -->
+        <item>female</item>   <!-- lunar midnight -->
+    </string-array>
+    <integer-array name="solarevents_quantity">   <!-- one-to-one with solarevents_short; values used by SelectFormat (api24+) -->
+        <item>1</item>    <!-- start of astronomical twilight -->
+        <item>1</item>    <!-- start of nautical twilight -->
+        <item>1</item>    <!-- start of morning blue hour -->
+        <item>1</item>    <!-- start of civil twilight -->
+        <item>1</item>    <!-- end of morning blue hour -->
+        <item>1</item>    <!-- sunrise -->
+        <item>1</item>    <!-- start of golden hour -->
+        <item>1</item>    <!-- solar noon -->
+        <item>1</item>    <!-- end of golden hour -->
+        <item>1</item>    <!-- sunset -->
+        <item>1</item>    <!-- start of evening blue hour -->
+        <item>1</item>    <!-- end of civil twilight -->
+        <item>1</item>    <!-- end of evening blue hour -->
+        <item>1</item>    <!-- end of nautical twilight -->
+        <item>1</item>    <!-- end of astronomical twilight -->
+        <item>1</item>    <!-- moonrise -->
+        <item>1</item>    <!-- moonset -->
+        <item>1</item>    <!-- new moon -->
+        <item>1</item>    <!-- first quarter -->
+        <item>1</item>    <!-- full moon -->
+        <item>1</item>    <!-- third quarter -->
+        <item>1</item>    <!-- spring solstice -->
+        <item>1</item>    <!-- summer solstice -->
+        <item>1</item>    <!-- autumn equinox -->
+        <item>1</item>    <!-- winter solstice -->
+        <item>1</item>    <!-- lunar noon -->
+        <item>1</item>    <!-- lunar midnight -->
+    </integer-array>
+    <string name="time_gender">female</string>   <!-- SelectFormat (api24+) time phrase gender (if applicable); expects 'female', 'other', etc; e.g. in Spanish hours are feminine ("de las 5:30") --> <!-- TODO -->
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">GPS is disabled. Enable it?</string>

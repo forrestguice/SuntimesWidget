@@ -119,6 +119,11 @@
         <item quantity="other">%1$s after</item>
     </plurals>  <!-- TODO -->
 
+    <string name="offset_before_msg">%1$s before %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO -->
+    <string name="offset_after_msg">%1$s after %2$s</string>      <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO -->
+    <string name="offset_before_msg1">{0} before {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO -->
+    <string name="offset_after_msg1">{0} after {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO -->
+
     <string name="offset_button_before">before</string>    <!-- button label; [1h] [5m] [before] (-) -->  <!-- TODO -->
     <string name="offset_button_after">after</string>      <!-- button label; [1h] [5m] [after] (+) -->  <!-- TODO -->
 
@@ -1119,7 +1124,7 @@
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
-    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
+    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>goizeko krepuskulu astronomikoa (hasiera)</item>
         <item>goizeko itsas krepuskulua (hasiera)</item>
         <item>goizeko ordu urdina (hasiera)</item>
@@ -1148,6 +1153,35 @@
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
+    <string-array name="solarevents_long1">    <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
+        <item>goizeko krepuskulu astronomikoa (hasiera)</item>
+        <item>goizeko itsas krepuskulua (hasiera)</item>
+        <item>goizeko ordu urdina (hasiera)</item>
+        <item>goizeko krepuskulu zibila (hasiera)</item>
+        <item>goizeko ordu urdina (amaiera)</item>
+        <item>egunsentia</item>
+        <item>goizeko urrezko ordua (amaiera)</item>
+        <item>eguzki eguerdia</item>
+        <item>arratsaldeko urrezko ordua (hasiera)</item>
+        <item>ilunabarra</item>
+        <item>arratsaldeko ordu urdina (hasiera)</item>
+        <item>arratsaldeko krepuskulu zibila (amaiera)</item>
+        <item>arratsaldeko ordu urdina (amaiera)</item>
+        <item>arratsaldeko itsas krepuskulua (amaiera)</item>
+        <item>arratsaldeko krepuskulu astronomikoa (amaiera)</item>
+        <item>ilargiaren irteera</item>
+        <item>ilargia ezkutatzea</item>
+        <item>ilberria</item>
+        <item>lehen laurdena</item>
+        <item>ilbetea</item>
+        <item>hirugarren laurdena</item>
+        <item>udaberriko ekinokzioa</item>
+        <item>udako solstizioa</item>
+        <item>udazkeneko ekinokzioa</item>
+        <item>neguko solstizioa</item>
+        <item>lunar noon</item>    <!-- TODO -->
+        <item>lunar midnight</item>    <!-- TODO -->
+    </string-array>    <!-- TODO -->
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">GPSa ezgaituta dago. Gaitu?</string>

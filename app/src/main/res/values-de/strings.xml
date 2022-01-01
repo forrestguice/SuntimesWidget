@@ -113,7 +113,12 @@
   <plurals name="offset_after_plural">      <!-- e.g. "30m after \n 5:30PM" .. the time component is shown on the next line -->
     <item quantity="one">%1$s nach</item>
     <item quantity="other">%1$s nach</item>
-  </plurals>  
+  </plurals>
+
+  <string name="offset_before_msg">%1$s vor %2$s</string>      <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO: review -->
+  <string name="offset_after_msg">%1$s nach %2$s</string>      <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO: review -->
+  <string name="offset_before_msg1">{0} vor {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+  <string name="offset_after_msg1">{0} nach {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
 
   <string name="offset_button_before">vor</string>    <!-- button label; [1h] [5m] [before] (-) -->  
   <string name="offset_button_after">nach</string>      <!-- button label; [1h] [5m] [after] (+) -->  
@@ -1103,24 +1108,24 @@
     <item>Mondmittag</item>
     <item>Mondmitternacht</item>
   </string-array>
-  <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
-      <item>Astronomische Morgendämmerung (Beginn)</item>
-      <item>Nautische Morgendämmerung (Beginn)</item>
-      <item>Morgendliche Blaue Stunde (Beginn)</item>
-      <item>Bürgerliche Morgendämmerung (Beginn)</item>
-      <item>Morgendliche Blaue Stunde (Ende)</item>
-      <item>Sonnenaufgang</item>
-      <item>Morgendliche Goldene Stunde (Ende)</item>
-      <item>Mittagshöhe</item>
-      <item>Abendliche Goldene Stunde (Beginn)</item>
-      <item>Sonnenuntergang</item>
-      <item>Abendliche Blaue Stunde (Beginn)</item>
-      <item>Bürgerliche Abenddämmerung (Ende)</item>
-      <item>Abendliche Blaue Stunde (Ende)</item>
-      <item>Nautische Abenddämmerung (Ende)</item>
-      <item>Astronomische Abenddämmerung (Ende)</item>
-      <item>Mondaufgang</item>
-      <item>Monduntergang</item>
+  <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
+    <item>Astronomische Morgendämmerung (Beginn)</item>
+    <item>Nautische Morgendämmerung (Beginn)</item>
+    <item>Morgendliche Blaue Stunde (Beginn)</item>
+    <item>Bürgerliche Morgendämmerung (Beginn)</item>
+    <item>Morgendliche Blaue Stunde (Ende)</item>
+    <item>Sonnenaufgang</item>
+    <item>Morgendliche Goldene Stunde (Ende)</item>
+    <item>Mittagshöhe</item>
+    <item>Abendliche Goldene Stunde (Beginn)</item>
+    <item>Sonnenuntergang</item>
+    <item>Abendliche Blaue Stunde (Beginn)</item>
+    <item>Bürgerliche Abenddämmerung (Ende)</item>
+    <item>Abendliche Blaue Stunde (Ende)</item>
+    <item>Nautische Abenddämmerung (Ende)</item>
+    <item>Astronomische Abenddämmerung (Ende)</item>
+    <item>Mondaufgang</item>
+    <item>Monduntergang</item>
     <item>Neumond</item>
     <item>Zunehmender Halbmond</item>
     <item>Vollmond</item>
@@ -1132,6 +1137,35 @@
     <item>Mondmittag</item>
     <item>Mondmitternacht</item>
   </string-array>
+  <string-array name="solarevents_long1">    <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
+    <item>Astronomische Morgendämmerung (Beginn)</item>
+    <item>Nautische Morgendämmerung (Beginn)</item>
+    <item>Morgendliche Blaue Stunde (Beginn)</item>
+    <item>Bürgerliche Morgendämmerung (Beginn)</item>
+    <item>Morgendliche Blaue Stunde (Ende)</item>
+    <item>Sonnenaufgang</item>
+    <item>Morgendliche Goldene Stunde (Ende)</item>
+    <item>Mittagshöhe</item>
+    <item>Abendliche Goldene Stunde (Beginn)</item>
+    <item>Sonnenuntergang</item>
+    <item>Abendliche Blaue Stunde (Beginn)</item>
+    <item>Bürgerliche Abenddämmerung (Ende)</item>
+    <item>Abendliche Blaue Stunde (Ende)</item>
+    <item>Nautische Abenddämmerung (Ende)</item>
+    <item>Astronomische Abenddämmerung (Ende)</item>
+    <item>Mondaufgang</item>
+    <item>Monduntergang</item>
+    <item>Neumond</item>
+    <item>Zunehmender Halbmond</item>
+    <item>Vollmond</item>
+    <item>Abnehmender Halbmond</item>
+    <item>Frühjahrs-Tag-Nacht-Gleiche</item>
+    <item>Sommersonnenwende</item>
+    <item>Herbst-Tag-Nacht-Gleiche</item>
+    <item>Wintersonnenwende</item>
+    <item>Mondmittag</item>
+    <item>Mondmitternacht</item>
+  </string-array>  <!-- TODO: review -->
 
   <!-- Dialog: Enable GPS? -->
   <string name="gps_dialog_msg">GPS ist deaktiviert. Jetzt aktivieren?</string>

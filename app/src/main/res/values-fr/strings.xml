@@ -104,15 +104,20 @@
     <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. the time component is shown on the next line -->
         <item quantity="one" xliff:ignore="ImpliedQuantity">at</item>
         <item quantity="other">à</item>
-    </plurals>  <!-- TODO -->
+    </plurals>  <!-- TODO: review -->
     <plurals name="offset_before_plural">      <!-- e.g. "30m before \n 5:30PM" .. the time component is shown on the next line -->
         <item quantity="one">%1$s avant</item>
         <item quantity="other">%1$s avant</item>
-    </plurals>  <!-- TODO -->
+    </plurals>  <!-- TODO: review -->
     <plurals name="offset_after_plural">      <!-- e.g. "30m after \n 5:30PM" .. the time component is shown on the next line -->
         <item quantity="one">%1$s après</item>
         <item quantity="other">%1$s après</item>
-    </plurals>  <!-- TODO -->
+    </plurals>  <!-- TODO: review -->
+
+    <string name="offset_before_msg">%1$s avant %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_after_msg">%1$s après %2$s</string>     <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_before_msg1">{0} avant {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+    <string name="offset_after_msg1">{0} après {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
 
     <string name="offset_button_before">avant</string>    <!-- button label; [1h] [5m] [before] (-) -->  <!-- TODO -->
     <string name="offset_button_after">après</string>      <!-- button label; [1h] [5m] [after] (+) -->  <!-- TODO -->
@@ -1089,7 +1094,7 @@
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
-    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
+    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>crépuscule astronomique du matin</item>
         <item>crépuscule nautique du matin</item>
         <item>heure bleue du matin (début)</item>  
@@ -1118,6 +1123,35 @@
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
+    <string-array name="solarevents_long1">    <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
+        <item>crépuscule astronomique du matin</item>
+        <item>crépuscule nautique du matin</item>
+        <item>heure bleue du matin (début)</item>
+        <item>crépuscule civil du matin</item>
+        <item>heure bleue du matin (fin)</item>
+        <item>lever du soleil</item>
+        <item>heure dorée du matin (fin)</item>
+        <item>midi solaire</item>
+        <item>heure dorée du soir (début)</item>
+        <item>coucher du soleil</item>
+        <item>heure bleue du soir (début)</item>
+        <item>crépuscule civil du soir</item>
+        <item>heure bleue du soir (fin)</item>
+        <item>crépuscule nautique du soir</item>
+        <item>crépuscule astronomique du soir</item>
+        <item>lever de la lune</item>
+        <item>coucher de la lune</item>
+        <item>nouvelle lune</item>
+        <item>premier quartier</item>
+        <item>pleine lune</item>
+        <item>dernier quartier</item>
+        <item>Équinoxe du printemps</item>
+        <item>Solstice d\'été</item>
+        <item>Équinoxe d\'automne</item>
+        <item>Solstice d\'hiver</item>
+        <item>lunar noon</item>    <!-- TODO -->
+        <item>lunar midnight</item>    <!-- TODO -->
+    </string-array>  <!-- TODO -->
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">Activer le GPS ?</string>

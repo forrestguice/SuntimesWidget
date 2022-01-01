@@ -115,6 +115,11 @@
         <item quantity="other">%1$s desprès</item>
     </plurals>
 
+    <string name="offset_before_msg">%1$s abans %2$s</string>     <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_after_msg">%1$s desprès %2$s</string>    <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_before_msg1">{0} abans {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+    <string name="offset_after_msg1">{0} desprès {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+
     <string name="offset_button_before">abans</string>    <!-- button label; [1h] [5m] [before] (-) -->
     <string name="offset_button_after">desprès</string>      <!-- button label; [1h] [5m] [after] (+) -->
 
@@ -1111,7 +1116,7 @@
         <item>Migdia lunar</item>    
         <item>Mitjanit lunar</item>    
     </string-array>
-    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
+    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>sortida de sol astronòmica</item>
         <item>sortida de sol nàutica</item>
         <item>hora blava de l\'alba (inici)</item>
@@ -1140,6 +1145,35 @@
         <item>Migdia lunar</item>    
         <item>Mitjanit lunar</item>    
     </string-array>
+    <string-array name="solarevents_long1">    <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
+        <item>sortida de sol astronòmica</item>
+        <item>sortida de sol nàutica</item>
+        <item>hora blava de l\'alba (inici)</item>
+        <item>sortida de sol civil</item>
+        <item>hora blava de l\'alba (fi)</item>
+        <item>sortida de sol</item>
+        <item>hora daurada del fi de l\'alba</item>
+        <item>migdia</item>
+        <item>hora daurada de l\'inici del capvespre</item>
+        <item>posta de sol</item>
+        <item>hora blava nocturna (inici)</item>
+        <item>posta de sol civil</item>
+        <item>hora blava capvespre (fi)</item>
+        <item>posta de sol nàutica</item>
+        <item>posta de sol astronòmica</item>
+        <item>sortida lunar</item>
+        <item>posta lunar</item>
+        <item>lluna nova</item>
+        <item>quart creixent</item>
+        <item>lluna plena</item>
+        <item>quart minvant</item>
+        <item>equinocci de primavera</item>
+        <item>solstici d\'estiu</item>
+        <item>equinocci de tardor</item>
+        <item>solstici d\'hivern</item>
+        <item>Migdia lunar</item>
+        <item>Mitjanit lunar</item>
+    </string-array>   <!-- TODO -->
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">El GPS està desactivat. Activar-lo?</string>

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2020 Forrest Guice
+    Copyright (C) 2018-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -31,6 +31,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 
+import android.icu.text.MessageFormat;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -649,17 +650,10 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
-        String eventString = (alarm.event != null ? alarm.event.getShortDisplayString() : null);
-        String eventDisplay = eventString;
+        String eventDisplay = (alarm.event != null ? alarm.event.getLongDisplayString() : null);
         if (alarm.offset != 0) {
-            if (eventString == null) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(alarm.timestamp);
-                eventString = utils.calendarTimeShortDisplayString(context, calendar).toString();
-            }
-            String offsetText = utils.timeDeltaLongDisplayString(0, alarm.offset).getValue();
-            int offsetStringResID = ((alarm.offset < 0) ? R.string.offset_before_msg : R.string.offset_after_msg);
-            eventDisplay = context.getString(offsetStringResID, offsetText, eventString);
+            eventDisplay = (alarm.event != null) ? formatOffsetMessage(context, alarm.offset, alarm.event)
+                                                 : formatOffsetMessage(context, alarm.offset, alarm.timestamp);
         }
 
         String emptyLabel = ((eventDisplay != null) ? eventDisplay : context.getString(R.string.alarmOption_solarevent_none));
@@ -764,6 +758,45 @@ public class AlarmNotifications extends BroadcastReceiver
         builder.setOnlyAlertOnce(false);
 
         return builder.build();
+    }
+
+    public static String formatOffsetMessage(Context context, long offset, @NonNull SolarEvents event)
+    {
+        int i = event.ordinal();
+        String[] eventStrings = context.getResources().getStringArray(R.array.solarevents_long1);
+        String eventText = (i >= 0 && i <eventStrings.length) ? eventStrings[i] : event.name();
+        String offsetText = utils.timeDeltaLongDisplayString(0, offset).getValue();
+
+        if (Build.VERSION.SDK_INT >= 24) {    // uses SelectFormat so translations match quantity and gender
+            int[] eventPlurals = context.getResources().getIntArray(R.array.solarevents_quantity);
+            String[] eventGenders = context.getResources().getStringArray(R.array.solarevents_gender);
+            int plural = (i >= 0 && i <eventPlurals.length) ? eventPlurals[i] : 1;
+            String gender = (i >= 0 && i <eventGenders.length) ? eventGenders[i] : "other";
+            return formatOffsetMessage(context, offset, offsetText, eventText, plural, gender);
+        } else return formatOffsetMessage(context, offset, offsetText, eventText);
+    }
+    public static String formatOffsetMessage(Context context, long offset, long timestamp)
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timestamp);
+        String eventText = utils.calendarTimeShortDisplayString(context, calendar).toString();
+        String offsetText = utils.timeDeltaLongDisplayString(0, offset).getValue();
+
+        if (Build.VERSION.SDK_INT >= 24) {    // uses SelectFormat so translations match quantity and gender
+            int plural = SuntimesUtils.is24() ? calendar.get(Calendar.HOUR_OF_DAY) : calendar.get(Calendar.HOUR);
+            String gender = context.getString(R.string.time_gender);
+            return formatOffsetMessage(context, offset, offsetText, eventText, plural, gender);
+        } else return formatOffsetMessage(context, offset, offsetText, eventText);
+    }
+    public static String formatOffsetMessage(Context context, long offset, String offsetText, String eventText) {
+        return context.getString(((offset < 0) ? R.string.offset_before_msg : R.string.offset_after_msg), offsetText, eventText);
+    }
+    @TargetApi(24)
+    public static String formatOffsetMessage(Context context, long offset, String offsetText, String eventText, int plural, String gender )
+    {
+        String pattern = context.getString(((offset < 0) ? R.string.offset_before_msg1 : R.string.offset_after_msg1));
+        //Log.d("DEBUG", "formatOffsetMessage: " + plural + " : " + gender + "\n" + pattern);
+        return new MessageFormat(pattern).format( new Object[] {offsetText, plural, gender, eventText} );
     }
 
     /**

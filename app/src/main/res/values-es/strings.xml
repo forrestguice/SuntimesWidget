@@ -117,6 +117,11 @@
         <item quantity="other">%1$s después de las</item>
     </plurals>
 
+    <string name="offset_before_msg">%1$s antes de %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->
+    <string name="offset_before_msg1">{0} antes {1, plural, one {{2, select, female {de la} other {del}}} other {{2, select, female {de las} other {de los}}}} {3}</string>  <!-- uses SelectFormat (api24+) -->
+    <string name="offset_after_msg">%1$s después de %2$s</string>   <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->
+    <string name="offset_after_msg1">{0} después {1, plural, one {{2, select, female {de la} other {del}}} other {{2, select, female {de las} other {de los}}}} {3}</string>  <!-- uses SelectFormat (api24+)-->
+
     <string name="offset_button_before">antes</string>    <!-- button label; [1h] [5m] [before] (-) --> 
     <string name="offset_button_after">después</string>      <!-- button label; [1h] [5m] [after] (+) -->  
 
@@ -1109,7 +1114,7 @@
         <item>Mediodía lunar</item>    
         <item>Medianoche lunar</item>    
     </string-array>
-    <string-array name="solarevents_long">   
+    <string-array name="solarevents_long">      <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>Amanecer astronómico</item>
         <item>Amanecer náutico</item>
         <item>Hora azul del amanecer (inicio)</item>
@@ -1138,6 +1143,35 @@
         <item>Mediodía lunar</item>    
         <item>Medianoche lunar</item>    
     </string-array>
+    <string-array name="solarevents_long1">      <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
+        <item>Amanecer astronómico</item>
+        <item>Amanecer náutico</item>
+        <item>Hora azul del amanecer (inicio)</item>
+        <item>Amanecer civil</item>
+        <item>Hora azul del amanecer (final)</item>
+        <item>Amanecer</item>
+        <item>Hora dorada del final del amanecer</item>
+        <item>Mediodía</item>
+        <item>Hora dorada del inicio del atardecer</item>
+        <item>Atardecer</item>
+        <item>Hora azul del atardecer (inicio)</item>
+        <item>Atardecer sol civil</item>
+        <item>Hora azul del atardecer (final)</item>
+        <item>Atardecer náutica</item>
+        <item>Atardecer astronómico</item>
+        <item>Salida lunar</item>
+        <item>Puesta lunar</item>
+        <item>Luna nueva</item>
+        <item>Cuarto creciente</item>
+        <item>Luna llena</item>
+        <item>Cuarto menguante</item>
+        <item>Equinoccio de primavera</item>
+        <item>Solsticio de verano</item>
+        <item>Equinoccio de otoño</item>
+        <item>Solsticio de invierno</item>
+        <item>Mediodía lunar</item>
+        <item>Medianoche lunar</item>
+    </string-array>    <!-- TODO: review -->
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">El GPS está desactivado. ¿Activarlo?</string>

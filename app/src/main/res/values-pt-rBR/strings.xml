@@ -148,6 +148,11 @@
         <item quantity="other">%1$s após</item>
     </plurals>
 
+    <string name="offset_before_msg">%1$s antes das %2$s</string>  <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_after_msg">%1$s após %2$s</string>        <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_before_msg1">{0} antes das {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+    <string name="offset_after_msg1">{0} após {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+
     <string name="offset_button_before">antes</string>    <!-- button label; [1h] [5m] [before] (-) -->
     <string name="offset_button_after">depois</string>      <!-- button label; [1h] [5m] [after] (+) -->
 
@@ -1161,7 +1166,7 @@
         <item>meio-dia lunar</item>
         <item>meia-noite lunar</item>
     </string-array>
-    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
+    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>crepúsculo astronômico da manhã (início)</item>
         <item>crepúsculo náutico da manhã (início)</item>
         <item>hora azul da manhã (início)</item>
@@ -1190,6 +1195,35 @@
         <item>meio-dia lunar</item>
         <item>meia-noite lunar</item>
     </string-array>
+    <string-array name="solarevents_long1">  <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
+        <item>crepúsculo astronômico da manhã (início)</item>
+        <item>crepúsculo náutico da manhã (início)</item>
+        <item>hora azul da manhã (início)</item>
+        <item>crepúsculo civil de manhã (início)</item>
+        <item>hora azul da manhã (fim)</item>
+        <item>nascer do sol</item>
+        <item>hora dourada da manhã (fim)</item>
+        <item>meio dia</item>
+        <item>hora dourada da tarde (início)</item>
+        <item>pôr do sol</item>
+        <item>hora azul da tarde (início)</item>
+        <item>crepúsculo civil da tarde (fim)</item>
+        <item>hora azul da tarde (fim)</item>
+        <item>crepúsculo náutico da tarde (fim)</item>
+        <item>crepúsculo astronômico da tarde (fim)</item>
+        <item>nascer da lua</item>
+        <item>pôr da lua</item>
+        <item>lua nova</item>
+        <item>lua quarto crescente</item>
+        <item>lua cheia</item>
+        <item>lua quarto minguante</item>
+        <item>equinócio de primavera</item>
+        <item>solstício de verão</item>
+        <item>equinócio de outono</item>
+        <item>solstício de inverno</item>
+        <item>meio-dia lunar</item>
+        <item>meia-noite lunar</item>
+    </string-array>   <!-- TODO: review -->
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">GPS desligado. Deseja ligar?</string>
