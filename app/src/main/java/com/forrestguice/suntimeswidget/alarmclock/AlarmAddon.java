@@ -231,6 +231,15 @@ public class AlarmAddon
                     item.supports_repeating = (i_support_repeat >= 0) ? cursor.getInt(i_support_repeat) : AlarmEventContract.REPEAT_SUPPORT_DAILY;
                     item.supports_offset_days = (i_support_offsetdays >= 0) && Boolean.parseBoolean(cursor.getString(i_support_offsetdays));
                     item.requires_location = (i_requires_location >= 0) && Boolean.parseBoolean(cursor.getString(i_requires_location));
+
+                    int i_phrase = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_PHRASE);
+                    int i_phrase_gender = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_PHRASE_GENDER);
+                    int i_phrase_quantity = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_PHRASE_QUANTITY);
+                    String noun = (i_phrase >= 0 ? cursor.getString(i_phrase) : item.title);
+                    item.phrase = new AlarmEvent.AlarmEventPhrase(
+                            noun != null && !noun.trim().isEmpty() ? noun : item.title,
+                            i_phrase_gender >= 0 ? cursor.getString(i_phrase_gender) : "other",
+                            i_phrase_quantity >= 0 ? cursor.getInt(i_phrase_quantity) : 1);
                 }
 
                 cursor.close();

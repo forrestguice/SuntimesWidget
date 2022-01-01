@@ -78,6 +78,36 @@ public class AlarmEvent
     }
 
     /**
+     * AlarmEventPhrase
+     */
+    public static class AlarmEventPhrase
+    {
+        public AlarmEventPhrase(String noun) {
+            this.noun = noun;
+        }
+        public AlarmEventPhrase(String noun, String gender, int quantity) {
+            this.noun = noun;
+            this.gender = gender;
+            this.quantity = quantity;
+        }
+
+        protected String noun;
+        public String getNoun() {
+            return noun;
+        }
+
+        protected String gender = "other";
+        public String getGender() {
+            return gender;
+        }
+
+        protected int quantity = 1;
+        public int getQuantity() {
+            return quantity;
+        }
+    }
+
+    /**
      * AlarmEventItem
      * wraps SolarEvent or addon-alarm URI
      */
@@ -85,6 +115,7 @@ public class AlarmEvent
     {
         protected SolarEvents event;
         protected String title = "", summary = null;
+        protected AlarmEventPhrase phrase = null;
         protected String uri = null;
         protected boolean resolved = false;
 
@@ -122,6 +153,16 @@ public class AlarmEvent
         @Nullable
         public String getSummary() {
             return (event != null ? "" : summary);
+        }
+
+        @Nullable
+        public AlarmEventPhrase getPhrase(Context context)
+        {
+            if (phrase == null) {
+                phrase = (event != null ? new AlarmEventPhrase(phrase(context, event), phraseGender(context, event), phraseQuantity(context, event))
+                                        : new AlarmEventPhrase(title));          // fallback; queryDisplayStrings is primary way of assigning phrase
+            }
+            return phrase;
         }
 
         public int getIcon() {

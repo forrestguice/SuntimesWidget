@@ -1541,6 +1541,7 @@
         <item>1</item>    <!-- lunar midnight -->
     </integer-array>
     <string name="time_gender">female</string>   <!-- SelectFormat (api24+) time phrase gender (if applicable); expects 'female', 'other', etc; e.g. in Spanish hours are feminine ("de las 5:30") -->
+    <string name="date_gender">other</string>    <!-- SelectFormat (api24+) date phrase gender (if applicable); expects 'female', 'other', etc; e.g. ("del 20 de marzo, 5:30") -->
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">GPS is disabled. Enable it?</string>

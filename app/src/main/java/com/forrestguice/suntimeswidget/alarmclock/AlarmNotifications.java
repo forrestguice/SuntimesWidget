@@ -657,7 +657,7 @@ public class AlarmNotifications extends BroadcastReceiver
         AlarmEvent.AlarmEventItem eventItem = new AlarmEvent.AlarmEventItem(eventString, context.getContentResolver());
         String eventDisplay = (eventString != null) ? eventItem.getTitle() : null;
         if (alarm.offset != 0) {
-            eventDisplay = (eventString != null) ? formatOffsetMessage(context, alarm.offset, eventItem)
+            eventDisplay = (eventString != null) ? formatOffsetMessage(context, alarm.offset, alarm.timestamp, eventItem)
                                                  : formatOffsetMessage(context, alarm.offset, alarm.timestamp);
         }
         String emptyLabel = ((eventDisplay != null) ? eventDisplay : context.getString(R.string.alarmOption_solarevent_none));
@@ -765,10 +765,26 @@ public class AlarmNotifications extends BroadcastReceiver
         return builder.build();
     }
 
-    public static String formatOffsetMessage(Context context, long offset, @NonNull AlarmEvent.AlarmEventItem event)
+    public static String formatOffsetMessage(Context context, long offset, long timestamp, @NonNull AlarmEvent.AlarmEventItem event)
     {
-        SolarEvents solarEvent = event.getEvent();
-        return solarEvent != null ? formatOffsetMessage(context, offset, solarEvent) : event.getTitle();   //  TODO
+        String eventString = event.getEventID();
+        if (eventString != null)
+        {
+            SolarEvents solarEvent = event.getEvent();
+            if (solarEvent != null) {
+                return formatOffsetMessage(context, offset, solarEvent);
+
+            } else {
+                AlarmEvent.AlarmEventPhrase phrase = event.getPhrase(context);
+                String gender = (phrase != null ? phrase.getGender() : "other");
+                int quantity = (phrase != null ? phrase.getQuantity() : 1);
+                String eventText = (phrase != null ? phrase.getNoun() : event.getTitle());
+                String offsetText = utils.timeDeltaLongDisplayString(0, offset).getValue();
+                return formatOffsetMessage(context, offset, offsetText, eventText, quantity, gender);
+            }
+        } else {
+            return formatOffsetMessage(context, offset, timestamp);
+        }
     }
 
     public static String formatOffsetMessage(Context context, long offset, @NonNull SolarEvents event)

@@ -295,10 +295,10 @@ public class AlarmEventProvider extends ContentProvider
                     row[i] = utils.calendarDateTimeDisplayString(getContext(), eventCalendar, true, false);
                     break;
                 case COLUMN_EVENT_PHRASE_GENDER:
-                    row[i] = context.getString(R.string.time_gender);
+                    row[i] = context.getString(R.string.date_gender);
                     break;
                 case COLUMN_EVENT_PHRASE_QUANTITY:
-                    row[i] = eventCalendar.get(SuntimesUtils.is24() ? Calendar.HOUR_OF_DAY : Calendar.HOUR);
+                    row[i] = 1;   // TODO: are there locales where this value should return something other than 1?
                     break;
                 case COLUMN_EVENT_SUPPORTS_REPEATING:
                     row[i] = REPEAT_SUPPORT_BASIC;
