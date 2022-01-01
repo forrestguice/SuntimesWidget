@@ -115,6 +115,7 @@
     <!-- Field: moon illumination (as seen in moon widget) -->
     <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> освещено</string>  <!-- used in 2x1 widget -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- used in 1x1 widget -->
+    <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> \@ <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
@@ -481,6 +482,9 @@
     <string name="timezoneMode_current">Системный часовой пояс</string>               <!-- setting -->
     <string name="timezoneMode_custom">Пользовательский</string>                    <!-- setting -->
 
+    <string name="time_lmst">Local Sidereal Time</string>                  <!-- timezone label -->  <!-- TODO -->
+    <string name="time_gmst">Greenwich Sidereal Time</string>              <!-- timezone label -->  <!-- TODO -->
+    <string name="time_utc">Coordinated Universal Time</string>            <!-- timezone label -->  <!-- TODO -->
     <string name="time_localMean">Среднее солнечное время</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">Истинное солнечное время</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
@@ -765,6 +769,8 @@
 
     <string name="alarmOption_vibrate">Вибросигнал</string>                <!-- checkbox text -->
     <string name="alarmOption_ringtone_none">Без звука</string>          <!-- ringtone label (none) -->
+    <string name="alarmOption_ringtone_ringtone">Ringtone</string>          <!-- menu item; Select a "Ringtone" -->  <!-- TODO -->
+    <string name="alarmOption_ringtone_file">Audio File</string>          <!-- menu item; Select an "Audio File" -->  <!-- TODO -->
     <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
     <string name="alarmOption_action_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- action label format -->
     <string name="alarmOption_solarevent_none">по системному времени</string>          <!-- ringtone label (none) -->
@@ -916,6 +922,7 @@
     <string name="configAction_deletePlace">Удалить</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Очистить</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportPlaces">Экспорт</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->  <!-- TODO -->
 
 
     <!-- App Setting: UI -->
@@ -950,6 +957,11 @@
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Источник расчетов</string>
     <string name="configLabel_ui_showdatasource_summary">Показывать текущий алгоритм и коррекцию по высоте (если доступно).</string>
+
+    <!-- App Setting: show headers -->
+    <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
+    <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_ui_showheader_text">Show Header Text</string> <!-- checkbox label --> <!-- TODO -->
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Золотой час</string>
@@ -1674,6 +1686,7 @@
     <string name="feature_not_supported_by_api">Эта функция не поддерживается API %1$s.</string>
     <string name="feature_not_supported_by_source">Эта функция не поддерживается текущим источником данных.</string>
     <string name="reboot_required_message">Для вступления изменений в силу может потребоваться перезагрузка.</string>
+    <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
 
     <string name="dialog_ok">OK</string>  <!-- TODO -->
     <string name="dialog_cancel">Отменить</string>

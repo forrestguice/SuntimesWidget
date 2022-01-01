@@ -81,6 +81,7 @@
     <!-- Field: moon illumination (as seen in moon widget) -->
     <string name="moon_illumination">Iŀluminada al <xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50% illuminated" .. used in 2x1 widget -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50%" .. used in 1x1 widget -->
+    <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> \@ <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
@@ -420,6 +421,9 @@
     <string name="timezoneMode_current">Zona horària de sistema</string>               <!-- setting -->
     <string name="timezoneMode_custom">Definida per l\'usuari</string>                    <!-- setting -->
 
+    <string name="time_lmst">Local Sidereal Time</string>                  <!-- timezone label -->  <!-- TODO -->
+    <string name="time_gmst">Greenwich Sidereal Time</string>              <!-- timezone label -->  <!-- TODO -->
+    <string name="time_utc">Coordinated Universal Time</string>            <!-- timezone label -->  <!-- TODO -->
     <string name="time_localMean">Temps solar mitjà</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">Temps solar aparent</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
@@ -700,7 +704,9 @@
     <string name="configLabel_alarmEdit_onDismissTray">Al rebutjar:</string>               <!-- group title -->  
 
     <string name="alarmOption_vibrate">Vibrar</string>                <!-- checkbox text -->
-    <string name="alarmOption_ringtone_none">Sense so</string>          <!-- ringtone label (none) -->  
+    <string name="alarmOption_ringtone_none">Sense so</string>          <!-- ringtone label (none) -->
+    <string name="alarmOption_ringtone_ringtone">Ringtone</string>          <!-- menu item; Select a "Ringtone" -->  <!-- TODO -->
+    <string name="alarmOption_ringtone_file">Audio File</string>          <!-- menu item; Select an "Audio File" -->  <!-- TODO -->
     <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
     <string name="alarmOption_solarevent_none">Rellotge</string>          <!-- ringtone label (none) -->  
 
@@ -840,6 +846,7 @@
     <string name="configAction_deletePlace">Elimina</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Elimina tot</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportPlaces">Exportar</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->  <!-- TODO -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interfície d\'usuari</string>                       <!-- group title -->
@@ -873,6 +880,11 @@
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Mostrar font de dades</string>
     <string name="configLabel_ui_showdatasource_summary">Mostrar una etiqueta indicant la Configuració actual.</string>
+
+    <!-- App Setting: show headers -->
+    <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
+    <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_ui_showheader_text">Show Header Text</string> <!-- checkbox label --> <!-- TODO -->
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Hora daurada</string>
@@ -1413,6 +1425,7 @@
     <string name="feature_not_supported_by_api">Aquesta caracteristica no està suportada per l\'API %1$s.</string>
     <string name="feature_not_supported_by_source">Aquesta caracteristica no està suportada per la font de dades actual.</string>
     <string name="reboot_required_message">És possible que es necessiti reiniciar per fer efectius els canvis.</string>
+    <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
 
     <string name="dialog_ok">D\'acord</string>  
     <string name="dialog_cancel">Canceŀlar</string>

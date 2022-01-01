@@ -83,6 +83,7 @@
     <!-- Field: moon illumination (as seen in moon widget) -->
     <string name="moon_illumination">Iluminada al <xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g></string>
     <string name="moon_illumination_short"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g></string>
+    <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> \@ <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
@@ -416,8 +417,11 @@
     
     <string name="timezoneMode_standard">Hora solar</string>
     <string name="timezoneMode_current">Zona horaria de sistema</string>               
-    <string name="timezoneMode_custom">Definida por usuario</string>                    
+    <string name="timezoneMode_custom">Definida por usuario</string>
 
+    <string name="time_lmst">Local Sidereal Time</string>                  <!-- timezone label -->  <!-- TODO -->
+    <string name="time_gmst">Greenwich Sidereal Time</string>              <!-- timezone label -->  <!-- TODO -->
+    <string name="time_utc">Coordinated Universal Time</string>            <!-- timezone label -->  <!-- TODO -->
     <string name="time_localMean">Hora solar media</string>
     <string name="time_apparent">Hora solar aparente</string>
     <string name="timezoneCustom_line1"><xliff:g example="US/Arizona" id="timezoneID">%1$s</xliff:g></string>                                                                     
@@ -700,7 +704,9 @@
     <string name="configLabel_alarmEdit_onDismissTray">Al rechazar:</string>               <!-- group title -->  
 
     <string name="alarmOption_vibrate">Vibrar</string>                <!-- checkbox text -->  
-    <string name="alarmOption_ringtone_none">Sin sonido</string>          <!-- ringtone label (none) -->  
+    <string name="alarmOption_ringtone_none">Sin sonido</string>          <!-- ringtone label (none) -->
+    <string name="alarmOption_ringtone_ringtone">Ringtone</string>          <!-- menu item; Select a "Ringtone" -->  <!-- TODO -->
+    <string name="alarmOption_ringtone_file">Audio File</string>          <!-- menu item; Select an "Audio File" -->  <!-- TODO -->
     <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
     <string name="alarmOption_solarevent_none">Reloj</string>          <!-- ringtone label (none) -->  
 
@@ -841,6 +847,7 @@
     <string name="configAction_deletePlace">Borrar</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Clear</string>         <!-- button (contentDescription) -->  
     <string name="configAction_exportPlaces">Exportar</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->  <!-- TODO -->
 
     
     <string name="configLabel_ui">Interfaz de usuario</string>
@@ -875,6 +882,10 @@
     <string name="configLabel_ui_showdatasource">Mostrar fuente de datos</string>
     <string name="configLabel_ui_showdatasource_summary">Mostrar una etiqueta indicando la configuración actual.</string>
 
+
+    <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
+    <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_ui_showheader_text">Show Header Text</string> <!-- checkbox label --> <!-- TODO -->
     
     <string name="configLabel_ui_showgoldhour">Hora dorada</string>
 
@@ -1411,7 +1422,8 @@
     <string name="security_duplicate_permissions">Un permiso que pertenece a Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nestá tambień definido por: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  
     <string name="feature_not_supported_by_api">Esta característica no está soportada por la API %1$s.</string>
     <string name="feature_not_supported_by_source">Esta característica no está soportada por la actual fuente de datos.</string>  
-    <string name="reboot_required_message">Puede que sea necesario un reinicio para aplicar los cambios.</string>  
+    <string name="reboot_required_message">Puede que sea necesario un reinicio para aplicar los cambios.</string>
+    <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
 
     <string name="dialog_ok">Aceptar</string>  
     <string name="dialog_cancel">Cancelar</string>
