@@ -232,6 +232,15 @@ public class AlarmEventProvider extends ContentProvider
                 case COLUMN_EVENT_TITLE:
                     row[i] = event.getLongDisplayString();
                     break;
+                case COLUMN_EVENT_PHRASE:
+                    row[i] = AlarmEvent.phrase(context, event);
+                    break;
+                case COLUMN_EVENT_PHRASE_GENDER:
+                    row[i] = AlarmEvent.phraseGender(context, event);
+                    break;
+                case COLUMN_EVENT_PHRASE_QUANTITY:
+                    row[i] = AlarmEvent.phraseQuantity(context, event);
+                    break;
                 case COLUMN_EVENT_SUPPORTS_REPEATING:
                     row[i] = AlarmEvent.supportsRepeating(event);
                     break;
@@ -240,15 +249,6 @@ public class AlarmEventProvider extends ContentProvider
                     break;
                 case COLUMN_EVENT_REQUIRES_LOCATION:
                     row[i] = Boolean.toString(AlarmEvent.requiresLocation(event));
-                    break;
-                case COLUMN_EVENT_PHRASE:
-                    // TODO
-                    break;
-                case COLUMN_EVENT_PHRASE_GENDER:
-                    // TODO
-                    break;
-                case COLUMN_EVENT_PHRASE_QUANTITY:
-                    // TODO
                     break;
                 case COLUMN_EVENT_SUMMARY:
                 default:
@@ -291,7 +291,14 @@ public class AlarmEventProvider extends ContentProvider
                     row[i] = Long.toString(timedatemillis);
                     break;
                 case COLUMN_EVENT_TITLE:
+                case COLUMN_EVENT_PHRASE:
                     row[i] = utils.calendarDateTimeDisplayString(getContext(), eventCalendar, true, false);
+                    break;
+                case COLUMN_EVENT_PHRASE_GENDER:
+                    row[i] = context.getString(R.string.time_gender);
+                    break;
+                case COLUMN_EVENT_PHRASE_QUANTITY:
+                    row[i] = eventCalendar.get(SuntimesUtils.is24() ? Calendar.HOUR_OF_DAY : Calendar.HOUR);
                     break;
                 case COLUMN_EVENT_SUPPORTS_REPEATING:
                     row[i] = REPEAT_SUPPORT_BASIC;

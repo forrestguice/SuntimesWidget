@@ -64,6 +64,19 @@ public class AlarmEvent
         return (eventType != SolarEvents.TYPE_MOONPHASE);
     }
 
+    public static String phrase(Context context, @NonNull SolarEvents event) {
+        String[] values = context.getResources().getStringArray(R.array.solarevents_long1);
+        return values[event.ordinal()];
+    }
+    public static String phraseGender(Context context, @NonNull SolarEvents event) {
+        String[] values = context.getResources().getStringArray(R.array.solarevents_gender);
+        return values[event.ordinal()];
+    }
+    public static int phraseQuantity(Context context, @NonNull SolarEvents event) {
+        int[] values = context.getResources().getIntArray(R.array.solarevents_quantity);
+        return values[event.ordinal()];
+    }
+
     /**
      * AlarmEventItem
      * wraps SolarEvent or addon-alarm URI
