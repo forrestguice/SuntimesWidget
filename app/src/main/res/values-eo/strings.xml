@@ -114,6 +114,11 @@
         <item quantity="other">%1$s post</item>
     </plurals>
 
+    <string name="offset_before_msg">%1$s antaŭ %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_after_msg">%1$s post %2$s</string>      <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_before_msg1">{0} antaŭ {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+    <string name="offset_after_msg1">{0} post {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+
     <string name="offset_button_before">antaŭ</string>    <!-- button label; [1h] [5m] [before] (-) -->
     <string name="offset_button_after">post</string>      <!-- button label; [1h] [5m] [after] (+) -->
 
@@ -1018,7 +1023,7 @@
         <item>plejsupro de Luno</item>
         <item>plejmalsupro de Luno</item>
     </string-array>
-    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
+    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>astronomia sunleviĝo</item>
         <item>naŭtika sunleviĝo</item>
         <item>matena blua horo (komenco)</item>
@@ -1047,6 +1052,35 @@
         <item>kulmino supra de Luno</item>
         <item>kulmino malsupra de Luno</item>
     </string-array>
+    <string-array name="solarevents_long1">    <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
+        <item>astronomia sunleviĝo</item>
+        <item>naŭtika sunleviĝo</item>
+        <item>matena blua horo (komenco)</item>
+        <item>civila sunleviĝo</item>
+        <item>matena blua horo (fino)</item>
+        <item>sunleviĝo</item>
+        <item>matena ora horo (fino)</item>
+        <item>tagmezo vera (kulmino)</item>
+        <item>vespera ora horo (komenco)</item>
+        <item>sunsubiro</item>
+        <item>vespera blua horo (komenco)</item>
+        <item>civila sunsubiro</item>
+        <item>vespera blua horo (fino)</item>
+        <item>naŭtika sunsubiro</item>
+        <item>astronomia sunsubiro</item>
+        <item>lunleviĝo</item>
+        <item>lunsubiro</item>
+        <item>nova Luno</item>
+        <item>kreskanta Lunduono</item>
+        <item>plena Luno</item>
+        <item>malkreskanta Lunduono</item>
+        <item>printempa tagnoktegaleco</item>
+        <item>somera sunekstremo</item>
+        <item>aŭtuna tagnoktegaleco</item>
+        <item>vintra sunekstremo</item>
+        <item>kulmino supra de Luno</item>
+        <item>kulmino malsupra de Luno</item>
+    </string-array>   <!-- TODO -->
     
   <!-- App Setting: locale mode -->
   <string name="configLabel_locale">Agordoj de lingvo</string>   <!-- group title -->
@@ -1078,6 +1112,7 @@
         <item>Rusa</item>
         <item>Nederlanda</item>
         <item>Czech</item>  <!-- TODO -->
+        <item>Simplified Chinese</item> <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
