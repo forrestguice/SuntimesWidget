@@ -80,6 +80,7 @@
     <!-- Field: moon illumination (as seen in moon widget) -->
     <string name="moon_illumination">Eclairée à <xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50% illuminated" .. used in 2x1 widget -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50%" .. used in 1x1 widget -->
+    <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> \@ <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
@@ -104,15 +105,20 @@
     <plurals name="offset_at_plural">      <!-- e.g. "at \n 5:30PM" .. the time component is shown on the next line -->
         <item quantity="one" xliff:ignore="ImpliedQuantity">at</item>
         <item quantity="other">à</item>
-    </plurals>  <!-- TODO -->
+    </plurals>  <!-- TODO: review -->
     <plurals name="offset_before_plural">      <!-- e.g. "30m before \n 5:30PM" .. the time component is shown on the next line -->
         <item quantity="one">%1$s avant</item>
         <item quantity="other">%1$s avant</item>
-    </plurals>  <!-- TODO -->
+    </plurals>  <!-- TODO: review -->
     <plurals name="offset_after_plural">      <!-- e.g. "30m after \n 5:30PM" .. the time component is shown on the next line -->
         <item quantity="one">%1$s après</item>
         <item quantity="other">%1$s après</item>
-    </plurals>  <!-- TODO -->
+    </plurals>  <!-- TODO: review -->
+
+    <string name="offset_before_msg">%1$s avant %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_after_msg">%1$s après %2$s</string>     <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_before_msg1">{0} avant {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+    <string name="offset_after_msg1">{0} après {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
 
     <string name="offset_button_before">avant</string>    <!-- button label; [1h] [5m] [before] (-) -->  <!-- TODO -->
     <string name="offset_button_after">après</string>      <!-- button label; [1h] [5m] [after] (+) -->  <!-- TODO -->
@@ -407,6 +413,9 @@
     <string name="timezoneMode_current">Fuseau horaire système</string>               <!-- setting -->
     <string name="timezoneMode_custom">Défini par l\'utilisateur</string>                    <!-- setting -->
 
+    <string name="time_lmst">Local Sidereal Time</string>                  <!-- timezone label -->  <!-- TODO -->
+    <string name="time_gmst">Greenwich Sidereal Time</string>              <!-- timezone label -->  <!-- TODO -->
+    <string name="time_utc">Coordinated Universal Time</string>            <!-- timezone label -->  <!-- TODO -->
     <string name="time_localMean">Temps moyen local</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">Temps solaire apparent</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g example="US/Arizona" id="timezoneID">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
@@ -688,6 +697,8 @@
 
     <string name="alarmOption_vibrate">Vibrer</string>                <!-- checkbox text -->
     <string name="alarmOption_ringtone_none">Aucun son</string>          <!-- ringtone label (none) -->
+    <string name="alarmOption_ringtone_ringtone">Ringtone</string>          <!-- menu item; Select a "Ringtone" -->  <!-- TODO -->
+    <string name="alarmOption_ringtone_file">Audio File</string>          <!-- menu item; Select an "Audio File" -->  <!-- TODO -->
     <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->  <!-- TODO -->
     <string name="alarmOption_solarevent_none">Clock Time</string>          <!-- ringtone label (none) -->  <!-- TODO -->
 
@@ -827,6 +838,7 @@
     <string name="configAction_deletePlace">Supprimer</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Tout effacer</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportPlaces">Exporter</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->  <!-- TODO -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interface utilisateur</string>                       <!-- group title -->
@@ -859,7 +871,12 @@
 
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Afficher la source de données</string>  
-    <string name="configLabel_ui_showdatasource_summary">Affiche une étiquette contenant le nom de la source de données actuelle.</string> 
+    <string name="configLabel_ui_showdatasource_summary">Affiche une étiquette contenant le nom de la source de données actuelle.</string>
+
+    <!-- App Setting: show headers -->
+    <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
+    <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_ui_showheader_text">Show Header Text</string> <!-- checkbox label --> <!-- TODO -->
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Heure dorée</string>
@@ -974,6 +991,7 @@
         <item>Russian</item>  <!-- TODO -->
         <item>Dutch</item>  <!-- TODO -->
         <item>Czech</item>  <!-- TODO -->
+        <item>Simplified Chinese</item> <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
@@ -1088,7 +1106,7 @@
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
-    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
+    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>crépuscule astronomique du matin</item>
         <item>crépuscule nautique du matin</item>
         <item>heure bleue du matin (début)</item>  
@@ -1117,6 +1135,35 @@
         <item>lunar noon</item>    <!-- TODO -->
         <item>lunar midnight</item>    <!-- TODO -->
     </string-array>
+    <string-array name="solarevents_long1">    <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
+        <item>crépuscule astronomique du matin</item>
+        <item>crépuscule nautique du matin</item>
+        <item>heure bleue du matin (début)</item>
+        <item>crépuscule civil du matin</item>
+        <item>heure bleue du matin (fin)</item>
+        <item>lever du soleil</item>
+        <item>heure dorée du matin (fin)</item>
+        <item>midi solaire</item>
+        <item>heure dorée du soir (début)</item>
+        <item>coucher du soleil</item>
+        <item>heure bleue du soir (début)</item>
+        <item>crépuscule civil du soir</item>
+        <item>heure bleue du soir (fin)</item>
+        <item>crépuscule nautique du soir</item>
+        <item>crépuscule astronomique du soir</item>
+        <item>lever de la lune</item>
+        <item>coucher de la lune</item>
+        <item>nouvelle lune</item>
+        <item>premier quartier</item>
+        <item>pleine lune</item>
+        <item>dernier quartier</item>
+        <item>Équinoxe du printemps</item>
+        <item>Solstice d\'été</item>
+        <item>Équinoxe d\'automne</item>
+        <item>Solstice d\'hiver</item>
+        <item>lunar noon</item>    <!-- TODO -->
+        <item>lunar midnight</item>    <!-- TODO -->
+    </string-array>  <!-- TODO -->
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">Activer le GPS ?</string>
@@ -1345,6 +1392,7 @@
     <string name="feature_not_supported_by_api">Cette fonctionnalité n\'est pas prise en charge par l\'API %1$s.</string>
     <string name="feature_not_supported_by_source">Cette fonctionnalité n\'est pas prise en charge par la source de données utilisée.</string>
     <string name="reboot_required_message">Vous devez re-démarrer l\'application pour que ces modifciations soient appliquées.</string>
+    <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
 
     <string name="dialog_ok">OK</string>  <!-- TODO -->
     <string name="dialog_cancel">Annuler</string>

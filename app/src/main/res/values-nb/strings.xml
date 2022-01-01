@@ -85,6 +85,7 @@
     <!-- Field: moon illumination (as seen in moon widget) -->
     <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> opplyst</string>  <!-- used in 2x1 widget -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- used in 1x1 widget -->
+    <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> \@ <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
@@ -118,6 +119,11 @@
         <item quantity="one">%1$s etter</item>
         <item quantity="other">%1$s etter</item>
     </plurals>
+
+    <string name="offset_before_msg">%1$s før %2$s</string>       <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_after_msg">%1$s etter %2$s</string>      <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_before_msg1">{0} før {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+    <string name="offset_after_msg1">{0} etter {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
 
     <string name="offset_button_before">før</string>    <!-- button label; [1h] [5m] [before] (-) -->
     <string name="offset_button_after">etter</string>      <!-- button label; [1h] [5m] [after] (+) -->
@@ -707,6 +713,8 @@
 
     <string name="alarmOption_vibrate">Vibrate</string>                <!-- checkbox text -->  <!-- TODO -->
     <string name="alarmOption_ringtone_none">No Sound</string>          <!-- ringtone label (none) -->  <!-- TODO -->
+    <string name="alarmOption_ringtone_ringtone">Ringtone</string>          <!-- menu item; Select a "Ringtone" -->  <!-- TODO -->
+    <string name="alarmOption_ringtone_file">Audio File</string>          <!-- menu item; Select an "Audio File" -->  <!-- TODO -->
     <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->  <!-- TODO -->
     <string name="alarmOption_solarevent_none">Clock Time</string>          <!-- ringtone label (none) -->  <!-- TODO -->
 
@@ -847,6 +855,7 @@
     <string name="configAction_deletePlace">Slett</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Fjern</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportPlaces">Eksporter</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->  <!-- TODO -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Brukerflate</string>                       <!-- group title -->
@@ -1003,6 +1012,7 @@
         <item>Russisk</item>
         <item>Dutch</item>  <!-- TODO -->
         <item>Czech</item>  <!-- TODO -->
+        <item>Simplified Chinese</item> <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
@@ -1118,7 +1128,7 @@
         <item>månens kulminasjon</item>
         <item>månens nedre kulminasjon</item>
     </string-array>
-    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
+    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>astronomisk tussmørke morgen (start)</item>
         <item>nautisk tussmørke morgen (start)</item>
         <item>blåtimen morgen (start)</item>
@@ -1147,6 +1157,35 @@
         <item>månens kulminasjon</item>
         <item>månens nedre kulminasjon</item>
     </string-array>
+    <string-array name="solarevents_long1">    <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
+        <item>astronomisk tussmørke morgen (start)</item>
+        <item>nautisk tussmørke morgen (start)</item>
+        <item>blåtimen morgen (start)</item>
+        <item>alminnelig tussmørke morgen (start)</item>
+        <item>blåtimen morgen (slutt)</item>
+        <item>soloppgang</item>
+        <item>gylne time morgen (slutt)</item>
+        <item>lokal middag</item>
+        <item>gylne time kveld (start)</item>
+        <item>solnedgang</item>
+        <item>blåtimen kveld (start)</item>
+        <item>alminnelig tussmørke kveld (slutt)</item>
+        <item>blåtimen kveld (slutt)</item>
+        <item>nautisk tussmørke kveld (slutt)</item>
+        <item>astronomisk tussmørke kveld (slutt)</item>
+        <item>måneoppgang</item>
+        <item>månenedgang</item>
+        <item>nymåne</item>
+        <item>ny, halvmåne</item>
+        <item>fullmåne</item>
+        <item>ne, halvmåne</item>
+        <item>vårjevndøgn</item>
+        <item>sommersolverv</item>
+        <item>høstjevndøgn</item>
+        <item>vintersolverv</item>
+        <item>månens kulminasjon</item>
+        <item>månens nedre kulminasjon</item>
+    </string-array>    <!-- TODO: review -->
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">GPS er deaktivert. Aktivere nå?</string>
@@ -1404,6 +1443,7 @@
     <string name="feature_not_supported_by_api">This feature is not supported by API %1$s.</string>  <!-- TODO -->
     <string name="feature_not_supported_by_source">This feature is not supported by the current data source.</string>  <!-- TODO -->
     <string name="reboot_required_message">A reboot may be needed for changes to take effect.</string>  <!-- TODO -->
+    <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
 
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Avbryt</string>

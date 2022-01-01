@@ -476,7 +476,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         args.putInt(EXTRA_HOUR, prefs.getInt(EXTRA_HOUR, getHour()));
         args.putInt(EXTRA_MINUTE, prefs.getInt(EXTRA_MINUTE, getMinute()));
         args.putString(EXTRA_TIMEZONE, prefs.getString(EXTRA_TIMEZONE, getTimeZone()));
-        args.putSerializable(EXTRA_EVENT, SolarEvents.valueOf(prefs.getString(EXTRA_EVENT, SolarEvents.SUNRISE.name())));;
+        args.putSerializable(EXTRA_EVENT, SolarEvents.valueOf(prefs.getString(EXTRA_EVENT, SolarEvents.SUNRISE.name()), SolarEvents.SUNRISE));;
         args.putSerializable(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.valueOf(prefs.getString(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.ALARM.name())));
 
         if (isAdded())
