@@ -30,9 +30,15 @@ public interface AlarmEventContract
     String REQUIRED_PERMISSION = "suntimes.permission.READ_CALCULATOR";
 
     String COLUMN_CONFIG_PROVIDER = "provider";                  // String (provider reference)
+
     String COLUMN_EVENT_NAME = "event_name";                     // String (alarm/event ID)
-    String COLUMN_EVENT_TITLE = "event_title";                   // String (display string)
-    String COLUMN_EVENT_SUMMARY = "event_summary";               // String (extended display string)
+    String COLUMN_EVENT_TITLE = "event_title";                   // String (short label)
+    String COLUMN_EVENT_SUMMARY = "event_summary";               // String (extended label)
+
+    String COLUMN_EVENT_PHRASE = "event_phrase";                         // String (noun / natural language phrase)
+    String COLUMN_EVENT_PHRASE_GENDER = "event_phrase_gender";           // String (noun gender; SelectFormat param)
+    String COLUMN_EVENT_PHRASE_QUANTITY = "event_phrase_quantity";       // String (noun quantity; SelectFormat param)
+
     String COLUMN_EVENT_SUPPORTS_REPEATING = "event_supports_repeat";        // int; REPEAT_SUPPORT_*; 0 (none), 1 (basic), 2 (daily)
     String COLUMN_EVENT_SUPPORTS_OFFSETDAYS = "event_supports_offsetdays";   // String (boolean)
     String COLUMN_EVENT_REQUIRES_LOCATION = "event_requires_location";       // String (boolean)
@@ -44,7 +50,8 @@ public interface AlarmEventContract
     String QUERY_EVENT_INFO = "eventInfo";
     String[] QUERY_EVENT_INFO_PROJECTION = new String[] {
             COLUMN_EVENT_NAME, COLUMN_EVENT_TITLE, COLUMN_EVENT_SUMMARY,
-            COLUMN_EVENT_SUPPORTS_REPEATING, COLUMN_EVENT_SUPPORTS_OFFSETDAYS, COLUMN_EVENT_REQUIRES_LOCATION
+            COLUMN_EVENT_PHRASE, COLUMN_EVENT_PHRASE_GENDER, COLUMN_EVENT_PHRASE_QUANTITY,
+            COLUMN_EVENT_SUPPORTS_REPEATING, COLUMN_EVENT_SUPPORTS_OFFSETDAYS, COLUMN_EVENT_REQUIRES_LOCATION,
     };
 
     String COLUMN_EVENT_TIMEMILLIS = "event_time";      // long (timestamp millis)

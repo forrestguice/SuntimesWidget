@@ -29,6 +29,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -41,6 +42,9 @@ import java.util.HashMap;
 
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_NAME;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_PHRASE;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_PHRASE_GENDER;
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_PHRASE_QUANTITY;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_REQUIRES_LOCATION;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_SUMMARY;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.COLUMN_EVENT_SUPPORTS_OFFSETDAYS;
@@ -236,6 +240,15 @@ public class AlarmEventProvider extends ContentProvider
                     break;
                 case COLUMN_EVENT_REQUIRES_LOCATION:
                     row[i] = Boolean.toString(AlarmEvent.requiresLocation(event));
+                    break;
+                case COLUMN_EVENT_PHRASE:
+                    // TODO
+                    break;
+                case COLUMN_EVENT_PHRASE_GENDER:
+                    // TODO
+                    break;
+                case COLUMN_EVENT_PHRASE_QUANTITY:
+                    // TODO
                     break;
                 case COLUMN_EVENT_SUMMARY:
                 default:
