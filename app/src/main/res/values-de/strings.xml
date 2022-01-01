@@ -82,6 +82,7 @@
   <!-- Field: moon illumination (as seen in moon widget) -->
   <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> illuminiert</string>  <!-- "50% illuminated" .. used in 2x1 widget -->
   <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50%" .. used in 1x1 widget -->
+  <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> \@ <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
 
   <!-- Field: today/tomorrow time delta
        (layout/info_time_daydelta.xml)
@@ -113,7 +114,12 @@
   <plurals name="offset_after_plural">      <!-- e.g. "30m after \n 5:30PM" .. the time component is shown on the next line -->
     <item quantity="one">%1$s nach</item>
     <item quantity="other">%1$s nach</item>
-  </plurals>  
+  </plurals>
+
+  <string name="offset_before_msg">%1$s vor %2$s</string>      <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO: review -->
+  <string name="offset_after_msg">%1$s nach %2$s</string>      <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO: review -->
+  <string name="offset_before_msg1">{0} vor {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+  <string name="offset_after_msg1">{0} nach {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
 
   <string name="offset_button_before">vor</string>    <!-- button label; [1h] [5m] [before] (-) -->  
   <string name="offset_button_after">nach</string>      <!-- button label; [1h] [5m] [after] (+) -->  
@@ -405,6 +411,9 @@
   <string name="timezoneMode_current">System</string>                         <!-- setting -->
   <string name="timezoneMode_custom">Benutzerdefiniert</string>                    <!-- setting -->
 
+  <string name="time_lmst">Local Sidereal Time</string>                  <!-- timezone label -->  <!-- TODO -->
+  <string name="time_gmst">Greenwich Sidereal Time</string>              <!-- timezone label -->  <!-- TODO -->
+  <string name="time_utc">Coordinated Universal Time</string>            <!-- timezone label -->  <!-- TODO -->
   <string name="time_localMean">Mittlere Ortszeit</string>                 <!-- setting / custom timezone id -->
   <string name="time_apparent">Sonnenzeit</string>              <!-- setting / custom timezone id -->
   <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
@@ -704,6 +713,8 @@
 
   <string name="alarmOption_vibrate">Vibrieren</string>                <!-- checkbox text -->
   <string name="alarmOption_ringtone_none">Kein Ton</string>          <!-- ringtone label (none)   -->
+  <string name="alarmOption_ringtone_ringtone">Ringtone</string>          <!-- menu item; Select a "Ringtone" -->  <!-- TODO -->
+  <string name="alarmOption_ringtone_file">Audio File</string>          <!-- menu item; Select an "Audio File" -->  <!-- TODO -->
   <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
   <string name="alarmOption_solarevent_none">Uhrzeit</string>          <!-- ringtone label (none)   -->
 
@@ -848,6 +859,7 @@
   <string name="configAction_deletePlace">Löschen</string>        <!-- button (contentDescription) -->
   <string name="configAction_clearPlaces">Alle löschen</string>         <!-- button  (contentDescription)   -->
   <string name="configAction_exportPlaces">Exportieren</string>       <!-- button (contentDescription) -->
+  <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->  <!-- TODO -->
 
   <!-- App Setting: UI -->
   <string name="configLabel_ui">Benutzeroberfläche</string>                       <!-- group title -->
@@ -882,6 +894,11 @@
   <!-- App Setting: show data source -->
   <string name="configLabel_ui_showdatasource">Zeige Datenquelle</string>
   <string name="configLabel_ui_showdatasource_summary">Zeige eine Beschriftung mit der aktuellen Konfiguration.</string>
+
+  <!-- App Setting: show headers -->
+  <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
+  <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label --> <!-- TODO -->
+  <string name="configLabel_ui_showheader_text">Show Header Text</string> <!-- checkbox label --> <!-- TODO -->
 
   <!-- App Setting: show golden hour -->
   <string name="configLabel_ui_showgoldhour">@string/timeMode_golden</string>
@@ -989,6 +1006,7 @@
       <item>Russisch</item>
       <item>Niederländisch</item>
       <item>Czech</item>  <!-- TODO -->
+      <item>Simplified Chinese</item> <!-- TODO -->
   </string-array>
 
   <!--<string name="degrees_format"><xliff:g id="value" example="45">%1$s</xliff:g>°</string>-->  <!-- e.g. 45° -->
@@ -1102,24 +1120,24 @@
     <item>Mondmittag</item>
     <item>Mondmitternacht</item>
   </string-array>
-  <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
-      <item>Astronomische Morgendämmerung (Beginn)</item>
-      <item>Nautische Morgendämmerung (Beginn)</item>
-      <item>Morgendliche Blaue Stunde (Beginn)</item>
-      <item>Bürgerliche Morgendämmerung (Beginn)</item>
-      <item>Morgendliche Blaue Stunde (Ende)</item>
-      <item>Sonnenaufgang</item>
-      <item>Morgendliche Goldene Stunde (Ende)</item>
-      <item>Mittagshöhe</item>
-      <item>Abendliche Goldene Stunde (Beginn)</item>
-      <item>Sonnenuntergang</item>
-      <item>Abendliche Blaue Stunde (Beginn)</item>
-      <item>Bürgerliche Abenddämmerung (Ende)</item>
-      <item>Abendliche Blaue Stunde (Ende)</item>
-      <item>Nautische Abenddämmerung (Ende)</item>
-      <item>Astronomische Abenddämmerung (Ende)</item>
-      <item>Mondaufgang</item>
-      <item>Monduntergang</item>
+  <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
+    <item>Astronomische Morgendämmerung (Beginn)</item>
+    <item>Nautische Morgendämmerung (Beginn)</item>
+    <item>Morgendliche Blaue Stunde (Beginn)</item>
+    <item>Bürgerliche Morgendämmerung (Beginn)</item>
+    <item>Morgendliche Blaue Stunde (Ende)</item>
+    <item>Sonnenaufgang</item>
+    <item>Morgendliche Goldene Stunde (Ende)</item>
+    <item>Mittagshöhe</item>
+    <item>Abendliche Goldene Stunde (Beginn)</item>
+    <item>Sonnenuntergang</item>
+    <item>Abendliche Blaue Stunde (Beginn)</item>
+    <item>Bürgerliche Abenddämmerung (Ende)</item>
+    <item>Abendliche Blaue Stunde (Ende)</item>
+    <item>Nautische Abenddämmerung (Ende)</item>
+    <item>Astronomische Abenddämmerung (Ende)</item>
+    <item>Mondaufgang</item>
+    <item>Monduntergang</item>
     <item>Neumond</item>
     <item>Zunehmender Halbmond</item>
     <item>Vollmond</item>
@@ -1131,6 +1149,35 @@
     <item>Mondmittag</item>
     <item>Mondmitternacht</item>
   </string-array>
+  <string-array name="solarevents_long1">    <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
+    <item>Astronomische Morgendämmerung (Beginn)</item>
+    <item>Nautische Morgendämmerung (Beginn)</item>
+    <item>Morgendliche Blaue Stunde (Beginn)</item>
+    <item>Bürgerliche Morgendämmerung (Beginn)</item>
+    <item>Morgendliche Blaue Stunde (Ende)</item>
+    <item>Sonnenaufgang</item>
+    <item>Morgendliche Goldene Stunde (Ende)</item>
+    <item>Mittagshöhe</item>
+    <item>Abendliche Goldene Stunde (Beginn)</item>
+    <item>Sonnenuntergang</item>
+    <item>Abendliche Blaue Stunde (Beginn)</item>
+    <item>Bürgerliche Abenddämmerung (Ende)</item>
+    <item>Abendliche Blaue Stunde (Ende)</item>
+    <item>Nautische Abenddämmerung (Ende)</item>
+    <item>Astronomische Abenddämmerung (Ende)</item>
+    <item>Mondaufgang</item>
+    <item>Monduntergang</item>
+    <item>Neumond</item>
+    <item>Zunehmender Halbmond</item>
+    <item>Vollmond</item>
+    <item>Abnehmender Halbmond</item>
+    <item>Frühjahrs-Tag-Nacht-Gleiche</item>
+    <item>Sommersonnenwende</item>
+    <item>Herbst-Tag-Nacht-Gleiche</item>
+    <item>Wintersonnenwende</item>
+    <item>Mondmittag</item>
+    <item>Mondmitternacht</item>
+  </string-array>  <!-- TODO: review -->
 
   <!-- Dialog: Enable GPS? -->
   <string name="gps_dialog_msg">GPS ist deaktiviert. Jetzt aktivieren?</string>
@@ -1375,6 +1422,7 @@
   <string name="feature_not_supported_by_api">Diese Funktion wird nicht von der API %1$s unterstützt.</string>
   <string name="feature_not_supported_by_source">Diese Funktion wird nicht von der aktuellen Datenquelle unterstützt.</string>
   <string name="reboot_required_message">Ein Neustart ist möglicherweise nötig, damit die Änderungen wirksam werden.</string>
+  <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
 
   <string name="dialog_ok">OK</string>
   <string name="dialog_cancel">Abbrechen</string>

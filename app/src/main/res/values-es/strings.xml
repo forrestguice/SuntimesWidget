@@ -83,6 +83,7 @@
     <!-- Field: moon illumination (as seen in moon widget) -->
     <string name="moon_illumination">Iluminada al <xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g></string>
     <string name="moon_illumination_short"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g></string>
+    <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> \@ <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
@@ -116,6 +117,11 @@
         <item quantity="one">%1$s después de las</item>
         <item quantity="other">%1$s después de las</item>
     </plurals>
+
+    <string name="offset_before_msg">%1$s antes de %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->
+    <string name="offset_before_msg1">{0} antes {1, plural, one {{2, select, female {de la} other {del}}} other {{2, select, female {de las} other {de los}}}} {3}</string>  <!-- uses SelectFormat (api24+) -->
+    <string name="offset_after_msg">%1$s después de %2$s</string>   <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->
+    <string name="offset_after_msg1">{0} después {1, plural, one {{2, select, female {de la} other {del}}} other {{2, select, female {de las} other {de los}}}} {3}</string>  <!-- uses SelectFormat (api24+)-->
 
     <string name="offset_button_before">antes</string>    <!-- button label; [1h] [5m] [before] (-) --> 
     <string name="offset_button_after">después</string>      <!-- button label; [1h] [5m] [after] (+) -->  
@@ -411,8 +417,11 @@
     
     <string name="timezoneMode_standard">Hora solar</string>
     <string name="timezoneMode_current">Zona horaria de sistema</string>               
-    <string name="timezoneMode_custom">Definida por usuario</string>                    
+    <string name="timezoneMode_custom">Definida por usuario</string>
 
+    <string name="time_lmst">Local Sidereal Time</string>                  <!-- timezone label -->  <!-- TODO -->
+    <string name="time_gmst">Greenwich Sidereal Time</string>              <!-- timezone label -->  <!-- TODO -->
+    <string name="time_utc">Coordinated Universal Time</string>            <!-- timezone label -->  <!-- TODO -->
     <string name="time_localMean">Hora solar media</string>
     <string name="time_apparent">Hora solar aparente</string>
     <string name="timezoneCustom_line1"><xliff:g example="US/Arizona" id="timezoneID">%1$s</xliff:g></string>                                                                     
@@ -695,7 +704,9 @@
     <string name="configLabel_alarmEdit_onDismissTray">Al rechazar:</string>               <!-- group title -->  
 
     <string name="alarmOption_vibrate">Vibrar</string>                <!-- checkbox text -->  
-    <string name="alarmOption_ringtone_none">Sin sonido</string>          <!-- ringtone label (none) -->  
+    <string name="alarmOption_ringtone_none">Sin sonido</string>          <!-- ringtone label (none) -->
+    <string name="alarmOption_ringtone_ringtone">Ringtone</string>          <!-- menu item; Select a "Ringtone" -->  <!-- TODO -->
+    <string name="alarmOption_ringtone_file">Audio File</string>          <!-- menu item; Select an "Audio File" -->  <!-- TODO -->
     <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
     <string name="alarmOption_solarevent_none">Reloj</string>          <!-- ringtone label (none) -->  
 
@@ -836,6 +847,7 @@
     <string name="configAction_deletePlace">Borrar</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Clear</string>         <!-- button (contentDescription) -->  
     <string name="configAction_exportPlaces">Exportar</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->  <!-- TODO -->
 
     
     <string name="configLabel_ui">Interfaz de usuario</string>
@@ -870,6 +882,10 @@
     <string name="configLabel_ui_showdatasource">Mostrar fuente de datos</string>
     <string name="configLabel_ui_showdatasource_summary">Mostrar una etiqueta indicando la configuración actual.</string>
 
+
+    <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
+    <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_ui_showheader_text">Show Header Text</string> <!-- checkbox label --> <!-- TODO -->
     
     <string name="configLabel_ui_showgoldhour">Hora dorada</string>
 
@@ -994,6 +1010,7 @@
         <item>Ruso</item>
         <item>Holandés</item>
         <item>Czech</item>  <!-- TODO -->
+        <item>Simplified Chinese</item> <!-- TODO -->
     </string-array>
 
     
@@ -1108,7 +1125,7 @@
         <item>Mediodía lunar</item>    
         <item>Medianoche lunar</item>    
     </string-array>
-    <string-array name="solarevents_long">   
+    <string-array name="solarevents_long">      <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>Amanecer astronómico</item>
         <item>Amanecer náutico</item>
         <item>Hora azul del amanecer (inicio)</item>
@@ -1137,6 +1154,35 @@
         <item>Mediodía lunar</item>    
         <item>Medianoche lunar</item>    
     </string-array>
+    <string-array name="solarevents_long1">      <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
+        <item>Amanecer astronómico</item>
+        <item>Amanecer náutico</item>
+        <item>Hora azul del amanecer (inicio)</item>
+        <item>Amanecer civil</item>
+        <item>Hora azul del amanecer (final)</item>
+        <item>Amanecer</item>
+        <item>Hora dorada del final del amanecer</item>
+        <item>Mediodía</item>
+        <item>Hora dorada del inicio del atardecer</item>
+        <item>Atardecer</item>
+        <item>Hora azul del atardecer (inicio)</item>
+        <item>Atardecer sol civil</item>
+        <item>Hora azul del atardecer (final)</item>
+        <item>Atardecer náutica</item>
+        <item>Atardecer astronómico</item>
+        <item>Salida lunar</item>
+        <item>Puesta lunar</item>
+        <item>Luna nueva</item>
+        <item>Cuarto creciente</item>
+        <item>Luna llena</item>
+        <item>Cuarto menguante</item>
+        <item>Equinoccio de primavera</item>
+        <item>Solsticio de verano</item>
+        <item>Equinoccio de otoño</item>
+        <item>Solsticio de invierno</item>
+        <item>Mediodía lunar</item>
+        <item>Medianoche lunar</item>
+    </string-array>    <!-- TODO: review -->
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">El GPS está desactivado. ¿Activarlo?</string>
@@ -1376,7 +1422,8 @@
     <string name="security_duplicate_permissions">Un permiso que pertenece a Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nestá tambień definido por: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  
     <string name="feature_not_supported_by_api">Esta característica no está soportada por la API %1$s.</string>
     <string name="feature_not_supported_by_source">Esta característica no está soportada por la actual fuente de datos.</string>  
-    <string name="reboot_required_message">Puede que sea necesario un reinicio para aplicar los cambios.</string>  
+    <string name="reboot_required_message">Puede que sea necesario un reinicio para aplicar los cambios.</string>
+    <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
 
     <string name="dialog_ok">Aceptar</string>  
     <string name="dialog_cancel">Cancelar</string>

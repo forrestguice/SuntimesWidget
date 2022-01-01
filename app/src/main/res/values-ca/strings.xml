@@ -81,6 +81,7 @@
     <!-- Field: moon illumination (as seen in moon widget) -->
     <string name="moon_illumination">Iŀluminada al <xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50% illuminated" .. used in 2x1 widget -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50%" .. used in 1x1 widget -->
+    <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> \@ <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
@@ -114,6 +115,11 @@
         <item quantity="one">%1$s desprès</item>
         <item quantity="other">%1$s desprès</item>
     </plurals>
+
+    <string name="offset_before_msg">%1$s abans %2$s</string>     <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_after_msg">%1$s desprès %2$s</string>    <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_before_msg1">{0} abans {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+    <string name="offset_after_msg1">{0} desprès {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
 
     <string name="offset_button_before">abans</string>    <!-- button label; [1h] [5m] [before] (-) -->
     <string name="offset_button_after">desprès</string>      <!-- button label; [1h] [5m] [after] (+) -->
@@ -415,6 +421,9 @@
     <string name="timezoneMode_current">Zona horària de sistema</string>               <!-- setting -->
     <string name="timezoneMode_custom">Definida per l\'usuari</string>                    <!-- setting -->
 
+    <string name="time_lmst">Local Sidereal Time</string>                  <!-- timezone label -->  <!-- TODO -->
+    <string name="time_gmst">Greenwich Sidereal Time</string>              <!-- timezone label -->  <!-- TODO -->
+    <string name="time_utc">Coordinated Universal Time</string>            <!-- timezone label -->  <!-- TODO -->
     <string name="time_localMean">Temps solar mitjà</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">Temps solar aparent</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
@@ -695,7 +704,9 @@
     <string name="configLabel_alarmEdit_onDismissTray">Al rebutjar:</string>               <!-- group title -->  
 
     <string name="alarmOption_vibrate">Vibrar</string>                <!-- checkbox text -->
-    <string name="alarmOption_ringtone_none">Sense so</string>          <!-- ringtone label (none) -->  
+    <string name="alarmOption_ringtone_none">Sense so</string>          <!-- ringtone label (none) -->
+    <string name="alarmOption_ringtone_ringtone">Ringtone</string>          <!-- menu item; Select a "Ringtone" -->  <!-- TODO -->
+    <string name="alarmOption_ringtone_file">Audio File</string>          <!-- menu item; Select an "Audio File" -->  <!-- TODO -->
     <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
     <string name="alarmOption_solarevent_none">Rellotge</string>          <!-- ringtone label (none) -->  
 
@@ -835,6 +846,7 @@
     <string name="configAction_deletePlace">Elimina</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Elimina tot</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportPlaces">Exportar</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->  <!-- TODO -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interfície d\'usuari</string>                       <!-- group title -->
@@ -868,6 +880,11 @@
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Mostrar font de dades</string>
     <string name="configLabel_ui_showdatasource_summary">Mostrar una etiqueta indicant la Configuració actual.</string>
+
+    <!-- App Setting: show headers -->
+    <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
+    <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_ui_showheader_text">Show Header Text</string> <!-- checkbox label --> <!-- TODO -->
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Hora daurada</string>
@@ -995,6 +1012,7 @@
         <item>Rus</item>
         <item>Holandès</item>
         <item>Czech</item>  <!-- TODO -->
+        <item>Simplified Chinese</item> <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
@@ -1110,7 +1128,7 @@
         <item>Migdia lunar</item>    
         <item>Mitjanit lunar</item>    
     </string-array>
-    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
+    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>sortida de sol astronòmica</item>
         <item>sortida de sol nàutica</item>
         <item>hora blava de l\'alba (inici)</item>
@@ -1139,6 +1157,35 @@
         <item>Migdia lunar</item>    
         <item>Mitjanit lunar</item>    
     </string-array>
+    <string-array name="solarevents_long1">    <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
+        <item>sortida de sol astronòmica</item>
+        <item>sortida de sol nàutica</item>
+        <item>hora blava de l\'alba (inici)</item>
+        <item>sortida de sol civil</item>
+        <item>hora blava de l\'alba (fi)</item>
+        <item>sortida de sol</item>
+        <item>hora daurada del fi de l\'alba</item>
+        <item>migdia</item>
+        <item>hora daurada de l\'inici del capvespre</item>
+        <item>posta de sol</item>
+        <item>hora blava nocturna (inici)</item>
+        <item>posta de sol civil</item>
+        <item>hora blava capvespre (fi)</item>
+        <item>posta de sol nàutica</item>
+        <item>posta de sol astronòmica</item>
+        <item>sortida lunar</item>
+        <item>posta lunar</item>
+        <item>lluna nova</item>
+        <item>quart creixent</item>
+        <item>lluna plena</item>
+        <item>quart minvant</item>
+        <item>equinocci de primavera</item>
+        <item>solstici d\'estiu</item>
+        <item>equinocci de tardor</item>
+        <item>solstici d\'hivern</item>
+        <item>Migdia lunar</item>
+        <item>Mitjanit lunar</item>
+    </string-array>   <!-- TODO -->
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">El GPS està desactivat. Activar-lo?</string>
@@ -1378,6 +1425,7 @@
     <string name="feature_not_supported_by_api">Aquesta caracteristica no està suportada per l\'API %1$s.</string>
     <string name="feature_not_supported_by_source">Aquesta caracteristica no està suportada per la font de dades actual.</string>
     <string name="reboot_required_message">És possible que es necessiti reiniciar per fer efectius els canvis.</string>
+    <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
 
     <string name="dialog_ok">D\'acord</string>  
     <string name="dialog_cancel">Canceŀlar</string>
