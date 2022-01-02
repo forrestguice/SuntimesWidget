@@ -82,24 +82,26 @@ public class AlarmEvent
      */
     public static class AlarmEventPhrase
     {
-        public AlarmEventPhrase(String noun) {
+        public AlarmEventPhrase(@NonNull String noun) {
             this.noun = noun;
         }
-        public AlarmEventPhrase(String noun, String gender, int quantity) {
+        public AlarmEventPhrase(@NonNull String noun, @Nullable String gender, int quantity) {
             this.noun = noun;
-            this.gender = gender;
-            this.quantity = quantity;
+            this.gender = (gender != null) ? gender : "other";
+            this.quantity = gender != null ? quantity : Math.max(1, quantity);
         }
 
-        protected String noun;
+        @NonNull
         public String getNoun() {
             return noun;
         }
+        protected String noun;
 
-        protected String gender = "other";
+        @NonNull
         public String getGender() {
             return gender;
         }
+        protected String gender = "other";
 
         protected int quantity = 1;
         public int getQuantity() {
