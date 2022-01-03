@@ -109,6 +109,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
     public LightMapDialog()
     {
         Bundle args = new Bundle();
+        args.putLong(EXTRA_DATETIME, -1);
         setArguments(args);
     }
 
@@ -564,6 +565,14 @@ public class LightMapDialog extends BottomSheetDialogFragment
         if (context != null)
         {
             LightMapView.LightMapColors options = lightmap.getColors();
+            long now = getArguments().getLong(EXTRA_DATETIME);
+            if (now != -1L)
+            {
+                getArguments().putLong(EXTRA_DATETIME, -1L);
+                options.now = now;
+                options.offsetMinutes = 1;
+                Log.d("DEBUG", "updateOptions: now: " + now);
+            }
             options.anim_frameOffsetMinutes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, MAPTAG_LIGHTMAP)
                     ? 24 * 60 : 1;
         }
