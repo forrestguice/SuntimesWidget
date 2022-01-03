@@ -2090,7 +2090,7 @@ public class SuntimesActivity extends AppCompatActivity
     private LightMapDialog.LightMapDialogListener lightMapListener = new LightMapDialog.LightMapDialogListener() {
         @Override
         public void onShowMap( long suggested) {
-            showWorldMapDialog();   // TODO: at suggested date
+            showMapPositionAt(suggested);
         }
         @Override
         public void onShowDate(long suggested) {
@@ -2100,23 +2100,25 @@ public class SuntimesActivity extends AppCompatActivity
     public void showSunPositionAt(@Nullable Long dateTime)
     {
         FragmentManager fragments = getSupportFragmentManager();
-        LightMapDialog lightMapDialog = (LightMapDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTMAP);
-        if (lightMapDialog == null) {
-            lightMapDialog = showLightMapDialog();
+        LightMapDialog dialog = (LightMapDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTMAP);
+        if (dialog != null) {
+            dialog.dismiss();
         }
-        lightMapDialog.showPositionAt(dateTime);
+        dialog = showLightMapDialog();
+        dialog.showPositionAt(dateTime);
     }
 
     /**
      * Show the world map dialog.
      */
-    protected void showWorldMapDialog()
+    protected WorldMapDialog showWorldMapDialog()
     {
         WorldMapDialog worldMapDialog = new WorldMapDialog();
         worldMapDialog.themeViews(this, appThemeOverride);
         worldMapDialog.setData(dataset);
         worldMapDialog.setDialogListener(worldMapListener);
         worldMapDialog.show(getSupportFragmentManager(), DIALOGTAG_WORLDMAP);
+        return worldMapDialog;
     }
     private WorldMapDialog.WorldMapDialogListener worldMapListener = new WorldMapDialog.WorldMapDialogListener()
     {
@@ -2138,6 +2140,15 @@ public class SuntimesActivity extends AppCompatActivity
             scrollToDate(suggested);
         }
     };
+    public void showMapPositionAt(@Nullable Long dateTime)
+    {
+        FragmentManager fragments = getSupportFragmentManager();
+        WorldMapDialog dialog = (WorldMapDialog) fragments.findFragmentByTag(DIALOGTAG_WORLDMAP);
+        if (dialog != null) {
+            dialog.dismiss();
+        }
+        dialog = showWorldMapDialog();
+    }
 
     /**
      * Show the solstice and equinox view/dialog.
