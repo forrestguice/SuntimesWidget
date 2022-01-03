@@ -94,10 +94,10 @@
                         android:text="@string/timeMode_tropical_year" />
 
                     <TextView android:id="@+id/info_time_year_length"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="100dp"
                         android:layout_margin="0dp" android:padding="0dp" android:gravity="start|center_vertical"
                         style="@style/SunsetTextView" android:textSize="12sp"
-                        tools:text="365d 5h 41m\n365.24 days"/>
+                        android:text="365d 5h 41m\n365.24 days" />
 
                 </LinearLayout>
 
