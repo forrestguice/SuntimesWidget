@@ -1,5 +1,11 @@
 ### ~
 
+### v0.13.17 (2022-01-02)
+* adds translation to Simplified Chinese (zh_CN) (contributed by James Liu) (#527).
+* updates translation to Traditional Chinese (zh_TW) (#527).
+* fixes alarm notifications to include the 'offset' text (more descriptive); e.g. "5m before sunset" vs "sunset" (#522).
+* fixes crash when loading AlarmCreateDialog with invalid settings (handle unknown event values).
+
 ### v0.13.16 (2021-11-29)
 * adds translation to Czech (cs) (contributed by utaxiu) (#520).
 * fixes bug where CalculatorProvider fails to apply altitude refinements. 
