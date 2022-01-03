@@ -775,7 +775,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         if (addonSubmenuItem != null) {
             List<ActivityItemInfo> addonMenuItems = queryAddonMenuItems(context);
             if (!addonMenuItems.isEmpty()) {
-                populateSubMenu(addonSubmenuItem.getSubMenu(), addonMenuItems, getMapTime(System.currentTimeMillis()));
+                populateSubMenu(addonSubmenuItem, addonMenuItems, getMapTime(System.currentTimeMillis()));
             } else addonSubmenuItem.setVisible(false);
         }
     }
@@ -1053,10 +1053,14 @@ public class WorldMapDialog extends BottomSheetDialogFragment
      */
     public static final class ActivityItemInfo
     {
-        public ActivityItemInfo(@NonNull String title, ActivityInfo info)
+        public ActivityItemInfo(Context context, @NonNull String title, ActivityInfo info)
         {
             this.title = title;
             this.info = info;
+
+            TypedArray typedArray = context.obtainStyledAttributes(new int[] { R.attr.icActionExtension });
+            this.icon = typedArray.getResourceId(0, R.drawable.ic_action_extension);
+            typedArray.recycle();
         }
 
         public ActivityItemInfo(@NonNull String title, int iconResId, ActivityInfo info)
@@ -1100,22 +1104,29 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         };
     }
 
-    public static void populateSubMenu(@Nullable SubMenu menu, @NonNull List<ActivityItemInfo> addonItems, long datetime)
+    public static void populateSubMenu(@Nullable MenuItem submenuItem, @NonNull List<ActivityItemInfo> addonItems, long datetime)
     {
-        if (menu != null)
+        if (submenuItem != null)
         {
-            menu.clear();
-            for (ActivityItemInfo addon : addonItems)
+            SubMenu submenu = submenuItem.getSubMenu();
+            if (submenu != null)
             {
-                MenuItem menuItem = menu.add(Menu.NONE, Menu.NONE, Menu.NONE, addon.getTitle());
-                if (addon.getIcon() != 0) {
-                    menuItem.setIcon(addon.getIcon());
+                for (int i=0; i<submenu.size(); i++) {
+                    submenu.getItem(i).setIntent(submenuItem.getIntent());
                 }
-                Intent intent = addon.getIntent();
-                intent.setAction(ACTION_SHOW_DATE);
-                intent.putExtra(EXTRA_SHOW_DATE, datetime);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                menuItem.setIntent(intent);
+
+                for (ActivityItemInfo addon : addonItems)
+                {
+                    MenuItem menuItem = submenu.add(Menu.NONE, Menu.NONE, Menu.NONE, addon.getTitle());
+                    if (addon.getIcon() != 0) {
+                        menuItem.setIcon(addon.getIcon());
+                    }
+                    Intent intent = addon.getIntent();
+                    intent.setAction(ACTION_SHOW_DATE);
+                    intent.putExtra(EXTRA_SHOW_DATE, datetime);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    menuItem.setIntent(intent);
+                }
             }
         }
     }
@@ -1145,7 +1156,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     {
                         String title = resolveInfo.activityInfo.metaData.getString(META_MENUITEM_TITLE, resolveInfo.activityInfo.name);
                         //int icon = R.drawable.ic_suntimes;    // TODO: icon
-                        matches.add(new ActivityItemInfo(title, 0, resolveInfo.activityInfo));
+                        matches.add(new ActivityItemInfo(context, title, resolveInfo.activityInfo));
 
                     } else {
                         Log.w("queryAddonMenuItems", "Permission denied! " + packageInfo0.packageName + " does not have required permissions.");

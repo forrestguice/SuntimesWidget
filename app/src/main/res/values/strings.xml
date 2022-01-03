@@ -22,7 +22,7 @@
     <string name="configAction_setTimeZone">Set Time Zone</string>
     <string name="configAction_setDate">Set Date</string>
     <string name="configAction_viewDate">View date</string>
-    <string name="configAction_viewDateWith">View with</string>    <!-- TODO -->
+    <string name="configAction_viewDateWith">View date</string>    <!-- TODO -->
     <string name="configAction_share">Share</string>    <!-- TODO -->
     <string name="configAction_sunDialog">Sun Position</string>
     <string name="configAction_equinoxDialog">Solstice / Equinox</string>

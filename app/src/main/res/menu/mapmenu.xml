@@ -32,22 +32,24 @@
 
     <group android:id="@+id/mapOption_group_action" android:checkableBehavior="none">
 
-        <item android:id="@+id/action_sunposition"
-            android:title="@string/configAction_sunDialog"
-            android:icon="@drawable/ic_sun"
-            app:showAsAction="never" />
-
-        <item android:id="@+id/action_date"
-            android:title="@string/configAction_viewDate"
-            android:icon="?attr/icActionTimeReset"
-            app:showAsAction="never" />
-
         <item android:id="@+id/addonSubMenu"
-            android:icon="?attr/icActionExtension"
+            android:icon="?attr/icActionTimeReset"
             android:title="@string/configAction_viewDateWith"
             app:showAsAction="never"
             android:orderInCategory="0">
-            <menu />         <!-- submenu is populated at runtime -->
+            <menu>         <!-- submenu is populated at runtime -->
+
+                <item android:id="@+id/action_date"
+                    android:title="@string/app_name"
+                    android:icon="?attr/icActionTimeReset"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_sunposition"
+                    android:title="@string/configAction_sunDialog"
+                    android:icon="@drawable/ic_sun"
+                    app:showAsAction="never" />
+
+            </menu>
         </item>
 
         <item android:id="@+id/shareMap"
