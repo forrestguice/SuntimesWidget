@@ -83,6 +83,7 @@ import java.util.TimeZone;
 public class WorldMapDialog extends BottomSheetDialogFragment
 {
     public static final String LOGTAG = "WorldMapDialog";
+    public static final String EXTRA_DATETIME = "datetime";
 
     private View dialogHeader;
     private TextView dialogTitle;
@@ -108,10 +109,24 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     private SuntimesUtils utils = new SuntimesUtils();
 
+    public WorldMapDialog()
+    {
+        Bundle args = new Bundle();
+        args.putLong(EXTRA_DATETIME, -1);
+        setArguments(args);
+    }
+
     private SuntimesRiseSetDataset data;
     public void setData( SuntimesRiseSetDataset data )
     {
         this.data = data;
+    }
+
+    public void showPositionAt(@Nullable Long datetime) {
+        getArguments().putLong(EXTRA_DATETIME, (datetime == null ? -1 : datetime));
+        if (isAdded()) {
+            updateViews();
+        }
     }
 
     @Override
@@ -460,6 +475,15 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             if (WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2)) {
                 options.locations = new double[][] {{location.getLatitudeAsDouble(), location.getLongitudeAsDouble()}};
             } else options.locations = null;
+
+            long now = getArguments().getLong(EXTRA_DATETIME);
+            if (now != -1L)
+            {
+                getArguments().putLong(EXTRA_DATETIME, -1L);
+                options.now = now;
+                options.offsetMinutes = 1;
+                Log.d("DEBUG", "updateOptions: now: " + now);
+            }
 
             options.modified = true;
         }

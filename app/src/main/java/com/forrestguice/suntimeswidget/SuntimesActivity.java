@@ -2148,6 +2148,7 @@ public class SuntimesActivity extends AppCompatActivity
             dialog.dismiss();
         }
         dialog = showWorldMapDialog();
+        dialog.showPositionAt(dateTime);
     }
 
     /**
@@ -2189,7 +2190,7 @@ public class SuntimesActivity extends AppCompatActivity
         }
         @Override
         public void onShowMap( long suggestDate ) {
-            showWorldMapDialog();   // TODO: at suggested date
+            showMapPositionAt(suggestDate);
         }
         @Override
         public void onShowPosition( long suggested ) {
