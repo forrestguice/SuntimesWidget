@@ -181,6 +181,9 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             @Override
             public void onDataModified( SuntimesRiseSetDataset data ) {
                 LightMapView.this.data = data;
+                if (mapListener != null) {
+                    mapListener.onDataModified(data);
+                }
             }
 
             @Override

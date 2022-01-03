@@ -333,6 +333,11 @@ public class LightMapDialog extends BottomSheetDialogFragment
             lightmap.setMapTaskListener(new LightMapView.LightMapTaskListener()
             {
                 @Override
+                public void onDataModified( SuntimesRiseSetDataset data ) {
+                    LightMapDialog.this.data = data;
+                }
+
+                @Override
                 public void onFrame(Bitmap frame, long offsetMinutes)
                 {
                     //getArguments().putLong(EXTRA_DATETIME, lightmap.getNow());
