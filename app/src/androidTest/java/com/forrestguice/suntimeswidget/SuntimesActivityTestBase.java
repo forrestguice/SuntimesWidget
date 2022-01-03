@@ -305,6 +305,7 @@ public abstract class SuntimesActivityTestBase
         config.put("zh_TW", new SuntimesTestConfig(new Location("Taiwan", "23.5491", "119.8998", "0"), "Asia/Taipei", false, "METRIC"));
         config.put("pt_BR", new SuntimesTestConfig(new Location("São Paulo", "-23.6821", "-46.8754", "815"), "Brazil/East", true, "METRIC"));
         config.put("cs", new SuntimesTestConfig(new Location("Prague", "50.0595", "14.3255", "361"), "CET", true, "METRIC"));
+        config.put("zh_CN", new SuntimesTestConfig(new Location("Taiwan", "23.5491", "119.8998", "0"), "Asia/Taipei", false, "METRIC"));
 
         if (!version.startsWith("v"))
             version = "v" + version;
