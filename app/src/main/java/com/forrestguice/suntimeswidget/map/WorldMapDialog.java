@@ -595,26 +595,26 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         offsetTime.setText(displayString);
     }
 
-    private AdapterView.OnItemSelectedListener onMapSelected = new AdapterView.OnItemSelectedListener()
-    {
+    private AdapterView.OnItemSelectedListener onMapSelected = new AdapterView.OnItemSelectedListener() {
         @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-        {
-            WorldMapWidgetSettings.WorldMapWidgetMode mode = (WorldMapWidgetSettings.WorldMapWidgetMode) parent.getItemAtPosition(position);
-            Context context = getContext();
-            if (context != null && mode != mapMode)
-            {
-                mapMode = mode;
-                WorldMapWidgetSettings.saveSunPosMapModePref(context, 0, mapMode, WorldMapWidgetSettings.MAPTAG_DEF);
-                worldmap.setMapMode(context, mapMode);
-                Log.d(WorldMapView.LOGTAG, "onMapSelected: mapMode changed so triggering update...");
-                updateViews();
-            }
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            setMapMode(getContext(), (WorldMapWidgetSettings.WorldMapWidgetMode) parent.getItemAtPosition(position));
         }
-
         @Override
         public void onNothingSelected(AdapterView<?> parent) {}
     };
+
+    public void setMapMode(Context context, WorldMapWidgetSettings.WorldMapWidgetMode mode)
+    {
+        if (context != null && mode != mapMode)
+        {
+            mapMode = mode;
+            WorldMapWidgetSettings.saveSunPosMapModePref(context, 0, mapMode, WorldMapWidgetSettings.MAPTAG_DEF);
+            worldmap.setMapMode(context, mapMode);
+            Log.d(WorldMapView.LOGTAG, "onMapSelected: mapMode changed so triggering update...");
+            updateViews();
+        }
+    }
 
     /**private View.OnClickListener onRadioButtonClicked = new View.OnClickListener()
     {
@@ -655,7 +655,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             worldmap.setVisibility(show ? View.GONE : View.VISIBLE);
         }
         if (mapSelector != null) {
-            mapSelector.setVisibility(show ? View.GONE : View.VISIBLE);
+            mapSelector.setVisibility(show ? View.GONE : View.GONE);   // always hidden
         }
         if (mediaGroup != null) {
             mediaGroup.setVisibility(show ? View.GONE : View.VISIBLE);
@@ -771,12 +771,39 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             action_date.setEnabled( !WidgetSettings.DateInfo.isToday(getMapDate()) );
         }
 
+        MenuItem option_mapmode0 = m.findItem(R.id.mapProjectionMenu);
+        MenuItem option_mapmode = m.findItem(menuItemForMapMode(mapMode));
+        if (option_mapmode != null) {
+            option_mapmode.setChecked(true);
+            if (option_mapmode0 != null) {
+                option_mapmode0.setTitle(option_mapmode.getTitle());
+                option_mapmode0.setIcon(option_mapmode.getIcon());
+            }
+        }
+
         MenuItem addonSubmenuItem = m.findItem(R.id.addonSubMenu);
         if (addonSubmenuItem != null) {
             List<ActivityItemInfo> addonMenuItems = queryAddonMenuItems(context);
             if (!addonMenuItems.isEmpty()) {
                 populateSubMenu(addonSubmenuItem, addonMenuItems, getMapTime(System.currentTimeMillis()));
             } else addonSubmenuItem.setVisible(false);
+        }
+    }
+
+    private int menuItemForMapMode(WorldMapWidgetSettings.WorldMapWidgetMode mode) {
+        switch (mode) {
+            case EQUIAZIMUTHAL_SIMPLE: return R.id.action_worldmap_simpleazimuthal;
+            case EQUIAZIMUTHAL_SIMPLE1: return R.id.action_worldmap_simpleazimuthal_south;
+            case EQUIRECTANGULAR_BLUEMARBLE: return R.id.action_worldmap_bluemarble;
+            case EQUIRECTANGULAR_SIMPLE: default: return R.id.action_worldmap_simplerectangular;
+        }
+    }
+    private WorldMapWidgetSettings.WorldMapWidgetMode mapModeForMenuItem(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_worldmap_simpleazimuthal: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE;
+            case R.id.action_worldmap_simpleazimuthal_south: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE1;
+            case R.id.action_worldmap_bluemarble: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE;
+            case R.id.action_worldmap_simplerectangular: default: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE;
         }
     }
 
@@ -819,6 +846,14 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
                 case R.id.shareMap:
                     shareMap();
+                    return true;
+
+                case R.id.action_worldmap_simplerectangular:
+                case R.id.action_worldmap_bluemarble:
+                case R.id.action_worldmap_simpleazimuthal:
+                case R.id.action_worldmap_simpleazimuthal_south:
+                    setMapMode(context, mapModeForMenuItem(item));
+                    item.setChecked(true);
                     return true;
 
                 case R.id.mapOption_location:

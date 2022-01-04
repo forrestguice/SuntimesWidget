@@ -2,6 +2,40 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/mapProjectionMenu"
+        android:icon="?attr/icActionMap"
+        android:title="@string/configAction_worldMap"
+        app:showAsAction="never"
+        android:orderInCategory="0">
+        <menu>
+            <group android:id="@+id/mapOption_group_projection">
+                <item android:id="@+id/action_worldmap_simplerectangular"
+                    android:title="@string/widgetMode_sunPosMap_simplerectangular"
+                    android:icon="?attr/icActionMap"
+                    android:checkable="true"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_worldmap_bluemarble"
+                    android:title="@string/widgetMode_sunPosMap_bluemarble"
+                    android:icon="?attr/icActionMap"
+                    android:checkable="true"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_worldmap_simpleazimuthal"
+                    android:title="@string/widgetMode_sunPosMap_simpleazimuthal"
+                    android:icon="?attr/icActionLocale"
+                    android:checkable="true"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_worldmap_simpleazimuthal_south"
+                    android:title="@string/widgetMode_sunPosMap_simpleazimuthal_south"
+                    android:icon="?attr/icActionLocale"
+                    android:checkable="true"
+                    app:showAsAction="never" />
+            </group>
+        </menu>
+    </item>
+
     <group android:id="@+id/mapOption_group_misc">
 
         <item android:id="@+id/mapOption_majorLatitudes"

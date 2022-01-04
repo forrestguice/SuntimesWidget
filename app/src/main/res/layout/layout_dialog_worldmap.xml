@@ -45,7 +45,7 @@
         app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="@+id/info_time_utc" />
 
-    <Spinner
+    <Spinner android:visibility="gone"
         android:id="@+id/worldmap_selector"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
