@@ -186,7 +186,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
             behavior.setHideable(false);
             behavior.setSkipCollapsed(true);
-            behavior.setPeekHeight((int)(dialogHeader.getHeight() + getResources().getDimension(R.dimen.dialog_margin) * 2));
+            behavior.setPeekHeight((int)(dialogHeader.getHeight() + getResources().getDimension(R.dimen.dialog_margin)));
             behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
     }
@@ -204,7 +204,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
             behavior.setHideable(false);
             behavior.setSkipCollapsed(false);
-            behavior.setPeekHeight((int)(dialogHeader.getHeight() + getResources().getDimension(R.dimen.dialog_margin) * 2));
+            behavior.setPeekHeight((int)(dialogHeader.getHeight() + getResources().getDimension(R.dimen.dialog_margin)));
             behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         }
     }
