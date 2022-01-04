@@ -17,9 +17,9 @@
     <string name="configAction_mapLocation_chooser">地圖顯示方式</string>
     <string name="configAction_mapLocation_noapp">未找到地圖應用</string>
     <string name="configAction_showCalendar">日歷</string>
-    <string name="configAction_setAlarm">設置鬧鐘</string>
-    <string name="configAction_setTimeZone">設置時區</string>
-    <string name="configAction_setDate">設置日期</string>
+    <string name="configAction_setAlarm">設定鬧鐘</string>
+    <string name="configAction_setTimeZone">設定時區</string>
+    <string name="configAction_setDate">設定日期</string>
     <string name="configAction_viewDate">查看日期</string>
     <string name="configAction_sunDialog">太陽位置</string>
     <string name="configAction_equinoxDialog">夏冬至/春秋分</string>
@@ -27,7 +27,7 @@
     <string name="configAction_moon">月亮</string>
     <string name="configAction_help">幫助</string>
     <string name="configAction_overflow">更多</string>
-    <string name="configAction_settings">設置</string>
+    <string name="configAction_settings">設定</string>
     <string name="configAction_aboutWidget">關於</string>
 
     <!-- Button: Next/Prev Date
@@ -56,7 +56,7 @@
              where [date] is a dateString formatted by app using user's locale
     -->
     <string name="dateField"><xliff:g id="dateDesc" example="Today">%1$s</xliff:g>\n<xliff:g id="date" example="Jul 8, 2016">%2$s</xliff:g> <xliff:g id="warningTag">[w]</xliff:g></string>
-    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> 日期已設置為今天外的另一天。</string>  <!-- snackbar message -->
+    <string name="dateWarning"><xliff:g id="warningTag">[w]</xliff:g> 日期已設定為今天外的另一天。</string>  <!-- snackbar message -->
 
     <!-- DateDesc: some day in the past (appears in dateField) -->
     <string name="past_today">過去</string>
@@ -119,10 +119,10 @@
         <!--<item quantity="one">%1$s after</item>-->
         <item quantity="other">%1$s 之後</item>
     </plurals>
-    <string name="offset_before_msg">%1$s 之前 %2$s</string>      <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO: review -->
-    <string name="offset_after_msg">%1$s 之後 %2$s</string>       <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO: review -->
-    <string name="offset_before_msg1">{0} 之前 {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
-    <string name="offset_after_msg1">{0} 之後 {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+    <string name="offset_before_msg">%2$s 之前 %1$s</string>      <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->
+    <string name="offset_after_msg">%2$s 之後 %1$s</string>       <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->
+    <string name="offset_before_msg1">{1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3} 之前 {0}</string>  <!-- uses SelectFormat (api24+) -->
+    <string name="offset_after_msg1">{1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3} 之後 {0}</string>  <!-- uses SelectFormat (api24+) -->
 
     <string name="offset_button_before">之前</string>    <!-- button label; [1h] [5m] [before] (-) -->
     <string name="offset_button_after">之後</string>      <!-- button label; [1h] [5m] [after] (+) -->
@@ -227,31 +227,31 @@
          WIDGET CONFIG
     -->
 
-    <string name="configAction_restoreDefaults">復原設置</string>   <!-- button / menu text -->
+    <string name="configAction_restoreDefaults">復原設定</string>   <!-- button / menu text -->
 
     <string name="configLabel_tagDefault">[初始值]</string>
     <string name="configLabel_tagPlugin">[插件]</string>
     <string name="configLabel_prefSummaryTagged"><xliff:g id="summaryText">%1$s</xliff:g>\t<xliff:g id="tag" example="[default]">%2$s</xliff:g></string>  <!-- label applied to ListPref items (e.g. defaults) -->
 
     <!-- WidgetConfig Activity -->
-    <string name="configAction_addWidget">添加小部件</string>                   <!-- Button: Add -->
+    <string name="configAction_addWidget">加入小工具</string>                   <!-- Button: Add -->
     <string name="configAction_reconfigWidget_short">重新配置</string>       <!-- Button: Reconfigure -->
-    <string name="configAction_reconfigWidget">重新配置小部件</string>      <!-- used as title when reconfiguring -->
+    <string name="configAction_reconfigWidget">重新配置小工具</string>      <!-- used as title when reconfiguring -->
     <string name="configLabel_title0">@string/app_name_widget0</string>         <!-- used as title when adding -->
-    <string name="configLabel_title1">可翻轉的小部件</string>                 <!-- used as title when adding -->
+    <string name="configLabel_title1">可翻轉的小工具</string>                 <!-- used as title when adding -->
     <string name="configLabel_title2">@string/app_name_widget2</string>                  <!-- used as title when adding -->
     <string name="configLabel_solsticewidget0">@string/app_name_solsticewidget0</string>                  <!-- used as title when adding -->
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">通用設置</string>                <!-- group title -->
+    <string name="configLabel_general">一般設定</string>                <!-- group title -->
     <string name="configLabel_general_calculator">日期來源:</string>         <!-- spinner label -->
-    <string name="configLabel_general_calculator_sun">日光數據來源</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_moon">月光數據來源</string>         <!-- preference label -->
+    <string name="configLabel_general_calculator_sun">日光資料來源</string>         <!-- preference label -->
+    <string name="configLabel_general_calculator_moon">月光資料來源</string>         <!-- preference label -->
 
     <string name="configLabel_general_timeFormatMode">時間格式:</string>         <!-- spinner label -->
 
-    <string name="configLabel_general_altitude_enabled">使用海拔</string>        <!-- checkbox label -->
+    <string name="configLabel_general_altitude_enabled">套用海拔</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">套用海拔以提高精度。</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_lengthUnits">長度單位</string>        <!-- spinner label -->
@@ -272,17 +272,17 @@
     <string name="configLabel_general_observerheight_summary">顯示高度為 <xliff:g id="value" example="1 meter">%1$s</xliff:g> 的物體投射的陰影長度。</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">高級設置</string>                        <!-- group title -->
-    <string name="configLabel_experimental">實驗性設置</string>                <!-- group title -->
-    <string name="configLabel_general_scanPlugins">數據源插件</string>                                <!-- checkbox label -->
-    <string name="configLabel_general_scanPlugins_summary">掃描並加載第三方插件。</string>   <!-- pref summary -->
+    <string name="configLabel_advanced">進階進階設定</string>                        <!-- group title -->
+    <string name="configLabel_experimental">實驗性設定</string>                <!-- group title -->
+    <string name="configLabel_general_scanPlugins">資料源插件</string>                                <!-- checkbox label -->
+    <string name="configLabel_general_scanPlugins_summary">掃描並載入第三方插件。</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_appearance">外觀設置</string>           <!-- group title -->
+    <string name="configLabel_appearance">外觀設定</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">外觀</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">主題:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">適應可用的空間（可調節大小）</string>  <!-- checkbox label -->
-    <string name="configLabel_appearance_showLabels">顯示標籤</string>          <!-- checkbox label -->
+    <string name="configLabel_appearance_showLabels">顯示標記</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">顯示標題</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">標題:</string>              <!-- edittext label -->
     <string name="configHint_appearance_titleText">(%t %m %M %lat %lon)</string> <!-- edittext hint -->
@@ -385,8 +385,8 @@
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">什麼也不做</string>           <!-- setting -->
-    <string name="actionMode_update">更新小部件</string>           <!-- setting -->
-    <string name="actionMode_config">重新配置小部件</string>      <!-- setting -->
+    <string name="actionMode_update">更新小工具</string>           <!-- setting -->
+    <string name="actionMode_config">重新配置小工具</string>      <!-- setting -->
     <string name="actionMode_launchActivity">打開應用</string>      <!-- setting -->
     <string name="actionMode_flipToNextItem">翻轉顯示</string>      <!-- setting -->
 
@@ -399,7 +399,7 @@
     <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
     <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
-    <string name="configLabel_action">動作設置</string>                  <!-- group title -->
+    <string name="configLabel_action">動作設定</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">輕按時:</string>                    <!-- spinner label -->
     <string name="configLabel_action_onClockTap">輕按時鐘時</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">輕按便簽時</string>           <!-- spinner label -->
@@ -408,9 +408,9 @@
 
     <!-- Widget Setting: location -->
     <string name="locationMode_current">當前（最近獲取到的位置）</string>  <!-- setting -->
-    <string name="locationMode_custom">用戶自定</string>           <!-- setting -->
+    <string name="locationMode_custom">用戶自訂</string>           <!-- setting -->
 
-    <string name="configLabel_location">位置設置</string>               <!-- group title -->
+    <string name="configLabel_location">位置設定</string>               <!-- group title -->
     <string name="configLabel_location_mode">模式:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">緯度:</string>                   <!-- edittext label -->
     <string name="configHint_location_lat">十進制</string>      <!-- edittext hint -->
@@ -424,22 +424,22 @@
 
     <string name="configAction_getFix">獲取位置</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">編輯</string>         <!-- button (contentDescription) -->
-    <string name="configAction_savePlace">保存</string>         <!-- button (contentDescription) -->
+    <string name="configAction_savePlace">儲存</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
     <string name="timezoneMode_standard">太陽時</string>                       <!-- setting -->
     <string name="timezoneMode_current">系統時區</string>               <!-- setting -->
-    <string name="timezoneMode_custom">用戶自定</string>                    <!-- setting -->
+    <string name="timezoneMode_custom">用戶自訂</string>                    <!-- setting -->
 
-    <string name="time_lmst">Local Sidereal Time</string>                  <!-- timezone label -->  <!-- TODO -->
-    <string name="time_gmst">Greenwich Sidereal Time</string>              <!-- timezone label -->  <!-- TODO -->
-    <string name="time_utc">Coordinated Universal Time</string>            <!-- timezone label -->  <!-- TODO -->
+    <string name="time_lmst">本地恆星時</string>                  <!-- timezone label -->
+    <string name="time_gmst">格林威治恆星時</string>              <!-- timezone label -->
+    <string name="time_utc">協調世界時</string>            <!-- timezone label -->
     <string name="time_localMean">當地平均時間</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">視太陽時間</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
-    <string name="configLabel_timezone">時區設置</string>             <!-- group title -->
+    <string name="configLabel_timezone">時區設定</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">模式:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">時區:</string>              <!-- spinner label -->
     <string name="configLabel_timezone_standard">太陽時:</string>                   <!-- spinner label -->
@@ -454,9 +454,9 @@
 
     <!-- Widget Setting: date mode -->
     <string name="dateMode_current">今天</string>                  <!-- setting -->
-    <string name="dateMode_custom">用戶自定</string>            <!-- setting -->
+    <string name="dateMode_custom">用戶自訂</string>            <!-- setting -->
 
-    <string name="configLabel_date">日期設置</string>                      <!-- group title -->
+    <string name="configLabel_date">日期設定</string>                      <!-- group title -->
     <string name="configLabel_date_mode">模式:</string>                         <!-- spinner label -->
     <string name="configLabel_date_custom">日期:</string>                       <!-- dateSelector label -->
 
@@ -487,7 +487,7 @@
     <string name="configLabel_action_launch_type">類型:</string>                 <!-- spinner label -->
     <string name="configLabel_action_launch_action">動作:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch_action">&lt;無&gt;</string> <!-- editText hint (and default) -->
-    <string name="configLabel_action_launch_data">數據:</string>                 <!-- edittext label -->
+    <string name="configLabel_action_launch_data">資料:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch_data">&lt;無&gt;</string> <!-- editText hint (and default) -->
     <string name="configLabel_action_launch_datatype">Mime:</string>                 <!-- edittext label -->
     <string name="configHint_action_launch_datatype">text/plain</string> <!-- editText hint (and default) -->
@@ -498,8 +498,8 @@
     <string name="configLabel_action_item_desc">(%1$s)</string>
     <string name="configLabel_action_item_none">無動作</string>
 
-    <string name="addaction_custname">自定義<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
-    <string name="addaction_custtitle">自定義動作 <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
+    <string name="addaction_custname">自訂<xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
+    <string name="addaction_custtitle">自訂動作 <xliff:g id="#">%1$s</xliff:g></string>         <!-- button (contentDescription) -->
     <string name="addaction_error_id">ID 不能為空（或包含空格）。</string>
     <string name="addaction_error_title">顯示字元串不能為空。</string>
     <string name="addaction_error_exists">ID已被佔用。此動作將被復蓋。</string>
@@ -510,49 +510,49 @@
     <string name="delaction_dialog_ok1">復原</string>
     <string name="delaction_dialog_cancel">取消</string>
 
-    <string name="clearactions_dialog_msg">您確定要重置為預設值嗎？\n\n所有自定義動作都將被刪除。</string>
+    <string name="clearactions_dialog_msg">您確定要重置為預設值嗎？\n\n所有自訂動作都將被刪除。</string>
     <string name="clearactions_dialog_ok">清空</string>
     <!--<string name="clearactions_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="clearactions_toast">動作已重置為預設值。</string>
 
-    <string name="saveaction_dialog_title">添加動作</string>
-    <string name="saveaction_dialog_ok">保存</string>
+    <string name="saveaction_dialog_title">加入動作</string>
+    <string name="saveaction_dialog_ok">儲存</string>
     <!--<string name="saveaction_dialog_cancel">@string/dialog_cancel</string>-->  <!-- "Cancel" button; uncomment to override -->
     <string name="saveaction_dialog_suggest">建議</string>
-    <string name="saveaction_toast">動作 \"%1$s\" 已保存 (%2$s)。</string>
+    <string name="saveaction_toast">動作 \"%1$s\" 已儲存 (%2$s)。</string>
 
     <string name="loadaction_dialog_title">動作</string>
-    <string name="loadaction_toast">動作 \"%1$s\" 已加載。</string>
+    <string name="loadaction_toast">動作 \"%1$s\" 已載入。</string>
 
     <string name="startaction_failed_toast">啟動 %s 失敗!</string>         <!-- error toast -->
 
-    <string name="configAction_addAction">添加</string>           <!-- button (contentDescription) -->
+    <string name="configAction_addAction">加入</string>           <!-- button (contentDescription) -->
     <string name="configAction_editAction">編輯</string>           <!-- button (contentDescription) -->
     <string name="configAction_testAction">測試</string>         <!-- button (contentDescription) -->
-    <string name="configAction_saveAction">保存</string>         <!-- button (contentDescription) -->
-    <string name="configAction_loadAction">加載</string>         <!-- button (contentDescription) -->
+    <string name="configAction_saveAction">儲存</string>         <!-- button (contentDescription) -->
+    <string name="configAction_loadAction">載入</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteAction">刪除</string>         <!-- button (contentDescription) -->
     <string name="configAction_clearActions">清空</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportActions">導出</string>         <!-- button (contentDescription) -->
-    <string name="configAction_importActions">導入</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportActions">匯出</string>         <!-- button (contentDescription) -->
+    <string name="configAction_importActions">匯入</string>         <!-- button (contentDescription) -->
 
     <!-- App Setting: WidgetThemes -->
-    <string name="configLabel_widgetThemeList">小部件主題</string>
+    <string name="configLabel_widgetThemeList">小工具主題</string>
     <string name="configLabel_widgetThemeListSelect">選擇一個主題</string>
-    <string name="configAction_addTheme">添加</string>           <!-- button (contentDescription) -->
+    <string name="configAction_addTheme">加入</string>           <!-- button (contentDescription) -->
     <string name="configAction_selectTheme">選擇</string>     <!-- button (contentDescription) -->
     <string name="configAction_editTheme">編輯</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteTheme">刪除</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">復制</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportThemes">導出</string>    <!-- button (contentDescription) -->
-    <string name="configAction_importThemes">導入</string>    <!-- button (contentDescription) -->
+    <string name="configAction_exportThemes">匯出</string>    <!-- button (contentDescription) -->
+    <string name="configAction_importThemes">匯入</string>    <!-- button (contentDescription) -->
 
     <string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
     <string name="addtheme_copydisplay"><xliff:g id="themeName">%1$s</xliff:g> (copy)</string>                            <!-- copied theme name (display string) -->
 
-    <string name="addtheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g>添加好了。</string>          <!-- toast msg -->
-    <string name="edittheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g>保存好了。</string>         <!-- toast msg -->
+    <string name="addtheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g>加入好了。</string>          <!-- toast msg -->
+    <string name="edittheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g>儲存好了。</string>         <!-- toast msg -->
     <string name="deletetheme_toast_success"><xliff:g id="themeName">%1$s</xliff:g> 已刪除。</string> <!-- toast msg -->
 
     <string name="edittheme_error_themeName_empty">ID 不能重復 (必填)。</string>        <!-- error hint (themeName empty) -->
@@ -567,9 +567,9 @@
     <string name="deletetheme_dialog_ok">刪除</string>        <!-- button -->
     <string name="deletetheme_dialog_cancel">取消</string>    <!-- button -->
 
-    <string name="configLabel_widgetThemeAdd">添加主題</string>     <!-- title text -->
+    <string name="configLabel_widgetThemeAdd">加入主題</string>     <!-- title text -->
     <string name="configLabel_widgetThemeEdit">編輯主題</string>   <!-- title text -->
-    <string name="configAction_saveTheme">保存</string>           <!-- button (contentDescription) -->
+    <string name="configAction_saveTheme">儲存</string>           <!-- button (contentDescription) -->
     <string name="configAction_chooseColor">選擇顏色</string> <!-- button (contentDescription) -->
 
     <string name="configLabel_themeBackgroundId">底色:</string>    <!-- spinner label -->
@@ -654,7 +654,7 @@
     <string name="configHint_themeID">主題ID</string>                  <!-- edit hint -->
 
     <string name="configLabel_themeName">顯示:</string>               <!-- edit label -->
-    <string name="configHint_themeName">標籤</string>                   <!-- edit hint -->
+    <string name="configHint_themeName">標記</string>                   <!-- edit hint -->
 
     <string name="widgetLabel_azimuth">方位</string>                   <!-- label -->
     <string name="widgetLabel_azimuth_short">方位</string>                   <!-- label -->
@@ -675,8 +675,8 @@
     -->
     <string name="configLabel_alarmClock">鬧鐘</string>            <!-- group title -->
     <string name="configLabel_alarmClock_emptyMsg">無鬧鐘</string>     <!-- a label that is displayed in place of an empty listview -->
-    <string name="configAction_addAlarm">設置鬧鐘</string>               <!-- button (contentDescription) -->
-    <string name="configAction_addNotification">設置通知</string> <!-- button (contentDescription) -->
+    <string name="configAction_addAlarm">設定鬧鐘</string>               <!-- button (contentDescription) -->
+    <string name="configAction_addNotification">設定通知</string> <!-- button (contentDescription) -->
     <string name="configAction_editAlarm">編輯</string>               <!-- button (contentDescription) -->
     <string name="configAction_deleteAlarm">刪除</string>               <!-- button (contentDescription) -->
     <string name="configAction_clearAlarms">清空</string>                <!-- action button / menu item -->
@@ -684,19 +684,19 @@
     <string name="configAction_sortAlarms_by_time">鬧鐘時間</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_creation">創建時間</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">清空</string>                <!-- action button / menu item -->
-    <string name="configAction_setAlarmOffset">設置補償</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmType">設置類型</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmLabel">設置標籤</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmLocation">設置位置</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmRepeat">設置重復</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmEvent">設置事件</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmOffset">設定補償</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmType">設定類型</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmLabel">設定標記</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmLocation">設定位置</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmRepeat">設定重復</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmEvent">設定事件</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmTime">復蓋時間</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmAction">設置動作</string>         <!-- button (contentDescription) -->
-    <string name="configAction_setAlarmSound">設置聲音</string>         <!-- button (contentDescription) -->
-    <string name="configAction_alarmMenu">鬧鐘菜單</string>         <!-- button (contentDescription) -->
-    <string name="configAction_saveAlarm">保存</string>               <!-- button (contentDescription) -->
-    <string name="configAction_enableAlarm">保存 &amp; 啟用</string>               <!-- button (contentDescription) -->
-    <string name="configAction_disableAlarm">保存 &amp; 禁用</string>               <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmAction">設定動作</string>         <!-- button (contentDescription) -->
+    <string name="configAction_setAlarmSound">設定聲音</string>         <!-- button (contentDescription) -->
+    <string name="configAction_alarmMenu">鬧鐘選單</string>         <!-- button (contentDescription) -->
+    <string name="configAction_saveAlarm">儲存</string>               <!-- button (contentDescription) -->
+    <string name="configAction_enableAlarm">儲存 &amp; 啟用</string>               <!-- button (contentDescription) -->
+    <string name="configAction_disableAlarm">儲存 &amp; 禁用</string>               <!-- button (contentDescription) -->
     <string name="configAction_undo">撤銷</string>               <!-- button (contentDescription) -->
 
     <string name="alarmAction_dismiss">解除</string>                <!-- notification action button -->
@@ -718,8 +718,8 @@
 
     <string name="alarmOption_vibrate">震動</string>                <!-- checkbox text -->
     <string name="alarmOption_ringtone_none">無聲</string>          <!-- ringtone label (none) -->
-    <string name="alarmOption_ringtone_ringtone">Ringtone</string>          <!-- menu item; Select a "Ringtone" -->  <!-- TODO -->
-    <string name="alarmOption_ringtone_file">Audio File</string>          <!-- menu item; Select an "Audio File" -->  <!-- TODO -->
+    <string name="alarmOption_ringtone_ringtone">鈴聲</string>          <!-- menu item; Select a "Ringtone" -->
+    <string name="alarmOption_ringtone_file">音訊檔案</string>          <!-- menu item; Select an "Audio File" -->
     <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
     <string name="alarmOption_solarevent_none">鬧鐘時間</string>          <!-- ringtone label (none) -->
 
@@ -733,10 +733,10 @@
     <string name="deletealarm_dialog_cancel">取消</string>    <!-- button -->
     <string name="deletealarm_toast_success"><xliff:g id="type" example="Notification">%1$s</xliff:g> 於 <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>) 已被刪除。</string> <!-- toast msg -->
 
-    <string name="discardchanges_dialog_message">有未保存的變更。</string>      <!-- dialog message -->
+    <string name="discardchanges_dialog_message">有未儲存的變更。</string>      <!-- dialog message -->
     <string name="discardchanges_dialog_ok">丟棄</string>                              <!-- button -->
     <string name="discardchanges_dialog_cancel">取消</string>                           <!-- button -->
-    <string name="discardchanges_dialog_neutral">保存</string>                            <!-- button -->
+    <string name="discardchanges_dialog_neutral">儲存</string>                            <!-- button -->
 
     <string name="clearalarms_dialog_title">清空鬧鐘</string>        <!-- dialog title -->
     <string name="clearalarms_dialog_message">您確定要刪除所有鬧鐘嗎？</string>   <!-- dialog msg -->
@@ -744,10 +744,10 @@
     <string name="clearalarms_dialog_cancel">取消</string>    <!-- button -->
     <string name="clearalarms_toast_success">鬧鐘已被清空。</string> <!-- toast msg -->
 
-    <string name="alarmlabel_dialog_title">標籤</string>        <!-- dialog title -->
+    <string name="alarmlabel_dialog_title">標記</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">應用</string>        <!-- button -->
     <string name="alarmlabel_dialog_cancel">取消</string>    <!-- button -->
-    <string name="alarmlabel_hint">標籤</string>        <!-- EditText hint -->
+    <string name="alarmlabel_hint">標記</string>        <!-- EditText hint -->
 
     <string name="alarmrepeat_dialog_title">重復鬧鐘</string>        <!-- dialog title -->
     <string name="alarmrepeat_dialog_ok">應用</string>        <!-- button -->
@@ -762,7 +762,7 @@
     <string name="alarmoffset_dialog_ok">應用</string>        <!-- button -->
     <string name="alarmoffset_dialog_cancel">取消</string>    <!-- button -->
 
-    <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> 設置於自現在起 <xliff:g id="duration" example="8h">%2$s</xliff:g>。</string> <!-- toast msg -->
+    <string name="alarmenabled_toast"><xliff:g id="alarmType" example="Notification">%1$s</xliff:g> 設定於自現在起 <xliff:g id="duration" example="8h">%2$s</xliff:g>。</string> <!-- toast msg -->
 
     <string name="configLabel_alarms_optWhiteList">電池優化</string>
     <string name="configLabel_alarms_optWhiteList_listed">未優化 (推薦)</string>
@@ -772,7 +772,7 @@
     <string name="configLabel_alarms_notifications_on">打開</string>
     <string name="configLabel_alarms_notifications_off">關閉。\n鬧鐘可能無法正確顯示。</string>
     <!--<string name="configLabel_alarms_notifications_summary0">%1$s</string>-->                    <!-- "On", "Off" -->
-    <string name="configLabel_alarms_notifications_summary1">鎖定屏幕時: %1$s</string>    <!-- "On lock screen: Off -->
+    <string name="configLabel_alarms_notifications_summary1">鎖定螢幕時: %1$s</string>    <!-- "On lock screen: Off -->
     <string name="notificationsWarning"><xliff:g id="warningTag">[w]</xliff:g> 通知已關閉。鬧鐘可能無法正確顯示。</string>  <!-- snackbar message -->
 
     <string name="configLabel_alarms_silenceAfter">在…后靜音</string>
@@ -823,64 +823,64 @@
     </plurals>
 
     <string name="configLabel_alarmMisc">雜項</string>
-    <string name="configLabel_alarms_showlauncher">啟動器圖標</string>
-    <string name="configLabel_alarms_showlauncher_summary">在應用程式托盤中顯示鬧鐘圖標。</string>
+    <string name="configLabel_alarms_showlauncher">啟動器圖示</string>
+    <string name="configLabel_alarms_showlauncher_summary">在應用程式托盤中顯示鬧鐘圖示。</string>
 
     <!--
          APP SETTINGS
     -->
 
     <!--App Setting: WidgetList -->
-    <string name="configLabel_widgetList">小部件</string>               <!-- group title -->
+    <string name="configLabel_widgetList">小工具</string>               <!-- group title -->
     <string name="configLabel_widgetList_itemTitle"><xliff:g id="widgetTitle">%s</xliff:g></string>
     <string name="configLabel_widgetList_itemTitlePattern" formatted="false"><xliff:g id="titlePattern"><![CDATA[%M (%loc) [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
     <string name="configLabel_widgetList_itemTitlePattern1" formatted="false"><xliff:g id="titlePattern"><![CDATA[%loc [%t]]]></xliff:g></string> <!-- the pattern used when generating sun widget titles -->
     <string name="configLabel_widgetList_itemSummaryPattern"><xliff:g id="widgetType">%1$s</xliff:g> [<xliff:g id="datasource">%2$s</xliff:g>]</string>
     <string name="configLabel_widgetListHelp_title">幫助</string>               <!-- always the first item in the widgetList -->
-    <string name="configLabel_widgetListHelp_summary">顯示小部件幫助</string>
-    <string name="configLabel_widgetList_emptyMsg">無小部件</string>          <!-- a label that is displayed in place of an empty listview -->
+    <string name="configLabel_widgetListHelp_summary">顯示小工具幫助</string>
+    <string name="configLabel_widgetList_emptyMsg">無小工具</string>          <!-- a label that is displayed in place of an empty listview -->
 
     <!-- App Setting: Places -->
     <string name="configLabel_places">地點</string>                           <!-- group title -->
     <string name="configLabel_places_manage">管理地點</string>             <!-- group title -->
     <!--<string name="configLabel_places_emptyMsg">@string/configLabel_places</string>-->
-    <string name="configLabel_places_build">添加世界地點</string>
-    <string name="configLabel_places_build_summary">掃描本地並添加城市到數據庫。</string>
+    <string name="configLabel_places_build">加入世界地點</string>
+    <string name="configLabel_places_build_summary">掃描本地並加入城市到資料庫。</string>
 
     <plurals name="placePlural">
         <item quantity="other">%d 地點</item>
     </plurals>
 
 
-    <string name="configAction_addPlace">添加</string>              <!-- button (contentDescription) -->
+    <string name="configAction_addPlace">加入</string>              <!-- button (contentDescription) -->
     <string name="configAction_copyPlace">復制</string>            <!-- button (contentDescription) -->
     <string name="configAction_selectPlace">選擇</string>        <!-- button (contentDescription) -->
     <string name="configAction_searchPlace">搜索</string>              <!-- button (contentDescription) -->
     <string name="configAction_sharePlace">分享</string>          <!-- button (contentDescription) -->
     <string name="configAction_deletePlace">刪除</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">清空地點</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportPlaces">導出</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_exportPlaces">匯出</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">匯入</string>       <!-- button (contentDescription) -->
 
     <!-- App Setting: UI -->
-    <string name="configLabel_ui">用戶界面</string>                       <!-- group title -->
+    <string name="configLabel_ui">用戶介面</string>                       <!-- group title -->
     <string name="configLabel_ui_fields">顯示</string>                <!-- group title, followed by a list of "[X] <Twilight Event>" fields -->
     <string name="configLabel_ui_misc">雜項</string>
 
     <!-- App Setting: Verbose Accessibility -->
-    <string name="configLabel_accessibility_verbose">詳細的屏幕閱讀器</string>
-    <string name="configLabel_accessibility_verbose_summary">用戶界面發生變化時自動通知。</string>
+    <string name="configLabel_accessibility_verbose">詳細的螢幕閱讀器</string>
+    <string name="configLabel_accessibility_verbose_summary">用戶介面發生變化時自動通知。</string>
 
     <!-- App Setting: UI Warnings -->
     <string name="configLabel_ui_showWarnings">顯示警告</string>
-    <string name="configLabel_ui_showWarnings_summary">顯示配置好的警告信息。</string>
+    <string name="configLabel_ui_showWarnings_summary">顯示配置好的警告訊息。</string>
 
     <!-- App Setting: Show Lightmap -->
     <string name="configLabel_ui_showLightmap">顯示光照圖</string>
     <string name="configLabel_ui_showLightmap_summary">顯示一個含有白天，夜晚和的曙暮光柱狀圖。</string>
 
     <!-- App Setting: Show Moon -->
-    <string name="configLabel_ui_showmoon">顯示月亮的信息</string>
+    <string name="configLabel_ui_showmoon">顯示月亮的訊息</string>
     <string name="configLabel_ui_showmoon_summary">顯示月出月落的時間，月相和月光時段。</string>
 
     <!-- App Setting: Show Equinox / Solstice -->
@@ -892,13 +892,13 @@
     <string name="configLabel_ui_solsticeTrackingMode_summary"><xliff:g id="modeName" example="Upcoming Event">%s</xliff:g></string>
 
     <!-- App Setting: show data source -->
-    <string name="configLabel_ui_showdatasource">顯示數據源</string>
-    <string name="configLabel_ui_showdatasource_summary">為當前配置顯示一個標籤。</string>
+    <string name="configLabel_ui_showdatasource">顯示資料源</string>
+    <string name="configLabel_ui_showdatasource_summary">為當前配置顯示一個標記。</string>
 
     <!-- App Setting: show headers -->
-    <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
-    <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label --> <!-- TODO -->
-    <string name="configLabel_ui_showheader_text">Show Header Text</string> <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_ui_showheaders">列標題</string>              <!-- group title -->
+    <string name="configLabel_ui_showheader_icon">顯示列標題圖示</string> <!-- checkbox label -->
+    <string name="configLabel_ui_showheader_text">顯示列標題文字</string> <!-- checkbox label -->
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">顯示黃金時刻</string>
@@ -934,16 +934,16 @@
     <string name="configActionDesc_resetNote">重置便簽</string>
     <string name="configActionDesc_showCalendar">顯示日歷應用</string>
     <string name="configActionDesc_mapLocation">在地圖上展示位置</string>
-    <string name="configActionDesc_setAlarm">設置鬧鐘</string>
+    <string name="configActionDesc_setAlarm">設定鬧鐘</string>
     <string name="configActionDesc_worldMap">世界地圖對話窗</string>
     <string name="configActionDesc_equinoxDialog">至日對話窗</string>
     <string name="configActionDesc_moon">月亮對話窗</string>
     <string name="configActionDesc_sunDialog">太陽對話窗</string>
-    <string name="configActionDesc_setDate">設置日期</string>
-    <string name="configActionDesc_setTimeZone">設置時區</string>
-    <string name="configActionDesc_setLocation">設置位置</string>
+    <string name="configActionDesc_setDate">設定日期</string>
+    <string name="configActionDesc_setTimeZone">設定時區</string>
+    <string name="configActionDesc_setLocation">設定位置</string>
     <string name="configActionDesc_swapCards">切換卡片 (今天/明天)</string>
-    <string name="configActionDesc_setAlarmForNote">為便簽設置鬧鐘</string>
+    <string name="configActionDesc_setAlarmForNote">為便簽設定鬧鐘</string>
 
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">by offset</string>
@@ -997,13 +997,13 @@
     <string name="configLabel_getFix_passiveMode_summary">使用被動接收到的位置。</string>
 
     <!-- App Setting: locale mode -->
-    <string name="configLabel_locale">語言設置</string>   <!-- group title -->
+    <string name="configLabel_locale">語言設定</string>   <!-- group title -->
 
     <string name="configLabel_localeMode">模式</string>
     <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
     <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
         <item>系統</item>
-        <item>用戶自定</item>
+        <item>用戶自訂</item>
     </string-array>
 
     <!-- App Setting: custom Locale -->
@@ -1100,15 +1100,15 @@
     <string name="configAction_shareMap">分享</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <!-- Dialog: Set Alarm -->
-    <string name="configLabel_schedalarm_mode">新建一個鬧鐘排程</string>
+    <string name="configLabel_schedalarm_mode">新增一個鬧鐘排程</string>
     <string name="configLabel_schednotify_mode">安排通知為</string>
-    <string name="schedalarm_dialog_title">設置鬧鐘</string>
+    <string name="schedalarm_dialog_title">設定鬧鐘</string>
     <string name="schedalarm_dialog_tab_event">事件</string>                      <!-- tab text -->
     <string name="schedalarm_dialog_tab_time">時間</string>                        <!-- tab text -->
-    <string name="schedalarm_dialog_ok">設置鬧鐘</string>
+    <string name="schedalarm_dialog_ok">設定鬧鐘</string>
     <string name="schedalarm_dialog_cancel">取消</string>
-    <string name="schedalarm_dialog_error">鬧鐘沒有設置……</string>
-    <string name="schedalarm_dialog_error2">鬧鐘無法設置……</string>
+    <string name="schedalarm_dialog_error">鬧鐘沒有設定……</string>
+    <string name="schedalarm_dialog_error2">鬧鐘無法設定……</string>
     <string name="schedalarm_dialog_note">距離現在大約<xliff:g id="timetext" example="6h 30m">%s</xliff:g>。</string>
     <string name="schedalarm_dialog_note1">@string/schedalarm_dialog_note</string>
     <string name="schedalarm_dialog_note2"><xliff:g id="solarevent" example="nautical twilight">%s</xliff:g>沒有出現。</string>
@@ -1174,17 +1174,17 @@
     <string-array name="solarevents_long1">   <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>天文曙光</item>
         <item>航海曙光</item>
-        <item>藍色時刻（開始）</item>
+        <item>藍色時刻的開始</item>
         <item>民用曙光</item>
-        <item>藍色時刻（結束）</item>
+        <item>藍色時刻的結束</item>
         <item>日出</item>
-        <item>黃金時刻（結束）</item>
+        <item>黃金時刻的結束</item>
         <item>正午</item>
-        <item>黃金時刻（開始）</item>
+        <item>黃金時刻的開始</item>
         <item>日落</item>
-        <item>藍色時刻（開始）</item>
+        <item>藍色時刻的開始</item>
         <item>民用暮光</item>
-        <item>藍色時刻（結束）</item>
+        <item>藍色時刻的結束</item>
         <item>航海暮光</item>
         <item>天文暮光</item>
         <item>月出</item>
@@ -1199,7 +1199,7 @@
         <item>冬至</item>
         <item>月亮正午</item>
         <item>月夜</item>
-    </string-array>    <!-- TODO: review -->
+    </string-array>
 
 
     <!-- Dialog: Enable GPS? -->
@@ -1208,27 +1208,27 @@
     <string name="gps_dialog_cancel">否</string>
 
     <!-- gps_lastfix (current location mode) -->
-    <string name="gps_lastfix_title_set">設置位置</string>               <!-- may appear as place name when location set by intent -->
+    <string name="gps_lastfix_title_set">設定位置</string>               <!-- may appear as place name when location set by intent -->
     <string name="gps_lastfix_title_found">上次獲取到的位置</string>            <!-- may appear as place name when location set by gps -->
     <string name="gps_lastfix_title_searching">獲取位置</string>     <!-- may appear in ActionBar title while gps in progress -->
     <string name="gps_lastfix_toast_notfound">GPS未能獲取到位置；嘗試用上次獲取到的位置。</string>  <!-- displayed briefly after gps has failed to get a location -->
     <string name="gps_lastfix_toast_cancelled">GPS更新已取消。</string> <!-- displayed briefly when gps refresh cancelled -->
 
     <!-- Dialog: KeepTrying GPS? -->
-    <string name="gps_keeptrying_title">沒有補丁</string>
-    <string name="gps_keeptrying_msg">無法獲取補丁。</string>
+    <string name="gps_keeptrying_title">沒有更新檔</string>
+    <string name="gps_keeptrying_msg">無法獲取更新檔。</string>
     <string name="gps_keeptrying_ok">繼續嘗試</string>
     <string name="gps_keeptrying_cancel">放棄</string>
     <string name="gps_keeptrying_fallback">使用最後的位置</string>
 
     <!-- Dialog: Use Date -->
-    <string name="timedate_dialog_title">設置日期</string>
-    <string name="timedate_dialog_ok">設置</string>
+    <string name="timedate_dialog_title">設定日期</string>
+    <string name="timedate_dialog_ok">設定</string>
     <string name="timedate_dialog_cancel">取消</string>
 
     <!-- Dialog: Use Timezone -->
     <string name="timezone_dialog_title">時區</string>
-    <string name="timezone_dialog_ok">設置</string>
+    <string name="timezone_dialog_ok">設定</string>
     <string name="timezone_dialog_cancel">取消</string>
 
     <!-- Dialog: Set Location -->
@@ -1254,40 +1254,40 @@
 
     <!-- Dialog: Clear Places -->
     <string name="locationclear_dialog_title">清空地點？</string>
-    <string name="locationclear_dialog_message">確定要清除存放地點的數據庫嗎？</string>
+    <string name="locationclear_dialog_message">確定要清除存放地點的資料庫嗎？</string>
     <string name="locationclear_dialog_ok">清除</string>
     <string name="locationclear_dialog_cancel">取消</string>
 
     <!-- Dialog: Clear Places (progress) -->
     <string name="locationcleared_dialog_title">正在清除地點</string>
-    <string name="locationcleared_dialog_message">正在清理數據庫……</string>
-    <string name="locationcleared_toast_success">地點數據庫清理好了。</string>
+    <string name="locationcleared_dialog_message">正在清理資料庫……</string>
+    <string name="locationcleared_toast_success">地點資料庫清理好了。</string>
 
     <!-- Dialog: Build Places List (progress) -->
-    <string name="locationbuild_dialog_title">創建數據庫</string>
-    <string name="locationbuild_dialog_message">正在創建地點數據庫……</string>
-    <string name="locationbuild_toast_success">添加了<xliff:g id="n">%1$s</xliff:g>個地點到數據庫中。</string>
+    <string name="locationbuild_dialog_title">創建資料庫</string>
+    <string name="locationbuild_dialog_message">正在創建地點資料庫……</string>
+    <string name="locationbuild_toast_success">加入了<xliff:g id="n">%1$s</xliff:g>個地點到資料庫中。</string>
 
     <!-- Dialog: Export Places -->
-    <string name="locationexport_dialog_title">導出地點</string>
-    <string name="locationexport_dialog_message">導出地點到csv文件。</string>
+    <string name="locationexport_dialog_title">匯出地點</string>
+    <string name="locationexport_dialog_message">匯出地點到csv檔案。</string>
 
     <!-- Dialog: Export Themes -->
-    <string name="themesexport_dialog_title">導出主題</string>
-    <string name="themesexport_dialog_message">導出主題到文件中。</string>
+    <string name="themesexport_dialog_title">匯出主題</string>
+    <string name="themesexport_dialog_message">匯出主題到檔案中。</string>
 
     <!-- Dialog: Export -->
     <string name="msg_export_success">臨時復制到了 <xliff:g id="filepath">%s</xliff:g></string>
-    <string name="msg_export_failure">導出到 <xliff:g id="filepath">%s</xliff:g> 失敗了。</string>
-    <string name="msg_export_to">其他導出工具</string>  <!-- title displayed over "share action" chooser -->
+    <string name="msg_export_failure">匯出到 <xliff:g id="filepath">%s</xliff:g> 失敗了。</string>
+    <string name="msg_export_to">其他匯出工具</string>  <!-- title displayed over "share action" chooser -->
 
     <!-- Dialog: Import Themes -->
-    <string name="themesimport_dialog_title">導入主題</string>
-    <string name="themesimport_dialog_message">正從文件中導入主題…</string>
+    <string name="themesimport_dialog_title">匯入主題</string>
+    <string name="themesimport_dialog_message">正從檔案中匯入主題…</string>
 
-    <string name="msg_import_success">導入了 <xliff:g id="themePlural">%s</xliff:g>。</string>
-    <string name="msg_import_failure">從 <xliff:g id="filepath">%s</xliff:g> 導入失敗!</string>
-    <string name="msg_import_noresults">導入已跳過；沒有找到新的主題。</string>
+    <string name="msg_import_success">匯入了 <xliff:g id="themePlural">%s</xliff:g>。</string>
+    <string name="msg_import_failure">從 <xliff:g id="filepath">%s</xliff:g> 匯入失敗!</string>
+    <string name="msg_import_noresults">匯入已跳過；沒有找到新的主題。</string>
 
     <plurals name="themePlural">
         <item quantity="other">%d 個主題</item>
@@ -1343,9 +1343,9 @@
     <!-- Dialog: Help -->
     <string name="help_dialog_title">幫助</string>
     <string name="help_appearance_title"><![CDATA[
-       支持下列標題替換:<br/>
+       支援下列標題替換:<br/>
         <br/>
-        <b>全部小部件:</b> <br />
+        <b>全部小工具:</b> <br />
                 * 日期: <b>%d</b>（例如: February 12）<br/>
                 * 日（短）: <b>%dd</b>（例如: Mon）<br/>
                 * 日（長）: <b>%dD</b>（例如: Monday）<br/>
@@ -1353,24 +1353,24 @@
                 * 時間（最近更新）: <b>%dt</b><br/>
                 * 含秒的時間（最近更新）: <b>%dT</b><br/>
                 <br/>
-                * 標籤: <b>%loc</b>（例如: Prescott）<br />
+                * 標記: <b>%loc</b>（例如: Prescott）<br />
                 * 緯度: <b>%lat</b>（例如: 35.5409）<br />
                 * 經度: <b>%lon</b>（例如: -112.4691）<br/>
                 * 高度: <b>%lel</b>（例如: 385 meters）<br/>
                 <br/>
-                * 數據源: <b>%s</b>（例如: sunrisesunsetlib）<br/>
+                * 資料源: <b>%s</b>（例如: sunrisesunsetlib）<br/>
                 * 時區（id）: <b>%t</b>（例如: US/Arizona）<br/>
                 * appWidgetID: <b>%id</b><br/>
          <br/>
-         <b>太陽小部件:</b> <br/>
+         <b>太陽小工具:</b> <br/>
                 * 模式（短）: <b>%m</b>（例如: Civil）<br/>
                 * 模式（長）: <b>%M</b>（例如: Civil Twilight）<br/>
          <br/>
-         <b>月亮小部件:</b> <br/>
+         <b>月亮小工具:</b> <br/>
                 * （月亮）飽滿度: <b>%i</b>（例如: 25%）<br/>
                 * 月相: <b>%M</b>（例如: Waxing Crescent）<br/>
          <br/>
-         <b>至日小部件:</b> <br/>
+         <b>至日小工具:</b> <br/>
                 * 模式（短）: <b>%m</b>（例如: Solstice）<br/>
                 * 模式（長）: <b>%M</b>（例如: Winter Solstice）<br/>
     ]]></string>
@@ -1398,7 +1398,7 @@
           <b>天文曙暮光:</b> 太陽到達地平線下18度；跟夜裡差不多。<br/>
     ]]></string>
     <string name="help_general_riseSetOrder"><![CDATA[
-          <b>今日:</b> 為今天的日期設置事件時間。<br/><br/>
+          <b>今日:</b> 為今天的日期設定事件時間。<br/><br/>
           <b>前 / 後:</b> 上一個事件的時間，以及下一個即將發生的事件。<br/>
     ]]></string>
 
@@ -1413,7 +1413,7 @@
         <b>天亮時間: </b> 從民用曙光到民用暮光的時間。<br/>
     ]]></string>
     <string name="help_general_moonillum"><![CDATA[
-        <b>（月亮）飽滿度</b> 月亮小部件和主頁會顯示午夜（月出和月落的中間點）時月亮的飽滿度，月亮對話框則會顯示當前時刻月亮的飽滿度。<br/><br/>
+        <b>（月亮）飽滿度</b> 月亮小工具和主頁會顯示午夜（月出和月落的中間點）時月亮的飽滿度，月亮對話框則會顯示當前時刻月亮的飽滿度。<br/><br/>
     ]]></string>
     <string name="help_general_goldhour"><![CDATA[
         <b>黃金時刻（魔術光）: </b>太陽位於地平線上方或下方6度之間。早上，黃金時刻以民用曙光開始，在日出一小段時間後結束。傍晚，黃金時刻在日落前一小段時間開始，以民用暮光結束。<br/>
@@ -1425,11 +1425,11 @@
         啟動活動所需的完整類名。<br/>
     ]]></string>
     <string name="help_widgetlist"><![CDATA[
-          如果要<b>新增一個小部件</b>，你需要去手機的主頁。<br/><br/>
-          如果要<b>配置一個已存在的小部件</b>，你可以從以下的列表中選擇。<br/>
+          如果要<b>新增一個小工具</b>，你需要去手機的主頁。<br/><br/>
+          如果要<b>配置一個已存在的小工具</b>，你可以從以下的列表中選擇。<br/>
     ]]></string>
     <string name="help_themelist">
-          [Icon Add] 添加一個新主題或[Icon Copy]從已有主題中復制一份。\n
+          [Icon Add] 加入一個新主題或[Icon Copy]從已有主題中復制一份。\n
           \n
           [Icon Edit]編輯或[Icon Delete]刪除主題。\n
           [Icon Default]預設主題是不能被刪除的。
@@ -1442,9 +1442,9 @@
         此功能現在作為<a href="moreInfoLink">單獨的應用程式</a>使用
     ]]></string>
 
-    <string name="privacy_policy"><![CDATA[<b>隱私:</b><br/>Suntimes 不會蒐集、儲存、傳輸個人用戶數據。它<b>沒有廣告</b>, <b>沒有用戶分析</b>, <b>沒有跟蹤器</b>，並且<b>不使用不必要的權限</b>。<br/><br/>本應用使用位置信息來配置。位置信息（和其他用來配置本應用的數據）保存在本機並且不會離開本機。<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
+    <string name="privacy_policy"><![CDATA[<b>隱私:</b><br/>Suntimes 不會蒐集、儲存、傳輸個人用戶資料。它<b>沒有廣告</b>, <b>沒有用戶分析</b>, <b>沒有跟蹤器</b>，並且<b>不使用不必要的權限</b>。<br/><br/>本應用使用位置訊息來配置。位置訊息（和其他用來配置本應用的資料）儲存在本機並且不會離開本機。<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes 使用<b>位置</b>權限來確定您當前的經緯度。<br/><br/>此權限是可選的；位置預設可被手動配置。]]></string>
-    <string name="privacy_permission_storage"><![CDATA[Suntimes 使用<b>外部存儲</b>權限以備份/導出數據到文檔中（例如: 地點、主題）。]]></string>
+    <string name="privacy_permission_storage"><![CDATA[Suntimes 使用<b>外部存儲</b>權限以備份/匯出資料到文檔中（例如: 地點、主題）。]]></string>
     <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms 使用<b>外部存儲</b>權限以播放位於SD卡中的聲音。<br/><br/>此權限是可選的；如果訪問被拒絕將播放預設聲音。系統聲音不需要此權限（媒體存儲）。]]></string>
     <string name="privacy_permissiondialog_prompt"><![CDATA[現在請求權限？]]></string>
     <string name="privacy_permissiondialog_ignore">忽略</string>
@@ -1453,10 +1453,10 @@
 
     <string name="security_dialog_title">安全提醒</string>
     <string name="security_duplicate_permissions">屬於 Suntimes 的權限:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\n也被定義為: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
-    <string name="feature_not_supported_by_api">API %1$s 不支持此功能。</string>
-    <string name="feature_not_supported_by_source">當前數據源不支持此功能。</string>
-    <string name="reboot_required_message">可能需要重新啟動以使變更生效。</string>
-    <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
+    <string name="feature_not_supported_by_api">API %1$s 不支援此功能。</string>
+    <string name="feature_not_supported_by_source">當前資料源不支援此功能。</string>
+    <string name="reboot_required_message">可能需要重啟裝置以使變更生效。</string>    <!-- toast; device off/on may be required -->
+    <string name="restart_required_message">可能需要重啟應用以使變更生效。</string>   <!-- toast; app restart may be required -->
 
     <string name="dialog_ok">確認</string>
     <string name="dialog_cancel">取消</string>

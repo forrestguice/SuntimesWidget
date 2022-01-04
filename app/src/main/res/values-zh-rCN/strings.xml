@@ -120,10 +120,10 @@
         <item quantity="other">%1$s 之后</item>
     </plurals>
 
-    <string name="offset_before_msg">%1$s 之前 %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO: review -->
-    <string name="offset_after_msg">%1$s 之后 %2$s</string>     <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO: review -->
-    <string name="offset_before_msg1">{0} 之前 {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
-    <string name="offset_after_msg1">{0} 之后 {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+    <string name="offset_before_msg">%2$s 之前 %1$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->
+    <string name="offset_after_msg">%2$s 之后 %1$s</string>     <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->
+    <string name="offset_before_msg1">{1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3} 之前 {0}</string>  <!-- uses SelectFormat (api24+) -->
+    <string name="offset_after_msg1">{1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3} 之后 {0}</string>  <!-- uses SelectFormat (api24+) -->
 
     <string name="offset_button_before">之前</string>    <!-- button label; [1h] [5m] [before] (-) -->
     <string name="offset_button_after">之后</string>      <!-- button label; [1h] [5m] [after] (+) -->
@@ -252,8 +252,8 @@
 
     <string name="configLabel_general_timeFormatMode">时间格式:</string>         <!-- spinner label -->
 
-    <string name="configLabel_general_altitude_enabled">使用海拔</string>        <!-- checkbox label -->
-    <string name="configLabel_general_altitude_enabled_summary">套用海拔以提高精度。</string>        <!-- checkbox label -->
+    <string name="configLabel_general_altitude_enabled">应用海拔</string>        <!-- checkbox label -->
+    <string name="configLabel_general_altitude_enabled_summary">应用海拔以提高精度。</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_lengthUnits">长度单位</string>        <!-- spinner label -->
 
@@ -432,9 +432,9 @@
     <string name="timezoneMode_current">系统时区</string>               <!-- setting -->
     <string name="timezoneMode_custom">用户自定</string>                    <!-- setting -->
 
-    <string name="time_lmst">Local Sidereal Time</string>                  <!-- timezone label -->  <!-- TODO -->
-    <string name="time_gmst">Greenwich Sidereal Time</string>              <!-- timezone label -->  <!-- TODO -->
-    <string name="time_utc">Coordinated Universal Time</string>            <!-- timezone label -->  <!-- TODO -->
+    <string name="time_lmst">本地恒星时</string>                  <!-- timezone label -->
+    <string name="time_gmst">格林威治恒星时</string>              <!-- timezone label -->
+    <string name="time_utc">协调世界时</string>            <!-- timezone label -->
     <string name="time_localMean">当地平均时间</string>                 <!-- setting / custom timezone id -->
     <string name="time_apparent">视太阳时间</string>              <!-- setting / custom timezone id -->
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
@@ -719,8 +719,8 @@
 
     <string name="alarmOption_vibrate">震动</string>                <!-- checkbox text -->
     <string name="alarmOption_ringtone_none">无声</string>          <!-- ringtone label (none) -->
-    <string name="alarmOption_ringtone_ringtone">Ringtone</string>          <!-- menu item; Select a "Ringtone" -->  <!-- TODO -->
-    <string name="alarmOption_ringtone_file">Audio File</string>          <!-- menu item; Select an "Audio File" -->  <!-- TODO -->
+    <string name="alarmOption_ringtone_ringtone">铃声</string>          <!-- menu item; Select a "Ringtone" -->
+    <string name="alarmOption_ringtone_file">音频文件</string>          <!-- menu item; Select an "Audio File" -->
     <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
     <string name="alarmOption_solarevent_none">闹钟时间</string>          <!-- ringtone label (none) -->
 
@@ -861,7 +861,7 @@
     <string name="configAction_deletePlace">删除</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">清空地点</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportPlaces">导出</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_importPlaces">导入</string>       <!-- button (contentDescription) -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">用户界面</string>                       <!-- group title -->
@@ -897,9 +897,9 @@
     <string name="configLabel_ui_showdatasource_summary">为当前配置显示一个标签。</string>
 
     <!-- App Setting: show headers -->
-    <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
-    <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label --> <!-- TODO -->
-    <string name="configLabel_ui_showheader_text">Show Header Text</string> <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_ui_showheaders">列标题</string>              <!-- group title -->
+    <string name="configLabel_ui_showheader_icon">显示列标题图标</string> <!-- checkbox label -->
+    <string name="configLabel_ui_showheader_text">显示列标题文本</string> <!-- checkbox label -->
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">显示黄金时刻</string>
@@ -1175,17 +1175,17 @@
     <string-array name="solarevents_long1">   <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>天文曙光</item>
         <item>航海曙光</item>
-        <item>蓝色时刻（开始）</item>
+        <item>蓝色时刻的开始</item>
         <item>民用曙光</item>
-        <item>蓝色时刻（结束）</item>
+        <item>蓝色时刻的结束</item>
         <item>日出</item>
-        <item>黄金时刻（结束）</item>
+        <item>黄金时刻的结束</item>
         <item>正午</item>
-        <item>黄金时刻（开始）</item>
+        <item>黄金时刻的开始</item>
         <item>日落</item>
-        <item>蓝色时刻（开始）</item>
+        <item>蓝色时刻的开始</item>
         <item>民用暮光</item>
-        <item>蓝色时刻（结束）</item>
+        <item>蓝色时刻的结束</item>
         <item>航海暮光</item>
         <item>天文暮光</item>
         <item>月出</item>
@@ -1200,7 +1200,7 @@
         <item>冬至</item>
         <item>月亮正午</item>
         <item>月夜</item>
-    </string-array>  <!-- TODO: review -->
+    </string-array>
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">GPS已被禁用，要启用吗？</string>
@@ -1455,8 +1455,8 @@
     <string name="security_duplicate_permissions">属于 Suntimes 的权限:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\n也被定义为: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>
     <string name="feature_not_supported_by_api">API %1$s 不支持此功能。</string>
     <string name="feature_not_supported_by_source">当前数据源不支持此功能。</string>
-    <string name="reboot_required_message">可能需要重新启动以使变更生效。</string>
-    <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
+    <string name="reboot_required_message">可能需要重启设备以使变更生效。</string>    <!-- toast; device off/on may be required -->
+    <string name="restart_required_message">可能需要重启应用以使变更生效。</string>   <!-- toast; app restart may be required -->
 
     <string name="dialog_ok">确认</string>
     <string name="dialog_cancel">取消</string>
