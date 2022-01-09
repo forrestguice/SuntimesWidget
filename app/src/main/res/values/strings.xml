@@ -295,6 +295,9 @@
     <string name="configLabel_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label -->
 
+    <string name="configLabel_general_localize_hemisphere">Localize to Hemisphere</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_general_localize_hemisphere_summary">Apply hemisphere based localization (adjust season labels, moon phase icons, etc).</string>        <!-- checkbox label -->    <!-- TODO -->
+
     <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->
 
     <string name="configLabel_general_showSeconds">Show Seconds</string>        <!-- checkbox label -->
@@ -1882,6 +1885,7 @@
     <string name="def_appwidget_0_general_showtimedate" translatable="false">true</string>
     <string name="def_appwidget_0_general_trackingmode" translatable="false">SOONEST</string>
     <string name="def_appwidget_0_general_observerheight" translatable="false">1.8288</string>
+    <string name="def_appwidget_0_general_localize_hemisphere" translatable="false">true</string>
 
     <string name="def_app_plugins_enabled" translatable="false">false</string>
 
