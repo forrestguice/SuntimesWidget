@@ -1,5 +1,9 @@
 ### ~
 
+### v0.13.18 (2022-01-14)
+* changes the solstice/equinox card to always include seconds when expanded (#533).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#531, #532 by James Liu).
+
 ### v0.13.17 (2022-01-02)
 * adds translation to Simplified Chinese (zh_CN) (contributed by James Liu) (#527).
 * updates translation to Traditional Chinese (zh_TW) (#527).

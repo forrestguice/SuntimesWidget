@@ -1,0 +1,3 @@
+- the solstice dialog now includes seconds.
+- updates translation to Simplified Chinese.
+- updates translation to Traditional Chinese.
