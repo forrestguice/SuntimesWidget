@@ -839,6 +839,15 @@ public class LocationConfigView extends LinearLayout
         task.execute((Object[]) null);
     }
 
+    @Override
+    protected void onDetachedFromWindow()
+    {
+        if (getFixAdapter != null) {
+            getFixAdapter.changeCursor(null);    // closes previous cursor
+        }
+        super.onDetachedFromWindow();
+    }
+
     /**
      * A ListAdapter of WidgetListItems.
      */
