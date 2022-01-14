@@ -1,3 +1,4 @@
 - the solstice dialog now includes seconds.
-- updates translation to Simplified Chinese.
-- updates translation to Traditional Chinese.
+- updates translations to Simplified Chinese, and Traditional Chinese.
+- fixes a bug where the "rectangular world map widget is unavailable" on some devices (#535).
+- other miscellaneous bug fixes (#529, #530, #536).

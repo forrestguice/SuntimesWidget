@@ -3,6 +3,10 @@
 ### v0.13.18 (2022-01-14)
 * changes the solstice/equinox card to always include seconds when expanded (#533).
 * updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#531, #532 by James Liu).
+* fixes bug "rectangular world map widget unavailable" on some devices (#535).
+* fixes bug "LocationListTask leaks database cursor" (#536).
+* fixes bug "alarm dialog fails to consume touch events" (#529).
+* fixes bug "invalid offsets are retained when editing an existing alarm's event" (#530).
 
 ### v0.13.17 (2022-01-02)
 * adds translation to Simplified Chinese (zh_CN) (contributed by James Liu) (#527).
