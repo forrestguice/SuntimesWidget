@@ -302,10 +302,10 @@ public abstract class SuntimesActivityTestBase
         config.put("it", new SuntimesTestConfig(new Location("Roma", "41.9099", "12.3959", "79"), "CET", false, "METRIC"));
         config.put("pl", new SuntimesTestConfig(new Location("Warszawa", "52.2319", "21.0067", "143"), "Poland", true, "METRIC"));
         config.put("nb", new SuntimesTestConfig(new Location("Oslo", "59.8937", "10.6450", "0"), "Europe/Oslo", true, "METRIC"));
-        config.put("zh_TW", new SuntimesTestConfig(new Location("Taiwan", "23.5491", "119.8998", "0"), "Asia/Taipei", false, "METRIC"));
+        config.put("zh_TW", new SuntimesTestConfig(new Location("Taipei", "25.0330", "121.5654", "0"), "Asia/Taipei", false, "METRIC"));
         config.put("pt_BR", new SuntimesTestConfig(new Location("São Paulo", "-23.6821", "-46.8754", "815"), "Brazil/East", true, "METRIC"));
         config.put("cs", new SuntimesTestConfig(new Location("Prague", "50.0595", "14.3255", "361"), "CET", true, "METRIC"));
-        config.put("zh_CN", new SuntimesTestConfig(new Location("Taiwan", "23.5491", "119.8998", "0"), "Asia/Taipei", false, "METRIC"));
+        config.put("zh_CN", new SuntimesTestConfig(new Location("Beijing", "39.9042", "116.4074", "0"), "Asia/Taipei", false, "METRIC"));
 
         if (!version.startsWith("v"))
             version = "v" + version;
