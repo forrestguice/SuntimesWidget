@@ -110,6 +110,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_showWeeks;
     protected CheckBox checkbox_showHours;
     protected CheckBox checkbox_useAltitude;
+    protected CheckBox checkbox_localizeHemisphere;
 
     protected Spinner spinner_riseSetOrder;
     protected ImageButton button_riseSetOrderHelp;
@@ -718,6 +719,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         //
         checkbox_useAltitude = (CheckBox)findViewById(R.id.appwidget_general_useAltitude);
 
+        checkbox_localizeHemisphere = (CheckBox)findViewById(R.id.appwidget_general_localize_hemisphere);
+
         //
         // widget: about button
         //
@@ -1204,6 +1207,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         boolean useAltitude = checkbox_useAltitude.isChecked();
         WidgetSettings.saveLocationAltitudeEnabledPref(context, appWidgetId, useAltitude);
 
+        // save: localize hemisphere
+        WidgetSettings.saveLocalizeHemispherePref(context, appWidgetId, checkbox_localizeHemisphere.isChecked());
+
         // save: time mode
         saveTimeMode(context);
         saveTimeModeOverride(context);
@@ -1264,6 +1270,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // load: useAltitude
         boolean useAltitude = WidgetSettings.loadLocationAltitudeEnabledPref(context, appWidgetId);
         checkbox_useAltitude.setChecked(useAltitude);
+
+        // load: localize hemisphere
+        checkbox_localizeHemisphere.setChecked(WidgetSettings.loadLocalizeHemispherePref(context, appWidgetId));
 
         // load: time mode
         loadTimeMode(context);
@@ -1609,6 +1618,15 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (layout_riseSetOrder != null)
         {
             layout_riseSetOrder.setVisibility((showUI ? View.VISIBLE : View.GONE));
+        }
+    }
+
+    /**
+     */
+    protected void showOptionLocalizeHemisphere(boolean showUI) {
+        View layout = findViewById(R.id.appwidget_general_localize_hemisphere_layout);
+        if (layout != null) {
+            layout.setVisibility(showUI ? View.VISIBLE : View.GONE);
         }
     }
 
