@@ -36,7 +36,7 @@
 
             <item android:id="@+id/mapOption_background"
                 android:title="@string/worldmap_dialog_option_background"
-                android:icon="?attr/icActionMap"
+                android:icon="?attr/icActionSettings"
                 app:showAsAction="never" />
         </menu>
     </item>
