@@ -840,6 +840,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             context.getContentResolver().releasePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
         WorldMapWidgetSettings.deleteWorldMapPref(context,0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_BACKGROUND, mapTag);
+        worldmap.setMapMode(context, mapMode);
+        updateViews();
     }
 
     protected void onMapBackgroundResult(Context context, int requestCode, Uri uri)
@@ -847,6 +849,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         Toast.makeText(context, "TODO: " + uri.toString(), Toast.LENGTH_LONG).show();
         String mapTag = WorldMapWidgetSettings.MAPTAG_3x2;   // TODO: 3x3 square map
         WorldMapWidgetSettings.saveWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_BACKGROUND, mapTag, uri.toString());
+        worldmap.setMapMode(context, mapMode);
         updateViews();
     }
 

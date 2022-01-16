@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -25,11 +25,14 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.graphics.ColorUtils;
@@ -46,6 +49,8 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 {
@@ -108,20 +113,23 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     }
 
     @SuppressLint("ResourceType")
-    public void setMapMode(Context context, WorldMapWidgetSettings.WorldMapWidgetMode mode )
+    public void setMapMode(Context context, WorldMapWidgetSettings.WorldMapWidgetMode mode)
     {
+        Drawable background;
         this.mode = mode;
         switch (mode)
         {
             case EQUIAZIMUTHAL_SIMPLE:
-                options.map = ContextCompat.getDrawable(context, R.drawable.worldmap2);
+                background = loadBackgroundDrawable(context, WorldMapWidgetSettings.MAPTAG_3x2);   // TODO: 3x3
+                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap2);
                 options.map_night = null;
                 options.foregroundColor = foregroundColor;
                 options.hasTransparentBaseMap = true;
                 break;
 
             case EQUIAZIMUTHAL_SIMPLE1:
-                options.map = ContextCompat.getDrawable(context, R.drawable.worldmap3);
+                background = loadBackgroundDrawable(context, WorldMapWidgetSettings.MAPTAG_3x2);   // TODO: 3x3
+                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap3);
                 options.map_night = null;
                 options.foregroundColor = foregroundColor;
                 options.hasTransparentBaseMap = true;
@@ -136,11 +144,35 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 
             case EQUIRECTANGULAR_SIMPLE:
             default:
-                options.map = ContextCompat.getDrawable(context, R.drawable.worldmap);
+                background = loadBackgroundDrawable(context, WorldMapWidgetSettings.MAPTAG_3x2);
+                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap);
                 options.map_night = null;
                 options.foregroundColor = foregroundColor;
                 options.hasTransparentBaseMap = true;
                 break;
+        }
+    }
+
+    @Nullable
+    protected static Drawable loadBackgroundDrawable(Context context, String mapTag)
+    {
+        String backgroundString = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_BACKGROUND, mapTag);
+        Uri backgroundUri = (backgroundString != null) ? Uri.parse(backgroundString) : null;
+        if (backgroundUri != null)
+        {
+            try {
+                int w = 1024;
+                int h = mapTag.startsWith(WorldMapWidgetSettings.MAPTAG_3x3) ? 1024 : 512;
+                InputStream in = context.getContentResolver().openInputStream(backgroundUri);
+                Drawable background = Drawable.createFromStream(in, backgroundUri.toString());
+                return new BitmapDrawable(Bitmap.createScaledBitmap(((BitmapDrawable)background).getBitmap(), w, h, true));
+
+            } catch (FileNotFoundException e) {
+                Log.w(LOGTAG, "Unable to open map background: " + e);
+                return null;
+            }
+        } else {
+            return null;
         }
     }
 
