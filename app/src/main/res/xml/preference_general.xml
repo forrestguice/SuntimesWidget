@@ -59,7 +59,7 @@
             android:entries="@null" android:entryValues="@null" android:defaultValue="@string/def_appwidget_0_general_calculator_moon" />
     </PreferenceCategory>
 
-    <PreferenceCategory
+    <!--<PreferenceCategory
         android:title="@string/configLabel_experimental">
 
         <CheckBoxPreference
@@ -67,6 +67,6 @@
             android:title="@string/configLabel_general_scanPlugins"
             android:summary="@string/configLabel_general_scanPlugins_summary" android:defaultValue="@string/def_app_plugins_enabled" />
 
-    </PreferenceCategory>
+    </PreferenceCategory>-->
 
 </PreferenceScreen>
