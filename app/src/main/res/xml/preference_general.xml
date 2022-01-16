@@ -35,6 +35,11 @@
             android:defaultValue="@string/default_units_length" />
 
         <CheckBoxPreference
+            android:key="appwidget_0_general_showseconds"
+            android:title="@string/configLabel_general_showSeconds"
+            android:summary="@string/configLabel_general_showSeconds_summary" android:defaultValue="@string/def_appwidget_0_general_showseconds" />
+        
+        <CheckBoxPreference
             android:key="appwidget_0_location_altitude_enabled"
             android:title="@string/configLabel_general_altitude_enabled"
             android:summary="@string/configLabel_general_altitude_enabled_summary" android:defaultValue="@string/def_appwidget_0_general_altitude_enabled" />
