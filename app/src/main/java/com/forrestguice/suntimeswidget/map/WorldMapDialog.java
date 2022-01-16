@@ -61,6 +61,7 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -815,6 +816,12 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         updateMediaButtons();
     }
 
+    private void setMapBackground()
+    {
+        // TODO
+        Toast.makeText(getContext(), "TODO", Toast.LENGTH_SHORT).show();
+    }
+
     private PopupMenu.OnMenuItemClickListener onContextMenuClick = new PopupMenu.OnMenuItemClickListener()
     {
         @Override
@@ -846,6 +853,10 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
                 case R.id.shareMap:
                     shareMap();
+                    return true;
+
+                case R.id.mapOption_background:
+                    setMapBackground();
                     return true;
 
                 case R.id.action_worldmap_simplerectangular:
