@@ -1883,7 +1883,7 @@
         For more information about available choices, or extending the app to support other libraries, see the online help.
     ]]>
     </string>   <!-- TODO -->
-    <string name="help_datasources_url">https://github.com/forrestguice/SuntimesWidget/wiki/Help</string>
+    <string name="help_datasources_url">https://github.com/forrestguice/SuntimesWidget/wiki/Help#data-sources</string>
 
     <!-- pref defaults -->
     <string name="def_appwidget_0_general_calculator" translatable="false">time4a-time4j</string>
