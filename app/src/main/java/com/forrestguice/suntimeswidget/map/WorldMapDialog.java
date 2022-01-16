@@ -772,6 +772,10 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             action_date.setEnabled( !WidgetSettings.DateInfo.isToday(getMapDate()) );
         }
 
+        MenuItem action_background_clear = m.findItem(R.id.mapOption_background_clear);
+        if (action_background_clear != null) {
+        }
+
         MenuItem option_mapmode0 = m.findItem(R.id.mapProjectionMenu);
         MenuItem option_mapmode = m.findItem(menuItemForMapMode(mapMode));
         if (option_mapmode != null) {
@@ -857,6 +861,9 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
                 case R.id.mapOption_background:
                     setMapBackground();
+                    return true;
+
+                case R.id.mapOption_background_clear:
                     return true;
 
                 case R.id.action_worldmap_simplerectangular:

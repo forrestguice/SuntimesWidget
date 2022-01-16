@@ -1387,6 +1387,7 @@
     <string name="worldmap_dialog_action_reset">Reset</string>     <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_menu">Options</string>       <!-- button (contentDescription) -->
     <string name="worldmap_dialog_option_background">Change map background</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background_clear">Clear map background</string>    <!-- TODO -->
     <string name="worldmap_dialog_option_sunlight">Sunlight</string>
     <string name="worldmap_dialog_option_moonlight">Moonlight</string>
     <string name="worldmap_dialog_option_all">Both</string>
