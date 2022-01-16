@@ -46,6 +46,8 @@ public class WorldMapWidgetSettings
             new String[] {PREF_KEY_WORLDMAP_SPEED1D, "false"}
     };
 
+    public static final String PREF_KEY_WORLDMAP_BACKGROUND = "background";
+
     public static final String MAPTAG_3x2 = "";    // EMPTY
     public static final String MAPTAG_3x3 = "1";
     public static final String MAPTAG_DEF = MAPTAG_3x2;
@@ -150,6 +152,20 @@ public class WorldMapWidgetSettings
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_WORLDMAP;
         prefs.remove(prefs_prefix + key + mapTag);
         prefs.apply();
+    }
+
+    public static void saveWorldMapString(Context context, int appWidgetId, String key, String mapTag, String value)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
+        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_WORLDMAP;
+        prefs.putString(prefs_prefix + key + mapTag, value);
+        prefs.apply();
+    }
+    public static String loadWorldMapString(Context context, int appWidgetId, String key, String mapTag)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
+        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_WORLDMAP;
+        return prefs.getString(prefs_prefix + key + mapTag, null);
     }
 
     public static boolean defaultWorldMapFlag(String key)

@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.map;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -35,6 +36,8 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -85,6 +88,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 {
     public static final String LOGTAG = "WorldMapDialog";
     public static final String EXTRA_DATETIME = "datetime";
+
+    public static final int REQUEST_BACKGROUND = 400;
 
     private View dialogHeader;
     private TextView dialogTitle;
@@ -774,6 +779,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
         MenuItem action_background_clear = m.findItem(R.id.mapOption_background_clear);
         if (action_background_clear != null) {
+            action_background_clear.setVisible(null != WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_BACKGROUND, WorldMapWidgetSettings.MAPTAG_3x2));
         }
 
         MenuItem option_mapmode0 = m.findItem(R.id.mapProjectionMenu);
@@ -822,8 +828,75 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     private void setMapBackground()
     {
-        // TODO
-        Toast.makeText(getContext(), "TODO", Toast.LENGTH_SHORT).show();
+        mapBackgroundFilePicker(REQUEST_BACKGROUND);
+    }
+
+    private void clearMapBackground(Context context)
+    {
+        String mapTag = WorldMapWidgetSettings.MAPTAG_3x2;   // TODO: 3x3 square map
+        String mapBackgroundString = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_BACKGROUND, mapTag);
+        Uri uri = mapBackgroundString != null ? Uri.parse(mapBackgroundString) : null;
+        if (uri != null) {
+            context.getContentResolver().releasePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
+        WorldMapWidgetSettings.deleteWorldMapPref(context,0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_BACKGROUND, mapTag);
+    }
+
+    protected void onMapBackgroundResult(Context context, int requestCode, Uri uri)
+    {
+        Toast.makeText(context, "TODO: " + uri.toString(), Toast.LENGTH_LONG).show();
+        String mapTag = WorldMapWidgetSettings.MAPTAG_3x2;   // TODO: 3x3 square map
+        WorldMapWidgetSettings.saveWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_BACKGROUND, mapTag, uri.toString());
+        updateViews();
+    }
+
+    protected void onMapBackgroundResult(int requestCode, int resultCode, Intent data)
+    {
+        Context context = getContext();
+        if (resultCode == Activity.RESULT_OK && context != null && data != null && data.getData() != null)
+        {
+            Uri uri = data.getData();
+            if (Build.VERSION.SDK_INT >= 19) {
+                final int flags = data.getFlags() & Intent.FLAG_GRANT_READ_URI_PERMISSION;
+                context.getContentResolver().takePersistableUriPermission(uri, flags);
+            }
+            onMapBackgroundResult(context, requestCode, uri);
+        } else {
+            Log.d(LOGTAG, "onActivityResult: bad result: " + resultCode + ", " + data);
+        }
+    }
+
+    protected void mapBackgroundFilePicker(int requestCode)
+    {
+        Intent intent;
+        if (Build.VERSION.SDK_INT >= 19)
+        {
+            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
+        } else {
+            intent = new Intent(Intent.ACTION_GET_CONTENT);
+        }
+
+        if (Build.VERSION.SDK_INT >= 11) {
+            intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+        }
+        intent.setType("image/png");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.worldmap_dialog_option_background)), requestCode);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode)
+        {
+            case REQUEST_BACKGROUND:
+                onMapBackgroundResult(requestCode, resultCode, data);
+                break;
+        }
     }
 
     private PopupMenu.OnMenuItemClickListener onContextMenuClick = new PopupMenu.OnMenuItemClickListener()
@@ -864,6 +937,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     return true;
 
                 case R.id.mapOption_background_clear:
+                    clearMapBackground(context);
                     return true;
 
                 case R.id.action_worldmap_simplerectangular:
