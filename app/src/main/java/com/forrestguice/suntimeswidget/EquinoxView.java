@@ -1148,7 +1148,7 @@ public class EquinoxView extends LinearLayout
                 SuntimesUtils.TimeDisplayText titleText = utils.calendarDateYearDisplayString(context, data.dataEquinoxSpring.eventCalendarThisYear());
                 title.setText(titleText.toString());
 
-                boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, 0);
+                boolean showSeconds = !options.minimized || WidgetSettings.loadShowSecondsPref(context, 0);
                 boolean showTime = WidgetSettings.loadShowTimeDatePref(context, 0);
 
                 note_equinox_vernal.updateDate(context, data.dataEquinoxSpring.eventCalendarThisYear(), showTime, showSeconds);

@@ -29,5 +29,13 @@ public class SuntimesApplication extends Application
     {
         super.onCreate();
         ApplicationStarter.initialize(this, false);
+
+        /*if (BuildConfig.DEBUG) {
+            try {
+                Class.forName("dalvik.system.CloseGuard").getMethod("setEnabled", boolean.class).invoke(null, true);
+            } catch (ReflectiveOperationException e) {
+                throw new RuntimeException(e);
+            }
+        }*/
     }
 }

@@ -142,7 +142,7 @@ When reporting a bug **please be detailed as possible**. What did you expect the
 
 ## Legal Stuff
 
-Copyright &#169; 2014-2021 Forrest Guice<br/>
+Copyright &#169; 2014-2022 Forrest Guice<br/>
 
 The source code is available under [GPLv3](LICENSE) (https://github.com/forrestguice/SuntimesWidget).
 > This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the [GNU General Public License](LICENSE) for more details.
@@ -172,11 +172,12 @@ Catalan and Spanish translations by <u><a href="https://github.com/Raulvo">Raulv
 Basque translation by <u>beriain</u>.<br/>
 Norwegian translation by <u>FTno</u>.<br/>
 Italian translation by <u>Matteo Caoduro</u> and <u>GiovaGa</u>.<br/>
-Traditional Chinese translation by <u><a href=https://github.com/pggdt>ft42</a></u>.<br />
+Traditional Chinese translation by <u><a href=https://github.com/pggdt>ft42</a></u>, and <u><a href=https://github.com/jamesliu96>James Liu</a></u>.<br />
 Brazilian Portuguese translation by <u><a href=https://github.com/netosilva15>NetoSilva</a></u>, <u>Nelson A. de Oliveira</u>, and <u>Enrico S. B. Fraletti</u>.<br />
 Russian translation by <u><a href=https://github.com/rchintsov>Ruslan Chintsov</a></u>.<br />
 Dutch translation by <u><a href=https://github.com/joppla>Joppla</a></u>.<br />
 Czech translation by <u><a href=https://github.com/utaxiu>utaxiu</a></u>.<br />
+Simplified Chinese translation by <u><a href=https://github.com/jamesliu96>James Liu</a></u>.<br />
 
 [Contributions to the project](CONTRIBUTING.md) are welcome.
 
