@@ -27,6 +27,7 @@
     <string name="configAction_worldMap">World Map</string>
     <string name="configAction_moon">Moon</string>
     <string name="configAction_help">Help</string>
+    <string name="configAction_onlineHelp">Online Help</string>   <!-- TODO -->
     <string name="configAction_overflow">More</string>
     <string name="configAction_settings">Settings</string>
     <string name="configAction_aboutWidget">About</string>
@@ -289,6 +290,7 @@
     <string name="configLabel_general_calculator">Data Source:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Sun Data Source</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Moon Data Source</string>         <!-- preference label -->
+    <string name="configLabel_general_calculator_help">About Data Sources</string>    <!-- preference title / help button text --> <!-- TODO -->
 
     <string name="configLabel_general_timeFormatMode">Time Format:</string>         <!-- spinner label -->
 
@@ -1870,6 +1872,18 @@
     <string name="calculator_displayString_time4a_noaa">Follows algorithms published by the National Oceanic and Atmospheric Administration.</string>
     <string name="calculator_displayString_time4a_cc">Follows algorithms published by Dershowitz/Reingold in their book "Calendrical Calculations" (third edition).</string>
     <string name="calculator_displayString_time4a_4j">Based on astronomical calculations published by Jean Meeus in his book "Astronomical Algorithms" (second edition).</string>
+    <string name="help_datasources">
+        <![CDATA[
+        Suntimes uses third-party libraries to perform astronomical calculations.<br/>
+        <br/>
+        The <b>data source</b> setting allows choosing between different libraries (or choosing between different algorithms offered by those libraries). The default is <b>time4a-time4j</b>.<br/>
+        <br/>
+        This setting affects the speed and accuracy of calculations, and may limit which features are available. <br/>
+        <br/>
+        For more information about available choices, or extending the app to support other libraries, see the online help.
+    ]]>
+    </string>   <!-- TODO -->
+    <string name="help_datasources_url">https://github.com/forrestguice/SuntimesWidget/wiki/Help</string>
 
     <!-- pref defaults -->
     <string name="def_appwidget_0_general_calculator" translatable="false">time4a-time4j</string>

@@ -57,6 +57,17 @@
             android:dialogTitle="@string/configLabel_general_calculator_moon"
             android:summary="%s"
             android:entries="@null" android:entryValues="@null" android:defaultValue="@string/def_appwidget_0_general_calculator_moon" />
+
+        <com.forrestguice.suntimeswidget.settings.HelpPreference
+            android:key="appwidget_0_general_calculator_help"
+            android:persistent="false"
+            android:title="@string/configLabel_general_calculator_help"
+            android:icon="?attr/icActionHelp"
+            app:helpText="@string/help_datasources"
+            app:helpLink="@string/help_datasources_url"
+            app:moreHelpButtonText="@string/configAction_onlineHelp"
+            />
+
     </PreferenceCategory>
 
     <!--<PreferenceCategory
