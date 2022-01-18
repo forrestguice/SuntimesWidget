@@ -60,7 +60,8 @@ public class WorldMapWidgetSettings
         EQUIRECTANGULAR_SIMPLE("Simple", R.layout.layout_widget_sunpos_3x2_0),
         EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", R.layout.layout_widget_sunpos_3x2_0),
         EQUIAZIMUTHAL_SIMPLE("Polar [north]", R.layout.layout_widget_sunpos_3x3_0),
-        EQUIAZIMUTHAL_SIMPLE1("Polar [south]", R.layout.layout_widget_sunpos_3x3_0);
+        EQUIAZIMUTHAL_SIMPLE1("Polar [south]", R.layout.layout_widget_sunpos_3x3_0),
+        EQUIAZIMUTHAL_SIMPLE2("Polar [location]", R.layout.layout_widget_sunpos_3x3_0);
 
         private final int layoutID;
         private String displayString;
@@ -90,6 +91,7 @@ public class WorldMapWidgetSettings
         {
             EQUIAZIMUTHAL_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simpleazimuthal));
             EQUIAZIMUTHAL_SIMPLE1.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simpleazimuthal_south));
+            EQUIAZIMUTHAL_SIMPLE2.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simpleazimuthal_location));
             EQUIRECTANGULAR_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simplerectangular));
             EQUIRECTANGULAR_BLUEMARBLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_bluemarble));
         }

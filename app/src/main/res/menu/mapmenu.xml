@@ -32,6 +32,12 @@
                     android:icon="?attr/icActionLocale"
                     android:checkable="true"
                     app:showAsAction="never" />
+
+                <item android:id="@+id/action_worldmap_simpleazimuthal_location"
+                    android:title="@string/widgetMode_sunPosMap_simpleazimuthal_location"
+                    android:icon="?attr/icActionLocale"
+                    android:checkable="true"
+                    app:showAsAction="never" />
             </group>
 
             <group android:id="@+id/mapOption_group_background">

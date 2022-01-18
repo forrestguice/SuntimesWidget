@@ -59,7 +59,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         double[] polar = new double[2];
         polar[0] = lon;
         polar[1] = 90 - lat;
-        //Log.d(WorldMapView.LOGTAG, "toPolar: [" + lat + ", " + lon + "] -> [" + polar[0] + ", " + polar[1] + "]");
+        Log.d(WorldMapView.LOGTAG, "toPolar: [" + lat + ", " + lon + "] -> [" + polar[0] + ", " + polar[1] + "]");
         return polar;
     }
 

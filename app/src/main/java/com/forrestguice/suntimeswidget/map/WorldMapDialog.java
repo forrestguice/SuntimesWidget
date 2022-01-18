@@ -478,6 +478,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             options.anim_frameOffsetMinutes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2)
                     ? 24 * 60 : 3;
 
+            options.center = new double[] {location.getLatitudeAsDouble(), location.getLongitudeAsDouble()};
             if (WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2)) {
                 options.locations = new double[][] {{location.getLatitudeAsDouble(), location.getLongitudeAsDouble()}};
             } else options.locations = null;
@@ -805,6 +806,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         switch (mode) {
             case EQUIAZIMUTHAL_SIMPLE: return R.id.action_worldmap_simpleazimuthal;
             case EQUIAZIMUTHAL_SIMPLE1: return R.id.action_worldmap_simpleazimuthal_south;
+            case EQUIAZIMUTHAL_SIMPLE2: return R.id.action_worldmap_simpleazimuthal_location;
             case EQUIRECTANGULAR_BLUEMARBLE: return R.id.action_worldmap_bluemarble;
             case EQUIRECTANGULAR_SIMPLE: default: return R.id.action_worldmap_simplerectangular;
         }
@@ -813,6 +815,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         switch (item.getItemId()) {
             case R.id.action_worldmap_simpleazimuthal: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE;
             case R.id.action_worldmap_simpleazimuthal_south: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE1;
+            case R.id.action_worldmap_simpleazimuthal_location: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE2;
             case R.id.action_worldmap_bluemarble: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE;
             case R.id.action_worldmap_simplerectangular: default: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE;
         }
@@ -947,6 +950,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                 case R.id.action_worldmap_bluemarble:
                 case R.id.action_worldmap_simpleazimuthal:
                 case R.id.action_worldmap_simpleazimuthal_south:
+                case R.id.action_worldmap_simpleazimuthal_location:
                     setMapMode(context, mapModeForMenuItem(item));
                     item.setChecked(true);
                     return true;

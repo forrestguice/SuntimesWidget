@@ -135,6 +135,13 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 options.hasTransparentBaseMap = true;
                 break;
 
+            case EQUIAZIMUTHAL_SIMPLE2:
+                options.map = loadBackgroundDrawable(context, WorldMapWidgetSettings.MAPTAG_3x2);   // TODO: 3x3
+                options.map_night = null;
+                options.foregroundColor = foregroundColor;
+                options.hasTransparentBaseMap = true;
+                break;
+
             case EQUIRECTANGULAR_BLUEMARBLE:
                 options.map = ContextCompat.getDrawable(context, R.drawable.land_shallow_topo_1024);
                 options.map_night = ContextCompat.getDrawable(context, R.drawable.earth_lights_lrg_1024);
@@ -333,8 +340,9 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         {
             case EQUIAZIMUTHAL_SIMPLE:
             case EQUIAZIMUTHAL_SIMPLE1:
+            case EQUIAZIMUTHAL_SIMPLE2:
                 Log.d("DEBUG", "matchHeight: " + matchHeight);
-                projection = (mode == WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE1 ? new WorldMapEquiazimuthal1() : new WorldMapEquiazimuthal());
+                projection = getMapProjection(mode);
                 if (w > 0)
                 {
                     if (h > 0)
@@ -385,6 +393,17 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             drawTask.execute(data, w, h, options, projection, (animated ? 0 : 1), options.offsetMinutes);
             options.modified = false;
             lastUpdate = System.currentTimeMillis();
+        }
+    }
+
+    public static WorldMapTask.WorldMapProjection getMapProjection(WorldMapWidgetSettings.WorldMapWidgetMode mode)
+    {
+        switch (mode) {
+            case EQUIAZIMUTHAL_SIMPLE: return new WorldMapEquiazimuthal();
+            case EQUIAZIMUTHAL_SIMPLE1: return new WorldMapEquiazimuthal1();
+            case EQUIAZIMUTHAL_SIMPLE2: return new WorldMapEquiazimuthal2();
+            case EQUIRECTANGULAR_BLUEMARBLE: case EQUIRECTANGULAR_SIMPLE:
+            default: return new WorldMapEquirectangular();
         }
     }
 

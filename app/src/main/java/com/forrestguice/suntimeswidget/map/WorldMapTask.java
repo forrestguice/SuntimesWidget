@@ -198,6 +198,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
 
         public boolean translateToLocation = false;
 
+        public double[] center = new double[] {0, 0};
         public double[][] locations = null;  // a list of locations {{lat, lon}, {lat, lon}, ...} or null
         public int locationFillColor = Color.MAGENTA;
         public int locationStrokeColor = Color.BLACK;
@@ -364,7 +365,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         {
             if (options.locations != null && options.locations.length > 0)
             {
-                double[] mid = new double[] { w/2, h/2d };
+                double[] mid = new double[] { w/2d, h/2d };
                 for (int i=0; i<options.locations.length; i++)
                 {
                     int[] point = toBitmapCoords(w, h, mid, options.locations[i][0], options.locations[i][1]);
