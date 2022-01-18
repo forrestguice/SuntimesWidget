@@ -319,7 +319,10 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
 
         p.setColor(Color.GREEN);
         p.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
-        drawConnectedLines(c, createLatitudePath(mid, 0), p);
+        drawConnectedLines(c, createLatitudePath(mid, 0, -180, 0), p);
+
+        p.setColor(Color.RED);
+        drawConnectedLines(c, createLatitudePath(mid, 0, 0, 180), p);
 
         p.setColor(options.latitudeColors[0]);
         for (int i=-179; i<180; i+=15) {
@@ -329,18 +332,18 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         drawConnectedLines(c, createLongitudePath(mid, 180), p);
         p.setColor(Color.YELLOW);
         drawConnectedLines(c, createLongitudePath(mid, 0), p);
-        p.setColor(Color.LTGRAY);
+        p.setColor(Color.RED);
         drawConnectedLines(c, createLongitudePath(mid, 90), p);
-        p.setColor(Color.DKGRAY);
+        p.setColor(Color.GREEN);
         drawConnectedLines(c, createLongitudePath(mid, -90), p);
 
         p.setColor(Color.CYAN);
         p.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
-        for (int i=0; i<90; i+=18) {
+        for (int i=0; i<90; i+=5) {
             drawConnectedLines(c, createLatitudePath(mid, i), p);
         }
         p.setColor(Color.WHITE);
-        for (int i=-90; i<0; i+=18) {
+        for (int i=-90; i<0; i+=5) {
             drawConnectedLines(c, createLatitudePath(mid, i), p);
         }
 
@@ -367,16 +370,20 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         c.drawLines(lines, 2,lines.length-2, p);
     }
 
-    protected float[] createLatitudePath(double[] mid, double latitude)
+    protected float[] createLatitudePath(double[] mid, double latitude) {
+        return createLatitudePath(mid, latitude, -180, 180);
+    }
+
+    protected float[] createLatitudePath(double[] mid, double latitude, double min, double max)
     {
-        double[] point = toCartesian(toPolar(latitude, -180));
+        double[] point = toCartesian(toPolar(latitude, min));
         float x = (int)(mid[0] + ((point[0] / 180d) * mid[0]));
         float y = (int)(mid[1] - ((point[1] / 180d) * mid[1]));
 
         ArrayList<Float> path = new ArrayList<>();
         path.add(x);
         path.add(y);
-        for (int longitude = -180; longitude<=180; longitude++)
+        for (int longitude=(int)min; longitude <= max; longitude++)
         {
             point = toCartesian(toPolar(latitude, longitude));
             x = (int)(mid[0] + ((point[0] / 180d) * mid[0]));
