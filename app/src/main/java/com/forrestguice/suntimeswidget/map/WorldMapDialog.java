@@ -350,7 +350,9 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             seekbar.setMax(seek_totalMinutes);
             seekbar.setProgress(seek_now);
             seekbar.setOnSeekBarChangeListener(seekBarListener);
-            updateSeekbarDrawables(context);
+            if (context != null) {
+                updateSeekbarDrawables(context);
+            }
         }
 
         playButton = (ImageButton)dialogView.findViewById(R.id.media_play_map);
@@ -399,7 +401,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         seekGroup = dialogView.findViewById(R.id.media_seek);
     }
 
-    private void updateSeekbarDrawables(Context context)
+    private void updateSeekbarDrawables(@NonNull Context context)
     {
         /**LightMapView.LightMapTask lightMapTask = new LightMapView.LightMapTask();
         LightMapView.LightMapColors colors = new LightMapView.LightMapColors();
@@ -408,7 +410,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         Bitmap lightmap = lightMapTask.makeBitmap(data, worldmap.getWidth(), 1, colors);
         BitmapDrawable lightmapDrawable = new BitmapDrawable(context.getResources(), lightmap);*/
 
-        boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(getContext(), 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
+        boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
         int color = speed_1d ? color_warning : color_accent;
         seekbar.setTrackColor(color);
         seekbar.setTickColor(color, color, color);
@@ -1145,8 +1147,9 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         {
             expandSheet(getDialog());
 
-            if (seekbar != null) {
-                updateSeekbarDrawables(getContext());
+            Context context = getContext();
+            if (seekbar != null && context != null) {
+                updateSeekbarDrawables(context);
             }
         }
     };
