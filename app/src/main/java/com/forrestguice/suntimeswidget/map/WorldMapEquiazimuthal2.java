@@ -124,14 +124,20 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
     @Override
     protected double[] toPolar(double lat, double lon)
     {
-        // x = k` * cosLat * sinDistance
-        // y = k` * (cosLat1 * sinLat + sinLat1 * cosLat * cosDistance)
-        // here
-        //     k` = c / sin C
-        // and
-        //     cosC = sinLat1 * sinLat + cosLat1 * cosLat * cosDistance
-        // where c is the angular distance from center
+        double[] polar = new double[2];
+        double[] point = toCartesian(lat, lon);
+        polar[0] = Math.toDegrees(Math.atan2(point[0], point[1]));
+        polar[1] = Math.toDegrees(point[2]);
+        //Log.d(WorldMapView.LOGTAG, "toPolar: [" + lat + ", " + lon + "] -> [" + polar[0] + ", " + polar[1] + "]");
+        return polar;
+    }
 
+    protected double[] toCartesian(double lat, double lon) {
+        return toCartesian(lat, lon, 1.0);
+    }
+
+    protected double[] toCartesian(double lat, double lon, double R)
+    {
         double distance = lon - center[1];
         double radDistance = Math.toRadians(distance);
         double sinDistance = Math.sin(radDistance);
@@ -145,19 +151,42 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         double sinLat = Math.sin(radLat);
         double cosLat = Math.cos(radLat);
 
+        double k = 1;
+        double[] point = new double[3];
         double cosC = (sinLat1 * sinLat) + (cosLat1 * cosLat * cosDistance);
-        double c = Math.acos(cosC);
-        double k = c / Math.sin(c);
-        double east = k * cosLat * sinDistance;
-        double north = k * ((cosLat1 * sinLat) + (sinLat1 * cosLat * cosDistance));
+        double c = point[2] = Math.acos(cosC);
+        if (c < 0.00001)
+        {
+            if (cosC > 0) {
+                k = 1;
+                point[0] = point[1] = 0;
 
-        double[] polar = new double[2];
-        polar[0] = Math.toDegrees(Math.atan2(east, north));
-        polar[1] = Math.toDegrees(c);
-        //if (polar[1] > 360) {
-        //    Log.d(WorldMapView.LOGTAG, "toPolar: [" + lat + ", " + lon + "] -> [" + polar[0] + ", " + polar[1] + "]");
-        //}
-        return polar;
+            } else if (cosC < 0) {
+                k = 1;
+                //point[0] = -1 * center[0];    // TODO
+                //point[1] = center[1] + 180;
+            }
+        } else {
+            k = c / Math.sin(c);
+            point[0] = R * k * cosLat * sinDistance;
+            point[1] = R * k * (((cosLat1 * sinLat) - (sinLat1 * cosLat * cosDistance)));
+        }
+        //Log.d("DEBUG", "toCartesian: [" + lat + ", " + lon + "] -> [" + point[0] + ", " + point[1] + "] .. k is " + k + ", c is " + Math.toDegrees(c) + ", cosC is " + cosC + ", distance is " + distance);
+        return point;
+    }
+
+    @Override
+    public int[] toBitmapCoords(int w, int h, double[] mid, double lat, double lon)
+    {
+        double[] point = toCartesian(lat, lon);
+        int[] r = new int[2];
+        r[0] = (int)(mid[0] + ((point[0] / Math.PI) * mid[0]));
+        r[1] = (int)(mid[1] - ((point[1] / Math.PI) * mid[1]));
+        return r;
+    }
+
+    public void setCenterFromOptions(WorldMapTask.WorldMapOptions options) {
+        center = options.center;
     }
 
     @Override
@@ -168,7 +197,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
             return null;
         }
 
-        center = options.center;
+        setCenterFromOptions(options);
         if (matrix == null) {
             matrix = initMatrix();
         }
@@ -253,9 +282,9 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
             // draw sun
             if (options.showSunPosition && options.showSunShadow)
             {
-                double[] point = toCartesian(toPolar(sunLat, sunLon));
-                int sunX = (int)(mid[0] + ((point[0] / 180d) * mid[0]) );
-                int sunY = (int)(mid[1] - ((point[1] / 180d) * mid[1]) );
+                double[] point = toCartesian(sunLat, sunLon);
+                int sunX = (int)(mid[0] + ((point[0] / Math.PI) * mid[0]) );
+                int sunY = (int)(mid[1] - ((point[1] / Math.PI) * mid[1]) );
                 drawSun(c, sunX, sunY, paintSun_fill, paintSun_stroke, options);
             }
 
@@ -263,9 +292,9 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
             // draw moon
             if (options.showMoonPosition && options.showMoonLight)
             {
-                double[] point = toCartesian(toPolar(moonLat, moonLon));
-                int moonX = (int)(mid[0] + ((point[0] / 180d) * mid[0]) );
-                int moonY = (int)(mid[1] - ((point[1] / 180d) * mid[1]) );
+                double[] point = toCartesian(moonLat, moonLon);
+                int moonX = (int)(mid[0] + ((point[0] / Math.PI) * mid[0]) );
+                int moonY = (int)(mid[1] - ((point[1] / Math.PI) * mid[1]) );
                 drawMoon(c, moonX, moonY, paintMoon_fill, paintMoon_stroke, options);
             }
 
@@ -337,13 +366,13 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         p.setColor(Color.GREEN);
         drawConnectedLines(c, createLongitudePath(mid, -90), p);
 
-        p.setColor(Color.CYAN);
+        p.setColor(Color.WHITE);
         p.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
-        for (int i=0; i<90; i+=5) {
+        for (int i=0; i<90; i+=15) {
             drawConnectedLines(c, createLatitudePath(mid, i), p);
         }
-        p.setColor(Color.WHITE);
-        for (int i=-90; i<0; i+=5) {
+        p.setColor(Color.DKGRAY);
+        for (int i=-90; i<0; i+=15) {
             drawConnectedLines(c, createLatitudePath(mid, i), p);
         }
 
@@ -356,7 +385,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         p.setPathEffect((options.latitudeLinePatterns[2][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[2], 0) : null);
         p.setColor(Color.RED);
         drawConnectedLines(c, createLatitudePath(mid, 66.560833), p);
-        p.setColor(Color.MAGENTA);
+        p.setColor(Color.GREEN);
         drawConnectedLines(c, createLatitudePath(mid, -66.560833), p);
 
         p.setStyle(prevStyle);
@@ -373,53 +402,40 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
     protected float[] createLatitudePath(double[] mid, double latitude) {
         return createLatitudePath(mid, latitude, -180, 180);
     }
-
     protected float[] createLatitudePath(double[] mid, double latitude, double min, double max)
     {
-        double[] point = toCartesian(toPolar(latitude, min));
-        float x = (int)(mid[0] + ((point[0] / 180d) * mid[0]));
-        float y = (int)(mid[1] - ((point[1] / 180d) * mid[1]));
-
+        double[] point;
         ArrayList<Float> path = new ArrayList<>();
-        path.add(x);
-        path.add(y);
         for (int longitude=(int)min; longitude <= max; longitude++)
         {
-            point = toCartesian(toPolar(latitude, longitude));
-            x = (int)(mid[0] + ((point[0] / 180d) * mid[0]));
-            y = (int)(mid[1] - ((point[1] / 180d) * mid[1]));
-            path.add(x);
-            path.add(y);
+            point = toCartesian(latitude, longitude);
+            path.add((float)(mid[0] + ((point[0] / (Math.PI)) * mid[0])));
+            path.add((float)(mid[1] - ((point[1] / (Math.PI)) * mid[1])));
         }
-
-        float[] retvalue = new float[path.size()];
-        for (int i=0; i<retvalue.length; i++) {
-            retvalue[i] = path.get(i);
-        }
-        return retvalue;
+        return toFloatArray(path);
     }
 
-    protected float[] createLongitudePath(double[] mid, double longitude)
+    protected float[] createLongitudePath(double[] mid, double longitude) {
+        return createLongitudePath(mid, longitude, -88, 88);
+    }
+    protected float[] createLongitudePath(double[] mid, double longitude, double min, double max)
     {
-        double[] point = toCartesian(toPolar(-88, longitude));
-        float x = (int)(mid[0] + ((point[0] / 180d) * mid[0]));
-        float y = (int)(mid[1] - ((point[1] / 180d) * mid[1]));
-
+        double[] point;
         ArrayList<Float> path = new ArrayList<>();
-        path.add(x);
-        path.add(y);
-        for (int latitude = -88; latitude<88; latitude++)
+        for (int latitude = (int)min; latitude<max; latitude++)
         {
-            point = toCartesian(toPolar(latitude, longitude));
-            x = (int)(mid[0] + ((point[0] / 180d) * mid[0]));
-            y = (int)(mid[1] - ((point[1] / 180d) * mid[1]));
-            path.add(x);
-            path.add(y);
+            point = toCartesian(latitude, longitude);
+            path.add((float)(mid[0] + ((point[0] / (Math.PI)) * mid[0])));
+            path.add((float)(mid[1] - ((point[1] / (Math.PI)) * mid[1])));
         }
+        return toFloatArray(path);
+    }
 
-        float[] retvalue = new float[path.size()];
+    protected float[] toFloatArray(ArrayList<Float> values)
+    {
+        float[] retvalue = new float[values.size()];
         for (int i=0; i<retvalue.length; i++) {
-            retvalue[i] = path.get(i);
+            retvalue[i] = values.get(i);
         }
         return retvalue;
     }
