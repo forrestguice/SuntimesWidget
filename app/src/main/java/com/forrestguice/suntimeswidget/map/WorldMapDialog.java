@@ -350,9 +350,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             seekbar.setMax(seek_totalMinutes);
             seekbar.setProgress(seek_now);
             seekbar.setOnSeekBarChangeListener(seekBarListener);
-            if (context != null) {
-                updateSeekbarDrawables(context);
-            }
+            updateSeekbarDrawables(context);
         }
 
         playButton = (ImageButton)dialogView.findViewById(R.id.media_play_map);
@@ -401,8 +399,11 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         seekGroup = dialogView.findViewById(R.id.media_seek);
     }
 
-    private void updateSeekbarDrawables(@NonNull Context context)
+    private void updateSeekbarDrawables(Context context)
     {
+        if (context == null) {
+            return;
+        }
         /**LightMapView.LightMapTask lightMapTask = new LightMapView.LightMapTask();
         LightMapView.LightMapColors colors = new LightMapView.LightMapColors();
         colors.initDefaultDark(context);
