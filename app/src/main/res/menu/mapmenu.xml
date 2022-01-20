@@ -63,6 +63,11 @@
             android:checkable="true"
             app:showAsAction="never" />
 
+        <item android:id="@+id/mapOption_minorgrid"
+            android:title="@string/worldmap_dialog_option_minorgrid"
+            android:checkable="true"
+            app:showAsAction="never" />
+
         <item android:id="@+id/mapOption_location"
             android:title="@string/worldmap_dialog_option_location"
             android:checkable="true"
