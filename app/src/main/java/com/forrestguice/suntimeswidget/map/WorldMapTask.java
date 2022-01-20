@@ -198,7 +198,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
 
         public boolean translateToLocation = false;
 
-        public double[] center = new double[] {0, 0};
+        public double[] center = null;
         public double[][] locations = null;  // a list of locations {{lat, lon}, {lat, lon}, ...} or null
         public int locationFillColor = Color.MAGENTA;
         public int locationStrokeColor = Color.BLACK;

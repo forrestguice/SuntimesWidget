@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2019 Forrest Guice
+    Copyright (C) 2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -24,11 +24,11 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.PathEffect;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -41,13 +41,22 @@ import java.util.Calendar;
 
 /**
  * WorldMapEquiazimuthal
- * An azimuthal projection centered on arbitrary coordinates.
+ * An equidistant azimuthal projection centered on given coordinates.
  */
 public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
 {
-    protected double[] center = new double[] {90, 0};
+    protected double[] center = new double[] {0, 0};
     public double[] getCenter() {
         return center;
+    }
+    public void setCenter(double lat, double lon) {
+        center[0] = lat;
+        center[1] = lon;
+    }
+    public void setCenterFromOptions(@Nullable WorldMapTask.WorldMapOptions options) {
+        if (options != null && options.center != null) {
+            center = options.center;
+        }
     }
 
     @Override
@@ -66,39 +75,50 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         int h = size[1];
         double[] v = new double[w * h * 3];
 
-        double squareR = (0.5 * w + 1) * (0.5 * w + 1);
-        double negPiOver2 = -0.5 * Math.PI;
-        double[] polar = new double[2];
-
         double x, y;
-        double radLon, cosLon, sinLon, sinLat;
+        double c, sinC, cosC;
         double radLat, cosLat;
+        double radLon, cosLon, sinLon;
+        double squareR = Math.PI * Math.PI;
 
-        double squareP, squareX, squareY;
+        double radLon1 = Math.toRadians(center[1]);
+        double radLat1 = Math.toRadians(center[0]);
+        double sinLat1 = Math.sin(radLat1);
+        double cosLat1 = Math.cos(radLat1);
+
         for (int i = 0; i < w; i++)
         {
-            x = ((double)i) - 180d;   // [-180,180]
-            squareX = x * x;
+            x = ((((double)i) - 180) / 180d) * Math.PI;    // to [-180,180] to [-PI,PI]
+            double squareX = x * x;
             if (x == 0) {
                 x += 0.0001;
             }
 
             for (int j = 0; j < h; j++)
             {
-                y = ((double)(h - j)) - 180d;   // [-180,180]
-                squareY = y * y;
-                squareP = squareX + squareY;
-                if (squareP > squareR)
+                y = ((((double)(h - j)) - 180d) / 180d) * Math.PI;    // to [-180,180] to [-PI,PI]
+                if ((squareX + y*y) > squareR) {
                     continue;
-                //Log.d("DEBUG", "pX: " + x + ", pY: " + y);
+                }
 
-                polar[0] = Math.atan(x / y);                     // theta
-                polar[1] = Math.toRadians(Math.sqrt(squareP));   // p
+                c = Math.sqrt(x*x + y*y);
+                if (c != 0)
+                {
+                    cosC = Math.cos(c);
+                    sinC = Math.sin(c);
+                    radLat = Math.asin((cosC * sinLat1) + ((y * sinC * cosLat1) / c));
 
-                radLon = polar[0];
-                radLat = (y < 0) ? negPiOver2 - polar[1]
-                        : Math.asin(-1 * Math.cos(polar[1]));
-                //Log.d("DEBUG", "angle: " + polar[0] + ", dist: " + polar[1]);
+                    if (center[0] == 90) {
+                        radLon = radLon1 + Math.atan2(x,-y);
+                    } else if (center[0] == -90) {
+                        radLon = radLon1 + Math.atan2(x,y);
+                    } else {
+                        radLon = radLon1 + Math.atan2((x * sinC), (c * cosLat1 * cosC) - (y * sinLat1 * sinC));
+                    }
+                } else {
+                    radLat = Math.toRadians(center[0]);
+                    radLon = Math.toRadians(center[1]);
+                }
 
                 cosLat = Math.cos(radLat);
                 cosLon = Math.cos(radLon);
@@ -185,10 +205,6 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         return r;
     }
 
-    public void setCenterFromOptions(WorldMapTask.WorldMapOptions options) {
-        center = options.center;
-    }
-
     @Override
     public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options)
     {
@@ -265,7 +281,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
             ////////////////
             // draw sunlight / moonlight
             // algorithm described at https://gis.stackexchange.com/questions/17184/method-to-shade-or-overlay-a-raster-map-to-reflect-time-of-day-and-ambient-light
-            /*if (options.showSunPosition || options.showMoonPosition)
+            if (options.showSunPosition || options.showMoonPosition)
             {
                 int[] size = matrixSize();
                 Bitmap lightBitmap = Bitmap.createBitmap(size[0], size[1], Bitmap.Config.ARGB_8888);
@@ -276,7 +292,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
                 Rect dst = new Rect(0,0,w-1, h-1);
                 c.drawBitmap(lightBitmap, src, dst, paintScaled);
                 lightBitmap.recycle();
-            }*/
+            }
 
             ////////////////
             // draw sun
