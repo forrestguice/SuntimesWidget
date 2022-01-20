@@ -223,6 +223,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         public abstract void initPaint(WorldMapTask.WorldMapOptions options);
         public abstract double[] initMatrix();            // creates flattened multi-dimensional array; [lon][lat][v(3)]
         public abstract double[] getMatrix();
+        public abstract void resetMatrix();
         public abstract int[] matrixSize();               // [width(lon), height(lat)]
         protected abstract int k(int x, int y, int z);    // returns index into flattened array
         public abstract int[] toBitmapCoords(int w, int h, double[] mid, double lat, double lon);

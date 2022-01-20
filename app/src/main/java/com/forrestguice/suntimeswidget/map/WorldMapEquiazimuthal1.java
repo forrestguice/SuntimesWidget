@@ -61,6 +61,11 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
     }
 
     @Override
+    public void resetMatrix() {
+        matrix = null;
+    }
+
+    @Override
     public double[] initMatrix()
     {
         long bench_start = System.nanoTime();

@@ -53,10 +53,14 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         center[0] = lat;
         center[1] = lon;
     }
-    public void setCenterFromOptions(@Nullable WorldMapTask.WorldMapOptions options) {
-        if (options != null && options.center != null) {
-            center = options.center;
-        }
+    public boolean setCenterFromOptions(@Nullable WorldMapTask.WorldMapOptions options) {
+        if (options != null && options.center != null                                               // if options defines a center
+                && (options.center[0] != center[0] || options.center[1] != center[1]))                  // and that center is not the same
+        {
+            center[0] = options.center[0];
+            center[1] = options.center[1];
+            return true;
+        } else return false;
     }
 
     @Override
@@ -64,6 +68,11 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         return matrix;
     }
     private static double[] matrix = null;    // [x * y * v(3)]
+
+    @Override
+    public void resetMatrix() {
+        matrix = null;
+    }
 
     @Override
     public double[] initMatrix()
@@ -213,8 +222,8 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
             return null;
         }
 
-        setCenterFromOptions(options);
-        if (matrix == null) {
+        boolean recenter = setCenterFromOptions(options);
+        if (matrix == null || recenter) {
             matrix = initMatrix();
         }
 

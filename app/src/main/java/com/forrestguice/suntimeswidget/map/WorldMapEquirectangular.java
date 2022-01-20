@@ -313,6 +313,11 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
     private static double[] matrix = null;    // [x * y * v(3)]
 
     @Override
+    public void resetMatrix() {
+        matrix = null;
+    }
+
+    @Override
     public double[] initMatrix()
     {
         long bench_start = System.nanoTime();

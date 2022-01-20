@@ -352,6 +352,11 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
     }
 
     @Override
+    public void resetMatrix() {
+        matrix = null;
+    }
+
+    @Override
     public int[] matrixSize()
     {
         return new int[] {360, 360};
