@@ -235,6 +235,9 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         if (options.showMajorLatitudes) {
             drawMajorLatitudes(c, w, h, mid, options);
         }
+        if (options.showGrid) {
+            drawGrid(c, w, h, mid, options);
+        }
 
         drawData: if (data != null)
         {
@@ -369,10 +372,6 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         p.setColor(Color.RED);
         drawConnectedLines(c, createLatitudePath(mid, 0, 0, 180), p);
 
-        p.setColor(options.latitudeColors[0]);
-        for (int i=-179; i<180; i+=15) {
-            drawConnectedLines(c, createLongitudePath(mid, i), p);
-        }
         p.setColor(Color.BLUE);
         drawConnectedLines(c, createLongitudePath(mid, 180), p);
         p.setColor(Color.YELLOW);
@@ -382,20 +381,10 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         p.setColor(Color.GREEN);
         drawConnectedLines(c, createLongitudePath(mid, -90), p);
 
-        p.setColor(Color.WHITE);
+        p.setColor(options.latitudeColors[1]);
         p.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
-        for (int i=0; i<90; i+=15) {
-            drawConnectedLines(c, createLatitudePath(mid, i), p);
-        }
-        p.setColor(Color.DKGRAY);
-        for (int i=-90; i<0; i+=15) {
-            drawConnectedLines(c, createLatitudePath(mid, i), p);
-        }
-
-        //p.setColor(options.latitudeColors[1]);
-        //p.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
-        //c.drawPath(createLatitudePath(mid, 23.439444), p);
-        //c.drawPath(createLatitudePath(mid, -23.439444), p);
+        drawConnectedLines(c, createLatitudePath(mid, 23.439444), p);
+        drawConnectedLines(c, createLatitudePath(mid, -23.439444), p);
 
         p.setColor(options.latitudeColors[2]);
         p.setPathEffect((options.latitudeLinePatterns[2][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[2], 0) : null);
@@ -403,6 +392,41 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         drawConnectedLines(c, createLatitudePath(mid, 66.560833), p);
         p.setColor(Color.GREEN);
         drawConnectedLines(c, createLatitudePath(mid, -66.560833), p);
+
+        p.setStyle(prevStyle);
+        p.setPathEffect(prevEffect);
+        p.setStrokeWidth(prevStrokeWidth);
+    }
+
+    @Override
+    public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    {
+        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+        p.setXfermode(options.hasTransparentBaseMap ? new PorterDuffXfermode(PorterDuff.Mode.DST_OVER) : new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+
+        Paint.Style prevStyle = p.getStyle();
+        PathEffect prevEffect = p.getPathEffect();
+        float prevStrokeWidth = p.getStrokeWidth();
+
+        float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
+        p.setStrokeWidth(strokeWidth);
+        p.setStyle(Paint.Style.STROKE);
+        p.setStrokeCap(Paint.Cap.ROUND);
+
+        p.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
+        p.setColor(options.gridXColor);
+        for (int i=-179; i<180; i+=15) {
+            drawConnectedLines(c, createLongitudePath(mid, i), p);
+        }
+
+        p.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
+        p.setColor(options.gridYColor);
+        for (int i=0; i<90; i+=15) {
+            drawConnectedLines(c, createLatitudePath(mid, i), p);
+        }
+        for (int i=-90; i<0; i+=15) {
+            drawConnectedLines(c, createLatitudePath(mid, i), p);
+        }
 
         p.setStyle(prevStyle);
         p.setPathEffect(prevEffect);

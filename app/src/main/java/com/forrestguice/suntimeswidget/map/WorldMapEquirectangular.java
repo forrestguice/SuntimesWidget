@@ -146,7 +146,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
             drawMajorLatitudes(c, w, h, mid, options);
         }
         if (options.showGrid) {
-            drawGrid(c, w, h, mid, null, options);
+            drawGrid(c, w, h, mid, options);
         }
 
         drawData: if (data != null)

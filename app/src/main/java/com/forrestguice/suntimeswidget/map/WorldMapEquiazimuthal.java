@@ -229,6 +229,9 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         if (options.showMajorLatitudes) {
             drawMajorLatitudes(c, w, h, mid, options);
         }
+        if (options.showGrid) {
+            drawGrid(c, w, h, mid, options);
+        }
 
         drawData: if (data != null)
         {
