@@ -1,0 +1,15 @@
+追踪日光和月光时间。应用程序、闹钟和小部件集合。
+
+Suntimes 显示日出日落、暮光（民用/航海/天文）、蓝色和黄金时段、至点和分点、月出和月落、月相和月光饱满度。闹钟为日出、日落和其他事件安排每天重复的闹钟（或通知）。本应用程序包含许多与通常世界时钟相关的功能。
+
+本应用程序报告的时间是近似值。本应用程序不需要网络连接，GPS是可选的。
+
+本应用程序受益于以下权限:
+* <small><u>ACCESS_FINE_LOCATION</u></small> 用于获取当前位置（纬度，经度，海拔）。
+* <small><u>BOOT_COMPLETED</u></small> 用于在重启后恢复启动的闹钟。
+* <small><u>SET_ALARM</u></small> 用于使用 AlarmClock 应用程序安排闹钟。
+* <small><u>VIBRATE</u></small> 用于闹钟通知。
+* <small><u>READ_EXTERNAL_STORAGE</u></small> 用于播放位于SD卡上的闹钟声音 <small>(仅限api&le;=18)</small>。
+* <small><u>WRITE_EXTERNAL_STORAGE</u></small> 用于将数据备份至存储（地点、主题等）<small>(仅限api&le;=18)</small>。
+
+注意: 在 v0.9.0 中加入的“日历集成”和相关权限在 v0.10.0 中被删除。此功能现在可作为单独的附加应用程序使用；<a href="https://f-droid.org/en/packages/com.forrestguice.suntimescalendars">Suntimes Calendars</a>。
