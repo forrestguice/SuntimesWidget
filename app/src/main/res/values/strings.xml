@@ -1401,6 +1401,12 @@
     <string name="worldmap_dialog_speed_1d">&#215; 1d</string>      <!-- menu item; "x 1d"; increments of 1 day -->
     <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->    <!-- TODO -->
 
+    <string name="help_worldmap_background">
+        Projection: <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g>
+      \nCentered at: [<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>]\n
+      \nFor correct alignment, choose a map background image with matching projection and center coordinates.
+    </string>    <!-- TODO -->
+
     <!-- Dialog: Light Map -->
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
     <string name="lightmap_dialog_action_menu">Options</string>       <!-- button (contentDescription) -->   <!-- TODO -->f

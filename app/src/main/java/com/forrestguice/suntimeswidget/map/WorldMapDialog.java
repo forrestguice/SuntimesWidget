@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.map;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -838,9 +839,29 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         updateMediaButtons();
     }
 
-    private void setMapBackground()
+    private void setMapBackground(Context context)
     {
-        mapBackgroundFilePicker(REQUEST_BACKGROUND);
+        if (context != null)
+        {
+            WorldMapWidgetSettings.WorldMapWidgetMode mode = worldmap.getMapMode();
+            WorldMapTask.WorldMapProjection projection = WorldMapView.getMapProjection(mode);
+            double[] center = projection.getCenter();
+
+            String title = context.getString(R.string.worldmap_dialog_option_background);
+            String message = context.getString(R.string.help_worldmap_background, mode.getDisplayString(), center[0]+"", center[1]+"");
+            AlertDialog.Builder dialog = new AlertDialog.Builder(context)
+                    .setTitle(title).setMessage(message).setIcon(R.drawable.ic_action_settings)
+                    .setPositiveButton(context.getString(R.string.dialog_ok),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            mapBackgroundFilePicker(REQUEST_BACKGROUND);
+                        }
+                    })
+                    .setNegativeButton(context.getString(R.string.dialog_cancel), null);
+            dialog.show();
+        }
     }
 
     private void clearMapBackground(Context context)
@@ -948,7 +969,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     return true;
 
                 case R.id.mapOption_background:
-                    setMapBackground();
+                    setMapBackground(context);
                     return true;
 
                 case R.id.mapOption_background_clear:
