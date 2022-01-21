@@ -43,6 +43,8 @@ import java.util.Calendar;
  */
 public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
 {
+    public double[] getCenter() { return new double[] {-90,0}; }
+
     @Override
     protected double[] toPolar(double lat, double lon)
     {

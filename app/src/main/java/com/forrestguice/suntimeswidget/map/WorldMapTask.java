@@ -227,6 +227,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         public abstract int[] matrixSize();               // [width(lon), height(lat)]
         protected abstract int k(int x, int y, int z);    // returns index into flattened array
         public abstract int[] toBitmapCoords(int w, int h, double[] mid, double lat, double lon);
+        public double[] getCenter() { return new double[] {0,0}; }
 
         protected Calendar mapTime(SuntimesRiseSetDataset data, WorldMapTask.WorldMapOptions options)
         {

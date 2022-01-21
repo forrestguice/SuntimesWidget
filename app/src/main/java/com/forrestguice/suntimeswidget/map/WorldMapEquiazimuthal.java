@@ -46,6 +46,8 @@ import java.util.Calendar;
  */
 public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
 {
+    public double[] getCenter() { return new double[] {90,0}; }
+
     /**
      * point (angle, distance) from north pole
      *   angle = longitude

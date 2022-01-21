@@ -46,6 +46,8 @@ import java.util.Calendar;
 public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
 {
     protected double[] center = new double[] {0, 0};
+
+    @Override
     public double[] getCenter() {
         return center;
     }
