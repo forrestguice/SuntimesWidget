@@ -171,4 +171,10 @@
         <attr name="zeroValueText" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="HelpPreference">
+        <attr name="helpText" format="string" />
+        <attr name="helpLink" format="string" />
+        <attr name="moreHelpButtonText" format="string" />
+    </declare-styleable>
+
 </resources>

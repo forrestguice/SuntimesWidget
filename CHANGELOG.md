@@ -1,6 +1,5 @@
 ### ~
 
---
 * adds widget option to "use the app location"; defaults false.
 * adds widget option to override 12h/24h time format setting.
 * adds widget option to "fill entire cell" or "align base" to top-left, right, bottom, etc.
@@ -10,6 +9,20 @@
 * enhances widget theme selector to show background preview.
 * enhances widget time mode selector (color tabs).
 * reorganizes widget options.
+
+### v0.13.18 (2022-01-14)
+* changes the solstice/equinox card to always include seconds when expanded (#533).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#531, #532 by James Liu).
+* fixes bug "rectangular world map widget unavailable" on some devices (#535).
+* fixes bug "LocationListTask leaks database cursor" (#536).
+* fixes bug "alarm dialog fails to consume touch events" (#529).
+* fixes bug "invalid offsets are retained when editing an existing alarm's event" (#530).
+
+### v0.13.17 (2022-01-02)
+* adds translation to Simplified Chinese (zh_CN) (contributed by James Liu) (#527).
+* updates translation to Traditional Chinese (zh_TW) (#527).
+* fixes alarm notifications to include the 'offset' text (more descriptive); e.g. "5m before sunset" vs "sunset" (#522).
+* fixes crash when loading AlarmCreateDialog with invalid settings (handle unknown event values).
 
 ### v0.13.16 (2021-11-29)
 * adds translation to Czech (cs) (contributed by utaxiu) (#520).
