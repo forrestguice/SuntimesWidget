@@ -26,6 +26,8 @@ import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -42,6 +44,22 @@ public class MapProjectionTest extends SuntimesActivityTestBase
     @Before
     public void setup() {
         mockContext = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
+    }
+
+    @Test
+    public void test_gha()
+    {
+        WorldMapEquiazimuthal2 projection = new WorldMapEquiazimuthal2();
+        Location location = new Location("Test", "40", "100", "0");
+
+        SuntimesCalculator.Position position0 = new SuntimesCalculator.Position();
+        position0.elevation = 90;
+        position0.azimuth = 180;
+        position0.declination = 40;
+        double hourAngle0 = 260;
+        double[] gha0 = projection.gha(location, position0);
+        assertEquals("declination should match", gha0[1], position0.declination, 0.0001);
+        assertEquals("hour angle should match", gha0[0], hourAngle0, 0.0001);
     }
 
     @Test
