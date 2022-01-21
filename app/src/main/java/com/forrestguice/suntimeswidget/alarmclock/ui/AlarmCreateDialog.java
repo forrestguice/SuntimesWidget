@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2020 Forrest Guice
+    Copyright (C) 2020-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -193,6 +193,9 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         fragment.setDialogListener(new AlarmDialog.DialogListener() {
             @Override
             public void onChanged(AlarmDialog dialog) {
+                if (Math.abs(getOffset()) >= (1000 * 60 * 60 * 24)) {    // clear multi-day offsets
+                    getArguments().putLong(EXTRA_OFFSET, 0);
+                }
                 getArguments().putString(EXTRA_EVENT, dialog.getChoice());
                 Log.d("DEBUG", "AlarmCreateDialog: onChanged: " + dialog.getChoice());
                 getArguments().putParcelable(EXTRA_LOCATION, dialog.getLocation());
@@ -946,6 +949,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     {
         item.type = dialog.getAlarmType();
         item.location = dialog.getLocation();
+        item.offset = dialog.getOffset();
 
         if (dialog.getMode() == 0)
         {
