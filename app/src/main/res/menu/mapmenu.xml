@@ -40,6 +40,49 @@
                     app:showAsAction="never" />
             </group>
 
+        </menu>
+    </item>
+
+    <item android:id="@+id/mapDisplaySubmenu"
+        android:title="@string/worldmap_dialog_options_menu"
+        android:icon="?attr/icActionSettings"
+        app:showAsAction="never"
+        android:orderInCategory="0">
+
+        <menu>
+            <group android:id="@+id/mapOption_group_misc">
+
+                <item android:id="@+id/mapOption_majorLatitudes"
+                    android:title="@string/worldmap_dialog_option_latitudes"
+                    android:checkable="true"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/mapOption_minorgrid"
+                    android:title="@string/worldmap_dialog_option_minorgrid"
+                    android:checkable="true"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/mapOption_location"
+                    android:title="@string/worldmap_dialog_option_location"
+                    android:checkable="true"
+                    app:showAsAction="never" />
+
+            </group>
+
+            <group android:id="@+id/mapOption_group_light">
+
+                <item android:id="@+id/mapOption_moonlight"
+                    android:title="@string/worldmap_dialog_option_moonlight"
+                    android:checkable="true"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/mapOption_sunlight"
+                    android:title="@string/worldmap_dialog_option_sunlight"
+                    android:checkable="true"
+                    app:showAsAction="never" />
+
+            </group>
+
             <group android:id="@+id/mapOption_group_background">
 
                 <item android:id="@+id/mapOption_background"
@@ -55,39 +98,6 @@
 
         </menu>
     </item>
-
-    <group android:id="@+id/mapOption_group_misc">
-
-        <item android:id="@+id/mapOption_majorLatitudes"
-            android:title="@string/worldmap_dialog_option_latitudes"
-            android:checkable="true"
-            app:showAsAction="never" />
-
-        <item android:id="@+id/mapOption_minorgrid"
-            android:title="@string/worldmap_dialog_option_minorgrid"
-            android:checkable="true"
-            app:showAsAction="never" />
-
-        <item android:id="@+id/mapOption_location"
-            android:title="@string/worldmap_dialog_option_location"
-            android:checkable="true"
-            app:showAsAction="never" />
-
-    </group>
-
-    <group android:id="@+id/mapOption_group_light">
-
-        <item android:id="@+id/mapOption_moonlight"
-            android:title="@string/worldmap_dialog_option_moonlight"
-            android:checkable="true"
-            app:showAsAction="never" />
-
-        <item android:id="@+id/mapOption_sunlight"
-            android:title="@string/worldmap_dialog_option_sunlight"
-            android:checkable="true"
-            app:showAsAction="never" />
-
-    </group>
 
     <group android:id="@+id/mapOption_group_action" android:checkableBehavior="none">
 

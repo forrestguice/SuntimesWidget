@@ -421,7 +421,7 @@
     <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [north]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [south]</string>     <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal_location">Polar [location]</string>     <!-- setting -->   <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_location">Azimuthal Equidistant</string>     <!-- setting -->   <!-- TODO -->
     <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->
 
     <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->
@@ -1387,8 +1387,9 @@
     <string name="worldmap_dialog_action_prev">Previous</string>   <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_reset">Reset</string>     <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_menu">Options</string>       <!-- button (contentDescription) -->
-    <string name="worldmap_dialog_option_background">Change map background</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_background_clear">Clear map background</string>    <!-- TODO -->
+    <string name="worldmap_dialog_options_menu">Display</string>   <!-- TODO -->
+    <string name="worldmap_dialog_option_background">Map Background</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background_clear">Clear background</string>    <!-- TODO -->
     <string name="worldmap_dialog_option_sunlight">Sunlight</string>
     <string name="worldmap_dialog_option_moonlight">Moonlight</string>
     <string name="worldmap_dialog_option_all">Both</string>
