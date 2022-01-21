@@ -1170,7 +1170,11 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     private void setSeekProgress( long offsetMinutes )
     {
-        boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(getContext(), 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
+        Context context = getContext();
+        if (context == null) {
+            return;
+        }
+        boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
         long offsetMinutes1 = (speed_1d ? offsetMinutes / ((SEEK_TOTALMINUTES_1d) / seek_totalMinutes) : offsetMinutes);
 
         //long offset = progress - t_prevProgress;
