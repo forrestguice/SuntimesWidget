@@ -455,7 +455,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
             List<WorldMapDialog.ActivityItemInfo> addonMenuItems = WorldMapDialog.queryAddonMenuItems(context);
             if (!addonMenuItems.isEmpty()) {
                 WorldMapDialog.populateSubMenu(submenuItem, addonMenuItems, getMapTime(System.currentTimeMillis()));
-            } else submenuItem.setVisible(false);
+            } //else submenuItem.setVisible(false);
         }
     }
 

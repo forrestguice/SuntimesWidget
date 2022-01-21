@@ -337,7 +337,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
             if (!addonMenuItems.isEmpty()) {
                 SuntimesUtils.forceActionBarIcons(addonSubmenuItem.getSubMenu());
                 WorldMapDialog.populateSubMenu(addonSubmenuItem, addonMenuItems, datetime);
-            } else addonSubmenuItem.setVisible(false);
+            } //else addonSubmenuItem.setVisible(false);
         }
     }
 

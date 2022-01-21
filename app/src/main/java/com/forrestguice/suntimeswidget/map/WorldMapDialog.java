@@ -803,13 +803,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             }
         }
 
-        MenuItem addonSubmenuItem = m.findItem(R.id.addonSubMenu);
-        if (addonSubmenuItem != null) {
+        MenuItem addonSubmenuItem = m.findItem(R.id.addonSubMenu0);
+        /*if (addonSubmenuItem != null) {
             List<ActivityItemInfo> addonMenuItems = queryAddonMenuItems(context);
             if (!addonMenuItems.isEmpty()) {
                 populateSubMenu(addonSubmenuItem, addonMenuItems, getMapTime(System.currentTimeMillis()));
-            } else addonSubmenuItem.setVisible(false);
-        }
+            } //else addonSubmenuItem.setVisible(false);
+        }*/
     }
 
     private int menuItemForMapMode(WorldMapWidgetSettings.WorldMapWidgetMode mode) {
