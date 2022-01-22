@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2018 Forrest Guice
+    Copyright (C) 2017-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -50,6 +50,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 @SuppressWarnings("ConstantConditions")
@@ -827,6 +828,22 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         WidgetSettings.deleteShowTimeDatePref(context, appWidgetId);
         showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
         assertTrue("showTimeDate should be default (true) but was " + showTimeDate, showTimeDate && showTimeDate == WidgetSettings.PREF_DEF_GENERAL_SHOWTIMEDATE);
+    }
+
+    @Test
+    public void test_showLocalizeHemispherePref()
+    {
+        WidgetSettings.saveLocalizeHemispherePref(context, appWidgetId, false);
+        boolean value0 = WidgetSettings.loadLocalizeHemispherePref(context, appWidgetId);
+        assertFalse("localizeHemisphere should be false but was " + value0, value0);
+
+        WidgetSettings.saveLocalizeHemispherePref(context, appWidgetId, true);
+        value0 = WidgetSettings.loadLocalizeHemispherePref(context, appWidgetId);
+        assertTrue("localizeHemisphere should be true but was " + value0, value0);
+
+        WidgetSettings.deleteLocalizeHemispherePref(context, appWidgetId);
+        value0 = WidgetSettings.loadLocalizeHemispherePref(context, appWidgetId);
+        assertTrue("localizeHemisphere should be default (true) but was " + value0, value0 && value0 == WidgetSettings.PREF_DEF_GENERAL_LOCALIZE_HEMISPHERE);
     }
 
     public static final float FLOAT_TOLERANCE = 0.01f;

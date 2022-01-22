@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2021 Forrest Guice
+    Copyright (C) 2018-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.util.AttributeSet;
@@ -35,6 +36,7 @@ import com.forrestguice.suntimeswidget.calculator.MoonPhaseDisplay;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.text.NumberFormat;
@@ -47,6 +49,7 @@ public class MoonPhaseView extends LinearLayout
     private boolean centered = false;
     private boolean illumAtNoon = false;
     private boolean showPosition = false;
+    private boolean northward = false;
 
     private LinearLayout content;
     private TextView phaseText, illumText, azimuthText, elevationText;
@@ -102,7 +105,8 @@ public class MoonPhaseView extends LinearLayout
         }
     }
 
-    private int noteColor;
+    private float strokePixels;
+    private int noteColor, waxingColor, waningColor, fullColor, newColor;
     private void themeViews(Context context)
     {
         int[] colorAttrs = { android.R.attr.textColorPrimary }; //, R.attr.springColor, R.attr.summerColor, R.attr.fallColor, R.attr.winterColor };
@@ -110,10 +114,19 @@ public class MoonPhaseView extends LinearLayout
         int def = R.color.transparent;
         noteColor = ContextCompat.getColor(context, typedArray.getResourceId(0, def));
         typedArray.recycle();
+
+        fullColor = ContextCompat.getColor(context, R.color.moonIcon_color_full);
+        newColor = ContextCompat.getColor(context, R.color.moonIcon_color_new);
+        waxingColor = ContextCompat.getColor(context, R.color.moonIcon_color_waxing);
+        waningColor = ContextCompat.getColor(context, R.color.moonIcon_color_waning);
+        strokePixels = context.getResources().getDimension(R.dimen.moonIcon_stroke_full);
+        themeIcons(context, null);
     }
 
+    protected SuntimesTheme themeOverride = null;
     public void themeViews(Context context, SuntimesTheme theme)
     {
+        this.themeOverride = theme;
         noteColor = theme.getTimeColor();
         int textColor = theme.getTextColor();
         int timeColor = theme.getTimeColor();
@@ -133,6 +146,11 @@ public class MoonPhaseView extends LinearLayout
         phaseText.setTextSize(timeSizeSp);
         phaseText.setTypeface(phaseText.getTypeface(), (theme.getTimeBold() ? Typeface.BOLD : Typeface.NORMAL));
 
+        themeIcons(context, theme);
+    }
+
+    private void themeIcons(Context context, SuntimesTheme theme)
+    {
         int[] viewID = getIconViewIDs();
         Bitmap[] bitmaps = getThemedBitmaps(context, theme);
         for (int i=0; i<viewID.length; i++)
@@ -144,22 +162,23 @@ public class MoonPhaseView extends LinearLayout
         }
     }
 
-    private static Bitmap[] getThemedBitmaps(Context context, SuntimesTheme theme)
+    private Bitmap[] getThemedBitmaps(Context context, @Nullable SuntimesTheme theme)
     {
-        int colorWaxing = theme.getMoonWaxingColor();
-        int colorWaning = theme.getMoonWaningColor();
-        int colorFull = theme.getMoonFullColor();
-        int colorNew = theme.getMoonNewColor();
+        int colorWaxing = (theme != null) ? theme.getMoonWaxingColor() : waxingColor;
+        int colorWaning = (theme != null) ? theme.getMoonWaningColor() : waningColor;
+        int colorFull = (theme != null) ? theme.getMoonFullColor() : fullColor;
+        int colorNew = (theme != null) ? theme.getMoonNewColor() : newColor;
+        float stroke = (theme != null) ? theme.getMoonFullStrokePixels(context) : strokePixels;
 
         return new Bitmap[] {
-                SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.FULL.getIcon(), colorFull, colorWaning, theme.getMoonFullStrokePixels(context)),
-                SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.NEW.getIcon(), colorNew, colorWaxing, theme.getMoonNewStrokePixels(context)),
-                SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WAXING_CRESCENT.getIcon(), colorWaxing, colorWaxing, 0),
-                SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.FIRST_QUARTER.getIcon(), colorWaxing, colorWaxing, 0),
-                SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WAXING_GIBBOUS.getIcon(), colorWaxing, colorWaxing, 0),
-                SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WANING_CRESCENT.getIcon(), colorWaning, colorWaning, 0),
-                SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.THIRD_QUARTER.getIcon(), colorWaning, colorWaning, 0),
-                SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WANING_GIBBOUS.getIcon(), colorWaning, colorWaning, 0)
+                SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.FULL.getIcon(northward), colorFull, colorWaning, (int)stroke),
+                SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.NEW.getIcon(northward), colorNew, colorWaxing, (int)stroke),
+                SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WAXING_CRESCENT.getIcon(northward), colorWaxing, colorWaxing, 0),
+                SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.FIRST_QUARTER.getIcon(northward), colorWaxing, colorWaxing, 0),
+                SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WAXING_GIBBOUS.getIcon(northward), colorWaxing, colorWaxing, 0),
+                SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WANING_CRESCENT.getIcon(northward), colorWaning, colorWaning, 0),
+                SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.THIRD_QUARTER.getIcon(northward), colorWaning, colorWaning, 0),
+                SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WANING_GIBBOUS.getIcon(northward), colorWaning, colorWaning, 0)
         };
     }
     private static int[] getIconViewIDs()
@@ -201,6 +220,8 @@ public class MoonPhaseView extends LinearLayout
         this.data = data;
         if (data != null && data.isCalculated())
         {
+            northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && (data.location().getLatitudeAsDouble() < 0);
+            themeIcons(context, themeOverride);
             hideIcons();
 
             MoonPhaseDisplay phase = (tomorrowMode ? data.getMoonPhaseTomorrow() : data.getMoonPhaseToday());

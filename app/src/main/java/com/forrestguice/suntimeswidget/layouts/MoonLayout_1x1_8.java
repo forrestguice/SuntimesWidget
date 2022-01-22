@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2019 Forrest Guice
+   Copyright (C) 2019-2022 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -188,13 +188,6 @@ public class MoonLayout_1x1_8 extends MoonLayout
             views.setTextViewTextSize(R.id.moonapsis_apogee_date, TypedValue.COMPLEX_UNIT_DIP, timeSize);
             views.setTextViewTextSize(R.id.moonapsis_perigee_date, TypedValue.COMPLEX_UNIT_DIP, timeSize);
         }
-    }
-
-    @SuppressWarnings("EmptyMethod")
-    @Override
-    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
-    {
-        // EMPTY
     }
 
     @Override

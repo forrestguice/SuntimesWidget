@@ -22,6 +22,11 @@
             android:defaultValue="@string/default_units_length" />
 
         <CheckBoxPreference
+            android:key="appwidget_0_general_localize_hemisphere"
+            android:title="@string/configLabel_general_localize_hemisphere"
+            android:summary="@string/configLabel_general_localize_hemisphere_summary" android:defaultValue="@string/def_appwidget_0_general_localize_hemisphere" />
+
+        <CheckBoxPreference
             android:key="appwidget_0_general_showseconds"
             android:title="@string/configLabel_general_showSeconds"
             android:summary="@string/configLabel_general_showSeconds_summary" android:defaultValue="@string/def_appwidget_0_general_showseconds" />

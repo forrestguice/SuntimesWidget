@@ -49,6 +49,7 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
         hideOptionCompareAgainst();
         showOptionTrackingMode(false);
         showOptionTimeModeOverride(false);
+        showOptionLocalizeHemisphere(true);
         //showDataSource(false);
     }
 

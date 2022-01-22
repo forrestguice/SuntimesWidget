@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2020 Forrest Guice
+    Copyright (C) 2020-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -1196,7 +1196,8 @@ public class AlarmListDialog extends DialogFragment
                 float eventIconSize = context.getResources().getDimension(R.dimen.eventIcon_width);
                 if (item.event != null)
                 {
-                    Drawable eventIcon = SolarEventIcons.getIconDrawable(context, item.event, (int)eventIconSize, (int)eventIconSize);
+                    boolean northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && (item.location.getLatitudeAsDouble() < 0);
+                    Drawable eventIcon = SolarEventIcons.getIconDrawable(context, item.event, (int)eventIconSize, (int)eventIconSize, northward);
                     view.text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, item.event));
                     view.text_event.setCompoundDrawables(eventIcon, null, null, null);
 

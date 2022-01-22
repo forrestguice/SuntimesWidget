@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2018-2019 Forrest Guice
+   Copyright (C) 2018-2022 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -104,10 +104,5 @@ public class MoonLayout_1x1_4 extends MoonLayout
         }
     }
 
-    /**@Override
-    public void prepareForUpdate(SuntimesMoonData data)
-    {
-        // EMPTY
-    }*/
 }
 

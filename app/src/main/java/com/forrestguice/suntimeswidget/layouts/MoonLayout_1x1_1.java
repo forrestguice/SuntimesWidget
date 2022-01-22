@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2018-2019 Forrest Guice
+   Copyright (C) 2018-2022 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -104,10 +104,4 @@ public class MoonLayout_1x1_1 extends MoonLayout
         themeViewsMoonPhaseIcons(context, views, theme);
     }
 
-    @SuppressWarnings("EmptyMethod")
-    @Override
-    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
-    {
-        // EMPTY
-    }
 }

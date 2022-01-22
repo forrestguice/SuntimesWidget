@@ -104,6 +104,19 @@ public enum SolarEvents
         return iconResource;
     }
 
+    public int getIcon(boolean southernHemisphere)
+    {
+        if (!southernHemisphere) {
+            return iconResource;
+        } else {
+            switch (this) {
+                case FIRSTQUARTER: return THIRDQUARTER.iconResource;
+                case THIRDQUARTER: return FIRSTQUARTER.iconResource;
+                case NEWMOON: case FULLMOON: default: return iconResource;
+            }
+        }
+    }
+
     public int getType()
     {
         return type;
@@ -169,7 +182,7 @@ public enum SolarEvents
         return retValue;
     }
 
-    public static SolarEventsAdapter createAdapter(Context context)
+    public static SolarEventsAdapter createAdapter(Context context, boolean northward)
     {
         ArrayList<SolarEvents> choices = new ArrayList<SolarEvents>(Arrays.asList(
                 MORNING_ASTRONOMICAL, MORNING_NAUTICAL, MORNING_BLUE8, MORNING_CIVIL, MORNING_BLUE4,
@@ -180,7 +193,7 @@ public enum SolarEvents
                 NEWMOON, FIRSTQUARTER, FULLMOON, THIRDQUARTER,
                 EQUINOX_SPRING, SOLSTICE_SUMMER, EQUINOX_AUTUMNAL, SOLSTICE_WINTER
         ));
-        return new SolarEventsAdapter(context, choices);
+        return new SolarEventsAdapter(context, choices, northward);
     }
 
     /**
@@ -190,12 +203,14 @@ public enum SolarEvents
     {
         private final Context context;
         private final ArrayList<SolarEvents> choices;
+        private boolean northward;
 
-        public SolarEventsAdapter(Context context, ArrayList<SolarEvents> choices)
+        public SolarEventsAdapter(Context context, ArrayList<SolarEvents> choices, boolean northward)
         {
             super(context, R.layout.layout_listitem_solarevent, choices);
             this.context = context;
             this.choices = choices;
+            this.northward = northward;
         }
 
         public static int[] getIconDimen(Resources resources, SolarEvents event)
@@ -252,7 +267,7 @@ public enum SolarEvents
                 view = inflater.inflate(R.layout.layout_listitem_solarevent, parent, false);
             }
 
-            int[] iconAttr = { choices.get(position).getIcon() };
+            int[] iconAttr = { choices.get(position).getIcon(northward) };
             TypedArray typedArray = context.obtainStyledAttributes(iconAttr);
             int def = R.drawable.ic_moon_rise;
             int iconResource = typedArray.getResourceId(0, def);

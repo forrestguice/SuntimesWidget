@@ -51,9 +51,22 @@ public enum MoonPhaseDisplay
         return longDisplayString;
     }
 
-    public int getIcon()
+    public int getIcon() {
+        return getIcon(false);    // from northern hemisphere we look southward
+    }
+
+    public int getIcon(boolean northward)
     {
-        return iconResource;
+        if (northward) {
+            switch (this) {
+                case WAXING_CRESCENT: return WANING_CRESCENT.iconResource;   // swap icons
+                case FIRST_QUARTER: return THIRD_QUARTER.iconResource;
+                case WAXING_GIBBOUS: return WANING_GIBBOUS.iconResource;
+                case THIRD_QUARTER: return FIRST_QUARTER.iconResource;
+                case WANING_CRESCENT: return WAXING_CRESCENT.iconResource;
+                case NEW: case FULL: default: return iconResource;
+            }
+        } else return iconResource;
     }
 
     public int getView()
