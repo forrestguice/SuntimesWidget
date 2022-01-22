@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2017-2018 Forrest Guice
+    Copyright (C) 2017-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -23,18 +23,28 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" android:minHeight="125dp"
     android:orientation="vertical" android:gravity="start"
-    android:padding="8dp" android:background="?graphColor_background">
+    android:paddingTop="8dp" android:background="?graphColor_background">
 
     <TextView android:id="@+id/sundialog_title" style="@style/TableHeadTextView"
-        android:text="@string/configAction_sunDialog"
+        android:text="@string/lightmap_dialog_title"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginLeft="0dp" android:layout_marginRight="0dp" android:layout_marginTop="0dp"
+        android:layout_marginLeft="8dp" android:layout_marginRight="8dp" android:layout_marginTop="0dp"
         android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+    <TextView
+        style="@style/SunsetTimeTextView"
+        android:id="@+id/info_time_solar"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        tools:text="June 3, 6:00 PM Apparent Solar Time" android:gravity="end|right"
+        android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sundialog_title" />
 
     <android.support.constraint.ConstraintLayout android:id="@+id/info_sun_layout"
         android:layout_width="0dp" android:layout_height="wrap_content" android:visibility="visible"
-        app:layout_constraintTop_toBottomOf="@+id/sundialog_title"
+        android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/info_time_solar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -187,6 +197,7 @@
 
     </android.support.constraint.ConstraintLayout>
 
+    <!-- lightmap -->
     <com.forrestguice.suntimeswidget.LightMapView
         android:id="@+id/info_time_lightmap"
         android:layout_width="0dp" android:layout_height="32dp"
@@ -195,185 +206,286 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/durationGuide"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        app:layout_constraintGuide_percent="0.55" android:orientation="vertical" />
+    <!-- media controls -->
+    <android.support.constraint.ConstraintLayout android:id="@+id/media_actions"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center_vertical"
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/info_time_lightmap">
 
-    <!-- Night -->
-    <ImageView
-        android:id="@+id/info_time_lightmap_key_night_icon"
-        android:layout_width="16dp" android:layout_height="16dp"
-        android:layout_marginTop="14dp"
-        app:layout_constraintTop_toBottomOf="@+id/info_time_lightmap"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_gravity="center_vertical"
-        android:background="@drawable/ic_colortab"
-        android:contentDescription="@string/timeMode_night" />
+        <ImageButton
+            android:id="@+id/media_reset"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground" android:layout_marginRight="16dp" android:layout_marginEnd="16dp"
+            android:paddingTop="8dp" android:paddingBottom="8dp"
+            android:paddingLeft="8dp" android:paddingStart="8dp"
+            android:paddingRight="4dp" android:paddingEnd="4dp"
+            android:contentDescription="@string/worldmap_dialog_action_reset"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="?attr/icActionTimeReset" />
 
-    <TextView
-        android:id="@+id/info_time_lightmap_key_night_label"
-        android:labelFor="@+id/info_time_lightmap_key_night_duration"
-        android:layout_width="0dp" android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/info_time_lightmap_key_night_icon"
-        app:layout_constraintTop_toTopOf="@+id/info_time_lightmap_key_night_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/info_time_lightmap_key_night_icon"
-        app:layout_constraintEnd_toStartOf="@+id/durationGuide"
-        android:ellipsize="end" android:singleLine="true" android:maxLines="1"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
-        android:text="@string/timeMode_night" />
+        <ImageButton
+            android:id="@+id/media_play"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:paddingTop="8dp" android:paddingBottom="8dp"
+            android:paddingLeft="4dp" android:paddingStart="4dp"
+            android:paddingRight="8dp" android:paddingEnd="8dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/media_reset"
+            android:contentDescription="@string/worldmap_dialog_action_play"
+            android:src="?attr/icActionPlay" />
 
-    <TextView
-        android:id="@+id/info_time_lightmap_key_night_duration"
-        android:layout_width="0dp" android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/durationGuide" app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/info_time_lightmap_key_night_label"
+        <ImageButton android:visibility="gone"
+            android:id="@+id/media_pause"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:paddingTop="8dp" android:paddingBottom="8dp"
+            android:paddingLeft="4dp" android:paddingStart="4dp"
+            android:paddingRight="8dp" android:paddingEnd="8dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/media_reset"
+            android:contentDescription="@string/worldmap_dialog_action_pause"
+            android:src="?attr/icActionPause" />
 
-        android:layout_gravity="center"
-        style="@style/SunsetTimeTextView"
-        android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
-        tools:text="[30m]" />
+        <ImageButton
+            android:id="@+id/media_prev"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground" android:scaleY="0.75" android:scaleX="0.75"
+            android:paddingTop="8dp" android:paddingBottom="8dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/info_time_offset"
+            android:contentDescription="@string/worldmap_dialog_action_prev"
+            android:src="?attr/icActionPrevious" />
 
-    <!-- Astronomical Twilight -->
-    <ImageView
-        android:id="@+id/info_time_lightmap_key_astro_icon"
-        android:layout_width="16dp" android:layout_height="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/info_time_lightmap_key_night_duration"
-        android:layout_gravity="center_vertical"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/ic_colortab"
-        android:contentDescription="@string/timeMode_astronomical" />
+        <TextView
+            style="@style/SunsetTimeTextView"
+            android:id="@+id/info_time_offset"
+            android:layout_width="wrap_content" android:minWidth="50dp" android:maxWidth="60dp" android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            tools:text="30m\nfrom now" android:gravity="center_horizontal" />
 
-    <TextView
-        android:id="@+id/info_time_lightmap_key_astro_label"
-        android:labelFor="@+id/info_time_lightmap_key_astro_duration"
-        android:layout_width="0dp" android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/info_time_lightmap_key_astro_icon"
-        app:layout_constraintTop_toTopOf="@+id/info_time_lightmap_key_astro_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/info_time_lightmap_key_astro_icon"
-        app:layout_constraintEnd_toStartOf="@+id/durationGuide"
-        android:ellipsize="end" android:singleLine="true" android:maxLines="1"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
-        android:text="@string/timeMode_astronomical" />
+        <ImageButton
+            android:id="@+id/media_next"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground" android:scaleY="0.75" android:scaleX="0.75"
+            android:paddingTop="8dp" android:paddingBottom="8dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/info_time_offset"
+            android:contentDescription="@string/worldmap_dialog_action_next"
+            android:src="?attr/icActionNext" />
 
-    <TextView
-        android:id="@+id/info_time_lightmap_key_astro_duration"
-        android:layout_width="0dp" android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/durationGuide" app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/info_time_lightmap_key_astro_label"
+        <TextView
+            style="@style/SunsetTimeTextView"
+            android:background="?attr/selectableItemBackground"
+            android:id="@+id/media_speed" android:textStyle="bold"
+            android:layout_width="wrap_content" android:minWidth="50dp" android:maxWidth="60dp"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/media_menu"
+            tools:text="@string/worldmap_dialog_speed_5m" android:gravity="center" />
 
-        android:layout_gravity="center"
-        style="@style/SunsetTimeTextView"
-        android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
-        tools:text="[30m, 30m]"/>
+        <ImageButton
+            android:id="@+id/media_menu"
+            android:layout_width="0dp" android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/lightmap_dialog_action_menu"
+            style="?attr/actionOverflowButtonStyle" />
 
-    <!-- Nautical Twilight -->
-    <ImageView
-        android:id="@+id/info_time_lightmap_key_nautical_icon"
-        android:layout_width="16dp" android:layout_height="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/info_time_lightmap_key_astro_duration"
-        android:layout_gravity="center_vertical"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/ic_colortab"
-        android:contentDescription="@string/timeMode_nautical" />
+    </android.support.constraint.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/info_time_lightmap_key_nautical_label"
-        android:labelFor="@+id/info_time_lightmap_key_nautical_duration"
-        android:layout_width="0dp" android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/info_time_lightmap_key_nautical_icon"
-        app:layout_constraintTop_toTopOf="@+id/info_time_lightmap_key_nautical_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/info_time_lightmap_key_nautical_icon"
-        app:layout_constraintEnd_toStartOf="@+id/durationGuide"
-        android:ellipsize="end" android:singleLine="true" android:maxLines="1"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
-        android:text="@string/timeMode_nautical" />
+    <!-- Lightmap Durations -->
+    <android.support.constraint.ConstraintLayout android:id="@+id/durations_layout"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center_vertical"
+        android:background="?attr/dialogBackgroundAlt"
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/media_actions">
 
-    <TextView
-        android:id="@+id/info_time_lightmap_key_nautical_duration"
-        android:layout_width="0dp" android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/durationGuide" app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/info_time_lightmap_key_nautical_label"
+        <android.support.constraint.Guideline
+            android:id="@+id/durationGuide"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            app:layout_constraintGuide_percent="0.55" android:orientation="vertical" />
 
-        android:layout_gravity="center"
-        style="@style/SunsetTimeTextView"
-        android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
-        tools:text="[30m, 30m]"/>
+        <!-- Night -->
+        <ImageView
+            android:id="@+id/info_time_lightmap_key_night_icon"
+            android:layout_width="16dp" android:layout_height="16dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/info_time_lightmap_key_astro_duration"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/ic_colortab"
+            android:contentDescription="@string/timeMode_night" />
 
-    <!-- Civil Twilight -->
-    <ImageView
-        android:id="@+id/info_time_lightmap_key_civil_icon"
-        android:layout_width="16dp" android:layout_height="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/info_time_lightmap_key_nautical_duration"
-        android:layout_gravity="center_vertical"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/ic_colortab"
-        android:contentDescription="@string/timeMode_civil" />
+        <TextView
+            android:id="@+id/info_time_lightmap_key_night_label"
+            android:labelFor="@+id/info_time_lightmap_key_night_duration"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/info_time_lightmap_key_night_icon"
+            app:layout_constraintTop_toTopOf="@+id/info_time_lightmap_key_night_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/info_time_lightmap_key_night_icon"
+            app:layout_constraintEnd_toStartOf="@+id/durationGuide"
+            android:ellipsize="end" android:singleLine="true" android:maxLines="1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
+            android:text="@string/timeMode_night" />
 
-    <TextView
-        android:id="@+id/info_time_lightmap_key_civil_label"
-        android:labelFor="@+id/info_time_lightmap_key_civil_duration"
-        android:layout_width="0dp" android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/info_time_lightmap_key_civil_icon"
-        app:layout_constraintTop_toTopOf="@+id/info_time_lightmap_key_civil_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/info_time_lightmap_key_civil_icon"
-        app:layout_constraintEnd_toStartOf="@+id/durationGuide"
-        android:ellipsize="end" android:singleLine="true" android:maxLines="1"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
-        android:text="@string/timeMode_civil" />
+        <TextView
+            android:id="@+id/info_time_lightmap_key_night_duration"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/durationGuide" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/info_time_lightmap_key_night_label"
 
-    <TextView
-        android:id="@+id/info_time_lightmap_key_civil_duration"
-        android:layout_width="0dp" android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/durationGuide" app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/info_time_lightmap_key_civil_label"
+            android:layout_gravity="center"
+            style="@style/SunsetTimeTextView"
+            android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
+            tools:text="[30m]" />
 
-        android:layout_gravity="center"
-        style="@style/SunsetTimeTextView"
-        android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
-        tools:text="[30m,\n 30m]"/>
+        <!-- Astronomical Twilight -->
+        <ImageView
+            android:id="@+id/info_time_lightmap_key_astro_icon"
+            android:layout_width="16dp" android:layout_height="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/info_time_lightmap_key_nautical_duration"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ic_colortab"
+            android:contentDescription="@string/timeMode_astronomical" />
 
-    <!-- Day -->
-    <ImageView
-        android:id="@+id/info_time_lightmap_key_day_icon"
-        android:layout_width="16dp" android:layout_height="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/info_time_lightmap_key_civil_duration"
-        android:layout_gravity="center_vertical"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/ic_colortab"
-        android:contentDescription="@string/timeMode_day" />
+        <TextView
+            android:id="@+id/info_time_lightmap_key_astro_label"
+            android:labelFor="@+id/info_time_lightmap_key_astro_duration"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/info_time_lightmap_key_astro_icon"
+            app:layout_constraintTop_toTopOf="@+id/info_time_lightmap_key_astro_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/info_time_lightmap_key_astro_icon"
+            app:layout_constraintEnd_toStartOf="@+id/durationGuide"
+            android:ellipsize="end" android:singleLine="true" android:maxLines="1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
+            android:text="@string/timeMode_astronomical" />
 
-    <TextView
-        android:id="@+id/info_time_lightmap_key_day_label"
-        android:labelFor="@+id/info_time_lightmap_key_day_duration"
-        android:layout_width="0dp" android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/info_time_lightmap_key_day_icon"
-        app:layout_constraintTop_toTopOf="@+id/info_time_lightmap_key_day_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/info_time_lightmap_key_day_icon"
-        app:layout_constraintEnd_toStartOf="@+id/durationGuide"
-        android:ellipsize="end" android:singleLine="true" android:maxLines="1"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
-        android:text="@string/timeMode_day" />
+        <TextView
+            android:id="@+id/info_time_lightmap_key_astro_duration"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/durationGuide" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/info_time_lightmap_key_astro_label"
 
-    <TextView
-        android:id="@+id/info_time_lightmap_key_day_duration"
-        android:layout_width="0dp" android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/durationGuide" app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/info_time_lightmap_key_day_label"
+            android:layout_gravity="center"
+            style="@style/SunsetTimeTextView"
+            android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
+            tools:text="[30m, 30m]"/>
 
-        style="@style/SunsetTimeTextView"
-        android:layout_gravity="center"
-        android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
-        tools:text="10h 45m 20s [+1m\n 50s]"/>
+        <!-- Nautical Twilight -->
+        <ImageView
+            android:id="@+id/info_time_lightmap_key_nautical_icon"
+            android:layout_width="16dp" android:layout_height="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/info_time_lightmap_key_civil_duration"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ic_colortab"
+            android:contentDescription="@string/timeMode_nautical" />
+
+        <TextView
+            android:id="@+id/info_time_lightmap_key_nautical_label"
+            android:labelFor="@+id/info_time_lightmap_key_nautical_duration"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/info_time_lightmap_key_nautical_icon"
+            app:layout_constraintTop_toTopOf="@+id/info_time_lightmap_key_nautical_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/info_time_lightmap_key_nautical_icon"
+            app:layout_constraintEnd_toStartOf="@+id/durationGuide"
+            android:ellipsize="end" android:singleLine="true" android:maxLines="1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
+            android:text="@string/timeMode_nautical" />
+
+        <TextView
+            android:id="@+id/info_time_lightmap_key_nautical_duration"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/durationGuide" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/info_time_lightmap_key_nautical_label"
+
+            android:layout_gravity="center"
+            style="@style/SunsetTimeTextView"
+            android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
+            tools:text="[30m, 30m]"/>
+
+        <!-- Civil Twilight -->
+        <ImageView
+            android:id="@+id/info_time_lightmap_key_civil_icon"
+            android:layout_width="16dp" android:layout_height="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/info_time_lightmap_key_day_duration"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ic_colortab"
+            android:contentDescription="@string/timeMode_civil" />
+
+        <TextView
+            android:id="@+id/info_time_lightmap_key_civil_label"
+            android:labelFor="@+id/info_time_lightmap_key_civil_duration"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/info_time_lightmap_key_civil_icon"
+            app:layout_constraintTop_toTopOf="@+id/info_time_lightmap_key_civil_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/info_time_lightmap_key_civil_icon"
+            app:layout_constraintEnd_toStartOf="@+id/durationGuide"
+            android:ellipsize="end" android:singleLine="true" android:maxLines="1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
+            android:text="@string/timeMode_civil" />
+
+        <TextView
+            android:id="@+id/info_time_lightmap_key_civil_duration"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/durationGuide" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/info_time_lightmap_key_civil_label"
+
+            android:layout_gravity="center"
+            style="@style/SunsetTimeTextView"
+            android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
+            tools:text="[30m,\n 30m]"/>
+
+        <!-- Day -->
+        <ImageView
+            android:id="@+id/info_time_lightmap_key_day_icon"
+            android:layout_width="16dp" android:layout_height="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ic_colortab"
+            android:contentDescription="@string/timeMode_day" />
+
+        <TextView
+            android:id="@+id/info_time_lightmap_key_day_label"
+            android:labelFor="@+id/info_time_lightmap_key_day_duration"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/info_time_lightmap_key_day_icon"
+            app:layout_constraintTop_toTopOf="@+id/info_time_lightmap_key_day_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/info_time_lightmap_key_day_icon"
+            app:layout_constraintEnd_toStartOf="@+id/durationGuide"
+            android:ellipsize="end" android:singleLine="true" android:maxLines="1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
+            android:text="@string/timeMode_day" />
+
+        <TextView
+            android:id="@+id/info_time_lightmap_key_day_duration"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/durationGuide" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/info_time_lightmap_key_day_label"
+
+            style="@style/SunsetTimeTextView"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp" android:layout_marginLeft="5dp"
+            tools:text="10h 45m 20s [+1m\n 50s]"/>
+
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
-

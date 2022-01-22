@@ -81,9 +81,11 @@ public class SuntimesData
      * Property: timezone
      */
     protected TimeZone timezone;
-    public TimeZone timezone()
-    {
+    public TimeZone timezone() {
         return timezone;
+    }
+    public void setTimezone( TimeZone value ) {
+        timezone = value;
     }
 
     /**
@@ -131,9 +133,11 @@ public class SuntimesData
      * Property: timezone mode
      */
     protected WidgetSettings.TimezoneMode timezoneMode;
-    public WidgetSettings.TimezoneMode timezoneMode()
-    {
+    public WidgetSettings.TimezoneMode timezoneMode() {
         return timezoneMode;
+    }
+    public void setTimeZoneMode(WidgetSettings.TimezoneMode value) {
+        timezoneMode = value;
     }
 
     /**

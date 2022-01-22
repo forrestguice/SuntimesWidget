@@ -24,6 +24,7 @@ import android.content.res.TypedArray;
 
 import android.support.annotation.NonNull;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -431,5 +432,18 @@ public enum SolarEvents
             case SOLSTICE_WINTER: return WidgetSettings.SolsticeEquinoxMode.SOLSTICE_WINTER;
         }
         return null;
+    }
+    public static SolarEvents valueOf(@Nullable WidgetSettings.SolsticeEquinoxMode mode)
+    {
+        if (mode == null) {
+            return null;
+        }
+        switch (mode) {
+            case EQUINOX_SPRING: return SolarEvents.EQUINOX_SPRING;
+            case SOLSTICE_SUMMER: return SolarEvents.SOLSTICE_SUMMER;
+            case EQUINOX_AUTUMNAL: return SolarEvents.EQUINOX_AUTUMNAL;
+            case SOLSTICE_WINTER: return SolarEvents.SOLSTICE_WINTER;
+            default: return null;
+        }
     }
 }

@@ -769,6 +769,7 @@ public class WidgetSettings
      */
     public static enum TrackingMode
     {
+        RECENT("Recent Event"),
         CLOSEST("Closest Event"),
         SOONEST("Upcoming Event");
 
@@ -796,6 +797,7 @@ public class WidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
+            RECENT.setDisplayString( context.getString(R.string.trackingMode_recent) );
             CLOSEST.setDisplayString( context.getString(R.string.trackingMode_closest) );
             SOONEST.setDisplayString( context.getString(R.string.trackingMode_soonest) );
         }
