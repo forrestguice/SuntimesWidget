@@ -63,6 +63,10 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_stringArrayLength("solarevents_short", R.array.solarevents_short, "solarevents_long", R.array.solarevents_long);
             verify_stringArrayLength("solarevents_short", R.array.solarevents_short, "SolarEvents (ENUM)", SolarEvents.values());
 
+            verify_stringArrayLength("solarevents_long1", R.array.solarevents_short, "solarevents_short", R.array.solarevents_short);
+            verify_stringArrayLength("solarevents_long1", R.array.solarevents_long1, "solarevents_gender", R.array.solarevents_gender);
+            verify_stringArrayLength("solarevents_long1", R.array.solarevents_long1, "solarevents_quantity", R.array.solarevents_quantity);
+
             verify_stringArrayLength("directions_short", R.array.directions_short, "directions_long", R.array.directions_long);
             verify_stringArrayLength("directions_short", R.array.directions_short, "CardinalDirection (ENUM)", SuntimesUtils.CardinalDirection.values());
 
@@ -136,6 +140,30 @@ public class SuntimesResTest extends SuntimesActivityTestBase
     {
         assertTrue("The size of " + tag1 + " and " + tag2 + "DOES NOT MATCH! locale: " + AppSettings.getLocale().toString(),
                 a1.length == a2.length);
+    }
+
+    @Test
+    public void test_selectFormat_offsetMessages()
+    {
+        Context context = activityRule.getActivity();
+        String[] locales = context.getResources().getStringArray(R.array.locale_values);
+        for (String languageTag : locales)
+        {
+            AppSettings.loadLocale(context, languageTag);
+            verify_selectFormat_offsetMessage("offset_before_msg1", R.string.offset_before_msg1);
+            verify_selectFormat_offsetMessage("offset_after_msg1", R.string.offset_after_msg1);
+        }
+    }
+
+    public void verify_selectFormat_offsetMessage(String tag1, int stringID)
+    {
+        Context context = activityRule.getActivity();
+        String pattern = context.getResources().getString(stringID);
+        assertTrue(tag1 + " pattern contains `{0}` :: " + AppSettings.getLocale().toString(), pattern.contains("{0}"));
+        assertTrue(tag1 + " pattern contains `{1, plural` :: " + AppSettings.getLocale().toString(), pattern.contains("{1, plural,"));
+        assertTrue(tag1 + " pattern contains `{2, select` :: " + AppSettings.getLocale().toString(), pattern.contains("{2, select,"));
+        assertTrue(tag1 + " pattern contains `{3}` :: " + AppSettings.getLocale().toString(), pattern.contains("{3}"));
+        assertTrue(tag1 + " pattern contains `other {` :: " + AppSettings.getLocale().toString(), pattern.contains("other {"));
     }
 
     @Test

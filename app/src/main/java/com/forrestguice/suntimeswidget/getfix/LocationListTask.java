@@ -22,6 +22,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -51,6 +52,7 @@ public class LocationListTask extends AsyncTask<Object, Object, LocationListTask
         {
             Log.i("LocationListTask", "Place not found, adding it.. " + selectedPlaceName + ":" + selectedPlaceLat + "," + selectedPlaceLon + " [" +  selectedPlaceAlt + "]");
             db.addPlace(selected);
+            closeCursor(cursor);
             cursor = db.getAllPlaces(0, true);
         }
 
@@ -58,10 +60,13 @@ public class LocationListTask extends AsyncTask<Object, Object, LocationListTask
         String selectedLat = selectedCursor.getString(selectedCursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_LATITUDE));
         String selectedLon = selectedCursor.getString(selectedCursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_LONGITUDE));
         String selectedAlt = selectedCursor.getString(selectedCursor.getColumnIndex(GetFixDatabaseAdapter.KEY_PLACE_ALTITUDE));
+        closeCursor(selectedCursor);
+
         if (!selectedLat.equals(selectedPlaceLat) || !selectedLon.equals(selectedPlaceLon) || !selectedAlt.equals(selectedPlaceAlt))
         {
             Log.i("LocationListTask", "Place modified; saving it.. " + selectedPlaceName + ":" + selectedPlaceLat + "," + selectedPlaceLon + " [" +  selectedPlaceAlt + "]");
             db.updatePlace(selected);
+            closeCursor(cursor);
             cursor = db.getAllPlaces(0, true);
         }
 
@@ -76,7 +81,13 @@ public class LocationListTask extends AsyncTask<Object, Object, LocationListTask
             result = new LocationListTaskResult(cursor, selectedIndex);
         }
         db.close();
-        return result;
+        return result;    // the caller has responsibility for eventually closing returned Cursor
+    }
+
+    private void closeCursor(@Nullable Cursor cursor) {
+        if (cursor != null) {
+             cursor.close();
+        }
     }
 
     @Override
