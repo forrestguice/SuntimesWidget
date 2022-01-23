@@ -855,7 +855,7 @@
     <string name="configAction_deletePlace">Slett</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Fjern</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportPlaces">Eksporter</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_importPlaces">Importer</string>       <!-- button (contentDescription) -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Brukerflate</string>                       <!-- group title -->
@@ -1010,9 +1010,9 @@
         <item>Tradisjonell kinesisk</item>
         <item>Portugisisk</item>
         <item>Russisk</item>
-        <item>Dutch</item>  <!-- TODO -->
-        <item>Czech</item>  <!-- TODO -->
-        <item>Simplified Chinese</item> <!-- TODO -->
+        <item>Nederlandsk</item>
+        <item>Tsjekkisk</item>
+        <item>Forenklet kinesisk</item>
     </string-array>
 
     <!-- position formats -->
