@@ -851,6 +851,37 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         updateMediaButtons();
     }
 
+    private void setMapCenter(Context context)
+    {
+        Location location = WidgetSettings.loadLocationPref(context, 0);
+        double[] center = new double[] {location.getLatitudeAsDouble(), location.getLongitudeAsDouble()};
+
+        WorldMapWidgetSettings.saveWorldMapCenter(context, 0, WorldMapWidgetSettings.MAPTAG_3x2, center);
+        WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2, true);
+        WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, WorldMapWidgetSettings.MAPTAG_3x2, true);
+        WorldMapWidgetSettings.deleteWorldMapPref(context,0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_BACKGROUND, WorldMapWidgetSettings.MAPTAG_3x2);  // TODO
+
+        String locationDisplay = getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
+        Toast.makeText(context, context.getString(R.string.worldmap_dialog_option_center_msg, locationDisplay), Toast.LENGTH_LONG).show();
+
+        worldmap.setMapMode(context, mapMode);
+        updateViews();
+    }
+
+    private void clearMapCenter(Context context)
+    {
+        WorldMapWidgetSettings.deleteWorldMapPref(context,0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_BACKGROUND, WorldMapWidgetSettings.MAPTAG_3x2);  // TODO
+        WorldMapWidgetSettings.deleteWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LATITUDE, WorldMapWidgetSettings.MAPTAG_3x2);
+        WorldMapWidgetSettings.deleteWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LONGITUDE, WorldMapWidgetSettings.MAPTAG_3x2);
+
+        double[] center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, WorldMapWidgetSettings.MAPTAG_3x2);
+        String locationDisplay = getString(R.string.location_format_latlon, Double.toString(center[0]), Double.toString(center[1]));
+        Toast.makeText(context, context.getString(R.string.worldmap_dialog_option_center_clear_msg, locationDisplay), Toast.LENGTH_LONG).show();
+
+        worldmap.setMapMode(context, mapMode);
+        updateViews();
+    }
+
     private void setMapBackground(Context context)
     {
         if (context != null)
@@ -980,9 +1011,11 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     return true;
 
                 case R.id.mapOption_center:
+                    setMapCenter(context);
                     return true;
 
                 case R.id.mapOption_center_clear:
+                    clearMapCenter(context);
                     return true;
 
                 case R.id.mapOption_background:

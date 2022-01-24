@@ -197,9 +197,13 @@ public class WorldMapWidgetSettings
 
     public static double[] loadWorldMapCenter(Context context, int appWidgetId, String mapTag) {
         return new double[] {
-                Double.parseDouble(WorldMapWidgetSettings.loadWorldMapString(context, 0, PREF_KEY_WORLDMAP_CENTER_LATITUDE, mapTag, PREF_DEF_WORLDMAP_CENTER_LATITUDE)),
-                Double.parseDouble(WorldMapWidgetSettings.loadWorldMapString(context, 0, PREF_KEY_WORLDMAP_CENTER_LONGITUDE, mapTag, PREF_DEF_WORLDMAP_CENTER_LONGITUDE))
+                Double.parseDouble(loadWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_CENTER_LATITUDE, mapTag, PREF_DEF_WORLDMAP_CENTER_LATITUDE)),
+                Double.parseDouble(loadWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_CENTER_LONGITUDE, mapTag, PREF_DEF_WORLDMAP_CENTER_LONGITUDE))
         };
+    }
+    public static void saveWorldMapCenter(Context context, int appWidgetId, String mapTag, double[] value) {
+        saveWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_CENTER_LATITUDE, mapTag, Double.toString(value[0]));
+        saveWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_CENTER_LONGITUDE, mapTag, Double.toString(value[1]));
     }
 
     public static boolean defaultWorldMapFlag(String key)
