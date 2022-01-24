@@ -648,7 +648,7 @@
     <string name="configHint_themeSizeSuffix">8</string>                  <!-- edit hint -->
 
     <string name="configLabel_themePadding">留白:</string>            <!-- edit label -->
-    <string name="configHint_themePadding">[左, 上, 右, 下]</string> <!-- edit hint -->
+    <string name="configHint_themePadding">[左，上，右，下]</string> <!-- edit hint -->
 
     <string name="configLabel_themeID">ID:</string>                      <!-- edit label -->
     <string name="configHint_themeID">主題ID</string>                  <!-- edit hint -->
@@ -1442,7 +1442,7 @@
         此功能現在作為<a href="moreInfoLink">單獨的應用程式</a>使用
     ]]></string>
 
-    <string name="privacy_policy"><![CDATA[<b>隱私:</b><br/>Suntimes 不會蒐集、儲存、傳輸個人用戶資料。它<b>沒有廣告</b>, <b>沒有用戶分析</b>, <b>沒有跟蹤器</b>，並且<b>不使用不必要的權限</b>。<br/><br/>本應用使用位置訊息來配置。位置訊息（和其他用來配置本應用的資料）儲存在本機並且不會離開本機。<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
+    <string name="privacy_policy"><![CDATA[<b>隱私:</b><br/>Suntimes 不會蒐集、儲存、傳輸個人用戶資料。它<b>沒有廣告</b>，<b>沒有用戶分析</b>，<b>沒有跟蹤器</b>，並且<b>不使用不必要的權限</b>。<br/><br/>本應用使用位置訊息來配置。位置訊息（和其他用來配置本應用的資料）儲存在本機並且不會離開本機。<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes 使用<b>位置</b>權限以確認您當前的經緯度。<br/><br/>此權限是可選的；位置預設可被手動配置。]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes 使用<b>外部存儲</b>權限以備份/匯出資料到文檔中（例如: 地點、主題）。]]></string>
     <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms 使用<b>外部存儲</b>權限以播放位於SD卡中的聲音。<br/><br/>此權限是可選的；如果訪問被拒絕將播放預設聲音。系統聲音不需要此權限（媒體存儲）。]]></string>
