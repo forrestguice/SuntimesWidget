@@ -788,9 +788,16 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             option_moonlight.setChecked(options.showMoonLight);
         }
 
-        MenuItem action_date = m.findItem(R.id.action_date);
-        if (action_date != null) {
-            action_date.setEnabled( !WidgetSettings.DateInfo.isToday(getMapDate()) );
+        //MenuItem action_date = m.findItem(R.id.action_date);
+        //if (action_date != null) {
+        //    action_date.setEnabled( !WidgetSettings.DateInfo.isToday(getMapDate()) );
+        //}
+
+        MenuItem action_center = m.findItem(R.id.mapOption_center_current);
+        if (action_center != null) {
+            double[] center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, WorldMapWidgetSettings.MAPTAG_3x2);
+            String locationDisplay = getString(R.string.location_format_latlon, Double.toString(center[0]), Double.toString(center[1]));
+            action_center.setTitle(context.getString(R.string.worldmap_dialog_option_center_current, locationDisplay));
         }
 
         MenuItem action_background_clear = m.findItem(R.id.mapOption_background_clear);
@@ -809,12 +816,12 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
 
         MenuItem addonSubmenuItem = m.findItem(R.id.addonSubMenu0);
-        /*if (addonSubmenuItem != null) {
+        if (addonSubmenuItem != null) {
             List<ActivityItemInfo> addonMenuItems = queryAddonMenuItems(context);
             if (!addonMenuItems.isEmpty()) {
                 populateSubMenu(addonSubmenuItem, addonMenuItems, getMapTime(System.currentTimeMillis()));
             } //else addonSubmenuItem.setVisible(false);
-        }*/
+        }
     }
 
     private int menuItemForMapMode(WorldMapWidgetSettings.WorldMapWidgetMode mode) {
@@ -972,6 +979,12 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     shareMap();
                     return true;
 
+                case R.id.mapOption_center:
+                    return true;
+
+                case R.id.mapOption_center_clear:
+                    return true;
+
                 case R.id.mapOption_background:
                     setMapBackground(context);
                     return true;
@@ -1101,7 +1114,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     {
         @Override
         public void onClick(View v) {
-            showContextMenu(getContext(), v);
+            showContextMenu(getContext(), dialogTitle);
         }
     };
 

@@ -23,22 +23,47 @@
 
                 <item android:id="@+id/action_worldmap_simpleazimuthal"
                     android:title="@string/widgetMode_sunPosMap_simpleazimuthal"
-                    android:icon="?attr/icActionLocale"
+                    android:icon="?attr/icActionMap"
                     android:checkable="true"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_worldmap_simpleazimuthal_south"
                     android:title="@string/widgetMode_sunPosMap_simpleazimuthal_south"
-                    android:icon="?attr/icActionLocale"
+                    android:icon="?attr/icActionMap"
                     android:checkable="true"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_worldmap_simpleazimuthal_location"
                     android:title="@string/widgetMode_sunPosMap_simpleazimuthal_location"
-                    android:icon="?attr/icActionLocale"
+                    android:icon="?attr/icActionMap"
                     android:checkable="true"
                     app:showAsAction="never" />
             </group>
+
+        </menu>
+    </item>
+
+    <item android:id="@+id/mapOption_center_current"
+        android:title="@string/worldmap_dialog_option_center_current"
+        android:icon="?attr/icActionSettings"
+        app:showAsAction="never">
+
+        <menu>
+            <item android:id="@+id/mapOption_center"
+                android:title="@string/worldmap_dialog_option_center"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/mapOption_center_clear"
+                android:title="@string/worldmap_dialog_option_center_clear"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/mapOption_background"
+                android:title="@string/worldmap_dialog_option_background"
+                app:showAsAction="never" />
+
+            <item android:id="@+id/mapOption_background_clear" android:visible="false"
+                android:title="@string/worldmap_dialog_option_background_clear"
+                app:showAsAction="never" />
 
         </menu>
     </item>
@@ -82,48 +107,29 @@
 
             </group>
 
-            <group android:id="@+id/mapOption_group_background">
-
-                <item android:id="@+id/mapOption_background"
-                    android:title="@string/worldmap_dialog_option_background"
-                    android:icon="?attr/icActionSettings"
-                    app:showAsAction="never" />
-
-                <item android:id="@+id/mapOption_background_clear" android:visible="false"
-                    android:title="@string/worldmap_dialog_option_background_clear"
-                    android:icon="?attr/icActionSettings"
-                    app:showAsAction="never" />
-            </group>
-
         </menu>
     </item>
 
-        <item android:id="@+id/addonSubMenu0"
+    <item android:id="@+id/addonSubMenu0"
             android:icon="?attr/icActionTimeReset"
             android:title="@string/configAction_viewDateWith"
             app:showAsAction="never">
-            <menu>         <!-- submenu is populated at runtime -->
+            <menu>         <!-- submenu is also populated at runtime -->
+                <item android:id="@+id/action_date"
+                    android:title="@string/app_name"
+                    android:icon="?attr/icActionTimeReset"
+                    app:showAsAction="never" />
 
-                <group>
-                    <item android:id="@+id/action_date"
-                        android:title="@string/app_name"
-                        android:icon="?attr/icActionTimeReset"
-                        app:showAsAction="never" />
-
-                    <item android:id="@+id/action_sunposition"
-                        android:title="@string/configAction_sunDialog"
-                        android:icon="@drawable/ic_sun"
-                        app:showAsAction="never" />
-                </group>
-
+                <item android:id="@+id/action_sunposition"
+                    android:title="@string/configAction_sunDialog"
+                    android:icon="@drawable/ic_sun"
+                    app:showAsAction="never" />
             </menu>
-        </item>
+    </item>
 
-
-        <item android:id="@+id/shareMap"
-            android:title="@string/configAction_shareMap"
-            android:icon="?attr/icActionShare"
-            app:showAsAction="never" />
-
+    <item android:id="@+id/shareMap"
+        android:title="@string/configAction_shareMap"
+        android:icon="?attr/icActionShare"
+        app:showAsAction="never" />
 
 </menu>
