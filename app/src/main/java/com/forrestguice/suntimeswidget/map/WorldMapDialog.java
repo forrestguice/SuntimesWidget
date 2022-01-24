@@ -843,12 +843,11 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     {
         if (context != null)
         {
-            WorldMapWidgetSettings.WorldMapWidgetMode mode = worldmap.getMapMode();
-            WorldMapTask.WorldMapProjection projection = WorldMapView.getMapProjection(mode);
-            double[] center = projection.getCenter();
+            WorldMapWidgetSettings.WorldMapWidgetMode modes = worldmap.getMapMode();
+            double[] center = worldmap.getOptions().center;
 
             String title = context.getString(R.string.worldmap_dialog_option_background);
-            String message = context.getString(R.string.help_worldmap_background, mode.getDisplayString(), center[0]+"", center[1]+"");
+            String message = context.getString(R.string.help_worldmap_background, modes.getProjectionString(), center[0]+"", center[1]+"");
             AlertDialog.Builder dialog = new AlertDialog.Builder(context)
                     .setTitle(title).setMessage(message).setIcon(R.drawable.ic_action_settings)
                     .setPositiveButton(context.getString(R.string.dialog_ok),

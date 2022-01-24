@@ -59,16 +59,17 @@ public class WorldMapWidgetSettings
      */
     public static enum WorldMapWidgetMode
     {
-        EQUIRECTANGULAR_SIMPLE("Simple", R.layout.layout_widget_sunpos_3x2_0),
-        EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", R.layout.layout_widget_sunpos_3x2_0),
-        EQUIAZIMUTHAL_SIMPLE("Polar [north]", R.layout.layout_widget_sunpos_3x3_0),
-        EQUIAZIMUTHAL_SIMPLE1("Polar [south]", R.layout.layout_widget_sunpos_3x3_0),
-        EQUIAZIMUTHAL_SIMPLE2("Polar [location]", R.layout.layout_widget_sunpos_3x3_0);
+        EQUIRECTANGULAR_SIMPLE("Simple", "Equidistant Rectangular", R.layout.layout_widget_sunpos_3x2_0),
+        EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", "Equidistant Rectangular", R.layout.layout_widget_sunpos_3x2_0),
+        EQUIAZIMUTHAL_SIMPLE("Polar [north]", "Equidistant Azimuthal", R.layout.layout_widget_sunpos_3x3_0),
+        EQUIAZIMUTHAL_SIMPLE1("Polar [south]", "Equidistant Azimuthal", R.layout.layout_widget_sunpos_3x3_0),
+        EQUIAZIMUTHAL_SIMPLE2("Polar [location]", "Equidistant Azimuthal", R.layout.layout_widget_sunpos_3x3_0);
 
         private final int layoutID;
         private String displayString;
+        private String projectionString;
 
-        private WorldMapWidgetMode(String displayString, int layoutID)
+        private WorldMapWidgetMode(String displayString, String projectionString, int layoutID)
         {
             this.displayString = displayString;
             this.layoutID = layoutID;
@@ -89,6 +90,13 @@ public class WorldMapWidgetSettings
             this.displayString = displayString;
         }
 
+        public String getProjectionString() {
+            return projectionString;
+        }
+        public void setProjectionString(String value) {
+            projectionString = value;
+        }
+
         public static void initDisplayStrings( Context context )
         {
             EQUIAZIMUTHAL_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simpleazimuthal));
@@ -96,6 +104,12 @@ public class WorldMapWidgetSettings
             EQUIAZIMUTHAL_SIMPLE2.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simpleazimuthal_location));
             EQUIRECTANGULAR_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simplerectangular));
             EQUIRECTANGULAR_BLUEMARBLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_bluemarble));
+
+            EQUIAZIMUTHAL_SIMPLE.setProjectionString(context.getString(R.string.worldmap_projection_equiazimuthal));
+            EQUIAZIMUTHAL_SIMPLE1.setProjectionString(context.getString(R.string.worldmap_projection_equiazimuthal));
+            EQUIAZIMUTHAL_SIMPLE2.setProjectionString(context.getString(R.string.worldmap_projection_equiazimuthal));
+            EQUIRECTANGULAR_SIMPLE.setProjectionString(context.getString(R.string.worldmap_projection_equirectangular));
+            EQUIRECTANGULAR_BLUEMARBLE.setProjectionString(context.getString(R.string.worldmap_projection_equirectangular));
         }
     }
 

@@ -424,6 +424,9 @@
     <string name="widgetMode_sunPosMap_simpleazimuthal_location">Azimuthal Equidistant</string>     <!-- setting -->   <!-- TODO -->
     <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->
 
+    <string name="worldmap_projection_equirectangular">Equidistant Rectangular</string>    <!-- TODO -->
+    <string name="worldmap_projection_equiazimuthal">Equidistant Azimuthal</string>    <!-- TODO -->
+
     <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Moon phase &amp; illumination</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphase">Moon phase only</string>     <!-- setting -->
@@ -1402,9 +1405,8 @@
     <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->    <!-- TODO -->
 
     <string name="help_worldmap_background">
-        Projection: <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g>
-      \nCentered at: [<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>]\n
-      \nFor correct alignment, choose a map background image with matching projection and center coordinates.
+        <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g>
+      \n@ <xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>
     </string>    <!-- TODO -->
 
     <!-- Dialog: Light Map -->
