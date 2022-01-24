@@ -483,7 +483,12 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             options.anim_frameOffsetMinutes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2)
                     ? 24 * 60 : 3;
 
-            options.center = new double[] {location.getLatitudeAsDouble(), location.getLongitudeAsDouble()};
+            try {
+                options.center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, WorldMapWidgetSettings.MAPTAG_3x2);
+            } catch (NumberFormatException | NullPointerException e) {
+                options.center = new double[] {location.getLatitudeAsDouble(), location.getLongitudeAsDouble()};
+            }
+
             if (WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2)) {
                 options.locations = new double[][] {{location.getLatitudeAsDouble(), location.getLongitudeAsDouble()}};
             } else options.locations = null;

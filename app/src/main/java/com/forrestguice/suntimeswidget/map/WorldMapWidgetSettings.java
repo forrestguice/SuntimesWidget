@@ -50,6 +50,12 @@ public class WorldMapWidgetSettings
 
     public static final String PREF_KEY_WORLDMAP_BACKGROUND = "background";
 
+    public static final String PREF_KEY_WORLDMAP_CENTER_LATITUDE = "center_latitude";
+    public static final String PREF_DEF_WORLDMAP_CENTER_LATITUDE = "33.45";
+
+    public static final String PREF_KEY_WORLDMAP_CENTER_LONGITUDE = "center_longitude";
+    public static final String PREF_DEF_WORLDMAP_CENTER_LONGITUDE = "-111.94";
+
     public static final String MAPTAG_3x2 = "";    // EMPTY
     public static final String MAPTAG_3x3 = "1";
     public static final String MAPTAG_DEF = MAPTAG_3x2;
@@ -179,11 +185,21 @@ public class WorldMapWidgetSettings
         prefs.putString(prefs_prefix + key + mapTag, value);
         prefs.apply();
     }
-    public static String loadWorldMapString(Context context, int appWidgetId, String key, String mapTag)
+    public static String loadWorldMapString(Context context, int appWidgetId, String key, String mapTag) {
+        return loadWorldMapString(context, appWidgetId, key, mapTag, null);
+    }
+    public static String loadWorldMapString(Context context, int appWidgetId, String key, String mapTag, String defValue)
     {
         SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_WORLDMAP;
-        return prefs.getString(prefs_prefix + key + mapTag, null);
+        return prefs.getString(prefs_prefix + key + mapTag, defValue);
+    }
+
+    public static double[] loadWorldMapCenter(Context context, int appWidgetId, String mapTag) {
+        return new double[] {
+                Double.parseDouble(WorldMapWidgetSettings.loadWorldMapString(context, 0, PREF_KEY_WORLDMAP_CENTER_LATITUDE, mapTag, PREF_DEF_WORLDMAP_CENTER_LATITUDE)),
+                Double.parseDouble(WorldMapWidgetSettings.loadWorldMapString(context, 0, PREF_KEY_WORLDMAP_CENTER_LONGITUDE, mapTag, PREF_DEF_WORLDMAP_CENTER_LONGITUDE))
+        };
     }
 
     public static boolean defaultWorldMapFlag(String key)
