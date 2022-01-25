@@ -17,8 +17,13 @@
 */
 package com.forrestguice.suntimeswidget.map;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
@@ -50,11 +55,10 @@ public class WorldMapWidgetSettings
 
     public static final String PREF_KEY_WORLDMAP_BACKGROUND = "background";
 
+    public static final double[] PREF_DEF_WORLDMAP_CENTER = new double[] { 33.45, -111.94 };
+    public static final String PREF_KEY_WORLDMAP_CENTER_LABEL = "center_label";
     public static final String PREF_KEY_WORLDMAP_CENTER_LATITUDE = "center_latitude";
-    public static final String PREF_DEF_WORLDMAP_CENTER_LATITUDE = "33.45";
-
     public static final String PREF_KEY_WORLDMAP_CENTER_LONGITUDE = "center_longitude";
-    public static final String PREF_DEF_WORLDMAP_CENTER_LONGITUDE = "-111.94";
 
     public static final String MAPTAG_3x2 = "";    // EMPTY
     public static final String MAPTAG_3x3 = "1";
@@ -66,20 +70,23 @@ public class WorldMapWidgetSettings
      */
     public static enum WorldMapWidgetMode
     {
-        EQUIRECTANGULAR_SIMPLE("Simple", "Equidistant Rectangular", R.layout.layout_widget_sunpos_3x2_0),
-        EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", "Equidistant Rectangular", R.layout.layout_widget_sunpos_3x2_0),
-        EQUIAZIMUTHAL_SIMPLE("Polar [north]", "Equidistant Azimuthal", R.layout.layout_widget_sunpos_3x3_0),
-        EQUIAZIMUTHAL_SIMPLE1("Polar [south]", "Equidistant Azimuthal", R.layout.layout_widget_sunpos_3x3_0),
-        EQUIAZIMUTHAL_SIMPLE2("Polar [location]", "Equidistant Azimuthal", R.layout.layout_widget_sunpos_3x3_0);
+        EQUIRECTANGULAR_SIMPLE("Simple", "Equidistant Rectangular", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_0),
+        EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", "Equidistant Rectangular", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_0),
+        EQUIAZIMUTHAL_SIMPLE("Polar [north]", "Equidistant Azimuthal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0),
+        EQUIAZIMUTHAL_SIMPLE1("Polar [south]", "Equidistant Azimuthal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0),
+        EQUIAZIMUTHAL_SIMPLE2("Polar [location]", "Equidistant Azimuthal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0);
 
         private final int layoutID;
         private String displayString;
         private String projectionString;
+        private String tag;
 
-        private WorldMapWidgetMode(String displayString, String projectionString, int layoutID)
+        private WorldMapWidgetMode(String displayString, String projectionString, String tag, int layoutID)
         {
             this.displayString = displayString;
+            this.projectionString = projectionString;
             this.layoutID = layoutID;
+            this.tag = tag;
         }
 
         public String toString()
@@ -102,6 +109,10 @@ public class WorldMapWidgetSettings
         }
         public void setProjectionString(String value) {
             projectionString = value;
+        }
+
+        public String getMapTag() {
+            return tag + ":" + name();
         }
 
         public static void initDisplayStrings( Context context )
@@ -152,7 +163,7 @@ public class WorldMapWidgetSettings
     }
     public static WorldMapWidgetMode defaultSunPosMapMode(String mapTag)
     {
-        if (mapTag.equals(MAPTAG_3x3)) {
+        if (mapTag.startsWith(MAPTAG_3x3)) {
             return PREF_DEF_APPEARANCE_WIDGETMODE_WORLDMAP1;
         } else return PREF_DEF_APPEARANCE_WIDGETMODE_WORLDMAP;
     }
@@ -197,13 +208,42 @@ public class WorldMapWidgetSettings
 
     public static double[] loadWorldMapCenter(Context context, int appWidgetId, String mapTag) {
         return new double[] {
-                Double.parseDouble(loadWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_CENTER_LATITUDE, mapTag, PREF_DEF_WORLDMAP_CENTER_LATITUDE)),
-                Double.parseDouble(loadWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_CENTER_LONGITUDE, mapTag, PREF_DEF_WORLDMAP_CENTER_LONGITUDE))
+                Double.parseDouble(loadWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_CENTER_LATITUDE, mapTag, PREF_DEF_WORLDMAP_CENTER[0]+"")),
+                Double.parseDouble(loadWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_CENTER_LONGITUDE, mapTag, PREF_DEF_WORLDMAP_CENTER[1]+""))
         };
     }
-    public static void saveWorldMapCenter(Context context, int appWidgetId, String mapTag, double[] value) {
+    public static void saveWorldMapCenter(Context context, int appWidgetId, String mapTag, double[] value)
+    {
         saveWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_CENTER_LATITUDE, mapTag, Double.toString(value[0]));
         saveWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_CENTER_LONGITUDE, mapTag, Double.toString(value[1]));
+    }
+    public static String getCenterTag(@Nullable double[] center) {
+        return (center == null ? "0:0" : (int)center[0] + ":" + (int)center[1]);
+    }
+
+    public static String loadWorldMapBackground(Context context, int appWidgetId, String mapTag, @Nullable double[] center) {
+        return loadWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_BACKGROUND, mapTag + ":" + getCenterTag(center));
+    }
+    public static void saveWorldMapBackground(Context context, int appWidgetId, String mapTag, @Nullable double[] center, String backgroundUri) {
+        saveWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_BACKGROUND, mapTag + ":" + getCenterTag(center), backgroundUri);
+    }
+    public static void deleteWorldMapBackground(Context context, int appWidgetId, String mapTag, @Nullable double[] center) {
+        deleteWorldMapPref(context, appWidgetId, PREF_KEY_WORLDMAP_BACKGROUND, mapTag + ":" + getCenterTag(center));
+    }
+    public static void initWorldMapBackgroundDefaults(Context context)
+    {
+        saveWorldMapBackground(context, 0, WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE2.getMapTag(), PREF_DEF_WORLDMAP_CENTER, getDrawableUri(context, R.drawable.worldmap4).toString());
+    }
+
+    private static Uri getDrawableUri(Context context, int resId)
+    {
+        Resources resources = context.getResources();
+        return (new Uri.Builder())
+                .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+                .authority(resources.getResourcePackageName(resId))
+                .appendPath(resources.getResourceTypeName(resId))
+                .appendPath(resources.getResourceEntryName(resId))
+                .build();
     }
 
     public static boolean defaultWorldMapFlag(String key)
@@ -233,6 +273,7 @@ public class WorldMapWidgetSettings
     public static void initDisplayStrings( Context context )
     {
         WorldMapWidgetMode.initDisplayStrings(context);
+        initWorldMapBackgroundDefaults(context);
     }
 
     /**

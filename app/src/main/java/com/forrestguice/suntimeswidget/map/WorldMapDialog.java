@@ -320,12 +320,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         mapMode = WorldMapWidgetSettings.loadSunPosMapModePref(context, 0, WorldMapWidgetSettings.MAPTAG_DEF);
         int modePosition = mapAdapter.getPosition(mapMode);
         mapSelector.setSelection((modePosition >= 0) ? modePosition : 0);
-        worldmap.setMapMode(context, (WorldMapWidgetSettings.WorldMapWidgetMode) mapSelector.getSelectedItem());
 
+        updateOptions(getContext());
+        worldmap.setMapMode(context, (WorldMapWidgetSettings.WorldMapWidgetMode) mapSelector.getSelectedItem());
         mapSelector.setOnItemSelectedListener(onMapSelected);
 
         //WorldMapTask.WorldMapOptions options = worldmap.getOptions();
-        updateOptions(getContext());
+
 
         /**radioGroup = dialogView.findViewById(R.id.radio_group);
         RadioButton option_sun = (RadioButton)dialogView.findViewById(R.id.radio_sun);
@@ -484,7 +485,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     ? 24 * 60 : 3;
 
             try {
-                options.center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, WorldMapWidgetSettings.MAPTAG_3x2);
+                options.center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, mapMode.getMapTag());
             } catch (NumberFormatException | NullPointerException e) {
                 options.center = new double[] {location.getLatitudeAsDouble(), location.getLongitudeAsDouble()};
             }
@@ -795,14 +796,15 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
         MenuItem action_center = m.findItem(R.id.mapOption_center_current);
         if (action_center != null) {
-            double[] center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, WorldMapWidgetSettings.MAPTAG_3x2);
+            double[] center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, mapMode.getMapTag());
             String locationDisplay = getString(R.string.location_format_latlon, Double.toString(center[0]), Double.toString(center[1]));
             action_center.setTitle(context.getString(R.string.worldmap_dialog_option_center_current, locationDisplay));
         }
 
         MenuItem action_background_clear = m.findItem(R.id.mapOption_background_clear);
         if (action_background_clear != null) {
-            action_background_clear.setVisible(null != WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_BACKGROUND, WorldMapWidgetSettings.MAPTAG_3x2));
+            double[] center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, mapMode.getMapTag());
+            action_background_clear.setVisible(null != WorldMapWidgetSettings.loadWorldMapBackground(context, 0, mapMode.getMapTag(), center));
         }
 
         MenuItem option_mapmode0 = m.findItem(R.id.mapProjectionMenu);
@@ -856,28 +858,31 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         Location location = WidgetSettings.loadLocationPref(context, 0);
         double[] center = new double[] {location.getLatitudeAsDouble(), location.getLongitudeAsDouble()};
 
-        WorldMapWidgetSettings.saveWorldMapCenter(context, 0, WorldMapWidgetSettings.MAPTAG_3x2, center);
-        WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2, true);
-        WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, WorldMapWidgetSettings.MAPTAG_3x2, true);
-        WorldMapWidgetSettings.deleteWorldMapPref(context,0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_BACKGROUND, WorldMapWidgetSettings.MAPTAG_3x2);  // TODO
+        WorldMapWidgetSettings.saveWorldMapCenter(context, 0, mapMode.getMapTag(), center);
+        WorldMapWidgetSettings.saveWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LABEL, mapMode.getMapTag(), location.getLabel());
+
+        WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, mapMode.getMapTag(), true);
+        WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, mapMode.getMapTag(), true);
 
         String locationDisplay = getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
         Toast.makeText(context, context.getString(R.string.worldmap_dialog_option_center_msg, locationDisplay), Toast.LENGTH_LONG).show();
 
+        updateOptions(getContext());
         worldmap.setMapMode(context, mapMode);
         updateViews();
     }
 
     private void clearMapCenter(Context context)
     {
-        WorldMapWidgetSettings.deleteWorldMapPref(context,0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_BACKGROUND, WorldMapWidgetSettings.MAPTAG_3x2);  // TODO
-        WorldMapWidgetSettings.deleteWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LATITUDE, WorldMapWidgetSettings.MAPTAG_3x2);
-        WorldMapWidgetSettings.deleteWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LONGITUDE, WorldMapWidgetSettings.MAPTAG_3x2);
+        WorldMapWidgetSettings.deleteWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LATITUDE, mapMode.getMapTag());
+        WorldMapWidgetSettings.deleteWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LONGITUDE, mapMode.getMapTag());
+        WorldMapWidgetSettings.initWorldMapBackgroundDefaults(context);   // restores background if removed
 
-        double[] center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, WorldMapWidgetSettings.MAPTAG_3x2);
+        double[] center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, mapMode.getMapTag());
         String locationDisplay = getString(R.string.location_format_latlon, Double.toString(center[0]), Double.toString(center[1]));
         Toast.makeText(context, context.getString(R.string.worldmap_dialog_option_center_clear_msg, locationDisplay), Toast.LENGTH_LONG).show();
 
+        updateOptions(getContext());
         worldmap.setMapMode(context, mapMode);
         updateViews();
     }
@@ -908,22 +913,26 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     private void clearMapBackground(Context context)
     {
-        String mapTag = WorldMapWidgetSettings.MAPTAG_3x2;   // TODO: 3x3 square map
-        String mapBackgroundString = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_BACKGROUND, mapTag);
+        double[] center = worldmap.getOptions().center;
+        String mapTag = mapMode.getMapTag();
+        String mapBackgroundString = WorldMapWidgetSettings.loadWorldMapBackground(context, 0, mapTag, center);
         Uri uri = mapBackgroundString != null ? Uri.parse(mapBackgroundString) : null;
         if (uri != null) {
             context.getContentResolver().releasePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
-        WorldMapWidgetSettings.deleteWorldMapPref(context,0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_BACKGROUND, mapTag);
+        WorldMapWidgetSettings.deleteWorldMapBackground(context,0, mapTag, center);
+
         worldmap.setMapMode(context, mapMode);
         updateViews();
     }
 
     protected void onMapBackgroundResult(Context context, int requestCode, Uri uri)
     {
-        Toast.makeText(context, "TODO: " + uri.toString(), Toast.LENGTH_LONG).show();
-        String mapTag = WorldMapWidgetSettings.MAPTAG_3x2;   // TODO: 3x3 square map
-        WorldMapWidgetSettings.saveWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_BACKGROUND, mapTag, uri.toString());
+        String mapTag = mapMode.getMapTag();
+        double[] center = worldmap.getOptions().center;
+        WorldMapWidgetSettings.saveWorldMapBackground(context, 0, mapTag, center, uri.toString());
+
+        Toast.makeText(context, uri.toString(), Toast.LENGTH_LONG).show();
         worldmap.setMapMode(context, mapMode);
         updateViews();
     }

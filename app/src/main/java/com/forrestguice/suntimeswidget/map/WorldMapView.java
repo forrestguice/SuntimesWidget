@@ -120,7 +120,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         switch (mode)
         {
             case EQUIAZIMUTHAL_SIMPLE:
-                background = loadBackgroundDrawable(context, WorldMapWidgetSettings.MAPTAG_3x2);   // TODO: 3x3
+                background = loadBackgroundDrawable(context, mode.getMapTag(), options.center);
                 options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap2);
                 options.map_night = null;
                 options.foregroundColor = foregroundColor;
@@ -128,7 +128,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 break;
 
             case EQUIAZIMUTHAL_SIMPLE1:
-                background = loadBackgroundDrawable(context, WorldMapWidgetSettings.MAPTAG_3x2);   // TODO: 3x3
+                background = loadBackgroundDrawable(context, mode.getMapTag(), options.center);
                 options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap3);
                 options.map_night = null;
                 options.foregroundColor = foregroundColor;
@@ -136,8 +136,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 break;
 
             case EQUIAZIMUTHAL_SIMPLE2:
-                background = loadBackgroundDrawable(context, WorldMapWidgetSettings.MAPTAG_3x2);   // TODO: 3x3
-                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap4);    // TODO
+                options.map = loadBackgroundDrawable(context, mode.getMapTag(), options.center);
                 options.map_night = null;
                 options.foregroundColor = foregroundColor;
                 options.hasTransparentBaseMap = true;
@@ -152,7 +151,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 
             case EQUIRECTANGULAR_SIMPLE:
             default:
-                background = loadBackgroundDrawable(context, WorldMapWidgetSettings.MAPTAG_3x2);
+                background = loadBackgroundDrawable(context, mode.getMapTag(), options.center);
                 options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap);
                 options.map_night = null;
                 options.foregroundColor = foregroundColor;
@@ -162,9 +161,9 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     }
 
     @Nullable
-    protected static Drawable loadBackgroundDrawable(Context context, String mapTag)
+    protected static Drawable loadBackgroundDrawable(Context context, String mapTag, double[] center)
     {
-        String backgroundString = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_BACKGROUND, mapTag);
+        String backgroundString = WorldMapWidgetSettings.loadWorldMapBackground(context, 0, mapTag, center);
         Uri backgroundUri = (backgroundString != null) ? Uri.parse(backgroundString) : null;
         if (backgroundUri != null)
         {
