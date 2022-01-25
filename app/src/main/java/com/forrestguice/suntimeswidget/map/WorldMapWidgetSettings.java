@@ -229,6 +229,12 @@ public class WorldMapWidgetSettings
         saveWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_CENTER_LATITUDE, mapTag, Double.toString(value[0]));
         saveWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_CENTER_LONGITUDE, mapTag, Double.toString(value[1]));
     }
+    public static void deleteWorldMapCenter(Context context, int appWidgetId, String mapTag)
+    {
+        WorldMapWidgetSettings.deleteWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LABEL, mapTag);
+        WorldMapWidgetSettings.deleteWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LATITUDE, mapTag);
+        WorldMapWidgetSettings.deleteWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LONGITUDE, mapTag);
+    }
     public static String getCenterTag(@Nullable double[] center) {
         return (center == null ? "0:0" : (int)center[0] + ":" + (int)center[1]);
     }
@@ -300,10 +306,8 @@ public class WorldMapWidgetSettings
                 deleteWorldMapPref(context, appWidgetId, flags[0], tag);
             }
             deleteSunPosMapModePref(context, appWidgetId, tag);
-            deleteWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_BACKGROUND, tag);
-            deleteWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LABEL, tag);
-            deleteWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LATITUDE, tag);
-            deleteWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LONGITUDE, tag);
+            deleteWorldMapCenter(context, appWidgetId, tag);
+            // deleteWorldMapBackground(context, appWidgetId, tag, center);    // TODO
         }
     }
 

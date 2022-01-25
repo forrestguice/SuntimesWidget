@@ -884,8 +884,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     private void clearMapCenter(Context context)
     {
-        WorldMapWidgetSettings.deleteWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LATITUDE, mapMode.getMapTag());
-        WorldMapWidgetSettings.deleteWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LONGITUDE, mapMode.getMapTag());
+        WorldMapWidgetSettings.deleteWorldMapCenter(context, 0, mapMode.getMapTag());
         WorldMapWidgetSettings.initWorldMapBackgroundDefaults(context);   // restores background if removed
 
         double[] center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, mapMode.getMapTag(), mapMode.getProjectionCenter());
