@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -59,6 +59,7 @@ public class WorldMapWidgetSettings
     public static final String MAPTAG_3x2 = "";    // EMPTY
     public static final String MAPTAG_3x3 = "1";
     public static final String MAPTAG_DEF = MAPTAG_3x2;
+    public static final String[] MAPTAGS = new String[] { MAPTAG_3x2, MAPTAG_3x3 };
 
     /**
      * WorldMapWidgetMode
@@ -118,7 +119,6 @@ public class WorldMapWidgetSettings
             EQUIRECTANGULAR_BLUEMARBLE.setProjectionString(context.getString(R.string.worldmap_projection_equirectangular));
         }
     }
-
 
     public static void saveSunPosMapModePref(Context context, int appWidgetId, WorldMapWidgetMode mode, String mapTag)
     {
@@ -241,10 +241,17 @@ public class WorldMapWidgetSettings
      */
     public static void deletePrefs(Context context, int appWidgetId)
     {
-        deleteSunPosMapModePref(context, appWidgetId, MAPTAG_3x2);
-        deleteSunPosMapModePref(context, appWidgetId, MAPTAG_3x3);
-        deleteWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, MAPTAG_3x2);
-        deleteWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, MAPTAG_3x3);
+        for (String tag : MAPTAGS)
+        {
+            for (String[] flags : PREF_DEF_WORLDMAP) {
+                deleteWorldMapPref(context, appWidgetId, flags[0], tag);
+            }
+            deleteSunPosMapModePref(context, appWidgetId, tag);
+            deleteWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_BACKGROUND, tag);
+            deleteWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LABEL, tag);
+            deleteWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LATITUDE, tag);
+            deleteWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LONGITUDE, tag);
+        }
     }
 
 }
