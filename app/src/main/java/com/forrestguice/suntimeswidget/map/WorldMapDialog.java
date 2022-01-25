@@ -485,7 +485,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     ? 24 * 60 : 3;
 
             try {
-                options.center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, mapMode.getMapTag());
+                options.center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, mapMode.getMapTag(), mapMode.getProjectionCenter());
             } catch (NumberFormatException | NullPointerException e) {
                 options.center = new double[] {location.getLatitudeAsDouble(), location.getLongitudeAsDouble()};
             }
@@ -794,17 +794,27 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         //    action_date.setEnabled( !WidgetSettings.DateInfo.isToday(getMapDate()) );
         //}
 
-        MenuItem action_center = m.findItem(R.id.mapOption_center_current);
-        if (action_center != null) {
-            double[] center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, mapMode.getMapTag());
+        MenuItem action_center_current = m.findItem(R.id.mapOption_center_current);
+        if (action_center_current != null) {
+            double[] center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, mapMode.getMapTag(), mapMode.getProjectionCenter());
             String locationDisplay = getString(R.string.location_format_latlon, Double.toString(center[0]), Double.toString(center[1]));
-            action_center.setTitle(context.getString(R.string.worldmap_dialog_option_center_current, locationDisplay));
+            action_center_current.setTitle(context.getString(R.string.worldmap_dialog_option_center_current, locationDisplay));
+        }
+
+        MenuItem action_center_set = m.findItem(R.id.mapOption_center);
+        if (action_center_set != null) {
+            action_center_set.setVisible(mapMode.supportsCenter());
+        }
+
+        MenuItem action_center_clear = m.findItem(R.id.mapOption_center_clear);
+        if (action_center_clear != null) {
+            action_center_clear.setVisible(mapMode.supportsCenter());
         }
 
         MenuItem action_background_clear = m.findItem(R.id.mapOption_background_clear);
         if (action_background_clear != null) {
-            double[] center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, mapMode.getMapTag());
-            action_background_clear.setVisible(null != WorldMapWidgetSettings.loadWorldMapBackground(context, 0, mapMode.getMapTag(), center));
+            double[] center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, mapMode.getMapTag(), mapMode.getProjectionCenter());
+            action_background_clear.setEnabled(null != WorldMapWidgetSettings.loadWorldMapBackground(context, 0, mapMode.getMapTag(), center));
         }
 
         MenuItem option_mapmode0 = m.findItem(R.id.mapProjectionMenu);
@@ -878,7 +888,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         WorldMapWidgetSettings.deleteWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LONGITUDE, mapMode.getMapTag());
         WorldMapWidgetSettings.initWorldMapBackgroundDefaults(context);   // restores background if removed
 
-        double[] center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, mapMode.getMapTag());
+        double[] center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, mapMode.getMapTag(), mapMode.getProjectionCenter());
         String locationDisplay = getString(R.string.location_format_latlon, Double.toString(center[0]), Double.toString(center[1]));
         Toast.makeText(context, context.getString(R.string.worldmap_dialog_option_center_clear_msg, locationDisplay), Toast.LENGTH_LONG).show();
 

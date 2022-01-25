@@ -70,23 +70,27 @@ public class WorldMapWidgetSettings
      */
     public static enum WorldMapWidgetMode
     {
-        EQUIRECTANGULAR_SIMPLE("Simple", "Equidistant Rectangular", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_0),
-        EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", "Equidistant Rectangular", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_0),
-        EQUIAZIMUTHAL_SIMPLE("Polar [north]", "Equidistant Azimuthal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0),
-        EQUIAZIMUTHAL_SIMPLE1("Polar [south]", "Equidistant Azimuthal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0),
-        EQUIAZIMUTHAL_SIMPLE2("Polar [location]", "Equidistant Azimuthal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0);
+        EQUIRECTANGULAR_SIMPLE("Simple", "Equidistant Rectangular", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_0, false, 0, 0),
+        EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", "Equidistant Rectangular", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_0, false, 0, 0),
+        EQUIAZIMUTHAL_SIMPLE("Polar [north]", "Equidistant Azimuthal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0, false, 90, 0),
+        EQUIAZIMUTHAL_SIMPLE1("Polar [south]", "Equidistant Azimuthal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0, false, -90, 0),
+        EQUIAZIMUTHAL_SIMPLE2("Polar [location]", "Equidistant Azimuthal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0, true, PREF_DEF_WORLDMAP_CENTER[0], PREF_DEF_WORLDMAP_CENTER[1]);
 
         private final int layoutID;
         private String displayString;
         private String projectionString;
         private String tag;
+        private boolean supportsCenter;
+        private double[] center;
 
-        private WorldMapWidgetMode(String displayString, String projectionString, String tag, int layoutID)
+        private WorldMapWidgetMode(String displayString, String projectionString, String tag, int layoutID, boolean supportsCenter, double centerLat, double centerLon)
         {
             this.displayString = displayString;
             this.projectionString = projectionString;
             this.layoutID = layoutID;
             this.tag = tag;
+            this.supportsCenter = supportsCenter;
+            this.center = new double[] {centerLat, centerLon};
         }
 
         public String toString()
@@ -111,8 +115,16 @@ public class WorldMapWidgetSettings
             projectionString = value;
         }
 
+        public double[] getProjectionCenter() {
+            return center;
+        }
+
         public String getMapTag() {
             return tag + ":" + name();
+        }
+
+        public boolean supportsCenter() {
+            return supportsCenter;
         }
 
         public static void initDisplayStrings( Context context )
@@ -206,10 +218,10 @@ public class WorldMapWidgetSettings
         return prefs.getString(prefs_prefix + key + mapTag, defValue);
     }
 
-    public static double[] loadWorldMapCenter(Context context, int appWidgetId, String mapTag) {
+    public static double[] loadWorldMapCenter(Context context, int appWidgetId, String mapTag, double[] defCenter) {
         return new double[] {
-                Double.parseDouble(loadWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_CENTER_LATITUDE, mapTag, PREF_DEF_WORLDMAP_CENTER[0]+"")),
-                Double.parseDouble(loadWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_CENTER_LONGITUDE, mapTag, PREF_DEF_WORLDMAP_CENTER[1]+""))
+                Double.parseDouble(loadWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_CENTER_LATITUDE, mapTag, defCenter[0]+"")),
+                Double.parseDouble(loadWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_CENTER_LONGITUDE, mapTag, defCenter[1]+""))
         };
     }
     public static void saveWorldMapCenter(Context context, int appWidgetId, String mapTag, double[] value)
