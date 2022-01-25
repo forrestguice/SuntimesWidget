@@ -1413,6 +1413,7 @@
         <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g>
       \n@ <xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>
     </string>    <!-- TODO -->
+    <string name="help_worldmap_background_url">https://github.com/forrestguice/SuntimesWidget/wiki/Help#worldmap</string>
 
     <!-- Dialog: Light Map -->
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>

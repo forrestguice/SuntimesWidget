@@ -896,7 +896,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         updateViews();
     }
 
-    private void setMapBackground(Context context)
+    private void setMapBackground(final Context context)
     {
         if (context != null)
         {
@@ -913,6 +913,13 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                             mapBackgroundFilePicker(REQUEST_BACKGROUND);
+                        }
+                    })
+                    .setNeutralButton(context.getString(R.string.configAction_onlineHelp),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.help_worldmap_background_url))));
                         }
                     })
                     .setNegativeButton(context.getString(R.string.dialog_cancel), null);
