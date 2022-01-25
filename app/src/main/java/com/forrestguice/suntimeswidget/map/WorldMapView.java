@@ -136,7 +136,8 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 break;
 
             case EQUIAZIMUTHAL_SIMPLE2:
-                options.map = loadBackgroundDrawable(context, WorldMapWidgetSettings.MAPTAG_3x2);   // TODO: 3x3
+                background = loadBackgroundDrawable(context, WorldMapWidgetSettings.MAPTAG_3x2);   // TODO: 3x3
+                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap4);    // TODO
                 options.map_night = null;
                 options.foregroundColor = foregroundColor;
                 options.hasTransparentBaseMap = true;
