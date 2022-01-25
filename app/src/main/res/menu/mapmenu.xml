@@ -51,6 +51,7 @@
         <menu>
             <item android:id="@+id/mapOption_center"
                 android:title="@string/worldmap_dialog_option_center"
+                android:icon="?attr/icActionPlace"
                 app:showAsAction="never" />
 
             <item android:id="@+id/mapOption_center_clear"
@@ -59,6 +60,7 @@
 
             <item android:id="@+id/mapOption_background"
                 android:title="@string/worldmap_dialog_option_background"
+                android:icon="?attr/icActionMap"
                 app:showAsAction="never" />
 
             <item android:id="@+id/mapOption_background_clear" android:visible="false"

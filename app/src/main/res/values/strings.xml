@@ -1391,13 +1391,13 @@
     <string name="worldmap_dialog_action_reset">Reset</string>     <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_menu">Options</string>       <!-- button (contentDescription) -->
     <string name="worldmap_dialog_options_menu">Options</string>   <!-- TODO -->
-    <string name="worldmap_dialog_option_center">Set center to location</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center">Center on location</string>    <!-- TODO -->
     <string name="worldmap_dialog_option_center_current">Center: [%s]</string>    <!-- TODO -->
     <string name="worldmap_dialog_option_center_msg">Map center set to current location \n[%s]</string>    <!-- toast message; center set to... --> <!-- TODO -->
     <string name="worldmap_dialog_option_center_clear">Reset map center</string>    <!-- TODO -->
     <string name="worldmap_dialog_option_center_clear_msg">Map center reset to default \n[%s]</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_background">Set background image</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_background_clear">Clear background</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background">Set Background</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background_clear">Clear Background</string>    <!-- TODO -->
     <string name="worldmap_dialog_option_sunlight">Sunlight</string>
     <string name="worldmap_dialog_option_moonlight">Moonlight</string>
     <string name="worldmap_dialog_option_all">Both</string>
