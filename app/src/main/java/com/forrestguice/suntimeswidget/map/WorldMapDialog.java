@@ -993,6 +993,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             context.getContentResolver().releasePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
         WorldMapWidgetSettings.deleteWorldMapBackground(context,0, mapTag, center);
+        WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapTag, true);   // reset tint flag
 
         worldmap.setMapMode(context, mapMode);
         updateViews();
