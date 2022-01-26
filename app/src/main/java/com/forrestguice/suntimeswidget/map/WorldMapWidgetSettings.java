@@ -39,6 +39,7 @@ public class WorldMapWidgetSettings
     public static final String PREF_KEY_WORLDMAP_MAJORLATITUDES = "majorlatitudes";
     public static final String PREF_KEY_WORLDMAP_MINORGRID = "minorgrid";
     public static final String PREF_KEY_WORLDMAP_DEBUGLINES = "debuglines";
+    public static final String PREF_KEY_WORLDMAP_TINTMAP = "tintmap";
     public static final String PREF_KEY_WORLDMAP_SUNSHADOW = "sunshadow";
     public static final String PREF_KEY_WORLDMAP_MOONLIGHT = "moonlight";
     public static final String PREF_KEY_WORLDMAP_LOCATION = "showlocation";
@@ -48,6 +49,7 @@ public class WorldMapWidgetSettings
             new String[] {PREF_KEY_WORLDMAP_MAJORLATITUDES, "false"},
             new String[] {PREF_KEY_WORLDMAP_MINORGRID, "false"},
             new String[] {PREF_KEY_WORLDMAP_DEBUGLINES, "false"},
+            new String[] {PREF_KEY_WORLDMAP_TINTMAP, "true"},
             new String[] {PREF_KEY_WORLDMAP_SUNSHADOW, "true"},
             new String[] {PREF_KEY_WORLDMAP_MOONLIGHT, "true"},
             new String[] {PREF_KEY_WORLDMAP_LOCATION, "false"},

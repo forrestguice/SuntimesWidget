@@ -115,30 +115,28 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     @SuppressLint("ResourceType")
     public void setMapMode(Context context, WorldMapWidgetSettings.WorldMapWidgetMode mode)
     {
-        Drawable background;
+        Drawable background = loadBackgroundDrawable(context, mode.getMapTag(), options.center);
         this.mode = mode;
         switch (mode)
         {
             case EQUIAZIMUTHAL_SIMPLE:
-                background = loadBackgroundDrawable(context, mode.getMapTag(), options.center);
                 options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap2);
                 options.map_night = null;
-                options.foregroundColor = foregroundColor;
+                options.foregroundColor = (options.tintForeground ? foregroundColor : Color.TRANSPARENT);
                 options.hasTransparentBaseMap = true;
                 break;
 
             case EQUIAZIMUTHAL_SIMPLE1:
-                background = loadBackgroundDrawable(context, mode.getMapTag(), options.center);
                 options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap3);
                 options.map_night = null;
-                options.foregroundColor = foregroundColor;
+                options.foregroundColor = (options.tintForeground ? foregroundColor : Color.TRANSPARENT);
                 options.hasTransparentBaseMap = true;
                 break;
 
             case EQUIAZIMUTHAL_SIMPLE2:
-                options.map = loadBackgroundDrawable(context, mode.getMapTag(), options.center);
+                options.map = background;
                 options.map_night = null;
-                options.foregroundColor = foregroundColor;
+                options.foregroundColor = (options.tintForeground ? foregroundColor : Color.TRANSPARENT);
                 options.hasTransparentBaseMap = true;
                 break;
 
@@ -151,10 +149,9 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 
             case EQUIRECTANGULAR_SIMPLE:
             default:
-                background = loadBackgroundDrawable(context, mode.getMapTag(), options.center);
                 options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap);
                 options.map_night = null;
-                options.foregroundColor = foregroundColor;
+                options.foregroundColor = (options.tintForeground ? foregroundColor : Color.TRANSPARENT);
                 options.hasTransparentBaseMap = true;
                 break;
         }

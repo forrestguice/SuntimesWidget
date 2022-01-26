@@ -57,6 +57,11 @@
                     android:checkable="true"
                     app:showAsAction="never" />
 
+                <item android:id="@+id/mapOption_tintMap"
+                    android:title="@string/worldmap_dialog_option_tintmap"
+                    android:checkable="true"
+                    app:showAsAction="never" />
+
             </group>
 
             <group android:id="@+id/mapOption_group_light">

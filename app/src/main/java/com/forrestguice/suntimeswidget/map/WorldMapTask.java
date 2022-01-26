@@ -168,6 +168,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         public Drawable map_night = null;            // BitmapDrawable
         public int backgroundColor = Color.BLUE;
         public int foregroundColor = Color.TRANSPARENT;
+        public boolean tintForeground = true;
         public boolean hasTransparentBaseMap = true;
         public boolean showDebugLines = false;
 

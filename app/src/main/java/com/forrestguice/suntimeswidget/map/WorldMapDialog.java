@@ -499,6 +499,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             } catch (NumberFormatException | NullPointerException e) {
                 options.center = new double[] {location.getLatitudeAsDouble(), location.getLongitudeAsDouble()};
             }
+            options.tintForeground = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapMode.getMapTag());
 
             if (WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2)) {
                 options.locations = new double[][] {{location.getLatitudeAsDouble(), location.getLongitudeAsDouble()}};
@@ -829,6 +830,11 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             option_debuglines.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_DEBUGLINES, WorldMapWidgetSettings.MAPTAG_3x2));
         }
 
+        MenuItem option_tintMap = m.findItem(R.id.mapOption_tintMap);
+        if (option_tintMap != null) {
+            option_tintMap.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapMode.getMapTag()));
+        }
+
         MenuItem option_minorgrid = m.findItem(R.id.mapOption_minorgrid);
         if (option_minorgrid != null) {
             option_minorgrid.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, WorldMapWidgetSettings.MAPTAG_3x2));
@@ -1105,6 +1111,15 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2);
                     WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
                     item.setChecked(toggledValue);
+                    updateViews();
+                    return true;
+
+                case R.id.mapOption_tintMap:
+                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapMode.getMapTag());
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapMode.getMapTag(), toggledValue);
+                    item.setChecked(toggledValue);
+                    updateOptions(context);
+                    worldmap.setMapMode(context, mapMode);
                     updateViews();
                     return true;
 
