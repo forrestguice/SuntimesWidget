@@ -25,6 +25,7 @@ import android.graphics.DashPathEffect;
 import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PathEffect;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -263,10 +264,10 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         ////////////////
         // draw base map
         drawMap(c, w, h, paintForeground, options);
-        if (options.showMajorLatitudes || options.showDebugLines) {
-            if (options.showDebugLines)
-                drawDebugLines(c, w, h, mid, options);
-            else drawMajorLatitudes(c, w, h, mid, options);
+        if (options.showDebugLines) {
+            drawDebugLines(c, w, h, mid, options);
+        } else if (options.showMajorLatitudes) {
+            drawMajorLatitudes(c, w, h, mid, options);
         }
         if (options.showGrid) {
             drawGrid(c, w, h, mid, options);
@@ -459,29 +460,20 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         return i + (360 * ((360 * k) + j));
     }
 
-    private static double r_equator = 0.5;
-    private static double r_tropics = (23.439444 / 180d);
-    private static double r_polar = (66.560833 / 180d);
+    protected static double r_equator = 0.5;
+    protected static double r_tropics = (23.439444 / 180d);
+    protected static double r_polar = (66.560833 / 180d);
 
     @Override
     public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
     {
-        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
-        p.setXfermode(options.hasTransparentBaseMap ? new PorterDuffXfermode(PorterDuff.Mode.DST_OVER) : new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-
-        Paint.Style prevStyle = p.getStyle();
-        PathEffect prevEffect = p.getPathEffect();
-        float prevStrokeWidth = p.getStrokeWidth();
-
         double equator = mid[1] * r_equator;
         double tropics = mid[1] * r_tropics;
         double polar = mid[1] * r_polar;
 
+        Paint p = paintGrid;
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
         p.setStrokeWidth(strokeWidth);
-        p.setStyle(Paint.Style.STROKE);
-        p.setStrokeCap(Paint.Cap.ROUND);
-
         p.setColor(options.latitudeColors[0]);
         p.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
 
@@ -500,10 +492,41 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         p.setPathEffect((options.latitudeLinePatterns[2][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[2], 0) : null);
         c.drawCircle((int)mid[0], (int)mid[1], (int)(equator + polar), p);
         c.drawCircle((int)mid[0], (int)mid[1], (int)(equator - polar), p);
+    }
 
-        p.setStyle(prevStyle);
-        p.setPathEffect(prevEffect);
-        p.setStrokeWidth(prevStrokeWidth);
+    @Override
+    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    {
+        double equator = mid[1] * r_equator;
+        double tropics = mid[1] * r_tropics;
+        double polar = mid[1] * r_polar;
+
+        Paint p = paintGrid;
+        float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
+        p.setStrokeWidth(strokeWidth);
+        p.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
+
+        p.setColor(Color.BLACK);
+        c.drawCircle((int)mid[0], (int)mid[1], (int)equator, p);
+        p.setColor(Color.YELLOW);
+        c.drawLine((int)mid[0], (int)mid[1], (int)mid[0], h, p);
+        p.setColor(Color.BLUE);
+        c.drawLine((int)mid[0], (int)mid[1], (int)mid[0], 0, p);
+        p.setColor(Color.RED);
+        c.drawLine((int)mid[0], (int)mid[1], w, (int)mid[1], p);
+        p.setColor(Color.GREEN);
+        c.drawLine(0, (int)mid[1], (int)mid[0], (int)mid[1], p);
+
+        p.setColor(Color.WHITE);
+        p.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
+        c.drawCircle((int)mid[0], (int)mid[1], (int)(equator + tropics), p);
+        c.drawCircle((int)mid[0], (int)mid[1], (int)(equator - tropics), p);
+
+        p.setColor(Color.GREEN);
+        p.setPathEffect((options.latitudeLinePatterns[2][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[2], 0) : null);
+        c.drawCircle((int)mid[0], (int)mid[1], (int)(equator + polar), p);
+        p.setColor(Color.RED);
+        c.drawCircle((int)mid[0], (int)mid[1], (int)(equator - polar), p);
     }
 
     private static ArrayList<float[]> grid_x = null, grid_y = null;
@@ -523,9 +546,6 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
             grid_y.add(createLatitudePath(mid, i));
             grid_y.add(createLatitudePath(mid, -i));
         }
-        //for (int i=-90; i<0; i+=15) {
-        //    grid_y.add(createLatitudePath(mid, i));
-        //}
         long bench_end = System.nanoTime();
         Log.d(WorldMapView.LOGTAG, "initGrid :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
     }

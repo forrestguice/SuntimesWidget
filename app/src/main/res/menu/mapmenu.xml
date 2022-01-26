@@ -52,6 +52,11 @@
                     android:checkable="true"
                     app:showAsAction="never" />
 
+                <item android:id="@+id/mapOption_debugLines"
+                    android:title="@string/worldmap_dialog_option_debuglines"
+                    android:checkable="true"
+                    app:showAsAction="never" />
+
             </group>
 
             <group android:id="@+id/mapOption_group_light">

@@ -242,7 +242,9 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         ////////////////
         // draw base map
         drawMap(c, w, h, paintForeground, options);
-        if (options.showMajorLatitudes) {
+        if (options.showDebugLines) {
+            drawDebugLines(c, w, h, mid, options);
+        } else if (options.showMajorLatitudes) {
             drawMajorLatitudes(c, w, h, mid, options);
         }
         if (options.showGrid) {
@@ -387,15 +389,15 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         drawConnectedLines(c, createLatitudePath(mid, -66.560833), paintGrid);
     }
 
+    @Override
     public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
     {
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
         paintGrid.setStrokeWidth(strokeWidth);
 
-        paintGrid.setColor(Color.GREEN);
         paintGrid.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
+        paintGrid.setColor(Color.GREEN);
         drawConnectedLines(c, createLatitudePath(mid, 0, -180, 0), paintGrid);
-
         paintGrid.setColor(Color.RED);
         drawConnectedLines(c, createLatitudePath(mid, 0, 0, 180), paintGrid);
 
@@ -409,14 +411,15 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         drawConnectedLines(c, createLongitudePath(mid, -90), paintGrid);
 
         paintGrid.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
+        paintGrid.setColor(Color.WHITE);
         drawConnectedLines(c, createLatitudePath(mid, 23.439444), paintGrid);
         drawConnectedLines(c, createLatitudePath(mid, -23.439444), paintGrid);
 
         paintGrid.setPathEffect((options.latitudeLinePatterns[2][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[2], 0) : null);
-        paintGrid.setColor(Color.RED);
-        drawConnectedLines(c, createLatitudePath(mid, 66.560833), paintGrid);
         paintGrid.setColor(Color.GREEN);
         drawConnectedLines(c, createLatitudePath(mid, -66.560833), paintGrid);
+        paintGrid.setColor(Color.RED);
+        drawConnectedLines(c, createLatitudePath(mid, 66.560833), paintGrid);
     }
 
     protected void initGrid(double[] mid)
@@ -433,9 +436,6 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
             grid_y.add(createLatitudePath(mid, i));
             grid_y.add(createLatitudePath(mid, -i));
         }
-        //for (int i=-90; i<0; i+=15) {
-        //    grid_y.add(createLatitudePath(mid, i));
-        //}
         long bench_end = System.nanoTime();
         Log.d(WorldMapView.LOGTAG, "initGrid :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
     }

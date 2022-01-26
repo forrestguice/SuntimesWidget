@@ -21,6 +21,7 @@ package com.forrestguice.suntimeswidget.map;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -153,7 +154,9 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
         ////////////////
         // draw base map
         drawMap(c, w, h, paintForeground, options);
-        if (options.showMajorLatitudes) {
+        if (options.showDebugLines) {
+            drawDebugLines(c, w, h, mid, options);
+        } else if (options.showMajorLatitudes) {
             drawMajorLatitudes(c, w, h, mid, options);
         }
         if (options.showGrid) {
@@ -270,5 +273,41 @@ public class WorldMapEquiazimuthal1 extends WorldMapEquiazimuthal
         Log.d(WorldMapView.LOGTAG, "make equiazimuthal world map :: " + ((bench_end - bench_start) / 1000000.0) + " ms; " + w + ", " + h);
         return masked;
     }
+
+    @Override
+    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    {
+        double equator = mid[1] * r_equator;
+        double tropics = mid[1] * r_tropics;
+        double polar = mid[1] * r_polar;
+
+        Paint p = paintGrid;
+        float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
+        p.setStrokeWidth(strokeWidth);
+        p.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
+
+        p.setColor(Color.BLACK);
+        c.drawCircle((int)mid[0], (int)mid[1], (int)equator, p);
+        p.setColor(Color.BLUE);
+        c.drawLine((int)mid[0], (int)mid[1], (int)mid[0], h, p);
+        p.setColor(Color.YELLOW);
+        c.drawLine((int)mid[0], (int)mid[1], (int)mid[0], 0, p);
+        p.setColor(Color.RED);
+        c.drawLine((int)mid[0], (int)mid[1], w, (int)mid[1], p);
+        p.setColor(Color.GREEN);
+        c.drawLine(0, (int)mid[1], (int)mid[0], (int)mid[1], p);
+
+        p.setColor(Color.WHITE);
+        p.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
+        c.drawCircle((int)mid[0], (int)mid[1], (int)(equator + tropics), p);
+        c.drawCircle((int)mid[0], (int)mid[1], (int)(equator - tropics), p);
+
+        p.setColor(Color.RED);
+        p.setPathEffect((options.latitudeLinePatterns[2][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[2], 0) : null);
+        c.drawCircle((int)mid[0], (int)mid[1], (int)(equator + polar), p);
+        p.setColor(Color.GREEN);
+        c.drawCircle((int)mid[0], (int)mid[1], (int)(equator - polar), p);
+    }
+
 
 }
