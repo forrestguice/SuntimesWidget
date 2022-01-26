@@ -256,8 +256,10 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         ////////////////
         // draw base map
         drawMap(c, w, h, paintForeground, options);
-        if (options.showMajorLatitudes) {
-            drawMajorLatitudes(c, w, h, mid, options);
+        if (options.showMajorLatitudes || options.showDebugLines) {
+            if (options.showDebugLines)
+                drawDebugLines(c, w, h, mid, options);
+            else drawMajorLatitudes(c, w, h, mid, options);
         }
         if (options.showGrid) {
             drawGrid(c, w, h, mid, options);

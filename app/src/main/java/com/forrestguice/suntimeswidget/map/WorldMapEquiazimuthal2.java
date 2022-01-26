@@ -369,41 +369,60 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
     @Override
     public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
     {
-        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
-        p.setXfermode(options.hasTransparentBaseMap ? new PorterDuffXfermode(PorterDuff.Mode.DST_OVER) : new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
-        p.setStrokeWidth(strokeWidth);
-        p.setStyle(Paint.Style.STROKE);
-        p.setStrokeCap(Paint.Cap.ROUND);
+        paintGrid.setStrokeWidth(strokeWidth);
 
-        p.setColor(Color.GREEN);
-        p.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
-        drawConnectedLines(c, createLatitudePath(mid, 0, -180, 0), p);
+        paintGrid.setColor(options.latitudeColors[0]);
+        paintGrid.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
+        drawConnectedLines(c, createLatitudePath(mid, 0, -180, 0), paintGrid);
+        drawConnectedLines(c, createLatitudePath(mid, 0, 0, 180), paintGrid);
 
-        p.setColor(Color.RED);
-        drawConnectedLines(c, createLatitudePath(mid, 0, 0, 180), p);
+        drawConnectedLines(c, createLongitudePath(mid, 180), paintGrid);
+        drawConnectedLines(c, createLongitudePath(mid, 0), paintGrid);
+        drawConnectedLines(c, createLongitudePath(mid, 90), paintGrid);
+        drawConnectedLines(c, createLongitudePath(mid, -90), paintGrid);
 
-        p.setColor(Color.BLUE);
-        drawConnectedLines(c, createLongitudePath(mid, 180), p);
-        p.setColor(Color.YELLOW);
-        drawConnectedLines(c, createLongitudePath(mid, 0), p);
-        p.setColor(Color.RED);
-        drawConnectedLines(c, createLongitudePath(mid, 90), p);
-        p.setColor(Color.GREEN);
-        drawConnectedLines(c, createLongitudePath(mid, -90), p);
+        paintGrid.setColor(options.latitudeColors[1]);
+        paintGrid.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
+        drawConnectedLines(c, createLatitudePath(mid, 23.439444), paintGrid);
+        drawConnectedLines(c, createLatitudePath(mid, -23.439444), paintGrid);
 
-        p.setColor(options.latitudeColors[1]);
-        p.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
-        drawConnectedLines(c, createLatitudePath(mid, 23.439444), p);
-        drawConnectedLines(c, createLatitudePath(mid, -23.439444), p);
+        paintGrid.setColor(options.latitudeColors[2]);
+        paintGrid.setPathEffect((options.latitudeLinePatterns[2][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[2], 0) : null);
+        drawConnectedLines(c, createLatitudePath(mid, 66.560833), paintGrid);
+        drawConnectedLines(c, createLatitudePath(mid, -66.560833), paintGrid);
+    }
 
-        p.setColor(options.latitudeColors[2]);
-        p.setPathEffect((options.latitudeLinePatterns[2][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[2], 0) : null);
-        p.setColor(Color.RED);
-        drawConnectedLines(c, createLatitudePath(mid, 66.560833), p);
-        p.setColor(Color.GREEN);
-        drawConnectedLines(c, createLatitudePath(mid, -66.560833), p);
+    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    {
+        float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
+        paintGrid.setStrokeWidth(strokeWidth);
+
+        paintGrid.setColor(Color.GREEN);
+        paintGrid.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
+        drawConnectedLines(c, createLatitudePath(mid, 0, -180, 0), paintGrid);
+
+        paintGrid.setColor(Color.RED);
+        drawConnectedLines(c, createLatitudePath(mid, 0, 0, 180), paintGrid);
+
+        paintGrid.setColor(Color.BLUE);
+        drawConnectedLines(c, createLongitudePath(mid, 180), paintGrid);
+        paintGrid.setColor(Color.YELLOW);
+        drawConnectedLines(c, createLongitudePath(mid, 0), paintGrid);
+        paintGrid.setColor(Color.RED);
+        drawConnectedLines(c, createLongitudePath(mid, 90), paintGrid);
+        paintGrid.setColor(Color.GREEN);
+        drawConnectedLines(c, createLongitudePath(mid, -90), paintGrid);
+
+        paintGrid.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
+        drawConnectedLines(c, createLatitudePath(mid, 23.439444), paintGrid);
+        drawConnectedLines(c, createLatitudePath(mid, -23.439444), paintGrid);
+
+        paintGrid.setPathEffect((options.latitudeLinePatterns[2][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[2], 0) : null);
+        paintGrid.setColor(Color.RED);
+        drawConnectedLines(c, createLatitudePath(mid, 66.560833), paintGrid);
+        paintGrid.setColor(Color.GREEN);
+        drawConnectedLines(c, createLatitudePath(mid, -66.560833), paintGrid);
     }
 
     protected void initGrid(double[] mid)

@@ -169,6 +169,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         public int backgroundColor = Color.BLUE;
         public int foregroundColor = Color.TRANSPARENT;
         public boolean hasTransparentBaseMap = true;
+        public boolean showDebugLines = false;
 
         public boolean showGrid = false;
         public int gridXColor = Color.LTGRAY;
@@ -365,6 +366,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
 
         public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options) { /* EMPTY */ }
         public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options) { /* EMPTY */ }
+        public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options) { /* EMPTY */ }
         public void drawLocations(Canvas c, int w, int h, Paint p1, Paint p2, WorldMapTask.WorldMapOptions options)
         {
             if (options.locations != null && options.locations.length > 0)
