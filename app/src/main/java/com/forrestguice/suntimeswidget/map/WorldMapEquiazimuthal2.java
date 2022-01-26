@@ -47,6 +47,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
 {
     private static double[] center = new double[] {0, 0};
     private static double sinLat1 = 0, cosLat1 = 1;
+    private static Rect pixelSrc;
 
     @Override
     public double[] getCenter() {
@@ -83,6 +84,9 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         long bench_start = System.nanoTime();
 
         int[] size = matrixSize();
+        pixelSrc = new Rect(0,0,size[0]-1, size[1]-1);
+        grid_mid = null;
+
         int w = size[0];
         int h = size[1];
         double[] v = new double[w * h * 3];
@@ -221,6 +225,8 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
     }
     private Paint paintGrid;
 
+    private Rect pixelDst = new Rect();
+
     @Override
     public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options)
     {
@@ -304,12 +310,12 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
             {
                 int[] size = matrixSize();
                 Bitmap lightBitmap = Bitmap.createBitmap(size[0], size[1], Bitmap.Config.ARGB_8888);
-                int[] pixels = initPixels(size[0], size[1], sunUp, moonUp, options);
+                int[] pixels = initPixels(size[0], size[1], sunUp, moonUp, options);    // TODO: double buffer?
                 lightBitmap.setPixels(pixels, 0, size[0], 0, 0, size[0], size[1]);
 
-                Rect src = new Rect(0,0,size[0]-1, size[1]-1);
-                Rect dst = new Rect(0,0,w-1, h-1);
-                c.drawBitmap(lightBitmap, src, dst, paintScaled);
+                //Rect pixelSrc = new Rect(0,0,size[0]-1, size[1]-1);    // set by initMatrix
+                pixelDst.set(0,0,w-1, h-1);
+                c.drawBitmap(lightBitmap, pixelSrc, pixelDst, paintScaled);
                 lightBitmap.recycle();
             }
 
@@ -428,6 +434,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
     protected void initGrid(double[] mid)
     {
         long bench_start = System.nanoTime();
+        grid_mid = mid;
         grid_x = new ArrayList<>();
         grid_y = new ArrayList<>();
         for (int i=0; i<180; i+=15) {
@@ -445,11 +452,12 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         Log.d(WorldMapView.LOGTAG, "initGrid :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
     }
     private static ArrayList<float[]> grid_x = null, grid_y = null;
+    private static double[] grid_mid;
 
     @Override
     public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
     {
-        if (grid_x == null || grid_y == null) {
+        if (grid_mid == null || mid[0] != grid_mid[0] || mid[1] != grid_mid[1]) {
             initGrid(mid);
         }
 
