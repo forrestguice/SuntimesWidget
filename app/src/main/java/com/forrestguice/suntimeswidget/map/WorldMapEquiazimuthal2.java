@@ -213,18 +213,6 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         return r;
     }
 
-    @Override
-    public void initPaint(WorldMapTask.WorldMapOptions options)
-    {
-        super.initPaint(options);
-
-        paintGrid = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintGrid.setXfermode(options.hasTransparentBaseMap ? new PorterDuffXfermode(PorterDuff.Mode.DST_OVER) : new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-        paintGrid.setStyle(Paint.Style.STROKE);
-        paintGrid.setStrokeCap(Paint.Cap.ROUND);
-    }
-    private Paint paintGrid;
-
     private Rect pixelDst = new Rect();
 
     @Override
@@ -476,9 +464,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         }
     }
 
-    protected float[] createLatitudePath(double[] mid, double latitude) {
-        return createLatitudePath(mid, latitude, -180, 180);
-    }
+    @Override
     protected float[] createLatitudePath(double[] mid, double latitude, double min, double max)
     {
         double[] point;
@@ -492,9 +478,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         return toFloatArray(path);
     }
 
-    protected float[] createLongitudePath(double[] mid, double longitude) {
-        return createLongitudePath(mid, longitude, -88, 88);
-    }
+    @Override
     protected float[] createLongitudePath(double[] mid, double longitude, double min, double max)
     {
         double[] point;

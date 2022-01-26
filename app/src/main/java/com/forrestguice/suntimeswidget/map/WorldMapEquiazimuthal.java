@@ -38,6 +38,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -178,6 +179,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
     protected Paint paintSun_stroke = null;
     protected Paint paintMoon_fill = null;
     protected Paint paintMoon_stroke = null;
+    protected Paint paintGrid = null;
 
     @Override
     public void initPaint(WorldMapTask.WorldMapOptions options)
@@ -226,6 +228,11 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         paintMoon_stroke = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintMoon_stroke.setStyle(Paint.Style.STROKE);
         paintMoon_stroke.setColor(options.moonStrokeColor);
+
+        paintGrid = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintGrid.setXfermode(options.hasTransparentBaseMap ? new PorterDuffXfermode(PorterDuff.Mode.DST_OVER) : new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+        paintGrid.setStyle(Paint.Style.STROKE);
+        paintGrid.setStrokeCap(Paint.Cap.ROUND);
 
         paintInitialized = true;
     }
@@ -489,7 +496,6 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         c.drawCircle((int)mid[0], (int)mid[1], (int)(equator + tropics), p);
         c.drawCircle((int)mid[0], (int)mid[1], (int)(equator - tropics), p);
 
-
         p.setColor(options.latitudeColors[2]);
         p.setPathEffect((options.latitudeLinePatterns[2][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[2], 0) : null);
         c.drawCircle((int)mid[0], (int)mid[1], (int)(equator + polar), p);
@@ -498,6 +504,83 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         p.setStyle(prevStyle);
         p.setPathEffect(prevEffect);
         p.setStrokeWidth(prevStrokeWidth);
+    }
+
+    private static ArrayList<float[]> grid_x = null, grid_y = null;
+    private static double[] grid_mid;
+
+    protected void initGrid(double[] mid)
+    {
+        long bench_start = System.nanoTime();
+        grid_mid = mid;
+        grid_x = new ArrayList<>();
+        grid_y = new ArrayList<>();
+        for (int i=0; i<180; i+=15) {
+            grid_x.add(createLongitudePath(mid, i));
+            grid_x.add(createLongitudePath(mid, -i));
+        }
+        for (int i=0; i<90; i+=15) {
+            grid_y.add(createLatitudePath(mid, i));
+            grid_y.add(createLatitudePath(mid, -i));
+        }
+        //for (int i=-90; i<0; i+=15) {
+        //    grid_y.add(createLatitudePath(mid, i));
+        //}
+        long bench_end = System.nanoTime();
+        Log.d(WorldMapView.LOGTAG, "initGrid :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+    }
+
+    public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    {
+        if (grid_mid == null || mid[0] != grid_mid[0] || mid[1] != grid_mid[1]) {
+            initGrid(mid);
+        }
+
+        float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
+        paintGrid.setStrokeWidth(strokeWidth);
+        paintGrid.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
+        paintGrid.setColor(options.gridXColor);
+        for (int i=0; i<grid_x.size(); i++) {
+            drawConnectedLines(c, grid_x.get(i), paintGrid);
+        }
+
+        paintGrid.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
+        paintGrid.setColor(options.gridYColor);
+        for (int i=0; i<grid_y.size(); i++) {
+            drawConnectedLines(c, grid_y.get(i), paintGrid);
+        }
+    }
+
+    protected float[] createLatitudePath(double[] mid, double latitude) {
+        return createLatitudePath(mid, latitude, -180, 180);
+    }
+    protected float[] createLatitudePath(double[] mid, double latitude, double min, double max)
+    {
+        double[] point;
+        ArrayList<Float> path = new ArrayList<>();
+        for (int longitude=(int)min; longitude <= max; longitude+=2)
+        {
+            point = toCartesian(toPolar(latitude, longitude));
+            path.add((float)(mid[0] + ((point[0] / 180d) * mid[0])));
+            path.add((float)(mid[1] - ((point[1] / 180d) * mid[1])));
+        }
+        return toFloatArray(path);
+    }
+
+    protected float[] createLongitudePath(double[] mid, double longitude) {
+        return createLongitudePath(mid, longitude, -88, 88);
+    }
+    protected float[] createLongitudePath(double[] mid, double longitude, double min, double max)
+    {
+        double[] point;
+        ArrayList<Float> path = new ArrayList<>();
+        for (int latitude = (int)min; latitude<max; latitude+=2)
+        {
+            point = toCartesian(toPolar(latitude, longitude));
+            path.add((float)(mid[0] + ((point[0] / 180d) * mid[0])));
+            path.add((float)(mid[1] - ((point[1] / 180d) * mid[1])));
+        }
+        return toFloatArray(path);
     }
 
 }
