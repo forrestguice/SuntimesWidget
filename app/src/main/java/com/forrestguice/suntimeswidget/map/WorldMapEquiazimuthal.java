@@ -91,9 +91,6 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
 
     protected int[] initPixels(int w, int h, double[] sunUp, double[] moonUp, WorldMapTask.WorldMapOptions options)
     {
-        boolean combined = (options.showSunShadow && options.showMoonLight);
-        int combinedColor = ColorUtils.compositeColors(options.moonLightColor, options.sunShadowColor);
-
         int z = 0;
         int j0, j1, j2;
         double v0, v1, v2;
@@ -101,23 +98,23 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         int[] pixels = new int[w * h];
         double[] m = getMatrix();
 
-        for (int j = 0; j < h; j++)
+        if (options.showSunShadow && options.showMoonLight)
         {
-            j0 = (360 * j);
-            j1 = (360 * (360 + j));
-            j2 = (360 * (720 + j));
-
-            for (int i = 0; i < w; i++)
+            int combinedColor = ColorUtils.compositeColors(options.moonLightColor, options.sunShadowColor);
+            for (int j = 0; j < h; j++)
             {
-                v0 = m[i + j0];
-                v1 = m[i + j1];
-                v2 = m[i + j2];
+                j0 = (360 * j);
+                j1 = (360 * (360 + j));
+                j2 = (360 * (720 + j));
 
-                if (combined)
+                for (int i = 0; i < w; i++)
                 {
+                    v0 = m[i + j0];
+                    v1 = m[i + j1];
+                    v2 = m[i + j2];
+
                     sunIntensity = (sunUp[0] * v0) + (sunUp[1] * v1) + (sunUp[2] * v2);
                     moonIntensity = (moonUp[0] * v0) + (moonUp[1] * v1) + (moonUp[2] * v2);
-
                     if (sunIntensity <= 0 && moonIntensity > 0) {
                         pixels[z] = combinedColor;
                     } else if (sunIntensity <= 0) {
@@ -125,16 +122,46 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
                     } else if (moonIntensity > 0) {
                         pixels[z] = options.moonLightColor;
                     }
+                    z++;
+                }
+            }
 
-                } else if (options.showSunShadow) {
+        } else if (options.showSunShadow) {
+            for (int j = 0; j < h; j++)
+            {
+                j0 = (360 * j);
+                j1 = (360 * (360 + j));
+                j2 = (360 * (720 + j));
+
+                for (int i = 0; i < w; i++)
+                {
+                    v0 = m[i + j0];
+                    v1 = m[i + j1];
+                    v2 = m[i + j2];
+
                     sunIntensity = (sunUp[0] * v0) + (sunUp[1] * v1) + (sunUp[2] * v2);
                     pixels[z] = (sunIntensity <= 0) ? options.sunShadowColor : Color.TRANSPARENT;
+                    z++;
+                }
+            }
 
-                } else if (options.showMoonLight) {
+        } else if (options.showMoonLight) {
+            for (int j = 0; j < h; j++)
+            {
+                j0 = (360 * j);
+                j1 = (360 * (360 + j));
+                j2 = (360 * (720 + j));
+
+                for (int i = 0; i < w; i++)
+                {
+                    v0 = m[i + j0];
+                    v1 = m[i + j1];
+                    v2 = m[i + j2];
+
                     moonIntensity = (moonUp[0] * v0) + (moonUp[1] * v1) + (moonUp[2] * v2);
                     pixels[z] = (moonIntensity > 0) ? options.moonLightColor : Color.TRANSPARENT;
+                    z++;
                 }
-                z++;
             }
         }
         return pixels;
