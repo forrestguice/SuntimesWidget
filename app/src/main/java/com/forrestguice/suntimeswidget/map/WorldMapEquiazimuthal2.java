@@ -403,6 +403,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         p.setStyle(prevStyle);
         p.setPathEffect(prevEffect);
         p.setStrokeWidth(prevStrokeWidth);
+        Log.d(WorldMapView.LOGTAG, "initGrid :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
     }
 
     @Override
