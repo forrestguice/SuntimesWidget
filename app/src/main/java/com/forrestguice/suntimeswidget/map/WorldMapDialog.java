@@ -100,7 +100,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private TextView utcTime, offsetTime;
     private Spinner mapSelector;
     private WorldMapSeekBar seekbar;
-    private ImageButton playButton, pauseButton, recordButton, resetButton, nextButton, prevButton, menuButton;
+    private ImageButton playButton, pauseButton, recordButton, resetButton, nextButton, prevButton, menuButton, modeButton;
     private TextView speedButton;
     private View mediaGroup, seekGroup;
     //private View radioGroup;
@@ -327,6 +327,15 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
         //WorldMapTask.WorldMapOptions options = worldmap.getOptions();
 
+        modeButton = (ImageButton)dialogView.findViewById(R.id.map_modemenu);
+        if (modeButton != null) {
+            modeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showMapModeMenu(context, modeButton);
+                }
+            });
+        }
 
         /**radioGroup = dialogView.findViewById(R.id.radio_group);
         RadioButton option_sun = (RadioButton)dialogView.findViewById(R.id.radio_sun);
@@ -689,13 +698,61 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         expandSheet(getDialog());
     }
 
-    protected boolean showSpeedMenu(final Context context, View view)
+    protected PopupMenu createMenu(Context context, View view, int menuId, PopupMenu.OnMenuItemClickListener listener)
     {
         PopupMenu menu = new PopupMenu(context, view);
         MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.mapmenu_speed, menu.getMenu());
-        menu.setOnMenuItemClickListener(onSpeedMenuClick);
+        inflater.inflate(menuId, menu.getMenu());
+        menu.setOnMenuItemClickListener(listener);
+        return menu;
+    }
 
+    protected boolean showMapModeMenu(final Context context, View view)
+    {
+        PopupMenu menu = createMenu(context, view, R.menu.mapmenu_mode, onMapModeMenuClick);
+        updateMapModeMenu(context, menu);
+        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        menu.show();
+        return true;
+    }
+    private void updateMapModeMenu(Context context, PopupMenu menu)
+    {
+        Menu m = menu.getMenu();
+        MenuItem option_mapmode = m.findItem(menuItemForMapMode(mapMode));
+        if (option_mapmode != null) {
+            option_mapmode.setChecked(true);
+        }
+    }
+    private PopupMenu.OnMenuItemClickListener onMapModeMenuClick = new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            Context context = getContext();
+            if (context == null) {
+                return false;
+            }
+
+            switch (item.getItemId())
+            {
+                case R.id.action_worldmap_simplerectangular:
+                case R.id.action_worldmap_bluemarble:
+                case R.id.action_worldmap_simpleazimuthal:
+                case R.id.action_worldmap_simpleazimuthal_south:
+                case R.id.action_worldmap_simpleazimuthal_location:
+                    item.setChecked(true);
+                    setMapMode(context, mapModeForMenuItem(item));
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+    };
+
+    protected boolean showSpeedMenu(final Context context, View view)
+    {
+        PopupMenu menu = createMenu(context, view, R.menu.mapmenu_speed, onSpeedMenuClick); new PopupMenu(context, view);
         updateSpeedMenu(context, menu);
         menu.show();
         return true;
@@ -749,11 +806,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     protected boolean showContextMenu(final Context context, View view)
     {
-        PopupMenu menu = new PopupMenu(context, view);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.mapmenu, menu.getMenu());
-        menu.setOnMenuItemClickListener(onContextMenuClick);
-
+        PopupMenu menu = createMenu(context, view, R.menu.mapmenu, onContextMenuClick);
         updateContextMenu(context, menu);
         SuntimesUtils.forceActionBarIcons(menu.getMenu());
         menu.show();
@@ -816,16 +869,6 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         if (action_background_clear != null) {
             double[] center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, mapMode.getMapTag(), mapMode.getProjectionCenter());
             action_background_clear.setEnabled(null != WorldMapWidgetSettings.loadWorldMapBackground(context, 0, mapMode.getMapTag(), center));
-        }
-
-        MenuItem option_mapmode0 = m.findItem(R.id.mapProjectionMenu);
-        MenuItem option_mapmode = m.findItem(menuItemForMapMode(mapMode));
-        if (option_mapmode != null) {
-            option_mapmode.setChecked(true);
-            if (option_mapmode0 != null) {
-                option_mapmode0.setTitle(option_mapmode.getTitle());
-                option_mapmode0.setIcon(option_mapmode.getIcon());
-            }
         }
 
         MenuItem addonSubmenuItem = m.findItem(R.id.addonSubMenu0);
@@ -1050,15 +1093,6 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
                 case R.id.mapOption_background_clear:
                     clearMapBackground(context);
-                    return true;
-
-                case R.id.action_worldmap_simplerectangular:
-                case R.id.action_worldmap_bluemarble:
-                case R.id.action_worldmap_simpleazimuthal:
-                case R.id.action_worldmap_simpleazimuthal_south:
-                case R.id.action_worldmap_simpleazimuthal_location:
-                    setMapMode(context, mapModeForMenuItem(item));
-                    item.setChecked(true);
                     return true;
 
                 case R.id.mapOption_location:

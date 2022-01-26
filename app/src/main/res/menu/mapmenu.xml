@@ -2,47 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/mapProjectionMenu"
-        android:icon="?attr/icActionMap"
-        android:title="@string/configAction_worldMap"
-        app:showAsAction="never"
-        android:orderInCategory="0">
-        <menu>
-            <group android:id="@+id/mapOption_group_projection">
-                <item android:id="@+id/action_worldmap_simplerectangular"
-                    android:title="@string/widgetMode_sunPosMap_simplerectangular"
-                    android:icon="?attr/icActionMap"
-                    android:checkable="true"
-                    app:showAsAction="never" />
-
-                <item android:id="@+id/action_worldmap_bluemarble"
-                    android:title="@string/widgetMode_sunPosMap_bluemarble"
-                    android:icon="?attr/icActionMap"
-                    android:checkable="true"
-                    app:showAsAction="never" />
-
-                <item android:id="@+id/action_worldmap_simpleazimuthal"
-                    android:title="@string/widgetMode_sunPosMap_simpleazimuthal"
-                    android:icon="?attr/icActionMap"
-                    android:checkable="true"
-                    app:showAsAction="never" />
-
-                <item android:id="@+id/action_worldmap_simpleazimuthal_south"
-                    android:title="@string/widgetMode_sunPosMap_simpleazimuthal_south"
-                    android:icon="?attr/icActionMap"
-                    android:checkable="true"
-                    app:showAsAction="never" />
-
-                <item android:id="@+id/action_worldmap_simpleazimuthal_location"
-                    android:title="@string/widgetMode_sunPosMap_simpleazimuthal_location"
-                    android:icon="?attr/icActionMap"
-                    android:checkable="true"
-                    app:showAsAction="never" />
-            </group>
-
-        </menu>
-    </item>
-
     <item android:id="@+id/mapOption_center_current"
         android:title="@string/worldmap_dialog_option_center_current"
         android:icon="?attr/icActionSettings"
@@ -78,8 +37,8 @@
         <menu>
             <group android:id="@+id/mapOption_group_misc">
 
-                <item android:id="@+id/mapOption_majorLatitudes"
-                    android:title="@string/worldmap_dialog_option_latitudes"
+                <item android:id="@+id/mapOption_location"
+                    android:title="@string/worldmap_dialog_option_location"
                     android:checkable="true"
                     app:showAsAction="never" />
 
@@ -88,8 +47,8 @@
                     android:checkable="true"
                     app:showAsAction="never" />
 
-                <item android:id="@+id/mapOption_location"
-                    android:title="@string/worldmap_dialog_option_location"
+                <item android:id="@+id/mapOption_majorLatitudes"
+                    android:title="@string/worldmap_dialog_option_latitudes"
                     android:checkable="true"
                     app:showAsAction="never" />
 

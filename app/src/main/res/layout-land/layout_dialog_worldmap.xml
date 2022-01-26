@@ -48,7 +48,7 @@
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="@+id/guideline4"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="@+id/info_time_utc" />
 
-        <Spinner
+        <Spinner android:visibility="gone"
             android:id="@+id/worldmap_selector"
             android:layout_width="0dp" android:layout_height="wrap_content"
             android:layout_marginLeft="0dp" android:layout_marginRight="12dp"
@@ -57,6 +57,15 @@
             app:layout_constraintBottom_toTopOf="@+id/media_actions"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/guideline4" app:layout_constraintHorizontal_bias="0" />
+
+        <ImageButton
+            android:id="@+id/map_modemenu"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/worldmap_dialog_action_menu"
+            android:src="?attr/icActionMap"
+            app:layout_constraintEnd_toStartOf="@+id/info_time_worldmap_layout" app:layout_constraintBottom_toTopOf="@+id/media_actions"
+            style="?attr/actionOverflowButtonStyle" />
 
         <FrameLayout
             android:id="@+id/info_time_worldmap_layout"
@@ -132,14 +141,14 @@
             <ImageButton
                 android:id="@+id/media_reset_map"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:background="@null"
+                android:background="?attr/selectableItemBackground"
                 android:contentDescription="@string/worldmap_dialog_action_reset"
                 android:src="?attr/icActionTimeReset" />
 
             <ImageButton
                 android:id="@+id/media_play_map"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:background="@null"
+                android:background="?attr/selectableItemBackground"
                 android:layout_marginLeft="16dp" android:layout_marginStart="16dp"
                 android:layout_marginRight="16dp" android:layout_marginEnd="16dp"
                 android:contentDescription="@string/worldmap_dialog_action_play"
@@ -148,7 +157,7 @@
             <ImageButton android:visibility="gone"
                 android:id="@+id/media_pause_map"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:background="@null"
+                android:background="?attr/selectableItemBackground"
                 android:layout_marginLeft="16dp" android:layout_marginStart="16dp"
                 android:layout_marginRight="16dp" android:layout_marginEnd="16dp"
                 android:contentDescription="@string/worldmap_dialog_action_pause"
@@ -157,7 +166,7 @@
             <ImageButton android:visibility="gone"
                 android:id="@+id/media_record_map"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:background="@null"
+                android:background="?attr/selectableItemBackground"
                 android:layout_marginLeft="16dp" android:layout_marginStart="16dp"
                 android:layout_marginRight="16dp" android:layout_marginEnd="16dp"
                 android:contentDescription="@string/worldmap_dialog_action_record"
@@ -170,7 +179,7 @@
             <ImageButton
                 android:id="@+id/map_menu"
                 android:layout_width="24dp" android:layout_height="24dp"
-                android:background="@null"
+                android:background="?attr/selectableItemBackground"
                 android:contentDescription="@string/worldmap_dialog_action_menu"
                 style="?attr/actionOverflowButtonStyle" />
 
