@@ -174,8 +174,8 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                 Drawable background = Drawable.createFromStream(in, backgroundUri.toString());
                 return new BitmapDrawable(Bitmap.createScaledBitmap(((BitmapDrawable)background).getBitmap(), w, h, true));
 
-            } catch (FileNotFoundException e) {
-                Log.w(LOGTAG, "Unable to open map background: " + e);
+            } catch (FileNotFoundException | OutOfMemoryError e) {
+                Log.e(LOGTAG, "Failed to open map background: " + e);
                 return null;
             }
         } else {
