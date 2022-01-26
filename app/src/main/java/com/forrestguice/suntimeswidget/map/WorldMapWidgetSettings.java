@@ -253,7 +253,9 @@ public class WorldMapWidgetSettings
     }
     public static void initWorldMapBackgroundDefaults(Context context)
     {
-        saveWorldMapBackground(context, 0, WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE2.getMapTag(), PREF_DEF_WORLDMAP_CENTER, getDrawableUri(context, R.drawable.worldmap4).toString());
+        if (null == loadWorldMapBackground(context, 0, WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE2.getMapTag(), PREF_DEF_WORLDMAP_CENTER)) {
+            saveWorldMapBackground(context, 0, WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE2.getMapTag(), PREF_DEF_WORLDMAP_CENTER, getDrawableUri(context, R.drawable.worldmap4).toString());
+        }
     }
 
     private static Uri getDrawableUri(Context context, int resId)
