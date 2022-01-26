@@ -33,6 +33,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -391,6 +392,14 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
             }
         }
 
+        public static float[] toFloatArray(ArrayList<Float> values)
+        {
+            float[] retvalue = new float[values.size()];
+            for (int i=0; i<retvalue.length; i++) {
+                retvalue[i] = values.get(i);
+            }
+            return retvalue;
+        }
     }
 
     /**

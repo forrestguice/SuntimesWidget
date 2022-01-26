@@ -163,11 +163,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         return polar;
     }
 
-    protected double[] toCartesian(double lat, double lon) {
-        return toCartesian(lat, lon, 1.0);
-    }
-
-    protected double[] toCartesian(double lat, double lon, double R)
+    protected double[] toCartesian(double lat, double lon)
     {
         double distance = lon - center[1];
         double radDistance = Math.toRadians(distance);
@@ -182,23 +178,23 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         double sinLat = Math.sin(radLat);
         double cosLat = Math.cos(radLat);
 
-        double k = 1;
         double[] point = new double[3];
         double cosC = (sinLat1 * sinLat) + (cosLat1 * cosLat * cosDistance);
         double c = point[2] = Math.acos(cosC);
         if (c < 0.00001)
         {
             if (cosC > 0) {
-                k = 1;
+                // k = 1;
                 point[0] = point[1] = 0;
 
             } else if (cosC < 0) {
-                k = 1;
+                // k = 1;
                 //point[0] = -1 * center[0];    // TODO
                 //point[1] = center[1] + 180;
             }
         } else {
-            k = c / Math.sin(c);
+            double k = c / Math.sin(c);
+            double R = 1;
             point[0] = R * k * cosLat * sinDistance;
             point[1] = R * k * (((cosLat1 * sinLat) - (sinLat1 * cosLat * cosDistance)));
         }
@@ -480,15 +476,6 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
             path.add((float)(mid[1] - ((point[1] / (Math.PI)) * mid[1])));
         }
         return toFloatArray(path);
-    }
-
-    protected float[] toFloatArray(ArrayList<Float> values)
-    {
-        float[] retvalue = new float[values.size()];
-        for (int i=0; i<retvalue.length; i++) {
-            retvalue[i] = values.get(i);
-        }
-        return retvalue;
     }
 
 }

@@ -136,7 +136,7 @@ public class MapProjectionTest extends SuntimesActivityTestBase
             for (int j=0; j<testCoords[i].length; j++)
             {
                 coords = testCoords[i][j];
-                point = projection.toCartesian(coords[0], coords[1], R);
+                point = projection.toCartesian(coords[0], coords[1]);
                 String tag = "["+coords[0]+","+coords[1]+ "]";
                 testPointEquals(point, testResult[i][j], tag);
                 Log.d("RESULT", "[lat, lon] = " + coords[0] + "," + coords[1] + ", [x, y] = " + point[0] + "," + point[1]);
