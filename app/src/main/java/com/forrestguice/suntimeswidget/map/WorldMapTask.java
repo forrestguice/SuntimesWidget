@@ -392,6 +392,12 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
             }
         }
 
+        protected void drawConnectedLines(Canvas c, float[] lines, Paint p)
+        {
+            c.drawLines(lines, 0, lines.length, p);
+            c.drawLines(lines, 2,lines.length-2, p);
+        }
+
         public static float[] toFloatArray(ArrayList<Float> values)
         {
             float[] retvalue = new float[values.size()];

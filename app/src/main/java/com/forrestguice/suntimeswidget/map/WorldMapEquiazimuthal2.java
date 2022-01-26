@@ -46,6 +46,7 @@ import java.util.Calendar;
 public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
 {
     private static double[] center = new double[] {0, 0};
+    private static double sinLat1 = 0, cosLat1 = 1;
 
     @Override
     public double[] getCenter() {
@@ -94,8 +95,8 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
 
         double radLon1 = Math.toRadians(center[1]);
         double radLat1 = Math.toRadians(center[0]);
-        double sinLat1 = Math.sin(radLat1);
-        double cosLat1 = Math.cos(radLat1);
+        sinLat1 = Math.sin(radLat1);
+        cosLat1 = Math.cos(radLat1);
 
         for (int i = 0; i < w; i++)
         {
@@ -170,10 +171,6 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         double sinDistance = Math.sin(radDistance);
         double cosDistance = Math.cos(radDistance);
 
-        double radLat1 = Math.toRadians(center[0]);
-        double sinLat1 = Math.sin(radLat1);
-        double cosLat1 = Math.cos(radLat1);
-
         double radLat = Math.toRadians(lat);
         double sinLat = Math.sin(radLat);
         double cosLat = Math.cos(radLat);
@@ -211,6 +208,18 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         r[1] = (int)(mid[1] - ((point[1] / Math.PI) * mid[1]));
         return r;
     }
+
+    @Override
+    public void initPaint(WorldMapTask.WorldMapOptions options)
+    {
+        super.initPaint(options);
+
+        paintGrid = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintGrid.setXfermode(options.hasTransparentBaseMap ? new PorterDuffXfermode(PorterDuff.Mode.DST_OVER) : new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+        paintGrid.setStyle(Paint.Style.STROKE);
+        paintGrid.setStrokeCap(Paint.Cap.ROUND);
+    }
+    private Paint paintGrid;
 
     @Override
     public Bitmap makeBitmap(SuntimesRiseSetDataset data, int w, int h, WorldMapTask.WorldMapOptions options)
@@ -363,10 +372,6 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
         p.setXfermode(options.hasTransparentBaseMap ? new PorterDuffXfermode(PorterDuff.Mode.DST_OVER) : new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
 
-        Paint.Style prevStyle = p.getStyle();
-        PathEffect prevEffect = p.getPathEffect();
-        float prevStrokeWidth = p.getStrokeWidth();
-
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
         p.setStrokeWidth(strokeWidth);
         p.setStyle(Paint.Style.STROKE);
@@ -399,52 +404,49 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         drawConnectedLines(c, createLatitudePath(mid, 66.560833), p);
         p.setColor(Color.GREEN);
         drawConnectedLines(c, createLatitudePath(mid, -66.560833), p);
+    }
 
-        p.setStyle(prevStyle);
-        p.setPathEffect(prevEffect);
-        p.setStrokeWidth(prevStrokeWidth);
+    protected void initGrid(double[] mid)
+    {
+        long bench_start = System.nanoTime();
+        grid_x = new ArrayList<>();
+        grid_y = new ArrayList<>();
+        for (int i=0; i<180; i+=15) {
+            grid_x.add(createLongitudePath(mid, i));
+            grid_x.add(createLongitudePath(mid, -i));
+        }
+        for (int i=0; i<90; i+=15) {
+            grid_y.add(createLatitudePath(mid, i));
+            grid_y.add(createLatitudePath(mid, -i));
+        }
+        //for (int i=-90; i<0; i+=15) {
+        //    grid_y.add(createLatitudePath(mid, i));
+        //}
+        long bench_end = System.nanoTime();
         Log.d(WorldMapView.LOGTAG, "initGrid :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
     }
+    private static ArrayList<float[]> grid_x = null, grid_y = null;
 
     @Override
     public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
     {
-        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
-        p.setXfermode(options.hasTransparentBaseMap ? new PorterDuffXfermode(PorterDuff.Mode.DST_OVER) : new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-
-        Paint.Style prevStyle = p.getStyle();
-        PathEffect prevEffect = p.getPathEffect();
-        float prevStrokeWidth = p.getStrokeWidth();
+        if (grid_x == null || grid_y == null) {
+            initGrid(mid);
+        }
 
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
-        p.setStrokeWidth(strokeWidth);
-        p.setStyle(Paint.Style.STROKE);
-        p.setStrokeCap(Paint.Cap.ROUND);
-
-        p.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
-        p.setColor(options.gridXColor);
-        for (int i=-179; i<180; i+=15) {
-            drawConnectedLines(c, createLongitudePath(mid, i), p);
+        paintGrid.setStrokeWidth(strokeWidth);
+        paintGrid.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
+        paintGrid.setColor(options.gridXColor);
+        for (int i=0; i<grid_x.size(); i++) {
+            drawConnectedLines(c, grid_x.get(i), paintGrid);
         }
 
-        p.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
-        p.setColor(options.gridYColor);
-        for (int i=0; i<90; i+=15) {
-            drawConnectedLines(c, createLatitudePath(mid, i), p);
+        paintGrid.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
+        paintGrid.setColor(options.gridYColor);
+        for (int i=0; i<grid_y.size(); i++) {
+            drawConnectedLines(c, grid_y.get(i), paintGrid);
         }
-        for (int i=-90; i<0; i+=15) {
-            drawConnectedLines(c, createLatitudePath(mid, i), p);
-        }
-
-        p.setStyle(prevStyle);
-        p.setPathEffect(prevEffect);
-        p.setStrokeWidth(prevStrokeWidth);
-    }
-
-    protected void drawConnectedLines(Canvas c, float[] lines, Paint p)
-    {
-        c.drawLines(lines, 0, lines.length, p);
-        c.drawLines(lines, 2,lines.length-2, p);
     }
 
     protected float[] createLatitudePath(double[] mid, double latitude) {
@@ -454,7 +456,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
     {
         double[] point;
         ArrayList<Float> path = new ArrayList<>();
-        for (int longitude=(int)min; longitude <= max; longitude++)
+        for (int longitude=(int)min; longitude <= max; longitude+=2)
         {
             point = toCartesian(latitude, longitude);
             path.add((float)(mid[0] + ((point[0] / (Math.PI)) * mid[0])));
@@ -470,7 +472,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
     {
         double[] point;
         ArrayList<Float> path = new ArrayList<>();
-        for (int latitude = (int)min; latitude<max; latitude++)
+        for (int latitude = (int)min; latitude<max; latitude+=2)
         {
             point = toCartesian(latitude, longitude);
             path.add((float)(mid[0] + ((point[0] / (Math.PI)) * mid[0])));

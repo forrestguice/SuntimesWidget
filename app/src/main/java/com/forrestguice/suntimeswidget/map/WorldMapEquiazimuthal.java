@@ -91,6 +91,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
 
     protected int[] initPixels(int w, int h, double[] sunUp, double[] moonUp, WorldMapTask.WorldMapOptions options)
     {
+        boolean combined = (options.showSunShadow && options.showMoonLight);
         int combinedColor = ColorUtils.compositeColors(options.moonLightColor, options.sunShadowColor);
 
         int z = 0;
@@ -112,7 +113,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
                 v1 = m[i + j1];
                 v2 = m[i + j2];
 
-                if (options.showSunShadow && options.showMoonLight)
+                if (combined)
                 {
                     sunIntensity = (sunUp[0] * v0) + (sunUp[1] * v1) + (sunUp[2] * v2);
                     moonIntensity = (moonUp[0] * v0) + (moonUp[1] * v1) + (moonUp[2] * v2);
