@@ -428,7 +428,7 @@ public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
         grid_mid = mid;
         grid_x = new ArrayList<>();
         grid_y = new ArrayList<>();
-        for (int i=0; i<180; i+=15) {
+        for (int i=0; i<=180; i+=15) {
             grid_x.add(createLongitudePath(mid, i));
             grid_x.add(createLongitudePath(mid, -i));
         }
