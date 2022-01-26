@@ -421,9 +421,14 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
         p.setStrokeWidth(strokeWidth);
 
-        p.setColor(options.latitudeColors[0]);                    // equator
+        p.setColor(options.latitudeColors[0]);                    // equator, prime meridian
         p.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
         c.drawLine(0, (int)mid[1], w, (int)mid[1], p);
+        c.drawLine((int)mid[0], 0, (int)mid[0], h, p);
+
+        p.setColor(options.latitudeColors[0]);                    // east, west meridians
+        c.drawLine((int)mid[0]/2f, 0, (int)mid[0]/2f, h, p);
+        c.drawLine((int)(3*mid[0]/2f), 0, (int)(3*mid[0]/2f), h, p);
 
         double tropics = r_tropics * mid[1];
         int tropicsY0 = (int)(mid[1] + tropics);

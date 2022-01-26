@@ -479,11 +479,16 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         p.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
 
         c.drawCircle((int)mid[0], (int)mid[1], (int)equator, p);
+        c.drawLine((int)mid[0], (int)mid[1], (int)mid[0], h, p);
+        c.drawLine((int)mid[0], (int)mid[1], (int)mid[0], 0, p);
+        c.drawLine((int)mid[0], (int)mid[1], w, (int)mid[1], p);
+        c.drawLine(0, (int)mid[1], (int)mid[0], (int)mid[1], p);
 
         p.setColor(options.latitudeColors[1]);
         p.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
         c.drawCircle((int)mid[0], (int)mid[1], (int)(equator + tropics), p);
         c.drawCircle((int)mid[0], (int)mid[1], (int)(equator - tropics), p);
+
 
         p.setColor(options.latitudeColors[2]);
         p.setPathEffect((options.latitudeLinePatterns[2][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[2], 0) : null);
