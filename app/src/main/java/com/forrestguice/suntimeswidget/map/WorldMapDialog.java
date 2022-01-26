@@ -628,6 +628,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         {
             mapMode = mode;
             WorldMapWidgetSettings.saveSunPosMapModePref(context, 0, mapMode, WorldMapWidgetSettings.MAPTAG_DEF);
+            updateOptions(context);
             worldmap.setMapMode(context, mapMode);
             Log.d(WorldMapView.LOGTAG, "onMapSelected: mapMode changed so triggering update...");
             updateViews();
