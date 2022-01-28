@@ -37,6 +37,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -1000,17 +1001,33 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         WorldMapWidgetSettings.deleteWorldMapBackground(context,0, mapTag, center);
         WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapTag, true);   // reset tint flag
 
+        updateOptions(context);
         worldmap.setMapMode(context, mapMode);
         updateViews();
     }
 
     protected void onMapBackgroundResult(Context context, int requestCode, Uri uri)
     {
-        String mapTag = mapMode.getMapTag();
-        double[] center = worldmap.getOptions().center;
-        WorldMapWidgetSettings.saveWorldMapBackground(context, 0, mapTag, center, uri.toString());
+        Drawable background = WorldMapView.loadDrawableFromUri(context, uri.toString());
+        if (background == null) {
+            Toast.makeText(context, context.getString(R.string.worldmap_dialog_option_background_error0), Toast.LENGTH_LONG).show();
+            return;
+        }
 
-        Toast.makeText(context, uri.toString(), Toast.LENGTH_LONG).show();
+        String mapTag = mapMode.getMapTag();
+        double aspectRatio0 = mapTag.startsWith(WorldMapWidgetSettings.MAPTAG_3x3) ? 1 : 2;
+        double aspectRatio1 = ((double)background.getIntrinsicWidth() / (double)background.getIntrinsicHeight());
+        if (Math.abs(aspectRatio1 - aspectRatio0) > 0.01)
+        {
+            String aspectWarning = context.getString(R.string.worldmap_dialog_option_background_warning0, Double.toString(aspectRatio1), Double.toString(aspectRatio0));
+            Toast.makeText(context, aspectWarning, Toast.LENGTH_LONG).show();
+        }
+
+        double[] center = worldmap.getOptions().center;    // TODO: read center/projection info from image exif data?
+        WorldMapWidgetSettings.saveWorldMapBackground(context, 0, mapTag, center, uri.toString());
+        WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapTag, false);    // TODO: automatically set tint flag based on image transparency?
+
+        updateOptions(context);
         worldmap.setMapMode(context, mapMode);
         updateViews();
     }
