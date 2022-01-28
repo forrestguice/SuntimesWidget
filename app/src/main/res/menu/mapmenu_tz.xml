@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:id="@+id/group_tz">
+
+        <item android:id="@+id/tz_item_utc"
+            android:title="@string/time_utc"
+            android:checkable="true"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/tz_item_localmean"
+            android:title="@string/time_localMean"
+            android:checkable="true"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/tz_item_apparentsolar"
+            android:title="@string/time_localMean"
+            android:checkable="true" android:visible="false"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/tz_item_gmst"
+            android:title="@string/time_gmst"
+            android:checkable="true" android:visible="false"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/tz_item_lmst"
+            android:title="@string/time_lmst"
+            android:checkable="true" android:visible="false"
+            app:showAsAction="never" />
+
+    </group>
+
+</menu>

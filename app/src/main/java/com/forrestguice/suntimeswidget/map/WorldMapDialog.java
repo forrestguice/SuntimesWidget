@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2021 Forrest Guice
+    Copyright (C) 2018-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -76,6 +76,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
@@ -287,7 +288,15 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     {
         dialogHeader = dialogView.findViewById(R.id.worldmapdialog_header);
         dialogTitle = (TextView)dialogView.findViewById(R.id.worldmapdialog_title);
+
         utcTime = (TextView)dialogView.findViewById(R.id.info_time_utc);
+        utcTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimeZoneMenu(context, v);
+            }
+        });
+
         offsetTime = (TextView)dialogView.findViewById(R.id.info_time_offset);
         empty = (TextView)dialogView.findViewById(R.id.txt_empty);
         worldmap = (WorldMapView)dialogView.findViewById(R.id.info_time_worldmap);
@@ -602,7 +611,9 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
         String suffix = "";
         boolean nowIsAfter = false;
-        Calendar mapTime = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+
+        String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2, WorldMapWidgetSettings.PREF_DEF_WORLDMAP_TIMEZONE);
+        Calendar mapTime = Calendar.getInstance(WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble()));
         if (empty.getVisibility() != View.VISIBLE)
         {
             mapTime.setTimeInMillis(mapTimeMillis);
@@ -701,7 +712,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         expandSheet(getDialog());
     }
 
-    protected PopupMenu createMenu(Context context, View view, int menuId, PopupMenu.OnMenuItemClickListener listener)
+    public static PopupMenu createMenu(Context context, View view, int menuId, PopupMenu.OnMenuItemClickListener listener)
     {
         PopupMenu menu = new PopupMenu(context, view);
         MenuInflater inflater = menu.getMenuInflater();
@@ -709,6 +720,39 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         menu.setOnMenuItemClickListener(listener);
         return menu;
     }
+
+    protected boolean showTimeZoneMenu(Context context, View view)
+    {
+        PopupMenu menu = createMenu(context, view, R.menu.mapmenu_tz, onTimeZoneMenuClick);
+        updateTimeZoneMenu(context, menu, WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2));
+        menu.show();
+        return true;
+    }
+    private void updateTimeZoneMenu(Context context, PopupMenu menu, @Nullable String tzId)
+    {
+        MenuItem tzItem = menu.getMenu().findItem(WidgetTimezones.menuItemForTimeZone(tzId));
+        if (tzItem != null) {
+            tzItem.setChecked(true);
+        }
+    }
+    private PopupMenu.OnMenuItemClickListener onTimeZoneMenuClick = new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            Context context = getContext();
+            if (context == null) {
+                return false;
+            }
+            String tzID = WidgetTimezones.timeZoneForMenuItem(item.getItemId());
+            if (tzID != null)
+            {
+                WorldMapWidgetSettings.saveWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2, tzID);
+                updateViews();
+            }
+            return (tzID != null);
+        }
+    };
 
     protected boolean showMapModeMenu(final Context context, View view)
     {

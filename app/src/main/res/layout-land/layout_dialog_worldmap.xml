@@ -33,7 +33,7 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
         <TextView
-            style="@style/SunsetTimeTextView"
+            style="@style/SunsetTimeTextView" android:background="?attr/selectableItemBackground"
             android:id="@+id/info_time_utc"
             android:layout_width="0dp" android:layout_height="wrap_content"
             tools:text="June 3, 6:00 PM UTC" android:gravity="start"

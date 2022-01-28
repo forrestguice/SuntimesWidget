@@ -63,6 +63,9 @@ public class WorldMapWidgetSettings
     public static final String PREF_KEY_WORLDMAP_CENTER_LATITUDE = "center_latitude";
     public static final String PREF_KEY_WORLDMAP_CENTER_LONGITUDE = "center_longitude";
 
+    public static final String PREF_KEY_WORLDMAP_TIMEZONE = "timezone";
+    public static final String PREF_DEF_WORLDMAP_TIMEZONE = "UTC";
+
     public static final String MAPTAG_3x2 = "";    // EMPTY
     public static final String MAPTAG_3x3 = "1";
     public static final String MAPTAG_DEF = MAPTAG_3x2;
@@ -323,6 +326,7 @@ public class WorldMapWidgetSettings
             deleteSunPosMapModePref(context, appWidgetId, tag);
             deleteWorldMapCenter(context, appWidgetId, tag);
             // deleteWorldMapBackground(context, appWidgetId, tag, center);    // TODO
+            deleteWorldMapPref(context, appWidgetId, PREF_KEY_WORLDMAP_TIMEZONE, tag);
         }
     }
 
