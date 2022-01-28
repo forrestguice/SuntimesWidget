@@ -50,6 +50,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 public class WorldMapView extends android.support.v7.widget.AppCompatImageView
@@ -161,20 +162,41 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     protected static Drawable loadBackgroundDrawable(Context context, String mapTag, double[] center)
     {
         String backgroundString = WorldMapWidgetSettings.loadWorldMapBackground(context, 0, mapTag, center);
-        Uri backgroundUri = (backgroundString != null) ? Uri.parse(backgroundString) : null;
+        Drawable drawable = loadDrawableFromUri(context, backgroundString);
+        if (drawable != null)
+        {
+            int w = 1024;
+            int h = mapTag.startsWith(WorldMapWidgetSettings.MAPTAG_3x3) ? 1024 : 512;
+            return new BitmapDrawable(Bitmap.createScaledBitmap(((BitmapDrawable)drawable).getBitmap(), w, h, true));
+        }
+        return null;
+    }
+
+    @Nullable
+    public static Drawable loadDrawableFromUri(Context context, @Nullable String uriString)
+    {
+        Uri backgroundUri = (uriString != null) ? Uri.parse(uriString) : null;
         if (backgroundUri != null)
         {
+            InputStream in = null;
+            Drawable drawable;
             try {
-                int w = 1024;
-                int h = mapTag.startsWith(WorldMapWidgetSettings.MAPTAG_3x3) ? 1024 : 512;
-                InputStream in = context.getContentResolver().openInputStream(backgroundUri);
-                Drawable background = Drawable.createFromStream(in, backgroundUri.toString());
-                return new BitmapDrawable(Bitmap.createScaledBitmap(((BitmapDrawable)background).getBitmap(), w, h, true));
+                in = context.getContentResolver().openInputStream(backgroundUri);
+                drawable = Drawable.createFromStream(in, backgroundUri.toString());
 
-            } catch (FileNotFoundException | OutOfMemoryError e) {
+            } catch (FileNotFoundException | SecurityException | OutOfMemoryError e) {
                 Log.e(LOGTAG, "Failed to open map background: " + e);
-                return null;
+                drawable = null;
+
+            } finally {
+                try {
+                    if (in != null) {
+                        in.close();
+                    }
+                } catch (IOException e) { /* EMPTY */ }
             }
+            return drawable;
+
         } else {
             return null;
         }
