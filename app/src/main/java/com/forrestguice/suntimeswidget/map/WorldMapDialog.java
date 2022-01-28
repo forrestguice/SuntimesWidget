@@ -613,7 +613,9 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         boolean nowIsAfter = false;
 
         String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2, WorldMapWidgetSettings.PREF_DEF_WORLDMAP_TIMEZONE);
-        Calendar mapTime = Calendar.getInstance(WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble()));
+        TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data.timezone()
+                : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble());
+        Calendar mapTime = Calendar.getInstance(timezone);
         if (empty.getVisibility() != View.VISIBLE)
         {
             mapTime.setTimeInMillis(mapTimeMillis);
