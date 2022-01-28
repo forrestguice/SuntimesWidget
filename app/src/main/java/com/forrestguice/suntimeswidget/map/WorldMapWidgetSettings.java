@@ -68,28 +68,34 @@ public class WorldMapWidgetSettings
     public static final String MAPTAG_DEF = MAPTAG_3x2;
     public static final String[] MAPTAGS = new String[] { MAPTAG_3x2, MAPTAG_3x3 };
 
+    public static final String PROJ4_EQD = "+proj=eqc +lat_ts=0 +lat_0=%1$s +lon_0=%2$s +x_0=0 +y_0=0 +a=6371007 +b=6371007 +units=m +no_defs";
+    public static final String PROJ4_AEQD = "+proj=aeqd +lat_0=%1$s +lon_0=%2$s +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs";
+    public static final String PROJ4_AEQD1 = "+proj=aeqd +lat_0=%1$s +lon_0=%2$s +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m +no_defs";
+
     /**
      * WorldMapWidgetMode
      */
     public static enum WorldMapWidgetMode
     {
-        EQUIRECTANGULAR_SIMPLE("Simple", "Equidistant Rectangular", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_0, false, 0, 0),
-        EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", "Equidistant Rectangular", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_0, false, 0, 0),
-        EQUIAZIMUTHAL_SIMPLE("Polar [north]", "Equidistant Azimuthal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0, false, 90, 0),
-        EQUIAZIMUTHAL_SIMPLE1("Polar [south]", "Equidistant Azimuthal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0, false, -90, 0),
-        EQUIAZIMUTHAL_SIMPLE2("Polar [location]", "Equidistant Azimuthal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0, true, PREF_DEF_WORLDMAP_CENTER[0], PREF_DEF_WORLDMAP_CENTER[1]);
+        EQUIRECTANGULAR_SIMPLE("Simple", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_0, false, 0, 0, "Equidistant Rectangular", PROJ4_EQD),
+        EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_0, false, 0, 0, "Equidistant Rectangular", PROJ4_EQD),
+        EQUIAZIMUTHAL_SIMPLE("Polar [north]", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0, false, 90, 0, "Equidistant Azimuthal", PROJ4_AEQD),
+        EQUIAZIMUTHAL_SIMPLE1("Polar [south]", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0, false, -90, 0, "Equidistant Azimuthal", PROJ4_AEQD),
+        EQUIAZIMUTHAL_SIMPLE2("Polar [location]", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0, true, PREF_DEF_WORLDMAP_CENTER[0], PREF_DEF_WORLDMAP_CENTER[1], "Equidistant Azimuthal", PROJ4_AEQD1);
 
         private final int layoutID;
         private String displayString;
-        private String projectionString;
         private String tag;
         private boolean supportsCenter;
         private double[] center;
+        private String projectionTitle;
+        private String proj4String;
 
-        private WorldMapWidgetMode(String displayString, String projectionString, String tag, int layoutID, boolean supportsCenter, double centerLat, double centerLon)
+        private WorldMapWidgetMode(String displayString, String tag, int layoutID, boolean supportsCenter, double centerLat, double centerLon, String projectionTitle, String proj4String)
         {
             this.displayString = displayString;
-            this.projectionString = projectionString;
+            this.projectionTitle = projectionTitle;
+            this.proj4String = proj4String;
             this.layoutID = layoutID;
             this.tag = tag;
             this.supportsCenter = supportsCenter;
@@ -111,11 +117,15 @@ public class WorldMapWidgetSettings
             this.displayString = displayString;
         }
 
-        public String getProjectionString() {
-            return projectionString;
+        public String getProjectionTitle() {
+            return projectionTitle;
         }
-        public void setProjectionString(String value) {
-            projectionString = value;
+        public void setProjectionTitle(String value) {
+            projectionTitle = value;
+        }
+
+        public String getProj4() {
+            return String.format(proj4String, center[0], center[1]);
         }
 
         public double[] getProjectionCenter() {
@@ -138,11 +148,11 @@ public class WorldMapWidgetSettings
             EQUIRECTANGULAR_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simplerectangular));
             EQUIRECTANGULAR_BLUEMARBLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_bluemarble));
 
-            EQUIAZIMUTHAL_SIMPLE.setProjectionString(context.getString(R.string.worldmap_projection_equiazimuthal));
-            EQUIAZIMUTHAL_SIMPLE1.setProjectionString(context.getString(R.string.worldmap_projection_equiazimuthal));
-            EQUIAZIMUTHAL_SIMPLE2.setProjectionString(context.getString(R.string.worldmap_projection_equiazimuthal));
-            EQUIRECTANGULAR_SIMPLE.setProjectionString(context.getString(R.string.worldmap_projection_equirectangular));
-            EQUIRECTANGULAR_BLUEMARBLE.setProjectionString(context.getString(R.string.worldmap_projection_equirectangular));
+            EQUIAZIMUTHAL_SIMPLE.setProjectionTitle(context.getString(R.string.worldmap_projection_equiazimuthal));
+            EQUIAZIMUTHAL_SIMPLE1.setProjectionTitle(context.getString(R.string.worldmap_projection_equiazimuthal));
+            EQUIAZIMUTHAL_SIMPLE2.setProjectionTitle(context.getString(R.string.worldmap_projection_equiazimuthal));
+            EQUIRECTANGULAR_SIMPLE.setProjectionTitle(context.getString(R.string.worldmap_projection_equirectangular));
+            EQUIRECTANGULAR_BLUEMARBLE.setProjectionTitle(context.getString(R.string.worldmap_projection_equirectangular));
         }
     }
 
