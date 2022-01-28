@@ -990,7 +990,11 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         String mapBackgroundString = WorldMapWidgetSettings.loadWorldMapBackground(context, 0, mapTag, center);
         Uri uri = mapBackgroundString != null ? Uri.parse(mapBackgroundString) : null;
         if (uri != null) {
-            context.getContentResolver().releasePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            try {
+                context.getContentResolver().releasePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            } catch (SecurityException e) {
+                Log.w(LOGTAG, "Failed to release URI permissions for " + uri.toString() + "; " + e);
+            }
         }
         WorldMapWidgetSettings.deleteWorldMapBackground(context,0, mapTag, center);
         WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapTag, true);   // reset tint flag
