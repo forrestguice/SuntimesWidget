@@ -26,6 +26,11 @@
                 android:title="@string/worldmap_dialog_option_background_clear"
                 app:showAsAction="never" />
 
+            <item android:id="@+id/mapOption_tintMap"
+                android:title="@string/worldmap_dialog_option_tintmap"
+                android:checkable="true"
+                app:showAsAction="never" />
+
         </menu>
     </item>
 
@@ -35,13 +40,28 @@
         app:showAsAction="never">
 
         <menu>
+
+            <group android:id="@+id/mapOption_group_light">
+
+                <item android:id="@+id/mapOption_sunlight"
+                    android:title="@string/worldmap_dialog_option_sunlight"
+                    android:checkable="true"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/mapOption_moonlight"
+                    android:title="@string/worldmap_dialog_option_moonlight"
+                    android:checkable="true"
+                    app:showAsAction="never" />
+
+            </group>
+
             <group android:id="@+id/mapOption_group_misc">
 
                 <item android:id="@+id/mapOption_location"
                     android:title="@string/worldmap_dialog_option_location"
                     android:checkable="true"
                     app:showAsAction="never" />
-
+                
                 <item android:id="@+id/mapOption_minorgrid"
                     android:title="@string/worldmap_dialog_option_minorgrid"
                     android:checkable="true"
@@ -54,25 +74,6 @@
 
                 <item android:id="@+id/mapOption_debugLines"
                     android:title="@string/worldmap_dialog_option_debuglines"
-                    android:checkable="true"
-                    app:showAsAction="never" />
-
-                <item android:id="@+id/mapOption_tintMap"
-                    android:title="@string/worldmap_dialog_option_tintmap"
-                    android:checkable="true"
-                    app:showAsAction="never" />
-
-            </group>
-
-            <group android:id="@+id/mapOption_group_light">
-
-                <item android:id="@+id/mapOption_moonlight"
-                    android:title="@string/worldmap_dialog_option_moonlight"
-                    android:checkable="true"
-                    app:showAsAction="never" />
-
-                <item android:id="@+id/mapOption_sunlight"
-                    android:title="@string/worldmap_dialog_option_sunlight"
                     android:checkable="true"
                     app:showAsAction="never" />
 
@@ -98,9 +99,18 @@
             </menu>
     </item>
 
-    <item android:id="@+id/shareMap"
-        android:title="@string/configAction_shareMap"
-        android:icon="?attr/icActionShare"
-        app:showAsAction="never" />
+    <group android:id="@+id/mapOption_group_share">
+
+        <item android:id="@+id/recordMap"
+            android:title="@string/configAction_recordMap"
+            android:icon="?attr/icActionRecord"
+            app:showAsAction="never" android:visible="false" />
+
+        <item android:id="@+id/shareMap"
+            android:title="@string/configAction_shareMap"
+            android:icon="?attr/icActionShare"
+            app:showAsAction="never" />
+
+    </group>
 
 </menu>

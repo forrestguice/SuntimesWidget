@@ -1096,6 +1096,11 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     shareMap();
                     return true;
 
+                case R.id.recordMap:
+                    playMap();
+                    shareMap();
+                    return true;
+
                 case R.id.mapOption_center:
                     setMapCenter(context);
                     return true;

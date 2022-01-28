@@ -1405,11 +1405,12 @@
     <string name="worldmap_dialog_option_latitudes">Major Lines</string>    <!-- TODO: "Latitudes" -> "Major lines" -->
     <string name="worldmap_dialog_option_minorgrid">Graticule</string>  <!-- TODO -->
     <string name="worldmap_dialog_option_debuglines">Debug Lines</string>  <!-- TODO -->
-    <string name="worldmap_dialog_option_tintmap">Tint Foreground</string>  <!-- TODO -->
+    <string name="worldmap_dialog_option_tintmap">Tint</string>  <!-- TODO -->
     <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->   <!-- TODO -->
     <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- menu item; "x 15m"; increments of 15 minutes -->
     <string name="worldmap_dialog_speed_1d">&#215; 1d</string>      <!-- menu item; "x 1d"; increments of 1 day -->
     <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->    <!-- TODO -->
+    <string name="configAction_recordMap">@string/worldmap_dialog_action_record</string>   <!-- button (contentDescription) -->  <!-- export (share) -->    <!-- TODO -->
 
     <string name="help_worldmap_background">
       <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g>
