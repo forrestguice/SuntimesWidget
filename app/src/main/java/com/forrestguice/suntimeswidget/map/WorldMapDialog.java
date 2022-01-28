@@ -1064,7 +1064,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         if (Build.VERSION.SDK_INT >= 11) {
             intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
         }
-        intent.setType("image/png");
+        intent.setType("image/*");
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivityForResult(Intent.createChooser(intent, getString(R.string.worldmap_dialog_option_background)), requestCode);
     }
