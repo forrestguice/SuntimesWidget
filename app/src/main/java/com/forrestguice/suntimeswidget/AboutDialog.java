@@ -207,6 +207,10 @@ public class AboutDialog extends BottomSheetDialogFragment
         legalView3.setMovementMethod(LinkMovementMethod.getInstance());
         legalView3.setText(SuntimesUtils.fromHtml(initLibraryCredits(getActivity())));
 
+        TextView aboutMediaView = (TextView) dialogContent.findViewById(R.id.txt_about_media);
+        aboutMediaView.setMovementMethod(LinkMovementMethod.getInstance());
+        aboutMediaView.setText(SuntimesUtils.fromHtml(initMediaCredits(getActivity())));
+
         TextView legalView4 = (TextView) dialogContent.findViewById(R.id.txt_about_legal4);
         String permissionsExplained = context.getString(R.string.privacy_permission_location);
         if (Build.VERSION.SDK_INT <= 18) {
@@ -230,18 +234,26 @@ public class AboutDialog extends BottomSheetDialogFragment
         super.onSaveInstanceState(outState);
     }
 
-    public static String initLibraryCredits(Activity activity)
+    public static String initCredits(Activity activity, int stringResId, int entryArrayResId, int entryFormatResId)
     {
-        final String[] libraries = activity.getResources().getStringArray(R.array.app_libraries);
+        final String[] entries = activity.getResources().getStringArray(entryArrayResId);
         StringBuilder credits = new StringBuilder();
-        for (int i=0; i<libraries.length; i++)
+        for (int i=0; i<entries.length; i++)
         {
-            credits.append(activity.getString(R.string.libraryCreditsFormat, libraries[i]));
-            if (i != libraries.length-1) {
+            credits.append(activity.getString(entryFormatResId, entries[i]));
+            if (i != entries.length-1) {
                 credits.append(" <br />");
             }
         }
-        return activity.getString(R.string.app_legal3, credits.toString());
+        return activity.getString(stringResId, credits.toString());
+    }
+
+    public static String initLibraryCredits(Activity activity) {
+        return initCredits(activity, R.string.app_legal3, R.array.app_libraries, R.string.libraryCreditsFormat);
+    }
+
+    public static String initMediaCredits(Activity activity) {
+        return initCredits(activity, R.string.app_about_media, R.array.app_media, R.string.libraryCreditsFormat);
     }
 
     public static String initTranslationCredits(Activity activity)
