@@ -726,16 +726,9 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     protected boolean showTimeZoneMenu(Context context, View view)
     {
         PopupMenu menu = createMenu(context, view, R.menu.mapmenu_tz, onTimeZoneMenuClick);
-        updateTimeZoneMenu(context, menu, WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2));
+        WidgetTimezones.updateTimeZoneMenu(menu.getMenu(), WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2));
         menu.show();
         return true;
-    }
-    private void updateTimeZoneMenu(Context context, PopupMenu menu, @Nullable String tzId)
-    {
-        MenuItem tzItem = menu.getMenu().findItem(WidgetTimezones.menuItemForTimeZone(tzId));
-        if (tzItem != null) {
-            tzItem.setChecked(true);
-        }
     }
     private PopupMenu.OnMenuItemClickListener onTimeZoneMenuClick = new PopupMenu.OnMenuItemClickListener()
     {

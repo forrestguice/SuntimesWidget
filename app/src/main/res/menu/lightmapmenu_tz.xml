@@ -16,7 +16,7 @@
 
         <item android:id="@+id/tz_item_apparentsolar"
             android:title="@string/time_apparent"
-            android:checkable="true" android:visible="false"
+            android:checkable="true"
             app:showAsAction="never" />
 
         <item android:id="@+id/tz_item_gmst"

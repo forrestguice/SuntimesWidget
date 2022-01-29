@@ -125,6 +125,14 @@ public class WidgetTimezones
         }
     }
 
+    public static void updateTimeZoneMenu(Menu menu, @Nullable String tzId)
+    {
+        MenuItem tzItem = menu.findItem(WidgetTimezones.menuItemForTimeZone(tzId));
+        if (tzItem != null) {
+            tzItem.setChecked(true);
+        }
+    }
+
     public static void selectTimeZone( Spinner spinner, TimeZoneItemAdapter adapter, String timezoneID )
     {
         if (spinner == null || adapter == null || timezoneID == null)

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2021 Forrest Guice
+    Copyright (C) 2017-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -72,6 +72,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -124,9 +125,11 @@ public class LightMapDialog extends BottomSheetDialogFragment
         return getMapTime(System.currentTimeMillis());
     }
 
+    private TimeZone data_timezone = null;
     private SuntimesRiseSetDataset data;
     public void setData(@NonNull Context context, @NonNull SuntimesRiseSetDataset values)
     {
+        this.data_timezone = values.timezone();
         this.data = new SuntimesRiseSetDataset(values);
         this.data.invalidateCalculation();
         this.data.setTimeZone(context, WidgetTimezones.localMeanTime(context, values.location()));
@@ -149,7 +152,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_lightmap, parent, false);
 
         SuntimesUtils.initDisplayStrings(getActivity());
-        initViews(dialogContent);
+        initViews(getContext(), dialogContent);
         if (savedState != null) {
             Log.d("DEBUG", "LightMapDialog onCreate (restoreState)");
             loadSettings(savedState);
@@ -255,11 +258,19 @@ public class LightMapDialog extends BottomSheetDialogFragment
         }
     };
 
-    public void initViews(View dialogView)
+    public void initViews(final Context context, View dialogView)
     {
         dialogTitle = (TextView)dialogView.findViewById(R.id.sundialog_title);
         lightmap = (LightMapView)dialogView.findViewById(R.id.info_time_lightmap);
         sunTime = (TextView)dialogView.findViewById(R.id.info_time_solar);
+        if (sunTime != null) {
+            sunTime.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showTimeZoneMenu(getContext(), v);
+                }
+            });
+        }
         offsetTime = (TextView)dialogView.findViewById(R.id.info_time_offset);
 
         sunLayout = dialogView.findViewById(R.id.info_sun_layout);
@@ -529,6 +540,30 @@ public class LightMapDialog extends BottomSheetDialogFragment
                 default:
                     return false;
             }
+        }
+    };
+
+    protected boolean showTimeZoneMenu(Context context, View view)
+    {
+        PopupMenu menu = WorldMapDialog.createMenu(context, view, R.menu.lightmapmenu_tz, onTimeZoneMenuClick);
+        WidgetTimezones.updateTimeZoneMenu(menu.getMenu(), WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, WidgetTimezones.LocalMeanTime.TIMEZONEID));
+        menu.show();
+        return true;
+    }
+    private PopupMenu.OnMenuItemClickListener onTimeZoneMenuClick = new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            Context context = getContext();
+            if (context != null) {
+                String tzID = WidgetTimezones.timeZoneForMenuItem(item.getItemId());
+                if (tzID != null) {
+                    WorldMapWidgetSettings.saveWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, tzID);
+                    updateViews();
+                }
+                return (tzID != null);
+            } else return false;
         }
     };
 
@@ -956,7 +991,11 @@ public class LightMapDialog extends BottomSheetDialogFragment
 
         String suffix = "";
         boolean nowIsAfter = false;
-        Calendar mapTime = Calendar.getInstance(WidgetTimezones.localMeanTime(context, data.location()));
+
+        String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, MAPTAG_LIGHTMAP, WidgetTimezones.LocalMeanTime.TIMEZONEID);
+        TimeZone tz = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data_timezone
+                : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble());
+        Calendar mapTime = Calendar.getInstance(tz);
 
         mapTime.setTimeInMillis(mapTimeMillis);
         nowIsAfter = now.after(mapTime);
