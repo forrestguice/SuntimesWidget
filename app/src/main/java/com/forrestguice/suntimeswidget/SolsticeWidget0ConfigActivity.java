@@ -58,6 +58,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
         showOptionTrackingMode(true);
         showOptionTimeModeOverride(true);
         showDataSource(false);  // temporarily hidden; atm all entries point to same implementation (false choice)
+        showOptionLocalizeHemisphere(true);
     }
 
     @Override

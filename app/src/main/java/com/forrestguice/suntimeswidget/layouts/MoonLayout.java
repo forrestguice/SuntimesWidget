@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2018 Forrest Guice
+   Copyright (C) 2018-2022 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -46,10 +46,10 @@ public abstract class MoonLayout extends SuntimesLayout
      * modify its state based on the supplied data.
      * @param data the data object (should be the same as supplied to updateViews)
      */
-    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
-    {
-        // EMPTY
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data) {
+        northward = (WidgetSettings.loadLocalizeHemispherePref(context, appWidgetId) && (data.location().getLatitudeAsDouble() < 0));
     }
+    protected boolean northward = false;
 
     /**
      * Apply the provided data to the RemoteViews this layout knows about.
@@ -190,30 +190,30 @@ public abstract class MoonLayout extends SuntimesLayout
         int colorNew = theme.getMoonNewColor();
 
         // full and new
-        Bitmap fullMoon =  SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.FULL.getIcon(), colorFull, colorWaning, theme.getMoonFullStrokePixels(context));
+        Bitmap fullMoon =  SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.FULL.getIcon(northward), colorFull, colorWaning, theme.getMoonFullStrokePixels(context));
         views.setImageViewBitmap(R.id.icon_info_moonphase_full, fullMoon);
 
-        Bitmap newMoon =  SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.NEW.getIcon(), colorNew, colorWaxing, theme.getMoonNewStrokePixels(context));
+        Bitmap newMoon =  SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.NEW.getIcon(northward), colorNew, colorWaxing, theme.getMoonNewStrokePixels(context));
         views.setImageViewBitmap(R.id.icon_info_moonphase_new, newMoon);
 
         // waxing
-        Bitmap waxingCrescent = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WAXING_CRESCENT.getIcon(), colorWaxing, colorWaxing, 0);
+        Bitmap waxingCrescent = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WAXING_CRESCENT.getIcon(northward), colorWaxing, colorWaxing, 0);
         views.setImageViewBitmap(R.id.icon_info_moonphase_waxing_crescent, waxingCrescent);
 
-        Bitmap waxingQuarter = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.FIRST_QUARTER.getIcon(), colorWaxing, colorWaxing, 0);
+        Bitmap waxingQuarter = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.FIRST_QUARTER.getIcon(northward), colorWaxing, colorWaxing, 0);
         views.setImageViewBitmap(R.id.icon_info_moonphase_waxing_quarter, waxingQuarter);
 
-        Bitmap waxingGibbous = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WAXING_GIBBOUS.getIcon(), colorWaxing, colorWaxing, 0);
+        Bitmap waxingGibbous = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WAXING_GIBBOUS.getIcon(northward), colorWaxing, colorWaxing, 0);
         views.setImageViewBitmap(R.id.icon_info_moonphase_waxing_gibbous, waxingGibbous);
 
         // waning
-        Bitmap waningCrescent = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WANING_CRESCENT.getIcon(), colorWaning, colorWaning, 0);
+        Bitmap waningCrescent = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WANING_CRESCENT.getIcon(northward), colorWaning, colorWaning, 0);
         views.setImageViewBitmap(R.id.icon_info_moonphase_waning_crescent, waningCrescent);
 
-        Bitmap waningQuarter = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.THIRD_QUARTER.getIcon(), colorWaning, colorWaning, 0);
+        Bitmap waningQuarter = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.THIRD_QUARTER.getIcon(northward), colorWaning, colorWaning, 0);
         views.setImageViewBitmap(R.id.icon_info_moonphase_waning_quarter, waningQuarter);
 
-        Bitmap waningGibbous = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WANING_GIBBOUS.getIcon(), colorWaning, colorWaning, 0);
+        Bitmap waningGibbous = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.WANING_GIBBOUS.getIcon(northward), colorWaning, colorWaning, 0);
         views.setImageViewBitmap(R.id.icon_info_moonphase_waning_gibbous, waningGibbous);
     }
 

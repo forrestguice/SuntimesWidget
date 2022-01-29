@@ -304,6 +304,9 @@
     <string name="configLabel_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label -->
 
+    <string name="configLabel_general_localize_hemisphere">Localize to hemisphere</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_general_localize_hemisphere_summary">Apply hemisphere based localization (season labels, moon phase icons).</string>        <!-- checkbox label -->    <!-- TODO -->
+
     <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->
 
     <string name="configLabel_general_showSeconds">Show Seconds</string>        <!-- checkbox label -->
@@ -974,6 +977,17 @@
     <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title -->
     <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label -->
     <string name="configLabel_ui_showheader_text">Show Header Text</string> <!-- checkbox label -->
+    <string name="configLabel_ui_showheader_text_summary"><xliff:g id="modeName" example="Labels">%s</xliff:g></string>
+    <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
+        <item>None</item>
+        <item>Labels</item>
+        <item>Azimuth</item>
+    </string-array>    <!-- TODO -->
+    <string-array name="headerText_values" translatable="false">  <!-- one-to-one with headerText_display -->
+        <item>0</item>   <!-- 0: none -->
+        <item>1</item>   <!-- 1: labels -->
+        <item>2</item>   <!-- 2: azimuth -->
+    </string-array>
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Golden Hour</string>
@@ -1965,6 +1979,7 @@
     <string name="def_appwidget_0_general_showtimedate" translatable="false">true</string>
     <string name="def_appwidget_0_general_trackingmode" translatable="false">SOONEST</string>
     <string name="def_appwidget_0_general_observerheight" translatable="false">1.8288</string>
+    <string name="def_appwidget_0_general_localize_hemisphere" translatable="false">true</string>
 
     <string name="def_app_plugins_enabled" translatable="false">false</string>
 
@@ -1982,7 +1997,7 @@
     <string name="def_app_ui_showgoldhour" translatable="false">true</string>
     <string name="def_app_ui_showbluehour" translatable="false">false</string>
     <string name="def_app_ui_showheader_icon" translatable="false">true</string>
-    <string name="def_app_ui_showheader_text" translatable="false">true</string>
+    <string name="def_app_ui_showheader_text" translatable="false">1</string>  <!-- 1: labels -->
     <string name="def_app_ui_showdatasource" translatable="false">true</string>
     <string name="def_app_ui_datetapaction" translatable="false">SWAP_CARD</string>
     <string name="def_app_ui_datetapaction1" translatable="false">SHOW_CALENDAR</string>
