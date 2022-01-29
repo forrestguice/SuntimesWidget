@@ -25,6 +25,7 @@ import android.graphics.DashPathEffect;
 import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PathEffect;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -38,6 +39,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -46,6 +48,8 @@ import java.util.Calendar;
  */
 public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
 {
+    public double[] getCenter() { return new double[] {90,0}; }
+
     /**
      * point (angle, distance) from north pole
      *   angle = longitude
@@ -89,8 +93,6 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
 
     protected int[] initPixels(int w, int h, double[] sunUp, double[] moonUp, WorldMapTask.WorldMapOptions options)
     {
-        int combinedColor = ColorUtils.compositeColors(options.moonLightColor, options.sunShadowColor);
-
         int z = 0;
         int j0, j1, j2;
         double v0, v1, v2;
@@ -98,23 +100,23 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         int[] pixels = new int[w * h];
         double[] m = getMatrix();
 
-        for (int j = 0; j < h; j++)
+        if (options.showSunShadow && options.showMoonLight)
         {
-            j0 = (360 * j);
-            j1 = (360 * (360 + j));
-            j2 = (360 * (720 + j));
-
-            for (int i = 0; i < w; i++)
+            int combinedColor = ColorUtils.compositeColors(options.moonLightColor, options.sunShadowColor);
+            for (int j = 0; j < h; j++)
             {
-                v0 = m[i + j0];
-                v1 = m[i + j1];
-                v2 = m[i + j2];
+                j0 = (360 * j);
+                j1 = (360 * (360 + j));
+                j2 = (360 * (720 + j));
 
-                if (options.showSunShadow && options.showMoonLight)
+                for (int i = 0; i < w; i++)
                 {
+                    v0 = m[i + j0];
+                    v1 = m[i + j1];
+                    v2 = m[i + j2];
+
                     sunIntensity = (sunUp[0] * v0) + (sunUp[1] * v1) + (sunUp[2] * v2);
                     moonIntensity = (moonUp[0] * v0) + (moonUp[1] * v1) + (moonUp[2] * v2);
-
                     if (sunIntensity <= 0 && moonIntensity > 0) {
                         pixels[z] = combinedColor;
                     } else if (sunIntensity <= 0) {
@@ -122,16 +124,46 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
                     } else if (moonIntensity > 0) {
                         pixels[z] = options.moonLightColor;
                     }
+                    z++;
+                }
+            }
 
-                } else if (options.showSunShadow) {
+        } else if (options.showSunShadow) {
+            for (int j = 0; j < h; j++)
+            {
+                j0 = (360 * j);
+                j1 = (360 * (360 + j));
+                j2 = (360 * (720 + j));
+
+                for (int i = 0; i < w; i++)
+                {
+                    v0 = m[i + j0];
+                    v1 = m[i + j1];
+                    v2 = m[i + j2];
+
                     sunIntensity = (sunUp[0] * v0) + (sunUp[1] * v1) + (sunUp[2] * v2);
                     pixels[z] = (sunIntensity <= 0) ? options.sunShadowColor : Color.TRANSPARENT;
+                    z++;
+                }
+            }
 
-                } else if (options.showMoonLight) {
+        } else if (options.showMoonLight) {
+            for (int j = 0; j < h; j++)
+            {
+                j0 = (360 * j);
+                j1 = (360 * (360 + j));
+                j2 = (360 * (720 + j));
+
+                for (int i = 0; i < w; i++)
+                {
+                    v0 = m[i + j0];
+                    v1 = m[i + j1];
+                    v2 = m[i + j2];
+
                     moonIntensity = (moonUp[0] * v0) + (moonUp[1] * v1) + (moonUp[2] * v2);
                     pixels[z] = (moonIntensity > 0) ? options.moonLightColor : Color.TRANSPARENT;
+                    z++;
                 }
-                z++;
             }
         }
         return pixels;
@@ -148,6 +180,7 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
     protected Paint paintSun_stroke = null;
     protected Paint paintMoon_fill = null;
     protected Paint paintMoon_stroke = null;
+    protected Paint paintGrid = null;
 
     @Override
     public void initPaint(WorldMapTask.WorldMapOptions options)
@@ -197,6 +230,11 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         paintMoon_stroke.setStyle(Paint.Style.STROKE);
         paintMoon_stroke.setColor(options.moonStrokeColor);
 
+        paintGrid = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintGrid.setXfermode(options.hasTransparentBaseMap ? new PorterDuffXfermode(PorterDuff.Mode.DST_OVER) : new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+        paintGrid.setStyle(Paint.Style.STROKE);
+        paintGrid.setStrokeCap(Paint.Cap.ROUND);
+
         paintInitialized = true;
     }
 
@@ -226,8 +264,13 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         ////////////////
         // draw base map
         drawMap(c, w, h, paintForeground, options);
-        if (options.showMajorLatitudes) {
+        if (options.showDebugLines) {
+            drawDebugLines(c, w, h, mid, options);
+        } else if (options.showMajorLatitudes) {
             drawMajorLatitudes(c, w, h, mid, options);
+        }
+        if (options.showGrid) {
+            drawGrid(c, w, h, mid, options);
         }
 
         drawData: if (data != null)
@@ -349,6 +392,11 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
     }
 
     @Override
+    public void resetMatrix() {
+        matrix = null;
+    }
+
+    @Override
     public int[] matrixSize()
     {
         return new int[] {360, 360};
@@ -412,33 +460,28 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         return i + (360 * ((360 * k) + j));
     }
 
-    private static double r_equator = 0.5;
-    private static double r_tropics = (23.439444 / 180d);
-    private static double r_polar = (66.560833 / 180d);
+    protected static double r_equator = 0.5;
+    protected static double r_tropics = (23.439444 / 180d);
+    protected static double r_polar = (66.560833 / 180d);
 
     @Override
     public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
     {
-        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
-        p.setXfermode(options.hasTransparentBaseMap ? new PorterDuffXfermode(PorterDuff.Mode.DST_OVER) : new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-
-        Paint.Style prevStyle = p.getStyle();
-        PathEffect prevEffect = p.getPathEffect();
-        float prevStrokeWidth = p.getStrokeWidth();
-
         double equator = mid[1] * r_equator;
         double tropics = mid[1] * r_tropics;
         double polar = mid[1] * r_polar;
 
+        Paint p = paintGrid;
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
         p.setStrokeWidth(strokeWidth);
-        p.setStyle(Paint.Style.STROKE);
-        p.setStrokeCap(Paint.Cap.ROUND);
-
         p.setColor(options.latitudeColors[0]);
         p.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
 
         c.drawCircle((int)mid[0], (int)mid[1], (int)equator, p);
+        c.drawLine((int)mid[0], (int)mid[1], (int)mid[0], h, p);
+        c.drawLine((int)mid[0], (int)mid[1], (int)mid[0], 0, p);
+        c.drawLine((int)mid[0], (int)mid[1], w, (int)mid[1], p);
+        c.drawLine(0, (int)mid[1], (int)mid[0], (int)mid[1], p);
 
         p.setColor(options.latitudeColors[1]);
         p.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
@@ -449,10 +492,115 @@ public class WorldMapEquiazimuthal extends WorldMapTask.WorldMapProjection
         p.setPathEffect((options.latitudeLinePatterns[2][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[2], 0) : null);
         c.drawCircle((int)mid[0], (int)mid[1], (int)(equator + polar), p);
         c.drawCircle((int)mid[0], (int)mid[1], (int)(equator - polar), p);
+    }
 
-        p.setStyle(prevStyle);
-        p.setPathEffect(prevEffect);
-        p.setStrokeWidth(prevStrokeWidth);
+    @Override
+    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    {
+        double equator = mid[1] * r_equator;
+        double tropics = mid[1] * r_tropics;
+        double polar = mid[1] * r_polar;
+
+        Paint p = paintGrid;
+        float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
+        p.setStrokeWidth(strokeWidth);
+        p.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
+
+        p.setColor(Color.BLACK);
+        c.drawCircle((int)mid[0], (int)mid[1], (int)equator, p);
+        p.setColor(Color.YELLOW);
+        c.drawLine((int)mid[0], (int)mid[1], (int)mid[0], h, p);
+        p.setColor(Color.BLUE);
+        c.drawLine((int)mid[0], (int)mid[1], (int)mid[0], 0, p);
+        p.setColor(Color.RED);
+        c.drawLine((int)mid[0], (int)mid[1], w, (int)mid[1], p);
+        p.setColor(Color.GREEN);
+        c.drawLine(0, (int)mid[1], (int)mid[0], (int)mid[1], p);
+
+        p.setColor(Color.WHITE);
+        p.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
+        c.drawCircle((int)mid[0], (int)mid[1], (int)(equator + tropics), p);
+        c.drawCircle((int)mid[0], (int)mid[1], (int)(equator - tropics), p);
+
+        p.setColor(Color.GREEN);
+        p.setPathEffect((options.latitudeLinePatterns[2][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[2], 0) : null);
+        c.drawCircle((int)mid[0], (int)mid[1], (int)(equator + polar), p);
+        p.setColor(Color.RED);
+        c.drawCircle((int)mid[0], (int)mid[1], (int)(equator - polar), p);
+    }
+
+    private static ArrayList<float[]> grid_x = null, grid_y = null;
+    private static double[] grid_mid;
+
+    protected void initGrid(double[] mid)
+    {
+        long bench_start = System.nanoTime();
+        grid_mid = mid;
+        grid_x = new ArrayList<>();
+        grid_y = new ArrayList<>();
+        for (int i=0; i<=180; i+=15) {
+            grid_x.add(createLongitudePath(mid, i));
+            grid_x.add(createLongitudePath(mid, -i));
+        }
+        for (int i=0; i<90; i+=15) {
+            grid_y.add(createLatitudePath(mid, i));
+            grid_y.add(createLatitudePath(mid, -i));
+        }
+        long bench_end = System.nanoTime();
+        Log.d(WorldMapView.LOGTAG, "initGrid :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+    }
+
+    public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    {
+        if (grid_mid == null || mid[0] != grid_mid[0] || mid[1] != grid_mid[1]) {
+            initGrid(mid);
+        }
+
+        float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
+        paintGrid.setStrokeWidth(strokeWidth);
+        paintGrid.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
+        paintGrid.setColor(options.gridXColor);
+        for (int i=0; i<grid_x.size(); i++) {
+            drawConnectedLines(c, grid_x.get(i), paintGrid);
+        }
+
+        paintGrid.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
+        paintGrid.setColor(options.gridYColor);
+        for (int i=0; i<grid_y.size(); i++) {
+            drawConnectedLines(c, grid_y.get(i), paintGrid);
+        }
+    }
+
+    protected float[] createLatitudePath(double[] mid, double latitude) {
+        return createLatitudePath(mid, latitude, -180, 180);
+    }
+    protected float[] createLatitudePath(double[] mid, double latitude, double min, double max)
+    {
+        double[] point;
+        ArrayList<Float> path = new ArrayList<>();
+        for (int longitude=(int)min; longitude <= max; longitude+=2)
+        {
+            point = toCartesian(toPolar(latitude, longitude));
+            path.add((float)(mid[0] + ((point[0] / 180d) * mid[0])));
+            path.add((float)(mid[1] - ((point[1] / 180d) * mid[1])));
+        }
+        return toFloatArray(path);
+    }
+
+    protected float[] createLongitudePath(double[] mid, double longitude) {
+        return createLongitudePath(mid, longitude, -88, 88);
+    }
+    protected float[] createLongitudePath(double[] mid, double longitude, double min, double max)
+    {
+        double[] point;
+        ArrayList<Float> path = new ArrayList<>();
+        for (int latitude = (int)min; latitude<max; latitude+=2)
+        {
+            point = toCartesian(toPolar(latitude, longitude));
+            path.add((float)(mid[0] + ((point[0] / 180d) * mid[0])));
+            path.add((float)(mid[1] - ((point[1] / 180d) * mid[1])));
+        }
+        return toFloatArray(path);
     }
 
 }

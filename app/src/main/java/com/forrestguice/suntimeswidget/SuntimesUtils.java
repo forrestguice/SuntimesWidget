@@ -958,6 +958,55 @@ public class SuntimesUtils
         return text;
     }
 
+    public String timeDeltaLongDisplayString(long timeInMillis)
+    {
+        long numberOfSeconds = timeInMillis / 1000;
+        numberOfSeconds = Math.abs(numberOfSeconds);
+
+        long numberOfMinutes = numberOfSeconds / 60;
+        long numberOfHours = numberOfMinutes / 60;
+        long numberOfDays = numberOfHours / 24;
+
+        long remainingHours = numberOfHours % 24;
+        long remainingMinutes = numberOfMinutes % 60;
+        long remainingSeconds = numberOfSeconds % 60;
+
+        boolean showingDays = (numberOfDays > 0);
+        boolean showingHours = (remainingHours > 0);
+        boolean showingMinutes = (remainingMinutes > 0);
+        boolean showingSeconds = (remainingSeconds > 0);
+
+        String value = strEmpty;
+
+        if (showingDays)
+            value += String.format(strTimeDeltaFormat, numberOfDays, strDays);
+
+        if (showingHours)
+            value += (showingDays ? strSpace : strEmpty) +
+                    String.format(strTimeDeltaFormat, remainingHours, strHours);
+
+        if (showingMinutes)
+            value += (showingDays || showingHours ? strSpace : strEmpty) +
+                    String.format(strTimeDeltaFormat, remainingMinutes, strMinutes);
+
+        //if (showingSeconds)
+        //    value += (showingHours || showingMinutes ? strSpace : strEmpty) +
+        //            String.format(strTimeDeltaFormat, remainingSeconds, strSeconds);
+
+        if (!showingSeconds && !showingMinutes && !showingHours && !showingDays)
+            value += String.format(strTimeDeltaFormat, "0", strSeconds);
+
+        return value.trim();
+    }
+
+    public String formatDoubleValue(double value, int places)
+    {
+        NumberFormat formatter = NumberFormat.getInstance();
+        formatter.setMinimumFractionDigits(places);
+        formatter.setMaximumFractionDigits(places);
+        return formatter.format(value);
+    }
+
     /**
      * @param value
      * @return

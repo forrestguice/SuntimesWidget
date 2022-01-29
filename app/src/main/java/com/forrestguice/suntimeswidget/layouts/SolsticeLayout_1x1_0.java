@@ -96,11 +96,10 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
 
-        WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, appWidgetId);
         Calendar event = null;
         if (data != null && data.isCalculated()) {
-            event = (trackingMode == WidgetSettings.TrackingMode.SOONEST ? data.eventCalendarUpcoming(Calendar.getInstance())
-                    : data.eventCalendarClosest(Calendar.getInstance()));
+            Calendar now = Calendar.getInstance();
+            event = getEventCalendar(now, data, WidgetSettings.loadTrackingModePref(context, appWidgetId));
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
@@ -172,6 +171,15 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
             views.setTextViewTextSize(R.id.text_time_event_label, TypedValue.COMPLEX_UNIT_DIP, theme.getTextSizeSp());
             views.setTextViewTextSize(R.id.text_time_event_note, TypedValue.COMPLEX_UNIT_DIP, theme.getTextSizeSp());
             views.setTextViewTextSize(R.id.text_time_event, TypedValue.COMPLEX_UNIT_DIP, theme.getTimeSizeSp());
+        }
+    }
+
+    public static Calendar getEventCalendar(Calendar now, SuntimesEquinoxSolsticeData data, WidgetSettings.TrackingMode trackingMode)
+    {
+        switch (trackingMode) {
+            case RECENT: return data.eventCalendarRecent(now);
+            case CLOSEST: return data.eventCalendarClosest(now);
+            case SOONEST: default: return data.eventCalendarUpcoming(now);
         }
     }
 

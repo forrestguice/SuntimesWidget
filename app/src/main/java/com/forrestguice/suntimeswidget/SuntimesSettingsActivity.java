@@ -546,6 +546,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             return;
         }
 
+        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_LOCALIZE_HEMISPHERE))
+        {
+            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
+            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
+            WidgetSettings.saveLocalizeHemispherePref(this, 0, sharedPreferences.getBoolean(key, WidgetSettings.PREF_DEF_GENERAL_LOCALIZE_HEMISPHERE));
+            return;
+        }
+
         if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_OBSERVERHEIGHT))
         {
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,

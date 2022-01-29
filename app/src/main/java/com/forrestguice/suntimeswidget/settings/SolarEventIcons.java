@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2020 Forrest Guice
+    Copyright (C) 2020-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -35,7 +35,7 @@ import com.forrestguice.suntimeswidget.R;
 public class SolarEventIcons
 {
     @SuppressLint("ResourceType")
-    public static int getIconResID(Context context, SolarEvents event)
+    public static int getIconResID(Context context, SolarEvents event, boolean northward)
     {
         switch (event)
         {
@@ -47,8 +47,8 @@ public class SolarEventIcons
             case EVENING_NAUTICAL: case EVENING_ASTRONOMICAL: case MOONSET: case MOONNIGHT:
                 return R.drawable.svg_sunset;
 
-            case FIRSTQUARTER: return R.drawable.svg_moon_q1;
-            case THIRDQUARTER: return R.drawable.svg_moon_q3;
+            case FIRSTQUARTER: return (northward) ? R.drawable.svg_moon_q3 : R.drawable.svg_moon_q1;
+            case THIRDQUARTER: return (northward) ? R.drawable.svg_moon_q1 : R.drawable.svg_moon_q3;
 
             case NOON: return getResID(context, R.attr.sunnoonIcon, R.drawable.ic_noon_large);
             case NEWMOON: return getResID(context, R.attr.moonPhaseIcon0, R.drawable.ic_moon_new);
@@ -145,8 +145,8 @@ public class SolarEventIcons
     {
         return getIconDrawable(context, SolarEventIcons.getIconResID(context, timezoneID), width, height, getIconScale(timezoneID), getIconDrawableInset(context, timezoneID), SolarEventIcons.getIconTint(context, timezoneID));
     }
-    public static Drawable getIconDrawable(Context context, @NonNull SolarEvents event, int width, int height) {
-        return getIconDrawable(context, SolarEventIcons.getIconResID(context, event), width, height, getIconScale(event), getIconDrawableInset(context, event), SolarEventIcons.getIconTint(context, event));
+    public static Drawable getIconDrawable(Context context, @NonNull SolarEvents event, int width, int height, boolean northward) {
+        return getIconDrawable(context, SolarEventIcons.getIconResID(context, event, northward), width, height, getIconScale(event), getIconDrawableInset(context, event), SolarEventIcons.getIconTint(context, event));
     }
     public static Drawable getIconDrawable(Context context, int resID, int width, int height, float[] scale, int inset, Integer tint)
     {

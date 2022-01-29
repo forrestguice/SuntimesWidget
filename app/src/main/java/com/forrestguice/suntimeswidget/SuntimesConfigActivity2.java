@@ -216,6 +216,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
         ArrayList<WorldMapWidgetSettings.WorldMapWidgetMode> modes = new ArrayList<>();
         modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE);
         modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE1);
+        modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE2);
         WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, modes.toArray(new WidgetSettings.WidgetModeDisplay[0]));
         adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
         adapter.setThemeValues(themeValues);

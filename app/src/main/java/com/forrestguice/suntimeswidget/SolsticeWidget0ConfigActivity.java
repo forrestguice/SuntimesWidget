@@ -58,6 +58,7 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
         showOptionTrackingMode(true);
         showOptionTimeModeOverride(true);
         showDataSource(false);  // temporarily hidden; atm all entries point to same implementation (false choice)
+        showOptionLocalizeHemisphere(true);
         hideLayoutSettings();
     }
 
@@ -102,8 +103,6 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
                     helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
                 }
             });
-            button_timeModeHelp.setEnabled(false);           // disabled/hidden until txt provided
-            button_timeModeHelp.setVisibility(View.GONE);
         }
 
         if (checkbox_timeModeOverride != null)

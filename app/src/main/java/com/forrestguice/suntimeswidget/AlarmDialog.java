@@ -139,7 +139,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
 
     public void updateAdapter(Context context)
     {
-        adapter = SolarEvents.createAdapter(context);
+        adapter = SolarEvents.createAdapter(context, WidgetSettings.loadLocalizeHemispherePref(context, 0) && moondata != null && moondata.location().getLatitudeAsDouble() < 0);
         if (dataset != null)
         {
             boolean supportsGoldBlue = dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);

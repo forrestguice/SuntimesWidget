@@ -30,6 +30,7 @@ import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -414,17 +415,29 @@ public class AlarmDatabaseAdapter
     }
 
     @TargetApi(19)
-    public void releaseUnusedUriPermissions(Context context)
+    public void releaseUnusedUriPermissions(Context context) {
+        releaseUnusedUriPermissions(context, new String[] { ".png" });    // except for image types
+    }
+
+    @TargetApi(19)
+    public void releaseUnusedUriPermissions(Context context, String[] except)
     {
         ContentResolver resolver = (context != null) ? context.getContentResolver() : null;
         if (resolver != null)
         {
             List<UriPermission> permissions = resolver.getPersistedUriPermissions();
+            releasePermissionLoop:
             for (UriPermission permission : permissions)
             {
-                int alarmCount = getAlarmCount(permission.getUri().toString());
+                Uri uri = permission.getUri();
+                String uriString = permission.getUri().toString();
+                for (String exceptForType : except) {
+                    if (uriString.endsWith(exceptForType))
+                        continue releasePermissionLoop;
+                }
+                int alarmCount = getAlarmCount(uriString);
                 if (alarmCount <= 0) {
-                    resolver.releasePersistableUriPermission(permission.getUri(), Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    resolver.releasePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     Log.i("AlarmDatabaseAdapter", "released uri permission " + permission.getUri().toString());
                 } // else Log.d("AlarmDatabaseAdapter", "retaining uri permission " + permission.getUri().toString() + ", used by " + alarmCount + " alarms.");
             }

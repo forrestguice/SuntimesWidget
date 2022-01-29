@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -25,11 +25,14 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.graphics.ColorUtils;
@@ -46,6 +49,9 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 {
@@ -108,27 +114,35 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     }
 
     @SuppressLint("ResourceType")
-    public void setMapMode(Context context, WorldMapWidgetSettings.WorldMapWidgetMode mode )
+    public void setMapMode(Context context, WorldMapWidgetSettings.WorldMapWidgetMode mode)
     {
+        Drawable background = loadBackgroundDrawable(context, mode.getMapTag(), options.center);
         this.mode = mode;
         switch (mode)
         {
             case EQUIAZIMUTHAL_SIMPLE:
-                options.map = ContextCompat.getDrawable(context, R.drawable.worldmap2);
+                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap2);
                 options.map_night = null;
-                options.foregroundColor = foregroundColor;
+                options.foregroundColor = (options.tintForeground ? foregroundColor : Color.TRANSPARENT);
                 options.hasTransparentBaseMap = true;
                 break;
 
             case EQUIAZIMUTHAL_SIMPLE1:
-                options.map = ContextCompat.getDrawable(context, R.drawable.worldmap3);
+                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap3);
                 options.map_night = null;
-                options.foregroundColor = foregroundColor;
+                options.foregroundColor = (options.tintForeground ? foregroundColor : Color.TRANSPARENT);
+                options.hasTransparentBaseMap = true;
+                break;
+
+            case EQUIAZIMUTHAL_SIMPLE2:
+                options.map = background;
+                options.map_night = null;
+                options.foregroundColor = (options.tintForeground ? foregroundColor : Color.TRANSPARENT);
                 options.hasTransparentBaseMap = true;
                 break;
 
             case EQUIRECTANGULAR_BLUEMARBLE:
-                options.map = ContextCompat.getDrawable(context, R.drawable.land_shallow_topo_1024);
+                options.map = ContextCompat.getDrawable(context, R.drawable.world_topo_bathy_1024x512);   // land_shallow_topo_1024);
                 options.map_night = ContextCompat.getDrawable(context, R.drawable.earth_lights_lrg_1024);
                 options.foregroundColor = Color.TRANSPARENT;
                 options.hasTransparentBaseMap = false;
@@ -136,11 +150,55 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
 
             case EQUIRECTANGULAR_SIMPLE:
             default:
-                options.map = ContextCompat.getDrawable(context, R.drawable.worldmap);
+                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap);
                 options.map_night = null;
-                options.foregroundColor = foregroundColor;
+                options.foregroundColor = (options.tintForeground ? foregroundColor : Color.TRANSPARENT);
                 options.hasTransparentBaseMap = true;
                 break;
+        }
+    }
+
+    @Nullable
+    protected static Drawable loadBackgroundDrawable(Context context, String mapTag, double[] center)
+    {
+        String backgroundString = WorldMapWidgetSettings.loadWorldMapBackground(context, 0, mapTag, center);
+        Drawable drawable = loadDrawableFromUri(context, backgroundString);
+        if (drawable != null)
+        {
+            int w = 1024;
+            int h = mapTag.startsWith(WorldMapWidgetSettings.MAPTAG_3x3) ? 1024 : 512;
+            return new BitmapDrawable(Bitmap.createScaledBitmap(((BitmapDrawable)drawable).getBitmap(), w, h, true));
+        }
+        return null;
+    }
+
+    @Nullable
+    public static Drawable loadDrawableFromUri(Context context, @Nullable String uriString)
+    {
+        Uri backgroundUri = (uriString != null) ? Uri.parse(uriString) : null;
+        if (backgroundUri != null)
+        {
+            InputStream in = null;
+            Drawable drawable;
+            try {
+                in = context.getContentResolver().openInputStream(backgroundUri);
+                drawable = Drawable.createFromStream(in, backgroundUri.toString());
+
+            } catch (FileNotFoundException | SecurityException | OutOfMemoryError e) {
+                Log.e(LOGTAG, "Failed to open map background: " + e);
+                drawable = null;
+
+            } finally {
+                try {
+                    if (in != null) {
+                        in.close();
+                    }
+                } catch (IOException e) { /* EMPTY */ }
+            }
+            return drawable;
+
+        } else {
+            return null;
         }
     }
 
@@ -301,8 +359,9 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
         {
             case EQUIAZIMUTHAL_SIMPLE:
             case EQUIAZIMUTHAL_SIMPLE1:
+            case EQUIAZIMUTHAL_SIMPLE2:
                 Log.d("DEBUG", "matchHeight: " + matchHeight);
-                projection = (mode == WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE1 ? new WorldMapEquiazimuthal1() : new WorldMapEquiazimuthal());
+                projection = getMapProjection(mode);
                 if (w > 0)
                 {
                     if (h > 0)
@@ -353,6 +412,17 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
             drawTask.execute(data, w, h, options, projection, (animated ? 0 : 1), options.offsetMinutes);
             options.modified = false;
             lastUpdate = System.currentTimeMillis();
+        }
+    }
+
+    public static WorldMapTask.WorldMapProjection getMapProjection(WorldMapWidgetSettings.WorldMapWidgetMode mode)
+    {
+        switch (mode) {
+            case EQUIAZIMUTHAL_SIMPLE: return new WorldMapEquiazimuthal();
+            case EQUIAZIMUTHAL_SIMPLE1: return new WorldMapEquiazimuthal1();
+            case EQUIAZIMUTHAL_SIMPLE2: return new WorldMapEquiazimuthal2();
+            case EQUIRECTANGULAR_BLUEMARBLE: case EQUIRECTANGULAR_SIMPLE:
+            default: return new WorldMapEquirectangular();
         }
     }
 

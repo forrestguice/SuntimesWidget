@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.calculator;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -116,17 +117,19 @@ public class SuntimesEquinoxSolsticeDataset
         dataSolsticeWinter.calculate();
     }
 
-    public SuntimesEquinoxSolsticeData findSoonest(Calendar now)
-    {
-        return findClosest(now, true);
+    public SuntimesEquinoxSolsticeData findSoonest(Calendar now) {
+        return findClosest(now, false, true);
     }
 
-    public SuntimesEquinoxSolsticeData findClosest(Calendar now)
-    {
-        return findClosest(now, false);
+    public SuntimesEquinoxSolsticeData findClosest(Calendar now) {
+        return findClosest(now, false, false);
     }
 
-    protected SuntimesEquinoxSolsticeData findClosest(Calendar now, boolean upcoming)
+    public SuntimesEquinoxSolsticeData findRecent(Calendar now) {
+        return findClosest(now, true, false);
+    }
+
+    protected SuntimesEquinoxSolsticeData findClosest(Calendar now, boolean recent, boolean upcoming)
     {
         long timeDeltaMin = Long.MAX_VALUE;
         SuntimesEquinoxSolsticeData closest = null;
@@ -138,7 +141,7 @@ public class SuntimesEquinoxSolsticeDataset
             {
                 if (event != null)
                 {
-                    if (upcoming && !event.after(now))
+                    if ((upcoming && !event.after(now)) || (recent && event.after(now)))
                         continue;
 
                     long timeDelta = Math.abs(event.getTimeInMillis() - now.getTimeInMillis());
@@ -204,6 +207,13 @@ public class SuntimesEquinoxSolsticeDataset
     public Calendar now()
     {
         return Calendar.getInstance(TimeZone.getTimeZone(timezone()));
+    }
+
+    public long tropicalYearLength()
+    {
+        double latitude = dataEquinoxSpring.location.getLatitudeAsDouble();
+        SuntimesEquinoxSolsticeData data = (latitude >= 0) ? dataEquinoxSpring : dataEquinoxAutumnal;
+        return data.eventCalendarOtherYear().getTimeInMillis() - data.eventCalendarThisYear().getTimeInMillis();
     }
 }
 

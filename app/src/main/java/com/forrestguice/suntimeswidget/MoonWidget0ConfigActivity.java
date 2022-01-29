@@ -51,6 +51,7 @@ public class MoonWidget0ConfigActivity extends SuntimesConfigActivity0
         showOptionTimeModeOverride(false);
         showOption2x1LayoutMode(true);
         showOption3x1LayoutMode(true);
+        showOptionLocalizeHemisphere(true);
         //showDataSource(false);
     }
 
