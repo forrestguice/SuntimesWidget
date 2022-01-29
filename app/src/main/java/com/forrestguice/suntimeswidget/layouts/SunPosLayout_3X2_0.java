@@ -33,6 +33,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.map.WorldMapEquiazimuthal;
 import com.forrestguice.suntimeswidget.map.WorldMapEquiazimuthal1;
+import com.forrestguice.suntimeswidget.map.WorldMapEquiazimuthal2;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
@@ -86,6 +87,13 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
                 options.map_night = null;
                 options.hasTransparentBaseMap = true;
                 projection = new WorldMapEquiazimuthal1();
+                break;
+
+            case EQUIAZIMUTHAL_SIMPLE2:
+                options.map = null;    // TODO
+                options.map_night = null;
+                options.hasTransparentBaseMap = true;
+                projection = new WorldMapEquiazimuthal2();
                 break;
 
             case EQUIRECTANGULAR_BLUEMARBLE:

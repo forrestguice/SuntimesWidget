@@ -267,6 +267,12 @@ public class AboutActivity extends AppCompatActivity
                 legalView3.setText(SuntimesUtils.fromHtml(AboutDialog.initLibraryCredits(getActivity())));
             }
 
+            TextView aboutMediaView = (TextView) dialogContent.findViewById(R.id.txt_about_media);
+            if (aboutMediaView != null) {
+                aboutMediaView.setMovementMethod(LinkMovementMethod.getInstance());
+                aboutMediaView.setText(SuntimesUtils.fromHtml(AboutDialog.initMediaCredits(getActivity())));
+            }
+
             TextView legalView4 = (TextView) dialogContent.findViewById(R.id.txt_about_legal4);
             if (legalView4 != null) {
                 String permissionsExplained = context.getString(R.string.privacy_permission_location);

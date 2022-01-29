@@ -185,6 +185,7 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
             ArrayList<WorldMapWidgetSettings.WorldMapWidgetMode> modes = new ArrayList<>();
             modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE);
             modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE1);
+            modes.add(WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE2);
             ArrayAdapter<WorldMapWidgetSettings.WorldMapWidgetMode> adapter = new ArrayAdapter<>(this, R.layout.layout_listitem_oneline, modes);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_3x3mode.setAdapter(adapter);

@@ -34,11 +34,20 @@
     <TextView
         style="@style/SunsetTimeTextView"
         android:id="@+id/info_time_utc"
+        android:background="?attr/selectableItemBackground"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-
         tools:text="June 3, 6:00 PM UTC" android:gravity="end|right"
         app:layout_constraintStart_toStartOf="@+id/info_time_worldmap_layout"
         app:layout_constraintTop_toBottomOf="@+id/worldmapdialog_title" />
+
+    <ImageButton
+        android:id="@+id/map_modemenu"
+        android:layout_width="0dp" android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackground"
+        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/worldmap_dialog_action_menu"
+        android:src="?attr/icActionMap"
+        style="?attr/actionOverflowButtonStyle" />
 
     <View android:id="@+id/worldmapdialog_header"
         android:layout_width="0dp" android:layout_height="0dp" android:background="@null"

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2021 Forrest Guice
+    Copyright (C) 2018-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,6 +19,8 @@
 package com.forrestguice.suntimeswidget.map;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -35,6 +37,9 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -61,6 +66,7 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -70,6 +76,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
@@ -85,6 +92,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     public static final String LOGTAG = "WorldMapDialog";
     public static final String EXTRA_DATETIME = "datetime";
 
+    public static final int REQUEST_BACKGROUND = 400;
+
     private View dialogHeader;
     private TextView dialogTitle;
     private WorldMapView worldmap;
@@ -93,7 +102,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     private TextView utcTime, offsetTime;
     private Spinner mapSelector;
     private WorldMapSeekBar seekbar;
-    private ImageButton playButton, pauseButton, recordButton, resetButton, nextButton, prevButton, menuButton;
+    private ImageButton playButton, pauseButton, recordButton, resetButton, nextButton, prevButton, menuButton, modeButton;
     private TextView speedButton;
     private View mediaGroup, seekGroup;
     //private View radioGroup;
@@ -279,7 +288,15 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     {
         dialogHeader = dialogView.findViewById(R.id.worldmapdialog_header);
         dialogTitle = (TextView)dialogView.findViewById(R.id.worldmapdialog_title);
+
         utcTime = (TextView)dialogView.findViewById(R.id.info_time_utc);
+        utcTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimeZoneMenu(context, v);
+            }
+        });
+
         offsetTime = (TextView)dialogView.findViewById(R.id.info_time_offset);
         empty = (TextView)dialogView.findViewById(R.id.txt_empty);
         worldmap = (WorldMapView)dialogView.findViewById(R.id.info_time_worldmap);
@@ -313,12 +330,22 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         mapMode = WorldMapWidgetSettings.loadSunPosMapModePref(context, 0, WorldMapWidgetSettings.MAPTAG_DEF);
         int modePosition = mapAdapter.getPosition(mapMode);
         mapSelector.setSelection((modePosition >= 0) ? modePosition : 0);
-        worldmap.setMapMode(context, (WorldMapWidgetSettings.WorldMapWidgetMode) mapSelector.getSelectedItem());
 
+        updateOptions(getContext());
+        worldmap.setMapMode(context, (WorldMapWidgetSettings.WorldMapWidgetMode) mapSelector.getSelectedItem());
         mapSelector.setOnItemSelectedListener(onMapSelected);
 
         //WorldMapTask.WorldMapOptions options = worldmap.getOptions();
-        updateOptions(getContext());
+
+        modeButton = (ImageButton)dialogView.findViewById(R.id.map_modemenu);
+        if (modeButton != null) {
+            modeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showMapModeMenu(context, modeButton);
+                }
+            });
+        }
 
         /**radioGroup = dialogView.findViewById(R.id.radio_group);
         RadioButton option_sun = (RadioButton)dialogView.findViewById(R.id.radio_sun);
@@ -395,6 +422,9 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     private void updateSeekbarDrawables(Context context)
     {
+        if (context == null) {
+            return;
+        }
         /**LightMapView.LightMapTask lightMapTask = new LightMapView.LightMapTask();
         LightMapView.LightMapColors colors = new LightMapView.LightMapColors();
         colors.initDefaultDark(context);
@@ -402,7 +432,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         Bitmap lightmap = lightMapTask.makeBitmap(data, worldmap.getWidth(), 1, colors);
         BitmapDrawable lightmapDrawable = new BitmapDrawable(context.getResources(), lightmap);*/
 
-        boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(getContext(), 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
+        boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
         int color = speed_1d ? color_warning : color_accent;
         seekbar.setTrackColor(color);
         seekbar.setTickColor(color, color, color);
@@ -469,8 +499,17 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             options.showSunShadow = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SUNSHADOW, WorldMapWidgetSettings.MAPTAG_3x2);
             options.showMoonLight = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MOONLIGHT, WorldMapWidgetSettings.MAPTAG_3x2);
             options.showMajorLatitudes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
+            options.showGrid = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, WorldMapWidgetSettings.MAPTAG_3x2);
+            options.showDebugLines = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_DEBUGLINES, WorldMapWidgetSettings.MAPTAG_3x2);
             options.anim_frameOffsetMinutes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2)
                     ? 24 * 60 : 3;
+
+            try {
+                options.center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, mapMode.getMapTag(), mapMode.getProjectionCenter());
+            } catch (NumberFormatException | NullPointerException e) {
+                options.center = new double[] {location.getLatitudeAsDouble(), location.getLongitudeAsDouble()};
+            }
+            options.tintForeground = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapMode.getMapTag());
 
             if (WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2)) {
                 options.locations = new double[][] {{location.getLatitudeAsDouble(), location.getLongitudeAsDouble()}};
@@ -572,7 +611,11 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
         String suffix = "";
         boolean nowIsAfter = false;
-        Calendar mapTime = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+
+        String tzId = WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2, WorldMapWidgetSettings.PREF_DEF_WORLDMAP_TIMEZONE);
+        TimeZone timezone = WidgetTimezones.TZID_SUNTIMES.equals(tzId) ? data.timezone()
+                : WidgetTimezones.getTimeZone(tzId, data.location().getLongitudeAsDouble());
+        Calendar mapTime = Calendar.getInstance(timezone);
         if (empty.getVisibility() != View.VISIBLE)
         {
             mapTime.setTimeInMillis(mapTimeMillis);
@@ -610,6 +653,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         {
             mapMode = mode;
             WorldMapWidgetSettings.saveSunPosMapModePref(context, 0, mapMode, WorldMapWidgetSettings.MAPTAG_DEF);
+            updateOptions(context);
             worldmap.setMapMode(context, mapMode);
             Log.d(WorldMapView.LOGTAG, "onMapSelected: mapMode changed so triggering update...");
             updateViews();
@@ -670,13 +714,87 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         expandSheet(getDialog());
     }
 
-    protected boolean showSpeedMenu(final Context context, View view)
+    public static PopupMenu createMenu(Context context, View view, int menuId, PopupMenu.OnMenuItemClickListener listener)
     {
         PopupMenu menu = new PopupMenu(context, view);
         MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.mapmenu_speed, menu.getMenu());
-        menu.setOnMenuItemClickListener(onSpeedMenuClick);
+        inflater.inflate(menuId, menu.getMenu());
+        menu.setOnMenuItemClickListener(listener);
+        return menu;
+    }
 
+    protected boolean showTimeZoneMenu(Context context, View view)
+    {
+        PopupMenu menu = createMenu(context, view, R.menu.mapmenu_tz, onTimeZoneMenuClick);
+        WidgetTimezones.updateTimeZoneMenu(menu.getMenu(), WorldMapWidgetSettings.loadWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2));
+        menu.show();
+        return true;
+    }
+    private PopupMenu.OnMenuItemClickListener onTimeZoneMenuClick = new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            Context context = getContext();
+            if (context == null) {
+                return false;
+            }
+            String tzID = WidgetTimezones.timeZoneForMenuItem(item.getItemId());
+            if (tzID != null)
+            {
+                WorldMapWidgetSettings.saveWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TIMEZONE, WorldMapWidgetSettings.MAPTAG_3x2, tzID);
+                updateViews();
+            }
+            return (tzID != null);
+        }
+    };
+
+    protected boolean showMapModeMenu(final Context context, View view)
+    {
+        PopupMenu menu = createMenu(context, view, R.menu.mapmenu_mode, onMapModeMenuClick);
+        updateMapModeMenu(context, menu);
+        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        menu.show();
+        return true;
+    }
+    private void updateMapModeMenu(Context context, PopupMenu menu)
+    {
+        Menu m = menu.getMenu();
+        MenuItem option_mapmode = m.findItem(menuItemForMapMode(mapMode));
+        if (option_mapmode != null) {
+            option_mapmode.setChecked(true);
+        }
+    }
+    private PopupMenu.OnMenuItemClickListener onMapModeMenuClick = new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            Context context = getContext();
+            if (context == null) {
+                return false;
+            }
+
+            switch (item.getItemId())
+            {
+                case R.id.action_worldmap_simplerectangular:
+                case R.id.action_worldmap_bluemarble:
+                case R.id.action_worldmap_simpleazimuthal:
+                case R.id.action_worldmap_simpleazimuthal_south:
+                case R.id.action_worldmap_simpleazimuthal_location:
+                    item.setChecked(true);
+                    setMapMode(context, mapModeForMenuItem(item));
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+    };
+
+    protected boolean showSpeedMenu(final Context context, View view)
+    {
+        PopupMenu menu = createMenu(context, view, R.menu.mapmenu_speed, onSpeedMenuClick); new PopupMenu(context, view);
         updateSpeedMenu(context, menu);
         menu.show();
         return true;
@@ -730,11 +848,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     protected boolean showContextMenu(final Context context, View view)
     {
-        PopupMenu menu = new PopupMenu(context, view);
-        MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.mapmenu, menu.getMenu());
-        menu.setOnMenuItemClickListener(onContextMenuClick);
-
+        PopupMenu menu = createMenu(context, view, R.menu.mapmenu, onContextMenuClick);
         updateContextMenu(context, menu);
         SuntimesUtils.forceActionBarIcons(menu.getMenu());
         menu.show();
@@ -749,6 +863,21 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         MenuItem option_latitudes = m.findItem(R.id.mapOption_majorLatitudes);
         if (option_latitudes != null) {
             option_latitudes.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2));
+        }
+
+        MenuItem option_debuglines = m.findItem(R.id.mapOption_debugLines);
+        if (option_debuglines != null) {
+            option_debuglines.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_DEBUGLINES, WorldMapWidgetSettings.MAPTAG_3x2));
+        }
+
+        MenuItem option_tintMap = m.findItem(R.id.mapOption_tintMap);
+        if (option_tintMap != null) {
+            option_tintMap.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapMode.getMapTag()));
+        }
+
+        MenuItem option_minorgrid = m.findItem(R.id.mapOption_minorgrid);
+        if (option_minorgrid != null) {
+            option_minorgrid.setChecked(WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, WorldMapWidgetSettings.MAPTAG_3x2));
         }
 
         MenuItem option_location = m.findItem(R.id.mapOption_location);
@@ -766,27 +895,40 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             option_moonlight.setChecked(options.showMoonLight);
         }
 
-        MenuItem action_date = m.findItem(R.id.action_date);
-        if (action_date != null) {
-            action_date.setEnabled( !WidgetSettings.DateInfo.isToday(getMapDate()) );
+        //MenuItem action_date = m.findItem(R.id.action_date);
+        //if (action_date != null) {
+        //    action_date.setEnabled( !WidgetSettings.DateInfo.isToday(getMapDate()) );
+        //}
+
+        MenuItem action_center_current = m.findItem(R.id.mapOption_center_current);
+        if (action_center_current != null) {
+            double[] center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, mapMode.getMapTag(), mapMode.getProjectionCenter());
+            String locationDisplay = getString(R.string.location_format_latlon, Double.toString(center[0]), Double.toString(center[1]));
+            action_center_current.setTitle(context.getString(R.string.worldmap_dialog_option_center_current, locationDisplay));
         }
 
-        MenuItem option_mapmode0 = m.findItem(R.id.mapProjectionMenu);
-        MenuItem option_mapmode = m.findItem(menuItemForMapMode(mapMode));
-        if (option_mapmode != null) {
-            option_mapmode.setChecked(true);
-            if (option_mapmode0 != null) {
-                option_mapmode0.setTitle(option_mapmode.getTitle());
-                option_mapmode0.setIcon(option_mapmode.getIcon());
-            }
+        MenuItem action_center_set = m.findItem(R.id.mapOption_center);
+        if (action_center_set != null) {
+            action_center_set.setVisible(mapMode.supportsCenter());
         }
 
-        MenuItem addonSubmenuItem = m.findItem(R.id.addonSubMenu);
+        MenuItem action_center_clear = m.findItem(R.id.mapOption_center_clear);
+        if (action_center_clear != null) {
+            action_center_clear.setVisible(mapMode.supportsCenter());
+        }
+
+        MenuItem action_background_clear = m.findItem(R.id.mapOption_background_clear);
+        if (action_background_clear != null) {
+            double[] center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, mapMode.getMapTag(), mapMode.getProjectionCenter());
+            action_background_clear.setEnabled(null != WorldMapWidgetSettings.loadWorldMapBackground(context, 0, mapMode.getMapTag(), center));
+        }
+
+        MenuItem addonSubmenuItem = m.findItem(R.id.addonSubMenu0);
         if (addonSubmenuItem != null) {
             List<ActivityItemInfo> addonMenuItems = queryAddonMenuItems(context);
             if (!addonMenuItems.isEmpty()) {
                 populateSubMenu(addonSubmenuItem, addonMenuItems, getMapTime(System.currentTimeMillis()));
-            } else addonSubmenuItem.setVisible(false);
+            } //else addonSubmenuItem.setVisible(false);
         }
     }
 
@@ -794,6 +936,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         switch (mode) {
             case EQUIAZIMUTHAL_SIMPLE: return R.id.action_worldmap_simpleazimuthal;
             case EQUIAZIMUTHAL_SIMPLE1: return R.id.action_worldmap_simpleazimuthal_south;
+            case EQUIAZIMUTHAL_SIMPLE2: return R.id.action_worldmap_simpleazimuthal_location;
             case EQUIRECTANGULAR_BLUEMARBLE: return R.id.action_worldmap_bluemarble;
             case EQUIRECTANGULAR_SIMPLE: default: return R.id.action_worldmap_simplerectangular;
         }
@@ -802,6 +945,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         switch (item.getItemId()) {
             case R.id.action_worldmap_simpleazimuthal: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE;
             case R.id.action_worldmap_simpleazimuthal_south: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE1;
+            case R.id.action_worldmap_simpleazimuthal_location: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE2;
             case R.id.action_worldmap_bluemarble: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_BLUEMARBLE;
             case R.id.action_worldmap_simplerectangular: default: return WorldMapWidgetSettings.WorldMapWidgetMode.EQUIRECTANGULAR_SIMPLE;
         }
@@ -813,6 +957,167 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             worldmap.shareBitmap();
         } else worldmap.stopAnimation();
         updateMediaButtons();
+    }
+
+    private void setMapCenter(Context context)
+    {
+        Location location = WidgetSettings.loadLocationPref(context, 0);
+        double[] center = new double[] {location.getLatitudeAsDouble(), location.getLongitudeAsDouble()};
+
+        WorldMapWidgetSettings.saveWorldMapCenter(context, 0, mapMode.getMapTag(), center);
+        WorldMapWidgetSettings.saveWorldMapString(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LABEL, mapMode.getMapTag(), location.getLabel());
+
+        WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2, true);
+        WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, WorldMapWidgetSettings.MAPTAG_3x2, true);
+
+        String locationDisplay = getString(R.string.location_format_latlon, location.getLatitude(), location.getLongitude());
+        Toast.makeText(context, context.getString(R.string.worldmap_dialog_option_center_msg, locationDisplay), Toast.LENGTH_LONG).show();
+
+        updateOptions(getContext());
+        worldmap.setMapMode(context, mapMode);
+        updateViews();
+    }
+
+    private void clearMapCenter(Context context)
+    {
+        WorldMapWidgetSettings.deleteWorldMapCenter(context, 0, mapMode.getMapTag());
+        WorldMapWidgetSettings.initWorldMapBackgroundDefaults(context);   // restores background if removed
+
+        double[] center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, mapMode.getMapTag(), mapMode.getProjectionCenter());
+        String locationDisplay = getString(R.string.location_format_latlon, Double.toString(center[0]), Double.toString(center[1]));
+        Toast.makeText(context, context.getString(R.string.worldmap_dialog_option_center_clear_msg, locationDisplay), Toast.LENGTH_LONG).show();
+
+        updateOptions(getContext());
+        worldmap.setMapMode(context, mapMode);
+        updateViews();
+    }
+
+    private void setMapBackground(final Context context)
+    {
+        if (context != null)
+        {
+            WorldMapWidgetSettings.WorldMapWidgetMode modes = worldmap.getMapMode();
+            double[] center = worldmap.getOptions().center;
+
+            String title = context.getString(R.string.worldmap_dialog_option_background);
+            String message = context.getString(R.string.help_worldmap_background, modes.getProjectionTitle(), center[0]+"", center[1]+"", modes.getProj4());
+
+            AlertDialog.Builder dialog = new AlertDialog.Builder(context)
+                    .setTitle(title).setMessage(message).setIcon(R.drawable.ic_action_settings)
+                    .setPositiveButton(context.getString(R.string.dialog_ok),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            mapBackgroundFilePicker(REQUEST_BACKGROUND);
+                        }
+                    })
+                    .setNeutralButton(context.getString(R.string.configAction_onlineHelp),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.help_worldmap_background_url))));
+                        }
+                    })
+                    .setNegativeButton(context.getString(R.string.dialog_cancel), null);
+            dialog.show();
+        }
+    }
+
+    private void clearMapBackground(Context context)
+    {
+        double[] center = worldmap.getOptions().center;
+        String mapTag = mapMode.getMapTag();
+        String mapBackgroundString = WorldMapWidgetSettings.loadWorldMapBackground(context, 0, mapTag, center);
+        Uri uri = mapBackgroundString != null ? Uri.parse(mapBackgroundString) : null;
+        if (uri != null) {
+            try {
+                context.getContentResolver().releasePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            } catch (SecurityException e) {
+                Log.w(LOGTAG, "Failed to release URI permissions for " + uri.toString() + "; " + e);
+            }
+        }
+        WorldMapWidgetSettings.deleteWorldMapBackground(context,0, mapTag, center);
+        WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapTag, true);   // reset tint flag
+
+        updateOptions(context);
+        worldmap.setMapMode(context, mapMode);
+        updateViews();
+    }
+
+    protected void onMapBackgroundResult(Context context, int requestCode, Uri uri)
+    {
+        Drawable background = WorldMapView.loadDrawableFromUri(context, uri.toString());
+        if (background == null) {
+            Toast.makeText(context, context.getString(R.string.worldmap_dialog_option_background_error0), Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        String mapTag = mapMode.getMapTag();
+        double aspectRatio0 = mapTag.startsWith(WorldMapWidgetSettings.MAPTAG_3x3) ? 1 : 2;
+        double aspectRatio1 = ((double)background.getIntrinsicWidth() / (double)background.getIntrinsicHeight());
+        if (Math.abs(aspectRatio1 - aspectRatio0) > 0.01)
+        {
+            String aspectWarning = context.getString(R.string.worldmap_dialog_option_background_warning0, Double.toString(aspectRatio1), Double.toString(aspectRatio0));
+            Toast.makeText(context, aspectWarning, Toast.LENGTH_LONG).show();
+        }
+
+        double[] center = worldmap.getOptions().center;    // TODO: read center/projection info from image exif data?
+        WorldMapWidgetSettings.saveWorldMapBackground(context, 0, mapTag, center, uri.toString());
+        WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapTag, false);    // TODO: automatically set tint flag based on image transparency?
+
+        updateOptions(context);
+        worldmap.setMapMode(context, mapMode);
+        updateViews();
+    }
+
+    protected void onMapBackgroundResult(int requestCode, int resultCode, Intent data)
+    {
+        Context context = getContext();
+        if (resultCode == Activity.RESULT_OK && context != null && data != null && data.getData() != null)
+        {
+            Uri uri = data.getData();
+            if (Build.VERSION.SDK_INT >= 19) {
+                final int flags = data.getFlags() & Intent.FLAG_GRANT_READ_URI_PERMISSION;
+                context.getContentResolver().takePersistableUriPermission(uri, flags);
+            }
+            onMapBackgroundResult(context, requestCode, uri);
+        } else {
+            Log.d(LOGTAG, "onActivityResult: bad result: " + resultCode + ", " + data);
+        }
+    }
+
+    protected void mapBackgroundFilePicker(int requestCode)
+    {
+        Intent intent;
+        if (Build.VERSION.SDK_INT >= 19)
+        {
+            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
+        } else {
+            intent = new Intent(Intent.ACTION_GET_CONTENT);
+        }
+
+        if (Build.VERSION.SDK_INT >= 11) {
+            intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+        }
+        intent.setType("image/*");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.worldmap_dialog_option_background)), requestCode);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode)
+        {
+            case REQUEST_BACKGROUND:
+                onMapBackgroundResult(requestCode, resultCode, data);
+                break;
+        }
     }
 
     private PopupMenu.OnMenuItemClickListener onContextMenuClick = new PopupMenu.OnMenuItemClickListener()
@@ -848,12 +1153,25 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     shareMap();
                     return true;
 
-                case R.id.action_worldmap_simplerectangular:
-                case R.id.action_worldmap_bluemarble:
-                case R.id.action_worldmap_simpleazimuthal:
-                case R.id.action_worldmap_simpleazimuthal_south:
-                    setMapMode(context, mapModeForMenuItem(item));
-                    item.setChecked(true);
+                case R.id.recordMap:
+                    playMap();
+                    shareMap();
+                    return true;
+
+                case R.id.mapOption_center:
+                    setMapCenter(context);
+                    return true;
+
+                case R.id.mapOption_center_clear:
+                    clearMapCenter(context);
+                    return true;
+
+                case R.id.mapOption_background:
+                    setMapBackground(context);
+                    return true;
+
+                case R.id.mapOption_background_clear:
+                    clearMapBackground(context);
                     return true;
 
                 case R.id.mapOption_location:
@@ -863,9 +1181,32 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     updateViews();
                     return true;
 
+                case R.id.mapOption_tintMap:
+                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapMode.getMapTag());
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapMode.getMapTag(), toggledValue);
+                    item.setChecked(toggledValue);
+                    updateOptions(context);
+                    worldmap.setMapMode(context, mapMode);
+                    updateViews();
+                    return true;
+
+                case R.id.mapOption_debugLines:
+                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_DEBUGLINES, WorldMapWidgetSettings.MAPTAG_3x2);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_DEBUGLINES, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
+                    item.setChecked(toggledValue);
+                    updateViews();
+                    return true;
+
                 case R.id.mapOption_majorLatitudes:
                     toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);
                     WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
+                    item.setChecked(toggledValue);
+                    updateViews();
+                    return true;
+
+                case R.id.mapOption_minorgrid:
+                    toggledValue = !WorldMapWidgetSettings.loadWorldMapPref(context, 0,  WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, WorldMapWidgetSettings.MAPTAG_3x2);
+                    WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, WorldMapWidgetSettings.MAPTAG_3x2, toggledValue);
                     item.setChecked(toggledValue);
                     updateViews();
                     return true;
@@ -961,7 +1302,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     {
         @Override
         public void onClick(View v) {
-            showContextMenu(getContext(), v);
+            showContextMenu(getContext(), dialogTitle);
         }
     };
 
@@ -1046,15 +1387,20 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         {
             expandSheet(getDialog());
 
-            if (seekbar != null) {
-                updateSeekbarDrawables(getContext());
+            Context context = getContext();
+            if (seekbar != null && context != null) {
+                updateSeekbarDrawables(context);
             }
         }
     };
 
     private void setSeekProgress( long offsetMinutes )
     {
-        boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(getContext(), 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
+        Context context = getContext();
+        if (context == null) {
+            return;
+        }
+        boolean speed_1d = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SPEED1D, WorldMapWidgetSettings.MAPTAG_3x2);
         long offsetMinutes1 = (speed_1d ? offsetMinutes / ((SEEK_TOTALMINUTES_1d) / seek_totalMinutes) : offsetMinutes);
 
         //long offset = progress - t_prevProgress;
