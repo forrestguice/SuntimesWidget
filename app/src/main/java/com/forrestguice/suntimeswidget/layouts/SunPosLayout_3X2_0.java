@@ -87,7 +87,8 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
                 break;
 
             case EQUIAZIMUTHAL_SIMPLE2:
-                options.map = null;    // TODO
+                options.center = WorldMapWidgetSettings.PREF_DEF_WORLDMAP_CENTER;          // TODO: widget allows reconfigure center
+                options.map = ContextCompat.getDrawable(context, R.drawable.worldmap4);    // TODO: widget allows reconfigure background
                 options.map_night = null;
                 options.hasTransparentBaseMap = true;
                 projection = new WorldMapEquiazimuthal2();
