@@ -99,6 +99,11 @@
             </menu>
     </item>
 
+    <item android:id="@+id/action_timezone"
+        android:icon="?attr/icActionTime"
+        android:title="@string/configLabel_timezone"
+        app:showAsAction="never" />
+
     <group android:id="@+id/mapOption_group_share">
 
         <item android:id="@+id/recordMap"

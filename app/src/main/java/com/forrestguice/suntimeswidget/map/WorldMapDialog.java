@@ -1149,6 +1149,10 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     }
                     return true;
 
+                case R.id.action_timezone:
+                    showTimeZoneMenu(context, utcTime);
+                    return true;
+
                 case R.id.shareMap:
                     shareMap();
                     return true;
