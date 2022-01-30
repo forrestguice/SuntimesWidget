@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2020 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -36,7 +36,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -50,7 +49,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.ProgressBar;
@@ -83,8 +81,6 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme.ThemeDescriptor;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
-import org.w3c.dom.Text;
-
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +110,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected Spinner spinner_calculatorMode;
     protected Spinner spinner_timeFormatMode;
-    protected Spinner spinner_timeMode;
     protected CheckBox checkbox_timeModeOverride;
     protected ImageButton button_timeModeHelp;
     protected Spinner spinner_trackingMode;
@@ -128,6 +123,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_useAltitude;
     protected CheckBox checkbox_locationFromApp;
     protected CheckBox checkbox_localizeHemisphere;
+
+    protected Spinner spinner_timeMode;
+    protected TimeModeAdapter spinner_timeModeAdapter;
 
     protected Spinner spinner_riseSetOrder;
     protected ImageButton button_riseSetOrderHelp;
@@ -1085,7 +1083,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             //final ArrayAdapter<WidgetSettings.TimeMode> spinner_timeModeAdapter;
             //spinner_timeModeAdapter = new ArrayAdapter<WidgetSettings.TimeMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.TimeMode.values());
-            final TimeModeAdapter spinner_timeModeAdapter;
             spinner_timeModeAdapter = new TimeModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.TimeMode.values());
             spinner_timeModeAdapter.setDropDownViewResource(R.layout.layout_listitem_one_line_colortab);
             spinner_timeModeAdapter.setThemeValues(themeValues);
@@ -1136,7 +1133,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void loadTimeMode(Context context)
     {
         WidgetSettings.TimeMode timeMode = WidgetSettings.loadTimeModePref(context, appWidgetId);
-        spinner_timeMode.setSelection(timeMode.ordinal());
+        spinner_timeMode.setSelection(spinner_timeModeAdapter.getPosition(timeMode));
     }
 
     /**
@@ -1144,9 +1141,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected void saveTimeMode(Context context)
     {
-        final WidgetSettings.TimeMode[] timeModes = WidgetSettings.TimeMode.values();
-        WidgetSettings.TimeMode timeMode = timeModes[spinner_timeMode.getSelectedItemPosition()];
-        WidgetSettings.saveTimeModePref(context, appWidgetId, timeMode);
+        WidgetSettings.TimeMode timeMode = spinner_timeModeAdapter.getItem(spinner_timeMode.getSelectedItemPosition());
+        WidgetSettings.saveTimeModePref(context, appWidgetId, ((timeMode != null) ? timeMode : WidgetSettings.PREF_DEF_GENERAL_TIMEMODE));
     }
 
     /**
@@ -2104,25 +2100,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         this.themeValues = WidgetThemes.loadTheme(this, theme.name()).toContentValues();
         themeViews(themeValues);
 
-        // refresh widget previews
-        if (spinner_1x1mode != null) {
-            updateWidgetModeAdapter(spinner_1x1mode, themeValues);
-        }
-        if (spinner_2x1mode != null) {
-            updateWidgetModeAdapter(spinner_2x1mode, themeValues);
-        }
-        if (spinner_3x1mode != null) {
-            updateWidgetModeAdapter(spinner_3x1mode, themeValues);
-        }
-        if (spinner_3x2mode != null) {
-            updateWidgetModeAdapter(spinner_3x2mode, themeValues);
-        }
-        if (spinner_3x3mode != null) {
-            updateWidgetModeAdapter(spinner_3x3mode, themeValues);
-        }
-        if (spinner_timeMode != null) {
-            updateTimeModeAdapter(spinner_timeMode, themeValues);
-        }
+        updateWidgetModeAdapter(spinner_1x1mode, themeValues);    // refresh widget previews
+        updateWidgetModeAdapter(spinner_2x1mode, themeValues);
+        updateWidgetModeAdapter(spinner_3x1mode, themeValues);
+        updateWidgetModeAdapter(spinner_3x2mode, themeValues);
+        updateWidgetModeAdapter(spinner_3x3mode, themeValues);
+        updateTimeModeAdapter(themeValues);
     }
 
     protected void themeViews(ContentValues themeValues)
@@ -2161,27 +2144,31 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
-    private void updateTimeModeAdapter(@NonNull Spinner spinner, ContentValues themeValues)
+    private void updateTimeModeAdapter(ContentValues themeValues)
     {
-        TimeModeAdapter adapter = (TimeModeAdapter)spinner_timeMode.getAdapter();
-        if (adapter != null)
+        if (spinner_timeMode != null && spinner_timeModeAdapter != null)
         {
-            WidgetSettings.TimeMode selected = (WidgetSettings.TimeMode) spinner.getSelectedItem();
-            adapter.setThemeValues(themeValues);
-            spinner.setAdapter(adapter);
-            spinner.setSelection(adapter.getPosition(selected));
+            WidgetSettings.TimeMode selected = (WidgetSettings.TimeMode) spinner_timeMode.getSelectedItem();
+            spinner_timeModeAdapter.setThemeValues(themeValues);
+            spinner_timeMode.setAdapter(spinner_timeModeAdapter);
+            spinner_timeMode.setSelection(spinner_timeModeAdapter.getPosition(selected));
         }
     }
 
-    private void updateWidgetModeAdapter(@NonNull Spinner spinner, ContentValues themeValues)
+    private void updateWidgetModeAdapter(@Nullable Spinner spinner, ContentValues themeValues)
     {
-        WidgetModeAdapter adapter = (WidgetModeAdapter) spinner.getAdapter();
-        if (adapter != null)
-        {
-            WidgetSettings.WidgetModeDisplay selected = (WidgetSettings.WidgetModeDisplay) spinner.getSelectedItem();
-            adapter.setThemeValues(themeValues);
-            spinner.setAdapter(adapter);
-            spinner.setSelection(adapter.getPosition(selected));
+        if (spinner != null) {
+            try {
+                WidgetModeAdapter adapter = (WidgetModeAdapter) spinner.getAdapter();
+                if (adapter != null) {
+                    WidgetSettings.WidgetModeDisplay selected = (WidgetSettings.WidgetModeDisplay) spinner.getSelectedItem();
+                    adapter.setThemeValues(themeValues);
+                    spinner.setAdapter(adapter);
+                    spinner.setSelection(adapter.getPosition(selected));
+                }
+            } catch (ClassCastException e) {
+                Log.w("updateWidgetMode", "Failed to update adapter! " + e);
+            }
         }
     }
 
