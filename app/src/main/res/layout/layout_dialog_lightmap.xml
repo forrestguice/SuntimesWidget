@@ -173,6 +173,7 @@
             <ImageView
                 android:id="@+id/info_shadow_icon"
                 android:src="?attr/icActionShadow" android:contentDescription="@string/configLabel_general_observerheight"
+                android:tint="?attr/text_accentColor"
                 android:layout_width="24dp" android:layout_height="24dp" />
 
             <TextView style="@style/SunsetTimeTextView"
