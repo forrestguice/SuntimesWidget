@@ -94,7 +94,7 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
                 break;
 
             case EQUIRECTANGULAR_BLUEMARBLE:
-                options.map = ContextCompat.getDrawable(context, R.drawable.land_shallow_topo_1024);
+                options.map = ContextCompat.getDrawable(context, R.drawable.world_topo_bathy_1024x512);
                 options.map_night = ContextCompat.getDrawable(context, R.drawable.earth_lights_lrg_1024);
                 options.hasTransparentBaseMap = false;
                 options.foregroundColor = Color.TRANSPARENT;
