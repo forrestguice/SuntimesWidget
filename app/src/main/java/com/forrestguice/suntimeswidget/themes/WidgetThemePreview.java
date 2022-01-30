@@ -274,6 +274,7 @@ public class WidgetThemePreview
         {
             case EQUIAZIMUTHAL_SIMPLE:
             case EQUIAZIMUTHAL_SIMPLE1:
+            case EQUIAZIMUTHAL_SIMPLE2:
                 return new int[] { 128, 128 };
             case EQUIRECTANGULAR_BLUEMARBLE:
             case EQUIRECTANGULAR_SIMPLE:
