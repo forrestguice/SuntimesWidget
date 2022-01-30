@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.calculator;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -51,6 +52,18 @@ public class SuntimesRiseSetDataset
     public SuntimesRiseSetDataset(Context context, int appWidgetID)
     {
         init(context, appWidgetID);
+    }
+
+    public SuntimesRiseSetDataset(@NonNull SuntimesRiseSetDataset other)
+    {
+        dataset.add(this.dataActual = new SuntimesRiseSetData(other.dataActual));
+        dataset.add(this.dataCivil = new SuntimesRiseSetData(other.dataCivil));
+        dataset.add(this.dataNautical = new SuntimesRiseSetData(other.dataNautical));
+        dataset.add(this.dataAstro = new SuntimesRiseSetData(other.dataAstro));
+        dataset.add(this.dataNoon = new SuntimesRiseSetData(other.dataNoon));
+        dataset.add(this.dataGold = new SuntimesRiseSetData(other.dataGold));
+        dataset.add(this.dataBlue8 = new SuntimesRiseSetData(other.dataBlue8));
+        dataset.add(this.dataBlue4 = new SuntimesRiseSetData(other.dataBlue4));
     }
 
     private void init(Context context, int appWidgetID)
@@ -275,9 +288,15 @@ public class SuntimesRiseSetDataset
         }
     }
 
-    public TimeZone timezone()
-    {
+    public TimeZone timezone() {
         return dataActual.timezone();
+    }
+    public void setTimeZone(Context context, TimeZone value) {
+        for (SuntimesRiseSetData data : dataset) {
+            data.setTimeZoneMode(WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE);
+            data.setTimezone(value);
+            data.calculator = null;   // reset calculator because it may require re-initialization w/ timezone
+        }
     }
 
     public Date date()
@@ -295,9 +314,14 @@ public class SuntimesRiseSetDataset
         return dataActual.getOtherCalendar();
     }
 
-    public WidgetSettings.TimezoneMode timezoneMode()
-    {
+    public WidgetSettings.TimezoneMode timezoneMode() {
         return dataActual.timezoneMode();
+    }
+    public void setTimeZoneMode(WidgetSettings.TimezoneMode value) {
+        for (SuntimesRiseSetData data : dataset) {
+            data.setTimeZoneMode(value);
+            data.calculator = null;   // reset calculator because it may require re-initialization w/ timezone
+        }
     }
 
     public SuntimesCalculatorDescriptor calculatorMode()

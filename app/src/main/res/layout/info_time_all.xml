@@ -392,6 +392,16 @@
              />
 
         <TextView
+            android:id="@+id/text_position_noon"
+            style="@style/SunsetTimeTextView"
+            android:layout_marginEnd="@dimen/table_set_rightMargin"
+            android:layout_marginRight="@dimen/table_set_rightMargin"
+            android:textColor="?attr/sunsetColor"
+            app:layout_constraintBaseline_toBaselineOf="@+id/text_time_label_noon"
+            app:layout_constraintEnd_toEndOf="@+id/header_time_sunrise"
+            tools:text="33°∠"/>
+
+        <TextView
             android:id="@+id/text_time_noon"
             style="@style/SunsetTimeTextView"
             android:layout_marginEnd="@dimen/table_set_rightMargin"

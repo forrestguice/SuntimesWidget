@@ -21,7 +21,9 @@
     <string name="configAction_setAlarm">Set Alarm</string>
     <string name="configAction_setTimeZone">Set Time Zone</string>
     <string name="configAction_setDate">Set Date</string>
-    <string name="configAction_viewDate">View Date</string>
+    <string name="configAction_viewDate">View date</string>
+    <string name="configAction_viewDateWith">View date</string>    <!-- TODO -->
+    <string name="configAction_share">Share</string>    <!-- TODO -->
     <string name="configAction_sunDialog">Sun Position</string>
     <string name="configAction_equinoxDialog">Solstice / Equinox</string>
     <string name="configAction_worldMap">World Map</string>
@@ -112,6 +114,9 @@
     <string name="length_twilight1e_neg"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g> [-<xliff:g id="timeSpan1" example="+30s">%2$s</xliff:g>]</string>
     <string name="length_twilight2"><xliff:g id="timeSpan1" example="30m">%1$s</xliff:g> | <xliff:g id="timeSpan2" example="30m">%2$s</xliff:g></string>
     <string name="length_delimiter">|</string>
+
+    <string name="timeMode_tropical_year">Tropical Year</string>   <!-- TODO -->
+    <string name="length_tropical_year"><xliff:g id="timeSpan1" example="365d 5h 41m">%1$s</xliff:g>\n<xliff:g id="fractionalDays" example="365.24">%2$s</xliff:g></string>   <!-- TODO -->
 
     <!-- Field: moon illumination (as seen in moon widget) -->
     <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> illuminated</string>  <!-- used in 2x1 widget -->
@@ -219,6 +224,8 @@
     <string name="dateyear_format_short"><xliff:g id="patternYear">yyyy</xliff:g></string>                                        <!-- yyyy ... e.g. 2017 -->
     <string name="date_any">Any Date</string>   <!-- no particular date; unset date -->    <!-- TODO -->
 
+    <string name="share_format_equinox"><xliff:g id="label">%1$s</xliff:g>\n<xliff:g id="formattedDate">%2$s</xliff:g></string>   <!-- Summer solstice on June 20.. --> <!-- TODO -->
+
     <!-- location display formats -->
     <string name="location_format_alt"><xliff:g id="altitude">%1$s</xliff:g><xliff:g id="distanceUnit" example="m">%2$s</xliff:g></string>  <!-- altitude, e.g. 1600m -->
     <string name="location_format_alttag">[<xliff:g id="altitudeString">%1$s</xliff:g>]</string>                                            <!-- altitude as a tag, e.g. [1600m] -->
@@ -297,6 +304,9 @@
 
     <string name="configLabel_general_altitude_enabled">Use Elevation</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Apply altitude based refinements.</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_localize_hemisphere">Localize to hemisphere</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_general_localize_hemisphere_summary">Apply hemisphere based localization (season labels, moon phase icons).</string>        <!-- checkbox label -->    <!-- TODO -->
 
     <string name="configLabel_general_lengthUnits">Units of length</string>        <!-- spinner label -->
 
@@ -415,7 +425,11 @@
     <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [north]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [south]</string>     <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_location">Azimuthal Equidistant</string>     <!-- setting -->   <!-- TODO -->
     <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->
+
+    <string name="worldmap_projection_equirectangular">Equidistant Rectangular</string>    <!-- TODO -->
+    <string name="worldmap_projection_equiazimuthal">Equidistant Azimuthal</string>    <!-- TODO -->
 
     <string name="widgetMode1x1_moonriseset">Moonrise &amp; moonset</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Moon phase &amp; illumination</string>     <!-- setting -->
@@ -512,7 +526,8 @@
     <string name="configLabel_general_showComparison">Show Comparison</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_closest">Closest Event</string>                 <!-- setting -->
+    <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
+    <string name="trackingMode_closest">Nearest Event</string>                 <!-- setting -->    <!-- TODO -->
     <string name="trackingMode_soonest">Upcoming Event</string>                <!-- setting -->
     <string name="configLabel_general_trackingMode">Track:</string>            <!-- spinner label -->
 
@@ -589,7 +604,7 @@
     <string name="configAction_deleteTheme">Delete</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Copy</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportThemes">Export</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
-    <string name="configAction_shareTheme">Share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
+    <string name="configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->    <!-- TODO -->
     <string name="configAction_importThemes">Import</string>    <!-- button (contentDescription) -->
 
     <string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
@@ -878,6 +893,12 @@
         <item quantity="other">%d seconds</item>
     </plurals>
 
+    <plurals name="units_days">
+        <item quantity="one">%s days</item>
+        <item quantity="other">%s days</item>
+    </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->    <!-- TODO -->
+
+
     <string name="configLabel_alarmMisc">Miscellaneous</string>
     <string name="configLabel_alarms_showlauncher">Launcher Icon</string>
     <string name="configLabel_alarms_showlauncher_summary">Show alarm clock icon in the app tray.</string>
@@ -958,6 +979,17 @@
     <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title -->
     <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label -->
     <string name="configLabel_ui_showheader_text">Show Header Text</string> <!-- checkbox label -->
+    <string name="configLabel_ui_showheader_text_summary"><xliff:g id="modeName" example="Labels">%s</xliff:g></string>
+    <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
+        <item>None</item>
+        <item>Labels</item>
+        <item>Azimuth</item>
+    </string-array>    <!-- TODO -->
+    <string-array name="headerText_values" translatable="false">  <!-- one-to-one with headerText_display -->
+        <item>0</item>   <!-- 0: none -->
+        <item>1</item>   <!-- 1: labels -->
+        <item>2</item>   <!-- 2: azimuth -->
+    </string-array>
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Golden Hour</string>
@@ -993,10 +1025,12 @@
 
     <!-- App Setting: solstice tracking mode -->
     <string-array name="solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
+        <item>@string/trackingMode_recent</item>
         <item>@string/trackingMode_closest</item>
         <item>@string/trackingMode_soonest</item>
     </string-array>
     <string-array name="solsticeTrackingMode_values" translatable="false">  <!-- one-to-one with solsticeTrackingMode_display -->
+        <item>RECENT</item>
         <item>CLOSEST</item>
         <item>SOONEST</item>
     </string-array>
@@ -1372,14 +1406,40 @@
     <string name="worldmap_dialog_action_prev">Previous</string>   <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_reset">Reset</string>     <!-- button (contentDescription) -->
     <string name="worldmap_dialog_action_menu">Options</string>       <!-- button (contentDescription) -->
+    <string name="worldmap_dialog_options_menu">Options</string>   <!-- TODO -->
+    <string name="worldmap_dialog_option_center">Center on location</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_current">Center: %s</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_msg">Map center set to current location \n[%s]</string>    <!-- toast message; center set to... --> <!-- TODO -->
+    <string name="worldmap_dialog_option_center_clear">Reset map center</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_clear_msg">Map center reset to default \n[%s]</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background">Set Background</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background_clear">Clear Background</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background_warning0">This image has the wrong aspect ratio.. expected %2$s, but found %1$s!</string>    <!-- toast message; aspect ratio warning --> <!-- TODO -->
+    <string name="worldmap_dialog_option_background_error0">Failed to open map background.</string>    <!-- toast message; io error --> <!-- TODO -->
     <string name="worldmap_dialog_option_sunlight">Sunlight</string>
     <string name="worldmap_dialog_option_moonlight">Moonlight</string>
     <string name="worldmap_dialog_option_all">Both</string>
     <string name="worldmap_dialog_option_location">Location</string>
-    <string name="worldmap_dialog_option_latitudes">Latitudes</string>
+    <string name="worldmap_dialog_option_latitudes">Major Lines</string>    <!-- TODO: "Latitudes" -> "Major lines" -->
+    <string name="worldmap_dialog_option_minorgrid">Graticule</string>  <!-- TODO -->
+    <string name="worldmap_dialog_option_debuglines">Debug Lines</string>  <!-- TODO -->
+    <string name="worldmap_dialog_option_tintmap">Tint</string>  <!-- TODO -->
+    <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->   <!-- TODO -->
     <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- menu item; "x 15m"; increments of 15 minutes -->
     <string name="worldmap_dialog_speed_1d">&#215; 1d</string>      <!-- menu item; "x 1d"; increments of 1 day -->
-    <string name="configAction_shareMap">Share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+    <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->    <!-- TODO -->
+    <string name="configAction_recordMap">@string/worldmap_dialog_action_record</string>   <!-- button (contentDescription) -->  <!-- export (share) -->    <!-- TODO -->
+
+    <string name="help_worldmap_background">
+      <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
+      \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
+      \n\nFor best results select an image matching these properties.
+    </string>    <!-- TODO -->
+    <string name="help_worldmap_background_url">https://github.com/forrestguice/SuntimesWidget/wiki/Help#worldmap</string>
+
+    <!-- Dialog: Light Map -->
+    <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
+    <string name="lightmap_dialog_action_menu">Options</string>       <!-- button (contentDescription) -->   <!-- TODO -->f
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Schedule an alarm for</string>
@@ -1697,6 +1757,10 @@
         <item><![CDATA[ github.com/QuadFlask/colorpicker ]]></item>
         <item><![CDATA[ github.com/rubensousa/GravitySnapHelper ]]></item>
     </string-array>
+    <string name="app_about_media"><![CDATA[ <b>Media:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>    <!-- TODO -->
+    <string-array name="app_media">
+        <item><![CDATA[ NASA Earth Observatory. <i>Blue Marble: Next Generation</i>. ]]></item>
+    </string-array>
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Help</string>
@@ -1759,17 +1823,34 @@
           <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
           <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon. Near darkness of night.<br/>
     ]]></string>
+    <string name="help_general_twilight"><![CDATA[
+          <b>Civil Twilight:</b> The sun is 6 degrees below the horizon; the brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
+          <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
+          <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon. Near darkness of night.<br/>
+    ]]></string>   <!-- TODO -->
     <string name="help_general_riseSetOrder"><![CDATA[
           <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
           <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
     ]]></string>
 
     <string name="help_general_timeMode2"><![CDATA[
-          <b>Spring Equinox:</b> TODO.<br/><br/>
-          <b>Summer Solstice:</b> TODO.<br/><br/>
-          <b>Autumn Equinox:</b> TODO.<br/><br/>
-          <b>Winter Solstice:</b> TODO.<br/>
-    ]]></string>
+          <b>Spring Equinox:</b> The start of astronomical spring; <em>March</em> [northern hemisphere], or <em>September</em> [southern hemisphere]. The March equinox is also called the <em>northward equinox</em>.<br/><br/>
+          <b>Summer Solstice:</b> The start of astronomical summer; <em>June</em> [northern hemisphere], or <em>December</em> [southern hemisphere]. The June solstice is also called the <em>northern solstice</em>.<br/><br/>
+          <b>Autumn Equinox:</b> The start of astronomical autumn; <em>September</em> [northern hemisphere], or <em>March</em> [southern hemisphere]. The September equinox is also called the <em>southward equinox</em>.<br/><br/>
+          <b>Winter Solstice:</b> The start of astronomical winter; <em>December</em> [northern hemisphere], or <em>June</em> [southern hemisphere]. The December solstice is also called the <em>southern solstice</em>.<br/>
+    ]]></string>    <!-- TODO -->
+    <string name="help_general_tropicalyear"><![CDATA[
+          <b>Tropical Year:</b> A full cycle of the seasons. The length of the <em>tropical year</em> is measured from one <em>March equinox</em> to the next. It is <em>~365.24 days</em> on average, with an exact length that varies each year (up to 30 minutes).<br/>
+    ]]></string>   <!-- TODO -->
+    <!--<string name="help_general_leapyear"><![CDATA[
+          <b>Leap Year:</b> It takes ~365.24 days for a full cycle of seasons, but the Gregorian calendar is only 365 days long, so each passing calendar year drifts another fraction of a day behind the tropical year.<br/>
+          <br/>
+          A <em>leap year</em> adds an extra day to February to keep the calendar synchronized with the seasons.
+          This is typically every four years, but since the difference with the tropical year isn\'t an exact ¼ day, the calendar still drifts over time.
+          As a result the rule to determine leaps years is more complicated.<br/>
+          <br/>
+          The leap years are those that are divisible by 4 but not 100 (unless also divisible by 400).<br/><br/>
+    ]]></string>-->   <!-- TODO -->
     <string name="help_general_solartime"><![CDATA[
           <b>Apparent Solar Time:</b> Sundial time. The time determined by tracking the motion of the apparent sun with respect to a given longitude and latitude.
           <br/><br/>
@@ -1846,6 +1927,8 @@
         This feature is now available as a <a href="moreInfoLink">separate app</a>.
     ]]></string>
 
+    <string name="help_shadowlength" translatable="false">[Icon Shadow] %1$s</string>     <!-- e.g. [Icon] [configLabel_general_observerheight_summary] -->    <!-- TODO -->
+
     <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. <br/><br/>The app is configured from location data. This information (and other configuration data used by the app) is stored locally and does not leave the device.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string>
@@ -1899,6 +1982,7 @@
     <string name="def_appwidget_0_general_showtimedate" translatable="false">true</string>
     <string name="def_appwidget_0_general_trackingmode" translatable="false">SOONEST</string>
     <string name="def_appwidget_0_general_observerheight" translatable="false">1.8288</string>
+    <string name="def_appwidget_0_general_localize_hemisphere" translatable="false">true</string>
 
     <string name="def_app_plugins_enabled" translatable="false">false</string>
 
@@ -1916,7 +2000,7 @@
     <string name="def_app_ui_showgoldhour" translatable="false">true</string>
     <string name="def_app_ui_showbluehour" translatable="false">false</string>
     <string name="def_app_ui_showheader_icon" translatable="false">true</string>
-    <string name="def_app_ui_showheader_text" translatable="false">true</string>
+    <string name="def_app_ui_showheader_text" translatable="false">1</string>  <!-- 1: labels -->
     <string name="def_app_ui_showdatasource" translatable="false">true</string>
     <string name="def_app_ui_datetapaction" translatable="false">SWAP_CARD</string>
     <string name="def_app_ui_datetapaction1" translatable="false">SHOW_CALENDAR</string>

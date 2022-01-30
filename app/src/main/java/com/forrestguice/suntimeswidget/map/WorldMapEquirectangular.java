@@ -63,6 +63,7 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
     protected Paint paintMoon_stroke = null;
     protected Paint paintSun_fill = null;
     protected Paint paintSun_stroke = null;
+    protected Paint paintGrid = null;
 
     @Override
     public void initPaint(WorldMapTask.WorldMapOptions options)
@@ -115,6 +116,11 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         paintMoon_stroke.setStyle(Paint.Style.STROKE);
         paintMoon_stroke.setColor(options.moonStrokeColor);
 
+        paintGrid = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintGrid.setXfermode(options.hasTransparentBaseMap ? new PorterDuffXfermode(PorterDuff.Mode.DST_OVER) : new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+        paintGrid.setStyle(Paint.Style.STROKE);
+        paintGrid.setStrokeCap(Paint.Cap.ROUND);
+
         paintInitialized = true;
     }
 
@@ -142,11 +148,13 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         }
 
         drawMap(c, w, h, paintForeground, options);
-        if (options.showMajorLatitudes) {
+        if (options.showDebugLines) {
+            drawDebugLines(c, w, h, mid, options);
+        } else if (options.showMajorLatitudes) {
             drawMajorLatitudes(c, w, h, mid, options);
         }
         if (options.showGrid) {
-            drawGrid(c, w, h, mid, null, options);
+            drawGrid(c, w, h, mid, options);
         }
 
         drawData: if (data != null)
@@ -313,6 +321,11 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
     private static double[] matrix = null;    // [x * y * v(3)]
 
     @Override
+    public void resetMatrix() {
+        matrix = null;
+    }
+
+    @Override
     public double[] initMatrix()
     {
         long bench_start = System.nanoTime();
@@ -373,30 +386,32 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         return new int[] {720, 360};
     }
 
-    protected void drawGrid(Canvas c, int w, int h, double[] mid, Paint p, WorldMapTask.WorldMapOptions options)
+    @Override
+    public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
     {
-        if (p == null) {
-            p = new Paint(Paint.ANTI_ALIAS_FLAG);
-        }
+        float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
+        paintGrid.setStrokeWidth(strokeWidth);
 
-        p.setColor(options.gridXColor);
+        paintGrid.setColor(options.gridXColor);
+        paintGrid.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
         for (int i=0; i < 180; i = i + 15)
         {
             double offset = (i / 180d) * mid[0];
             int eastX = (int)(mid[0] + offset);
             int westX = (int)(mid[0] - offset);
-            c.drawLine(eastX, 0, eastX, h, p);
-            c.drawLine(westX, 0, westX, h, p);
+            c.drawLine(eastX, 0, eastX, h, paintGrid);
+            c.drawLine(westX, 0, westX, h, paintGrid);
         }
 
-        p.setColor(options.gridYColor);
+        paintGrid.setColor(options.gridYColor);
+        paintGrid.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
         for (int i=0; i < 90; i = i + 15)
         {
             double offset = (i / 90d) * mid[1];
             int northY = (int)(mid[1] + offset);
             int southY = (int)(mid[1] - offset);
-            c.drawLine(0, northY, w, northY, p);
-            c.drawLine(0, southY, w, southY, p);
+            c.drawLine(0, northY, w, northY, paintGrid);
+            c.drawLine(0, southY, w, southY, paintGrid);
         }
     }
 
@@ -406,19 +421,18 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
     @Override
     public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
     {
-        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
-        p.setXfermode(new PorterDuffXfermode( options.hasTransparentBaseMap ? PorterDuff.Mode.DST_OVER : PorterDuff.Mode.SRC_OVER ));
-
-        Paint.Style prevStyle = p.getStyle();
-        PathEffect prevEffect = p.getPathEffect();
-        float prevStrokeWidth = p.getStrokeWidth();
-
+        Paint p = paintGrid;
         float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
         p.setStrokeWidth(strokeWidth);
 
-        p.setColor(options.latitudeColors[0]);                    // equator
+        p.setColor(options.latitudeColors[0]);                    // equator, prime meridian
         p.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
         c.drawLine(0, (int)mid[1], w, (int)mid[1], p);
+        c.drawLine((int)mid[0], 0, (int)mid[0], h, p);
+
+        p.setColor(options.latitudeColors[0]);                    // east, west meridians
+        c.drawLine((int)mid[0]/2f, 0, (int)mid[0]/2f, h, p);
+        c.drawLine((int)(3*mid[0]/2f), 0, (int)(3*mid[0]/2f), h, p);
 
         double tropics = r_tropics * mid[1];
         int tropicsY0 = (int)(mid[1] + tropics);
@@ -435,10 +449,44 @@ public class WorldMapEquirectangular extends WorldMapTask.WorldMapProjection
         p.setPathEffect((options.latitudeLinePatterns[2][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[2], 0) : null);
         c.drawLine(0, polarY0, w, polarY0, p);
         c.drawLine(0, polarY1, w, polarY1, p);
-
-        p.setStyle(prevStyle);
-        p.setPathEffect(prevEffect);
-        p.setStrokeWidth(prevStrokeWidth);
-        p.setXfermode(new PorterDuffXfermode( PorterDuff.Mode.SRC_OVER) );
     }
+
+    @Override
+    public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options)
+    {
+        Paint p = paintGrid;
+        float strokeWidth = sunStroke(c, options) * options.latitudeLineScale;
+        p.setStrokeWidth(strokeWidth);
+
+        p.setPathEffect((options.latitudeLinePatterns[0][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[0], 0) : null);
+        p.setColor(Color.GREEN);
+        c.drawLine(0, (int)mid[1], (int)mid[0], (int)mid[1], p);
+        p.setColor(Color.RED);
+        c.drawLine((int)mid[0], (int)mid[1], w, (int)mid[1], p);
+        p.setColor(Color.YELLOW);                    // equator, prime meridian
+        c.drawLine((int)mid[0], 0, (int)mid[0], h, p);
+        p.setColor(Color.GREEN);
+        c.drawLine((int)mid[0]/2f, 0, (int)mid[0]/2f, h, p);
+        p.setColor(Color.RED);                       // east, west meridians
+        c.drawLine((int)(3*mid[0]/2f), 0, (int)(3*mid[0]/2f), h, p);
+
+        double tropics = r_tropics * mid[1];
+        int tropicsY0 = (int)(mid[1] + tropics);
+        int tropicsY1 = (int)(mid[1] - tropics);
+        p.setPathEffect((options.latitudeLinePatterns[1][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[1], 0) : null);
+        p.setColor(Color.WHITE);                    // tropics
+        c.drawLine(0, tropicsY0, w, tropicsY0, p);
+        c.drawLine(0, tropicsY1, w, tropicsY1, p);
+
+        double polar = r_polar * mid[1];
+        int polarY0 = (int)(mid[1] + polar);
+        p.setPathEffect((options.latitudeLinePatterns[2][0] > 0) ? new DashPathEffect(options.latitudeLinePatterns[2], 0) : null);
+        p.setColor(Color.GREEN);                  // polar
+        c.drawLine(0, polarY0, w, polarY0, p);
+
+        int polarY1 = (int)(mid[1] - polar);
+        p.setColor(Color.RED);
+        c.drawLine(0, polarY1, w, polarY1, p);
+    }
+
 }

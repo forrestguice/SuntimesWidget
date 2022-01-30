@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2020 Forrest Guice
+    Copyright (C) 2020-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -44,6 +44,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.settings.SolarEventIcons;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -192,7 +193,8 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
             if (event != null)
             {
-                Drawable eventIcon = SolarEventIcons.getIconDrawable(context, event, (int)iconSize, (int)iconSize);
+                boolean northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && (item.location.getLatitudeAsDouble() < 0);
+                Drawable eventIcon = SolarEventIcons.getIconDrawable(context, event, (int)iconSize, (int)iconSize, northward);
                 text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, event));
                 text_event.setCompoundDrawables(eventIcon, null, null, null);
 

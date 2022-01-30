@@ -41,6 +41,7 @@ import android.os.Parcelable;
 import android.os.SystemClock;
 import android.preference.PreferenceActivity;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -465,7 +466,8 @@ public class SuntimesActivity extends AppCompatActivity
         if (lightMapDialog != null)
         {
             lightMapDialog.themeViews(this, appThemeOverride);
-            lightMapDialog.setData(dataset);
+            lightMapDialog.setData(context, dataset);
+            lightMapDialog.setDialogListener(lightMapListener);
             lightMapDialog.updateViews();
             //Log.d("DEBUG", "LightMapDialog updated on restore.");
         }
@@ -484,6 +486,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (equinoxDialog != null)
         {
             equinoxDialog.themeViews(this, appThemeOverride);
+            equinoxDialog.setDialogListener(equinoxDialogListener);
             equinoxDialog.updateViews();
             //Log.d("DEBUG", "EquinoxDialog updated on restore.");
         }
@@ -493,6 +496,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             moonDialog.themeViews(this, appThemeOverride);
             moonDialog.setData((dataset_moon != null) ? dataset_moon : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
+            moonDialog.setDialogListener(moonDialogListener);
             moonDialog.updateViews();
             //Log.d("DEBUG", "MoonDialog updated on restore.");
         }
@@ -1527,7 +1531,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             AlarmCreateDialog dialog = new AlarmCreateDialog();
             dialog.loadSettings(SuntimesActivity.this);
-            dialog.setEvent((event != null ? event.name() : dialog.getEvent()), WidgetSettings.loadLocationPref(this, 0));
+            dialog.setEvent((event != null ? event.name() : dialog.getEvent()), WidgetSettings.loadLocationPref(this, 0));    // TODO: bug; dialog fails to switch tabs if already showing "by time"
             dialog.setShowAlarmListButton(true);
             dialog.setOnAcceptedListener(onScheduleAlarm);
             dialog.setOnNeutralListener(onManageAlarms);
@@ -1927,11 +1931,15 @@ public class SuntimesActivity extends AppCompatActivity
 
         @Override
         public void onLightmapClick(CardAdapter adapter, int position) {
-            showLightMapDialog();
+            if (Math.abs(CardAdapter.TODAY_POSITION - position) > 1) {
+                showSunPositionAt(adapter.initData(SuntimesActivity.this, position).first.dataNoon.calendar().getTimeInMillis());
+            } else showLightMapDialog();
         }
         @Override
         public boolean onLightmapLongClick(CardAdapter adapter, int position) {
-            showLightMapDialog();
+            if (Math.abs(CardAdapter.TODAY_POSITION - position) > 1) {
+                showSunPositionAt(adapter.initData(SuntimesActivity.this, position).first.dataNoon.calendar().getTimeInMillis());
+            } else showLightMapDialog();
             return true;
         }
 
@@ -2078,26 +2086,57 @@ public class SuntimesActivity extends AppCompatActivity
     /**
      * Show the lightmap dialog.
      */
-    protected void showLightMapDialog()
+    protected LightMapDialog showLightMapDialog()
     {
         final LightMapDialog lightMapDialog = new LightMapDialog();
         lightMapDialog.themeViews(this, appThemeOverride);
-        lightMapDialog.setData(dataset);
+        lightMapDialog.setData(SuntimesActivity.this, dataset);
+        lightMapDialog.setDialogListener(lightMapListener);
         lightMapDialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTMAP);
+        return lightMapDialog;
+    }
+    private LightMapDialog.LightMapDialogListener lightMapListener = new LightMapDialog.LightMapDialogListener() {
+        @Override
+        public void onShowMap( long suggested) {
+            showMapPositionAt(suggested);
+        }
+        @Override
+        public void onShowDate(long suggested) {
+            scrollToDate(suggested);
+        }
+    };
+    public void showSunPositionAt(@Nullable Long dateTime)
+    {
+        FragmentManager fragments = getSupportFragmentManager();
+        LightMapDialog dialog = (LightMapDialog) fragments.findFragmentByTag(DIALOGTAG_LIGHTMAP);
+        if (dialog != null) {
+            dialog.dismiss();
+        }
+        dialog = showLightMapDialog();
+        dialog.showPositionAt(dateTime);
     }
 
-    protected void showWorldMapDialog()
+    /**
+     * Show the world map dialog.
+     */
+    protected WorldMapDialog showWorldMapDialog()
     {
         WorldMapDialog worldMapDialog = new WorldMapDialog();
         worldMapDialog.themeViews(this, appThemeOverride);
         worldMapDialog.setData(dataset);
         worldMapDialog.setDialogListener(worldMapListener);
         worldMapDialog.show(getSupportFragmentManager(), DIALOGTAG_WORLDMAP);
+        return worldMapDialog;
     }
     private WorldMapDialog.WorldMapDialogListener worldMapListener = new WorldMapDialog.WorldMapDialogListener()
     {
         @Override
-        public void onConfigDate(long suggested)
+        public void onShowPosition(long suggested) {
+            showSunPositionAt(suggested - (60 * 1000));
+        }
+
+        @Override
+        public void onShowDate(long suggested)
         {
             /**WidgetSettings.DateInfo dateInfo = new WidgetSettings.DateInfo(suggested);
             WidgetSettings.saveDateModePref(SuntimesActivity.this, 0,
@@ -2106,14 +2145,23 @@ public class SuntimesActivity extends AppCompatActivity
             WidgetSettings.saveDatePref(SuntimesActivity.this, 0, dateInfo);
             afterConfigDate();*/
 
-            int position = card_adapter.findPositionForDate(SuntimesActivity.this, suggested);
-            if (position >= 0 && position < CardAdapter.MAX_POSITIONS) {
-                setUserSwappedCard(true, "onConfigDate");
-                card_view.scrollToPosition(position);
-            }
+            scrollToDate(suggested);
         }
     };
+    public void showMapPositionAt(@Nullable Long dateTime)
+    {
+        FragmentManager fragments = getSupportFragmentManager();
+        WorldMapDialog dialog = (WorldMapDialog) fragments.findFragmentByTag(DIALOGTAG_WORLDMAP);
+        if (dialog != null) {
+            dialog.dismiss();
+        }
+        dialog = showWorldMapDialog();
+        dialog.showPositionAt(dateTime);
+    }
 
+    /**
+     * Show the solstice and equinox view/dialog.
+     */
     protected void showEquinoxView( boolean value )
     {
         equinoxLayout.setVisibility((value ? View.VISIBLE : View.GONE ));
@@ -2124,16 +2172,66 @@ public class SuntimesActivity extends AppCompatActivity
         final EquinoxDialog equinoxDialog = new EquinoxDialog();
         updateEquinoxDialogColumnWidth(equinoxDialog);
         equinoxDialog.themeViews(this, appThemeOverride);
+        equinoxDialog.setDialogListener(equinoxDialogListener);
         equinoxDialog.show(getSupportFragmentManager(), DIALOGTAG_EQUINOX);
     }
+    protected void dismissEquinoxDialog()
+    {
+        FragmentManager fragments = getSupportFragmentManager();
+        EquinoxDialog equinoxDialog = (EquinoxDialog) fragments.findFragmentByTag(DIALOGTAG_EQUINOX);
+        if (equinoxDialog != null) {
+            equinoxDialog.dismiss();
+        }
+    }
+    private EquinoxDialog.EquinoxDialogListener equinoxDialogListener = new EquinoxDialog.EquinoxDialogListener()
+    {
+        @Override
+        public void onOptionsModified() {
+            updateViews(SuntimesActivity.this);
+            if (AppSettings.loadShowEquinoxPref(SuntimesActivity.this)) {
+                dismissEquinoxDialog();   // dismiss the dialog if also showing the view (so any changed options are immediately visible)
+            }
+        }
+        @Override
+        public void onSetAlarm( WidgetSettings.SolsticeEquinoxMode suggestedEvent ) {
+            scheduleAlarm(SolarEvents.valueOf(suggestedEvent));
+        }
+        @Override
+        public void onShowMap( long suggestDate ) {
+            showMapPositionAt(suggestDate);
+        }
+        @Override
+        public void onShowPosition( long suggested ) {
+            showSunPositionAt(suggested);
+        }
+        @Override
+        public void onShowDate(long suggested) {
+            scrollToDate(suggested);
+        }
+    };
 
+    /**
+     * Show the moon dialog.
+     */
     protected void showMoonDialog()
     {
         MoonDialog moonDialog = new MoonDialog();
         moonDialog.themeViews(this, appThemeOverride);
         moonDialog.setData((dataset_moon != null) ? dataset_moon : new SuntimesMoonData(SuntimesActivity.this, 0, "moon"));
+        moonDialog.setDialogListener(moonDialogListener);
         moonDialog.show(getSupportFragmentManager(), DIALOGTAG_MOON);
     }
+    private MoonDialog.MoonDialogListener moonDialogListener = new MoonDialog.MoonDialogListener()
+    {
+        @Override
+        public void onSetAlarm( SolarEvents suggestedEvent ) {
+            scheduleAlarm(suggestedEvent);
+        }
+        @Override
+        public void onShowMap( long suggestDate ) {
+            showWorldMapDialog();   // TODO: at suggested date
+        }
+    };
 
     /**
      * Show data source labels / ui.
@@ -2163,6 +2261,14 @@ public class SuntimesActivity extends AppCompatActivity
         } else {
             card_scroller.setTargetPosition(position);   // near; animated scroll to item
             card_layout.startSmoothScroll(card_scroller);
+        }
+    }
+    protected void scrollToDate(long suggested)
+    {
+        int position = card_adapter.findPositionForDate(SuntimesActivity.this, suggested);
+        if (position >= 0 && position < CardAdapter.MAX_POSITIONS) {
+            setUserSwappedCard(true, "scrollToDate");
+            card_view.scrollToPosition(position);
         }
     }
     private RecyclerView.OnScrollListener onCardScrollListener = new RecyclerView.OnScrollListener()

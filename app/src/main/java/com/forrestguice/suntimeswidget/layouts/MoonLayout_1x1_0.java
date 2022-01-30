@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2018 Forrest Guice
+   Copyright (C) 2018-2022 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -63,6 +63,7 @@ public class MoonLayout_1x1_0 extends MoonLayout
     @Override
     public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
     {
+        super.prepareForUpdate(context, appWidgetId, data);
         order = WidgetSettings.loadRiseSetOrderPref(context, appWidgetId);
         this.layoutID = chooseMoonLayout(R.layout.layout_widget_moon_1x1_0, R.layout.layout_widget_moon_1x1_01, data, order);
     }

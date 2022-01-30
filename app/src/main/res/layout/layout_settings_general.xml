@@ -151,6 +151,18 @@
 
         </LinearLayout>
 
+        <LinearLayout android:id="@+id/appwidget_general_localize_hemisphere_layout" android:visibility="gone"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+            <CheckBox
+                android:id="@+id/appwidget_general_localize_hemisphere"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/configLabel_general_localize_hemisphere" />
+
+        </LinearLayout>
+
         <LinearLayout android:id="@+id/appwidget_general_showWeeks_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
