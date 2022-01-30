@@ -448,6 +448,14 @@ public class LightMapDialog extends BottomSheetDialogFragment
                     }
                     return true;
 
+                case R.id.action_observerheight:
+                    showShadowObjHeightPopup(context, sunShadowObj);
+                    return true;
+
+                case R.id.action_timezone:
+                    showTimeZoneMenu(context, sunTime);
+                    return true;
+
                 case R.id.action_help:
                     showHelp(getContext());
                     return true;

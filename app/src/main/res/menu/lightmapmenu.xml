@@ -24,6 +24,16 @@
             </menu>
         </item>
 
+        <item android:id="@+id/action_observerheight"
+            android:icon="?attr/icActionShadow"
+            android:title="@string/configLabel_general_observerheight"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/action_timezone"
+            android:icon="?attr/icActionTime"
+            android:title="@string/configLabel_timezone"
+            app:showAsAction="never" />
+
         <item android:id="@+id/action_help"
             android:icon="?attr/icActionHelp"
             android:title="@string/configAction_help"
