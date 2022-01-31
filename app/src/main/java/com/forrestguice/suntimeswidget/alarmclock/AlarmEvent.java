@@ -342,9 +342,9 @@ public class AlarmEvent
         iconView.setBackgroundResource(iconRes);
     }
 
-    public static AlarmEventAdapter createAdapter(Context context)
+    public static AlarmEventAdapter createAdapter(Context context, boolean northward)
     {
-        SolarEvents.SolarEventsAdapter solarEventsAdapter = SolarEvents.createAdapter(context);
+        SolarEvents.SolarEventsAdapter solarEventsAdapter = SolarEvents.createAdapter(context, northward);
         ArrayList<AlarmEventItem> items = new ArrayList<>();
         for (SolarEvents event : solarEventsAdapter.getChoices()) {
             items.add(new AlarmEventItem(event));
