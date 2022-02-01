@@ -283,6 +283,32 @@ public class AlarmNotifications extends BroadcastReceiver
             } else Log.e(TAG, "cancelAlarmTimeouts: AlarmManager is null!");
         } else Log.e(TAG, "cancelAlarmTimeouts: context is null!");
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Find the alarm expected to trigger next and cache its ID in prefs.
+     * @param context context
+     */
+    protected static void findUpcomingAlarm(final Context context, @Nullable final AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener onFinished)
+    {
+        AlarmDatabaseAdapter.AlarmListTask findTask = new AlarmDatabaseAdapter.AlarmListTask(context);
+        findTask.setParam_enabledOnly(true);
+        findTask.setParam_nowMillis(System.currentTimeMillis());
+        findTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener()
+        {
+            @Override
+            public void onItemsLoaded(Long[] ids)
+            {
+                AlarmSettings.saveUpcomingAlarmId(context, ids[0]);
+                if (onFinished != null) {
+                    onFinished.onItemsLoaded(ids);
+                }
+            }
+        });
+        findTask.execute();
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
