@@ -280,6 +280,24 @@ public class AlarmNotifications extends BroadcastReceiver
             } else Log.e(TAG, "cancelAlarmTimeouts: AlarmManager is null!");
         } else Log.e(TAG, "cancelAlarmTimeouts: context is null!");
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private static final String PACKAGE_POWEROFFALARM = "com.qualcomm.qti.poweroffalarm";
+    private static final String ACTION_POWEROFFALARM_SET = "org.codeaurora.poweroffalarm.action.SET_ALARM";
+    private static final String ACTION_POWEROFFALARM_CANCEL = "org.codeaurora.poweroffalarm.action.CANCEL_ALARM";
+    private static final String EXTRA_POWEROFFALARM_TIME = "time";
+
+    protected static Intent getPowerOffAlarmIntent(@Nullable String action, long datetime)
+    {
+        Intent intent = new Intent((action != null) ? action : ACTION_POWEROFFALARM_SET);
+        intent.setPackage(PACKAGE_POWEROFFALARM);
+        intent.putExtra(EXTRA_POWEROFFALARM_TIME, datetime);
+        if (Build.VERSION.SDK_INT >= 16) {
+            intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+        }
+        return intent;
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
