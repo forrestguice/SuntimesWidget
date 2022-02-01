@@ -246,6 +246,9 @@ public class AlarmNotifications extends BroadcastReceiver
         } else Log.e(TAG, "addAlarmTimeout: context is null!");
     }
 
+    protected static void cancelAlarmTimeouts(Context context, AlarmClockItem item) {
+        cancelAlarmTimeouts(context, item.getUri());
+    }
     protected static void cancelAlarmTimeout(Context context, String action, Uri data) {
         cancelAlarmTimeouts(context, new String[] {action}, data);
     }
