@@ -97,6 +97,7 @@ import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_C
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_DATETAPACTION;
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_DATETAPACTION1;
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_NOTETAPACTION;
+import static com.forrestguice.suntimeswidget.settings.AppSettings.findPermission;
 
 /**
  * A preferences activity for the main app;
@@ -1709,6 +1710,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                     return true;
                 }
             });
+            powerOffAlarmsPref.setSummary(context.getString(R.string.configLabel_alarms_poweroffalarms_summary, findPermission(context, AlarmNotifications.PERMISSION_POWEROFFALARM)));
         }
 
         Preference showLauncher = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_SHOWLAUNCHER);

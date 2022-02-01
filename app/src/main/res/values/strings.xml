@@ -904,7 +904,7 @@
     <string name="configLabel_alarms_showlauncher_summary">Show alarm clock icon in the app tray.</string>
 
     <string name="configLabel_alarms_poweroffalarms">Power Off Alarm</string>    <!-- TODO -->
-    <string name="configLabel_alarms_poweroffalarms_summary">Wake the device from the power off state (hardware dependent).</string>    <!-- TODO -->
+    <string name="configLabel_alarms_poweroffalarms_summary">Wake the device from the power off state.\npackage: <xliff:g id="packageName">%s</xliff:g></string>    <!-- TODO -->
 
     <!--
          APP SETTINGS

@@ -32,6 +32,7 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -648,6 +649,29 @@ public class AppSettings
             long bench_end = System.nanoTime();
             Log.d("checkCustomPermissions", "permission check took :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
         }
+    }
+
+    /**
+     * @param context context
+     * @param permissionName permission
+     * @return package that owns this permission, or null of permission dne
+     */
+    @Nullable
+    public static String findPermission(@NonNull Context context, String permissionName)
+    {
+        String packageName = null;
+        PackageManager packageManager = context.getPackageManager();
+        for (PackageInfo packageInfo : packageManager.getInstalledPackages(PackageManager.GET_PERMISSIONS)) {
+            if (packageInfo.permissions != null) {
+                for (PermissionInfo permission : packageInfo.permissions) {
+                    if (permission != null && permission.name.equals(permissionName)) {
+                        packageName = packageInfo.packageName;
+                        break;
+                    }
+                }
+            }
+        }
+        return packageName;
     }
 
 }
