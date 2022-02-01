@@ -246,8 +246,12 @@ public class AlarmNotifications extends BroadcastReceiver
         } else Log.e(TAG, "addAlarmTimeout: context is null!");
     }
 
-    protected static void cancelAlarmTimeouts(Context context, AlarmClockItem item) {
+    protected static void cancelAlarmTimeouts(Context context, AlarmClockItem item)
+    {
         cancelAlarmTimeouts(context, item.getUri());
+        if (AlarmSettings.loadPrefPowerOffAlarms(context)) {
+            cancelPowerOffAlarm(context, item);
+        }
     }
     protected static void cancelAlarmTimeout(Context context, String action, Uri data) {
         cancelAlarmTimeouts(context, new String[] {action}, data);
@@ -289,6 +293,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
     /**
      * Find the alarm expected to trigger next and cache its ID in prefs.
+     * If using 'power off alarms' this is the alarm that should wake the device.
      * @param context context
      */
     protected static void findUpcomingAlarm(final Context context, @Nullable final AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener onFinished)
@@ -302,6 +307,9 @@ public class AlarmNotifications extends BroadcastReceiver
             public void onItemsLoaded(Long[] ids)
             {
                 AlarmSettings.saveUpcomingAlarmId(context, ids[0]);
+                if (AlarmSettings.loadPrefPowerOffAlarms(context) && ids[0] != null) {
+                    setPowerOffAlarm(context, ids[0]);
+                }
                 if (onFinished != null) {
                     onFinished.onItemsLoaded(ids);
                 }
@@ -309,6 +317,19 @@ public class AlarmNotifications extends BroadcastReceiver
         });
         findTask.execute();
     }
+
+    protected static void setPowerOffAlarm(final Context context, long alarmId)
+    {
+        AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(context);
+        itemTask.addAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener() {
+            @Override
+            public void onFinished(Boolean result, AlarmClockItem alarm) {
+                setPowerOffAlarm(context, alarm);
+            }
+        });
+        itemTask.execute(alarmId);
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -317,6 +338,15 @@ public class AlarmNotifications extends BroadcastReceiver
     private static final String ACTION_POWEROFFALARM_CANCEL = "org.codeaurora.poweroffalarm.action.CANCEL_ALARM";
     public static final String PERMISSION_POWEROFFALARM = "org.codeaurora.permission.POWER_OFF_ALARM";
     private static final String EXTRA_POWEROFFALARM_TIME = "time";
+
+    protected static void setPowerOffAlarm(Context context, @NonNull AlarmClockItem alarm) {
+        Log.d(TAG, "setPowerOffAlarm: " + alarm.rowID + " at " + alarm.alarmtime);
+        context.sendBroadcast(getPowerOffAlarmIntent(ACTION_POWEROFFALARM_SET, alarm.alarmtime));
+    }
+    protected static void cancelPowerOffAlarm(Context context, @NonNull AlarmClockItem alarm) {
+        Log.d(TAG, "cancelPowerOffAlarm: " + alarm.rowID + " at " + alarm.alarmtime);
+        context.sendBroadcast(getPowerOffAlarmIntent(ACTION_POWEROFFALARM_CANCEL, alarm.alarmtime));
+    }
 
     protected static Intent getPowerOffAlarmIntent(@Nullable String action, long datetime)
     {
