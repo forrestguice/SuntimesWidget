@@ -286,6 +286,7 @@ public class AlarmNotifications extends BroadcastReceiver
     private static final String PACKAGE_POWEROFFALARM = "com.qualcomm.qti.poweroffalarm";
     private static final String ACTION_POWEROFFALARM_SET = "org.codeaurora.poweroffalarm.action.SET_ALARM";
     private static final String ACTION_POWEROFFALARM_CANCEL = "org.codeaurora.poweroffalarm.action.CANCEL_ALARM";
+    public static final String PERMISSION_POWEROFFALARM = "org.codeaurora.permission.POWER_OFF_ALARM";
     private static final String EXTRA_POWEROFFALARM_TIME = "time";
 
     protected static Intent getPowerOffAlarmIntent(@Nullable String action, long datetime)

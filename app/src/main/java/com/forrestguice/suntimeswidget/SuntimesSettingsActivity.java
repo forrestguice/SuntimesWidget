@@ -45,6 +45,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -58,6 +59,7 @@ import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
 import com.forrestguice.suntimeswidget.actions.LoadActionDialog;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -1593,6 +1595,11 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_alarms, false);
             addPreferencesFromResource(R.xml.preference_alarms);
+
+            Activity activity = getActivity();
+            if (AlarmSettings.loadPrefPowerOffAlarms(activity)) {
+                checkPermissions(activity, true);
+            }
         }
 
         @Override
@@ -1601,6 +1608,19 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             super.onResume();
             initPref_alarms(AlarmPrefsFragment.this);
         }
+
+        public static final int REQUEST_PERMISSION_POWEROFFALARMS = 100;
+        protected boolean checkPermissions(Activity activity, boolean requestIfMissing)
+        {
+            if (ContextCompat.checkSelfPermission(activity, AlarmNotifications.PERMISSION_POWEROFFALARM) != PackageManager.PERMISSION_GRANTED) {
+                if (requestIfMissing) {
+                    ActivityCompat.requestPermissions(activity, new String[]{AlarmNotifications.PERMISSION_POWEROFFALARM}, REQUEST_PERMISSION_POWEROFFALARMS);
+                }
+                return false;
+            } else return true;
+        }
+        @Override
+        public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {}
     }
 
     private void initPref_alarms()
@@ -1612,7 +1632,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
     @SuppressLint("ResourceType")
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private static void initPref_alarms(final PreferenceFragment fragment)
+    private static void initPref_alarms(final AlarmPrefsFragment fragment)
     {
         final Context context = fragment.getActivity();
         if (context == null) {
@@ -1671,6 +1691,24 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         Preference volumesPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_VOLUMES);
         if (volumesPrefs != null) {
             volumesPrefs.setOnPreferenceClickListener(onVolumesPrefsClicked(context));
+        }
+
+        Preference powerOffAlarmsPref = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_POWEROFFALARMS);
+        if (powerOffAlarmsPref != null)
+        {
+            powerOffAlarmsPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+            {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue)
+                {
+                    Activity activity = fragment.getActivity();
+                    boolean enabled = (Boolean)newValue;
+                    if (enabled && activity != null) {
+                        fragment.checkPermissions(activity, true);
+                    }
+                    return true;
+                }
+            });
         }
 
         Preference showLauncher = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_SHOWLAUNCHER);
