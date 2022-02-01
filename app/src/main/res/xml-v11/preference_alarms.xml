@@ -93,4 +93,15 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="@string/configLabel_experimental" >
+
+        <CheckBoxPreference
+            android:key="app_alarms_poweroffalarms"
+            android:title="@string/configLabel_alarms_poweroffalarms"
+            android:summary="@string/configLabel_alarms_poweroffalarms_summary"
+            android:defaultValue="false" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>
