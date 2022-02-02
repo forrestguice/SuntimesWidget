@@ -327,7 +327,7 @@
 
     <!-- Widget Setting: advanced / experimental -->
     <string name="configLabel_advanced">Advanced</string>                        <!-- group title -->    <!-- TODO: shortened "Advanced Settings" to "Advanced" -->
-    <string name="configLabel_experimental">Experimental Settings</string>                <!-- group title -->
+    <string name="configLabel_experimental">Experimental</string>                <!-- group title -->    <!-- TODO: shortened "Experimental SEttings" to "Experimental" -->
     <string name="configLabel_general_scanPlugins">Data Source Plugins</string>                                <!-- checkbox label -->
     <string name="configLabel_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary -->
 
@@ -925,6 +925,9 @@
     <string name="configLabel_alarmMisc">Miscellaneous</string>
     <string name="configLabel_alarms_showlauncher">Launcher Icon</string>
     <string name="configLabel_alarms_showlauncher_summary">Show alarm clock icon in the app tray.</string>
+
+    <string name="configLabel_alarms_poweroffalarms">Power Off Alarm</string>    <!-- TODO -->
+    <string name="configLabel_alarms_poweroffalarms_summary">Wake the device from the power off state.\npackage: <xliff:g id="packageName">%s</xliff:g></string>    <!-- TODO -->
 
     <!--
          APP SETTINGS
