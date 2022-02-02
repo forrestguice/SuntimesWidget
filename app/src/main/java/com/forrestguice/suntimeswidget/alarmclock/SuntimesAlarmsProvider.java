@@ -25,6 +25,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -172,24 +173,29 @@ public class SuntimesAlarmsProvider extends ContentProvider
         Object[] row = new Object[columns.length];
         for (int i=0; i<columns.length; i++)
         {
-            switch (cursor.getType(i))
+            if (Build.VERSION.SDK_INT >= 11)
             {
-                case Cursor.FIELD_TYPE_INTEGER:
-                    row[i] = cursor.getLong(i);
-                    break;
-                case Cursor.FIELD_TYPE_FLOAT:
-                    row[i] = cursor.getDouble(i);
-                    break;
-                case Cursor.FIELD_TYPE_BLOB:
-                    row[i] = cursor.getBlob(i);
-                    break;
-                case Cursor.FIELD_TYPE_STRING:
-                    row[i] = cursor.getString(i);
-                    break;
-                case Cursor.FIELD_TYPE_NULL:
-                default:
-                    row[i] = null;
-                    break;
+                switch (cursor.getType(i))
+                {
+                    case Cursor.FIELD_TYPE_INTEGER:
+                        row[i] = cursor.getLong(i);
+                        break;
+                    case Cursor.FIELD_TYPE_FLOAT:
+                        row[i] = cursor.getDouble(i);
+                        break;
+                    case Cursor.FIELD_TYPE_BLOB:
+                        row[i] = cursor.getBlob(i);
+                        break;
+                    case Cursor.FIELD_TYPE_STRING:
+                        row[i] = cursor.getString(i);
+                        break;
+                    case Cursor.FIELD_TYPE_NULL:
+                    default:
+                        row[i] = null;
+                        break;
+                }
+            } else {
+                row[i] = cursor.getString(i);
             }
         }
         return row;

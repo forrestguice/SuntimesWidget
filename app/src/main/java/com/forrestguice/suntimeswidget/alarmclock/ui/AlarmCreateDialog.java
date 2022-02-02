@@ -275,7 +275,9 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.DATE, -1);
-            picker.setMinDate(calendar.getTimeInMillis());
+            if (Build.VERSION.SDK_INT >= 11) {
+                picker.setMinDate(calendar.getTimeInMillis());
+            }
 
             Button btn_neutral = (Button) dialogContent.findViewById(R.id.dialog_button_neutral);
             if (btn_neutral != null)

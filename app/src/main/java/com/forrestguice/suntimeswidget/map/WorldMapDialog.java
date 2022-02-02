@@ -1030,13 +1030,18 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         String mapTag = mapMode.getMapTag();
         String mapBackgroundString = WorldMapWidgetSettings.loadWorldMapBackground(context, 0, mapTag, center);
         Uri uri = mapBackgroundString != null ? Uri.parse(mapBackgroundString) : null;
-        if (uri != null) {
-            try {
-                context.getContentResolver().releasePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            } catch (SecurityException e) {
-                Log.w(LOGTAG, "Failed to release URI permissions for " + uri.toString() + "; " + e);
+
+        if (Build.VERSION.SDK_INT >= 19)
+        {
+            if (uri != null) {
+                try {
+                    context.getContentResolver().releasePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                } catch (SecurityException e) {
+                    Log.w(LOGTAG, "Failed to release URI permissions for " + uri.toString() + "; " + e);
+                }
             }
         }
+
         WorldMapWidgetSettings.deleteWorldMapBackground(context,0, mapTag, center);
         WorldMapWidgetSettings.saveWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapTag, true);   // reset tint flag
 
@@ -1539,7 +1544,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     PackageInfo packageInfo0 = packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, PackageManager.GET_PERMISSIONS);
                     if (hasPermission(packageInfo0))
                     {
-                        String title = resolveInfo.activityInfo.metaData.getString(META_MENUITEM_TITLE, resolveInfo.activityInfo.name);
+                        String metadata = resolveInfo.activityInfo.metaData.getString(META_MENUITEM_TITLE);
+                        String title = (metadata != null ? metadata : resolveInfo.activityInfo.name);
                         //int icon = R.drawable.ic_suntimes;    // TODO: icon
                         matches.add(new ActivityItemInfo(context, title, resolveInfo.activityInfo));
 

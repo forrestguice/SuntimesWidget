@@ -964,7 +964,7 @@ public class EquinoxView extends LinearLayout
                 {
                     WidgetSettings.SolsticeEquinoxMode mode = WidgetSettings.SolsticeEquinoxMode.values()[i];
                     if (holder.getSelected() == mode) {
-                        holder.notes.get(i).contextMenu.callOnClick();
+                        holder.notes.get(i).contextMenu.performClick();
 
                     } else {
                         setSelection(mode);

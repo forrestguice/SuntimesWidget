@@ -87,7 +87,8 @@ public class AlarmAddon
                     PackageInfo packageInfo0 = packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, PackageManager.GET_PERMISSIONS);
                     if (hasPermission(packageInfo0))
                     {
-                        String title = resolveInfo.activityInfo.metaData.getString(KEY_EVENT_PICKER_TITLE, resolveInfo.activityInfo.name);
+                        String metadata = resolveInfo.activityInfo.metaData.getString(KEY_EVENT_PICKER_TITLE);
+                        String title = (metadata != null ? metadata : resolveInfo.activityInfo.name);
                         matches.add(new EventPickerInfo(title, resolveInfo.activityInfo));
 
                     } else {

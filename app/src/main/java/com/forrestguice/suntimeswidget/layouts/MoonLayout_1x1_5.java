@@ -168,7 +168,9 @@ public class MoonLayout_1x1_5 extends MoonLayout
         } else {
             views.setTextViewText(R.id.info_moon_elevation_current, "");
             views.setTextViewText(R.id.info_moon_azimuth_current, "");
-            views.setContentDescription(R.id.info_moon_azimuth_current, "");
+            if (Build.VERSION.SDK_INT >= 15) {
+                views.setContentDescription(R.id.info_moon_azimuth_current, "");
+            }
         }
     }
 
