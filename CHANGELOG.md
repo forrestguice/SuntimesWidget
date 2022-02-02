@@ -1,14 +1,10 @@
 ### ~
 
-* adds widget option to "use the app location"; defaults false.
-* adds widget option to override 12h/24h time format setting.
-* adds widget option to "fill entire cell" or "align base" to top-left, right, bottom, etc.
-* adds widget option to "scale text and icons"; extra large widgets.
-* renames widget option "grow with available space" to "swap layouts to fill space"; default changed to false; adds help text.
-* enhances widget layout selector to show a themed preview.
-* enhances widget theme selector to show background preview.
-* enhances widget time mode selector (color tabs).
-* reorganizes widget options.
+### v0.13.19 (2022-01-24)
+* adds help for `data source` setting; adds link to online help (#223).
+* reorganizes General settings (#223, #533); `show seconds` restored to `general`; `data source` moved into `advanced`; hides `experimental`. 
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#543 by James Liu).
+* updates translation to Norwegian (nb) (#542 by FTno).
 
 ### v0.13.18 (2022-01-14)
 * changes the solstice/equinox card to always include seconds when expanded (#533).
