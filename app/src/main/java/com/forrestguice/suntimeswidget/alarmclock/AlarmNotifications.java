@@ -295,8 +295,10 @@ public class AlarmNotifications extends BroadcastReceiver
      * Find the alarm expected to trigger next and cache its ID in prefs.
      * If using 'power off alarms' this is the alarm that should wake the device.
      * @param context context
+     * @param saveResult true save to prefs (and set power off alarm); false no action is performed (the result is available in onFinished)
+     * @param onFinished task AlarmListTaskListener
      */
-    protected static void findUpcomingAlarm(final Context context, @Nullable final AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener onFinished)
+    protected static void findUpcomingAlarm(final Context context, final boolean saveResult, @Nullable final AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener onFinished)
     {
         AlarmDatabaseAdapter.AlarmListTask findTask = new AlarmDatabaseAdapter.AlarmListTask(context);
         findTask.setParam_enabledOnly(true);
@@ -306,9 +308,13 @@ public class AlarmNotifications extends BroadcastReceiver
             @Override
             public void onItemsLoaded(Long[] ids)
             {
-                AlarmSettings.saveUpcomingAlarmId(context, ids[0]);
-                if (AlarmSettings.loadPrefPowerOffAlarms(context) && ids[0] != null) {
-                    setPowerOffAlarm(context, ids[0]);
+                Log.d(TAG, "findUpcomingAlarm: " + (saveResult ? "saved " : "found ") + ids[0]);
+                if (saveResult)
+                {
+                    AlarmSettings.saveUpcomingAlarmId(context, ids[0]);
+                    if (AlarmSettings.loadPrefPowerOffAlarms(context) && ids[0] != null) {
+                        setPowerOffAlarm(context, ids[0]);
+                    }
                 }
                 if (onFinished != null) {
                     onFinished.onItemsLoaded(ids);
@@ -316,6 +322,9 @@ public class AlarmNotifications extends BroadcastReceiver
             }
         });
         findTask.execute();
+    }
+    protected static void findUpcomingAlarm(final Context context, @Nullable final AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener onFinished) {
+        findUpcomingAlarm(context, true, onFinished);
     }
 
     protected static void setPowerOffAlarm(final Context context, long alarmId)
@@ -325,6 +334,20 @@ public class AlarmNotifications extends BroadcastReceiver
             @Override
             public void onFinished(Boolean result, AlarmClockItem alarm) {
                 setPowerOffAlarm(context, alarm);
+            }
+        });
+        itemTask.execute(alarmId);
+    }
+    protected static void cancelPowerOffAlarm(final Context context, long alarmId, @Nullable final AlarmDatabaseAdapter.AlarmItemTaskListener onFinished)
+    {
+        AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(context);
+        itemTask.addAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener() {
+            @Override
+            public void onFinished(Boolean result, AlarmClockItem alarm) {
+                cancelPowerOffAlarm(context, alarm);
+                if (onFinished != null) {
+                    onFinished.onFinished(result, alarm);
+                }
             }
         });
         itemTask.execute(alarmId);
@@ -1040,18 +1063,26 @@ public class AlarmNotifications extends BroadcastReceiver
                     } else if (AlarmNotifications.ACTION_DELETE.equals(action)) {
                         Log.d(TAG, "ACTION_DELETE: clear all");
                         AlarmNotifications.stopAlert();
-                        AlarmDatabaseAdapter.AlarmListTask alarmListTask = new AlarmDatabaseAdapter.AlarmListTask(getApplicationContext());
-                        alarmListTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
-                            @Override
-                            public void onItemsLoaded(Long[] ids)
-                            {
-                                cancelAlarmTimeouts(getApplicationContext(), ids);
-                                AlarmDatabaseAdapter.AlarmDeleteTask clearTask = new AlarmDatabaseAdapter.AlarmDeleteTask(getApplicationContext());
-                                clearTask.setTaskListener(onClearedState(getApplicationContext()));
-                                clearTask.execute();
-                            }
-                        });
-                        alarmListTask.execute();
+                        if (AlarmSettings.loadPrefPowerOffAlarms(getApplicationContext()))
+                        {
+                            findUpcomingAlarm(getApplicationContext(), false, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
+                                @Override
+                                public void onItemsLoaded(Long[] ids) {
+                                    cancelPowerOffAlarm(getApplicationContext(), ids[0], new AlarmDatabaseAdapter.AlarmItemTaskListener() {
+                                        @Override
+                                        public void onFinished(Boolean result, AlarmClockItem item) {
+                                            AlarmDatabaseAdapter.AlarmListTask clearTask = new AlarmDatabaseAdapter.AlarmListTask(getApplicationContext());
+                                            clearTask.setAlarmItemTaskListener(clearTaskListener);
+                                            clearTask.execute();
+                                        }
+                                    });
+                                }
+                            });
+                        } else {
+                            AlarmDatabaseAdapter.AlarmListTask clearTask = new AlarmDatabaseAdapter.AlarmListTask(getApplicationContext());
+                            clearTask.setAlarmItemTaskListener(clearTaskListener);
+                            clearTask.execute();
+                        }
 
                     } else Log.w(TAG, "onStartCommand: null data!");
                 }
@@ -1059,6 +1090,18 @@ public class AlarmNotifications extends BroadcastReceiver
 
             return START_STICKY;
         }
+
+        private AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener clearTaskListener = new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener()
+        {
+            @Override
+            public void onItemsLoaded(Long[] ids)
+            {
+                cancelAlarmTimeouts(getApplicationContext(), ids);
+                AlarmDatabaseAdapter.AlarmDeleteTask clearTask = new AlarmDatabaseAdapter.AlarmDeleteTask(getApplicationContext());
+                clearTask.setTaskListener(onClearedState(getApplicationContext()));
+                clearTask.execute();
+            }
+        };
 
         @Nullable
         @Override
@@ -1366,7 +1409,7 @@ public class AlarmNotifications extends BroadcastReceiver
             return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
                 @Override
-                public void onFinished(Boolean result, AlarmClockItem item)
+                public void onFinished(Boolean result, final AlarmClockItem item)
                 {
                     if (item.type == AlarmClockItem.AlarmType.ALARM)
                     {
@@ -1400,6 +1443,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             showAlarmPlayingToast(getApplicationContext(), item);
                             context.sendBroadcast(getFullscreenBroadcast(item.getUri()));   // update fullscreen activity
                         }
+                        findUpcomingAlarm(context, null);
                     }
                 }
             };
