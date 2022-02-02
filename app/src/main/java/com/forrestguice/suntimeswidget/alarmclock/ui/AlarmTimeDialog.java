@@ -279,7 +279,7 @@ public class AlarmTimeDialog extends DialogFragment
             calendar.setTimeInMillis(datetime);
             return utils.calendarDateDisplayString(context, calendar, true).toString();
         } else {
-            return context.getString(R.string.date_any);
+            return "";    //return context.getString(R.string.date_any);
         }
     }
 
