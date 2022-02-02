@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014-2019 Forrest Guice
+    Copyright (C) 2014-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical" android:id="@+id/root_layout">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/app_menubar"
@@ -83,17 +83,20 @@
                 android:layout_height="wrap_content"
                 android:focusable="true" android:focusableInTouchMode="true">
 
-                <LinearLayout android:id="@+id/appwidget_location_layout"
+                <LinearLayout android:id="@+id/appwidget_widget_layout"
                     style="@style/SunsetTimeWidget_dark"
                     android:layout_marginBottom="@dimen/settingsGroup_margin"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:background="?attr/settingsCardBackground">
+                    <include layout="@layout/layout_settings_widget" />
+                </LinearLayout>
 
-                    <com.forrestguice.suntimeswidget.LocationConfigView
-                        android:id="@+id/appwidget_location_config"
-                        android:layout_width="match_parent" android:layout_height="wrap_content" />
-                    <!-- <include layout="@layout/layout_settings_location" /> -->
-
+                <LinearLayout android:id="@+id/appwidget_appearance_layout"
+                    style="@style/SunsetTimeWidget_dark"
+                    android:layout_marginBottom="@dimen/settingsGroup_margin"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:background="?attr/settingsCardBackground">
+                    <include layout="@layout/layout_settings_appearance" />
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/appwidget_general_layout"
@@ -112,12 +115,30 @@
                     <include layout="@layout/layout_settings_timezone" />
                 </LinearLayout>
 
-                <LinearLayout android:id="@+id/appwidget_appearance_layout"
+                <LinearLayout android:id="@+id/appwidget_location_layout"
                     style="@style/SunsetTimeWidget_dark"
                     android:layout_marginBottom="@dimen/settingsGroup_margin"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:background="?attr/settingsCardBackground">
-                    <include layout="@layout/layout_settings_appearance" />
+
+                    <com.forrestguice.suntimeswidget.LocationConfigView
+                        android:id="@+id/appwidget_location_config"
+                        android:layout_width="match_parent" android:layout_height="wrap_content" />
+                    <!-- <include layout="@layout/layout_settings_location" /> -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingRight="12dp" android:paddingLeft="12dp" android:paddingTop="@dimen/settingsGroup_padding"
+                        android:paddingBottom="5dp">
+
+                        <CheckBox
+                            android:id="@+id/appwidget_location_fromapp"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/configLabel_location_fromapp" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/appwidget_action_layout"

@@ -78,13 +78,13 @@ public class WorldMapWidgetSettings
     /**
      * WorldMapWidgetMode
      */
-    public static enum WorldMapWidgetMode
+    public static enum WorldMapWidgetMode implements WidgetSettings.WidgetModeDisplay
     {
         EQUIRECTANGULAR_SIMPLE("Simple", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_0, false, 0, 0, "Equidistant Rectangular", PROJ4_EQD),
-        EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_0, false, 0, 0, "Equidistant Rectangular", PROJ4_EQD),
+        EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_1, false, 0, 0, "Equidistant Rectangular", PROJ4_EQD),
         EQUIAZIMUTHAL_SIMPLE("Polar [north]", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0, false, 90, 0, "Equidistant Azimuthal", PROJ4_AEQD),
-        EQUIAZIMUTHAL_SIMPLE1("Polar [south]", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0, false, -90, 0, "Equidistant Azimuthal", PROJ4_AEQD),
-        EQUIAZIMUTHAL_SIMPLE2("Polar [location]", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0, true, 33.45, -111.94, "Equidistant Azimuthal", PROJ4_AEQD1);
+        EQUIAZIMUTHAL_SIMPLE1("Polar [south]", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_1, false, -90, 0, "Equidistant Azimuthal", PROJ4_AEQD),
+        EQUIAZIMUTHAL_SIMPLE2("Equidistant Azimuthal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_2, true, 33.45, -111.94, "Equidistant Azimuthal", PROJ4_AEQD1);
 
         private final int layoutID;
         private String displayString;
@@ -108,6 +108,11 @@ public class WorldMapWidgetSettings
         public String toString()
         {
             return displayString;
+        }
+
+        @Override
+        public int getLayoutID() {
+            return layoutID;
         }
 
         public String getDisplayString()
@@ -156,6 +161,26 @@ public class WorldMapWidgetSettings
             EQUIAZIMUTHAL_SIMPLE2.setProjectionTitle(context.getString(R.string.worldmap_projection_equiazimuthal));
             EQUIRECTANGULAR_SIMPLE.setProjectionTitle(context.getString(R.string.worldmap_projection_equirectangular));
             EQUIRECTANGULAR_BLUEMARBLE.setProjectionTitle(context.getString(R.string.worldmap_projection_equirectangular));
+        }
+
+        public static WorldMapWidgetMode findMode(int layoutID)
+        {
+            for (WorldMapWidgetMode mode : values()) {
+                if (mode.layoutID == layoutID) {
+                    return mode;
+                }
+            }
+            return null;
+        }
+
+        public static boolean supportsLayout(int layoutID)
+        {
+            for (WidgetSettings.WidgetModeDisplay mode : values()) {
+                if (mode.getLayoutID() == layoutID) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 

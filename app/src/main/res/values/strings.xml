@@ -331,10 +331,29 @@
     <string name="configLabel_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
+    <string name="configLabel_widgetlayout">Layout</string>           <!-- group title -->  <!-- TODO -->
+
+    <string-array name="widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
+        <!--<item>Fill</item>-->
+        <item>Top-Left</item>
+        <item>Top</item>
+        <item>Top-Right</item>
+        <item>Left</item>
+        <item>Center</item>
+        <item>Right</item>
+        <item>Bottom-Left</item>
+        <item>Bottom</item>
+        <item>Bottom-Right</item>
+    </string-array>  <!-- TODO -->
+
+    <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Appearance</string>           <!-- group title -->    <!-- TODO: shortened "Appearance Settings" to "Appearance" -->
     <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Theme:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Grow with available space (resizeable)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_allowResize">Swap layouts to fill available space</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_showLabels">Show Labels</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">Show Title</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Title:</string>              <!-- edittext label -->
@@ -436,9 +455,11 @@
     <string name="widgetMode1x1_moonillum">Moon illumination only</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphasenext">Next major phase</string>     <!-- setting -->
 
-    <string name="configLabel_appearance_1x1mode">1x1 Layout:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x2mode">3x2 Layout:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x3mode">3x3 Layout:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_1x1mode">1x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_2x1mode">2x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x1mode">3x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x2mode">3x2:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x3mode">3x3:</string>     <!-- spinner label -->  <!-- TODO -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Do Nothing</string>           <!-- setting -->
@@ -478,6 +499,7 @@
     <string name="configLabel_location_name">Name:</string>                      <!-- edittext label -->
     <string name="configHint_location_name">(optional)</string>                  <!-- edittext hint -->
     <string name="configHint_location_name0">Place Name</string>                  <!-- edittext hint -->
+    <string name="configLabel_location_fromapp">Use the app location</string>                  <!-- edittext hint -->  <!-- TODO -->
 
     <string name="configAction_getFix">Get Location</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">Edit</string>         <!-- button (contentDescription) -->
@@ -506,6 +528,7 @@
     <string name="timeFormatMode_system">System format</string>          <!-- setting -->
     <string name="timeFormatMode_12hr">12-hour</string>                  <!-- setting -->
     <string name="timeFormatMode_24hr">24-hour</string>                  <!-- setting -->
+    <string name="timeFormatMode_suntimes">Suntimes format</string>     <!-- setting -->  <!-- TODO -->
 
     <string name="configLabel_timeFormatMode">Time Format</string>             <!-- preference label -->
     <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
@@ -1761,6 +1784,14 @@
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Help</string>
+    <string name="help_appearance_allowresize"><![CDATA[
+      <big>Swap layouts to fill available space</big><br/><br/>
+      <i><b>[enabled]</b></i> The widget will switch between layouts depending on available space.<br/><br/>
+      <i><b>[disabled]</b></i> The widget maintains its initial layout when resized. Use this with the \"<i>scale text and icons</i>\" option for extra large widgets.<br/>
+    ]]></string>  <!-- TODO -->
+    <string name="help_appearance_widgetlayout"><![CDATA[
+      This widget was created with a <b>%1$s</b> <em>initial layout</em>.<br/></br/>
+    ]]></string>  <!-- TODO -->
     <string name="help_appearance_title"><![CDATA[
         The following title substitutions are supported:<br/>
         <br/>

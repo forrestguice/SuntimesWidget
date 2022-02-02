@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2017 Forrest Guice
+   Copyright (C) 2017-2021 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,15 +19,24 @@
 package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
+import android.os.Build;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 public abstract class SolsticeLayout extends SuntimesLayout
 {
+    protected float titleSizeSp = 12;
+    protected float textSizeSp = 12;
+    protected float timeSizeSp = 12;
+    protected float suffixSizeSp = 8;
+    protected int[] paddingDp = new int[] {0, 0};
+    protected boolean scaleBase = WidgetSettings.PREF_DEF_APPEARANCE_SCALEBASE;
+
     public SolsticeLayout()
     {
         initLayoutID();
@@ -38,9 +47,9 @@ public abstract class SolsticeLayout extends SuntimesLayout
      * modify its state based on the supplied data.
      * @param data the data object (should be the same as supplied to updateViews)
      */
-    public void prepareForUpdate(SuntimesEquinoxSolsticeData data)
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesEquinoxSolsticeData data)
     {
-        // EMPTY
+        this.scaleBase = WidgetSettings.loadScaleBasePref(context, appWidgetId);
     }
 
     /**
@@ -60,5 +69,19 @@ public abstract class SolsticeLayout extends SuntimesLayout
         //Log.v("DEBUG", "title text: " + titleText);
     }
 
+    @Override
+    public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
+    {
+        super.themeViews(context, views, theme);
+        paddingDp = theme.getPadding();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            titleSizeSp = theme.getTitleSizeSp();
+            textSizeSp = theme.getTextSizeSp();
+            timeSizeSp = theme.getTimeSizeSp();
+            suffixSizeSp = theme.getTimeSuffixSizeSp();
+        }
+    }
 
 }

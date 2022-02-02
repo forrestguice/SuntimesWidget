@@ -20,7 +20,11 @@ package com.forrestguice.suntimeswidget.layouts;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.v4.content.res.ResourcesCompat;
 import android.text.SpannableString;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -56,10 +60,50 @@ public class MoonLayout_1x1_1 extends MoonLayout
     }
 
     @Override
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
+    {
+        super.prepareForUpdate(context, appWidgetId, data);
+        this.layoutID = (scaleBase ? R.layout.layout_widget_moon_1x1_1_align_fill : R.layout.layout_widget_moon_1x1_1);
+    }
+
+    @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesMoonData data)
     {
         super.updateViews(context, appWidgetId, views, data);
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            if (WidgetSettings.loadScaleTextPref(context, appWidgetId))
+            {
+                int showTitle = (WidgetSettings.loadShowTitlePref(context, appWidgetId) ? 1 : 0);
+                int[] maxDp = new int[] {maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), (maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle)) / (showLabels ? 2 : 1)};
+                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, "0000", timeSizeSp, ClockLayout.CLOCKFACE_MAX_SP, "", suffixSizeSp, iconSizeDp);
+                if (adjustedSizeSp[0] > timeSizeSp)
+                {
+                    float textScale = Math.max(adjustedSizeSp[0] / timeSizeSp, 1);
+                    float scaledPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textScale * 2, context.getResources().getDisplayMetrics());
+
+                    views.setViewPadding(R.id.text_title, (int)(scaledPadding), 0, (int)(scaledPadding), 0);
+                    views.setViewPadding(R.id.text_info_moonphase, (int)scaledPadding/2, 0, (int)scaledPadding, 0);
+                    views.setViewPadding(R.id.text_info_moonillum, (int)scaledPadding/2, 0, (int)scaledPadding, (int)(scaledPadding)/2);
+
+                    /*views.setViewPadding(R.id.icon_info_moonphase_full, (int)(scaledPadding), 0, 0, 0);
+                    views.setViewPadding(R.id.icon_info_moonphase_new, (int)(scaledPadding), 0, 0, 0);
+                    views.setViewPadding(R.id.icon_info_moonphase_waxing_crescent, (int)(scaledPadding), 0, 0, 0);
+                    views.setViewPadding(R.id.icon_info_moonphase_waxing_quarter, (int)(scaledPadding), 0, 0, 0);
+                    views.setViewPadding(R.id.icon_info_moonphase_waxing_gibbous, (int)(scaledPadding), 0, 0, 0);
+                    views.setViewPadding(R.id.icon_info_moonphase_waning_crescent, (int)(scaledPadding), 0, 0, 0);
+                    views.setViewPadding(R.id.icon_info_moonphase_waning_quarter, (int)(scaledPadding), 0, 0, 0);
+                    views.setViewPadding(R.id.icon_info_moonphase_waning_gibbous, (int)(scaledPadding), 0, 0, 0);*/
+
+                    views.setTextViewTextSize(R.id.text_info_moonillum, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
+                    views.setTextViewTextSize(R.id.text_info_moonphase, TypedValue.COMPLEX_UNIT_DIP, textScale * textSizeSp);
+
+                    // TODO: scale icons
+                }
+            }
+        }
 
         NumberFormat percentage = NumberFormat.getPercentInstance();
         String illum = percentage.format(data.getMoonIlluminationToday());
@@ -67,8 +111,7 @@ public class MoonLayout_1x1_1 extends MoonLayout
         SpannableString illumNoteSpan = (boldTime ? SuntimesUtils.createBoldColorSpan(null, illumNote, illum, illumColor) : SuntimesUtils.createColorSpan(null, illumNote, illum, illumColor));
         views.setTextViewText(R.id.text_info_moonillum, illumNoteSpan);
 
-        for (MoonPhaseDisplay moonPhase : MoonPhaseDisplay.values())
-        {
+        for (MoonPhaseDisplay moonPhase : MoonPhaseDisplay.values()) {
             views.setViewVisibility(moonPhase.getView(), View.GONE);
         }
 
@@ -84,8 +127,7 @@ public class MoonLayout_1x1_1 extends MoonLayout
             views.setViewVisibility(phase.getView(), View.VISIBLE);
 
             Integer phaseColor = phaseColors.get(phase);
-            if (phaseColor != null)
-            {
+            if (phaseColor != null) {
                 views.setTextColor(R.id.text_info_moonphase, phaseColor);
             }
         }

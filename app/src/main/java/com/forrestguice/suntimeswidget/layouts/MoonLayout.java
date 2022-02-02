@@ -36,6 +36,14 @@ import java.util.HashMap;
 
 public abstract class MoonLayout extends SuntimesLayout
 {
+    protected float titleSizeSp = 10;
+    protected float textSizeSp = 12;
+    protected float timeSizeSp = 12;
+    protected float suffixSizeSp = 8;
+    protected float iconSizeDp = 32;
+
+    protected boolean scaleBase = WidgetSettings.PREF_DEF_APPEARANCE_SCALEBASE;
+
     public MoonLayout()
     {
         initLayoutID();
@@ -47,6 +55,7 @@ public abstract class MoonLayout extends SuntimesLayout
      * @param data the data object (should be the same as supplied to updateViews)
      */
     public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data) {
+        this.scaleBase = WidgetSettings.loadScaleBasePref(context, appWidgetId);
         northward = (WidgetSettings.loadLocalizeHemispherePref(context, appWidgetId) && (data.location().getLatitudeAsDouble() < 0));
     }
     protected boolean northward = false;
@@ -68,7 +77,7 @@ public abstract class MoonLayout extends SuntimesLayout
         //Log.v("DEBUG", "title text: " + titleText);
     }
 
-    protected void updateViewsMoonRiseSetText(Context context, RemoteViews views, SuntimesMoonData data, boolean showSeconds, WidgetSettings.RiseSetOrder order)
+    protected void updateViewsMoonRiseSetText(Context context, RemoteViews views, SuntimesMoonData data, boolean showSeconds, WidgetSettings.RiseSetOrder order, WidgetSettings.TimeFormatMode timeFormat)
     {
         Calendar moonrise, moonset;
         if (order == WidgetSettings.RiseSetOrder.TODAY)
@@ -144,24 +153,29 @@ public abstract class MoonLayout extends SuntimesLayout
             }
         }
 
-        SuntimesUtils.TimeDisplayText riseText = utils.calendarTimeShortDisplayString(context, moonrise, showSeconds);
+        SuntimesUtils.TimeDisplayText riseText = utils.calendarTimeShortDisplayString(context, moonrise, showSeconds, timeFormat);
         String riseString = riseText.getValue();
         CharSequence riseSequence = (boldTime ? SuntimesUtils.createBoldSpan(null, riseString, riseString) : riseString);
         views.setTextViewText(R.id.text_time_moonrise, riseSequence);
         views.setTextViewText(R.id.text_time_moonrise_suffix, riseText.getSuffix());
 
-        SuntimesUtils.TimeDisplayText setText = utils.calendarTimeShortDisplayString(context, moonset, showSeconds);
+        SuntimesUtils.TimeDisplayText setText = utils.calendarTimeShortDisplayString(context, moonset, showSeconds, timeFormat);
         String setString = setText.getValue();
         CharSequence setSequence = (boldTime ? SuntimesUtils.createBoldSpan(null, setString, setString) : setString);
         views.setTextViewText(R.id.text_time_moonset, setSequence);
         views.setTextViewText(R.id.text_time_moonset_suffix, setText.getSuffix());
     }
 
-    /**@Override
+    @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
     {
         super.themeViews(context, views, theme);
-    }*/
+
+        titleSizeSp = theme.getTitleSizeSp();
+        textSizeSp = theme.getTextSizeSp();
+        timeSizeSp = theme.getTimeSizeSp();
+        suffixSizeSp = theme.getTimeSuffixSizeSp();
+    }
 
     protected HashMap<MoonPhaseDisplay, Integer> phaseColors = new HashMap<>();
 

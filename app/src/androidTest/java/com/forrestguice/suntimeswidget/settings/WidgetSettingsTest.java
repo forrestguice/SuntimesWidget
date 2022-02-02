@@ -391,19 +391,37 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         assertTrue("location does not match default! " + pref0.getUri() + " != " + testloc0.getUri(), pref0.equals(testloc0));
     }
 
-    @Test public void test_locationAltitudeEnabledPref()
+    @Test
+    public void test_locationAltitudeEnabledPref()
     {
-	WidgetSettings.saveLocationAltitudeEnabledPref(context, appWidgetId, true);
-	boolean isEnabled0 = WidgetSettings.loadLocationAltitudeEnabledPref(context, appWidgetId);
-	assertTrue("value does not match! " + isEnabled0, isEnabled0);
+	    WidgetSettings.saveLocationAltitudeEnabledPref(context, appWidgetId, true);
+	    boolean isEnabled0 = WidgetSettings.loadLocationAltitudeEnabledPref(context, appWidgetId);
+	    assertTrue("value does not match! " + isEnabled0, isEnabled0);
 
-	WidgetSettings.saveLocationAltitudeEnabledPref(context, appWidgetId, false);
-	boolean isEnabled1 = WidgetSettings.loadLocationAltitudeEnabledPref(context, appWidgetId);
-	assertTrue("value does not match! " + isEnabled1, !isEnabled1);
+	    WidgetSettings.saveLocationAltitudeEnabledPref(context, appWidgetId, false);
+	    boolean isEnabled1 = WidgetSettings.loadLocationAltitudeEnabledPref(context, appWidgetId);
+	    assertTrue("value does not match! " + isEnabled1, !isEnabled1);
 
-	WidgetSettings.deleteLocationAltitudeEnabledPref(context, appWidgetId);
-	boolean isEnabled2 = WidgetSettings.loadLocationAltitudeEnabledPref(context, appWidgetId);
-	assertTrue("value does not match! " + isEnabled2, isEnabled2 == WidgetSettings.PREF_DEF_LOCATION_ALTITUDE_ENABLED);
+	    WidgetSettings.deleteLocationAltitudeEnabledPref(context, appWidgetId);
+	    boolean isEnabled2 = WidgetSettings.loadLocationAltitudeEnabledPref(context, appWidgetId);
+	    assertTrue("value does not match! " + isEnabled2, isEnabled2 == WidgetSettings.PREF_DEF_LOCATION_ALTITUDE_ENABLED);
+    }
+
+
+    @Test
+    public void test_locationFromAppPref()
+    {
+        WidgetSettings.saveLocationFromAppPref(context, appWidgetId, true);
+        boolean isEnabled0 = WidgetSettings.loadLocationFromAppPref(context, appWidgetId);
+        assertTrue("value does not match! " + isEnabled0, isEnabled0);
+
+        WidgetSettings.saveLocationFromAppPref(context, appWidgetId, false);
+        boolean isEnabled1 = WidgetSettings.loadLocationFromAppPref(context, appWidgetId);
+        assertTrue("value does not match! " + isEnabled1, !isEnabled1);
+
+        WidgetSettings.deleteLocationFromAppPref(context, appWidgetId);
+        boolean isEnabled2 = WidgetSettings.loadLocationFromAppPref(context, appWidgetId);
+        assertTrue("value does not match! " + isEnabled2, isEnabled2 == WidgetSettings.PREF_DEF_LOCATION_FROMAPP);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -603,6 +621,57 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         WidgetSettings.deleteAllowResizePref(context, appWidgetId);
         boolean pref0 = WidgetSettings.loadAllowResizePref(context, appWidgetId);
         assertTrue("mode should be default (true) but was " + pref0, pref0 && pref0 == WidgetSettings.PREF_DEF_APPEARANCE_ALLOWRESIZE);
+    }
+
+    @Test
+    public void test_scaleTextPref()
+    {
+        WidgetSettings.saveScaleTextPref(context, appWidgetId, false);
+        boolean pref1 = WidgetSettings.loadScaleTextPref(context, appWidgetId);
+        assertFalse("pref should be false but was " + pref1, pref1);
+
+        WidgetSettings.saveScaleTextPref(context, appWidgetId, true);
+        boolean pref2 = WidgetSettings.loadScaleTextPref(context, appWidgetId);
+        assertTrue("pref should be true but was " + pref2, pref2);
+
+        WidgetSettings.deleteScaleTextPref(context, appWidgetId);
+        boolean pref0 = WidgetSettings.loadScaleTextPref(context, appWidgetId);
+        assertFalse("mode should be default (false) but was " + pref0, pref0 && pref0 == WidgetSettings.PREF_DEF_APPEARANCE_SCALETEXT);
+    }
+
+    @Test
+    public void test_scaleBasePref()
+    {
+        WidgetSettings.saveScaleBasePref(context, appWidgetId, false);
+        boolean pref1 = WidgetSettings.loadScaleBasePref(context, appWidgetId);
+        assertFalse("pref should be false but was " + pref1, pref1);
+
+        WidgetSettings.saveScaleBasePref(context, appWidgetId, true);
+        boolean pref2 = WidgetSettings.loadScaleBasePref(context, appWidgetId);
+        assertTrue("pref should be true but was " + pref2, pref2);
+
+        WidgetSettings.deleteScaleBasePref(context, appWidgetId);
+        boolean pref0 = WidgetSettings.loadScaleBasePref(context, appWidgetId);
+        assertFalse("mode should be default (false) but was " + pref0, pref0 && pref0 == WidgetSettings.PREF_DEF_APPEARANCE_SCALEBASE);
+    }
+
+    @Test
+    public void test_widgetGravityPref()
+    {
+        WidgetSettings.saveWidgetGravityPref(context, appWidgetId, WidgetSettings.WidgetGravity.TOP.getPosition());
+        int pref2 = WidgetSettings.loadWidgetGravityPref(context, appWidgetId);
+        assertEquals(WidgetSettings.WidgetGravity.TOP.getPosition(), pref2);
+
+        WidgetSettings.WidgetGravity[] values = WidgetSettings.WidgetGravity.values();
+        for (int i=0; i<values.length; i++)
+        {
+            WidgetSettings.saveWidgetGravityPref(context, appWidgetId, values[i].getPosition());
+            assertEquals(values[i].getPosition(), WidgetSettings.loadWidgetGravityPref(context, appWidgetId));
+        }
+
+        WidgetSettings.deleteWidgetGravityPref(context, appWidgetId);
+        int pref0 = WidgetSettings.loadWidgetGravityPref(context, appWidgetId);
+        assertEquals(WidgetSettings.PREF_DEF_APPEARANCE_GRAVITY.getPosition(), pref0);
     }
 
     @Test

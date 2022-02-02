@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -22,6 +22,9 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.TextView;
 
 /**
  * Widget config activity (for resizable widget that falls back to 2x1 layout).
@@ -62,4 +65,26 @@ public class SuntimesConfigActivity0_2x1 extends SuntimesConfigActivity0
         minSize[1] = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
         return minSize;
     }
+
+    protected void initWidgetModeLayout(Context context)
+    {
+        super.initWidgetModeLayout(context);
+        showOption2x1LayoutMode(true);
+    }
+
+    @Override
+    protected TextView getPrimaryWidgetModeLabel() {
+        return label_2x1mode;
+    }
+
+    @Override
+    protected View[] getPrimaryWidgetModeViews() {
+        return new View[] { label_2x1mode, spinner_2x1mode };
+    }
+
+    @Override
+    protected View[] getSecondaryWidgetModeViews() {
+        return new View[] { label_1x1mode, spinner_1x1mode, label_3x1mode, spinner_3x1mode, label_3x2mode, spinner_3x2mode, label_3x3mode, spinner_3x3mode };
+    }
+
 }

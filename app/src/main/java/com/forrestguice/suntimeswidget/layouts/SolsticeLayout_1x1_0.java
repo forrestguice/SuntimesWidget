@@ -40,6 +40,9 @@ import java.util.Calendar;
  */
 public class SolsticeLayout_1x1_0 extends SolsticeLayout
 {
+    protected WidgetSettings.SolsticeEquinoxMode timeMode = WidgetSettings.SolsticeEquinoxMode.EQUINOX_SPRING;
+    protected int timeColor = Color.WHITE;
+
     public SolsticeLayout_1x1_0()
     {
         super();
@@ -57,57 +60,98 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
     }
 
     @Override
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesEquinoxSolsticeData data)
+    {
+        super.prepareForUpdate(context, appWidgetId, data);
+        int position = scaleBase ? 0 : WidgetSettings.loadWidgetGravityPref(context, appWidgetId);
+        this.layoutID = chooseLayout(position); //(scaleBase ? R.layout.layout_widget_solstice_1x1_0_align_fill : R.layout.layout_widget_solstice_1x1_0);
+        timeMode = data.timeMode();
+    }
+
+    protected int chooseLayout(int position)
+    {
+        switch (position) {
+            case 0: return R.layout.layout_widget_solstice_1x1_0_align_fill;
+            case 1: return R.layout.layout_widget_solstice_1x1_0_align_float_1;
+            case 2: return R.layout.layout_widget_solstice_1x1_0_align_float_2;
+            case 3: return R.layout.layout_widget_solstice_1x1_0_align_float_3;
+            case 4: return R.layout.layout_widget_solstice_1x1_0_align_float_4;
+            case 6: return R.layout.layout_widget_solstice_1x1_0_align_float_6;
+            case 7: return R.layout.layout_widget_solstice_1x1_0_align_float_7;
+            case 8: return R.layout.layout_widget_solstice_1x1_0_align_float_8;
+            case 9: return R.layout.layout_widget_solstice_1x1_0_align_float_9;
+            case 5: default: return R.layout.layout_widget_solstice_1x1_0;
+        }
+    }
+
+    @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesEquinoxSolsticeData data)
     {
         super.updateViews(context, appWidgetId, views, data);
 
-        if (data != null && data.isCalculated())
+        boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, appWidgetId);
+        boolean showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
+        boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
+        boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
+        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
+        WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+
+        Calendar event = null;
+        if (data != null && data.isCalculated()) {
+            Calendar now = Calendar.getInstance();
+            event = getEventCalendar(now, data, WidgetSettings.loadTrackingModePref(context, appWidgetId));
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            if (WidgetSettings.loadScaleTextPref(context, appWidgetId))
+            {
+                int showTitle = (WidgetSettings.loadShowTitlePref(context, appWidgetId) ? 1 : 0);
+                int[] maxDp = new int[] {maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), ((maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle)) / (showLabels ? 4 : 3))};
+                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, " September 22, ", timeSizeSp, ClockLayout.CLOCKFACE_MAX_SP, "", suffixSizeSp);
+                if (adjustedSizeSp[0] > timeSizeSp)
+                {
+                    float textScale = Math.max(adjustedSizeSp[0] / timeSizeSp, 1);
+                    float scaledPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textScale * 2, context.getResources().getDisplayMetrics());
+
+                    views.setTextViewTextSize(R.id.text_time_event, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
+                    views.setTextViewTextSize(R.id.text_time_event_note, TypedValue.COMPLEX_UNIT_DIP, textSizeSp * textScale);
+                    views.setTextViewTextSize(R.id.text_time_event_label, TypedValue.COMPLEX_UNIT_DIP, textSizeSp * textScale);
+
+                    views.setViewPadding(R.id.text_title, (int)(scaledPadding), 0, (int)(scaledPadding), 0);
+                    views.setViewPadding(R.id.text_time_event_label, (int)(2*scaledPadding), 0, (int)(2*scaledPadding), 0);
+                    views.setViewPadding(R.id.text_time_event_note, (int)(scaledPadding), 0, (int)(scaledPadding), (int)(scaledPadding / 2));
+                }
+            }
+        }
+
+        if (event != null)
         {
             Calendar now = Calendar.getInstance();
-            Calendar event = getEventCalendar(now, data, WidgetSettings.loadTrackingModePref(context, appWidgetId));
 
-            if (event != null)
-            {
-                boolean showWeeks = WidgetSettings.loadShowWeeksPref(context, appWidgetId);
-                boolean showHours = WidgetSettings.loadShowHoursPref(context, appWidgetId);
-                boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
-                boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
-                boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
+            views.setTextViewText(R.id.text_time_event_label, data.timeMode().getLongDisplayString());
+            views.setViewVisibility(R.id.text_time_event_label, (showLabels ? View.VISIBLE : View.GONE));
 
-                views.setTextViewText(R.id.text_time_event_label, data.timeMode().getLongDisplayString());
-                views.setViewVisibility(R.id.text_time_event_label, (showLabels ? View.VISIBLE : View.GONE));
+            TimeDisplayText eventString = utils.calendarDateTimeDisplayString(context, event, showTimeDate, showSeconds, timeFormat);
+            views.setTextViewText(R.id.text_time_event, eventString.getValue());
 
-                TimeDisplayText eventString = utils.calendarDateTimeDisplayString(context, event, showTimeDate, showSeconds);
-                views.setTextViewText(R.id.text_time_event, eventString.getValue());
-
-                int noteStringId = R.string.hence;
-                if (event.before(now))
-                {
-                    noteStringId = R.string.ago;
-                }
-
-                String noteTime = utils.timeDeltaDisplayString(now.getTime(), event.getTime(), showWeeks, showHours).toString();
-                String noteString = context.getString(noteStringId, noteTime);
-                SpannableString noteSpan = (boldTime ? SuntimesUtils.createBoldColorSpan(null, noteString, noteTime, timeColor) : SuntimesUtils.createColorSpan(null, noteString, noteTime, timeColor));
-                views.setTextViewText(R.id.text_time_event_note, noteSpan);
-
-            } else {
-                views.setTextViewText(R.id.text_time_event, "");
-                views.setTextViewText(R.id.text_time_event_note, context.getString(R.string.feature_not_supported_by_source));
-                views.setTextViewText(R.id.text_time_event_label, "");
-                views.setViewVisibility(R.id.text_time_event_label, View.GONE);
+            int noteStringId = R.string.hence;
+            if (event.before(now)) {
+                noteStringId = R.string.ago;
             }
+
+            String noteTime = utils.timeDeltaDisplayString(now.getTime(), event.getTime(), showWeeks, showHours).toString();
+            String noteString = context.getString(noteStringId, noteTime);
+            SpannableString noteSpan = (boldTime ? SuntimesUtils.createBoldColorSpan(null, noteString, noteTime, timeColor) : SuntimesUtils.createColorSpan(null, noteString, noteTime, timeColor));
+            views.setTextViewText(R.id.text_time_event_note, noteSpan);
+
         } else {
             views.setTextViewText(R.id.text_time_event, "");
-            views.setTextViewText(R.id.text_time_event_note, context.getString(R.string.time_loading));
+            views.setTextViewText(R.id.text_time_event_note, context.getString(R.string.feature_not_supported_by_source));
             views.setTextViewText(R.id.text_time_event_label, "");
             views.setViewVisibility(R.id.text_time_event_label, View.GONE);
         }
     }
-
-    private WidgetSettings.SolsticeEquinoxMode timeMode = WidgetSettings.SolsticeEquinoxMode.EQUINOX_SPRING;
-    private int timeColor = Color.WHITE;
-    private boolean boldTime = false;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
@@ -117,7 +161,6 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
         timeColor = theme.getTimeColor();
         int textColor = theme.getTextColor();
         int eventColor = theme.getSeasonColor(timeMode);
-        boldTime = theme.getTimeBold();
 
         views.setTextColor(R.id.text_time_event_note, textColor);
         views.setTextColor(R.id.text_time_event, eventColor);
@@ -125,19 +168,10 @@ public class SolsticeLayout_1x1_0 extends SolsticeLayout
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            float textSize = theme.getTextSizeSp();
-            float timeSize = theme.getTimeSizeSp();
-
-            views.setTextViewTextSize(R.id.text_time_event_label, TypedValue.COMPLEX_UNIT_DIP, textSize);
-            views.setTextViewTextSize(R.id.text_time_event_note, TypedValue.COMPLEX_UNIT_DIP, textSize);
-            views.setTextViewTextSize(R.id.text_time_event, TypedValue.COMPLEX_UNIT_DIP, timeSize);
+            views.setTextViewTextSize(R.id.text_time_event_label, TypedValue.COMPLEX_UNIT_DIP, theme.getTextSizeSp());
+            views.setTextViewTextSize(R.id.text_time_event_note, TypedValue.COMPLEX_UNIT_DIP, theme.getTextSizeSp());
+            views.setTextViewTextSize(R.id.text_time_event, TypedValue.COMPLEX_UNIT_DIP, theme.getTimeSizeSp());
         }
-    }
-
-    @Override
-    public void prepareForUpdate(SuntimesEquinoxSolsticeData data)
-    {
-        timeMode = data.timeMode();
     }
 
     public static Calendar getEventCalendar(Calendar now, SuntimesEquinoxSolsticeData data, WidgetSettings.TrackingMode trackingMode)

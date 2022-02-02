@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2014-2018 Forrest Guice
+   Copyright (C) 2014-2021 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,7 +20,12 @@ package com.forrestguice.suntimeswidget.layouts;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.util.Log;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
@@ -42,6 +47,21 @@ public abstract class SuntimesLayout
 
     protected boolean boldTitle = false;
     protected boolean boldTime = false;
+
+    protected int category = -1;
+    public void setCategory(int category)
+    {
+        this.category = category;
+    }
+
+    protected int[] maxDimensionsDp = new int[] {40, 40};
+    public void setMaxDimensionsDp(int[] size)
+    {
+        maxDimensionsDp[0] = size[0];
+        maxDimensionsDp[1] = size[1];
+    }
+
+    protected int[] paddingDp = new int[] {0, 0, 0, 0};    // left, top, right, bottom
 
     /**
      * All SuntimesLayout subclasses must implement this method and provide a value for
@@ -119,6 +139,7 @@ public abstract class SuntimesLayout
         views.setTextColor(R.id.text_title, titleColor);
         boldTitle = theme.getTitleBold();
         boldTime = theme.getTimeBold();
+        paddingDp = theme.getPadding();
     }
 
     /**
@@ -131,6 +152,90 @@ public abstract class SuntimesLayout
     {
         /* EMPTY */
         return false;
+    }
+
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public static float[] adjustTextSize(Context context, int[] maxDimensionsDp, int[] paddingDp,
+                                         String fontFamily, boolean bold, String timeText, float timeSizeSp, float timeSizeMaxSp, String suffixText, float suffixSizeSp)
+    {
+        return adjustTextSize(context, maxDimensionsDp, paddingDp, fontFamily, bold, timeText, timeSizeSp, timeSizeMaxSp, suffixText, suffixSizeSp, 0);
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public static float[] adjustTextSize(Context context, int[] maxDimensionsDp, int[] paddingDp,
+                                         String fontFamily, boolean bold, String timeText, float timeSizeSp, float timeSizeMaxSp, String suffixText, float suffixSizeSp, float iconWidthDp)
+    {
+        float adjustedTimeSizeSp = timeSizeSp;
+        Rect timeBounds = new Rect();
+        Paint timePaint = new Paint();
+        timePaint.setTypeface(Typeface.create(fontFamily, bold ? Typeface.BOLD : Typeface.NORMAL));
+
+        float adjustedSuffixSizeSp = suffixSizeSp;
+        Rect suffixBounds = new Rect();
+        Paint suffixPaint = new Paint();
+        suffixPaint.setTypeface(Typeface.create(fontFamily, Typeface.BOLD));
+
+        float adjustedIconWidthDp = iconWidthDp;
+        float adjustedIconWidthPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, adjustedIconWidthDp, context.getResources().getDisplayMetrics());
+
+        float stepSizeSp = 0.1f;                                      // upscale by stepSize (until maxWidth is filled)
+        float suffixRatio = suffixSizeSp / timeSizeSp;                // preserve suffix proportions while scaling
+        float iconRatio = iconWidthDp / timeSizeSp;
+        //float maxWidthDp = (maxDimensionsDp[0] - paddingDp[0] - 8);   // maxWidth is adjusted for padding and margins
+        //float maxHeightDp = (maxDimensionsDp[1] - paddingDp[1] - 8);  // maxHeight is adjusted for padding and margins
+        float maxWidthDp = Math.max(maxDimensionsDp[0], 0);
+        float maxHeightDp = Math.max(maxDimensionsDp[1], 0);
+        float maxWidthPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, maxWidthDp, context.getResources().getDisplayMetrics());
+        float maxHeightPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, maxHeightDp, context.getResources().getDisplayMetrics());
+
+        int c = 0;
+        int limit = 1000;
+
+        while ((timeBounds.width() + suffixBounds.width() + adjustedIconWidthPx) < maxWidthPixels                         // scale up to fill width
+                && (adjustedTimeSizeSp < timeSizeMaxSp || timeSizeMaxSp == -1))
+        {
+            adjustedTimeSizeSp += stepSizeSp;
+            adjustedSuffixSizeSp += stepSizeSp * suffixRatio;
+            adjustedIconWidthDp += stepSizeSp * iconRatio;
+            adjustedIconWidthPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, adjustedIconWidthDp, context.getResources().getDisplayMetrics());
+            getTextBounds(context,  timeText, adjustedTimeSizeSp, timePaint, timeBounds);
+            getTextBounds(context, suffixText, adjustedSuffixSizeSp, suffixPaint, suffixBounds);
+
+            if (c > limit) {
+                Log.w("SuntimesLayout", "adjustTextSize stuck in a loop.. breaking [0]");
+                break;
+            } else c++;
+        }
+
+        c = 0;
+        while (timeBounds.height() > maxHeightPixels)
+        {
+            adjustedTimeSizeSp -= stepSizeSp;
+            adjustedSuffixSizeSp -= (stepSizeSp * suffixRatio);
+            adjustedIconWidthDp -= (stepSizeSp * iconRatio);
+            getTextBounds(context,  timeText, adjustedTimeSizeSp, timePaint, timeBounds);
+            getTextBounds(context, suffixText, adjustedSuffixSizeSp, suffixPaint, suffixBounds);
+
+            if (c > limit) {
+                Log.w("SuntimesLayout", "adjustTextSize stuck in a loop.. breaking [1] .. " + timeBounds.height() + "px > " + maxHeightPixels + "px [" + maxHeightDp + "dp]");
+                break;
+            } else c++;
+        }
+
+        float[] retValue = new float[3];
+        retValue[0] = adjustedTimeSizeSp;
+        retValue[1] = adjustedSuffixSizeSp;
+        retValue[2] = adjustedIconWidthDp;
+
+        Log.d("ClockLayout", "adjustTextSize: within " + maxDimensionsDp[0] + "," + maxDimensionsDp[1] + " .. baseSp:" + timeSizeSp + ", adjustedSp:" + retValue[0] + ", baseIconDp: " + iconWidthDp +  ", adjustedIconDp: " + retValue[2]);
+        return retValue;
+    }
+
+    public static void getTextBounds(@NonNull Context context, @NonNull String text, float textSizeSp, @NonNull Paint textPaint, @NonNull Rect textBounds)
+    {
+        textPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, textSizeSp, context.getResources().getDisplayMetrics()));
+        textPaint.getTextBounds(text, 0, text.length(), textBounds);
     }
 
 }

@@ -38,6 +38,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.Html;
 import android.text.Spannable;
 
@@ -150,7 +151,7 @@ public class SuntimesUtils
         //long bench_start = System.nanoTime();
 
         WidgetSettings.TimeFormatMode mode = WidgetSettings.loadTimeFormatModePref(context, 0);
-        is24 = (mode == TimeFormatMode.MODE_SYSTEM) ? android.text.format.DateFormat.is24HourFormat(context)
+        is24 = (mode == TimeFormatMode.MODE_SYSTEM || mode == TimeFormatMode.MODE_SUNTIMES) ? android.text.format.DateFormat.is24HourFormat(context)
                                                     : (mode == TimeFormatMode.MODE_24HR);
 
         strTimeShorter = context.getString(R.string.delta_day_shorter);
@@ -185,15 +186,13 @@ public class SuntimesUtils
         strDateShortFormat = context.getString(R.string.date_format_short);
         strDateLongFormat = context.getString(R.string.date_format_long);
 
-        strTimeShortFormat12 = context.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12, strTimeSuffixFormat);
-        String timeFormat = (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12);
-        strDateTimeShortFormat = context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormat);
-        strDateTimeLongFormat = context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormat);
+        strTimeShortFormat12 = context.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12, strTimeSuffixFormat);        //String timeFormat = (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12);
+        strDateTimeShortFormat = dateTimeFormatShort(context, is24, false);  //  context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormat);
+        strDateTimeLongFormat = dateTimeFormatLong(context, is24, false);    // context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormat);
 
-        strTimeShortFormat12s = context.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12s, strTimeSuffixFormat);
-        String timeFormatSec = (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s);
-        strDateTimeShortFormatSec = context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormatSec);
-        strDateTimeLongFormatSec = context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormatSec);
+        strTimeShortFormat12s = context.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12s, strTimeSuffixFormat);        //String timeFormatSec = (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s);
+        strDateTimeShortFormatSec = dateTimeFormatShort(context, is24, true);  // context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormatSec);
+        strDateTimeLongFormatSec = dateTimeFormatLong(context, is24, true);    // context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormatSec);
 
         CardinalDirection.initDisplayStrings(context);
 
@@ -201,6 +200,17 @@ public class SuntimesUtils
         ///initCount++;
         //long bench_end = System.nanoTime();
         //Log.d("DEBUG", "SuntimesUtils initialized: " + initCount + " :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
+    }
+
+    public static String dateTimeFormatShort(Context context, boolean is24, boolean showSeconds)
+    {
+        String timeFormat = (showSeconds ? (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s) : (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12));
+        return context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormat);
+    }
+    public static String dateTimeFormatLong(Context context, boolean is24, boolean showSeconds)
+    {
+        String timeFormat = (showSeconds ? (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s) : (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12));
+        return context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormat);
     }
 
     public static boolean isInitialized()
@@ -497,6 +507,10 @@ public class SuntimesUtils
                 case MODE_12HR:
                     return calendarTime12HrDisplayString(context, cal, showSeconds);
 
+                case MODE_SUNTIMES:
+                    return (is24 ? calendarTime24HrDisplayString(context, cal, showSeconds)
+                            : calendarTime12HrDisplayString(context, cal, showSeconds));
+
                 case MODE_SYSTEM:
                     boolean sysIs24 = android.text.format.DateFormat.is24HourFormat(context);
                     return (sysIs24 ? calendarTime24HrDisplayString(context, cal, showSeconds)
@@ -775,6 +789,38 @@ public class SuntimesUtils
         // doesn't use app's 12hr/24hr setting
         /** DateFormat timeFormat = android.text.format.DateFormat.getLongDateFormat(context);
         String value = timeFormat.format(cal.getTime());*/
+    }
+
+    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showTime, boolean showSeconds, TimeFormatMode format) {
+        return calendarDateTimeDisplayString(context, cal, (cal != null && (cal.get(Calendar.YEAR) != Calendar.getInstance().get(Calendar.YEAR))), showTime, showSeconds, format);
+    }
+    public TimeDisplayText calendarDateTimeDisplayString(Context context, Calendar cal, boolean showYear, boolean showTime, boolean showSeconds, TimeFormatMode format)
+    {
+        if (cal == null || context == null) {
+            return new TimeDisplayText(strTimeNone);
+        }
+
+        boolean formatIs24;
+        switch (format) {
+            case MODE_SUNTIMES: formatIs24 = is24; break;
+            case MODE_SYSTEM: formatIs24 = android.text.format.DateFormat.is24HourFormat(context); break;
+            case MODE_12HR: formatIs24 = false; break;
+            case MODE_24HR: default: formatIs24 = true; break;
+        }
+
+        Locale locale = getLocale();
+        SimpleDateFormat dateTimeFormat;
+        if (showTime) {
+            dateTimeFormat = new SimpleDateFormat((showYear ? dateTimeFormatLong(context, formatIs24, showSeconds) : dateTimeFormatShort(context, formatIs24, showSeconds)), locale);
+        } else dateTimeFormat = new SimpleDateFormat((showYear ? strDateLongFormat : strDateShortFormat), locale);
+        //Log.d("DEBUG","DateTimeFormat: " + dateTimeFormat.toPattern() + " (" + locale.toString() + ")");
+
+        Date time = cal.getTime();
+        applyTimeZone(time, cal.getTimeZone());
+        dateTimeFormat.setTimeZone(cal.getTimeZone());
+        TimeDisplayText displayText = new TimeDisplayText(dateTimeFormat.format(time), "", "");
+        displayText.setRawValue(cal.getTimeInMillis());
+        return displayText;
     }
 
     /**
@@ -1703,6 +1749,18 @@ public class SuntimesUtils
             }
         }
         return d;
+    }
+
+    @Nullable
+    public static Drawable tintDrawableCompat(Drawable d, int color)
+    {
+        if (d != null)
+        {
+            Drawable tinted = DrawableCompat.wrap(d.mutate());
+            DrawableCompat.setTint(tinted, color);
+            DrawableCompat.setTintMode(tinted, PorterDuff.Mode.SRC_IN);
+            return tinted;
+        } else return null;
     }
 
     /**

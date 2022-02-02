@@ -59,8 +59,9 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
         showTimeMode(false);
         showOptionShowNoon(false);
 
-        showTimeFormatMode(true);
+        //showTimeFormatMode(true);
         showOptionLabels(true);
+        hideLayoutSettings();
 
         moveSectionToTop(R.id.appwidget_timezone_layout);
         moveSectionToTop(R.id.appwidget_general_layout);
@@ -109,6 +110,11 @@ public class ClockWidget0ConfigActivity extends SuntimesConfigActivity0
     protected WidgetSettings.TimezoneMode getDefaultTimezoneMode()
     {
         return WidgetSettings.TimezoneMode.SOLAR_TIME;
+    }
+
+    @Override
+    protected boolean getDefaultScaleText() {
+        return true;
     }
 
     @Override

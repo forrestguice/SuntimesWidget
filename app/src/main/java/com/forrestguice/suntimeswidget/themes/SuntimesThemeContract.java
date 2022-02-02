@@ -42,12 +42,14 @@ package com.forrestguice.suntimeswidget.themes;
  * ------------------------------------------------------------------------------------------------
  * CHANGES
  *   1 initial version
+ *   2 fixes comment for THEME_PADDING to indicate these are actually dp values,
+ *     adds THEME_PADDING_PIXELS suffix (may be appended to THEME_PADDING*).
  */
 public interface SuntimesThemeContract
 {
     String AUTHORITY = "suntimeswidget.theme.provider";
-    String VERSION_NAME = "v0.1.0";
-    int VERSION_CODE = 1;
+    String VERSION_NAME = "v0.1.1";
+    int VERSION_CODE = 2;
 
     /**
      * THEME
@@ -64,10 +66,11 @@ public interface SuntimesThemeContract
     String THEME_BACKGROUND_COLOR = "backgroundColor";                                              // int (color)
 
     String THEME_PADDING = "padding";
-    String THEME_PADDING_LEFT = "padding_left";                                                     // int (pixels)
-    String THEME_PADDING_TOP = "padding_top";                                                       // int (pixels)
-    String THEME_PADDING_RIGHT = "padding_right";                                                   // int (pixels)
-    String THEME_PADDING_BOTTOM = "padding_bottom";                                                 // int (pixels)
+    String THEME_PADDING_LEFT = "padding_left";                                                     // int (dp)
+    String THEME_PADDING_TOP = "padding_top";                                                       // int (dp)
+    String THEME_PADDING_RIGHT = "padding_right";                                                   // int (dp)
+    String THEME_PADDING_BOTTOM = "padding_bottom";                                                 // int (dp)
+    String THEME_PADDING_PIXELS = "_pixels";                                                        // int (pixels)
 
     String THEME_TEXTCOLOR = "textcolor";                                                           // int (color)
     String THEME_TITLECOLOR = "titlecolor";                                                         // int (color)

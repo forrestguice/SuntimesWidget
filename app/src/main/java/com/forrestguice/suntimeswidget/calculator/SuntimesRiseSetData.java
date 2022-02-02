@@ -55,7 +55,7 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: layoutID
      */
-    protected int layoutID = R.layout.layout_widget_1x1_0i;
+    protected int layoutID = R.layout.layout_widget_1x1_0_content;
     public int layoutID()
     {
         return layoutID;
