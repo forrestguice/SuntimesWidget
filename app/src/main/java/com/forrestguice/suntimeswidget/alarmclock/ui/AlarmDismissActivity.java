@@ -57,6 +57,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
@@ -531,22 +532,22 @@ public class AlarmDismissActivity extends AppCompatActivity
         String emptyLabel = context.getString(R.string.alarmMode_alarm);
         alarmTitle.setText((item.label == null || item.label.isEmpty()) ? emptyLabel : item.label);
 
-        if (alarm.event != null) {
-            alarmSubtitle.setText(item.event.getLongDisplayString());
+        String eventString = alarm.getEvent();
+        if (eventString != null)
+        {
+            AlarmEvent.AlarmEventItem eventItem = new AlarmEvent.AlarmEventItem(eventString, context.getContentResolver());
+            alarmSubtitle.setText(eventItem.getTitle());
             alarmSubtitle.setVisibility(View.VISIBLE);
 
-        } else {
-            if (alarm.timezone != null)
-            {
-                Calendar eventTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(item.timezone, item.location));
-                eventTime.set(Calendar.HOUR_OF_DAY, item.hour);
-                eventTime.set(Calendar.MINUTE, item.minute);
-                alarmSubtitle.setText(utils.calendarTimeShortDisplayString(context, eventTime) + "\n" + AlarmClockItem.AlarmTimeZone.displayString(item.timezone));
-                alarmSubtitle.setVisibility(View.VISIBLE);
+        } else if (alarm.timezone != null) {
+            Calendar eventTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(item.timezone, item.location));
+            eventTime.set(Calendar.HOUR_OF_DAY, item.hour);
+            eventTime.set(Calendar.MINUTE, item.minute);
+            alarmSubtitle.setText(utils.calendarTimeShortDisplayString(context, eventTime) + "\n" + AlarmClockItem.AlarmTimeZone.displayString(item.timezone));
+            alarmSubtitle.setVisibility(View.VISIBLE);
 
-            } else {
-                alarmSubtitle.setVisibility(View.GONE);
-            }
+         } else {
+            alarmSubtitle.setVisibility(View.GONE);
         }
 
         Spannable offsetSpan = new SpannableString("");

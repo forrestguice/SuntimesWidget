@@ -51,6 +51,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Shared preferences used by individual widgets; uses getSharedPreferences (stored in com.forrestguice.suntimeswidget.xml).
@@ -836,6 +837,12 @@ public class WidgetSettings
         public int getYear() { return year; }
         public int getMonth() { return month; }
         public int getDay() { return day; }
+
+        public Calendar getCalendar(TimeZone timezone, int hour, int minute) {
+            Calendar calendar = Calendar.getInstance(timezone);
+            calendar.set(getYear(), getMonth(), getDay(), hour, minute, 0);
+            return calendar;
+        }
 
         public boolean isSet()
         {

@@ -75,6 +75,7 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmCreateDialog;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
@@ -1539,7 +1540,7 @@ public class SuntimesActivity extends AppCompatActivity
         {
             AlarmCreateDialog dialog = new AlarmCreateDialog();
             dialog.loadSettings(SuntimesActivity.this);
-            dialog.setEvent((event != null ? event : dialog.getEvent()), WidgetSettings.loadLocationPref(this, 0));    // TODO: bug; dialog fails to switch tabs if already showing "by time"
+            dialog.setEvent((event != null ? event.name() : dialog.getEvent()), WidgetSettings.loadLocationPref(this, 0));    // TODO: bug; dialog fails to switch tabs if already showing "by time"
             dialog.setShowAlarmListButton(true);
             dialog.setOnAcceptedListener(onScheduleAlarm);
             dialog.setOnNeutralListener(onManageAlarms);
@@ -1575,9 +1576,12 @@ public class SuntimesActivity extends AppCompatActivity
 
                     case 0:
                     default:
-                        SolarEvents event = dialog.getEvent();
-                        String alarmLabel = context.getString(R.string.schedalarm_labelformat2, event.getShortDisplayString());
-                        AlarmClockActivity.scheduleAlarm(context, type, alarmLabel, event, location);
+                        String eventString = dialog.getEvent();
+                        AlarmEvent.AlarmEventItem eventItem = new AlarmEvent.AlarmEventItem(eventString, getContentResolver());
+                        String alarmLabel = eventString != null ? context.getString(R.string.schedalarm_labelformat2, eventItem.getTitle()) : "";
+                        if (eventString != null) {
+                            AlarmClockActivity.scheduleAlarm(context, type, alarmLabel, eventString, location);
+                        }
                         break;
                 }
             }

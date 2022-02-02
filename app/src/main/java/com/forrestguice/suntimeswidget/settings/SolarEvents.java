@@ -169,18 +169,11 @@ public enum SolarEvents
 
     public static SolarEvents valueOf(String value, SolarEvents defaultType)
     {
-        SolarEvents retValue = defaultType;
-        if (value != null)
-        {
-            try {
-                retValue = SolarEvents.valueOf(value);
-
-            } catch (IllegalArgumentException e) {
-                Log.w("SolarEvents", "valueOf :: failed to load '" + value);
-                retValue = defaultType;
-            }
+        for (SolarEvents e : values()) {
+            if (e.name().equals(value))
+                return e;
         }
-        return retValue;
+        return defaultType;
     }
 
     public static SolarEventsAdapter createAdapter(Context context, boolean northward)
@@ -308,6 +301,10 @@ public enum SolarEvents
 
             icon.setImageDrawable(null);
             icon.setBackgroundResource(iconResource);
+        }
+
+        public ArrayList<SolarEvents> getChoices() {
+            return choices;
         }
     }
 

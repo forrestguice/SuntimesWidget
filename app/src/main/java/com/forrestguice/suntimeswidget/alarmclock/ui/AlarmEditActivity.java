@@ -692,9 +692,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     {
         if (Build.VERSION.SDK_INT >= 11)
         {
-            int eventType = item.event != null ? item.event.getType() : -1;
             AlarmOffsetDialog offsetDialog = new AlarmOffsetDialog();
-            offsetDialog.setShowDays(eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON);
+            offsetDialog.setShowDays(item.getEventItem(AlarmEditActivity.this).supportsOffsetDays());
             offsetDialog.setOffset(item.offset);
             offsetDialog.setOnAcceptedListener(onOffsetChanged);
             offsetDialog.show(getSupportFragmentManager(), DIALOGTAG_OFFSET + 1);
@@ -729,8 +728,9 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         final AlarmCreateDialog dialog = new AlarmCreateDialog();
         dialog.loadSettings(AlarmEditActivity.this);
         dialog.setAlarmType(item.type);
-        dialog.setDialogMode(item.event != null ? 0 : 1);
-        dialog.setEvent(item.event, item.location);
+        dialog.setDialogMode(item.getEvent() != null ? 0 : 1);
+
+        dialog.setEvent(item.getEvent(), item.location);
         dialog.setAlarmTime(item.hour, item.minute, item.timezone);
         dialog.setOffset(item.offset);
         dialog.setOnAcceptedListener(onPickEventAccepted);

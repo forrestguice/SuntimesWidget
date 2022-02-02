@@ -19,6 +19,7 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -55,7 +56,10 @@ import com.forrestguice.suntimeswidget.AlarmDialog;
 import com.forrestguice.suntimeswidget.LocationConfigDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.TimeDateDialog;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
@@ -65,6 +69,9 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+
+import java.util.Calendar;
+import java.util.TimeZone;
 
 @SuppressWarnings("Convert2Diamond")
 public class AlarmCreateDialog extends BottomSheetDialogFragment
@@ -79,16 +86,18 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     public static final String EXTRA_LOCATION = "location";
     public static final String EXTRA_EVENT = "event";
 
+    public static final long DEF_DATE = -1L;
     public static final int DEF_MODE = 1;
     public static final int DEF_HOUR = 6;
     public static final int DEF_MINUTE = 30;
-    public static final SolarEvents DEF_EVENT = SolarEvents.SUNRISE;
+    public static final String DEF_EVENT = SolarEvents.SUNRISE.name();
     public static final AlarmClockItem.AlarmType DEF_ALARMTYPE = AlarmClockItem.AlarmType.ALARM;
 
     public static final String EXTRA_PREVIEW_OFFSET = "previewOffset";
     public static final String EXTRA_BUTTON_ALARMLIST = "showAlarmListButton";
 
     public static final String DIALOG_LOCATION = "locationDialog";
+    public static final String DIALOG_DATE = "dateDialog";
 
     public static final String PREFS_ALARMCREATE = "com.forrestguice.suntimeswidget.alarmcreate";
 
@@ -108,11 +117,12 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         args.putBoolean(EXTRA_PREVIEW_OFFSET, false);
         args.putBoolean(EXTRA_BUTTON_ALARMLIST, false);
 
+        args.putLong(EXTRA_DATE, DEF_DATE);
         args.putInt(EXTRA_HOUR, DEF_HOUR);
         args.putInt(EXTRA_MINUTE, DEF_MINUTE);
         args.putLong(EXTRA_OFFSET, 0);
         args.putString(EXTRA_TIMEZONE, null);
-        args.putSerializable(EXTRA_EVENT, DEF_EVENT);
+        args.putString(EXTRA_EVENT, DEF_EVENT);
         args.putSerializable(EXTRA_ALARMTYPE, DEF_ALARMTYPE);
 
         setArguments(args);
@@ -128,6 +138,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         }
 
         Context context = getActivity();
+        SuntimesUtils.initDisplayStrings(context);
         SolarEvents.initDisplayStrings(context);
         AlarmClockItem.AlarmType.initDisplayStrings(context);
         AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
@@ -185,7 +196,8 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
                 if (Math.abs(getOffset()) >= (1000 * 60 * 60 * 24)) {    // clear multi-day offsets
                     getArguments().putLong(EXTRA_OFFSET, 0);
                 }
-                getArguments().putSerializable(EXTRA_EVENT, dialog.getChoice());
+                getArguments().putString(EXTRA_EVENT, dialog.getChoice());
+                Log.d("DEBUG", "AlarmCreateDialog: onChanged: " + dialog.getChoice());
                 getArguments().putParcelable(EXTRA_LOCATION, dialog.getLocation());
                 updateViews(getActivity());
             }
@@ -233,12 +245,67 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         }
     };
 
+    protected void showDateDialog(Context context)
+    {
+        final AlarmTimeDateDialog dialog = new AlarmTimeDateDialog();
+        dialog.setTimezone(AlarmClockItem.AlarmTimeZone.getTimeZone(getTimeZone(), getLocation()));
+        dialog.setOnAcceptedListener(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog0, int which)
+            {
+                Calendar now = Calendar.getInstance(dialog.getTimeZone());
+                Calendar then = dialog.getDateInfo().getCalendar(dialog.getTimeZone(), getHour(), getMinute());
+                Calendar then1 = Calendar.getInstance(dialog.getTimeZone());
+                then1.setTimeInMillis(then.getTimeInMillis());
+                then1.set(Calendar.HOUR_OF_DAY, 0);
+                then1.set(Calendar.MINUTE, 0);
+                then1.set(Calendar.SECOND, 0);
+                setDate(now.getTimeInMillis() >= then1.getTimeInMillis() ? -1L : then.getTimeInMillis());
+                updateViews(getActivity());
+            }
+        });
+        dialog.show(getChildFragmentManager(), DIALOG_DATE);
+    }
+    public static class AlarmTimeDateDialog extends TimeDateDialog
+    {
+        @Override
+        protected void initViews(Context context, View dialogContent)
+        {
+            super.initViews(context, dialogContent);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE, -1);
+            picker.setMinDate(calendar.getTimeInMillis());
+
+            Button btn_neutral = (Button) dialogContent.findViewById(R.id.dialog_button_neutral);
+            if (btn_neutral != null)
+            {
+                btn_neutral.setText(context.getString(R.string.configAction_clearDate));
+                btn_neutral.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        AlarmTimeDateDialog.this.init(Calendar.getInstance(timezone));
+                        AlarmTimeDateDialog.this.onDialogAcceptClick.onClick(v);
+                    }
+                });
+            }
+        }
+
+        @Override
+        protected void loadSettings(Context context) { /* EMPTY */ }
+        @Override
+        protected void saveSettings(Context context) { /* EMPTY */ }
+    }
+
     protected void showByTimeFragment()
     {
         FragmentManager fragments = getChildFragmentManager();
         FragmentTransaction transaction = fragments.beginTransaction();
 
         AlarmTimeDialog fragment = new AlarmTimeDialog();
+        fragment.setDate(getDate());
         fragment.setTime(getHour(), getMinute());
         fragment.setTimeZone(getTimeZone());
         fragment.setLocation(getLocation());
@@ -248,6 +315,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             @Override
             public void onChanged(AlarmTimeDialog dialog)
             {
+                getArguments().putLong(EXTRA_DATE, dialog.getDate());
                 getArguments().putInt(EXTRA_HOUR, dialog.getHour());
                 getArguments().putInt(EXTRA_MINUTE, dialog.getMinute());
                 getArguments().putString(EXTRA_TIMEZONE, dialog.getTimeZone());
@@ -257,6 +325,11 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             @Override
             public void onLocationClick(AlarmTimeDialog dialog) {
                 showLocationDialog(getActivity());
+            }
+
+            @Override
+            public void onDateClick(AlarmTimeDialog dialog) {
+                showDateDialog(getActivity());
             }
 
             @Override
@@ -479,7 +552,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         args.putInt(EXTRA_HOUR, prefs.getInt(EXTRA_HOUR, getHour()));
         args.putInt(EXTRA_MINUTE, prefs.getInt(EXTRA_MINUTE, getMinute()));
         args.putString(EXTRA_TIMEZONE, prefs.getString(EXTRA_TIMEZONE, getTimeZone()));
-        args.putSerializable(EXTRA_EVENT, SolarEvents.valueOf(prefs.getString(EXTRA_EVENT, SolarEvents.SUNRISE.name()), SolarEvents.SUNRISE));;
+        args.putString(EXTRA_EVENT, prefs.getString(EXTRA_EVENT, DEF_EVENT));
         args.putSerializable(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.valueOf(prefs.getString(EXTRA_ALARMTYPE, AlarmClockItem.AlarmType.ALARM.name())));
 
         if (isAdded())
@@ -518,7 +591,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         out.putInt(EXTRA_HOUR, getHour());
         out.putInt(EXTRA_MINUTE, getMinute());
         out.putString(EXTRA_TIMEZONE, getTimeZone());
-        out.putString(EXTRA_EVENT, getEvent().name());
+        out.putString(EXTRA_EVENT, getEvent());
         out.putString(EXTRA_ALARMTYPE, getAlarmType().name());
         out.apply();
     }
@@ -712,9 +785,9 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         return tabs.getSelectedTabPosition();
     }
 
-    public SolarEvents getEvent()
+    public String getEvent()
     {
-        SolarEvents event = (SolarEvents) getArguments().getSerializable(EXTRA_EVENT);
+        String event = getArguments().getString(EXTRA_EVENT);
         return (event != null ? event : DEF_EVENT);
     }
     public Location getLocation()
@@ -722,10 +795,10 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         Location location = getArguments().getParcelable(EXTRA_LOCATION);
         return (location != null ? location : WidgetSettings.loadLocationPref(getActivity(), 0));
     }
-    public void setEvent( SolarEvents event, Location location )
+    public void setEvent( String event, Location location )
     {
         Bundle args = getArguments();
-        args.putSerializable(EXTRA_EVENT, event);
+        args.putString(EXTRA_EVENT, event);
         args.putParcelable(EXTRA_LOCATION, location);
 
         if (isAdded())
@@ -740,6 +813,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             AlarmTimeDialog fragment1 = (AlarmTimeDialog) fragments.findFragmentByTag("AlarmTimeDialog");
             if (fragment1 != null) {
                 fragment1.setLocation(location);
+                getArguments().putLong(EXTRA_DATE, fragment1.getDate());
                 fragment1.updateViews(getActivity());
             }
         }
@@ -752,7 +826,21 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         return getArguments().getInt(EXTRA_MINUTE, DEF_MINUTE);
     }
     public long getDate() {
-        return getArguments().getLong(EXTRA_DATE, System.currentTimeMillis());
+        return getArguments().getLong(EXTRA_DATE, DEF_DATE);
+    }
+    public void setDate(long date)
+    {
+        getArguments().putLong(EXTRA_DATE, date);
+
+        if (isAdded())
+        {
+            FragmentManager fragments = getChildFragmentManager();
+            AlarmTimeDialog fragment1 = (AlarmTimeDialog) fragments.findFragmentByTag("AlarmTimeDialog");
+            if (fragment1 != null) {
+                fragment1.setDate(date);
+                fragment1.updateViews(getActivity());
+            }
+        }
     }
     public String getTimeZone() {
         return getArguments().getString(EXTRA_TIMEZONE);
@@ -760,6 +848,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     public void setAlarmTime( int hour, int minute, String timezone )
     {
         Bundle args = getArguments();
+        args.putLong(EXTRA_DATE, -1L);
         args.putInt(EXTRA_HOUR, hour);
         args.putInt(EXTRA_MINUTE, minute);
         args.putString(EXTRA_TIMEZONE, timezone);
@@ -832,26 +921,28 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
     public static AlarmClockItem createAlarm(@NonNull AlarmCreateDialog dialog, AlarmClockItem.AlarmType type)
     {
+        long date;
         int hour;
         int minute;
-        SolarEvents event;
+        String event;
         String timezone;
 
         if (dialog.getMode() == 0)
         {
+            date = -1L;
             hour = -1;
             minute = -1;
             timezone = null;
             event = dialog.getEvent();
 
         } else {
+            date = dialog.getDate();
             hour = dialog.getHour();
             minute = dialog.getMinute();
             timezone = dialog.getTimeZone();
             event = null;
         }
-
-        return AlarmListDialog.createAlarm(dialog.getActivity(), type, "", event, dialog.getLocation(), hour, minute, timezone, AlarmSettings.loadPrefVibrateDefault(dialog.getActivity()), AlarmSettings.getDefaultRingtoneUri(dialog.getActivity(), type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
+        return AlarmListDialog.createAlarm(dialog.getActivity(), type, "", event, dialog.getLocation(), date, hour, minute, timezone, AlarmSettings.loadPrefVibrateDefault(dialog.getActivity()), AlarmSettings.getDefaultRingtoneUri(dialog.getActivity(), type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
 
     public static void updateAlarmItem(AlarmCreateDialog dialog, AlarmClockItem item)
@@ -865,13 +956,13 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             item.hour = -1;
             item.minute = -1;
             item.timezone = null;
-            item.event = dialog.getEvent();
+            item.setEvent(dialog.getEvent());
 
         } else {
             item.hour = dialog.getHour();
             item.minute = dialog.getMinute();
             item.timezone = dialog.getTimeZone();
-            item.event = null;
+            item.setEvent(dialog.getDate() != -1L ? AlarmAddon.getEventInfoUri(AlarmEventContract.AUTHORITY, Long.toString(dialog.getDate())) : null);
         }
     }
 

@@ -70,6 +70,7 @@ import com.forrestguice.suntimeswidget.SuntimesWarning;
 import com.forrestguice.suntimeswidget.actions.LoadActionDialog;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
@@ -285,7 +286,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
                     }
                 }
 
-                SolarEvents param_event = SolarEvents.valueOf(intent.getStringExtra(AlarmClockActivity.EXTRA_SOLAREVENT), null);
+                String param_event = intent.getStringExtra(AlarmClockActivity.EXTRA_SOLAREVENT);
 
                 //Log.i(TAG, "ACTION_SET_ALARM :: " + param_label + ", " + param_hour + ", " + param_minute + ", " + param_event);
                 addAlarm(AlarmClockItem.AlarmType.ALARM, param_label, param_event, param_hour, param_minute, param_vibrate, param_ringtoneUri, param_days);
@@ -659,7 +660,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
             dialog.setDialogTitle((type == AlarmClockItem.AlarmType.NOTIFICATION) ? getString(R.string.configAction_addNotification) : getString(R.string.configAction_addAlarm));
             initEventDialog(dialog, null);
             dialog.setType(type);
-            dialog.setChoice(SolarEvents.SUNRISE);
+            dialog.setChoice(SolarEvents.SUNRISE.name());
             DialogInterface.OnClickListener clickListener = (type == AlarmClockItem.AlarmType.ALARM ? onAddAlarmAccepted : onAddNotificationAccepted);
             dialog.setOnAcceptedListener(clickListener);
             dialog.show(getSupportFragmentManager(), DIALOGTAG_EVENT_FAB);
@@ -672,7 +673,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         AlarmDialog dialog = (AlarmDialog) fragments.findFragmentByTag(DIALOGTAG_EVENT_FAB);
         addAlarm(type, "", dialog.getChoice(), -1, -1, AlarmSettings.loadPrefVibrateDefault(this), AlarmSettings.getDefaultRingtoneUri(this, type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
-    protected void addAlarm(AlarmClockItem.AlarmType type, String label, SolarEvents event, int hour, int minute, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays)
+    protected void addAlarm(AlarmClockItem.AlarmType type, String label, String event, int hour, int minute, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays)
     {
         //Log.d("DEBUG", "addAlarm: type is " + type.toString());
         final AlarmClockItem alarm = new AlarmClockItem();
@@ -682,7 +683,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
 
         alarm.hour = hour;
         alarm.minute = minute;
-        alarm.event = event;
+        alarm.setEvent(event);
         alarm.location = WidgetSettings.loadLocationPref(this, 0);
 
         alarm.repeating = false;
@@ -734,7 +735,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
 
             if (item != null && dialog != null)
             {
-                item.event = dialog.getChoice();
+                item.setEvent(dialog.getChoice());
                 item.modified = true;
                 AlarmNotifications.updateAlarmTime(AlarmClockLegacyActivity.this, item);
 
@@ -822,7 +823,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         @Override
         public void onRequestTime(final AlarmClockItem forItem)
         {
-            if (forItem.event != null)
+            if (forItem.getEvent() != null)
             {
                 AlertDialog.Builder confirmOverride = new AlertDialog.Builder(AlarmClockLegacyActivity.this);
                 confirmOverride.setIcon(android.R.drawable.ic_dialog_alert);
@@ -965,7 +966,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         final AlarmDialog dialog = new AlarmDialog();
         dialog.setDialogTitle((item.type == AlarmClockItem.AlarmType.NOTIFICATION) ? getString(R.string.configAction_addNotification) : getString(R.string.configAction_addAlarm));
         initEventDialog(dialog, item.location);
-        dialog.setChoice(item.event);
+        dialog.setChoice(item.getEvent());
         dialog.setOnAcceptedListener(onSolarEventChanged);
 
         t_selectedItem = item.rowID;
@@ -1077,7 +1078,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
 
             if (item != null && timeDialog != null)
             {
-                item.event = null;
+                item.setEvent(null);
                 item.hour = timeDialog.getHour();
                 item.minute = timeDialog.getMinute();
                 item.timezone = timeDialog.getTimeZone();
@@ -1099,6 +1100,10 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         @Override
         public void onLocationClick(AlarmTimeDialog dialog) {
         }
+
+        @Override
+        public void onDateClick(AlarmTimeDialog dialog) {
+        }
     };
 
     /**
@@ -1109,9 +1114,10 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     {
         if (Build.VERSION.SDK_INT >= 11)
         {
-            int eventType = item.event != null ? item.event.getType() : -1;
+            SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
+            int eventType = event != null ? event.getType() : -1;
             AlarmOffsetDialog offsetDialog = new AlarmOffsetDialog();
-            offsetDialog.setShowDays(eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON);
+            offsetDialog.setShowDays(AlarmEvent.supportsOffsetDays(eventType));
             offsetDialog.setOffset(item.offset);
             offsetDialog.setOnAcceptedListener(onOffsetChanged);
             t_selectedItem = item.rowID;
@@ -1692,9 +1698,10 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
     {
         if (Build.VERSION.SDK_INT >= 11)
         {
-            int eventType = item.event != null ? item.event.getType() : -1;
+            SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
+            int eventType = event != null ? event.getType() : -1;
             AlarmOffsetDialog offsetDialog = new AlarmOffsetDialog();
-            offsetDialog.setShowDays(eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON);
+            offsetDialog.setShowDays(AlarmEvent.supportsOffsetDays(eventType));
             offsetDialog.setOffset(item.offset);
             offsetDialog.setOnAcceptedListener(onOffsetChanged1);
             offsetDialog.show(getSupportFragmentManager(), DIALOGTAG_OFFSET + 1);

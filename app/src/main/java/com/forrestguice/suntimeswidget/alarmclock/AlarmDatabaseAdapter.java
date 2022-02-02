@@ -33,6 +33,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.lang.ref.WeakReference;
@@ -250,21 +251,19 @@ public class AlarmDatabaseAdapter
     public Cursor getAllAlarms(int n, boolean fullEntry)
     {
         String[] QUERY = (fullEntry) ? QUERY_ALARMS_FULLENTRY : QUERY_ALARMS_MINENTRY;
-        Cursor cursor =  (n > 0) ? database.query( TABLE_ALARMS, QUERY, null, null, null, null, "_id DESC", n+"" )
-                                 : database.query( TABLE_ALARMS, QUERY, null, null, null, null, "_id DESC" );
-        if (cursor != null)
-        {
-            cursor.moveToFirst();
-        }
-        return cursor;
+        return getAllAlarms(n, QUERY, null, null);
     }
     public Cursor getAllAlarms(int n, boolean fullEntry, boolean enabledOnly)
     {
         String selection = (enabledOnly ? KEY_ALARM_ENABLED + " = ?" : null);    // select enabled
         String[] selectionArgs = (enabledOnly ? new String[] {"1"} : null);    // is 1 (true)
         String[] query = (fullEntry) ? QUERY_ALARMS_FULLENTRY : QUERY_ALARMS_MINENTRY;
-        Cursor cursor =  (n > 0) ? database.query( TABLE_ALARMS, query, selection, selectionArgs, null, null, "_id DESC", n+"" )
-                                 : database.query( TABLE_ALARMS, query, selection, selectionArgs, null, null, "_id DESC" );
+        return getAllAlarms(n, query, selection, selectionArgs);
+    }
+    public Cursor getAllAlarms(int n, String[] columns, @Nullable String selection, @Nullable String[] selectionArgs)
+    {
+        Cursor cursor =  (n > 0) ? database.query( TABLE_ALARMS, columns, selection, selectionArgs, null, null, "_id DESC", n+"" )
+                                 : database.query( TABLE_ALARMS, columns, selection, selectionArgs, null, null, "_id DESC" );
         if (cursor != null) {
             cursor.moveToFirst();
         }
@@ -289,6 +288,19 @@ public class AlarmDatabaseAdapter
         }
         return cursor;
     }
+    public Cursor getAlarm(long row, @NonNull String[] columns, @Nullable String selection, @Nullable String[] selectionArgs) throws SQLException
+    {
+        String selection0 = KEY_ROWID + "=" + row;
+        if (selection != null) {
+            selection0 += " AND " + selection;
+        }
+        Cursor cursor = database.query( true, TABLE_ALARMS, columns, selection0, selectionArgs,
+                null, null, null, null );
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
 
     /**
      * Get an alarm state from the database.
@@ -303,6 +315,18 @@ public class AlarmDatabaseAdapter
         Cursor cursor = database.query( true, TABLE_ALARMSTATE, QUERY,
                 KEY_STATE_ALARMID + "=" + row, null,
                 null, null, null, null );
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
+    public Cursor getAlarmState(long row, String selection, String[] selectionArgs) throws SQLException
+    {
+        String selection0 = KEY_STATE_ALARMID + "=" + row;
+        if (selection != null) {
+            selection0 += " AND " + selection;
+        }
+        Cursor cursor = database.query( true, TABLE_ALARMSTATE, QUERY_ALARMSTATE_FULLENTRY, selection0, selectionArgs, null, null, null, null );
         if (cursor != null) {
             cursor.moveToFirst();
         }

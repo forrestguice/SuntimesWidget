@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2019 Forrest Guice
+    Copyright (C) 2014-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -17,19 +17,19 @@
 */
 package com.forrestguice.suntimeswidget;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.os.Build;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
-import android.provider.AlarmClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -37,25 +37,33 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.content.ContextCompat;
 
+import android.support.v7.widget.PopupMenu;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
-import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmListDialog;
+import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmRepeatDialog;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -67,14 +75,13 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
-import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
+import java.util.List;
 
 public class AlarmDialog extends BottomSheetDialogFragment
 {
+    public static final int REQUEST_ADDON_ALARMPICKER = 3000;
+
     public static final String KEY_ALARM_TYPE = "alarmdialog_alarmtype";
     public static final AlarmClockItem.AlarmType DEF_ALARM_TYPE = AlarmClockItem.AlarmType.ALARM;
 
@@ -82,8 +89,8 @@ public class AlarmDialog extends BottomSheetDialogFragment
     public static final String KEY_DIALOGSHOWFRAME = "alarmdialog_showframe";
     public static final String KEY_DIALOGSHOWDESC = "alarmdialog_showdesc";
 
-    public static final String PREF_KEY_ALARM_LASTCHOICE = "alarmdialog_lastchoice";
-    public static final SolarEvents PREF_DEF_ALARM_LASTCHOICE = SolarEvents.SUNRISE;
+    public static final String PREF_KEY_ALARM_LASTCHOICE = "alarmdialog_lastchoice1";
+    public static final String PREF_DEF_ALARM_LASTCHOICE = SolarEvents.SUNRISE.name();
 
     protected static final SuntimesUtils utils = new SuntimesUtils();
 
@@ -139,80 +146,99 @@ public class AlarmDialog extends BottomSheetDialogFragment
 
     public void updateAdapter(Context context)
     {
-        adapter = SolarEvents.createAdapter(context, WidgetSettings.loadLocalizeHemispherePref(context, 0) && moondata != null && moondata.location().getLatitudeAsDouble() < 0);
+        adapter = AlarmEvent.createAdapter(context, WidgetSettings.loadLocalizeHemispherePref(context, 0) && moondata != null && moondata.location().getLatitudeAsDouble() < 0);
         if (dataset != null)
         {
             boolean supportsGoldBlue = dataset.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_GOLDBLUE);
             if (!supportsGoldBlue)
             {
-                adapter.remove(SolarEvents.MORNING_BLUE8);
-                adapter.remove(SolarEvents.MORNING_BLUE4);
-                adapter.remove(SolarEvents.EVENING_BLUE4);
-                adapter.remove(SolarEvents.EVENING_BLUE8);
-                adapter.remove(SolarEvents.MORNING_GOLDEN);
-                adapter.remove(SolarEvents.EVENING_GOLDEN);
+                adapter.removeItem(SolarEvents.MORNING_BLUE8);
+                adapter.removeItem(SolarEvents.MORNING_BLUE4);
+                adapter.removeItem(SolarEvents.EVENING_BLUE4);
+                adapter.removeItem(SolarEvents.EVENING_BLUE8);
+                adapter.removeItem(SolarEvents.MORNING_GOLDEN);
+                adapter.removeItem(SolarEvents.EVENING_GOLDEN);
             }
 
             boolean supportsMoon = moondata != null && moondata.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_MOON);
             if (!supportsMoon)
             {
-                adapter.remove(SolarEvents.MOONRISE);
-                adapter.remove(SolarEvents.MOONSET);
-                adapter.remove(SolarEvents.MOONNOON);
-                adapter.remove(SolarEvents.MOONNIGHT);
-                adapter.remove(SolarEvents.NEWMOON);
-                adapter.remove(SolarEvents.FIRSTQUARTER);
-                adapter.remove(SolarEvents.FULLMOON);
-                adapter.remove(SolarEvents.THIRDQUARTER);
+                adapter.removeItem(SolarEvents.MOONRISE);
+                adapter.removeItem(SolarEvents.MOONSET);
+                adapter.removeItem(SolarEvents.MOONNOON);
+                adapter.removeItem(SolarEvents.MOONNIGHT);
+                adapter.removeItem(SolarEvents.NEWMOON);
+                adapter.removeItem(SolarEvents.FIRSTQUARTER);
+                adapter.removeItem(SolarEvents.FULLMOON);
+                adapter.removeItem(SolarEvents.THIRDQUARTER);
             }
 
             boolean supportsSolstice = equinoxdata != null && equinoxdata.dataEquinoxSpring.calculatorMode().hasRequestedFeature(SuntimesCalculator.FEATURE_SOLSTICE);
             if (!supportsSolstice)
             {
-                adapter.remove(SolarEvents.EQUINOX_SPRING);
-                adapter.remove(SolarEvents.SOLSTICE_SUMMER);
-                adapter.remove(SolarEvents.EQUINOX_AUTUMNAL);
-                adapter.remove(SolarEvents.SOLSTICE_WINTER);
+                adapter.removeItem(SolarEvents.EQUINOX_SPRING);
+                adapter.removeItem(SolarEvents.SOLSTICE_SUMMER);
+                adapter.removeItem(SolarEvents.EQUINOX_AUTUMNAL);
+                adapter.removeItem(SolarEvents.SOLSTICE_WINTER);
             }
         }
 
-        if (spinner_scheduleMode != null)
-        {
+        if (spinner_scheduleMode != null) {
             spinner_scheduleMode.setAdapter(adapter);
         }
     }
 
-    private ArrayAdapter<SolarEvents> adapter = null;
+    private AlarmEvent.AlarmEventAdapter adapter = null;
 
     /**
      * The user's alarm choice.
      */
-    private SolarEvents choice = null;
-    public void setChoice( SolarEvents choice )
+    private String choice = null;
+    public void setChoice( String choice )
     {
         if (choice != null)
         {
             this.choice = choice;
             Log.d("DEBUG", "setChoice: " + choice);
-            if (spinner_scheduleMode != null)
+
+            if (adapter != null)
             {
-                SpinnerAdapter adapter = spinner_scheduleMode.getAdapter();
-                if (adapter != null)
+                Context context = getActivity();
+                if (context != null && !adapter.containsItem(choice))
                 {
+                    AlarmEvent.AlarmEventItem item = new AlarmEvent.AlarmEventItem(choice, context.getContentResolver());
+                    if (item.isResolved()) {
+                        adapter.insert(item, 0);
+                        Log.d("DEBUG", "inserting event into adapter: " + choice);
+                    } else Log.w(getClass().getSimpleName(), "omitting unresolved event from adapter: " + choice);
+                }
+
+                if (spinner_scheduleMode != null)
+                {
+                    boolean found = false;
                     for (int i = 0; i < adapter.getCount(); i++)
                     {
-                        SolarEvents event = (SolarEvents) adapter.getItem(i);
-                        if (event.equals(choice))
+                        AlarmEvent.AlarmEventItem item = adapter.getItem(i);
+                        String eventID = item != null ? item.getEventID() : null;
+                        if (eventID != null && choice.equals(item.getEventID()))
                         {
+                            found = true;
                             spinner_scheduleMode.setSelection(i);
+                            Log.d("DEBUG", "setting spinner to position: " + i);
                             break;
                         }
+                    }
+
+                    if (!found)
+                    {
+                        // TODO: fallback action when the choice isn't in the adapter because it wasn't added for some reason, or it failed to resolve.. maybe display a message
+                        // for now do nothing.. the spinner won't match the custom selection (instead displaying an arbitrary item), and will eventually overwrite it.
                     }
                 }
             }
         }
     }
-    public SolarEvents getChoice() { return choice; }
+    public String getChoice() { return choice; }
 
     public Location getLocation()
     {
@@ -272,6 +298,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
     private TextView txt_location;
     private TextView txt_modeLabel;
     private TextView txt_title;
+    private ImageButton btn_more;
 
     protected void initViews( final Context context, View dialogContent )
     {
@@ -292,6 +319,13 @@ public class AlarmDialog extends BottomSheetDialogFragment
             txt_location.setOnClickListener(onLocationClicked);
         }
 
+        alarmPickers = AlarmAddon.queryEventPickers(context);
+        btn_more = (ImageButton) dialogContent.findViewById(R.id.appwidget_schedalarm_more);
+        if (btn_more != null) {
+            btn_more.setOnClickListener(onMoreButtonClicked);
+            btn_more.setVisibility(alarmPickers.size() > 0 ? View.VISIBLE : View.GONE);
+        }
+
         spinner_scheduleMode = (Spinner) dialogContent.findViewById(R.id.appwidget_schedalarm_mode);
         if (adapter != null) {
             spinner_scheduleMode.setAdapter(adapter);
@@ -307,42 +341,53 @@ public class AlarmDialog extends BottomSheetDialogFragment
                     {
                         updateLocationLabel(context, txt_location, dataset.location());
 
-                        choice = (SolarEvents)spinner_scheduleMode.getSelectedItem();
+                        AlarmEvent.AlarmEventItem item = (AlarmEvent.AlarmEventItem)spinner_scheduleMode.getSelectedItem();
+                        choice = item.getEventID();
+
+                        if (choice == null) {
+                            Log.d("DEBUG", "null selection");
+                            return;
+                        }
+
                         Log.d("DEBUG", "onItemSelected: " + choice);
                         if (listener != null) {
                             listener.onChanged(AlarmDialog.this);
                         }
 
-                        Calendar now0 = dataset.nowThen(dataset.calendar());
-                        Calendar alarmCalendar = getCalendarForAlarmChoice(choice, now0);
-                        if (alarmCalendar != null)
+                        if (showDesc)
                         {
-                            Calendar now = dataset.now();
-                            if (now.after(alarmCalendar))      // getCalendarForAlarmChoice should return a datetime in the future..
-                            {                                      // but supposing it doesn't (due to user defined date) then adjust alarmTime to be today
-                                alarmCalendar = SuntimesData.nowThen(alarmCalendar, now);  // and if that is also past, adjust alarmTime to be tomorrow
-                                if (now.after(alarmCalendar))
-                                {
-                                    Calendar tomorrow = (Calendar)now.clone();
-                                    tomorrow.add(Calendar.DAY_OF_YEAR, 1);
-                                    alarmCalendar = SuntimesData.nowThen(alarmCalendar, tomorrow);
+                            String displayString = item.getTitle();
+                            Calendar now0 = dataset.nowThen(dataset.calendar());
+                            Calendar alarmCalendar = getCalendarForAlarmChoice(choice, now0);
+                            if (alarmCalendar != null)
+                            {
+                                Calendar now = dataset.now();
+                                if (now.after(alarmCalendar))      // getCalendarForAlarmChoice should return a datetime in the future..
+                                {                                      // but supposing it doesn't (due to user defined date) then adjust alarmTime to be today
+                                    alarmCalendar = SuntimesData.nowThen(alarmCalendar, now);  // and if that is also past, adjust alarmTime to be tomorrow
+                                    if (now.after(alarmCalendar))
+                                    {
+                                        Calendar tomorrow = (Calendar)now.clone();
+                                        tomorrow.add(Calendar.DAY_OF_YEAR, 1);
+                                        alarmCalendar = SuntimesData.nowThen(alarmCalendar, tomorrow);
+                                    }
                                 }
+
+                                String timeString =" " + utils.timeDeltaDisplayString(now.getTime(), alarmCalendar.getTime()).getValue() + " ";
+                                String noteString = context.getString(R.string.schedalarm_dialog_note, timeString);
+                                txt_note.setText(SuntimesUtils.createBoldColorSpan(null, noteString, timeString, color_textTimeDelta));
+                                icon_note.setVisibility(View.GONE);
+
+                                String modeDescription = (type == AlarmClockItem.AlarmType.NOTIFICATION) ? context.getString(R.string.configLabel_schednotify_mode) : context.getString(R.string.configLabel_schedalarm_mode);
+                                SuntimesUtils.announceForAccessibility(txt_note,  modeDescription + " " + displayString + ", " + txt_note.getText());   // TODO: does AlarmCreateDialog also announce?
+
+                            } else {
+                                String timeString = " " + displayString + " ";
+                                String noteString = context.getString(R.string.schedalarm_dialog_note2, timeString);
+                                txt_note.setText(SuntimesUtils.createBoldColorSpan(null, noteString, timeString, color_textTimeDelta));
+                                icon_note.setVisibility(View.VISIBLE);
+                                SuntimesUtils.announceForAccessibility(txt_note, displayString + ", " + txt_note.getText());
                             }
-
-                            String timeString =" " + utils.timeDeltaDisplayString(now.getTime(), alarmCalendar.getTime()).getValue() + " ";
-                            String noteString = context.getString(R.string.schedalarm_dialog_note, timeString);
-                            txt_note.setText(SuntimesUtils.createBoldColorSpan(null, noteString, timeString, color_textTimeDelta));
-                            icon_note.setVisibility(View.GONE);
-
-                            String modeDescription = (type == AlarmClockItem.AlarmType.NOTIFICATION) ? context.getString(R.string.configLabel_schednotify_mode) : context.getString(R.string.configLabel_schedalarm_mode);
-                            SuntimesUtils.announceForAccessibility(txt_note,  modeDescription + " " + choice.getLongDisplayString() + ", " + txt_note.getText());
-
-                        } else {
-                            String timeString = " " + choice.getLongDisplayString() + " ";
-                            String noteString = context.getString(R.string.schedalarm_dialog_note2, timeString);
-                            txt_note.setText(SuntimesUtils.createBoldColorSpan(null, noteString, timeString, color_textTimeDelta));
-                            icon_note.setVisibility(View.VISIBLE);
-                            SuntimesUtils.announceForAccessibility(txt_note, choice.getLongDisplayString() + ", " + txt_note.getText());
                         }
                     }
 
@@ -376,6 +421,130 @@ public class AlarmDialog extends BottomSheetDialogFragment
                 layout_note.setVisibility(View.GONE);
             }
             txt_modeLabel.setVisibility(View.GONE);
+        }
+    }
+
+    private View.OnClickListener onMoreButtonClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v)
+        {
+            Context context = getActivity();
+            PopupMenu popup = new PopupMenu(context, v);
+            Menu menu = popup.getMenu();
+
+            if (alarmPickers == null) {
+                alarmPickers = AlarmAddon.queryEventPickers(context);
+            }
+
+            int[] attr = { R.attr.icActionExtension };
+            TypedArray typedArray = context.obtainStyledAttributes(attr);
+            Drawable icon = ContextCompat.getDrawable(context, typedArray.getResourceId(0, R.drawable.ic_action_extension));
+            typedArray.recycle();
+
+            for (int i=0; i<alarmPickers.size(); i++)
+            {
+                MenuItem item = menu.add(0, i, i, alarmPickers.get(i).getTitle());
+                item.setIcon(icon);
+            }
+
+            SuntimesUtils.forceActionBarIcons(menu);
+            popup.setOnMenuItemClickListener(onMoreMenuClick);
+            popup.show();
+        }
+    };
+    private List<AlarmAddon.EventPickerInfo> alarmPickers = null;
+
+    private PopupMenu.OnMenuItemClickListener onMoreMenuClick = new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem item)
+        {
+            Context context = getContext();
+            if (context == null || alarmPickers == null) {
+                return false;
+            }
+
+            int i = item.getItemId();
+            if (i >= 0 && i < alarmPickers.size())
+            {
+                AlarmAddon.EventPickerInfo picker = alarmPickers.get(item.getItemId());
+                Intent intent = picker.getIntent(getLocation());
+                intent.putExtra(AlarmEventContract.EXTRA_ALARM_EVENT, getChoice());
+                startActivityForResult(intent, REQUEST_ADDON_ALARMPICKER);
+                return true;
+
+            } else {
+                Log.d(getClass().getSimpleName(), "Invalid AlarmPicker index; ignoring selection..");
+                return false;
+            }
+        }
+    };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode)
+        {
+            case REQUEST_ADDON_ALARMPICKER:
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    if (data != null)
+                    {
+                        Uri uri = data.getData();
+                        String reference = data.getStringExtra(AlarmEventContract.COLUMN_CONFIG_PROVIDER);
+                        String name = data.getStringExtra(AlarmEventContract.COLUMN_EVENT_NAME);
+                        //String title = data.getStringExtra(AlarmAddon.COLUMN_ALARM_TITLE);
+                        //String summary = data.getStringExtra(AlarmAddon.COLUMN_ALARM_SUMMARY);
+                        //Toast.makeText(getActivity(), "picker result: \n" + title + " \n" + summary + "\n" + name + "\n" + reference + "\n" + uri, Toast.LENGTH_LONG).show();
+
+                        if ((reference != null && name != null)) {
+                            selectAddonAlarm(reference, name);
+
+                        } else if (uri != null) {
+                            selectAddonAlarm(uri);
+
+                        } else {
+                            Log.w(getClass().getSimpleName(), "onActivityResult: missing addon alarm data; ignoring result");
+                        }
+                    } else {
+                        Log.w(getClass().getSimpleName(), "onActivityResult: missing addon alarm data; ignoring result");
+                    }
+                }
+                break;
+        }
+    }
+
+    protected void selectAddonAlarm(@NonNull Uri uri)
+    {
+        String reference = uri.getAuthority();
+        String alarmName = uri.getLastPathSegment();
+        if (reference != null && alarmName != null) {
+            selectAddonAlarm(reference, alarmName);
+        }
+    }
+    protected void selectAddonAlarm(@NonNull String reference, @NonNull String name)
+    {
+        Context context = getActivity();
+        ContentResolver resolver = context != null ? context.getContentResolver() : null;
+        if (resolver != null)
+        {
+            if (AlarmAddon.checkUriPermission(context, AlarmAddon.getEventInfoUri(reference, name)))
+            {
+                AlarmEvent.AlarmEventItem item = new AlarmEvent.AlarmEventItem(reference, name, resolver);
+                if (item.isResolved())
+                {
+                    setChoice(item.getEventID());
+                    if (listener != null) {
+                        listener.onChanged(this);
+                    }
+                } else {
+                    Log.w(getClass().getSimpleName(), "selectAddonAlarm: permission denied! " + reference);
+                    Toast.makeText(context, context.getString(R.string.schedalarm_dialog_error2), Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(context, context.getString(R.string.schedalarm_dialog_error2), Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -413,13 +582,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
         if (overwriteCurrent || choice == null)
         {
             SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
-            String choiceString = prefs.getString(PREF_KEY_ALARM_LASTCHOICE, PREF_DEF_ALARM_LASTCHOICE.name());
-            try
-            {
-                choice = SolarEvents.valueOf(choiceString);
-            } catch (IllegalArgumentException e) {
-                choice = PREF_DEF_ALARM_LASTCHOICE;
-            }
+            choice = prefs.getString(PREF_KEY_ALARM_LASTCHOICE, PREF_DEF_ALARM_LASTCHOICE);
         }
         setChoice(choice);
     }
@@ -429,7 +592,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
         showFrame = bundle.getBoolean(KEY_DIALOGSHOWFRAME);
         showDesc = bundle.getBoolean(KEY_DIALOGSHOWDESC);
 
-        choice = (SolarEvents) bundle.getSerializable(PREF_KEY_ALARM_LASTCHOICE);
+        choice = bundle.getString(PREF_KEY_ALARM_LASTCHOICE);
         if (choice == null) {
             choice = PREF_DEF_ALARM_LASTCHOICE;
         }
@@ -448,7 +611,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
     protected void saveSettings(Context context)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
-        prefs.putString(PREF_KEY_ALARM_LASTCHOICE, choice.name());
+        prefs.putString(PREF_KEY_ALARM_LASTCHOICE, choice);
         prefs.apply();
     }
 
@@ -499,248 +662,15 @@ public class AlarmDialog extends BottomSheetDialogFragment
         onCanceled = listener;
     }
 
-    /**
-     * @param choice a SolarEvent "alarm choice"
-     * @param now a Calendar representing "right now"
-     * @return a Calendar representing the alarm selection
-     */
-    public Calendar getCalendarForAlarmChoice( SolarEvents choice, Calendar now )
+    public Calendar getCalendarForAlarmChoice( String choice, Calendar now )
     {
-        Date time = now.getTime();
-        Calendar calendar = null;
-        switch (choice)
-        {
-            case EQUINOX_SPRING:
-                if (equinoxdata != null) {
-                    calendar = equinoxdata.dataEquinoxSpring.eventCalendarThisYear();
-                    if (calendar == null || time.after(calendar.getTime())) {
-                        calendar = equinoxdata.dataEquinoxSpring.eventCalendarOtherYear();
-                    }
-                }
-                break;
-            case SOLSTICE_SUMMER:
-                if (equinoxdata != null) {
-                    calendar = equinoxdata.dataSolsticeSummer.eventCalendarThisYear();
-                    if (calendar == null || time.after(calendar.getTime())) {
-                        calendar = equinoxdata.dataSolsticeSummer.eventCalendarOtherYear();
-                    }
-                }
-                break;
-            case EQUINOX_AUTUMNAL:
-                if (equinoxdata != null) {
-                    calendar = equinoxdata.dataEquinoxAutumnal.eventCalendarThisYear();
-                    if (calendar == null || time.after(calendar.getTime())) {
-                        calendar = equinoxdata.dataEquinoxAutumnal.eventCalendarOtherYear();
-                    }
-                }
-                break;
-            case SOLSTICE_WINTER:
-                if (equinoxdata != null) {
-                    calendar = equinoxdata.dataSolsticeWinter.eventCalendarThisYear();
-                    if (calendar == null || time.after(calendar.getTime())) {
-                        calendar = equinoxdata.dataSolsticeWinter.eventCalendarOtherYear();
-                    }
-                }
-                break;
-            case NEWMOON:
-            case FIRSTQUARTER:
-            case FULLMOON:
-            case THIRDQUARTER:
-                if (moondata != null) {
-                    calendar = moondata.moonPhaseCalendar(choice.toMoonPhase());
-                }
-                break;
-            case MOONRISE:
-            case MOONSET:
-            case MOONNOON:
-            case MOONNIGHT:
-                if (moondata != null)
-                {
-                    calendar = AlarmNotifications.moonEventCalendar(choice, moondata, true);
-                    if (calendar == null || time.after(calendar.getTime())) {
-                        calendar = AlarmNotifications.moonEventCalendar(choice, moondata, false);
-                    }
-                }
-                break;
-            case MORNING_ASTRONOMICAL:
-                calendar = dataset.dataAstro.sunriseCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataAstro.sunriseCalendarOther();
-                }
-                break;
-            case MORNING_NAUTICAL:
-                calendar = dataset.dataNautical.sunriseCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataNautical.sunriseCalendarOther();
-                }
-                break;
-            case MORNING_BLUE8:
-                calendar = dataset.dataBlue8.sunriseCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataBlue8.sunriseCalendarOther();
-                }
-                break;
-            case MORNING_CIVIL:
-                calendar = dataset.dataCivil.sunriseCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataCivil.sunriseCalendarOther();
-                }
-                break;
-            case MORNING_BLUE4:
-                calendar = dataset.dataBlue4.sunriseCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataBlue4.sunriseCalendarOther();
-                }
-                break;
-            case MORNING_GOLDEN:
-                calendar = dataset.dataGold.sunriseCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataGold.sunriseCalendarOther();
-                }
-                break;
-            case NOON:
-                calendar = dataset.dataNoon.sunriseCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataNoon.sunriseCalendarOther();
-                }
-                break;
-            case SUNSET:
-                calendar = dataset.dataActual.sunsetCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataActual.sunsetCalendarOther();
-                }
-                break;
-            case EVENING_GOLDEN:
-                calendar = dataset.dataGold.sunsetCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataGold.sunsetCalendarOther();
-                }
-                break;
-            case EVENING_BLUE4:
-                calendar = dataset.dataBlue4.sunsetCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataBlue4.sunsetCalendarOther();
-                }
-                break;
-            case EVENING_CIVIL:
-                calendar = dataset.dataCivil.sunsetCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataCivil.sunsetCalendarOther();
-                }
-                break;
-            case EVENING_BLUE8:
-                calendar = dataset.dataBlue8.sunsetCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataBlue8.sunsetCalendarOther();
-                }
-                break;
-            case EVENING_NAUTICAL:
-                calendar = dataset.dataNautical.sunsetCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataNautical.sunsetCalendarOther();
-                }
-                break;
-            case EVENING_ASTRONOMICAL:
-                calendar = dataset.dataAstro.sunsetCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataAstro.sunsetCalendarOther();
-                }
-                break;
-            case SUNRISE:
-            default:
-                calendar = dataset.dataActual.sunriseCalendarToday();
-                if (calendar == null || time.after(calendar.getTime()))
-                {
-                    calendar = dataset.dataActual.sunriseCalendarOther();
-                }
-                break;
-        }
-        return calendar;
+        AlarmClockItem item = createAlarmItem();
+        boolean isSchedulable = AlarmNotifications.updateAlarmTime(getActivity(), item);
+        return (isSchedulable) ? item.getCalendar() : null;
     }
 
-    /**
-     * Schedule the selected alarm on click.
-     */
-    public DialogInterface.OnClickListener scheduleAlarmClickListener = new DialogInterface.OnClickListener()
-    {
-        @Override
-        public void onClick(DialogInterface dialogInterface, int i)
-        {
-            Context context = getContext();
-            if (context != null)
-            {
-                SolarEvents choice = getChoice();
-                Calendar now = dataset.nowThen(dataset.calendar());
-                Calendar calendar = getCalendarForAlarmChoice(choice, now);
-
-                if (calendar != null)
-                {
-                    DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
-                    String alarmLabel = context.getString(R.string.schedalarm_labelformat, choice.getShortDisplayString(), dateFormat.format(calendar.getTime()));
-                    AlarmDialog.scheduleAlarm(getActivity(), alarmLabel, calendar, choice);
-
-                } else {
-                    String alarmErrorTxt = getString(R.string.schedalarm_dialog_error) + "\n" + getString(R.string.schedalarm_dialog_note2, choice.getLongDisplayString());
-                    Toast alarmError = Toast.makeText(getActivity(), alarmErrorTxt, Toast.LENGTH_LONG);
-                    alarmError.show();
-                }
-            }
-        }
-    };
-
-    public static void scheduleAlarm(Activity context, String label, Calendar calendar, SolarEvents event)
-    {
-        if (calendar == null)
-            return;
-
-        Calendar alarm = new GregorianCalendar(TimeZone.getDefault());
-        alarm.setTimeInMillis(calendar.getTimeInMillis());
-        int hour = alarm.get(Calendar.HOUR_OF_DAY);
-        int minutes = alarm.get(Calendar.MINUTE);
-
-        Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
-        alarmIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //alarmIntent.putExtra(AlarmClock.EXTRA_MESSAGE, label);
-        alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, hour);
-        alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
-        alarmIntent.putExtra(AlarmClockActivity.EXTRA_SOLAREVENT, event.name());
-
-        if (alarmIntent.resolveActivity(context.getPackageManager()) != null)
-        {
-            context.startActivity(alarmIntent);
-        }
-    }
-
-    /**
-     * @param context a context used to start the "show alarm" intent
-     */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    public static void showAlarms(Activity context)
-    {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-        {
-            Intent alarmsIntent = new Intent(AlarmClock.ACTION_SHOW_ALARMS);
-            alarmsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-            if (alarmsIntent.resolveActivity(context.getPackageManager()) != null)
-            {
-                context.startActivity(alarmsIntent);
-            }
-        }
+    protected AlarmClockItem createAlarmItem() {
+        return AlarmListDialog.createAlarm(getActivity(), AlarmClockItem.AlarmType.ALARM, "", getChoice(), getLocation(), -1L, -1, -1, null, AlarmSettings.loadPrefVibrateDefault(getActivity()), AlarmSettings.getDefaultRingtoneUri(getActivity(), AlarmClockItem.AlarmType.ALARM), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
 
     private View.OnClickListener onLocationClicked = new View.OnClickListener() {

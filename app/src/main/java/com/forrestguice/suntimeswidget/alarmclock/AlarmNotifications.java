@@ -26,11 +26,13 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 
 import android.content.Context;
 import android.content.Intent;
 
+import android.database.Cursor;
 import android.icu.text.MessageFormat;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -61,6 +63,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
+import com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -650,13 +653,15 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
-        String eventDisplay = (alarm.event != null ? alarm.event.getLongDisplayString() : null);
+        String eventString = alarm.getEvent();
+        AlarmEvent.AlarmEventItem eventItem = new AlarmEvent.AlarmEventItem(eventString, context.getContentResolver());
+        String eventDisplay = (eventString != null) ? eventItem.getTitle() : null;
         if (alarm.offset != 0) {
-            eventDisplay = (alarm.event != null) ? formatOffsetMessage(context, alarm.offset, alarm.event)
+            eventDisplay = (eventString != null) ? formatOffsetMessage(context, alarm.offset, alarm.timestamp, eventItem)
                                                  : formatOffsetMessage(context, alarm.offset, alarm.timestamp);
         }
-
         String emptyLabel = ((eventDisplay != null) ? eventDisplay : context.getString(R.string.alarmOption_solarevent_none));
+
         String notificationTitle = (alarm.label == null || alarm.label.isEmpty() ? emptyLabel : alarm.label);
         String notificationMsg = eventDisplay;
         int notificationIcon = ((alarm.type == AlarmClockItem.AlarmType.NOTIFICATION) ? R.drawable.ic_action_notification : R.drawable.ic_action_alarms);
@@ -758,6 +763,28 @@ public class AlarmNotifications extends BroadcastReceiver
         builder.setOnlyAlertOnce(false);
 
         return builder.build();
+    }
+
+    public static String formatOffsetMessage(Context context, long offset, long timestamp, @NonNull AlarmEvent.AlarmEventItem event)
+    {
+        String eventString = event.getEventID();
+        if (eventString != null)
+        {
+            SolarEvents solarEvent = event.getEvent();
+            if (solarEvent != null) {
+                return formatOffsetMessage(context, offset, solarEvent);
+
+            } else {
+                AlarmEvent.AlarmEventPhrase phrase = event.getPhrase(context);
+                String gender = (phrase != null ? phrase.getGender() : "other");
+                int quantity = (phrase != null ? phrase.getQuantity() : 1);
+                String eventText = (phrase != null ? phrase.getNoun() : event.getTitle());
+                String offsetText = utils.timeDeltaLongDisplayString(0, offset).getValue();
+                return formatOffsetMessage(context, offset, offsetText, eventText, quantity, gender);
+            }
+        } else {
+            return formatOffsetMessage(context, offset, timestamp);
+        }
     }
 
     public static String formatOffsetMessage(Context context, long offset, @NonNull SolarEvents event)
@@ -1446,33 +1473,22 @@ public class AlarmNotifications extends BroadcastReceiver
     }
     public static boolean updateAlarmTime(Context context, final AlarmClockItem item, Calendar now, boolean modifyItem)
     {
-        Calendar eventTime = Calendar.getInstance();
-        if (item.location != null && item.event != null)
+        Calendar eventTime = null;
+        String eventID = item.getEvent();
+        SolarEvents event = SolarEvents.valueOf(eventID, null);
+        if (item.location != null && event != null)
         {
-            switch (item.event.getType())
-            {
-                case SolarEvents.TYPE_MOON:
-                    eventTime = updateAlarmTime_moonEvent(context, item.event, item.location, item.offset, item.repeating, item.repeatingDays, now);
-                    break;
+            eventTime = updateAlarmTime_solarEvent(context, event, item.location, item.offset, item.repeating, item.repeatingDays, now);
 
-                case SolarEvents.TYPE_MOONPHASE:
-                    eventTime = updateAlarmTime_moonPhaseEvent(context, item.event, item.location, item.offset, item.repeating, item.repeatingDays, now);
-                    break;
+        } else if (eventID != null) {
+            eventTime = updateAlarmTime_addonEvent(context.getContentResolver(), eventID, item.location, item.offset, item.repeating, item.repeatingDays, now);
 
-                case SolarEvents.TYPE_SEASON:
-                    eventTime = updateAlarmTime_seasonEvent(context, item.event, item.location, item.offset, item.repeating, item.repeatingDays, now);
-                    break;
-
-                case SolarEvents.TYPE_SUN:
-                    eventTime = updateAlarmTime_sunEvent(context, item.event, item.location, item.offset, item.repeating, item.repeatingDays, now);
-                    break;
-            }
         } else {
             eventTime = updateAlarmTime_clockTime(item.hour, item.minute, item.timezone, item.location, item.offset, item.repeating, item.repeatingDays, now);
         }
 
         if (eventTime == null) {
-            Log.e(TAG, "updateAlarmTime: failed to update " + item + " :: " + item.event + "@" + item.location);
+            Log.e(TAG, "updateAlarmTime: failed to update " + item + " :: " + item.getEvent() + "@" + item.location);
             return false;
         }
 
@@ -1484,6 +1500,31 @@ public class AlarmNotifications extends BroadcastReceiver
             item.modified = true;
         }
         return true;
+    }
+
+    @Nullable
+    protected static Calendar updateAlarmTime_solarEvent(Context context, @NonNull SolarEvents event, @NonNull Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
+    {
+        Calendar eventTime = null;
+        switch (event.getType())
+        {
+            case SolarEvents.TYPE_MOON:
+                eventTime = updateAlarmTime_moonEvent(context, event, location, offset, repeating, repeatingDays, now);
+                break;
+
+            case SolarEvents.TYPE_MOONPHASE:
+                eventTime = updateAlarmTime_moonPhaseEvent(context, event, location, offset, repeating, repeatingDays, now);
+                break;
+
+            case SolarEvents.TYPE_SEASON:
+                eventTime = updateAlarmTime_seasonEvent(context, event, location, offset, repeating, repeatingDays, now);
+                break;
+
+            case SolarEvents.TYPE_SUN:
+                eventTime = updateAlarmTime_sunEvent(context, event, location, offset, repeating, repeatingDays, now);
+                break;
+        }
+        return eventTime;
     }
 
     @Nullable
@@ -1664,8 +1705,76 @@ public class AlarmNotifications extends BroadcastReceiver
         return eventTime;
     }
 
+    protected static Calendar updateAlarmTime_addonEvent(@Nullable ContentResolver resolver, @NonNull String eventID, @Nullable Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
+    {
+        Log.d(TAG, "updateAlarmTime_addonEvent: eventID: " + eventID + ", offset: " + offset + ", repeating: " + repeating);
+        long nowMillis = now.getTimeInMillis();
+
+        Uri uri_id = Uri.parse(eventID);
+        Uri uri_calc = Uri.parse(AlarmAddon.getEventCalcUri(uri_id.getAuthority(), uri_id.getLastPathSegment()));
+        if (resolver != null)
+        {
+            StringBuilder repeatingDaysString = new StringBuilder("[");
+            if (repeating) {
+                for (int i = 0; i < repeatingDays.size(); i++) {
+                    repeatingDaysString.append(repeatingDays.get(i));
+                    if (i != repeatingDays.size() - 1) {
+                        repeatingDaysString.append(",");
+                    }
+                }
+            }
+            repeatingDaysString.append("]");
+
+            String[] selectionArgs = new String[] { Long.toString(nowMillis), Long.toString(offset), Boolean.toString(repeating), repeatingDaysString.toString() };
+            String selection = AlarmEventContract.EXTRA_ALARM_NOW + "=? AND "
+                             + AlarmEventContract.EXTRA_ALARM_OFFSET + "=? AND "
+                             + AlarmEventContract.EXTRA_ALARM_REPEAT + "=? AND "
+                             + AlarmEventContract.EXTRA_ALARM_REPEAT_DAYS + "=?";
+
+            if (location != null)
+            {
+                selectionArgs = new String[] { Long.toString(nowMillis), Long.toString(offset), Boolean.toString(repeating), repeatingDaysString.toString(),
+                                               location.getLatitude(), location.getLongitude(), location.getAltitude() };
+                selection += " AND "
+                        + CalculatorProviderContract.COLUMN_CONFIG_LATITUDE + "=? AND "
+                        + CalculatorProviderContract.COLUMN_CONFIG_LONGITUDE + "=? AND "
+                        + CalculatorProviderContract.COLUMN_CONFIG_ALTITUDE + "=?";
+            }
+
+            Cursor cursor = resolver.query(uri_calc, AlarmEventContract.QUERY_EVENT_CALC_PROJECTION, selection, selectionArgs, null);
+            if (cursor != null)
+            {
+                cursor.moveToFirst();
+                int i_eventTime = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_TIMEMILLIS);
+                Long eventTimeMillis = i_eventTime >= 0 ? cursor.getLong(i_eventTime) : null;
+                cursor.close();
+
+                if (eventTimeMillis != null)
+                {
+                    if (nowMillis > (eventTimeMillis + offset)) {
+                        Log.e(TAG, "updateAlarmTime: failed to query alarm time; result is invalid (past) :: " + uri_calc);
+                        return null;
+                    }
+                    Calendar eventTime = Calendar.getInstance();
+                    eventTime.setTimeInMillis(eventTimeMillis);
+                    return eventTime;
+
+                } else {
+                    Log.e(TAG, "updateAlarmTime: failed to query alarm time; result is missing " + AlarmEventContract.COLUMN_EVENT_TIMEMILLIS + " :: " + uri_calc);
+                    return null;
+                }
+            } else {
+                Log.e(TAG, "updateAlarmTime: failed to query alarm time; null cursor!" + uri_calc);
+                return null;
+            }
+        } else {
+            Log.e(TAG, "updateAlarmTime: failed to query alarm time; null ContentResolver! " + uri_calc);
+            return null;
+        }
+    }
+
     @Nullable
-    private static Calendar updateAlarmTime_clockTime(int hour, int minute, String tzID, @Nullable Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
+    protected static Calendar updateAlarmTime_clockTime(int hour, int minute, String tzID, @Nullable Location location, long offset, boolean repeating, ArrayList<Integer> repeatingDays, Calendar now)
     {
         TimeZone timezone = AlarmClockItem.AlarmTimeZone.getTimeZone(tzID, location);
         Log.d(TAG, "updateAlarmTime_clockTime: hour: " + hour + ", minute: " + minute + ", timezone: " + timezone.getID() + ", offset: " + offset + ", repeating: " + repeating);
@@ -1699,17 +1808,18 @@ public class AlarmNotifications extends BroadcastReceiver
 
     private static SuntimesData getData(Context context, @NonNull AlarmClockItem alarm)
     {
-        if (alarm.location != null && alarm.event != null)
+        SolarEvents event = SolarEvents.valueOf(alarm.getEvent(), null);   // TODO: non SolarEventsEnum
+        if (alarm.location != null && event != null)
         {
-            switch (alarm.event.getType())
+            switch (event.getType())
             {
                 case SolarEvents.TYPE_MOON:
                 case SolarEvents.TYPE_MOONPHASE:
                     return getData_moonEvent(context, alarm.location);
                 case SolarEvents.TYPE_SEASON:
-                    return getData_seasons(context, alarm.event, alarm.location);
+                    return getData_seasons(context, event, alarm.location);
                 case SolarEvents.TYPE_SUN:
-                    return getData_sunEvent(context, alarm.event, alarm.location);
+                    return getData_sunEvent(context, event, alarm.location);
                 default:
                     return getData_clockEvent(context, alarm.location);
             }
