@@ -39,13 +39,13 @@ public interface AlarmEventContract
     String COLUMN_EVENT_PHRASE_GENDER = "event_phrase_gender";           // String (noun gender; SelectFormat param)
     String COLUMN_EVENT_PHRASE_QUANTITY = "event_phrase_quantity";       // int (noun quantity; SelectFormat param)
 
-    String COLUMN_EVENT_SUPPORTS_REPEATING = "event_supports_repeat";        // int; REPEAT_SUPPORT_*; 0 (none), 1 (basic), 2 (daily)
+    String COLUMN_EVENT_SUPPORTS_REPEATING = "event_supports_repeat";        // int; REPEAT_SUPPORT_*; 2 (none), 1 (basic), 0 (daily)
     String COLUMN_EVENT_SUPPORTS_OFFSETDAYS = "event_supports_offsetdays";   // String (boolean)
     String COLUMN_EVENT_REQUIRES_LOCATION = "event_requires_location";       // String (boolean)
 
-    int REPEAT_SUPPORT_NONE = 0;
+    int REPEAT_SUPPORT_NONE = 2;
     int REPEAT_SUPPORT_BASIC = 1;
-    int REPEAT_SUPPORT_DAILY = 2;
+    int REPEAT_SUPPORT_DAILY = 0;
 
     String QUERY_EVENT_INFO = "eventInfo";
     String[] QUERY_EVENT_INFO_PROJECTION = new String[] {
