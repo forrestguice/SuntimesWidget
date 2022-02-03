@@ -1523,6 +1523,8 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     public static final String REQUIRED_PERMISSION = "suntimes.permission.READ_CALCULATOR";   // TODO: move this somewhere else
     public static final String CATEGORY_SUNTIMES_ADDON = "suntimes.SUNTIMES_ADDON";
+    public static final String ACTION_ABOUT = "suntimes.action.SHOW_ABOUT";
+    public static final String ACTION_MENU_ITEM = "suntimes.action.ADDON_MENU_ITEM";
     public static final String ACTION_SHOW_DATE = "suntimes.action.SHOW_DATE";
     public static final String EXTRA_SHOW_DATE = "dateMillis";
     public static final String META_MENUITEM_TITLE = "SuntimesMenuItemTitle";

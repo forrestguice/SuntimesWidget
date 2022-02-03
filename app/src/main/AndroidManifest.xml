@@ -115,7 +115,14 @@
         <activity
             android:name=".AboutActivity"
             android:label="@string/app_name"
-            android:icon="@mipmap/ic_launcher">
+            android:icon="@mipmap/ic_launcher"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="suntimes.action.SHOW_ABOUT" />
+                <category android:name="suntimes.SUNTIMES_ADDON" />
+            </intent-filter>
+            <meta-data android:name="SuntimesMenuItemTitle" android:value="@string/app_name" />
         </activity>
 
         <!-- Settings Activity -->
