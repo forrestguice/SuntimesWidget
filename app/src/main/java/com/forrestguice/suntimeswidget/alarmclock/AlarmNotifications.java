@@ -869,11 +869,15 @@ public class AlarmNotifications extends BroadcastReceiver
 
             } else {
                 AlarmEvent.AlarmEventPhrase phrase = event.getPhrase(context);
-                String gender = (phrase != null ? phrase.getGender() : "other");
-                int quantity = (phrase != null ? phrase.getQuantity() : 1);
                 String eventText = (phrase != null ? phrase.getNoun() : event.getTitle());
                 String offsetText = utils.timeDeltaLongDisplayString(0, offset).getValue();
-                return formatOffsetMessage(context, offset, offsetText, eventText, quantity, gender);
+
+                if (Build.VERSION.SDK_INT >= 24)
+                {
+                    String gender = (phrase != null ? phrase.getGender() : "other");
+                    int quantity = (phrase != null ? phrase.getQuantity() : 1);
+                    return formatOffsetMessage(context, offset, offsetText, eventText, quantity, gender);
+                } else return formatOffsetMessage(context, offset, offsetText, eventText);
             }
         } else {
             return formatOffsetMessage(context, offset, timestamp);
