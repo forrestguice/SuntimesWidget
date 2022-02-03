@@ -230,8 +230,20 @@ public class AlarmAddon
                     item.title = titleValue != null ? titleValue : info_uri.getLastPathSegment();
                     item.summary = (i_summary >= 0) ? cursor.getString(i_summary) : null;
                     item.supports_repeating = (i_support_repeat >= 0) ? cursor.getInt(i_support_repeat) : AlarmEventContract.REPEAT_SUPPORT_DAILY;
-                    item.supports_offset_days = (i_support_offsetdays >= 0) && Boolean.parseBoolean(cursor.getString(i_support_offsetdays));
-                    item.requires_location = (i_requires_location >= 0) && Boolean.parseBoolean(cursor.getString(i_requires_location));
+
+                    if (i_support_offsetdays >= 0) {
+                        String v = cursor.getString(i_support_offsetdays);
+                        if (v != null) {
+                            item.supports_offset_days = Boolean.parseBoolean(v);
+                        }
+                    }
+
+                    if (i_requires_location >= 0) {
+                        String v = cursor.getString(i_requires_location);
+                        if (v != null) {
+                            item.requires_location = Boolean.parseBoolean(v);
+                        }
+                    }
 
                     int i_phrase = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_PHRASE);
                     int i_phrase_gender = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_PHRASE_GENDER);
