@@ -19,9 +19,12 @@
 package com.forrestguice.suntimeswidget;
 
 import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -422,7 +425,19 @@ public class EquinoxDialog extends BottomSheetDialogFragment
             SuntimesUtils.initDisplayStrings(context);
             String itemDisplay = context.getString(R.string.share_format_equinox, itemMode, utils.calendarDateTimeDisplayString(context, itemTime, showTime, showSeconds).toString());
 
-            Toast.makeText(getContext(), itemDisplay, Toast.LENGTH_SHORT).show();    // TODO: copy to clipboard
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+            {
+                ClipboardManager clipboard = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+                if (clipboard != null) {
+                    clipboard.setPrimaryClip(ClipData.newPlainText(itemMode.getLongDisplayString(), itemDisplay));
+                }
+            } else {
+                android.text.ClipboardManager clipboard = (android.text.ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+                if (clipboard != null) {
+                    clipboard.setText(itemDisplay);
+                }
+            }
+            Toast.makeText(getContext(), itemDisplay, Toast.LENGTH_SHORT).show();
         }
     }
 
