@@ -21,12 +21,15 @@
     <string name="configAction_setAlarm">Configurar alarma</string>
     <string name="configAction_setTimeZone">Configurar zona horària</string>
     <string name="configAction_setDate">Configurar data</string>
-    <string name="configAction_viewDate">Veure data</string>    
+    <string name="configAction_viewDate">Veure data</string>
+    <string name="configAction_viewDateWith">View date</string>    <!-- TODO -->
+    <string name="configAction_share">Share</string>    <!-- TODO -->
     <string name="configAction_sunDialog">Posició del Sol</string>
     <string name="configAction_equinoxDialog">Solstici / equinocci</string>
     <string name="configAction_worldMap">Mapa del món</string>
     <string name="configAction_moon">Lluna</string>
     <string name="configAction_help">Ajuda</string>
+    <string name="configAction_onlineHelp">Online Help</string>   <!-- TODO -->
     <string name="configAction_overflow">Més</string>  
     <string name="configAction_settings">Configuració</string>
     <string name="configAction_aboutWidget">Quant a</string>
@@ -77,6 +80,8 @@
     -->
     <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> de dia</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
     <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> de llum útil</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
+
+    <string name="timeMode_tropical_year">Tropical Year</string>   <!-- TODO -->
 
     <!-- Field: moon illumination (as seen in moon widget) -->
     <string name="moon_illumination">Iŀluminada al <xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50% illuminated" .. used in 2x1 widget -->
@@ -238,11 +243,15 @@
     <string name="configLabel_general_calculator">Font de dades:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Font de dades del Sol</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Font de dades de la Lluna</string>         <!-- preference label -->
+    <string name="configLabel_general_calculator_help">Data Sources</string>    <!-- preference title / help button text --> <!-- TODO -->
 
     <string name="configLabel_general_timeFormatMode">Format de la data:</string>         <!-- spinner label -->
 
     <string name="configLabel_general_altitude_enabled">Utilitza elevació</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Aplica refinaments basats en l\'altitud.</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_localize_hemisphere">Localize to hemisphere</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_general_localize_hemisphere_summary">Apply hemisphere based localization (season labels, moon phase icons).</string>        <!-- checkbox label -->    <!-- TODO -->
 
     <string name="configLabel_general_lengthUnits">Unitats de longitud</string>        <!-- spinner label -->
 
@@ -268,10 +277,28 @@
     <string name="configLabel_general_scanPlugins_summary">Cerca i carrega complements de tercers.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
+    <string name="configLabel_widgetlayout">Layout</string>           <!-- group title -->  <!-- TODO -->
+    <string-array name="widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
+        <!--<item>Fill</item>-->
+        <item>Top-Left</item>
+        <item>Top</item>
+        <item>Top-Right</item>
+        <item>Left</item>
+        <item>Center</item>
+        <item>Right</item>
+        <item>Bottom-Left</item>
+        <item>Bottom</item>
+        <item>Bottom-Right</item>
+    </string-array>  <!-- TODO -->
+
+    <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Opcions d\'aparença</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Aparença</string>                  <!-- spinner label -->  
     <string name="configLabel_appearance_theme">Tema:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Creix amb l\'espai disponible (reescalable)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_showLabels">Mostra etiquetes</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">Mostrar títol</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Títol:</string>              <!-- edittext label -->
@@ -362,6 +389,10 @@
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [nord]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [sud]</string>     <!-- setting -->  
     <string name="widgetMode_sunPosMap_bluemarble">Bola blava</string>    <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_location">Azimuthal Equidistant</string>     <!-- setting -->   <!-- TODO -->
+
+    <string name="worldmap_projection_equirectangular">Equidistant Rectangular</string>    <!-- TODO -->
+    <string name="worldmap_projection_equiazimuthal">Equidistant Azimuthal</string>    <!-- TODO -->
 
     <string name="widgetMode1x1_moonriseset">Sortida i posta de la Lluna</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Fase lunar i iŀluminació</string>     <!-- setting -->
@@ -369,9 +400,11 @@
     <string name="widgetMode1x1_moonillum">Només iŀluminació lunar</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphasenext">Següent fase</string>     <!-- setting -->
 
-    <string name="configLabel_appearance_1x1mode">Disseny 1x1:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x2mode">Disseny 3x2:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x3mode">Disseny 3x3:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_1x1mode">1x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_2x1mode">2x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x1mode">3x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x2mode">3x2:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x3mode">3x3:</string>     <!-- spinner label -->  <!-- TODO -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">No fer res</string>           <!-- setting -->
@@ -410,7 +443,8 @@
     <string name="configHint_location_alt">0</string> <!-- edittext hint -->
     <string name="configLabel_location_name">Nom:</string>                      <!-- edittext label -->
     <string name="configHint_location_name">(opcional)</string>                  <!-- edittext hint -->
-    <string name="configHint_location_name0">Nom del lloc</string>                  <!-- edittext hint -->  
+    <string name="configHint_location_name0">Nom del lloc</string>                  <!-- edittext hint -->
+    <string name="configLabel_location_fromapp">Use the app location</string>                  <!-- checkbox text -->  <!-- TODO -->
 
     <string name="configAction_getFix">Adquirir ubicació</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">Editar</string>         <!-- button (contentDescription) -->
@@ -457,6 +491,7 @@
     <string name="configLabel_general_showComparison">Mostrar comparació</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
+    <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
     <string name="trackingMode_closest">Esdeveniment més proper</string>                 <!-- setting -->
     <string name="trackingMode_soonest">Esdeveniment més d\'hora</string>                <!-- setting -->
     <string name="configLabel_general_trackingMode">Seguiment:</string>            <!-- spinner label -->
@@ -670,7 +705,8 @@
     <string name="configAction_sortAlarms">Ordena</string>                <!-- action button / menu item -->  
     <string name="configAction_sortAlarms_by_time">Per data de l\'alarma</string>                <!-- action button / menu item -->  
     <string name="configAction_sortAlarms_by_creation">Per data de creació</string>                <!-- action button / menu item -->  
-    <string name="configAction_clearOffset">Elimina</string>                <!-- action button / menu item -->  
+    <string name="configAction_clearOffset">Elimina</string>                <!-- action button / menu item -->
+    <string name="configAction_clearDate">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_setAlarmOffset">Retard</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmType">Tipus</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmLabel">Etiqueta</string>         <!-- button (contentDescription) -->  
@@ -809,9 +845,17 @@
         <item quantity="other">%d segons</item>
     </plurals>
 
+    <plurals name="units_days">
+        <item quantity="one">%s day</item>
+        <item quantity="other">%s days</item>
+    </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->    <!-- TODO -->
+
     <string name="configLabel_alarmMisc">Misceŀlani</string>
     <string name="configLabel_alarms_showlauncher">Icona del llançador</string>
     <string name="configLabel_alarms_showlauncher_summary">Mostra icona del rellotge d\\\'alarma a la barra de notificacions.</string>
+
+    <string name="configLabel_alarms_poweroffalarms">Power Off Alarm</string>    <!-- TODO -->
+    <string name="configLabel_alarms_poweroffalarms_summary">Wake the device from the power off state.\npackage: <xliff:g id="packageName">%s</xliff:g></string>    <!-- TODO -->
 
     <!--
          APP SETTINGS
@@ -885,6 +929,11 @@
     <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
     <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label --> <!-- TODO -->
     <string name="configLabel_ui_showheader_text">Show Header Text</string> <!-- checkbox label --> <!-- TODO -->
+    <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
+        <item>None</item>
+        <item>Labels</item>
+        <item>Azimuth</item>
+    </string-array>    <!-- TODO -->
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Hora daurada</string>
@@ -1324,9 +1373,18 @@
     <string name="creditsTab">Crèdits</string>   
     
     <string name="app_legal3"><![CDATA[ <b>Biblioteques:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
+    <string name="app_about_media"><![CDATA[ <b>Media:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>    <!-- TODO -->
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Ajuda</string>
+    <string name="help_appearance_allowresize"><![CDATA[
+      <big>Swap layouts to fill available space</big><br/><br/>
+      <i><b>[enabled]</b></i> The widget will switch between layouts depending on available space.<br/><br/>
+      <i><b>[disabled]</b></i> The widget maintains its initial layout when resized. Use this with the \"<i>scale text and icons</i>\" option for extra large widgets.<br/>
+    ]]></string>  <!-- TODO -->
+    <string name="help_appearance_widgetlayout"><![CDATA[
+      This widget was created with a <b>%1$s</b> <em>initial layout</em>.<br/></br/>
+    ]]></string>  <!-- TODO -->
 
     <string name="help_appearance_title"><![CDATA[
         Les següents substitucions estàn soportades:<br/>
@@ -1368,11 +1426,14 @@
       <b>Crepuscle astrònomic:</b> El Sol està 18 graus per sota de l\'horitzó. Qüasi l\'obscuritat de la nit.<br/>
 ]]></string>
     <string name="help_general_timeMode2"><![CDATA[
-      <b>equinocci primaveral:</b> TODO.<br/><br/>
-      <b>solstici d\'estiu:</b> TODO.<br/><br/>
-      <b>equinocci de tardor:</b> TODO.<br/><br/>
-      <b>solstici d\'hivern:</b> TODO.<br/>
-]]></string>
+          <b>equinocci primaveral:</b> The start of astronomical spring; <em>March</em> [northern hemisphere], or <em>September</em> [southern hemisphere]. The March equinox is also called the <em>northward equinox</em>.<br/><br/>
+          <b>solstici d\'estiu:</b> The start of astronomical summer; <em>June</em> [northern hemisphere], or <em>December</em> [southern hemisphere]. The June solstice is also called the <em>northern solstice</em>.<br/><br/>
+          <b>equinocci de tardor:</b> The start of astronomical autumn; <em>September</em> [northern hemisphere], or <em>March</em> [southern hemisphere]. The September equinox is also called the <em>southward equinox</em>.<br/><br/>
+          <b>solstici d\'hivern:</b> The start of astronomical winter; <em>December</em> [northern hemisphere], or <em>June</em> [southern hemisphere]. The December solstice is also called the <em>southern solstice</em>.<br/>
+    ]]></string>    <!-- TODO -->
+    <string name="help_general_tropicalyear"><![CDATA[
+          <b>Tropical Year:</b> A full cycle of the seasons. The length of the <em>tropical year</em> is measured from one <em>March equinox</em> to the next. It is <em>~365.24 days</em> on average, with an exact length that varies each year (up to 30 minutes).<br/>
+    ]]></string>   <!-- TODO -->
     <string name="help_general_riseSetOrder"><![CDATA[
           <b>Today:</b> Events de sortida i posta per a la data d\'avui.<br/><br/>
           <b>Last / Next:</b> L\'hora de l\'últim event, i del pròxim event.<br/>
@@ -1438,6 +1499,17 @@
     <string name="calculator_displayString_time4a_noaa">Segueix algoritmes publicats per la "National Oceanic and Atmospheric Administration".</string>
     <string name="calculator_displayString_time4a_cc">Segueix algoritmes publicats per Dershowitz/Reingold en el seu llibre "Calendrical Calculations" (tercera edició).</string>
     <string name="calculator_displayString_time4a_4j">Basat en càlculs astrònomics publicats per Jean Meeus en el seu llibre "Astronomical Algorithms" (segona edició).</string>
+    <string name="help_datasources">
+        <![CDATA[
+        Suntimes uses third-party libraries to perform astronomical calculations.<br/>
+        <br/>
+        The <b>data source</b> setting allows choosing between different libraries (or choosing between different algorithms offered by those libraries). The default is <b>time4a-time4j</b>.<br/>
+        <br/>
+        This setting affects the speed and accuracy of calculations, and may limit which features are available. <br/>
+        <br/>
+        For more information about available choices, or extending the app to support other libraries, see the online help.
+    ]]>
+    </string>   <!-- TODO -->
     <string name="configAction_shareTheme">Compartir</string>
 
 </resources>

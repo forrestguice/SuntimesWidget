@@ -21,11 +21,14 @@
     <string name="configAction_setTimeZone">Tidssone</string>
     <string name="configAction_setDate">Dato</string>
     <string name="configAction_viewDate">Vis dato</string>
+    <string name="configAction_viewDateWith">View date</string>    <!-- TODO -->
+    <string name="configAction_share">Share</string>    <!-- TODO -->
     <string name="configAction_sunDialog">Solens posisjon</string>
     <string name="configAction_equinoxDialog">Solverv / Jevndøgn</string>
     <string name="configAction_worldMap">Verdenskart</string>
     <string name="configAction_moon">Månen</string>
     <string name="configAction_help">Hjelp</string>
+    <string name="configAction_onlineHelp">Online Help</string>   <!-- TODO -->
     <string name="configAction_overflow">Mer</string>
     <string name="configAction_settings">Innstillinger</string>
     <string name="configAction_aboutWidget">Om</string>
@@ -81,6 +84,8 @@
     <string name="length_twilight1e_neg"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g> [-<xliff:g id="timeSpan1" example="+30s">%2$s</xliff:g>]</string>
     <string name="length_twilight2"><xliff:g id="timeSpan1" example="30m">%1$s</xliff:g> | <xliff:g id="timeSpan2" example="30m">%2$s</xliff:g></string>
     <string name="length_delimiter">|</string>
+
+    <string name="timeMode_tropical_year">Tropical Year</string>   <!-- TODO -->
 
     <!-- Field: moon illumination (as seen in moon widget) -->
     <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> opplyst</string>  <!-- used in 2x1 widget -->
@@ -242,11 +247,15 @@
     <string name="configLabel_general_calculator">Datakilde:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Soldatakilde</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Månedatakilde</string>         <!-- preference label -->
+    <string name="configLabel_general_calculator_help">Data Sources</string>    <!-- preference title / help button text --> <!-- TODO -->
 
     <string name="configLabel_general_timeFormatMode">Tidsformat:</string>         <!-- spinner label -->
 
     <string name="configLabel_general_altitude_enabled">Bruk høyde</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Bruk høydebaserte forbedringer.</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_localize_hemisphere">Localize to hemisphere</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_general_localize_hemisphere_summary">Apply hemisphere based localization (season labels, moon phase icons).</string>        <!-- checkbox label -->    <!-- TODO -->
 
     <string name="configLabel_general_lengthUnits">Lengdeenhet</string>        <!-- spinner label -->
 
@@ -272,10 +281,28 @@
     <string name="configLabel_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary --> <!-- TODO -->
 
     <!-- Widget Setting: appearance -->
+    <string name="configLabel_widgetlayout">Layout</string>           <!-- group title -->  <!-- TODO -->
+    <string-array name="widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
+        <!--<item>Fill</item>-->
+        <item>Top-Left</item>
+        <item>Top</item>
+        <item>Top-Right</item>
+        <item>Left</item>
+        <item>Center</item>
+        <item>Right</item>
+        <item>Bottom-Left</item>
+        <item>Bottom</item>
+        <item>Bottom-Right</item>
+    </string-array>  <!-- TODO -->
+
+    <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Utseende-innstillinger</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Utseende</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Tema:</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_allowResize">Grow with available space (resizeable)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_showLabels">Vis påskrifter</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">Vis tittel</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Tittel:</string>              <!-- edittext label -->
@@ -366,6 +393,10 @@
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [nord]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [sør]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_location">Azimuthal Equidistant</string>     <!-- setting -->   <!-- TODO -->
+
+    <string name="worldmap_projection_equirectangular">Equidistant Rectangular</string>    <!-- TODO -->
+    <string name="worldmap_projection_equiazimuthal">Equidistant Azimuthal</string>    <!-- TODO -->
 
     <string name="widgetMode1x1_moonriseset">Måneoppgang &amp; månenedgang</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Månefase &amp; illuminasjon</string>     <!-- setting -->
@@ -373,9 +404,11 @@
     <string name="widgetMode1x1_moonillum">Bare måneilluminasjon</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphasenext">Neste hovedfase</string>     <!-- setting -->
 
-    <string name="configLabel_appearance_1x1mode">1x1 Layout:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_3x2mode">3x2 Layout:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_3x3mode">3x3 Layout:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_1x1mode">1x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_2x1mode">2x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x1mode">3x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x2mode">3x2:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x3mode">3x3:</string>     <!-- spinner label -->  <!-- TODO -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Ikke gjør noe</string>           <!-- setting -->
@@ -415,6 +448,7 @@
     <string name="configLabel_location_name">Navn:</string>                      <!-- edittext label -->
     <string name="configHint_location_name">(valgfri)</string>                  <!-- edittext hint -->
     <string name="configHint_location_name0">Stedsnavn</string>                  <!-- edittext hint -->
+    <string name="configLabel_location_fromapp">Use the app location</string>                  <!-- checkbox text -->  <!-- TODO -->
 
     <string name="configAction_getFix">Hent posisjon</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">Rediger</string>         <!-- button (contentDescription) -->
@@ -461,6 +495,7 @@
     <string name="configLabel_general_showComparison">Vis sammenligning</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
+    <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
     <string name="trackingMode_closest">Nærmeste hendelse</string>                 <!-- setting -->
     <string name="trackingMode_soonest">Kommende hendelse</string>                <!-- setting -->
     <string name="configLabel_general_trackingMode">Track:</string>            <!-- spinner label -->
@@ -679,6 +714,7 @@
     <string name="configAction_sortAlarms_by_time">Alarm Time</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_sortAlarms_by_creation">Creation Date</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_clearOffset">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="configAction_clearDate">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_setAlarmOffset">Set Offset</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmType">Set Type</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmLabel">Set Label</string>         <!-- button (contentDescription) -->  <!-- TODO -->
@@ -817,9 +853,17 @@
         <item quantity="other">%d sekunder</item>
     </plurals>
 
+    <plurals name="units_days">
+        <item quantity="one">%s day</item>
+        <item quantity="other">%s days</item>
+    </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->    <!-- TODO -->
+
     <string name="configLabel_alarmMisc">Diverse</string>
     <string name="configLabel_alarms_showlauncher">App-ikon</string>
     <string name="configLabel_alarms_showlauncher_summary">Vis alarmklokkeikon i app-skuffen.</string>
+
+    <string name="configLabel_alarms_poweroffalarms">Power Off Alarm</string>    <!-- TODO -->
+    <string name="configLabel_alarms_poweroffalarms_summary">Wake the device from the power off state.\npackage: <xliff:g id="packageName">%s</xliff:g></string>    <!-- TODO -->
 
     <!--
          APP SETTINGS
@@ -894,6 +938,11 @@
     <string name="configLabel_ui_showheaders">Overskrifter</string>              <!-- group title -->
     <string name="configLabel_ui_showheader_icon">Vis overskriftsikon</string> <!-- checkbox label -->
     <string name="configLabel_ui_showheader_text">Vis overskriftstekst</string> <!-- checkbox label -->
+    <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
+        <item>None</item>
+        <item>Labels</item>
+        <item>Azimuth</item>
+    </string-array>    <!-- TODO -->
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Gylne time</string>
@@ -1326,9 +1375,18 @@
     <string name="creditsTab">Krediteringer</string>
     
     <string name="app_legal3"><![CDATA[ <b>Biblioteker:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
+    <string name="app_about_media"><![CDATA[ <b>Media:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>    <!-- TODO -->
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Hjelp</string>
+    <string name="help_appearance_allowresize"><![CDATA[
+      <big>Swap layouts to fill available space</big><br/><br/>
+      <i><b>[enabled]</b></i> The widget will switch between layouts depending on available space.<br/><br/>
+      <i><b>[disabled]</b></i> The widget maintains its initial layout when resized. Use this with the \"<i>scale text and icons</i>\" option for extra large widgets.<br/>
+    ]]></string>  <!-- TODO -->
+    <string name="help_appearance_widgetlayout"><![CDATA[
+      This widget was created with a <b>%1$s</b> <em>initial layout</em>.<br/></br/>
+    ]]></string>  <!-- TODO -->
     <string name="help_appearance_title"><![CDATA[
         The following title substitutions are supported:<br/>
         <br/>
@@ -1390,11 +1448,14 @@
     ]]></string>
 
     <string name="help_general_timeMode2"><![CDATA[
-          <b>Spring Equinox:</b> TODO.<br/><br/>
-          <b>Summer Solstice:</b> TODO.<br/><br/>
-          <b>Autumn Equinox:</b> TODO.<br/><br/>
-          <b>Winter Solstice:</b> TODO.<br/>
-    ]]></string>
+          <b>Spring Equinox:</b> The start of astronomical spring; <em>March</em> [northern hemisphere], or <em>September</em> [southern hemisphere]. The March equinox is also called the <em>northward equinox</em>.<br/><br/>
+          <b>Summer Solstice:</b> The start of astronomical summer; <em>June</em> [northern hemisphere], or <em>December</em> [southern hemisphere]. The June solstice is also called the <em>northern solstice</em>.<br/><br/>
+          <b>Autumn Equinox:</b> The start of astronomical autumn; <em>September</em> [northern hemisphere], or <em>March</em> [southern hemisphere]. The September equinox is also called the <em>southward equinox</em>.<br/><br/>
+          <b>Winter Solstice:</b> The start of astronomical winter; <em>December</em> [northern hemisphere], or <em>June</em> [southern hemisphere]. The December solstice is also called the <em>southern solstice</em>.<br/>
+    ]]></string>    <!-- TODO -->
+    <string name="help_general_tropicalyear"><![CDATA[
+          <b>Tropical Year:</b> A full cycle of the seasons. The length of the <em>tropical year</em> is measured from one <em>March equinox</em> to the next. It is <em>~365.24 days</em> on average, with an exact length that varies each year (up to 30 minutes).<br/>
+    ]]></string>   <!-- TODO -->
     <string name="help_general_daylength"><![CDATA[
         <b>Daglengde:</b> Tiden mellom soloppgang og solnedgang.<br/><br/>
         <b>Brukbart lys:</b> Tiden mellom alminnelig tussmørke morgen og kveld.<br/>
@@ -1455,5 +1516,16 @@
     <string name="calculator_displayString_time4a_noaa">Follows algorithms published by the National Oceanic and Atmospheric Administration.</string>
     <string name="calculator_displayString_time4a_cc">Follows algorithms published by Dershowitz/Reingold in their book "Calendrical Calculations" (third edition).</string>
     <string name="calculator_displayString_time4a_4j">Based on astronomical calculations published by Jean Meeus in his book "Astronomical Algorithms" (second edition).</string>
+    <string name="help_datasources">
+        <![CDATA[
+        Suntimes uses third-party libraries to perform astronomical calculations.<br/>
+        <br/>
+        The <b>data source</b> setting allows choosing between different libraries (or choosing between different algorithms offered by those libraries). The default is <b>time4a-time4j</b>.<br/>
+        <br/>
+        This setting affects the speed and accuracy of calculations, and may limit which features are available. <br/>
+        <br/>
+        For more information about available choices, or extending the app to support other libraries, see the online help.
+    ]]>
+    </string>   <!-- TODO -->
     
 </resources>
