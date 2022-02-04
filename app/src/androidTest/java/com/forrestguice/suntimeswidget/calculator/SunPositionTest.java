@@ -30,7 +30,7 @@ public class SunPositionTest
 
     public static final double TEST_TOLERANCE = 0.25;        // degrees
     public static final double TEST_LATITUDE = 33.45579;
-    public static final double TEST_LONGITUDE = -11.9485;    // Phoenix, AZ
+    public static final double TEST_LONGITUDE = -111.9485;    // Phoenix, AZ
     public static final int TEST_ALTITUDE = 360;
     public static final long TEST_DATE = 1639791526;         // Dec 17, 2021
     public static final TimeZone TEST_TIMEZONE = TimeZone.getTimeZone("US/Arizona");

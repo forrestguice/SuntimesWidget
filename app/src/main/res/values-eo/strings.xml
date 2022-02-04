@@ -285,7 +285,7 @@
     <string name="configLabel_appearance">Aspekto</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Aspekto</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Etoso:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Etendigi al disponebla spaco (regrandigebla)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_allowResize">Etendigi al disponebla spaco (regrandigebla)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
     <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
@@ -448,7 +448,7 @@
     <string name="configAction_savePlace">Konservi</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">suntempo</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">suntempo</string>                       <!-- setting -->    <!-- TODO: "solar time" -> "Time Standard" -->
     <string name="timezoneMode_current">laŭ operaciumo</string>                         <!-- setting -->
     <string name="timezoneMode_custom">propra</string>                    <!-- setting -->
 
@@ -463,7 +463,7 @@
     <string name="configLabel_timezone">Agordoj pri horzono</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Reĝimo:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Horzono:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Suntempo:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Suntempo:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Laŭ operaciumo</string>          <!-- setting -->
@@ -1396,28 +1396,31 @@
                 * <b>%dt</b> por tempo de lasta aktualigo <br/>
                 * <b>%dT</b> por tempo (kun sekundoj) de lasta aktualigo <br/>
                 <br/>
-                * <b>%loc</b> por etikedo (ekz. Prescott) <br />
-                * <b>%lat</b> por latitudo (ekz. 35.5409) <br />
-                * <b>%lon</b> por longitudo (ekz. -112.4691) <br/>
-                * <b>%lel</b> por altitudo (ekz. 385 metroj) <br/>
+                * <b>%loc</b> por etikedo (ekz. Bjalistoko) <br />
+                * <b>%lat</b> por latitudo <br />
+                * <b>%lon</b> por longitudo <br/>
+                * <b>%lel</b> por altitudo (ekz. 139 metroj) <br/>
                 <br/>
                 * <b>%s</b> por datum‑fonto (ekz. sunrisesunsetlib) <br/>
-                * <b>%t</b> por horzono (id) (ekz. US/Arizona) <br/>
+                * <b>%t</b> por horzono (id) (ekz. Europe/Warsaw) <br/>
                 * <b>%id</b> por appWidgetID <br/>
          <br/>
          <b>Sunaj fenestraĵoj:</b> <br/>
                 * <b>%m</b> por reĝimo (mallonge) (ekz. civila) <br/>
                 * <b>%M</b> por reĝimo (longe) (ekz. civila krepusko) <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>Lunaj fenestraĵoj:</b> <br/>
                 * <b>%i</b> por prilumeco (ekz. 25%) <br/>
                 * <b>%M</b> por lunfazo (ekz. kreskanta post‑Lunduono) <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>Solsticaj fenestraĵoj:</b> <br/>
                 * <b>%m</b> por reĝimo (mallonge) (ekz. solstico) <br/>
                 * <b>%M</b> por reĝimo (longe) (ekz. vintra sunekstremo) <br/>
+                * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
          ]]>
-    </string>
+    </string>   <!-- TODO -->
     <string name="help_general_timeMode"><![CDATA[
           <b>Reala sunleviĝo/sunsubiro:</b> la Suno estas sur la horizonto, tio ĉi estas proksimuma tempo de sunleviĝo aŭ sunsubiro.<br/><br/>
           <b>Civila krepusko:</b> la Suno estas 6&nbsp;gradoj sub la horizonto, la plej helaj steloj estas videblaj. Estas sufiĉe da lumo por fari plejparte da agadoj eksterdome sen artefarita prilumado.<br/><br/>

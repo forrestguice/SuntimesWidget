@@ -172,10 +172,10 @@ public class WidgetSettings
     public static final LocationMode PREF_DEF_LOCATION_MODE = LocationMode.CUSTOM_LOCATION;
 
     public static final String PREF_KEY_LOCATION_LONGITUDE = "longitude";
-    public static String PREF_DEF_LOCATION_LONGITUDE = "-112.4691";      // reassigned later by initDefaults
+    public static String PREF_DEF_LOCATION_LONGITUDE = "-111.4557";      // reassigned later by initDefaults
 
     public static final String PREF_KEY_LOCATION_LATITUDE = "latitude";
-    public static String PREF_DEF_LOCATION_LATITUDE = "34.5409";         // reassigned later by initDefaults
+    public static String PREF_DEF_LOCATION_LATITUDE = "33.4557";         // reassigned later by initDefaults
 
     public static final String PREF_KEY_LOCATION_ALTITUDE = "altitude";
     public static String PREF_DEF_LOCATION_ALTITUDE = "0";               // reassigned later by initDefaults
@@ -184,7 +184,7 @@ public class WidgetSettings
     public static final boolean PREF_DEF_LOCATION_ALTITUDE_ENABLED = true;
 
     public static final String PREF_KEY_LOCATION_LABEL = "label";
-    public static String PREF_DEF_LOCATION_LABEL = "Prescott, AZ";       // reassigned later by initDefaults
+    public static String PREF_DEF_LOCATION_LABEL = "Phoenix";       // reassigned later by initDefaults
 
     public static final String PREF_KEY_LOCATION_FROMAPP = "fromapp";
     public static final boolean PREF_DEF_LOCATION_FROMAPP = false;

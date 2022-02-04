@@ -350,7 +350,7 @@
     <string name="configLabel_appearance">Nastavení vzhledu</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Vzhled</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Téma:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Zvětšit s dostupným místem na obrazovce (zvětšitelné)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_allowResize">Zvětšit s dostupným místem na obrazovce (zvětšitelné)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
     <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
@@ -1605,13 +1605,13 @@
                 * <b>%dT</b> pro čas včetně vteřin (poslední aktualizace) <br/>
                 * <b>%dm</b> pro milisekundy (poslední aktualizace) <br/>
                 <br/>
-                * <b>%loc</b> pro nadpis (např. Prescott) <br />
-                * <b>%lat</b> pro zeměpisnou šířku (např. 35.5409) <br />
-                * <b>%lon</b> pro zeměpisnou délku (např. -112.4691) <br/>
-                * <b>%lel</b> pro nadmořskou výšku (např. 385 metrů) <br/>
+                * <b>%loc</b> pro nadpis (např. Prague) <br />
+                * <b>%lat</b> pro zeměpisnou šířku <br />
+                * <b>%lon</b> pro zeměpisnou délku <br/>
+                * <b>%lel</b> pro nadmořskou výšku (např. 361 metrů) <br/>
                 <br/>
                 * <b>%s</b> pro zdroj dat (např. sunrisesunsetlib) <br/>
-                * <b>%t</b> pro časové pásmo (id) (např. US/Arizona) <br/>
+                * <b>%t</b> pro časové pásmo (id) (např. CET) <br/>
                 * <b>%id</b> pro appWidgetID <br/>
          <br/>
          <b>Sluneční widget:</b> <br/>

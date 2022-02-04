@@ -300,7 +300,7 @@
     <string name="configLabel_appearance">Itxuraren ezarpenak</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Itxura</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Gaia:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Handitu lekuaren arabera (neurriz aldagarria)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_allowResize">Handitu lekuaren arabera (neurriz aldagarria)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
     <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
@@ -456,7 +456,7 @@
     <string name="configAction_savePlace">Gorde</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Eguzkiaren ordua</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Eguzkiaren ordua</string>                       <!-- setting -->    <!-- TODO: "solar time" -> "Time Standard" -->
     <string name="timezoneMode_current">Sistemaren ordu eremua</string>               <!-- setting -->
     <string name="timezoneMode_custom">Erabiltzaileak ezarria</string>                    <!-- setting -->
 
@@ -471,7 +471,7 @@
     <string name="configLabel_timezone">Ordu eremuen ezarpenak</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Modua:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Ordu eremua:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Eguzkiaren ordua:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Eguzkiaren ordua:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Sistemaren formatua</string>          <!-- setting -->
@@ -1432,27 +1432,30 @@
                 * <b>%dt</b> ordurako (azken eguneraketarena) <br/>
                 * <b>%dT</b> ordurako, segunduekin (azken eguneraketarena) <br/>
                 <br/>
-                * <b>%loc</b> etiketarako (adib. Prescott) <br />
-                * <b>%lat</b> latituderako (adib. 35.5409) <br />
-                * <b>%lon</b> longituderako (adib. -112.4691) <br/>
-                * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
+                * <b>%loc</b> etiketarako (adib. Euskal Herriko erdigunea) <br />
+                * <b>%lat</b> latituderako <br />
+                * <b>%lon</b> longituderako <br/>
+                * <b>%lel</b> for elevation (e.g. 1258 meters) <br/>
                 <br/>
                 * <b>%s</b> datuen jatorrirako (adib. sunrisesunsetlib) <br/>
-                * <b>%t</b> ordu eremurako (id) (adib. US/Arizona) <br/>
+                * <b>%t</b> ordu eremurako (id) (adib. CET) <br/>
                 * <b>%id</b> appWidgetIDrako <br/>
          <br/>
          <b>Eguzkiaren widgetak:</b> <br/>
                 * <b>%m</b> modurako (laburra) (adib. Zibila) <br/>
                 * <b>%M</b> modurako (luzea) (adib. Krepuskulu zibila) <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>Ilargiaren widgetak:</b> <br/>
                 * <b>%i</b> ilargiaren argiztapenerako (adib. 25%) <br/>
                 * <b>%M</b> ilargialdirako (adib. Ilgora) <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>Solstizioaren widgetak:</b> <br/>
                 * <b>%m</b> modurako (laburra) (adib. Solstizioa) <br/>
                 * <b>%M</b> modurako (luzea) (adib. Neguko solstizioa) <br/>
-    ]]></string>  <!-- TODO: %lel -->
+                * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
+    ]]></string>      <!-- TODO -->
 
     <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>

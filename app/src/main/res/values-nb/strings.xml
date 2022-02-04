@@ -300,7 +300,7 @@
     <string name="configLabel_appearance">Utseende-innstillinger</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Utseende</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Tema:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Grow with available space (resizeable)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_allowResize">Grow with available space (resizeable)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
     <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
@@ -1423,27 +1423,30 @@
                 * <b>%dt</b> for time (of last update) <br/>
                 * <b>%dT</b> for time with seconds (of last update) <br/>
                 <br/>
-                * <b>%loc</b> for label (e.g. Prescott) <br />
-                * <b>%lat</b> for latitude (e.g. 35.5409) <br />
-                * <b>%lon</b> for longitude (e.g. -112.4691) <br/>
-                * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
+                * <b>%loc</b> for label (e.g. Oslo) <br />
+                * <b>%lat</b> for latitude <br />
+                * <b>%lon</b> for longitude <br/>
+                * <b>%lel</b> for elevation (e.g. 0 meters) <br/>
                 <br/>
                 * <b>%s</b> for data source (e.g. sunrisesunsetlib) <br/>
-                * <b>%t</b> for time zone (id) (e.g. US/Arizona) <br/>
+                * <b>%t</b> for time zone (id) (e.g. Europe/Oslo) <br/>
                 * <b>%id</b> for appWidgetID <br/>
          <br/>
          <b>Sun Widgets:</b> <br/>
                 * <b>%m</b> for mode (short) (e.g. Civil) <br/>
                 * <b>%M</b> for mode (long) (e.g. Civil Twilight) <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>Moon Widgets:</b> <br/>
                 * <b>%i</b> for moon illumination (e.g. 25%) <br/>
                 * <b>%M</b> for moon phase (e.g. Waxing Crescent) <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>Solstice Widgets:</b> <br/>
                 * <b>%m</b> for mode (short) (e.g. Solstice) <br/>
                 * <b>%M</b> for mode (long) (e.g. Winter Solstice) <br/>
-    ]]></string>
+                * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
+    ]]></string>    <!-- TODO -->
 
     <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>

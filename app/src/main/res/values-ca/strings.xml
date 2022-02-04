@@ -296,7 +296,7 @@
     <string name="configLabel_appearance">Opcions d\'aparença</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Aparença</string>                  <!-- spinner label -->  
     <string name="configLabel_appearance_theme">Tema:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Creix amb l\'espai disponible (reescalable)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_allowResize">Creix amb l\'espai disponible (reescalable)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
     <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
@@ -452,7 +452,7 @@
     <string name="configAction_savePlace">Guardar</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Horari solar</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Horari solar</string>                       <!-- setting -->    <!-- TODO: "solar time" -> "Time Standard" -->
     <string name="timezoneMode_current">Zona horària de sistema</string>               <!-- setting -->
     <string name="timezoneMode_custom">Definida per l\'usuari</string>                    <!-- setting -->
 
@@ -467,7 +467,7 @@
     <string name="configLabel_timezone">Opcions de zona horària</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Mode:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Zona horària:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Temps solar:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Temps solar:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Format del sistema</string>          <!-- setting -->
@@ -1429,21 +1429,24 @@
                 * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
                 <br/>
                 * <b>%s</b> per a font de dades (p.ex. sunrisesunsetlib) <br/>
-                * <b>%t</b> per a zona horària (id) (p.ex. ES/Barcelona) <br/>
+                * <b>%t</b> per a zona horària (id) (p.ex. CET) <br/>
                 * <b>%id</b> for appWidgetID <br/>
          <br/>
          <b>Giny solar:</b> <br/>
                 * <b>%m</b> per a mode de temps (curt) (p.ex. "Civil") <br/>
                 * <b>%M</b> per a mode de temps (llarg) (p.ex. "Crepuscle Civil") <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>Giny lunar:</b> <br/>
                 * <b>%i</b> per a la iŀluminació (p. ex. 25%) <br/>
                 * <b>%M</b> per a la fase lunar (p. ex. Creixent) <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>Ginys de solsticis:</b> <br/>
                 * <b>%m</b> per al mode (curt) (p. ex. Solstici) <br/>
                 * <b>%M</b> per al mode (llarg) (p. ex. Solstici d\'hivern) <br/>
-    ]]></string>
+                * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
+    ]]></string>    <!-- TODO -->
 
     <string name="help_general_timeMode"><![CDATA[
       <b>Hora oficial:</b> El Sol està en l\'horitzó: això és l\'hora  aproximada de la sortida i posta de sol.<br/><br/>

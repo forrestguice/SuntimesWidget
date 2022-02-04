@@ -359,7 +359,7 @@
     <string name="configLabel_appearance">Настройки внешнего вида</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Тема оформления</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Тема:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Заполнять все доступное пространство (изменяемый размер)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_allowResize">Заполнять все доступное пространство (изменяемый размер)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
     <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
@@ -513,7 +513,7 @@
     <string name="configAction_savePlace">Сохранить</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Солнечное время</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Солнечное время</string>                       <!-- setting -->    <!-- TODO: "solar time" -> "Time Standard" -->
     <string name="timezoneMode_current">Системный часовой пояс</string>               <!-- setting -->
     <string name="timezoneMode_custom">Пользовательский</string>                    <!-- setting -->
 
@@ -528,7 +528,7 @@
     <string name="configLabel_timezone">Настройки часового пояса</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Режим:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Часовой пояс:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Солнечное время:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Солнечное время:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Системный</string>          <!-- setting -->
@@ -1621,8 +1621,8 @@
                 * <b>%dm</b> миллисекунды времени посл.обн. <br/>
                 <br/>
                 * <b>%loc</b> название места (напр. Москва) <br />
-                * <b>%lat</b> широта (напр. 35.5409) <br />
-                * <b>%lon</b> долгота (напр. -112.4691) <br/>
+                * <b>%lat</b> широта <br />
+                * <b>%lon</b> долгота <br/>
                 * <b>%lel</b> высота НУМ (напр. 186 метров) <br/>
                 <br/>
                 * <b>%s</b> алгоритм (напр. sunrisesunsetlib) <br/>

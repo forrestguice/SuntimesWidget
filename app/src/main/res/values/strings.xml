@@ -350,7 +350,7 @@
     <string name="configLabel_appearance">Appearance</string>           <!-- group title -->    <!-- TODO: shortened "Appearance Settings" to "Appearance" -->
     <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Theme:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Swap layouts to fill available space</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
+    <string name="configLabel_appearance_allowResize">Swap layouts to fill available space</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->
@@ -506,7 +506,7 @@
     <string name="configAction_savePlace">Save</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Time Standard</string>                   <!-- setting -->    <!-- TODO: "solar time" -> "time standard" -->
+    <string name="timezoneMode_standard">Time Standard</string>                   <!-- setting -->
     <string name="timezoneMode_current">System Time Zone</string>               <!-- setting -->
     <string name="timezoneMode_custom">User Defined</string>                    <!-- setting -->
 
@@ -522,7 +522,7 @@
     <string name="configLabel_timezone">Time Zone</string>             <!-- group title -->      <!-- TODO: shortened "Time Zone Settings" to "Time Zone" -->
     <string name="configLabel_timezone_mode">Mode:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Time Zone:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Standard:</string>                   <!-- spinner label -->   <!-- TODO: "solar time" -> "time standard" -->
+    <string name="configLabel_timezone_standard">Standard:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">System format</string>          <!-- setting -->
@@ -1809,9 +1809,9 @@
                 * <b>%dT</b> for time with seconds (of last update) <br/>
                 * <b>%dm</b> for milliseconds (of last update) <br/>
                 <br/>
-                * <b>%loc</b> for label (e.g. Prescott) <br />
-                * <b>%lat</b> for latitude (e.g. 35.5409) <br />
-                * <b>%lon</b> for longitude (e.g. -112.4691) <br/>
+                * <b>%loc</b> for label (e.g. Phoenix) <br />
+                * <b>%lat</b> for latitude <br />
+                * <b>%lon</b> for longitude <br/>
                 * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
                 <br/>
                 * <b>%s</b> for data source (e.g. sunrisesunsetlib) <br/>
@@ -1832,7 +1832,7 @@
                 * <b>%m</b> for mode (short) (e.g. Solstice) <br/>
                 * <b>%M</b> for mode (long) (e.g. Winter Solstice) <br/>
                 * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
-    ]]></string>  <!-- TODO: %o is new and isn't advertised in any of the translations -->
+    ]]></string>
 
     <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>

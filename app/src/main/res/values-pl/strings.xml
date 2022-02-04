@@ -300,7 +300,7 @@
     <string name="configLabel_appearance">Ustawienia wyglądu</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Wygląd</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Skórka:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Poszerz do dostępnej przestrzeni (rozciągalne)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_allowResize">Poszerz do dostępnej przestrzeni (rozciągalne)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
     <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
@@ -456,7 +456,7 @@
     <string name="configAction_savePlace">Zapisz</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">czas słoneczny</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">czas słoneczny</string>                       <!-- setting -->    <!-- TODO: "solar time" -> "Time Standard" -->
     <string name="timezoneMode_current">systemowa</string>                         <!-- setting -->
     <string name="timezoneMode_custom">użytkownika</string>                    <!-- setting -->
     
@@ -471,7 +471,7 @@
     <string name="configLabel_timezone">Ustawienia strefy czasowej</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Tryb:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Strefa czasowa:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Czas słoneczny:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Czas słoneczny:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Systemowy</string>
@@ -1417,27 +1417,30 @@
                 * <b>%dt</b> dla czasu ostatniej aktualizacji <br/>
                 * <b>%dT</b> dla czasu ostatniej aktualizacji (uwzględniając sekundy) <br/>
                 <br/>
-                * <b>%loc</b> dla etykiety (np. Prescott) <br />
-                * <b>%lat</b> dla szerokości geograficznej (np. 35.5409) <br />
-                * <b>%lon</b> dla długości geograficznej (np. -112.4691) <br/>
-                * <b>%lel</b> dla wysokości n.p.m. (np. 385) <br/>
+                * <b>%loc</b> dla etykiety (np. Warszawa) <br />
+                * <b>%lat</b> dla szerokości geograficznej <br />
+                * <b>%lon</b> dla długości geograficznej <br/>
+                * <b>%lel</b> dla wysokości n.p.m. (np. 143) <br/>
                 <br/>
                 * <b>%s</b> dla źródła danych (np. sunrisesunsetlib) <br/>
-                * <b>%t</b> dla strefy czasowej (id) (np. US/Arizona) <br/>
+                * <b>%t</b> dla strefy czasowej (id) (np. Poland) <br/>
                 * <b>%id</b> dla ID widżetu <br/>
          <br/>
          <b>Widżety Słońca:</b> <br/>
                 * <b>%m</b> dla trybu (skrót) (np. cywilny) <br/>
                 * <b>%M</b> dla trybu (pełny) (np. wschód cywilny) <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>Widżety Księżyca:</b> <br/>
                 * <b>%i</b> dla oświetlenia Księżyca (np. 25%) <br/>
                 * <b>%M</b> dla fazy Księżyca (np. Księżyc rosnący (&lt;50%)) <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>Widżety przesilenia:</b> <br/>
                 * <b>%m</b> dla trybu (skrót) (np. przesilenie) <br/>
                 * <b>%M</b> dla trybu (pełny) (np. zimowe przesilenie) <br/>
-    ]]></string>
+                * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
+    ]]></string>    <!-- TODO -->
     <string name="help_general_timeMode"><![CDATA[
           <b>Rzeczywisty wschód/zachód:</b> Słońce znajduje się na linii horyzontu, jest to przybliżony czas wschodu lub zachodu Słońca.<br/><br/>
           <b>Świt/zmierzch cywilny:</b> Słońce znajduje się 6&nbsp;stopni pod horyzontem, widoczne są najjaśniejsze gwiazdy. Jest wystarczająco jasno na wykonywanie większości czynności na dworze bez potrzeby korzystania ze sztucznego oświetlenia.<br/><br/>

@@ -306,7 +306,7 @@
     <string name="configLabel_appearance">外觀設定</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">外觀</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">主題:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">適應可用的空間（可調節大小）</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_allowResize">適應可用的空間（可調節大小）</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
     <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
@@ -462,7 +462,7 @@
     <string name="configAction_savePlace">儲存</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">太陽時</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">太陽時</string>                       <!-- setting -->    <!-- TODO: "solar time" -> "Time Standard" -->
     <string name="timezoneMode_current">系統時區</string>               <!-- setting -->
     <string name="timezoneMode_custom">用戶自訂</string>                    <!-- setting -->
 
@@ -477,7 +477,7 @@
     <string name="configLabel_timezone">時區設定</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">模式:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">時區:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">太陽時:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">太陽時:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">系統格式</string>          <!-- setting -->
@@ -1436,27 +1436,30 @@
                 * 時間（最近更新）: <b>%dt</b><br/>
                 * 含秒的時間（最近更新）: <b>%dT</b><br/>
                 <br/>
-                * 標記: <b>%loc</b>（例如: Prescott）<br />
-                * 緯度: <b>%lat</b>（例如: 35.5409）<br />
-                * 經度: <b>%lon</b>（例如: -112.4691）<br/>
-                * 高度: <b>%lel</b>（例如: 385 meters）<br/>
+                * 標記: <b>%loc</b>（例如: Taipei）<br />
+                * 緯度: <b>%lat</b> <br />
+                * 經度: <b>%lon</b> <br/>
+                * 高度: <b>%lel</b>（例如: 0 meters）<br/>
                 <br/>
                 * 資料源: <b>%s</b>（例如: sunrisesunsetlib）<br/>
-                * 時區: <b>%t</b>（例如: US/Arizona）<br/>
+                * 時區: <b>%t</b>（例如: Asia/Taipei）<br/>
                 * appWidgetID: <b>%id</b><br/>
          <br/>
          <b>太陽小工具:</b> <br/>
                 * 模式（短）: <b>%m</b>（例如: Civil）<br/>
                 * 模式（長）: <b>%M</b>（例如: Civil Twilight）<br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>月亮小工具:</b> <br/>
                 * 月光飽滿度: <b>%i</b>（例如: 25%）<br/>
                 * 月相: <b>%M</b>（例如: Waxing Crescent）<br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>至日小工具:</b> <br/>
                 * 模式（短）: <b>%m</b>（例如: Solstice）<br/>
                 * 模式（長）: <b>%M</b>（例如: Winter Solstice）<br/>
-    ]]></string>
+                * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
+    ]]></string>    <!-- TODO -->
 
     <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>

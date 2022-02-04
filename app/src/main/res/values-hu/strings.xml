@@ -286,7 +286,7 @@
     <string name="configLabel_appearance">Megjelenés beállításai</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_theme">Téma:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Kitölti a rendelkezésre álló helyet (átméretezhető)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_allowResize">Kitölti a rendelkezésre álló helyet (átméretezhető)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
     <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
@@ -442,7 +442,7 @@
     <string name="configAction_savePlace">Ment</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Szoláris idő</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Szoláris idő</string>                       <!-- setting -->    <!-- TODO: "solar time" -> "Time Standard" -->
     <string name="timezoneMode_current">Zónaidő</string>               <!-- setting -->
     <string name="timezoneMode_custom">Felhasználó által megadott</string>                    <!-- setting -->
 
@@ -457,7 +457,7 @@
     <string name="configLabel_timezone">Időzóna beállítások:</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Mód:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Időzóna:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Szoláris idő:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Szoláris idő:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Idő megjelenítése</string>          <!-- setting -->
@@ -1399,27 +1399,30 @@
                 * <b>%dt</b> for time (of last update) <br/>
                 * <b>%dT</b> for time with seconds (of last update) <br/>
                 <br/>
-                * <b>%loc</b> for label (e.g. Prescott) <br />
-                * <b>%lat</b> for latitude (e.g. 35.5409) <br />
-                * <b>%lon</b> for longitude (e.g. -112.4691) <br/>
-                * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
+                * <b>%loc</b> for label (e.g. Budapest) <br />
+                * <b>%lat</b> for latitude <br />
+                * <b>%lon</b> for longitude <br/>
+                * <b>%lel</b> for elevation (e.g. 225 meters) <br/>
                 <br/>
                 * <b>%s</b> for data source (e.g. sunrisesunsetlib) <br/>
-                * <b>%t</b> for time zone (id) (e.g. US/Arizona) <br/>
+                * <b>%t</b> for time zone (id) (e.g. Europe/Budapest) <br/>
                 * <b>%id</b> for appWidgetID <br/>
          <br/>
          <b>Sun Widgets:</b> <br/>
                 * <b>%m</b> for mode (short) (e.g. Civil) <br/>
                 * <b>%M</b> for mode (long) (e.g. Civil Twilight) <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>Moon Widgets:</b> <br/>
                 * <b>%i</b> for moon illumination (e.g. 25%) <br/>
                 * <b>%M</b> for moon phase (e.g. Waxing Crescent) <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>Solstice Widgets:</b> <br/>
                 * <b>%m</b> for mode (short) (e.g. Solstice) <br/>
                 * <b>%M</b> for mode (long) (e.g. Winter Solstice) <br/>
-    ]]></string>
+                * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
+    ]]></string>    <!-- TODO -->
 
     <string name="help_general_timeMode"><![CDATA[
           <b>Actual Time:</b> The sun is on the horizon; this is the approximate time of sunrise and sunset.<br/><br/>

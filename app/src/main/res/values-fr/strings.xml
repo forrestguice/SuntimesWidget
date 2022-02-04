@@ -288,7 +288,7 @@
     <string name="configLabel_appearance">Apparence</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Appearance</string>                  <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_theme">Thème</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Occupe l\'espace libre (redimensionnable)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_allowResize">Occupe l\'espace libre (redimensionnable)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
     <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
@@ -444,7 +444,7 @@
     <string name="configAction_savePlace">Enregistrer</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Heure solaire</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Heure solaire</string>                       <!-- setting -->    <!-- TODO: "solar time" -> "Time Standard" -->
     <string name="timezoneMode_current">Fuseau horaire système</string>               <!-- setting -->
     <string name="timezoneMode_custom">Défini par l\'utilisateur</string>                    <!-- setting -->
 
@@ -459,7 +459,7 @@
     <string name="configLabel_timezone">Fuseau horaire</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Mode :</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Fuseau horaire :</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Temps solaire :</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Temps solaire :</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Format de l\'heure</string>          <!-- setting -->
@@ -1394,27 +1394,30 @@
                 * <b>%dt</b> pour l\'heure (de la dernière mise à jour) <br/>
                 * <b>%dT</b> pour l\'heure avec les secondes (de la dernière mise à jour) <br/>
                 <br/>
-                * <b>%loc</b> pour le libellé (ex. Prescott) <br />
-                * <b>%lat</b> pour la latitude (ex. 35.5409) <br />
-                * <b>%lon</b> pour la longitude (ex. -112.4691) <br/>
-                * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
+                * <b>%loc</b> pour le libellé (ex. Paris) <br />
+                * <b>%lat</b> pour la latitude <br />
+                * <b>%lon</b> pour la longitude <br/>
+                * <b>%lel</b> for elevation (e.g. 185 meters) <br/>
                 <br/>
                 * <b>%s</b> pour la source de donnée (ex. sunrisesunsetlib) <br/>
-                * <b>%t</b> pour le fuseau horaire (id) (ex. EU/Paris) <br/>
+                * <b>%t</b> pour le fuseau horaire (id) (ex. Europe/Paris) <br/>
                 * <b>%id</b> pour appWidgetID <br/>
          <br/>
          <b>Widgets du soleil :</b> <br/>
                 * <b>%m</b> pour le mode temporel (court) (ex. Civil) <br/>
                 * <b>%M</b> pour le mode temporel (long) (ex. Crépuscule civil) <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>Widgets de la lune :</b> <br/>
                 * <b>%i</b> pour l\'illumination de la lune (ex. 25%) <br/>
                 * <b>%M</b> pour la phase de la lune (ex. Premier croissant) <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>Widgets des solstices :</b> <br/>
                 * <b>%m</b> pour le mode temporel (court) (ex. Solstice) <br/>
                 * <b>%M</b> pour le mode temporel (long) (ex. Solstice d\'hiver) <br/>
-    ]]></string>  <!-- TODO: %lel -->
+                * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
+    ]]></string>      <!-- TODO -->
 
     <string name="help_general_timeMode"><![CDATA[
           <b>Heure réelle :</b> Le soleil est à l\'horizon. C\'est l\'heure (approximative) du lever et du coucher du soleil.<br/><br/>

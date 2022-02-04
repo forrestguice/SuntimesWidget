@@ -307,7 +307,7 @@
     <string name="configLabel_appearance">Aspetto</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Aspetto</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Tema:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Cresce con lo spazio disponibile (ridimensionabile)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_allowResize">Cresce con lo spazio disponibile (ridimensionabile)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
     <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
@@ -463,7 +463,7 @@
     <string name="configAction_savePlace">Salva</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Orario solare</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Orario solare</string>                       <!-- setting -->    <!-- TODO: "solar time" -> "Time Standard" -->
     <string name="timezoneMode_current">Fuso orario di sistema</string>               <!-- setting -->
     <string name="timezoneMode_custom">Definito dall\'utente</string>                    <!-- setting -->
 
@@ -478,7 +478,7 @@
     <string name="configLabel_timezone">Fuso orario</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Modalità:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Fuso orario:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Tempo solare:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Tempo solare:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Formato di sistema</string>          <!-- setting -->
@@ -1439,27 +1439,30 @@
         * <b>%dt</b> per orario (dell\'ultimo aggiornamento) <br/>
         * <b>%dT</b> per orario con secondi (dell\'ultimo aggiornamento) <br/>
         <br/>
-        * <b>%loc</b> per etichetta (e.g. Prescott) <br />
-        * <b>%lat</b> per latitudine (e.g. 35.5409) <br />
-        * <b>%lon</b> per longitudine (e.g. -112.4691) <br/>
-        * <b>%lel</b> per altitudine (e.g. 385 metri) <br/>
+        * <b>%loc</b> per etichetta (e.g. Roma) <br />
+        * <b>%lat</b> per latitudine <br />
+        * <b>%lon</b> per longitudine <br/>
+        * <b>%lel</b> per altitudine (e.g. 79 metri) <br/>
         <br/>
         * <b>%s</b> per sorgente dati (e.g. sunrisesunsetlib) <br/>
-        * <b>%t</b> per fuso orario (id) (e.g. US/Arizona) <br/>
+        * <b>%t</b> per fuso orario (id) (e.g. CET) <br/>
         * <b>%id</b> per appWidgetID <br/>
         <br/>
         <b>Widget solari:</b> <br/>
         * <b>%m</b> per modalità (breve) (e.g. civile) <br/>
         * <b>%M</b> per modalità (esteso) (e.g. crepuscolo civile) <br/>
+        * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
         <br/>
         <b>Widget lunari:</b> <br/>
         * <b>%i</b> per illuminazione lunare (e.g. 25%) <br/>
         * <b>%M</b> per fase lunare (e.g. luna crescente) <br/>
+        * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
         <br/>
         <b>Widget dei solstizi:</b> <br/>
         * <b>%m</b> per modalità (breve) (e.g. solstizio) <br/>
         * <b>%M</b> per modalità (esteso) (e.g. solstizio d\'inverno) <br/>
-    ]]></string>
+        * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
+    ]]></string>    <!-- TODO -->
 
     <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>

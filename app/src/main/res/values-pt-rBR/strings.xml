@@ -341,7 +341,7 @@
     <string name="configLabel_appearance">Configurações de Interface</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Interface</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Tema:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Usar espaço disponível (redimensionável)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_allowResize">Usar espaço disponível (redimensionável)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
     <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
@@ -497,7 +497,7 @@
     <string name="configAction_savePlace">Salvar</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Hora Solar</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Hora Solar</string>                       <!-- setting -->    <!-- TODO: "solar time" -> "Time Standard" -->
     <string name="timezoneMode_current">Fuso Horário do Sistema</string>               <!-- setting -->
     <string name="timezoneMode_custom">Definido pelo Usuário</string>                    <!-- setting -->
 
@@ -512,7 +512,7 @@
     <string name="configLabel_timezone">Configurações de Fuso Horário</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Modo:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Fuso Horário:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Tempo Solar:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Tempo Solar:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Do sistema</string>          <!-- setting -->
@@ -1474,10 +1474,10 @@
                 * <b>%dt</b> para hora (da última atualização) <br/>
                 * <b>%dT</b> para hora com segundos (da última atualização) <br/>
                 <br/>
-                * <b>%loc</b> para nome (ex: Prescott) <br />
-                * <b>%lat</b> para latitude (ex: 35.5409) <br />
-                * <b>%lon</b> para longitude (ex: -112.4691) <br/>
-                * <b>%lel</b> para elevação (ex: 385 metros) <br/>
+                * <b>%loc</b> para nome (ex: São Paulo) <br />
+                * <b>%lat</b> para latitude <br />
+                * <b>%lon</b> para longitude <br/>
+                * <b>%lel</b> para elevação (ex: 815 metros) <br/>
                 <br/>
                 * <b>%s</b> para fonte de dados (ex: sunrisesunsetlib) <br/>
                 * <b>%t</b> para fuso horário (id) (ex: America/Sao_Paulo) <br/>
