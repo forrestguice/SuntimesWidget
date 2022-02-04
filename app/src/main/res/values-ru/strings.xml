@@ -22,8 +22,8 @@
     <string name="configAction_setTimeZone">Выбрать часовой пояс</string>
     <string name="configAction_setDate">Выбрать дату</string>
     <string name="configAction_viewDate">Отобразить дату</string>
-    <string name="configAction_viewDateWith">View date</string>    <!-- TODO -->
-    <string name="configAction_share">Share</string>    <!-- TODO -->
+    <string name="configAction_viewDateWith">Отобразить дату</string>
+    <string name="configAction_share">Поделиться</string>
     <string name="configAction_sunDialog">Солнечная позиция</string>
     <string name="configAction_equinoxDialog">Солнцест. / Равнод.</string>
     <string name="configAction_worldMap">Карта мира</string>
@@ -31,6 +31,7 @@
     <string name="configAction_help">Справка</string>
     <string name="configAction_onlineHelp">Online Help</string>   <!-- TODO -->
     <string name="configAction_overflow">Больше</string>
+    <string name="configAction_options">Options</string>   <!-- TODO -->
     <string name="configAction_settings">Настройки</string>
     <string name="configAction_aboutWidget">О приложении</string>
 
@@ -630,7 +631,7 @@
     <string name="configAction_deleteTheme">Удалить</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Копировать</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportThemes">Экспорт</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
-    <string name="configAction_shareTheme">Поделиться</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
+    <string name="configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
     <string name="configAction_importThemes">Импорт</string>    <!-- button (contentDescription) -->
 
     <string name="addtheme_custname">Тема_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
@@ -964,7 +965,7 @@
     <string name="configAction_copyPlace">Копировать</string>            <!-- button (contentDescription) -->
     <string name="configAction_selectPlace">Выбрать</string>        <!-- button (contentDescription) -->
     <string name="configAction_searchPlace">Найти</string>        <!-- button (contentDescription) -->
-    <string name="configAction_sharePlace">Поделиться</string>          <!-- button (contentDescription) -->
+    <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
     <string name="configAction_deletePlace">Удалить</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Очистить</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportPlaces">Экспорт</string>       <!-- button (contentDescription) -->
@@ -1310,10 +1311,34 @@
     <string name="worldmap_dialog_option_moonlight">Лунный свет</string>
     <string name="worldmap_dialog_option_all">Оба</string>
     <string name="worldmap_dialog_option_location">Местоположение</string>
-    <string name="worldmap_dialog_option_latitudes">Линии широт</string>
+    <string name="worldmap_dialog_options_menu">@string/configAction_options</string>
+    <string name="worldmap_dialog_option_center">Center on location</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_current">Center: %s</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_msg">Map center set to current location \n[%s]</string>    <!-- toast message; center set to... --> <!-- TODO -->
+    <string name="worldmap_dialog_option_center_clear">Reset map center</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_clear_msg">Map center reset to default \n[%s]</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background">Set Background</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background_clear">Clear Background</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background_warning0">This image has the wrong aspect ratio.. expected %2$s, but found %1$s!</string>    <!-- toast message; aspect ratio warning --> <!-- TODO -->
+    <string name="worldmap_dialog_option_background_error0">Failed to open map background.</string>    <!-- toast message; io error --> <!-- TODO -->
+    <string name="worldmap_dialog_option_latitudes">Линии широт</string>    <!-- TODO: "Latitudes" -> "Major lines" -->
+    <string name="worldmap_dialog_option_minorgrid">Graticule</string>  <!-- TODO -->
+    <string name="worldmap_dialog_option_debuglines">Debug Lines</string>  <!-- TODO -->
+    <string name="worldmap_dialog_option_tintmap">Tint</string>  <!-- TODO -->
+    <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->   <!-- TODO -->
     <string name="worldmap_dialog_speed_15m">&#215; 15 мин.</string>
     <string name="worldmap_dialog_speed_1d">&#215; 1 день</string>
-    <string name="configAction_shareMap">Поделиться</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+    <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+
+    <string name="help_worldmap_background">
+      <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
+      \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
+      \n\nFor best results select an image matching these properties.
+    </string>    <!-- TODO -->
+
+    <!-- Dialog: Light Map -->
+    <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
+    <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Установить будильник для</string>

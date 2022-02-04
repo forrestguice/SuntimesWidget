@@ -22,8 +22,8 @@
     <string name="configAction_setTimeZone">Nastavení časového pásma</string>
     <string name="configAction_setDate">Nastavit datum</string>
     <string name="configAction_viewDate">Zobrazit datum</string>
-    <string name="configAction_viewDateWith">View date</string>    <!-- TODO -->
-    <string name="configAction_share">Share</string>    <!-- TODO -->
+    <string name="configAction_viewDateWith">Zobrazit datum</string>
+    <string name="configAction_share">Sdílet</string>
     <string name="configAction_sunDialog">Poloha slunce</string>
     <string name="configAction_equinoxDialog">Slunovrat / Rovnodennost</string>
     <string name="configAction_worldMap">Mapa světa</string>
@@ -31,6 +31,7 @@
     <string name="configAction_help">Nápověda</string>
     <string name="configAction_onlineHelp">Online Help</string>   <!-- TODO -->
     <string name="configAction_overflow">Více</string>
+    <string name="configAction_options">Options</string>   <!-- TODO -->
     <string name="configAction_settings">Nastavení</string>
     <string name="configAction_aboutWidget">O aplikaci</string>
 
@@ -624,7 +625,7 @@
     <string name="configAction_deleteTheme">Smazat</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Kopírovat</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportThemes">Exportovat</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
-    <string name="configAction_shareTheme">Sdílet</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
+    <string name="configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
     <string name="configAction_importThemes">Importovat</string>    <!-- button (contentDescription) -->
 
     <string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
@@ -953,7 +954,7 @@
     <string name="configAction_copyPlace">Kopírovat</string>            <!-- button (contentDescription) -->
     <string name="configAction_selectPlace">Vybrat</string>        <!-- button (contentDescription) -->
     <string name="configAction_searchPlace">Hledat</string>        <!-- button (contentDescription) -->
-    <string name="configAction_sharePlace">Sdílet</string>          <!-- button (contentDescription) -->
+    <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
     <string name="configAction_deletePlace">Smazat</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Vyčistit</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportPlaces">Exportovat</string>       <!-- button (contentDescription) -->
@@ -1296,10 +1297,34 @@
     <string name="worldmap_dialog_option_moonlight">Měsíční svit</string>
     <string name="worldmap_dialog_option_all">Obojí</string>
     <string name="worldmap_dialog_option_location">Pozice</string>
-    <string name="worldmap_dialog_option_latitudes">Zeměpisné šířky</string>
+    <string name="worldmap_dialog_options_menu">@string/configAction_options</string>
+    <string name="worldmap_dialog_option_center">Center on location</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_current">Center: %s</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_msg">Map center set to current location \n[%s]</string>    <!-- toast message; center set to... --> <!-- TODO -->
+    <string name="worldmap_dialog_option_center_clear">Reset map center</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_clear_msg">Map center reset to default \n[%s]</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background">Set Background</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background_clear">Clear Background</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background_warning0">This image has the wrong aspect ratio.. expected %2$s, but found %1$s!</string>    <!-- toast message; aspect ratio warning --> <!-- TODO -->
+    <string name="worldmap_dialog_option_background_error0">Failed to open map background.</string>    <!-- toast message; io error --> <!-- TODO -->
+    <string name="worldmap_dialog_option_latitudes">Zeměpisné šířky</string>    <!-- TODO: "Latitudes" -> "Major lines" -->
+    <string name="worldmap_dialog_option_minorgrid">Graticule</string>  <!-- TODO -->
+    <string name="worldmap_dialog_option_debuglines">Debug Lines</string>  <!-- TODO -->
+    <string name="worldmap_dialog_option_tintmap">Tint</string>  <!-- TODO -->
+    <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->   <!-- TODO -->
     <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- menu item; "x 15m"; increments of 15 minutes -->
     <string name="worldmap_dialog_speed_1d">&#215; 1d</string>      <!-- menu item; "x 1d"; increments of 1 day -->
-    <string name="configAction_shareMap">Sdílet</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+    <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+
+    <string name="help_worldmap_background">
+      <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
+      \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
+      \n\nFor best results select an image matching these properties.
+    </string>    <!-- TODO -->
+
+    <!-- Dialog: Light Map -->
+    <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
+    <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Naplánovat budík pro</string>
