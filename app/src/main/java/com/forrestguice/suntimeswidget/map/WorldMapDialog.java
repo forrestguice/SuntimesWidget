@@ -1000,9 +1000,9 @@ public class WorldMapDialog extends BottomSheetDialogFragment
             double[] center = worldmap.getOptions().center;
 
             String title = context.getString(R.string.worldmap_dialog_option_background);
-            String message = context.getString(R.string.help_worldmap_background, modes.getProjectionTitle(), center[0]+"", center[1]+"", modes.getProj4());
+            String message = context.getString(R.string.help_worldmap_background, modes.getProjectionTitle(), center[0]+"", center[1]+"", modes.getProj4(center));
 
-            AlertDialog.Builder dialog = new AlertDialog.Builder(context)
+            AlertDialog.Builder builder = new AlertDialog.Builder(context)
                     .setTitle(title).setMessage(message).setIcon(R.drawable.ic_action_settings)
                     .setPositiveButton(context.getString(R.string.dialog_ok),
                     new DialogInterface.OnClickListener() {
@@ -1020,7 +1020,12 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                         }
                     })
                     .setNegativeButton(context.getString(R.string.dialog_cancel), null);
-            dialog.show();
+
+            Dialog dialog = builder.show();
+            View textView = dialog.findViewById(android.R.id.message);
+            if (textView instanceof TextView) {
+                ((TextView) textView).setTextIsSelectable(true);
+            }
         }
     }
 
