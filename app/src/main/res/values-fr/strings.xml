@@ -1419,8 +1419,10 @@
                 * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
     ]]></string>      <!-- TODO -->
 
-    <string name="help_general_timeMode"><![CDATA[
+    <string name="help_general_actualTime"><![CDATA[
           <b>Heure réelle :</b> Le soleil est à l\'horizon. C\'est l\'heure (approximative) du lever et du coucher du soleil.<br/><br/>
+    ]]></string>
+    <string name="help_general_twilight"><![CDATA[
           <b>Crépuscule civil :</b> Le soleil est à 6 degrés sous l\'horizon. Les étoiles les plus brillantes sont visibles. Il y a assez de lumière pour la plupart des activités de plein air sans lumière d\'appoint.<br/><br/>
           <b>Crépuscule nautique :</b> Le soleil est à 12 degrés au-dessous de l\'horizon. Le contour des objets et l\'horizon sont de plus en plus indistincts. Il n\'y a pas assez de lumière pour la plupart des activités de plein air sans avoir recours à une lumière d\'appoint.<br/><br/>
           <b>Crépuscule astronomique :</b> Le soleil est à 18 degrés au-dessous de l\'horizon. Proche de l\'obscurité nocturne.<br/>

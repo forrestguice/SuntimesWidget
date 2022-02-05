@@ -1646,8 +1646,10 @@
         <xliff:g id="help_topic4">%4$s</xliff:g>
     </string>
 
-    <string name="help_general_timeMode"><![CDATA[
+    <string name="help_general_actualTime"><![CDATA[
           <b>Skutečný čas:</b> Přibližný čas východu a západu slunce.<br/><br/>
+    ]]></string>
+    <string name="help_general_twilight"><![CDATA[
           <b>Občanský soumrak:</b> Slunce je 6 stupňů pod obzorem; jsou vidět nejjasnější hvězdy. Je zde dostatek světla pro většinu outdoorových aktivit, aniž byste potřebovali světlo.<br/><br/>
           <b>Nautický soumrak:</b> Slunce je 12 stupňů pod obzorem; obrysy objektu a horizont jsou čím dál méně jasné. Pro většinu outdoorových aktivit není dostatek světla, aniž byste potřebovali dodatečné světlo.<br/><br/>
           <b>Astronomický soumrak:</b> Slunce je 18 stupňů pod obzorem. Tma je blízká noci.<br/>

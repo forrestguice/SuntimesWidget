@@ -1111,10 +1111,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 public void onClick(View v)
                 {
                     HelpDialog helpDialog = new HelpDialog();
-                    String help0 = getString(R.string.help_general_timeMode);
-                    String help1 = getString(R.string.help_general_bluehour);
-                    String help2 = getString(R.string.help_general_goldhour);
-                    helpDialog.setContent(getString(R.string.help_general3, help0, help1, help2));
+                    String help0 = getString(R.string.help_general_actualTime);
+                    String help1 = getString(R.string.help_general_twilight);
+                    String help2 = getString(R.string.help_general_bluehour);
+                    String help3 = getString(R.string.help_general_goldhour);
+                    helpDialog.setContent(getString(R.string.help_general4, help0, help1, help2, help3));
                     helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
                 }
             });

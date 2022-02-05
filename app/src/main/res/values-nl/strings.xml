@@ -1631,16 +1631,18 @@
         <xliff:g id="help_topic4">%4$s</xliff:g>
     </string>
 
-    <string name="help_general_timeMode"><![CDATA[
+    <string name="help_general_actualTime"><![CDATA[
           <b>Actual Time:</b> The approximate time of sunrise and sunset.<br/><br/>
+    ]]></string>    <!-- TODO -->
+    <string name="help_general_twilight"><![CDATA[
           <b>Civil Twilight:</b> The sun is 6 degrees below the horizon; the brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
           <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
           <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon. Near darkness of night.<br/>
-    ]]></string>
+    ]]></string>    <!-- TODO -->
     <string name="help_general_riseSetOrder"><![CDATA[
           <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
           <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
-    ]]></string>
+    ]]></string>    <!-- TODO -->
 
     <string name="help_general_timeMode2"><![CDATA[
           <b>Spring Equinox:</b> The start of astronomical spring; <em>March</em> [northern hemisphere], or <em>September</em> [southern hemisphere]. The March equinox is also called the <em>northward equinox</em>.<br/><br/>

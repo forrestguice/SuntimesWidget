@@ -1421,8 +1421,10 @@
                 * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
          ]]>
     </string>   <!-- TODO -->
-    <string name="help_general_timeMode"><![CDATA[
+    <string name="help_general_actualTime"><![CDATA[
           <b>Reala sunleviĝo/sunsubiro:</b> la Suno estas sur la horizonto, tio ĉi estas proksimuma tempo de sunleviĝo aŭ sunsubiro.<br/><br/>
+    ]]></string>
+    <string name="help_general_twilight"><![CDATA[
           <b>Civila krepusko:</b> la Suno estas 6&nbsp;gradoj sub la horizonto, la plej helaj steloj estas videblaj. Estas sufiĉe da lumo por fari plejparte da agadoj eksterdome sen artefarita prilumado.<br/><br/>
           <b>Naŭtika krepusko:</b> la Suno estas 12&nbsp;gradoj sub la horizonto, konturoj de objektoj kaj la horizonto estas kvazaŭ nevideblaj. Lumo mankas por plejparte da agadoj eksterdome sen artefarita prilumado.<br/><br/>
           <b>Astronomia krepusko:</b> la Suno estas 18&nbsp;gradoj sub la horizonto. Preskaŭ nigra nokto.<br/>

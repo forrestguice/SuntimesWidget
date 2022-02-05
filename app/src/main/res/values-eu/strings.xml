@@ -1473,8 +1473,10 @@
         <xliff:g id="help_topic4">%4$s</xliff:g>
     </string>
 
-    <string name="help_general_timeMode"><![CDATA[
+    <string name="help_general_actualTime"><![CDATA[
           <b>Benetako ordua:</b> Eguzkia zeruertzean dago; hau da gutxi gorabehera egunsentiaren eta ilunabarraren ordua.<br/><br/>
+    ]]></string>
+    <string name="help_general_twilight"><![CDATA[
           <b>Krepuskulu zibila:</b> Eguzkia 6 gradu zeruertzaren azpitik dago; izar argitsuenak ikusi daitezke. Argi nahikoa dago kanpoko jardueretarako argi bat erabili behar gabe.<br/><br/>
           <b>Itsas krepuskulua:</b> Eguzkia 8 gradu zeruertzaren azpitik dago; objektuen ingerada eta zeruertza gero eta bereizezinagoak dira. Ez dago argi nahikorik kanpoko jarduera gehienetarako argi bat erabili behar gabe.<br/><br/>
           <b>Krepuskulu astronomikoa:</b> Eguzkia 18 gradu zeruertzaren azpitik dago. Gauaren iluntasunetik hurbil.<br/>

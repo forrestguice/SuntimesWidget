@@ -1464,8 +1464,10 @@
         <xliff:g id="help_topic4">%4$s</xliff:g>
     </string>
 
-    <string name="help_general_timeMode"><![CDATA[
+    <string name="help_general_actualTime"><![CDATA[
           <b>Faktisk tid:</b> Den omtrentlige tiden for soloppgang og solnedgang.<br/><br/>
+    ]]></string>
+    <string name="help_general_twilight"><![CDATA[
           <b>Alminnelig tussmørke:</b> Solen er 6 grader under horisonten; de lyseste stjernene er synlige. Det er nok lys for de fleste utendørsaktiviteter uten å kreve ekstra lys.<br/><br/>
           <b>Nautisk tussmørke:</b> Solen er 12 grader under horisonten; objektomriss og horisonten blir stadig mer utydelig. Det er ikke nok lys for de fleste utendørsaktiviteter uten å kreve ekstra lys.<br/><br/>
           <b>Astronomisk tussmørke:</b> Solen er 18 grader under horisonten. Nær nattens mørke.<br/>

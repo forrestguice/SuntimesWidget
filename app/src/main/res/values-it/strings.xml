@@ -1480,8 +1480,10 @@
         <xliff:g id="help_topic4">%4$s</xliff:g>
     </string>
 
-    <string name="help_general_timeMode"><![CDATA[
+    <string name="help_general_actualTime"><![CDATA[
         <b>Orario effettivo:</b> Il sole è all\'orizzonte; questo è l\'orario approssimativo di alba e tramonto.<br/><br/>
+    ]]></string>
+    <string name="help_general_twilight"><![CDATA[
         <b>Crepuscolo civile:</b> Il sole è 6 gradi al di sotto dell\'orizzonte; le stelle più luminose sono visibili. C\'è abbastanza luce per la maggior parte delle attività all\'aperto, senza bisogno di una fonte luminosa.<br/><br/>
         <b>Crepuscolo nautico:</b> Il sole è 12 gradi al di sotto dell\'orizzonte; è sempre più difficoltoso discernere i bordi degli oggetti e l\'orizzonte. Non c\'è abbastanza luce per la maggior parte delle attività all\'aperto, senza l\'utilizzo di una fonte luminosa.<br/><br/>
         <b>Crepuscolo astronomico:</b> Il sole è 18 gradi al di sotto dell\'orizzonte. Pressoché il buio della notte.<br/>

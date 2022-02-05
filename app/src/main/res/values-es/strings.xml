@@ -1441,12 +1441,14 @@
                 * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
     ]]></string>    <!-- TODO -->
 
-    <string name="help_general_timeMode"><![CDATA[
+    <string name="help_general_actualTime"><![CDATA[
     <b>Tiempo natural:</b> El Sol está en el horizonte: esto es el tiempo aproximado de la salida y puesta de sol. <br/><br/>
+]]></string>
+    <string name="help_general_twilight"><![CDATA[
     <b>Crepúsculo civil:</b> El Sol está 6 grados por debajo del horizonte; las estrellas más brillantes son visibles. Hay suficiente luz para la mayoría de las actividades al aire libre sin necesidad de linterna. <br/><br/>
     <b>Crepúsculo náutico:</b> El Sol está 12 grados por debajo del horizonte; las siluetas de los objetos y el horizonte son difíciles de distinguir. No hay suficiente luz para actividades a al aire libre sin linterna. <br/><br/>
     <b>Crepúsculo astronómico:</b> El Sol está 18 grados por debajo del horizonte. Casi la oscuridad de la noche. <br/>
-]]></string>
+    ]]></string>
     <string name="help_general_riseSetOrder"><![CDATA[
           <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
           <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>

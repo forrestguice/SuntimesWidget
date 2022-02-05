@@ -1448,12 +1448,14 @@
                 * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
     ]]></string>    <!-- TODO -->
 
-    <string name="help_general_timeMode"><![CDATA[
+    <string name="help_general_actualTime"><![CDATA[
       <b>Hora oficial:</b> El Sol està en l\'horitzó: això és l\'hora  aproximada de la sortida i posta de sol.<br/><br/>
+]]></string>
+    <string name="help_general_twilight"><![CDATA[
       <b>Crepuscle civil:</b> El Sol està 6 graus per sota de l\'horitzó; les estrelles més brillants són visibles. Hi ha suficient llum per a la majoría de les activitats a l\'aire lliure sense necessitat de llanterna.<br/><br/>
       <b>Crepuscle nàutic:</b> El Sol està 12 graus per sota de l\'horitzó; les siluetes dels objectes i l\'horitzó són difícils de distingir. No hi ha suficient llum per a activitatss a l\'aire lliure sense llanterna.<br/><br/>
       <b>Crepuscle astrònomic:</b> El Sol està 18 graus per sota de l\'horitzó. Qüasi l\'obscuritat de la nit.<br/>
-]]></string>
+    ]]></string>
     <string name="help_general_timeMode2"><![CDATA[
           <b>equinocci primaveral:</b> The start of astronomical spring; <em>March</em> [northern hemisphere], or <em>September</em> [southern hemisphere]. The March equinox is also called the <em>northward equinox</em>.<br/><br/>
           <b>solstici d\'estiu:</b> The start of astronomical summer; <em>June</em> [northern hemisphere], or <em>December</em> [southern hemisphere]. The June solstice is also called the <em>northern solstice</em>.<br/><br/>

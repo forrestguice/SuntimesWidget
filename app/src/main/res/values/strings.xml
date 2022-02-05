@@ -1460,7 +1460,7 @@
       \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
       \n\nFor best results select an image matching these properties.
     </string>
-    <string name="help_worldmap_background_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/wiki/Help#worldmap</string>
+    <string name="help_worldmap_background_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/wiki/Help#world-map</string>
 
     <!-- Dialog: Light Map -->
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
@@ -1850,17 +1850,14 @@
         <xliff:g id="help_topic4">%4$s</xliff:g>
     </string>
 
-    <string name="help_general_timeMode"><![CDATA[
+    <string name="help_general_actualTime"><![CDATA[
           <b>Actual Time:</b> The approximate time of sunrise and sunset.<br/><br/>
-          <b>Civil Twilight:</b> The sun is 6 degrees below the horizon; the brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
-          <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
-          <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon. Near darkness of night.<br/>
     ]]></string>
     <string name="help_general_twilight"><![CDATA[
           <b>Civil Twilight:</b> The sun is 6 degrees below the horizon; the brightest stars are visible. There is enough light for most outdoor activities without requiring a light.<br/><br/>
           <b>Nautical Twilight:</b> The sun is 12 degrees below the horizon; object outlines and the horizon are increasingly indistinct. There isn\'t enough light for most outdoor activities without requiring a light.<br/><br/>
           <b>Astronomical Twilight:</b> The sun is 18 degrees below the horizon. Near darkness of night.<br/>
-    ]]></string>   <!-- TODO -->
+    ]]></string>
     <string name="help_general_riseSetOrder"><![CDATA[
           <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
           <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
@@ -1992,7 +1989,7 @@
         <br/>
         For more information about available choices, or extending the app to support other libraries, see the online help.
     ]]>
-    </string>
+    </string>    <!-- TODO -->
     <string name="help_datasources_url" translatable="false">https://github.com/forrestguice/SuntimesWidget/wiki/Help#data-sources</string>
 
     <!-- pref defaults -->

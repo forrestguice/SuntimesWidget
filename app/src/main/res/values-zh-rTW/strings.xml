@@ -1477,8 +1477,10 @@
         <xliff:g id="help_topic4">%4$s</xliff:g>
     </string>
 
-    <string name="help_general_timeMode"><![CDATA[
+    <string name="help_general_actualTime"><![CDATA[
           <b>實際時間:</b> 太陽到達地平線；準確的日出和日落時間。<br/><br/>
+    ]]></string>
+    <string name="help_general_twilight"><![CDATA[
           <b>民用曙暮光:</b> 太陽到達地平線下6度；最亮的星星仍然可見。對於大多數戶外運動來說已不用額外照明。<br/><br/>
           <b>航海曙暮光:</b> 太陽到達地平線下12度；地平線和物體的輪廓非常模糊。對於大多數戶外運動來說光照不足。<br/><br/>
           <b>天文曙暮光:</b> 太陽到達地平線下18度；跟夜裡差不多。<br/>

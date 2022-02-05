@@ -1515,8 +1515,10 @@
         <xliff:g id="help_topic4">%4$s</xliff:g>
     </string>
 
-    <string name="help_general_timeMode"><![CDATA[
+    <string name="help_general_actualTime"><![CDATA[
           <b>Tempo Atual:</b> O sol está no horizonte, esse é basicamente o período aproximado entre o nascer e pôr do sol.<br/><br/>
+    ]]></string>
+    <string name="help_general_twilight"><![CDATA[
           <b>Crepúsculo Civil:</b> O sol está 6 graus abaixo do horizonte; as estrelas mais brilhantes estão visíveis. Há luz suficiente para maioria das atividades externas sem a necessidade de iluminação extra.<br/><br/>
           <b>Crepúsculo Náutico:</b> O sol está 12 graus abaixo do horizonte. Não há luz suficiente para maioria das atividades externas sem a necessidade de iluminação extra..<br/><br/>
           <b>Crepúsculo Astronômico:</b> O sol está 18 graus abaixo do horizonte. Totalmente sem condições de qualquer atividade externa sem o auxílio de luz extra.<br/>

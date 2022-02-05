@@ -1474,9 +1474,10 @@ public class SuntimesActivity extends AppCompatActivity
      */
     protected void showHelp()
     {
-        String timeModes = getString(R.string.help_general_timeMode);
+        String actual = getString(R.string.help_general_actualTime);
+        String twilight = getString(R.string.help_general_twilight);
         String dayLength = getString(R.string.help_general_daylength);
-        String timeText = getString(R.string.help_general2, timeModes, dayLength);
+        String timeText = getString(R.string.help_general3, actual, twilight, dayLength);
 
         String goldHour = getString(R.string.help_general_goldhour);
         String blueHour = getString(R.string.help_general_bluehour);

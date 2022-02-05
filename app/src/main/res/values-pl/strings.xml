@@ -1441,8 +1441,10 @@
                 * <b>%M</b> dla trybu (pełny) (np. zimowe przesilenie) <br/>
                 * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
     ]]></string>    <!-- TODO -->
-    <string name="help_general_timeMode"><![CDATA[
+    <string name="help_general_actualTime"><![CDATA[
           <b>Rzeczywisty wschód/zachód:</b> Słońce znajduje się na linii horyzontu, jest to przybliżony czas wschodu lub zachodu Słońca.<br/><br/>
+    ]]></string>
+    <string name="help_general_twilight"><![CDATA[
           <b>Świt/zmierzch cywilny:</b> Słońce znajduje się 6&nbsp;stopni pod horyzontem, widoczne są najjaśniejsze gwiazdy. Jest wystarczająco jasno na wykonywanie większości czynności na dworze bez potrzeby korzystania ze sztucznego oświetlenia.<br/><br/>
           <b>Świt/zmierzch żeglarski:</b> Słońce znajduje się 12&nbsp;stopni pod horyzontem, kontury obiektów i linia horyzontu są praktycznie niewidoczne. Jest zbyt ciemno na wykonywanie większości czynności na dworze bez sztucznego oświetlenia.<br/><br/>
           <b>Świt/zmierzch astronomiczny: </b> Słońce znajduje się 18&nbsp;stopni pod horyzontem. Praktycznie czarne niebo.<br/>

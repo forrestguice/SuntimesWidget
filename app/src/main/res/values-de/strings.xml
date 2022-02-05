@@ -1443,12 +1443,14 @@
                 * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
     ]]></string>    <!-- TODO -->
 
-  <string name="help_general_timeMode"><![CDATA[
+  <string name="help_general_actualTime"><![CDATA[
         <b>Tatsächlicher Sonnenauf-/Untergang:</b> Die Sonnenscheibe steht ungefähr mittig am Horizont.<br/><br/>
+  ]]></string>
+  <string name="help_general_twilight"><![CDATA[
         <b>Bürgerliche Dämmerung:</b> Die Sonne steht 6 Grad unter dem Horizont; Nur die hellsten Himmelskörper sind erkennbar. Unter freiem Himmel ist es hell genug für die meisten Aktivitäten, wie beispielsweise Lesen ohne Beleuchtung. (Auch zivile Dämmerung genannt.)<br/><br/>
         <b>Nautische Dämmerung:</b> Die Sonne steht 12 Grad unter dem Horizont; Der nautische Horizont (Kimmlinie) ist gerade noch zu erkennen, einige wenige, für die nautische Navigation notwendige, Sterne, sind bereits zu erkennen. Die meisten Aktivitäten unter freiem Himmel sind nur noch mit Beleuchtung möglich.<br/><br/>
         <b>Astronomische Dämmerung:</b> Die Sonne steht 18 Grad unter dem Horizont; Die astronomische Nacht beginnt und mit ihr die tiefste Dunkelheit, sofern der Himmel nicht von meist künstlichen Lichtquellen erhellt wird (Lichtverschmutzung).<br/>
-  ]]></string>
+    ]]></string>
   <string name="help_general_riseSetOrder"><![CDATA[
           <b>Heute:</b> Sonnenaufgang- und -untergangzeiten als Ereignisse für heutiges Datum.<br/><br/>
           <b>Letztes / Nächstes:</b> Zeit des letzten und nächsten Ereignisses.<br/>
