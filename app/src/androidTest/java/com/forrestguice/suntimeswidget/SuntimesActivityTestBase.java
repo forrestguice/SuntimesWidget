@@ -290,6 +290,7 @@ public abstract class SuntimesActivityTestBase
     {
         config = new HashMap<String, SuntimesTestConfig>();
         config.put("ca", new SuntimesTestConfig(new Location("Barcelona", "41.3825", "2.1769", "31"), "CET", true, "METRIC"));
+        config.put("cs", new SuntimesTestConfig(new Location("Prague", "50.0595", "14.3255", "361"), "CET", true, "METRIC"));
         config.put("de", new SuntimesTestConfig(new Location("Berlin", "52.5243", "13.4105", "40"), "Europe/Berlin", true, "METRIC"));
         config.put("es_ES", new SuntimesTestConfig(new Location("Madrid", "40.4378", "-3.8196", "681"), "Europe/Madrid", false, "METRIC"));
         config.put("eu", new SuntimesTestConfig(new Location("Euskal Herriko erdigunea", "42.883008", "-1.935491", "1258"), "CET", true, "METRIC"));
@@ -297,12 +298,12 @@ public abstract class SuntimesActivityTestBase
         config.put("hu", new SuntimesTestConfig(new Location("Budapest", "47.4811", "18.9902", "225"), "Europe/Budapest", true, "METRIC"));
         config.put("it", new SuntimesTestConfig(new Location("Roma", "41.9099", "12.3959", "79"), "CET", false, "METRIC"));
         config.put("pl", new SuntimesTestConfig(new Location("Warszawa", "52.2319", "21.0067", "143"), "Poland", true, "METRIC"));
+        config.put("pt_BR", new SuntimesTestConfig(new Location("São Paulo", "-23.6821", "-46.8754", "815"), "Brazil/East", true, "METRIC"));
         config.put("nb", new SuntimesTestConfig(new Location("Oslo", "59.8937", "10.6450", "0"), "Europe/Oslo", true, "METRIC"));
         config.put("nl", new SuntimesTestConfig(new Location("Amsterdam", "52.3745", "4.758", "0"), "CET", true, "METRIC"));
-        config.put("zh_TW", new SuntimesTestConfig(new Location("Taipei", "25.0330", "121.5654", "0"), "Asia/Taipei", false, "METRIC"));
-        config.put("pt_BR", new SuntimesTestConfig(new Location("São Paulo", "-23.6821", "-46.8754", "815"), "Brazil/East", true, "METRIC"));
-        config.put("cs", new SuntimesTestConfig(new Location("Prague", "50.0595", "14.3255", "361"), "CET", true, "METRIC"));
+        config.put("ru", new SuntimesTestConfig(new Location("Москва", "55.7539", "37.6202", "186"), "Etc/GMT-3", true, "METRIC"));
         config.put("zh_CN", new SuntimesTestConfig(new Location("Beijing", "39.9042", "116.4074", "0"), "Asia/Taipei", false, "METRIC"));
+        config.put("zh_TW", new SuntimesTestConfig(new Location("Taipei", "25.0330", "121.5654", "0"), "Asia/Taipei", false, "METRIC"));
 
         if (!version.startsWith("v"))
             version = "v" + version;
@@ -311,11 +312,14 @@ public abstract class SuntimesActivityTestBase
     protected void configureAppForTesting(Activity context)
     {
         WidgetSettings.saveDateModePref(context, 0, WidgetSettings.DateMode.CURRENT_DATE);
-        WidgetSettings.saveTrackingModePref(context, 0, WidgetSettings.TrackingMode.SOONEST);
+        WidgetSettings.saveTrackingModePref(context, 0, WidgetSettings.TrackingMode.RECENT);
         WidgetSettings.saveShowSecondsPref(context, 0, false);
         WidgetSettings.saveLocationAltitudeEnabledPref(context, 0, true);
+        WidgetSettings.saveLocalizeHemispherePref(context, 0, true);
 
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putString(AppSettings.PREF_KEY_UI_SHOWHEADER_TEXT, "" + AppSettings.HEADER_TEXT_AZIMUTH);
+        prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWHEADER_ICON, true);
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWWARNINGS, false);
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWLIGHTMAP, true);
         prefs.putBoolean(AppSettings.PREF_KEY_UI_SHOWDATASOURCE, false);
