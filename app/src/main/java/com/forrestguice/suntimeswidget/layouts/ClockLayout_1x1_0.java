@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2019 Forrest Guice
+   Copyright (C) 2019-2021 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -57,6 +57,24 @@ public class ClockLayout_1x1_0 extends ClockLayout
     }
 
     @Override
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesClockData data)
+    {
+        super.prepareForUpdate(context, appWidgetId, data);
+        int position = scaleBase ? 0 : WidgetSettings.loadWidgetGravityPref(context, appWidgetId);
+        this.layoutID = chooseLayout(position);  //(scaleBase ? R.layout.layout_widget_clock_1x1_0_align_fill : R.layout.layout_widget_clock_1x1_0);
+    }
+
+    protected int chooseLayout(int position)
+    {
+        switch (position) {
+            case 0: return R.layout.layout_widget_clock_1x1_0_align_fill;                       // fill
+            case 1: case 2: case 3: return R.layout.layout_widget_clock_1x1_0_align_float_2;    // top
+            case 7: case 8: case 9: return R.layout.layout_widget_clock_1x1_0_align_float_8;    // bottom
+            case 4: case 6: case 5: default: return R.layout.layout_widget_clock_1x1_0;         // center
+        }
+    }
+
+    @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)
     {
         super.updateViews(context, appWidgetId, views, data);
@@ -72,10 +90,12 @@ public class ClockLayout_1x1_0 extends ClockLayout
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
-            if (WidgetSettings.loadAllowResizePref(context, appWidgetId))
+            if (WidgetSettings.loadScaleTextPref(context, appWidgetId, true))
             {
+                int showTitle = (WidgetSettings.loadShowTitlePref(context, appWidgetId) ? 1 : 0);
                 float maxSp = ClockLayout.CLOCKFACE_MAX_SP;  // ((category == AppWidgetProviderInfo.WIDGET_CATEGORY_KEYGUARD) ? CLOCKFACE_MAX_SP : -1);
-                float[] adjustedSizeSp = adjustTextSize(context, maxDimensionsDp, paddingDp, "sans-serif", boldTime,"00:00", timeSizeSp, maxSp, "MM", suffixSizeSp);
+                int[] maxDp = new int[] {maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), (maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle))};
+                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime,"00:00", timeSizeSp, maxSp, "MM", suffixSizeSp);
                 if (adjustedSizeSp[0] != timeSizeSp) {
                     views.setTextViewTextSize(R.id.text_time, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
                     views.setTextViewTextSize(R.id.text_time_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
@@ -122,13 +142,13 @@ public class ClockLayout_1x1_0 extends ClockLayout
         }
     }
 
-    private int timeColor = Color.WHITE;
-    private int textColor = Color.WHITE;
-    private int suffixColor = Color.GRAY;
+    protected int timeColor = Color.WHITE;
+    protected int textColor = Color.WHITE;
+    protected int suffixColor = Color.GRAY;
     private boolean boldTime = false;
-    private float timeSizeSp = 12;
-    private float suffixSizeSp = 8;
-    private int[] paddingDp = new int[] {0, 0};
+    protected float titleSizeSp = 10;
+    protected float timeSizeSp = 12;
+    protected float suffixSizeSp = 8;
 
     @Override
     public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
@@ -155,9 +175,4 @@ public class ClockLayout_1x1_0 extends ClockLayout
         }
     }
 
-    @Override
-    public void prepareForUpdate(SuntimesClockData data)
-    {
-        /* EMPTY */
-    }
 }

@@ -27,6 +27,14 @@
             app:showAsAction="never"
             android:orderInCategory="899" />
 
+        <item android:id="@+id/action_options"
+            android:icon="?attr/icActionSettings"
+            android:title="@string/configAction_options"
+            app:showAsAction="never"
+            android:orderInCategory="950">
+            <menu />    <!-- populated at runtime from menu/alarmcontext2 -->
+        </item>
+
         <item android:id="@+id/action_about"
             android:icon="?attr/icActionAbout"
             android:title="@string/configAction_aboutWidget"

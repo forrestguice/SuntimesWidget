@@ -525,8 +525,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         public boolean showGold = false;
         public boolean showBlue = false;
 
-        public boolean showHeaderText = true;
-        public boolean showHeaderIcon = true;
+        public int showHeaderText = AppSettings.PREF_DEF_UI_SHOWHEADER_TEXT;
+        public boolean showHeaderIcon = AppSettings.PREF_DEF_UI_SHOWHEADER_ICON;
 
         public SuntimesTheme themeOverride = null;
         public int color_textTimeDelta, color_enabled, color_disabled, color_pressed, color_warning, color_accent, color_background;

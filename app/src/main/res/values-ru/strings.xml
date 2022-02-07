@@ -22,12 +22,16 @@
     <string name="configAction_setTimeZone">Выбрать часовой пояс</string>
     <string name="configAction_setDate">Выбрать дату</string>
     <string name="configAction_viewDate">Отобразить дату</string>
+    <string name="configAction_viewDateWith">Отобразить дату</string>
+    <string name="configAction_share">Поделиться</string>
     <string name="configAction_sunDialog">Солнечная позиция</string>
     <string name="configAction_equinoxDialog">Солнцест. / Равнод.</string>
     <string name="configAction_worldMap">Карта мира</string>
     <string name="configAction_moon">Лунная позиция</string>
     <string name="configAction_help">Справка</string>
+    <string name="configAction_onlineHelp">Online Help</string>   <!-- TODO -->
     <string name="configAction_overflow">Больше</string>
+    <string name="configAction_options">Options</string>   <!-- TODO -->
     <string name="configAction_settings">Настройки</string>
     <string name="configAction_aboutWidget">О приложении</string>
 
@@ -111,6 +115,8 @@
     <string name="length_twilight1e_neg"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g> [-<xliff:g id="timeSpan1" example="+30s">%2$s</xliff:g>]</string>
     <string name="length_twilight2"><xliff:g id="timeSpan1" example="30m">%1$s</xliff:g> | <xliff:g id="timeSpan2" example="30m">%2$s</xliff:g></string>
     <string name="length_delimiter">|</string>
+
+    <string name="timeMode_tropical_year">Tropical Year</string>   <!-- TODO -->
 
     <!-- Field: moon illumination (as seen in moon widget) -->
     <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> освещено</string>  <!-- used in 2x1 widget -->
@@ -301,11 +307,15 @@
     <string name="configLabel_general_calculator">Источник данных:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Алгоритм положения солнца</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Алгоритм положения луны</string>         <!-- preference label -->
+    <string name="configLabel_general_calculator_help">Data Sources</string>    <!-- preference title / help button text --> <!-- TODO -->
 
     <string name="configLabel_general_timeFormatMode">Формат времени:</string>         <!-- spinner label -->
 
     <string name="configLabel_general_altitude_enabled">Использовать высоту НУМ</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Применять уточнения на основе высоты над уровнем моря.</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_localize_hemisphere">Localize to hemisphere</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_general_localize_hemisphere_summary">Apply hemisphere based localization (season labels, moon phase icons).</string>        <!-- checkbox label -->    <!-- TODO -->
 
     <string name="configLabel_general_lengthUnits">Единицы длины</string>        <!-- spinner label -->
 
@@ -331,10 +341,28 @@
     <string name="configLabel_general_scanPlugins_summary">Сканировать и загрузить сторонние плагины.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
+    <string name="configLabel_widgetlayout">Layout</string>           <!-- group title -->  <!-- TODO -->
+    <string-array name="widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
+        <!--<item>Fill</item>-->
+        <item>Top-Left</item>
+        <item>Top</item>
+        <item>Top-Right</item>
+        <item>Left</item>
+        <item>Center</item>
+        <item>Right</item>
+        <item>Bottom-Left</item>
+        <item>Bottom</item>
+        <item>Bottom-Right</item>
+    </string-array>  <!-- TODO -->
+
+    <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Настройки внешнего вида</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Тема оформления</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Тема:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Заполнять все доступное пространство (изменяемый размер)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_allowResize">Заполнять все доступное пространство (изменяемый размер)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
+    <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_showLabels">Показывать детали (азимуты, высоты)</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">Показывать заголовок</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Заголовок:</string>              <!-- edittext label -->
@@ -425,6 +453,10 @@
     <string name="widgetMode_sunPosMap_simpleazimuthal">Полярная [Сев. п.]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">Полярная [Южн. п.]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_bluemarble">Спутниковая</string>    <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_location">Azimuthal Equidistant</string>     <!-- setting -->   <!-- TODO -->
+
+    <string name="worldmap_projection_equirectangular">Equidistant Rectangular</string>    <!-- TODO -->
+    <string name="worldmap_projection_equiazimuthal">Equidistant Azimuthal</string>    <!-- TODO -->
 
     <string name="widgetMode1x1_moonriseset">Восход и заход луны</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Фаза луны и освещенность</string>     <!-- setting -->
@@ -432,9 +464,11 @@
     <string name="widgetMode1x1_moonillum">Только освещенность луны</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphasenext">Следующая большая фаза луны</string>     <!-- setting -->
 
-    <string name="configLabel_appearance_1x1mode">Размер 1x1:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x2mode">Размер 3x2:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x3mode">Размер 3x3:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_1x1mode">1x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_2x1mode">2x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x1mode">3x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x2mode">3x2:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x3mode">3x3:</string>     <!-- spinner label -->  <!-- TODO -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Ничего не делать</string>           <!-- setting -->
@@ -472,13 +506,14 @@
     <string name="configLabel_location_name">Название:</string>                      <!-- edittext label -->
     <string name="configHint_location_name">(опционально)</string>                  <!-- edittext hint -->
     <string name="configHint_location_name0">Название места</string>                  <!-- edittext hint -->
+    <string name="configLabel_location_fromapp">Use the app location</string>                  <!-- checkbox text -->  <!-- TODO -->
 
     <string name="configAction_getFix">Определить местоположение</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">Изменить</string>         <!-- button (contentDescription) -->
     <string name="configAction_savePlace">Сохранить</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Солнечное время</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Солнечное время</string>                       <!-- setting -->    <!-- TODO: "solar time" -> "Time Standard" -->
     <string name="timezoneMode_current">Системный часовой пояс</string>               <!-- setting -->
     <string name="timezoneMode_custom">Пользовательский</string>                    <!-- setting -->
 
@@ -493,7 +528,7 @@
     <string name="configLabel_timezone">Настройки часового пояса</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Режим:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Часовой пояс:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Солнечное время:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Солнечное время:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Системный</string>          <!-- setting -->
@@ -518,6 +553,7 @@
     <string name="configLabel_general_showComparison">Показывать сравнение</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
+    <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
     <string name="trackingMode_closest">Ближайшее событие</string>                 <!-- setting -->
     <string name="trackingMode_soonest">Предстоящее событие</string>                <!-- setting -->
     <string name="configLabel_general_trackingMode">Отслеживать:</string>            <!-- spinner label -->
@@ -595,7 +631,7 @@
     <string name="configAction_deleteTheme">Удалить</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Копировать</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportThemes">Экспорт</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
-    <string name="configAction_shareTheme">Поделиться</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
+    <string name="configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
     <string name="configAction_importThemes">Импорт</string>    <!-- button (contentDescription) -->
 
     <string name="addtheme_custname">Тема_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
@@ -735,6 +771,7 @@
     <string name="configAction_sortAlarms_by_time">Время срабатывания</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_creation">Время создания</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">Очистить</string>                <!-- action button / menu item -->
+    <string name="configAction_clearDate">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_setAlarmOffset">Установить смещение</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmType">Выбрать тип</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">Выбрать название</string>         <!-- button (contentDescription) -->
@@ -882,9 +919,19 @@
         <item quantity="many">%d секунд</item>
     </plurals>
 
+    <plurals name="units_days">
+        <item quantity="one">%s day</item>
+        <item quantity="other">%s days</item>
+        <item quantity="few">%s days</item>
+        <item quantity="many">%s days</item>
+    </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->    <!-- TODO -->
+
     <string name="configLabel_alarmMisc">Прочие настройки</string>
     <string name="configLabel_alarms_showlauncher">Отображать ярлык</string>
     <string name="configLabel_alarms_showlauncher_summary">Показывать ярлык приложения будильников Suntimes Alarms в общем списке приложений.</string>
+
+    <string name="configLabel_alarms_poweroffalarms">Power Off Alarm</string>    <!-- TODO -->
+    <string name="configLabel_alarms_poweroffalarms_summary">Wake the device from the power off state.\npackage: <xliff:g id="packageName">%s</xliff:g></string>    <!-- TODO -->
 
     <!--
          APP SETTINGS
@@ -918,7 +965,7 @@
     <string name="configAction_copyPlace">Копировать</string>            <!-- button (contentDescription) -->
     <string name="configAction_selectPlace">Выбрать</string>        <!-- button (contentDescription) -->
     <string name="configAction_searchPlace">Найти</string>        <!-- button (contentDescription) -->
-    <string name="configAction_sharePlace">Поделиться</string>          <!-- button (contentDescription) -->
+    <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
     <string name="configAction_deletePlace">Удалить</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Очистить</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportPlaces">Экспорт</string>       <!-- button (contentDescription) -->
@@ -962,6 +1009,11 @@
     <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
     <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label --> <!-- TODO -->
     <string name="configLabel_ui_showheader_text">Show Header Text</string> <!-- checkbox label --> <!-- TODO -->
+    <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
+        <item>None</item>
+        <item>Labels</item>
+        <item>Azimuth</item>
+    </string-array>    <!-- TODO -->
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Золотой час</string>
@@ -987,6 +1039,7 @@
 
     <!-- App Setting: solstice tracking mode -->
     <string-array name="solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
+        <item>@string/trackingMode_recent</item>
         <item>@string/trackingMode_closest</item>
         <item>@string/trackingMode_soonest</item>
     </string-array>
@@ -1258,10 +1311,34 @@
     <string name="worldmap_dialog_option_moonlight">Лунный свет</string>
     <string name="worldmap_dialog_option_all">Оба</string>
     <string name="worldmap_dialog_option_location">Местоположение</string>
-    <string name="worldmap_dialog_option_latitudes">Линии широт</string>
+    <string name="worldmap_dialog_options_menu">@string/configAction_options</string>
+    <string name="worldmap_dialog_option_center">Center on location</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_current">Center: %s</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_msg">Map center set to current location \n[%s]</string>    <!-- toast message; center set to... --> <!-- TODO -->
+    <string name="worldmap_dialog_option_center_clear">Reset map center</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_clear_msg">Map center reset to default \n[%s]</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background">Set Background</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background_clear">Clear Background</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background_warning0">This image has the wrong aspect ratio.. expected %2$s, but found %1$s!</string>    <!-- toast message; aspect ratio warning --> <!-- TODO -->
+    <string name="worldmap_dialog_option_background_error0">Failed to open map background.</string>    <!-- toast message; io error --> <!-- TODO -->
+    <string name="worldmap_dialog_option_latitudes">Линии широт</string>    <!-- TODO: "Latitudes" -> "Major lines" -->
+    <string name="worldmap_dialog_option_minorgrid">Graticule</string>  <!-- TODO -->
+    <string name="worldmap_dialog_option_debuglines">Debug Lines</string>  <!-- TODO -->
+    <string name="worldmap_dialog_option_tintmap">Tint</string>  <!-- TODO -->
+    <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->   <!-- TODO -->
     <string name="worldmap_dialog_speed_15m">&#215; 15 мин.</string>
     <string name="worldmap_dialog_speed_1d">&#215; 1 день</string>
-    <string name="configAction_shareMap">Поделиться</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+    <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+
+    <string name="help_worldmap_background">
+      <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
+      \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
+      \n\nFor best results select an image matching these properties.
+    </string>    <!-- TODO -->
+
+    <!-- Dialog: Light Map -->
+    <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
+    <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Установить будильник для</string>
@@ -1519,9 +1596,18 @@
         <item><![CDATA[ github.com/QuadFlask/colorpicker ]]></item>
         <item><![CDATA[ github.com/rubensousa/GravitySnapHelper ]]></item>
     </string-array>
+    <string name="app_about_media"><![CDATA[ <b>Media:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>    <!-- TODO -->
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Help</string>
+    <string name="help_appearance_allowresize"><![CDATA[
+      <big>Swap layouts to fill available space</big><br/><br/>
+      <i><b>[enabled]</b></i> The widget will switch between layouts depending on available space.<br/><br/>
+      <i><b>[disabled]</b></i> The widget maintains its initial layout when resized. Use this with the \"<i>scale text and icons</i>\" option for extra large widgets.<br/>
+    ]]></string>  <!-- TODO -->
+    <string name="help_appearance_widgetlayout"><![CDATA[
+      This widget was created with a <b>%1$s</b> <em>initial layout</em>.<br/></br/>
+    ]]></string>  <!-- TODO -->
     <string name="help_appearance_title"><![CDATA[
         Поддерживаются следующие регулярные выражения:<br/>
         <br/>
@@ -1535,8 +1621,8 @@
                 * <b>%dm</b> миллисекунды времени посл.обн. <br/>
                 <br/>
                 * <b>%loc</b> название места (напр. Москва) <br />
-                * <b>%lat</b> широта (напр. 35.5409) <br />
-                * <b>%lon</b> долгота (напр. -112.4691) <br/>
+                * <b>%lat</b> широта <br />
+                * <b>%lon</b> долгота <br/>
                 * <b>%lel</b> высота НУМ (напр. 186 метров) <br/>
                 <br/>
                 * <b>%s</b> алгоритм (напр. sunrisesunsetlib) <br/>
@@ -1575,8 +1661,10 @@
         <xliff:g id="help_topic4">%4$s</xliff:g>
     </string>
 
-    <string name="help_general_timeMode"><![CDATA[
+    <string name="help_general_actualTime"><![CDATA[
           <b>Фактическое время:</b> Солнце находится на горизонте. Это приблизительное время восхода и захода солнца.<br/><br/>
+    ]]></string>
+    <string name="help_general_twilight"><![CDATA[
           <b>Гражданские сумерки:</b> Солнце в 6 градусах ниже линии горизонта, видны самые яркие звезды. В это время хватает света для большинства занятий на открытом воздухе без применения искусственного освещения.<br/><br/>
           <b>Навигационные сумерки:</b> Солнце в 12 градусах ниже линии горизонта, очертания объектов и сам горизонт становятся менее четкими. Уже недостаточно света для большинства занятий на открытом воздухе без искусственного освещения.<br/><br/>
           <b>Астрономические сумерки:</b> Солнце в 18 градусах ниже линии горизонта. Почти полная тьма.<br/>
@@ -1587,11 +1675,14 @@
     ]]></string>
 
     <string name="help_general_timeMode2"><![CDATA[
-          <b>Spring Equinox:</b> TODO.<br/><br/>
-          <b>Summer Solstice:</b> TODO.<br/><br/>
-          <b>Autumn Equinox:</b> TODO.<br/><br/>
-          <b>Winter Solstice:</b> TODO.<br/>
-    ]]></string>
+          <b>Spring Equinox:</b> The start of astronomical spring; <em>March</em> [northern hemisphere], or <em>September</em> [southern hemisphere]. The March equinox is also called the <em>northward equinox</em>.<br/><br/>
+          <b>Summer Solstice:</b> The start of astronomical summer; <em>June</em> [northern hemisphere], or <em>December</em> [southern hemisphere]. The June solstice is also called the <em>northern solstice</em>.<br/><br/>
+          <b>Autumn Equinox:</b> The start of astronomical autumn; <em>September</em> [northern hemisphere], or <em>March</em> [southern hemisphere]. The September equinox is also called the <em>southward equinox</em>.<br/><br/>
+          <b>Winter Solstice:</b> The start of astronomical winter; <em>December</em> [northern hemisphere], or <em>June</em> [southern hemisphere]. The December solstice is also called the <em>southern solstice</em>.<br/>
+    ]]></string>    <!-- TODO -->
+    <string name="help_general_tropicalyear"><![CDATA[
+          <b>Tropical Year:</b> A full cycle of the seasons. The length of the <em>tropical year</em> is measured from one <em>March equinox</em> to the next. It is <em>~365.24 days</em> on average, with an exact length that varies each year (up to 30 minutes).<br/>
+    ]]></string>   <!-- TODO -->
     <string name="help_general_solartime"><![CDATA[
           <b>Истинное солнечное время:</b> Время по солнцу. Время определяется путем отслеживания движения видимого солнца относительно заданной точки (долготы и широты).
           <br/><br/>
@@ -1698,6 +1789,17 @@
     <string name="calculator_displayString_time4a_noaa">Следует алгоритмам, опубликованным Национальным управлением океанических и атмосферных исследований США (NOAA).</string>
     <string name="calculator_displayString_time4a_cc">Следует алгоритмам, опубликованным N.&#160;Dershowitz и E.M.&#160;Reingold в книге \"Calendrical&#160;Calculations\" (3-е издание).</string>
     <string name="calculator_displayString_time4a_4j">Основан на астрономических расчетах, опубликованных Jean Meeus в книге \"Astronomical&#160;Algorithms\" (2-е издание).</string>
+    <string name="help_datasources">
+        <![CDATA[
+        Suntimes uses third-party libraries to perform astronomical calculations.<br/>
+        <br/>
+        The <b>data source</b> setting allows choosing between different libraries (or choosing between different algorithms offered by those libraries). The default is <b>time4a-time4j</b>.<br/>
+        <br/>
+        This setting affects the speed and accuracy of calculations, and may limit which features are available. <br/>
+        <br/>
+        For more information about available choices, or extending the app to support other libraries, see the online help.
+    ]]>
+    </string>   <!-- TODO -->
 
 
 </resources>

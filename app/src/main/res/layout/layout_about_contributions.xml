@@ -54,12 +54,22 @@
             android:id="@+id/txt_about_legal3"
             android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
             android:layout_marginTop="2dp"
-            android:layout_marginBottom="125dp"
+            android:layout_marginBottom="2dp"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/app_legal3"
             android:autoLink="web" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp" android:background="?attr/hrColor" android:layout_marginTop="4dp" android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/txt_about_media"
+            android:layout_marginStart="4dp" android:layout_marginLeft="4dp"
+            android:layout_marginTop="2dp" android:layout_marginBottom="125dp"
+            android:layout_height="wrap_content" android:layout_width="wrap_content"
+            android:text="@string/app_about_media" android:autoLink="web" />
 
     </LinearLayout>
 

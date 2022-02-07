@@ -29,6 +29,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.style.CharacterStyle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,10 +47,15 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.util.Calendar;
+
 public class AlarmTimeDialog extends DialogFragment
 {
     public static final String PREF_KEY_ALARM_TIME_24HR = "is24";
     public static final boolean PREF_DEF_ALARM_TIME_24HR = true;
+
+    public static final String PREF_KEY_ALARM_TIME_DATE = "alarmdate";
+    public static final long PREF_DEF_ALARM_TIME_DATE = -1L;
 
     public static final String PREF_KEY_ALARM_TIME_HOUR = "alarmhour";
     public static final int PREF_DEF_ALARM_TIME_HOUR = 0;
@@ -65,12 +71,17 @@ public class AlarmTimeDialog extends DialogFragment
     private TimePicker timePicker;
     private Spinner modePicker;
     private TextView locationPicker;
+    private TextView datePicker;
+
+    private AlarmTimeModeAdapter modeAdapter;
+    private SuntimesUtils utils = new SuntimesUtils();
 
     public AlarmTimeDialog()
     {
         super();
 
         Bundle defaultArgs = new Bundle();
+        defaultArgs.putLong(PREF_KEY_ALARM_TIME_DATE, PREF_DEF_ALARM_TIME_DATE);
         defaultArgs.putInt(PREF_KEY_ALARM_TIME_HOUR, PREF_DEF_ALARM_TIME_HOUR);
         defaultArgs.putInt(PREF_KEY_ALARM_TIME_MINUTE, PREF_DEF_ALARM_TIME_MINUTE);
         defaultArgs.putBoolean(PREF_KEY_ALARM_TIME_24HR, PREF_DEF_ALARM_TIME_24HR);
@@ -88,18 +99,24 @@ public class AlarmTimeDialog extends DialogFragment
         super.onCreate(savedState);
     }
 
+    public void setDate(long datetime) {
+        getArguments().putLong(PREF_KEY_ALARM_TIME_DATE, datetime);
+    }
     public void setTime(int hour, int minute) {
         getArguments().putInt(PREF_KEY_ALARM_TIME_HOUR, hour);
         getArguments().putInt(PREF_KEY_ALARM_TIME_MINUTE, minute);
+        updateDate();
     }
     public void set24Hour(boolean value) {
         getArguments().putBoolean(PREF_KEY_ALARM_TIME_24HR, value);
     }
     public void setTimeZone(String value) {
         getArguments().putString(PREF_KEY_ALARM_TIME_MODE, value);
+        updateDate();
     }
     public void setLocation(Location location) {
         getArguments().putParcelable(PREF_KEY_ALARM_LOCATION, location);
+        updateDate();
     }
 
     @SuppressWarnings({"deprecation","RestrictedApi"})
@@ -121,17 +138,16 @@ public class AlarmTimeDialog extends DialogFragment
 
     protected void initViews( final Context context, View dialogContent )
     {
+        SuntimesUtils.initDisplayStrings(context);
         AlarmClockItem.AlarmTimeZone.initDisplayStrings(context);
-        AlarmTimeModeAdapter modeAdapter = new AlarmTimeModeAdapter(context, R.layout.layout_listitem_alarmtz, AlarmClockItem.AlarmTimeZone.values());
+        modeAdapter = new AlarmTimeModeAdapter(context, R.layout.layout_listitem_alarmtz, AlarmClockItem.AlarmTimeZone.values());
         //modeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         modePicker = (Spinner)dialogContent.findViewById(R.id.modepicker);
         modePicker.setAdapter(modeAdapter);
 
-        AlarmClockItem.AlarmTimeZone mode = AlarmClockItem.AlarmTimeZone.valueOfID(getArguments().getString(PREF_KEY_ALARM_TIME_MODE));
-        modePicker.setSelection(modeAdapter.getPosition(mode));
-
         timePicker = (TimePicker)dialogContent.findViewById(R.id.timepicker);
         locationPicker = (TextView) dialogContent.findViewById(R.id.locationPicker);
+        datePicker = (TextView) dialogContent.findViewById(R.id.datePicker);
         setTimeChangedListener();
     }
 
@@ -146,6 +162,9 @@ public class AlarmTimeDialog extends DialogFragment
         if (locationPicker != null) {
             locationPicker.setOnClickListener(onLocationClicked);
         }
+        if (datePicker != null) {
+            datePicker.setOnClickListener(onDateClicked);
+        }
     }
     private void clearTimeChangedListener()
     {
@@ -158,6 +177,9 @@ public class AlarmTimeDialog extends DialogFragment
         if (locationPicker != null) {
             locationPicker.setOnClickListener(null);
         }
+        if (datePicker != null) {
+            datePicker.setOnClickListener(null);
+        }
     }
 
     private TimePicker.OnTimeChangedListener onTimeChanged = new TimePicker.OnTimeChangedListener()
@@ -167,19 +189,33 @@ public class AlarmTimeDialog extends DialogFragment
         {
             getArguments().putInt(PREF_KEY_ALARM_TIME_HOUR, hourOfDay);
             getArguments().putInt(PREF_KEY_ALARM_TIME_MINUTE, minute);
+            updateDate();
+
             if (listener != null) {
                 listener.onChanged(AlarmTimeDialog.this);
             }
         }
     };
 
+    private void updateDate()
+    {
+        if (getDate() != -1L)
+        {
+            Calendar calendar = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(getTimeZone(), getLocation()));
+            calendar.setTimeInMillis(getDate());
+            calendar.set(Calendar.HOUR_OF_DAY, getHour());
+            calendar.set(Calendar.MINUTE, getMinute());
+            calendar.set(Calendar.SECOND, 0);
+            getArguments().putLong(PREF_KEY_ALARM_TIME_DATE, calendar.getTimeInMillis());
+        }
+    }
+
     private AdapterView.OnItemSelectedListener onModeChanged = new AdapterView.OnItemSelectedListener()
     {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
-            String timezone = ((AlarmClockItem.AlarmTimeZone) parent.getItemAtPosition(position)).timeZoneID();
-            getArguments().putString(PREF_KEY_ALARM_TIME_MODE, timezone);
+            setTimeZone(((AlarmClockItem.AlarmTimeZone) parent.getItemAtPosition(position)).timeZoneID());
             updateViews(getActivity());
             if (listener != null) {
                 listener.onChanged(AlarmTimeDialog.this);
@@ -198,20 +234,52 @@ public class AlarmTimeDialog extends DialogFragment
         }
     };
 
+    private View.OnClickListener onDateClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (listener != null) {
+                listener.onDateClick(AlarmTimeDialog.this);
+            }
+        }
+    };
+
     protected void updateViews(Context context)
     {
+        clearTimeChangedListener();
+
+        if (modePicker != null && modeAdapter != null) {
+            AlarmClockItem.AlarmTimeZone mode = AlarmClockItem.AlarmTimeZone.valueOfID(getArguments().getString(PREF_KEY_ALARM_TIME_MODE));
+            modePicker.setSelection(modeAdapter.getPosition(mode));
+        }
+
+        if (datePicker != null) {
+            datePicker.setText(displayDate(getActivity(), getDate()));
+        }
+
         if (timePicker != null)
         {
-            clearTimeChangedListener();
-
             timePicker.setIs24HourView(getArguments().getBoolean(PREF_KEY_ALARM_TIME_24HR));
             timePicker.setCurrentHour(getArguments().getInt(PREF_KEY_ALARM_TIME_HOUR));
             timePicker.setCurrentMinute(getArguments().getInt(PREF_KEY_ALARM_TIME_MINUTE));
+        }
 
+        if (locationPicker != null) {
             locationPicker.setText(displayLocation(getActivity(), getLocation()));
             locationPicker.setVisibility(getArguments().getString(PREF_KEY_ALARM_TIME_MODE) == null ? View.GONE : View.VISIBLE);
+        }
 
-            setTimeChangedListener();
+        setTimeChangedListener();
+    }
+
+    public CharSequence displayDate(Context context, long datetime)
+    {
+        if (datetime != -1L)
+        {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(datetime);
+            return utils.calendarDateDisplayString(context, calendar, true).toString();
+        } else {
+            return "";    //return context.getString(R.string.date_any);
         }
     }
 
@@ -227,12 +295,16 @@ public class AlarmTimeDialog extends DialogFragment
         return SuntimesUtils.createRelativeSpan(displayText, displayString, coordString, 0.75f);
     }
 
+    public long getDate() {
+        return getArguments().getLong(PREF_KEY_ALARM_TIME_DATE, PREF_DEF_ALARM_TIME_DATE);
+    }
+
     public int getHour() {
-        return getArguments().getInt(PREF_KEY_ALARM_TIME_HOUR);
+        return getArguments().getInt(PREF_KEY_ALARM_TIME_HOUR, PREF_DEF_ALARM_TIME_HOUR);
     }
 
     public int getMinute() {
-        return getArguments().getInt(PREF_KEY_ALARM_TIME_MINUTE);
+        return getArguments().getInt(PREF_KEY_ALARM_TIME_MINUTE, PREF_DEF_ALARM_TIME_MINUTE);
     }
 
     public String getTimeZone() {
@@ -249,6 +321,7 @@ public class AlarmTimeDialog extends DialogFragment
         void onCanceled(AlarmTimeDialog dialog);
         void onChanged(AlarmTimeDialog dialog);
         void onLocationClick(AlarmTimeDialog dialog);
+        void onDateClick(AlarmTimeDialog dialog);
     }
 
     private DialogListener listener = null;

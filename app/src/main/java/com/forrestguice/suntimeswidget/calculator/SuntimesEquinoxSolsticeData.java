@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2018 Forrest Guice
+    Copyright (C) 2017-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
 
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -59,6 +60,17 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
     }
 
     /**
+     * Property: localizeHemisphere
+     */
+    public boolean localizeHemisphere() {
+        return localizeHemisphere;
+    }
+    public void setLocalizeHemisphere(boolean value) {
+        localizeHemisphere = value;
+    }
+    protected boolean localizeHemisphere;
+
+    /**
      * init from other SuntimesEquinoxSolsticeData object
      * @param other another SuntimesEquinoxSolsticeData obj
      */
@@ -66,6 +78,7 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
     {
         super.initFromOther(other);
         this.timeMode = other.timeMode();
+        this.localizeHemisphere = other.localizeHemisphere;
     }
 
     /**
@@ -78,17 +91,23 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
     {
         super.initFromSettings(context, appWidgetId, calculatorName);
         timeMode = WidgetSettings.loadTimeMode2Pref(context, appWidgetId);
+        localizeHemisphere = WidgetSettings.loadLocalizeHemispherePref(context, appWidgetId);
     }
 
     /**
      * result: eventCalendarUpcoming
      */
-    public Calendar eventCalendarUpcoming(Calendar now)
-    {
+    public Calendar eventCalendarUpcoming(Calendar now) {
         Calendar event = eventCalendarThisYear();
-        if (now.after(event))
-        {
+        if (now.after(event)) {
             event = eventCalendarOtherYear();
+        }
+        return event;
+    }
+    public Calendar eventCalendarRecent(Calendar now) {
+        Calendar event = eventCalendarOtherYear();
+        if (!now.after(event)) {
+            event = eventCalendarThisYear();
         }
         return event;
     }
@@ -154,7 +173,14 @@ public class SuntimesEquinoxSolsticeData extends SuntimesData
         //Log.v("SuntimesWidgetData", "timezone_mode: " + timezoneMode.name());
         //Log.v("SuntimesWidgetData", "timezone: " + timezone);
 
+        Location location0 = location;
+        if (!localizeHemisphere && (location != null && location.getLatitudeAsDouble() < 0)) {      // calculator returns localized times; force northern hemisphere
+            double northLatitude = Math.abs(location.getLatitudeAsDouble());                        // by passing a modified location during calculator init
+            location = new Location(location.getLabel(), Double.toString(northLatitude), location.getLongitude(), location.getAltitude());
+        }
         initCalculator(context);
+        location = location0;
+
         initTimezone(context);
 
         todaysCalendar = Calendar.getInstance(timezone);

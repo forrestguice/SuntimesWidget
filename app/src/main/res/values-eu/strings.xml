@@ -21,12 +21,16 @@
     <string name="configAction_setTimeZone">Ordu eremua ezarri</string>
     <string name="configAction_setDate">Data ezarri</string>
     <string name="configAction_viewDate">View Date</string>    <!-- TODO -->
+    <string name="configAction_viewDateWith">View date</string>    <!-- TODO -->
+    <string name="configAction_share">Share</string>    <!-- TODO -->
     <string name="configAction_sunDialog">Eguzkiaren kokapena</string>
     <string name="configAction_equinoxDialog">Solstizioak / Ekinokzioak</string>
     <string name="configAction_worldMap">Munduko mapa</string>
     <string name="configAction_moon">Ilargia</string>
     <string name="configAction_help">Laguntza</string>
+    <string name="configAction_onlineHelp">Online Help</string>   <!-- TODO -->
     <string name="configAction_overflow">More</string>  <!-- TODO -->
+    <string name="configAction_options">Options</string>   <!-- TODO -->
     <string name="configAction_settings">Ezarpenak</string>
     <string name="configAction_aboutWidget">Honi buruz</string>
 
@@ -81,6 +85,8 @@
     <string name="length_twilight1e_neg"><xliff:g id="timeSpan1" example="10h 5m">%1$s</xliff:g> [-<xliff:g id="timeSpan1" example="+30s">%2$s</xliff:g>]</string>
     <string name="length_twilight2"><xliff:g id="timeSpan1" example="30m">%1$s</xliff:g> | <xliff:g id="timeSpan2" example="30m">%2$s</xliff:g></string>
     <string name="length_delimiter">|</string>
+
+    <string name="timeMode_tropical_year">Tropical Year</string>   <!-- TODO -->
 
     <!-- Field: moon illumination (as seen in moon widget) -->
     <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> argituta</string>  <!-- used in 2x1 widget -->
@@ -242,11 +248,15 @@
     <string name="configLabel_general_calculator">Datuen jatorria:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Eguzkiaren datuen jatorria</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Ilargiaren datuen jatorria</string>         <!-- preference label -->
+    <string name="configLabel_general_calculator_help">Data Sources</string>    <!-- preference title / help button text --> <!-- TODO -->
 
     <string name="configLabel_general_timeFormatMode">Time Format:</string>         <!-- spinner label -->  <!-- TODO -->
 
     <string name="configLabel_general_altitude_enabled">Altitudea erabili</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Altitudean oinarritutako hobekuntzak erabili.</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_localize_hemisphere">Localize to hemisphere</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_general_localize_hemisphere_summary">Apply hemisphere based localization (season labels, moon phase icons).</string>        <!-- checkbox label -->    <!-- TODO -->
 
     <string name="configLabel_general_lengthUnits">Luzera unitateak</string>        <!-- spinner label -->
 
@@ -272,10 +282,28 @@
     <string name="configLabel_general_scanPlugins_summary">Hirugarrenen pluginak bilatu eta kargatu.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
+    <string name="configLabel_widgetlayout">Layout</string>           <!-- group title -->  <!-- TODO -->
+    <string-array name="widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
+        <!--<item>Fill</item>-->
+        <item>Top-Left</item>
+        <item>Top</item>
+        <item>Top-Right</item>
+        <item>Left</item>
+        <item>Center</item>
+        <item>Right</item>
+        <item>Bottom-Left</item>
+        <item>Bottom</item>
+        <item>Bottom-Right</item>
+    </string-array>  <!-- TODO -->
+
+    <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Itxuraren ezarpenak</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Itxura</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Gaia:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Handitu lekuaren arabera (neurriz aldagarria)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_allowResize">Handitu lekuaren arabera (neurriz aldagarria)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
+    <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_showLabels">Etiketak erakutsi</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">Izenburua erakutsi</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Izenburua:</string>              <!-- edittext label -->
@@ -366,6 +394,10 @@
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polarra</string>     <!-- setting -->  <!-- TODO (north) -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [south]</string>     <!-- setting -->  <!-- TODO -->
     <string name="widgetMode_sunPosMap_bluemarble">Puxtarri urdina</string>    <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_location">Azimuthal Equidistant</string>     <!-- setting -->   <!-- TODO -->
+
+    <string name="worldmap_projection_equirectangular">Equidistant Rectangular</string>    <!-- TODO -->
+    <string name="worldmap_projection_equiazimuthal">Equidistant Azimuthal</string>    <!-- TODO -->
 
     <string name="widgetMode1x1_moonriseset">Ilargiaren irteera eta ezkutatzea</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Ilargialdia eta argiztapena</string>     <!-- setting -->
@@ -373,9 +405,11 @@
     <string name="widgetMode1x1_moonillum">Ilargiaren argitazpena soilik</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphasenext">Hurrengo ilargialdi nagusia</string>     <!-- setting -->
 
-    <string name="configLabel_appearance_1x1mode">1x1 diseinua:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x2mode">3x2 diseinua:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x3mode">3x3 diseinua:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_1x1mode">1x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_2x1mode">2x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x1mode">3x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x2mode">3x2:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x3mode">3x3:</string>     <!-- spinner label -->  <!-- TODO -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Ez egin ezer</string>           <!-- setting -->
@@ -415,13 +449,14 @@
     <string name="configLabel_location_name">Izena:</string>                      <!-- edittext label -->
     <string name="configHint_location_name">(hautazkoa)</string>                  <!-- edittext hint -->
     <string name="configHint_location_name0">Place Name</string>                  <!-- edittext hint -->  <!-- TODO -->
+    <string name="configLabel_location_fromapp">Use the app location</string>                  <!-- checkbox text -->  <!-- TODO -->
 
     <string name="configAction_getFix">Kokapena lortu</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">Editatu</string>         <!-- button (contentDescription) -->
     <string name="configAction_savePlace">Gorde</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Eguzkiaren ordua</string>                       <!-- setting -->
+    <string name="timezoneMode_standard">Eguzkiaren ordua</string>                       <!-- setting -->    <!-- TODO: "solar time" -> "Time Standard" -->
     <string name="timezoneMode_current">Sistemaren ordu eremua</string>               <!-- setting -->
     <string name="timezoneMode_custom">Erabiltzaileak ezarria</string>                    <!-- setting -->
 
@@ -436,7 +471,7 @@
     <string name="configLabel_timezone">Ordu eremuen ezarpenak</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Modua:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Ordu eremua:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Eguzkiaren ordua:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Eguzkiaren ordua:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Sistemaren formatua</string>          <!-- setting -->
@@ -461,6 +496,7 @@
     <string name="configLabel_general_showComparison">Konparazioa erakutsi</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
+    <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
     <string name="trackingMode_closest">Gertakizun hurbilena</string>                 <!-- setting -->
     <string name="trackingMode_soonest">Datorren gertaera</string>                <!-- setting -->
     <string name="configLabel_general_trackingMode">Jarraipena egin:</string>            <!-- spinner label -->
@@ -678,6 +714,7 @@
     <string name="configAction_sortAlarms_by_time">Alarm Time</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_sortAlarms_by_creation">Creation Date</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_clearOffset">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="configAction_clearDate">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_setAlarmOffset">Set Offset</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmType">Set Type</string>         <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_setAlarmLabel">Set Label</string>         <!-- button (contentDescription) -->  <!-- TODO -->
@@ -816,9 +853,17 @@
         <item quantity="other">%d seconds</item>
     </plurals>  <!-- TODO -->
 
+    <plurals name="units_days">
+        <item quantity="one">%s day</item>
+        <item quantity="other">%s days</item>
+    </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->    <!-- TODO -->
+
     <string name="configLabel_alarmMisc">Miscellaneous</string>  <!-- TODO -->
     <string name="configLabel_alarms_showlauncher">Launcher Icon</string>  <!-- TODO -->
     <string name="configLabel_alarms_showlauncher_summary">Show alarm clock icon in the app tray.</string>  <!-- TODO -->
+
+    <string name="configLabel_alarms_poweroffalarms">Power Off Alarm</string>    <!-- TODO -->
+    <string name="configLabel_alarms_poweroffalarms_summary">Wake the device from the power off state.\npackage: <xliff:g id="packageName">%s</xliff:g></string>    <!-- TODO -->
 
     <!--
          APP SETTINGS
@@ -850,7 +895,7 @@
     <string name="configAction_copyPlace">Kopiatu</string>            <!-- button (contentDescription) -->
     <string name="configAction_selectPlace">Hautatu</string>        <!-- button (contentDescription) -->
     <string name="configAction_searchPlace">Search</string>              <!-- button (contentDescription) -->  <!-- TODO -->
-    <string name="configAction_sharePlace">Share</string>          <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_deletePlace">Ezabatu</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Garbitu</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportPlaces">Esportatu</string>       <!-- button (contentDescription) -->
@@ -893,6 +938,11 @@
     <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
     <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label --> <!-- TODO -->
     <string name="configLabel_ui_showheader_text">Show Header Text</string> <!-- checkbox label --> <!-- TODO -->
+    <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
+        <item>None</item>
+        <item>Labels</item>
+        <item>Azimuth</item>
+    </string-array>    <!-- TODO -->
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Urrezko ordua</string>
@@ -918,6 +968,7 @@
 
     <!-- App Setting: solstice tracking mode -->
     <string-array name="solsticeTrackingMode_display">                      <!-- one-to-one with solsticeTrackingMode_values -->
+        <item>@string/trackingMode_recent</item>
         <item>@string/trackingMode_closest</item>
         <item>@string/trackingMode_soonest</item>
     </string-array>
@@ -1088,10 +1139,34 @@
     <string name="worldmap_dialog_option_moonlight">Ilargiaren argia</string>
     <string name="worldmap_dialog_option_all">Biak</string>
     <string name="worldmap_dialog_option_location">Location</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_latitudes">Latitudes</string>    <!-- TODO -->
+    <string name="worldmap_dialog_options_menu">@string/configAction_options</string>
+    <string name="worldmap_dialog_option_center">Center on location</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_current">Center: %s</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_msg">Map center set to current location \n[%s]</string>    <!-- toast message; center set to... --> <!-- TODO -->
+    <string name="worldmap_dialog_option_center_clear">Reset map center</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_clear_msg">Map center reset to default \n[%s]</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background">Set Background</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background_clear">Clear Background</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background_warning0">This image has the wrong aspect ratio.. expected %2$s, but found %1$s!</string>    <!-- toast message; aspect ratio warning --> <!-- TODO -->
+    <string name="worldmap_dialog_option_background_error0">Failed to open map background.</string>    <!-- toast message; io error --> <!-- TODO -->
+    <string name="worldmap_dialog_option_latitudes">Major Lines</string>    <!-- TODO: "Latitudes" -> "Major lines" -->
+    <string name="worldmap_dialog_option_minorgrid">Graticule</string>  <!-- TODO -->
+    <string name="worldmap_dialog_option_debuglines">Debug Lines</string>  <!-- TODO -->
+    <string name="worldmap_dialog_option_tintmap">Tint</string>  <!-- TODO -->
+    <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->   <!-- TODO -->
     <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    <!-- TODO -->
     <string name="worldmap_dialog_speed_1d">&#215; 1d</string>    <!-- TODO -->
-    <string name="configAction_shareMap">Share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->  <!-- TODO -->
+    <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+
+    <string name="help_worldmap_background">
+      <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
+      \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
+      \n\nFor best results select an image matching these properties.
+    </string>    <!-- TODO -->
+
+    <!-- Dialog: Light Map -->
+    <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
+    <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Alarma bat programatu honetarako</string>
@@ -1334,9 +1409,18 @@
     <string name="creditsTab">Credits</string>   <!-- TODO -->
 
     <string name="app_legal3"><![CDATA[ <b>Liburutegiak:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
+    <string name="app_about_media"><![CDATA[ <b>Media:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>    <!-- TODO -->
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Laguntza</string>
+    <string name="help_appearance_allowresize"><![CDATA[
+      <big>Swap layouts to fill available space</big><br/><br/>
+      <i><b>[enabled]</b></i> The widget will switch between layouts depending on available space.<br/><br/>
+      <i><b>[disabled]</b></i> The widget maintains its initial layout when resized. Use this with the \"<i>scale text and icons</i>\" option for extra large widgets.<br/>
+    ]]></string>  <!-- TODO -->
+    <string name="help_appearance_widgetlayout"><![CDATA[
+      This widget was created with a <b>%1$s</b> <em>initial layout</em>.<br/></br/>
+    ]]></string>  <!-- TODO -->
     <string name="help_appearance_title"><![CDATA[
         Hurrengo izenburu ordezkoak onartzen dira:<br/>
         <br/>
@@ -1348,27 +1432,30 @@
                 * <b>%dt</b> ordurako (azken eguneraketarena) <br/>
                 * <b>%dT</b> ordurako, segunduekin (azken eguneraketarena) <br/>
                 <br/>
-                * <b>%loc</b> etiketarako (adib. Prescott) <br />
-                * <b>%lat</b> latituderako (adib. 35.5409) <br />
-                * <b>%lon</b> longituderako (adib. -112.4691) <br/>
-                * <b>%lel</b> for elevation (e.g. 385 meters) <br/>
+                * <b>%loc</b> etiketarako (adib. Euskal Herriko erdigunea) <br />
+                * <b>%lat</b> latituderako <br />
+                * <b>%lon</b> longituderako <br/>
+                * <b>%lel</b> for elevation (e.g. 1258 meters) <br/>
                 <br/>
                 * <b>%s</b> datuen jatorrirako (adib. sunrisesunsetlib) <br/>
-                * <b>%t</b> ordu eremurako (id) (adib. US/Arizona) <br/>
+                * <b>%t</b> ordu eremurako (id) (adib. CET) <br/>
                 * <b>%id</b> appWidgetIDrako <br/>
          <br/>
          <b>Eguzkiaren widgetak:</b> <br/>
                 * <b>%m</b> modurako (laburra) (adib. Zibila) <br/>
                 * <b>%M</b> modurako (luzea) (adib. Krepuskulu zibila) <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>Ilargiaren widgetak:</b> <br/>
                 * <b>%i</b> ilargiaren argiztapenerako (adib. 25%) <br/>
                 * <b>%M</b> ilargialdirako (adib. Ilgora) <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>Solstizioaren widgetak:</b> <br/>
                 * <b>%m</b> modurako (laburra) (adib. Solstizioa) <br/>
                 * <b>%M</b> modurako (luzea) (adib. Neguko solstizioa) <br/>
-    ]]></string>  <!-- TODO: %lel -->
+                * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
+    ]]></string>      <!-- TODO -->
 
     <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
@@ -1386,8 +1473,10 @@
         <xliff:g id="help_topic4">%4$s</xliff:g>
     </string>
 
-    <string name="help_general_timeMode"><![CDATA[
+    <string name="help_general_actualTime"><![CDATA[
           <b>Benetako ordua:</b> Eguzkia zeruertzean dago; hau da gutxi gorabehera egunsentiaren eta ilunabarraren ordua.<br/><br/>
+    ]]></string>
+    <string name="help_general_twilight"><![CDATA[
           <b>Krepuskulu zibila:</b> Eguzkia 6 gradu zeruertzaren azpitik dago; izar argitsuenak ikusi daitezke. Argi nahikoa dago kanpoko jardueretarako argi bat erabili behar gabe.<br/><br/>
           <b>Itsas krepuskulua:</b> Eguzkia 8 gradu zeruertzaren azpitik dago; objektuen ingerada eta zeruertza gero eta bereizezinagoak dira. Ez dago argi nahikorik kanpoko jarduera gehienetarako argi bat erabili behar gabe.<br/><br/>
           <b>Krepuskulu astronomikoa:</b> Eguzkia 18 gradu zeruertzaren azpitik dago. Gauaren iluntasunetik hurbil.<br/>
@@ -1398,11 +1487,14 @@
     ]]></string>  <!-- TODO -->
 
     <string name="help_general_timeMode2"><![CDATA[
-          <b>Udaberriko ekinokzioa:</b> TODO.<br/><br/>
-          <b>Udako solstizioa:</b> TODO.<br/><br/>
-          <b>Udazkeneko ekinokzioa:</b> TODO.<br/><br/>
-          <b>Negu solstizioa:</b> TODO.<br/>
-    ]]></string>
+          <b>Udaberriko ekinokzioa:</b> The start of astronomical spring; <em>March</em> [northern hemisphere], or <em>September</em> [southern hemisphere]. The March equinox is also called the <em>northward equinox</em>.<br/><br/>
+          <b>Udako solstizioa:</b> The start of astronomical summer; <em>June</em> [northern hemisphere], or <em>December</em> [southern hemisphere]. The June solstice is also called the <em>northern solstice</em>.<br/><br/>
+          <b>Udazkeneko ekinokzioa:</b> The start of astronomical autumn; <em>September</em> [northern hemisphere], or <em>March</em> [southern hemisphere]. The September equinox is also called the <em>southward equinox</em>.<br/><br/>
+          <b>Negu solstizioa:</b> The start of astronomical winter; <em>December</em> [northern hemisphere], or <em>June</em> [southern hemisphere]. The December solstice is also called the <em>southern solstice</em>.<br/>
+    ]]></string>    <!-- TODO -->
+    <string name="help_general_tropicalyear"><![CDATA[
+          <b>Tropical Year:</b> A full cycle of the seasons. The length of the <em>tropical year</em> is measured from one <em>March equinox</em> to the next. It is <em>~365.24 days</em> on average, with an exact length that varies each year (up to 30 minutes).<br/>
+    ]]></string>   <!-- TODO -->
     <string name="help_general_daylength"><![CDATA[
         <b>Egunaren iraupena:</b> Egunsentiaren eta ilunabarraren arteko denbora.<br/><br/>
         <b>Argi erabilgarria:</b> Goizeko eta arratsaldeko krepuskulu zibilen arteko denbora.<br/>
@@ -1463,5 +1555,16 @@
     <string name="calculator_displayString_time4a_noaa">National Oceanic and Atmospheric Administrationek argitaratutako algoritmoak jarraitzen ditu.</string>
     <string name="calculator_displayString_time4a_cc">Dershowitz/Reingoldek haien "Calendrical Calculations" (hirugarren edizioa) liburuan argitaratutako algoritmoak jarraitzen ditu.</string>
     <string name="calculator_displayString_time4a_4j">Jean Meeusek bere "Astronomical Algorithms" (bigarren edizioa) liburuan argitaratutako kalkulu astronomikoetan oinarrituta.</string>
+    <string name="help_datasources">
+        <![CDATA[
+        Suntimes uses third-party libraries to perform astronomical calculations.<br/>
+        <br/>
+        The <b>data source</b> setting allows choosing between different libraries (or choosing between different algorithms offered by those libraries). The default is <b>time4a-time4j</b>.<br/>
+        <br/>
+        This setting affects the speed and accuracy of calculations, and may limit which features are available. <br/>
+        <br/>
+        For more information about available choices, or extending the app to support other libraries, see the online help.
+    ]]>
+    </string>   <!-- TODO -->
     
 </resources>

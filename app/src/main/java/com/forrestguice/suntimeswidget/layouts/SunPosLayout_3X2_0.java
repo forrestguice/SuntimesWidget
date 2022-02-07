@@ -33,6 +33,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.map.WorldMapEquiazimuthal;
 import com.forrestguice.suntimeswidget.map.WorldMapEquiazimuthal1;
+import com.forrestguice.suntimeswidget.map.WorldMapEquiazimuthal2;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
@@ -55,9 +56,9 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
     }
 
     @Override
-    public void prepareForUpdate(SuntimesRiseSetDataset dataset, int[] widgetSize)
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesRiseSetDataset dataset, int[] widgetSize)
     {
-        super.prepareForUpdate(dataset, widgetSize);
+        super.prepareForUpdate(context, appWidgetId, dataset, widgetSize);
 
         if (Build.VERSION.SDK_INT >= 16)
         {
@@ -66,11 +67,8 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
         }
     }
 
-    @Override
-    public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetDataset dataset)
+    public static WorldMapTask.WorldMapProjection createProjectionForMode(Context context, WorldMapWidgetSettings.WorldMapWidgetMode mapMode, WorldMapTask.WorldMapOptions options)
     {
-        super.updateViews(context, appWidgetId, views, dataset);
-        WorldMapWidgetSettings.WorldMapWidgetMode mapMode = getMapMode(context, appWidgetId);
         WorldMapTask.WorldMapProjection projection;
         switch (mapMode)
         {
@@ -88,8 +86,16 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
                 projection = new WorldMapEquiazimuthal1();
                 break;
 
+            case EQUIAZIMUTHAL_SIMPLE2:
+                options.center = WorldMapWidgetSettings.PREF_DEF_WORLDMAP_CENTER;          // TODO: widget allows reconfigure center
+                options.map = ContextCompat.getDrawable(context, R.drawable.worldmap4);    // TODO: widget allows reconfigure background
+                options.map_night = null;
+                options.hasTransparentBaseMap = true;
+                projection = new WorldMapEquiazimuthal2();
+                break;
+
             case EQUIRECTANGULAR_BLUEMARBLE:
-                options.map = ContextCompat.getDrawable(context, R.drawable.land_shallow_topo_1024);
+                options.map = ContextCompat.getDrawable(context, R.drawable.world_topo_bathy_1024x512);
                 options.map_night = ContextCompat.getDrawable(context, R.drawable.earth_lights_lrg_1024);
                 options.hasTransparentBaseMap = false;
                 options.foregroundColor = Color.TRANSPARENT;
@@ -104,6 +110,15 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
                 projection = new WorldMapEquirectangular();
                 break;
         }
+        return projection;
+    }
+
+    @Override
+    public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesRiseSetDataset dataset)
+    {
+        super.updateViews(context, appWidgetId, views, dataset);
+        WorldMapWidgetSettings.WorldMapWidgetMode mapMode = getMapMode(context, appWidgetId);
+        WorldMapTask.WorldMapProjection projection = createProjectionForMode(context, mapMode, options);
 
         boolean showLocation = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, getMapTag());
         if (showLocation) {

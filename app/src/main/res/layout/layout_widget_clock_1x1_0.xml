@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2019 Forrest Guice
+    Copyright (C) 2019-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -16,9 +16,15 @@
     You should have received a copy of the GNU General Public License
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              style="@style/SunsetTimeWidgetFrame" android:layout_width="match_parent">
 
-    <include layout="@layout/layout_widget_clock_1x1_0i" />
+    <LinearLayout
+        style="@style/SunsetTimeWidget" android:layout_height="match_parent"
+        android:id="@+id/widgetframe_inner">
+
+        <include layout="@layout/layout_widget_clock_1x1_0_content" />
+
+    </LinearLayout>
 
 </FrameLayout>

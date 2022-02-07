@@ -29,7 +29,6 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
-import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
@@ -59,7 +58,7 @@ public class AlarmClockItem implements Parcelable
     public int hour = -1, minute = -1;
     public long offset = 0;
     public String label = null;
-    public SolarEvents event = null;
+    private String event = null;
     public String timezone = null;
     public Location location = null;
     public String ringtoneName = null;
@@ -135,7 +134,7 @@ public class AlarmClockItem implements Parcelable
             location.setUseAltitude(useAltitude);
         } else location = null;
 
-        event = SolarEvents.valueOf(in.readString(), null);
+        event = in.readString();
         timezone = in.readString();
 
         vibrate =  (in.readInt() == 1);
@@ -171,7 +170,8 @@ public class AlarmClockItem implements Parcelable
         out.writeString(location.getAltitude());
         out.writeInt(location.useAltitude() ? 1 : 0);
 
-        out.writeString(event != null ? event.name() : null);
+        //out.writeString(event != null ? event.name() : null);
+        out.writeString(event);
         out.writeString(timezone);
 
         out.writeInt(vibrate ? 1 : 0);
@@ -214,8 +214,7 @@ public class AlarmClockItem implements Parcelable
 
         } else location = null;
 
-        String eventString = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_SOLAREVENT);
-        event = SolarEvents.valueOf(eventString, null);
+        event = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_SOLAREVENT);
         timezone = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_TIMEZONE);
 
         vibrate = (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_VIBRATE) == 1);
@@ -251,7 +250,7 @@ public class AlarmClockItem implements Parcelable
         }
 
         if (event != null) {
-            values.put(AlarmDatabaseAdapter.KEY_ALARM_SOLAREVENT, event.name());
+            values.put(AlarmDatabaseAdapter.KEY_ALARM_SOLAREVENT, event);
         } else values.putNull(AlarmDatabaseAdapter.KEY_ALARM_SOLAREVENT);
 
         if (timezone != null) {
@@ -282,6 +281,24 @@ public class AlarmClockItem implements Parcelable
         return (state != null ? state.getState() : AlarmState.STATE_NONE);
     }
 
+    @Nullable
+    public String getEvent() {
+        return event;
+    }
+    public void setEvent(@Nullable String event) {
+        this.event = event;
+        eventItem = null;
+    }
+
+    private AlarmEvent.AlarmEventItem eventItem = null;
+    public AlarmEvent.AlarmEventItem getEventItem(Context context)
+    {
+        if (eventItem == null) {
+            eventItem = new AlarmEvent.AlarmEventItem(getEvent(), context.getContentResolver());
+        }
+        return eventItem;
+    }
+
     public int getIcon()
     {
         return ((type == AlarmClockItem.AlarmType.NOTIFICATION) ? ICON_NOTIFICATION : ICON_ALARM);
@@ -292,10 +309,11 @@ public class AlarmClockItem implements Parcelable
         return getLabel((type == AlarmClockItem.AlarmType.ALARM) ? context.getString(R.string.alarmMode_alarm) : context.getString(R.string.alarmMode_notification));
     }
 
-    public String getLabelAlt(Context context)
+    /*public String getLabelAlt(Context context)
     {
-        return getLabel((event != null) ? event.getShortDisplayString() : context.getString(R.string.alarmOption_solarevent_none));
-    }
+        SolarEvents solarEvent = SolarEvents.valueOf(event, null);
+        return getLabel((solarEvent != null) ? solarEvent.getShortDisplayString() : context.getString(R.string.alarmOption_solarevent_none));   // TODO
+    }*/
 
     public String getLabel(String emptyLabel)
     {

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2020 Forrest Guice
+    Copyright (C) 2020-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -26,6 +26,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -37,10 +38,13 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.settings.SolarEventIcons;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -184,11 +188,14 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             text_repeat.setText( displayRepeating(context, item, selected));
 
             text_event.setText(displayEvent(context, item));
+            Log.d("DEBUG", "set event text: " + text_event.getText());
 
-            if (item.event != null)
+            SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
+            if (event != null)
             {
-                Drawable eventIcon = SolarEventIcons.getIconDrawable(context, item.event, (int)iconSize, (int)iconSize);
-                text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, item.event));
+                boolean northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && (item.location.getLatitudeAsDouble() < 0);
+                Drawable eventIcon = SolarEventIcons.getIconDrawable(context, event, (int)iconSize, (int)iconSize, northward);
+                text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, event));
                 text_event.setCompoundDrawables(eventIcon, null, null, null);
 
             } else {
@@ -278,7 +285,6 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
         CharSequence alarmDesc;
         SuntimesUtils utils = new SuntimesUtils();
-        SuntimesUtils.initDisplayStrings(context);
         SuntimesUtils.TimeDisplayText timeText = utils.calendarTimeShortDisplayString(context, alarmTime, false);
         if (SuntimesUtils.is24()) {
             alarmDesc = timeText.getValue();
@@ -303,10 +309,10 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             String displayString = context.getString(R.string.schedalarm_dialog_note1, timeString);
             return SuntimesUtils.createBoldColorSpan(null, displayString, timeString, noteColor);
 
-        } else if (item.event != null) {
-            String eventString = item.event.getLongDisplayString();
-            String displayString = context.getString(R.string.schedalarm_dialog_note2, eventString);
-            return SuntimesUtils.createBoldSpan(null, displayString, eventString);
+        } else if (item.getEvent() != null) {
+            AlarmEvent.AlarmEventItem eventItem = item.getEventItem(context);
+            String displayString = context.getString(R.string.schedalarm_dialog_note2, eventItem.getTitle());
+            return SuntimesUtils.createBoldSpan(null, displayString, eventItem.getTitle());
 
         } else {
             return "";
@@ -335,11 +341,10 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public static boolean showAlarmDate(Context context, AlarmClockItem item)
     {
-        int eventType = item.event == null ? -1 : item.event.getType();
-        long now = Calendar.getInstance(TimeZone.getDefault()).getTimeInMillis();
+        long now = System.currentTimeMillis();
         long delta = item.timestamp - now;
         boolean isDistant = (delta >= (48 * 60 * 60 * 1000));
-        return (eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON || isDistant);
+        return (item.getEventItem(context).supportsOffsetDays() || isDistant);
     }
 
     public static CharSequence displayOffset(Context context, AlarmClockItem item)
@@ -361,15 +366,22 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public static CharSequence displayRepeating(Context context, AlarmClockItem item, boolean isSelected)
     {
-        int eventType = item.event == null ? -1 : item.event.getType();
+        SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
         boolean noRepeat = item.repeatingDays == null || item.repeatingDays.isEmpty();
         String repeatText = AlarmClockItem.repeatsEveryDay(item.repeatingDays)
                 ? context.getString(R.string.alarmOption_repeat_all)
                 : noRepeat
                 ? context.getString(R.string.alarmOption_repeat_none)
                 : AlarmRepeatDialog.getDisplayString(context, item.repeatingDays);
-        if (item.repeating && (eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON)) {
-            repeatText = context.getString(R.string.alarmOption_repeat);
+        if (item.repeating)
+        {
+            AlarmEvent.AlarmEventItem eventItem = item.getEventItem(context);
+            int repeatSupport = eventItem.supportsRepeating();
+            if (repeatSupport == AlarmEventContract.REPEAT_SUPPORT_BASIC) {
+                repeatText = context.getString(R.string.alarmOption_repeat);
+            } else if (repeatSupport == AlarmEventContract.REPEAT_SUPPORT_NONE) {
+                repeatText = context.getString(R.string.alarmOption_repeat_none);
+            }
         }
         return (isSelected || !noRepeat ? repeatText : "");
     }
@@ -401,8 +413,10 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
     public static CharSequence displayEvent(Context context, AlarmClockItem item)
     {
-        if (item.event != null) {
-            return item.event.getLongDisplayString();
+        String eventString = item.getEvent();
+        if (eventString != null) {
+            AlarmEvent.AlarmEventItem eventItem = item.getEventItem(context);
+            return eventItem.getTitle();
 
         } else if (item.timezone != null) {
             Calendar adjustedTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(item.timezone, item.location));

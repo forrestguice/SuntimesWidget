@@ -153,7 +153,7 @@ Icons and images from:
 * "Google Android Design Icons 20131120" [Apache License 2.0]
 * "Google Material Icons" [Apache License 2.0] (https://material.io/icons/)
 * "Material Design Icons" [SIL Open Font License 1.1] (https://materialdesignicons.com)
-* "NASA Visible Earth: Blue Marble" [Public Domain] (https://visibleearth.nasa.gov/view_cat.php?categoryID=1484)
+* NASA Earth Observatory. "Blue Marble: Next Generation" [Public Domain] (https://visibleearth.nasa.gov/view_cat.php?categoryID=1484)
 
 Libraries used:
 * Time4A [Apache License 2.0] (http://github.com/MenoData/Time4A) 

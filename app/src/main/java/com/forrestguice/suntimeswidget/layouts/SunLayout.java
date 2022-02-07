@@ -18,17 +18,34 @@
 
 package com.forrestguice.suntimeswidget.layouts;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
+import android.util.TypedValue;
 import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
 
 public abstract class SunLayout extends SuntimesLayout
 {
+    protected int suffixColor = Color.GRAY;
+    protected int sunriseColor = Color.YELLOW;
+    protected int sunsetColor = Color.YELLOW;
+
+    protected float titleSizeSp = 10;
+    protected float textSizeSp = 12;
+    protected float timeSizeSp = 12;
+    protected float suffixSizeSp = 8;
+    protected float iconSizeDp = 32;
+
+    protected boolean scaleBase = WidgetSettings.PREF_DEF_APPEARANCE_SCALEBASE;
+
     /**
      * Called by widget before themeViews and updateViews to give the layout obj an opportunity to
      * modify its state based on the supplied data.
@@ -36,7 +53,25 @@ public abstract class SunLayout extends SuntimesLayout
      */
     public void prepareForUpdate(Context context, int appWidgetId, SuntimesRiseSetData data)
     {
-        // EMPTY
+        this.scaleBase = WidgetSettings.loadScaleBasePref(context, appWidgetId);
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
+    {
+        super.themeViews(context, views, theme);
+
+        suffixColor = theme.getTimeSuffixColor();
+        sunriseColor = theme.getSunriseTextColor();
+        sunsetColor = theme.getSunsetTextColor();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        {
+            titleSizeSp = theme.getTitleSizeSp();
+            textSizeSp = theme.getTextSizeSp();
+            timeSizeSp = theme.getTimeSizeSp();
+            suffixSizeSp = theme.getTimeSuffixSizeSp();
+        }
     }
 
     /**
@@ -56,12 +91,12 @@ public abstract class SunLayout extends SuntimesLayout
         //Log.v("DEBUG", "title text: " + titleText);
     }
 
-    protected void updateViewsSunRiseSetText(Context context, RemoteViews views, SuntimesRiseSetData data, boolean showSeconds, WidgetSettings.RiseSetOrder order)
+    protected void updateViewsSunRiseSetText(Context context, RemoteViews views, SuntimesRiseSetData data, boolean showSeconds, WidgetSettings.RiseSetOrder order, WidgetSettings.TimeFormatMode timeFormat)
     {
         if (order == WidgetSettings.RiseSetOrder.TODAY)
         {
-            updateViewsSunriseText(context, views, data.sunriseCalendarToday(), showSeconds);
-            updateViewsSunsetText(context, views, data.sunsetCalendarToday(), showSeconds);
+            updateViewsSunriseText(context, views, data.sunriseCalendarToday(), showSeconds, timeFormat);
+            updateViewsSunsetText(context, views, data.sunsetCalendarToday(), showSeconds, timeFormat);
 
         } else {
             Calendar now = data.now();
@@ -70,42 +105,42 @@ public abstract class SunLayout extends SuntimesLayout
 
             if (now.before(sunriseToday))      // in the wee hours
             {
-                updateViewsSunriseText(context, views, data.sunriseCalendar(1), showSeconds);  // sunrise today
-                updateViewsSunsetText(context, views, data.sunsetCalendar(0), showSeconds);    // sunset yesterday
+                updateViewsSunriseText(context, views, data.sunriseCalendar(1), showSeconds, timeFormat);  // sunrise today
+                updateViewsSunsetText(context, views, data.sunsetCalendar(0), showSeconds, timeFormat);    // sunset yesterday
 
             } else if (now.before(sunsetToday)) {       // during the day
-                updateViewsSunriseText(context, views, data.sunriseCalendar(1), showSeconds);  // sunrise today
-                updateViewsSunsetText(context, views, data.sunsetCalendar(1), showSeconds);    // sunset today
+                updateViewsSunriseText(context, views, data.sunriseCalendar(1), showSeconds, timeFormat);  // sunrise today
+                updateViewsSunsetText(context, views, data.sunsetCalendar(1), showSeconds, timeFormat);    // sunset today
 
             } else {                          // night; the day is over (but "tomorrow" has yet to arrive)
-                updateViewsSunsetText(context, views, data.sunsetCalendar(1), showSeconds);    // sunset today
-                updateViewsSunriseText(context, views, data.sunriseCalendar(2), showSeconds);  // sunrise tomorrow
+                updateViewsSunsetText(context, views, data.sunsetCalendar(1), showSeconds, timeFormat);    // sunset today
+                updateViewsSunriseText(context, views, data.sunriseCalendar(2), showSeconds, timeFormat);  // sunrise tomorrow
             }
         }
 
     }
 
-    protected void updateViewsSunriseText(Context context, RemoteViews views, Calendar event, boolean showSeconds)
+    protected void updateViewsSunriseText(Context context, RemoteViews views, Calendar event, boolean showSeconds, WidgetSettings.TimeFormatMode timeFormat)
     {
-        SuntimesUtils.TimeDisplayText sunriseText = utils.calendarTimeShortDisplayString(context, event, showSeconds);
+        SuntimesUtils.TimeDisplayText sunriseText = utils.calendarTimeShortDisplayString(context, event, showSeconds, timeFormat);
         String sunriseString = sunriseText.getValue();
         CharSequence sunrise = (boldTime ? SuntimesUtils.createBoldSpan(null, sunriseString, sunriseString) : sunriseString);
         views.setTextViewText(R.id.text_time_rise, sunrise);
         views.setTextViewText(R.id.text_time_rise_suffix, sunriseText.getSuffix());
     }
 
-    protected void updateViewsSunsetText(Context context, RemoteViews views, Calendar event, boolean showSeconds)
+    protected void updateViewsSunsetText(Context context, RemoteViews views, Calendar event, boolean showSeconds, WidgetSettings.TimeFormatMode timeFormat)
     {
-        SuntimesUtils.TimeDisplayText sunsetText = utils.calendarTimeShortDisplayString(context, event, showSeconds);
+        SuntimesUtils.TimeDisplayText sunsetText = utils.calendarTimeShortDisplayString(context, event, showSeconds, timeFormat);
         String sunsetString = sunsetText.getValue();
         CharSequence sunset = (boldTime ? SuntimesUtils.createBoldSpan(null, sunsetString, sunsetString) : sunsetString);
         views.setTextViewText(R.id.text_time_set, sunset);
         views.setTextViewText(R.id.text_time_set_suffix, sunsetText.getSuffix());
     }
 
-    protected void updateViewsNoonText(Context context, RemoteViews views, Calendar event, boolean showSeconds)
+    protected void updateViewsNoonText(Context context, RemoteViews views, Calendar event, boolean showSeconds, WidgetSettings.TimeFormatMode timeFormat)
     {
-        SuntimesUtils.TimeDisplayText noonText = utils.calendarTimeShortDisplayString(context, event, showSeconds);
+        SuntimesUtils.TimeDisplayText noonText = utils.calendarTimeShortDisplayString(context, event, showSeconds, timeFormat);
         String noonString = noonText.getValue();
         CharSequence noon = (boldTime ? SuntimesUtils.createBoldSpan(null, noonString, noonString) : noonString);
         views.setTextViewText(R.id.text_time_noon, noon);
