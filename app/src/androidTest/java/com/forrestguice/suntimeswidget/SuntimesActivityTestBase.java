@@ -73,17 +73,13 @@ import static org.hamcrest.core.IsNot.not;
 public abstract class SuntimesActivityTestBase
 {
     public static final String TESTLOC_0_LABEL = "Test Location 0";
-    public static final String TESTLOC_0_LAT = "35";
-    public static final String TESTLOC_0_LON = "-112";
+    public static final String TESTLOC_0_LAT = "34";
+    public static final String TESTLOC_0_LON = "-111";
 
     public static final String TESTLOC_1_LABEL = "Test Location 1";
     public static final String TESTLOC_1_LAT = "83.124";
     public static final String TESTLOC_1_LON = "23.1592";
     public static final String TESTLOC_1_ALT = "10";
-
-    public static final String TESTLOC_2_LABEL = "Iron Springs";
-    public static final String TESTLOC_2_LAT = "34.58742";
-    public static final String TESTLOC_2_LON = "-112.57367";
 
     public static final String TESTTZID_0 = "US/Eastern";
     public static final String TESTTZID_1 = "US/Pacific";
@@ -302,6 +298,7 @@ public abstract class SuntimesActivityTestBase
         config.put("it", new SuntimesTestConfig(new Location("Roma", "41.9099", "12.3959", "79"), "CET", false, "METRIC"));
         config.put("pl", new SuntimesTestConfig(new Location("Warszawa", "52.2319", "21.0067", "143"), "Poland", true, "METRIC"));
         config.put("nb", new SuntimesTestConfig(new Location("Oslo", "59.8937", "10.6450", "0"), "Europe/Oslo", true, "METRIC"));
+        config.put("nl", new SuntimesTestConfig(new Location("Amsterdam", "52.3745", "4.758", "0"), "CET", true, "METRIC"));
         config.put("zh_TW", new SuntimesTestConfig(new Location("Taipei", "25.0330", "121.5654", "0"), "Asia/Taipei", false, "METRIC"));
         config.put("pt_BR", new SuntimesTestConfig(new Location("São Paulo", "-23.6821", "-46.8754", "815"), "Brazil/East", true, "METRIC"));
         config.put("cs", new SuntimesTestConfig(new Location("Prague", "50.0595", "14.3255", "361"), "CET", true, "METRIC"));

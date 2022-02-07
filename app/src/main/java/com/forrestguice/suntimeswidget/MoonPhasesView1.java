@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2021 Forrest Guice
+    Copyright (C) 2018-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -330,6 +330,7 @@ public class MoonPhasesView1 extends LinearLayout
             SuntimesMoonData1 moon = initData(context, position);
             Calendar phaseDate = moon.moonPhaseCalendar(holder.phase);
             boolean isAgo = moon.now().after(phaseDate);
+            holder.northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && (moon.location().getLatitudeAsDouble() < 0);
             themeViews(context, holder, isAgo);
 
             holder.bindDataToPosition(context, moon, holder.phase, position);
@@ -437,10 +438,10 @@ public class MoonPhasesView1 extends LinearLayout
             Bitmap bitmap;
             switch (holder.phase)
             {
-                case NEW: bitmap = SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.NEW.getIcon(), colorNew, colorWaxing, (int)strokePixelsNew); break;
-                case FIRST_QUARTER: bitmap = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.FIRST_QUARTER.getIcon(), colorWaxing, colorWaxing, 0); break;
-                case THIRD_QUARTER: bitmap = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.THIRD_QUARTER.getIcon(), colorWaning, colorWaning, 0); break;
-                case FULL: default: bitmap = SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.FULL.getIcon(), colorFull, colorWaning, (int)strokePixelsFull); break;
+                case NEW: bitmap = SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.NEW.getIcon(holder.northward), colorNew, colorWaxing, (int)strokePixelsNew); break;
+                case FIRST_QUARTER: bitmap = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.FIRST_QUARTER.getIcon(holder.northward), colorWaxing, colorWaxing, 0); break;
+                case THIRD_QUARTER: bitmap = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.THIRD_QUARTER.getIcon(holder.northward), colorWaning, colorWaning, 0); break;
+                case FULL: default: bitmap = SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.FULL.getIcon(holder.northward), colorFull, colorWaning, (int)strokePixelsFull); break;
             }
             holder.noteColor = colorNote;
             PhaseField.disabledColor = colorDisabled;
@@ -468,6 +469,7 @@ public class MoonPhasesView1 extends LinearLayout
 
         public int position = RecyclerView.NO_POSITION;
         public SuntimesCalculator.MoonPhase phase = SuntimesCalculator.MoonPhase.FULL;
+        public boolean northward = false;
 
         public PhaseField(@NonNull View parent)
         {

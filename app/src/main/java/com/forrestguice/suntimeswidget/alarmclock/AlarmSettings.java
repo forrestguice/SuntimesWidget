@@ -25,6 +25,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 
 /**
  * AlarmSettings
@@ -62,6 +63,11 @@ public class AlarmSettings
 
     public static final String PREF_KEY_ALARM_SHOWLAUNCHER = "app_alarms_showlauncher";
     public static final boolean PREF_DEF_ALARM_SHOWLAUNCHER = true;
+
+    public static final String PREF_KEY_ALARM_POWEROFFALARMS = "app_alarms_poweroffalarms";
+    public static final boolean PREF_DEF_ALARM_POWEROFFALARMS = false;
+
+    public static final String PREF_KEY_ALARM_UPCOMING_ALARMID = "app_alarms_upcomingAlarmId";    // the alarm we expect to go off next (cached value)
 
     public static final String PREF_KEY_ALARM_FADEIN = "app_alarms_fadeinMillis";
     public static final int PREF_DEF_ALARM_FADEIN = 1000 * 10;   // 10 s
@@ -110,6 +116,12 @@ public class AlarmSettings
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getBoolean(PREF_KEY_ALARM_AUTOENABLE, PREF_DEF_ALARM_AUTOENABLE);
+    }
+
+    public static boolean loadPrefPowerOffAlarms(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean(PREF_KEY_ALARM_POWEROFFALARMS, PREF_DEF_ALARM_POWEROFFALARMS);
     }
 
     @TargetApi(10)
@@ -186,6 +198,22 @@ public class AlarmSettings
         if (Build.VERSION.SDK_INT >= 11) {
             return prefs.getInt(PREF_KEY_ALARM_FADEIN, PREF_DEF_ALARM_FADEIN);
         } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_FADEIN, PREF_DEF_ALARM_FADEIN);
+    }
+
+    public static void saveUpcomingAlarmId(Context context, @Nullable Long alarmId)
+    {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        if (alarmId != null) {
+            prefs.putLong(PREF_KEY_ALARM_UPCOMING_ALARMID, alarmId);
+        } else prefs.remove(PREF_KEY_ALARM_UPCOMING_ALARMID);
+        prefs.apply();
+    }
+    @Nullable
+    public static Long loadUpcomingAlarmId(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        long retValue = prefs.getLong(PREF_KEY_ALARM_UPCOMING_ALARMID, -1);
+        return (retValue != -1) ? retValue : null;
     }
 
 }

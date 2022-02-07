@@ -33,6 +33,7 @@ import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -167,7 +168,9 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         public Drawable map_night = null;            // BitmapDrawable
         public int backgroundColor = Color.BLUE;
         public int foregroundColor = Color.TRANSPARENT;
+        public boolean tintForeground = true;
         public boolean hasTransparentBaseMap = true;
+        public boolean showDebugLines = false;
 
         public boolean showGrid = false;
         public int gridXColor = Color.LTGRAY;
@@ -198,6 +201,7 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
 
         public boolean translateToLocation = false;
 
+        public double[] center = null;
         public double[][] locations = null;  // a list of locations {{lat, lon}, {lat, lon}, ...} or null
         public int locationFillColor = Color.MAGENTA;
         public int locationStrokeColor = Color.BLACK;
@@ -222,9 +226,11 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
         public abstract void initPaint(WorldMapTask.WorldMapOptions options);
         public abstract double[] initMatrix();            // creates flattened multi-dimensional array; [lon][lat][v(3)]
         public abstract double[] getMatrix();
+        public abstract void resetMatrix();
         public abstract int[] matrixSize();               // [width(lon), height(lat)]
         protected abstract int k(int x, int y, int z);    // returns index into flattened array
         public abstract int[] toBitmapCoords(int w, int h, double[] mid, double lat, double lon);
+        public double[] getCenter() { return new double[] {0,0}; }
 
         protected Calendar mapTime(SuntimesRiseSetDataset data, WorldMapTask.WorldMapOptions options)
         {
@@ -359,12 +365,14 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
             c.drawCircle(x, y, moonRadius, paintStroke);
         }
 
+        public void drawGrid(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options) { /* EMPTY */ }
         public void drawMajorLatitudes(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options) { /* EMPTY */ }
+        public void drawDebugLines(Canvas c, int w, int h, double[] mid, WorldMapTask.WorldMapOptions options) { /* EMPTY */ }
         public void drawLocations(Canvas c, int w, int h, Paint p1, Paint p2, WorldMapTask.WorldMapOptions options)
         {
             if (options.locations != null && options.locations.length > 0)
             {
-                double[] mid = new double[] { w/2, h/2d };
+                double[] mid = new double[] { w/2d, h/2d };
                 for (int i=0; i<options.locations.length; i++)
                 {
                     int[] point = toBitmapCoords(w, h, mid, options.locations[i][0], options.locations[i][1]);
@@ -387,6 +395,20 @@ public class WorldMapTask extends AsyncTask<Object, Bitmap, Bitmap>
             }
         }
 
+        protected void drawConnectedLines(Canvas c, float[] lines, Paint p)
+        {
+            c.drawLines(lines, 0, lines.length, p);
+            c.drawLines(lines, 2,lines.length-2, p);
+        }
+
+        public static float[] toFloatArray(ArrayList<Float> values)
+        {
+            float[] retvalue = new float[values.size()];
+            for (int i=0; i<retvalue.length; i++) {
+                retvalue[i] = values.get(i);
+            }
+            return retvalue;
+        }
     }
 
     /**

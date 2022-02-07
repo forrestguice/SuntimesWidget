@@ -60,6 +60,8 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -555,7 +557,8 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
      */
     private void updateView(AlarmClockItemView view, @NonNull final AlarmClockItem item)
     {
-        int eventType = item.event == null ? -1 : item.event.getType();
+        SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
+        int eventType = event == null ? -1 : event.getType();
         final boolean isSelected = (item.rowID == selectedItem);
         view.cardBackdrop.setBackgroundColor( isSelected ? ColorUtils.setAlphaComponent(alarmSelectedColor, 170) : Color.TRANSPARENT );  // 66% alpha
 
@@ -640,7 +643,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         if (view.text_date != null)
         {
             view.text_date.setText(AlarmEditViewHolder.displayAlarmDate(context, item));
-            view.text_date.setVisibility((eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON) ? View.VISIBLE : View.GONE);
+            view.text_date.setVisibility( AlarmEvent.supportsOffsetDays(eventType) ? View.VISIBLE : View.GONE);
             if (!isSelected && !item.enabled) {
                 view.text_date.setTextColor(disabledColor);
             } else if (item.enabled){
@@ -653,7 +656,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
         // location
         if (view.text_location != null)
         {
-            view.text_location.setVisibility((item.event == null && item.timezone == null) ? View.INVISIBLE : View.VISIBLE);
+            view.text_location.setVisibility((item.getEvent() == null && item.timezone == null) ? View.INVISIBLE : View.VISIBLE);
             AlarmDialog.updateLocationLabel(context, view.text_location, item.location);
 
             if (!isSelected || item.enabled) {
@@ -709,7 +712,7 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                     ? context.getString(R.string.alarmOption_repeat_none)
                     : AlarmRepeatDialog.getDisplayString(context, item.repeatingDays);
 
-            if (item.repeating && (eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON)) {
+            if (item.repeating && AlarmEvent.supportsRepeating(eventType) == AlarmEventContract.REPEAT_SUPPORT_BASIC) {
                 repeatText = context.getString(R.string.alarmOption_repeat);
             }
 

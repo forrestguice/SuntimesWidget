@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2019 Forrest Guice
+    Copyright (C) 2019-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -36,6 +36,7 @@ import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
+import com.forrestguice.suntimeswidget.actions.SuntimesActionsContract;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
@@ -44,6 +45,10 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
+
+import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.TAG_DEFAULT;
+import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.TAG_SUNTIMES;
+import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.TAG_SUNTIMESALARMS;
 
 /**
  * WidgetActions
@@ -58,41 +63,34 @@ public class WidgetActions
     public static final String PREF_PREFIX_KEY = WidgetSettings.PREF_PREFIX_KEY;
     public static final String PREF_PREFIX_KEY_ACTION = "_action_";
 
-    public static final String PREF_KEY_ACTION_LAUNCH_TITLE = "title";
+    public static final String PREF_KEY_ACTION_LAUNCH_TITLE = SuntimesActionsContract.COLUMN_ACTION_TITLE;
     public static String PREF_DEF_ACTION_LAUNCH_TITLE = "Suntimes";
 
-    public static final String PREF_KEY_ACTION_LAUNCH_DESC = "desc";
+    public static final String PREF_KEY_ACTION_LAUNCH_DESC = SuntimesActionsContract.COLUMN_ACTION_DESC;
     public static String PREF_DEF_ACTION_LAUNCH_DESC = "";
 
-    public static final String PREF_KEY_ACTION_LAUNCH_COLOR = "color";
+    public static final String PREF_KEY_ACTION_LAUNCH_COLOR = SuntimesActionsContract.COLUMN_ACTION_COLOR;
     public static int PREF_DEF_ACTION_LAUNCH_COLOR = Color.WHITE;
 
-    public static final String PREF_KEY_ACTION_LAUNCH_TAGS = "tags";
-    public static final String TAG_DEFAULT = "default";
-    public static final String TAG_SUNTIMES = "suntimes";
-    public static final String TAG_SUNTIMESALARMS = "suntimesalarms";
+    public static final String PREF_KEY_ACTION_LAUNCH_TAGS = SuntimesActionsContract.COLUMN_ACTION_TAGS;
 
-    public static final String PREF_KEY_ACTION_LAUNCH = "launch";
+    public static final String PREF_KEY_ACTION_LAUNCH = SuntimesActionsContract.COLUMN_ACTION_CLASS;
     public static final String PREF_DEF_ACTION_LAUNCH = "com.forrestguice.suntimeswidget.SuntimesActivity";
 
-    public static final String PREF_KEY_ACTION_LAUNCH_ACTION = "action";
+    public static final String PREF_KEY_ACTION_LAUNCH_ACTION = SuntimesActionsContract.COLUMN_ACTION_ACTION;
     public static final String PREF_DEF_ACTION_LAUNCH_ACTION = "";
 
-    public static final String PREF_KEY_ACTION_LAUNCH_EXTRAS = "extras";
+    public static final String PREF_KEY_ACTION_LAUNCH_EXTRAS = SuntimesActionsContract.COLUMN_ACTION_EXTRAS;
     public static final String PREF_DEF_ACTION_LAUNCH_EXTRAS = "";
 
-    public static final String PREF_KEY_ACTION_LAUNCH_DATA = "data";
+    public static final String PREF_KEY_ACTION_LAUNCH_DATA = SuntimesActionsContract.COLUMN_ACTION_DATA;
     public static final String PREF_DEF_ACTION_LAUNCH_DATA = "";
 
-    public static final String PREF_KEY_ACTION_LAUNCH_DATATYPE = "datatype";
+    public static final String PREF_KEY_ACTION_LAUNCH_DATATYPE = SuntimesActionsContract.COLUMN_ACTION_MIMETYPE;
     public static final String PREF_DEF_ACTION_LAUNCH_DATATYPE = "";
 
-    public static final String PREF_KEY_ACTION_LAUNCH_TYPE = "type";
+    public static final String PREF_KEY_ACTION_LAUNCH_TYPE = SuntimesActionsContract.COLUMN_ACTION_TYPE;
     public static final LaunchType PREF_DEF_ACTION_LAUNCH_TYPE = LaunchType.ACTIVITY;
-
-    public static final String LAUNCH_TYPE_ACTIVITY = "ACTIVITY";
-    public static final String LAUNCH_TYPE_BROADCAST = "BROADCAST";
-    public static final String LAUNCH_TYPE_SERVICE = "SERVICE";
 
     public static final String PREF_KEY_ACTION_LAUNCH_LIST = "list";
 
@@ -165,7 +163,7 @@ public class WidgetActions
         String prefs_prefix0 = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_ACTION + PREF_KEY_ACTION_LAUNCH + "_" + id + "_";
 
         prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH, (launchString != null ? launchString : ""));
-        prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_TYPE, (type != null ? type : LAUNCH_TYPE_ACTIVITY));
+        prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_TYPE, (type != null ? type : SuntimesActionsContract.TYPE_ACTIVITY));
         prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_ACTION, (action != null ? action : ""));
         prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_DATA, (dataString != null ? dataString : ""));
         prefs.putString(prefs_prefix0 + PREF_KEY_ACTION_LAUNCH_DATATYPE, (mimeType != null ? mimeType : ""));
@@ -226,7 +224,7 @@ public class WidgetActions
             switch (key)
             {
                 case PREF_KEY_ACTION_LAUNCH_TYPE:
-                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_TYPE, LAUNCH_TYPE_ACTIVITY);
+                    return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_TYPE, SuntimesActionsContract.TYPE_ACTIVITY);
 
                 case PREF_KEY_ACTION_LAUNCH_ACTION:
                     return prefs.getString(prefs_prefix + PREF_KEY_ACTION_LAUNCH_ACTION, "");
@@ -307,17 +305,20 @@ public class WidgetActions
             prefs.apply();
 
         } else {
-            if (values != null)
-            {
-                StringBuilder s = new StringBuilder();
-                for (String v : values) {
-                    s.append(v).append("|");
-                }
-                prefs.putString(key, s.toString());
-            } else {
-                prefs.putString(key, null);
-            }
+            prefs.putString(key, stringSetToString(values));
             prefs.apply();
+        }
+    }
+    public static String stringSetToString(@Nullable Set<String> values)
+    {
+        if (values != null) {
+            StringBuilder s = new StringBuilder();
+            for (String v : values) {
+                s.append(v).append("|");
+            }
+            return s.toString();
+        } else {
+            return null;
         }
     }
 
@@ -350,15 +351,15 @@ public class WidgetActions
             Log.i(TAG, "startIntent :: " + launchType + " :: " + launchIntent.toString());
             switch (launchType)
             {
-                case WidgetActions.LAUNCH_TYPE_BROADCAST:
+                case SuntimesActionsContract.TYPE_BROADCAST:
                     context.sendBroadcast(launchIntent);
                     break;
 
-                case WidgetActions.LAUNCH_TYPE_SERVICE:
+                case SuntimesActionsContract.TYPE_SERVICE:
                     context.startService(launchIntent);
                     break;
 
-                case WidgetActions.LAUNCH_TYPE_ACTIVITY:
+                case SuntimesActionsContract.TYPE_ACTIVITY:
                 default:
                     context.startActivity(launchIntent);
                     break;

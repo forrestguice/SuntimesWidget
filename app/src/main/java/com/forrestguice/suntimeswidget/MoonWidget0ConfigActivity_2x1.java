@@ -22,6 +22,9 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.TextView;
 
 public class MoonWidget0ConfigActivity_2x1 extends MoonWidget0ConfigActivity
 {
@@ -58,5 +61,20 @@ public class MoonWidget0ConfigActivity_2x1 extends MoonWidget0ConfigActivity
         minSize[0] = context.getResources().getInteger(R.integer.widget_size_minWidthDp2x1);
         minSize[1] = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
         return minSize;
+    }
+
+    @Override
+    protected TextView getPrimaryWidgetModeLabel() {
+        return label_2x1mode;
+    }
+
+    @Override
+    protected View[] getPrimaryWidgetModeViews() {
+        return new View[] { label_2x1mode, spinner_2x1mode };
+    }
+
+    @Override
+    protected View[] getSecondaryWidgetModeViews() {
+        return new View[] { label_1x1mode, spinner_1x1mode, label_3x1mode, spinner_3x1mode, label_3x2mode, spinner_3x2mode, label_3x3mode, spinner_3x3mode };
     }
 }

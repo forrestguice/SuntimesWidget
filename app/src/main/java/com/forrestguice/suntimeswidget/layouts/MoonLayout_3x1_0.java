@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2018-2019 Forrest Guice
+   Copyright (C) 2018-2022 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -57,28 +57,100 @@ public class MoonLayout_3x1_0 extends MoonLayout
     }
 
     @Override
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
+    {
+        super.prepareForUpdate(context, appWidgetId, data);
+
+        Calendar midnight = data.midnight();
+        SuntimesCalculator.MoonPhase nextPhase = data.nextPhase(midnight);
+
+        int position = scaleBase ? 0 : WidgetSettings.loadWidgetGravityPref(context, appWidgetId);
+        this.layoutID = chooseLayout(nextPhase, position);
+        /*switch (nextPhase)
+        {
+            case THIRD_QUARTER:
+                this.layoutID = R.layout.layout_widget_moon_3x1_03;
+                break;
+
+            case FULL:
+                this.layoutID = R.layout.layout_widget_moon_3x1_02;
+                break;
+
+            case FIRST_QUARTER:
+                this.layoutID = R.layout.layout_widget_moon_3x1_01;
+                break;
+
+            case NEW:
+            default:
+                this.layoutID = R.layout.layout_widget_moon_3x1_0;
+                break;
+        }*/
+    }
+
+    protected int chooseLayout(SuntimesCalculator.MoonPhase nextPhase, int position)
+    {
+        switch (nextPhase)
+        {
+            case THIRD_QUARTER:
+                switch (position)
+                {
+                    case 0: return R.layout.layout_widget_moon_3x1_03_align_fill;
+                    case 1: case 2: case 3: return R.layout.layout_widget_moon_3x1_03_align_float_2;
+                    case 7: case 8: case 9: return R.layout.layout_widget_moon_3x1_03_align_float_8;
+                    case 5: default: return R.layout.layout_widget_moon_3x1_03;
+                }
+
+            case FULL:
+                switch (position) {
+                    case 0: return R.layout.layout_widget_moon_3x1_02_align_fill;
+                    case 1: case 2: case 3: return R.layout.layout_widget_moon_3x1_02_align_float_2;
+                    case 7: case 8: case 9: return R.layout.layout_widget_moon_3x1_02_align_float_8;
+                    case 5: default: return R.layout.layout_widget_moon_3x1_02;
+                }
+
+            case FIRST_QUARTER:
+                switch (position) {
+                    case 0: return R.layout.layout_widget_moon_3x1_01_align_fill;
+                    case 1: case 2: case 3: return R.layout.layout_widget_moon_3x1_01_align_float_2;
+                    case 7: case 8: case 9: return R.layout.layout_widget_moon_3x1_01_align_float_8;
+                    case 5: default: return R.layout.layout_widget_moon_3x1_01;
+                }
+
+            case NEW:
+            default:
+                switch (position) {
+                    case 0: return R.layout.layout_widget_moon_3x1_0_align_fill;
+                    case 1: case 2: case 3: return R.layout.layout_widget_moon_3x1_0_align_float_2;
+                    case 7: case 8: case 9: return R.layout.layout_widget_moon_3x1_0_align_float_8;
+                    case 5: default: return R.layout.layout_widget_moon_3x1_0;
+                }
+        }
+    }
+
+    @Override
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesMoonData data)
     {
         super.updateViews(context, appWidgetId, views, data);
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
         boolean showTimeDate = WidgetSettings.loadShowTimeDatePref(context, appWidgetId);
+        WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
 
-        SuntimesUtils.TimeDisplayText newMoonString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.NEW), showTimeDate, showSeconds);
+        SuntimesUtils.TimeDisplayText newMoonString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.NEW), showTimeDate, showSeconds, timeFormat);
         views.setTextViewText(R.id.moonphase_new_date, newMoonString.getValue());
         views.setTextViewText(R.id.moonphase_new_label, data.getMoonPhaseLabel(context, SuntimesCalculator.MoonPhase.NEW));
         views.setViewVisibility(R.id.moonphase_new_label, (showLabels ? View.VISIBLE : View.GONE));
 
-        SuntimesUtils.TimeDisplayText firstQuarterMoonString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FIRST_QUARTER), showTimeDate, showSeconds);
+        SuntimesUtils.TimeDisplayText firstQuarterMoonString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FIRST_QUARTER), showTimeDate, showSeconds, timeFormat);
         views.setTextViewText(R.id.moonphase_firstquarter_date, firstQuarterMoonString.getValue());
         views.setViewVisibility(R.id.moonphase_firstquarter_label, (showLabels ? View.VISIBLE : View.GONE));
 
-        SuntimesUtils.TimeDisplayText fullMoonString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FULL), showTimeDate, showSeconds);
+        SuntimesUtils.TimeDisplayText fullMoonString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.FULL), showTimeDate, showSeconds, timeFormat);
         views.setTextViewText(R.id.moonphase_full_date, fullMoonString.getValue());
         views.setTextViewText(R.id.moonphase_full_label, data.getMoonPhaseLabel(context, SuntimesCalculator.MoonPhase.FULL));
         views.setViewVisibility(R.id.moonphase_full_label, (showLabels ? View.VISIBLE : View.GONE));
 
-        SuntimesUtils.TimeDisplayText thirdQuarterMoonString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.THIRD_QUARTER), showTimeDate, showSeconds);
+        SuntimesUtils.TimeDisplayText thirdQuarterMoonString = utils.calendarDateTimeDisplayString(context, data.moonPhaseCalendar(SuntimesCalculator.MoonPhase.THIRD_QUARTER), showTimeDate, showSeconds, timeFormat);
         views.setTextViewText(R.id.moonphase_thirdquarter_date, thirdQuarterMoonString.getValue());
         views.setViewVisibility(R.id.moonphase_thirdquarter_label, (showLabels ? View.VISIBLE : View.GONE));
     }
@@ -120,43 +192,18 @@ public class MoonLayout_3x1_0 extends MoonLayout
         int colorFull = theme.getMoonFullColor();
         int colorNew = theme.getMoonNewColor();
 
-        Bitmap fullMoon =  SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.FULL.getIcon(), colorFull, colorWaning, theme.getMoonFullStrokePixels(context));
+        Bitmap fullMoon =  SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.FULL.getIcon(northward), colorFull, colorWaning, theme.getMoonFullStrokePixels(context));
         views.setImageViewBitmap(R.id.moonphase_full_icon, fullMoon);
 
-        Bitmap newMoon =  SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.NEW.getIcon(), colorNew, colorWaxing, theme.getMoonNewStrokePixels(context));
+        Bitmap newMoon =  SuntimesUtils.gradientDrawableToBitmap(context, MoonPhaseDisplay.NEW.getIcon(northward), colorNew, colorWaxing, theme.getMoonNewStrokePixels(context));
         views.setImageViewBitmap(R.id.moonphase_new_icon, newMoon);
 
-        Bitmap waxingQuarter = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.FIRST_QUARTER.getIcon(), colorWaxing, colorWaxing, 0);
+        Bitmap waxingQuarter = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.FIRST_QUARTER.getIcon(northward), colorWaxing, colorWaxing, 0);
         views.setImageViewBitmap(R.id.moonphase_firstquarter_icon, waxingQuarter);
 
-        Bitmap waningQuarter = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.THIRD_QUARTER.getIcon(), colorWaning, colorWaning, 0);
+        Bitmap waningQuarter = SuntimesUtils.layerDrawableToBitmap(context, MoonPhaseDisplay.THIRD_QUARTER.getIcon(northward), colorWaning, colorWaning, 0);
         views.setImageViewBitmap(R.id.moonphase_thirdquarter_icon, waningQuarter);
     }
 
-    @Override
-    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
-    {
-        Calendar midnight = data.midnight();
-        SuntimesCalculator.MoonPhase nextPhase = data.nextPhase(midnight);
-        switch (nextPhase)
-        {
-            case THIRD_QUARTER:
-                this.layoutID = R.layout.layout_widget_moon_3x1_03;
-                break;
-                
-            case FULL:
-                this.layoutID = R.layout.layout_widget_moon_3x1_02;
-                break;
-
-            case FIRST_QUARTER:
-                this.layoutID = R.layout.layout_widget_moon_3x1_01;
-                break;
-
-            case NEW:
-            default:
-                this.layoutID = R.layout.layout_widget_moon_3x1_0;
-                break;
-        }
-    }
 }
 

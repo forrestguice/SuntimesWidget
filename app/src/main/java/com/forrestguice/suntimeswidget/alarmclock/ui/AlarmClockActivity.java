@@ -56,8 +56,10 @@ import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesWarning;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -255,19 +257,23 @@ public class AlarmClockActivity extends AppCompatActivity
                     }
                 }
 
-                SolarEvents param_event = SolarEvents.valueOf(intent.getStringExtra(AlarmClockActivity.EXTRA_SOLAREVENT), null);
-                intent.setExtrasClassLoader(getClassLoader());
+                String param_event = intent.getStringExtra(AlarmClockActivity.EXTRA_SOLAREVENT);
+                if (!AlarmEvent.isValidEventID(context, param_event)) {
+                    Log.w(TAG, "handleIntent: ignoring invalid event " + param_event);
+                    param_event = null;
+                }
 
+                intent.setExtrasClassLoader(getClassLoader());
                 Location param_location = locationFromIntentExtras(context, intent);
 
                 boolean param_skipUI = false;
                 if (Build.VERSION.SDK_INT >= 11) {
                     param_skipUI = intent.getBooleanExtra(AlarmClock.EXTRA_SKIP_UI, false);
                 }
-                if (param_skipUI) {
-                    list.createAlarm(context, param_type, param_label, param_event, param_location, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_days, true);
+                if (param_skipUI) {   // TODO: support date
+                    list.createAlarm(context, param_type, param_label, param_event, param_location, -1L, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_days, true);
                 } else {
-                    AlarmClockItem item = AlarmListDialog.createAlarm(context, param_type, param_label, param_event, param_location, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_days);
+                    AlarmClockItem item = AlarmListDialog.createAlarm(context, param_type, param_label, param_event, param_location, -1L, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_days);
                     AlarmNotifications.updateAlarmTime(context, item);
                     showAlarmEditActivity(item, null, REQUEST_ADDALARM, true);
                 }
@@ -813,7 +819,7 @@ public class AlarmClockActivity extends AppCompatActivity
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void scheduleAlarm(Activity context, AlarmClockItem.AlarmType type, String label, @NonNull SolarEvents event, @NonNull com.forrestguice.suntimeswidget.calculator.core.Location location)
+    public static void scheduleAlarm(Activity context, AlarmClockItem.AlarmType type, String label, @NonNull String event, @NonNull com.forrestguice.suntimeswidget.calculator.core.Location location)
     {
         AlarmClockItem item = AlarmListDialog.createAlarm(context, type, label, event, location);
         boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item);
@@ -829,7 +835,7 @@ public class AlarmClockActivity extends AppCompatActivity
         scheduleAlarm(context, type, label, event, location, hour, minutes, null);
     }
 
-    public static void scheduleAlarm(Activity context, AlarmClockItem.AlarmType type, String label, SolarEvents event, com.forrestguice.suntimeswidget.calculator.core.Location location, int hour, int minutes, String timezone)
+    public static void scheduleAlarm(Activity context, AlarmClockItem.AlarmType type, String label, String event, com.forrestguice.suntimeswidget.calculator.core.Location location, int hour, int minutes, String timezone)
     {
         TimeZone tz = (timezone == null ? TimeZone.getDefault() : AlarmClockItem.AlarmTimeZone.getTimeZone(timezone, location));
         Calendar calendar0 = Calendar.getInstance(tz);
@@ -845,7 +851,7 @@ public class AlarmClockActivity extends AppCompatActivity
         alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, ((timezone == null) ? hour : calendar1.get(Calendar.HOUR_OF_DAY)));
         alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, ((timezone == null) ? minutes : calendar1.get(Calendar.MINUTE)));
         alarmIntent.putExtra(AlarmClockActivity.EXTRA_TIMEZONE, timezone);
-        alarmIntent.putExtra(AlarmClockActivity.EXTRA_SOLAREVENT, (event != null ? event.name() : (String) null));
+        alarmIntent.putExtra(AlarmClockActivity.EXTRA_SOLAREVENT, event);
         alarmIntent.putExtra(AlarmClockActivity.EXTRA_ALARMTYPE, type.name());
 
         Bundle locationBundle = new Bundle();

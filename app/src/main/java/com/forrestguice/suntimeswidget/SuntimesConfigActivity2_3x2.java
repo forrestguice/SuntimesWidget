@@ -22,6 +22,9 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.themes.WidgetThemeConfigActivity;
 
@@ -70,6 +73,21 @@ public class SuntimesConfigActivity2_3x2 extends SuntimesConfigActivity2
         Intent intent = super.themeEditorIntent(context);
         intent.putExtra(WidgetThemeConfigActivity.PARAM_PREVIEWID, WidgetThemeConfigActivity.PREVIEWID_SUNPOS_3x2);
         return intent;
+    }
+
+    @Override
+    protected TextView getPrimaryWidgetModeLabel() {
+        return label_3x2mode;
+    }
+
+    @Override
+    protected View[] getPrimaryWidgetModeViews() {
+        return new View[] { label_3x2mode, spinner_3x2mode };
+    }
+
+    @Override
+    protected View[] getSecondaryWidgetModeViews() {
+        return new View[] { label_1x1mode, spinner_1x1mode, label_2x1mode, spinner_2x1mode, label_3x1mode, spinner_3x1mode, label_3x3mode, spinner_3x3mode };
     }
 
 }

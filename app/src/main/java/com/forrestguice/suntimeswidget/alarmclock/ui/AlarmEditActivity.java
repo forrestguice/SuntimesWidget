@@ -46,6 +46,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.Toast;
 
@@ -338,6 +339,15 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.alarmedit, menu);
+
+        MenuItem optionsItem = menu.findItem(R.id.action_options);
+        if (optionsItem != null) {
+            SubMenu optionsMenu = optionsItem.getSubMenu();
+            if (optionsMenu != null) {
+                inflater.inflate(R.menu.alarmcontext2, optionsMenu);
+            }
+        }
+
         return true;
     }
 
@@ -360,6 +370,34 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
 
             case R.id.action_delete:
                 AlarmEditDialog.confirmDeleteAlarm(AlarmEditActivity.this, editor.getItem(), onDeleteConfirmed(editor.getItem()));
+                return true;
+
+            case R.id.setAlarmType:
+                editor.itemView.menu_type.performClick();
+                return true;
+
+            case R.id.setAlarmLabel:
+                editor.itemView.edit_label.performClick();
+                return true;
+
+            case R.id.setAlarmOffset:
+                editor.itemView.chip_offset.performClick();
+                return true;
+
+            case R.id.setAlarmEvent:
+                editor.itemView.chip_event.performClick();
+                return true;
+
+            case R.id.setAlarmLocation:
+                editor.itemView.chip_location.performClick();
+                return true;
+
+            case R.id.setAlarmRepeat:
+                editor.itemView.chip_repeat.performClick();
+                return true;
+
+            case R.id.setAlarmSound:
+                editor.itemView.chip_ringtone.performClick();
                 return true;
 
             case R.id.action_about:
@@ -692,9 +730,8 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
     {
         if (Build.VERSION.SDK_INT >= 11)
         {
-            int eventType = item.event != null ? item.event.getType() : -1;
             AlarmOffsetDialog offsetDialog = new AlarmOffsetDialog();
-            offsetDialog.setShowDays(eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON);
+            offsetDialog.setShowDays(item.getEventItem(AlarmEditActivity.this).supportsOffsetDays());
             offsetDialog.setOffset(item.offset);
             offsetDialog.setOnAcceptedListener(onOffsetChanged);
             offsetDialog.show(getSupportFragmentManager(), DIALOGTAG_OFFSET + 1);
@@ -729,8 +766,9 @@ public class AlarmEditActivity extends AppCompatActivity implements AlarmItemAda
         final AlarmCreateDialog dialog = new AlarmCreateDialog();
         dialog.loadSettings(AlarmEditActivity.this);
         dialog.setAlarmType(item.type);
-        dialog.setDialogMode(item.event != null ? 0 : 1);
-        dialog.setEvent(item.event, item.location);
+        dialog.setDialogMode(item.getEvent() != null ? 0 : 1);
+
+        dialog.setEvent(item.getEvent(), item.location);
         dialog.setAlarmTime(item.hour, item.minute, item.timezone);
         dialog.setOffset(item.offset);
         dialog.setOnAcceptedListener(onPickEventAccepted);

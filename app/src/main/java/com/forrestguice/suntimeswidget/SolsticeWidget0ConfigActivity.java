@@ -58,6 +58,8 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
         showOptionTrackingMode(true);
         showOptionTimeModeOverride(true);
         showDataSource(false);  // temporarily hidden; atm all entries point to same implementation (false choice)
+        showOptionLocalizeHemisphere(true);
+        hideLayoutSettings();
     }
 
     @Override
@@ -101,8 +103,6 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
                     helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
                 }
             });
-            button_timeModeHelp.setEnabled(false);           // disabled/hidden until txt provided
-            button_timeModeHelp.setVisibility(View.GONE);
         }
 
         if (checkbox_timeModeOverride != null)
@@ -155,6 +155,10 @@ public class SolsticeWidget0ConfigActivity extends SuntimesConfigActivity0
 
         String titleText = WidgetSettings.loadTitleTextPref(context, appWidgetId, DEF_TITLETEXT);
         text_titleText.setText(titleText);
+    }
+
+    @Override
+    protected void initWidgetModeLayout(Context context) {
     }
 
 }

@@ -71,16 +71,14 @@ public class ClockWidget0 extends SuntimesWidget0
 
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, ClockLayout layout)
     {
+        SuntimesClockData data = new SuntimesClockData(context, appWidgetId);
+        data.calculate();
+        layout.prepareForUpdate(context, appWidgetId, data);
         RemoteViews views = layout.getViews(context);
 
         boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
         views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
-
-        SuntimesClockData data = new SuntimesClockData(context, appWidgetId);
-        data.calculate();
-
         views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, ClockWidget0.class));
-        layout.prepareForUpdate(data);
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, data);
         appWidgetManager.updateAppWidget(appWidgetId, views);

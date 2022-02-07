@@ -43,6 +43,7 @@ import android.widget.TextView;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 import com.forrestguice.suntimeswidget.views.MoonApsisView;
@@ -326,5 +327,22 @@ public class MoonDialog extends BottomSheetDialogFragment
     {
         stopUpdateTask();
         super.onStop();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private MoonDialogListener dialogListener = null;
+    public void setDialogListener( MoonDialogListener listener ) {
+        dialogListener = listener;
+    }
+
+    /**
+     * DialogListener
+     */
+    public static class MoonDialogListener
+    {
+        public void onSetAlarm( SolarEvents suggestedEvent ) {}
+        public void onShowMap( long suggestedDate ) {}
     }
 }
