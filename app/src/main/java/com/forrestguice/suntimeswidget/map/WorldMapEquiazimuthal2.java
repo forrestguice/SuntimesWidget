@@ -45,7 +45,7 @@ import java.util.Calendar;
  */
 public class WorldMapEquiazimuthal2 extends WorldMapEquiazimuthal
 {
-    private static double[] center = new double[] {0, 0};
+    protected static double[] center = new double[] {0, 0};
     private static double sinLat1 = 0, cosLat1 = 1;
     private static Rect pixelSrc;
 
