@@ -110,6 +110,7 @@ The app benefits from the following permissions...
 |ACCESS_COARSE_LOCATION|To get current location.|v0.1.0|
 |ACCESS_FINE_LOCATION|To get current location (GPS).|v0.1.0|
 |BOOT_COMPLETED|To restore active alarms when the device boots.|v0.11.0|
+|POWER_OFF_ALARM|To wake the device from the power off state.|v0.14.0|
 |READ_EXTERNAL_STORAGE|To play alarm sounds located on the SD card.|v0.11.5, v0.13.8 (api&le;18)|
 |SET_ALARM|To interact with the system AlarmClock app.|v0.1.0|
 |WRITE_EXTERNAL_STORAGE|To export data (places, themes, etc.) to file.|v0.2.2 (api&le;18)|
