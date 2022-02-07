@@ -1022,9 +1022,12 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                     .setNegativeButton(context.getString(R.string.dialog_cancel), null);
 
             Dialog dialog = builder.show();
-            View textView = dialog.findViewById(android.R.id.message);
-            if (textView instanceof TextView) {
-                ((TextView) textView).setTextIsSelectable(true);
+
+            if (Build.VERSION.SDK_INT >= 11) {
+                View textView = dialog.findViewById(android.R.id.message);
+                if (textView instanceof TextView) {
+                    ((TextView) textView).setTextIsSelectable(true);
+                }
             }
         }
     }
