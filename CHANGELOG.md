@@ -1,5 +1,27 @@
 ### ~
 
+### v0.14.0 (2022-02-07)
+* extends add-on functionality; adds content-providers for actions, alarms, and alarm events.
+* adds support for add-on alarms; set an alarm depending on a calculation (#516); the alarm dialog displays a popup menu of add-on AlarmPickers (hidden if none).
+* adds support for 'power off alarms' (#426); adds permission POWER_OFF_ALARM. [PERMISSION].
+* adds a date picker to the alarm dialog; its now possible to schedule alarms at a given date+time (repeat yearly).
+* adds playback (Reset, Play/Pause) to the lightmap dialog (#519).
+* adds altitude at solar noon to the main card view (#524); adds an option display the rising/setting azimuth is place of header labels (#485).
+* adds option 'localize to hemisphere'; swap the waxing/waning moon phase icons for southern hemisphere (northward view) (#526).
+* adds 'tropical year' to the solstice dialog, and 'recent' to solstice tracking modes.
+* adds world map "Azimuthal projection centered on custom coordinates" (#493); adds custom map backgrounds; 'set center', 'set map background', 'tint map', 'graticule' and 'debug lines' options.
+* updates world map backgrounds; "Blue Marble" updated to include bathymetry.
+* adds widget option to "use the app location".
+* adds widget option to override 12h/24h time format setting.
+* adds widget option to "fill entire cell" or "align base" to top-left, right, bottom, ...
+* adds widget option to "scale text and icons" (extra large widgets).
+* renames widget option "grow with available space" to "swap layouts to fill space"; default changed to false; adds help text.
+* reorganizes widget configuration; enhances widget selectors; layout selector now shows a themed preview, theme selector shows background.
+* misc alarm ui improvements; adds a submenu to the alarm edit activity; an alternate way access/discover alarm features (#416).
+* misc solstice dialog improvements; adds context menus, overflow menu, and tracking submenu.
+* misc world map and lightmap dialog improvements; adds overflow menu; adds time zone submenu.
+* misc dialog improvements; navigate between dialogs or addons with the selected date/time.
+
 ### v0.13.19 (2022-01-24)
 * adds help for `data source` setting; adds link to online help (#223).
 * reorganizes General settings (#223, #533); `show seconds` restored to `general`; `data source` moved into `advanced`; hides `experimental`. 
