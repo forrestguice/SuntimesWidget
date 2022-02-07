@@ -94,11 +94,15 @@ public class AppSettings
     public static final String PREF_KEY_UI_SHOWDATASOURCE = "app_ui_showdatasource";
     public static final boolean PREF_DEF_UI_SHOWDATASOURCE = true;
 
-    public static final String PREF_KEY_UI_SHOWHEADER_TEXT = "app_ui_showheader_text1";
-    public static final int PREF_DEF_UI_SHOWHEADER_TEXT = 1;
-
     public static final String PREF_KEY_UI_SHOWHEADER_ICON = "app_ui_showheader_icon";
     public static final boolean PREF_DEF_UI_SHOWHEADER_ICON = true;
+
+    public static final int HEADER_TEXT_NONE = 0;
+    public static final int HEADER_TEXT_LABEL = 1;
+    public static final int HEADER_TEXT_AZIMUTH = 2;
+
+    public static final String PREF_KEY_UI_SHOWHEADER_TEXT = "app_ui_showheader_text1";
+    public static final int PREF_DEF_UI_SHOWHEADER_TEXT = HEADER_TEXT_LABEL;
 
     public static final String PREF_KEY_UI_SHOWFIELDS = "app_ui_showfields";
     public static final byte PREF_DEF_UI_SHOWFIELDS = 0b00111111;
@@ -356,7 +360,7 @@ public class AppSettings
         try {
             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
             return Integer.parseInt(pref.getString(PREF_KEY_UI_SHOWHEADER_TEXT, "" + PREF_DEF_UI_SHOWHEADER_TEXT));
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | ClassCastException e) {
             return PREF_DEF_UI_SHOWHEADER_TEXT;
         }
     }

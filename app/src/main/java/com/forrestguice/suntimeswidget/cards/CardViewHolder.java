@@ -45,6 +45,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
@@ -422,7 +423,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
     protected void updateHeaderViews(Context context, Pair<SuntimesRiseSetDataset, SuntimesMoonData> data, CardAdapter.CardAdapterOptions options)
     {
-        int textVisibility = (options.showHeaderText != 0 ? View.VISIBLE : View.GONE);
+        int textVisibility = (options.showHeaderText != AppSettings.HEADER_TEXT_NONE ? View.VISIBLE : View.GONE);
         header_sunrise.setVisibility(textVisibility);
         header_sunset.setVisibility(textVisibility);
 
@@ -430,7 +431,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         icon_sunrise.setVisibility(iconVisibility);
         icon_sunset.setVisibility(iconVisibility);
 
-        boolean showPosition = (options.showHeaderText == 2);
+        boolean showPosition = (options.showHeaderText == AppSettings.HEADER_TEXT_AZIMUTH);
         SuntimesRiseSetDataset sun = ((data == null) ? null : data.first);
         if (showPosition && sun != null)
         {
