@@ -129,6 +129,7 @@ public class MapProjectionTest extends SuntimesActivityTestBase
 
         WorldMapEquiazimuthal2 projection = new WorldMapEquiazimuthal2();
         projection.center = options.center;
+        projection.initMatrix();
 
         double[] point, coords;
         for (int i=0; i<testCoords.length; i++)

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2021 Forrest Guice
+    Copyright (C) 2017-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -620,7 +620,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
         WidgetSettings.deleteAllowResizePref(context, appWidgetId);
         boolean pref0 = WidgetSettings.loadAllowResizePref(context, appWidgetId);
-        assertTrue("mode should be default (true) but was " + pref0, pref0 && pref0 == WidgetSettings.PREF_DEF_APPEARANCE_ALLOWRESIZE);
+        assertTrue("mode should be default (true) but was " + pref0, !pref0 && pref0 == WidgetSettings.PREF_DEF_APPEARANCE_ALLOWRESIZE);
     }
 
     @Test
