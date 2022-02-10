@@ -28,9 +28,9 @@
     <string name="configAction_worldMap">世界地图</string>
     <string name="configAction_moon">月亮</string>
     <string name="configAction_help">帮助</string>
-    <string name="configAction_onlineHelp">Online Help</string>   <!-- TODO -->
+    <string name="configAction_onlineHelp">在线帮助</string>
     <string name="configAction_overflow">更多</string>
-    <string name="configAction_options">Options</string>   <!-- TODO -->
+    <string name="configAction_options">选项</string>
     <string name="configAction_settings">设置</string>
     <string name="configAction_aboutWidget">关于</string>
 
@@ -43,7 +43,7 @@
     <string name="prevYear">上一年</string>
 
     <!-- Warnings -->
-    <string name="spanTag_warning">警告!</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
+    <string name="spanTag_warning">警告！</string>   <!-- contentDescription (accessibility).. [w] will be replaced w/ this text when read aloud -->
 
     <!-- Field: timezone
          The time zone field that appears below the clock (main activity).
@@ -86,7 +86,7 @@
     <string name="length_twilight2"><xliff:g id="timeSpan1" example="30m">%1$s</xliff:g> | <xliff:g id="timeSpan2" example="30m">%2$s</xliff:g></string>
     <string name="length_delimiter">|</string>
 
-    <string name="timeMode_tropical_year">Tropical Year</string>   <!-- TODO -->
+    <string name="timeMode_tropical_year">回归年</string>
 
     <!-- Field: moon illumination (as seen in moon widget) -->
     <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g>饱满度</string>  <!-- used in 2x1 widget -->
@@ -255,15 +255,15 @@
     <string name="configLabel_general_calculator">日期来源:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">日光数据来源</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">月光数据来源</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_help">Data Sources</string>    <!-- preference title / help button text --> <!-- TODO -->
+    <string name="configLabel_general_calculator_help">数据来源</string>    <!-- preference title / help button text -->
 
     <string name="configLabel_general_timeFormatMode">时间格式:</string>         <!-- spinner label -->
 
     <string name="configLabel_general_altitude_enabled">应用海拔</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">应用海拔以提高精度。</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_localize_hemisphere">Localize to hemisphere</string>        <!-- checkbox label -->    <!-- TODO -->
-    <string name="configLabel_general_localize_hemisphere_summary">Apply hemisphere based localization (season labels, moon phase icons).</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_general_localize_hemisphere">半球本地化</string>        <!-- checkbox label -->
+    <string name="configLabel_general_localize_hemisphere_summary">应用基于半球的本地化（季节标签、月相图标）。</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_lengthUnits">长度单位</string>        <!-- spinner label -->
 
@@ -289,28 +289,28 @@
     <string name="configLabel_general_scanPlugins_summary">扫描并加载第三方插件。</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_widgetlayout">Layout</string>           <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_widgetlayout">布局</string>           <!-- group title -->
     <string-array name="widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
-        <!--<item>Fill</item>-->
-        <item>Top-Left</item>
-        <item>Top</item>
-        <item>Top-Right</item>
-        <item>Left</item>
-        <item>Center</item>
-        <item>Right</item>
-        <item>Bottom-Left</item>
-        <item>Bottom</item>
-        <item>Bottom-Right</item>
-    </string-array>  <!-- TODO -->
+        <!--<item>填充</item>-->
+        <item>左上</item>
+        <item>上</item>
+        <item>右上</item>
+        <item>左</item>
+        <item>中心</item>
+        <item>右</item>
+        <item>左下</item>
+        <item>下</item>
+        <item>右下</item>
+    </string-array>
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">外观设置</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">外观</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">主题:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">适应可用的空间（可调节大小）</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
-    <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_allowResize">交换布局以填充可用空间</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_scaleText">缩放文本和图标</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_scaleBase">填充整个单元格</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_gravity">对齐底部:</string>  <!-- spinner label -->
     <string name="configLabel_appearance_showLabels">显示标签</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">显示标题</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">标题:</string>              <!-- edittext label -->
@@ -401,10 +401,10 @@
     <string name="widgetMode_sunPosMap_simpleazimuthal">北半球视角</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">南半球视角</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_bluemarble">卫星</string>    <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal_location">Azimuthal Equidistant</string>     <!-- setting -->   <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_location">方位角等距</string>     <!-- setting --> 
 
-    <string name="worldmap_projection_equirectangular">Equidistant Rectangular</string>    <!-- TODO -->
-    <string name="worldmap_projection_equiazimuthal">Equidistant Azimuthal</string>    <!-- TODO -->
+    <string name="worldmap_projection_equirectangular">等距矩形</string>
+    <string name="worldmap_projection_equiazimuthal">等距方位角</string>
 
     <string name="widgetMode1x1_moonriseset">月出 &amp; 月落</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">月相 &amp; 月光</string>     <!-- setting -->
@@ -412,11 +412,11 @@
     <string name="widgetMode1x1_moonillum">仅月光</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphasenext">下一个月相</string>     <!-- setting -->
 
-    <string name="configLabel_appearance_1x1mode">1x1:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_2x1mode">2x1:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_3x1mode">3x1:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_3x2mode">3x2:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_3x3mode">3x3:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_1x1mode">1x1:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_2x1mode">2x1:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x1mode">3x1:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x2mode">3x2:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x3mode">3x3:</string>     <!-- spinner label -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">什么也不做</string>           <!-- setting -->
@@ -456,14 +456,14 @@
     <string name="configLabel_location_name">名称:</string>                      <!-- edittext label -->
     <string name="configHint_location_name">（可选）</string>                  <!-- edittext hint -->
     <string name="configHint_location_name0">地点名称</string>                  <!-- edittext hint -->
-    <string name="configLabel_location_fromapp">Use the app location</string>                  <!-- checkbox text -->  <!-- TODO -->
+    <string name="configLabel_location_fromapp">使用应用位置</string>                  <!-- checkbox text -->
 
     <string name="configAction_getFix">获取位置</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">编辑</string>         <!-- button (contentDescription) -->
     <string name="configAction_savePlace">保存</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">太阳时</string>                       <!-- setting -->    <!-- TODO: "solar time" -> "Time Standard" -->
+    <string name="timezoneMode_standard">时间标准</string>                       <!-- setting -->
     <string name="timezoneMode_current">系统时区</string>               <!-- setting -->
     <string name="timezoneMode_custom">用户自定</string>                    <!-- setting -->
 
@@ -478,7 +478,7 @@
     <string name="configLabel_timezone">时区设置</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">模式:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">时区:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">太阳时:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
+    <string name="configLabel_timezone_standard">标准:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">系统格式</string>          <!-- setting -->
@@ -503,7 +503,7 @@
     <string name="configLabel_general_showComparison">显示对比</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
+    <string name="trackingMode_recent">近期事件</string>                   <!-- setting -->
     <string name="trackingMode_closest">最近事件</string>                 <!-- setting -->
     <string name="trackingMode_soonest">即将发生事件</string>                <!-- setting -->
     <string name="configLabel_general_trackingMode">追踪:</string>            <!-- spinner label -->
@@ -561,7 +561,7 @@
     <string name="loadaction_dialog_title">动作</string>
     <string name="loadaction_toast">动作 \"%1$s\" 已加载。</string>
 
-    <string name="startaction_failed_toast">启动 %s 失败!</string>         <!-- error toast -->
+    <string name="startaction_failed_toast">启动 %s 失败！</string>         <!-- error toast -->
 
     <string name="configAction_addAction">添加</string>           <!-- button (contentDescription) -->
     <string name="configAction_editAction">编辑</string>           <!-- button (contentDescription) -->
@@ -721,7 +721,7 @@
     <string name="configAction_sortAlarms_by_time">闹钟时间</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_creation">创建时间</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">清空</string>                <!-- action button / menu item -->
-    <string name="configAction_clearDate">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="configAction_clearDate">清空</string>                <!-- action button / menu item -->
     <string name="configAction_setAlarmOffset">设置补偿</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmType">设置类型</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">设置标签</string>         <!-- button (contentDescription) -->
@@ -861,15 +861,15 @@
     </plurals>
 
     <plurals name="units_days">
-        <item quantity="other">%s days</item>
-    </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->    <!-- TODO -->
+        <item quantity="other">%s 天</item>
+    </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->
 
     <string name="configLabel_alarmMisc">杂项</string>
     <string name="configLabel_alarms_showlauncher">启动器图标</string>
     <string name="configLabel_alarms_showlauncher_summary">在应用程序托盘中显示闹钟图标。</string>
 
-    <string name="configLabel_alarms_poweroffalarms">Power Off Alarm</string>    <!-- TODO -->
-    <string name="configLabel_alarms_poweroffalarms_summary">Wake the device from the power off state.\npackage: <xliff:g id="packageName">%s</xliff:g></string>    <!-- TODO -->
+    <string name="configLabel_alarms_poweroffalarms">关机闹钟</string>
+    <string name="configLabel_alarms_poweroffalarms_summary">将设备从关机状态唤醒。\n包: <xliff:g id="packageName">%s</xliff:g></string>
 
     <!--
          APP SETTINGS
@@ -945,10 +945,10 @@
     <string name="configLabel_ui_showheader_icon">显示列标题图标</string> <!-- checkbox label -->
     <string name="configLabel_ui_showheader_text">显示列标题文本</string> <!-- checkbox label -->
     <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
-        <item>None</item>
-        <item>Labels</item>
-        <item>Azimuth</item>
-    </string-array>    <!-- TODO -->
+        <item>无</item>
+        <item>标签</item>
+        <item>方位角</item>
+    </string-array>
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">显示黄金时刻</string>
@@ -987,7 +987,7 @@
     <string name="configActionDesc_mapLocation">在地图上展示位置</string>
     <string name="configActionDesc_setAlarm">设置闹钟</string>
     <string name="configActionDesc_worldMap">世界地图对话窗</string>
-    <string name="configActionDesc_equinoxDialog">至日对话窗</string>
+    <string name="configActionDesc_equinoxDialog">至点对话窗</string>
     <string name="configActionDesc_moon">月亮对话窗</string>
     <string name="configActionDesc_sunDialog">太阳对话窗</string>
     <string name="configActionDesc_setDate">设置日期</string>
@@ -1146,29 +1146,29 @@
     <string name="worldmap_dialog_option_all">全部</string>
     <string name="worldmap_dialog_option_location">位置</string>
     <string name="worldmap_dialog_options_menu">@string/configAction_options</string>
-    <string name="worldmap_dialog_option_center">Center on location</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_center_current">Center: %s</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_center_msg">Map center set to current location \n[%s]</string>    <!-- toast message; center set to... --> <!-- TODO -->
-    <string name="worldmap_dialog_option_center_clear">Reset map center</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_center_clear_msg">Map center reset to default \n[%s]</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_background">Set Background</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_background_clear">Clear Background</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_background_warning0">This image has the wrong aspect ratio.. expected %2$s, but found %1$s!</string>    <!-- toast message; aspect ratio warning --> <!-- TODO -->
-    <string name="worldmap_dialog_option_background_error0">Failed to open map background.</string>    <!-- toast message; io error --> <!-- TODO -->
-    <string name="worldmap_dialog_option_latitudes">纬度</string>  <!-- TODO: "Latitudes" -> "Major lines" -->
-    <string name="worldmap_dialog_option_minorgrid">Graticule</string>  <!-- TODO -->
-    <string name="worldmap_dialog_option_debuglines">Debug Lines</string>  <!-- TODO -->
-    <string name="worldmap_dialog_option_tintmap">Tint</string>  <!-- TODO -->
-    <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->   <!-- TODO -->
+    <string name="worldmap_dialog_option_center">位置中心</string>
+    <string name="worldmap_dialog_option_center_current">中心: %s</string>
+    <string name="worldmap_dialog_option_center_msg">地图中心设置为当前位置 \n[%s]</string>    <!-- toast message; center set to... -->
+    <string name="worldmap_dialog_option_center_clear">重置地图中心</string>
+    <string name="worldmap_dialog_option_center_clear_msg">地图中心重置为默认值 \n[%s]</string>
+    <string name="worldmap_dialog_option_background">设置背景</string>
+    <string name="worldmap_dialog_option_background_clear">清除背景</string>
+    <string name="worldmap_dialog_option_background_warning0">此图像的纵横比错误。应为 %2$s，实为 %1$s！</string>    <!-- toast message; aspect ratio warning -->
+    <string name="worldmap_dialog_option_background_error0">打开地图背景失败。</string>    <!-- toast message; io error -->
+    <string name="worldmap_dialog_option_latitudes">主线</string>
+    <string name="worldmap_dialog_option_minorgrid">标线</string>
+    <string name="worldmap_dialog_option_debuglines">调试线</string>
+    <string name="worldmap_dialog_option_tintmap">着色</string>
+    <string name="worldmap_dialog_speed_5m">&#215; 5分</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->
     <string name="worldmap_dialog_speed_15m">&#215; 15分</string>
-    <string name="worldmap_dialog_speed_1d">&#215; 1日</string>
+    <string name="worldmap_dialog_speed_1d">&#215; 1天</string>
     <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
 
     <string name="help_worldmap_background">
       <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
       \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
-      \n\nFor best results select an image matching these properties.
-    </string>    <!-- TODO -->
+      \n\n为获得最佳效果，请选择与这些属性匹配的图像。
+    </string>
 
     <!-- Dialog: Light Map -->
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
@@ -1360,7 +1360,7 @@
     <string name="themesimport_dialog_message">正从文件中导入主题……</string>
 
     <string name="msg_import_success">导入 <xliff:g id="themePlural">%s</xliff:g>。</string>
-    <string name="msg_import_failure">从 <xliff:g id="filepath">%s</xliff:g> 导入失败!</string>
+    <string name="msg_import_failure">从 <xliff:g id="filepath">%s</xliff:g> 导入失败！</string>
     <string name="msg_import_noresults">导入已跳过；没有找到新的主题。</string>
 
     <plurals name="themePlural">
@@ -1413,53 +1413,53 @@
     <string name="creditsTab">出品</string>
 
     <string name="app_legal3"><![CDATA[ <b>库:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
-    <string name="app_about_media"><![CDATA[ <b>Media:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>    <!-- TODO -->
+    <string name="app_about_media"><![CDATA[ <b>媒体:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
 
     <!-- Dialog: Help -->
     <string name="help_dialog_title">帮助</string>
     <string name="help_appearance_allowresize"><![CDATA[
-      <big>Swap layouts to fill available space</big><br/><br/>
-      <i><b>[enabled]</b></i> The widget will switch between layouts depending on available space.<br/><br/>
-      <i><b>[disabled]</b></i> The widget maintains its initial layout when resized. Use this with the \"<i>scale text and icons</i>\" option for extra large widgets.<br/>
-    ]]></string>  <!-- TODO -->
+      <big>交换布局以填充可用空间</big><br/><br/>
+      <i><b>[启用]</b></i> 小部件将根据可用空间在布局之间切换。<br/><br/>
+      <i><b>[禁用]</b></i> 调整大小时，小部件保持其初始布局。将此与“<i>缩放文本和图标</i>”选项一起作用于超大小部件。<br/>
+    ]]></string>
     <string name="help_appearance_widgetlayout"><![CDATA[
-      This widget was created with a <b>%1$s</b> <em>initial layout</em>.<br/></br/>
-    ]]></string>  <!-- TODO -->
+      该小部件是使用 <b>%1$s</b> <em>初始布局</em> 创建的。<br/></br/>
+    ]]></string>
     <string name="help_appearance_title"><![CDATA[
        支持下列标题替换:<br/>
         <br/>
         <b>全部小部件:</b> <br />
-                * 日期: <b>%d</b>（例如: February 12）<br/>
-                * 日（短）: <b>%dd</b>（例如: Mon）<br/>
-                * 日（长）: <b>%dD</b>（例如: Monday）<br/>
+                * 日期: <b>%d</b>（例如: 2月12日）<br/>
+                * 日（短）: <b>%dd</b>（例如: 一）<br/>
+                * 日（长）: <b>%dD</b>（例如: 周一）<br/>
                 * 年: <b>%dY</b>（例如: 2018）<br/>
                 * 时间（最近更新）: <b>%dt</b><br/>
                 * 含秒的时间（最近更新）: <b>%dT</b><br/>
                 <br/>
-                * 标签: <b>%loc</b>（例如: Beijing）<br />
+                * 标签: <b>%loc</b>（例如: 北京）<br />
                 * 纬度: <b>%lat</b> <br />
                 * 经度: <b>%lon</b> <br/>
-                * 高度: <b>%lel</b>（例如: 0 meters）<br/>
+                * 高度: <b>%lel</b>（例如: 0米）<br/>
                 <br/>
                 * 数据源: <b>%s</b>（例如: sunrisesunsetlib）<br/>
-                * 时区: <b>%t</b>（例如: Asia/Taipei）<br/>
+                * 时区: <b>%t</b>（例如: Asia/Beijing）<br/>
                 * appWidgetID: <b>%id</b><br/>
          <br/>
          <b>太阳小部件:</b> <br/>
-                * 模式（短）: <b>%m</b>（例如: Civil）<br/>
-                * 模式（长）: <b>%M</b>（例如: Civil Twilight）<br/>
-                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
+                * 模式（短）: <b>%m</b>（例如: 民用）<br/>
+                * 模式（长）: <b>%M</b>（例如: 民用暮光）<br/>
+                * 顺序: <b>%o</b>（例如: 前一天/后一天，今天）<br/>
          <br/>
          <b>月亮小部件:</b> <br/>
                 * 月光饱满度: <b>%i</b>（例如: 25%）<br/>
-                * 月相: <b>%M</b>（例如: Waxing Crescent）<br/>
-                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
+                * 月相: <b>%M</b>（例如: 眉月）<br/>
+                * 顺序: <b>%o</b>（例如: 前一天/后一天，今天）<br/>
          <br/>
-         <b>至日小部件:</b> <br/>
-                * 模式（短）: <b>%m</b>（例如: Solstice）<br/>
-                * 模式（长）: <b>%M</b>（例如: Winter Solstice）<br/>
-                * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
-    ]]></string>    <!-- TODO -->
+         <b>至点小部件:</b> <br/>
+                * 模式（短）: <b>%m</b>（例如: 至点）<br/>
+                * 模式（长）: <b>%M</b>（例如: 冬至）<br/>
+                * 顺序: <b>%o</b>（例如: 最近事件，即将发生事件）<br/>
+    ]]></string>
 
     <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>
@@ -1491,14 +1491,14 @@
     ]]></string>
 
     <string name="help_general_timeMode2"><![CDATA[
-          <b>春分:</b> The start of astronomical spring; <em>March</em> [northern hemisphere], or <em>September</em> [southern hemisphere]. The March equinox is also called the <em>northward equinox</em>.<br/><br/>
-          <b>夏至:</b> The start of astronomical summer; <em>June</em> [northern hemisphere], or <em>December</em> [southern hemisphere]. The June solstice is also called the <em>northern solstice</em>.<br/><br/>
-          <b>秋分:</b> The start of astronomical autumn; <em>September</em> [northern hemisphere], or <em>March</em> [southern hemisphere]. The September equinox is also called the <em>southward equinox</em>.<br/><br/>
-          <b>冬至:</b> The start of astronomical winter; <em>December</em> [northern hemisphere], or <em>June</em> [southern hemisphere]. The December solstice is also called the <em>southern solstice</em>.<br/>
-    ]]></string>    <!-- TODO -->
+          <b>春分:</b> 天文春天的开始；<em>三月</em>[北半球] 或 <em>九月</em>[南半球]。三月分点也被称为<em>北分点</em>。<br/><br/>
+          <b>夏至:</b> 天文夏季的开始；<em>六月</em>[北半球] 或 <em>十二月</em>[南半球]。六月至点也被称为<em>北至点</em>。<br/><br/>
+          <b>秋分:</b> 天文秋季的开始；<em>九月</em>[北半球] 或 <em>三月</em>[南半球]。九月分点也被称为<em>南分点</em>。<br/><br/>
+          <b>冬至:</b> 天文冬季的开始；<em>十二月</em>[北半球] 或 <em>六月</em>[南半球]。十二月至点也称为<em>南至点</em>。<br/>
+    ]]></string>
     <string name="help_general_tropicalyear"><![CDATA[
-          <b>Tropical Year:</b> A full cycle of the seasons. The length of the <em>tropical year</em> is measured from one <em>March equinox</em> to the next. It is <em>~365.24 days</em> on average, with an exact length that varies each year (up to 30 minutes).<br/>
-    ]]></string>   <!-- TODO -->
+          <b>回归年:</b> 一个完整的季节循环。<em>回归年</em>的长度是从一个<em>三月分点</em>到下一个。平均<em>~365.24天</em>，确切的长度每年都不同（最多30分钟）。<br/>
+    ]]></string>
     <string name="help_general_daylength"><![CDATA[
         <b>日光:</b> 日出到日落的时间。<br/><br/>
         <b>天亮时间:</b> 从民用曙光到民用暮光的时间。<br/>
@@ -1561,14 +1561,14 @@
     <string name="calculator_displayString_time4a_4j">Based on astronomical calculations published by Jean Meeus in his book "Astronomical Algorithms" (second edition).</string>
     <string name="help_datasources">
         <![CDATA[
-        Suntimes uses third-party libraries to perform astronomical calculations.<br/>
+        Suntimes 使用第三方库进行天文计算。<br/>
         <br/>
-        The <b>data source</b> setting allows choosing between different libraries (or choosing between different algorithms offered by those libraries). The default is <b>time4a-time4j</b>.<br/>
+        <b>数据源</b>设置允许在不同的库之间进行选择（或在这些库提供的不同算法之间进行选择）。默认为 <b>time4a-time4j</b>。<br/>
         <br/>
-        This setting affects the speed and accuracy of calculations, and may limit which features are available. <br/>
+        此设置会影响计算的速度和准确性，并且可能会限制可用的功能。<br/>
         <br/>
-        For more information about available choices, or extending the app to support other libraries, see the online help.
+        有关可用选项的更多信息，或扩展应用程序以支持其他库，请参阅在线帮助。
     ]]>
-    </string>   <!-- TODO -->
+    </string>
 
 </resources>
