@@ -193,7 +193,7 @@ public class WidgetSettings
     public static final TimezoneMode PREF_DEF_TIMEZONE_MODE = TimezoneMode.CURRENT_TIMEZONE;
 
     public static final String PREF_KEY_TIMEZONE_CUSTOM = "timezone";
-    public static final String PREF_DEF_TIMEZONE_CUSTOM = "US/Arizona";
+    public static final String PREF_DEF_TIMEZONE_CUSTOM = "MST";    // TODO: candidate for initDefaults?
     public static final String[][] PREF_DEF_TIMEZONES = new String[][] { new String[] {"", PREF_DEF_TIMEZONE_CUSTOM} };
 
     public static final String PREF_KEY_TIMEZONE_SOLARMODE = "solarmode";

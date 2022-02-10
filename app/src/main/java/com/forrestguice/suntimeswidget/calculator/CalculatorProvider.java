@@ -45,6 +45,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.AUTHORITY;
 import static com.forrestguice.suntimeswidget.calculator.core.CalculatorProviderContract.COLUMN_CONFIG_ALTITUDE;
@@ -418,7 +419,7 @@ public class CalculatorProvider extends ContentProvider
                             break;
 
                         case COLUMN_CONFIG_TIMEZONE:
-                            row[i] = WidgetSettings.loadTimezonePref(context, appWidgetID);
+                            row[i] = initTimeZone(context, appWidgetID).getID();
                             break;
 
                         case COLUMN_CONFIG_APPWIDGETID:
@@ -964,7 +965,7 @@ public class CalculatorProvider extends ContentProvider
                 location = WidgetSettings.loadLocationPref(context, appWidgetID);
             }
             if (timezone == null) {
-                timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
+                timezone = initTimeZone(context, appWidgetID);
             }
             if (descriptor == null) {
                 descriptor = (calculatorName == null ? WidgetSettings.loadCalculatorModePref(context, appWidgetID)
@@ -984,7 +985,7 @@ public class CalculatorProvider extends ContentProvider
         {
             WidgetSettings.initDefaults(context);
             Location location = WidgetSettings.loadLocationPref(context, appWidgetID);
-            TimeZone timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
+            TimeZone timezone = initTimeZone(context, appWidgetID);
             SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(context, appWidgetID);
             SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
             sunSource.put(appWidgetID, (retValue = factory.createCalculator(location, timezone)));
@@ -1004,7 +1005,7 @@ public class CalculatorProvider extends ContentProvider
         {
             WidgetSettings.initDefaults(context);
             Location location = WidgetSettings.loadLocationPref(context, appWidgetID);
-            TimeZone timezone = TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
+            TimeZone timezone = initTimeZone(context, appWidgetID);
             SuntimesCalculatorDescriptor descriptor = WidgetSettings.loadCalculatorModePref(context, 0, "moon");      // always use app calculator (0)
             SuntimesCalculatorFactory factory = new SuntimesCalculatorFactory(context, descriptor);
             moonSource.put(appWidgetID, (retValue = factory.createCalculator(location, timezone)));
@@ -1014,6 +1015,14 @@ public class CalculatorProvider extends ContentProvider
     }
     private SuntimesCalculator initMoonCalculator(Context context, HashMap<String,String> selection) {
         return initCalculator(context, selection, "moon");
+    }
+
+    private static TimeZone initTimeZone(Context context, int appWidgetID)
+    {
+        switch (WidgetSettings.loadTimezoneModePref(context, appWidgetID)) {
+            case CURRENT_TIMEZONE: return TimeZone.getDefault();
+            case CUSTOM_TIMEZONE: default: return TimeZone.getTimeZone(WidgetSettings.loadTimezonePref(context, appWidgetID));
+        }
     }
 
     public Calendar now(HashMap<String,String> selection) {
