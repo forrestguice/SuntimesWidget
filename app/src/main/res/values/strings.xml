@@ -1505,7 +1505,7 @@
         <item>third quarter</item>
         <item>spring equinox</item>
         <item>summer solstice</item>
-        <item>autumn equinox</item>
+        <item>@string/solarevents_event_equinox_autumnal</item>
         <item>winter solstice</item>
         <item>lunar noon</item>
         <item>lunar midnight</item>
@@ -1534,7 +1534,7 @@
         <item>third quarter</item>
         <item>spring equinox</item>
         <item>summer solstice</item>
-        <item>autumn equinox</item>
+        <item>@string/solarevents_event_equinox_autumnal</item>
         <item>winter solstice</item>
         <item>lunar noon</item>
         <item>lunar midnight</item>
@@ -1563,11 +1563,12 @@
         <item>third quarter</item>
         <item>spring equinox</item>
         <item>summer solstice</item>
-        <item>autumn equinox</item>
+        <item>@string/solarevents_event_equinox_autumnal</item>    <!-- autumn equinox; using @string/ here so en_US may easily override -->
         <item>winter solstice</item>
         <item>lunar noon</item>
         <item>lunar midnight</item>
     </string-array>
+    <string name="solarevents_event_equinox_autumnal">autumn equinox</string>   <!-- solarevents_* array value; optional if arrays are overridden by translation -->
 
     <string-array name="solarevents_gender">   <!-- one-to-one with solarevents_long1; values used by SelectFormat (api24+) -->
         <item>other</item>    <!-- start of astronomical twilight -->
