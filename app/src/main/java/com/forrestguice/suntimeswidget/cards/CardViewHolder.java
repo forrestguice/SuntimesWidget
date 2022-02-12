@@ -257,7 +257,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
         } else {
             String notCalculated = context.getString(R.string.time_loading);
-            row_solarnoon.updateFields(notCalculated);
+            row_solarnoon.updateFields(notCalculated, notCalculated);
             row_actual.updateFields(notCalculated, notCalculated);
             row_civil.updateFields(notCalculated, notCalculated);
             row_nautical.updateFields(notCalculated, notCalculated);
