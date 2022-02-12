@@ -869,7 +869,7 @@ public class EquinoxView extends LinearLayout
 
             for (int i=0; i <holder.notes.size(); i++) {
                 EquinoxNote note = holder.notes.get(i);
-                if (note.contextMenu != null) {
+                if (note.contextMenu != null && note.time != null) {
                     note.contextMenu.setOnClickListener(onMenuClick(note.contextMenu, position, WidgetSettings.SolsticeEquinoxMode.values()[i], note.time.getTimeInMillis()));
                 }
             }
