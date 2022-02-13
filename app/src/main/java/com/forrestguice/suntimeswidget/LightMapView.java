@@ -171,6 +171,10 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             Log.w(LightMapView.class.getSimpleName(), "updateViews: task already running: " + data + " (" + Integer.toHexString(drawTask.hashCode())  +  ") .. restarting task.");
             drawTask.cancel(true);
         } else Log.d(LightMapView.class.getSimpleName(), "updateViews: starting task " + data);
+        if (getWidth() == 0 || getHeight() == 0) {
+            //Log.d(LightMapView.class.getSimpleName(), "updateViews: width or height 0; skipping update..");
+            return;
+        }
 
         drawTask = new LightMapTask();
         drawTask.setListener(drawTaskListener);
@@ -283,6 +287,9 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
+        if (data != null) {
+            updateViews(data);
+        }
     }
 
     @Override
