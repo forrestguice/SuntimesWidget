@@ -101,7 +101,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
      */
     public void onResume()
     {
-        Log.d("DEBUG", "LightMapView onResume");
+        Log.d(LightMapView.class.getSimpleName(), "onResume");
     }
 
     /**
@@ -116,6 +116,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         super.onSizeChanged(w, h, oldw, oldh);
         if (resizable)
         {
+            Log.d(LightMapView.class.getSimpleName(), "onSizeChanged: " + oldw + "," + oldh + " -> " + w + "," + h);
             updateViews(true);
         }
     }
@@ -163,9 +164,9 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
         if (drawTask != null && drawTask.getStatus() == AsyncTask.Status.RUNNING)
         {
-            Log.w("LightMapView", "updateViews: task already running");
+            Log.w(LightMapView.class.getSimpleName(), "updateViews: task already running: " + data + " (" + Integer.toHexString(drawTask.hashCode())  +  ") .. restarting task.");
             drawTask.cancel(true);
-        }
+        } else Log.d(LightMapView.class.getSimpleName(), "updateViews: starting task " + data);
 
         drawTask = new LightMapTask();
         drawTask.setListener(new LightMapTaskListener()
@@ -224,7 +225,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
     protected void loadSettings(Context context, @NonNull Bundle bundle )
     {
-        Log.d("DEBUG", "LightMapView loadSettings (bundle)");
+        Log.d(LightMapView.class.getSimpleName(), "loadSettings (bundle)");
         animated = bundle.getBoolean("animated", animated);
         colors.offsetMinutes = bundle.getLong("offsetMinutes", colors.offsetMinutes);
         colors.now = bundle.getLong("now", colors.now);
@@ -232,7 +233,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
     protected boolean saveSettings(Bundle bundle)
     {
-        Log.d("DEBUG", "LightMapView saveSettings (bundle)");
+        Log.d(LightMapView.class.getSimpleName(), "saveSettings (bundle)");
         bundle.putBoolean("animated", animated);
         bundle.putLong("offsetMinutes", colors.offsetMinutes);
         bundle.putLong("now", colors.now);
@@ -240,11 +241,13 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     }
 
     public void startAnimation() {
+        Log.d(LightMapView.class.getSimpleName(), "startAnimation");
         animated = true;
         updateViews(true);
     }
 
     public void stopAnimation() {
+        Log.d(LightMapView.class.getSimpleName(), "stopAnimation");
         animated = false;
         if (drawTask != null) {
             drawTask.cancel(true);
@@ -253,6 +256,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
 
     public void resetAnimation( boolean updateTime )
     {
+        Log.d(LightMapView.class.getSimpleName(), "resetAnimation");
         stopAnimation();
         colors.offsetMinutes = 0;
         if (updateTime)
@@ -277,6 +281,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     {
         super.onDetachedFromWindow();
         if (drawTask != null) {
+            Log.d(LightMapView.class.getSimpleName(), "onDetachedFromWindow: cancel task " + Integer.toHexString(drawTask.hashCode()));
             drawTask.cancel(true);
         }
     }
@@ -333,7 +338,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 frameDuration = colors.anim_frameLengthMs * 1000000;   // ms to ns
 
             } catch (ClassCastException e) {
-                Log.w("LightmapTask", "Invalid params; using [null, 0, 0]");
+                Log.w(LightMapTask.class.getSimpleName(), "Invalid params; using [null, 0, 0]");
                 return null;
             }
 
@@ -344,7 +349,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             int i = 0;
             while (i < numFrames || numFrames <= 0)
             {
-                Log.w("LightmapTask", "generating frame " + i);
+                Log.d(LightMapTask.class.getSimpleName(), "generating frame " + i + " | " + w + "," + h);
                 if (isCancelled()) {
                     break;
                 }
@@ -356,7 +361,7 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                     long data_age = (maptime.getTimeInMillis() - datatime.getTimeInMillis());
                     if (data_age >= (12 * 60 * 60 * 1000)) {    // TODO: more precise
 
-                        Log.d("LightMapTask", "recalculating dataset with adjusted date: " + data_age);
+                        Log.d(LightMapTask.class.getSimpleName(), "recalculating dataset with adjusted date: " + data_age);
                         Calendar calendar = Calendar.getInstance(data.timezone());
                         calendar.setTimeInMillis(maptime.getTimeInMillis());
 

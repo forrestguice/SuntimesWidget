@@ -510,6 +510,12 @@ public class SuntimesRiseSetDataset
         return new Calendar[] { null, null };
     }
 
+    @Override
+    public String toString()
+    {
+        return "" + date().getTime();
+    }
+
 }
 
 
