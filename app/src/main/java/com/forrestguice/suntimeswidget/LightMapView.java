@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2021 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -173,46 +173,51 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         } else Log.d(LightMapView.class.getSimpleName(), "updateViews: starting task " + data);
 
         drawTask = new LightMapTask();
-        drawTask.setListener(new LightMapTaskListener()
-        {
-            @Override
-            public void onStarted()
-            {
-                if (mapListener != null) {
-                    mapListener.onStarted();
-                }
-            }
-
-            @Override
-            public void onDataModified( SuntimesRiseSetDataset data ) {
-                LightMapView.this.data = data;
-                if (mapListener != null) {
-                    mapListener.onDataModified(data);
-                }
-            }
-
-            @Override
-            public void onFrame(Bitmap frame, long offsetMinutes) {
-                setImageBitmap(frame);
-                if (mapListener != null) {
-                    mapListener.onFrame(frame, offsetMinutes);
-                }
-            }
-
-            @Override
-            public void afterFrame(Bitmap frame, long offsetMinutes) {
-            }
-
-            @Override
-            public void onFinished(Bitmap frame) {
-                setImageBitmap(frame);
-                if (mapListener != null) {
-                    mapListener.onFinished(frame);
-                }
-            }
-        });
+        drawTask.setListener(drawTaskListener);
         drawTask.execute(data, getWidth(), getHeight(), colors, (animated ? 0 : 1), colors.offsetMinutes);
     }
+
+    private LightMapTaskListener drawTaskListener = new LightMapTaskListener() {
+        @Override
+        public void onStarted() {
+            Log.d(LightMapView.class.getSimpleName(), "LightmapView.updateViews: onStarted: " + Integer.toHexString(drawTask.hashCode()));
+            if (mapListener != null) {
+                mapListener.onStarted();
+            }
+        }
+
+        @Override
+        public void onDataModified(SuntimesRiseSetDataset data) {
+            Log.d(LightMapView.class.getSimpleName(), "LightmapView.updateViews: onDataModified: " + Integer.toHexString(drawTask.hashCode()));
+            LightMapView.this.data = data;
+            if (mapListener != null) {
+                mapListener.onDataModified(data);
+            }
+        }
+
+        @Override
+        public void onFrame(Bitmap frame, long offsetMinutes) {
+            Log.d(LightMapView.class.getSimpleName(), "LightmapView.updateViews: onFrame: " + Integer.toHexString(drawTask.hashCode()));
+            setImageBitmap(frame);
+            if (mapListener != null) {
+                mapListener.onFrame(frame, offsetMinutes);
+            }
+        }
+
+        @Override
+        public void afterFrame(Bitmap frame, long offsetMinutes) {
+            //Log.d(LightMapView.class.getSimpleName(), "LightmapView.updateViews: afterFrame: " + Integer.toHexString(drawTask.hashCode()));
+        }
+
+        @Override
+        public void onFinished(Bitmap frame) {
+            Log.d(LightMapView.class.getSimpleName(), "LightmapView.updateViews: onFinished: " + Integer.toHexString(drawTask.hashCode()));
+            setImageBitmap(frame);
+            if (mapListener != null) {
+                mapListener.onFinished(frame);
+            }
+        }
+    };
 
     /**
      * @param context a context used to access shared prefs
