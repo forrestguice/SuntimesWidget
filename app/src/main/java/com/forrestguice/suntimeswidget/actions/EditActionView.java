@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -196,7 +197,7 @@ public class EditActionView extends LinearLayout
             if (fragmentManager != null) {
                 HelpDialog helpDialog = new HelpDialog();
                 helpDialog.setContent(getContext().getString(R.string.help_action_launch));
-                helpDialog.setShowNeutralButton(getContext().getString(R.string.configAction_restoreDefaults));
+                helpDialog.setShowNeutralButton(getContext().getString(R.string.configAction_onlineHelp));
                 helpDialog.setNeutralButtonListener(helpDialogListener_launchApp, HELPTAG_LAUNCH);
                 helpDialog.show(fragmentManager, DIALOGTAG_HELP);
             }
@@ -650,16 +651,9 @@ public class EditActionView extends LinearLayout
         @Override
         public void onClick(View v)
         {
-            if (text_launchActivity != null) {
-                restoreDefaults();
-            }
-
-            if (fragmentManager != null)
-            {
-                HelpDialog helpDialog = (HelpDialog) fragmentManager.findFragmentByTag(DIALOGTAG_HELP);
-                if (helpDialog != null) {
-                    helpDialog.dismiss();
-                }
+            Context context = getContext();
+            if (context != null) {
+                getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(context.getString(R.string.help_action_url))));
             }
         }
     };
