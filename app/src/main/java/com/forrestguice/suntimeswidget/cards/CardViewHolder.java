@@ -290,7 +290,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         // lightmap
         lightmapLayout.setVisibility(options.showLightmap ? View.VISIBLE : View.GONE);
         lightmap.getColors().option_drawNow = (position == CardAdapter.TODAY_POSITION) ? LightMapView.LightMapColors.DRAW_SUN1 : LightMapView.LightMapColors.DRAW_SUN2;
-        lightmap.updateViews(options.showLightmap ? sun : null);
+        lightmap.setData(options.showLightmap ? sun : null);
 
         toggleNextPrevButtons(position);
     }

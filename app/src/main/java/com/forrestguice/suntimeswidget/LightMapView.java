@@ -142,6 +142,10 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         colors.colorPointStroke = theme.getNoonIconStrokeColor();
     }
 
+    public void setData(@Nullable SuntimesRiseSetDataset data) {
+        this.data = data;
+    }
+
     /**
      * throttled update method
      */
@@ -158,9 +162,9 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     /**
      * @param data an instance of SuntimesRiseSetDataset
      */
-    public void updateViews(SuntimesRiseSetDataset data)
+    public void updateViews(@Nullable SuntimesRiseSetDataset data)
     {
-        this.data = data;
+        setData(data);
 
         if (drawTask != null && drawTask.getStatus() == AsyncTask.Status.RUNNING)
         {
