@@ -1941,15 +1941,14 @@ public class SuntimesActivity extends AppCompatActivity
 
         @Override
         public void onLightmapClick(CardAdapter adapter, int position) {
-            if (Math.abs(CardAdapter.TODAY_POSITION - position) > 1) {
-                showSunPositionAt(adapter.initData(SuntimesActivity.this, position).first.dataNoon.calendar().getTimeInMillis());
+            Pair<SuntimesRiseSetDataset, SuntimesMoonData> cardData = adapter.initData(SuntimesActivity.this, position);
+            if (Math.abs(CardAdapter.TODAY_POSITION - position) > 1 && cardData != null) {
+                showSunPositionAt(cardData.first.dataNoon.calendar().getTimeInMillis());
             } else showLightMapDialog();
         }
         @Override
         public boolean onLightmapLongClick(CardAdapter adapter, int position) {
-            if (Math.abs(CardAdapter.TODAY_POSITION - position) > 1) {
-                showSunPositionAt(adapter.initData(SuntimesActivity.this, position).first.dataNoon.calendar().getTimeInMillis());
-            } else showLightMapDialog();
+            onLightmapClick(adapter, position);
             return true;
         }
 
