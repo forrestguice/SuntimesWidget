@@ -27,9 +27,9 @@
     <string name="configAction_worldMap">Mondmapo</string>
     <string name="configAction_moon">Luno</string>
     <string name="configAction_help">Helpo</string>
-    <string name="configAction_onlineHelp">Online Help</string>   <!-- TODO -->
+    <string name="configAction_onlineHelp">Enreta helpo</string>
     <string name="configAction_overflow">Pli</string>
-    <string name="configAction_options">Options</string>   <!-- TODO -->
+    <string name="configAction_options">Agordi…</string>
     <string name="configAction_settings">Agordoj</string>
     <string name="configAction_aboutWidget">Pri</string>
 
@@ -80,7 +80,7 @@
     <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> da tago</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
     <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> da uzebla lumo</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
 
-    <string name="timeMode_tropical_year">Tropical Year</string>   <!-- TODO -->
+    <string name="timeMode_tropical_year">Tropika jaro</string>
 
     <!-- Field: moon illumination (as seen in moon widget) -->
     <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> prilumata</string>  <!-- "50% illuminated" .. used in 2x1 widget -->
@@ -120,8 +120,8 @@
         <item quantity="other">%1$s post</item>
     </plurals>
 
-    <string name="offset_before_msg">%1$s antaŭ %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO: review -->
-    <string name="offset_after_msg">%1$s post %2$s</string>      <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_before_msg">%1$s antaŭ %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->
+    <string name="offset_after_msg">%1$s post %2$s</string>      <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->
     <string name="offset_before_msg1">{0} antaŭ {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
     <string name="offset_after_msg1">{0} post {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
 
@@ -233,7 +233,7 @@
     <string name="configLabel_general_calculator">Fonto de datumoj:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Fonto de sunaj datumoj</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Fonto de lunaj datumoj</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_help">Data Sources</string>    <!-- preference title / help button text --> <!-- TODO -->
+    <string name="configLabel_general_calculator_help">Fontoj de datumoj</string>    <!-- preference title / help button text -->
 
     <string name="configLabel_general_timeFormatMode">Formo de tempo:</string>         <!-- spinner label -->
 
