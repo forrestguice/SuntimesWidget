@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:xliff="http://schemas.android.com/tools">
-
-    <string name="default_location_label">Kiev</string>
-    <string name="default_location_latitude">50.4496</string>    <!-- decimal degrees (DD) -->
-    <string name="default_location_longitude">30.5252</string>   <!-- decimal degrees (DD) -->
-    <string name="default_location_altitude">150</string>         <!-- meters -->
-
+<resources>
+    <string name="default_location_label">Odessa</string>
+    <string name="default_location_latitude">46.48572</string>    <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">30.74344</string>   <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">40</string>          <!-- meters -->
 </resources>
