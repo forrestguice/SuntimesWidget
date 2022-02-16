@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_location_label">Tripoli</string>
+    <string name="default_location_latitude">32.89500</string>    <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">13.18431</string>   <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">81</string>           <!-- meters -->
+</resources>

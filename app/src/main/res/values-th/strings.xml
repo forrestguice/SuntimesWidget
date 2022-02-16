@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_location_label">Bangkok</string>
+    <string name="default_location_latitude">13.75653</string>    <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">100.49333</string>  <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">2</string>           <!-- meters -->
+</resources>
