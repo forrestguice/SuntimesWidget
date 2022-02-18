@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="default_location_label">Odessa</string>
-    <string name="default_location_latitude">46.48572</string>    <!-- decimal degrees (DD) -->
-    <string name="default_location_longitude">30.74344</string>   <!-- decimal degrees (DD) -->
-    <string name="default_location_altitude">40</string>          <!-- meters -->
-</resources>
