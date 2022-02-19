@@ -1,0 +1,4 @@
+- fixes crash when using "current location" (#556).
+- fixes bug "content-provider supplies wrong time zone" (#554).
+- fixes bug "lightmap for tomorrow fails to display" (#557).
+- updates translations to Simplified Chinese, and Traditional Chinese.
