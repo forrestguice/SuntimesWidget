@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="http://schemas.android.com/tools">
 
-    <string name="default_location_label">Oslo</string>
-    <string name="default_location_latitude">59.8937</string>    <!-- decimal degrees (DD) -->
-    <string name="default_location_longitude">10.6450</string>   <!-- decimal degrees (DD) -->
-    <string name="default_location_altitude">0</string>         <!-- meters -->
+    <string name="default_location_label">Bergen</string>
+    <string name="default_location_latitude">60.38713</string>    <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">5.32006</string>    <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">0</string>           <!-- meters -->
 
     <string name="time_format_12hr_veryshort"><xliff:g id="patternHours">h</xliff:g>.<xliff:g id="patternMinutes">mm</xliff:g></string>  <!-- shortest 12hr time format; should omit am/pm -->
 
