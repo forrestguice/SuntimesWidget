@@ -28,9 +28,9 @@
     <string name="configAction_worldMap">Verdenskart</string>
     <string name="configAction_moon">Månen</string>
     <string name="configAction_help">Hjelp</string>
-    <string name="configAction_onlineHelp">Online Help</string>   <!-- TODO -->
+    <string name="configAction_onlineHelp">Hjelp på nett</string>
     <string name="configAction_overflow">Mer</string>
-    <string name="configAction_options">Options</string>   <!-- TODO -->
+    <string name="configAction_options">Alternativer</string>
     <string name="configAction_settings">Innstillinger</string>
     <string name="configAction_aboutWidget">Om</string>
 
@@ -86,7 +86,7 @@
     <string name="length_twilight2"><xliff:g id="timeSpan1" example="30m">%1$s</xliff:g> | <xliff:g id="timeSpan2" example="30m">%2$s</xliff:g></string>
     <string name="length_delimiter">|</string>
 
-    <string name="timeMode_tropical_year">Tropical Year</string>   <!-- TODO -->
+    <string name="timeMode_tropical_year">Tropisk år</string>
 
     <!-- Field: moon illumination (as seen in moon widget) -->
     <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> opplyst</string>  <!-- used in 2x1 widget -->
@@ -244,19 +244,19 @@
     <string name="configLabel_moonwidget0">@string/app_name_moonwidget0</string>                 <!-- used as title when adding -->
 
     <!-- Widget Setting: general -->
-    <string name="configLabel_general">Generelle innstillinger</string>                <!-- group title -->
+    <string name="configLabel_general">Generelt</string>                <!-- group title -->
     <string name="configLabel_general_calculator">Datakilde:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Soldatakilde</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Månedatakilde</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_help">Data Sources</string>    <!-- preference title / help button text --> <!-- TODO -->
+    <string name="configLabel_general_calculator_help">Datakilder</string>    <!-- preference title / help button text -->
 
     <string name="configLabel_general_timeFormatMode">Tidsformat:</string>         <!-- spinner label -->
 
     <string name="configLabel_general_altitude_enabled">Bruk høyde</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Bruk høydebaserte forbedringer.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_localize_hemisphere">Localize to hemisphere</string>        <!-- checkbox label -->    <!-- TODO -->
-    <string name="configLabel_general_localize_hemisphere_summary">Apply hemisphere based localization (season labels, moon phase icons).</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_general_localize_hemisphere">Lokaliser til halvkule</string>        <!-- checkbox label -->
+    <string name="configLabel_general_localize_hemisphere_summary">Bruk halvkulebasert lokalisering (sesongpåskrifter, månefaseikoner).</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_lengthUnits">Lengdeenhet</string>        <!-- spinner label -->
 
@@ -394,10 +394,10 @@
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [nord]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [sør]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal_location">Azimuthal Equidistant</string>     <!-- setting -->   <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_location">Asimutal ekvidistant</string>     <!-- setting -->
 
-    <string name="worldmap_projection_equirectangular">Equidistant Rectangular</string>    <!-- TODO -->
-    <string name="worldmap_projection_equiazimuthal">Equidistant Azimuthal</string>    <!-- TODO -->
+    <string name="worldmap_projection_equirectangular">Ekvidistant rektangulær</string>
+    <string name="worldmap_projection_equiazimuthal">Ekvidistant asimutal</string>
 
     <string name="widgetMode1x1_moonriseset">Måneoppgang &amp; månenedgang</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Månefase &amp; illuminasjon</string>     <!-- setting -->
@@ -496,10 +496,10 @@
     <string name="configLabel_general_showComparison">Vis sammenligning</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
+    <string name="trackingMode_recent">Nylig hendelse</string>                   <!-- setting -->
     <string name="trackingMode_closest">Nærmeste hendelse</string>                 <!-- setting -->
     <string name="trackingMode_soonest">Kommende hendelse</string>                <!-- setting -->
-    <string name="configLabel_general_trackingMode">Track:</string>            <!-- spinner label -->
+    <string name="configLabel_general_trackingMode">Spor:</string>            <!-- spinner label -->
 
     <!-- Widget Setting: timeMode override -->
     <string name="configLabel_general_timeMode_override">Tracking overrides mode</string>     <!-- checkbox label -->
@@ -855,9 +855,9 @@
     </plurals>
 
     <plurals name="units_days">
-        <item quantity="one">%s day</item>
-        <item quantity="other">%s days</item>
-    </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->    <!-- TODO -->
+        <item quantity="one">%s døgn</item>
+        <item quantity="other">%s døgn</item>
+    </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->
 
     <string name="configLabel_alarmMisc">Diverse</string>
     <string name="configLabel_alarms_showlauncher">App-ikon</string>
@@ -940,10 +940,10 @@
     <string name="configLabel_ui_showheader_icon">Vis overskriftsikon</string> <!-- checkbox label -->
     <string name="configLabel_ui_showheader_text">Vis overskriftstekst</string> <!-- checkbox label -->
     <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
-        <item>None</item>
-        <item>Labels</item>
-        <item>Azimuth</item>
-    </string-array>    <!-- TODO -->
+        <item>Ingen</item>
+        <item>Påskrifter</item>
+        <item>Asimut</item>
+    </string-array>
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Gylne time</string>
@@ -1033,7 +1033,7 @@
     <string name="configLabel_getFix_passiveMode_summary">Bruk den passive posisjonsleverandøren.</string>
 
     <!-- App Setting: locale mode -->
-    <string name="configLabel_locale">Språkinnstillinger</string>   <!-- group title -->
+    <string name="configLabel_locale">Språk</string>   <!-- group title -->
 
     <string name="configLabel_localeMode">Modus</string>
     <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
@@ -1131,20 +1131,20 @@
     <string name="worldmap_dialog_option_all">Begge</string>
     <string name="worldmap_dialog_option_location">Posisjon</string>
     <string name="worldmap_dialog_options_menu">@string/configAction_options</string>
-    <string name="worldmap_dialog_option_center">Center on location</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_center_current">Center: %s</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_center_msg">Map center set to current location \n[%s]</string>    <!-- toast message; center set to... --> <!-- TODO -->
-    <string name="worldmap_dialog_option_center_clear">Reset map center</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_center_clear_msg">Map center reset to default \n[%s]</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_background">Set Background</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_background_clear">Clear Background</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_background_warning0">This image has the wrong aspect ratio.. expected %2$s, but found %1$s!</string>    <!-- toast message; aspect ratio warning --> <!-- TODO -->
-    <string name="worldmap_dialog_option_background_error0">Failed to open map background.</string>    <!-- toast message; io error --> <!-- TODO -->
-    <string name="worldmap_dialog_option_latitudes">Breddegrader</string>    <!-- TODO: "Latitudes" -> "Major lines" -->
-    <string name="worldmap_dialog_option_minorgrid">Graticule</string>  <!-- TODO -->
+    <string name="worldmap_dialog_option_center">Sentrer på posisjon</string>
+    <string name="worldmap_dialog_option_center_current">Senter: %s</string>
+    <string name="worldmap_dialog_option_center_msg">Kartsenter satt til gjeldende posisjon \n[%s]</string>    <!-- toast message; center set to... -->
+    <string name="worldmap_dialog_option_center_clear">Tilbakestill kartsenter</string>
+    <string name="worldmap_dialog_option_center_clear_msg">Kartsenter tilbakestilt til standard \n[%s]</string>
+    <string name="worldmap_dialog_option_background">Sett bakgrunn</string>
+    <string name="worldmap_dialog_option_background_clear">Fjern bakgrunn</string>
+    <string name="worldmap_dialog_option_background_warning0">Dette bildet har feil sideforhold.. forventet %2$s, men fant %1$s!</string>    <!-- toast message; aspect ratio warning -->
+    <string name="worldmap_dialog_option_background_error0">Klarte ikke åpne kartbakgrunn.</string>    <!-- toast message; io error -->
+    <string name="worldmap_dialog_option_latitudes">Hovedlinjer</string>
+    <string name="worldmap_dialog_option_minorgrid">Gradnett</string>
     <string name="worldmap_dialog_option_debuglines">Debug Lines</string>  <!-- TODO -->
-    <string name="worldmap_dialog_option_tintmap">Tint</string>  <!-- TODO -->
-    <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->   <!-- TODO -->
+    <string name="worldmap_dialog_option_tintmap">Farge</string>
+    <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->
     <string name="worldmap_dialog_speed_15m">&#215; 15m</string>
     <string name="worldmap_dialog_speed_1d">&#215; 1d</string>
     <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
@@ -1152,8 +1152,8 @@
     <string name="help_worldmap_background">
       <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
       \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
-      \n\nFor best results select an image matching these properties.
-    </string>    <!-- TODO -->
+      \n\nFor best resultat velg et bilde som samsvarer med disse egenskapene.
+    </string>
 
     <!-- Dialog: Light Map -->
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
@@ -1478,14 +1478,14 @@
     ]]></string>
 
     <string name="help_general_timeMode2"><![CDATA[
-          <b>Spring Equinox:</b> The start of astronomical spring; <em>March</em> [northern hemisphere], or <em>September</em> [southern hemisphere]. The March equinox is also called the <em>northward equinox</em>.<br/><br/>
-          <b>Summer Solstice:</b> The start of astronomical summer; <em>June</em> [northern hemisphere], or <em>December</em> [southern hemisphere]. The June solstice is also called the <em>northern solstice</em>.<br/><br/>
-          <b>Autumn Equinox:</b> The start of astronomical autumn; <em>September</em> [northern hemisphere], or <em>March</em> [southern hemisphere]. The September equinox is also called the <em>southward equinox</em>.<br/><br/>
-          <b>Winter Solstice:</b> The start of astronomical winter; <em>December</em> [northern hemisphere], or <em>June</em> [southern hemisphere]. The December solstice is also called the <em>southern solstice</em>.<br/>
-    ]]></string>    <!-- TODO -->
+          <b>Vårjevndøgn:</b> Starten på den astronomiske våren; <em>mars</em> [nordlige halvkule], eller <em>september</em> [sørlige halvkule]. Marsjevndøgnet kan også kalles <em>\"nordoverjevndøgnet\"</em>.<br/><br/>
+          <b>Sommersolverv:</b> Starten på den astronomiske sommeren; <em>juni</em> [nordlige halvkule], eller <em>desember</em> [sørlige halvkule]. Junisolvervet kan også kalles det <em>\"nordlige solvervet\"</em>.<br/><br/>
+          <b>Høstjevndøgn:</b> Starten på den astronomiske høsten; <em>september</em> [nordlige halvkule], eller <em>mars</em> [sørlige halvkule]. Septemberjevndøgnet kan også kalles <em>\"søroverjevndøgnet\"</em>.<br/><br/>
+          <b>Vintersolverv:</b> Starten på den astronomiske vinteren; <em>desember</em> [nordlige halvkule], eller <em>juni</em> [sørlige halvkule]. Desembersolvervet kan også kalles det <em>\"sørlige solvervet\".</em>.<br/>
+    ]]></string>
     <string name="help_general_tropicalyear"><![CDATA[
-          <b>Tropical Year:</b> A full cycle of the seasons. The length of the <em>tropical year</em> is measured from one <em>March equinox</em> to the next. It is <em>~365.24 days</em> on average, with an exact length that varies each year (up to 30 minutes).<br/>
-    ]]></string>   <!-- TODO -->
+          <b>Tropisk år (solår):</b> En hel syklus av årstidene. Lengden på det <em>tropiske året</em> måles fra et <em>marsjevndøgn</em> til det neste. Det er <em>~365.24 døgn</em> i gjennomsnitt, med en nøyaktig lengde som varierer hvert år (opptil 30 minutter).<br/>
+    ]]></string>
     <string name="help_general_daylength"><![CDATA[
         <b>Daglengde:</b> Tiden mellom soloppgang og solnedgang.<br/><br/>
         <b>Brukbart lys:</b> Tiden mellom alminnelig tussmørke morgen og kveld.<br/>
