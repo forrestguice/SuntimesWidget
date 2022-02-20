@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_location_label">Naples</string>
+    <string name="default_location_latitude">40.83526</string>     <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">14.2515</string>     <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">0</string>            <!-- meters -->
+</resources>
