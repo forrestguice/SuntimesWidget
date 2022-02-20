@@ -94,6 +94,18 @@ public class WidgetTimezones
         }
     }
 
+    public static String getTimeZoneDisplay(Context context, TimeZone tz) {
+        if (tz != null)
+        {
+            switch (tz.getID())
+            {
+                case LocalMeanTime.TIMEZONEID: return context.getString(R.string.time_localMean);
+                case ApparentSolarTime.TIMEZONEID: return context.getString(R.string.time_apparent);
+                default: return tz.getID();
+            }
+        } else return "";
+    }
+
     ///////////////////////////////////////
     ///////////////////////////////////////
 

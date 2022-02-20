@@ -627,10 +627,12 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         }
 
         SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, mapTime);
-        if (utcTime != null) {
+        if (utcTime != null)
+        {
+            String tzDisplay = WidgetTimezones.getTimeZoneDisplay(context, mapTime.getTimeZone());
             if (suffix.isEmpty())
-                utcTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), mapTime.getTimeZone().getID()));
-            else utcTime.setText(SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), mapTime.getTimeZone().getID(), suffix), suffix, color_warning));
+                utcTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), tzDisplay));
+            else utcTime.setText(SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), tzDisplay, suffix), suffix, color_warning));
         }
 
         SuntimesUtils.TimeDisplayText offsetText = utils.timeDeltaLongDisplayString(nowMillis, mapTimeMillis, false, true, false);
