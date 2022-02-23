@@ -152,6 +152,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
         View dialogContent = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_lightmap, parent, false);
 
         SuntimesUtils.initDisplayStrings(getActivity());
+        WidgetSettings.SolarTimeMode.initDisplayStrings(getActivity());
         initViews(getContext(), dialogContent);
         if (savedState != null) {
             Log.d("DEBUG", "LightMapDialog onCreate (restoreState)");
@@ -1014,10 +1015,12 @@ public class LightMapDialog extends BottomSheetDialogFragment
         }
 
         SuntimesUtils.TimeDisplayText timeText = utils.calendarDateTimeDisplayString(context, mapTime);
-        if (sunTime != null) {
+        if (sunTime != null)
+        {
+            String tzDisplay = WidgetTimezones.getTimeZoneDisplay(context, mapTime.getTimeZone());
             if (suffix.isEmpty())
-                sunTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), mapTime.getTimeZone().getID()));
-            else sunTime.setText(SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), mapTime.getTimeZone().getID(), suffix), suffix, color_warning));
+                sunTime.setText(getString(R.string.datetime_format_verylong, timeText.toString(), tzDisplay));
+            else sunTime.setText(SuntimesUtils.createBoldColorSpan(null, getString(R.string.datetime_format_verylong1, timeText.toString(), tzDisplay, suffix), suffix, color_warning));
         }
 
         if (offsetTime != null)
