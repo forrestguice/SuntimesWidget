@@ -1,5 +1,16 @@
 ### ~
 
+### v0.14.1 (2022-02-22)
+* fixes crash when using "current location" (#556).
+* fixes bug "lightmap for tomorrow card fails to display" (#557).
+* fixes bug "content-provider supplies the wrong time zone" (#554).
+* adds default world places; ~34 additional locations.    
+* adds 'online-help' link to actions help dialog (#489, #546).
+* changes default 'solar time' mode to Local Mean Time.
+* minor fixes to `en` translations; e.g. `en_US` and `en_CA` display 'fall equinox'.
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#553 by James Liu).
+* updates translation to Norwegian (nb) (#561 by FTno).
+
 ### v0.14.0 (2022-02-07)
 * extends add-on functionality; adds content-providers for actions, alarms, and alarm events.
 * adds support for add-on alarms; set an alarm depending on a calculation (#516); the alarm dialog displays a popup menu of add-on AlarmPickers (hidden if none).
