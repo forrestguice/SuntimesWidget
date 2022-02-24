@@ -124,7 +124,7 @@ public class SuntimesActivity extends AppCompatActivity
     public static final String ACTION_CARD_PREV = "com.forrestguice.suntimeswidget.CARD_PREV";
     public static final String ACTION_CARD_RESET = "com.forrestguice.suntimeswidget.SWAP_CARD";
     public static final String ACTION_CARD_SHOW = "com.forrestguice.suntimeswidget.SHOW_CARD";
-    public static final String EXTRA_SHOW_DATE = "dateMillis";
+    public static final String EXTRA_SHOW_DATE = MenuAddon.EXTRA_SHOW_DATE;
 
     public static final String ACTION_NOTE_NEXT = "com.forrestguice.suntimeswidget.NEXT_NOTE";
     public static final String ACTION_NOTE_PREV = "com.forrestguice.suntimeswidget.PREV_NOTE";

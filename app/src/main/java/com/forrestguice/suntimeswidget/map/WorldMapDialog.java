@@ -68,6 +68,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.MenuAddon;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
@@ -90,7 +91,7 @@ import java.util.TimeZone;
 public class WorldMapDialog extends BottomSheetDialogFragment
 {
     public static final String LOGTAG = "WorldMapDialog";
-    public static final String EXTRA_DATETIME = "datetime";
+    public static final String ARG_DATETIME = "datetime";
 
     public static final int REQUEST_BACKGROUND = 400;
 
@@ -121,7 +122,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     public WorldMapDialog()
     {
         Bundle args = new Bundle();
-        args.putLong(EXTRA_DATETIME, -1);
+        args.putLong(ARG_DATETIME, -1);
         setArguments(args);
     }
 
@@ -132,7 +133,7 @@ public class WorldMapDialog extends BottomSheetDialogFragment
     }
 
     public void showPositionAt(@Nullable Long datetime) {
-        getArguments().putLong(EXTRA_DATETIME, (datetime == null ? -1 : datetime));
+        getArguments().putLong(ARG_DATETIME, (datetime == null ? -1 : datetime));
         if (isAdded()) {
             updateViews();
         }
@@ -516,10 +517,10 @@ public class WorldMapDialog extends BottomSheetDialogFragment
                 options.locations = new double[][] {{location.getLatitudeAsDouble(), location.getLongitudeAsDouble()}};
             } else options.locations = null;
 
-            long now = getArguments().getLong(EXTRA_DATETIME);
+            long now = getArguments().getLong(ARG_DATETIME);
             if (now != -1L)
             {
-                getArguments().putLong(EXTRA_DATETIME, -1L);
+                getArguments().putLong(ARG_DATETIME, -1L);
                 options.now = now;
                 options.offsetMinutes = 1;
                 Log.d("DEBUG", "updateOptions: now: " + now);
@@ -928,9 +929,9 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
         MenuItem addonSubmenuItem = m.findItem(R.id.addonSubMenu0);
         if (addonSubmenuItem != null) {
-            List<ActivityItemInfo> addonMenuItems = queryAddonMenuItems(context);
+            List<MenuAddon.ActivityItemInfo> addonMenuItems = MenuAddon.queryAddonMenuItems(context);
             if (!addonMenuItems.isEmpty()) {
-                populateSubMenu(addonSubmenuItem, addonMenuItems, getMapTime(System.currentTimeMillis()));
+                MenuAddon.populateSubMenu(addonSubmenuItem, addonMenuItems, getMapTime(System.currentTimeMillis()));
             } //else addonSubmenuItem.setVisible(false);
         }
     }
@@ -1448,144 +1449,6 @@ public class WorldMapDialog extends BottomSheetDialogFragment
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * ActivityItemInfo
-     */
-    public static final class ActivityItemInfo
-    {
-        public ActivityItemInfo(Context context, @NonNull String title, ActivityInfo info)
-        {
-            this.title = title;
-            this.info = info;
-
-            TypedArray typedArray = context.obtainStyledAttributes(new int[] { R.attr.icActionExtension });
-            this.icon = typedArray.getResourceId(0, R.drawable.ic_action_extension);
-            typedArray.recycle();
-        }
-
-        public ActivityItemInfo(@NonNull String title, int iconResId, ActivityInfo info)
-        {
-            this.title = title;
-            this.icon = iconResId;
-            this.info = info;
-        }
-
-        protected String title;
-        @NonNull
-        public String getTitle() {
-            return title;
-        }
-
-        protected int icon = 0;
-        public int getIcon() {
-            return icon;
-        }
-
-        protected ActivityInfo info;
-        public ActivityInfo getInfo() {
-            return info;
-        }
-
-        public Intent getIntent() {
-            Intent intent = new Intent();
-            intent.setClassName(info.packageName, info.name);
-            return intent;
-        }
-
-        public String toString() {
-            return title;
-        }
-
-        public static final Comparator<ActivityItemInfo> title_comparator = new Comparator<ActivityItemInfo>() {
-            @Override
-            public int compare(ActivityItemInfo o1, ActivityItemInfo o2) {
-                return o1.getTitle().compareTo(o2.getTitle());
-            }
-        };
-    }
-
-    public static void populateSubMenu(@Nullable MenuItem submenuItem, @NonNull List<ActivityItemInfo> addonItems, long datetime)
-    {
-        if (submenuItem != null)
-        {
-            SubMenu submenu = submenuItem.getSubMenu();
-            if (submenu != null)
-            {
-                for (int i=0; i<submenu.size(); i++) {
-                    submenu.getItem(i).setIntent(submenuItem.getIntent());
-                }
-
-                for (ActivityItemInfo addon : addonItems)
-                {
-                    MenuItem menuItem = submenu.add(Menu.NONE, Menu.NONE, Menu.NONE, addon.getTitle());
-                    if (addon.getIcon() != 0) {
-                        menuItem.setIcon(addon.getIcon());
-                    }
-                    Intent intent = addon.getIntent();
-                    intent.setAction(ACTION_SHOW_DATE);
-                    intent.putExtra(EXTRA_SHOW_DATE, datetime);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    menuItem.setIntent(intent);
-                }
-            }
-        }
-    }
-
-    public static final String REQUIRED_PERMISSION = "suntimes.permission.READ_CALCULATOR";   // TODO: move this somewhere else
-    public static final String CATEGORY_SUNTIMES_ADDON = "suntimes.SUNTIMES_ADDON";
-    public static final String ACTION_ABOUT = "suntimes.action.SHOW_ABOUT";
-    public static final String ACTION_MENU_ITEM = "suntimes.action.ADDON_MENU_ITEM";
-    public static final String ACTION_SHOW_DATE = "suntimes.action.SHOW_DATE";
-    public static final String EXTRA_SHOW_DATE = "dateMillis";
-    public static final String META_MENUITEM_TITLE = "SuntimesMenuItemTitle";
-    public static List<ActivityItemInfo> queryAddonMenuItems(@NonNull Context context)
-    {
-        Intent intent = new Intent();
-        intent.setAction(ACTION_SHOW_DATE);
-        intent.addCategory(CATEGORY_SUNTIMES_ADDON);
-
-        PackageManager packageManager = context.getPackageManager();
-        List<ResolveInfo> packageInfo = packageManager.queryIntentActivities(intent, PackageManager.GET_RESOLVED_FILTER | PackageManager.GET_META_DATA);
-        ArrayList<ActivityItemInfo> matches = new ArrayList<>();
-        for (ResolveInfo resolveInfo : packageInfo)
-        {
-            IntentFilter filter = resolveInfo.filter;
-            if (filter != null && filter.hasAction(ACTION_SHOW_DATE) && filter.hasCategory(CATEGORY_SUNTIMES_ADDON))
-            {
-                try {
-                    PackageInfo packageInfo0 = packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, PackageManager.GET_PERMISSIONS);
-                    if (hasPermission(packageInfo0))
-                    {
-                        String metadata = resolveInfo.activityInfo.metaData.getString(META_MENUITEM_TITLE);
-                        String title = (metadata != null ? metadata : resolveInfo.activityInfo.name);
-                        //int icon = R.drawable.ic_suntimes;    // TODO: icon
-                        matches.add(new ActivityItemInfo(context, title, resolveInfo.activityInfo));
-
-                    } else {
-                        Log.w("queryAddonMenuItems", "Permission denied! " + packageInfo0.packageName + " does not have required permissions.");
-                    }
-                } catch (PackageManager.NameNotFoundException e) {
-                    Log.e("queryAddonMenuItems", "Package not found! " + e);
-                }
-            }
-        }
-        Collections.sort(matches, ActivityItemInfo.title_comparator);
-        return matches;
-    }
-    public static boolean hasPermission(@NonNull PackageInfo packageInfo)
-    {
-        boolean hasPermission = false;
-        if (packageInfo.requestedPermissions != null) {
-            for (String permission : packageInfo.requestedPermissions) {
-                if (permission != null && permission.equals(REQUIRED_PERMISSION)) {
-                    hasPermission = true;
-                    break;
-                }
-            }
-        }
-        return hasPermission;
-    }
 
     public static void initPeekHeight(DialogInterface dialog, int bottomViewResId)    // TODO: move this general use method somewhere more appropriate
     {
