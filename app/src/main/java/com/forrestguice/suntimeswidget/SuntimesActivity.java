@@ -1438,12 +1438,7 @@ public class SuntimesActivity extends AppCompatActivity
     {
         Intent mapIntent = new Intent(Intent.ACTION_VIEW);
         mapIntent.setData(location.getUri());
-        //if (mapIntent.resolveActivity(getPackageManager()) != null)
-        //{
-        //    startActivity(mapIntent);
-        //}
 
-        String myPackage = "com.forrestguice.suntimeswidget";
         List<ResolveInfo> info = getPackageManager().queryIntentActivities(mapIntent, 0);
         List<Intent> geoIntents = new ArrayList<Intent>();
 
@@ -1452,7 +1447,7 @@ public class SuntimesActivity extends AppCompatActivity
             for (ResolveInfo resolveInfo : info)
             {
                 String packageName = resolveInfo.activityInfo.packageName;
-                if (!TextUtils.equals(packageName, myPackage))
+                if (!TextUtils.equals(packageName, BuildConfig.APPLICATION_ID))
                 {
                     Intent geoIntent = new Intent(Intent.ACTION_VIEW);
                     geoIntent.setPackage(packageName);
