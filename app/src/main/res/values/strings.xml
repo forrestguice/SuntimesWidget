@@ -1137,6 +1137,8 @@
     <string name="configActionDesc_themeList">Theme List</string>
     <string name="configActionDesc_actionList">Action List</string>
     <string name="configActionDesc_widgetList">Widget List</string>
+    <string name="configActionDesc_nextSunrise">Show next sunrise</string>   <!-- TODO -->
+    <string name="configActionDesc_nextSunset">Show next sunset</string>     <!-- TODO -->
 
     <string-array name="tapActions_titles">    <!-- must be in same order as enum TapActions -->
         <item>@string/configActionDesc_doNothing</item>
@@ -1147,6 +1149,8 @@
         <item>@string/app_name</item>
         <item>@string/app_name</item>
 
+        <item>@string/app_name</item>
+        <item>@string/app_name</item>
         <item>@string/app_name</item>
         <item>@string/app_name</item>
         <item>@string/app_name</item>
@@ -1180,6 +1184,8 @@
         <item>@string/configActionDesc_nextNote</item>
         <item>@string/configActionDesc_prevNote</item>
         <item>@string/configActionDesc_resetNote</item>
+        <item>@string/configActionDesc_nextSunrise</item>
+        <item>@string/configActionDesc_nextSunset</item>
 
         <item>@string/configActionDesc_setDate</item>
         <item>@string/configActionDesc_setLocation</item>

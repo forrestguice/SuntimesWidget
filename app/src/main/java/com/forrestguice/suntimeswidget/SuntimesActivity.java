@@ -129,6 +129,8 @@ public class SuntimesActivity extends AppCompatActivity
     public static final String ACTION_NOTE_NEXT = "com.forrestguice.suntimeswidget.NEXT_NOTE";
     public static final String ACTION_NOTE_PREV = "com.forrestguice.suntimeswidget.PREV_NOTE";
     public static final String ACTION_NOTE_RESET = "com.forrestguice.suntimeswidget.RESET_NOTE";
+    public static final String ACTION_NOTE_SEEK = "com.forrestguice.suntimeswidget.SEEK_NOTE";
+    public static final String EXTRA_SOLAREVENT = "solarevent";
 
     public static final String ACTION_CONFIG_LOCATION = "com.forrestguice.suntimeswidget.CONFIG_LOCATION";
     public static final String ACTION_CONFIG_TIMEZONE = "com.forrestguice.suntimeswidget.TIMEZONE";
@@ -295,6 +297,9 @@ public class SuntimesActivity extends AppCompatActivity
 
             } else if (action.equals(ACTION_CONFIG_DATE)) {
                 configDate();
+
+            } else if (action.equals(ACTION_NOTE_SEEK)) {
+                seekNextNote(SolarEvents.valueOf(intent.getStringExtra(EXTRA_SOLAREVENT), SolarEvents.SUNSET));
 
             } else if (action.equals(ACTION_NOTE_NEXT)) {
                 setUserSwappedCard( false, "handleIntent (nextNote)" );
@@ -1874,6 +1879,16 @@ public class SuntimesActivity extends AppCompatActivity
         //lightmap.updateViews(false);
     }
 
+    protected void seekNextNote(SolarEvents event)
+    {
+        setUserSwappedCard(false, "seekNextNote: " + event);
+        notes.setNoteIndex(notes.getNoteIndex(event));
+        NoteData note = notes.getNote();
+        if (note != null) {
+            highlightTimeField1(note.noteMode);
+        }
+    }
+
     private CardAdapter.CardAdapterListener cardAdapterListener = new CardAdapter.CardAdapterListener()
     {
         @Override
@@ -1887,45 +1902,22 @@ public class SuntimesActivity extends AppCompatActivity
         }
 
         @Override
-        public void onSunriseHeaderClick(CardAdapter adapter, int position)
-        {
-            setUserSwappedCard(false, "onSunriseClick");
-            notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNRISE));
-            NoteData note = notes.getNote();
-            if (note != null) {
-                highlightTimeField1(note.noteMode);
-            }
+        public void onSunriseHeaderClick(CardAdapter adapter, int position) {
+            seekNextNote(SolarEvents.SUNRISE);
         }
         @Override
         public boolean onSunriseHeaderLongClick(CardAdapter adapter, int position) {
-            setUserSwappedCard(false, "onSunriseClick");
-            notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNRISE));
-            NoteData note = notes.getNote();
-            if (note != null) {
-                highlightTimeField1(note.noteMode);
-            }
+            seekNextNote(SolarEvents.SUNRISE);
             return true;
         }
 
         @Override
-        public void onSunsetHeaderClick(CardAdapter adapter, int position)
-        {
-            setUserSwappedCard(false, "onSunsetClick");
-            notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNSET));
-            NoteData note = notes.getNote();
-            if (note != null) {
-                highlightTimeField1(note.noteMode);
-            }
+        public void onSunsetHeaderClick(CardAdapter adapter, int position) {
+            seekNextNote(SolarEvents.SUNSET);
         }
         @Override
-        public boolean onSunsetHeaderLongClick(CardAdapter adapter, int position)
-        {
-            setUserSwappedCard(false, "onSunsetClick");
-            notes.setNoteIndex(notes.getNoteIndex(SolarEvents.SUNSET));
-            NoteData note = notes.getNote();
-            if (note != null) {
-                highlightTimeField1(note.noteMode);
-            }
+        public boolean onSunsetHeaderLongClick(CardAdapter adapter, int position) {
+            seekNextNote(SolarEvents.SUNSET);
             return true;
         }
 

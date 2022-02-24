@@ -570,6 +570,8 @@ public class WidgetActions
         NEXT_NOTE("Suntimes", "Show next note", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, false),
         PREV_NOTE("Suntimes", "Show previous note", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, false),
         RESET_NOTE("Suntimes", "Show upcoming event", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, false),
+        SEEK_NOTE_SUNRISE("Suntimes", "Show next sunrise", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, false),
+        SEEK_NOTE_SUNSET("Suntimes", "Show next sunset", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, false),
 
         CONFIG_DATE("Suntimes", "Set date", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
         CONFIG_LOCATION("Suntimes", "Set location", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
@@ -691,6 +693,12 @@ public class WidgetActions
                         case NEXT_NOTE: launchAction = SuntimesActivity.ACTION_NOTE_NEXT; break;
                         case PREV_NOTE: launchAction = SuntimesActivity.ACTION_NOTE_PREV; break;
                         case RESET_NOTE: launchAction = SuntimesActivity.ACTION_NOTE_RESET; break;
+                        case SEEK_NOTE_SUNRISE: launchAction = SuntimesActivity.ACTION_NOTE_SEEK;
+                            launchExtras = SuntimesActivity.EXTRA_SOLAREVENT + "=" + SolarEvents.SUNRISE.name();
+                            break;
+                        case SEEK_NOTE_SUNSET: launchAction = SuntimesActivity.ACTION_NOTE_SEEK;
+                            launchExtras = SuntimesActivity.EXTRA_SOLAREVENT + "=" + SolarEvents.SUNSET.name();
+                            break;
 
                         case CARD_NEXT: launchAction = SuntimesActivity.ACTION_CARD_NEXT; break;
                         case CARD_PREV: launchAction = SuntimesActivity.ACTION_CARD_PREV; break;
