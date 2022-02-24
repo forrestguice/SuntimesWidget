@@ -278,7 +278,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (action != null)
         {
             if (action.equals(ACTION_VIEW_SUN)) {
-                showLightMapDialog();
+                showSunPositionAt(intent.getLongExtra(EXTRA_SHOW_DATE, -1));
 
             } else if (action.equals(ACTION_VIEW_MOON)) {
                 showMoonDialog();
@@ -287,7 +287,7 @@ public class SuntimesActivity extends AppCompatActivity
                 showEquinoxDialog();
 
             } else if (action.equals(ACTION_VIEW_WORLDMAP)) {
-                showWorldMapDialog();
+                showMapPositionAt(intent.getLongExtra(EXTRA_SHOW_DATE, -1));
 
             } else if (action.equals(ACTION_ADD_ALARM)) {
                 scheduleAlarm(SolarEvents.valueOf(intent.getStringExtra(EXTRA_SOLAREVENT), null));
