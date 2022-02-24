@@ -1447,30 +1447,4 @@ public class WorldMapDialog extends BottomSheetDialogFragment
         public void onShowPosition( long suggestDate ) {}
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public static void initPeekHeight(DialogInterface dialog, int bottomViewResId)    // TODO: move this general use method somewhere more appropriate
-    {
-        if (dialog != null) {
-            BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
-            FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
-            if (layout != null)
-            {
-                BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
-                View divider1 = bottomSheet.findViewById(bottomViewResId);
-                if (divider1 != null)
-                {
-                    Rect headerBounds = new Rect();
-                    divider1.getDrawingRect(headerBounds);
-                    layout.offsetDescendantRectToMyCoords(divider1, headerBounds);
-                    behavior.setPeekHeight(headerBounds.bottom); // + (int)getResources().getDimension(R.dimen.dialog_margin));
-
-                } else {
-                    behavior.setPeekHeight(-1);
-                }
-            }
-        }
-    }
-
 }

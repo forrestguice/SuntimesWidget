@@ -45,10 +45,10 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.forrestguice.suntimeswidget.map.WorldMapDialog;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import java.util.Calendar;
 import java.util.List;
@@ -145,7 +145,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
                 BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
                 behavior.setHideable(false);
                 behavior.setSkipCollapsed(true);
-                WorldMapDialog.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
+                ViewUtils.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
                 return behavior;
             }
         }
@@ -161,7 +161,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
                 equinoxView.post(new Runnable() {
                     @Override
                     public void run() {
-                        WorldMapDialog.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
+                        ViewUtils.initPeekHeight(getDialog(), R.id.info_equinoxsolstice_flipper1);
                     }
                 });
             } else Log.w("EquinoxDialog.onShow", "null context! skipping update");
