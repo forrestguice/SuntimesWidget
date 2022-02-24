@@ -1930,6 +1930,16 @@ public class SuntimesActivity extends AppCompatActivity
         }
 
         @Override
+        public void onNoonHeaderClick(CardAdapter adapter, int position) {
+            onLightmapClick(adapter, position);
+        }
+        @Override
+        public boolean onNoonHeaderLongClick(CardAdapter adapter, int position) {
+            onLightmapClick(adapter, position);
+            return true;
+        }
+
+        @Override
         public void onMoonHeaderClick(CardAdapter adapter, int position) {
             showMoonDialog();
         }
