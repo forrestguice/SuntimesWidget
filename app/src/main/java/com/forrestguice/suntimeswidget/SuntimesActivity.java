@@ -105,6 +105,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
@@ -113,28 +114,37 @@ import android.os.Handler;
 @SuppressWarnings("Convert2Diamond")
 public class SuntimesActivity extends AppCompatActivity
 {
-    public static final String ACTION_ADD_ALARM = "com.forrestguice.suntimeswidget.ALARM";
+    public static final String ACTION_ADD_ALARM = "suntimes.action.ALARM";
 
-    public static final String ACTION_VIEW_SUN = "com.forrestguice.suntimeswidget.VIEW_SUN";
-    public static final String ACTION_VIEW_MOON = "com.forrestguice.suntimeswidget.VIEW_MOON";
-    public static final String ACTION_VIEW_SOLSTICE = "com.forrestguice.suntimeswidget.VIEW_SOLSTICE";
-    public static final String ACTION_VIEW_WORLDMAP = "com.forrestguice.suntimeswidget.VIEW_WORLDMAP";
+    public static final String ACTION_VIEW_SUN = "suntimes.action.VIEW_SUN";
+    public static final String ACTION_VIEW_MOON = "suntimes.action.VIEW_MOON";
+    public static final String ACTION_VIEW_SOLSTICE = "suntimes.action.VIEW_SOLSTICE";
+    public static final String ACTION_VIEW_WORLDMAP = "suntimes.action.VIEW_WORLDMAP";
 
-    public static final String ACTION_CARD_NEXT = "com.forrestguice.suntimeswidget.CARD_NEXT";
-    public static final String ACTION_CARD_PREV = "com.forrestguice.suntimeswidget.CARD_PREV";
-    public static final String ACTION_CARD_RESET = "com.forrestguice.suntimeswidget.SWAP_CARD";
-    public static final String ACTION_CARD_SHOW = "com.forrestguice.suntimeswidget.SHOW_CARD";
+    public static final String ACTION_CARD_NEXT = "suntimes.action.CARD_NEXT";
+    public static final String ACTION_CARD_PREV = "suntimes.action.CARD_PREV";
+    public static final String ACTION_CARD_RESET = "suntimes.action.SWAP_CARD";
+    public static final String ACTION_CARD_SHOW = "suntimes.action.SHOW_CARD";
     public static final String EXTRA_SHOW_DATE = MenuAddon.EXTRA_SHOW_DATE;
 
-    public static final String ACTION_NOTE_NEXT = "com.forrestguice.suntimeswidget.NEXT_NOTE";
-    public static final String ACTION_NOTE_PREV = "com.forrestguice.suntimeswidget.PREV_NOTE";
-    public static final String ACTION_NOTE_RESET = "com.forrestguice.suntimeswidget.RESET_NOTE";
-    public static final String ACTION_NOTE_SEEK = "com.forrestguice.suntimeswidget.SEEK_NOTE";
+    public static final String ACTION_NOTE_NEXT = "suntimes.action.NEXT_NOTE";
+    public static final String ACTION_NOTE_PREV = "suntimes.action.PREV_NOTE";
+    public static final String ACTION_NOTE_RESET = "suntimes.action.RESET_NOTE";
+    public static final String ACTION_NOTE_SEEK = "suntimes.action.SEEK_NOTE";
     public static final String EXTRA_SOLAREVENT = "solarevent";
 
-    public static final String ACTION_CONFIG_LOCATION = "com.forrestguice.suntimeswidget.CONFIG_LOCATION";
-    public static final String ACTION_CONFIG_TIMEZONE = "com.forrestguice.suntimeswidget.TIMEZONE";
-    public static final String ACTION_CONFIG_DATE = "com.forrestguice.suntimeswidget.CONFIG_DATE";
+    public static final String ACTION_CONFIG_LOCATION = "suntimes.action.CONFIG_LOCATION";
+    public static final String ACTION_CONFIG_TIMEZONE = "suntimes.action.TIMEZONE";
+    public static final String ACTION_CONFIG_DATE = "suntimes.action.CONFIG_DATE";
+
+    public static final String SUNTIMES_ACTION_PREFIX = "suntimes.action";
+    private static final String[] SUNTIMES_ACTIONS = new String[] {
+            ACTION_ADD_ALARM, ACTION_VIEW_SUN, ACTION_VIEW_MOON, ACTION_VIEW_SOLSTICE, ACTION_VIEW_WORLDMAP,
+            ACTION_CARD_NEXT, ACTION_CARD_PREV, ACTION_CARD_RESET, ACTION_CARD_SHOW,
+            ACTION_NOTE_NEXT, ACTION_NOTE_PREV, ACTION_NOTE_RESET, ACTION_NOTE_SEEK,
+            ACTION_CONFIG_LOCATION, ACTION_CONFIG_TIMEZONE, ACTION_CONFIG_DATE
+    };
+    private static final HashMap<String, String> SUNTIMES_ACTION_MAP = createLegacyActionMap();
 
     public static final String SUNTIMES_APP_UPDATE_FULL = "suntimes.SUNTIMES_APP_UPDATE_FULL";
     public static final String SUNTIMES_APP_UPDATE_PARTIAL = "suntimes.SUNTIMES_APP_UPDATE_PARTIAL";
@@ -271,6 +281,11 @@ public class SuntimesActivity extends AppCompatActivity
         String action = intent.getAction();
         intent.setAction(null);
 
+        if (SUNTIMES_ACTION_MAP.containsKey(action)) {
+            Log.d("handleIntent", "legacy action: " + action);
+            action = SUNTIMES_ACTION_MAP.get(action);
+        }
+
         Uri data = intent.getData();
         intent.setData(null);
 
@@ -356,6 +371,17 @@ public class SuntimesActivity extends AppCompatActivity
                 }
             }
         }
+    }
+
+    public static HashMap<String, String> createLegacyActionMap() {
+        return createLegacyActionMap(SUNTIMES_ACTIONS);
+    }
+    public static HashMap<String, String> createLegacyActionMap(String[] actions) {
+        HashMap<String, String> actionMap = new HashMap<>();
+        for (String action : actions) {
+            actionMap.put(action.replaceFirst(SUNTIMES_ACTION_PREFIX, BuildConfig.APPLICATION_ID), action);   // "com.forrestguice.suntimeswidget.ACTION" -> "suntimes.action.ACTION"
+        }
+        return actionMap;
     }
 
     private void initTheme()
