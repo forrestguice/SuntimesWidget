@@ -290,7 +290,7 @@ public class SuntimesActivity extends AppCompatActivity
                 showWorldMapDialog();
 
             } else if (action.equals(ACTION_ADD_ALARM)) {
-                scheduleAlarm();
+                scheduleAlarm(SolarEvents.valueOf(intent.getStringExtra(EXTRA_SOLAREVENT), null));
 
             } else if (action.equals(ACTION_CONFIG_TIMEZONE)) {
                 configTimeZone();
