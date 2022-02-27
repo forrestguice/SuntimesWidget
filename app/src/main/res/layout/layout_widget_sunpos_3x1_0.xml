@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -23,58 +23,7 @@
     <LinearLayout android:id="@+id/widgetframe_inner" style="@style/SunsetTimeWidget"
         android:orientation="vertical" android:layout_width="match_parent">
 
-        <TextView android:id="@+id/text_title" style="@style/SunsetTimeTextTitleView"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:gravity="start" tools:text="title" />
-
-        <LinearLayout
-            android:id="@+id/info_time_lightmap_labels"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginBottom="0dp" android:layout_marginLeft="2dp" android:layout_marginRight="2dp">
-
-            <TextView style="@style/SunsetTimeTextView" android:maxLines="1"
-                android:id="@+id/info_sun_elevation_current"
-                android:layout_marginLeft="2dp" android:layout_marginStart="2dp"
-                android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
-                android:layout_marginTop="0dp" android:layout_marginBottom="0dp"
-                android:text="" tools:text="48" />
-
-            <TextView style="@style/SunsetTimeTextView" android:maxLines="1"
-                android:id="@+id/info_sun_azimuth_current"
-                android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-                android:layout_marginRight="16dp" android:layout_marginEnd="16dp"
-                android:layout_marginTop="0dp" android:layout_marginBottom="0dp"
-                android:text="" tools:text="280" />
-
-            <TextView style="@style/SunsetTimeTextView" android:maxLines="1"
-                android:id="@+id/info_sun_azimuth_rising"
-                android:layout_marginLeft="24dp" android:layout_marginStart="24dp"
-                android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
-                android:layout_marginTop="0dp" android:layout_marginBottom="0dp"
-                android:text="" tools:text="90 E" />
-
-            <TextView style="@style/SunsetTimeTextView" android:maxLines="1"
-                android:id="@+id/info_sun_elevation_atnoon"
-                android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-                android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
-                android:layout_marginTop="0dp" android:layout_marginBottom="0dp"
-                android:text="" tools:text="74" />
-
-            <TextView style="@style/SunsetTimeTextView" android:maxLines="1"
-                android:id="@+id/info_sun_azimuth_setting"
-                android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
-                android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
-                android:layout_marginTop="0dp" android:layout_marginBottom="0dp"
-                android:text="" tools:text="270 W" />
-
-        </LinearLayout>
-
-        <ImageView android:id="@+id/info_time_lightmap"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_gravity="center" android:layout_marginLeft="2dp" android:layout_marginRight="1dp"
-            android:layout_marginStart="2dp" android:layout_marginEnd="1dp"
-            android:contentDescription="@string/configAction_sunDialog" />
+        <include layout="@layout/layout_widget_sunpos_3x1_0_content" />
 
     </LinearLayout>
 

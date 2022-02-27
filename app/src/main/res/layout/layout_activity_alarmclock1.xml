@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2018 Forrest Guice
+    Copyright (C) 2018-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -33,6 +33,7 @@
 		android:id="@+id/app_bottomsheet"
 		android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical"
 		app:layout_insetEdge="bottom" app:behavior_hideable="true" app:behavior_peekHeight="0dp"
+		android:clickable="true" android:focusable="true"
 		app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
 		<!--<View android:layout_width="match_parent" android:layout_height="8dp"

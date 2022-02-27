@@ -55,7 +55,7 @@ public class SuntimesRiseSetData extends SuntimesData
     /**
      * Property: layoutID
      */
-    protected int layoutID = R.layout.layout_widget_1x1_0i;
+    protected int layoutID = R.layout.layout_widget_1x1_0_content;
     public int layoutID()
     {
         return layoutID;
@@ -145,14 +145,14 @@ public class SuntimesRiseSetData extends SuntimesData
 
     public Calendar sunriseCalendar(int i)
     {
-        if (i == 0)
+        if (i == 1)
             return sunriseCalendarToday;
         else return sunriseCalendarOther;
     }
 
     public Calendar sunsetCalendar(int i)
     {
-        if (i == 0)
+        if (i == 1)
             return sunsetCalendarToday;
         else return sunsetCalendarOther;
     }

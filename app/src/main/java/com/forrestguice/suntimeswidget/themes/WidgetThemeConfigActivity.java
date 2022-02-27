@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,6 +20,7 @@ package com.forrestguice.suntimeswidget.themes;
 
 import android.app.Activity;
 import android.app.WallpaperManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,6 +32,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.app.ActionBar;
@@ -100,6 +102,7 @@ import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONFULLCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONFULL_STROKE_WIDTH;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONNEWCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONNEW_STROKE_WIDTH;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONRISECOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONSETCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MOONWANINGCOLOR;
@@ -116,8 +119,13 @@ import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_NOONICON_STROKE_WIDTH_MAX;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_NOONICON_STROKE_WIDTH_MIN;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_PADDING;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_PADDING_BOTTOM;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_PADDING_LEFT;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_PADDING_RIGHT;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_PADDING_TOP;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_RISEICON_FILL_COLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_RISEICON_STROKE_COLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_RISEICON_STROKE_WIDTH;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_SETICON_FILL_COLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_SETICON_STROKE_COLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_SETICON_STROKE_WIDTH;
@@ -131,6 +139,7 @@ import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TEXTSIZE;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TEXTSIZE_MAX;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TEXTSIZE_MIN;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TIMEBOLD;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TIMECOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TIMESIZE;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TIMESIZE_MAX;
@@ -139,6 +148,7 @@ import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TIMESUFFIXSIZE;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TIMESUFFIXSIZE_MAX;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TIMESUFFIXSIZE_MIN;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TITLEBOLD;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TITLECOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TITLESIZE;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_TITLESIZE_MAX;
@@ -365,22 +375,22 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseColorSetIconStroke = createColorChooser(this, R.id.chooser_sunsetStrokeColor, THEME_SETICON_STROKE_COLOR);
 
         // graph colors
-        chooseColorDay = createColorChooser(context, R.id.chooser_dayColor, THEME_DAYCOLOR);
-        chooseColorCivil = createColorChooser(context, R.id.chooser_civilColor, THEME_CIVILCOLOR);
-        chooseColorNautical = createColorChooser(context, R.id.chooser_nauticalColor, THEME_NAUTICALCOLOR);
-        chooseColorAstro = createColorChooser(context, R.id.chooser_astroColor, THEME_ASTROCOLOR);
-        chooseColorNight = createColorChooser(context, R.id.chooser_nightColor, THEME_NIGHTCOLOR);
+        chooseColorDay = createColorChooser(context, R.id.chooser_dayColor, THEME_DAYCOLOR, PREVIEWID_SUNPOS_3x1);
+        chooseColorCivil = createColorChooser(context, R.id.chooser_civilColor, THEME_CIVILCOLOR, PREVIEWID_SUNPOS_3x1);
+        chooseColorNautical = createColorChooser(context, R.id.chooser_nauticalColor, THEME_NAUTICALCOLOR, PREVIEWID_SUNPOS_3x1);
+        chooseColorAstro = createColorChooser(context, R.id.chooser_astroColor, THEME_ASTROCOLOR, PREVIEWID_SUNPOS_3x1);
+        chooseColorNight = createColorChooser(context, R.id.chooser_nightColor, THEME_NIGHTCOLOR, PREVIEWID_SUNPOS_3x1);
 
         // map colors
-        chooseColorMapBackground = createColorChooser(context, R.id.chooser_mapBackgroundColor, THEME_MAP_BACKGROUNDCOLOR);
+        chooseColorMapBackground = createColorChooser(context, R.id.chooser_mapBackgroundColor, THEME_MAP_BACKGROUNDCOLOR, PREVIEWID_SUNPOS_3x2);
         chooseColorMapBackground.setShowAlpha(true);
 
-        chooseColorMapForeground = createColorChooser(context, R.id.chooser_mapForegroundColor, THEME_MAP_FOREGROUNDCOLOR);
+        chooseColorMapForeground = createColorChooser(context, R.id.chooser_mapForegroundColor, THEME_MAP_FOREGROUNDCOLOR, PREVIEWID_SUNPOS_3x2);
 
-        chooseColorMapShadow = createColorChooser(context, R.id.chooser_mapSunShadowColor, THEME_MAP_SHADOWCOLOR);
+        chooseColorMapShadow = createColorChooser(context, R.id.chooser_mapSunShadowColor, THEME_MAP_SHADOWCOLOR, PREVIEWID_SUNPOS_3x2);
         chooseColorMapShadow.setShowAlpha(true);
 
-        chooseColorMapHighlight = createColorChooser(context, R.id.chooser_mapMoonHighlightColor, THEME_MAP_HIGHLIGHTCOLOR);
+        chooseColorMapHighlight = createColorChooser(context, R.id.chooser_mapMoonHighlightColor, THEME_MAP_HIGHLIGHTCOLOR, PREVIEWID_SUNPOS_3x2);
         chooseColorMapHighlight.setShowAlpha(true);
 
         // season colors
@@ -600,31 +610,40 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
     private ColorChooser createColorChooser(Context context, String id)
     {
-        return createColorChooser(context, null, null, null, id);
+        return createColorChooser(context, null, null, null, id, null);
     }
     private ColorChooser createColorChooser(Context context, int labelID, int editID, int buttonID, String id)
     {
         TextView label = (TextView)findViewById(labelID);
         EditText edit = (EditText)findViewById(editID);
         ImageButton button = (ImageButton)findViewById(buttonID);
-        return createColorChooser(context, label, edit, button, id);
+        return createColorChooser(context, label, edit, button, id, null);
     }
-    private ColorChooser createColorChooser(Context context, TextView label, EditText edit, ImageButton button, String id)
+    private ColorChooser createColorChooser(Context context, TextView label, EditText edit, ImageButton button, String id, @Nullable final Integer previewID)
     {
         ColorChooser chooser = new ColorChooser(context, label, edit, button, id);
         chooser.setColorChangeListener(new ColorDialog.ColorChangeListener() {
             @Override
             public void onColorChanged(int color) {
                 addRecentColor(color);
+                if (previewID != null) {
+                    flipToPreview(previewID);
+                    updatePreview();
+                }
             }
         });
         colorChoosers.add(chooser);
         return chooser;
     }
+    private ColorChooser createColorChooser(Context context, int colorChooserID, String id, @Nullable Integer previewID)
+    {
+        ColorChooserView view = (ColorChooserView)findViewById(colorChooserID);
+        return createColorChooser(this, view.getLabel(), view.getEdit(), view.getButton(), id, previewID);
+    }
     private ColorChooser createColorChooser(Context context, int colorChooserID, String id)
     {
         ColorChooserView view = (ColorChooserView)findViewById(colorChooserID);
-        return createColorChooser(this, view.getLabel(), view.getEdit(), view.getButton(), id);
+        return createColorChooser(this, view.getLabel(), view.getEdit(), view.getButton(), id, null);
     }
 
     private SizeChooser createSizeChooser(Context context, float min, float max, String id)
@@ -1282,7 +1301,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
 
         for (SizeChooser chooser : sizeChoosers)
         {
-            outState.putInt(chooser.getID(), chooser.getValue());
+            outState.putFloat(chooser.getID(), chooser.getValue());
         }
         for (ColorChooser chooser : colorChoosers)
         {
@@ -1430,10 +1449,10 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             {
                 editDisplay.setText((mode == UIMode.ADD_THEME) ? generateThemeDisplayString(theme.themeDisplayString()) : theme.themeDisplayString());
             }
-            chooseTitleSize.setValue((int)theme.getTitleSizeSp());
-            chooseTextSize.setValue((int)theme.getTextSizeSp());
-            chooseTimeSize.setValue((int)theme.getTimeSizeSp());
-            chooseSuffixSize.setValue((int)theme.getTimeSuffixSizeSp());
+            chooseTitleSize.setValue(theme.getTitleSizeSp());
+            chooseTextSize.setValue(theme.getTextSizeSp());
+            chooseTimeSize.setValue(theme.getTimeSizeSp());
+            chooseSuffixSize.setValue(theme.getTimeSuffixSizeSp());
             chooseColorTitle.setColor(theme.getTitleColor());
             chooseColorText.setColor(theme.getTextColor());
             chooseColorTime.setColor(theme.getTimeColor());
@@ -1509,7 +1528,18 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
      */
     protected SuntimesTheme saveTheme()
     {
-        SuntimesTheme theme = new SuntimesTheme()
+        SuntimesTheme theme = toTheme();
+        SharedPreferences themePref = getSharedPreferences(WidgetThemes.PREFS_THEMES, Context.MODE_PRIVATE);
+        theme.saveTheme(themePref);
+        return theme;
+    }
+
+    /**
+     *
+     */
+    public SuntimesTheme toTheme()
+    {
+        return new SuntimesTheme()
         {
             private SuntimesTheme init()
             {
@@ -1532,17 +1562,17 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 this.themeSunriseTextColor = chooseColorRise.getColor();
                 this.themeSunriseIconColor = chooseColorRiseIconFill.getColor();
                 this.themeSunriseIconStrokeColor = chooseColorRiseIconStroke.getColor();
-                this.themeSunriseIconStrokeWidth = chooseIconStroke.getValue();
+                this.themeSunriseIconStrokeWidth = (int)chooseIconStroke.getValue();
 
                 this.themeNoonTextColor = chooseColorNoon.getColor();
                 this.themeNoonIconColor = chooseColorNoonIconFill.getColor();
                 this.themeNoonIconStrokeColor = chooseColorNoonIconStroke.getColor();
-                this.themeNoonIconStrokeWidth = chooseNoonIconStroke.getValue();
+                this.themeNoonIconStrokeWidth = (int)chooseNoonIconStroke.getValue();
 
                 this.themeSunsetTextColor = chooseColorSet.getColor();
                 this.themeSunsetIconColor = chooseColorSetIconFill.getColor();
                 this.themeSunsetIconStrokeColor = chooseColorSetIconStroke.getColor();
-                this.themeSunsetIconStrokeWidth = chooseIconStroke.getValue();
+                this.themeSunsetIconStrokeWidth = (int)chooseIconStroke.getValue();
 
                 this.themeDayColor = chooseColorDay.getColor();
                 this.themeCivilColor = chooseColorCivil.getColor();
@@ -1567,8 +1597,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 this.themeMoonWaxingColor = chooseColorMoonWaxing.getColor();
                 this.themeMoonFullColor = chooseColorMoonFull.getColor();
 
-                this.themeMoonFullStroke = chooseMoonStroke.getValue();
-                this.themeMoonNewStroke = chooseMoonStroke.getValue();
+                this.themeMoonFullStroke = (int)chooseMoonStroke.getValue();
+                this.themeMoonNewStroke = (int)chooseMoonStroke.getValue();
 
                 this.themePadding = choosePadding.getPadding();
                 ThemeBackground backgroundItem = (ThemeBackground)spinBackground.getSelectedItem();
@@ -1580,10 +1610,82 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 return this;
             }
         }.init();
+    }
 
-        SharedPreferences themePref = getSharedPreferences(WidgetThemes.PREFS_THEMES, Context.MODE_PRIVATE);
-        theme.saveTheme(themePref);
-        return theme;
+    protected ContentValues toContentValues()
+    {
+        ContentValues values = new ContentValues();
+        values.put(THEME_NAME, chooseName.getThemeName());
+
+        values.put(THEME_DISPLAYSTRING, editDisplay.getText().toString());
+        values.put(THEME_TITLESIZE, chooseTitleSize.getValue());
+        values.put(THEME_TEXTSIZE, chooseTextSize.getValue());
+        values.put(THEME_TIMESIZE, chooseTimeSize.getValue());
+        values.put(THEME_TIMESUFFIXSIZE, chooseSuffixSize.getValue());
+        values.put(THEME_TITLECOLOR, chooseColorTitle.getColor());
+        values.put(THEME_TEXTCOLOR, chooseColorText.getColor());
+        values.put(THEME_TIMECOLOR, chooseColorTime.getColor());
+        values.put(THEME_TIMESUFFIXCOLOR, chooseColorSuffix.getColor());
+        values.put(THEME_ACTIONCOLOR, chooseColorAction.getColor());
+        values.put(THEME_ACCENTCOLOR, chooseColorAccent.getColor());
+
+        values.put(THEME_TITLEBOLD, checkTitleBold.isChecked());
+        values.put(THEME_TIMEBOLD, checkTimeBold.isChecked());
+
+        values.put(THEME_SUNRISECOLOR, chooseColorRise.getColor());
+        values.put(THEME_RISEICON_FILL_COLOR, chooseColorRiseIconFill.getColor());
+        values.put(THEME_RISEICON_STROKE_COLOR, chooseColorRiseIconStroke.getColor());
+        values.put(THEME_RISEICON_STROKE_WIDTH, (int)chooseIconStroke.getValue());
+
+        values.put(THEME_NOONCOLOR, chooseColorNoon.getColor());
+        values.put(THEME_NOONICON_FILL_COLOR, chooseColorNoonIconFill.getColor());
+        values.put(THEME_NOONICON_STROKE_COLOR, chooseColorNoonIconStroke.getColor());
+        values.put(THEME_NOONICON_STROKE_WIDTH, (int)chooseNoonIconStroke.getValue());
+
+        values.put(THEME_SUNSETCOLOR, chooseColorSet.getColor());
+        values.put(THEME_SETICON_FILL_COLOR, chooseColorSetIconFill.getColor());
+        values.put(THEME_SETICON_STROKE_COLOR, chooseColorSetIconStroke.getColor());
+        values.put(THEME_SETICON_STROKE_WIDTH, (int)chooseIconStroke.getValue());
+
+        values.put(THEME_DAYCOLOR, chooseColorDay.getColor());
+        values.put(THEME_CIVILCOLOR, chooseColorCivil.getColor());
+        values.put(THEME_NAUTICALCOLOR, chooseColorNautical.getColor());
+        values.put(THEME_ASTROCOLOR, chooseColorAstro.getColor());
+        values.put(THEME_NIGHTCOLOR, chooseColorNight.getColor());
+
+        values.put(THEME_SPRINGCOLOR, chooseColorSpring.getColor());
+        values.put(THEME_SUMMERCOLOR, chooseColorSummer.getColor());
+        values.put(THEME_FALLCOLOR, chooseColorFall.getColor());
+        values.put(THEME_WINTERCOLOR, chooseColorWinter.getColor());
+
+        values.put(THEME_MAP_BACKGROUNDCOLOR, chooseColorMapBackground.getColor());
+        values.put(THEME_MAP_FOREGROUNDCOLOR, chooseColorMapForeground.getColor());
+        values.put(THEME_MAP_SHADOWCOLOR, chooseColorMapShadow.getColor());
+        values.put(THEME_MAP_HIGHLIGHTCOLOR, chooseColorMapHighlight.getColor());
+
+        values.put(THEME_MOONRISECOLOR, chooseColorMoonrise.getColor());
+        values.put(THEME_MOONSETCOLOR, chooseColorMoonset.getColor());
+        values.put(THEME_MOONWANINGCOLOR, chooseColorMoonWaning.getColor());
+        values.put(THEME_MOONNEWCOLOR, chooseColorMoonNew.getColor());
+        values.put(THEME_MOONWAXINGCOLOR, chooseColorMoonWaxing.getColor());
+        values.put(THEME_MOONFULLCOLOR, chooseColorMoonFull.getColor());
+
+        values.put(THEME_MOONFULL_STROKE_WIDTH, (int)chooseMoonStroke.getValue());
+        values.put(THEME_MOONNEW_STROKE_WIDTH, (int)chooseMoonStroke.getValue());
+
+        int[] padding = choosePadding.getPadding();
+        values.put(THEME_PADDING_LEFT, padding[0]);
+        values.put(THEME_PADDING_TOP, padding[1]);
+        values.put(THEME_PADDING_RIGHT, padding[2]);
+        values.put(THEME_PADDING_BOTTOM, padding[3]);
+
+        SuntimesTheme.ThemeBackground backgroundItem = (SuntimesTheme.ThemeBackground)spinBackground.getSelectedItem();
+        if (backgroundItem != null) {
+            values.put(THEME_BACKGROUND, backgroundItem.name());
+        }
+        values.put(THEME_BACKGROUND_COLOR, chooseColorBackground.getColor());
+
+        return values;
     }
 
     /**

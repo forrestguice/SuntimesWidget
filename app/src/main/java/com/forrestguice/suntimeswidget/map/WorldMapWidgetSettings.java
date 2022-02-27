@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -17,8 +17,12 @@
 */
 package com.forrestguice.suntimeswidget.map;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
@@ -33,6 +37,9 @@ public class WorldMapWidgetSettings
 
     public static final String PREF_KEY_WORLDMAP = "worldmap_";
     public static final String PREF_KEY_WORLDMAP_MAJORLATITUDES = "majorlatitudes";
+    public static final String PREF_KEY_WORLDMAP_MINORGRID = "minorgrid";
+    public static final String PREF_KEY_WORLDMAP_DEBUGLINES = "debuglines";
+    public static final String PREF_KEY_WORLDMAP_TINTMAP = "tintmap";
     public static final String PREF_KEY_WORLDMAP_SUNSHADOW = "sunshadow";
     public static final String PREF_KEY_WORLDMAP_MOONLIGHT = "moonlight";
     public static final String PREF_KEY_WORLDMAP_LOCATION = "showlocation";
@@ -40,38 +47,72 @@ public class WorldMapWidgetSettings
 
     public static final String[][] PREF_DEF_WORLDMAP = new String[][] {
             new String[] {PREF_KEY_WORLDMAP_MAJORLATITUDES, "false"},
+            new String[] {PREF_KEY_WORLDMAP_MINORGRID, "false"},
+            new String[] {PREF_KEY_WORLDMAP_DEBUGLINES, "false"},
+            new String[] {PREF_KEY_WORLDMAP_TINTMAP, "true"},
             new String[] {PREF_KEY_WORLDMAP_SUNSHADOW, "true"},
             new String[] {PREF_KEY_WORLDMAP_MOONLIGHT, "true"},
             new String[] {PREF_KEY_WORLDMAP_LOCATION, "false"},
             new String[] {PREF_KEY_WORLDMAP_SPEED1D, "false"}
     };
 
+    public static final String PREF_KEY_WORLDMAP_BACKGROUND = "background";
+
+    public static final double[] PREF_DEF_WORLDMAP_CENTER = new double[] { 33.45, -111.94 };
+    public static final String PREF_KEY_WORLDMAP_CENTER_LABEL = "center_label";
+    public static final String PREF_KEY_WORLDMAP_CENTER_LATITUDE = "center_latitude";
+    public static final String PREF_KEY_WORLDMAP_CENTER_LONGITUDE = "center_longitude";
+
+    public static final String PREF_KEY_WORLDMAP_TIMEZONE = "timezone";
+    public static final String PREF_DEF_WORLDMAP_TIMEZONE = "UTC";
+
     public static final String MAPTAG_3x2 = "";    // EMPTY
     public static final String MAPTAG_3x3 = "1";
     public static final String MAPTAG_DEF = MAPTAG_3x2;
+    public static final String[] MAPTAGS = new String[] { MAPTAG_3x2, MAPTAG_3x3 };
+
+    public static final String PROJ4_EQD = "+proj=eqc +lat_ts=0 +lat_0=%1$s +lon_0=%2$s +x_0=0 +y_0=0 +a=6371007 +b=6371007 +units=m +no_defs";
+    public static final String PROJ4_AEQD = "+proj=aeqd +lat_0=%1$s +lon_0=%2$s +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs";
+    public static final String PROJ4_AEQD1 = "+proj=aeqd +lat_0=%1$s +lon_0=%2$s +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m +no_defs";
 
     /**
      * WorldMapWidgetMode
      */
-    public static enum WorldMapWidgetMode
+    public static enum WorldMapWidgetMode implements WidgetSettings.WidgetModeDisplay
     {
-        EQUIRECTANGULAR_SIMPLE("Simple", R.layout.layout_widget_sunpos_3x2_0),
-        EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", R.layout.layout_widget_sunpos_3x2_0),
-        EQUIAZIMUTHAL_SIMPLE("Polar [north]", R.layout.layout_widget_sunpos_3x3_0),
-        EQUIAZIMUTHAL_SIMPLE1("Polar [south]", R.layout.layout_widget_sunpos_3x3_0);
+        EQUIRECTANGULAR_SIMPLE("Simple", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_0, false, 0, 0, "Equidistant Rectangular", PROJ4_EQD),
+        EQUIRECTANGULAR_BLUEMARBLE("Blue Marble", MAPTAG_3x2, R.layout.layout_widget_sunpos_3x2_1, false, 0, 0, "Equidistant Rectangular", PROJ4_EQD),
+        EQUIAZIMUTHAL_SIMPLE("Polar [north]", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_0, false, 90, 0, "Equidistant Azimuthal", PROJ4_AEQD),
+        EQUIAZIMUTHAL_SIMPLE1("Polar [south]", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_1, false, -90, 0, "Equidistant Azimuthal", PROJ4_AEQD),
+        EQUIAZIMUTHAL_SIMPLE2("Equidistant Azimuthal", MAPTAG_3x3, R.layout.layout_widget_sunpos_3x3_2, true, 33.45, -111.94, "Equidistant Azimuthal", PROJ4_AEQD1);
 
         private final int layoutID;
         private String displayString;
+        private String tag;
+        private boolean supportsCenter;
+        private double[] center;
+        private String projectionTitle;
+        private String proj4String;
 
-        private WorldMapWidgetMode(String displayString, int layoutID)
+        private WorldMapWidgetMode(String displayString, String tag, int layoutID, boolean supportsCenter, double centerLat, double centerLon, String projectionTitle, String proj4String)
         {
             this.displayString = displayString;
+            this.projectionTitle = projectionTitle;
+            this.proj4String = proj4String;
             this.layoutID = layoutID;
+            this.tag = tag;
+            this.supportsCenter = supportsCenter;
+            this.center = new double[] {centerLat, centerLon};
         }
 
         public String toString()
         {
             return displayString;
+        }
+
+        @Override
+        public int getLayoutID() {
+            return layoutID;
         }
 
         public String getDisplayString()
@@ -84,15 +125,67 @@ public class WorldMapWidgetSettings
             this.displayString = displayString;
         }
 
+        public String getProjectionTitle() {
+            return projectionTitle;
+        }
+        public void setProjectionTitle(String value) {
+            projectionTitle = value;
+        }
+
+        public String getProj4() {
+            return String.format(proj4String, center);
+        }
+        public String getProj4(double[] center) {
+            return String.format(proj4String, center[0], center[1]);
+        }
+
+        public double[] getProjectionCenter() {
+            return center;
+        }
+
+        public String getMapTag() {
+            return tag + ":" + name();
+        }
+
+        public boolean supportsCenter() {
+            return supportsCenter;
+        }
+
         public static void initDisplayStrings( Context context )
         {
             EQUIAZIMUTHAL_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simpleazimuthal));
             EQUIAZIMUTHAL_SIMPLE1.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simpleazimuthal_south));
+            EQUIAZIMUTHAL_SIMPLE2.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simpleazimuthal_location));
             EQUIRECTANGULAR_SIMPLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_simplerectangular));
             EQUIRECTANGULAR_BLUEMARBLE.setDisplayString(context.getString(R.string.widgetMode_sunPosMap_bluemarble));
+
+            EQUIAZIMUTHAL_SIMPLE.setProjectionTitle(context.getString(R.string.worldmap_projection_equiazimuthal));
+            EQUIAZIMUTHAL_SIMPLE1.setProjectionTitle(context.getString(R.string.worldmap_projection_equiazimuthal));
+            EQUIAZIMUTHAL_SIMPLE2.setProjectionTitle(context.getString(R.string.worldmap_projection_equiazimuthal));
+            EQUIRECTANGULAR_SIMPLE.setProjectionTitle(context.getString(R.string.worldmap_projection_equirectangular));
+            EQUIRECTANGULAR_BLUEMARBLE.setProjectionTitle(context.getString(R.string.worldmap_projection_equirectangular));
+        }
+
+        public static WorldMapWidgetMode findMode(int layoutID)
+        {
+            for (WorldMapWidgetMode mode : values()) {
+                if (mode.layoutID == layoutID) {
+                    return mode;
+                }
+            }
+            return null;
+        }
+
+        public static boolean supportsLayout(int layoutID)
+        {
+            for (WidgetSettings.WidgetModeDisplay mode : values()) {
+                if (mode.getLayoutID() == layoutID) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
-
 
     public static void saveSunPosMapModePref(Context context, int appWidgetId, WorldMapWidgetMode mode, String mapTag)
     {
@@ -126,7 +219,7 @@ public class WorldMapWidgetSettings
     }
     public static WorldMapWidgetMode defaultSunPosMapMode(String mapTag)
     {
-        if (mapTag.equals(MAPTAG_3x3)) {
+        if (mapTag.startsWith(MAPTAG_3x3)) {
             return PREF_DEF_APPEARANCE_WIDGETMODE_WORLDMAP1;
         } else return PREF_DEF_APPEARANCE_WIDGETMODE_WORLDMAP;
     }
@@ -150,6 +243,71 @@ public class WorldMapWidgetSettings
         String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_WORLDMAP;
         prefs.remove(prefs_prefix + key + mapTag);
         prefs.apply();
+    }
+
+    public static void saveWorldMapString(Context context, int appWidgetId, String key, String mapTag, String value)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0).edit();
+        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_WORLDMAP;
+        prefs.putString(prefs_prefix + key + mapTag, value);
+        prefs.apply();
+    }
+    public static String loadWorldMapString(Context context, int appWidgetId, String key, String mapTag) {
+        return loadWorldMapString(context, appWidgetId, key, mapTag, null);
+    }
+    public static String loadWorldMapString(Context context, int appWidgetId, String key, String mapTag, String defValue)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(WidgetSettings.PREFS_WIDGET, 0);
+        String prefs_prefix = WidgetSettings.PREF_PREFIX_KEY + appWidgetId + WidgetSettings.PREF_PREFIX_KEY_APPEARANCE + PREF_KEY_WORLDMAP;
+        return prefs.getString(prefs_prefix + key + mapTag, defValue);
+    }
+
+    public static double[] loadWorldMapCenter(Context context, int appWidgetId, String mapTag, double[] defCenter) {
+        return new double[] {
+                Double.parseDouble(loadWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_CENTER_LATITUDE, mapTag, defCenter[0]+"")),
+                Double.parseDouble(loadWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_CENTER_LONGITUDE, mapTag, defCenter[1]+""))
+        };
+    }
+    public static void saveWorldMapCenter(Context context, int appWidgetId, String mapTag, double[] value)
+    {
+        saveWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_CENTER_LATITUDE, mapTag, Double.toString(value[0]));
+        saveWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_CENTER_LONGITUDE, mapTag, Double.toString(value[1]));
+    }
+    public static void deleteWorldMapCenter(Context context, int appWidgetId, String mapTag)
+    {
+        WorldMapWidgetSettings.deleteWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LABEL, mapTag);
+        WorldMapWidgetSettings.deleteWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LATITUDE, mapTag);
+        WorldMapWidgetSettings.deleteWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_CENTER_LONGITUDE, mapTag);
+    }
+    public static String getCenterTag(@Nullable double[] center) {
+        return (center == null ? "0:0" : (int)center[0] + ":" + (int)center[1]);
+    }
+
+    public static String loadWorldMapBackground(Context context, int appWidgetId, String mapTag, @Nullable double[] center) {
+        return loadWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_BACKGROUND, mapTag + ":" + getCenterTag(center));
+    }
+    public static void saveWorldMapBackground(Context context, int appWidgetId, String mapTag, @Nullable double[] center, String backgroundUri) {
+        saveWorldMapString(context, appWidgetId, PREF_KEY_WORLDMAP_BACKGROUND, mapTag + ":" + getCenterTag(center), backgroundUri);
+    }
+    public static void deleteWorldMapBackground(Context context, int appWidgetId, String mapTag, @Nullable double[] center) {
+        deleteWorldMapPref(context, appWidgetId, PREF_KEY_WORLDMAP_BACKGROUND, mapTag + ":" + getCenterTag(center));
+    }
+    public static void initWorldMapBackgroundDefaults(Context context)
+    {
+        if (null == loadWorldMapBackground(context, 0, WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE2.getMapTag(), PREF_DEF_WORLDMAP_CENTER)) {
+            saveWorldMapBackground(context, 0, WorldMapWidgetMode.EQUIAZIMUTHAL_SIMPLE2.getMapTag(), PREF_DEF_WORLDMAP_CENTER, getDrawableUri(context, R.drawable.worldmap4).toString());
+        }
+    }
+
+    private static Uri getDrawableUri(Context context, int resId)
+    {
+        Resources resources = context.getResources();
+        return (new Uri.Builder())
+                .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+                .authority(resources.getResourcePackageName(resId))
+                .appendPath(resources.getResourceTypeName(resId))
+                .appendPath(resources.getResourceEntryName(resId))
+                .build();
     }
 
     public static boolean defaultWorldMapFlag(String key)
@@ -179,6 +337,7 @@ public class WorldMapWidgetSettings
     public static void initDisplayStrings( Context context )
     {
         WorldMapWidgetMode.initDisplayStrings(context);
+        initWorldMapBackgroundDefaults(context);
     }
 
     /**
@@ -187,10 +346,16 @@ public class WorldMapWidgetSettings
      */
     public static void deletePrefs(Context context, int appWidgetId)
     {
-        deleteSunPosMapModePref(context, appWidgetId, MAPTAG_3x2);
-        deleteSunPosMapModePref(context, appWidgetId, MAPTAG_3x3);
-        deleteWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, MAPTAG_3x2);
-        deleteWorldMapPref(context, appWidgetId, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, MAPTAG_3x3);
+        for (String tag : MAPTAGS)
+        {
+            for (String[] flags : PREF_DEF_WORLDMAP) {
+                deleteWorldMapPref(context, appWidgetId, flags[0], tag);
+            }
+            deleteSunPosMapModePref(context, appWidgetId, tag);
+            deleteWorldMapCenter(context, appWidgetId, tag);
+            // deleteWorldMapBackground(context, appWidgetId, tag, center);    // TODO
+            deleteWorldMapPref(context, appWidgetId, PREF_KEY_WORLDMAP_TIMEZONE, tag);
+        }
     }
 
 }

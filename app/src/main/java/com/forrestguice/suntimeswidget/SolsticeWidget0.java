@@ -1,7 +1,7 @@
 package com.forrestguice.suntimeswidget;
 
 /**
-    Copyright (C) 2017 Forrest Guice
+    Copyright (C) 2017-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -83,11 +83,6 @@ public class SolsticeWidget0 extends SuntimesWidget0
 
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SolsticeLayout layout)
     {
-        RemoteViews views = layout.getViews(context);
-
-        boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
-        views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
-
         SuntimesEquinoxSolsticeData data;
         boolean overrideMode = WidgetSettings.loadTimeMode2OverridePref(context, appWidgetId);
         if (overrideMode)
@@ -95,9 +90,7 @@ public class SolsticeWidget0 extends SuntimesWidget0
             SuntimesEquinoxSolsticeDataset dataset = new SuntimesEquinoxSolsticeDataset(context, appWidgetId);
             dataset.calculateData();
 
-            WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, appWidgetId);
-            SuntimesEquinoxSolsticeData nextEvent = (trackingMode == WidgetSettings.TrackingMode.SOONEST ? dataset.findSoonest(dataset.now())
-                                                                                                         : dataset.findClosest(dataset.now()));
+            SuntimesEquinoxSolsticeData nextEvent = findData(dataset, WidgetSettings.loadTrackingModePref(context, appWidgetId));
             data = (nextEvent != null ? nextEvent : dataset.dataEquinoxSpring);
 
         } else {
@@ -105,8 +98,12 @@ public class SolsticeWidget0 extends SuntimesWidget0
             data.calculate();
         }
 
+        layout.prepareForUpdate(context, appWidgetId, data);
+        RemoteViews views = layout.getViews(context);
+
+        boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
+        views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
         views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, SolsticeWidget0.class));
-        layout.prepareForUpdate(data);
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, data);
         appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -117,10 +114,18 @@ public class SolsticeWidget0 extends SuntimesWidget0
         return new SuntimesEquinoxSolsticeDataset(context, appWidgetId).dataEquinoxSpring;
     }
 
+    public static SuntimesEquinoxSolsticeData findData(SuntimesEquinoxSolsticeDataset dataset, WidgetSettings.TrackingMode trackingMode) {
+        switch (trackingMode) {
+            case RECENT: return dataset.findRecent(dataset.now());
+            case CLOSEST: return dataset.findClosest(dataset.now());
+            case SOONEST: default: return dataset.findSoonest(dataset.now());
+        }
+    }
+
     protected static SolsticeLayout getWidgetLayout(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
-        //int minWidth = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
-        //int minHeight = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
+        int minWidth = context.getResources().getInteger(R.integer.widget_size_minWidthDp);
+        int minHeight = context.getResources().getInteger(R.integer.widget_size_minHeightDp);
         //int[] mustFitWithinDp = {minWidth, minHeight};
         //Log.d("getWidgetLayout2", "0: must fit:  [" + mustFitWithinDp[0] + ", " + mustFitWithinDp[1] + "]");
 
@@ -152,6 +157,8 @@ public class SolsticeWidget0 extends SuntimesWidget0
         //}
 
         //Log.d("getWidgetLayout2", "layout is: " + layout);
+        layout.setMaxDimensionsDp(widgetSizeDp(context, appWidgetManager, appWidgetId, new int[] { minWidth, minHeight }));
+        layout.setCategory(widgetCategory(appWidgetManager, appWidgetId));
         return layout;
     }
 

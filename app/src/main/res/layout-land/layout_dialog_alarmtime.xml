@@ -41,11 +41,22 @@
 
         <TextView
             android:id="@+id/locationPicker" android:background="?attr/selectableItemBackground"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_width="wrap_content" android:minWidth="250dp" android:layout_height="wrap_content"
             android:gravity="center_vertical" android:drawablePadding="8dp"
-            android:layout_marginLeft="8dp" android:layout_marginRight="8dp" android:paddingLeft="8dp" android:paddingRight="8dp"
+            android:layout_marginLeft="0dp" android:layout_marginRight="0dp"
+            android:layout_marginBottom="0dp"
+            android:paddingLeft="12dp" android:paddingRight="12dp" android:paddingBottom="4dp"
             android:drawableLeft="?attr/icActionPlace" android:drawableStart="?attr/icActionPlace"
             tools:text="Location" />
+
+        <TextView
+            android:id="@+id/datePicker" android:background="?attr/selectableItemBackground"
+            android:layout_width="wrap_content" android:minWidth="250dp" android:layout_height="wrap_content"
+            android:gravity="center_vertical" android:drawablePadding="8dp"
+            android:layout_marginLeft="0dp" android:layout_marginRight="0dp"
+            android:paddingLeft="12dp" android:paddingRight="12dp" android:paddingTop="4dp" android:paddingBottom="4dp"
+            android:drawableLeft="?attr/icActionCalendar" android:drawableStart="?attr/icActionCalendar"
+            tools:text="Any Date" />
 
     </LinearLayout>
 

@@ -30,8 +30,10 @@ import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.lang.ref.WeakReference;
@@ -249,21 +251,19 @@ public class AlarmDatabaseAdapter
     public Cursor getAllAlarms(int n, boolean fullEntry)
     {
         String[] QUERY = (fullEntry) ? QUERY_ALARMS_FULLENTRY : QUERY_ALARMS_MINENTRY;
-        Cursor cursor =  (n > 0) ? database.query( TABLE_ALARMS, QUERY, null, null, null, null, "_id DESC", n+"" )
-                                 : database.query( TABLE_ALARMS, QUERY, null, null, null, null, "_id DESC" );
-        if (cursor != null)
-        {
-            cursor.moveToFirst();
-        }
-        return cursor;
+        return getAllAlarms(n, QUERY, null, null);
     }
     public Cursor getAllAlarms(int n, boolean fullEntry, boolean enabledOnly)
     {
         String selection = (enabledOnly ? KEY_ALARM_ENABLED + " = ?" : null);    // select enabled
         String[] selectionArgs = (enabledOnly ? new String[] {"1"} : null);    // is 1 (true)
         String[] query = (fullEntry) ? QUERY_ALARMS_FULLENTRY : QUERY_ALARMS_MINENTRY;
-        Cursor cursor =  (n > 0) ? database.query( TABLE_ALARMS, query, selection, selectionArgs, null, null, "_id DESC", n+"" )
-                                 : database.query( TABLE_ALARMS, query, selection, selectionArgs, null, null, "_id DESC" );
+        return getAllAlarms(n, query, selection, selectionArgs);
+    }
+    public Cursor getAllAlarms(int n, String[] columns, @Nullable String selection, @Nullable String[] selectionArgs)
+    {
+        Cursor cursor =  (n > 0) ? database.query( TABLE_ALARMS, columns, selection, selectionArgs, null, null, "_id DESC", n+"" )
+                                 : database.query( TABLE_ALARMS, columns, selection, selectionArgs, null, null, "_id DESC" );
         if (cursor != null) {
             cursor.moveToFirst();
         }
@@ -288,6 +288,48 @@ public class AlarmDatabaseAdapter
         }
         return cursor;
     }
+    public Cursor getAlarm(long row, @NonNull String[] columns, @Nullable String selection, @Nullable String[] selectionArgs) throws SQLException
+    {
+        String selection0 = KEY_ROWID + "=" + row;
+        if (selection != null) {
+            selection0 += " AND " + selection;
+        }
+        Cursor cursor = database.query( true, TABLE_ALARMS, columns, selection0, selectionArgs,
+                null, null, null, null );
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
+
+    public Long findUpcomingAlarmId(long nowMillis) throws SQLException
+    {
+        String[] columns = new String[] { KEY_ROWID, KEY_ALARM_TYPE, KEY_ALARM_ENABLED, KEY_ALARM_DATETIME_ADJUSTED };
+        String selection = KEY_ALARM_TYPE + "= ? AND " + KEY_ALARM_ENABLED + " = ?";
+        String[] selectionArgs = new String[] { "ALARM", "1" };
+
+        Cursor cursor = database.query( true, TABLE_ALARMS, columns, selection, selectionArgs, null, null, null, null );
+        if (cursor != null)
+        {
+            Long upcomingAlarmId = null;
+            long timeToUpcomingAlarm = Long.MAX_VALUE;
+
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast())
+            {
+                long alarmtime = cursor.getLong(cursor.getColumnIndex(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_ADJUSTED));
+                long timeToAlarm = alarmtime - nowMillis;
+                if (timeToAlarm > 0 && timeToAlarm < timeToUpcomingAlarm) {
+                    timeToUpcomingAlarm = timeToAlarm;
+                    upcomingAlarmId = cursor.getLong(cursor.getColumnIndex(AlarmDatabaseAdapter.KEY_ROWID));
+                }
+                cursor.moveToNext();
+            }
+            cursor.close();
+            return upcomingAlarmId;
+        }
+        return null;
+    }
 
     /**
      * Get an alarm state from the database.
@@ -302,6 +344,18 @@ public class AlarmDatabaseAdapter
         Cursor cursor = database.query( true, TABLE_ALARMSTATE, QUERY,
                 KEY_STATE_ALARMID + "=" + row, null,
                 null, null, null, null );
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
+    public Cursor getAlarmState(long row, String selection, String[] selectionArgs) throws SQLException
+    {
+        String selection0 = KEY_STATE_ALARMID + "=" + row;
+        if (selection != null) {
+            selection0 += " AND " + selection;
+        }
+        Cursor cursor = database.query( true, TABLE_ALARMSTATE, QUERY_ALARMSTATE_FULLENTRY, selection0, selectionArgs, null, null, null, null );
         if (cursor != null) {
             cursor.moveToFirst();
         }
@@ -414,17 +468,29 @@ public class AlarmDatabaseAdapter
     }
 
     @TargetApi(19)
-    public void releaseUnusedUriPermissions(Context context)
+    public void releaseUnusedUriPermissions(Context context) {
+        releaseUnusedUriPermissions(context, new String[] { ".png" });    // except for image types
+    }
+
+    @TargetApi(19)
+    public void releaseUnusedUriPermissions(Context context, String[] except)
     {
         ContentResolver resolver = (context != null) ? context.getContentResolver() : null;
         if (resolver != null)
         {
             List<UriPermission> permissions = resolver.getPersistedUriPermissions();
+            releasePermissionLoop:
             for (UriPermission permission : permissions)
             {
-                int alarmCount = getAlarmCount(permission.getUri().toString());
+                Uri uri = permission.getUri();
+                String uriString = permission.getUri().toString();
+                for (String exceptForType : except) {
+                    if (uriString.endsWith(exceptForType))
+                        continue releasePermissionLoop;
+                }
+                int alarmCount = getAlarmCount(uriString);
                 if (alarmCount <= 0) {
-                    resolver.releasePersistableUriPermission(permission.getUri(), Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    resolver.releasePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     Log.i("AlarmDatabaseAdapter", "released uri permission " + permission.getUri().toString());
                 } // else Log.d("AlarmDatabaseAdapter", "retaining uri permission " + permission.getUri().toString() + ", used by " + alarmCount + " alarms.");
             }
@@ -821,17 +887,29 @@ public class AlarmDatabaseAdapter
             param_enabledOnly = value;
         }
 
+        private Long param_nowMillis = null;    // list all items, else find next upcoming from now
+        public void setParam_nowMillis( Long value ) {
+            param_nowMillis = value;
+    }
+
         @Override
         protected Long[] doInBackground(Void... voids)
         {
             ArrayList<Long> alarmIds = new ArrayList<>();
             db.open();
-            Cursor cursor = db.getAllAlarms(0, false, param_enabledOnly);
-            while (!cursor.isAfterLast())
-            {
-                alarmIds.add(cursor.getLong(cursor.getColumnIndex(AlarmDatabaseAdapter.KEY_ROWID)));
-                cursor.moveToNext();
+
+            if (param_nowMillis != null) {
+                alarmIds.add(db.findUpcomingAlarmId(param_nowMillis));
+
+            } else {
+                Cursor cursor = db.getAllAlarms(0, false, param_enabledOnly);
+                while (!cursor.isAfterLast())
+                {
+                    alarmIds.add(cursor.getLong(cursor.getColumnIndex(AlarmDatabaseAdapter.KEY_ROWID)));
+                    cursor.moveToNext();
+                }
             }
+
             db.close();
             return alarmIds.toArray(new Long[0]);
         }

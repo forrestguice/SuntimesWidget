@@ -1,5 +1,95 @@
 ### ~
 
+### v0.14.1 (2022-02-22)
+* fixes crash when using "current location" (#556).
+* fixes bug "lightmap for tomorrow card fails to display" (#557).
+* fixes bug "content-provider supplies the wrong time zone" (#554).
+* adds default world places; ~34 additional locations.    
+* adds 'online-help' link to actions help dialog (#489, #546).
+* changes default 'solar time' mode to Local Mean Time.
+* minor fixes to `en` translations; e.g. `en_US` and `en_CA` display 'fall equinox'.
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#553 by James Liu).
+* updates translation to Norwegian (nb) (#561 by FTno).
+
+### v0.14.0 (2022-02-07)
+* extends add-on functionality; adds content-providers for actions, alarms, and alarm events.
+* adds support for add-on alarms; set an alarm depending on a calculation (#516); the alarm dialog displays a popup menu of add-on AlarmPickers (hidden if none).
+* adds support for 'power off alarms' (#426); adds permission POWER_OFF_ALARM. [PERMISSION].
+* adds a date picker to the alarm dialog; its now possible to schedule alarms at a given date+time (repeat yearly).
+* adds playback (Reset, Play/Pause) to the lightmap dialog (#519).
+* adds altitude at solar noon to the main card view (#524); adds an option display the rising/setting azimuth is place of header labels (#485).
+* adds option 'localize to hemisphere'; swap the waxing/waning moon phase icons for southern hemisphere (northward view) (#526).
+* adds 'tropical year' to the solstice dialog, and 'recent' to solstice tracking modes.
+* adds world map "Azimuthal projection centered on custom coordinates" (#493); adds custom map backgrounds; 'set center', 'set map background', 'tint map', 'graticule' and 'debug lines' options.
+* updates world map backgrounds; "Blue Marble" updated to include bathymetry.
+* adds widget option to "use the app location".
+* adds widget option to override 12h/24h time format setting.
+* adds widget option to "fill entire cell" or "align base" to top-left, right, bottom, ...
+* adds widget option to "scale text and icons" (extra large widgets).
+* renames widget option "grow with available space" to "swap layouts to fill space"; default changed to false; adds help text.
+* reorganizes widget configuration; enhances widget selectors; layout selector now shows a themed preview, theme selector shows background.
+* misc alarm ui improvements; adds a submenu to the alarm edit activity; an alternate way access/discover alarm features (#416).
+* misc solstice dialog improvements; adds context menus, overflow menu, and tracking submenu.
+* misc world map and lightmap dialog improvements; adds overflow menu; adds time zone submenu.
+* misc dialog improvements; navigate between dialogs or addons with the selected date/time.
+
+### v0.13.19 (2022-01-24)
+* adds help for `data source` setting; adds link to online help (#223).
+* reorganizes General settings (#223, #533); `show seconds` restored to `general`; `data source` moved into `advanced`; hides `experimental`. 
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#543 by James Liu).
+* updates translation to Norwegian (nb) (#542 by FTno).
+
+### v0.13.18 (2022-01-14)
+* changes the solstice/equinox card to always include seconds when expanded (#533).
+* updates translations to Simplified Chinese (zh_CN) and Traditional Chinese (zh_TW) (#531, #532 by James Liu).
+* fixes bug "rectangular world map widget unavailable" on some devices (#535).
+* fixes bug "LocationListTask leaks database cursor" (#536).
+* fixes bug "alarm dialog fails to consume touch events" (#529).
+* fixes bug "invalid offsets are retained when editing an existing alarm's event" (#530).
+
+### v0.13.17 (2022-01-02)
+* adds translation to Simplified Chinese (zh_CN) (contributed by James Liu) (#527).
+* updates translation to Traditional Chinese (zh_TW) (#527).
+* fixes alarm notifications to include the 'offset' text (more descriptive); e.g. "5m before sunset" vs "sunset" (#522).
+* fixes crash when loading AlarmCreateDialog with invalid settings (handle unknown event values).
+
+### v0.13.16 (2021-11-29)
+* adds translation to Czech (cs) (contributed by utaxiu) (#520).
+* fixes bug where CalculatorProvider fails to apply altitude refinements.
+
+### v0.13.15 (2021-11-15)
+* updates translation to Norwegian (nb) (#515 by FTno).
+* updates translations to Polish (pl) and Esperanto (eo) (#514 by Verdulo).
+
+### v0.13.14 (2021-10-26)
+* adds "Show Header Icon" and "Show Header Text" options to User Interface settings (#509, #511).
+* fixes bug "twilight duration fails to switch to the next event" (#508).
+* fixes bug "unable to select default widget themes" when overriding the app theme (#510).
+* fixes bug in "1x1 sunrise/sunset only" widgets where the time displayed is for the wrong day (off-by-one).
+* fixes app crash when table headers are clicked (but the corresponding rows have been hidden).
+
+### v0.13.13 (2021-09-09)
+* fixes bug "1x1 moon widget uses imperial units while the app metric" (#506).
+
+### v0.13.12 (2021-06-20)
+* updates translation to German (de) (#503 by wolkenschieber).
+
+### v0.13.11 (2021-06-08)
+* updates translation to Italian (it) (contributed by GiovaGa) (#499).
+* updates translation to French (fr) (contributed by ldmpub) (#501).
+
+### v0.13.10 (2021-05-05)
+* adds 'import places'; import from a previously exported csv (#419).
+* changes moon illumination message; "% illuminated" to "% @ <lunarNoon>" (#384).
+* miscellaneous theme fixes and improvements (#492):
+ ** app now applies theme text sizes.
+ ** app now hides default widget themes from list (recommended for widgets only).
+ ** app now shows a warning when the theme is changed; "app restart may be needed for changes to take effect".
+ ** theme editor now allows choosing fractional sp values.
+ ** theme editor now changes previews when map/graph colors are modified.
+* fixes bug "current location title not translated" (#467).
+* updates translation to Polish and Esperanto (eo, pl) (#491 by Verdulo).
+
 ### v0.13.9 (2021-03-03)
 * updates translation to Catalan (ca) and Spanish (es) (#478, #479 by gnusuari0).
 * updates translation to Dutch (nl) (#486, #487 by Joppla).
@@ -31,14 +121,14 @@
 * fixes bug "NotificationService keeps running in background" (#456, #323).
 
 ### v0.13.4 (2020-11-16)
-* updates translation to Brazilian Portuguese (pt-br) (#450 by naoliv). 
+* updates translation to Brazilian Portuguese (pt-br) (#450 by naoliv).
 * updates translation to Norwegian (nb) (#447 by FTno).
 * updates translation to Polish and Esperanto (eo, pl) (#446 by Verdulo).
 
 ### v0.13.3 (2020-11-03)
 * fixes crash in Manage Places when copying or editing places (#443).
 * adds an object height slider (shadow length) to sun position dialog (#189, #442).
-* updates translation to Brazilian Portuguese (pt-br) (#441 by naoliv). 
+* updates translation to Brazilian Portuguese (pt-br) (#441 by naoliv).
 
 ### v0.13.2 (2020-10-26)
 * adds support for overriding location when creating alarms via Intent.
@@ -186,7 +276,7 @@
 * updates translations to Polish (pl) and Esperanto (eo) (#330, #339 by Verdulo).
 
 ### v0.11.5 (2019-05-31)
-* adds support for playing alarm sounds from the file system (mp3, ogg, etc). [Selecting files requires a file manager app with support for ringtone selection.] 
+* adds support for playing alarm sounds from the file system (mp3, ogg, etc). [Selecting files requires a file manager app with support for ringtone selection.]
 * fixes bug "alarm sound fails to play from external storage" (#326); alarm notifications will fallback to the default ringtone if the selected sound cannot be played.
 * new permission: READ_EXTERNAL_STORAGE. This permission is needed to play sounds located on the SD card (#326). [PERMISSION]
 * improves language resolution for Spanish locales (#147).
@@ -233,7 +323,7 @@
 ### v0.10.2 (2019-01-10)
 * fixes bug "'get location' does not honor the 'units of length' pref" (#290).
 * improves the accuracy of the apparent solar time calculation (#291).
-* updates translation to Basque (eu) (#294 by beriain). 
+* updates translation to Basque (eu) (#294 by beriain).
 
 ### v0.10.1 (2018-12-23)
 * fixes bug "sun/moon circles are difficult to see (too small)" (#286) on lightmap and worldmap widgets.
@@ -246,12 +336,12 @@
 * adds "distance units" (imperial, metric) to General Settings; display distances (altitude/elevation, shadow length) using meters or feet (#273).
 * adds "shadow length" to the Sun Position dialog (#189, #273), and "object height" to General Settings.
 * adds support for third-party apps and widgets through a ContentProvider (#266, #276); https://github.com/forrestguice/SuntimesWidget/wiki/Interfaces.
-* removes Calendar permissions (READ_CALENDAR, WRITE_CALENDAR, READ_SYNC_STATS, WRITE_SYNC_SETTINGS); 
+* removes Calendar permissions (READ_CALENDAR, WRITE_CALENDAR, READ_SYNC_STATS, WRITE_SYNC_SETTINGS);
 * removes Calendar Integration; this feature is now available as a separate apk (#239, #266, #277); https://github.com/forrestguice/SuntimesCalendars.
 * extends the widget update strategy to support per widget updates; the sun and moon widgets may now trigger an update shortly after each event (in addition to the daily update at midnight).
 * adds dst label to timezone dialog; displayed when selected timezone is using daylight saving time (#274).
 * adds eot label to timezone dialog; displayed for apparent solar time (#274).
-* adds "import themes" and "share themes" (export) to the theme list activity (#275). 
+* adds "import themes" and "share themes" (export) to the theme list activity (#275).
 * adds "action color" to themes (button press color) (#275).
 * fixes cropped text in theme config activity (#254); misc layout improvements.
 * updates the legacy icon to match the appearance of the adaptive icon (#272).
@@ -302,7 +392,7 @@
 * enhances the data source selector; now tags the default source, and sources loaded via plugin.
 * enhances data sources (plugins); support for loading external sources (not included with app) (#229).
 * adds elevation to all default locations; default 'en' location changed to New York City, default 'en-US' location changed to Phoenix.  
-* adds elevation UI to Location settings, main ActionBar, and widget title substitutions. 
+* adds elevation UI to Location settings, main ActionBar, and widget title substitutions.
 * adds app pref "Use Elevation"; apply altitude based refinements; defaults true.
 * adds app pref "On Date Long Press"; defaults to "Show Calendar".
 * adds permissions READ_CALENDAR, WRITE_CALENDAR; needed to interact w/ Calendar app (add/remove events in custom calendars).
@@ -317,7 +407,7 @@
 * adds to theming; custom background option (simple background color supporting transparency).
 * updates translation to Polish and Esperanto (eo, pl) (#235 by Verdulo).
 * updates translation to Norwegian (nb) (#224 by FTno).
-* updates dependency (Time4A 3.44.2-2018b). 
+* updates dependency (Time4A 3.44.2-2018b).
 
 ### v0.8.6 (2018-07-05)
 * updates translation to French (fr) (#220 by Aloha68).
@@ -407,8 +497,8 @@
 * adds widget title substitution; %dt and %dT are for time (of last widget update).
 * adds widget title substitution; %id is for appWidgetID (for debug purposes).
 * adds widget option "show labels"; show/hide extra labels.
-* updates dependency (Time4A 3.40-2018b). 
-* updates url: AboutDialog now links https://forrestguice.github.io/SuntimesWidget/ 
+* updates dependency (Time4A 3.40-2018b).
+* updates url: AboutDialog now links https://forrestguice.github.io/SuntimesWidget/
 * updates translations (eo, pl) (#171, #172, #175 by Verdulo); adds translated fastlane metadata.
 
 ### v0.7.1 (2018-02-28)
@@ -442,13 +532,13 @@
 * updates translations (eo, pl) (#160, #162, #163 by Verdulo).
 
 ### v0.6.2 (2018-02-03)
-* adds option "verbose accessibility"; better support for TalkBack. 
-* misc usability fixes (MainActivity, AlarmDialog); better support for TalkBack. 
+* adds option "verbose accessibility"; better support for TalkBack.
+* misc usability fixes (MainActivity, AlarmDialog); better support for TalkBack.
 * misc layout fixes (improved accessibility); better support for "large text".
 * fixes bug "solstice/equinox dates not localized" (#146).
 * adds "adaptive" launcher icon (used by api26+).
 * updates translations (eo, pl) (#148, #149 by Verdulo).
- 
+
 ### v0.6.1 (2018-01-23)
 * adds translations to Catalan (ca) and Spanish (es-ES) (contributed by Raulvo) (#141).
 * fixes bug; expected "11h 55s", actual "11h55s" (#b61d942).
@@ -468,7 +558,7 @@
 * misc refactoring to prevent memory leaks (LightMapTask, TimeZonesLoadTask).
 * fixes flippable widget randomly displays 24hr time (#129).
 * fixes table switch animation fails to play (#125).
-* fixes automatic keyboard popup (WidgetConfigActivity, ThemeConfigActivity); prevent the keyboard from taking focus on activity start. 
+* fixes automatic keyboard popup (WidgetConfigActivity, ThemeConfigActivity); prevent the keyboard from taking focus on activity start.
 * fixes stale/duplicate items in theme selector.
 * fixes theme preview icons (now shown) (api22+).
 * fixes theme icons don't use theme colors (api22+) (#120).
@@ -480,7 +570,7 @@
 * changes default data source to time4a-noaa (fallback remains sunrisesunsetlib).
 * fixes 2x1 widget to show seconds (e.g. "Tomorrow will be 1m 4s shorter").
 * restricts auto-backup to app settings and themes (now excludes widget settings and sqlite db).
-* adds collapsed UI state to ColorChooser; expanded by clicking label. 
+* adds collapsed UI state to ColorChooser; expanded by clicking label.
 * adds to theme config activity: sunrise, sunset, and noon icon colors (fill, stroke, stroke width).
 * fixes theme previews to display sunrise/sunset times (as configured by app) instead of static text.
 * fixes widget sunrise, sunset, and noon icons to use theme colors.

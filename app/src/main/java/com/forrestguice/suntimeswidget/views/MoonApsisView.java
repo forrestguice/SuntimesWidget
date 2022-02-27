@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2019 Forrest Guice
+    Copyright (C) 2019-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -22,7 +22,9 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v4.widget.ImageViewCompat;
@@ -234,6 +236,8 @@ public class MoonApsisView extends LinearLayout
         private boolean isRising = false;
 
         private int colorNote, colorTitle, colorTime, colorText, colorDisabled, colorMoonrise, colorMoonset;
+        private Float spTitle = null, spTime = null, spText = null, spSuffix = null;
+        private boolean boldTitle = false, boldTime = false;
 
         public MoonApsisAdapter(Context context)
         {
@@ -377,6 +381,12 @@ public class MoonApsisView extends LinearLayout
             colorText = theme.getTextColor();
             colorMoonrise = theme.getMoonriseTextColor();
             colorMoonset = theme.getMoonsetTextColor();
+            spText = theme.getTextSizeSp();
+            spTime = theme.getTimeSizeSp();
+            spTitle = theme.getTitleSizeSp();
+            spSuffix = theme.getTimeSuffixSizeSp();
+            boldTitle = theme.getTitleBold();
+            boldTime = theme.getTimeBold();
         }
 
         protected void themeViews(Context context, @NonNull MoonApsisField holder, boolean isAgo)
@@ -389,7 +399,7 @@ public class MoonApsisView extends LinearLayout
             int textColor = isAgo ? colorDisabled : colorText;
             int moonriseColor = isAgo ? colorDisabled : colorMoonrise;
             int moonsetColor = isAgo ? colorDisabled : colorMoonset;
-            holder.themeView(titleColor, textColor, timeColor, moonriseColor, moonsetColor);
+            holder.themeView(titleColor, textColor, timeColor, moonriseColor, moonsetColor, spTitle, boldTitle, spTime, boldTime, spText, spSuffix);
         }
 
         public boolean isRising() {
@@ -444,13 +454,30 @@ public class MoonApsisView extends LinearLayout
             }
         }
 
-        public void themeView(int titleColor, int textColor, int timeColor, int moonriseColor, int moonsetColor)
+        public void themeView(int titleColor, int textColor, int timeColor, int moonriseColor, int moonsetColor, @Nullable Float titleSizeSp, boolean titleBold, @Nullable Float timeSizeSp, boolean timeBold, @Nullable Float textSizeSp, @Nullable Float suffixSizeSp)
         {
             this.timeColor = timeColor;
             timeView.setTextColor(timeColor);
+            if (timeSizeSp != null) {
+                timeView.setTextSize(timeSizeSp);
+                timeView.setTypeface(timeView.getTypeface(), (timeBold ? Typeface.BOLD : Typeface.NORMAL));
+            }
+
             positionView.setTextColor(isRising ? moonriseColor : moonsetColor);
+            if (suffixSizeSp != null) {
+                positionView.setTextSize(suffixSizeSp);
+            }
+
             noteView.setTextColor(textColor);
+            if (timeSizeSp != null) {
+                noteView.setTextSize(timeSizeSp);
+            }
+
             labelView.setTextColor(titleColor);
+            if (titleSizeSp != null) {
+                labelView.setTextSize(titleSizeSp);
+                labelView.setTypeface(labelView.getTypeface(), (titleBold ? Typeface.BOLD : Typeface.NORMAL));
+            }
         }
 
         public void updateField(Context context, Pair<Calendar,SuntimesCalculator.MoonPosition> apsis, boolean showTime, boolean showWeeks, boolean showHours, boolean showSeconds, WidgetSettings.LengthUnit units)

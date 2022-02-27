@@ -28,8 +28,8 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 public abstract class PositionLayout extends SuntimesLayout
 {
-    protected static final int DECIMAL_PLACES = 1;
-    protected static final float SYMBOL_RELATIVE_SIZE = 0.7f;
+    public static final int DECIMAL_PLACES = 1;
+    public static final float SYMBOL_RELATIVE_SIZE = 0.7f;
 
     protected int highlightColor = Color.WHITE;
     protected float suffixSp;
@@ -45,7 +45,7 @@ public abstract class PositionLayout extends SuntimesLayout
         suffixColor = theme.getTimeSuffixColor();
     }
 
-    protected static SpannableString styleAzimuthText(SuntimesUtils.TimeDisplayText azimuthDisplay, int valueColor, int suffixColor, boolean boldTime)
+    public static SpannableString styleAzimuthText(SuntimesUtils.TimeDisplayText azimuthDisplay, int valueColor, int suffixColor, boolean boldTime)
     {
         String azimuthSymbol = azimuthDisplay.getSuffix();
         String azimuthString = azimuthDisplay.getValue() + azimuthSymbol;
@@ -56,7 +56,7 @@ public abstract class PositionLayout extends SuntimesLayout
         return azimuth;
     }
 
-    protected static SpannableString styleElevationText(double value, int valueColor, int suffixColor, boolean boldValue)
+    public static SpannableString styleElevationText(double value, int valueColor, int suffixColor, boolean boldValue)
     {
         SuntimesUtils.TimeDisplayText elevationDisplay = utils.formatAsElevation(value, DECIMAL_PLACES);
         String elevationSymbol = elevationDisplay.getSuffix();

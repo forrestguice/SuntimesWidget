@@ -32,6 +32,7 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -92,6 +93,16 @@ public class AppSettings
 
     public static final String PREF_KEY_UI_SHOWDATASOURCE = "app_ui_showdatasource";
     public static final boolean PREF_DEF_UI_SHOWDATASOURCE = true;
+
+    public static final String PREF_KEY_UI_SHOWHEADER_ICON = "app_ui_showheader_icon";
+    public static final boolean PREF_DEF_UI_SHOWHEADER_ICON = true;
+
+    public static final int HEADER_TEXT_NONE = 0;
+    public static final int HEADER_TEXT_LABEL = 1;
+    public static final int HEADER_TEXT_AZIMUTH = 2;
+
+    public static final String PREF_KEY_UI_SHOWHEADER_TEXT = "app_ui_showheader_text1";
+    public static final int PREF_DEF_UI_SHOWHEADER_TEXT = HEADER_TEXT_LABEL;
 
     public static final String PREF_KEY_UI_SHOWFIELDS = "app_ui_showfields";
     public static final byte PREF_DEF_UI_SHOWFIELDS = 0b00111111;
@@ -336,6 +347,22 @@ public class AppSettings
     {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getBoolean(PREF_KEY_UI_SHOWMOON, PREF_DEF_UI_SHOWMOON);
+    }
+
+    public static boolean loadShowHeaderIconPref( Context context )
+    {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return pref.getBoolean(PREF_KEY_UI_SHOWHEADER_ICON, PREF_DEF_UI_SHOWHEADER_ICON);
+    }
+
+    public static int loadShowHeaderTextPref( Context context )
+    {
+        try {
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+            return Integer.parseInt(pref.getString(PREF_KEY_UI_SHOWHEADER_TEXT, "" + PREF_DEF_UI_SHOWHEADER_TEXT));
+        } catch (NumberFormatException | ClassCastException e) {
+            return PREF_DEF_UI_SHOWHEADER_TEXT;
+        }
     }
 
     public static boolean loadDatasourceUIPref( Context context )
@@ -626,6 +653,29 @@ public class AppSettings
             long bench_end = System.nanoTime();
             Log.d("checkCustomPermissions", "permission check took :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
         }
+    }
+
+    /**
+     * @param context context
+     * @param permissionName permission
+     * @return package that owns this permission, or null of permission dne
+     */
+    @Nullable
+    public static String findPermission(@NonNull Context context, String permissionName)
+    {
+        String packageName = null;
+        PackageManager packageManager = context.getPackageManager();
+        for (PackageInfo packageInfo : packageManager.getInstalledPackages(PackageManager.GET_PERMISSIONS)) {
+            if (packageInfo.permissions != null) {
+                for (PermissionInfo permission : packageInfo.permissions) {
+                    if (permission != null && permission.name.equals(permissionName)) {
+                        packageName = packageInfo.packageName;
+                        break;
+                    }
+                }
+            }
+        }
+        return packageName;
     }
 
 }

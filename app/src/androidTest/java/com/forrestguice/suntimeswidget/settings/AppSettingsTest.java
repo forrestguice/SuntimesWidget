@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -127,6 +127,24 @@ public class AppSettingsTest extends SuntimesActivityTestBase
         assertTrue("defaults should match", defaultValue0 == defaultValue1);
 
         boolean value = AppSettings.loadShowEquinoxPref(context);
+    }
+
+    @Test
+    public void test_showHeaderIcon()
+    {
+        boolean defaultValue0 = AppSettings.PREF_DEF_UI_SHOWHEADER_ICON;
+        boolean defaultValue1 = Boolean.valueOf(context.getResources().getString(R.string.def_app_ui_showheader_icon));
+        assertTrue("defaults should match", defaultValue0 == defaultValue1);
+        boolean value = AppSettings.loadShowHeaderIconPref(context);
+    }
+
+    @Test
+    public void test_showHeaderText()
+    {
+        int defaultValue0 = AppSettings.PREF_DEF_UI_SHOWHEADER_TEXT;
+        int defaultValue1 = Integer.parseInt(context.getResources().getString(R.string.def_app_ui_showheader_text));
+        assertTrue("defaults should match", defaultValue0 == defaultValue1);
+        int value = AppSettings.loadShowHeaderTextPref(context);
     }
 
     @Test

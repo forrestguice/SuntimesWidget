@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -57,15 +57,21 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_stringArrayLength("locale_credits", R.array.locale_credits, "locale_display", R.array.locale_display);
             verify_stringArrayLength("appThemes_values", R.array.appThemes_values, "appThemes_display", R.array.appThemes_display);
 
+            verify_stringArrayValuesOfEnum("localeMode_values", R.array.localeMode_values, AppSettings.LocaleMode.class);
             verify_stringArrayLength("localeMode_values", R.array.localeMode_values, "localeMode_display", R.array.localeMode_display);
             verify_stringArrayLength("localeMode_display", R.array.localeMode_display, "LocaleMode (ENUM)", AppSettings.LocaleMode.values());
 
             verify_stringArrayLength("solarevents_short", R.array.solarevents_short, "solarevents_long", R.array.solarevents_long);
             verify_stringArrayLength("solarevents_short", R.array.solarevents_short, "SolarEvents (ENUM)", SolarEvents.values());
 
+            verify_stringArrayLength("solarevents_long1", R.array.solarevents_short, "solarevents_short", R.array.solarevents_short);
+            verify_stringArrayLength("solarevents_long1", R.array.solarevents_long1, "solarevents_gender", R.array.solarevents_gender);
+            verify_stringArrayLength("solarevents_long1", R.array.solarevents_long1, "solarevents_quantity", R.array.solarevents_quantity);
+
             verify_stringArrayLength("directions_short", R.array.directions_short, "directions_long", R.array.directions_long);
             verify_stringArrayLength("directions_short", R.array.directions_short, "CardinalDirection (ENUM)", SuntimesUtils.CardinalDirection.values());
 
+            verify_stringArrayValuesOfEnum("timezoneSort_values", R.array.timezoneSort_values, WidgetTimezones.TimeZoneSort.class);
             verify_stringArrayLength("timezoneSort_values", R.array.timezoneSort_values, "timezoneSort_display", R.array.timezoneSort_display);
             verify_stringArrayLength("timezoneSort_display", R.array.timezoneSort_display, "TimeZoneSort (ENUM)", WidgetTimezones.TimeZoneSort.values());
 
@@ -75,15 +81,28 @@ public class SuntimesResTest extends SuntimesActivityTestBase
             verify_stringArrayLength("dateTapActions_values", R.array.dateTapActions_values, "dateTapActions_display", R.array.dateTapActions_display);
             verify_enumTapActions("dateTapActions_values", R.array.dateTapActions_values);
 
+            verify_stringArrayValuesOfEnum("timeFormatMode_values", R.array.timeFormatMode_values, WidgetSettings.TimeFormatMode.class);
             verify_stringArrayLength("timeFormatMode_values", R.array.timeFormatMode_values, "timeFormatMode_display", R.array.timeFormatMode_display);
-            verify_stringArrayLength("timeFormatMode_display", R.array.timeFormatMode_display, "TimeFormatMode (ENUM)", WidgetSettings.TimeFormatMode.values());
 
+            verify_stringArrayValuesOfEnum("lengthUnits_values", R.array.lengthUnits_values, WidgetSettings.LengthUnit.class);
             verify_stringArrayLength("lengthUnits_values", R.array.lengthUnits_values, "lengthUnits_display", R.array.lengthUnits_display);
+
             verify_stringArrayLength("alarm_hardwarebutton_actions_values", R.array.alarm_hardwarebutton_actions_values, "alarm_hardwarebutton_actions_display", R.array.alarm_hardwarebutton_actions_display);
             verify_stringArrayLength("getFix_maxAge_values", R.array.getFix_maxAge_values, "getFix_maxAge_display", R.array.getFix_maxAge_display);
             verify_stringArrayLength("getFix_maxElapse_values", R.array.getFix_maxElapse_values, "getFix_maxElapse_display", R.array.getFix_maxElapse_display);
             verify_stringArrayLength("noteTapActions_values", R.array.noteTapActions_values, "noteTapActions_display", R.array.noteTapActions_display);
+
+            verify_stringArrayValuesOfEnum("solsticeTrackingMode_values", R.array.solsticeTrackingMode_values, WidgetSettings.TrackingMode.class);
             verify_stringArrayLength("solsticeTrackingMode_values", R.array.solsticeTrackingMode_values, "solsticeTrackingMode_display", R.array.solsticeTrackingMode_display);
+        }
+    }
+
+    public void verify_stringArrayValuesOfEnum(String tag1, int array1Id, Class enumClass)
+    {
+        Context context = activityRule.getActivity();
+        String[] values = context.getResources().getStringArray(array1Id);
+        for (String value : values) {
+            Enum e = Enum.valueOf(enumClass, value);
         }
     }
 
@@ -136,6 +155,30 @@ public class SuntimesResTest extends SuntimesActivityTestBase
     {
         assertTrue("The size of " + tag1 + " and " + tag2 + "DOES NOT MATCH! locale: " + AppSettings.getLocale().toString(),
                 a1.length == a2.length);
+    }
+
+    @Test
+    public void test_selectFormat_offsetMessages()
+    {
+        Context context = activityRule.getActivity();
+        String[] locales = context.getResources().getStringArray(R.array.locale_values);
+        for (String languageTag : locales)
+        {
+            AppSettings.loadLocale(context, languageTag);
+            verify_selectFormat_offsetMessage("offset_before_msg1", R.string.offset_before_msg1);
+            verify_selectFormat_offsetMessage("offset_after_msg1", R.string.offset_after_msg1);
+        }
+    }
+
+    public void verify_selectFormat_offsetMessage(String tag1, int stringID)
+    {
+        Context context = activityRule.getActivity();
+        String pattern = context.getResources().getString(stringID);
+        assertTrue(tag1 + " pattern contains `{0}` :: " + AppSettings.getLocale().toString(), pattern.contains("{0}"));
+        assertTrue(tag1 + " pattern contains `{1, plural` :: " + AppSettings.getLocale().toString(), pattern.contains("{1, plural,"));
+        assertTrue(tag1 + " pattern contains `{2, select` :: " + AppSettings.getLocale().toString(), pattern.contains("{2, select,"));
+        assertTrue(tag1 + " pattern contains `{3}` :: " + AppSettings.getLocale().toString(), pattern.contains("{3}"));
+        assertTrue(tag1 + " pattern contains `other {` :: " + AppSettings.getLocale().toString(), pattern.contains("other {"));
     }
 
     @Test

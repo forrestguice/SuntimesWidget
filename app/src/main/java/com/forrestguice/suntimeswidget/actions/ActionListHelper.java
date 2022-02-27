@@ -24,14 +24,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.ActionMode;
@@ -60,10 +57,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
-
-import static com.forrestguice.suntimeswidget.settings.WidgetActions.TAG_DEFAULT;
-import static com.forrestguice.suntimeswidget.settings.WidgetActions.TAG_SUNTIMES;
-import static com.forrestguice.suntimeswidget.settings.WidgetActions.TAG_SUNTIMESALARMS;
 
 /**
  * LoadActionDialog
@@ -238,7 +231,7 @@ public class ActionListHelper
             }
         });
 
-        ids.add(0, new ActionDisplay("", context.getString(R.string.configActionDesc_doNothing), context.getString(R.string.configActionDesc_doNothing), WidgetActions.PREF_DEF_ACTION_LAUNCH_COLOR, new String[] {TAG_DEFAULT}));
+        ids.add(0, new ActionDisplay("", context.getString(R.string.configActionDesc_doNothing), context.getString(R.string.configActionDesc_doNothing), WidgetActions.PREF_DEF_ACTION_LAUNCH_COLOR, new String[] {SuntimesActionsContract.TAG_DEFAULT}));
 
         adapter = new ActionDisplayAdapter(context, R.layout.layout_listitem_actions, ids.toArray(new ActionDisplay[0]));
         list.setAdapter(adapter);
@@ -406,7 +399,7 @@ public class ActionListHelper
         if (actionID != null && !actionID.trim().isEmpty() && context != null)
         {
             Set<String> tags = WidgetActions.loadActionTags(context, 0, actionID);
-            final boolean isDefault = tags.contains(TAG_DEFAULT);
+            final boolean isDefault = tags.contains(SuntimesActionsContract.TAG_DEFAULT);
 
             AlertDialog.Builder dialog = new AlertDialog.Builder(context);
             String title = WidgetActions.loadActionLaunchPref(context, 0, actionID, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
@@ -567,10 +560,10 @@ public class ActionListHelper
             if (icon != null && colorize)
             {
                 icon.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                if (item.hasTag(TAG_SUNTIMESALARMS)) {
+                if (item.hasTag(SuntimesActionsContract.TAG_SUNTIMESALARMS)) {
                     icon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher_alarms_foreground));
 
-                } else if (item.hasTag(TAG_SUNTIMES)) {
+                } else if (item.hasTag(SuntimesActionsContract.TAG_SUNTIMES)) {
                     icon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher_foreground));
 
                 } else {

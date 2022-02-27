@@ -44,6 +44,8 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -57,6 +59,7 @@ import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
 import com.forrestguice.suntimeswidget.actions.LoadActionDialog;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
@@ -78,6 +81,7 @@ import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
 import java.io.File;
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -93,6 +97,7 @@ import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_C
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_DATETAPACTION;
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_DATETAPACTION1;
 import static com.forrestguice.suntimeswidget.settings.AppSettings.PREF_KEY_UI_NOTETAPACTION;
+import static com.forrestguice.suntimeswidget.settings.AppSettings.findPermission;
 
 /**
  * A preferences activity for the main app;
@@ -220,6 +225,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 pref.putString(prefKeyForRequestCode(requestCode), selection);
                 pref.apply();
                 rebuildActivity();
+                Toast.makeText(context, context.getString(R.string.restart_required_message), Toast.LENGTH_LONG).show();
 
             } else if (adapterModified) {
                 rebuildActivity();
@@ -540,6 +546,14 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
             // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
             WidgetSettings.saveShowHoursPref(this, 0, sharedPreferences.getBoolean(key, WidgetSettings.PREF_DEF_GENERAL_SHOWHOURS));
+            return;
+        }
+
+        if (key.endsWith(WidgetSettings.PREF_KEY_GENERAL_LOCALIZE_HEMISPHERE))
+        {
+            // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
+            // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
+            WidgetSettings.saveLocalizeHemispherePref(this, 0, sharedPreferences.getBoolean(key, WidgetSettings.PREF_DEF_GENERAL_LOCALIZE_HEMISPHERE));
             return;
         }
 
@@ -1381,6 +1395,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 overridePref.setActionButtonPreferenceListener(createThemeListPreferenceListener(activity, (String)newValue, requestCode));
+                Toast.makeText(activity, activity.getString(R.string.restart_required_message), Toast.LENGTH_LONG).show();
                 return true;
             }
         };
@@ -1402,21 +1417,33 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         };
     }
 
-    private static void initPref_ui_themeOverride(Activity activity, ActionButtonPreference listPref, String key)
+    private static void initPref_ui_themeOverride(Activity activity, ActionButtonPreference listPref, String key) {
+        initPref_ui_themeOverride(activity, listPref, key, null);
+    }
+    private static void initPref_ui_themeOverride(Activity activity, ActionButtonPreference listPref, String key, @Nullable String mustIncludeTheme)
     {
         if (listPref != null)
         {
             WidgetThemes.initThemes(activity);
-            SuntimesTheme.ThemeDescriptor[] themes = WidgetThemes.sortedValues(true);
-            String[] themeEntries = new String[themes.length + 1];
-            String[] themeValues = new String[themes.length + 1];
+            List<SuntimesTheme.ThemeDescriptor> themes0 = WidgetThemes.getSortedValues(true);
+            ArrayList<SuntimesTheme.ThemeDescriptor> themes = new ArrayList<>();
+
+            for (SuntimesTheme.ThemeDescriptor theme : themes0)
+            {
+                if (!theme.isDefault() || theme.name().equals(mustIncludeTheme)) {
+                    themes.add(theme);    // hide default widget themes, show only user-created themes
+                }                            // this is a workaround - the defaults have tiny (unreadable) font sizes, so we won't advertise their use
+            }
+
+            String[] themeEntries = new String[themes.size() + 1];
+            String[] themeValues = new String[themes.size() + 1];
 
             themeValues[0] = "default";
             themeEntries[0] = activity.getString(R.string.configLabel_tagDefault);
-            for (int i=0; i<themes.length; i++)                // i:0 is reserved for "default"
+            for (int i=0; i<themes.size(); i++)                // i:0 is reserved for "default"
             {
-                themeValues[i + 1] = themes[i].name();
-                themeEntries[i + 1] = themes[i].displayString();
+                themeValues[i + 1] = themes.get(i).name();
+                themeEntries[i + 1] = themes.get(i).displayString();
             }
 
             listPref.setEntries(themeEntries);
@@ -1440,8 +1467,16 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 listPref.setOnPreferenceChangeListener(onOverrideThemeChanged(activity, listPref, requestCode));
 
             } else {
-                Log.w(LOG_TAG, "loadPref: Unable to load " + key + "... The list is missing an entry for the descriptor: " + themeName);
-                listPref.setValueIndex(0);
+                if (WidgetThemes.valueOf(themeName) != null) {    // the theme exists but is missing from the list; reload the adapter
+                    initPref_ui_themeOverride(activity, listPref, key, themeName);   // it mustInclude: themeName
+                    loadPref_ui_themeOverride(activity, listPref, key);    // !! potential for recursive loop if initPref_ui_themeOverride fails to include themeName
+
+                } else {
+                    Log.w(LOG_TAG, "loadPref: Unable to load " + key + "... The list is missing an entry for the descriptor: " + themeName);
+                    listPref.setValueIndex(0);
+                    listPref.setActionButtonPreferenceListener(createThemeListPreferenceListener(activity, themeName, requestCode));
+                    listPref.setOnPreferenceChangeListener(onOverrideThemeChanged(activity, listPref, requestCode));
+                }
             }
         }
     }
@@ -1561,6 +1596,11 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
             PreferenceManager.setDefaultValues(getActivity(), R.xml.preference_alarms, false);
             addPreferencesFromResource(R.xml.preference_alarms);
+
+            Activity activity = getActivity();
+            if (AlarmSettings.loadPrefPowerOffAlarms(activity)) {
+                checkPermissions(activity, true);
+            }
         }
 
         @Override
@@ -1569,6 +1609,19 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             super.onResume();
             initPref_alarms(AlarmPrefsFragment.this);
         }
+
+        public static final int REQUEST_PERMISSION_POWEROFFALARMS = 100;
+        protected boolean checkPermissions(Activity activity, boolean requestIfMissing)
+        {
+            if (ContextCompat.checkSelfPermission(activity, AlarmNotifications.PERMISSION_POWEROFFALARM) != PackageManager.PERMISSION_GRANTED) {
+                if (requestIfMissing) {
+                    ActivityCompat.requestPermissions(activity, new String[]{AlarmNotifications.PERMISSION_POWEROFFALARM}, REQUEST_PERMISSION_POWEROFFALARMS);
+                }
+                return false;
+            } else return true;
+        }
+        @Override
+        public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {}
     }
 
     private void initPref_alarms()
@@ -1580,7 +1633,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
     @SuppressLint("ResourceType")
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private static void initPref_alarms(final PreferenceFragment fragment)
+    private static void initPref_alarms(final AlarmPrefsFragment fragment)
     {
         final Context context = fragment.getActivity();
         if (context == null) {
@@ -1639,6 +1692,25 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         Preference volumesPrefs = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_VOLUMES);
         if (volumesPrefs != null) {
             volumesPrefs.setOnPreferenceClickListener(onVolumesPrefsClicked(context));
+        }
+
+        Preference powerOffAlarmsPref = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_POWEROFFALARMS);
+        if (powerOffAlarmsPref != null)
+        {
+            powerOffAlarmsPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener()
+            {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue)
+                {
+                    Activity activity = fragment.getActivity();
+                    boolean enabled = (Boolean)newValue;
+                    if (enabled && activity != null) {
+                        fragment.checkPermissions(activity, true);
+                    }
+                    return true;
+                }
+            });
+            powerOffAlarmsPref.setSummary(context.getString(R.string.configLabel_alarms_poweroffalarms_summary, findPermission(context, AlarmNotifications.PERMISSION_POWEROFFALARM)));
         }
 
         Preference showLauncher = fragment.findPreference(AlarmSettings.PREF_KEY_ALARM_SHOWLAUNCHER);

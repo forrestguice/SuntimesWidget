@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_location_label">Vienna</string>
+    <string name="default_location_latitude">48.19992</string>    <!-- decimal degrees (DD) -->
+    <string name="default_location_longitude">16.36757</string>   <!-- decimal degrees (DD) -->
+    <string name="default_location_altitude">151</string>         <!-- meters -->
+</resources>

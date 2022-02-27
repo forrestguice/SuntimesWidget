@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2020 Forrest Guice
+    Copyright (C) 2020-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -49,7 +49,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.text.style.ImageSpan;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -65,8 +64,10 @@ import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
@@ -351,20 +352,20 @@ public class AlarmListDialog extends DialogFragment
     }
     public static final int UNDO_DELETE_MILLIS = 8000;
 
-    public AlarmClockItem createAlarm(final Context context, AlarmClockItem.AlarmType type, String label, SolarEvents event, Location location, int hour, int minute, String timezone, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays, boolean addToDatabase)
+    public AlarmClockItem createAlarm(final Context context, AlarmClockItem.AlarmType type, String label, String event, Location location, long date, int hour, int minute, String timezone, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays, boolean addToDatabase)
     {
-        final AlarmClockItem alarm = createAlarm(context, type, label, event, location, hour, minute, timezone, vibrate, ringtoneUri, repetitionDays);
+        final AlarmClockItem alarm = createAlarm(context, type, label, event, location, date, hour, minute, timezone, vibrate, ringtoneUri, repetitionDays);
         if (addToDatabase) {
             addAlarm(context, alarm);
         }
         return alarm;
     }
 
-    public static AlarmClockItem createAlarm(final Context context, AlarmClockItem.AlarmType type, String label, @NonNull SolarEvents event, @NonNull Location location) {
-        return createAlarm(context, type, label, event, location, -1, -1, null, AlarmSettings.loadPrefVibrateDefault(context), AlarmSettings.getDefaultRingtoneUri(context, type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
+    public static AlarmClockItem createAlarm(final Context context, AlarmClockItem.AlarmType type, String label, @NonNull String event, @NonNull Location location) {
+        return createAlarm(context, type, label, event, location, -1L, -1, -1, null, AlarmSettings.loadPrefVibrateDefault(context), AlarmSettings.getDefaultRingtoneUri(context, type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
 
-    public static AlarmClockItem createAlarm(final Context context, AlarmClockItem.AlarmType type, String label, SolarEvents event, Location location, int hour, int minute, String timezone, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays)
+    public static AlarmClockItem createAlarm(final Context context, AlarmClockItem.AlarmType type, String label, String event, Location location, long date, int hour, int minute, String timezone, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays)
     {
         final AlarmClockItem alarm = new AlarmClockItem();
         alarm.enabled = AlarmSettings.loadPrefAlarmAutoEnable(context);
@@ -373,7 +374,8 @@ public class AlarmListDialog extends DialogFragment
         alarm.hour = hour;
         alarm.minute = minute;
         alarm.timezone = timezone;
-        alarm.event = event;
+        Log.d("DEBUG", "createAlarm: with hour " + hour + " and minute " + minute + " .. timezone " + timezone);
+        alarm.setEvent(date != -1L ? AlarmAddon.getEventInfoUri(AlarmEventContract.AUTHORITY, Long.toString(date)) : event);   // TODO: event on date
         alarm.location = (location != null ? location : WidgetSettings.loadLocationPref(context, 0));
         alarm.repeating = false;
         alarm.vibrate = vibrate;
@@ -381,9 +383,9 @@ public class AlarmListDialog extends DialogFragment
         alarm.ringtoneURI = (ringtoneUri != null ? ringtoneUri.toString() : null);
         if (alarm.ringtoneURI != null)
         {
-            Ringtone ringtone = RingtoneManager.getRingtone(context, ringtoneUri);
-            alarm.ringtoneName = ringtone.getTitle(context);
-            ringtone.stop();
+            Ringtone ringtone = RingtoneManager.getRingtone(context, ringtoneUri);     // TODO: optimize.. getRingtone takes up to 100ms!
+            alarm.ringtoneName = ringtone.getTitle(context);                           // another ~10ms
+            ringtone.stop();                                                           // another ~30ms
         }
 
         alarm.setState(alarm.enabled ? AlarmState.STATE_NONE : AlarmState.STATE_DISABLED);
@@ -1138,7 +1140,8 @@ public class AlarmListDialog extends DialogFragment
 
         protected void updateView(Context context, AlarmListDialogItem view, @NonNull final AlarmClockItem item)
         {
-            int eventType = item.event == null ? -1 : item.event.getType();
+            SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
+            int eventType = event == null ? -1 : event.getType();
             boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item, Calendar.getInstance(), false);
 
             // spannable icons
@@ -1194,10 +1197,11 @@ public class AlarmListDialog extends DialogFragment
                 view.text_event.setTextColor(item.enabled ? color_on : color_off);
 
                 float eventIconSize = context.getResources().getDimension(R.dimen.eventIcon_width);
-                if (item.event != null)
+                if (event != null)
                 {
-                    Drawable eventIcon = SolarEventIcons.getIconDrawable(context, item.event, (int)eventIconSize, (int)eventIconSize);
-                    view.text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, item.event));
+                    boolean northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && (item.location.getLatitudeAsDouble() < 0);
+                    Drawable eventIcon = SolarEventIcons.getIconDrawable(context, event, (int)eventIconSize, (int)eventIconSize, northward);
+                    view.text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, event));
                     view.text_event.setCompoundDrawables(eventIcon, null, null, null);
 
                 } else {
@@ -1235,8 +1239,10 @@ public class AlarmListDialog extends DialogFragment
             }
 
             // location
-            if (view.text_location != null) {
-                view.text_location.setVisibility((item.event == null && item.timezone == null) ? View.INVISIBLE : View.VISIBLE);
+            if (view.text_location != null)
+            {
+                boolean showLocation = (item.getEventItem(context).requiresLocation() || (item.getEvent() == null && item.timezone != null));
+                view.text_location.setVisibility(showLocation ? View.VISIBLE : View.INVISIBLE);
                 view.text_location.setText(item.location.getLabel());
                 view.text_location.setTextColor(item.enabled ? color_on : color_off);
 
@@ -1281,11 +1287,17 @@ public class AlarmListDialog extends DialogFragment
                 String repeatText = AlarmClockItem.repeatsEveryDay(item.repeatingDays)
                         ? context.getString(R.string.alarmOption_repeat_all)
                         : noRepeat
-                        ? context.getString(R.string.alarmOption_repeat_none)
-                        : AlarmRepeatDialog.getDisplayString(context, item.repeatingDays);
+                            ? context.getString(R.string.alarmOption_repeat_none)
+                            : AlarmRepeatDialog.getDisplayString(context, item.repeatingDays);
 
-                if (item.repeating && (eventType == SolarEvents.TYPE_MOONPHASE || eventType == SolarEvents.TYPE_SEASON)) {
-                    repeatText = context.getString(R.string.alarmOption_repeat);
+                if (item.repeating)
+                {
+                    int repeatSupport = item.getEventItem(context).supportsRepeating();
+                    if (repeatSupport == AlarmEventContract.REPEAT_SUPPORT_BASIC) {
+                        repeatText = context.getString(R.string.alarmOption_repeat);
+                    } else if (repeatSupport == AlarmEventContract.REPEAT_SUPPORT_NONE) {
+                        repeatText = "";
+                    }
                 }
 
                 view.text_repeat.setText(repeatText);

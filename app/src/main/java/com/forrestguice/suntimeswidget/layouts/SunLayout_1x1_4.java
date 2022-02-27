@@ -57,7 +57,8 @@ public class SunLayout_1x1_4 extends SunLayout
     {
         super.updateViews(context, appWidgetId, views, data);
         boolean showSeconds = WidgetSettings.loadShowSecondsPref(context, appWidgetId);
-        updateViewsNoonText(context, views, data.sunsetCalendarToday(), showSeconds);
+        WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
+        updateViewsNoonText(context, views, data.sunsetCalendarToday(), showSeconds, timeFormat);
     }
 
     @Override
@@ -65,10 +66,8 @@ public class SunLayout_1x1_4 extends SunLayout
     {
         super.themeViews(context, views, theme);
 
-        int noonColor = theme.getNoonTextColor();
-        int suffixColor = theme.getTimeSuffixColor();
-        views.setTextColor(R.id.text_time_noon_suffix, suffixColor);
-        views.setTextColor(R.id.text_time_noon, noonColor);
+        views.setTextColor(R.id.text_time_noon_suffix, theme.getTimeSuffixColor());
+        views.setTextColor(R.id.text_time_noon, theme.getNoonTextColor());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
             views.setTextViewTextSize(R.id.text_time_noon_suffix, TypedValue.COMPLEX_UNIT_DIP, theme.getTimeSuffixSizeSp());

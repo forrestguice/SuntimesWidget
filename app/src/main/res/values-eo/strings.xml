@@ -20,12 +20,16 @@
     <string name="configAction_setTimeZone">Elekti horzonon</string>
     <string name="configAction_setDate">Elekti daton</string>
     <string name="configAction_viewDate">Montri daton</string>
+    <string name="configAction_viewDateWith">Montri daton</string>
+    <string name="configAction_share">Kunhavigi</string>
     <string name="configAction_sunDialog">Pozicio de Suno</string>
     <string name="configAction_equinoxDialog">Solstico / ekvinokso</string>
     <string name="configAction_worldMap">Mondmapo</string>
     <string name="configAction_moon">Luno</string>
     <string name="configAction_help">Helpo</string>
+    <string name="configAction_onlineHelp">Online Help</string>   <!-- TODO -->
     <string name="configAction_overflow">Pli</string>
+    <string name="configAction_options">Options</string>   <!-- TODO -->
     <string name="configAction_settings">Agordoj</string>
     <string name="configAction_aboutWidget">Pri</string>
 
@@ -76,18 +80,21 @@
     <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> da tago</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
     <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> da uzebla lumo</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
 
+    <string name="timeMode_tropical_year">Tropical Year</string>   <!-- TODO -->
+
     <!-- Field: moon illumination (as seen in moon widget) -->
     <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> prilumata</string>  <!-- "50% illuminated" .. used in 2x1 widget -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50%" .. used in 1x1 widget -->
+    <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> je <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
          The relative order is defined by the layout (layout/info_time_daydelta.xml).
     -->
-    <string name="delta_day_tomorrow">Morgaŭo estos</string>
-    <string name="delta_day_yesterday">Hieraŭo estis</string>
-    <string name="delta_day_shorter">malpli longa</string>
-    <string name="delta_day_longer">pli longa</string>
+    <string name="delta_day_tomorrow">Morgaŭo estos je</string>
+    <string name="delta_day_yesterday">Hieraŭo estis je</string>
+    <string name="delta_day_shorter">malpli longa.</string>
+    <string name="delta_day_longer">pli longa.</string>
 
     <!-- NotePrefix: since/until/untilEnd
          The note prefix text. e.g.
@@ -112,6 +119,11 @@
         <item quantity="one">%1$s post</item>
         <item quantity="other">%1$s post</item>
     </plurals>
+
+    <string name="offset_before_msg">%1$s antaŭ %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_after_msg">%1$s post %2$s</string>      <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO: review -->
+    <string name="offset_before_msg1">{0} antaŭ {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+    <string name="offset_after_msg1">{0} post {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
 
     <string name="offset_button_before">antaŭ</string>    <!-- button label; [1h] [5m] [before] (-) -->
     <string name="offset_button_after">post</string>      <!-- button label; [1h] [5m] [after] (+) -->
@@ -221,11 +233,15 @@
     <string name="configLabel_general_calculator">Fonto de datumoj:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Fonto de sunaj datumoj</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Fonto de lunaj datumoj</string>         <!-- preference label -->
+    <string name="configLabel_general_calculator_help">Data Sources</string>    <!-- preference title / help button text --> <!-- TODO -->
 
     <string name="configLabel_general_timeFormatMode">Formo de tempo:</string>         <!-- spinner label -->
 
     <string name="configLabel_general_altitude_enabled">Uzi altitudon</string>        <!-- checkbox label -->
-    <string name="configLabel_general_altitude_enabled_summary">Apliki plibonigojn surbaze de altitudo.</string>        <!-- checkbox label -->
+    <string name="configLabel_general_altitude_enabled_summary">Apliki korektojn surbaze de altitudo.</string>        <!-- checkbox label -->
+
+    <string name="configLabel_general_localize_hemisphere">Localize to hemisphere</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_general_localize_hemisphere_summary">Apply hemisphere based localization (season labels, moon phase icons).</string>        <!-- checkbox label -->    <!-- TODO -->
 
     <string name="configLabel_general_lengthUnits">Unuoj de longo</string>        <!-- spinner label -->
 
@@ -236,7 +252,7 @@
     <string name="configLabel_general_showTimeDate_summary">Ampleksi la horon dum montrado de datoj.</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_showWeeks">Montri semajnojn</string>        <!-- checkbox label -->
-    <string name="configLabel_general_showWeeks_summary">Dividi temp-intervalojn longaj ol 7 tagoj inter semajnoj (ekz. 15t iĝas 2sem 1t).</string>        <!-- checkbox label -->
+    <string name="configLabel_general_showWeeks_summary">Dividi temp-intervalojn pli longajn ol 7 tagoj inter semajnoj (ekz. 15 t iĝas 2 sem 1 t).</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_showHours">Montri horojn</string>        <!-- checkbox label -->
     <string name="configLabel_general_showHours_summary">Ampleksi horojn kaj minutojn por temp-intervaloj pli longaj ol tagnokto.</string>    <!-- checkbox label -->
@@ -251,10 +267,28 @@
     <string name="configLabel_general_scanPlugins_summary">Skani kaj enlegi eksterajn kromprogramojn.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
+    <string name="configLabel_widgetlayout">Layout</string>           <!-- group title -->  <!-- TODO -->
+    <string-array name="widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
+        <!--<item>Fill</item>-->
+        <item>Top-Left</item>
+        <item>Top</item>
+        <item>Top-Right</item>
+        <item>Left</item>
+        <item>Center</item>
+        <item>Right</item>
+        <item>Bottom-Left</item>
+        <item>Bottom</item>
+        <item>Bottom-Right</item>
+    </string-array>  <!-- TODO -->
+
+    <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Aspekto</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Aspekto</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Etoso:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Etendigi al disponebla spaco (regrandigebla)</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_allowResize">Etendigi al disponebla spaco (regrandigebla)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
+    <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_showLabels">Montri etikedojn</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">Montri titolon</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Titolo:</string>              <!-- edittext label -->
@@ -345,6 +379,10 @@
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polusa (nordo)</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polusa (sudo)</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_bluemarble">Blua Globeto</string>    <!-- setting -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_location">Azimuthal Equidistant</string>     <!-- setting -->   <!-- TODO -->
+
+    <string name="worldmap_projection_equirectangular">Equidistant Rectangular</string>    <!-- TODO -->
+    <string name="worldmap_projection_equiazimuthal">Equidistant Azimuthal</string>    <!-- TODO -->
 
     <string name="widgetMode1x1_moonriseset">Lunleviĝo kaj lunsubiro</string>       <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Lunfazo kaj prilumeco</string>    <!-- setting -->
@@ -352,9 +390,11 @@
     <string name="widgetMode1x1_moonillum">Nur prilumeco de Luno</string>         <!-- setting -->
     <string name="widgetMode1x1_moonphasenext">Sekva ĉefa fazo</string>             <!-- setting -->
 
-    <string name="configLabel_appearance_1x1mode">Grando 1×1:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x2mode">Grando 3×2:</string>     <!-- spinner label -->
-    <string name="configLabel_appearance_3x3mode">Grando 3×3:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_1x1mode">1x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_2x1mode">2x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x1mode">3x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x2mode">3x2:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x3mode">3x3:</string>     <!-- spinner label -->  <!-- TODO -->
 
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Fari nenion</string>           <!-- setting -->
@@ -401,15 +441,16 @@
     <string name="configLabel_location_name">Nomo:</string>                     <!-- edittext label -->
     <string name="configHint_location_name">(malnepra)</string>                 <!-- edittext hint -->
     <string name="configHint_location_name0">Nomo de loko</string>                  <!-- edittext hint -->
+    <string name="configLabel_location_fromapp">Use the app location</string>                  <!-- checkbox text -->  <!-- TODO -->
 
     <string name="configAction_getFix">Determini pozicion</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">Redakti</string>         <!-- button (contentDescription) -->
     <string name="configAction_savePlace">Konservi</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">Suntempo</string>                       <!-- setting -->
-    <string name="timezoneMode_current">Sistema</string>                         <!-- setting -->
-    <string name="timezoneMode_custom">Propra</string>                    <!-- setting -->
+    <string name="timezoneMode_standard">suntempo</string>                       <!-- setting -->    <!-- TODO: "solar time" -> "Time Standard" -->
+    <string name="timezoneMode_current">laŭ operaciumo</string>                         <!-- setting -->
+    <string name="timezoneMode_custom">propra</string>                    <!-- setting -->
 
     <string name="time_lmst">loka laŭstela tempo</string>                  <!-- timezone label -->
     <string name="time_gmst">Grenviĉa laŭstela tempo</string>              <!-- timezone label -->
@@ -422,10 +463,10 @@
     <string name="configLabel_timezone">Agordoj pri horzono</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Reĝimo:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Horzono:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Suntempo:</string>                   <!-- spinner label -->
+    <string name="configLabel_timezone_standard">Suntempo:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
 
     <!-- Widget Setting: timeFormat mode -->
-    <string name="timeFormatMode_system">Sistema formo</string>          <!-- setting -->
+    <string name="timeFormatMode_system">Laŭ operaciumo</string>          <!-- setting -->
     <string name="timeFormatMode_12hr">12‑hora</string>                  <!-- setting -->
     <string name="timeFormatMode_24hr">24‑hora</string>                  <!-- setting -->
 
@@ -447,6 +488,7 @@
     <string name="configLabel_general_showComparison">Montri komparon</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
+    <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
     <string name="trackingMode_closest">Plej proksima okazaĵo</string>                 <!-- setting -->
     <string name="trackingMode_soonest">Sekva okazaĵo</string>                <!-- setting -->
     <string name="configLabel_general_trackingMode">Spuri:</string>            <!-- spinner label -->
@@ -525,7 +567,7 @@
     <string name="configAction_deleteTheme">Forigi</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Kopii</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportThemes">Elporti</string>    <!-- button (contentDescription) -->
-    <string name="configAction_shareTheme">Kunhavigi</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
+    <string name="configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
     <string name="configAction_importThemes">Enporti</string>    <!-- button (contentDescription) -->
 
     <!--<string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>-->                                        <!-- suggested new theme id -->
@@ -662,6 +704,7 @@
     <string name="configAction_sortAlarms_by_time">Tempo de alarmo</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_creation">Tempo de kreo</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">Forviŝi</string>                <!-- action button / menu item -->
+    <string name="configAction_clearDate">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_setAlarmOffset">Agordi deŝovon</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmType">Agordi tipon</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">Agordi etikedon</string>         <!-- button (contentDescription) -->
@@ -687,8 +730,8 @@
     <string name="alarmAction_timeoutMsg">Alarmo silentiĝis.</string>     <!-- notification msg -->
     <string name="alarmAction_upcomingMsg">Alarmo baldaŭas</string>     <!-- notification msg -->
 
-    <string name="alarmMode_alarm">Alarmo</string>                <!-- alarm type (setting) -->
-    <string name="alarmMode_notification">Sciigo</string>                <!-- alarm type (setting) -->
+    <string name="alarmMode_alarm">alarmo</string>                <!-- alarm type (setting) -->
+    <string name="alarmMode_notification">sciigo</string>                <!-- alarm type (setting) -->
 
     <string name="configLabel_alarmEdit_scheduleTray">Plani:</string>               <!-- group title -->
     <string name="configLabel_alarmEdit_onAlertTray">Ludi sonon &#47; ekigi:</string>               <!-- group title -->
@@ -696,6 +739,8 @@
 
     <string name="alarmOption_vibrate">vibri</string>                <!-- checkbox text -->
     <string name="alarmOption_ringtone_none">sen sono</string>          <!-- ringtone label (none) -->
+    <string name="alarmOption_ringtone_ringtone">voksono</string>          <!-- menu item; Select a "Ringtone" -->
+    <string name="alarmOption_ringtone_file">son-dosiero</string>          <!-- menu item; Select an "Audio File" -->
     <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
     <string name="alarmOption_solarevent_none">konstanta tempo</string>          <!-- ringtone label (none) -->
 
@@ -707,7 +752,8 @@
     <string name="deletealarm_dialog_message">Ĉu vi certe volas forigi la <xliff:g id="type">%1$s</xliff:g>n je <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>)?</string>   <!-- dialog msg -->
     <string name="deletealarm_dialog_ok">Forigi</string>        <!-- button -->
     <string name="deletealarm_dialog_cancel">Nuligi</string>    <!-- button -->
-    <string name="deletealarm_toast_success">Forigis <xliff:g id="type" example="sciigo">%1$s</xliff:g>n je <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>).</string> <!-- toast msg -->
+    <string name="deletealarm_toast_success">Forigita: <xliff:g id="type" example="sciigo">%1$s</xliff:g> je <xliff:g id="time">%2$s</xliff:g> (<xliff:g id="event">%3$s</xliff:g>).</string> <!-- toast msg -->
+    <string name="deletealarm_toast_success1">Forigita: <xliff:g id="type" example="Notification">%1$s</xliff:g>.</string> <!-- toast msg -->
 
     <string name="discardchanges_dialog_message">Estas nekonservitaj ŝanĝoj.</string>      <!-- dialog message -->
     <string name="discardchanges_dialog_ok">Ne konservi</string>                              <!-- button -->
@@ -739,6 +785,7 @@
     <string name="alarmoffset_dialog_cancel">Nuligi</string>    <!-- button -->
 
     <string name="alarmenabled_toast">Agordis <xliff:g id="alarmType" example="sciigo">%1$s</xliff:g>n post <xliff:g id="duration" example="8h">%2$s</xliff:g>.</string> <!-- toast msg -->
+    <string name="alarmdetails_snack">La <xliff:g id="alarmType" example="Notification">%1$s</xliff:g> aktiviĝos post <xliff:g id="duration" example="8h">%2$s</xliff:g>.</string> <!-- snackbar msg -->
 
     <string name="configLabel_alarms_optWhiteList">Optimumigo de baterio</string>
     <string name="configLabel_alarms_optWhiteList_listed">Ne optimumigita (konsilinde)</string>
@@ -797,11 +844,19 @@
         <item quantity="one">%d sekundo</item>
         <item quantity="other">%d sekundoj</item>
     </plurals>
+
+    <plurals name="units_days">
+        <item quantity="one">%s day</item>
+        <item quantity="other">%s days</item>
+    </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->    <!-- TODO -->
     
     <string name="configLabel_alarmMisc">Diversaj</string>
-    <string name="configLabel_alarms_showlauncher">Piktogramo en lanĉilo</string>
-    <string name="configLabel_alarms_showlauncher_summary">Montri la piktogramon “Suntempoj: alarmoj” en aplikaĵa lanĉilo.</string>
-    
+    <string name="configLabel_alarms_showlauncher">Bildsimbolo en lanĉilo</string>
+    <string name="configLabel_alarms_showlauncher_summary">Montri la bildsimbolon “Suntempoj: alarmoj” en aplikaĵlanĉilo.</string>
+
+    <string name="configLabel_alarms_poweroffalarms">Power Off Alarm</string>    <!-- TODO -->
+    <string name="configLabel_alarms_poweroffalarms_summary">Wake the device from the power off state.\npackage: <xliff:g id="packageName">%s</xliff:g></string>    <!-- TODO -->
+
     <!--
          APP SETTINGS
     -->
@@ -830,10 +885,11 @@
     <string name="configAction_copyPlace">Kopii</string>            <!-- button (contentDescription) -->
     <string name="configAction_selectPlace">Elekti</string>        <!-- button (contentDescription) -->
     <string name="configAction_searchPlace">Serĉi</string>              <!-- button (contentDescription) -->
-    <string name="configAction_sharePlace">Kunhavigi</string>          <!-- button (contentDescription) -->
+    <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
     <string name="configAction_deletePlace">Forigi</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Forigi ĉiujn</string>         <!-- button (contentDescription) -->
     <string name="configAction_exportPlaces">Elporti</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">Enporti</string>       <!-- button (contentDescription) -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Fasado</string>                       <!-- group title -->
@@ -867,6 +923,16 @@
     <!-- App Setting: show data source -->
     <string name="configLabel_ui_showdatasource">Montri fonton de datumoj</string>
     <string name="configLabel_ui_showdatasource_summary">Montri etikedon indikantan la nunan agordaron.</string>
+
+    <!-- App Setting: show headers -->
+    <string name="configLabel_ui_showheaders">Kolumn-titoloj</string>              <!-- group title -->
+    <string name="configLabel_ui_showheader_icon">Montri bildsimbolon en kulumn-titolo</string> <!-- checkbox label -->
+    <string name="configLabel_ui_showheader_text">Montri tekston en kolumn-titolo</string> <!-- checkbox label -->
+    <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
+        <item>None</item>
+        <item>Labels</item>
+        <item>Azimuth</item>
+    </string-array>    <!-- TODO -->
 
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Ora horo</string>
@@ -960,10 +1026,34 @@
     <string name="worldmap_dialog_option_moonlight">Luno</string>
     <string name="worldmap_dialog_option_all">Ambaŭ</string>
     <string name="worldmap_dialog_option_location">Pozicio</string>
-    <string name="worldmap_dialog_option_latitudes">Cirkloj de latitudo</string>
-    <string name="worldmap_dialog_speed_15m">&#215; 15min</string>
-    <string name="worldmap_dialog_speed_1d">&#215; 1t</string>
-    <string name="configAction_shareMap">Kunhavigi</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+    <string name="worldmap_dialog_options_menu">@string/configAction_options</string>
+    <string name="worldmap_dialog_option_center">Center on location</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_current">Center: %s</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_msg">Map center set to current location \n[%s]</string>    <!-- toast message; center set to... --> <!-- TODO -->
+    <string name="worldmap_dialog_option_center_clear">Reset map center</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_clear_msg">Map center reset to default \n[%s]</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background">Set Background</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background_clear">Clear Background</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background_warning0">This image has the wrong aspect ratio.. expected %2$s, but found %1$s!</string>    <!-- toast message; aspect ratio warning --> <!-- TODO -->
+    <string name="worldmap_dialog_option_background_error0">Failed to open map background.</string>    <!-- toast message; io error --> <!-- TODO -->
+    <string name="worldmap_dialog_option_latitudes">Cirkloj de latitudo</string>    <!-- TODO: "Latitudes" -> "Major lines" -->
+    <string name="worldmap_dialog_option_minorgrid">Graticule</string>  <!-- TODO -->
+    <string name="worldmap_dialog_option_debuglines">Debug Lines</string>  <!-- TODO -->
+    <string name="worldmap_dialog_option_tintmap">Tint</string>  <!-- TODO -->
+    <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->   <!-- TODO -->
+    <string name="worldmap_dialog_speed_15m">&#215; 15 min</string>
+    <string name="worldmap_dialog_speed_1d">&#215; 1 t</string>
+    <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+
+    <string name="help_worldmap_background">
+      <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
+      \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
+      \n\nFor best results select an image matching these properties.
+    </string>    <!-- TODO -->
+
+    <!-- Dialog: Light Map -->
+    <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
+    <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Plani alarmon pri</string>
@@ -1007,7 +1097,7 @@
         <item>plejsupro de Luno</item>
         <item>plejmalsupro de Luno</item>
     </string-array>
-    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->
+    <string-array name="solarevents_long">   <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>astronomia sunleviĝo</item>
         <item>naŭtika sunleviĝo</item>
         <item>matena blua horo (komenco)</item>
@@ -1036,6 +1126,35 @@
         <item>kulmino supra de Luno</item>
         <item>kulmino malsupra de Luno</item>
     </string-array>
+    <string-array name="solarevents_long1">    <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
+        <item>astronomia sunleviĝo</item>
+        <item>naŭtika sunleviĝo</item>
+        <item>matena blua horo (komenco)</item>
+        <item>civila sunleviĝo</item>
+        <item>matena blua horo (fino)</item>
+        <item>sunleviĝo</item>
+        <item>matena ora horo (fino)</item>
+        <item>tagmezo vera (kulmino)</item>
+        <item>vespera ora horo (komenco)</item>
+        <item>sunsubiro</item>
+        <item>vespera blua horo (komenco)</item>
+        <item>civila sunsubiro</item>
+        <item>vespera blua horo (fino)</item>
+        <item>naŭtika sunsubiro</item>
+        <item>astronomia sunsubiro</item>
+        <item>lunleviĝo</item>
+        <item>lunsubiro</item>
+        <item>nova Luno</item>
+        <item>kreskanta Lunduono</item>
+        <item>plena Luno</item>
+        <item>malkreskanta Lunduono</item>
+        <item>printempa tagnoktegaleco</item>
+        <item>somera sunekstremo</item>
+        <item>aŭtuna tagnoktegaleco</item>
+        <item>vintra sunekstremo</item>
+        <item>kulmino supra de Luno</item>
+        <item>kulmino malsupra de Luno</item>
+    </string-array>   <!-- TODO -->
     
   <!-- App Setting: locale mode -->
   <string name="configLabel_locale">Agordoj de lingvo</string>   <!-- group title -->
@@ -1043,7 +1162,7 @@
   <string name="configLabel_localeMode">Reĝimo</string>
   <string name="configLabel_localeMode_summary"><xliff:g id="localeMode_display" example="System Locale">%s</xliff:g></string>
   <string-array name="localeMode_display">                      <!-- one-to-one with localeMode_values -->
-      <item>Sistema</item>
+      <item>Laŭ operaciumo</item>
       <item>Propra</item>
   </string-array>
 
@@ -1066,6 +1185,8 @@
         <item>Portugala</item>
         <item>Rusa</item>
         <item>Nederlanda</item>
+        <item>Czech</item>  <!-- TODO -->
+        <item>Simplified Chinese</item> <!-- TODO -->
     </string-array>
 
     <!-- position formats -->
@@ -1240,7 +1361,7 @@
         <a href="https://github.com/forrestguice/SuntimesWidget/issues">erar-spurilon</a> por raporti problemon.
     ]]></string>
     <string name="app_legal1"><![CDATA[
-        Kopirajto &#169 2014-2021 Forrest GUICE <br />
+        Kopirajto &#169 2014-2022 Forrest GUICE <br />
         Fontkodo disponebla laŭ la permesilo GPLv3.
     ]]></string>
 
@@ -1251,9 +1372,18 @@
     <string name="creditsTab">Dankoj</string>
 
     <string name="app_legal3"><![CDATA[ <b>Bibliotekoj:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
+    <string name="app_about_media"><![CDATA[ <b>Media:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>    <!-- TODO -->
     
     <!-- Dialog: Help -->  
     <string name="help_dialog_title">Helpo</string>
+    <string name="help_appearance_allowresize"><![CDATA[
+      <big>Swap layouts to fill available space</big><br/><br/>
+      <i><b>[enabled]</b></i> The widget will switch between layouts depending on available space.<br/><br/>
+      <i><b>[disabled]</b></i> The widget maintains its initial layout when resized. Use this with the \"<i>scale text and icons</i>\" option for extra large widgets.<br/>
+    ]]></string>  <!-- TODO -->
+    <string name="help_appearance_widgetlayout"><![CDATA[
+      This widget was created with a <b>%1$s</b> <em>initial layout</em>.<br/></br/>
+    ]]></string>  <!-- TODO -->
     <string name="help_appearance_title">
         <![CDATA[
         La jenaj mallongigoj estas subtenataj:<br/>
@@ -1266,30 +1396,35 @@
                 * <b>%dt</b> por tempo de lasta aktualigo <br/>
                 * <b>%dT</b> por tempo (kun sekundoj) de lasta aktualigo <br/>
                 <br/>
-                * <b>%loc</b> por etikedo (ekz. Prescott) <br />
-                * <b>%lat</b> por latitudo (ekz. 35.5409) <br />
-                * <b>%lon</b> por longitudo (ekz. -112.4691) <br/>
-                * <b>%lel</b> por altitudo (ekz. 385 metroj) <br/>
+                * <b>%loc</b> por etikedo (ekz. Bjalistoko) <br />
+                * <b>%lat</b> por latitudo <br />
+                * <b>%lon</b> por longitudo <br/>
+                * <b>%lel</b> por altitudo (ekz. 139 metroj) <br/>
                 <br/>
                 * <b>%s</b> por datum‑fonto (ekz. sunrisesunsetlib) <br/>
-                * <b>%t</b> por horzono (id) (ekz. US/Arizona) <br/>
+                * <b>%t</b> por horzono (id) (ekz. Europe/Warsaw) <br/>
                 * <b>%id</b> por appWidgetID <br/>
          <br/>
          <b>Sunaj fenestraĵoj:</b> <br/>
                 * <b>%m</b> por reĝimo (mallonge) (ekz. civila) <br/>
                 * <b>%M</b> por reĝimo (longe) (ekz. civila krepusko) <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>Lunaj fenestraĵoj:</b> <br/>
                 * <b>%i</b> por prilumeco (ekz. 25%) <br/>
                 * <b>%M</b> por lunfazo (ekz. kreskanta post‑Lunduono) <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>Solsticaj fenestraĵoj:</b> <br/>
                 * <b>%m</b> por reĝimo (mallonge) (ekz. solstico) <br/>
                 * <b>%M</b> por reĝimo (longe) (ekz. vintra sunekstremo) <br/>
+                * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
          ]]>
-    </string>
-    <string name="help_general_timeMode"><![CDATA[
+    </string>   <!-- TODO -->
+    <string name="help_general_actualTime"><![CDATA[
           <b>Reala sunleviĝo/sunsubiro:</b> la Suno estas sur la horizonto, tio ĉi estas proksimuma tempo de sunleviĝo aŭ sunsubiro.<br/><br/>
+    ]]></string>
+    <string name="help_general_twilight"><![CDATA[
           <b>Civila krepusko:</b> la Suno estas 6&nbsp;gradoj sub la horizonto, la plej helaj steloj estas videblaj. Estas sufiĉe da lumo por fari plejparte da agadoj eksterdome sen artefarita prilumado.<br/><br/>
           <b>Naŭtika krepusko:</b> la Suno estas 12&nbsp;gradoj sub la horizonto, konturoj de objektoj kaj la horizonto estas kvazaŭ nevideblaj. Lumo mankas por plejparte da agadoj eksterdome sen artefarita prilumado.<br/><br/>
           <b>Astronomia krepusko:</b> la Suno estas 18&nbsp;gradoj sub la horizonto. Preskaŭ nigra nokto.<br/>
@@ -1298,6 +1433,15 @@
           <b>Hodiaŭ:</b> tempoj de leviĝo kaj subiro por la hodiaŭa dato.<br/><br/>
           <b>Antaŭa / sekva:</b> tempo de la eksa okazaĵo kaj la sekva okazaĵo.<br/>
     ]]></string>
+    <string name="help_general_timeMode2"><![CDATA[
+          <b>Spring Equinox:</b> The start of astronomical spring; <em>March</em> [northern hemisphere], or <em>September</em> [southern hemisphere]. The March equinox is also called the <em>northward equinox</em>.<br/><br/>
+          <b>Summer Solstice:</b> The start of astronomical summer; <em>June</em> [northern hemisphere], or <em>December</em> [southern hemisphere]. The June solstice is also called the <em>northern solstice</em>.<br/><br/>
+          <b>Autumn Equinox:</b> The start of astronomical autumn; <em>September</em> [northern hemisphere], or <em>March</em> [southern hemisphere]. The September equinox is also called the <em>southward equinox</em>.<br/><br/>
+          <b>Winter Solstice:</b> The start of astronomical winter; <em>December</em> [northern hemisphere], or <em>June</em> [southern hemisphere]. The December solstice is also called the <em>southern solstice</em>.<br/>
+    ]]></string>    <!-- TODO -->
+    <string name="help_general_tropicalyear"><![CDATA[
+          <b>Tropical Year:</b> A full cycle of the seasons. The length of the <em>tropical year</em> is measured from one <em>March equinox</em> to the next. It is <em>~365.24 days</em> on average, with an exact length that varies each year (up to 30 minutes).<br/>
+    ]]></string>   <!-- TODO -->
 
         <string name="help_general_solartime"><![CDATA[
           <b>Ŝajna suntempo:</b> tempo determinita per spuri movon de ŝajna Suno al la agordita longitudo kaj latitudo.<br/><br/>
@@ -1350,9 +1494,9 @@
         Tiu eblaĵo estas nun disponebla kiel <a href="moreInfoLink">aparta aplikaĵo</a>.
     ]]></string>
 
-    <string name="privacy_policy"><![CDATA[<b>Privateco:</b><br/>La aplikaĵo Suntempoj ne kolektas, konservas aŭ transigas personajn informojn de la uzanto. Ĝi enhavas <b>neniujn reklamojn</b>, <b>neniujn analizilojn</b>, <b>neniujn spurilojn</b> kaj <b>neniujn malnecesajn permesojn</b>. <br/><br/>La aplikaĵo agordiĝas de lokaj datumoj. Tiuj informoj (kaj aliaj agordoj uzataj de la aplikaĵo) estas konservataj loke kaj ne eliras el la aparato.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
+    <string name="privacy_policy"><![CDATA[<b>Privateco:</b><br/>La aplikaĵo Suntempoj ne kolektas, konservas aŭ transigas personajn informojn de la uzanto. Ĝi enhavas <b>neniun reklamon</b>, <b>neniun analizilon</b>, <b>neniun spurilon</b> kaj <b>neniun malnecesan permeson</b>. <br/><br/>La aplikaĵo agordiĝas de lokaj datumoj. Tiuj informoj (kaj aliaj agordoj uzataj de la aplikaĵo) estas konservataj loke kaj ne eliras el la aparato.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[La permeso por <b>determini pozicion</b> estas uzata por trovi vian nunan longitudon kaj latitudon. Tiu permeso estas malnepra, pozicio estas implicite agordita permane.]]></string>
-    <string name="privacy_permission_storage"><![CDATA[La permeso por aliri <b>eksteran konservejon</b> estas uzato por elpori/sekurkopii datumojn al dosieroj (ekz. lokojn, etosojn).]]></string>
+    <string name="privacy_permission_storage"><![CDATA[La permeso por aliri <b>eksteran konservejon</b> estas uzata por elpori/sekurkopii datumojn al dosieroj (ekz. lokojn, etosojn).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[La permeso por <b>legi eksteran konservejon</b> estas uzata por ludi sonojn troviĝantajn en la SD‑karto. <br/><br/>Tiu permeso estas malnepra, la implicita sono estos ludata, se tiu permeso mankas. Tiu permeso ne estas bezonata por ludi sonojn de la sistemo (konservo de aŭdvidaĵoj).]]></string>
     <string name="privacy_permissiondialog_prompt"><![CDATA[Ĉu peti la permeson nun?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignori</string>
@@ -1363,7 +1507,8 @@
     <string name="security_duplicate_permissions">La permeso, kiu apartenas al la programo Suntempoj:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nestas ankaŭ difinita de: <xliff:g id="packageName" example="iu.alia.aplikajho">%2$s</xliff:g></string>
     <string name="feature_not_supported_by_api">Tiu ĉi eblaĵo ne estas subtenata per API %1$s.</string>
     <string name="feature_not_supported_by_source">Tiu ĉi eblaĵo ne estas subtenata per la nuna datum‑fonto.</string>
-    <string name="reboot_required_message">Restarto povas esti bezonata por apliki ŝanĝojn.</string>
+    <string name="reboot_required_message">Restarto de la aparato povas esti necesa por apliki ŝanĝojn.</string>    <!-- toast; device off/on may be required -->
+    <string name="restart_required_message">Restarto de la aplikaĵo povas esti necesa por apliki ŝanĝojn.</string>   <!-- toast; app restart may be required -->
 
     <string name="dialog_ok">Bone</string>
     <string name="dialog_cancel">Nuligi</string>
@@ -1375,5 +1520,16 @@
     <string name="calculator_displayString_time4a_noaa">Uzas algoritmojn publikigitajn de Nacia Oceana kaj Atmosfera Administro (NOAA).</string>
     <string name="calculator_displayString_time4a_cc">Uzas algoritmojn publikigitajn de Dershowitz kaj Reingold en ilia libro “Calendrical Calculations” (tria eldono).</string>
     <string name="calculator_displayString_time4a_4j">Bazita sur astrosciencaj kalkuloj publikigitaj de Jean Meeus en lia libro “Astronomical Algorithms” (dua eldono).</string>
+    <string name="help_datasources">
+        <![CDATA[
+        Suntimes uses third-party libraries to perform astronomical calculations.<br/>
+        <br/>
+        The <b>data source</b> setting allows choosing between different libraries (or choosing between different algorithms offered by those libraries). The default is <b>time4a-time4j</b>.<br/>
+        <br/>
+        This setting affects the speed and accuracy of calculations, and may limit which features are available. <br/>
+        <br/>
+        For more information about available choices, or extending the app to support other libraries, see the online help.
+    ]]>
+    </string>   <!-- TODO -->
 
 /</resources>

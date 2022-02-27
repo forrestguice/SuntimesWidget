@@ -68,8 +68,24 @@
 
     </PreferenceCategory>
 
+    <!--<PreferenceCategory
+        android:title="@string/configLabel_ui_showheaders">
+    </PreferenceCategory>-->
+
     <PreferenceCategory
         android:title="@string/configLabel_ui">
+
+        <CheckBoxPreference
+            android:key="app_ui_showheader_icon"
+            android:title="@string/configLabel_ui_showheader_icon"
+            android:defaultValue="@string/def_app_ui_showheader_icon" />
+
+        <com.forrestguice.suntimeswidget.settings.ListPreference
+            android:key="app_ui_showheader_text1"
+            android:title="@string/configLabel_ui_showheader_text"
+            android:summary="@string/configLabel_ui_showheader_text_summary"
+            android:entries="@array/headerText_display" android:entryValues="@array/headerText_values"
+            android:defaultValue="@string/def_app_ui_showheader_text" />
 
         <CheckBoxPreference
             android:key="app_ui_showdatasource"
@@ -128,11 +144,6 @@
             android:key="appwidget_0_general_showhours"
             android:title="@string/configLabel_general_showHours"
             android:summary="@string/configLabel_general_showHours_summary" android:defaultValue="@string/def_appwidget_0_general_showhours" />
-
-        <CheckBoxPreference
-            android:key="appwidget_0_general_showseconds"
-            android:title="@string/configLabel_general_showSeconds"
-            android:summary="@string/configLabel_general_showSeconds_summary" android:defaultValue="@string/def_appwidget_0_general_showseconds" />
 
         <CheckBoxPreference
             android:key="appwidget_0_general_showtimedate"

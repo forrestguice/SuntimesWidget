@@ -72,8 +72,9 @@
             <ImageButton android:id="@+id/dialog_button_alarms"
                 style="?attr/actionOverflowButtonStyle"
                 android:contentDescription="@string/app_name_alarmclock"
-                android:layout_width="48dp" android:layout_height="48dp"
-                android:layout_gravity="bottom|start" android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_margin="0dp" android:paddingTop="8dp" android:paddingBottom="0dp"
                 android:src="@drawable/ic_suntimesalarms" />
 
         </FrameLayout>

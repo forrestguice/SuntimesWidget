@@ -24,6 +24,9 @@ A calendar provider add-on for Suntimes.<br/><br />
 
 <a href="https://github.com/forrestguice/SolunarPeriods/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/assets/images/ic_solunar.png" height="64" /></a> <a href="https://github.com/forrestguice/SolunarPeriods/">Solunar Periods</a> <br />
 A hunting and fishing add-on for Suntimes.<br/><br />
+
+<a href="https://github.com/forrestguice/NaturalHour/"><img align="left" src="https://forrestguice.github.io/SuntimesWidget/assets/images/ic_naturalhour.png" height="64" /></a> <a href="https://github.com/forrestguice/NaturalHour/">Natural Hour</a> <br />
+A 24-hour clock & roman timekeeping add-on for Suntimes.<br/><br />
     
 The app:
 * displays the current time (system time zone, custom time zone, or solar time) 
@@ -107,6 +110,7 @@ The app benefits from the following permissions...
 |ACCESS_COARSE_LOCATION|To get current location.|v0.1.0|
 |ACCESS_FINE_LOCATION|To get current location (GPS).|v0.1.0|
 |BOOT_COMPLETED|To restore active alarms when the device boots.|v0.11.0|
+|POWER_OFF_ALARM|To wake the device from the power off state.|v0.14.0|
 |READ_EXTERNAL_STORAGE|To play alarm sounds located on the SD card.|v0.11.5, v0.13.8 (api&le;18)|
 |SET_ALARM|To interact with the system AlarmClock app.|v0.1.0|
 |WRITE_EXTERNAL_STORAGE|To export data (places, themes, etc.) to file.|v0.2.2 (api&le;18)|
@@ -139,7 +143,7 @@ When reporting a bug **please be detailed as possible**. What did you expect the
 
 ## Legal Stuff
 
-Copyright &#169; 2014-2021 Forrest Guice<br/>
+Copyright &#169; 2014-2022 Forrest Guice<br/>
 
 The source code is available under [GPLv3](LICENSE) (https://github.com/forrestguice/SuntimesWidget).
 > This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the [GNU General Public License](LICENSE) for more details.
@@ -150,7 +154,7 @@ Icons and images from:
 * "Google Android Design Icons 20131120" [Apache License 2.0]
 * "Google Material Icons" [Apache License 2.0] (https://material.io/icons/)
 * "Material Design Icons" [SIL Open Font License 1.1] (https://materialdesignicons.com)
-* "NASA Visible Earth: Blue Marble" [Public Domain] (https://visibleearth.nasa.gov/view_cat.php?categoryID=1484)
+* NASA Earth Observatory. "Blue Marble: Next Generation" [Public Domain] (https://visibleearth.nasa.gov/view_cat.php?categoryID=1484)
 
 Libraries used:
 * Time4A [Apache License 2.0] (http://github.com/MenoData/Time4A) 
@@ -163,16 +167,18 @@ Libraries used:
 
 German translation by <u>Henrik "HerHde" Hüttemann</u>, <u>Wolkenschieber</u>, and <u>xnumad</u>.<br/>
 Polish and Esperanto translations by <u>Verdulo</u>.<br/>
-French translation by <u>Jej</u> and <u>Aloha</u>.<br/>
+French translation by <u>Jej</u>, <u>Aloha</u> and <u>ldmpub</u>.<br/>
 Hungarian translation by <u>Erci</u>.<br/>
 Catalan and Spanish translations by <u><a href="https://github.com/Raulvo">Raulvo</a></u> and <u><a href=https://github.com/gnusuari0>gnusuari0</a></u>.<br/>
 Basque translation by <u>beriain</u>.<br/>
 Norwegian translation by <u>FTno</u>.<br/>
-Italian translation by <u>Matteo Caoduro</u>.<br/>
-Traditional Chinese translation by <u><a href=https://github.com/pggdt>ft42</a></u>.<br />
+Italian translation by <u>Matteo Caoduro</u> and <u>GiovaGa</u>.<br/>
+Traditional Chinese translation by <u><a href=https://github.com/pggdt>ft42</a></u>, and <u><a href=https://github.com/jamesliu96>James Liu</a></u>.<br />
 Brazilian Portuguese translation by <u><a href=https://github.com/netosilva15>NetoSilva</a></u>, <u>Nelson A. de Oliveira</u>, and <u>Enrico S. B. Fraletti</u>.<br />
 Russian translation by <u><a href=https://github.com/rchintsov>Ruslan Chintsov</a></u>.<br />
 Dutch translation by <u><a href=https://github.com/joppla>Joppla</a></u>.<br />
+Czech translation by <u><a href=https://github.com/utaxiu>utaxiu</a></u>.<br />
+Simplified Chinese translation by <u><a href=https://github.com/jamesliu96>James Liu</a></u>.<br />
 
 [Contributions to the project](CONTRIBUTING.md) are welcome.
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2021 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -26,38 +26,6 @@
         <TextView style="@style/SunsetTimeSettingsGroupTitle"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="@string/configLabel_general" />
-
-        <LinearLayout android:id="@+id/appwidget_general_calculator_layout"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding">
-
-            <TextView android:labelFor="@+id/appwidget_general_calculator"
-                android:id="@+id/appwidget_general_calculator_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/configLabel_general_calculator" />
-
-            <Spinner android:id="@+id/appwidget_general_calculator" android:layout_width="match_parent"
-                android:dropDownVerticalOffset="16sp"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-        <LinearLayout android:id="@+id/appwidget_general_timeformatmode_layout" android:visibility="gone"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding">
-
-            <TextView android:labelFor="@+id/appwidget_general_timeformatmode"
-                android:id="@+id/appwidget_general_timeformatmode_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/configLabel_general_timeFormatMode" />
-
-            <Spinner android:id="@+id/appwidget_general_timeformatmode" android:layout_width="match_parent"
-                android:dropDownVerticalOffset="16sp"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
 
         <LinearLayout android:id="@+id/appwidget_general_timeMode_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -87,7 +55,7 @@
         <LinearLayout android:id="@+id/appwidget_general_riseSetOrder_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding"
+            android:paddingRight="16dp" android:paddingLeft="16dp"
             android:weightSum="1">
 
             <TextView android:labelFor="@+id/appwidget_general_riseSetOrder"
@@ -109,16 +77,17 @@
 
         </LinearLayout>
 
+
         <LinearLayout android:id="@+id/appwidget_general_trackingMode_layout"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="horizontal"
-                      android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding">
 
             <TextView android:labelFor="@+id/appwidget_general_trackingMode"
-                      android:id="@+id/appwidget_general_trackingMode_label"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content" android:text="@string/configLabel_general_trackingMode" />
+                android:id="@+id/appwidget_general_trackingMode_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="@string/configLabel_general_trackingMode" />
 
             <Spinner
                 android:id="@+id/appwidget_general_trackingMode" android:layout_width="0dp"
@@ -140,14 +109,92 @@
 
         </LinearLayout>
 
-        <LinearLayout android:id="@+id/appwidget_general_useAltitude_layout"
+
+        <CheckBox android:id="@+id/appwidget_appearance_showTitle" android:layout_width="match_parent"
+            android:paddingTop="@dimen/settingsGroup_padding"
+            android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+            android:layout_height="wrap_content" android:text="@string/configLabel_appearance_showTitle" />
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp" android:paddingRight="8dp"
+            android:paddingStart="16dp" android:paddingEnd="8dp">
+
+            <TextView android:labelFor="@+id/appwidget_appearance_titleText"
+                android:id="@+id/appwidget_appearance_titleText_label"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/configLabel_appearance_titleText" />
+
+            <EditText android:id="@+id/appwidget_appearance_titleText" android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="1"
+                android:hint="@string/configHint_appearance_titleText" android:text=""
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:inputType="textVisiblePassword" />
+
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_appearance_titleText_helpButton"
+                style="@style/Widget.AppCompat.ActionButton"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
+                android:contentDescription="@string/configAction_help" />
+
+        </LinearLayout>
+
+
+        <LinearLayout android:id="@+id/appwidget_general_showCompare_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
 
-            <CheckBox android:id="@+id/appwidget_general_useAltitude"
+            <CheckBox
+                android:id="@+id/appwidget_general_showCompare"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/configLabel_general_altitude_enabled" />
+                android:text="@string/configLabel_general_showComparison" />
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/appwidget_general_compareMode_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+            <TextView android:labelFor="@+id/appwidget_general_compareMode"
+                android:id="@+id/appwidget_general_compareMode_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="@string/configLabel_general_compareMode" />
+
+            <Spinner android:id="@+id/appwidget_general_compareMode" android:layout_width="match_parent"
+                android:dropDownVerticalOffset="16sp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+        <CheckBox android:id="@+id/appwidget_appearance_showLabels" android:layout_width="match_parent"
+            android:paddingTop="@dimen/settingsGroup_padding"
+            android:layout_marginLeft="8dp" android:layout_marginRight="8dp" android:visibility="visible"
+            android:layout_height="wrap_content" android:text="@string/configLabel_appearance_showLabels" />
+
+        <LinearLayout android:id="@+id/appwidget_general_showNoon_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+            <CheckBox
+                android:id="@+id/appwidget_general_showNoon"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/configLabel_general_showNoon" />
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/appwidget_general_localize_hemisphere_layout" android:visibility="gone"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+            <CheckBox
+                android:id="@+id/appwidget_general_localize_hemisphere"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/configLabel_general_localize_hemisphere" />
 
         </LinearLayout>
 
@@ -173,17 +220,6 @@
 
         </LinearLayout>
 
-        <LinearLayout android:id="@+id/appwidget_general_showSeconds_layout"
-                      android:layout_width="match_parent" android:layout_height="wrap_content"
-                      android:orientation="horizontal"
-		              android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
-
-	      <CheckBox android:id="@+id/appwidget_general_showSeconds"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="@string/configLabel_general_showSeconds" />
-
-        </LinearLayout>
-
         <LinearLayout android:id="@+id/appwidget_general_showTimeDate_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -195,43 +231,63 @@
 
         </LinearLayout>
 
-        <LinearLayout android:id="@+id/appwidget_general_showNoon_layout"
-                      android:layout_width="match_parent" android:layout_height="wrap_content"
-                      android:orientation="horizontal"
-                      android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
 
-            <CheckBox
-                android:id="@+id/appwidget_general_showNoon"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/configLabel_general_showNoon" />
+        <LinearLayout android:id="@+id/appwidget_general_timeformatmode_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="8dp">
 
-        </LinearLayout>
+            <TextView android:labelFor="@+id/appwidget_general_timeformatmode"
+                android:id="@+id/appwidget_general_timeformatmode_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="@string/configLabel_general_timeFormatMode" />
 
-        <LinearLayout android:id="@+id/appwidget_general_showCompare_layout"
-                      android:layout_width="match_parent" android:layout_height="wrap_content"
-                      android:orientation="horizontal"
-                      android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
-
-            <CheckBox
-                android:id="@+id/appwidget_general_showCompare"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/configLabel_general_showComparison" />
+            <Spinner android:id="@+id/appwidget_general_timeformatmode" android:layout_width="match_parent"
+                android:dropDownVerticalOffset="16sp"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
-        <LinearLayout android:id="@+id/appwidget_general_compareMode_layout"
+
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="?attr/colorControlHighlight"
+            android:layout_marginRight="8dp" android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp" android:layout_marginBottom="8dp" />
+
+        <LinearLayout android:id="@+id/appwidget_general_calculator_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding">
 
-            <TextView android:labelFor="@+id/appwidget_general_compareMode"
-                android:id="@+id/appwidget_general_compareMode_label"
+            <TextView android:labelFor="@+id/appwidget_general_calculator"
+                android:id="@+id/appwidget_general_calculator_label"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="@string/configLabel_general_compareMode" />
+                android:layout_height="wrap_content" android:text="@string/configLabel_general_calculator" />
 
-            <Spinner android:id="@+id/appwidget_general_compareMode" android:layout_width="match_parent"
+            <Spinner android:id="@+id/appwidget_general_calculator" android:layout_width="match_parent"
                 android:dropDownVerticalOffset="16sp"
                 android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/appwidget_general_useAltitude_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+            <CheckBox android:id="@+id/appwidget_general_useAltitude"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/configLabel_general_altitude_enabled" />
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/appwidget_general_showSeconds_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+            <CheckBox android:id="@+id/appwidget_general_showSeconds"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/configLabel_general_showSeconds" />
 
         </LinearLayout>
 

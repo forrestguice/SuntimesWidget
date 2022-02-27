@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:id="@+id/mapOption_group_action" android:checkableBehavior="none">
+
+        <item android:id="@+id/addonSubMenu"
+            android:icon="?attr/icActionTimeReset"
+            android:title="@string/configAction_viewDateWith"
+            app:showAsAction="never"
+            android:orderInCategory="0">
+            <menu>         <!-- submenu is populated at runtime -->
+
+                <item android:id="@+id/action_date"
+                    android:title="@string/app_name"
+                    android:icon="?attr/icActionTimeReset"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_worldmap"
+                    android:icon="?attr/icActionMap"
+                    android:title="@string/configAction_worldMap"
+                    app:showAsAction="never" />
+
+            </menu>
+        </item>
+
+        <item android:id="@+id/action_observerheight"
+            android:icon="?attr/icActionShadow"
+            android:title="@string/configLabel_general_observerheight"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/action_timezone"
+            android:icon="?attr/icActionTime"
+            android:title="@string/configLabel_timezone"
+            app:showAsAction="never" />
+
+        <item android:id="@+id/action_help"
+            android:icon="?attr/icActionHelp"
+            android:title="@string/configAction_help"
+            app:showAsAction="never" />
+
+    </group>
+
+</menu>

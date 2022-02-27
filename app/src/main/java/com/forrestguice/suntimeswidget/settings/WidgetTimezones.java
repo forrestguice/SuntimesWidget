@@ -1,5 +1,5 @@
 /**
- Copyright (C) 2014-2018 Forrest Guice
+ Copyright (C) 2014-2022 Forrest Guice
  This file is part of SuntimesWidget.
 
  SuntimesWidget is free software: you can redistribute it and/or modify
@@ -26,6 +26,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import android.view.ActionMode;
@@ -56,9 +57,13 @@ import java.util.TimeZone;
 
 public class WidgetTimezones
 {
+    public static final String TZID_UTC = "UTC";
+    public static final String TZID_SUNTIMES = "SUNTIMES";
+    public static final String TZID_SYSTEM = "SYSTEM";
+
     public static boolean isProbablyNotLocal(TimeZone timezone, Location atLocation, Date onDate )
     {
-        if (timezone.getID().equals("UTC") || timezone.getID().equals(SiderealTime.TZID_GMST) || timezone.getID().equals(SiderealTime.TZID_LMST)) {
+        if (timezone.getID().equals(TZID_UTC) || timezone.getID().equals(SiderealTime.TZID_GMST) || timezone.getID().equals(SiderealTime.TZID_LMST)) {
             return false;
         }
 
@@ -75,8 +80,70 @@ public class WidgetTimezones
         return isProbablyNotLocal;
     }
 
+    public static TimeZone getTimeZone(String tzId, @Nullable Double longitude)
+    {
+        if (longitude == null) {
+            longitude = 0.0;
+        }
+        switch (tzId) {
+            case ApparentSolarTime.TIMEZONEID: return new ApparentSolarTime(longitude, tzId);
+            case LocalMeanTime.TIMEZONEID: case SiderealTime.TZID_LMST: return new LocalMeanTime(longitude, tzId);
+            case SiderealTime.TZID_GMST: return new LocalMeanTime(0, tzId);
+            case TZID_SYSTEM: case TZID_SUNTIMES: return TimeZone.getDefault();
+            default: return TimeZone.getTimeZone(tzId);
+        }
+    }
+
+    public static String getTimeZoneDisplay(Context context, TimeZone tz) {
+        if (tz != null)
+        {
+            switch (tz.getID())
+            {
+                case LocalMeanTime.TIMEZONEID: return context.getString(R.string.time_localMean);
+                case ApparentSolarTime.TIMEZONEID: return context.getString(R.string.time_apparent);
+                default: return tz.getID();
+            }
+        } else return "";
+    }
+
     ///////////////////////////////////////
     ///////////////////////////////////////
+
+    public static int menuItemForTimeZone(@Nullable String tzId)
+    {
+        if (tzId != null) {
+            switch (tzId) {
+                case ApparentSolarTime.TIMEZONEID: return R.id.tz_item_apparentsolar;
+                case LocalMeanTime.TIMEZONEID: return R.id.tz_item_localmean;
+                case SiderealTime.TZID_LMST: return R.id.tz_item_lmst;
+                case SiderealTime.TZID_GMST: return R.id.tz_item_gmst;
+                case TZID_SUNTIMES: return R.id.tz_item_suntimes;
+                case TZID_SYSTEM: return R.id.tz_item_system;
+                case TZID_UTC: default: return R.id.tz_item_utc;
+            }
+        } else return R.id.tz_item_utc;
+    }
+    public static String timeZoneForMenuItem(int itemId)
+    {
+        switch (itemId) {
+            case R.id.tz_item_apparentsolar:  return ApparentSolarTime.TIMEZONEID;
+            case R.id.tz_item_localmean: return LocalMeanTime.TIMEZONEID;
+            case R.id.tz_item_lmst:  return SiderealTime.TZID_LMST;
+            case R.id.tz_item_gmst:  return SiderealTime.TZID_GMST;
+            case R.id.tz_item_suntimes: return TZID_SUNTIMES;
+            case R.id.tz_item_system: return TZID_SYSTEM;
+            case R.id.tz_item_utc: return TZID_UTC;
+            default: return null;
+        }
+    }
+
+    public static void updateTimeZoneMenu(Menu menu, @Nullable String tzId)
+    {
+        MenuItem tzItem = menu.findItem(WidgetTimezones.menuItemForTimeZone(tzId));
+        if (tzItem != null) {
+            tzItem.setChecked(true);
+        }
+    }
 
     public static void selectTimeZone( Spinner spinner, TimeZoneItemAdapter adapter, String timezoneID )
     {
@@ -99,9 +166,8 @@ public class WidgetTimezones
     ///////////////////////////////////////
     ///////////////////////////////////////
 
-    public static TimeZone localMeanTime( Context context, Location location )
-    {
-        return new LocalMeanTime(location.getLongitudeAsDouble(), context.getString(R.string.time_localMean));
+    public static TimeZone localMeanTime( Context context, Location location ) {
+        return new LocalMeanTime(location.getLongitudeAsDouble(), LocalMeanTime.TIMEZONEID);
     }
 
     public static TimeZone siderealTime(Context context) {
@@ -112,14 +178,12 @@ public class WidgetTimezones
         return new LocalMeanTime(location.getLongitudeAsDouble(), SiderealTime.TZID_LMST);
     }
 
-    public static TimeZone apparentSolarTime(Context context, Location location)
-    {
-        return new ApparentSolarTime(location.getLongitudeAsDouble(), context.getString(R.string.time_apparent));
+    public static TimeZone apparentSolarTime(Context context, Location location) {
+        return new ApparentSolarTime(location.getLongitudeAsDouble(), ApparentSolarTime.TIMEZONEID);
     }
 
-    public static TimeZone apparentSolarTime(Context context, Location location, SuntimesCalculator calculator)
-    {
-        return new ApparentSolarTime(location.getLongitudeAsDouble(), context.getString(R.string.time_apparent), calculator);
+    public static TimeZone apparentSolarTime(Context context, Location location, SuntimesCalculator calculator) {
+        return new ApparentSolarTime(location.getLongitudeAsDouble(), ApparentSolarTime.TIMEZONEID, calculator);
     }
 
     /**
@@ -127,7 +191,7 @@ public class WidgetTimezones
      */
     public static class LocalMeanTime extends TimeZone
     {
-        public static final String TIMEZONEID = "Local Mean Time";
+        public static final String TIMEZONEID = "LMT";
 
         private int rawOffset = 0;
 
@@ -199,7 +263,7 @@ public class WidgetTimezones
      */
     public static class ApparentSolarTime extends LocalMeanTime
     {
-        public static final String TIMEZONEID = "Apparent Solar Time";
+        public static final String TIMEZONEID = "LTST";    // local true solar time
 
         public ApparentSolarTime(double longitude, String name)
         {
@@ -325,8 +389,8 @@ public class WidgetTimezones
      */
     public static class SiderealTime
     {
-        public static final String TZID_GMST = "Greenwich Sidereal Time";
-        public static final String TZID_LMST = "Local Sidereal Time";
+        public static final String TZID_GMST = "GMST";
+        public static final String TZID_LMST = "LMST";
 
         public static int gmstOffset(long dateMillis)
         {

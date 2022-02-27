@@ -1,22 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         android:title="@string/configLabel_general">
-
-        <com.forrestguice.suntimeswidget.settings.SummaryListPreference
-            android:key="appwidget_0_general_calculator"
-            android:title="@string/configLabel_general_calculator_sun"
-            android:dialogTitle="@string/configLabel_general_calculator_sun"
-            android:summary="%s"
-            android:entries="@null" android:entryValues="@null" android:defaultValue="@string/def_appwidget_0_general_calculator" />
-
-        <com.forrestguice.suntimeswidget.settings.SummaryListPreference
-            android:key="appwidget_0_general_calculator_moon"
-            android:title="@string/configLabel_general_calculator_moon"
-            android:dialogTitle="@string/configLabel_general_calculator_moon"
-            android:summary="%s"
-            android:entries="@null" android:entryValues="@null" android:defaultValue="@string/def_appwidget_0_general_calculator_moon" />
 
         <com.forrestguice.suntimeswidget.settings.ListPreference
             android:key="appwidget_0_appearance_timeformatmode"
@@ -35,6 +22,16 @@
             android:defaultValue="@string/default_units_length" />
 
         <CheckBoxPreference
+            android:key="appwidget_0_general_localize_hemisphere"
+            android:title="@string/configLabel_general_localize_hemisphere"
+            android:summary="@string/configLabel_general_localize_hemisphere_summary" android:defaultValue="@string/def_appwidget_0_general_localize_hemisphere" />
+
+        <CheckBoxPreference
+            android:key="appwidget_0_general_showseconds"
+            android:title="@string/configLabel_general_showSeconds"
+            android:summary="@string/configLabel_general_showSeconds_summary" android:defaultValue="@string/def_appwidget_0_general_showseconds" />
+
+        <CheckBoxPreference
             android:key="appwidget_0_location_altitude_enabled"
             android:title="@string/configLabel_general_altitude_enabled"
             android:summary="@string/configLabel_general_altitude_enabled_summary" android:defaultValue="@string/def_appwidget_0_general_altitude_enabled" />
@@ -50,6 +47,35 @@
     <PreferenceCategory android:layout="@layout/divider_pref" />
 
     <PreferenceCategory
+        android:title="@string/configLabel_advanced">
+
+        <com.forrestguice.suntimeswidget.settings.SummaryListPreference
+            android:key="appwidget_0_general_calculator"
+            android:title="@string/configLabel_general_calculator_sun"
+            android:dialogTitle="@string/configLabel_general_calculator_sun"
+            android:summary="%s"
+            android:entries="@null" android:entryValues="@null" android:defaultValue="@string/def_appwidget_0_general_calculator" />
+
+        <com.forrestguice.suntimeswidget.settings.SummaryListPreference
+            android:key="appwidget_0_general_calculator_moon"
+            android:title="@string/configLabel_general_calculator_moon"
+            android:dialogTitle="@string/configLabel_general_calculator_moon"
+            android:summary="%s"
+            android:entries="@null" android:entryValues="@null" android:defaultValue="@string/def_appwidget_0_general_calculator_moon" />
+
+        <com.forrestguice.suntimeswidget.settings.HelpPreference
+            android:key="appwidget_0_general_calculator_help"
+            android:persistent="false"
+            android:title="@string/configLabel_general_calculator_help"
+            android:icon="?attr/icActionHelp"
+            app:helpText="@string/help_datasources"
+            app:helpLink="@string/help_datasources_url"
+            app:moreHelpButtonText="@string/configAction_onlineHelp"
+            />
+
+    </PreferenceCategory>
+
+    <!--<PreferenceCategory
         android:title="@string/configLabel_experimental">
 
         <CheckBoxPreference
@@ -57,6 +83,6 @@
             android:title="@string/configLabel_general_scanPlugins"
             android:summary="@string/configLabel_general_scanPlugins_summary" android:defaultValue="@string/def_app_plugins_enabled" />
 
-    </PreferenceCategory>
+    </PreferenceCategory>-->
 
 </PreferenceScreen>

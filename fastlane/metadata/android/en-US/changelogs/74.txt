@@ -1,0 +1,3 @@
+- adds 'import places' (restore places from backup).
+- miscellaneous theme fixes and improvements.
+- updates translation to Polish and Esperanto.

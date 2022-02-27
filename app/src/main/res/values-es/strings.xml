@@ -23,13 +23,17 @@
     <string name="configAction_setAlarm">Configurar alarma</string>
     <string name="configAction_setTimeZone">Configurar zona horaria</string>
     <string name="configAction_setDate">Configurar fecha</string>
-    <string name="configAction_viewDate">Ver fecha</string>    
+    <string name="configAction_viewDate">Ver fecha</string>
+    <string name="configAction_viewDateWith">Ver fecha</string>
+    <string name="configAction_share">Compartir</string>
     <string name="configAction_sunDialog">Posición del Sol</string>
     <string name="configAction_equinoxDialog">Solsticio / Equinoccio</string>
     <string name="configAction_worldMap">Mapa del mundo</string>
     <string name="configAction_moon">Luna</string>
     <string name="configAction_help">Ayuda</string>
-    <string name="configAction_overflow">Más</string>  
+    <string name="configAction_onlineHelp">Online Help</string>   <!-- TODO -->
+    <string name="configAction_overflow">Más</string>
+    <string name="configAction_options">Options</string>   <!-- TODO -->
     <string name="configAction_settings">Configuración</string>
     <string name="configAction_aboutWidget">Acerca de</string>
 
@@ -80,9 +84,12 @@
     <string name="length_day"><xliff:g example="12h" id="timeSpan">%1$s</xliff:g> de día</string>
     <string name="length_light"><xliff:g example="12h 50m" id="timeSpan">%1$s</xliff:g> de luz útil</string>
 
+    <string name="timeMode_tropical_year">Tropical Year</string>   <!-- TODO -->
+
     <!-- Field: moon illumination (as seen in moon widget) -->
     <string name="moon_illumination">Iluminada al <xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g></string>
     <string name="moon_illumination_short"><xliff:g example="50%" id="illuminationPercent">%1$s</xliff:g></string>
+    <string name="moon_illumination_at"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> \@ <xliff:g id="illuminationTime" example="11:55">%2$s</xliff:g></string>
 
     <!-- Field: today/tomorrow time delta (as seen in 1x3_0 widget layout).
          e.g. 'Tomorrow will be' + ' 2m ' + 'shorter'
@@ -116,6 +123,11 @@
         <item quantity="one">%1$s después de las</item>
         <item quantity="other">%1$s después de las</item>
     </plurals>
+
+    <string name="offset_before_msg">%1$s antes de %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->
+    <string name="offset_before_msg1">{0} antes {1, plural, one {{2, select, female {de la} other {del}}} other {{2, select, female {de las} other {de los}}}} {3}</string>  <!-- uses SelectFormat (api24+) -->
+    <string name="offset_after_msg">%1$s después de %2$s</string>   <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->
+    <string name="offset_after_msg1">{0} después {1, plural, one {{2, select, female {de la} other {del}}} other {{2, select, female {de las} other {de los}}}} {3}</string>  <!-- uses SelectFormat (api24+)-->
 
     <string name="offset_button_before">antes</string>    <!-- button label; [1h] [5m] [before] (-) --> 
     <string name="offset_button_after">después</string>      <!-- button label; [1h] [5m] [after] (+) -->  
@@ -232,11 +244,15 @@
     <string name="configLabel_general_calculator">Fuente de datos:</string>         
     <string name="configLabel_general_calculator_sun">Fuente de datos del Sol</string>         
     <string name="configLabel_general_calculator_moon">Fuente de datos de la Luna</string>
+    <string name="configLabel_general_calculator_help">Data Sources</string>    <!-- preference title / help button text --> <!-- TODO -->
 
     <string name="configLabel_general_timeFormatMode">Time Format:</string>         <!-- spinner label -->  
 
     <string name="configLabel_general_altitude_enabled">Usar elevación</string>        
     <string name="configLabel_general_altitude_enabled_summary">Aplicar refinamientos basados en altitud.</string>
+
+    <string name="configLabel_general_localize_hemisphere">Localize to hemisphere</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_general_localize_hemisphere_summary">Apply hemisphere based localization (season labels, moon phase icons).</string>        <!-- checkbox label -->    <!-- TODO -->
 
     <string name="configLabel_general_lengthUnits">Unidades de distancia</string>        <!-- spinner label -->  
 
@@ -258,13 +274,30 @@
     <string name="configLabel_advanced">Configuración avanzada</string>
     <string name="configLabel_experimental">Configuración experimental</string>
     <string name="configLabel_general_scanPlugins">Complementos de fuentes de datos</string>                                
-    <string name="configLabel_general_scanPlugins_summary">Busca y carga complementos de terceros.</string>   
+    <string name="configLabel_general_scanPlugins_summary">Busca y carga complementos de terceros.</string>
 
+    <!-- Widget Setting: appearance -->
+    <string name="configLabel_widgetlayout">Layout</string>           <!-- group title -->  <!-- TODO -->
+    <string-array name="widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
+        <!--<item>Fill</item>-->
+        <item>Top-Left</item>
+        <item>Top</item>
+        <item>Top-Right</item>
+        <item>Left</item>
+        <item>Center</item>
+        <item>Right</item>
+        <item>Bottom-Left</item>
+        <item>Bottom</item>
+        <item>Bottom-Right</item>
+    </string-array>  <!-- TODO -->
     
     <string name="configLabel_appearance">Opciones de apariencia</string>
     <string name="configLabel_appearance_mode">Apariencia</string>                  <!-- spinner label -->  
     <string name="configLabel_appearance_theme">Tema:</string>                  
-    <string name="configLabel_appearance_allowResize">Crece con el espacio disponible (reescalable)</string>
+    <string name="configLabel_appearance_allowResize">Crece con el espacio disponible (reescalable)</string>  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
+    <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
+    <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
     <string name="configLabel_appearance_showLabels">Mostrar etiquetas</string>          
     <string name="configLabel_appearance_showTitle">Mostrar título</string>
     <string name="configLabel_appearance_titleText">Título:</string>
@@ -354,16 +387,22 @@
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [norte]</string>  
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [sur]</string>     <!-- setting -->  
     <string name="widgetMode_sunPosMap_bluemarble">Bola azul</string>
+    <string name="widgetMode_sunPosMap_simpleazimuthal_location">Azimuthal Equidistant</string>     <!-- setting -->   <!-- TODO -->
+
+    <string name="worldmap_projection_equirectangular">Equidistant Rectangular</string>    <!-- TODO -->
+    <string name="worldmap_projection_equiazimuthal">Equidistant Azimuthal</string>    <!-- TODO -->
 
     <string name="widgetMode1x1_moonriseset">Salida y puesta de la Luna</string>     
     <string name="widgetMode1x1_moonphaseillum">Fase lunar e iluminación</string>
     <string name="widgetMode1x1_moonphase">Sólo fase lunar</string>     
     <string name="widgetMode1x1_moonillum">Sólo iluminación lunar</string>     
-    <string name="widgetMode1x1_moonphasenext">siguiente fase</string>     
+    <string name="widgetMode1x1_moonphasenext">siguiente fase</string>
 
-    <string name="configLabel_appearance_1x1mode">Diseño 1x1:</string>     
-    <string name="configLabel_appearance_3x2mode">Diseño 3x2:</string>
-    <string name="configLabel_appearance_3x3mode">Diseño 3x3:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_1x1mode">1x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_2x1mode">2x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x1mode">3x1:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x2mode">3x2:</string>     <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_3x3mode">3x3:</string>     <!-- spinner label -->  <!-- TODO -->
 
     
     <string name="actionMode_doNothing">No hacer nada</string>
@@ -402,17 +441,21 @@
     <string name="configHint_location_alt">0</string> 
     <string name="configLabel_location_name">Nombre:</string>
     <string name="configHint_location_name">(opcional)</string>
-    <string name="configHint_location_name0">Nombre del lugar</string>                  <!-- edittext hint -->  
+    <string name="configHint_location_name0">Nombre del lugar</string>                  <!-- edittext hint -->
+    <string name="configLabel_location_fromapp">Use the app location</string>                  <!-- checkbox text -->  <!-- TODO -->
 
     <string name="configAction_getFix">Adquirir ubicación</string>
     <string name="configAction_editPlace">Editar</string>         
     <string name="configAction_savePlace">Guardar</string>         
 
     
-    <string name="timezoneMode_standard">Hora solar</string>
+    <string name="timezoneMode_standard">Hora solar</string>    <!-- TODO: "solar time" -> "Time Standard" -->
     <string name="timezoneMode_current">Zona horaria de sistema</string>               
-    <string name="timezoneMode_custom">Definida por usuario</string>                    
+    <string name="timezoneMode_custom">Definida por usuario</string>
 
+    <string name="time_lmst">Local Sidereal Time</string>                  <!-- timezone label -->  <!-- TODO -->
+    <string name="time_gmst">Greenwich Sidereal Time</string>              <!-- timezone label -->  <!-- TODO -->
+    <string name="time_utc">Coordinated Universal Time</string>            <!-- timezone label -->  <!-- TODO -->
     <string name="time_localMean">Hora solar media</string>
     <string name="time_apparent">Hora solar aparente</string>
     <string name="timezoneCustom_line1"><xliff:g example="US/Arizona" id="timezoneID">%1$s</xliff:g></string>                                                                     
@@ -421,7 +464,7 @@
     <string name="configLabel_timezone">Opciones de zona horaria</string>
     <string name="configLabel_timezone_mode">Modo:</string>       
     <string name="configLabel_timezone_custom">Zona horaria:</string>
-    <string name="configLabel_timezone_standard">Hora solar:</string>
+    <string name="configLabel_timezone_standard">Hora solar:</string>    <!-- TODO: "solar time" -> "Time Standard" -->
 
     
     <string name="timeFormatMode_system">Formato del sistema</string>
@@ -445,7 +488,8 @@
     <string name="configLabel_general_compareMode">Comparar con:</string>
     <string name="configLabel_general_showComparison">Mostrar comparación</string>
 
-    
+
+    <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
     <string name="trackingMode_closest">Evento más cercano</string>                 
     <string name="trackingMode_soonest">Evento más temprano</string>
     <string name="configLabel_general_trackingMode">Seguimiento:</string>
@@ -524,7 +568,7 @@
     <string name="configAction_deleteTheme">Borrar</string>     
     <string name="configAction_copyTheme">Copiar</string>
     <string name="configAction_exportThemes">Exportar</string>
-    <string name="configAction_shareTheme">Compartir</string>
+    <string name="configAction_shareTheme">@string/configAction_share</string>
     <string name="configAction_importThemes">Importar</string>    
 
     <string name="addtheme_custname">tema_<xliff:g id="#">%1$s</xliff:g></string>                                        
@@ -661,7 +705,8 @@
     <string name="configAction_sortAlarms">Ordenar</string>                <!-- action button / menu item -->  
     <string name="configAction_sortAlarms_by_time">Por fecha de la alarma</string>                <!-- action button / menu item -->  
     <string name="configAction_sortAlarms_by_creation">Por fecha de creación</string>                <!-- action button / menu item -->  
-    <string name="configAction_clearOffset">Eliminar</string>                <!-- action button / menu item -->  
+    <string name="configAction_clearOffset">Eliminar</string>                <!-- action button / menu item -->
+    <string name="configAction_clearDate">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_setAlarmOffset">Retardo</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmType">Tipo</string>         <!-- button (contentDescription) -->  
     <string name="configAction_setAlarmLabel">Etiqueta</string>         <!-- button (contentDescription) -->  
@@ -695,7 +740,9 @@
     <string name="configLabel_alarmEdit_onDismissTray">Al rechazar:</string>               <!-- group title -->  
 
     <string name="alarmOption_vibrate">Vibrar</string>                <!-- checkbox text -->  
-    <string name="alarmOption_ringtone_none">Sin sonido</string>          <!-- ringtone label (none) -->  
+    <string name="alarmOption_ringtone_none">Sin sonido</string>          <!-- ringtone label (none) -->
+    <string name="alarmOption_ringtone_ringtone">Ringtone</string>          <!-- menu item; Select a "Ringtone" -->  <!-- TODO -->
+    <string name="alarmOption_ringtone_file">Audio File</string>          <!-- menu item; Select an "Audio File" -->  <!-- TODO -->
     <string name="alarmOption_ringtone_label"><xliff:g id="icon">[icon]</xliff:g> <xliff:g id="name">%1$s</xliff:g></string>  <!-- ringtone label format -->
     <string name="alarmOption_solarevent_none">Reloj</string>          <!-- ringtone label (none) -->  
 
@@ -798,10 +845,17 @@
         <item quantity="other">%d segundos</item>
     </plurals>
 
+    <plurals name="units_days">
+        <item quantity="one">%s day</item>
+        <item quantity="other">%s days</item>
+    </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->    <!-- TODO -->
+
     <string name="configLabel_alarmMisc">Misceláneo</string>
     <string name="configLabel_alarms_showlauncher">Icono del lanzador</string>
     <string name="configLabel_alarms_showlauncher_summary">Mostrar icono de la alarma en la barra de notificaciones.</string>
 
+    <string name="configLabel_alarms_poweroffalarms">Power Off Alarm</string>    <!-- TODO -->
+    <string name="configLabel_alarms_poweroffalarms_summary">Wake the device from the power off state.\npackage: <xliff:g id="packageName">%s</xliff:g></string>    <!-- TODO -->
 
     <!--
          APP SETTINGS
@@ -832,10 +886,11 @@
     <string name="configAction_copyPlace">Copiar</string>            <!-- button (contentDescription) -->
     <string name="configAction_selectPlace">Seleccionar</string>        <!-- button (contentDescription) -->
     <string name="configAction_searchPlace">Search</string>              <!-- button (contentDescription) -->  
-    <string name="configAction_sharePlace">Compartir</string>          <!-- button (contentDescription) -->
+    <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
     <string name="configAction_deletePlace">Borrar</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Clear</string>         <!-- button (contentDescription) -->  
     <string name="configAction_exportPlaces">Exportar</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->  <!-- TODO -->
 
     
     <string name="configLabel_ui">Interfaz de usuario</string>
@@ -870,6 +925,15 @@
     <string name="configLabel_ui_showdatasource">Mostrar fuente de datos</string>
     <string name="configLabel_ui_showdatasource_summary">Mostrar una etiqueta indicando la configuración actual.</string>
 
+
+    <string name="configLabel_ui_showheaders">Headers</string>              <!-- group title --> <!-- TODO -->
+    <string name="configLabel_ui_showheader_icon">Show Header Icon</string> <!-- checkbox label --> <!-- TODO -->
+    <string name="configLabel_ui_showheader_text">Show Header Text</string> <!-- checkbox label --> <!-- TODO -->
+    <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
+        <item>None</item>
+        <item>Labels</item>
+        <item>Azimuth</item>
+    </string-array>    <!-- TODO -->
     
     <string name="configLabel_ui_showgoldhour">Hora dorada</string>
 
@@ -890,7 +954,8 @@
     </string-array>
 
     
-    <string-array name="solsticeTrackingMode_display">                      
+    <string-array name="solsticeTrackingMode_display">
+        <item>@string/trackingMode_recent</item>
         <item>@string/trackingMode_closest</item>
         <item>@string/trackingMode_soonest</item>
     </string-array>
@@ -993,6 +1058,8 @@
         <item>Portugués</item>
         <item>Ruso</item>
         <item>Holandés</item>
+        <item>Czech</item>  <!-- TODO -->
+        <item>Simplified Chinese</item> <!-- TODO -->
     </string-array>
 
     
@@ -1058,11 +1125,35 @@
     <string name="worldmap_dialog_option_sunlight">Luz solar</string>
     <string name="worldmap_dialog_option_moonlight">Luz lunar</string>
     <string name="worldmap_dialog_option_all">Ambos</string>
-    <string name="worldmap_dialog_option_location">Ubicación</string>    
-    <string name="worldmap_dialog_option_latitudes">Latitudes</string>    
+    <string name="worldmap_dialog_option_location">Ubicación</string>
+    <string name="worldmap_dialog_options_menu">@string/configAction_options</string>
+    <string name="worldmap_dialog_option_center">Center on location</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_current">Center: %s</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_msg">Map center set to current location \n[%s]</string>    <!-- toast message; center set to... --> <!-- TODO -->
+    <string name="worldmap_dialog_option_center_clear">Reset map center</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_center_clear_msg">Map center reset to default \n[%s]</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background">Set Background</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background_clear">Clear Background</string>    <!-- TODO -->
+    <string name="worldmap_dialog_option_background_warning0">This image has the wrong aspect ratio.. expected %2$s, but found %1$s!</string>    <!-- toast message; aspect ratio warning --> <!-- TODO -->
+    <string name="worldmap_dialog_option_background_error0">Failed to open map background.</string>    <!-- toast message; io error --> <!-- TODO -->
+    <string name="worldmap_dialog_option_latitudes">Latitudes</string>    <!-- TODO: "Latitudes" -> "Major lines" -->
+    <string name="worldmap_dialog_option_minorgrid">Graticule</string>  <!-- TODO -->
+    <string name="worldmap_dialog_option_debuglines">Debug Lines</string>  <!-- TODO -->
+    <string name="worldmap_dialog_option_tintmap">Tint</string>  <!-- TODO -->
+    <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->   <!-- TODO -->
     <string name="worldmap_dialog_speed_15m">&#215; 15m</string>    
     <string name="worldmap_dialog_speed_1d">&#215; 1d</string>    
-    <string name="configAction_shareMap">Compartir</string>   <!-- button (contentDescription) -->  <!-- export (share) -->  
+    <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
+
+    <string name="help_worldmap_background">
+      <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
+      \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
+      \n\nFor best results select an image matching these properties.
+    </string>    <!-- TODO -->
+
+    <!-- Dialog: Light Map -->
+    <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
+    <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
 
     <!-- Dialog: Set Alarm -->
     <string name="configLabel_schedalarm_mode">Planificar alarma para</string>
@@ -1107,7 +1198,7 @@
         <item>Mediodía lunar</item>    
         <item>Medianoche lunar</item>    
     </string-array>
-    <string-array name="solarevents_long">   
+    <string-array name="solarevents_long">      <!-- one-to-one with solarevents_short -->  <!-- labels; ending may be ellipsed (so the beginning should be distinct)  -->
         <item>Amanecer astronómico</item>
         <item>Amanecer náutico</item>
         <item>Hora azul del amanecer (inicio)</item>
@@ -1136,6 +1227,35 @@
         <item>Mediodía lunar</item>    
         <item>Medianoche lunar</item>    
     </string-array>
+    <string-array name="solarevents_long1">      <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
+        <item>Amanecer astronómico</item>
+        <item>Amanecer náutico</item>
+        <item>Hora azul del amanecer (inicio)</item>
+        <item>Amanecer civil</item>
+        <item>Hora azul del amanecer (final)</item>
+        <item>Amanecer</item>
+        <item>Hora dorada del final del amanecer</item>
+        <item>Mediodía</item>
+        <item>Hora dorada del inicio del atardecer</item>
+        <item>Atardecer</item>
+        <item>Hora azul del atardecer (inicio)</item>
+        <item>Atardecer sol civil</item>
+        <item>Hora azul del atardecer (final)</item>
+        <item>Atardecer náutica</item>
+        <item>Atardecer astronómico</item>
+        <item>Salida lunar</item>
+        <item>Puesta lunar</item>
+        <item>Luna nueva</item>
+        <item>Cuarto creciente</item>
+        <item>Luna llena</item>
+        <item>Cuarto menguante</item>
+        <item>Equinoccio de primavera</item>
+        <item>Solsticio de verano</item>
+        <item>Equinoccio de otoño</item>
+        <item>Solsticio de invierno</item>
+        <item>Mediodía lunar</item>
+        <item>Medianoche lunar</item>
+    </string-array>    <!-- TODO: review -->
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">El GPS está desactivado. ¿Activarlo?</string>
@@ -1261,7 +1381,7 @@
 ]]></string>
     <string name="app_legal1"><![CDATA[
     <b>Código fuente:</b> <br />
-    Copyright &#169 2014-2021 Forrest Guice <br />
+    Copyright &#169 2014-2022 Forrest Guice <br />
     Código fuente disponible bajo GPLv3.
 ]]></string>
 
@@ -1272,9 +1392,18 @@
     <string name="creditsTab">Créditos</string>   
 
     <string name="app_legal3"><![CDATA[<b>Bibliotecas:</b> <br/>]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
+    <string name="app_about_media"><![CDATA[ <b>Media:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>    <!-- TODO -->
 
     
     <string name="help_dialog_title">Ayuda</string>
+    <string name="help_appearance_allowresize"><![CDATA[
+      <big>Swap layouts to fill available space</big><br/><br/>
+      <i><b>[enabled]</b></i> The widget will switch between layouts depending on available space.<br/><br/>
+      <i><b>[disabled]</b></i> The widget maintains its initial layout when resized. Use this with the \"<i>scale text and icons</i>\" option for extra large widgets.<br/>
+    ]]></string>  <!-- TODO -->
+    <string name="help_appearance_widgetlayout"><![CDATA[
+      This widget was created with a <b>%1$s</b> <em>initial layout</em>.<br/></br/>
+    ]]></string>  <!-- TODO -->
     
     <string name="help_appearance_title"><![CDATA[
         Las siguientes sustituciones están soportadas:<br/>
@@ -1293,38 +1422,46 @@
                 * <b>%lel</b> para elevación (p. ej. 385 metros) <br/>
                 <br/>
                 * <b>%s</b> para fuente de datos (p.ej. sunrisesunsetlib) <br/>
-                * <b>%t</b> para zona horaria (id) (p. ej. ES/Barcelona) <br/>
+                * <b>%t</b> para zona horaria (id) (p. ej. Europe/Madrid) <br/>
                 * <b>%id</b> para appWidgetID <br/>
          <br/>
          <b>Widget solar:</b> <br/>
                 * <b>%m</b> para el modo de tiempo (corto) (p. ej. «Civil») <br/>
                 * <b>%M</b> para el modo de tiempo (largo) (p. ej. «Crepúsculo Civil») <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>Widget lunar:</b> <br/>
                 * <b>%i</b> para la iluminación de la Luna (p. ej. 25%) <br/>
                 * <b>%M</b> para la fase de la Luna (e.g. Creciente) <br/>
+                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
          <br/>
          <b>Widgets de solsticios:</b> <br/>
                 * <b>%m</b> para el modo (corto) (p. ej. Solsticio) <br/>
                 * <b>%M</b> para el modo (largo) (p. ej. Solsticio de invierno) <br/>
-    ]]></string>
+                * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
+    ]]></string>    <!-- TODO -->
 
-    <string name="help_general_timeMode"><![CDATA[
+    <string name="help_general_actualTime"><![CDATA[
     <b>Tiempo natural:</b> El Sol está en el horizonte: esto es el tiempo aproximado de la salida y puesta de sol. <br/><br/>
+]]></string>
+    <string name="help_general_twilight"><![CDATA[
     <b>Crepúsculo civil:</b> El Sol está 6 grados por debajo del horizonte; las estrellas más brillantes son visibles. Hay suficiente luz para la mayoría de las actividades al aire libre sin necesidad de linterna. <br/><br/>
     <b>Crepúsculo náutico:</b> El Sol está 12 grados por debajo del horizonte; las siluetas de los objetos y el horizonte son difíciles de distinguir. No hay suficiente luz para actividades a al aire libre sin linterna. <br/><br/>
     <b>Crepúsculo astronómico:</b> El Sol está 18 grados por debajo del horizonte. Casi la oscuridad de la noche. <br/>
-]]></string>
+    ]]></string>
     <string name="help_general_riseSetOrder"><![CDATA[
           <b>Today:</b> Rising and setting event times for today\'s date.<br/><br/>
           <b>Last / Next:</b> The time of the last event, and the next upcoming event.<br/>
-    ]]></string>  
+    ]]></string>
     <string name="help_general_timeMode2"><![CDATA[
-    <b>Equinoccio de primavera:</b> TODO. <br/> 
-    <b>Solsticio de verano:</b> TODO. <br/> 
-    <b>Equinoccio de otoño:</b> TODO. <br/> 
-    <b>Solsticio de invierno:</b> TODO. <br/>
-]]></string>
+          <b>Equinoccio de primavera:</b> The start of astronomical spring; <em>March</em> [northern hemisphere], or <em>September</em> [southern hemisphere]. The March equinox is also called the <em>northward equinox</em>.<br/><br/>
+          <b>Solsticio de verano:</b> The start of astronomical summer; <em>June</em> [northern hemisphere], or <em>December</em> [southern hemisphere]. The June solstice is also called the <em>northern solstice</em>.<br/><br/>
+          <b>Equinoccio de otoño:</b> The start of astronomical autumn; <em>September</em> [northern hemisphere], or <em>March</em> [southern hemisphere]. The September equinox is also called the <em>southward equinox</em>.<br/><br/>
+          <b>Solsticio de invierno:</b> The start of astronomical winter; <em>December</em> [northern hemisphere], or <em>June</em> [southern hemisphere]. The December solstice is also called the <em>southern solstice</em>.<br/>
+    ]]></string>    <!-- TODO -->
+    <string name="help_general_tropicalyear"><![CDATA[
+          <b>Tropical Year:</b> A full cycle of the seasons. The length of the <em>tropical year</em> is measured from one <em>March equinox</em> to the next. It is <em>~365.24 days</em> on average, with an exact length that varies each year (up to 30 minutes).<br/>
+    ]]></string>   <!-- TODO -->
     <string name="help_general_daylength"><![CDATA[
     <b>Duración del día:</b> la cantidad de tiempo entre la salida y la puesta del Sol. <br/><br/>
     <b>Luz usable:</b> la cantidad de tiempo entre el crepúsculo civil diurno y el nocturno. <br/>
@@ -1375,7 +1512,8 @@
     <string name="security_duplicate_permissions">Un permiso que pertenece a Suntimes:\n\n<xliff:g id="permissionName" example="suntimes.permission.READ_CALENDAR">%1$s</xliff:g>\n\nestá tambień definido por: <xliff:g id="packageName" example="some.other.app">%2$s</xliff:g></string>  
     <string name="feature_not_supported_by_api">Esta característica no está soportada por la API %1$s.</string>
     <string name="feature_not_supported_by_source">Esta característica no está soportada por la actual fuente de datos.</string>  
-    <string name="reboot_required_message">Puede que sea necesario un reinicio para aplicar los cambios.</string>  
+    <string name="reboot_required_message">Puede que sea necesario un reinicio para aplicar los cambios.</string>
+    <string name="restart_required_message">A restart may be needed for changes to take full effect.</string>   <!-- toast; app restart may be required -->  <!-- TODO -->
 
     <string name="dialog_ok">Aceptar</string>  
     <string name="dialog_cancel">Cancelar</string>
@@ -1387,5 +1525,16 @@
     <string name="calculator_displayString_time4a_noaa">Sigue algoritmos publicados por la «National Oceanic and Atmospheric Administration».</string>
     <string name="calculator_displayString_time4a_cc">Sigue algoritmos publicados por Dershowitz / Reingold en su libro "Calendrical Calculations" (tercera edición).</string>
     <string name="calculator_displayString_time4a_4j">Basado en cálculos Astronómico publicados por Jean Meeus en su libro "Astronomical Algorithms" (segunda edición).</string>
+    <string name="help_datasources">
+        <![CDATA[
+        Suntimes uses third-party libraries to perform astronomical calculations.<br/>
+        <br/>
+        The <b>data source</b> setting allows choosing between different libraries (or choosing between different algorithms offered by those libraries). The default is <b>time4a-time4j</b>.<br/>
+        <br/>
+        This setting affects the speed and accuracy of calculations, and may limit which features are available. <br/>
+        <br/>
+        For more information about available choices, or extending the app to support other libraries, see the online help.
+    ]]>
+    </string>   <!-- TODO -->
 
 </resources>

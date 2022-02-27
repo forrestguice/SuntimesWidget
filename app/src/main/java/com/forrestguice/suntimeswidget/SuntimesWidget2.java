@@ -85,15 +85,15 @@ public class SuntimesWidget2 extends SuntimesWidget0
 
     protected static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, SunPosLayout layout, Class widgetClass)
     {
-        RemoteViews views = layout.getViews(context);
+        SuntimesRiseSetDataset dataset = new SuntimesRiseSetDataset(context, appWidgetId);
+        layout.prepareForUpdate(context, appWidgetId, dataset, widgetMaxSizeDp(context, appWidgetManager, appWidgetId, new int[] {40, 40}));
 
+        RemoteViews views = layout.getViews(context);
         boolean showTitle = WidgetSettings.loadShowTitlePref(context, appWidgetId);
         views.setViewVisibility(R.id.text_title, showTitle ? View.VISIBLE : View.GONE);
 
-        SuntimesRiseSetDataset dataset = new SuntimesRiseSetDataset(context, appWidgetId);
-
         views.setOnClickPendingIntent(R.id.widgetframe_inner, SuntimesWidget0.clickActionIntent(context, appWidgetId, widgetClass));
-        layout.prepareForUpdate(dataset, widgetMaxSizeDp(context, appWidgetManager, appWidgetId, new int[] {40, 40}));
+
         layout.themeViews(context, views, appWidgetId);
         layout.updateViews(context, appWidgetId, views, dataset);
         appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -115,7 +115,8 @@ public class SuntimesWidget2 extends SuntimesWidget0
             if (mustFitWithinDp[0] >= minDimen_x3)
             {
                 if (mustFitWithinDp[1] >= minDimen_x3)
-                    layout = new SunPosLayout_3X3_0();
+                    layout = ((mustFitWithinDp[0] / (float)mustFitWithinDp[1]) < 1.1) ? new SunPosLayout_3X3_0()
+                                                                                      : new SunPosLayout_3X2_0();
                 else if (mustFitWithinDp[1] >= minDimen_x2)
                     layout = new SunPosLayout_3X2_0();
                 else layout = new SunPosLayout_3X1_0();
@@ -127,6 +128,8 @@ public class SuntimesWidget2 extends SuntimesWidget0
             layout = defLayout;
         }
         //Log.d("getWidgetLayout", "layout is: " + layout);
+        layout.setMaxDimensionsDp(widgetSizeDp(context, appWidgetManager, appWidgetId, defSize));
+        layout.setCategory(widgetCategory(appWidgetManager, appWidgetId));
         return layout;
     }
 

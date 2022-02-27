@@ -100,12 +100,16 @@ public class SuntimesScreenshots extends SuntimesActivityTestBase
         configureAppForTesting(context, languageTag, configuration, theme);
         activityRule.launchActivity(activityRule.getActivity().getIntent());
 
-        long waitTime = 3 * 1000;            // wait a moment
+        long waitTime = 1 * 1000;            // wait a moment
         IdlingResource waitForResource = new ElapsedTimeIdlingResource(waitTime);
         IdlingPolicies.setMasterPolicyTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
         IdlingPolicies.setIdlingResourceTimeout(waitTime * 2, TimeUnit.MILLISECONDS);
         registerIdlingResources(waitForResource);
 
+        for (int i = 0; i<3; i++) {
+            long t = System.currentTimeMillis();
+            while (System.currentTimeMillis() - t < waitTime) { /* busy */ }
+        }
         captureScreenshot(activityRule.getActivity(), version + "/" + languageTag, "activity-main0-" + theme);
 
         unregisterIdlingResources(waitForResource);
