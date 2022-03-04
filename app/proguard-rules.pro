@@ -24,6 +24,9 @@
    public <init>();
 }
 
+# keep classes from support library
+-keep class android.support.v7.widget.SearchView { *; }
+
 #-keep class **.SPX
 #-keepclassmembers class * implements java.io.Serializable {
 #    static final long serialVersionUID;
