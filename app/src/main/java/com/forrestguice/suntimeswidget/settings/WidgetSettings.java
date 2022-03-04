@@ -190,7 +190,7 @@ public class WidgetSettings
     public static final boolean PREF_DEF_LOCATION_FROMAPP = false;
 
     public static final String PREF_KEY_TIMEZONE_MODE = "timezoneMode";
-    public static final TimezoneMode PREF_DEF_TIMEZONE_MODE = TimezoneMode.SOLAR_TIME;
+    public static final TimezoneMode PREF_DEF_TIMEZONE_MODE = TimezoneMode.CURRENT_TIMEZONE;
 
     public static final String PREF_KEY_TIMEZONE_CUSTOM = "timezone";
     public static final String PREF_DEF_TIMEZONE_CUSTOM = "MST";    // TODO: candidate for initDefaults?
