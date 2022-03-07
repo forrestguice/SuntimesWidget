@@ -28,9 +28,9 @@
     <string name="configAction_worldMap">Mapa świata</string>
     <string name="configAction_moon">Księżyc</string>
     <string name="configAction_help">Pomoc</string>
-    <string name="configAction_onlineHelp">Online Help</string>   <!-- TODO -->
+    <string name="configAction_onlineHelp">Pomoc online</string>
     <string name="configAction_overflow">Więcej</string>
-    <string name="configAction_options">Options</string>   <!-- TODO -->
+    <string name="configAction_options">Opcje</string>
     <string name="configAction_settings">Ustawienia</string>
     <string name="configAction_aboutWidget">O programie</string>
 
@@ -81,8 +81,8 @@
     <string name="length_day"><xliff:g id="timeSpan" example="12h">%1$s</xliff:g> dnia</string>         <!-- time between sunrise and sunset; "12 hr in the day"  -->
     <string name="length_light"><xliff:g id="timeSpan" example="12h 50m">%1$s</xliff:g> użytecznego światła</string>  <!-- time between civil twilights; 12 hr 50m of usable light -->
 
-    <string name="timeMode_tropical_year">Tropical Year</string>   <!-- TODO -->
-
+    <string name="timeMode_tropical_year">Rok zwrotnikowy</string>
+    
     <!-- Field: moon illumination (as seen in moon widget) -->
     <string name="moon_illumination"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g> oświetlenia</string>  <!-- "50% illuminated" .. used in 2x1 widget -->
     <string name="moon_illumination_short"><xliff:g id="illuminationPercent" example="50%">%1$s</xliff:g></string>  <!-- "50%" .. used in 1x1 widget -->
@@ -127,10 +127,10 @@
         <item quantity="other">%1$s po</item>
     </plurals>
 
-    <string name="offset_before_msg">%1$s przed %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->   <!-- TODO: review -->
-    <string name="offset_after_msg">%1$s po %2$s</string>        <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->   <!-- TODO: review -->
-    <string name="offset_before_msg1">{0} przed {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
-    <string name="offset_after_msg1">{0} po {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- TODO: review -->
+    <string name="offset_before_msg">%1$s przed %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->
+    <string name="offset_after_msg">%1$s po %2$s</string>        <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->
+    <string name="offset_before_msg1">{0} przed {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- SelectFormat not used -->
+    <string name="offset_after_msg1">{0} po {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- SelectFormat not used -->
 
     <string name="offset_button_before">przed</string>    <!-- button label; [1h] [5m] [before] (-) -->
     <string name="offset_button_after">po</string>      <!-- button label; [1h] [5m] [after] (+) -->
@@ -248,14 +248,14 @@
     <string name="configLabel_general_calculator">Źródło danych:</string>         <!-- spinner label -->
     <string name="configLabel_general_calculator_sun">Źródło danych słonecznych</string>         <!-- preference label -->
     <string name="configLabel_general_calculator_moon">Źródło danych księżycowych</string>         <!-- preference label -->
-    <string name="configLabel_general_calculator_help">Data Sources</string>    <!-- preference title / help button text --> <!-- TODO -->
+    <string name="configLabel_general_calculator_help">Źródła danych</string>    <!-- preference title / help button text -->
 
     <string name="configLabel_general_timeFormatMode">Format czasu:</string>         <!-- spinner label -->
 
     <string name="configLabel_general_altitude_enabled">Użyj wysokości</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Zastosuj poprawki uwzględniające wysokość n.p.m.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_localize_hemisphere">Localize to hemisphere</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_general_localize_hemisphere">Dostosuj do półkuli</string>        <!-- checkbox label -->    <!-- TODO -->
     <string name="configLabel_general_localize_hemisphere_summary">Apply hemisphere based localization (season labels, moon phase icons).</string>        <!-- checkbox label -->    <!-- TODO -->
 
     <string name="configLabel_general_lengthUnits">Jednostki długości</string>        <!-- spinner label -->
