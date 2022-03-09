@@ -255,8 +255,8 @@
     <string name="configLabel_general_altitude_enabled">Użyj wysokości</string>        <!-- checkbox label -->
     <string name="configLabel_general_altitude_enabled_summary">Zastosuj poprawki uwzględniające wysokość n.p.m.</string>        <!-- checkbox label -->
 
-    <string name="configLabel_general_localize_hemisphere">Dostosuj do półkuli</string>        <!-- checkbox label -->    <!-- TODO -->
-    <string name="configLabel_general_localize_hemisphere_summary">Apply hemisphere based localization (season labels, moon phase icons).</string>        <!-- checkbox label -->    <!-- TODO -->
+    <string name="configLabel_general_localize_hemisphere">Dostosuj do półkuli</string>        <!-- checkbox label -->
+    <string name="configLabel_general_localize_hemisphere_summary">Uwzględnij półkulę podczas wyświetlania etikiet pór roku i ikon faz Księżyca.</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_lengthUnits">Jednostki długości</string>        <!-- spinner label -->
 
@@ -282,28 +282,28 @@
     <string name="configLabel_general_scanPlugins_summary">Skanuj i załaduj zewnętrzne wtyczki.</string>   <!-- pref summary -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_widgetlayout">Layout</string>           <!-- group title -->  <!-- TODO -->
+    <string name="configLabel_widgetlayout">Układ</string>           <!-- group title -->
     <string-array name="widgetgravity">         <!-- must be one-to-one with WidgetSettings.WidgetGravity enum -->
         <!--<item>Fill</item>-->
-        <item>Top-Left</item>
-        <item>Top</item>
-        <item>Top-Right</item>
-        <item>Left</item>
-        <item>Center</item>
-        <item>Right</item>
-        <item>Bottom-Left</item>
-        <item>Bottom</item>
-        <item>Bottom-Right</item>
-    </string-array>  <!-- TODO -->
+        <item>górne lewo</item>
+        <item>góra</item>
+        <item>górne prawo</item>
+        <item>lewo</item>
+        <item>środek</item>
+        <item>prawo</item>
+        <item>dolne lewo</item>
+        <item>dół</item>
+        <item>dolne prawo</item>
+    </string-array>
 
     <!-- Widget Setting: appearance -->
     <string name="configLabel_appearance">Ustawienia wyglądu</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Wygląd</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Skórka:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Poszerz do dostępnej przestrzeni (rozciągalne)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
-    <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
-    <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
+    <string name="configLabel_appearance_allowResize">Pzełączaj układy, aby wypełnić dostępną przestrzeń</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_scaleText">Skaluj tekst i ikony</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_scaleBase">Wypełnij całą komórkę</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_gravity">Wyrównanie do:</string>  <!-- spinner label -->
     <string name="configLabel_appearance_showLabels">Wyświetl etykiety</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_showTitle">Wyświetl tytuł</string>          <!-- checkbox label -->
     <string name="configLabel_appearance_titleText">Tytuł:</string>              <!-- edittext label -->
@@ -394,10 +394,10 @@
     <string name="widgetMode_sunPosMap_simpleazimuthal">Biegunowa (północ)</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">Biegunowa (południe)</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_bluemarble">Blue Marble</string>    <!-- setting -->
-    <string name="widgetMode_sunPosMap_simpleazimuthal_location">Azimuthal Equidistant</string>     <!-- setting -->   <!-- TODO -->
+    <string name="widgetMode_sunPosMap_simpleazimuthal_location">Azymutalna równoodległościowa</string>     <!-- setting -->
 
-    <string name="worldmap_projection_equirectangular">Equidistant Rectangular</string>    <!-- TODO -->
-    <string name="worldmap_projection_equiazimuthal">Equidistant Azimuthal</string>    <!-- TODO -->
+    <string name="worldmap_projection_equirectangular">Walcowa równoodległościowa</string>
+    <string name="worldmap_projection_equiazimuthal">Azymutalna równoodległościowa</string>
 
     <string name="widgetMode1x1_moonriseset">Wschód i zachód Księżyca</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphaseillum">Faza i oświetlenie Księżyca</string>     <!-- setting -->
@@ -405,12 +405,12 @@
     <string name="widgetMode1x1_moonillum">Tylko oświetlenie Księżyca</string>     <!-- setting -->
     <string name="widgetMode1x1_moonphasenext">Następna faza główna</string>     <!-- setting -->
 
-    <string name="configLabel_appearance_1x1mode">1x1:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_2x1mode">2x1:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_3x1mode">3x1:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_3x2mode">3x2:</string>     <!-- spinner label -->  <!-- TODO -->
-    <string name="configLabel_appearance_3x3mode">3x3:</string>     <!-- spinner label -->  <!-- TODO -->
-
+    <string name="configLabel_appearance_1x1mode">1×1:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_2x1mode">2×1:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x1mode">3×1:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x2mode">3×2:</string>     <!-- spinner label -->
+    <string name="configLabel_appearance_3x3mode">3×3:</string>     <!-- spinner label -->
+    
     <!-- Widget Setting: widget tap action -->
     <string name="actionMode_doNothing">Nic nie rób</string>           <!-- setting -->
     <string name="actionMode_update">Aktualizuj widżet</string>           <!-- setting -->
@@ -449,14 +449,14 @@
     <string name="configLabel_location_name">Nazwa:</string>                     <!-- edittext label -->
     <string name="configHint_location_name">(opcjonalne)</string>                 <!-- edittext hint -->
     <string name="configHint_location_name0">Nazwa miejsca</string>                  <!-- edittext hint -->
-    <string name="configLabel_location_fromapp">Use the app location</string>                  <!-- checkbox text -->  <!-- TODO -->
+    <string name="configLabel_location_fromapp">Pozycja określona przez aplikację</string>                  <!-- checkbox text -->
 
     <string name="configAction_getFix">Obecna lokalizacja</string>    <!-- button (contentDescription) -->
     <string name="configAction_editPlace">Edytuj</string>         <!-- button (contentDescription) -->
     <string name="configAction_savePlace">Zapisz</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: timezone -->
-    <string name="timezoneMode_standard">czas słoneczny</string>                       <!-- setting -->    <!-- TODO: "solar time" -> "Time Standard" -->
+    <string name="timezoneMode_standard">standard</string>                       <!-- setting -->
     <string name="timezoneMode_current">systemowa</string>                         <!-- setting -->
     <string name="timezoneMode_custom">użytkownika</string>                    <!-- setting -->
     
@@ -471,7 +471,7 @@
     <string name="configLabel_timezone">Ustawienia strefy czasowej</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Tryb:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Strefa czasowa:</string>              <!-- spinner label -->
-    <string name="configLabel_timezone_standard">Czas słoneczny:</string>                   <!-- spinner label -->    <!-- TODO: "solar time" -> "Time Standard" -->
+    <string name="configLabel_timezone_standard">Standard:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
     <string name="timeFormatMode_system">Systemowy</string>
@@ -496,9 +496,9 @@
     <string name="configLabel_general_showComparison">Pokaż porównanie</string>  <!-- checkbox label -->
 
     <!-- Widget Setting: tracking mode -->
-    <string name="trackingMode_recent">Recent Event</string>                   <!-- setting -->    <!-- TODO -->
-    <string name="trackingMode_closest">Najbliższe wydarzenie</string>                 <!-- setting -->
-    <string name="trackingMode_soonest">Nadchodzące wydarzenie</string>                <!-- setting -->
+    <string name="trackingMode_recent">poprzednie</string>                   <!-- setting -->
+    <string name="trackingMode_closest">najbliższe</string>                 <!-- setting -->
+    <string name="trackingMode_soonest">następne</string>                <!-- setting -->
     <string name="configLabel_general_trackingMode">Śledź:</string>            <!-- spinner label -->
 
     <!-- Widget Setting: timeMode override -->
@@ -712,7 +712,7 @@
     <string name="configAction_sortAlarms_by_time">Czas alarmu</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_creation">Data utworzenia</string>                <!-- action button / menu item -->
     <string name="configAction_clearOffset">Usuń</string>                <!-- action button / menu item -->
-    <string name="configAction_clearDate">Clear</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="configAction_clearDate">Wyczyść</string>                <!-- action button / menu item -->
     <string name="configAction_setAlarmOffset">Ustaw przesunięcie</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmType">Ustaw typ</string>         <!-- button (contentDescription) -->
     <string name="configAction_setAlarmLabel">Ustaw etykietę</string>         <!-- button (contentDescription) -->
@@ -859,18 +859,18 @@
     </plurals>
 
     <plurals name="units_days">
-        <item quantity="one">%s day</item>
-        <item quantity="few">%s days</item>
-        <item quantity="many">%s days</item>
-        <item quantity="other">%s days</item>
-    </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->    <!-- TODO -->
+        <item quantity="one">%s dzień</item>
+        <item quantity="few">%s dni</item>
+        <item quantity="many">%s dni</item>
+        <item quantity="other">%s dni</item>
+    </plurals>    <!-- %s may be fractional (365.24 days); uses whole days to determine which quantity -->
 
     <string name="configLabel_alarmMisc">Inne</string>
     <string name="configLabel_alarms_showlauncher">Ikona na ekranie startowym</string>
     <string name="configLabel_alarms_showlauncher_summary">Pokaż ikonę „Czasy Słońca: alarmy” na ekranie startowym.</string>
 
-    <string name="configLabel_alarms_poweroffalarms">Power Off Alarm</string>    <!-- TODO -->
-    <string name="configLabel_alarms_poweroffalarms_summary">Wake the device from the power off state.\npackage: <xliff:g id="packageName">%s</xliff:g></string>    <!-- TODO -->
+    <string name="configLabel_alarms_poweroffalarms">Alarm po wyłączeniu</string>
+    <string name="configLabel_alarms_poweroffalarms_summary">Alarm włączy się nawet, gdy urządzenie jest „wyłączone”.\n(Korzysta z aplikacji <xliff:g id="packageName">%s</xliff:g>.)</string>
 
     <!--
          APP SETTINGS
@@ -946,10 +946,10 @@
     <string name="configLabel_ui_showheader_icon">Wyświetl ikonę nagłówka</string> <!-- checkbox label -->
     <string name="configLabel_ui_showheader_text">Wyświetl tekst nagłówka</string> <!-- checkbox label -->
     <string-array name="headerText_display">                      <!-- one-to-one with headerText_values -->
-        <item>None</item>
-        <item>Labels</item>
-        <item>Azimuth</item>
-    </string-array>    <!-- TODO -->
+        <item>Brak</item>
+        <item>Etykieta</item>
+        <item>Azymut</item>
+    </string-array>
     
     <!-- App Setting: show golden hour -->
     <string name="configLabel_ui_showgoldhour">Złota godzina</string>
@@ -1062,8 +1062,8 @@
         <item>Portugalski</item>
         <item>Rosyjski</item>
         <item>Holenderski</item>
-        <item>Czech</item>  <!-- TODO -->
-        <item>Simplified Chinese</item> <!-- TODO -->
+        <item>Czeski</item>
+        <item>Chiński uproszczony</item>
     </string-array>
 
     <!-- position formats -->
@@ -1132,9 +1132,9 @@
     <string name="worldmap_dialog_option_all">Oba</string>
     <string name="worldmap_dialog_option_location">Położenie</string>
     <string name="worldmap_dialog_options_menu">@string/configAction_options</string>
-    <string name="worldmap_dialog_option_center">Center on location</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_center_current">Center: %s</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_center_msg">Map center set to current location \n[%s]</string>    <!-- toast message; center set to... --> <!-- TODO -->
+    <string name="worldmap_dialog_option_center">Wyśrodkuj na lokalizacji</string>
+    <string name="worldmap_dialog_option_center_current">Środek: %s</string>
+    <string name="worldmap_dialog_option_center_msg">Wyśrodkowano mapę na obecną lokalizację:\n[%s]</string>    <!-- toast message; center set to... -->
     <string name="worldmap_dialog_option_center_clear">Reset map center</string>    <!-- TODO -->
     <string name="worldmap_dialog_option_center_clear_msg">Map center reset to default \n[%s]</string>    <!-- TODO -->
     <string name="worldmap_dialog_option_background">Set Background</string>    <!-- TODO -->
