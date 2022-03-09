@@ -114,6 +114,7 @@ import android.os.Handler;
 public class SuntimesActivity extends AppCompatActivity
 {
     public static final String ACTION_ADD_ALARM = "com.forrestguice.suntimeswidget.ALARM";
+    public static final String EXTRA_SOLAREVENT = "solarevent";
 
     public static final String ACTION_VIEW_SUN = "com.forrestguice.suntimeswidget.VIEW_SUN";
     public static final String ACTION_VIEW_MOON = "com.forrestguice.suntimeswidget.VIEW_MOON";
@@ -276,7 +277,7 @@ public class SuntimesActivity extends AppCompatActivity
         if (action != null)
         {
             if (action.equals(ACTION_VIEW_SUN)) {
-                showLightMapDialog();
+                showSunPositionAt(intent.getLongExtra(EXTRA_SHOW_DATE, -1));
 
             } else if (action.equals(ACTION_VIEW_MOON)) {
                 showMoonDialog();
@@ -285,10 +286,10 @@ public class SuntimesActivity extends AppCompatActivity
                 showEquinoxDialog();
 
             } else if (action.equals(ACTION_VIEW_WORLDMAP)) {
-                showWorldMapDialog();
+                showMapPositionAt(intent.getLongExtra(EXTRA_SHOW_DATE, -1));
 
             } else if (action.equals(ACTION_ADD_ALARM)) {
-                scheduleAlarm();
+                scheduleAlarm(SolarEvents.valueOf(intent.getStringExtra(EXTRA_SOLAREVENT), null));
 
             } else if (action.equals(ACTION_CONFIG_TIMEZONE)) {
                 configTimeZone();
