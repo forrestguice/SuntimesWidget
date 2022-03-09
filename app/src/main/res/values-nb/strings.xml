@@ -50,7 +50,7 @@
     -->
     <string name="timezoneField"><xliff:g id="timezone" example="US/Mountain">%1$s</xliff:g> <xliff:g id="dstTag">[d]</xliff:g><xliff:g id="warningTag">[w]</xliff:g></string>
     <string name="timezoneWarning"><xliff:g id="warningTag">[w]</xliff:g> Tidssonen kan være feil for dette stedet.</string>  <!-- snackbar message -->
-    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> Sommertid</string>  <!-- timezone dialog label -->
+    <string name="timezoneExtraDST"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+1h">%1$s</xliff:g> sommertid</string>  <!-- timezone dialog label -->
     <string name="timezoneExtraApparentSolar"><xliff:g id="dstTag">[d]</xliff:g> <xliff:g id="dstOffset" example="+8m">%1$s</xliff:g> tidsjevning</string>  <!-- timezone dialog label -->
 
     <!-- Field: date
@@ -276,8 +276,8 @@
     <string name="configLabel_general_observerheight_summary">Vis skyggelengde fra et objekt med en høyde på <xliff:g id="value" example="1 meter">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Advanced Settings</string>                        <!-- group title -->  <!-- TODO -->
-    <string name="configLabel_experimental">Experimental Settings</string>                <!-- group title --> <!-- TODO -->
+    <string name="configLabel_advanced">Avansert</string>                        <!-- group title -->
+    <string name="configLabel_experimental">Eksperimentelt</string>                <!-- group title -->
     <string name="configLabel_general_scanPlugins">Data Source Plugins</string>                                <!-- checkbox label --> <!-- TODO -->
     <string name="configLabel_general_scanPlugins_summary">Scan for and load third party plugins.</string>   <!-- pref summary --> <!-- TODO -->
 
@@ -297,10 +297,10 @@
     </string-array>  <!-- TODO -->
 
     <!-- Widget Setting: appearance -->
-    <string name="configLabel_appearance">Utseende-innstillinger</string>           <!-- group title -->
+    <string name="configLabel_appearance">Utseende</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Utseende</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Tema:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Grow with available space (resizeable)</string>  <!-- checkbox label -->  <!-- TODO: "Grow with available space" to "Swap layouts to fill available space" -->
+    <string name="configLabel_appearance_allowResize">Bytt layouter for å fylle ledig plass</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_scaleText">Scale text and icons</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_scaleBase">Fill entire cell</string>  <!-- checkbox label -->  <!-- TODO -->
     <string name="configLabel_appearance_gravity">Align base:</string>  <!-- spinner label -->  <!-- TODO -->
@@ -427,7 +427,7 @@
     <!--<string name="increment">@string/expandMore</string>-->  <!-- contentDescription for (+>) type buttons -->
     <!--<string name="decrement">@string/expandLess</string>-->  <!-- contentDescription for (-<) type buttons -->
 
-    <string name="configLabel_action">Handlingsinnstillinger</string>                  <!-- group title -->
+    <string name="configLabel_action">Handling</string>                  <!-- group title -->
     <string name="configLabel_action_onTap">Ved trykk:</string>                    <!-- spinner label -->
     <string name="configLabel_action_onClockTap">Ved trykk på klokke</string>         <!-- spinner label -->
     <string name="configLabel_action_onNoteTap">Ved trykk på notis</string>           <!-- spinner label -->
@@ -438,7 +438,7 @@
     <string name="locationMode_current">Gjeldende (sist kjente)</string>  <!-- setting -->
     <string name="locationMode_custom">Brukerdefinert</string>           <!-- setting -->
 
-    <string name="configLabel_location">Stedsinnstillinger</string>               <!-- group title -->
+    <string name="configLabel_location">Sted</string>               <!-- group title -->
     <string name="configLabel_location_mode">Modus:</string>                      <!-- spinner label -->
     <string name="configLabel_location_lat">Breddegrad:</string>                   <!-- edittext label -->
     <string name="configHint_location_lat">desimalgrader</string>      <!-- edittext hint -->
@@ -468,7 +468,7 @@
     <string name="timezoneCustom_line1"><xliff:g id="timezoneID" example="US/Arizona">%1$s</xliff:g></string>                                                                     <!-- selector item format (e.g. "US/Arizona" ) -->
     <string name="timezoneCustom_line2">[<xliff:g id="utmOffset" example="-7">%1$s</xliff:g>] <xliff:g id="timezoneName" example="Mountain Standard Time">%2$s</xliff:g></string> <!-- selector item format (e.g. "[-7] Mountain Standard Time") -->
 
-    <string name="configLabel_timezone">Tidssoneinnstillinger</string>             <!-- group title -->
+    <string name="configLabel_timezone">Tidssone</string>             <!-- group title -->
     <string name="configLabel_timezone_mode">Modus:</string>                     <!-- spinner label -->
     <string name="configLabel_timezone_custom">Tidssone:</string>              <!-- spinner label -->
     <string name="configLabel_timezone_standard">Standard:</string>                   <!-- spinner label -->
@@ -1231,22 +1231,22 @@
         <item>månens kulminasjon</item>
         <item>månens nedre kulminasjon</item>
     </string-array>
-    <string-array name="solarevents_long1">    <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
-        <item>astronomisk tussmørke morgen (start)</item>
-        <item>nautisk tussmørke morgen (start)</item>
-        <item>blåtimen morgen (start)</item>
-        <item>alminnelig tussmørke morgen (start)</item>
-        <item>blåtimen morgen (slutt)</item>
+    <string-array name="solarevents_long1">   <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
+        <item>start på astronomisk tussmørke morgen</item>
+        <item>start på nautisk tussmørke morgen</item>
+        <item>start på blåtimen morgen</item>
+        <item>start på alminnelig tussmørke morgen</item>
+        <item>slutt på blåtimen morgen</item>
         <item>soloppgang</item>
-        <item>gylne time morgen (slutt)</item>
+        <item>slutt på gylne time morgen</item>
         <item>lokal middag</item>
-        <item>gylne time kveld (start)</item>
+        <item>start på gylne time kveld</item>
         <item>solnedgang</item>
-        <item>blåtimen kveld (start)</item>
-        <item>alminnelig tussmørke kveld (slutt)</item>
-        <item>blåtimen kveld (slutt)</item>
-        <item>nautisk tussmørke kveld (slutt)</item>
-        <item>astronomisk tussmørke kveld (slutt)</item>
+        <item>start på blåtimen kveld</item>
+        <item>slutt på alminnelig tussmørke kveld</item>
+        <item>slutt på blåtimen kveld</item>
+        <item>slutt på nautisk tussmørke kveld</item>
+        <item>slutt på astronomisk tussmørke kveld</item>
         <item>måneoppgang</item>
         <item>månenedgang</item>
         <item>nymåne</item>
@@ -1259,7 +1259,7 @@
         <item>vintersolverv</item>
         <item>månens kulminasjon</item>
         <item>månens nedre kulminasjon</item>
-    </string-array>    <!-- TODO: review -->
+    </string-array>
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">GPS er deaktivert. Aktivere nå?</string>
@@ -1479,12 +1479,36 @@
 
     <string name="help_general_timeMode2"><![CDATA[
           <b>Vårjevndøgn:</b> Starten på den astronomiske våren; <em>mars</em> [nordlige halvkule], eller <em>september</em> [sørlige halvkule]. Marsjevndøgnet kan også kalles <em>\"nordoverjevndøgnet\"</em>.<br/><br/>
-          <b>Sommersolverv:</b> Starten på den astronomiske sommeren; <em>juni</em> [nordlige halvkule], eller <em>desember</em> [sørlige halvkule]. Junisolvervet kan også kalles det <em>\"nordlige solvervet\"</em>.<br/><br/>
+          <b>Sommersolverv:</b> Starten på den astronomiske sommeren; <em>juni</em> [nordlige halvkule], eller <em>desember</em> [sørlige halvkule]. Junisolvervet kan også kalles <em>\"det nordlige solvervet\"</em>.<br/><br/>
           <b>Høstjevndøgn:</b> Starten på den astronomiske høsten; <em>september</em> [nordlige halvkule], eller <em>mars</em> [sørlige halvkule]. Septemberjevndøgnet kan også kalles <em>\"søroverjevndøgnet\"</em>.<br/><br/>
-          <b>Vintersolverv:</b> Starten på den astronomiske vinteren; <em>desember</em> [nordlige halvkule], eller <em>juni</em> [sørlige halvkule]. Desembersolvervet kan også kalles det <em>\"sørlige solvervet\".</em>.<br/>
+          <b>Vintersolverv:</b> Starten på den astronomiske vinteren; <em>desember</em> [nordlige halvkule], eller <em>juni</em> [sørlige halvkule]. Desembersolvervet kan også kalles <em>\"det sørlige solvervet\"</em>.<br/>
     ]]></string>
     <string name="help_general_tropicalyear"><![CDATA[
           <b>Tropisk år (solår):</b> En hel syklus av årstidene. Lengden på det <em>tropiske året</em> måles fra et <em>marsjevndøgn</em> til det neste. Det er <em>~365.24 døgn</em> i gjennomsnitt, med en nøyaktig lengde som varierer hvert år (opptil 30 minutter).<br/>
+    ]]></string>
+    <string name="help_general_solartime"><![CDATA[
+          <b>Tilsynelatende soltid (sann soltid):</b> Solurtid. Tiden bestemt ved å spore solens tilsynelatende bevegelse over himmelhvelvingen med hensyn til en gitt lengde- og breddegrad.
+          <br/><br/>
+          Den tilsynelatende bevegelsen til solen er ikke konstant. Den varierer sesongmessig på grunn av ekliptikkens aksehelning og eksentrisiteten til jordens bane.
+          Lengden på hver tilsynelatende soldag, målt fra en middag til den neste, kan være litt lengre eller kortere enn 24 timer (opptil 30s).
+          Disse små variasjonene akkumuleres for hver dag som går (men nulles ut over året).
+          <br/><br/>
+
+          <b>Lokal middeltid:</b> Klokketid. Tiden bestemt fra posisjonen til middelsolen i forhold til en gitt lengdegrad.
+          <br/><br/>
+          Bevegelsen til middelsolen korrigerer for aksehelning og eksentrisitet og er ensartet.
+          Lengden på hver middelsoldag er nøyaktig 24 timer.<br/><br/>
+
+          <b>Tidsjevning:</b> Forskjellen mellom lokal middeltid og tilsynelatende soltid.
+          Dette er den akkumulerte variasjonen av den tilsynelatende soldagen.
+          <br/><br/>
+          Tilsynelatende soltid kan avvike fra lokal middeltid med opptil 16 minutter avhengig av tiden på året.
+          <br/><br/>
+
+          <i>Denne appen bruker en algoritme for å beregne tidsjevningen (og utlede den tilsynelatende soltiden).
+          Ditt sted brukes til å bestemme den lokale middeltiden.</i>
+          <br/><br/>
+
     ]]></string>
     <string name="help_general_daylength"><![CDATA[
         <b>Daglengde:</b> Tiden mellom soloppgang og solnedgang.<br/><br/>
@@ -1521,12 +1545,12 @@
     ]]></string>
 
     <string name="privacy_policy"><![CDATA[<b>Privacy:</b><br/>Suntimes does not collect, store, or transmit personal user data. It contains <b>no advertising</b>, <b>no analytics</b>, <b>no trackers</b>, and <b>no unnecessary permissions</b>. <br/><br/>The app is configured from location data. This information (and other configuration data used by the app) is stored locally and does not leave the device.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string> <!-- TODO -->
-    <string name="privacy_permission_location"><![CDATA[Suntimes uses the <b>location</b> permission to determine your current longitude and latitude.<br/><br/>This permission is optional; the location is manually configured by default.]]></string> <!-- TODO -->
+    <string name="privacy_permission_location"><![CDATA[Suntimes bruker <b>plasseringstillatelsen</b> til å bestemme gjeldende lengde- og breddegrad.<br/><br/>Denne tillatelsen er valgfri; plasseringen er manuelt innstilt som standard.]]></string>
     <string name="privacy_permission_storage"><![CDATA[Suntimes uses <b>external storage</b> permissions to backup/export data to file (e.g. places, themes).]]></string> <!-- TODO -->
     <string name="privacy_permission_storage1"><![CDATA[Suntimes Alarms uses the <b>external storage</b> permission to play sounds located on the SD card.<br/><br/>This permission is optional; the default sound will be played if access is denied. This permission is not needed for system sounds (Media Storage).]]></string>    <!-- TODO -->
     <string name="privacy_permissiondialog_prompt"><![CDATA[Request permissions now?]]></string>    <!-- TODO -->
-    <string name="privacy_permissiondialog_ignore">Ignore</string>    <!-- TODO -->
-    <string name="privacy_permissiondialog_title">Permissions</string> <!-- TODO -->
+    <string name="privacy_permissiondialog_ignore">Ignorer</string>
+    <string name="privacy_permissiondialog_title">Tillatelser</string>
     <string name="privacyTab">Personvern</string>
 
     <string name="security_dialog_title">Security Alert</string>  <!-- TODO -->

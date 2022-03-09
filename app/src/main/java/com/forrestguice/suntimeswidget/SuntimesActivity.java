@@ -2122,7 +2122,13 @@ public class SuntimesActivity extends AppCompatActivity
     {
         final LightMapDialog lightMapDialog = new LightMapDialog();
         lightMapDialog.themeViews(this, appThemeOverride);
-        lightMapDialog.setData(SuntimesActivity.this, dataset);
+        if (dataset != null) {
+            lightMapDialog.setData(SuntimesActivity.this, dataset);
+        } else {
+            SuntimesRiseSetDataset data = new SuntimesRiseSetDataset(SuntimesActivity.this);
+            data.calculateData();
+            lightMapDialog.setData(SuntimesActivity.this, data);
+        }
         lightMapDialog.setDialogListener(lightMapListener);
         lightMapDialog.show(getSupportFragmentManager(), DIALOGTAG_LIGHTMAP);
         return lightMapDialog;

@@ -18,12 +18,10 @@
 
 package com.forrestguice.suntimeswidget.layouts;
 
-//import android.content.Context;
-//import android.widget.RemoteViews;
+import android.content.Context;
 
 import com.forrestguice.suntimeswidget.R;
-//import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
-//import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 
 /**
  * Moon Phase (1x1)
@@ -35,27 +33,17 @@ public class MoonLayout_1x1_3 extends MoonLayout_1x1_1
         super();
     }
 
-    /**public MoonLayout_1x1_3(int layoutID)
-    {
-        this.layoutID = layoutID;
-    }*/
-
     @Override
     public void initLayoutID()
     {
         this.layoutID = R.layout.layout_widget_moon_1x1_3;
     }
 
-    /**@Override
-    public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesMoonData data)
+    @Override
+    public void prepareForUpdate(Context context, int appWidgetId, SuntimesMoonData data)
     {
-        super.updateViews(context, appWidgetId, views, data);
-    }*/
-
-    /**@Override
-    public void themeViews(Context context, RemoteViews views, SuntimesTheme theme)
-    {
-        super.themeViews(context, views, theme);
-    }*/
+        super.prepareForUpdate(context, appWidgetId, data);    // super.prepareForUpdate overrides layoutID
+        this.layoutID = R.layout.layout_widget_moon_1x1_3;     // TODO: support scaleBase
+    }
 
 }
