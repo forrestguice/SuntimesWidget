@@ -256,7 +256,7 @@
     <string name="configLabel_general_altitude_enabled_summary">Zastosuj poprawki uwzględniające wysokość n.p.m.</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_localize_hemisphere">Dostosuj do półkuli</string>        <!-- checkbox label -->
-    <string name="configLabel_general_localize_hemisphere_summary">Uwzględnij półkulę podczas wyświetlania etikiet pór roku i ikon faz Księżyca.</string>        <!-- checkbox label -->
+    <string name="configLabel_general_localize_hemisphere_summary">Uwzględnij półkulę podczas wyświetlania etykiet pór roku i ikon faz Księżyca.</string>        <!-- checkbox label -->
 
     <string name="configLabel_general_lengthUnits">Jednostki długości</string>        <!-- spinner label -->
 
@@ -300,7 +300,7 @@
     <string name="configLabel_appearance">Ustawienia wyglądu</string>           <!-- group title -->
     <string name="configLabel_appearance_mode">Wygląd</string>                  <!-- spinner label -->
     <string name="configLabel_appearance_theme">Skórka:</string>                  <!-- spinner label -->
-    <string name="configLabel_appearance_allowResize">Pzełączaj układy, aby wypełnić dostępną przestrzeń</string>  <!-- checkbox label -->
+    <string name="configLabel_appearance_allowResize">Przełączaj układy, aby wypełnić dostępną przestrzeń</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_scaleText">Skaluj tekst i ikony</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_scaleBase">Wypełnij całą komórkę</string>  <!-- checkbox label -->
     <string name="configLabel_appearance_gravity">Wyrównanie do:</string>  <!-- spinner label -->
@@ -1504,7 +1504,7 @@
           [Icon Add] Utwórz nową skórkę lub [Icon Copy] skopiuj istniejącą.\n
           \n
           [Icon Edit] Edytuj lub [Icon Delete] usuwaj skórki.\n
-          Nie można modifikować [Icon Default] domyślnych skórek.
+          Nie można modyfikować [Icon Default] domyślnych skórek.
     </string> <!-- text explains themelist actions/icons; [Icon tags] are substituted at runtime (should remain unaltered)  -->
 
     <string name="help_calendar"><![CDATA[Dodaje wydarzenia do aplikacji kalendarza (fazy Księżyca, przesilenia i równonoce).<br />
