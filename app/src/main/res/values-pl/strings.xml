@@ -129,8 +129,8 @@
 
     <string name="offset_before_msg">%1$s przed %2$s</string>    <!-- notification msg; '1h 30m before Sunset'; second arg is always non-plural -->
     <string name="offset_after_msg">%1$s po %2$s</string>        <!-- notification msg; '1h 30m after end of evening civil twilight'; second arg is always non-plural -->
-    <string name="offset_before_msg1">{0} przed {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- SelectFormat not used -->
-    <string name="offset_after_msg1">{0} po {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- SelectFormat not used -->
+    <string name="offset_before_msg1">{0} przed: {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- SelectFormat not used -->
+    <string name="offset_after_msg1">{0} po: {1, plural, one {{2, select, female {} other {}}} other {{2, select, female {} other {}}}}{3}</string>  <!-- uses SelectFormat (api24+) -->  <!-- SelectFormat not used -->
 
     <string name="offset_button_before">przed</string>    <!-- button label; [1h] [5m] [before] (-) -->
     <string name="offset_button_after">po</string>      <!-- button label; [1h] [5m] [after] (+) -->
@@ -1135,17 +1135,17 @@
     <string name="worldmap_dialog_option_center">Wyśrodkuj na lokalizacji</string>
     <string name="worldmap_dialog_option_center_current">Środek: %s</string>
     <string name="worldmap_dialog_option_center_msg">Wyśrodkowano mapę na obecną lokalizację:\n[%s]</string>    <!-- toast message; center set to... -->
-    <string name="worldmap_dialog_option_center_clear">Reset map center</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_center_clear_msg">Map center reset to default \n[%s]</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_background">Set Background</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_background_clear">Clear Background</string>    <!-- TODO -->
-    <string name="worldmap_dialog_option_background_warning0">This image has the wrong aspect ratio.. expected %2$s, but found %1$s!</string>    <!-- toast message; aspect ratio warning --> <!-- TODO -->
-    <string name="worldmap_dialog_option_background_error0">Failed to open map background.</string>    <!-- toast message; io error --> <!-- TODO -->
-    <string name="worldmap_dialog_option_latitudes">Równoleżniki</string>    <!-- TODO: "Latitudes" -> "Major lines" -->
-    <string name="worldmap_dialog_option_minorgrid">Graticule</string>  <!-- TODO -->
-    <string name="worldmap_dialog_option_debuglines">Debug Lines</string>  <!-- TODO -->
-    <string name="worldmap_dialog_option_tintmap">Tint</string>  <!-- TODO -->
-    <string name="worldmap_dialog_speed_5m">&#215; 5m</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->   <!-- TODO -->
+    <string name="worldmap_dialog_option_center_clear">Domyślne wyśrodkowanie</string>
+    <string name="worldmap_dialog_option_center_clear_msg">Wyśrodkowano mapę na wartościach domyślnych:\n[%s]</string>
+    <string name="worldmap_dialog_option_background">Ustaw tło</string>
+    <string name="worldmap_dialog_option_background_clear">Usuń tło</string>
+    <string name="worldmap_dialog_option_background_warning0">Wybrany obraz ma niewłaściwe proporcje: powinno być %2$s, jest %1$s!</string>    <!-- toast message; aspect ratio warning -->
+    <string name="worldmap_dialog_option_background_error0">Nie udało się otworzyć obrazu tła mapy.</string>    <!-- toast message; io error -->
+    <string name="worldmap_dialog_option_latitudes">Siatka</string>
+    <string name="worldmap_dialog_option_minorgrid">Siatka (szczegółowa)</string>
+    <string name="worldmap_dialog_option_debuglines">Siatka (odpluskwianie)</string>
+    <string name="worldmap_dialog_option_tintmap">Zabarwienie</string>
+    <string name="worldmap_dialog_speed_5m">&#215; 5 min</string>      <!-- menu item; "x 5m"; increments of 5 minutes -->
     <string name="worldmap_dialog_speed_15m">&#215; 15 min</string>
     <string name="worldmap_dialog_speed_1d">&#215; 1 d</string>
     <string name="configAction_shareMap">@string/configAction_share</string>   <!-- button (contentDescription) -->  <!-- export (share) -->
@@ -1153,9 +1153,9 @@
     <string name="help_worldmap_background">
       <xliff:g id="projectionName" example="Azimuthal Equidistant">%1$s</xliff:g> (<xliff:g id="centerLatitude" example="0">%2$s</xliff:g>, <xliff:g id="centerLongitude" example="0">%3$s</xliff:g>)
       \n\n<xliff:g id="proj4String" example="+proj4=eqd ..">%4$s</xliff:g>
-      \n\nFor best results select an image matching these properties.
-    </string>    <!-- TODO -->
-
+      \n\nDla najleepszego rezultatu, wybierz zdjęcie o powyższych parametrach.
+    </string>
+    
     <!-- Dialog: Light Map -->
     <string name="lightmap_dialog_title">@string/configAction_sunDialog</string>
     <string name="lightmap_dialog_action_menu">@string/configAction_options</string>       <!-- button (contentDescription) -->
@@ -1234,17 +1234,17 @@
     <string-array name="solarevents_long1">   <!-- one-to-one with solarevents_long -->  <!-- natural sounding phrases (nouns); used with solarevents_gender/quantity and SelectFormat patterns (e.g. offset_before_msg1) -->
         <item>świt astronomiczny</item>
         <item>świt żeglarski</item>
-        <item>poranna błękitna godzina (początek)</item>
+        <item>początek porannej błękitnej godziny</item>
         <item>świt cywilny</item>
-        <item>poranna błękitna godzina (koniec)</item>
+        <item>koniec porannej błękitnej godziny</item>
         <item>wschód Słońca</item>
-        <item>poranna złota godzina (koniec)</item>
+        <item>koniec porannej złotej godziny</item>
         <item>kulminacja Słońca</item>
-        <item>wieczorna złota godzina (początek)</item>
+        <item>początek wieczornej złotej godziny</item>
         <item>zachód Słońca</item>
-        <item>wieczorna błękitna godzina (początek)</item>
+        <item>początek wieczornej błękitnej godziny</item>
         <item>zmierzch cywilny</item>
-        <item>wieczorna złota godzina (koniec)</item>
+        <item>koniec wieczornej złotej godziny</item>
         <item>zmierzch żeglarski</item>
         <item>zmierzch astronomiczny</item>
         <item>wschód Księżyca</item>
@@ -1259,7 +1259,7 @@
         <item>przesilenie zimowe</item>
         <item>kulminacja górna Księżyca</item>
         <item>kulminacja dolna Księżyca</item>
-    </string-array>   <!-- TODO: review -->
+    </string-array>
 
     <!-- Dialog: Enable GPS? -->
     <string name="gps_dialog_msg">GPS jest wyłączony. Czy włączyć go?</string>
@@ -1394,18 +1394,18 @@
     <string name="creditsTab">Autorzy</string>
 
     <string name="app_legal3"><![CDATA[ <b>Biblioteki:</b><br/> ]]><xliff:g id="app_libraries">%1$s</xliff:g></string>
-    <string name="app_about_media"><![CDATA[ <b>Media:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>    <!-- TODO -->
+    <string name="app_about_media"><![CDATA[ <b>Obrazy:</b><br/> ]]><xliff:g id="app_media">%1$s</xliff:g></string>
     
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Pomoc</string>
     <string name="help_appearance_allowresize"><![CDATA[
-      <big>Swap layouts to fill available space</big><br/><br/>
-      <i><b>[enabled]</b></i> The widget will switch between layouts depending on available space.<br/><br/>
-      <i><b>[disabled]</b></i> The widget maintains its initial layout when resized. Use this with the \"<i>scale text and icons</i>\" option for extra large widgets.<br/>
-    ]]></string>  <!-- TODO -->
+      <big>Pzełączaj układy, aby wypełnić dostępną przestrzeń</big><br/><br/>
+      <i><b>[włączone]</b></i> Widżet zmieni swój układ w zależności od dostępnej przestrzeni.<br/><br/>
+      <i><b>[wyłączone]</b></i> Widżet zachowa swój początkowy układ podczas zmiany rozmiaru. Użyj tego razem z ustawieniem „<i>Skaluj tekst i ikony</i>” dla bardzo dużych widżetów.<br/>
+    ]]></string>
     <string name="help_appearance_widgetlayout"><![CDATA[
-      This widget was created with a <b>%1$s</b> <em>initial layout</em>.<br/></br/>
-    ]]></string>  <!-- TODO -->
+      Ten widżet został utworzony z <em>układem</em> <b>%1$s</b>.<br/></br/>
+    ]]></string>
     <string name="help_appearance_title"><![CDATA[
         Wspierane są następujące skróty:<br/>
         <br/>
@@ -1423,46 +1423,46 @@
                 * <b>%lel</b> dla wysokości n.p.m. (np. 143) <br/>
                 <br/>
                 * <b>%s</b> dla źródła danych (np. sunrisesunsetlib) <br/>
-                * <b>%t</b> dla strefy czasowej (id) (np. Poland) <br/>
+                * <b>%t</b> dla strefy czasowej (id) (np. Europe/Warsaw) <br/>
                 * <b>%id</b> dla ID widżetu <br/>
          <br/>
          <b>Widżety Słońca:</b> <br/>
                 * <b>%m</b> dla trybu (skrót) (np. cywilny) <br/>
                 * <b>%M</b> dla trybu (pełny) (np. wschód cywilny) <br/>
-                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
+                * <b>%o</b> dla kolejności (np. dzisiejszy, poprzedni / następny) <br/>
          <br/>
          <b>Widżety Księżyca:</b> <br/>
                 * <b>%i</b> dla oświetlenia Księżyca (np. 25%) <br/>
                 * <b>%M</b> dla fazy Księżyca (np. Księżyc rosnący (&lt;50%)) <br/>
-                * <b>%o</b> for order (e.g. Last/Next, Today) <br/>
+                * <b>%o</b> dla kolejności (np. dzisiejszy, poprzedni / następny) <br/>
          <br/>
          <b>Widżety przesilenia:</b> <br/>
                 * <b>%m</b> dla trybu (skrót) (np. przesilenie) <br/>
                 * <b>%M</b> dla trybu (pełny) (np. zimowe przesilenie) <br/>
-                * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
-    ]]></string>    <!-- TODO -->
+                * <b>%o</b> dla kolejności wydarzenia (np. poprzednie, najbliższe, nadchodzące) <br/>
+    ]]></string>
     <string name="help_general_actualTime"><![CDATA[
           <b>Rzeczywisty wschód/zachód:</b> Słońce znajduje się na linii horyzontu, jest to przybliżony czas wschodu lub zachodu Słońca.<br/><br/>
     ]]></string>
     <string name="help_general_twilight"><![CDATA[
           <b>Świt/zmierzch cywilny:</b> Słońce znajduje się 6&nbsp;stopni pod horyzontem, widoczne są najjaśniejsze gwiazdy. Jest wystarczająco jasno na wykonywanie większości czynności na dworze bez potrzeby korzystania ze sztucznego oświetlenia.<br/><br/>
           <b>Świt/zmierzch żeglarski:</b> Słońce znajduje się 12&nbsp;stopni pod horyzontem, kontury obiektów i linia horyzontu są praktycznie niewidoczne. Jest zbyt ciemno na wykonywanie większości czynności na dworze bez sztucznego oświetlenia.<br/><br/>
-          <b>Świt/zmierzch astronomiczny: </b> Słońce znajduje się 18&nbsp;stopni pod horyzontem. Praktycznie czarne niebo.<br/>
+          <b>Świt/zmierzch astronomiczny:</b> Słońce znajduje się 18&nbsp;stopni pod horyzontem. Praktycznie czarne niebo.<br/>
     ]]></string>
 
     <string name="help_general_riseSetOrder"><![CDATA[
-          <b>Dzisiaj:</b> czasy wschodu i zachodu dla dziesiejszej daty.<br/><br/>
+          <b>Dziesiejszy:</b> czasy wschodu i zachodu dla dziesiejszej daty.<br/><br/>
           <b>Poprzedni / następny:</b> czasy poprzedniego i następnego wydarzenia.<br/>
     ]]></string>
     <string name="help_general_timeMode2"><![CDATA[
-          <b>Spring Equinox:</b> The start of astronomical spring; <em>March</em> [northern hemisphere], or <em>September</em> [southern hemisphere]. The March equinox is also called the <em>northward equinox</em>.<br/><br/>
-          <b>Summer Solstice:</b> The start of astronomical summer; <em>June</em> [northern hemisphere], or <em>December</em> [southern hemisphere]. The June solstice is also called the <em>northern solstice</em>.<br/><br/>
-          <b>Autumn Equinox:</b> The start of astronomical autumn; <em>September</em> [northern hemisphere], or <em>March</em> [southern hemisphere]. The September equinox is also called the <em>southward equinox</em>.<br/><br/>
-          <b>Winter Solstice:</b> The start of astronomical winter; <em>December</em> [northern hemisphere], or <em>June</em> [southern hemisphere]. The December solstice is also called the <em>southern solstice</em>.<br/>
-    ]]></string>    <!-- TODO -->
+          <b>Równonoc wiosenna:</b> początek astronomicznej wiosny. Ma miejsce w <em>marcu</em> na półkuli północnej i we <em>wrześniu</em> na półkuli południowej.<br/><br/>
+          <b>Przesilenie letnie:</b> początek astronomicznego lata. Ma miejsce w <em>czerwcu</em> na półkuli północnej i w <em>grudniu</em> na półkuli południowej.<br/><br/>
+          <bRównonoc jesienna:</b> początek astronomicznej jesieni. Ma miejsce we <em>wrześniu</em> na półkuli północnej i w <em>marcu</em> na półkuli południowej.<br/><br/>
+          <b>Przesilenie zimowe:</b> poczętek astronomicznej zimy. Ma miejsce w <em>grudniu</em> na półkuli północnej i w  <em>czerwcu</em> na pólkuli południowej.<br/>
+    ]]></string>
     <string name="help_general_tropicalyear"><![CDATA[
-          <b>Tropical Year:</b> A full cycle of the seasons. The length of the <em>tropical year</em> is measured from one <em>March equinox</em> to the next. It is <em>~365.24 days</em> on average, with an exact length that varies each year (up to 30 minutes).<br/>
-    ]]></string>   <!-- TODO -->
+          <b>Rok tropiczny (zwrotnikowy):</b> pełny cykl wczystkich pór roku. Długość <em>roku tropicznego</em> jest mierzona od jednej <em>równonocy wiosennej</em> do następnej. Trwa średnio <em>≈365,24&nbsp;dni</em>, a dokładna długość zmienia się każdego roku (maksymalnie o 30&nbsp;minut).<br/>
+    ]]></string>
 
 <string name="help_general_solartime"><![CDATA[
           <b>Prawdziwy czas słoneczny:</b> czas określony przez śledzenie pozornego ruchu Słońca dla danej długości i szerokości geograficznej.<br/><br/>
@@ -1542,14 +1542,14 @@
     <string name="calculator_displayString_time4a_4j">Oparto na obliczeniach astronomicznych opublikowanych w książce „Astronomical Algorithms” (wyd. drugie) autorstwa Jean Meeus.</string>
     <string name="help_datasources">
         <![CDATA[
-        Suntimes uses third-party libraries to perform astronomical calculations.<br/>
+        Aplikacja Czasy Słońca korzysta z zewnętrznych bibliotek do wykonywania obliczeń astronomicznych.<br/>
         <br/>
-        The <b>data source</b> setting allows choosing between different libraries (or choosing between different algorithms offered by those libraries). The default is <b>time4a-time4j</b>.<br/>
+        Ustawienie <b>Źródła danych</b> umożliwia wybór spośród kilku bibliotek (lub algorytmów oferowanych przez te biblioteki). Domyślnm wyborem jest <b>time4a-time4j</b>.<br/>
         <br/>
-        This setting affects the speed and accuracy of calculations, and may limit which features are available. <br/>
+        Ustawienie to wpływa na szybkość i dokładność obliczeń, i może ograniczyć dostępne funkcje. <br/>
         <br/>
-        For more information about available choices, or extending the app to support other libraries, see the online help.
+        Więcej informacji o dostępnych algorytmach/bibliotekach i jak rozszerzyć aplikację od dodatkowe bilbioteki znajdziesz w pomocy online (w j. angielskim).
     ]]>
-    </string>   <!-- TODO -->
+    </string>
 
 </resources>
