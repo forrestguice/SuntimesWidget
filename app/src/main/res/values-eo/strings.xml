@@ -261,8 +261,8 @@
     <string name="configLabel_general_observerheight_summary">Montri longon de ombro kaŭzata de objekto kun alto <xliff:g id="value" example="1 metro">%1$s</xliff:g>.</string>        <!-- checkbox label -->
 
     <!-- Widget Setting: advanced / experimental -->
-    <string name="configLabel_advanced">Spertaj agordoj</string>                        <!-- group title -->
-    <string name="configLabel_experimental">Altnivelaj agordoj</string>                <!-- group title -->
+    <string name="configLabel_advanced">Agordoj altnivelaj</string>                        <!-- group title -->
+    <string name="configLabel_experimental">Agordoj eksperimentaj</string>                <!-- group title -->
     <string name="configLabel_general_scanPlugins">Kromprogramoj de datum-fontoj</string>                                <!-- checkbox label -->
     <string name="configLabel_general_scanPlugins_summary">Skani kaj enlegi eksterajn kromprogramojn.</string>   <!-- pref summary -->
 
@@ -1033,7 +1033,7 @@
     <string name="worldmap_dialog_option_center_clear">Implicita centrigo</string>
     <string name="worldmap_dialog_option_center_clear_msg">Mapo centrigita al la implicitaj valoroj:\n[%s]</string>
     <string name="worldmap_dialog_option_background">Agordi fonon</string>
-    <string name="worldmap_dialog_option_background_clear">Forviŝi fonon</string>
+    <string name="worldmap_dialog_option_background_clear">Forigi fonon</string>
     <string name="worldmap_dialog_option_background_warning0">Tiu ĉi bildo havas malĝustajn proporciojn: atendis %2$s, tamen ĝi havas %1$s!</string>    <!-- toast message; aspect ratio warning -->
     <string name="worldmap_dialog_option_background_error0">Fiaskis malfermi map-fonon.</string>    <!-- toast message; io error -->
     <string name="worldmap_dialog_option_latitudes">Krado</string>
@@ -1186,7 +1186,7 @@
         <item>Rusa</item>
         <item>Nederlanda</item>
         <item>Ĉeĥa</item>
-        <item>Ĉina sinmplgita</item>
+        <item>Ĉina simpligita</item>
     </string-array>
 
     <!-- position formats -->
@@ -1399,7 +1399,7 @@
                 • <b>%loc</b> – etikedo (ekz. Bjalistoko) <br/>
                 • <b>%lat</b> – latitudo <br/>
                 • <b>%lon</b> – longitudo <br/>
-                • <b>%lel</b> – altitudo (ekz. 139 metroj) <br/>
+                • <b>%lel</b> – altitudo (ekz. 139) <br/>
                 <br/>
                 • <b>%s</b> – datum‑fonto (ekz. sunrisesunsetlib) <br/>
                 • <b>%t</b> – horzono (id) (ekz. Europe/Warsaw) <br/>
@@ -1418,7 +1418,7 @@
          <b>Solsticaj fenestraĵoj:</b> <br/>
                 * <b>%m</b> – reĝimo (mallonge) (ekz. solstico) <br/>
                 * <b>%M</b> – reĝimo (longe) (ekz. vintra sunekstremo) <br/>
-                * <b>%o</b> – kioma okazaĵo (ekz. plej proksima, sekva) <br/>
+                * <b>%o</b> – kioma okazaĵo (ekz. antaŭa, plej proksima, sekva) <br/>
          ]]>
     </string>
     <string name="help_general_actualTime"><![CDATA[
@@ -1440,7 +1440,7 @@
           <b>Vintra sunekstremo (solstico):</b> la komenco de astronomia vintro. Okazas en <em>Decembro</em> sur la norda duonsfero kaj en <em>Junio</em> sur la suda duonsfero.<br/>
     ]]></string>
     <string name="help_general_tropicalyear"><![CDATA[
-          <b>Tropika (suna) jaro:</b> la plena ciklo de sezonoj. La longo de la <em>tropika jaro</em> estas kalkulata de unu <em>Marta tagnoktegaleco</em> ĝis la sekva. Ĝi daŭras mezume <em>≈365,24 tagoj</em> kaj la preciza longo varias de jaro al jaro (maksimume je 30 minutoj).<br/>
+          <b>Tropika (suna) jaro:</b> la plena ciklo de sezonoj. La longo de la <em>tropika jaro</em> estas kalkulata de unu <em>Marta tagnoktegaleco</em> ĝis la sekva. Ĝi daŭras mezume <em>≈365,24&nbsp;tagoj</em> kaj la preciza longo varias de jaro al jaro (maksimume je 30&nbsp;minutoj).<br/>
     ]]></string>
 
         <string name="help_general_solartime"><![CDATA[
@@ -1496,7 +1496,7 @@
 
     <string name="privacy_policy"><![CDATA[<b>Privateco:</b><br/>La aplikaĵo Suntempoj ne kolektas, konservas aŭ transigas personajn informojn de la uzanto. Ĝi enhavas <b>neniun reklamon</b>, <b>neniun analizilon</b>, <b>neniun spurilon</b> kaj <b>neniun malnecesan permeson</b>. <br/><br/>La aplikaĵo agordiĝas de lokaj datumoj. Tiuj informoj (kaj aliaj agordoj uzataj de la aplikaĵo) estas konservataj loke kaj ne eliras el la aparato.<br/><br/><xliff:g id="permissionsExplained">%1$s</xliff:g>]]></string>
     <string name="privacy_permission_location"><![CDATA[La permeso por <b>determini pozicion</b> estas uzata por trovi vian nunan longitudon kaj latitudon. Tiu permeso estas malnepra, pozicio estas implicite agordita permane.]]></string>
-    <string name="privacy_permission_storage"><![CDATA[La permeso por aliri <b>eksteran konservejon</b> estas uzata por elpori/sekurkopii datumojn al dosieroj (ekz. lokojn, etosojn).]]></string>
+    <string name="privacy_permission_storage"><![CDATA[La permeso por aliri <b>eksteran konservejon</b> estas uzata por elporti/sekurkopii datumojn al dosieroj (ekz. lokojn, etosojn).]]></string>
     <string name="privacy_permission_storage1"><![CDATA[La permeso por <b>legi eksteran konservejon</b> estas uzata por ludi sonojn troviĝantajn en la SD‑karto. <br/><br/>Tiu permeso estas malnepra, la implicita sono estos ludata, se tiu permeso mankas. Tiu permeso ne estas bezonata por ludi sonojn de la sistemo (konservo de aŭdvidaĵoj).]]></string>
     <string name="privacy_permissiondialog_prompt"><![CDATA[Ĉu peti la permeson nun?]]></string>
     <string name="privacy_permissiondialog_ignore">Ignori</string>
