@@ -1524,11 +1524,11 @@
         <![CDATA[
         La aplikaĵo Suntempoj uzas eksterajn bibliotekojn fari astrosciencajn kalkulojn.<br/>
         <br/>
-        La agordoj <b>fontoj de datumoj</b> ebligas elekti diversajn bibliotekojn (aŭ diversajn algoritmojn liveratajn de tiuj bibliotekoj). Implicite estas uzata <b>time4a-time4j</b>.<br/>
+        La agordo <b>Fontoj de datumoj</b> ebligas elekti diversajn bibliotekojn (aŭ diversajn algoritmojn liveratajn de tiuj bibliotekoj). Implicite estas uzata <b>time4a-time4j</b>.<br/>
         <br/>
         Tiu ĉi agordo efikas sur rapido kaj precizo de kalkuloj, kaj povas limigi disponeblajn eblojn.<br/>
         <br/>
-        Por akiri pliajn informojn pri disponeblaj bilbiotekojn/algoritmojn kaj kiel etendiĝi la aplikaĵon por subteni aliajn bibliotekojn, legu la helpon enrete (en la angla).
+        Por akiri pliajn informojn pri disponeblaj bilbiotekoj/algoritmoj kaj kiel etendiĝi la aplikaĵon por subteni aliajn bibliotekojn, legu la helpon enrete (en la angla).
     ]]>
     </string>
 
