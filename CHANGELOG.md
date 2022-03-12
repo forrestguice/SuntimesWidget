@@ -1,5 +1,13 @@
 ### ~
 
+### v0.14.2 (2022-03-14)
+* fixes crash when using 'sun position' app shortcut (#567).
+* fixes bug where "search places doesn't work" (#566).
+* fixes bug where '1x1 moon widget' illumination is always displayed (fails to be hidden) (#563).
+* changes default 'time zone mode' back to `system`; reverts change from 7c288be (#565).
+* adds extras to SuntimesActivity intent; `ACTION_VIEW_SUN` and `ACTION_VIEW_WORLDMAP` now accept `EXTRA_SHOW_DATE`; `ACTION_ADD_ALARM` accepts `EXTRA_SOLAREVENT`.
+* updates translation to Norwegian (nb) (#568 by FTno).
+
 ### v0.14.1 (2022-02-22)
 * fixes crash when using "current location" (#556).
 * fixes bug "lightmap for tomorrow card fails to display" (#557).
