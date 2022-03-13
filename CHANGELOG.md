@@ -7,6 +7,7 @@
 * changes default 'time zone mode' back to `system`; reverts change from 7c288be (#565).
 * adds extras to SuntimesActivity intent; `ACTION_VIEW_SUN` and `ACTION_VIEW_WORLDMAP` now accept `EXTRA_SHOW_DATE`; `ACTION_ADD_ALARM` accepts `EXTRA_SOLAREVENT`.
 * updates translation to Norwegian (nb) (#568 by FTno).
+* updates translations to Polish (pl) and Esperanto (eo) (#571 by Verdulo).
 
 ### v0.14.1 (2022-02-22)
 * fixes crash when using "current location" (#556).
