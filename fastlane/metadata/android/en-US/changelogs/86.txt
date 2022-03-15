@@ -1,0 +1,4 @@
+- fixes crash when using 'sun position' app shortcut (#567).
+- fixes bug where "search places doesn't work" (#566).
+- updates translation to Norwegian.
+- updates translation to Polish and Esperanto.
