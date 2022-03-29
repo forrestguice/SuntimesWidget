@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -130,6 +130,15 @@ public class AppSettings
 
     public static final String PREF_KEY_PLUGINS_ENABLESCAN = "app_plugins_enabled";
     public static final boolean PREF_DEF_PLUGINS_ENABLESCAN = false;
+
+    public static final String PREF_KEY_FIRST_LAUNCH = "app_first_launch";
+    public static boolean isFirstLaunch( Context context ) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PREF_KEY_FIRST_LAUNCH, true);
+    }
+    public static void setFirstLaunch( Context context, boolean value ) {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putBoolean(PREF_KEY_FIRST_LAUNCH, value).apply();
+    }
 
     /**
      * Language modes (system, user defined)
