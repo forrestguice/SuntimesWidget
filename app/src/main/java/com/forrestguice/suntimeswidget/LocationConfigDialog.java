@@ -22,6 +22,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -31,6 +32,7 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.FragmentActivity;
 
+import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +52,18 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     public static final String KEY_LOCATION_HIDEMODE = "hidemode";
 
     public static final int REQUEST_LOCATION = 30;
+
+    public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState)
+    {
+        super.onInflate(activity, attrs, savedInstanceState);
+
+        TypedArray a = activity.obtainStyledAttributes(attrs,R.styleable.LocationConfigDialog);
+        setHideDialogHeader(a.getBoolean(R.styleable.LocationConfigDialog_hideHeader, hideHeader));
+        setHideDialogFooter(a.getBoolean(R.styleable.LocationConfigDialog_hideFooter, hideFooter));
+        setHideMode(a.getBoolean(R.styleable.LocationConfigDialog_hideMode, hideMode));
+        setHideTitle(a.getBoolean(R.styleable.LocationConfigDialog_hideTitle, hideTitle));
+        a.recycle();
+    }
 
     /**
      * The dialog content; in this case just a wrapper around a LocationConfigView.
@@ -136,6 +150,14 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     private boolean hideHeader = false;
     public void setHideDialogHeader(boolean value) {
         hideHeader = value;
+    }
+
+    /**
+     * Show / hide the dialog buttons.
+     */
+    private boolean hideFooter = false;
+    public void setHideDialogFooter(boolean value) {
+        hideFooter = value;
     }
 
     /***
@@ -230,11 +252,16 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
             header.setVisibility(hideHeader ? View.GONE : View.VISIBLE);
         }
 
+        View footer = view.findViewById(R.id.dialog_footer);
+        if (footer != null) {
+            footer.setVisibility(hideFooter ? View.GONE : View.VISIBLE);
+        }
+
         Button btn_cancel = (Button) view.findViewById(R.id.dialog_button_cancel);
-        btn_cancel.setOnClickListener(onDialogCancelClick);
+        btn_cancel.setOnClickListener(hideFooter ? null : onDialogCancelClick);
 
         Button btn_accept = (Button) view.findViewById(R.id.dialog_button_accept);
-        btn_accept.setOnClickListener(onDialogAcceptClick);
+        btn_accept.setOnClickListener(hideFooter ? null : onDialogAcceptClick);
 
         if (savedInstanceState != null) {
             loadSettings(savedInstanceState);
@@ -402,7 +429,8 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
 
     private void disableTouchOutsideBehavior()
     {
-        Window window = getDialog().getWindow();
+        Dialog dialog = getDialog();
+        Window window = dialog != null ? dialog.getWindow() : null;
         if (window != null) {
             View decorView = window.getDecorView().findViewById(android.support.design.R.id.touch_outside);
             decorView.setOnClickListener(null);

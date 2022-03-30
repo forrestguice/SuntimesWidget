@@ -53,7 +53,7 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <LinearLayout android:id="@+id/dialog_footer"
             android:background="?attr/dialogFrame"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:gravity="center_vertical|end"

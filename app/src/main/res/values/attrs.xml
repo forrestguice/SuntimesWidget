@@ -177,4 +177,10 @@
         <attr name="moreHelpButtonText" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="LocationConfigDialog">
+        <attr name="hideHeader" format="boolean" />
+        <attr name="hideFooter" format="boolean" />
+        <attr name="hideTitle" format="boolean" />
+        <attr name="hideMode" format="boolean" />
+    </declare-styleable>
 </resources>
