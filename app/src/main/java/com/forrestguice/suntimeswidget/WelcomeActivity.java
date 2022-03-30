@@ -42,7 +42,7 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 public class WelcomeActivity extends AppCompatActivity
 {
-    private int[] layouts = new int[] { R.layout.layout_welcome_app, R.layout.layout_welcome_location };  // TODO: welcome pages
+    private int[] layouts = new int[] { R.layout.layout_welcome_app, R.layout.layout_welcome_location, R.layout.layout_welcome_timezone };  // TODO: welcome pages
 
     private ViewPager pager;
     private WelcomePagerAdapter pagerAdapter;
