@@ -24,8 +24,10 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -42,10 +44,8 @@ import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 public class WelcomeActivity extends AppCompatActivity
 {
-    private int[] layouts = new int[] { R.layout.layout_welcome_app, R.layout.layout_welcome_location, R.layout.layout_welcome_timezone };  // TODO: welcome pages
-
     private ViewPager pager;
-    private WelcomePagerAdapter pagerAdapter;
+    private WelcomeFragmentAdapter pagerAdapter;
     private Button nextButton, prevButton;
     private LinearLayout indicatorLayout;
     private AppSettings.LocaleInfo localeInfo;
@@ -78,14 +78,15 @@ public class WelcomeActivity extends AppCompatActivity
 
         setContentView(R.layout.layout_activity_welcome);
 
-        pagerAdapter = new WelcomePagerAdapter();
+        pagerAdapter = new WelcomeFragmentAdapter(getSupportFragmentManager());
         pager = (ViewPager) findViewById(R.id.container);
         pager.setAdapter(pagerAdapter);
         pager.addOnPageChangeListener(pagerChangeListener);
+        pager.setOffscreenPageLimit(pagerAdapter.getCount()-1);   // retain state of all previous pages
 
         prevButton = (Button) findViewById(R.id.button_prev);
         if (prevButton != null) {
-            prevButton.setOnClickListener(onSkipPressed);
+            prevButton.setOnClickListener(onPrevPressed);
         }
 
         nextButton = (Button) findViewById(R.id.button_next);
@@ -113,15 +114,14 @@ public class WelcomeActivity extends AppCompatActivity
         onDone();
     }
 
-    private View.OnClickListener onSkipPressed = new View.OnClickListener() {
+    private View.OnClickListener onPrevPressed = new View.OnClickListener() {
         @Override
         public void onClick(View v)
         {
-            int position = pager.getCurrentItem();
-            if (position <= 0) {
-                onDone();
+            if (pager.getCurrentItem() <= 0) {
+                onSkip();
             } else {
-                pager.setCurrentItem(position - 1);
+                onPrev();
             }
         }
     };
@@ -130,9 +130,8 @@ public class WelcomeActivity extends AppCompatActivity
     {
         @Override
         public void onClick(View v) {
-            int nextPosition = pager.getCurrentItem() + 1;
-            if (nextPosition < layouts.length) {
-                pager.setCurrentItem(nextPosition);
+            if ((pager.getCurrentItem() + 1) < pagerAdapter.getCount()) {
+                onNext();
             } else {
                 onDone();
             }
@@ -146,7 +145,7 @@ public class WelcomeActivity extends AppCompatActivity
         {
             setIndicator(position);
             prevButton.setText(getString((position != 0) ? R.string.welcome_action_prev : R.string.welcome_action_skip));
-            nextButton.setText(getString((position != layouts.length-1) ? R.string.welcome_action_next : R.string.welcome_action_done));
+            nextButton.setText(getString((position != pagerAdapter.getCount()-1) ? R.string.welcome_action_next : R.string.welcome_action_done));
         }
 
         @Override
@@ -167,7 +166,7 @@ public class WelcomeActivity extends AppCompatActivity
         int inactiveColor = ContextCompat.getColor(WelcomeActivity.this, typedArray.getResourceId(1, R.color.text_disabled_dark));
         typedArray.recycle();
 
-        TextView[] indicators = new TextView[layouts.length];
+        TextView[] indicators = new TextView[pagerAdapter.getCount()];
         for (int i=0; i<indicators.length; i++)
         {
             indicators[i] = new TextView(this);
@@ -182,55 +181,122 @@ public class WelcomeActivity extends AppCompatActivity
         }
     }
 
-    private void onDone() {
+    private void onNext() {
+        pager.setCurrentItem(pager.getCurrentItem() + 1);
+    }
+
+    private void onPrev() {
+        pager.setCurrentItem(pager.getCurrentItem() - 1);
+    }
+
+    private void onSkip()
+    {
         AppSettings.setFirstLaunch(WelcomeActivity.this, false);
         finish();
+    }
+
+    private void onDone()
+    {
+        saveSettings();
+        AppSettings.setFirstLaunch(WelcomeActivity.this, false);
+        finish();
+    }
+
+    private void saveSettings()
+    {
+        FragmentManager fragments = getSupportFragmentManager();
+        if (fragments != null)
+        {
+            LocationConfigDialog locationConfig = (LocationConfigDialog) fragments.findFragmentByTag("LocationConfigDialog");
+            if (locationConfig != null) {
+                locationConfig.getDialogContent().saveSettings(WelcomeActivity.this);
+            }
+
+            TimeZoneDialog tzConfig = (TimeZoneDialog) fragments.findFragmentByTag("TimeZoneDialog");
+            if (tzConfig != null) {
+                tzConfig.saveSettings(WelcomeActivity.this);
+            }
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * WelcomePagerAdapter
+     * WelcomeFragmentAdapter
      */
-    public class WelcomePagerAdapter extends PagerAdapter
+    public static class WelcomeFragmentAdapter extends FragmentPagerAdapter
     {
-        public WelcomePagerAdapter() {
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position)
+        public WelcomeFragmentAdapter(FragmentManager fragments)
         {
-            View v = null;
-            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            if (inflater != null) {
-                v = inflater.inflate(layouts[position], container, false);
-                container.addView(v);
-            }
-
-            if (v != null) {
-                TextView text0 = (TextView) v.findViewById(R.id.text0);
-                if (text0 != null) {
-                    text0.setText(SuntimesUtils.fromHtml(text0.getText().toString()));
-                }
-            }
-
-            return v;
+            super(fragments);
         }
 
         @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View)object);
+        public Fragment getItem(int position)
+        {
+            switch (position)
+            {
+                case 2: return WelcomeFragment.newInstance(R.layout.layout_welcome_timezone);
+                case 1: return WelcomeFragment.newInstance(R.layout.layout_welcome_location);
+                case 0: default: return WelcomeFragment.newInstance(R.layout.layout_welcome_app);
+            }
         }
 
         @Override
         public int getCount() {
-            return layouts.length;
+            return 3;
+        }
+    }
+
+    /**
+     * WelcomeFragment
+     */
+    public static class WelcomeFragment extends Fragment
+    {
+        public static final String ARG_LAYOUT_RESID = "layoutResID";
+
+        public WelcomeFragment() {}
+
+        public static WelcomeFragment newInstance(int layoutResID)
+        {
+            WelcomeFragment fragment = new WelcomeFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_LAYOUT_RESID, layoutResID);
+            fragment.setArguments(args);
+            return fragment;
         }
 
         @Override
-        public boolean isViewFromObject(View view, Object obj) {
-            return view == obj;
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        {
+            View view = inflater.inflate(getLayoutResID(), container, false);
+            initViews(getContext(), view);
+            updateViews(getContext(), view);
+            return view;
+        }
+
+        public void initViews(Context context, View view)
+        {
+            if (view != null)
+            {
+                int[] textViews = new int[] { R.id.text0 };
+                for (int resID : textViews) {
+                    TextView text = (TextView) view.findViewById(resID);
+                    if (text != null) {
+                        text.setText(SuntimesUtils.fromHtml(text.getText().toString()));
+                    }
+                }
+            }
+        }
+
+        public void updateViews(Context context, View view)
+        {
+            /* EMPTY */
+        }
+
+        public int getLayoutResID() {
+            return getArguments().getInt(ARG_LAYOUT_RESID);
         }
     }
 

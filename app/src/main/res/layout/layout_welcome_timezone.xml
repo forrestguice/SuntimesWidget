@@ -57,7 +57,8 @@
         <fragment
             android:layout_height="wrap_content" android:layout_width="match_parent"
             app:hideHeader="true" app:hideFooter="true"
-            android:name="com.forrestguice.suntimeswidget.TimeZoneDialog" />
+            android:name="com.forrestguice.suntimeswidget.TimeZoneDialog"
+            android:tag="TimeZoneDialog" />
 
     </LinearLayout>
 
