@@ -1788,6 +1788,12 @@
         <item><![CDATA[ NASA Earth Observatory. <i>Blue Marble: Next Generation</i>. ]]></item>
     </string-array>
 
+    <!-- Dialog: Welcome / Initial setup -->
+    <string name="welcome_action_skip">Skip</string>    <!-- TODO -->
+    <string name="welcome_action_prev">Back</string>    <!-- TODO -->
+    <string name="welcome_action_next">Next</string>    <!-- TODO -->
+    <string name="welcome_action_done">Finish</string>    <!-- TODO -->
+    <string name="welcome_message">@string/app_shortdesc</string>    <!-- TODO -->
     <!-- Dialog: Help -->
     <string name="help_dialog_title">Help</string>
     <string name="help_appearance_allowresize"><![CDATA[
