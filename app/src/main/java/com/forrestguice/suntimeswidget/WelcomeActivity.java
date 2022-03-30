@@ -24,7 +24,6 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -39,12 +38,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 public class WelcomeActivity extends AppCompatActivity
 {
-    private int[] layouts = new int[] { R.layout.layout_welcome_app };  // TODO: welcome pages
+    private int[] layouts = new int[] { R.layout.layout_welcome_app, R.layout.layout_welcome_location };  // TODO: welcome pages
 
     private ViewPager pager;
     private WelcomePagerAdapter pagerAdapter;
