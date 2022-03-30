@@ -17,10 +17,12 @@
 */
 package com.forrestguice.suntimeswidget;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -36,6 +38,7 @@ import android.text.style.ImageSpan;
 
 import android.support.annotation.NonNull;
 
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.ContextThemeWrapper;
@@ -117,6 +120,9 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         this.calculator = calculator;
     }
 
+    private boolean hideHeader = false;
+    private boolean hideFooter = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
@@ -128,6 +134,16 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             loadSettings(savedState);
         } else {
             loadSettings(getActivity());
+        }
+
+        View header = dialogContent.findViewById(R.id.dialog_header);
+        if (header != null) {
+            header.setVisibility(hideHeader ? View.GONE : View.VISIBLE);
+        }
+
+        View footer = dialogContent.findViewById(R.id.dialog_footer);
+        if (footer != null) {
+            footer.setVisibility(hideFooter ? View.GONE : View.VISIBLE);
         }
 
         final Context myParent = getActivity();
@@ -147,6 +163,15 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setOnShowListener(onDialogShow);
         return dialog;
+    }
+
+    public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState)
+    {
+        super.onInflate(activity, attrs, savedInstanceState);
+        TypedArray a = activity.obtainStyledAttributes(attrs,R.styleable.TimeZoneConfigDialog);
+        hideHeader = a.getBoolean(R.styleable.TimeZoneConfigDialog_hideHeader, hideHeader);
+        hideFooter = a.getBoolean(R.styleable.TimeZoneConfigDialog_hideFooter, hideFooter);
+        a.recycle();
     }
 
     /**

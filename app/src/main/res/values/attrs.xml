@@ -183,4 +183,12 @@
         <attr name="hideTitle" format="boolean" />
         <attr name="hideMode" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="TimeZoneConfigDialog">
+        <attr name="hideHeader" />
+        <attr name="hideFooter" />
+        <attr name="hideTitle" />
+        <attr name="hideMode" />
+    </declare-styleable>
+
 </resources>
