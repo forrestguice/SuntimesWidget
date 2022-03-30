@@ -700,7 +700,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         }
     }
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private static void initPref_general(PreferenceFragment fragment)
+    private static void initPref_general(final PreferenceFragment fragment)
     {
         Log.i(LOG_TAG, "initPref_general (fragment)");
         Context context = fragment.getActivity();
@@ -743,6 +743,19 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         {
             initPref_observerHeight(fragment.getActivity(), observerHeightPref);
             loadPref_observerHeight(fragment.getActivity(), observerHeightPref);
+        }
+
+        Preference introScreenPref = fragment.findPreference("appwidget_0_intro_screen");
+        if (introScreenPref != null)
+        {
+            introScreenPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener()
+            {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    fragment.startActivity(new Intent(fragment.getActivity(), WelcomeActivity.class));
+                    return false;
+                }
+            });
         }
     }
 
