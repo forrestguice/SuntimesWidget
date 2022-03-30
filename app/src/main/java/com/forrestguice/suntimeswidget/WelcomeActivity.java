@@ -30,6 +30,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,11 +58,6 @@ public class WelcomeActivity extends AppCompatActivity
         super.attachBaseContext(context);
     }
 
-    /*@Override
-    public void onAttachFragment(Fragment fragment) {
-        super.onAttachFragment(fragment);
-    }*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -82,7 +78,7 @@ public class WelcomeActivity extends AppCompatActivity
         pager = (ViewPager) findViewById(R.id.container);
         pager.setAdapter(pagerAdapter);
         pager.addOnPageChangeListener(pagerChangeListener);
-        pager.setOffscreenPageLimit(pagerAdapter.getCount()-1);   // retain state of all previous pages
+        pager.setOffscreenPageLimit(pagerAdapter.getCount()-1);   // don't recreate page fragments (retain state)
 
         prevButton = (Button) findViewById(R.id.button_prev);
         if (prevButton != null) {
@@ -205,16 +201,12 @@ public class WelcomeActivity extends AppCompatActivity
     private void saveSettings()
     {
         FragmentManager fragments = getSupportFragmentManager();
-        if (fragments != null)
+        for (int i=0; i<pagerAdapter.getCount(); i++)
         {
-            LocationConfigDialog locationConfig = (LocationConfigDialog) fragments.findFragmentByTag("LocationConfigDialog");
-            if (locationConfig != null) {
-                locationConfig.getDialogContent().saveSettings(WelcomeActivity.this);
-            }
-
-            TimeZoneDialog tzConfig = (TimeZoneDialog) fragments.findFragmentByTag("TimeZoneDialog");
-            if (tzConfig != null) {
-                tzConfig.saveSettings(WelcomeActivity.this);
+            // https://stackoverflow.com/questions/54279509/how-to-get-elements-of-fragments-created-by-viewpager-in-mainactivity/54280113#54280113
+            WelcomeFragment page = (WelcomeFragment) fragments.findFragmentByTag("android:switcher:" + pager.getId() + ":" + i);
+            if (page != null) {
+                page.saveSettings(WelcomeActivity.this);
             }
         }
     }
@@ -237,8 +229,8 @@ public class WelcomeActivity extends AppCompatActivity
         {
             switch (position)
             {
-                case 2: return WelcomeFragment.newInstance(R.layout.layout_welcome_timezone);
-                case 1: return WelcomeFragment.newInstance(R.layout.layout_welcome_location);
+                case 2: return WelcomeTimeZoneFragment.newInstance();
+                case 1: return WelcomeLocationFragment.newInstance();
                 case 0: default: return WelcomeFragment.newInstance(R.layout.layout_welcome_app);
             }
         }
@@ -290,13 +282,100 @@ public class WelcomeActivity extends AppCompatActivity
             }
         }
 
-        public void updateViews(Context context, View view)
-        {
+        public void updateViews(Context context, View view) {
+            /* EMPTY */
+        }
+
+        public void saveSettings(Context context) {
             /* EMPTY */
         }
 
         public int getLayoutResID() {
             return getArguments().getInt(ARG_LAYOUT_RESID);
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * WelcomeLocationFragment
+     */
+    public static class WelcomeLocationFragment extends WelcomeFragment
+    {
+        public WelcomeLocationFragment() {}
+
+        public static WelcomeLocationFragment newInstance()
+        {
+            WelcomeLocationFragment fragment = new WelcomeLocationFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_LAYOUT_RESID, R.layout.layout_welcome_location);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Override
+        public void saveSettings(Context context)
+        {
+            if (isAdded())
+            {
+                FragmentManager fragments = getChildFragmentManager();
+                if (fragments != null)
+                {
+                    LocationConfigDialog locationConfig = (LocationConfigDialog) fragments.findFragmentByTag("LocationConfigDialog");
+                    if (locationConfig != null)
+                    {
+                        locationConfig.getDialogContent().saveSettings(context);
+                        Log.d("DEBUG", "saveSettings: location");
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * WelcomeTimeZoneFragment
+     */
+    public static class WelcomeTimeZoneFragment extends WelcomeFragment
+    {
+        public WelcomeTimeZoneFragment() {}
+
+        public static WelcomeTimeZoneFragment newInstance()
+        {
+            WelcomeTimeZoneFragment fragment = new WelcomeTimeZoneFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_LAYOUT_RESID, R.layout.layout_welcome_timezone);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Override
+        public void initViews(Context context, View view) {
+            super.initViews(context, view);
+            // TODO
+        }
+
+        @Override
+        public void updateViews(Context context, View view) {
+            // TODO
+        }
+
+        @Override
+        public void saveSettings(Context context)
+        {
+            if (isAdded())
+            {
+                FragmentManager fragments = getChildFragmentManager();
+                if (fragments != null)
+                {
+                    TimeZoneDialog tzConfig = (TimeZoneDialog) fragments.findFragmentByTag("TimeZoneDialog");
+                    if (tzConfig != null)
+                    {
+                        tzConfig.saveSettings(context);
+                        Log.d("DEBUG", "saveSettings: timezone");
+                    }
+                }
+            }
         }
     }
 
