@@ -37,11 +37,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.settings.AppSettings;
+import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public class WelcomeActivity extends AppCompatActivity
 {
@@ -338,6 +342,8 @@ public class WelcomeActivity extends AppCompatActivity
      */
     public static class WelcomeTimeZoneFragment extends WelcomeFragment
     {
+        private Spinner timeFormatSpinner;
+
         public WelcomeTimeZoneFragment() {}
 
         public static WelcomeTimeZoneFragment newInstance()
@@ -350,15 +356,32 @@ public class WelcomeActivity extends AppCompatActivity
         }
 
         @Override
-        public void initViews(Context context, View view) {
+        public void initViews(Context context, View view)
+        {
             super.initViews(context, view);
-            // TODO
+
+            timeFormatSpinner = (Spinner) view.findViewById(R.id.appwidget_general_timeformatmode);
+            if (timeFormatSpinner != null)
+            {
+                WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, 0);
+                ArrayAdapter<WidgetSettings.TimeFormatMode> adapter = new ArrayAdapter<>(context, R.layout.layout_listitem_oneline,
+                        new WidgetSettings.TimeFormatMode[] {WidgetSettings.TimeFormatMode.MODE_SYSTEM, WidgetSettings.TimeFormatMode.MODE_12HR, WidgetSettings.TimeFormatMode.MODE_24HR});
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                timeFormatSpinner.setAdapter(adapter);
+                timeFormatSpinner.setSelection(adapter.getPosition(timeFormat), false);
+                timeFormatSpinner.setOnItemSelectedListener(onTimeFormatSelected);
+            }
         }
 
-        @Override
-        public void updateViews(Context context, View view) {
-            // TODO
-        }
+        private AdapterView.OnItemSelectedListener onTimeFormatSelected = new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // TODO: update preview
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        };
 
         @Override
         public void saveSettings(Context context)
@@ -375,6 +398,10 @@ public class WelcomeActivity extends AppCompatActivity
                         Log.d("DEBUG", "saveSettings: timezone");
                     }
                 }
+
+                WidgetSettings.TimeFormatMode timeFormat = (WidgetSettings.TimeFormatMode) timeFormatSpinner.getSelectedItem();
+                WidgetSettings.saveTimeFormatModePref(context, 0, timeFormat);
+                Log.d("DEBUG", "saveSettings: timeformat");
             }
         }
     }
