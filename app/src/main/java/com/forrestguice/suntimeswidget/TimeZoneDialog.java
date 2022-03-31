@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2019 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -73,6 +73,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     public static final String KEY_SOLARTIME_MODE = "solartimeMode";
     public static final String KEY_NOW = "paramNow";
     public static final String KEY_LONGITUDE = "paramLongitude";
+    public static final String KEY_TIMEFORMAT_MODE = "timeformatMode";
 
     private static final String DIALOGTAG_HELP = "timezone_help";
 
@@ -83,6 +84,10 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
 
     private Button btn_accept;
     private Spinner spinner_timezoneMode;
+
+    private TextView preview_time;
+    private TextView preview_time_suffix;
+    private TextView preview_time_tz;
 
     private LinearLayout layout_timezone;
     private TextView label_timezone;
@@ -102,6 +107,13 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     private WidgetTimezones.TimeZoneItemAdapter spinner_timezone_adapter;
     private boolean loading = false;
 
+    public TimeZoneDialog()
+    {
+        Bundle args = new Bundle();
+        args.putString(KEY_TIMEFORMAT_MODE, WidgetSettings.TimeFormatMode.MODE_SYSTEM.name());
+        setArguments(args);
+    }
+
     private Calendar now = Calendar.getInstance();
     public void setNow( Calendar now )
     {
@@ -112,6 +124,38 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     public void setLongitude( double longitude )
     {
         this.longitude = longitude;
+    }
+
+    public void setTimeFormatMode(WidgetSettings.TimeFormatMode mode) {
+        getArguments().putString(KEY_TIMEFORMAT_MODE, mode.name());
+    }
+    public WidgetSettings.TimeFormatMode getTimeFormatMode()
+    {
+        try {
+            return WidgetSettings.TimeFormatMode.valueOf(getArguments().getString(KEY_TIMEFORMAT_MODE, WidgetSettings.TimeFormatMode.MODE_SYSTEM.name()));
+        } catch (IllegalArgumentException e) {
+            Log.e(getClass().getSimpleName(), "getTimeFormatMode: " + e);
+            return WidgetSettings.TimeFormatMode.MODE_SYSTEM;
+        }
+    }
+
+    public TimeZone getTimeZone()
+    {
+        String tzID;
+        WidgetSettings.TimezoneMode mode = (WidgetSettings.TimezoneMode) spinner_timezoneMode.getSelectedItem();
+        switch (mode)
+        {
+            case SOLAR_TIME:
+                tzID = spinner_solartime != null ? ((WidgetTimezones.TimeZoneItem) spinner_solartime.getSelectedItem()).getID() : TimeZone.getDefault().getID();
+                return WidgetTimezones.getTimeZone(tzID, longitude);
+
+            case CUSTOM_TIMEZONE:
+                tzID = spinner_timezone != null ? ((WidgetTimezones.TimeZoneItem) spinner_timezone.getSelectedItem()).getID() : TimeZone.getDefault().getID();
+                return WidgetTimezones.getTimeZone(tzID, longitude);
+
+            case CURRENT_TIMEZONE:
+            default: return TimeZone.getDefault();
+        }
     }
 
     private SuntimesCalculator calculator = null;
@@ -197,6 +241,10 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         SuntimesUtils.initDisplayStrings(context);
         utils = new SuntimesUtils();
 
+        preview_time = (TextView) dialogContent.findViewById(R.id.text_time);
+        preview_time_suffix = (TextView) dialogContent.findViewById(R.id.text_time_suffix);
+        preview_time_tz = (TextView) dialogContent.findViewById(R.id.text_timezone);
+
         layout_timezone = (LinearLayout) dialogContent.findViewById(R.id.appwidget_timezone_custom_layout);
         label_timezone = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_custom_label);
         WidgetTimezones.TimeZoneSort.initDisplayStrings(context);
@@ -275,6 +323,21 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         btn_accept.setOnClickListener(onDialogAcceptClick);
     }
 
+    protected void updatePreview(Context context)
+    {
+        TimeZone tz = getTimeZone();
+        SuntimesUtils.TimeDisplayText timeDisplay = utils.calendarTimeShortDisplayString(context, Calendar.getInstance(tz), false, getTimeFormatMode());
+        if (preview_time != null) {
+            preview_time.setText(timeDisplay.getValue());
+        }
+        if (preview_time_suffix != null) {
+            preview_time_suffix.setText(timeDisplay.getSuffix());
+        }
+        if (preview_time_tz != null) {
+            preview_time_tz.setText(WidgetTimezones.getTimeZoneDisplay(context, tz));
+        }
+    }
+
     private void updateExtrasLabel(@NonNull Context context, int stringResID, long offset)
     {
         int iconSize = (int) Math.ceil(context.getResources().getDimension(R.dimen.statusIcon_size));
@@ -339,6 +402,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             if (layout_timezoneExtras != null && label_tzExtras0 != null && context != null) {
                 updateExtras(context, true, parent.getItemAtPosition(position));
             }
+            updatePreview(getActivity());
         }
 
         @Override
@@ -357,6 +421,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             if (layout_timezoneExtras != null && label_tzExtras0 != null && context != null) {
                 updateExtras(context, false, parent.getItemAtPosition(position));
             }
+            updatePreview(getActivity());
         }
 
         @Override
@@ -391,6 +456,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             updateExtras(getContext(), useSolarTime, item);
 
             SuntimesUtils.announceForAccessibility(spinner_timezoneMode, timezoneMode.getDisplayString());
+            updatePreview(getActivity());
         }
 
         public void onNothingSelected(AdapterView<?> parent) {}
@@ -636,6 +702,9 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
 
         // save: longitude
         bundle.putDouble(KEY_LONGITUDE, longitude);
+
+        // save: timeformatmode
+        bundle.putString(KEY_TIMEFORMAT_MODE, getTimeFormatMode().name());
     }
 
     /**
@@ -683,6 +752,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
             btn_accept.setEnabled(validateInput());
             progress_timezone.setVisibility(View.GONE);
+            updatePreview(getActivity());
         }
     };
 
