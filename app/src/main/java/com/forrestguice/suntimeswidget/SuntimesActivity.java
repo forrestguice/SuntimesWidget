@@ -257,6 +257,12 @@ public class SuntimesActivity extends AppCompatActivity
         getFixHelper.loadSettings(savedState);
 
         handleIntent(getIntent());
+
+        if (AppSettings.isFirstLaunch(this))
+        {
+            startActivityForResult(new Intent(this, WelcomeActivity.class), SUNTIMES_SETTINGS_REQUEST);
+            overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+        }
     }
 
     @Override
