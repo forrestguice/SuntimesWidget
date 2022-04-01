@@ -376,7 +376,7 @@ public class WelcomeActivity extends AppCompatActivity
             }
 
             progress_addPlaces = (ProgressBar) view.findViewById(R.id.progress_build_places);
-            hideProgress();
+            toggleProgress(false);
         }
 
         private View.OnClickListener onAddPlacesClicked = new View.OnClickListener()
@@ -399,14 +399,14 @@ public class WelcomeActivity extends AppCompatActivity
                     button_addPlaces.setEnabled(false);
                     button_addPlaces.setVisibility(View.INVISIBLE);
                 }
-                showProgress();
+                toggleProgress(true);
             }
 
             @Override
             public void onFinished(Integer result)
             {
                 setRetainInstance(false);
-                hideProgress();
+                toggleProgress(false);
 
                 if (result > 0)
                 {
@@ -420,16 +420,12 @@ public class WelcomeActivity extends AppCompatActivity
             }
         };
 
-        protected void showProgress() {
+        protected void toggleProgress(boolean visible) {
             if (progress_addPlaces != null) {
-                progress_addPlaces.setVisibility(View.VISIBLE);
+                progress_addPlaces.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
             }
         }
-        protected void hideProgress() {
-            if (progress_addPlaces != null) {
-                progress_addPlaces.setVisibility(View.INVISIBLE);
-            }
-        }
+
         protected void reloadLocationList()
         {
             if (isAdded()) {

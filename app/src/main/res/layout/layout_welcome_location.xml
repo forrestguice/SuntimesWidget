@@ -50,7 +50,8 @@
 
             <FrameLayout
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:animateLayoutChanges="true">
 
                 <Button android:id="@+id/button_build_places" android:visibility="visible"
                     android:layout_height="wrap_content" android:layout_width="wrap_content"
@@ -67,7 +68,7 @@
 
         <fragment
             android:layout_height="wrap_content" android:layout_width="match_parent"
-            app:hideHeader="true" app:hideFooter="true" app:hideTitle="true"  app:hideMode="true"
+            app:hideHeader="true" app:hideFooter="true" app:hideTitle="true"  app:hideMode="true" app:collapse="true"
             android:name="com.forrestguice.suntimeswidget.LocationConfigDialog"
             android:tag="LocationConfigDialog" />
 
