@@ -117,7 +117,7 @@ public class WelcomeActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        onDone();
+        onPrevPressed.onClick(prevButton);
     }
 
     private View.OnClickListener onPrevPressed = new View.OnClickListener() {
