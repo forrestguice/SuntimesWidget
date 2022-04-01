@@ -42,7 +42,7 @@
         android:orientation="vertical" style="@style/SunsetTimeWidget_dark"
         android:gravity="center"
         android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
-        android:paddingTop="6dp" android:paddingBottom="10dp"
+        android:paddingTop="8dp" android:paddingBottom="24dp"
         android:background="?attr/dialogBackgroundAlt">
 
         <include layout="@layout/info_time_now" />

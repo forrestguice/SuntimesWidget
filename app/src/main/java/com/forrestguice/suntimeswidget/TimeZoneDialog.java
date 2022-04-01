@@ -128,6 +128,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
 
     public void setTimeFormatMode(WidgetSettings.TimeFormatMode mode) {
         getArguments().putString(KEY_TIMEFORMAT_MODE, mode.name());
+        updatePreview(getActivity());
     }
     public WidgetSettings.TimeFormatMode getTimeFormatMode()
     {
@@ -142,15 +143,18 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     public TimeZone getTimeZone()
     {
         String tzID;
-        WidgetSettings.TimezoneMode mode = (WidgetSettings.TimezoneMode) spinner_timezoneMode.getSelectedItem();
+        WidgetTimezones.TimeZoneItem item;
+        WidgetSettings.TimezoneMode mode = (spinner_timezoneMode != null) ? (WidgetSettings.TimezoneMode) spinner_timezoneMode.getSelectedItem() : WidgetSettings.TimezoneMode.CURRENT_TIMEZONE;
         switch (mode)
         {
             case SOLAR_TIME:
-                tzID = spinner_solartime != null ? ((WidgetTimezones.TimeZoneItem) spinner_solartime.getSelectedItem()).getID() : TimeZone.getDefault().getID();
+                item = (spinner_solartime != null) ? ((WidgetTimezones.TimeZoneItem) spinner_solartime.getSelectedItem()) : null;
+                tzID = (item != null) ? item.getID() : TimeZone.getDefault().getID();
                 return WidgetTimezones.getTimeZone(tzID, longitude);
 
             case CUSTOM_TIMEZONE:
-                tzID = spinner_timezone != null ? ((WidgetTimezones.TimeZoneItem) spinner_timezone.getSelectedItem()).getID() : TimeZone.getDefault().getID();
+                item = (spinner_timezone != null) ? ((WidgetTimezones.TimeZoneItem) spinner_timezone.getSelectedItem()) : null;
+                tzID = (item != null) ? item.getID() : TimeZone.getDefault().getID();
                 return WidgetTimezones.getTimeZone(tzID, longitude);
 
             case CURRENT_TIMEZONE:
@@ -323,19 +327,54 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         btn_accept.setOnClickListener(onDialogAcceptClick);
     }
 
-    protected void updatePreview(Context context)
+    protected void updatePreview(@Nullable Context context)
     {
-        TimeZone tz = getTimeZone();
-        SuntimesUtils.TimeDisplayText timeDisplay = utils.calendarTimeShortDisplayString(context, Calendar.getInstance(tz), false, getTimeFormatMode());
-        if (preview_time != null) {
-            preview_time.setText(timeDisplay.getValue());
+        if (context != null && isAdded())
+        {
+            TimeZone tz = getTimeZone();
+            SuntimesUtils.TimeDisplayText timeDisplay = utils.calendarTimeShortDisplayString(context, Calendar.getInstance(tz), false, getTimeFormatMode());
+            if (preview_time != null) {
+                preview_time.setText(timeDisplay.getValue());
+            }
+            if (preview_time_suffix != null) {
+                preview_time_suffix.setText(timeDisplay.getSuffix());
+            }
+            if (preview_time_tz != null) {
+                preview_time_tz.setText(WidgetTimezones.getTimeZoneDisplay(context, tz));
+            }
         }
-        if (preview_time_suffix != null) {
-            preview_time_suffix.setText(timeDisplay.getSuffix());
+    }
+
+    private void startUpdateTask()
+    {
+        stopUpdateTask();
+        if (preview_time != null)
+            preview_time.post(updateTask);
+    }
+    private void stopUpdateTask()
+    {
+        if (preview_time != null)
+            preview_time.removeCallbacks(updateTask);
+    }
+
+    public static final int UPDATE_RATE = 3000;
+    private Runnable updateTask = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            Activity context = getActivity();
+            updatePreview(context);
+            if (preview_time != null && context != null)
+                preview_time.postDelayed(this, UPDATE_RATE);
         }
-        if (preview_time_tz != null) {
-            preview_time_tz.setText(WidgetTimezones.getTimeZoneDisplay(context, tz));
-        }
+    };
+
+    @Override
+    public void onStop()
+    {
+        stopUpdateTask();
+        super.onStop();
     }
 
     private void updateExtrasLabel(@NonNull Context context, int stringResID, long offset)
@@ -752,7 +791,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, customTimezoneID);
             btn_accept.setEnabled(validateInput());
             progress_timezone.setVisibility(View.GONE);
-            updatePreview(getActivity());
+            startUpdateTask();
         }
     };
 
