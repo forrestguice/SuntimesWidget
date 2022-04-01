@@ -12,7 +12,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/content_layout"
         app:layout_constraintVertical_chainStyle="spread_inside"
-        app:layout_constraintVertical_weight="2">
+        app:layout_constraintVertical_weight="2"
+        android:animateLayoutChanges="true">
 
         <TextView android:visibility="gone"
             android:id="@+id/txt_about_name"
@@ -29,6 +30,13 @@
             android:scaleType="fitCenter"
             android:src="@drawable/ic_time_256dp" android:tint="?attr/colorControlHighlight"
             tools:ignore="ContentDescription" />
+
+        <TextView android:visibility="visible"
+            android:id="@+id/warning_timezone" android:layout_gravity="center"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+
+            android:textColor="?attr/tagColor_warning" android:text="@string/timezoneWarning" />
 
     </LinearLayout>
 
