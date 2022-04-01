@@ -862,6 +862,10 @@ public class LocationConfigView extends LinearLayout
         task.execute((Object[]) null);
     }
 
+    public void clickLocationSpinner() {
+        spin_locationName.performClick();
+    }
+
     @Override
     protected void onDetachedFromWindow()
     {

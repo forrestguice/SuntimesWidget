@@ -41,9 +41,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -307,6 +309,9 @@ public class WelcomeActivity extends AppCompatActivity
      */
     public static class WelcomeLocationFragment extends WelcomeFragment
     {
+        private Button button_addPlaces;
+        private ProgressBar progress_addPlaces;
+
         public WelcomeLocationFragment() {}
 
         public static WelcomeLocationFragment newInstance()
@@ -316,6 +321,85 @@ public class WelcomeActivity extends AppCompatActivity
             args.putInt(ARG_LAYOUT_RESID, R.layout.layout_welcome_location);
             fragment.setArguments(args);
             return fragment;
+        }
+
+        @Override
+        public void initViews(Context context, View view)
+        {
+            super.initViews(context, view);
+
+            button_addPlaces = (Button) view.findViewById(R.id.button_build_places);
+            if (button_addPlaces != null) {
+                button_addPlaces.setOnClickListener(onAddPlacesClicked);
+            }
+
+            progress_addPlaces = (ProgressBar) view.findViewById(R.id.progress_build_places);
+            hideProgress();
+        }
+
+        private View.OnClickListener onAddPlacesClicked = new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                BuildPlacesTask task = new BuildPlacesTask(getActivity());
+                task.setTaskListener(buildPlacesListener);
+                task.execute();
+            }
+        };
+        private BuildPlacesTask.TaskListener buildPlacesListener = new BuildPlacesTask.TaskListener()
+        {
+            @Override
+            public void onStarted()
+            {
+                setRetainInstance(true);
+                if (button_addPlaces != null) {
+                    button_addPlaces.setEnabled(false);
+                    button_addPlaces.setVisibility(View.INVISIBLE);
+                }
+                showProgress();
+            }
+
+            @Override
+            public void onFinished(Integer result)
+            {
+                setRetainInstance(false);
+                hideProgress();
+
+                if (result > 0)
+                {
+                    Context context = getActivity();
+                    if (context != null) {
+                        button_addPlaces.setText(context.getString(R.string.locationbuild_toast_success, result.toString()));
+                        button_addPlaces.setVisibility(View.VISIBLE);
+                    }
+                }
+                reloadLocationList();
+            }
+        };
+
+        protected void showProgress() {
+            if (progress_addPlaces != null) {
+                progress_addPlaces.setVisibility(View.VISIBLE);
+            }
+        }
+        protected void hideProgress() {
+            if (progress_addPlaces != null) {
+                progress_addPlaces.setVisibility(View.INVISIBLE);
+            }
+        }
+        protected void reloadLocationList()
+        {
+            if (isAdded()) {
+                FragmentManager fragments = getChildFragmentManager();
+                if (fragments != null) {
+                    LocationConfigDialog locationConfig = (LocationConfigDialog) fragments.findFragmentByTag("LocationConfigDialog");
+                    if (locationConfig != null) {
+                        locationConfig.getDialogContent().populateLocationList();
+                        locationConfig.getDialogContent().clickLocationSpinner();
+                    }
+                }
+            }
         }
 
         @Override
