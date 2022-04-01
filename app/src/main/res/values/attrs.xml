@@ -182,6 +182,7 @@
         <attr name="hideFooter" format="boolean" />
         <attr name="hideTitle" format="boolean" />
         <attr name="hideMode" format="boolean" />
+        <attr name="collapse" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="TimeZoneConfigDialog">

@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2020 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -206,6 +206,18 @@ public class LocationConfigView extends LinearLayout
     }
 
     /**
+     * Property: collapsed
+     */
+    private boolean collapse = false;
+    public boolean shouldCollapse() {
+        return collapse;
+    }
+    public void setShouldCollapse(boolean value) {
+        collapse = value;
+        // TODO
+    }
+
+    /**
      * Property: auto mode allowed
      */
     private boolean autoAllowed = true;
@@ -242,6 +254,7 @@ public class LocationConfigView extends LinearLayout
                 labl_locationAlt.setEnabled(false);
                 text_locationAlt.setEnabled(false);
                 inputOverlay.setVisibility(View.VISIBLE);
+                detailsLayout.setVisibility(View.VISIBLE);
 
                 labl_locationName.setEnabled(false);
                 text_locationName.setEnabled(false);
@@ -266,6 +279,7 @@ public class LocationConfigView extends LinearLayout
                 labl_locationAlt.setEnabled(false);
                 text_locationAlt.setEnabled(false);
                 inputOverlay.setVisibility(View.GONE);
+                detailsLayout.setVisibility(collapse ? View.GONE : View.VISIBLE);
 
                 labl_locationName.setEnabled(false);
                 text_locationName.setEnabled(false);
@@ -290,6 +304,7 @@ public class LocationConfigView extends LinearLayout
                 labl_locationAlt.setEnabled(true);
                 text_locationAlt.setEnabled(true);
                 inputOverlay.setVisibility(View.GONE);
+                detailsLayout.setVisibility(View.VISIBLE);
 
                 labl_locationName.setEnabled(true);
                 text_locationName.setEnabled(true);
@@ -313,7 +328,9 @@ public class LocationConfigView extends LinearLayout
                 text_locationLat.setEnabled(false);
                 labl_locationAlt.setEnabled(false);
                 text_locationAlt.setEnabled(false);
-                inputOverlay.setVisibility(View.VISIBLE);
+
+                detailsLayout.setVisibility(collapse ? View.GONE : View.VISIBLE);
+                inputOverlay.setVisibility(detailsLayout.getVisibility() == View.VISIBLE ? View.VISIBLE : View.GONE);
 
                 labl_locationName.setEnabled(true);
                 text_locationName.setEnabled(false);
@@ -348,6 +365,7 @@ public class LocationConfigView extends LinearLayout
     private Spinner spin_locationName;
     private EditText text_locationName;
     private View inputOverlay;
+    private View detailsLayout;
 
     private ImageButton button_list;
     private ImageButton button_edit;
@@ -497,6 +515,8 @@ public class LocationConfigView extends LinearLayout
         spin_locationName = (Spinner)findViewById(R.id.appwidget_location_nameSelect);
         spin_locationName.setAdapter(getFixAdapter);
         spin_locationName.setOnItemSelectedListener(onCustomLocationSelected);
+
+        detailsLayout = findViewById(R.id.layout_details);
 
         inputOverlay = findViewById(R.id.appwidget_location_latlon_overlay);
         inputOverlay.setVisibility(View.GONE);

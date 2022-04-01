@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2020 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -50,6 +50,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
 {
     public static final String KEY_LOCATION_HIDETITLE = "hidetitle";
     public static final String KEY_LOCATION_HIDEMODE = "hidemode";
+    public static final String KEY_LOCATION_COLLAPSE = "collapse";
 
     public static final int REQUEST_LOCATION = 30;
 
@@ -62,6 +63,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         setHideDialogFooter(a.getBoolean(R.styleable.LocationConfigDialog_hideFooter, hideFooter));
         setHideMode(a.getBoolean(R.styleable.LocationConfigDialog_hideMode, hideMode));
         setHideTitle(a.getBoolean(R.styleable.LocationConfigDialog_hideTitle, hideTitle));
+        setShouldCollapse(a.getBoolean(R.styleable.LocationConfigDialog_collapse, collapse));
         a.recycle();
     }
 
@@ -178,6 +180,17 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     }
 
     /**
+     * Collapse the coordinate view when not editing location
+     */
+    private boolean collapse = false;
+    public void setShouldCollapse(boolean value) {
+        collapse = value;
+    }
+    public boolean shouldCollapse() {
+        return collapse;
+    }
+
+    /**
      * Preset data (in the form of a geo URI)
      */
     private Uri presetData = null;
@@ -236,6 +249,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         dialogContent = (LocationConfigView) view.findViewById(R.id.locationConfig);
         dialogContent.setHideTitle(hideTitle);
         dialogContent.setHideMode(hideMode);
+        dialogContent.setShouldCollapse(collapse);
         dialogContent.init(myParent, false);
         dialogContent.setOnListButtonClicked(new View.OnClickListener() {
             @Override
@@ -307,6 +321,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         //Log.d("DEBUG", "LocationConfigDialog saveSettings (bundle)");
         bundle.putBoolean(KEY_LOCATION_HIDETITLE, hideTitle);
         bundle.putBoolean(KEY_LOCATION_HIDEMODE, hideMode);
+        bundle.putBoolean(KEY_LOCATION_COLLAPSE, collapse);
         if (dialogContent != null)
         {
             dialogContent.saveSettings(bundle);
@@ -324,6 +339,9 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
 
         hideMode = bundle.getBoolean(KEY_LOCATION_HIDEMODE);
         setHideMode(hideMode);
+
+        collapse = bundle.getBoolean(KEY_LOCATION_COLLAPSE);
+        setShouldCollapse(collapse);
 
         if (dialogContent != null) {
             dialogContent.loadSettings(getActivity(), bundle);
