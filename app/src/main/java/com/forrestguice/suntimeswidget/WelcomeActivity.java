@@ -19,7 +19,9 @@
 package com.forrestguice.suntimeswidget;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
@@ -217,6 +219,12 @@ public class WelcomeActivity extends AppCompatActivity
         }
     }
 
+    public void showAbout( View v )
+    {
+        startActivity(new Intent(this, AboutActivity.class));
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -236,6 +244,7 @@ public class WelcomeActivity extends AppCompatActivity
             switch (position)
             {
                 case 2: return WelcomeTimeZoneFragment.newInstance();
+                case 3: return WelcomeFragment.newInstance(R.layout.layout_welcome_legal);
                 case 1: return WelcomeLocationFragment.newInstance();
                 case 0: default: return WelcomeAppearanceFragment.newInstance();
             }
@@ -243,7 +252,7 @@ public class WelcomeActivity extends AppCompatActivity
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
     }
 
