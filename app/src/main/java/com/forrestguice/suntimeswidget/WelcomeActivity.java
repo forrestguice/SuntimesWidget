@@ -239,7 +239,7 @@ public class WelcomeActivity extends AppCompatActivity
     /**
      * WelcomeFragmentAdapter
      */
-    public static class WelcomeFragmentAdapter extends FragmentPagerAdapter
+    private class WelcomeFragmentAdapter extends FragmentPagerAdapter
     {
         public WelcomeFragmentAdapter(FragmentManager fragments)
         {
@@ -251,8 +251,8 @@ public class WelcomeActivity extends AppCompatActivity
         {
             switch (position)
             {
-                case 2: return WelcomeTimeZoneFragment.newInstance();
                 case 3: return WelcomeFragment.newInstance(R.layout.layout_welcome_legal);
+                case 2: return WelcomeTimeZoneFragment.newInstance(WelcomeActivity.this);
                 case 1: return WelcomeLocationFragment.newInstance();
                 case 0: default: return WelcomeAppearanceFragment.newInstance();
             }
@@ -470,21 +470,41 @@ public class WelcomeActivity extends AppCompatActivity
     {
         private Spinner timeFormatSpinner;
 
-        public WelcomeTimeZoneFragment() {}
+        public WelcomeTimeZoneFragment()
+        {
+            setArguments(new Bundle());
+            setLongitude(Double.parseDouble(WidgetSettings.PREF_DEF_LOCATION_LONGITUDE));
+        }
 
-        public static WelcomeTimeZoneFragment newInstance()
+        public static WelcomeTimeZoneFragment newInstance(Context context)
         {
             WelcomeTimeZoneFragment fragment = new WelcomeTimeZoneFragment();
-            Bundle args = new Bundle();
+            Bundle args = fragment.getArguments();
             args.putInt(ARG_LAYOUT_RESID, R.layout.layout_welcome_timezone);
             fragment.setArguments(args);
+            fragment.setLongitude(WidgetSettings.loadLocationPref(context, 0).getLongitudeAsDouble());
             return fragment;
+        }
+
+        private double getLongitude() {
+            return getArguments().getDouble(TimeZoneDialog.KEY_LONGITUDE);
+        }
+        public void setLongitude(double value) {
+            getArguments().putDouble(TimeZoneDialog.KEY_LONGITUDE, value);
         }
 
         @Override
         public void initViews(Context context, View view)
         {
             super.initViews(context, view);
+
+            FragmentManager fragments = getChildFragmentManager();
+            if (fragments != null) {
+                TimeZoneDialog tzConfig = (TimeZoneDialog) fragments.findFragmentByTag("TimeZoneDialog");
+                if (tzConfig != null) {
+                    tzConfig.setTimeFormatMode(WidgetSettings.loadTimeFormatModePref(context, 0));
+                }
+            }
 
             timeFormatSpinner = (Spinner) view.findViewById(R.id.appwidget_general_timeformatmode);
             if (timeFormatSpinner != null)
@@ -499,11 +519,34 @@ public class WelcomeActivity extends AppCompatActivity
             }
         }
 
+        @Override
+        public void updateViews(Context context)
+        {
+            setLongitude(WidgetSettings.loadLocationPref(context, 0).getLongitudeAsDouble());
+
+            FragmentManager fragments = getChildFragmentManager();
+            if (fragments != null) {
+                TimeZoneDialog tzConfig = (TimeZoneDialog) fragments.findFragmentByTag("TimeZoneDialog");
+                if (tzConfig != null) {
+                    tzConfig.setLongitude(getLongitude());
+                    tzConfig.updatePreview(context);
+                }
+            }
+        }
+
         private AdapterView.OnItemSelectedListener onTimeFormatSelected = new AdapterView.OnItemSelectedListener()
         {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // TODO: update preview
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                FragmentManager fragments = getChildFragmentManager();
+                if (fragments != null) {
+                    TimeZoneDialog tzConfig = (TimeZoneDialog) fragments.findFragmentByTag("TimeZoneDialog");
+                    Activity context = getActivity();
+                    if (tzConfig != null && context != null) {
+                        tzConfig.setTimeFormatMode((WidgetSettings.TimeFormatMode) parent.getAdapter().getItem(position));
+                    }
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
@@ -515,19 +558,19 @@ public class WelcomeActivity extends AppCompatActivity
             if (isAdded())
             {
                 FragmentManager fragments = getChildFragmentManager();
-                if (fragments != null)
-                {
+                if (fragments != null) {
                     TimeZoneDialog tzConfig = (TimeZoneDialog) fragments.findFragmentByTag("TimeZoneDialog");
-                    if (tzConfig != null)
-                    {
+                    if (tzConfig != null) {
                         tzConfig.saveSettings(context);
-                        Log.d("DEBUG", "saveSettings: timezone");
                     }
                 }
 
                 WidgetSettings.TimeFormatMode timeFormat = (WidgetSettings.TimeFormatMode) timeFormatSpinner.getSelectedItem();
                 WidgetSettings.saveTimeFormatModePref(context, 0, timeFormat);
-                Log.d("DEBUG", "saveSettings: timeformat");
+                Log.d("DEBUG", "saveSettings: timezone");
+            }
+        }
+    }
 
     /**
      * WelcomeAlarmsFragment
