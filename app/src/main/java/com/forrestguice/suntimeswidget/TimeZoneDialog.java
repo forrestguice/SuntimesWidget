@@ -124,6 +124,8 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     public void setLongitude( double longitude )
     {
         this.longitude = longitude;
+        updatePreview(getActivity());
+        onSelectionChanged();
     }
 
     public void setTimeFormatMode(WidgetSettings.TimeFormatMode mode) {
@@ -442,6 +444,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
                 updateExtras(context, true, parent.getItemAtPosition(position));
             }
             updatePreview(getActivity());
+            onSelectionChanged();
         }
 
         @Override
@@ -461,6 +464,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
                 updateExtras(context, false, parent.getItemAtPosition(position));
             }
             updatePreview(getActivity());
+            onSelectionChanged();
         }
 
         @Override
@@ -496,6 +500,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
 
             SuntimesUtils.announceForAccessibility(spinner_timezoneMode, timezoneMode.getDisplayString());
             updatePreview(getActivity());
+            onSelectionChanged();
         }
 
         public void onNothingSelected(AdapterView<?> parent) {}
@@ -857,6 +862,26 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
             behavior.setSkipCollapsed(true);
             behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
+    }
+
+    protected void onSelectionChanged()
+    {
+        if (dialogListener != null) {
+            dialogListener.onSelectionChanged(getTimeZone());
+        }
+    }
+
+    private TimeZoneDialogListener dialogListener = null;
+    public void setDialogListener(TimeZoneDialogListener listener) {
+        dialogListener = listener;
+    }
+
+    /**
+     * TimeZoneDialogListener
+     */
+    public static class TimeZoneDialogListener
+    {
+        public void onSelectionChanged(TimeZone tz) {}
     }
 
 }
