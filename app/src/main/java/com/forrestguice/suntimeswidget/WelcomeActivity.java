@@ -486,6 +486,24 @@ public class WelcomeActivity extends AppCompatActivity
                 WidgetSettings.TimeFormatMode timeFormat = (WidgetSettings.TimeFormatMode) timeFormatSpinner.getSelectedItem();
                 WidgetSettings.saveTimeFormatModePref(context, 0, timeFormat);
                 Log.d("DEBUG", "saveSettings: timeformat");
+
+    /**
+     * WelcomeAlarmsFragment
+     */
+    public static class WelcomeAlarmsFragment extends WelcomeFragment
+    {
+        public WelcomeAlarmsFragment() {}
+
+        public static WelcomeAlarmsFragment newInstance()
+        {
+            WelcomeAlarmsFragment fragment = new WelcomeAlarmsFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_LAYOUT_RESID, R.layout.layout_welcome_alarms);
+            fragment.setArguments(args);
+            return fragment;
+        }
+    }
+
     /**
      * WelcomeAppearanceFragment
      */

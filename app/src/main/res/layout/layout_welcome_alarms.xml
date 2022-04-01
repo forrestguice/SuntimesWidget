@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:gravity="center"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:paddingBottom="48dp">
+
+    <LinearLayout android:id="@+id/icon_layout"
+        android:layout_width="wrap_content" android:layout_height="0dp"
+        android:gravity="center" android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/content_layout"
+        app:layout_constraintVertical_chainStyle="spread_inside">
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="198dp" android:layout_height="198dp" android:layout_margin="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_alarm_256dp" android:tint="?attr/colorControlHighlight"
+            tools:ignore="ContentDescription" />
+
+        <TextView android:visibility="visible"
+            android:id="@+id/txt_about_name"
+            android:layout_height="wrap_content" android:layout_width="wrap_content"
+            android:text="@string/configLabel_alarmClock"
+            android:gravity="center" android:textSize="36sp"
+            android:textColor="?attr/date_buttonSelector" android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/content_layout"
+        android:orientation="vertical" android:gravity="center"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/icon_layout"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout android:orientation="vertical"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp" android:layout_marginRight="16dp" android:layout_marginBottom="16dp">
+
+            <CheckBox android:id="@+id/check_alarms_showlauncher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/configLabel_alarms_showlauncher_summary"
+                android:checked="true" />
+
+            <View android:background="?attr/hrColor" android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <LinearLayout android:orientation="vertical"
+                android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/button_optWhiteList"
+                    style="@style/Widget.AppCompat.Button"
+                    android:layout_height="wrap_content" android:layout_width="wrap_content"
+                    android:text="@string/configLabel_alarms_optWhiteList" />
+
+                <TextView
+                    android:id="@+id/text_optWhiteList" android:layout_gravity="center"
+                    android:layout_height="wrap_content" android:layout_width="wrap_content"
+                    android:gravity="center_vertical" android:layout_margin="4dp"
+                    android:textColor="?attr/tagColor_warning"
+                    android:text="@string/configLabel_alarms_optWhiteList_unlisted" />
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
