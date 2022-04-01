@@ -464,6 +464,11 @@ public class AppSettings
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return pref.getString(PREF_KEY_APPEARANCE_THEME, PREF_DEF_APPEARANCE_THEME);
     }
+    public static void setThemePref(Context context, String themeID) {
+        SharedPreferences.Editor pref = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        pref.putString(PREF_KEY_APPEARANCE_THEME, themeID);
+        pref.apply();
+    }
 
     public static String loadThemeLightPref(Context context)
     {

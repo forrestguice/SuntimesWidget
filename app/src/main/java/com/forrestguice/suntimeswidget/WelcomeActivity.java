@@ -235,7 +235,7 @@ public class WelcomeActivity extends AppCompatActivity
             {
                 case 2: return WelcomeTimeZoneFragment.newInstance();
                 case 1: return WelcomeLocationFragment.newInstance();
-                case 0: default: return WelcomeFragment.newInstance(R.layout.layout_welcome_app);
+                case 0: default: return WelcomeAppearanceFragment.newInstance();
             }
         }
 
@@ -402,8 +402,57 @@ public class WelcomeActivity extends AppCompatActivity
                 WidgetSettings.TimeFormatMode timeFormat = (WidgetSettings.TimeFormatMode) timeFormatSpinner.getSelectedItem();
                 WidgetSettings.saveTimeFormatModePref(context, 0, timeFormat);
                 Log.d("DEBUG", "saveSettings: timeformat");
+    /**
+     * WelcomeAppearanceFragment
+     */
+    public static class WelcomeAppearanceFragment extends WelcomeFragment
+    {
+        public WelcomeAppearanceFragment() {}
+
+        public static WelcomeAppearanceFragment newInstance()
+        {
+            WelcomeAppearanceFragment fragment = new WelcomeAppearanceFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_LAYOUT_RESID, R.layout.layout_welcome_app);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Override
+        public void initViews(Context context, View view)
+        {
+            super.initViews(context, view);
+
+            Button darkThemeButton = (Button) view.findViewById(R.id.button_theme_dark);
+            if (darkThemeButton != null) {
+                darkThemeButton.setOnClickListener(onThemeButtonClicked(AppSettings.THEME_DARK));
+            }
+
+            Button lightThemeButton = (Button) view.findViewById(R.id.button_theme_light);
+            if (lightThemeButton != null) {
+                lightThemeButton.setOnClickListener(onThemeButtonClicked(AppSettings.THEME_LIGHT));
+            }
+        }
+
+        private View.OnClickListener onThemeButtonClicked(final String themeID) {
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppSettings.setThemePref(getActivity(), themeID);
+                    recreate(getActivity());
+                }
+            };
+        }
+
+        private static void recreate(Activity activity)
+        {
+            if (activity != null) {
+                activity.finish();
+                activity.overridePendingTransition(R.anim.transition_restart_in, R.anim.transition_restart_out);
+                activity.startActivity(activity.getIntent());
             }
         }
     }
+
 
 }
