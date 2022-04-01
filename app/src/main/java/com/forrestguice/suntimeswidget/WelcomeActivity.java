@@ -32,6 +32,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -64,6 +65,7 @@ public class WelcomeActivity extends AppCompatActivity
     {
         Context context = AppSettings.initLocale(newBase, localeInfo = new AppSettings.LocaleInfo());
         super.attachBaseContext(context);
+        WidgetSettings.initDefaults(context);
     }
 
     @Override
@@ -144,21 +146,23 @@ public class WelcomeActivity extends AppCompatActivity
 
     private ViewPager.OnPageChangeListener pagerChangeListener = new ViewPager.OnPageChangeListener()
     {
+        private int previousPosition = 0;
+
         @Override
         public void onPageSelected(int position)
         {
+            saveSettings(getSupportFragmentManager(), previousPosition);
             setIndicator(position);
             prevButton.setText(getString((position != 0) ? R.string.welcome_action_prev : R.string.welcome_action_skip));
             nextButton.setText(getString((position != pagerAdapter.getCount()-1) ? R.string.welcome_action_next : R.string.welcome_action_done));
+            previousPosition = position;
         }
 
         @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
-        }
+        public void onPageScrolled(int position, float offset, int offsetPixels) {}
 
         @Override
-        public void onPageScrollStateChanged(int arg0) {
-        }
+        public void onPageScrollStateChanged(int arg0) {}
     };
 
     @SuppressLint("ResourceType")
@@ -186,11 +190,12 @@ public class WelcomeActivity extends AppCompatActivity
     }
 
     private void onNext() {
-        pager.setCurrentItem(pager.getCurrentItem() + 1);
+        saveSettings(getSupportFragmentManager(), pager.getCurrentItem());
+        pager.setCurrentItem(pager.getCurrentItem() + 1, true);
     }
 
     private void onPrev() {
-        pager.setCurrentItem(pager.getCurrentItem() - 1);
+        pager.setCurrentItem(pager.getCurrentItem() - 1, true);
     }
 
     private void onSkip()
@@ -201,7 +206,7 @@ public class WelcomeActivity extends AppCompatActivity
 
     private void onDone()
     {
-        saveSettings();
+        saveSettings(getSupportFragmentManager(), pager.getCurrentItem());
         AppSettings.setFirstLaunch(WelcomeActivity.this, false);
         finish();
     }
@@ -209,13 +214,16 @@ public class WelcomeActivity extends AppCompatActivity
     private void saveSettings()
     {
         FragmentManager fragments = getSupportFragmentManager();
-        for (int i=0; i<pagerAdapter.getCount(); i++)
-        {
-            // https://stackoverflow.com/questions/54279509/how-to-get-elements-of-fragments-created-by-viewpager-in-mainactivity/54280113#54280113
-            WelcomeFragment page = (WelcomeFragment) fragments.findFragmentByTag("android:switcher:" + pager.getId() + ":" + i);
-            if (page != null) {
-                page.saveSettings(WelcomeActivity.this);
-            }
+        for (int i=0; i<pagerAdapter.getCount(); i++) {
+            saveSettings(fragments, i);
+        }
+    }
+    private void saveSettings(FragmentManager fragments, int position)
+    {
+        // https://stackoverflow.com/questions/54279509/how-to-get-elements-of-fragments-created-by-viewpager-in-mainactivity/54280113#54280113
+        WelcomeFragment page = (WelcomeFragment) fragments.findFragmentByTag("android:switcher:" + pager.getId() + ":" + position);
+        if (page != null) {
+            page.saveSettings(WelcomeActivity.this);
         }
     }
 
@@ -278,26 +286,51 @@ public class WelcomeActivity extends AppCompatActivity
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             View view = inflater.inflate(getLayoutResID(), container, false);
-            initViews(getContext(), view);
-            updateViews(getContext(), view);
+            initViews(getActivity(), view);
+            updateViews(getActivity());
             return view;
+        }
+
+        @Override
+        public void onResume()
+        {
+            super.onResume();
+            updateViews(getActivity());
+        }
+
+        @Override
+        public void setUserVisibleHint(boolean value)
+        {
+            super.setUserVisibleHint(value);
+            if (isResumed()) {
+                updateViews(getActivity());
+            }
         }
 
         public void initViews(Context context, View view)
         {
             if (view != null)
             {
-                int[] textViews = new int[] { R.id.text0 };
+                int[] textViews = new int[] { R.id.text0, R.id.text1, R.id.text2, R.id.text3 };
                 for (int resID : textViews) {
                     TextView text = (TextView) view.findViewById(resID);
                     if (text != null) {
                         text.setText(SuntimesUtils.fromHtml(text.getText().toString()));
                     }
                 }
+
+                textViews = new int[] { R.id.link0, R.id.link1, R.id.link2, R.id.link3 };
+                for (int resID : textViews) {
+                    TextView text = (TextView) view.findViewById(resID);
+                    if (text != null) {
+                        text.setText(SuntimesUtils.fromHtml(text.getText().toString()));
+                        text.setMovementMethod(LinkMovementMethod.getInstance());
+                    }
+                }
             }
         }
 
-        public void updateViews(Context context, View view) {
+        public void updateViews(Context context) {
             /* EMPTY */
         }
 

@@ -191,4 +191,13 @@
         <attr name="hideMode" />
     </declare-styleable>
 
+    <item type="id" name="text0"/>
+    <item type="id" name="text1"/>
+    <item type="id" name="text2"/>
+    <item type="id" name="text3"/>
+    <item type="id" name="link0"/>
+    <item type="id" name="link1"/>
+    <item type="id" name="link2"/>
+    <item type="id" name="link3"/>
+
 </resources>
