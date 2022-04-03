@@ -455,6 +455,11 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     }
     protected void onLocationResult(int resultCode, Intent data)
     {
+        boolean adapterModified = data != null && data.getBooleanExtra(PlacesActivity.EXTRA_ADAPTER_MODIFIED, false);
+        if (adapterModified) {
+            getDialogContent().populateLocationList();
+        }
+
         if (resultCode == Activity.RESULT_OK && data != null)
         {
             Location location = data.getParcelableExtra(PlacesActivity.EXTRA_LOCATION);
