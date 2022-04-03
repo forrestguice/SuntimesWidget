@@ -1610,13 +1610,13 @@ public class AlarmNotifications extends BroadcastReceiver
                             public void onItemsLoaded(Long[] ids) {
                                 if (chained != null) {
                                     chained.onFinished(true, item);
-                                }    // the service continues running; items that are "soon" live in the notification tray
+                                } else stopSelf();
                             }
                         });
                     } else {
                         if (chained != null) {
                             chained.onFinished(true, item);
-                        }
+                        } else stopSelf();
                     }
                 }
             };
