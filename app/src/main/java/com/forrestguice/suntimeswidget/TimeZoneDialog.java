@@ -104,6 +104,7 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
     private TextView label_tzExtras0;
     private SuntimesUtils utils;
 
+    private ArrayAdapter<WidgetSettings.TimezoneMode> spinner_timezoneMode_adapter;
     private WidgetTimezones.TimeZoneItemAdapter spinner_timezone_adapter;
     private boolean loading = false;
 
@@ -142,11 +143,37 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         }
     }
 
+    public WidgetSettings.TimezoneMode getTimeZoneMode() {
+        return (spinner_timezoneMode != null) ? (WidgetSettings.TimezoneMode) spinner_timezoneMode.getSelectedItem() : WidgetSettings.TimezoneMode.CURRENT_TIMEZONE;
+    }
+    public void setTimeZoneMode(WidgetSettings.TimezoneMode value)
+    {
+        if (spinner_timezoneMode != null) {
+            spinner_timezoneMode.setSelection(spinner_timezoneMode_adapter.getPosition(value), true);
+        }
+    }
+    public void setCustomTimeZone(final String tzID)
+    {
+        if (spinner_timezoneMode != null) {
+            spinner_timezoneMode.setSelection(spinner_timezoneMode_adapter.getPosition(WidgetSettings.TimezoneMode.CUSTOM_TIMEZONE), true);
+        }
+        spinner_timezone.post(new Runnable() {
+            @Override
+            public void run() {
+                WidgetTimezones.selectTimeZone(spinner_timezone, spinner_timezone_adapter, tzID);
+            }
+        });
+    }
+
+    public WidgetTimezones.TimeZoneItemAdapter getTimeZoneItemAdapter() {
+        return spinner_timezone_adapter;
+    }
+
     public TimeZone getTimeZone()
     {
         String tzID;
         WidgetTimezones.TimeZoneItem item;
-        WidgetSettings.TimezoneMode mode = (spinner_timezoneMode != null) ? (WidgetSettings.TimezoneMode) spinner_timezoneMode.getSelectedItem() : WidgetSettings.TimezoneMode.CURRENT_TIMEZONE;
+        WidgetSettings.TimezoneMode mode = getTimeZoneMode();
         switch (mode)
         {
             case SOLAR_TIME:
@@ -255,12 +282,11 @@ public class TimeZoneDialog extends BottomSheetDialogFragment
         label_timezone = (TextView) dialogContent.findViewById(R.id.appwidget_timezone_custom_label);
         WidgetTimezones.TimeZoneSort.initDisplayStrings(context);
 
-        ArrayAdapter<WidgetSettings.TimezoneMode> spinner_timezoneModeAdapter;
-        spinner_timezoneModeAdapter = new ArrayAdapter<WidgetSettings.TimezoneMode>(context, R.layout.layout_listitem_oneline, WidgetSettings.TimezoneMode.values());
-        spinner_timezoneModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_timezoneMode_adapter = new ArrayAdapter<WidgetSettings.TimezoneMode>(context, R.layout.layout_listitem_oneline, WidgetSettings.TimezoneMode.values());
+        spinner_timezoneMode_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner_timezoneMode = (Spinner) dialogContent.findViewById(R.id.appwidget_timezone_mode);
-        spinner_timezoneMode.setAdapter(spinner_timezoneModeAdapter);
+        spinner_timezoneMode.setAdapter(spinner_timezoneMode_adapter);
         spinner_timezoneMode.setOnItemSelectedListener(onTimeZoneModeSelected);
 
         View spinner_timezone_empty = dialogContent.findViewById(R.id.appwidget_timezone_custom_empty);
