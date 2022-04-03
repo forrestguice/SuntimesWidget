@@ -26,6 +26,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -156,11 +157,17 @@ public class WelcomeActivity extends AppCompatActivity
         @Override
         public void onPageSelected(int position)
         {
-            saveSettings(getSupportFragmentManager(), previousPosition);
-            setIndicator(position);
-            prevButton.setText(getString((position != 0) ? R.string.welcome_action_prev : R.string.welcome_action_skip));
-            nextButton.setText(getString((position != pagerAdapter.getCount()-1) ? R.string.welcome_action_next : R.string.welcome_action_done));
-            previousPosition = position;
+            if (saveSettings(getSupportFragmentManager(), previousPosition))
+            {
+                updateViews(getSupportFragmentManager(), position);
+                setIndicator(position);
+                prevButton.setText(getString((position != 0) ? R.string.welcome_action_prev : R.string.welcome_action_skip));
+                nextButton.setText(getString((position != pagerAdapter.getCount()-1) ? R.string.welcome_action_next : R.string.welcome_action_done));
+                previousPosition = position;
+
+            } else {
+                pager.setCurrentItem(previousPosition);
+            }
         }
 
         @Override
@@ -195,7 +202,6 @@ public class WelcomeActivity extends AppCompatActivity
     }
 
     private void onNext() {
-        saveSettings(getSupportFragmentManager(), pager.getCurrentItem());
         pager.setCurrentItem(pager.getCurrentItem() + 1, true);
     }
 
@@ -223,13 +229,35 @@ public class WelcomeActivity extends AppCompatActivity
             saveSettings(fragments, i);
         }
     }
-    private void saveSettings(FragmentManager fragments, int position)
+    private boolean saveSettings(FragmentManager fragments, int position)
     {
-        // https://stackoverflow.com/questions/54279509/how-to-get-elements-of-fragments-created-by-viewpager-in-mainactivity/54280113#54280113
-        WelcomeFragment page = (WelcomeFragment) fragments.findFragmentByTag("android:switcher:" + pager.getId() + ":" + position);
+        WelcomeFragment page = getPageFragment(fragments, pager, position);
         if (page != null) {
-            page.saveSettings(WelcomeActivity.this);
+            if (page.validateInput(WelcomeActivity.this)) {
+                return page.saveSettings(WelcomeActivity.this);
+            } else return false;
         }
+        return false;
+    }
+    private boolean validateInput(FragmentManager fragments, int position)
+    {
+        WelcomeFragment page = getPageFragment(fragments, pager, position);
+        if (page != null) {
+            return page.validateInput(WelcomeActivity.this);
+        }
+        return true;
+    }
+    private void updateViews(FragmentManager fragments, int position)
+    {
+        WelcomeFragment page = getPageFragment(fragments, pager, position);
+        if (page != null) {
+            page.updateViews(WelcomeActivity.this);
+        }
+    }
+
+    public static WelcomeFragment getPageFragment(FragmentManager fragments, ViewPager pager, int position) {
+        // https://stackoverflow.com/questions/54279509/how-to-get-elements-of-fragments-created-by-viewpager-in-mainactivity/54280113#54280113
+        return (WelcomeFragment) fragments.findFragmentByTag("android:switcher:" + pager.getId() + ":" + position);
     }
 
     public void showAbout( View v )
@@ -339,8 +367,12 @@ public class WelcomeActivity extends AppCompatActivity
             /* EMPTY */
         }
 
-        public void saveSettings(Context context) {
-            /* EMPTY */
+        public boolean validateInput(Context context) {
+            return true;
+        }
+
+        public boolean saveSettings(Context context) {
+            return true;
         }
 
         public int getLayoutResID() {
@@ -404,6 +436,7 @@ public class WelcomeActivity extends AppCompatActivity
                     button_addPlaces.setEnabled(false);
                     button_addPlaces.setVisibility(View.INVISIBLE);
                 }
+                setLocationViewMode(LocationConfigView.LocationViewMode.MODE_DISABLED);
                 toggleProgress(true);
             }
 
@@ -421,6 +454,7 @@ public class WelcomeActivity extends AppCompatActivity
                         button_addPlaces.setVisibility(View.VISIBLE);
                     }
                 }
+                setLocationViewMode(LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT);
                 reloadLocationList();
             }
         };
@@ -431,36 +465,56 @@ public class WelcomeActivity extends AppCompatActivity
             }
         }
 
-        protected void reloadLocationList()
+        @Nullable
+        private LocationConfigDialog getLocationConfigDialog()
         {
             if (isAdded()) {
                 FragmentManager fragments = getChildFragmentManager();
                 if (fragments != null) {
-                    LocationConfigDialog locationConfig = (LocationConfigDialog) fragments.findFragmentByTag("LocationConfigDialog");
-                    if (locationConfig != null) {
-                        locationConfig.getDialogContent().populateLocationList();
-                        locationConfig.getDialogContent().clickLocationSpinner();
-                    }
+                    return (LocationConfigDialog) fragments.findFragmentByTag("LocationConfigDialog");
                 }
+            }
+            return null;
+        }
+
+        protected void reloadLocationList()
+        {
+            LocationConfigDialog locationConfig = getLocationConfigDialog();
+            if (locationConfig != null) {
+                locationConfig.getDialogContent().populateLocationList();
+                locationConfig.getDialogContent().clickLocationSpinner();
+            }
+        }
+
+        protected void setLocationViewMode( LocationConfigView.LocationViewMode value)
+        {
+            LocationConfigDialog locationConfig = getLocationConfigDialog();
+            if (locationConfig != null) {
+                locationConfig.getDialogContent().setMode(value);
             }
         }
 
         @Override
-        public void saveSettings(Context context)
+        public boolean validateInput(Context context)
         {
-            if (isAdded())
-            {
-                FragmentManager fragments = getChildFragmentManager();
-                if (fragments != null)
-                {
-                    LocationConfigDialog locationConfig = (LocationConfigDialog) fragments.findFragmentByTag("LocationConfigDialog");
-                    if (locationConfig != null)
-                    {
-                        locationConfig.getDialogContent().saveSettings(context);
-                        Log.d("DEBUG", "saveSettings: location");
-                    }
-                }
+            LocationConfigDialog locationConfig = getLocationConfigDialog();
+            if (locationConfig != null) {
+                return locationConfig.getDialogContent().validateInput();
             }
+            return super.validateInput(context);
+        }
+
+        @Override
+        public boolean saveSettings(Context context)
+        {
+            LocationConfigDialog locationConfig = getLocationConfigDialog();
+            if (locationConfig != null)
+            {
+                boolean saved = locationConfig.getDialogContent().saveSettings(context);
+                Log.d("DEBUG", "saveSettings: location " + saved);
+                return saved;
+            }
+            return false;
         }
     }
 
@@ -574,7 +628,7 @@ public class WelcomeActivity extends AppCompatActivity
         };
 
         @Override
-        public void saveSettings(Context context)
+        public boolean saveSettings(Context context)
         {
             if (isAdded())
             {
@@ -586,7 +640,9 @@ public class WelcomeActivity extends AppCompatActivity
                 WidgetSettings.TimeFormatMode timeFormat = (WidgetSettings.TimeFormatMode) timeFormatSpinner.getSelectedItem();
                 WidgetSettings.saveTimeFormatModePref(context, 0, timeFormat);
                 Log.d("DEBUG", "saveSettings: timezone");
+                return true;
             }
+            return false;
         }
     }
 
