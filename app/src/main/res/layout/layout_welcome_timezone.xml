@@ -25,7 +25,7 @@
 
         <ImageView
             android:id="@+id/icon"
-            android:layout_width="192dp" android:layout_height="192dp"
+            android:layout_width="128dp" android:layout_height="128dp"
             android:layout_marginTop="8dp" android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_time_256dp" android:tint="?attr/colorControlHighlight"
@@ -37,6 +37,12 @@
             android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
 
             android:textColor="?attr/tagColor_warning" android:text="@string/timezoneWarning" />
+
+        <Button android:id="@+id/button_suggest_timezone" android:visibility="visible"
+            android:layout_height="wrap_content" android:layout_width="wrap_content"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_gravity="end" android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+            android:text="@string/configAction_suggestTimeZone" />
 
     </LinearLayout>
 

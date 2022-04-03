@@ -50,6 +50,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -525,6 +526,7 @@ public class WelcomeActivity extends AppCompatActivity
     {
         private Spinner timeFormatSpinner;
         private TextView timeZoneWarning;
+        private Button timeZoneSuggestButton;
 
         public WelcomeTimeZoneFragment()
         {
@@ -538,7 +540,10 @@ public class WelcomeActivity extends AppCompatActivity
             Bundle args = fragment.getArguments();
             args.putInt(ARG_LAYOUT_RESID, R.layout.layout_welcome_timezone);
             fragment.setArguments(args);
-            fragment.setLongitude(WidgetSettings.loadLocationPref(context, 0).getLongitudeAsDouble());
+
+            Location location = WidgetSettings.loadLocationPref(context, 0);
+            fragment.setLongitude(location.getLongitudeAsDouble());
+            fragment.setLongitudeLabel(location.getLabel());
             return fragment;
         }
 
@@ -549,10 +554,20 @@ public class WelcomeActivity extends AppCompatActivity
             getArguments().putDouble(TimeZoneDialog.KEY_LONGITUDE, value);
         }
 
+        public String getLongitudeLabel() {
+            return getArguments().getString(LocationConfigView.KEY_LOCATION_LABEL);
+        }
+        public void setLongitudeLabel( String value ) {
+            getArguments().putString(LocationConfigView.KEY_LOCATION_LABEL, value);
+        }
+
         public void toggleWarning(boolean visible)
         {
             if (timeZoneWarning != null) {
                 timeZoneWarning.setVisibility(visible ? View.VISIBLE : View.GONE);
+            }
+            if (timeZoneSuggestButton != null) {
+                timeZoneSuggestButton.setVisibility(visible ? View.VISIBLE : View.GONE);
             }
         }
 
@@ -579,6 +594,11 @@ public class WelcomeActivity extends AppCompatActivity
                 timeZoneWarning.setText(SuntimesUtils.createSpan(context, timeZoneWarning.getText().toString(), SuntimesUtils.SPANTAG_WARNING, warningIcon));
             }
 
+            timeZoneSuggestButton = (Button) view.findViewById(R.id.button_suggest_timezone);
+            if (timeZoneSuggestButton != null) {
+                timeZoneSuggestButton.setOnClickListener(timeZoneSuggestButtonListener);
+            }
+
             timeFormatSpinner = (Spinner) view.findViewById(R.id.appwidget_general_timeformatmode);
             if (timeFormatSpinner != null)
             {
@@ -595,7 +615,9 @@ public class WelcomeActivity extends AppCompatActivity
         @Override
         public void updateViews(Context context)
         {
-            setLongitude(WidgetSettings.loadLocationPref(context, 0).getLongitudeAsDouble());
+            Location location = WidgetSettings.loadLocationPref(context, 0);
+            setLongitude(location.getLongitudeAsDouble());
+            setLongitudeLabel(location.getLabel());
 
             TimeZoneDialog tzConfig = getTimeZoneDialog();
             if (tzConfig != null) {
@@ -625,6 +647,58 @@ public class WelcomeActivity extends AppCompatActivity
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
+        };
+
+        private View.OnClickListener timeZoneSuggestButtonListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                TimeZoneDialog tzConfig = getTimeZoneDialog();
+                if (tzConfig != null)
+                {
+                    Calendar now = Calendar.getInstance();
+                    double longitude = getLongitude();
+                    String label = getLongitudeLabel();
+                    Log.d("DEBUG", "longitude label: " + label);
+
+                    boolean foundItem = false;
+                    String tzID = WidgetSettings.PREF_DEF_TIMEZONE_CUSTOM;
+                    WidgetTimezones.TimeZoneItemAdapter adapter = tzConfig.getTimeZoneItemAdapter();
+                    WidgetTimezones.TimeZoneItem[] recommendations = null;
+                    if (adapter != null)
+                    {
+                        if (label != null)
+                        {
+                            WidgetTimezones.TimeZoneItem[] items = adapter.values();
+                            for (WidgetTimezones.TimeZoneItem item : items)
+                            {
+                                if (item.getID().contains(label) || item.getDisplayString().contains(label)) {
+                                    tzID = item.getID();
+                                    foundItem = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (!foundItem) {
+                            recommendations = adapter.findItems(longitude);
+                        }
+                    }
+
+                    if (!foundItem)
+                    {
+                        tzID = WidgetSettings.PREF_DEF_TIMEZONE_CUSTOM;
+                        TimeZone tz = WidgetTimezones.getTimeZone(tzID, longitude);
+                        if (WidgetTimezones.isProbablyNotLocal(tz, longitude, now.getTime()))
+                        {
+                            if (recommendations != null && recommendations[0] != null) {
+                                tzID = recommendations[0].getID();
+                            }
+                        }
+                    }
+                    tzConfig.setCustomTimeZone(tzID);
+                }
+            }
         };
 
         @Override
