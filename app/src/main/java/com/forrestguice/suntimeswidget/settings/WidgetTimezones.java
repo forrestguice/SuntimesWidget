@@ -617,15 +617,27 @@ public class WidgetTimezones
             return ord;
         }
 
-        public TimeZoneItem[] values()
+        public TimeZoneItem[] values() {
+            return items.toArray(new TimeZoneItem[0]);
+        }
+
+        public TimeZoneItem[] findItems(double longitude)
         {
-            int numTimeZones = items.size();
-            TimeZoneItem[] retArray = new TimeZoneItem[numTimeZones];
-            for (int i=0; i<numTimeZones; i++)
+            ArrayList<TimeZoneItem> matches = new ArrayList<>();
+            double lonOffsetHr = longitude * 24d / 360d;
+            double nearest = Double.POSITIVE_INFINITY;
+            for (TimeZoneItem item : items)
             {
-                retArray[i] = items.get(i);
+                double d = Math.abs(lonOffsetHr - item.getOffsetHr());
+                if (d <= nearest) {
+                    if (d < nearest) {
+                        nearest = d;
+                        matches.clear();
+                    }
+                    matches.add(0, item);
+                }
             }
-            return retArray;
+            return matches.toArray(new TimeZoneItem[0]);
         }
 
         public List<TimeZoneItem> getValues()
