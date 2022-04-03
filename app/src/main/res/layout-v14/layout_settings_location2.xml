@@ -129,6 +129,12 @@
                         android:layout_gravity="center" />
                 </FrameLayout>
 
+                <ImageButton android:id="@+id/appwidget_location_add"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    style="@android:style/Widget.ActionButton"
+                    android:src="?attr/icActionNew"
+                    android:contentDescription="@string/configAction_addPlace" />
+
                 <ImageButton android:id="@+id/appwidget_location_edit"
                              android:layout_width="wrap_content" android:layout_height="wrap_content"
                              style="@android:style/Widget.ActionButton"
@@ -139,7 +145,6 @@
                              style="@android:style/Widget.ActionButton"
                              android:layout_width="wrap_content" android:layout_height="wrap_content"
                              android:src="?attr/icActionSave"
-                             android:visibility="gone"
                              android:contentDescription="@string/configAction_savePlace" />
 
             </LinearLayout>

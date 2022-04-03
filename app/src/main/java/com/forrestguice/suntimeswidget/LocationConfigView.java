@@ -214,7 +214,17 @@ public class LocationConfigView extends LinearLayout
     }
     public void setShouldCollapse(boolean value) {
         collapse = value;
-        // TODO
+    }
+
+    /**
+     * Property: showAddButton; the view shows an add button instead of an edit button.
+     */
+    private boolean showAddButton = false;
+    public boolean showAddButton() {
+        return showAddButton;
+    }
+    public void setShowAddButton(boolean value) {
+        showAddButton = value;
     }
 
     /**
@@ -265,6 +275,7 @@ public class LocationConfigView extends LinearLayout
 
                 autoButtonLayout.setVisibility(View.VISIBLE);
                 button_list.setVisibility(View.GONE);
+                button_add.setVisibility(View.GONE);
                 button_edit.setVisibility(View.GONE);
                 button_save.setVisibility(View.GONE);
                 button_cancel.setVisibility(View.GONE);
@@ -289,7 +300,8 @@ public class LocationConfigView extends LinearLayout
 
                 autoButtonLayout.setVisibility(View.GONE);
                 button_list.setVisibility(View.INVISIBLE);
-                button_edit.setVisibility(View.INVISIBLE);
+                button_add.setVisibility(showAddButton ? View.INVISIBLE : View.GONE);
+                button_edit.setVisibility(showAddButton ? View.GONE : View.INVISIBLE);
                 button_save.setVisibility(View.GONE);
                 button_cancel.setVisibility(View.GONE);
                 flipper2.setDisplayedChild(1);
@@ -314,6 +326,7 @@ public class LocationConfigView extends LinearLayout
 
                 autoButtonLayout.setVisibility(View.GONE);
                 button_list.setVisibility(View.GONE);
+                button_add.setVisibility(View.GONE);
                 button_edit.setVisibility(View.GONE);
                 button_save.setVisibility(View.VISIBLE);
                 button_cancel.setVisibility(View.VISIBLE);
@@ -339,7 +352,8 @@ public class LocationConfigView extends LinearLayout
 
                 autoButtonLayout.setVisibility(View.GONE);
                 button_list.setVisibility(View.VISIBLE);
-                button_edit.setVisibility(View.VISIBLE);
+                button_add.setVisibility(showAddButton ? View.VISIBLE : View.GONE);
+                button_edit.setVisibility(showAddButton ? View.GONE : View.VISIBLE);
                 button_save.setVisibility(View.GONE);
                 button_cancel.setVisibility(View.GONE);
                 flipper2.setDisplayedChild(1);
@@ -368,6 +382,7 @@ public class LocationConfigView extends LinearLayout
     private View detailsLayout;
 
     private ImageButton button_list;
+    private ImageButton button_add;
     private ImageButton button_edit;
     private ImageButton button_save;
     private ImageButton button_cancel;
@@ -551,6 +566,10 @@ public class LocationConfigView extends LinearLayout
         // custom mode: toggle edit mode
         button_edit = (ImageButton)findViewById(R.id.appwidget_location_edit);
         button_edit.setOnClickListener(onEditButtonClicked);
+
+        // custom mode: toggle edit mode (add)
+        button_add = (ImageButton)findViewById(R.id.appwidget_location_add);
+        button_add.setOnClickListener(onAddButtonClicked);
 
         // custom mode: save location
         button_save = (ImageButton)findViewById(R.id.appwidget_location_save);
@@ -1157,6 +1176,20 @@ public class LocationConfigView extends LinearLayout
         public void onClick(View view)
         {
             setMode(LocationViewMode.MODE_CUSTOM_EDIT);
+        }
+    };
+
+    /**
+     * the custom location add button has been clicked.
+     */
+    private View.OnClickListener onAddButtonClicked = new View.OnClickListener()
+    {
+        @Override
+        public void onClick(View view)
+        {
+            setMode(LocationViewMode.MODE_CUSTOM_EDIT);
+            text_locationName.selectAll();
+            text_locationName.requestFocus();
         }
     };
 

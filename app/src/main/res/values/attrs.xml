@@ -183,6 +183,7 @@
         <attr name="hideTitle" format="boolean" />
         <attr name="hideMode" format="boolean" />
         <attr name="collapse" format="boolean" />
+        <attr name="showAddButton" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="TimeZoneConfigDialog">

@@ -51,6 +51,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
     public static final String KEY_LOCATION_HIDETITLE = "hidetitle";
     public static final String KEY_LOCATION_HIDEMODE = "hidemode";
     public static final String KEY_LOCATION_COLLAPSE = "collapse";
+    public static final String KEY_LOCATION_SHOWADDBUTTON = "showaddbutton";
 
     public static final int REQUEST_LOCATION = 30;
 
@@ -64,6 +65,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         setHideMode(a.getBoolean(R.styleable.LocationConfigDialog_hideMode, hideMode));
         setHideTitle(a.getBoolean(R.styleable.LocationConfigDialog_hideTitle, hideTitle));
         setShouldCollapse(a.getBoolean(R.styleable.LocationConfigDialog_collapse, collapse));
+        setShowAddButton(a.getBoolean(R.styleable.LocationConfigDialog_showAddButton, showAddButton));
         a.recycle();
     }
 
@@ -145,6 +147,18 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         }
     }
     public boolean getHideTitle() { return hideTitle; }
+
+    /**
+     * Show / hide add button.
+     */
+    private boolean showAddButton;
+    public void setShowAddButton(boolean value) {
+        showAddButton = value;
+        if (dialogContent != null) {
+            dialogContent.setShowAddButton(showAddButton);
+        }
+    }
+    public boolean showAddButton() { return showAddButton; }
 
     /**
      * Show / hide the dialog header.
@@ -250,6 +264,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         dialogContent.setHideTitle(hideTitle);
         dialogContent.setHideMode(hideMode);
         dialogContent.setShouldCollapse(collapse);
+        dialogContent.setShowAddButton(showAddButton);
         dialogContent.init(myParent, false);
         dialogContent.setOnListButtonClicked(new View.OnClickListener() {
             @Override
@@ -322,6 +337,7 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
         bundle.putBoolean(KEY_LOCATION_HIDETITLE, hideTitle);
         bundle.putBoolean(KEY_LOCATION_HIDEMODE, hideMode);
         bundle.putBoolean(KEY_LOCATION_COLLAPSE, collapse);
+        bundle.putBoolean(KEY_LOCATION_SHOWADDBUTTON, showAddButton);
         if (dialogContent != null)
         {
             dialogContent.saveSettings(bundle);
@@ -342,6 +358,9 @@ public class LocationConfigDialog extends BottomSheetDialogFragment
 
         collapse = bundle.getBoolean(KEY_LOCATION_COLLAPSE);
         setShouldCollapse(collapse);
+
+        showAddButton = bundle.getBoolean(KEY_LOCATION_SHOWADDBUTTON);
+        setShowAddButton(showAddButton);
 
         if (dialogContent != null) {
             dialogContent.loadSettings(getActivity(), bundle);
