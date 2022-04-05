@@ -1924,7 +1924,11 @@ public class SuntimesActivity extends AppCompatActivity
 
         @Override
         public void onSunriseHeaderClick(CardAdapter adapter, int position) {
-            seekNextNote(SolarEvents.SUNRISE);
+            if (AppSettings.loadShowHeaderTextPref(SuntimesActivity.this) == AppSettings.HEADER_TEXT_AZIMUTH) {
+                onLightmapClick(adapter, position);
+            } else {
+                seekNextNote(SolarEvents.SUNRISE);
+            }
         }
         @Override
         public boolean onSunriseHeaderLongClick(CardAdapter adapter, int position) {
@@ -1934,7 +1938,11 @@ public class SuntimesActivity extends AppCompatActivity
 
         @Override
         public void onSunsetHeaderClick(CardAdapter adapter, int position) {
-            seekNextNote(SolarEvents.SUNSET);
+            if (AppSettings.loadShowHeaderTextPref(SuntimesActivity.this) == AppSettings.HEADER_TEXT_AZIMUTH) {
+                onLightmapClick(adapter, position);
+            } else {
+                seekNextNote(SolarEvents.SUNSET);
+            }
         }
         @Override
         public boolean onSunsetHeaderLongClick(CardAdapter adapter, int position) {
