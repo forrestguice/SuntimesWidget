@@ -586,15 +586,27 @@ public class SuntimesUtils
 
     public String calendarTime24HrString(Context context, @NonNull Calendar cal, boolean showSeconds)
     {
-        Locale locale = getLocale();
-        String format = (showSeconds ? strTimeVeryShortFormat24s : strTimeVeryShortFormat24);  // HH:mm or HH:mm:ss
-        SimpleDateFormat timeFormat = new SimpleDateFormat(format, locale);
-
         Date time = cal.getTime();
         applyTimeZone(time, cal.getTimeZone());
+        SimpleDateFormat timeFormat = initTimeFormat_24(showSeconds);
         timeFormat.setTimeZone(cal.getTimeZone());
         return timeFormat.format(time);
     }
+    private SimpleDateFormat initTimeFormat_24(boolean showSeconds)
+    {
+        if (showSeconds)
+        {
+            if (timeFormat_24s == null)
+                return (timeFormat_24s = new SimpleDateFormat(strTimeVeryShortFormat24s, getLocale()));
+            else return timeFormat_24s;
+
+        } else {
+            if (timeFormat_24 == null) {
+                return (timeFormat_24 = new SimpleDateFormat(strTimeVeryShortFormat24, getLocale()));
+            } else return timeFormat_24;
+        }
+    }
+    private SimpleDateFormat timeFormat_24, timeFormat_24s;
 
     /**
      * applyTimeZone
@@ -649,23 +661,35 @@ public class SuntimesUtils
         //   dansk               6.47 AM        11.46 PM           (da)
         //   norsk bokmal        6.47 a.m.      11.46 p.m.         (nb)
 
-        Locale locale = getLocale();
-
-        String format = (showSeconds ? strTimeVeryShortFormat12s : strTimeVeryShortFormat12);  // h:mm or h:mm:ss
-        SimpleDateFormat timeFormat = new SimpleDateFormat(format, locale);
+        SimpleDateFormat timeFormat = initTimeFormat_12(showSeconds);
         timeFormat.setTimeZone(cal.getTimeZone());
-
-        //Log.d("DEBUG","TimeFormat: " + timeFormat.toPattern() + " (" + locale.toString() + ")");
-
-        SimpleDateFormat suffixFormat = new SimpleDateFormat(strTimeSuffixFormat, locale);  // a
-        suffixFormat.setTimeZone(cal.getTimeZone());
+        timeFormat_12_suffix.setTimeZone(cal.getTimeZone());
 
         Date time = cal.getTime();
         applyTimeZone(time, cal.getTimeZone());
-        TimeDisplayText retValue = new TimeDisplayText(timeFormat.format(time), "", suffixFormat.format(time));
+        TimeDisplayText retValue = new TimeDisplayText(timeFormat.format(time), "", timeFormat_12_suffix.format(time));
         retValue.setRawValue(cal.getTimeInMillis());
         return retValue;
     }
+
+    private SimpleDateFormat initTimeFormat_12(boolean showSeconds)
+    {
+        if (timeFormat_12_suffix == null) {
+            timeFormat_12_suffix = new SimpleDateFormat(strTimeSuffixFormat, getLocale());  // a
+        }
+        if (showSeconds)
+        {
+            if (timeFormat_12s == null)
+                return (timeFormat_12s = new SimpleDateFormat(strTimeVeryShortFormat12s, getLocale()));
+            else return timeFormat_12s;
+
+        } else {
+            if (timeFormat_12 == null) {
+                return (timeFormat_12 = new SimpleDateFormat(strTimeVeryShortFormat12, getLocale()));
+            } else return timeFormat_12;
+        }
+    }
+    private SimpleDateFormat timeFormat_12, timeFormat_12s, timeFormat_12_suffix;
 
     public String calendarTime12HrString(Context context, @NonNull Calendar cal)
     {
