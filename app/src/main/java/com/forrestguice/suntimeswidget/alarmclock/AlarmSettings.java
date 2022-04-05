@@ -18,15 +18,20 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.annotation.TargetApi;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.provider.OpenableColumns;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 
@@ -227,6 +232,39 @@ public class AlarmSettings
         return ringtoneName;
     }
 
+    public static String getRingtoneTitle(@NonNull Context context, @NonNull Uri uri, @NonNull Ringtone ringtone, boolean isAudioFile)
+    {
+        String ringtoneTitle = ringtone.getTitle(context);
+        ringtone.stop();
+
+        String retValue = ringtoneTitle;
+        if (isAudioFile)
+        {
+            Cursor cursor = null;
+            try {
+                ContentResolver resolver = context.getContentResolver();
+                cursor = resolver.query(uri, null, null, null, null);
+                if (cursor != null) {
+                    cursor.moveToFirst();
+                    retValue = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
+                    cursor.close();
+                }
+
+            } catch (IllegalArgumentException e) {
+                String[] filePath = ringtoneTitle.split("/");
+                String fileName = filePath[filePath.length - 1];
+                retValue = fileName == null ? null
+                        : ((fileName.contains(".")) ? fileName.substring(0, fileName.lastIndexOf(".")) : fileName);
+
+            } finally {
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }
+        }
+        return retValue;
+    }
+
     public static Uri getDefaultRingtoneUri(Context context, AlarmClockItem.AlarmType type) {
         return getDefaultRingtoneUri(context, type, false);
     }
@@ -299,6 +337,5 @@ public class AlarmSettings
             } else return false;
         }
     }
-
 
 }
