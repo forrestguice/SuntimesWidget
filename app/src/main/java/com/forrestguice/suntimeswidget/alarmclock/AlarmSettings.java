@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2019 Forrest Guice
+    Copyright (C) 2018-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -20,12 +20,17 @@ package com.forrestguice.suntimeswidget.alarmclock;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.icu.text.NumberFormat;
+import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+
+import com.forrestguice.suntimeswidget.R;
+
+import java.lang.ref.WeakReference;
 
 /**
  * AlarmSettings
@@ -57,6 +62,14 @@ public class AlarmSettings
 
     public static final String PREF_KEY_ALARM_AUTOVIBRATE = "app_alarms_autovibrate";
     public static final boolean PREF_DEF_ALARM_AUTOVIBRATE = false;
+
+    public static final String PREF_KEY_ALARM_RINGTONE_URI_ALARM = "app_alarms_default_alarm_ringtoneuri";     // cached RingtoneManager.getActualDefaultRingtoneUri
+    public static final String PREF_KEY_ALARM_RINGTONE_NAME_ALARM = "app_alarms_default_alarm_ringtoneuri";
+
+    public static final String PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION = "app_alarms_default_notification_ringtoneuri";
+    public static final String PREF_KEY_ALARM_RINGTONE_NAME_NOTIFICATION = "app_alarms_default_notification_ringtoneuri";
+
+    public static final String VALUE_RINGTONE_DEFAULT = "default";
 
     public static final String PREF_KEY_ALARM_ALLRINGTONES = "app_alarms_allringtones";
     public static final boolean PREF_DEF_ALARM_ALLRINGTONES = false;
@@ -180,18 +193,6 @@ public class AlarmSettings
         return prefs.getBoolean(PREF_KEY_ALARM_ALLRINGTONES, PREF_DEF_ALARM_ALLRINGTONES);
     }
 
-    public static Uri getDefaultRingtoneUri(Context context, AlarmClockItem.AlarmType type)
-    {
-        switch (type)
-        {
-            case ALARM:
-                return RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_ALARM);
-            case NOTIFICATION:
-            default:
-                return RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_NOTIFICATION);
-        }
-    }
-
     public static long loadPrefAlarmFadeIn(Context context)
     {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -215,5 +216,89 @@ public class AlarmSettings
         long retValue = prefs.getLong(PREF_KEY_ALARM_UPCOMING_ALARMID, -1);
         return (retValue != -1) ? retValue : null;
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static String getRingtoneName(Context context, Uri ringtoneUri)
+    {
+        Ringtone ringtone = RingtoneManager.getRingtone(context, ringtoneUri);      // TODO: getRingtone takes up to 100ms!
+        String ringtoneName = ringtone.getTitle(context);
+        ringtone.stop();
+        return ringtoneName;
+    }
+
+    public static Uri getDefaultRingtoneUri(Context context, AlarmClockItem.AlarmType type) {
+        return getDefaultRingtoneUri(context, type, false);
+    }
+    public static Uri getDefaultRingtoneUri(Context context, AlarmClockItem.AlarmType type, boolean resolveDefaults)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String uriString = prefs.getString((type == AlarmClockItem.AlarmType.ALARM) ? PREF_KEY_ALARM_RINGTONE_URI_ALARM : PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION, VALUE_RINGTONE_DEFAULT);
+        if (resolveDefaults && VALUE_RINGTONE_DEFAULT.equals(uriString)) {
+            return setDefaultRingtone(context, type);
+        } else return (uriString != null ? Uri.parse(uriString) : Uri.parse(VALUE_RINGTONE_DEFAULT));
+    }
+    public static String getDefaultRingtoneName(Context context, AlarmClockItem.AlarmType type)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString((type == AlarmClockItem.AlarmType.ALARM) ? PREF_KEY_ALARM_RINGTONE_NAME_ALARM : PREF_KEY_ALARM_RINGTONE_NAME_NOTIFICATION, context.getString(R.string.configLabel_tagDefault));
+    }
+
+    public static Uri setDefaultRingtone(Context context, AlarmClockItem.AlarmType type)
+    {
+        Uri uri;
+        String key_uri, key_name;
+        switch (type)
+        {
+            case ALARM:
+                uri = RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_ALARM);
+                key_uri = PREF_KEY_ALARM_RINGTONE_URI_ALARM;
+                key_name = PREF_KEY_ALARM_RINGTONE_NAME_ALARM;
+                break;
+            case NOTIFICATION:
+            default:
+                uri = RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_NOTIFICATION);
+                key_uri = PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION;
+                key_name = PREF_KEY_ALARM_RINGTONE_NAME_NOTIFICATION;
+                break;
+        }
+
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putString(key_uri, uri.toString());
+        prefs.putString(key_name, getRingtoneName(context, uri));
+        prefs.apply();
+        return uri;
+    }
+
+
+    public static void setDefaultRingtoneUris(Context context)
+    {
+        CacheDefaultRingtoneTask task = new CacheDefaultRingtoneTask(context);
+        task.execute(AlarmClockItem.AlarmType.ALARM, AlarmClockItem.AlarmType.NOTIFICATION);
+    }
+
+    /**
+     * CacheDefaultRingtoneTask
+     */
+    public static class CacheDefaultRingtoneTask extends AsyncTask<AlarmClockItem.AlarmType, Void, Boolean>
+    {
+        WeakReference<Context> contextRef;
+        public CacheDefaultRingtoneTask(Context context) {
+            contextRef = new WeakReference<>(context);
+        }
+
+        @Override
+        protected Boolean doInBackground(AlarmClockItem.AlarmType... types)
+        {
+            Context context = contextRef.get();
+            if (context != null) {
+                for (AlarmClockItem.AlarmType type : types) {
+                    setDefaultRingtone(context, ((type != null) ? type : AlarmClockItem.AlarmType.NOTIFICATION));
+                }
+                return true;
+            } else return false;
+        }
+    }
+
 
 }

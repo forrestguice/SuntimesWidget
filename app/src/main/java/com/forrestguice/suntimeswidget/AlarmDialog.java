@@ -670,7 +670,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
     }
 
     protected AlarmClockItem createAlarmItem() {
-        return AlarmListDialog.createAlarm(getActivity(), AlarmClockItem.AlarmType.ALARM, "", getChoice(), getLocation(), -1L, -1, -1, null, AlarmSettings.loadPrefVibrateDefault(getActivity()), AlarmSettings.getDefaultRingtoneUri(getActivity(), AlarmClockItem.AlarmType.ALARM), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
+        return AlarmListDialog.createAlarm(getActivity(), AlarmClockItem.AlarmType.ALARM, "", getChoice(), getLocation(), -1L, -1, -1, null, AlarmSettings.loadPrefVibrateDefault(getActivity()), AlarmSettings.getDefaultRingtoneUri(getActivity(), AlarmClockItem.AlarmType.ALARM), AlarmSettings.getDefaultRingtoneName(getActivity(), AlarmClockItem.AlarmType.ALARM), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
 
     private View.OnClickListener onLocationClicked = new View.OnClickListener() {
