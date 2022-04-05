@@ -944,7 +944,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             timezone = dialog.getTimeZone();
             event = null;
         }
-        return AlarmListDialog.createAlarm(dialog.getActivity(), type, "", event, dialog.getLocation(), date, hour, minute, timezone, AlarmSettings.loadPrefVibrateDefault(dialog.getActivity()), AlarmSettings.getDefaultRingtoneUri(dialog.getActivity(), type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
+        return AlarmListDialog.createAlarm(dialog.getActivity(), type, "", event, dialog.getLocation(), date, hour, minute, timezone, AlarmSettings.loadPrefVibrateDefault(dialog.getActivity()), AlarmSettings.getDefaultRingtoneUri(dialog.getActivity(), type), AlarmSettings.getDefaultRingtoneName(dialog.getActivity(), type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
 
     public static void updateAlarmItem(AlarmCreateDialog dialog, AlarmClockItem item)

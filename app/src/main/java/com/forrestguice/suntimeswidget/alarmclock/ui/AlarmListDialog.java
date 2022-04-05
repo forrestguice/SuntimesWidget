@@ -109,6 +109,7 @@ public class AlarmListDialog extends DialogFragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedState)
     {
+        AlarmSettings.setDefaultRingtoneUris(getActivity());
         ContextThemeWrapper contextWrapper = new ContextThemeWrapper(getActivity(), AppSettings.loadTheme(getContext()));
         View content = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_alarmlist, parent, false);
 
@@ -352,9 +353,9 @@ public class AlarmListDialog extends DialogFragment
     }
     public static final int UNDO_DELETE_MILLIS = 8000;
 
-    public AlarmClockItem createAlarm(final Context context, AlarmClockItem.AlarmType type, String label, String event, Location location, long date, int hour, int minute, String timezone, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays, boolean addToDatabase)
+    public AlarmClockItem createAlarm(final Context context, AlarmClockItem.AlarmType type, String label, String event, Location location, long date, int hour, int minute, String timezone, boolean vibrate, Uri ringtoneUri, String ringtoneName, ArrayList<Integer> repetitionDays, boolean addToDatabase)
     {
-        final AlarmClockItem alarm = createAlarm(context, type, label, event, location, date, hour, minute, timezone, vibrate, ringtoneUri, repetitionDays);
+        final AlarmClockItem alarm = createAlarm(context, type, label, event, location, date, hour, minute, timezone, vibrate, ringtoneUri, ringtoneName, repetitionDays);
         if (addToDatabase) {
             addAlarm(context, alarm);
         }
@@ -362,10 +363,10 @@ public class AlarmListDialog extends DialogFragment
     }
 
     public static AlarmClockItem createAlarm(final Context context, AlarmClockItem.AlarmType type, String label, @NonNull String event, @NonNull Location location) {
-        return createAlarm(context, type, label, event, location, -1L, -1, -1, null, AlarmSettings.loadPrefVibrateDefault(context), AlarmSettings.getDefaultRingtoneUri(context, type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
+        return createAlarm(context, type, label, event, location, -1L, -1, -1, null, AlarmSettings.loadPrefVibrateDefault(context), AlarmSettings.getDefaultRingtoneUri(context, type), AlarmSettings.getDefaultRingtoneName(context, type), AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS);
     }
 
-    public static AlarmClockItem createAlarm(final Context context, AlarmClockItem.AlarmType type, String label, String event, Location location, long date, int hour, int minute, String timezone, boolean vibrate, Uri ringtoneUri, ArrayList<Integer> repetitionDays)
+    public static AlarmClockItem createAlarm(final Context context, AlarmClockItem.AlarmType type, String label, String event, Location location, long date, int hour, int minute, String timezone, boolean vibrate, Uri ringtoneUri, String ringtoneName, ArrayList<Integer> repetitionDays)
     {
         final AlarmClockItem alarm = new AlarmClockItem();
         alarm.enabled = AlarmSettings.loadPrefAlarmAutoEnable(context);
@@ -383,9 +384,12 @@ public class AlarmListDialog extends DialogFragment
         alarm.ringtoneURI = (ringtoneUri != null ? ringtoneUri.toString() : null);
         if (alarm.ringtoneURI != null)
         {
-            Ringtone ringtone = RingtoneManager.getRingtone(context, ringtoneUri);     // TODO: optimize.. getRingtone takes up to 100ms!
-            alarm.ringtoneName = ringtone.getTitle(context);                           // another ~10ms
-            ringtone.stop();                                                           // another ~30ms
+            if (alarm.ringtoneURI.equals(AlarmSettings.VALUE_RINGTONE_DEFAULT)) {
+                alarm.ringtoneURI = AlarmSettings.getDefaultRingtoneUri(context, type).toString();
+                alarm.ringtoneName = AlarmSettings.getDefaultRingtoneName(context, type);
+            } else {
+                alarm.ringtoneName = ringtoneName;
+            }
         }
 
         alarm.setState(alarm.enabled ? AlarmState.STATE_NONE : AlarmState.STATE_DISABLED);

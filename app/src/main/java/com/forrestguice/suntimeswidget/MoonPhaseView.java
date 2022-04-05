@@ -282,6 +282,7 @@ public class MoonPhaseView extends LinearLayout
                 illumNote = (context == null ? illum : context.getString(R.string.moon_illumination, illum));
 
             } else {
+                boolean sharedNoon = (data.getLunarNoonToday().getTimeInMillis() == data.getLunarNoonTomorrow().getTimeInMillis());
                 String illumTime;
                 if (tomorrowMode)
                 {
@@ -290,9 +291,11 @@ public class MoonPhaseView extends LinearLayout
 
                 } else {
                     illum = formatter.format(data.getMoonIlluminationToday());
-                    illumTime = utils.calendarTimeShortDisplayString(context, data.getLunarNoonToday()).toString();
+                    illumTime = (sharedNoon)
+                            ? utils.calendarDateTimeDisplayString(context, data.getLunarNoonToday()).toString()
+                            : utils.calendarTimeShortDisplayString(context, data.getLunarNoonToday()).toString();
                 }
-                illumNote = (context == null ? illum : context.getString(R.string.moon_illumination_at, illum, illumTime));
+                illumNote = (context == null ? illum : context.getString(sharedNoon ? R.string.moon_illumination : R.string.moon_illumination_at, illum, illumTime));
             }
 
             SpannableString illumNoteSpan = SuntimesUtils.createColorSpan(null, illumNote, illum, noteColor);

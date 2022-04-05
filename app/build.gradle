@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android
 {
     compileSdkVersion 25
-    buildToolsVersion '27.0.3'
+    buildToolsVersion '28.0.2'
 
     sourceSets
     {
@@ -23,8 +23,8 @@ android
         minSdkVersion 10
         //noinspection ExpiredTargetSdkVersion,OldTargetApi
         targetSdkVersion 25
-        versionCode 85
-        versionName "0.14.1"
+        versionCode 86
+        versionName "0.14.2"
 
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
 

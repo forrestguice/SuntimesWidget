@@ -372,9 +372,17 @@ public class LocationConfigView extends LinearLayout
         public void updateUI(Location... locations)
         {
             DecimalFormat formatter = com.forrestguice.suntimeswidget.calculator.core.Location.decimalDegreesFormatter();
-            text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
-            text_locationLon.setText( formatter.format(locations[0].getLongitude()) );
-            text_locationAlt.setText( getAltitudeString(locations[0], formatter, WidgetSettings.loadLengthUnitsPref(getContext(), appWidgetId)) );
+            if (locations != null && locations[0] != null)
+            {
+                text_locationLat.setText( formatter.format(locations[0].getLatitude()) );
+                text_locationLon.setText( formatter.format(locations[0].getLongitude()) );
+                text_locationAlt.setText( getAltitudeString(locations[0], formatter, WidgetSettings.loadLengthUnitsPref(getContext(), appWidgetId)) );
+
+            } else {
+                text_locationLat.setText("");
+                text_locationLon.setText("");
+                text_locationAlt.setText("");
+            }
         }
 
         @Override

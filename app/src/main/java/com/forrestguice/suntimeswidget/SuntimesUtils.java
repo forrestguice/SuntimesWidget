@@ -22,6 +22,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.LightingColorFilter;
@@ -154,45 +155,46 @@ public class SuntimesUtils
         is24 = (mode == TimeFormatMode.MODE_SYSTEM || mode == TimeFormatMode.MODE_SUNTIMES) ? android.text.format.DateFormat.is24HourFormat(context)
                                                     : (mode == TimeFormatMode.MODE_24HR);
 
-        strTimeShorter = context.getString(R.string.delta_day_shorter);
-        strTimeLonger = context.getString(R.string.delta_day_longer);
-        strYears = context.getString(R.string.delta_years);
-        strWeeks = context.getString(R.string.delta_weeks);
-        strDays = context.getString(R.string.delta_days);
-        strHours = context.getString(R.string.delta_hours);
-        strMinutes = context.getString(R.string.delta_minutes);
-        strSeconds = context.getString(R.string.delta_seconds);
+        Resources res = context.getResources();
+        strTimeShorter = res.getString(R.string.delta_day_shorter);
+        strTimeLonger = res.getString(R.string.delta_day_longer);
+        strYears = res.getString(R.string.delta_years);
+        strWeeks = res.getString(R.string.delta_weeks);
+        strDays = res.getString(R.string.delta_days);
+        strHours = res.getString(R.string.delta_hours);
+        strMinutes = res.getString(R.string.delta_minutes);
+        strSeconds = res.getString(R.string.delta_seconds);
 
-        strAltSymbol = context.getString(R.string.widgetLabel_altitude_symbol);
-        strRaSymbol = context.getString(R.string.widgetLabel_rightAscension_symbol);
-        strDecSymbol = context.getString(R.string.widgetLabel_declination_symbol);
+        strAltSymbol = res.getString(R.string.widgetLabel_altitude_symbol);
+        strRaSymbol = res.getString(R.string.widgetLabel_rightAscension_symbol);
+        strDecSymbol = res.getString(R.string.widgetLabel_declination_symbol);
 
-        strDegreesFormat = context.getString(R.string.degrees_format);
-        strDirectionFormat = context.getString(R.string.direction_format);
-        strElevationFormat = context.getString(R.string.elevation_format);
-        strRaFormat = context.getString(R.string.rightascension_format);
-        strDeclinationFormat = context.getString(R.string.declination_format);
-        strDistanceFormat = context.getString(R.string.distance_format);
+        strDegreesFormat = res.getString(R.string.degrees_format);
+        strDirectionFormat = res.getString(R.string.direction_format);
+        strElevationFormat = res.getString(R.string.elevation_format);
+        strRaFormat = res.getString(R.string.rightascension_format);
+        strDeclinationFormat = res.getString(R.string.declination_format);
+        strDistanceFormat = res.getString(R.string.distance_format);
 
-        strTimeDeltaFormat = context.getString(R.string.delta_format);
-        strTimeVeryShortFormat12 = context.getString(R.string.time_format_12hr_veryshort);
-        strTimeVeryShortFormat24 = context.getString(R.string.time_format_24hr_veryshort);
-        strTimeVeryShortFormat12s = context.getString(R.string.time_format_12hr_veryshort_withseconds);
-        strTimeVeryShortFormat24s = context.getString(R.string.time_format_24hr_veryshort_withseconds);
-        strTimeNone = context.getString(R.string.time_none);
-        strTimeLoading = context.getString(R.string.time_loading);
+        strTimeDeltaFormat = res.getString(R.string.delta_format);
+        strTimeVeryShortFormat12 = res.getString(R.string.time_format_12hr_veryshort);
+        strTimeVeryShortFormat24 = res.getString(R.string.time_format_24hr_veryshort);
+        strTimeVeryShortFormat12s = res.getString(R.string.time_format_12hr_veryshort_withseconds);
+        strTimeVeryShortFormat24s = res.getString(R.string.time_format_24hr_veryshort_withseconds);
+        strTimeNone = res.getString(R.string.time_none);
+        strTimeLoading = res.getString(R.string.time_loading);
 
-        strDateYearFormat = context.getString(R.string.dateyear_format_short);
-        strDateShortFormat = context.getString(R.string.date_format_short);
-        strDateLongFormat = context.getString(R.string.date_format_long);
+        strDateYearFormat = res.getString(R.string.dateyear_format_short);
+        strDateShortFormat = res.getString(R.string.date_format_short);
+        strDateLongFormat = res.getString(R.string.date_format_long);
 
-        strTimeShortFormat12 = context.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12, strTimeSuffixFormat);        //String timeFormat = (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12);
-        strDateTimeShortFormat = dateTimeFormatShort(context, is24, false);  //  context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormat);
-        strDateTimeLongFormat = dateTimeFormatLong(context, is24, false);    // context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormat);
+        strTimeShortFormat12 = res.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12, strTimeSuffixFormat);        //String timeFormat = (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12);
+        strDateTimeShortFormat = dateTimeFormatShort(res, is24, false);  //  context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormat);
+        strDateTimeLongFormat = dateTimeFormatLong(res, is24, false);    // context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormat);
 
-        strTimeShortFormat12s = context.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12s, strTimeSuffixFormat);        //String timeFormatSec = (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s);
-        strDateTimeShortFormatSec = dateTimeFormatShort(context, is24, true);  // context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormatSec);
-        strDateTimeLongFormatSec = dateTimeFormatLong(context, is24, true);    // context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormatSec);
+        strTimeShortFormat12s = res.getString(R.string.time_format_12hr_short, strTimeVeryShortFormat12s, strTimeSuffixFormat);        //String timeFormatSec = (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s);
+        strDateTimeShortFormatSec = dateTimeFormatShort(res, is24, true);  // context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormatSec);
+        strDateTimeLongFormatSec = dateTimeFormatLong(res, is24, true);    // context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormatSec);
 
         CardinalDirection.initDisplayStrings(context);
 
@@ -202,15 +204,15 @@ public class SuntimesUtils
         //Log.d("DEBUG", "SuntimesUtils initialized: " + initCount + " :: " + ((bench_end - bench_start) / 1000000.0) + " ms");
     }
 
-    public static String dateTimeFormatShort(Context context, boolean is24, boolean showSeconds)
+    public static String dateTimeFormatShort(Resources res, boolean is24, boolean showSeconds)
     {
         String timeFormat = (showSeconds ? (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s) : (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12));
-        return context.getString(R.string.datetime_format_short, strDateShortFormat, timeFormat);
+        return res.getString(R.string.datetime_format_short, strDateShortFormat, timeFormat);
     }
-    public static String dateTimeFormatLong(Context context, boolean is24, boolean showSeconds)
+    public static String dateTimeFormatLong(Resources res, boolean is24, boolean showSeconds)
     {
         String timeFormat = (showSeconds ? (is24 ? strTimeVeryShortFormat24s : strTimeShortFormat12s) : (is24 ? strTimeVeryShortFormat24 : strTimeShortFormat12));
-        return context.getString(R.string.datetime_format_long, strDateLongFormat, timeFormat);
+        return res.getString(R.string.datetime_format_long, strDateLongFormat, timeFormat);
     }
 
     public static boolean isInitialized()
@@ -319,8 +321,9 @@ public class SuntimesUtils
 
         public static void initDisplayStrings( Context context )
         {
-            String[] modes_short = context.getResources().getStringArray(R.array.directions_short);
-            String[] modes_long = context.getResources().getStringArray(R.array.directions_long);
+            Resources res = context.getResources();
+            String[] modes_short = res.getStringArray(R.array.directions_short);
+            String[] modes_long = res.getStringArray(R.array.directions_long);
             if (modes_long.length != modes_short.length)
             {
                 Log.e("initDisplayStrings", "The size of directions_short and solarevents_long DOES NOT MATCH!");
@@ -583,15 +586,27 @@ public class SuntimesUtils
 
     public String calendarTime24HrString(Context context, @NonNull Calendar cal, boolean showSeconds)
     {
-        Locale locale = getLocale();
-        String format = (showSeconds ? strTimeVeryShortFormat24s : strTimeVeryShortFormat24);  // HH:mm or HH:mm:ss
-        SimpleDateFormat timeFormat = new SimpleDateFormat(format, locale);
-
         Date time = cal.getTime();
         applyTimeZone(time, cal.getTimeZone());
+        SimpleDateFormat timeFormat = initTimeFormat_24(showSeconds);
         timeFormat.setTimeZone(cal.getTimeZone());
         return timeFormat.format(time);
     }
+    private SimpleDateFormat initTimeFormat_24(boolean showSeconds)
+    {
+        if (showSeconds)
+        {
+            if (timeFormat_24s == null)
+                return (timeFormat_24s = new SimpleDateFormat(strTimeVeryShortFormat24s, getLocale()));
+            else return timeFormat_24s;
+
+        } else {
+            if (timeFormat_24 == null) {
+                return (timeFormat_24 = new SimpleDateFormat(strTimeVeryShortFormat24, getLocale()));
+            } else return timeFormat_24;
+        }
+    }
+    private SimpleDateFormat timeFormat_24, timeFormat_24s;
 
     /**
      * applyTimeZone
@@ -646,23 +661,35 @@ public class SuntimesUtils
         //   dansk               6.47 AM        11.46 PM           (da)
         //   norsk bokmal        6.47 a.m.      11.46 p.m.         (nb)
 
-        Locale locale = getLocale();
-
-        String format = (showSeconds ? strTimeVeryShortFormat12s : strTimeVeryShortFormat12);  // h:mm or h:mm:ss
-        SimpleDateFormat timeFormat = new SimpleDateFormat(format, locale);
+        SimpleDateFormat timeFormat = initTimeFormat_12(showSeconds);
         timeFormat.setTimeZone(cal.getTimeZone());
-
-        //Log.d("DEBUG","TimeFormat: " + timeFormat.toPattern() + " (" + locale.toString() + ")");
-
-        SimpleDateFormat suffixFormat = new SimpleDateFormat(strTimeSuffixFormat, locale);  // a
-        suffixFormat.setTimeZone(cal.getTimeZone());
+        timeFormat_12_suffix.setTimeZone(cal.getTimeZone());
 
         Date time = cal.getTime();
         applyTimeZone(time, cal.getTimeZone());
-        TimeDisplayText retValue = new TimeDisplayText(timeFormat.format(time), "", suffixFormat.format(time));
+        TimeDisplayText retValue = new TimeDisplayText(timeFormat.format(time), "", timeFormat_12_suffix.format(time));
         retValue.setRawValue(cal.getTimeInMillis());
         return retValue;
     }
+
+    private SimpleDateFormat initTimeFormat_12(boolean showSeconds)
+    {
+        if (timeFormat_12_suffix == null) {
+            timeFormat_12_suffix = new SimpleDateFormat(strTimeSuffixFormat, getLocale());  // a
+        }
+        if (showSeconds)
+        {
+            if (timeFormat_12s == null)
+                return (timeFormat_12s = new SimpleDateFormat(strTimeVeryShortFormat12s, getLocale()));
+            else return timeFormat_12s;
+
+        } else {
+            if (timeFormat_12 == null) {
+                return (timeFormat_12 = new SimpleDateFormat(strTimeVeryShortFormat12, getLocale()));
+            } else return timeFormat_12;
+        }
+    }
+    private SimpleDateFormat timeFormat_12, timeFormat_12s, timeFormat_12_suffix;
 
     public String calendarTime12HrString(Context context, @NonNull Calendar cal)
     {
@@ -811,7 +838,7 @@ public class SuntimesUtils
         Locale locale = getLocale();
         SimpleDateFormat dateTimeFormat;
         if (showTime) {
-            dateTimeFormat = new SimpleDateFormat((showYear ? dateTimeFormatLong(context, formatIs24, showSeconds) : dateTimeFormatShort(context, formatIs24, showSeconds)), locale);
+            dateTimeFormat = new SimpleDateFormat((showYear ? dateTimeFormatLong(context.getResources(), formatIs24, showSeconds) : dateTimeFormatShort(context.getResources(), formatIs24, showSeconds)), locale);
         } else dateTimeFormat = new SimpleDateFormat((showYear ? strDateLongFormat : strDateShortFormat), locale);
         //Log.d("DEBUG","DateTimeFormat: " + dateTimeFormat.toPattern() + " (" + locale.toString() + ")");
 

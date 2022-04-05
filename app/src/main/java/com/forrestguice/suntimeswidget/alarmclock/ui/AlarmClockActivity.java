@@ -251,6 +251,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 ArrayList<Integer> param_days = AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS;
                 boolean param_vibrate = AlarmSettings.loadPrefVibrateDefault(this);
                 Uri param_ringtoneUri = AlarmSettings.getDefaultRingtoneUri(this, param_type);
+                String param_ringtoneName = AlarmSettings.getDefaultRingtoneName(this, param_type);
                 if (Build.VERSION.SDK_INT >= 19)
                 {
                     param_vibrate = intent.getBooleanExtra(AlarmClock.EXTRA_VIBRATE, param_vibrate);
@@ -258,6 +259,7 @@ public class AlarmClockActivity extends AppCompatActivity
                     String param_ringtoneUriString = intent.getStringExtra(AlarmClock.EXTRA_RINGTONE);
                     if (param_ringtoneUriString != null) {
                         param_ringtoneUri = (param_ringtoneUriString.equals(AlarmClock.VALUE_RINGTONE_SILENT) ? null : Uri.parse(param_ringtoneUriString));
+                        param_ringtoneName = AlarmSettings.getRingtoneName(context, param_ringtoneUri);    // TODO: may block
                     }
 
                     ArrayList<Integer> repeatOnDays = intent.getIntegerArrayListExtra(AlarmClock.EXTRA_DAYS);
@@ -280,9 +282,9 @@ public class AlarmClockActivity extends AppCompatActivity
                     param_skipUI = intent.getBooleanExtra(AlarmClock.EXTRA_SKIP_UI, false);
                 }
                 if (param_skipUI) {   // TODO: support date
-                    list.createAlarm(context, param_type, param_label, param_event, param_location, -1L, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_days, true);
+                    list.createAlarm(context, param_type, param_label, param_event, param_location, -1L, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_ringtoneName, param_days, true);
                 } else {
-                    AlarmClockItem item = AlarmListDialog.createAlarm(context, param_type, param_label, param_event, param_location, -1L, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_days);
+                    AlarmClockItem item = AlarmListDialog.createAlarm(context, param_type, param_label, param_event, param_location, -1L, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_ringtoneName, param_days);
                     AlarmNotifications.updateAlarmTime(context, item);
                     showAlarmEditActivity(item, null, REQUEST_ADDALARM, true);
                 }

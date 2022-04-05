@@ -692,9 +692,12 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         alarm.ringtoneURI = (ringtoneUri != null ? ringtoneUri.toString() : null);
         if (alarm.ringtoneURI != null)
         {
-            Ringtone ringtone = RingtoneManager.getRingtone(this, ringtoneUri);
-            alarm.ringtoneName = ringtone.getTitle(this);
-            ringtone.stop();
+            if (alarm.ringtoneURI.equals(AlarmSettings.VALUE_RINGTONE_DEFAULT)) {
+                alarm.ringtoneURI = AlarmSettings.getDefaultRingtoneUri(this, type).toString();
+                alarm.ringtoneName = AlarmSettings.getDefaultRingtoneName(this, type);
+            } else {
+                alarm.ringtoneName = AlarmSettings.getRingtoneName(this, ringtoneUri);
+            }
         }
 
         alarm.setState(alarm.enabled ? AlarmState.STATE_NONE : AlarmState.STATE_DISABLED);
@@ -1334,7 +1337,7 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, item.type.getDisplayString());
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, AlarmSettings.getDefaultRingtoneUri(this, item.type));
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, AlarmSettings.setDefaultRingtone(this, item.type));   // setDefaultRingtone may block (potential ANR)
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (item.ringtoneURI != null ? Uri.parse(item.ringtoneURI) : null));
         t_selectedItem = item.rowID;
         startActivityForResult(intent, REQUEST_RINGTONE);

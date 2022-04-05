@@ -330,9 +330,7 @@ public class EquinoxDialog extends BottomSheetDialogFragment
         data.putExtra("mode", mode.name());
 
         Menu m = menu.getMenu();
-        for (int i=0; i<m.size(); i++) {
-            m.getItem(i).setIntent(data);
-        }
+        setDataToMenu(m, data);
 
         MenuItem addonSubmenuItem = m.findItem(R.id.addonSubMenu);
         if (addonSubmenuItem != null) {
@@ -341,6 +339,16 @@ public class EquinoxDialog extends BottomSheetDialogFragment
                 SuntimesUtils.forceActionBarIcons(addonSubmenuItem.getSubMenu());
                 MenuAddon.populateSubMenu(addonSubmenuItem, addonMenuItems, datetime);
             } //else addonSubmenuItem.setVisible(false);
+        }
+    }
+
+    private static void setDataToMenu(Menu m, Intent data)
+    {
+        if (m != null) {
+            for (int i = 0; i < m.size(); i++) {
+                m.getItem(i).setIntent(data);
+                setDataToMenu(m.getItem(i).getSubMenu(), data);
+            }
         }
     }
 

@@ -461,11 +461,15 @@ public class AlarmNotifications extends BroadcastReceiver
         Uri soundUri = ((alarm.ringtoneURI != null && !alarm.ringtoneURI.isEmpty()) ? Uri.parse(alarm.ringtoneURI) : null);
         if (soundUri != null && passesFilter)
         {
+            if (AlarmSettings.VALUE_RINGTONE_DEFAULT.equals(alarm.ringtoneURI)) {
+                soundUri = AlarmSettings.getDefaultRingtoneUri(context, alarm.type, true);
+            }
+
             try {
                 startAlert(context, soundUri, (alarm.type == AlarmClockItem.AlarmType.ALARM));
 
             } catch (IOException e) {    // fallback to default
-                Uri defaultUri = AlarmSettings.getDefaultRingtoneUri(context, alarm.type);
+                Uri defaultUri = AlarmSettings.getDefaultRingtoneUri(context, alarm.type, true);
                 try {
                     startAlert(context, defaultUri, (alarm.type == AlarmClockItem.AlarmType.ALARM));
                 } catch (IOException e1) {
@@ -1610,13 +1614,13 @@ public class AlarmNotifications extends BroadcastReceiver
                             public void onItemsLoaded(Long[] ids) {
                                 if (chained != null) {
                                     chained.onFinished(true, item);
-                                }    // the service continues running; items that are "soon" live in the notification tray
+                                } else stopSelf();
                             }
                         });
                     } else {
                         if (chained != null) {
                             chained.onFinished(true, item);
-                        }
+                        } else stopSelf();
                     }
                 }
             };

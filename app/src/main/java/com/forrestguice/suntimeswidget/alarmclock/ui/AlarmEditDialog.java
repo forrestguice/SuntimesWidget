@@ -48,6 +48,7 @@ import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 
 import java.util.Calendar;
@@ -95,6 +96,10 @@ public class AlarmEditDialog extends DialogFragment
 
     protected void bindItemToHolder(AlarmClockItem item)
     {
+        if (item != null && AlarmSettings.VALUE_RINGTONE_DEFAULT.equals(item.ringtoneURI)) {
+            item.ringtoneURI = AlarmSettings.getDefaultRingtoneUri(getActivity(), item.type).toString();
+            item.ringtoneName = AlarmSettings.getDefaultRingtoneName(getActivity(), item.type);
+        }
         if (itemView != null)
         {
             detachClickListeners(itemView);
