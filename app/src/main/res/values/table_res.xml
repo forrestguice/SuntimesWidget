@@ -9,6 +9,7 @@
     <dimen name="moonphase_column0_width">75dp</dimen>
 
     <dimen name="table_cell_spacing">10dp</dimen>     <!-- spacing between rows -->
+    <dimen name="table_cell_spacing_half">5dp</dimen>
     <integer name="table_weight0">9</integer>
     <integer name="table_weight1">1</integer>
 
