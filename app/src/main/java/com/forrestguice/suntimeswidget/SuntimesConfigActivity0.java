@@ -372,6 +372,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return supportedModes;
     }
 
+    @SuppressWarnings("ResourceType")
     protected void initViews(final Context context)
     {
         initToolbar(context);
