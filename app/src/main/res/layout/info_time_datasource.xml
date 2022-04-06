@@ -28,6 +28,7 @@
             android:background="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:paddingLeft="5dp" android:paddingRight="5dp"
             app:layout_constraintEnd_toEndOf="@+id/txt_datasource"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="spread"
@@ -84,10 +85,13 @@
             app:layout_constraintStart_toEndOf="@+id/layout_altitude"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginLeft="4dp" android:layout_marginStart="4dp"
-            android:layout_width="0dp" android:layout_height="wrap_content" android:gravity="center_vertical|end"
+            android:layout_marginTop="0dp" android:layout_marginBottom="0dp"
+            android:layout_marginLeft="0dp" android:paddingLeft="8dp"
+            android:layout_marginRight="0dp" android:paddingRight="8dp"
+            android:layout_width="0dp" android:layout_height="0dp" android:gravity="center_vertical|end"
             android:textColor="?attr/date_buttonSelector" android:textSize="10sp" android:textStyle="bold"
             tools:text="sunrisesunsetlib" tools:ignore="SmallSp"
+            android:background="?attr/selectableItemBackground"
             android:ellipsize="start" android:maxLines="2"
             app:layout_constraintHorizontal_weight="3"/>
 
