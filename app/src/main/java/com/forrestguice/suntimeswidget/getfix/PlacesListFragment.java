@@ -56,6 +56,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.BuildConfig;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -526,7 +527,7 @@ public class PlacesListFragment extends Fragment
             {
                 for (ResolveInfo resolveInfo : info)
                 {
-                    if (!TextUtils.equals(resolveInfo.activityInfo.packageName, "com.forrestguice.suntimeswidget"))
+                    if (!TextUtils.equals(resolveInfo.activityInfo.packageName, BuildConfig.APPLICATION_ID))
                     {
                         Intent geoIntent = new Intent(Intent.ACTION_VIEW);
                         geoIntent.setPackage(resolveInfo.activityInfo.packageName);

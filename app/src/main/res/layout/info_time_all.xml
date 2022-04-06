@@ -340,12 +340,19 @@
         <View
             android:id="@+id/table_rule"
             style="@style/SunsetTimeHorizontalRule"
-            android:layout_marginBottom="@dimen/table_cell_spacing"
             android:layout_marginTop="@dimen/table_cell_spacing"
+            android:padding="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
             app:layout_constraintTop_toBottomOf="@+id/text_time_label_official"
              />
+
+        <View android:id="@+id/table_rule1"
+            android:layout_width="0dp" android:layout_height="@dimen/table_cell_spacing_half"
+            android:layout_margin="0dp" android:padding="0dp"
+            app:layout_constraintStart_toStartOf="@+id/table_rule"
+            app:layout_constraintEnd_toEndOf="@+id/table_rule"
+            app:layout_constraintTop_toBottomOf="@+id/table_rule" />
 
 
 
@@ -353,11 +360,12 @@
         <TextView
             android:id="@+id/text_time_label_golden"
             style="@style/SunsetTimeTextView"
-            android:layout_marginBottom="@dimen/table_cell_spacing"
-            android:layout_marginTop="@dimen/table_cell_spacing"
+
+            android:layout_marginTop="0dp" android:paddingTop="@dimen/table_cell_spacing_half"
+            android:layout_marginBottom="0dp" android:paddingBottom="@dimen/table_cell_spacing_half"
             android:text="@string/timeMode_golden_short"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/table_rule"
+            app:layout_constraintTop_toBottomOf="@+id/table_rule1"
              />
 
         <TextView
@@ -384,8 +392,8 @@
         <TextView
             android:id="@+id/text_time_label_noon"
             style="@style/SunsetTimeTextView"
-            android:layout_marginBottom="@dimen/table_cell_spacing"
-            android:layout_marginTop="@dimen/table_cell_spacing"
+            android:layout_marginTop="0dp" android:paddingTop="@dimen/table_cell_spacing_half"
+            android:layout_marginBottom="0dp" android:paddingBottom="@dimen/table_cell_spacing_half"
             android:text="@string/timeMode_noon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_time_label_golden"
@@ -411,12 +419,20 @@
             app:layout_constraintEnd_toEndOf="@+id/header_time_sunset"
             tools:text="00:00 PM"/>
 
+        <View
+            android:id="@+id/noon_clickArea" android:orientation="horizontal"
+            android:layout_width="0dp" android:layout_height="0dp" android:elevation="2dp"
+            android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_time_label_noon"
+            app:layout_constraintBottom_toBottomOf="@+id/text_time_label_noon" />
+
         <!-- Moon -->
         <TextView
             android:id="@+id/text_time_label_moon"
             style="@style/SunsetTimeTextView"
-            android:layout_marginBottom="@dimen/table_cell_spacing"
-            android:layout_marginTop="@dimen/table_cell_spacing"
+            android:layout_marginTop="0dp" android:paddingTop="@dimen/table_cell_spacing_half"
+            android:layout_marginBottom="0dp" android:paddingBottom="0dp"
             android:text="@string/timeMode_moon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_time_label_noon" />

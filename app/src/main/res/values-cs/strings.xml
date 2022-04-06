@@ -1087,67 +1087,6 @@
     <string name="configActionDesc_actionList">Seznam akcí</string>
     <string name="configActionDesc_widgetList">Seznam widgetů</string>
 
-    <string-array name="tapActions_titles">    <!-- must be in same order as enum TapActions -->
-        <item>@string/configActionDesc_doNothing</item>
-        <item>@string/app_name</item>
-
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-        <item>@string/app_name</item>
-
-        <item>@string/configAction_showCalendar</item>
-        <item>@string/configAction_mapLocation</item>
-    </string-array>
-    <string-array name="tapActions_display">    <!-- must be in same order as enum TapActions -->
-        <item>@string/configActionDesc_doNothing</item>
-        <item>@string/configActionDesc_setAlarm</item>
-
-        <item>@string/configActionDesc_nextCard</item>
-        <item>@string/configActionDesc_prevCard</item>
-        <item>@string/configActionDesc_swapCards</item>
-        <item>@string/configActionDesc_showCard</item>
-
-        <item>@string/configActionDesc_nextNote</item>
-        <item>@string/configActionDesc_prevNote</item>
-        <item>@string/configActionDesc_resetNote</item>
-
-        <item>@string/configActionDesc_setDate</item>
-        <item>@string/configActionDesc_setLocation</item>
-        <item>@string/configActionDesc_setTimeZone</item>
-
-        <item>@string/configActionDesc_worldMap</item>
-        <item>@string/configActionDesc_equinoxDialog</item>
-        <item>@string/configActionDesc_moon</item>
-        <item>@string/configActionDesc_sunDialog</item>
-
-        <item>@string/configActionDesc_alarmList</item>
-        <item>@string/configActionDesc_themeList</item>
-        <item>@string/configActionDesc_actionList</item>
-        <item>@string/configActionDesc_widgetList</item>
-
-        <item>@string/configActionDesc_showCalendar</item>
-        <item>@string/configActionDesc_mapLocation</item>
-    </string-array>
-
     <!-- App Setting: time zone sort modes -->
     <string name="timezone_sort_byOffset">by offset</string>
     <string name="timezone_sort_byId">by id</string>

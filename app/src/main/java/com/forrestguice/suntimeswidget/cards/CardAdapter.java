@@ -290,6 +290,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         holder.sunriseHeader.setOnLongClickListener(onSunriseHeaderLongClick(position));
         holder.sunsetHeader.setOnClickListener(onSunsetHeaderClick(position));
         holder.sunsetHeader.setOnLongClickListener(onSunsetHeaderLongClick(position));
+        holder.noonClickArea.setOnClickListener(onNoonHeaderClick(position));
+        holder.noonClickArea.setOnLongClickListener(onNoonHeaderLongClick(position));
         holder.moonClickArea.setOnClickListener(onMoonHeaderClick(position));
         holder.moonClickArea.setOnLongClickListener(onMoonHeaderLongClick(position));
         holder.lightmapLayout.setOnClickListener(onLightmapClick(position));
@@ -306,6 +308,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
         holder.sunriseHeader.setOnLongClickListener(null);
         holder.sunsetHeader.setOnClickListener(null);
         holder.sunsetHeader.setOnLongClickListener(null);
+        holder.noonClickArea.setOnClickListener(null);
+        holder.noonClickArea.setOnLongClickListener(null);
         holder.moonClickArea.setOnClickListener(null);
         holder.moonClickArea.setOnLongClickListener(null);
         holder.lightmapLayout.setOnClickListener(null);
@@ -361,6 +365,23 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
             @Override
             public boolean onLongClick(View v) {
                 return adapterListener.onSunsetHeaderLongClick(CardAdapter.this, position);
+            }
+        };
+    }
+    private View.OnClickListener onNoonHeaderClick(final int position) {
+        return  new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapterListener.onNoonHeaderClick(CardAdapter.this, position);
+            }
+        };
+    }
+    private View.OnLongClickListener onNoonHeaderLongClick(final int position)
+    {
+        return new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return adapterListener.onNoonHeaderLongClick(CardAdapter.this, position);
             }
         };
     }
@@ -444,6 +465,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder>
 
         public void onSunsetHeaderClick(CardAdapter adapter, int position) {}
         public boolean onSunsetHeaderLongClick(CardAdapter adapter, int position)
+        {
+            return false;
+        }
+
+        public void onNoonHeaderClick(CardAdapter adapter, int position) {}
+        public boolean onNoonHeaderLongClick(CardAdapter adapter, int position)
         {
             return false;
         }

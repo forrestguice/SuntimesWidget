@@ -78,6 +78,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
     public TimeFieldRow row_astro, row_nautical, row_civil, row_actual, row_solarnoon;
     public TimeFieldRow row_gold, row_blue8, row_blue4;
     public HashMap<SolarEvents, TextView> timeFields;
+    public View noonClickArea;
 
     public LinearLayout layout_daylength;
     public TextView txt_daylength;
@@ -110,6 +111,8 @@ public class CardViewHolder extends RecyclerView.ViewHolder
         layout_daylength = (LinearLayout) view.findViewById(R.id.layout_daylength);
         txt_daylength = (TextView) view.findViewById(R.id.text_daylength);
         txt_lightlength = (TextView) view.findViewById(R.id.text_lightlength);
+
+        noonClickArea = view.findViewById(R.id.noon_clickArea);
 
         moonlabel = (TextView) view.findViewById(R.id.text_time_label_moon);
         moonphase = (MoonPhaseView) view.findViewById(R.id.moonphase_view);
@@ -220,6 +223,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder
 
                 row_solarnoon.updateFields(positionSpan, noonString);
             }
+            noonClickArea.setVisibility(options.showNoon ? View.VISIBLE : View.GONE);
 
             if (options.showBlue) {
                 String sunriseString_blue8 = utils.calendarTimeShortDisplayString(context, sun.dataBlue8.sunriseCalendarToday(), options.showSeconds).toString();

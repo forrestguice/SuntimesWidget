@@ -71,6 +71,7 @@ import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -81,8 +82,11 @@ public class AlarmClockActivity extends AppCompatActivity
 {
     public static final String TAG = "AlarmReceiverList";
 
-    public static final String ACTION_ADD_ALARM = "com.forrestguice.suntimeswidget.alarmclock.ADD_ALARM";
-    public static final String ACTION_ADD_NOTIFICATION = "com.forrestguice.suntimeswidget.alarmclock.ADD_NOTIFICATION";
+    public static final String ACTION_ADD_ALARM = "suntimes.action.alarmclock.ADD_ALARM";
+    public static final String ACTION_ADD_NOTIFICATION = "suntimes.action.alarmclock.ADD_NOTIFICATION";
+
+    private static final String[] SUNTIMES_ALARMS_ACTIONS = new String[] {ACTION_ADD_ALARM, ACTION_ADD_NOTIFICATION};
+    private static final HashMap<String, String> SUNTIMES_ALARMS_ACTION_MAP = SuntimesActivity.createLegacyActionMap(SUNTIMES_ALARMS_ACTIONS);
 
     public static final String EXTRA_SHOWBACK = "showBack";
     public static final String EXTRA_SOLAREVENT = "solarevent";
@@ -223,6 +227,11 @@ public class AlarmClockActivity extends AppCompatActivity
 
         String param_action = intent.getAction();
         intent.setAction(null);
+
+        if (SUNTIMES_ALARMS_ACTION_MAP.containsKey(param_action)) {
+            Log.d("handleIntent", "legacy action: " + param_action);
+            param_action = SUNTIMES_ALARMS_ACTION_MAP.get(param_action);
+        }
 
         Uri param_data = intent.getData();
         intent.setData(null);

@@ -96,8 +96,8 @@ public class AlarmClockLegacyActivity extends AppCompatActivity
 {
     public static final String TAG = "AlarmReceiverList";
 
-    public static final String ACTION_ADD_ALARM = "com.forrestguice.suntimeswidget.alarmclock.ALARM";
-    public static final String ACTION_ADD_NOTIFICATION = "com.forrestguice.suntimeswidget.alarmclock.ADD_NOTIFICATION";
+    public static final String ACTION_ADD_ALARM = "suntimes.action.alarmclock.ALARM";
+    public static final String ACTION_ADD_NOTIFICATION = "suntimes.action.alarmclock.ADD_NOTIFICATION";
 
     public static final String EXTRA_SHOWBACK = "showBack";
     public static final String EXTRA_SOLAREVENT = "solarevent";

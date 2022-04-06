@@ -80,7 +80,7 @@ public class LightMapDialog extends BottomSheetDialogFragment
 {
     public static final String DIALOGTAG_HELP = "lightmap_help";
 
-    public static final String EXTRA_DATETIME = "datetime";
+    public static final String ARG_DATETIME = "datetime";
 
     private static SuntimesUtils utils = new SuntimesUtils();
 
@@ -110,13 +110,13 @@ public class LightMapDialog extends BottomSheetDialogFragment
     public LightMapDialog()
     {
         Bundle args = new Bundle();
-        args.putLong(EXTRA_DATETIME, -1);
+        args.putLong(ARG_DATETIME, -1);
         setArguments(args);
     }
 
     public void showPositionAt(@Nullable Long datetime)
     {
-        getArguments().putLong(EXTRA_DATETIME, (datetime == null ? -1 : datetime));
+        getArguments().putLong(ARG_DATETIME, (datetime == null ? -1 : datetime));
         if (isAdded()) {
             updateViews();
         }
@@ -472,9 +472,9 @@ public class LightMapDialog extends BottomSheetDialogFragment
         Menu menu = popupMenu.getMenu();
         MenuItem submenuItem = menu.findItem(R.id.addonSubMenu);
         if (submenuItem != null) {
-            List<WorldMapDialog.ActivityItemInfo> addonMenuItems = WorldMapDialog.queryAddonMenuItems(context);
+            List<MenuAddon.ActivityItemInfo> addonMenuItems = MenuAddon.queryAddonMenuItems(context);
             if (!addonMenuItems.isEmpty()) {
-                WorldMapDialog.populateSubMenu(submenuItem, addonMenuItems, getMapTime(System.currentTimeMillis()));
+                MenuAddon.populateSubMenu(submenuItem, addonMenuItems, getMapTime(System.currentTimeMillis()));
             } //else submenuItem.setVisible(false);
         }
     }
@@ -609,10 +609,10 @@ public class LightMapDialog extends BottomSheetDialogFragment
         if (context != null)
         {
             LightMapView.LightMapColors options = lightmap.getColors();
-            long now = getArguments().getLong(EXTRA_DATETIME);
+            long now = getArguments().getLong(ARG_DATETIME);
             if (now != -1L)
             {
-                getArguments().putLong(EXTRA_DATETIME, -1L);
+                getArguments().putLong(ARG_DATETIME, -1L);
                 options.now = now;
                 options.offsetMinutes = 1;
                 Log.d("DEBUG", "updateOptions: now: " + now);
