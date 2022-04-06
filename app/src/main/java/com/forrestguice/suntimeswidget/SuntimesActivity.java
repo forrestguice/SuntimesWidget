@@ -1923,9 +1923,18 @@ public class SuntimesActivity extends AppCompatActivity
         }
 
         @Override
-        public void onSunriseHeaderClick(CardAdapter adapter, int position) {
+        public void onSunriseHeaderClick(CardAdapter adapter, int position)
+        {
             if (AppSettings.loadShowHeaderTextPref(SuntimesActivity.this) == AppSettings.HEADER_TEXT_AZIMUTH) {
                 onLightmapClick(adapter, position);
+                if (position == CardAdapter.TODAY_POSITION || position == (CardAdapter.TODAY_POSITION + 1) || position == (CardAdapter.TODAY_POSITION - 1)) {
+                    txt_time.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            seekNextNote(SolarEvents.SUNRISE);
+                        }
+                    }, 500);
+                }
             } else {
                 seekNextNote(SolarEvents.SUNRISE);
             }
@@ -1937,9 +1946,23 @@ public class SuntimesActivity extends AppCompatActivity
         }
 
         @Override
-        public void onSunsetHeaderClick(CardAdapter adapter, int position) {
+        public void onSunsetHeaderClick(CardAdapter adapter, int position)
+        {
             if (AppSettings.loadShowHeaderTextPref(SuntimesActivity.this) == AppSettings.HEADER_TEXT_AZIMUTH) {
                 onLightmapClick(adapter, position);
+                if (position == CardAdapter.TODAY_POSITION || position == (CardAdapter.TODAY_POSITION + 1) || position == (CardAdapter.TODAY_POSITION - 1)) {
+                    txt_time.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            txt_time.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    seekNextNote(SolarEvents.SUNSET);
+                                }
+                            }, 500);
+                        }
+                    });
+                }
             } else {
                 seekNextNote(SolarEvents.SUNSET);
             }
