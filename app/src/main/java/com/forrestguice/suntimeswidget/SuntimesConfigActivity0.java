@@ -57,6 +57,7 @@ import android.widget.TextView;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
@@ -122,6 +123,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_showHours;
     protected CheckBox checkbox_useAltitude;
     protected CheckBox checkbox_locationFromApp;
+    protected CheckBox checkbox_tzFromApp;
     protected CheckBox checkbox_localizeHemisphere;
 
     protected Spinner spinner_timeMode;
@@ -853,6 +855,19 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             });
         }
 
+        // widget: timezoneFromApp
+        checkbox_tzFromApp = (CheckBox)findViewById(R.id.appwidget_timezone_fromapp);
+        if (checkbox_tzFromApp != null)
+        {
+            checkbox_tzFromApp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+                {
+                    Toast.makeText(SuntimesConfigActivity0.this, "TODO", Toast.LENGTH_SHORT).show();  // TODO
+                }
+            });
+        }
+
         checkbox_localizeHemisphere = (CheckBox)findViewById(R.id.appwidget_general_localize_hemisphere);
 
         //
@@ -1467,6 +1482,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         boolean locationFromApp = checkbox_locationFromApp.isChecked();
         WidgetSettings.saveLocationFromAppPref(context, appWidgetId, locationFromApp);
 
+        // save: tzFromApp
+        boolean tzFromApp = checkbox_tzFromApp.isChecked();
+        WidgetSettings.saveTimeZoneFromAppPref(context, appWidgetId, tzFromApp);
+
         // save: localize hemisphere
         WidgetSettings.saveLocalizeHemispherePref(context, appWidgetId, checkbox_localizeHemisphere.isChecked());
 
@@ -1534,6 +1553,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // load: locationFromApp
         boolean locationFromApp = WidgetSettings.loadLocationFromAppPref(context, appWidgetId);
         checkbox_locationFromApp.setChecked(locationFromApp);
+
+        // load: tzFromApp
+        boolean tzFromApp = WidgetSettings.loadTimeZoneFromAppPref(context, appWidgetId);
+        checkbox_tzFromApp.setChecked(tzFromApp);
 
         // load: localize hemisphere
         checkbox_localizeHemisphere.setChecked(WidgetSettings.loadLocalizeHemispherePref(context, appWidgetId));

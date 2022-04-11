@@ -424,6 +424,22 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         assertTrue("value does not match! " + isEnabled2, isEnabled2 == WidgetSettings.PREF_DEF_LOCATION_FROMAPP);
     }
 
+    @Test
+    public void test_tzFromAppPref()
+    {
+        WidgetSettings.saveTimeZoneFromAppPref(context, appWidgetId, true);
+        boolean isEnabled0 = WidgetSettings.loadTimeZoneFromAppPref(context, appWidgetId);
+        assertTrue("value does not match! " + isEnabled0, isEnabled0);
+
+        WidgetSettings.saveTimeZoneFromAppPref(context, appWidgetId, false);
+        boolean isEnabled1 = WidgetSettings.loadTimeZoneFromAppPref(context, appWidgetId);
+        assertFalse("value does not match! " + isEnabled1, isEnabled1);
+
+        WidgetSettings.deleteTimeZoneFromAppPref(context, appWidgetId);
+        boolean isEnabled2 = WidgetSettings.loadTimeZoneFromAppPref(context, appWidgetId);
+        assertEquals("value does not match! " + isEnabled2, isEnabled2, WidgetSettings.PREF_DEF_TIMEZONE_FROMAPP);
+    }
+
     ///////////////////////////////////////////////////////////////////////////
 
     @Test
