@@ -663,6 +663,33 @@
             </intent-filter>
         </activity>
 
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <!-- Widget: Date (1x1)                                                               -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <receiver android:name=".widgets.DateWidget0"
+            android:label="@string/app_name_datewidget0"
+            android:icon="@drawable/ic_calendar">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="suntimes.DATE_WIDGET_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_THEME_UPDATE" />
+                <action android:name="suntimes.SUNTIMES_ALARM_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_date0_1x1" />
+        </receiver>
+
+        <activity
+            android:name=".widgets.DateWidget0ConfigActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+
     </application>
 
 </manifest>
