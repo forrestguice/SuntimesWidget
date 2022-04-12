@@ -228,6 +228,24 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     ///////////////////////////////////////////////////////////////////////////
 
     @Test
+    public void test_calendarModePref()
+    {
+        WidgetSettings.saveCalendarModePref(context, appWidgetId, WidgetSettings.CalendarMode.GREGORIAN);
+        WidgetSettings.CalendarMode mode2 = WidgetSettings.loadCalendarModePref(context, appWidgetId);
+        assertTrue("mode should be GREGORIAN but was " + mode2, mode2 == WidgetSettings.CalendarMode.GREGORIAN);
+
+        WidgetSettings.saveCalendarModePref(context, appWidgetId, WidgetSettings.CalendarMode.PERSIAN);
+        WidgetSettings.CalendarMode mode1 = WidgetSettings.loadCalendarModePref(context, appWidgetId);
+        assertTrue("mode should be PERSIAN but was " + mode1, mode1 == WidgetSettings.CalendarMode.PERSIAN);
+
+        WidgetSettings.deleteCalendarModePref(context, appWidgetId);
+        WidgetSettings.CalendarMode mode0 = WidgetSettings.loadCalendarModePref(context, appWidgetId);
+        assertTrue("mode should be default (GREGORIAN but was " + mode0, mode0 == WidgetSettings.PREF_DEF_CALENDAR_MODE && mode0 == WidgetSettings.CalendarMode.GREGORIAN);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+
+    @Test
     public void test_dateModePref()
     {
         WidgetSettings.saveDateModePref(context, appWidgetId, WidgetSettings.DateMode.CURRENT_DATE);
