@@ -53,6 +53,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import android.support.v7.app.AppCompatActivity;
@@ -111,6 +112,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected Spinner spinner_calculatorMode;
     protected Spinner spinner_timeFormatMode;
+    protected Spinner spinner_calendarMode;
     protected CheckBox checkbox_timeModeOverride;
     protected ImageButton button_timeModeHelp;
     protected Spinner spinner_trackingMode;
@@ -463,6 +465,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 public void onNothingSelected(AdapterView<?> adapterView) {}
             });
         }
+
+        // widget: calendar mode
+        spinner_calendarMode = (Spinner) findViewById(R.id.appwidget_general_calendarMode);
+        initCalendarMode(context);
 
         //
         // widget: time format mode
@@ -1058,6 +1064,34 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return new View[] { label_2x1mode, spinner_2x1mode, label_3x1mode, spinner_3x1mode, label_3x2mode, spinner_3x2mode, label_3x3mode, spinner_3x3mode };
     }
 
+    protected void initCalendarMode(Context context)
+    {
+        if (spinner_calendarMode != null)
+        {
+            final ArrayAdapter<WidgetSettings.CalendarMode> adapter = new ArrayAdapter<WidgetSettings.CalendarMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.CalendarMode.values());
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner_calendarMode.setAdapter(adapter);
+        }
+    }
+
+    protected int setCalendarMode(@NonNull WidgetSettings.CalendarMode mode)
+    {
+        if (spinner_calendarMode != null)
+        {
+            SpinnerAdapter adapter = spinner_calendarMode.getAdapter();
+            for (int i=0; i<adapter.getCount(); i++)
+            {
+                WidgetSettings.CalendarMode item = (WidgetSettings.CalendarMode) adapter.getItem(i);
+                if (mode.equals(item))
+                {
+                    spinner_calendarMode.setSelection(i);
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
     /**
      * @param context a context used to access resources
      */
@@ -1445,6 +1479,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         SuntimesCalculatorDescriptor calculator = calculators[spinner_calculatorMode.getSelectedItemPosition()];
         WidgetSettings.saveCalculatorModePref(context, appWidgetId, calculator);
 
+        // save: calendar mode
+        WidgetSettings.CalendarMode calendarMode = (WidgetSettings.CalendarMode) spinner_calendarMode.getSelectedItem();
+        WidgetSettings.saveCalendarModePref(context, appWidgetId, calendarMode);
+
         // save: tracking mode
         final WidgetSettings.TrackingMode[] trackingModes = WidgetSettings.TrackingMode.values();
         WidgetSettings.TrackingMode trackingMode = trackingModes[spinner_trackingMode.getSelectedItemPosition()];
@@ -1518,6 +1556,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         SuntimesCalculatorDescriptor[] calculators = supportingCalculators();
         SuntimesCalculatorDescriptor calculatorMode = WidgetSettings.loadCalculatorModePref(context, appWidgetId);
         spinner_calculatorMode.setSelection((calculatorMode != null ? calculatorMode.ordinal(calculators) : 0));
+
+        // load: calendar mode
+        setCalendarMode(WidgetSettings.loadCalendarModePref(context, appWidgetId));
 
         // load: tracking mode
         WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, appWidgetId);
@@ -1954,6 +1995,17 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (layout_riseSetOrder != null)
         {
             layout_riseSetOrder.setVisibility((showUI ? View.VISIBLE : View.GONE));
+        }
+    }
+
+    /**
+     * @param showUI true show option, false hide option
+     */
+    protected void showCalendarMode(boolean showUI)
+    {
+        View layout = findViewById(R.id.appwidget_general_calendarMode_layout);
+        if (layout != null) {
+            layout.setVisibility((showUI ? View.VISIBLE : View.GONE));
         }
     }
 

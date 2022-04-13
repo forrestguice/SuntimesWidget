@@ -43,6 +43,8 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
         super.initViews(context);
         setConfigActivityTitle(getString(R.string.configLabel_datewidget0));
 
+        showCalendarMode(true);
+
         showOptionRiseSetOrder(false);
         hideOptionUseAltitude();
         hideOptionCompareAgainst();
