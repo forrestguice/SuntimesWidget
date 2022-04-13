@@ -219,7 +219,11 @@ public class WidgetSettings
     public static final CalendarMode PREF_DEF_CALENDAR_MODE = CalendarMode.GREGORIAN;
 
     public static final String PREF_KEY_CALENDAR_FORMATPATTERN = "calendarFormat";
-    public static final String PREF_DEF_CALENDAR_FORMATPATTERN = "MMMM d, yyyy";
+    public static final String PREF_DEF_CALENDAR_FORMATPATTERN_ETHIOPIAN = "MMMM d, yyyy";   // TODO
+    public static final String PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN = "MMMM d, yyyy";
+    public static final String PREF_DEF_CALENDAR_FORMATPATTERN_HEBREW = "d MMMM yyyy";
+    public static final String PREF_DEF_CALENDAR_FORMATPATTERN_PERSIAN = "MMMM d, yyyy";     // TODO
+    public static final String PREF_DEF_CALENDAR_FORMATPATTERN_THAISOLAR = "MMMM d, yyyy";   // TODO
 
     public static final String PREF_KEY_NEXTUPDATE = "nextUpdate";
     public static final long PREF_DEF_NEXTUPDATE = -1L;
@@ -786,16 +790,22 @@ public class WidgetSettings
      */
     public static enum CalendarMode
     {
-        ETHIOPIAN("Ethiopian"),
-        GREGORIAN("Gregorian"),
-        HEBREW("Hebrew"),
-        PERSIAN("Solar Hijiri"),
-        THAISOLAR("Thai Solar");
+        ETHIOPIAN("Ethiopian", PREF_DEF_CALENDAR_FORMATPATTERN_ETHIOPIAN),
+        GREGORIAN("Gregorian", PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN),
+        HEBREW("Hebrew", PREF_DEF_CALENDAR_FORMATPATTERN_HEBREW),
+        PERSIAN("Solar Hijiri", PREF_DEF_CALENDAR_FORMATPATTERN_PERSIAN),
+        THAISOLAR("Thai Solar", PREF_DEF_CALENDAR_FORMATPATTERN_THAISOLAR);
 
         private String displayString;
+        private String defaultPattern;
 
-        private CalendarMode(String displayString) {
+        private CalendarMode(String displayString, String defaultPattern) {
             this.displayString = displayString;
+            this.defaultPattern = defaultPattern;
+        }
+
+        public String getDefaultPattern() {
+            return defaultPattern;
         }
 
         public String toString() {
@@ -2251,25 +2261,35 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveCalendarFormatPatternPref(Context context, int appWidgetId, String formatString)
+    public static void saveCalendarFormatPatternPref(Context context, int appWidgetId, String tag, String formatString)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_CALENDAR;
-        prefs.putString(prefs_prefix + PREF_KEY_CALENDAR_FORMATPATTERN, formatString);
+        prefs.putString(prefs_prefix + PREF_KEY_CALENDAR_FORMATPATTERN + "_" + tag, formatString);
         prefs.apply();
     }
-    public static String loadCalendarFormatPatternPref(Context context, int appWidgetId)
+    public static String loadCalendarFormatPatternPref(Context context, int appWidgetId, String tag)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_CALENDAR;
-        return prefs.getString(prefs_prefix + PREF_KEY_CALENDAR_FORMATPATTERN, PREF_DEF_CALENDAR_FORMATPATTERN);
+        return prefs.getString(prefs_prefix + PREF_KEY_CALENDAR_FORMATPATTERN + "_" + tag, defaultCalendarFormatPattern(tag));
     }
-    public static void deleteCalendarFormatPatternPref(Context context, int appWidgetId)
+    public static void deleteCalendarFormatPatternPref(Context context, int appWidgetId, String tag)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_CALENDAR;
-        prefs.remove(prefs_prefix + PREF_KEY_CALENDAR_FORMATPATTERN);
+        prefs.remove(prefs_prefix + PREF_KEY_CALENDAR_FORMATPATTERN + "_" + tag);
         prefs.apply();
+    }
+    public static String defaultCalendarFormatPattern(String tag)
+    {
+        CalendarMode mode;
+        try {
+            mode = WidgetSettings.CalendarMode.valueOf(tag);
+        } catch (IllegalArgumentException e) {
+            mode = PREF_DEF_CALENDAR_MODE;
+        }
+        return mode.getDefaultPattern();
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -2988,6 +3008,9 @@ public class WidgetSettings
         deleteTimezonePref(context, appWidgetId);
 
         deleteCalendarModePref(context, appWidgetId);
+        for (CalendarMode mode : CalendarMode.values()) {
+            deleteCalendarFormatPatternPref(context, appWidgetId, mode.name());
+        }
 
         deleteDateModePref(context, appWidgetId);
         deleteDatePref(context, appWidgetId);

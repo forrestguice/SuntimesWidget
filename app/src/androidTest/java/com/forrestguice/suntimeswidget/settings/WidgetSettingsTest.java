@@ -23,7 +23,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.util.Log;
 
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
@@ -31,9 +30,6 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator;
-import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
-import com.forrestguice.suntimeswidget.map.WorldMapTask;
-import com.forrestguice.suntimeswidget.map.WorldMapView;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.defaults.LightTheme;
@@ -246,12 +242,13 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_calendarFormatPref()
     {
-        WidgetSettings.saveCalendarFormatPatternPref(context, appWidgetId, "YYYY");
-        String format2 = WidgetSettings.loadCalendarFormatPatternPref(context, appWidgetId);
+        String tag = "TEST";
+        WidgetSettings.saveCalendarFormatPatternPref(context, appWidgetId, tag, "YYYY");
+        String format2 = WidgetSettings.loadCalendarFormatPatternPref(context, appWidgetId, tag);
         assertTrue("mode should be YYYY but was " + format2, "YYYY".equals(format2));
 
-        WidgetSettings.deleteCalendarFormatPatternPref(context, appWidgetId);
-        String format0 = WidgetSettings.loadCalendarFormatPatternPref(context, appWidgetId);
+        WidgetSettings.deleteCalendarFormatPatternPref(context, appWidgetId, tag);
+        String format0 = WidgetSettings.loadCalendarFormatPatternPref(context, appWidgetId, tag);
         assertTrue("mode should be default but was " + format0, WidgetSettings.PREF_DEF_CALENDAR_FORMATPATTERN.equals(format0));
     }
 

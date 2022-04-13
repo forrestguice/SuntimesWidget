@@ -78,7 +78,7 @@ public class DateLayout_1x1_0 extends DateLayout
         super.updateViews(context, appWidgetId, views, data);
 
         WidgetSettings.CalendarMode mode = WidgetSettings.loadCalendarModePref(context, appWidgetId);
-        String pattern = WidgetSettings.loadCalendarFormatPatternPref(context, appWidgetId);
+        String pattern = WidgetSettings.loadCalendarFormatPatternPref(context, appWidgetId, mode.name());
 
         Calendar now = Calendar.getInstance(data.timezone());
         Moment moment = TemporalType.JAVA_UTIL_DATE.translate(now.getTime());
