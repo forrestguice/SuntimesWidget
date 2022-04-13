@@ -24,9 +24,13 @@ import android.os.Build;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class DateLayout_1x1_0 extends DateLayout
 {
@@ -61,7 +65,22 @@ public class DateLayout_1x1_0 extends DateLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)
     {
         super.updateViews(context, appWidgetId, views, data);
-        // TODO
+
+        WidgetSettings.CalendarMode mode = WidgetSettings.loadCalendarModePref(context, appWidgetId);
+        String pattern = WidgetSettings.loadCalendarFormatPatternPref(context, appWidgetId);
+        Calendar now = Calendar.getInstance(data.timezone());
+
+        String displayString = "";
+        switch (mode)
+        {
+            case GREGORIAN:
+            default:
+                SimpleDateFormat gregorian = new SimpleDateFormat(pattern, SuntimesUtils.getLocale());
+                displayString = gregorian.format(now.getTime());
+                break;
+        }
+
+        views.setTextViewText(R.id.text_date, displayString);
     }
 
     protected int timeColor = Color.WHITE;
