@@ -1,5 +1,17 @@
 ### ~
 
+### v0.14.3 (2022-04-11)
+* adds click to solar noon field; opens the lightmap dialog (#562).
+* changes click on sunrise/sunset headers; opens the lightmap dialog if configured to show azimuth (#562).
+* fixes lunar noon field; omit on days it doesn't occur (#572).
+* fixes bug "solstice dialog 'view date' menu doesn't work" (#577).
+* fixes bug where the AlarmNotifications service fails to stop (battery use in background) (#575).
+* fixes ANR when showing alarm dialog (#576); misc changes to ringtone management.
+* fixes app crash when using 'fallback to last location'.
+* fixes bug where changes made in the PlacesActivity aren't displayed by the location spinner.
+* changes action prefix to "suntimes.action"; remaps legacy actions.
+* misc layout changes (enlarged click areas); misc cleanup/refactoring.
+
 ### v0.14.2 (2022-03-14)
 * fixes crash when using 'sun position' app shortcut (#567).
 * fixes bug where "search places doesn't work" (#566).
