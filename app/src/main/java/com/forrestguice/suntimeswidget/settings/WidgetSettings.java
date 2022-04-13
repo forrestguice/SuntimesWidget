@@ -218,6 +218,9 @@ public class WidgetSettings
     public static final String PREF_KEY_CALENDAR_MODE = "calendarMode";
     public static final CalendarMode PREF_DEF_CALENDAR_MODE = CalendarMode.GREGORIAN;
 
+    public static final String PREF_KEY_CALENDAR_FORMATPATTERN = "calendarFormat";
+    public static final String PREF_DEF_CALENDAR_FORMATPATTERN = "MMMM d, yyyy";
+
     public static final String PREF_KEY_NEXTUPDATE = "nextUpdate";
     public static final long PREF_DEF_NEXTUPDATE = -1L;
 
@@ -2237,6 +2240,30 @@ public class WidgetSettings
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_CALENDAR;
         prefs.remove(prefs_prefix + PREF_KEY_CALENDAR_MODE);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void saveCalendarFormatPatternPref(Context context, int appWidgetId, String formatString)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_CALENDAR;
+        prefs.putString(prefs_prefix + PREF_KEY_CALENDAR_FORMATPATTERN, formatString);
+        prefs.apply();
+    }
+    public static String loadCalendarFormatPatternPref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_CALENDAR;
+        return prefs.getString(prefs_prefix + PREF_KEY_CALENDAR_FORMATPATTERN, PREF_DEF_CALENDAR_FORMATPATTERN);
+    }
+    public static void deleteCalendarFormatPatternPref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_CALENDAR;
+        prefs.remove(prefs_prefix + PREF_KEY_CALENDAR_FORMATPATTERN);
         prefs.apply();
     }
 

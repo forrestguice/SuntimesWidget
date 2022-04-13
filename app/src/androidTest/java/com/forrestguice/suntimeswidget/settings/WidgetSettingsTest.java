@@ -243,6 +243,18 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         assertTrue("mode should be default (GREGORIAN but was " + mode0, mode0 == WidgetSettings.PREF_DEF_CALENDAR_MODE && mode0 == WidgetSettings.CalendarMode.GREGORIAN);
     }
 
+    @Test
+    public void test_calendarFormatPref()
+    {
+        WidgetSettings.saveCalendarFormatPatternPref(context, appWidgetId, "YYYY");
+        String format2 = WidgetSettings.loadCalendarFormatPatternPref(context, appWidgetId);
+        assertTrue("mode should be YYYY but was " + format2, "YYYY".equals(format2));
+
+        WidgetSettings.deleteCalendarFormatPatternPref(context, appWidgetId);
+        String format0 = WidgetSettings.loadCalendarFormatPatternPref(context, appWidgetId);
+        assertTrue("mode should be default but was " + format0, WidgetSettings.PREF_DEF_CALENDAR_FORMATPATTERN.equals(format0));
+    }
+
     ///////////////////////////////////////////////////////////////////////////
 
     @Test
