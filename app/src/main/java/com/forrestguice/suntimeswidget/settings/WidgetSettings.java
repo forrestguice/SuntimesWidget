@@ -810,8 +810,13 @@ public class WidgetSettings
             this.displayString = displayString;
         }
 
-        public static void initDisplayStrings( Context context ) {
-            // TODO
+        public static void initDisplayStrings( Context context )
+        {
+            ETHIOPIAN.setDisplayString(context.getString(R.string.calendarMode_ethiopian));
+            GREGORIAN.setDisplayString(context.getString(R.string.calendarMode_gregorian));
+            HEBREW.setDisplayString(context.getString(R.string.calendarMode_hebrew));
+            PERSIAN.setDisplayString(context.getString(R.string.calendarMode_persian));
+            THAISOLAR.setDisplayString(context.getString(R.string.calendarMode_thaisolar));
         }
     }
 
@@ -3026,7 +3031,7 @@ public class WidgetSettings
         DateMode.initDisplayStrings(context);
         TimeFormatMode.initDisplayStrings(context);
         RiseSetOrder.initDisplayStrings(context);
-
+        CalendarMode.initDisplayStrings(context);
         WidgetActions.initDisplayStrings(context);
     }
 }
