@@ -219,9 +219,11 @@ public class WidgetSettings
     public static final CalendarMode PREF_DEF_CALENDAR_MODE = CalendarMode.GREGORIAN;
 
     public static final String PREF_KEY_CALENDAR_FORMATPATTERN = "calendarFormat";
+    public static final String PREF_DEF_CALENDAR_FORMATPATTERN_COPTIC = "MMMM d, yyyy";   // TODO
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_ETHIOPIAN = "MMMM d, yyyy";   // TODO
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN = "MMMM d, yyyy";
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_HEBREW = "d MMMM yyyy";
+    public static final String PREF_DEF_CALENDAR_FORMATPATTERN_JULIAN = "MMMM d, yyyy";   // TODO
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_PERSIAN = "MMMM d, yyyy";     // TODO
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_THAISOLAR = "MMMM d, yyyy";   // TODO
 
@@ -790,9 +792,11 @@ public class WidgetSettings
      */
     public static enum CalendarMode
     {
+        COPTIC("Coptic", PREF_DEF_CALENDAR_FORMATPATTERN_COPTIC),
         ETHIOPIAN("Ethiopian", PREF_DEF_CALENDAR_FORMATPATTERN_ETHIOPIAN),
         GREGORIAN("Gregorian", PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN),
         HEBREW("Hebrew", PREF_DEF_CALENDAR_FORMATPATTERN_HEBREW),
+        JULIAN("Julian", PREF_DEF_CALENDAR_FORMATPATTERN_JULIAN),
         PERSIAN("Solar Hijiri", PREF_DEF_CALENDAR_FORMATPATTERN_PERSIAN),
         THAISOLAR("Thai Solar", PREF_DEF_CALENDAR_FORMATPATTERN_THAISOLAR);
 
@@ -822,9 +826,11 @@ public class WidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
+            COPTIC.setDisplayString(context.getString(R.string.calendarMode_coptic));
             ETHIOPIAN.setDisplayString(context.getString(R.string.calendarMode_ethiopian));
             GREGORIAN.setDisplayString(context.getString(R.string.calendarMode_gregorian));
             HEBREW.setDisplayString(context.getString(R.string.calendarMode_hebrew));
+            JULIAN.setDisplayString(context.getString(R.string.calendarMode_julian));
             PERSIAN.setDisplayString(context.getString(R.string.calendarMode_persian));
             THAISOLAR.setDisplayString(context.getString(R.string.calendarMode_thaisolar));
         }

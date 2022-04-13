@@ -537,9 +537,11 @@
     <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
 
     <!-- Widget Setting: calendar mode -->
+    <string name="calendarMode_coptic">Coptic</string>                      <!-- TODO -->
     <string name="calendarMode_ethiopian">Ethiopian</string>                <!-- TODO -->
     <string name="calendarMode_gregorian">Gregorian</string>                <!-- TODO -->
     <string name="calendarMode_hebrew">Hebrew</string>                      <!-- TODO -->
+    <string name="calendarMode_julian">Julian</string>                      <!-- TODO -->
     <string name="calendarMode_persian">Persian (Solar Hijiri)</string>     <!-- TODO -->
     <string name="calendarMode_thaisolar">Thai Solar</string>               <!-- TODO -->
 
