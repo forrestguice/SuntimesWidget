@@ -45,6 +45,7 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
 
         showCalendarMode(true);
 
+        showTimeFormatMode(false);
         showOptionRiseSetOrder(false);
         hideOptionUseAltitude();
         hideOptionCompareAgainst();
@@ -58,9 +59,7 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
         showDataSource(false);
         showTimeMode(false);
         showOptionShowNoon(false);
-
-        //showTimeFormatMode(true);
-        showOptionLabels(true);
+        showOptionLabels(false);
         hideLayoutSettings();
     }
 
