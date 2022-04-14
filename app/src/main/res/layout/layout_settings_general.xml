@@ -56,7 +56,7 @@
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding"
-            android:weightSum="1" android:visibility="visible">
+            android:weightSum="1" android:visibility="gone">
 
             <TextView android:labelFor="@+id/appwidget_general_calendarMode"
                 android:id="@+id/appwidget_general_calendarMode_label"
@@ -71,6 +71,32 @@
 
             <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_general_calendarMode_helpButton"
                 style="@style/Widget.AppCompat.ActionButton" android:visibility="invisible"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
+                android:contentDescription="@string/configAction_help" />
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/appwidget_general_calendarPattern_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="16dp" android:paddingLeft="16dp" android:paddingTop="@dimen/settingsGroup_padding"
+            android:weightSum="1" android:visibility="gone">
+
+            <TextView android:labelFor="@+id/appwidget_general_calendarPattern"
+                android:id="@+id/appwidget_general_calendarFormat_label"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="@string/configLabel_general_calendarFormatPattern" />
+
+            <EditText android:id="@+id/appwidget_general_calendarPattern" android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_gravity="center_vertical" android:layout_weight="1"
+                android:hint="@string/configHint_general_calendarFormatPattern" android:text=""
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:inputType="textVisiblePassword" />
+
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_general_calendarPattern_helpButton"
+                style="@style/Widget.AppCompat.ActionButton" android:visibility="visible"
                 android:layout_height="wrap_content" android:layout_width="wrap_content"
                 android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
                 android:contentDescription="@string/configAction_help" />

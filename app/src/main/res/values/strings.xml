@@ -430,6 +430,8 @@
 
     <string name="configLabel_general_timeMode">Mode:</string>          <!-- spinner label -->
     <string name="configLabel_general_calendarMode">Calendar:</string>          <!-- spinner label -->   <!-- TODO -->
+    <string name="configLabel_general_calendarFormatPattern">Pattern:</string>          <!-- edittext label -->   <!-- TODO -->
+    <string name="configHint_general_calendarFormatPattern">MMMM d, yyyy</string>       <!-- edittext hint -->   <!-- TODO -->
 
     <!-- Widget Setting: layout mode -->
     <string name="widgetMode1x1_sunrise">Sunrise only</string>             <!-- setting -->
@@ -1869,6 +1871,19 @@
         <xliff:g id="help_topic3">%3$s</xliff:g><![CDATA[<br />]]>
         <xliff:g id="help_topic4">%4$s</xliff:g>
     </string>
+
+    <string name="help_general_calendarFormatPattern"><![CDATA[
+          <b>Calendar Format:</b> The available elements may differ between calendars but typically includes support for..<br/>
+          <br/>
+          <b>E</b> : day of week <br/>
+          <b>d</b> : day of month <br/>
+          <b>D</b> : day of year <br/>
+          <b>F</b> : weekday in month <br/>
+          <b>M</b> : month of year <br/>
+          <b>y</b> : year of era <br/>
+          <b>G</b> : era <br/>
+          <br/>
+    ]]></string>    <!-- TODO -->
 
     <string name="help_general_actualTime"><![CDATA[
           <b>Actual Time:</b> The approximate time of sunrise and sunset.<br/><br/>

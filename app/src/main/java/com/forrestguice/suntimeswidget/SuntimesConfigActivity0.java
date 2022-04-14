@@ -58,7 +58,6 @@ import android.widget.TextView;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
-import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
@@ -112,7 +111,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected Spinner spinner_calculatorMode;
     protected Spinner spinner_timeFormatMode;
-    protected Spinner spinner_calendarMode;
     protected CheckBox checkbox_timeModeOverride;
     protected ImageButton button_timeModeHelp;
     protected Spinner spinner_trackingMode;
@@ -127,6 +125,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_locationFromApp;
     protected CheckBox checkbox_tzFromApp;
     protected CheckBox checkbox_localizeHemisphere;
+
+    protected Spinner spinner_calendarMode;
+    protected EditText text_calendarFormatPattern;
+    protected ImageButton button_calendarFormatPatternHelp;
 
     protected Spinner spinner_timeMode;
     protected TimeModeAdapter spinner_timeModeAdapter;
@@ -468,6 +470,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         // widget: calendar mode
         spinner_calendarMode = (Spinner) findViewById(R.id.appwidget_general_calendarMode);
+        text_calendarFormatPattern = (EditText) findViewById(R.id.appwidget_general_calendarPattern);
+        button_calendarFormatPatternHelp = (ImageButton) findViewById(R.id.appwidget_general_calendarPattern_helpButton);
         initCalendarMode(context);
 
         //
@@ -1071,8 +1075,35 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             final ArrayAdapter<WidgetSettings.CalendarMode> adapter = new ArrayAdapter<WidgetSettings.CalendarMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.CalendarMode.values());
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_calendarMode.setAdapter(adapter);
+            spinner_calendarMode.setOnItemSelectedListener(onCalendarModeSelected);
+        }
+
+        if (button_calendarFormatPatternHelp != null) {
+            button_calendarFormatPatternHelp.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    HelpDialog helpDialog = new HelpDialog();
+                    helpDialog.setContent(getString(R.string.help_general_calendarFormatPattern));
+                    helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
+                }
+            });
         }
     }
+
+    private AdapterView.OnItemSelectedListener onCalendarModeSelected = new AdapterView.OnItemSelectedListener()
+    {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+        {
+            WidgetSettings.CalendarMode mode = (WidgetSettings.CalendarMode) spinner_calendarMode.getItemAtPosition(position);
+            String pattern = WidgetSettings.loadCalendarFormatPatternPref(SuntimesConfigActivity0.this, appWidgetId, mode.name());
+            text_calendarFormatPattern.setText(pattern);
+        }
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {}
+    };
 
     protected int setCalendarMode(@NonNull WidgetSettings.CalendarMode mode)
     {
@@ -1482,6 +1513,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // save: calendar mode
         WidgetSettings.CalendarMode calendarMode = (WidgetSettings.CalendarMode) spinner_calendarMode.getSelectedItem();
         WidgetSettings.saveCalendarModePref(context, appWidgetId, calendarMode);
+
+        // save: calendar format pattern
+        String calendarPattern = text_calendarFormatPattern.getText().toString();
+        WidgetSettings.saveCalendarFormatPatternPref(context, appWidgetId, calendarMode.name(), calendarPattern);
 
         // save: tracking mode
         final WidgetSettings.TrackingMode[] trackingModes = WidgetSettings.TrackingMode.values();
@@ -2004,6 +2039,17 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void showCalendarMode(boolean showUI)
     {
         View layout = findViewById(R.id.appwidget_general_calendarMode_layout);
+        if (layout != null) {
+            layout.setVisibility((showUI ? View.VISIBLE : View.GONE));
+        }
+    }
+
+    /**
+     * @param showUI true show option, false hide option
+     */
+    protected void showCalendarFormatPattern(boolean showUI)
+    {
+        View layout = findViewById(R.id.appwidget_general_calendarPattern_layout);
         if (layout != null) {
             layout.setVisibility((showUI ? View.VISIBLE : View.GONE));
         }
