@@ -32,6 +32,7 @@ import android.support.v4.content.ContextCompat;
 
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
@@ -300,6 +301,26 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
         super.onDetachedFromWindow();
         if (drawTask != null) {
             //Log.d(LightMapView.class.getSimpleName(), "onDetachedFromWindow: cancel task " + Integer.toHexString(LightMapView.this.hashCode()));
+            drawTask.cancel(true);
+        }
+    }
+
+    @Override
+    protected void onVisibilityChanged(@NonNull View view, int visibility)
+    {
+        super.onVisibilityChanged(view, visibility);
+        //Log.d("DEBUG", "onVisibilityChanged: " + visibility);
+        if (visibility != View.VISIBLE && drawTask != null) {
+            drawTask.cancel(true);
+        }
+    }
+
+    @Override
+    public void onVisibilityAggregated(boolean isVisible)    // TODO: only called for api 24+ ?
+    {
+        super.onVisibilityAggregated(isVisible);
+        //Log.d("DEBUG", "onVisibilityAggregated: " + isVisible);
+        if (!isVisible && drawTask != null) {
             drawTask.cancel(true);
         }
     }
