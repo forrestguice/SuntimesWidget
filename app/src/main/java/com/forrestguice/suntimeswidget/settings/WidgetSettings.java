@@ -26,6 +26,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout;
@@ -49,6 +50,20 @@ import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_1;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
+import net.time4j.Moment;
+import net.time4j.PlainDate;
+import net.time4j.TemporalType;
+import net.time4j.calendar.CopticCalendar;
+import net.time4j.calendar.EthiopianCalendar;
+import net.time4j.calendar.HebrewCalendar;
+import net.time4j.calendar.JulianCalendar;
+import net.time4j.calendar.PersianCalendar;
+import net.time4j.calendar.ThaiSolarCalendar;
+import net.time4j.format.expert.ChronoFormatter;
+import net.time4j.format.expert.PatternType;
+import net.time4j.tz.ZonalOffset;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -824,6 +839,47 @@ public class WidgetSettings
             this.displayString = displayString;
         }
 
+        public String formatDate(Calendar now) {
+            return formatDate(this, defaultPattern, now);
+        }
+        public static String formatDate(WidgetSettings.CalendarMode calendar, String pattern, Calendar now)
+        {
+            Moment moment = TemporalType.JAVA_UTIL_DATE.translate(now.getTime());
+            ZonalOffset offset = ZonalOffset.ofTotalSeconds(now.getTimeZone().getOffset(now.getTimeInMillis()) / 1000);
+            PlainDate today = moment.toZonalTimestamp(offset).toDate();
+            switch (calendar)
+            {
+                case THAISOLAR:
+                    ChronoFormatter<ThaiSolarCalendar> thaiCalendar = ChronoFormatter.setUp(ThaiSolarCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR).build();
+                    return thaiCalendar.format(today.transform(ThaiSolarCalendar.class));
+
+                case PERSIAN:
+                    ChronoFormatter<PersianCalendar> persianCalendar = ChronoFormatter.setUp(PersianCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
+                    return persianCalendar.format(today.transform(PersianCalendar.class));
+
+                case ETHIOPIAN:
+                    ChronoFormatter<EthiopianCalendar> ethiopianCalendar = ChronoFormatter.setUp(EthiopianCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
+                    return ethiopianCalendar.format(today.transform(EthiopianCalendar.class));    // conversion at noon
+
+                case HEBREW:
+                    ChronoFormatter<HebrewCalendar> hebrewCalendar = ChronoFormatter.ofPattern(pattern, PatternType.CLDR_DATE, SuntimesUtils.getLocale(), HebrewCalendar.axis());
+                    return hebrewCalendar.format(today.transform(HebrewCalendar.class));
+
+                case JULIAN:
+                    ChronoFormatter<JulianCalendar> julianCalendar = ChronoFormatter.ofPattern(pattern, PatternType.CLDR, SuntimesUtils.getLocale(), JulianCalendar.axis());
+                    return julianCalendar.format(today.transform(JulianCalendar.class));
+
+                case COPTIC:
+                    ChronoFormatter<CopticCalendar> copticCalendar = ChronoFormatter.setUp(CopticCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
+                    return copticCalendar.format(today.transform(CopticCalendar.class));    // conversion at noon
+
+                case GREGORIAN:
+                default:
+                    SimpleDateFormat gregorian = new SimpleDateFormat(pattern, SuntimesUtils.getLocale());
+                    return gregorian.format(now.getTime());
+            }
+        }
+
         public static void initDisplayStrings( Context context )
         {
             COPTIC.setDisplayString(context.getString(R.string.calendarMode_coptic));
@@ -833,6 +889,66 @@ public class WidgetSettings
             JULIAN.setDisplayString(context.getString(R.string.calendarMode_julian));
             PERSIAN.setDisplayString(context.getString(R.string.calendarMode_persian));
             THAISOLAR.setDisplayString(context.getString(R.string.calendarMode_thaisolar));
+        }
+    }
+
+    /**
+     * CalendarFormat
+     */
+    public static enum CalendarFormat
+    {
+        F8("%s", "yyyy-MM-dd"),                           // year-month-day
+        F5("%s [Year]", "yyyy"),                          // year only
+        F9("%s [Month]", "MM"),                           // month only
+        F1("%s [Day of Month]", "d"),                     // day_of_month only
+        F7("%s [Day of Year]", "D"),                      // day_of_year only
+        F6("%s [Month]", "MMMM"),                                 // month name
+        F2("%s", "MMMM d"),                               // month + day
+        F3("%s", "MMMM d, yyyy"),                         // month day, year
+        F10("%s","d MMMM yyyy"),                          // day month year
+        F4("%s", "MMMM d, yyyy G"),                       // month day, year era
+        F11("%s [Era]", "G"),                             // era only
+        CUSTOM("Custom Format", null);
+
+        private String displayString;
+        private String pattern;
+
+        private CalendarFormat(String displayString, String pattern) {
+            this.displayString = displayString;
+            this.pattern = pattern;
+        }
+
+        public String getPattern() {
+            return pattern;
+        }
+
+        public String toString() {
+            return displayString;
+        }
+
+        public String getDisplayString() {
+            return displayString != null ? displayString : "";
+        }
+
+        public void setDisplayString( String displayString ) {
+            this.displayString = displayString;
+        }
+
+        public static void initDisplayStrings( Context context ) {
+            initDisplayStrings(context, CalendarMode.GREGORIAN, Calendar.getInstance());
+        }
+        public static void initDisplayStrings( Context context, @NonNull CalendarMode mode, @NonNull Calendar now )
+        {
+            // TODO: others
+            CUSTOM.setDisplayString(context.getString(R.string.configLabel_general_calendarFormat_custom));
+
+            for (CalendarFormat value : CalendarFormat.values()) {
+                if (value.displayString == null) {
+                    value.setDisplayString(CalendarMode.formatDate(mode, value.pattern, now));
+                } else if (value.displayString.contains("%s")) {
+                    value.setDisplayString( String.format(value.displayString, CalendarMode.formatDate(mode, value.pattern, now)));
+                }
+            }
         }
     }
 

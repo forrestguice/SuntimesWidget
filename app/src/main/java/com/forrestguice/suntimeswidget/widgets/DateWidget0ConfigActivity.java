@@ -44,6 +44,7 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
         setConfigActivityTitle(getString(R.string.configLabel_datewidget0));
 
         showCalendarMode(true);
+        showCalendarFormat(true);
         showCalendarFormatPattern(true);
 
         showTimeFormatMode(false);

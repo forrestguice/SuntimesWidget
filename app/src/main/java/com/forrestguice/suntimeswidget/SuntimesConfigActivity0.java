@@ -84,6 +84,7 @@ import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -127,6 +128,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_localizeHemisphere;
 
     protected Spinner spinner_calendarMode;
+    protected Spinner spinner_calendarFormat;
     protected EditText text_calendarFormatPattern;
     protected ImageButton button_calendarFormatPatternHelp;
 
@@ -472,6 +474,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         spinner_calendarMode = (Spinner) findViewById(R.id.appwidget_general_calendarMode);
         text_calendarFormatPattern = (EditText) findViewById(R.id.appwidget_general_calendarPattern);
         button_calendarFormatPatternHelp = (ImageButton) findViewById(R.id.appwidget_general_calendarPattern_helpButton);
+        spinner_calendarFormat = (Spinner) findViewById(R.id.appwidget_general_calendarFormat);
         initCalendarMode(context);
 
         //
@@ -1078,6 +1081,15 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             spinner_calendarMode.setOnItemSelectedListener(onCalendarModeSelected);
         }
 
+        if (spinner_calendarFormat != null)
+        {
+            final ArrayAdapter<WidgetSettings.CalendarFormat> adapter = new ArrayAdapter<WidgetSettings.CalendarFormat>(this, R.layout.layout_listitem_oneline, WidgetSettings.CalendarFormat.values());
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner_calendarFormat.setAdapter(adapter);
+            WidgetSettings.CalendarFormat.initDisplayStrings(context, WidgetSettings.CalendarMode.GREGORIAN, Calendar.getInstance());   // TODO: mode, tz
+            spinner_calendarFormat.setOnItemSelectedListener(onCalendarFormatSelected);
+        }
+
         if (button_calendarFormatPatternHelp != null) {
             button_calendarFormatPatternHelp.setOnClickListener(new View.OnClickListener()
             {
@@ -1100,6 +1112,17 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             WidgetSettings.CalendarMode mode = (WidgetSettings.CalendarMode) spinner_calendarMode.getItemAtPosition(position);
             String pattern = WidgetSettings.loadCalendarFormatPatternPref(SuntimesConfigActivity0.this, appWidgetId, mode.name());
             text_calendarFormatPattern.setText(pattern);
+            WidgetSettings.CalendarFormat.initDisplayStrings(SuntimesConfigActivity0.this, mode, Calendar.getInstance());
+        }
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {}
+    };
+    private AdapterView.OnItemSelectedListener onCalendarFormatSelected = new AdapterView.OnItemSelectedListener()
+    {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+        {
+            // TODO
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {}
@@ -2039,6 +2062,17 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void showCalendarMode(boolean showUI)
     {
         View layout = findViewById(R.id.appwidget_general_calendarMode_layout);
+        if (layout != null) {
+            layout.setVisibility((showUI ? View.VISIBLE : View.GONE));
+        }
+    }
+
+    /**
+     * @param showUI true show option, false hide option
+     */
+    protected void showCalendarFormat(boolean showUI)
+    {
+        View layout = findViewById(R.id.appwidget_general_calendarFormat_layout);
         if (layout != null) {
             layout.setVisibility((showUI ? View.VISIBLE : View.GONE));
         }

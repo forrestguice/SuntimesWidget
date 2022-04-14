@@ -430,8 +430,10 @@
 
     <string name="configLabel_general_timeMode">Mode:</string>          <!-- spinner label -->
     <string name="configLabel_general_calendarMode">Calendar:</string>          <!-- spinner label -->   <!-- TODO -->
+    <string name="configLabel_general_calendarFormat">Format:</string>          <!-- spinner label -->   <!-- TODO -->
     <string name="configLabel_general_calendarFormatPattern">Pattern:</string>          <!-- edittext label -->   <!-- TODO -->
     <string name="configHint_general_calendarFormatPattern">MMMM d, yyyy</string>       <!-- edittext hint -->   <!-- TODO -->
+    <string name="configLabel_general_calendarFormat_custom">Custom Format</string>       <!-- edittext hint -->   <!-- TODO -->
 
     <!-- Widget Setting: layout mode -->
     <string name="widgetMode1x1_sunrise">Sunrise only</string>             <!-- setting -->
