@@ -66,6 +66,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorListAdapter;
+import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
@@ -1075,7 +1076,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (spinner_calendarMode != null)
         {
-            final ArrayAdapter<WidgetSettings.CalendarMode> adapter = new ArrayAdapter<WidgetSettings.CalendarMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.CalendarMode.values());
+            final ArrayAdapter<CalendarMode> adapter = new ArrayAdapter<CalendarMode>(this, R.layout.layout_listitem_oneline, CalendarMode.values());
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_calendarMode.setAdapter(adapter);
             spinner_calendarMode.setOnItemSelectedListener(onCalendarModeSelected);
@@ -1086,7 +1087,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             final ArrayAdapter<WidgetSettings.CalendarFormat> adapter = new ArrayAdapter<WidgetSettings.CalendarFormat>(this, R.layout.layout_listitem_oneline, WidgetSettings.CalendarFormat.values());
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_calendarFormat.setAdapter(adapter);
-            WidgetSettings.CalendarFormat.initDisplayStrings(context, WidgetSettings.CalendarMode.GREGORIAN, Calendar.getInstance());   // TODO: mode, tz
+            WidgetSettings.CalendarFormat.initDisplayStrings(context, CalendarMode.GREGORIAN, Calendar.getInstance());   // TODO: mode, tz
             spinner_calendarFormat.setOnItemSelectedListener(onCalendarFormatSelected);
         }
 
@@ -1109,7 +1110,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
-            WidgetSettings.CalendarMode mode = (WidgetSettings.CalendarMode) spinner_calendarMode.getItemAtPosition(position);
+            CalendarMode mode = (CalendarMode) spinner_calendarMode.getItemAtPosition(position);
             String pattern = WidgetSettings.loadCalendarFormatPatternPref(SuntimesConfigActivity0.this, appWidgetId, mode.name());
             text_calendarFormatPattern.setText(pattern);
             WidgetSettings.CalendarFormat.initDisplayStrings(SuntimesConfigActivity0.this, mode, Calendar.getInstance());
@@ -1128,14 +1129,14 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         public void onNothingSelected(AdapterView<?> parent) {}
     };
 
-    protected int setCalendarMode(@NonNull WidgetSettings.CalendarMode mode)
+    protected int setCalendarMode(@NonNull CalendarMode mode)
     {
         if (spinner_calendarMode != null)
         {
             SpinnerAdapter adapter = spinner_calendarMode.getAdapter();
             for (int i=0; i<adapter.getCount(); i++)
             {
-                WidgetSettings.CalendarMode item = (WidgetSettings.CalendarMode) adapter.getItem(i);
+                CalendarMode item = (CalendarMode) adapter.getItem(i);
                 if (mode.equals(item))
                 {
                     spinner_calendarMode.setSelection(i);
@@ -1534,7 +1535,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         WidgetSettings.saveCalculatorModePref(context, appWidgetId, calculator);
 
         // save: calendar mode
-        WidgetSettings.CalendarMode calendarMode = (WidgetSettings.CalendarMode) spinner_calendarMode.getSelectedItem();
+        CalendarMode calendarMode = (CalendarMode) spinner_calendarMode.getSelectedItem();
         WidgetSettings.saveCalendarModePref(context, appWidgetId, calendarMode);
 
         // save: calendar format pattern

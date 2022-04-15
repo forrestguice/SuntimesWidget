@@ -30,6 +30,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.sunrisesunset_java.SunriseSunsetSuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.time4a.Time4ASimpleSuntimesCalculator;
+import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.defaults.LightTheme;
@@ -226,17 +227,17 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_calendarModePref()
     {
-        WidgetSettings.saveCalendarModePref(context, appWidgetId, WidgetSettings.CalendarMode.GREGORIAN);
-        WidgetSettings.CalendarMode mode2 = WidgetSettings.loadCalendarModePref(context, appWidgetId);
-        assertTrue("mode should be GREGORIAN but was " + mode2, mode2 == WidgetSettings.CalendarMode.GREGORIAN);
+        WidgetSettings.saveCalendarModePref(context, appWidgetId, CalendarMode.GREGORIAN);
+        CalendarMode mode2 = WidgetSettings.loadCalendarModePref(context, appWidgetId);
+        assertTrue("mode should be GREGORIAN but was " + mode2, mode2 == CalendarMode.GREGORIAN);
 
-        WidgetSettings.saveCalendarModePref(context, appWidgetId, WidgetSettings.CalendarMode.PERSIAN);
-        WidgetSettings.CalendarMode mode1 = WidgetSettings.loadCalendarModePref(context, appWidgetId);
-        assertTrue("mode should be PERSIAN but was " + mode1, mode1 == WidgetSettings.CalendarMode.PERSIAN);
+        WidgetSettings.saveCalendarModePref(context, appWidgetId, CalendarMode.PERSIAN);
+        CalendarMode mode1 = WidgetSettings.loadCalendarModePref(context, appWidgetId);
+        assertTrue("mode should be PERSIAN but was " + mode1, mode1 == CalendarMode.PERSIAN);
 
         WidgetSettings.deleteCalendarModePref(context, appWidgetId);
-        WidgetSettings.CalendarMode mode0 = WidgetSettings.loadCalendarModePref(context, appWidgetId);
-        assertTrue("mode should be default (GREGORIAN but was " + mode0, mode0 == WidgetSettings.PREF_DEF_CALENDAR_MODE && mode0 == WidgetSettings.CalendarMode.GREGORIAN);
+        CalendarMode mode0 = WidgetSettings.loadCalendarModePref(context, appWidgetId);
+        assertTrue("mode should be default (GREGORIAN but was " + mode0, mode0 == WidgetSettings.PREF_DEF_CALENDAR_MODE && mode0 == CalendarMode.GREGORIAN);
     }
 
     @Test

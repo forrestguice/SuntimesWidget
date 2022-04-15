@@ -26,9 +26,9 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_0;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_1;
@@ -50,20 +50,6 @@ import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_1;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
-import net.time4j.Moment;
-import net.time4j.PlainDate;
-import net.time4j.TemporalType;
-import net.time4j.calendar.CopticCalendar;
-import net.time4j.calendar.EthiopianCalendar;
-import net.time4j.calendar.HebrewCalendar;
-import net.time4j.calendar.JulianCalendar;
-import net.time4j.calendar.PersianCalendar;
-import net.time4j.calendar.ThaiSolarCalendar;
-import net.time4j.format.expert.ChronoFormatter;
-import net.time4j.format.expert.PatternType;
-import net.time4j.tz.ZonalOffset;
-
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -803,96 +789,6 @@ public class WidgetSettings
     }
 
     /**
-     * CalendarMode
-     */
-    public static enum CalendarMode
-    {
-        COPTIC("Coptic", PREF_DEF_CALENDAR_FORMATPATTERN_COPTIC),
-        ETHIOPIAN("Ethiopian", PREF_DEF_CALENDAR_FORMATPATTERN_ETHIOPIAN),
-        GREGORIAN("Gregorian", PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN),
-        HEBREW("Hebrew", PREF_DEF_CALENDAR_FORMATPATTERN_HEBREW),
-        JULIAN("Julian", PREF_DEF_CALENDAR_FORMATPATTERN_JULIAN),
-        PERSIAN("Solar Hijiri", PREF_DEF_CALENDAR_FORMATPATTERN_PERSIAN),
-        THAISOLAR("Thai Solar", PREF_DEF_CALENDAR_FORMATPATTERN_THAISOLAR);
-
-        private String displayString;
-        private String defaultPattern;
-
-        private CalendarMode(String displayString, String defaultPattern) {
-            this.displayString = displayString;
-            this.defaultPattern = defaultPattern;
-        }
-
-        public String getDefaultPattern() {
-            return defaultPattern;
-        }
-
-        public String toString() {
-            return displayString;
-        }
-
-        public String getDisplayString() {
-            return displayString;
-        }
-
-        public void setDisplayString( String displayString ) {
-            this.displayString = displayString;
-        }
-
-        public String formatDate(Calendar now) {
-            return formatDate(this, defaultPattern, now);
-        }
-        public static String formatDate(WidgetSettings.CalendarMode calendar, String pattern, Calendar now)
-        {
-            Moment moment = TemporalType.JAVA_UTIL_DATE.translate(now.getTime());
-            ZonalOffset offset = ZonalOffset.ofTotalSeconds(now.getTimeZone().getOffset(now.getTimeInMillis()) / 1000);
-            PlainDate today = moment.toZonalTimestamp(offset).toDate();
-            switch (calendar)
-            {
-                case THAISOLAR:
-                    ChronoFormatter<ThaiSolarCalendar> thaiCalendar = ChronoFormatter.setUp(ThaiSolarCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR).build();
-                    return thaiCalendar.format(today.transform(ThaiSolarCalendar.class));
-
-                case PERSIAN:
-                    ChronoFormatter<PersianCalendar> persianCalendar = ChronoFormatter.setUp(PersianCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
-                    return persianCalendar.format(today.transform(PersianCalendar.class));
-
-                case ETHIOPIAN:
-                    ChronoFormatter<EthiopianCalendar> ethiopianCalendar = ChronoFormatter.setUp(EthiopianCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
-                    return ethiopianCalendar.format(today.transform(EthiopianCalendar.class));    // conversion at noon
-
-                case HEBREW:
-                    ChronoFormatter<HebrewCalendar> hebrewCalendar = ChronoFormatter.ofPattern(pattern, PatternType.CLDR_DATE, SuntimesUtils.getLocale(), HebrewCalendar.axis());
-                    return hebrewCalendar.format(today.transform(HebrewCalendar.class));
-
-                case JULIAN:
-                    ChronoFormatter<JulianCalendar> julianCalendar = ChronoFormatter.ofPattern(pattern, PatternType.CLDR, SuntimesUtils.getLocale(), JulianCalendar.axis());
-                    return julianCalendar.format(today.transform(JulianCalendar.class));
-
-                case COPTIC:
-                    ChronoFormatter<CopticCalendar> copticCalendar = ChronoFormatter.setUp(CopticCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
-                    return copticCalendar.format(today.transform(CopticCalendar.class));    // conversion at noon
-
-                case GREGORIAN:
-                default:
-                    SimpleDateFormat gregorian = new SimpleDateFormat(pattern, SuntimesUtils.getLocale());
-                    return gregorian.format(now.getTime());
-            }
-        }
-
-        public static void initDisplayStrings( Context context )
-        {
-            COPTIC.setDisplayString(context.getString(R.string.calendarMode_coptic));
-            ETHIOPIAN.setDisplayString(context.getString(R.string.calendarMode_ethiopian));
-            GREGORIAN.setDisplayString(context.getString(R.string.calendarMode_gregorian));
-            HEBREW.setDisplayString(context.getString(R.string.calendarMode_hebrew));
-            JULIAN.setDisplayString(context.getString(R.string.calendarMode_julian));
-            PERSIAN.setDisplayString(context.getString(R.string.calendarMode_persian));
-            THAISOLAR.setDisplayString(context.getString(R.string.calendarMode_thaisolar));
-        }
-    }
-
-    /**
      * CalendarFormat
      */
     public static enum CalendarFormat
@@ -902,7 +798,7 @@ public class WidgetSettings
         F9("%s [Month]", "MM"),                           // month only
         F1("%s [Day of Month]", "d"),                     // day_of_month only
         F7("%s [Day of Year]", "D"),                      // day_of_year only
-        F6("%s [Month]", "MMMM"),                                 // month name
+        F6("%s [Month]", "MMMM"),                         // month name
         F2("%s", "MMMM d"),                               // month + day
         F3("%s", "MMMM d, yyyy"),                         // month day, year
         F10("%s","d MMMM yyyy"),                          // day month year
@@ -2351,14 +2247,14 @@ public class WidgetSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void saveCalendarModePref(Context context, int appWidgetId, WidgetSettings.CalendarMode mode)
+    public static void saveCalendarModePref(Context context, int appWidgetId, CalendarMode mode)
     {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_CALENDAR;
         prefs.putString(prefs_prefix + PREF_KEY_CALENDAR_MODE, mode.name());
         prefs.apply();
     }
-    public static WidgetSettings.CalendarMode loadCalendarModePref(Context context, int appWidgetId)
+    public static CalendarMode loadCalendarModePref(Context context, int appWidgetId)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
         String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_CALENDAR;
@@ -2366,7 +2262,7 @@ public class WidgetSettings
 
         CalendarMode mode;
         try {
-            mode = WidgetSettings.CalendarMode.valueOf(modeString);
+            mode = CalendarMode.valueOf(modeString);
         } catch (IllegalArgumentException e) {
             mode = PREF_DEF_CALENDAR_MODE;
         }
@@ -2407,7 +2303,7 @@ public class WidgetSettings
     {
         CalendarMode mode;
         try {
-            mode = WidgetSettings.CalendarMode.valueOf(tag);
+            mode = CalendarMode.valueOf(tag);
         } catch (IllegalArgumentException e) {
             mode = PREF_DEF_CALENDAR_MODE;
         }

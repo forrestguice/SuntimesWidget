@@ -24,25 +24,11 @@ import android.os.Build;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
+import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
-import net.time4j.Moment;
-import net.time4j.PlainDate;
-import net.time4j.TemporalType;
-import net.time4j.calendar.CopticCalendar;
-import net.time4j.calendar.EthiopianCalendar;
-import net.time4j.calendar.HebrewCalendar;
-import net.time4j.calendar.JulianCalendar;
-import net.time4j.calendar.PersianCalendar;
-import net.time4j.calendar.ThaiSolarCalendar;
-import net.time4j.format.expert.ChronoFormatter;
-import net.time4j.format.expert.PatternType;
-import net.time4j.tz.ZonalOffset;
-
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class DateLayout_1x1_0 extends DateLayout
@@ -78,10 +64,10 @@ public class DateLayout_1x1_0 extends DateLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)
     {
         super.updateViews(context, appWidgetId, views, data);
-        WidgetSettings.CalendarMode mode = WidgetSettings.loadCalendarModePref(context, appWidgetId);
+        CalendarMode mode = WidgetSettings.loadCalendarModePref(context, appWidgetId);
         String pattern = WidgetSettings.loadCalendarFormatPatternPref(context, appWidgetId, mode.name());
         Calendar now = Calendar.getInstance(data.timezone());
-        views.setTextViewText(R.id.text_date, WidgetSettings.CalendarMode.formatDate(mode, pattern, now));
+        views.setTextViewText(R.id.text_date, CalendarMode.formatDate(mode, pattern, now));
     }
 
 
