@@ -433,7 +433,12 @@
     <string name="configLabel_general_calendarFormat">Format:</string>          <!-- spinner label -->   <!-- TODO -->
     <string name="configLabel_general_calendarFormatPattern">Pattern:</string>          <!-- edittext label -->   <!-- TODO -->
     <string name="configHint_general_calendarFormatPattern">MMMM d, yyyy</string>       <!-- edittext hint -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_custom">Custom Format</string>       <!-- edittext hint -->   <!-- TODO -->
+    <string name="configLabel_general_calendarFormat_custom">Custom Format</string>       <!-- spinner value -->   <!-- TODO -->
+    <string name="configLabel_general_calendarFormat_yyyy">%s [year]</string>       <!-- spinner value -->   <!-- TODO -->
+    <string name="configLabel_general_calendarFormat_MMMM">%s [month]</string>       <!-- spinner value -->   <!-- TODO -->
+    <string name="configLabel_general_calendarFormat_MM">%s [month]</string>       <!-- spinner value -->   <!-- TODO -->
+    <string name="configLabel_general_calendarFormat_dd">%s [day of month]</string>       <!-- spinner value -->   <!-- TODO -->
+    <string name="configLabel_general_calendarFormat_DD">%s [day of year]</string>       <!-- spinner value -->   <!-- TODO -->
 
     <!-- Widget Setting: layout mode -->
     <string name="widgetMode1x1_sunrise">Sunrise only</string>             <!-- setting -->
@@ -1875,8 +1880,8 @@
     </string>
 
     <string name="help_general_calendarFormatPattern"><![CDATA[
-          <b>Calendar Format:</b> The available elements may differ between calendars but typically includes support for..<br/>
-          <br/>
+          <b>Calendar Format:</b> A date format pattern.<br/>
+          <br/>Elements may differ between calendars, but usually include..<br/>
           <b>E</b> : day of week <br/>
           <b>d</b> : day of month <br/>
           <b>D</b> : day of year <br/>

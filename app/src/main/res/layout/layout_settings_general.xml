@@ -94,12 +94,6 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1" />
 
-            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_general_calendarFormat_helpButton"
-                style="@style/Widget.AppCompat.ActionButton" android:visibility="visible"
-                android:layout_height="wrap_content" android:layout_width="wrap_content"
-                android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
-                android:contentDescription="@string/configAction_help" />
-
         </LinearLayout>
 
         <LinearLayout android:id="@+id/appwidget_general_calendarPattern_layout"

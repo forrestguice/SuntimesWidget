@@ -1107,7 +1107,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
     }
 
-    private AdapterView.OnItemSelectedListener onCalendarModeSelected = new AdapterView.OnItemSelectedListener()
+    private final AdapterView.OnItemSelectedListener onCalendarModeSelected = new AdapterView.OnItemSelectedListener()
     {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
@@ -1115,17 +1115,24 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             CalendarMode mode = (CalendarMode) spinner_calendarMode.getItemAtPosition(position);
             String pattern = CalendarSettings.loadCalendarFormatPatternPref(SuntimesConfigActivity0.this, appWidgetId, mode.name());
             text_calendarFormatPattern.setText(pattern);
-            CalendarFormat.initDisplayStrings(SuntimesConfigActivity0.this, mode, Calendar.getInstance());
+            setCalendarFormat(pattern);
+            CalendarFormat.initDisplayStrings(SuntimesConfigActivity0.this, mode, Calendar.getInstance());    // TODO: signal 'calendar format' adapter changed?
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {}
     };
-    private AdapterView.OnItemSelectedListener onCalendarFormatSelected = new AdapterView.OnItemSelectedListener()
+    private final AdapterView.OnItemSelectedListener onCalendarFormatSelected = new AdapterView.OnItemSelectedListener()
     {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
-            // TODO
+            CalendarFormat item = (CalendarFormat)parent.getItemAtPosition(position);
+            text_calendarFormatPattern.setEnabled(item == CalendarFormat.CUSTOM);
+            button_calendarFormatPatternHelp.setVisibility(item == CalendarFormat.CUSTOM ? View.VISIBLE : View.INVISIBLE);
+
+            if (item != CalendarFormat.CUSTOM) {
+                text_calendarFormatPattern.setText(item.getPattern());
+            }
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {}
@@ -1133,18 +1140,44 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected int setCalendarMode(@NonNull CalendarMode mode)
     {
-        if (spinner_calendarMode != null)
-        {
+        if (spinner_calendarMode != null) {
             SpinnerAdapter adapter = spinner_calendarMode.getAdapter();
-            for (int i=0; i<adapter.getCount(); i++)
-            {
+            for (int i=0; i<adapter.getCount(); i++) {
                 CalendarMode item = (CalendarMode) adapter.getItem(i);
-                if (mode.equals(item))
-                {
+                if (mode.equals(item)) {
                     spinner_calendarMode.setSelection(i);
                     return i;
                 }
             }
+        }
+        return -1;
+    }
+    protected int setCalendarFormat(@NonNull CalendarFormat format)
+    {
+        if (spinner_calendarFormat != null) {
+            SpinnerAdapter adapter = spinner_calendarFormat.getAdapter();
+            for (int i=0; i<adapter.getCount(); i++) {
+                CalendarFormat item = (CalendarFormat) adapter.getItem(i);
+                if (format.equals(item)) {
+                    spinner_calendarFormat.setSelection(i);
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+    protected int setCalendarFormat(@NonNull String pattern)
+    {
+        if (spinner_calendarFormat != null) {
+            SpinnerAdapter adapter = spinner_calendarFormat.getAdapter();
+            for (int i=0; i<adapter.getCount(); i++) {
+                CalendarFormat item = (CalendarFormat) adapter.getItem(i);
+                if (pattern.equals(item.getPattern())) {
+                    spinner_calendarFormat.setSelection(i);
+                    return i;
+                }
+            }
+            setCalendarFormat(CalendarFormat.CUSTOM);
         }
         return -1;
     }
@@ -1619,7 +1652,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         spinner_calculatorMode.setSelection((calculatorMode != null ? calculatorMode.ordinal(calculators) : 0));
 
         // load: calendar mode
-        setCalendarMode(CalendarSettings.loadCalendarModePref(context, appWidgetId));
+        CalendarMode calendarMode = CalendarSettings.loadCalendarModePref(context, appWidgetId);
+        setCalendarMode(calendarMode);
+        setCalendarFormat(CalendarSettings.loadCalendarFormatPatternPref(context, appWidgetId, calendarMode.name()));
 
         // load: tracking mode
         WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, appWidgetId);
