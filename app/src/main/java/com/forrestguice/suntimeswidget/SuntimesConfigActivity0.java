@@ -66,6 +66,7 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorListAdapter;
+import com.forrestguice.suntimeswidget.calendar.CalendarFormat;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 
@@ -1084,10 +1085,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         if (spinner_calendarFormat != null)
         {
-            final ArrayAdapter<WidgetSettings.CalendarFormat> adapter = new ArrayAdapter<WidgetSettings.CalendarFormat>(this, R.layout.layout_listitem_oneline, WidgetSettings.CalendarFormat.values());
+            final ArrayAdapter<CalendarFormat> adapter = new ArrayAdapter<CalendarFormat>(this, R.layout.layout_listitem_oneline, CalendarFormat.values());
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_calendarFormat.setAdapter(adapter);
-            WidgetSettings.CalendarFormat.initDisplayStrings(context, CalendarMode.GREGORIAN, Calendar.getInstance());   // TODO: mode, tz
+            CalendarFormat.initDisplayStrings(context, CalendarMode.GREGORIAN, Calendar.getInstance());   // TODO: mode, tz
             spinner_calendarFormat.setOnItemSelectedListener(onCalendarFormatSelected);
         }
 
@@ -1113,7 +1114,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             CalendarMode mode = (CalendarMode) spinner_calendarMode.getItemAtPosition(position);
             String pattern = WidgetSettings.loadCalendarFormatPatternPref(SuntimesConfigActivity0.this, appWidgetId, mode.name());
             text_calendarFormatPattern.setText(pattern);
-            WidgetSettings.CalendarFormat.initDisplayStrings(SuntimesConfigActivity0.this, mode, Calendar.getInstance());
+            CalendarFormat.initDisplayStrings(SuntimesConfigActivity0.this, mode, Calendar.getInstance());
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {}
