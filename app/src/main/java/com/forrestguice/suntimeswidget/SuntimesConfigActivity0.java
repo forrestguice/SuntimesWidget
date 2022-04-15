@@ -68,6 +68,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorListAdapter;
 import com.forrestguice.suntimeswidget.calendar.CalendarFormat;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
+import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
@@ -1112,7 +1113,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
         {
             CalendarMode mode = (CalendarMode) spinner_calendarMode.getItemAtPosition(position);
-            String pattern = WidgetSettings.loadCalendarFormatPatternPref(SuntimesConfigActivity0.this, appWidgetId, mode.name());
+            String pattern = CalendarSettings.loadCalendarFormatPatternPref(SuntimesConfigActivity0.this, appWidgetId, mode.name());
             text_calendarFormatPattern.setText(pattern);
             CalendarFormat.initDisplayStrings(SuntimesConfigActivity0.this, mode, Calendar.getInstance());
         }
@@ -1537,11 +1538,11 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
         // save: calendar mode
         CalendarMode calendarMode = (CalendarMode) spinner_calendarMode.getSelectedItem();
-        WidgetSettings.saveCalendarModePref(context, appWidgetId, calendarMode);
+        CalendarSettings.saveCalendarModePref(context, appWidgetId, calendarMode);
 
         // save: calendar format pattern
         String calendarPattern = text_calendarFormatPattern.getText().toString();
-        WidgetSettings.saveCalendarFormatPatternPref(context, appWidgetId, calendarMode.name(), calendarPattern);
+        CalendarSettings.saveCalendarFormatPatternPref(context, appWidgetId, calendarMode.name(), calendarPattern);
 
         // save: tracking mode
         final WidgetSettings.TrackingMode[] trackingModes = WidgetSettings.TrackingMode.values();
@@ -1618,7 +1619,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         spinner_calculatorMode.setSelection((calculatorMode != null ? calculatorMode.ordinal(calculators) : 0));
 
         // load: calendar mode
-        setCalendarMode(WidgetSettings.loadCalendarModePref(context, appWidgetId));
+        setCalendarMode(CalendarSettings.loadCalendarModePref(context, appWidgetId));
 
         // load: tracking mode
         WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, appWidgetId);

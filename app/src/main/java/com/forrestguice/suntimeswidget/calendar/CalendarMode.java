@@ -22,7 +22,6 @@ import android.content.Context;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
-import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import net.time4j.Moment;
 import net.time4j.PlainDate;
@@ -45,13 +44,13 @@ import java.util.Calendar;
  */
 public enum CalendarMode
 {
-    COPTIC("Coptic", WidgetSettings.PREF_DEF_CALENDAR_FORMATPATTERN_COPTIC),
-    ETHIOPIAN("Ethiopian", WidgetSettings.PREF_DEF_CALENDAR_FORMATPATTERN_ETHIOPIAN),
-    GREGORIAN("Gregorian", WidgetSettings.PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN),
-    HEBREW("Hebrew", WidgetSettings.PREF_DEF_CALENDAR_FORMATPATTERN_HEBREW),
-    JULIAN("Julian", WidgetSettings.PREF_DEF_CALENDAR_FORMATPATTERN_JULIAN),
-    PERSIAN("Solar Hijiri", WidgetSettings.PREF_DEF_CALENDAR_FORMATPATTERN_PERSIAN),
-    THAISOLAR("Thai Solar", WidgetSettings.PREF_DEF_CALENDAR_FORMATPATTERN_THAISOLAR);
+    COPTIC("Coptic", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_COPTIC),
+    ETHIOPIAN("Ethiopian",CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_ETHIOPIAN),
+    GREGORIAN("Gregorian", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_GREGORIAN),
+    HEBREW("Hebrew", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_HEBREW),
+    JULIAN("Julian", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_JULIAN),
+    PERSIAN("Solar Hijiri", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_PERSIAN),
+    THAISOLAR("Thai Solar", CalendarSettings.PREF_DEF_CALENDAR_FORMATPATTERN_THAISOLAR);
 
     private String displayString;
     private String defaultPattern;
