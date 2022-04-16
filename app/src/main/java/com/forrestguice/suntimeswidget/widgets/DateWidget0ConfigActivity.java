@@ -63,6 +63,8 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
         showOptionShowNoon(false);
         showOptionLabels(false);
         hideLayoutSettings();
+
+        moveSectionToTop(R.id.appwidget_general_layout);
     }
 
     @Override

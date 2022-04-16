@@ -137,6 +137,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected Spinner spinner_calendarFormat;
     protected EditText text_calendarFormatPattern;
     protected ImageButton button_calendarFormatPatternHelp;
+    protected ImageButton button_calendarFormatEdit;
 
     protected Spinner spinner_timeMode;
     protected TimeModeAdapter spinner_timeModeAdapter;
@@ -479,6 +480,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         // widget: calendar mode
         spinner_calendarMode = (Spinner) findViewById(R.id.appwidget_general_calendarMode);
         text_calendarFormatPattern = (EditText) findViewById(R.id.appwidget_general_calendarPattern);
+        button_calendarFormatEdit = (ImageButton) findViewById(R.id.appwidget_general_calendarFormat_editButton);
         button_calendarFormatPatternHelp = (ImageButton) findViewById(R.id.appwidget_general_calendarPattern_helpButton);
         spinner_calendarFormat = (Spinner) findViewById(R.id.appwidget_general_calendarFormat);
         initCalendarMode(context);
@@ -1101,7 +1103,17 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             text_calendarFormatPattern.setOnFocusChangeListener(onCalendarFormatPatternFocus);
         }
 
-        if (button_calendarFormatPatternHelp != null) {
+        if (button_calendarFormatEdit != null) {
+            button_calendarFormatEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setCalendarFormat(CalendarFormat.CUSTOM);
+                }
+            });
+        }
+
+        if (button_calendarFormatPatternHelp != null)
+        {
             button_calendarFormatPatternHelp.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -1156,6 +1168,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             CalendarFormat item = (CalendarFormat)parent.getItemAtPosition(position);
             text_calendarFormatPattern.setEnabled(item == CalendarFormat.CUSTOM);
+            button_calendarFormatEdit.setVisibility(item == CalendarFormat.CUSTOM ? View.INVISIBLE : View.VISIBLE);
 
             if (item != CalendarFormat.CUSTOM) {
                 text_calendarFormatPattern.setText(item.getPattern());
