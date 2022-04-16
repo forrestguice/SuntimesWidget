@@ -466,9 +466,10 @@
     <string name="configLabel_timezone_standard">Normo:</string>                   <!-- spinner label -->
 
     <!-- Widget Setting: timeFormat mode -->
-    <string name="timeFormatMode_system">Laŭ operaciumo</string>          <!-- setting -->
+    <string name="timeFormatMode_system">laŭ operaciumo</string>          <!-- setting -->
     <string name="timeFormatMode_12hr">12‑hora</string>                  <!-- setting -->
     <string name="timeFormatMode_24hr">24‑hora</string>                  <!-- setting -->
+    <string name="timeFormatMode_suntimes">laŭ aplikaĵo</string>     <!-- setting -->
 
     <string name="configLabel_timeFormatMode">Formo de tempo</string>             <!-- preference label -->
     <string name="configLabel_timeFormatMode_systemsummary"><xliff:g id="timeFormatMode">%1$s</xliff:g> [<xliff:g id="timeFormatMode">%2$s</xliff:g>]</string>  <!-- preference summary -->
@@ -1425,8 +1426,8 @@
           <b>Reala sunleviĝo/sunsubiro:</b> la Suno estas sur la horizonto, tio ĉi estas proksimuma tempo de sunleviĝo aŭ sunsubiro.<br/><br/>
     ]]></string>
     <string name="help_general_twilight"><![CDATA[
-          <b>Civila krepusko:</b> la Suno estas 6&nbsp;gradoj sub la horizonto, la plej helaj steloj estas videblaj. Estas sufiĉe da lumo por fari plejparte da agadoj eksterdome sen artefarita prilumado.<br/><br/>
-          <b>Naŭtika krepusko:</b> la Suno estas 12&nbsp;gradoj sub la horizonto, konturoj de objektoj kaj la horizonto estas kvazaŭ nevideblaj. Lumo mankas por plejparte da agadoj eksterdome sen artefarita prilumado.<br/><br/>
+          <b>Civila krepusko:</b> la Suno estas 6&nbsp;gradoj sub la horizonto, la plej helaj steloj estas videblaj. Estas sufiĉe da lumo por fari plejparte de agadoj eksterdome sen artefarita prilumado.<br/><br/>
+          <b>Naŭtika krepusko:</b> la Suno estas 12&nbsp;gradoj sub la horizonto, konturoj de objektoj kaj la horizonto estas kvazaŭ nevideblaj. Lumo mankas por plejparte de agadoj eksterdome sen artefarita prilumado.<br/><br/>
           <b>Astronomia krepusko:</b> la Suno estas 18&nbsp;gradoj sub la horizonto. Preskaŭ nigra nokto.<br/>
     ]]></string>
     <string name="help_general_riseSetOrder"><![CDATA[
