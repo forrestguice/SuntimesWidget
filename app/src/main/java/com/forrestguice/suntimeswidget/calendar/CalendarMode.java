@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.calendar;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -84,36 +85,41 @@ public enum CalendarMode
         Moment moment = TemporalType.JAVA_UTIL_DATE.translate(now.getTime());
         ZonalOffset offset = ZonalOffset.ofTotalSeconds(now.getTimeZone().getOffset(now.getTimeInMillis()) / 1000);
         PlainDate today = moment.toZonalTimestamp(offset).toDate();
-        switch (calendar)
-        {
-            case THAISOLAR:
-                ChronoFormatter<ThaiSolarCalendar> thaiCalendar = ChronoFormatter.setUp(ThaiSolarCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR).build();
-                return thaiCalendar.format(today.transform(ThaiSolarCalendar.class));
+        try {
+            switch (calendar)
+            {
+                case THAISOLAR:
+                    ChronoFormatter<ThaiSolarCalendar> thaiCalendar = ChronoFormatter.setUp(ThaiSolarCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR).build();
+                    return thaiCalendar.format(today.transform(ThaiSolarCalendar.class));
 
-            case PERSIAN:
-                ChronoFormatter<PersianCalendar> persianCalendar = ChronoFormatter.setUp(PersianCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
-                return persianCalendar.format(today.transform(PersianCalendar.class));
+                case PERSIAN:
+                    ChronoFormatter<PersianCalendar> persianCalendar = ChronoFormatter.setUp(PersianCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
+                    return persianCalendar.format(today.transform(PersianCalendar.class));
 
-            case ETHIOPIAN:
-                ChronoFormatter<EthiopianCalendar> ethiopianCalendar = ChronoFormatter.setUp(EthiopianCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
-                return ethiopianCalendar.format(today.transform(EthiopianCalendar.class));    // conversion at noon
+                case ETHIOPIAN:
+                    ChronoFormatter<EthiopianCalendar> ethiopianCalendar = ChronoFormatter.setUp(EthiopianCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
+                    return ethiopianCalendar.format(today.transform(EthiopianCalendar.class));    // conversion at noon
 
-            case HEBREW:
-                ChronoFormatter<HebrewCalendar> hebrewCalendar = ChronoFormatter.ofPattern(pattern, PatternType.CLDR_DATE, SuntimesUtils.getLocale(), HebrewCalendar.axis());
-                return hebrewCalendar.format(today.transform(HebrewCalendar.class));
+                case HEBREW:
+                    ChronoFormatter<HebrewCalendar> hebrewCalendar = ChronoFormatter.ofPattern(pattern, PatternType.CLDR_DATE, SuntimesUtils.getLocale(), HebrewCalendar.axis());
+                    return hebrewCalendar.format(today.transform(HebrewCalendar.class));
 
-            case JULIAN:
-                ChronoFormatter<JulianCalendar> julianCalendar = ChronoFormatter.ofPattern(pattern, PatternType.CLDR, SuntimesUtils.getLocale(), JulianCalendar.axis());
-                return julianCalendar.format(today.transform(JulianCalendar.class));
+                case JULIAN:
+                    ChronoFormatter<JulianCalendar> julianCalendar = ChronoFormatter.ofPattern(pattern, PatternType.CLDR, SuntimesUtils.getLocale(), JulianCalendar.axis());
+                    return julianCalendar.format(today.transform(JulianCalendar.class));
 
-            case COPTIC:
-                ChronoFormatter<CopticCalendar> copticCalendar = ChronoFormatter.setUp(CopticCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
-                return copticCalendar.format(today.transform(CopticCalendar.class));    // conversion at noon
+                case COPTIC:
+                    ChronoFormatter<CopticCalendar> copticCalendar = ChronoFormatter.setUp(CopticCalendar.axis(), SuntimesUtils.getLocale()).addPattern(pattern, PatternType.CLDR_DATE).build();
+                    return copticCalendar.format(today.transform(CopticCalendar.class));    // conversion at noon
 
-            case GREGORIAN:
-            default:
-                SimpleDateFormat gregorian = new SimpleDateFormat(pattern, SuntimesUtils.getLocale());
-                return gregorian.format(now.getTime());
+                case GREGORIAN:
+                default:
+                    SimpleDateFormat gregorian = new SimpleDateFormat(pattern, SuntimesUtils.getLocale());
+                    return gregorian.format(now.getTime());
+            }
+        } catch (IllegalStateException e) {    // bad pattern
+            Log.e("CalendarMode", "formatDate: " + e);
+            return "";
         }
     }
 

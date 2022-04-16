@@ -25,6 +25,7 @@ import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
+import com.forrestguice.suntimeswidget.calendar.CalendarFormat;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -65,10 +66,16 @@ public class DateLayout_1x1_0 extends DateLayout
     public void updateViews(Context context, int appWidgetId, RemoteViews views, SuntimesClockData data)
     {
         super.updateViews(context, appWidgetId, views, data);
-        CalendarMode mode = CalendarSettings.loadCalendarModePref(context, appWidgetId);
-        String pattern = CalendarSettings.loadCalendarFormatPatternPref(context, appWidgetId, mode.name());
         Calendar now = Calendar.getInstance(data.timezone());
-        views.setTextViewText(R.id.text_date, CalendarMode.formatDate(mode, pattern, now));
+        CalendarMode mode = CalendarSettings.loadCalendarModePref(context, appWidgetId);
+
+        String pattern = CalendarSettings.loadCalendarFormatPatternPref(context, appWidgetId, mode.name());
+        if (!CalendarFormat.isValidPattern(pattern)) {
+            pattern = mode.getDefaultPattern();
+        }
+
+        String displayString = CalendarMode.formatDate(mode, pattern, now) ;
+        views.setTextViewText(R.id.text_date, displayString);
     }
 
 

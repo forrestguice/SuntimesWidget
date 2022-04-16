@@ -32,16 +32,19 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -1074,7 +1077,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         return new View[] { label_2x1mode, spinner_2x1mode, label_3x1mode, spinner_3x1mode, label_3x2mode, spinner_3x2mode, label_3x3mode, spinner_3x3mode };
     }
 
-    protected void initCalendarMode(Context context)
+    protected void initCalendarMode(final Context context)
     {
         if (spinner_calendarMode != null)
         {
@@ -1089,8 +1092,13 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             final ArrayAdapter<CalendarFormat> adapter = new ArrayAdapter<CalendarFormat>(this, R.layout.layout_listitem_oneline, CalendarFormat.values());
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_calendarFormat.setAdapter(adapter);
-            CalendarFormat.initDisplayStrings(context, CalendarMode.GREGORIAN, Calendar.getInstance());   // TODO: mode, tz
             spinner_calendarFormat.setOnItemSelectedListener(onCalendarFormatSelected);
+        }
+
+        if (text_calendarFormatPattern != null) {
+            text_calendarFormatPattern.setImeOptions(EditorInfo.IME_ACTION_DONE);
+            text_calendarFormatPattern.setOnEditorActionListener(onCalendarFormatPatternEdited);
+            text_calendarFormatPattern.setOnFocusChangeListener(onCalendarFormatPatternFocus);
         }
 
         if (button_calendarFormatPatternHelp != null) {
@@ -1101,10 +1109,27 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 {
                     HelpDialog helpDialog = new HelpDialog();
                     helpDialog.setContent(getString(R.string.help_general_calendarFormatPattern));
+                    helpDialog.setNeutralButtonListener(onCalendarFormatPatternHelpRestoreDefaults, "calendarFormatPattern");
+                    helpDialog.setShowNeutralButton(context.getString(R.string.configAction_restoreDefaults));
                     helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
                 }
             });
         }
+    }
+    protected void notifyDataSetChanged_calendarFormatAdapter()
+    {
+        try {
+            ArrayAdapter<CalendarFormat> adapter = (ArrayAdapter<CalendarFormat>) spinner_calendarFormat.getAdapter();
+            adapter.notifyDataSetChanged();
+        } catch (ClassCastException e) {
+            Log.e(getClass().getSimpleName(), "Failed to update calendar format adapter: " + e);
+        }
+    }
+    protected void updateCustomCalendarFormat(String pattern) {
+        CalendarMode mode = (CalendarMode) spinner_calendarMode.getSelectedItem();
+        CalendarFormat.CUSTOM.setPattern(pattern);
+        CalendarFormat.CUSTOM.initDisplayString(SuntimesConfigActivity0.this, mode, Calendar.getInstance());
+        notifyDataSetChanged_calendarFormatAdapter();
     }
 
     private final AdapterView.OnItemSelectedListener onCalendarModeSelected = new AdapterView.OnItemSelectedListener()
@@ -1116,7 +1141,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             String pattern = CalendarSettings.loadCalendarFormatPatternPref(SuntimesConfigActivity0.this, appWidgetId, mode.name());
             text_calendarFormatPattern.setText(pattern);
             setCalendarFormat(pattern);
-            CalendarFormat.initDisplayStrings(SuntimesConfigActivity0.this, mode, Calendar.getInstance());    // TODO: signal 'calendar format' adapter changed?
+
+            CalendarFormat.CUSTOM.setPattern(pattern);
+            CalendarFormat.initDisplayStrings(SuntimesConfigActivity0.this, mode, Calendar.getInstance());
+            notifyDataSetChanged_calendarFormatAdapter();
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {}
@@ -1128,7 +1156,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         {
             CalendarFormat item = (CalendarFormat)parent.getItemAtPosition(position);
             text_calendarFormatPattern.setEnabled(item == CalendarFormat.CUSTOM);
-            button_calendarFormatPatternHelp.setVisibility(item == CalendarFormat.CUSTOM ? View.VISIBLE : View.INVISIBLE);
 
             if (item != CalendarFormat.CUSTOM) {
                 text_calendarFormatPattern.setText(item.getPattern());
@@ -1137,6 +1164,46 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         @Override
         public void onNothingSelected(AdapterView<?> parent) {}
     };
+    private final TextView.OnEditorActionListener onCalendarFormatPatternEdited = new TextView.OnEditorActionListener() {
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+        {
+            switch (actionId) {
+                case EditorInfo.IME_ACTION_DONE: case EditorInfo.IME_ACTION_NEXT: case EditorInfo.IME_ACTION_PREVIOUS:
+                case EditorInfo.IME_ACTION_SEARCH: case EditorInfo.IME_ACTION_GO: case EditorInfo.IME_ACTION_SEND:
+                    updateCustomCalendarFormat(v.getText().toString());
+                    break;
+            }
+            return false;
+        }
+    };
+    private final View.OnFocusChangeListener onCalendarFormatPatternFocus =  new View.OnFocusChangeListener() {
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            if (!hasFocus && v.isEnabled()) {
+                updateCustomCalendarFormat(text_calendarFormatPattern.getText().toString());
+            }
+        }
+    };
+    private final View.OnClickListener onCalendarFormatPatternHelpRestoreDefaults = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            dismissHelpDialog();
+            CalendarMode mode = (CalendarMode) spinner_calendarMode.getSelectedItem();
+            String pattern = mode.getDefaultPattern();
+            text_calendarFormatPattern.setText(pattern);
+            updateCustomCalendarFormat(pattern);
+        }
+    };
+
+    protected void dismissHelpDialog()
+    {
+        FragmentManager fragments = getSupportFragmentManager();
+        HelpDialog dialog = (HelpDialog) fragments.findFragmentByTag(DIALOGTAG_HELP);
+        if (dialog != null) {
+            dialog.dismiss();
+        }
+    }
 
     protected int setCalendarMode(@NonNull CalendarMode mode)
     {

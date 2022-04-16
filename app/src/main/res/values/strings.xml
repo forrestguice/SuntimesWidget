@@ -429,11 +429,13 @@
     <string name="label_perigee">Perigee</string>
 
     <string name="configLabel_general_timeMode">Mode:</string>          <!-- spinner label -->
+
+    <!-- Widget Setting: calendar -->
     <string name="configLabel_general_calendarMode">Calendar:</string>          <!-- spinner label -->   <!-- TODO -->
     <string name="configLabel_general_calendarFormat">Format:</string>          <!-- spinner label -->   <!-- TODO -->
     <string name="configLabel_general_calendarFormatPattern">Pattern:</string>          <!-- edittext label -->   <!-- TODO -->
     <string name="configHint_general_calendarFormatPattern">MMMM d, yyyy</string>       <!-- edittext hint -->   <!-- TODO -->
-    <string name="configLabel_general_calendarFormat_custom">Custom Format</string>       <!-- spinner value -->   <!-- TODO -->
+    <string name="configLabel_general_calendarFormat_custom">Custom (%s)</string>       <!-- spinner value -->   <!-- TODO -->
     <string name="configLabel_general_calendarFormat_yyyy">%s [year]</string>       <!-- spinner value -->   <!-- TODO -->
     <string name="configLabel_general_calendarFormat_MMMM">%s [month]</string>       <!-- spinner value -->   <!-- TODO -->
     <string name="configLabel_general_calendarFormat_MM">%s [month]</string>       <!-- spinner value -->   <!-- TODO -->
