@@ -1851,6 +1851,9 @@
                 * <b>%t</b> for time zone (id) (e.g. US/Arizona) <br/>
                 * <b>%id</b> for appWidgetID <br/>
          <br/>
+         <b>Date Widgets:</b> <br/>
+                * <b>%M</b> for mode (e.g. Gregorian) <br/>
+         <br/>
          <b>Sun Widgets:</b> <br/>
                 * <b>%m</b> for mode (short) (e.g. Civil) <br/>
                 * <b>%M</b> for mode (long) (e.g. Civil Twilight) <br/>
@@ -1865,7 +1868,7 @@
                 * <b>%m</b> for mode (short) (e.g. Solstice) <br/>
                 * <b>%M</b> for mode (long) (e.g. Winter Solstice) <br/>
                 * <b>%o</b> for order (e.g. Closest Event, Upcoming Event) <br/>
-    ]]></string>
+    ]]></string>    <!-- TODO: added section "Date Widgets:" -->
 
     <string name="help_general2">  <!-- general app help; composites a couple help topics together. -->
         <xliff:g id="help_topic1">%1$s</xliff:g><![CDATA[<br />]]>

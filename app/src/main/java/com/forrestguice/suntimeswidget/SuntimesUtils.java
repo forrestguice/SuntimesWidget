@@ -69,6 +69,7 @@ import android.widget.TextView;
 import java.lang.reflect.Method;
 import java.text.DateFormat;
 
+import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesEquinoxSolsticeData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
@@ -76,6 +77,8 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
+import com.forrestguice.suntimeswidget.calendar.CalendarMode;
+import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings.TimeFormatMode;
 import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
@@ -1262,6 +1265,22 @@ public class SuntimesUtils
         displayString = displayString.replaceAll(modePatternShort, timeMode.getShortDisplayString());
         displayString = displayString.replaceAll(modePattern, timeMode.getLongDisplayString());
         displayString = displayString.replaceAll(orderPattern, trackingMode.toString());
+        return displayString;
+    }
+
+    public String displayStringForTitlePattern(Context context, String titlePattern, @Nullable SuntimesClockData data)
+    {
+        String displayString = displayStringForTitlePattern(context, titlePattern, (SuntimesData)data);
+        String modePattern = "%M";
+        String modePatternShort = "%m";
+
+        if (data == null) {
+            return displayString.replaceAll(modePatternShort, "").replaceAll(modePattern, "");
+        }
+
+        CalendarMode mode = CalendarSettings.loadCalendarModePref(context, data.appWidgetID());
+        displayString = displayString.replaceAll(modePatternShort, mode.getDisplayString());
+        displayString = displayString.replaceAll(modePattern, mode.getDisplayString());
         return displayString;
     }
 
