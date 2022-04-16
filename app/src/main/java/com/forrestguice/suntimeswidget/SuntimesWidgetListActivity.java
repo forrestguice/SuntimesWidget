@@ -485,6 +485,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 AppWidgetProviderInfo info = widgetManager.getAppWidgetInfo(id);
                 SuntimesData data;
                 String widgetTitle;
+                int widgetSummaryResID = R.string.configLabel_widgetList_itemSummaryPattern;
                 String widgetType = getWidgetName(context, widgetClass);
                 String widgetClass0 = simpleClassName(widgetClass);
                 String configClass = info.configure.getClassName();
@@ -504,6 +505,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 } else if (widgetClass0.equals("ClockWidget0") || widgetClass0.equals("ClockWidget0_3x1") ||  widgetClass0.equals("DateWidget0")) {
                     SuntimesClockData data0 = new SuntimesClockData(context, id);
                     widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
+                    widgetSummaryResID = R.string.configLabel_widgetList_itemSummaryPattern1;
                     data = data0;
 
                 } else {
@@ -514,7 +516,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
 
                 String title = context.getString(R.string.configLabel_widgetList_itemTitle, widgetTitle);
                 String source = ((data == null || data.calculatorMode() == null) ? "def" : data.calculatorMode().getName());
-                String summary = context.getString(R.string.configLabel_widgetList_itemSummaryPattern, widgetType, source);
+                String summary = context.getString(widgetSummaryResID, widgetType, source);
                 items.add(new WidgetListItem(packageName, widgetClass, id, ContextCompat.getDrawable(context, widgetIcon), title, summary, configClass));
             }
             return items;
@@ -593,6 +595,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
             switch (simpleClassName(widgetClass))
             {
                 case "DateWidget0":
+                    return context.getString(R.string.configLabel_widgetList_itemTitlePattern2);
                 case "ClockWidget0": case "ClockWidget0_3x1":
                 case "MoonWidget0": case "MoonWidget0_2x1": case "MoonWidget0_3x1": case "MoonWidget0_3x2":
                 case "SuntimesWidget2": case "SuntimesWidget2_3x1": case "SuntimesWidget2_3x2": case "SuntimesWidget2_3x3":
