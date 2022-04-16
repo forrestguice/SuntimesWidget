@@ -71,6 +71,7 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
         showCalendarMode(true);
         showCalendarFormat(true);
         showCalendarFormatPattern(true);
+        showOptionLabels(true);
 
         showTimeFormatMode(false);
         showOptionRiseSetOrder(false);
@@ -86,7 +87,7 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
         showDataSource(false);
         showTimeMode(false);
         showOptionShowNoon(false);
-        showOptionLabels(false);
+
         hideLayoutSettings();
 
         moveSectionToTop(R.id.appwidget_general_layout);

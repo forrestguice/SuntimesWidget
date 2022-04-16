@@ -1069,7 +1069,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected View[] getSecondaryWidgetModeViews() {
         return new View[] { label_2x1mode, spinner_2x1mode, label_3x1mode, spinner_3x1mode, label_3x2mode, spinner_3x2mode, label_3x3mode, spinner_3x3mode };
     }
-    
+
     protected void initCalendarMode(final Context context) { /* EMPTY */ }
     protected void saveCalendarSettings(Context context) { /* EMPTY */ }
     protected void loadCalendarSettings(Context context) { /* EMPTY */ }

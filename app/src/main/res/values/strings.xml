@@ -439,6 +439,7 @@
     <string name="configLabel_general_calendarFormat_custom">Custom (%s)</string>       <!-- spinner value -->   <!-- TODO -->
     <string name="configLabel_general_calendarFormat_yyyy">%s [year]</string>       <!-- spinner value -->   <!-- TODO -->
     <string name="configLabel_general_calendarFormat_MMMM">%s [month]</string>       <!-- spinner value -->   <!-- TODO -->
+    <string name="configLabel_general_calendarFormat_EEEE">%s [day of week]</string>       <!-- spinner value -->   <!-- TODO -->
     <string name="configLabel_general_calendarFormat_MM">%s [month]</string>       <!-- spinner value -->   <!-- TODO -->
     <string name="configLabel_general_calendarFormat_dd">%s [day of month]</string>       <!-- spinner value -->   <!-- TODO -->
     <string name="configLabel_general_calendarFormat_DD">%s [day of year]</string>       <!-- spinner value -->   <!-- TODO -->
@@ -1891,6 +1892,7 @@
     <string name="help_general_calendarFormatPattern"><![CDATA[
           <b>Date Format:</b> A date format pattern.<br/>
           <br/>Available elements may differ between calendars, but usually include..<br/>
+          <br/>
           <b>E</b> : day of week <br/>
           <b>d</b> : day of month <br/>
           <b>D</b> : day of year <br/>

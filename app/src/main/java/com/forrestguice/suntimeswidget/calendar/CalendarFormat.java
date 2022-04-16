@@ -36,12 +36,18 @@ public enum CalendarFormat
     CUSTOM("%s [custom]", null),                       // CUSTOM (search functions assume this item is at 0)
     F_ISO8601("%s", "yyyy-MM-dd"),                     // year-month-day
     F_yyyy("%s [year]", "yyyy"),                       // year only
+    F_yy("%s [year]", "yy"),                           // year only
     F_MM("%s [month]", "MM"),                          // month only
     F_dd("%s [day of month]", "dd"),                   // day_of_month only
     F_DD("%s [day of year]", "DD"),                    // day_of_year only
-    F_EEEE("%s [day of week]", "EEEE"),                // day_of_week only
+    F_EEEE("%s [day of week]", "EEEE"),                // day name only
+    F_EE("%s [day of week]", "EE"),                    // day name only
+    F_MMM("%s [month]", "MMM"),                        // month only
     F_MMMM("%s [month]", "MMMM"),                      // month name
+    F_MMM_d("%s", "MMM d"),                            // month + day
     F_MMMM_d("%s", "MMMM d"),                          // month + day
+    F_EE_MMMM_d("%s", "EE, MMMM d"),                   // day name, month + day
+    F_EEEE_MMMM_d("%s", "EEEE, MMMM d"),               // day name, month + day
     F_MMMM_d_yyyy("%s", "MMMM d, yyyy"),               // month day, year
     F_d_MMMM_yyyy("%s","d MMMM yyyy"),                 // day month year
     F_MMMM_d_yyyy_G("%s", "MMMM d, yyyy G"),           // month day, year era
@@ -81,9 +87,9 @@ public enum CalendarFormat
     public static void initDisplayStrings(Context context, @NonNull CalendarMode mode, @NonNull Calendar now )
     {
         CUSTOM.displayString0 = context.getString(R.string.configLabel_general_calendarFormat_custom);
-        F_yyyy.displayString0 = context.getString(R.string.configLabel_general_calendarFormat_yyyy);
-        F_MMMM.displayString0 = context.getString(R.string.configLabel_general_calendarFormat_MMMM);
-        F_MM.displayString0 = context.getString(R.string.configLabel_general_calendarFormat_MM);
+        F_yyyy.displayString0 = F_yy.displayString0 = context.getString(R.string.configLabel_general_calendarFormat_yyyy);
+        F_EEEE.displayString0 = F_EE.displayString0 = context.getString(R.string.configLabel_general_calendarFormat_EEEE);
+        F_MMMM.displayString0 = F_MMM.displayString0 = F_MM.displayString0 = context.getString(R.string.configLabel_general_calendarFormat_MMMM);
         F_dd.displayString0 = context.getString(R.string.configLabel_general_calendarFormat_dd);
         F_DD.displayString0 = context.getString(R.string.configLabel_general_calendarFormat_DD);
 
