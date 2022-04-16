@@ -133,12 +133,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_tzFromApp;
     protected CheckBox checkbox_localizeHemisphere;
 
-    protected Spinner spinner_calendarMode;
-    protected Spinner spinner_calendarFormat;
-    protected EditText text_calendarFormatPattern;
-    protected ImageButton button_calendarFormatPatternHelp;
-    protected ImageButton button_calendarFormatEdit;
-
     protected Spinner spinner_timeMode;
     protected TimeModeAdapter spinner_timeModeAdapter;
 
@@ -273,6 +267,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         saveLayoutSettings(context);
         saveGeneralSettings(context);
+        saveCalendarSettings(context);
         locationConfig.saveSettings(context);
         saveTimezoneSettings(context);
         saveAppearanceSettings(context);
@@ -289,6 +284,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         locationConfig.loadSettings(context);
         loadLayoutSettings(context);
         loadGeneralSettings(context);
+        loadCalendarSettings(context);
         loadAppearanceSettings(context);
         loadTimezoneSettings(context);
         loadActionSettings(context);
@@ -478,11 +474,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         }
 
         // widget: calendar mode
-        spinner_calendarMode = (Spinner) findViewById(R.id.appwidget_general_calendarMode);
-        text_calendarFormatPattern = (EditText) findViewById(R.id.appwidget_general_calendarPattern);
-        button_calendarFormatEdit = (ImageButton) findViewById(R.id.appwidget_general_calendarFormat_editButton);
-        button_calendarFormatPatternHelp = (ImageButton) findViewById(R.id.appwidget_general_calendarPattern_helpButton);
-        spinner_calendarFormat = (Spinner) findViewById(R.id.appwidget_general_calendarFormat);
         initCalendarMode(context);
 
         //
@@ -1078,137 +1069,19 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected View[] getSecondaryWidgetModeViews() {
         return new View[] { label_2x1mode, spinner_2x1mode, label_3x1mode, spinner_3x1mode, label_3x2mode, spinner_3x2mode, label_3x3mode, spinner_3x3mode };
     }
-
-    protected void initCalendarMode(final Context context)
-    {
-        if (spinner_calendarMode != null)
-        {
-            final ArrayAdapter<CalendarMode> adapter = new ArrayAdapter<CalendarMode>(this, R.layout.layout_listitem_oneline, CalendarMode.values());
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner_calendarMode.setAdapter(adapter);
-            spinner_calendarMode.setOnItemSelectedListener(onCalendarModeSelected);
-        }
-
-        if (spinner_calendarFormat != null)
-        {
-            final ArrayAdapter<CalendarFormat> adapter = new ArrayAdapter<CalendarFormat>(this, R.layout.layout_listitem_oneline, CalendarFormat.values());
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner_calendarFormat.setAdapter(adapter);
-            spinner_calendarFormat.setOnItemSelectedListener(onCalendarFormatSelected);
-        }
-
-        if (text_calendarFormatPattern != null) {
-            text_calendarFormatPattern.setImeOptions(EditorInfo.IME_ACTION_DONE);
-            text_calendarFormatPattern.setOnEditorActionListener(onCalendarFormatPatternEdited);
-            text_calendarFormatPattern.setOnFocusChangeListener(onCalendarFormatPatternFocus);
-        }
-
-        if (button_calendarFormatEdit != null) {
-            button_calendarFormatEdit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    setCalendarFormat(CalendarFormat.CUSTOM);
-                }
-            });
-        }
-
-        if (button_calendarFormatPatternHelp != null)
-        {
-            button_calendarFormatPatternHelp.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    HelpDialog helpDialog = new HelpDialog();
-                    helpDialog.setContent(getString(R.string.help_general_calendarFormatPattern));
-                    helpDialog.setNeutralButtonListener(onCalendarFormatPatternHelpRestoreDefaults, "calendarFormatPattern");
-                    helpDialog.setShowNeutralButton(context.getString(R.string.configAction_restoreDefaults));
-                    helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
-                }
-            });
-        }
+    
+    protected void initCalendarMode(final Context context) { /* EMPTY */ }
+    protected void saveCalendarSettings(Context context) { /* EMPTY */ }
+    protected void loadCalendarSettings(Context context) { /* EMPTY */ }
+    protected int setCalendarMode(@NonNull CalendarMode mode) {
+        return -1;
     }
-    protected void notifyDataSetChanged_calendarFormatAdapter()
-    {
-        try {
-            ArrayAdapter<CalendarFormat> adapter = (ArrayAdapter<CalendarFormat>) spinner_calendarFormat.getAdapter();
-            adapter.notifyDataSetChanged();
-        } catch (ClassCastException e) {
-            Log.e(getClass().getSimpleName(), "Failed to update calendar format adapter: " + e);
-        }
+    protected int setCalendarFormat(@NonNull CalendarFormat format) {
+        return -1;
     }
-    protected void updateCustomCalendarFormat(String pattern) {
-        CalendarMode mode = (CalendarMode) spinner_calendarMode.getSelectedItem();
-        CalendarFormat.CUSTOM.setPattern(pattern);
-        CalendarFormat.CUSTOM.initDisplayString(SuntimesConfigActivity0.this, mode, Calendar.getInstance());
-        notifyDataSetChanged_calendarFormatAdapter();
+    protected int setCalendarFormat(@NonNull String pattern) {
+        return -1;
     }
-
-    private final AdapterView.OnItemSelectedListener onCalendarModeSelected = new AdapterView.OnItemSelectedListener()
-    {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-        {
-            CalendarMode mode = (CalendarMode) spinner_calendarMode.getItemAtPosition(position);
-            String pattern = CalendarSettings.loadCalendarFormatPatternPref(SuntimesConfigActivity0.this, appWidgetId, mode.name());
-            text_calendarFormatPattern.setText(pattern);
-            setCalendarFormat(pattern);
-
-            CalendarFormat.CUSTOM.setPattern(pattern);
-            CalendarFormat.initDisplayStrings(SuntimesConfigActivity0.this, mode, Calendar.getInstance());
-            notifyDataSetChanged_calendarFormatAdapter();
-        }
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {}
-    };
-    private final AdapterView.OnItemSelectedListener onCalendarFormatSelected = new AdapterView.OnItemSelectedListener()
-    {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-        {
-            CalendarFormat item = (CalendarFormat)parent.getItemAtPosition(position);
-            text_calendarFormatPattern.setEnabled(item == CalendarFormat.CUSTOM);
-            button_calendarFormatEdit.setVisibility(item == CalendarFormat.CUSTOM ? View.INVISIBLE : View.VISIBLE);
-
-            if (item != CalendarFormat.CUSTOM) {
-                text_calendarFormatPattern.setText(item.getPattern());
-            }
-        }
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {}
-    };
-    private final TextView.OnEditorActionListener onCalendarFormatPatternEdited = new TextView.OnEditorActionListener() {
-        @Override
-        public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
-        {
-            switch (actionId) {
-                case EditorInfo.IME_ACTION_DONE: case EditorInfo.IME_ACTION_NEXT: case EditorInfo.IME_ACTION_PREVIOUS:
-                case EditorInfo.IME_ACTION_SEARCH: case EditorInfo.IME_ACTION_GO: case EditorInfo.IME_ACTION_SEND:
-                    updateCustomCalendarFormat(v.getText().toString());
-                    break;
-            }
-            return false;
-        }
-    };
-    private final View.OnFocusChangeListener onCalendarFormatPatternFocus =  new View.OnFocusChangeListener() {
-        @Override
-        public void onFocusChange(View v, boolean hasFocus) {
-            if (!hasFocus && v.isEnabled()) {
-                updateCustomCalendarFormat(text_calendarFormatPattern.getText().toString());
-            }
-        }
-    };
-    private final View.OnClickListener onCalendarFormatPatternHelpRestoreDefaults = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            dismissHelpDialog();
-            CalendarMode mode = (CalendarMode) spinner_calendarMode.getSelectedItem();
-            String pattern = mode.getDefaultPattern();
-            text_calendarFormatPattern.setText(pattern);
-            updateCustomCalendarFormat(pattern);
-            setCalendarFormat(pattern);
-        }
-    };
 
     protected void dismissHelpDialog()
     {
@@ -1217,50 +1090,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (dialog != null) {
             dialog.dismiss();
         }
-    }
-
-    protected int setCalendarMode(@NonNull CalendarMode mode)
-    {
-        if (spinner_calendarMode != null) {
-            SpinnerAdapter adapter = spinner_calendarMode.getAdapter();
-            for (int i=0; i<adapter.getCount(); i++) {
-                CalendarMode item = (CalendarMode) adapter.getItem(i);
-                if (mode.equals(item)) {
-                    spinner_calendarMode.setSelection(i);
-                    return i;
-                }
-            }
-        }
-        return -1;
-    }
-    protected int setCalendarFormat(@NonNull CalendarFormat format)
-    {
-        if (spinner_calendarFormat != null) {
-            SpinnerAdapter adapter = spinner_calendarFormat.getAdapter();
-            for (int i=0; i<adapter.getCount(); i++) {
-                CalendarFormat item = (CalendarFormat) adapter.getItem(i);
-                if (format.equals(item)) {
-                    spinner_calendarFormat.setSelection(i);
-                    return i;
-                }
-            }
-        }
-        return -1;
-    }
-    protected int setCalendarFormat(@NonNull String pattern)
-    {
-        if (spinner_calendarFormat != null) {
-            SpinnerAdapter adapter = spinner_calendarFormat.getAdapter();
-            for (int i=adapter.getCount()-1; i>=0; i--) {    // CUSTOM must be considered last
-                CalendarFormat item = (CalendarFormat) adapter.getItem(i);
-                if (pattern.equals(item.getPattern())) {
-                    spinner_calendarFormat.setSelection(i);
-                    return i;
-                }
-            }
-            setCalendarFormat(CalendarFormat.CUSTOM);
-        }
-        return -1;
     }
 
     /**
@@ -1650,14 +1479,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         SuntimesCalculatorDescriptor calculator = calculators[spinner_calculatorMode.getSelectedItemPosition()];
         WidgetSettings.saveCalculatorModePref(context, appWidgetId, calculator);
 
-        // save: calendar mode
-        CalendarMode calendarMode = (CalendarMode) spinner_calendarMode.getSelectedItem();
-        CalendarSettings.saveCalendarModePref(context, appWidgetId, calendarMode);
-
-        // save: calendar format pattern
-        String calendarPattern = text_calendarFormatPattern.getText().toString();
-        CalendarSettings.saveCalendarFormatPatternPref(context, appWidgetId, calendarMode.name(), calendarPattern);
-
         // save: tracking mode
         final WidgetSettings.TrackingMode[] trackingModes = WidgetSettings.TrackingMode.values();
         WidgetSettings.TrackingMode trackingMode = trackingModes[spinner_trackingMode.getSelectedItemPosition()];
@@ -1731,11 +1552,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         SuntimesCalculatorDescriptor[] calculators = supportingCalculators();
         SuntimesCalculatorDescriptor calculatorMode = WidgetSettings.loadCalculatorModePref(context, appWidgetId);
         spinner_calculatorMode.setSelection((calculatorMode != null ? calculatorMode.ordinal(calculators) : 0));
-
-        // load: calendar mode
-        CalendarMode calendarMode = CalendarSettings.loadCalendarModePref(context, appWidgetId);
-        setCalendarMode(calendarMode);
-        setCalendarFormat(CalendarSettings.loadCalendarFormatPatternPref(context, appWidgetId, calendarMode.name()));
 
         // load: tracking mode
         WidgetSettings.TrackingMode trackingMode = WidgetSettings.loadTrackingModePref(context, appWidgetId);
