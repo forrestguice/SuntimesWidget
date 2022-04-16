@@ -67,6 +67,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesMoonData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
+import com.forrestguice.suntimeswidget.widgets.DateWidget0;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -406,7 +407,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 SuntimesWidget0.class.getName(), SuntimesWidget0_2x1.class.getName(), SuntimesWidget1.class.getName(), SolsticeWidget0.class.getName(),
                 MoonWidget0.class.getName(), MoonWidget0_2x1.class.getName(), MoonWidget0_3x1.class.getName(), MoonWidget0_3x2.class.getName(),
                 SuntimesWidget2.class.getName(), SuntimesWidget2_3x1.class.getName(), SuntimesWidget2_3x2.class.getName(), SuntimesWidget2_3x3.class.getName(),
-                ClockWidget0.class.getName(), ClockWidget0_3x1.class.getName()
+                ClockWidget0.class.getName(), ClockWidget0_3x1.class.getName(), DateWidget0.class.getName()
         };
 
         public ComponentName[] getAllWidgetClasses()
@@ -500,7 +501,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                     widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
                     data = data0;
 
-                } else if (widgetClass0.equals("ClockWidget0") || widgetClass0.equals("ClockWidget0_3x1")) {
+                } else if (widgetClass0.equals("ClockWidget0") || widgetClass0.equals("ClockWidget0_3x1") ||  widgetClass0.equals("DateWidget0")) {
                     SuntimesClockData data0 = new SuntimesClockData(context, id);
                     widgetTitle = utils.displayStringForTitlePattern(context, titlePattern, data0);
                     data = data0;
@@ -591,6 +592,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
         {
             switch (simpleClassName(widgetClass))
             {
+                case "DateWidget0":
                 case "ClockWidget0": case "ClockWidget0_3x1":
                 case "MoonWidget0": case "MoonWidget0_2x1": case "MoonWidget0_3x1": case "MoonWidget0_3x2":
                 case "SuntimesWidget2": case "SuntimesWidget2_3x1": case "SuntimesWidget2_3x2": case "SuntimesWidget2_3x3":
@@ -608,6 +610,7 @@ public class SuntimesWidgetListActivity extends AppCompatActivity
                 case "SolsticeWidget0": return context.getString(R.string.app_name_solsticewidget0);
                 case "ClockWidget0": return context.getString(R.string.app_name_clockwidget0);
                 case "ClockWidget0_3x1": return context.getString(R.string.app_name_clockwidget0) + " (3x1)";
+                case "DateWidget0": return context.getString(R.string.app_name_datewidget0);
                 case "MoonWidget0": return context.getString(R.string.app_name_moonwidget0);
                 case "MoonWidget0_2x1": return context.getString(R.string.app_name_moonwidget0) + " (2x1)";
                 case "MoonWidget0_3x1": return context.getString(R.string.app_name_moonwidget0) + " (3x1)";
