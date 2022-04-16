@@ -1193,6 +1193,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             String pattern = mode.getDefaultPattern();
             text_calendarFormatPattern.setText(pattern);
             updateCustomCalendarFormat(pattern);
+            setCalendarFormat(pattern);
         }
     };
 
@@ -1237,7 +1238,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (spinner_calendarFormat != null) {
             SpinnerAdapter adapter = spinner_calendarFormat.getAdapter();
-            for (int i=0; i<adapter.getCount(); i++) {
+            for (int i=adapter.getCount()-1; i>=0; i--) {    // CUSTOM must be considered last
                 CalendarFormat item = (CalendarFormat) adapter.getItem(i);
                 if (pattern.equals(item.getPattern())) {
                     spinner_calendarFormat.setSelection(i);

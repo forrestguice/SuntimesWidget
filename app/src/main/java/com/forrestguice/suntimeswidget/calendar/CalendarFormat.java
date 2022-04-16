@@ -33,7 +33,7 @@ import java.util.Calendar;
  */
 public enum CalendarFormat
 {
-    CUSTOM("%s [custom]", null),
+    CUSTOM("%s [custom]", null),                       // CUSTOM (search functions assume this item is at 0)
     F_ISO8601("%s", "yyyy-MM-dd"),                     // year-month-day
     F_yyyy("%s [year]", "yyyy"),                       // year only
     F_MM("%s [month]", "MM"),                          // month only
