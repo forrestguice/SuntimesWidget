@@ -1,5 +1,5 @@
 /**
-   Copyright (C) 2019-2021 Forrest Guice
+   Copyright (C) 2019-2022 Forrest Guice
    This file is part of SuntimesWidget.
 
    SuntimesWidget is free software: you can redistribute it and/or modify
@@ -22,8 +22,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.style.ImageSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -31,8 +30,10 @@ import android.widget.RemoteViews;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
+import com.forrestguice.suntimeswidget.calendar.CalendarFormat;
+import com.forrestguice.suntimeswidget.calendar.CalendarMode;
+import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
-import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
@@ -44,11 +45,6 @@ public class ClockLayout_1x1_0 extends ClockLayout
     {
         super();
     }
-
-    /**public ClockLayout_1x1_0(int layoutID)
-    {
-        this.layoutID = layoutID;
-    }*/
 
     @Override
     public void initLayoutID()
@@ -82,24 +78,61 @@ public class ClockLayout_1x1_0 extends ClockLayout
         boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
         views.setViewVisibility(R.id.text_time_extras, showLabels ? View.VISIBLE : View.GONE);
 
+        boolean showDate = CalendarSettings.loadCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, CalendarSettings.PREF_DEF_CALENDAR_SHOWDATE);
+        views.setViewVisibility(R.id.text_date, showDate ? View.VISIBLE : View.GONE);
+
         Calendar now = data.calendar();
         WidgetSettings.TimeFormatMode timeFormat = WidgetSettings.loadTimeFormatModePref(context, appWidgetId);
         SuntimesUtils.TimeDisplayText nowText = utils.calendarTimeShortDisplayString(context, now, false, timeFormat);
         String nowString = nowText.getValue();
         CharSequence nowChars = (boldTime ? SuntimesUtils.createBoldSpan(null, nowString, nowString) : nowString);
 
+        String dateString = null;
+        if (showDate)
+        {
+            CalendarMode mode = CalendarMode.GREGORIAN;
+            String pattern = CalendarSettings.loadCalendarFormatPatternPref(context, appWidgetId, mode.name());
+            if (!CalendarFormat.isValidPattern(pattern)) {
+                Log.w(getClass().getSimpleName(), "updateViews: invalid pattern! " + pattern + ", falling back to default..");
+                pattern = mode.getDefaultPattern();
+            }
+            dateString = CalendarMode.formatDate(mode, pattern, now);
+            views.setTextViewText(R.id.text_date, dateString);
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
             if (WidgetSettings.loadScaleTextPref(context, appWidgetId, true))
             {
                 int showTitle = (WidgetSettings.loadShowTitlePref(context, appWidgetId) ? 1 : 0);
-                float maxSp = ClockLayout.CLOCKFACE_MAX_SP;  // ((category == AppWidgetProviderInfo.WIDGET_CATEGORY_KEYGUARD) ? CLOCKFACE_MAX_SP : -1);
-                int[] maxDp = new int[] {maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), (maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle))};
-                float[] adjustedSizeSp = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime,"00:00", timeSizeSp, maxSp, "MM", suffixSizeSp);
-                if (adjustedSizeSp[0] != timeSizeSp) {
-                    views.setTextViewTextSize(R.id.text_time, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[0]);
-                    views.setTextViewTextSize(R.id.text_time_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp[1]);
-                }
+
+                float[] adjustedSizeSp0 = new float[] {timeSizeSp, timeSizeSp};
+                float[] adjustedSizeSp1 = new float[] {textSizeSp, textSizeSp};
+
+                int c = 0;
+                boolean rescale = false;
+                do
+                {
+                    float maxSp = ClockLayout.CLOCKFACE_MAX_SP;  // ((category == AppWidgetProviderInfo.WIDGET_CATEGORY_KEYGUARD) ? CLOCKFACE_MAX_SP : -1);
+                    int[] maxDp = new int[] {maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), (maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle) - ((int)adjustedSizeSp1[0] * (showDate ? 1 : 0)))};
+
+                    adjustedSizeSp0 = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime,"00:00", timeSizeSp, maxSp, "MM", suffixSizeSp);
+                    if (adjustedSizeSp0[0] != timeSizeSp) {
+                        views.setTextViewTextSize(R.id.text_time, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp0[0]);
+                        views.setTextViewTextSize(R.id.text_time_suffix, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp0[1]);
+                    }
+
+                    if (showDate && dateString != null) {
+                        maxSp *= 0.33f;
+                        maxDp = new int[] {maxDimensionsDp[0] - (paddingDp[0] + paddingDp[2]), (maxDimensionsDp[1] - (paddingDp[1] + paddingDp[3]) - ((int)titleSizeSp * showTitle) - (int)adjustedSizeSp0[0])};
+                        adjustedSizeSp1 = adjustTextSize(context, maxDp, paddingDp, "sans-serif", boldTime, dateString, textSizeSp, maxSp, "", 0);
+                        if (adjustedSizeSp1[0] != textSizeSp) {
+                            views.setTextViewTextSize(R.id.text_date, TypedValue.COMPLEX_UNIT_DIP, adjustedSizeSp1[0]);
+                            rescale = true;
+                        }
+                    }
+                    c++;
+                } while (rescale && c < 2);
             }
         }
 
@@ -148,6 +181,7 @@ public class ClockLayout_1x1_0 extends ClockLayout
     private boolean boldTime = false;
     protected float titleSizeSp = 10;
     protected float timeSizeSp = 12;
+    protected float textSizeSp = 12;
     protected float suffixSizeSp = 8;
 
     @Override
@@ -163,15 +197,18 @@ public class ClockLayout_1x1_0 extends ClockLayout
         views.setTextColor(R.id.text_time, timeColor);
         views.setTextColor(R.id.text_time_suffix, suffixColor);
         views.setTextColor(R.id.text_time_extras, textColor);
+        views.setTextColor(R.id.text_date, timeColor);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
         {
             timeSizeSp = theme.getTimeSizeSp();
+            textSizeSp = theme.getTextSizeSp();
             suffixSizeSp = theme.getTimeSuffixSizeSp();
 
             views.setTextViewTextSize(R.id.text_time, TypedValue.COMPLEX_UNIT_DIP, timeSizeSp);
             views.setTextViewTextSize(R.id.text_time_suffix, TypedValue.COMPLEX_UNIT_DIP, suffixSizeSp);
-            views.setTextViewTextSize(R.id.text_time_extras, TypedValue.COMPLEX_UNIT_DIP, theme.getTextSizeSp());
+            views.setTextViewTextSize(R.id.text_time_extras, TypedValue.COMPLEX_UNIT_DIP, textSizeSp);
+            views.setTextViewTextSize(R.id.text_date, TypedValue.COMPLEX_UNIT_DIP, textSizeSp);
         }
     }
 

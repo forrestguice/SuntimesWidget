@@ -431,7 +431,8 @@
     <string name="configLabel_general_timeMode">Mode:</string>          <!-- spinner label -->
 
     <!-- Widget Setting: calendar -->
-    <string name="configLabel_general_calendar">Calendar</string>   <!-- group title -->
+    <string name="configLabel_general_showDate">Show Date</string>   <!-- group title -->   <!-- TODO -->
+    <string name="configLabel_general_calendar">Calendar</string>   <!-- group title -->    <!-- TODO -->
     <string name="configLabel_general_calendarMode">Calendar:</string>          <!-- spinner label -->   <!-- TODO -->
     <string name="configLabel_general_calendarFormat">Date Format:</string>          <!-- spinner label -->   <!-- TODO -->
     <string name="configLabel_general_calendarFormatPattern">Date Pattern:</string>          <!-- edittext label -->   <!-- TODO -->

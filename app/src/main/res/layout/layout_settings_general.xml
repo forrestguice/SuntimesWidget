@@ -52,6 +52,18 @@
 
         </LinearLayout>
 
+        <LinearLayout android:id="@+id/appwidget_general_showDate_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:visibility="gone"
+            android:paddingRight="8dp" android:paddingLeft="8dp" android:paddingTop="@dimen/settingsGroup_padding">
+
+            <CheckBox
+                android:id="@+id/appwidget_general_showDate"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/configLabel_general_showDate" />
+
+        </LinearLayout>
+
         <LinearLayout android:id="@+id/appwidget_general_calendarMode_layout"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal"

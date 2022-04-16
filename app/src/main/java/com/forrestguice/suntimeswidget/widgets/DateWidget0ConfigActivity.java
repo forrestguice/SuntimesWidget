@@ -73,6 +73,7 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
         showCalendarFormatPattern(true);
         showOptionLabels(true);
 
+        showOptionShowDate(false);    // always true
         showTimeFormatMode(false);
         showOptionRiseSetOrder(false);
         hideOptionUseAltitude();
@@ -321,6 +322,8 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
     @Override
     protected void saveCalendarSettings(Context context)
     {
+        super.saveCalendarSettings(context);
+
         // save: calendar mode
         CalendarMode calendarMode = (CalendarMode) spinner_calendarMode.getSelectedItem();
         CalendarSettings.saveCalendarModePref(context, appWidgetId, calendarMode);
@@ -333,6 +336,8 @@ public class DateWidget0ConfigActivity extends SuntimesConfigActivity0
     @Override
     protected void loadCalendarSettings(Context context)
     {
+        super.loadCalendarSettings(context);
+
         CalendarMode calendarMode = CalendarSettings.loadCalendarModePref(context, appWidgetId);
         setCalendarMode(calendarMode);
         setCalendarFormat(CalendarSettings.loadCalendarFormatPatternPref(context, appWidgetId, calendarMode.name()));

@@ -34,8 +34,7 @@ public class ClockWidget0ConfigActivity_3x1 extends ClockWidget0ConfigActivity
     }
 
     @Override
-    protected void initViews( Context context )
-    {
+    protected void initViews( Context context ) {
         super.initViews(context);
     }
 

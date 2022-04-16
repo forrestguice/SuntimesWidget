@@ -125,6 +125,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected CheckBox checkbox_showNoon;
     protected CheckBox checkbox_showCompare;
     protected CheckBox checkbox_showSeconds;
+    protected CheckBox checkbox_showDate;
     protected CheckBox checkbox_showTimeDate;
     protected CheckBox checkbox_showWeeks;
     protected CheckBox checkbox_showHours;
@@ -473,7 +474,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             });
         }
 
-        // widget: calendar mode
+        // widget: show date, calendar mode
+        checkbox_showDate = (CheckBox) findViewById(R.id.appwidget_general_showDate);
         initCalendarMode(context);
 
         //
@@ -1071,8 +1073,12 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     }
 
     protected void initCalendarMode(final Context context) { /* EMPTY */ }
-    protected void saveCalendarSettings(Context context) { /* EMPTY */ }
-    protected void loadCalendarSettings(Context context) { /* EMPTY */ }
+    protected void saveCalendarSettings(Context context) {
+        CalendarSettings.saveCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, checkbox_showDate.isChecked());
+    }
+    protected void loadCalendarSettings(Context context) {
+        checkbox_showDate.setChecked(CalendarSettings.loadCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, CalendarSettings.PREF_DEF_CALENDAR_SHOWDATE));
+    }
     protected int setCalendarMode(@NonNull CalendarMode mode) {
         return -1;
     }
@@ -1988,6 +1994,17 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (layout_riseSetOrder != null)
         {
             layout_riseSetOrder.setVisibility((showUI ? View.VISIBLE : View.GONE));
+        }
+    }
+
+    /**
+     * @param showUI true show option, false hide option
+     */
+    protected void showOptionShowDate(boolean showUI)
+    {
+        View layout = findViewById(R.id.appwidget_general_showDate_layout);
+        if (layout != null) {
+            layout.setVisibility((showUI ? View.VISIBLE : View.GONE));
         }
     }
 

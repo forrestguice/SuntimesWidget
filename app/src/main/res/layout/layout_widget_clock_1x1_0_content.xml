@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2019-2021 Forrest Guice
+    Copyright (C) 2019-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -27,7 +27,8 @@
     <LinearLayout
         android:layout_width="match_parent" android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical" android:gravity="center" android:layout_gravity="center">
+        android:orientation="vertical" android:gravity="center" android:layout_gravity="center"
+        android:layout_marginBottom="4dp">
 
         <RelativeLayout
             android:id="@+id/text_time_layout"
@@ -54,13 +55,22 @@
                 style="@style/SunsetTimeTextSuffixView"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_below="@+id/text_time_suffix" android:layout_alignRight="@+id/text_time_suffix" android:layout_alignEnd="@+id/text_time_suffix"
-                android:layout_marginTop="0dp" android:layout_marginBottom="4dp"
+                android:layout_marginTop="0dp" android:layout_marginBottom="0dp"
                 android:paddingTop="0dp" android:paddingBottom="0dp"
                 android:maxLines="1"
                 android:layout_gravity="center" android:gravity="top|end"
                 tools:text="-12m 36s eot" />
 
         </RelativeLayout>
+
+        <TextView android:id="@+id/text_date" android:visibility="visible"
+            style="@style/SunsetTimeTextView2"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="0dp" android:layout_marginBottom="4dp"
+            android:paddingTop="0dp" android:paddingBottom="0dp"
+            android:maxLines="2"
+            android:layout_gravity="center"
+            tools:text="April 16, 2022" />
 
     </LinearLayout>
 

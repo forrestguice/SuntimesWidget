@@ -33,6 +33,9 @@ public class CalendarSettings
 
     public static final String PREF_PREFIX_KEY_CALENDAR = "_calendar_";
 
+    public static final String PREF_KEY_CALENDAR_SHOWDATE = "showDate";        // always true for the DateWidget; used by other widget to optionally show a date
+    public static final boolean PREF_DEF_CALENDAR_SHOWDATE = false;
+
      public static final String PREF_KEY_CALENDAR_MODE = "calendarMode";
     public static final CalendarMode PREF_DEF_CALENDAR_MODE = CalendarMode.GREGORIAN;
 
@@ -44,6 +47,23 @@ public class CalendarSettings
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_JULIAN = "MMMM d, yyyy";   // TODO
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_PERSIAN = "MMMM d, yyyy";     // TODO
     public static final String PREF_DEF_CALENDAR_FORMATPATTERN_THAISOLAR = "MMMM d, yyyy";   // TODO
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void saveCalendarFlag(Context context, int appWidgetId, String key, boolean value) {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_CALENDAR;
+        prefs.putBoolean(prefs_prefix + key, value);
+        prefs.apply();
+    }
+
+    public static boolean loadCalendarFlag(Context context, int appWidgetId, String key, boolean defValue)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_CALENDAR;
+        return prefs.getBoolean(prefs_prefix + key, defValue);
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -68,13 +88,6 @@ public class CalendarSettings
             mode = PREF_DEF_CALENDAR_MODE;
         }
         return mode;
-    }
-    public static void deleteCalendarModePref(Context context, int appWidgetId)
-    {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
-        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_CALENDAR;
-        prefs.remove(prefs_prefix + PREF_KEY_CALENDAR_MODE);
-        prefs.apply();
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -114,9 +127,18 @@ public class CalendarSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static void deleteCalendarPref(Context context, int appWidgetId, String key)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_CALENDAR;
+        prefs.remove(prefs_prefix + key);
+        prefs.apply();
+    }
+
     public static void deletePrefs(Context context, int appWidgetId)
     {
-        deleteCalendarModePref(context, appWidgetId);
+        deleteCalendarPref(context, appWidgetId, PREF_KEY_CALENDAR_SHOWDATE);
+        deleteCalendarPref(context, appWidgetId, PREF_KEY_CALENDAR_MODE);
         for (CalendarMode mode : CalendarMode.values()) {
             deleteCalendarFormatPatternPref(context, appWidgetId, mode.name());
         }
