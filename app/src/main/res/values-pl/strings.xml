@@ -1457,7 +1457,7 @@
     <string name="help_general_timeMode2"><![CDATA[
           <b>Równonoc wiosenna:</b> początek astronomicznej wiosny. Ma miejsce w <em>marcu</em> na półkuli północnej i we <em>wrześniu</em> na półkuli południowej.<br/><br/>
           <b>Przesilenie letnie:</b> początek astronomicznego lata. Ma miejsce w <em>czerwcu</em> na półkuli północnej i w <em>grudniu</em> na półkuli południowej.<br/><br/>
-          <bRównonoc jesienna:</b> początek astronomicznej jesieni. Ma miejsce we <em>wrześniu</em> na półkuli północnej i w <em>marcu</em> na półkuli południowej.<br/><br/>
+          <b>Równonoc jesienna:</b> początek astronomicznej jesieni. Ma miejsce we <em>wrześniu</em> na półkuli północnej i w <em>marcu</em> na półkuli południowej.<br/><br/>
           <b>Przesilenie zimowe:</b> poczętek astronomicznej zimy. Ma miejsce w <em>grudniu</em> na półkuli północnej i w  <em>czerwcu</em> na pólkuli południowej.<br/>
     ]]></string>
     <string name="help_general_tropicalyear"><![CDATA[
