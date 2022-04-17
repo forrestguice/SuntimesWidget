@@ -21,24 +21,20 @@ package com.forrestguice.suntimeswidget.widgets.layouts;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
-import android.text.SpannableString;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.RemoteViews;
 
 import com.forrestguice.suntimeswidget.R;
-import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesClockData;
 import com.forrestguice.suntimeswidget.calendar.CalendarFormat;
 import com.forrestguice.suntimeswidget.calendar.CalendarMode;
 import com.forrestguice.suntimeswidget.calendar.CalendarSettings;
-import com.forrestguice.suntimeswidget.layouts.ClockLayout;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
 import java.util.Calendar;
-import java.util.TimeZone;
 
 public class DateLayout_1x1_0 extends DateLayout
 {
@@ -98,13 +94,14 @@ public class DateLayout_1x1_0 extends DateLayout
             }
         }
 
-        boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
-        if (showLabels)
-        {
-            String extrasDisplayString = "TODO (extra labels)";    // TODO
-            views.setTextViewText(R.id.text_date_extras, extrasDisplayString);
-            views.setViewVisibility(R.id.text_date_extras, View.VISIBLE);
-        } else views.setViewVisibility(R.id.text_date_extras, View.GONE);
+        //boolean showLabels = WidgetSettings.loadShowLabelsPref(context, appWidgetId);
+        //if (showLabels)
+        //{
+        //    String extrasDisplayString = "TODO (extra labels)";    // TODO
+        //    views.setTextViewText(R.id.text_date_extras, extrasDisplayString);
+        //    views.setViewVisibility(R.id.text_date_extras, View.VISIBLE);
+        //} else
+            views.setViewVisibility(R.id.text_date_extras, View.GONE);
 
         views.setTextViewText(R.id.text_date, displayString);
     }
