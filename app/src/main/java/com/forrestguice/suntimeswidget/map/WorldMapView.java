@@ -39,6 +39,7 @@ import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -645,6 +646,29 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     protected void onDetachedFromWindow()
     {
         super.onDetachedFromWindow();
+        stopRunningTasks();
+    }
+
+    @Override
+    protected void onVisibilityChanged(@NonNull View view, int visibility)
+    {
+        super.onVisibilityChanged(view, visibility);
+        if (visibility != View.VISIBLE) {
+            stopRunningTasks();
+        }
+    }
+
+    @Override
+    public void onVisibilityAggregated(boolean isVisible)    // TODO: only called for api 24+ ?
+    {
+        super.onVisibilityAggregated(isVisible);
+        if (!isVisible) {
+            stopRunningTasks();
+        }
+    }
+
+    protected void stopRunningTasks()
+    {
         dismissProgress();
         if (drawTask != null) {
             drawTask.cancel(true);
