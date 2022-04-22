@@ -1079,15 +1079,6 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     protected void loadCalendarSettings(Context context) {
         checkbox_showDate.setChecked(CalendarSettings.loadCalendarFlag(context, appWidgetId, CalendarSettings.PREF_KEY_CALENDAR_SHOWDATE, CalendarSettings.PREF_DEF_CALENDAR_SHOWDATE));
     }
-    protected int setCalendarMode(@NonNull CalendarMode mode) {
-        return -1;
-    }
-    protected int setCalendarFormat(@NonNull CalendarFormat format) {
-        return -1;
-    }
-    protected int setCalendarFormat(@NonNull String pattern) {
-        return -1;
-    }
 
     protected void dismissHelpDialog()
     {
@@ -2028,14 +2019,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         if (layout != null) {
             layout.setVisibility((showUI ? View.VISIBLE : View.GONE));
         }
-    }
-
-    /**
-     * @param showUI true show option, false hide option
-     */
-    protected void showCalendarFormatPattern(boolean showUI)
-    {
-        View layout = findViewById(R.id.appwidget_general_calendarPattern_layout);
+        layout = findViewById(R.id.appwidget_general_calendarPattern_layout);
         if (layout != null) {
             layout.setVisibility((showUI ? View.VISIBLE : View.GONE));
         }
