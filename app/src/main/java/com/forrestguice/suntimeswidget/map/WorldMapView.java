@@ -585,7 +585,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
                     shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
                     try {
-                        Uri shareURI = FileProvider.getUriForFile(context, "com.forrestguice.suntimeswidget.fileprovider", result.getExportFile());
+                        Uri shareURI = FileProvider.getUriForFile(context, ExportTask.FILE_PROVIDER_AUTHORITY, result.getExportFile());
                         shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
 
                         String successMessage = context.getString(R.string.msg_export_success, result.getExportFile().getAbsolutePath());
