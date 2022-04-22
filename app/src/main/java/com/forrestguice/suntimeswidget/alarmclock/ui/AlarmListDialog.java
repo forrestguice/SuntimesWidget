@@ -21,6 +21,7 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
@@ -39,6 +40,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ImageViewCompat;
@@ -63,6 +65,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
@@ -72,12 +75,14 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
+import com.forrestguice.suntimeswidget.alarmclock.ExportAlarmsTask;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEventIcons;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -434,10 +439,85 @@ public class AlarmListDialog extends DialogFragment
         return alarm;
     }
 
-    public void exportAlarms(Context context)
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public boolean exportAlarms(Context context)
     {
-        Toast.makeText(context, "TODO: export", Toast.LENGTH_SHORT).show();    // TODO
+        if (exportTask != null) {
+            Log.e("ExportAlarms", "Already busy importing/exporting! ignoring request");
+            return false;
+        }
+
+        AlarmListDialogAdapter adapter = getAdapter();
+        if (context != null && adapter != null)
+        {
+            AlarmClockItem[] items = adapter.getItems().toArray(new AlarmClockItem[0]);
+            if (items.length > 0)
+            {
+                exportTask = new ExportAlarmsTask(context, "SuntimesAlarms", true, true);    // export to external cache
+                exportTask.setItems(items);
+                exportTask.setTaskListener(exportListener);
+                exportTask.execute();
+                return true;
+
+            } else return false;
+        }
+        return false;
     }
+
+    protected ExportAlarmsTask exportTask = null;
+    private ExportTask.TaskListener exportListener = new ExportTask.TaskListener()
+    {
+        public void onStarted()
+        {
+            setRetainInstance(true);
+            if (progress != null) {
+                progress.setVisibility(View.VISIBLE);
+            }
+        }
+
+        @Override
+        public void onFinished(ExportAlarmsTask.ExportResult results)
+        {
+            setRetainInstance(false);
+            exportTask = null;
+            if (progress != null) {
+                progress.setVisibility(View.GONE);
+            }
+
+            if (results.getResult())
+            {
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.setType(results.getMimeType());
+                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                try {
+                    Uri shareURI = FileProvider.getUriForFile(getActivity(), ExportTask.FILE_PROVIDER_AUTHORITY, results.getExportFile());
+                    shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
+                    startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.msg_export_to)));
+
+                    if (isAdded()) {
+                        String successMessage = getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());
+                        Toast.makeText(getActivity(), successMessage, Toast.LENGTH_LONG).show();
+                    }
+                    return;     // successful export ends here...
+
+                } catch (Exception e) {
+                    Log.e("ExportAlarms", "Failed to share file URI! " + e);
+                }
+            }
+
+            if (isAdded())
+            {
+                File file = results.getExportFile();   // export failed
+                String path = ((file != null) ? file.getAbsolutePath() : "<path>");
+                String failureMessage = getString(R.string.msg_export_failure, path);
+                Toast.makeText(getActivity(), failureMessage, Toast.LENGTH_LONG).show();
+            }
+        }
+    };
 
     public void importAlarms(Context context)
     {
