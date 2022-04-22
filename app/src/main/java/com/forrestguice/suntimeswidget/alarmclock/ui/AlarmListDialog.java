@@ -61,6 +61,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
@@ -203,6 +204,14 @@ public class AlarmListDialog extends DialogFragment
 
             case R.id.action_clear:
                 confirmClearAlarms(getActivity());
+                return true;
+
+            case R.id.action_export:
+                exportAlarms(getActivity());
+                return true;
+
+            case R.id.action_import:
+                importAlarms(getActivity());
                 return true;
 
             default:
@@ -425,6 +434,43 @@ public class AlarmListDialog extends DialogFragment
         return alarm;
     }
 
+    public void exportAlarms(Context context)
+    {
+        Toast.makeText(context, "TODO: export", Toast.LENGTH_SHORT).show();    // TODO
+    }
+
+    public void importAlarms(Context context)
+    {
+        Toast.makeText(context, "TODO: import", Toast.LENGTH_SHORT).show();    // TODO
+    }
+
+    public void offerUndoImport(Context context, final List<AlarmClockItem> items)
+    {
+        View view = getView();
+        if (context != null && view != null)
+        {
+            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.importalarms_toast_success, items.size() + ""), Snackbar.LENGTH_INDEFINITE);
+            snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    Context context = getActivity();
+                    if (context != null) {
+                        // TODO: undo import
+                        //for (AlarmClockItem item : items) {
+                        //    if (item != null) {
+                        //        addAlarm(context, item);
+                        //    }
+                        //}
+                    }
+                }
+            });
+            SuntimesUtils.themeSnackbar(context, snackbar, null);
+            snackbar.setDuration(UNDO_IMPORT_MILLIS);
+            snackbar.show();
+        }
+    }
+    public static final int UNDO_IMPORT_MILLIS = 8000;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
