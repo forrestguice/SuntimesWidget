@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout android:id="@+id/appwidget_general_calendarFormat_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="16dp" android:paddingLeft="16dp"
+            android:weightSum="1" android:visibility="visible" android:animateLayoutChanges="true">
+
+            <TextView android:labelFor="@+id/appwidget_general_calendarFormat"
+                android:id="@+id/appwidget_general_calendarFormat_label"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="@string/configLabel_general_calendarFormat" />
+
+            <Spinner android:id="@+id/appwidget_general_calendarFormat" android:layout_width="0dp"
+                android:layout_height="wrap_content" android:dropDownVerticalOffset="16sp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1" />
+
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_general_calendarFormat_editButton"
+                style="@style/Widget.AppCompat.ActionButton" android:visibility="visible" android:enabled="false"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                android:scaleX="0.8" android:scaleY="0.8"
+                android:src="?attr/icActionEdit" android:contentDescription="@string/configAction_editCalendarFormat" />
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/appwidget_general_calendarPattern_layout"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="16dp" android:paddingLeft="16dp" android:layout_marginBottom="@dimen/settingsGroup_padding"
+            android:weightSum="1" android:visibility="visible">
+
+            <TextView android:labelFor="@+id/appwidget_general_calendarPattern"
+                android:id="@+id/appwidget_general_calendarPattern_label"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="@string/configLabel_general_calendarFormatPattern" />
+
+            <EditText android:id="@+id/appwidget_general_calendarPattern" android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_gravity="center_vertical" android:layout_weight="1"
+                android:hint="@string/configHint_general_calendarFormatPattern" android:text=""
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:inputType="textVisiblePassword" />
+
+            <android.support.v7.widget.AppCompatImageButton android:id="@+id/appwidget_general_calendarPattern_helpButton"
+                style="@style/Widget.AppCompat.ActionButton" android:visibility="visible"
+                android:layout_height="wrap_content" android:layout_width="wrap_content"
+                android:src="@drawable/ic_help" android:tint="?attr/colorAccent"
+                android:contentDescription="@string/configAction_help" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</merge>
