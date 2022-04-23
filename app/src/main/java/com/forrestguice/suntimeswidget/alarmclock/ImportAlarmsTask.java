@@ -23,18 +23,17 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
+import android.util.JsonReader;
+import android.util.JsonToken;
 import android.util.Log;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -95,39 +94,35 @@ public class ImportAlarmsTask extends AsyncTask<Uri, AlarmClockItem, ImportAlarm
                 if (in != null)
                 {
                     Log.d(getClass().getSimpleName(), "doInBackground: reading");
-
-                    String jsonString = inputStreamToString(in);
-                    JSONArray jsonArray = new JSONArray(jsonString);
-                    in.close();
-
-                    for (int i=0; i<jsonArray.length(); i++)
-                    {
-                        JSONObject jsonObj = jsonArray.getJSONObject(i);
-                        Map<String, Object> map = new HashMap<>();
-                        for (Iterator<String> iterator = jsonObj.keys(); iterator.hasNext(); )
+                    JsonReader reader = new JsonReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+                    reader.setLenient(true);
+                    try {
+                        reader.beginArray();
+                        while (reader.hasNext())
                         {
-                            String key = iterator.next();
-                            Object obj = jsonObj.get(key);
-                            if (obj != null) {
-                                map.put(key, obj);
+                            Map<String, Object> map = readJsonObject(reader);
+                            if (map != null)
+                            {
+                                ContentValues values = toContentValues(map);
+                                AlarmClockItem item = new AlarmClockItem();
+                                item.fromContentValues(context, values);
+                                items.add(item);
                             }
                         }
+                        reader.endArray();
+                        result = true;
+                        error = null;
 
-                        ContentValues values = toContentValues(map);
-                        AlarmClockItem item = new AlarmClockItem();
-                        item.fromContentValues(context, values);
-                        items.add(item);
+                    } finally {
+                        reader.close();
+                        in.close();
                     }
-
-                    result = true;
-                    error = null;
-
                 } else {
                     Log.e(getClass().getSimpleName(), "Failed to import from " + uri + ": null input stream!");
                     result = false;
                     error = null;
                 }
-            } catch (IOException | JSONException e) {
+            } catch (IOException e) {
                 Log.e(getClass().getSimpleName(), "Failed to import from " + uri + ": " + e);
                 result = false;
                 items = null;
@@ -145,6 +140,47 @@ public class ImportAlarmsTask extends AsyncTask<Uri, AlarmClockItem, ImportAlarm
         return new TaskResult(result, uri, (items != null ? items.toArray(new AlarmClockItem[0]) : null), error);
     }
 
+    @Nullable
+    protected Map<String, Object> readJsonObject(JsonReader reader)
+    {
+        try {
+            Map<String, Object> map = new HashMap<>();
+            String key = null;
+            Object value = null;
+            boolean hasValue = false;
+
+            reader.beginObject();
+            while (reader.hasNext())
+            {
+                if (key == null) {
+                    key = reader.nextName();
+
+                } else {
+                    switch (reader.peek()) {
+                        case NULL: value = null; reader.nextNull(); break;
+                        case BOOLEAN: value = reader.nextBoolean(); break;
+                        case STRING:
+                        default: value = reader.nextString(); break;
+                    }
+                    hasValue = true;
+                }
+
+                if (key != null && hasValue) {
+                    map.put(key, value);
+                    key = null;
+                    value = null;
+                    hasValue = false;
+                }
+            }
+            reader.endObject();
+            return map;
+
+        } catch (IOException e) {
+            Log.e(getClass().getSimpleName(), "Failed to read json obj from input stream! " + e);
+            return null;
+        }
+    }
+
     @Override
     protected void onProgressUpdate(AlarmClockItem... progressItems) {
         super.onProgressUpdate(progressItems);
@@ -157,12 +193,6 @@ public class ImportAlarmsTask extends AsyncTask<Uri, AlarmClockItem, ImportAlarm
         if (taskListener != null) {
             taskListener.onFinished(result);
         }
-    }
-
-    public static String inputStreamToString(InputStream in)
-    {
-        Scanner s = new Scanner(in).useDelimiter("\\A");
-        return s.hasNext() ? s.next() : "";
     }
 
     /* https://stackoverflow.com/a/59211956 */
