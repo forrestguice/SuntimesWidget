@@ -762,6 +762,7 @@
     <string name="configAction_editAlarm">Edit</string>               <!-- button (contentDescription) -->
     <string name="configAction_deleteAlarm">Delete</string>               <!-- button (contentDescription) -->
     <string name="configAction_clearAlarms">Clear</string>                <!-- action button / menu item -->
+    <string name="configAction_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_exportAlarms">Export</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_importAlarms">Import</string>                <!-- action button / menu item -->  <!-- TODO -->
     <string name="configAction_sortAlarms">Sort</string>                <!-- action button / menu item -->
