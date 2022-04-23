@@ -18,6 +18,7 @@
 package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -29,8 +30,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -76,6 +75,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
 import com.forrestguice.suntimeswidget.alarmclock.ExportAlarmsTask;
+import com.forrestguice.suntimeswidget.alarmclock.ImportAlarmsTask;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEventIcons;
@@ -85,6 +85,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -94,6 +95,8 @@ import java.util.List;
 public class AlarmListDialog extends DialogFragment
 {
     public static final String EXTRA_SELECTED_ROWID = "selectedRowID";
+
+    public static final int REQUEST_IMPORT_URI = 100;
 
     protected View emptyView;
     protected RecyclerView list;
@@ -166,6 +169,24 @@ public class AlarmListDialog extends DialogFragment
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode)
+        {
+            case REQUEST_IMPORT_URI:
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    Uri uri = (data != null ? data.getData() : null);
+                    if (uri != null) {
+                        importAlarms(getActivity(), uri);
+                    }
+                }
+                break;
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -412,7 +433,7 @@ public class AlarmListDialog extends DialogFragment
     }
 
 
-    public AlarmClockItem addAlarm(final Context context, AlarmClockItem alarm)
+    public AlarmClockItem addAlarm(final Context context, AlarmClockItem... alarm)
     {
         AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, true, true);
         task.setTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener()
@@ -436,7 +457,7 @@ public class AlarmListDialog extends DialogFragment
             }
         });
         task.execute(alarm);
-        return alarm;
+        return alarm[0];
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -444,7 +465,7 @@ public class AlarmListDialog extends DialogFragment
 
     public boolean exportAlarms(Context context)
     {
-        if (exportTask != null) {
+        if (exportTask != null && importTask != null) {
             Log.e("ExportAlarms", "Already busy importing/exporting! ignoring request");
             return false;
         }
@@ -519,10 +540,77 @@ public class AlarmListDialog extends DialogFragment
         }
     };
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     public void importAlarms(Context context)
     {
-        Toast.makeText(context, "TODO: import", Toast.LENGTH_SHORT).show();    // TODO
+        if (importTask != null && exportTask != null) {
+            Log.e("ImportAlarms", "Already busy importing/exporting! ignoring request");
+
+        } else {
+            Intent intent = new Intent((Build.VERSION.SDK_INT >= 19 ? Intent.ACTION_OPEN_DOCUMENT : Intent.ACTION_GET_CONTENT));
+            intent.setType(ExportAlarmsTask.MIMETYPE);
+            startActivityForResult(intent, REQUEST_IMPORT_URI);
+        }
     }
+
+    protected void importAlarms(Context context, @NonNull Uri uri)
+    {
+        if (importTask != null && exportTask != null) {
+            Log.e("ImportAlarms", "Already busy importing/exporting! ignoring request");
+
+        } else if (context != null) {
+            importTask = new ImportAlarmsTask(context);
+            importTask.setTaskListener(importListener);
+            importTask.execute(uri);
+        }
+    }
+
+    protected ImportAlarmsTask importTask = null;
+    private ImportAlarmsTask.TaskListener importListener =  new ImportAlarmsTask.TaskListener()
+    {
+        @Override
+        public void onStarted()
+        {
+            setRetainInstance(true);
+            if (progress != null) {
+                progress.setVisibility(View.VISIBLE);
+            }
+        }
+
+        @Override
+        public void onFinished(ImportAlarmsTask.TaskResult result)
+        {
+            setRetainInstance(false);
+            importTask = null;
+            if (progress != null) {
+                progress.setVisibility(View.GONE);
+            }
+
+            if (result.getResult())
+            {
+                AlarmClockItem[] items = result.getItems();
+                addAlarm(getActivity(), items);
+
+                if (isAdded()) {
+                    //String successMessage = getString(R.string.msg_import_success, result.getUri().toString());
+                    //Toast.makeText(getActivity(), successMessage, Toast.LENGTH_LONG).show();
+                    offerUndoImport(getActivity(), new ArrayList<AlarmClockItem>(Arrays.asList(items)));
+                }
+                return;    // finished import
+
+            } else {
+                if (isAdded())
+                {
+                    Uri uri = result.getUri();   // import failed
+                    String path = ((uri != null) ? uri.toString() : "<path>");
+                    String failureMessage = getString(R.string.msg_import_failure, path);
+                    Toast.makeText(getActivity(), failureMessage, Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    };
 
     public void offerUndoImport(Context context, final List<AlarmClockItem> items)
     {
@@ -536,12 +624,11 @@ public class AlarmListDialog extends DialogFragment
                 {
                     Context context = getActivity();
                     if (context != null) {
-                        // TODO: undo import
-                        //for (AlarmClockItem item : items) {
-                        //    if (item != null) {
-                        //        addAlarm(context, item);
-                        //    }
-                        //}
+                        for (AlarmClockItem item : items) {
+                            if (item != null) {
+                                // TODO: remove item (undo import)
+                            }
+                        }
                     }
                 }
             });

@@ -23,16 +23,21 @@ import android.content.Context;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Set;
 
+/**
+ * AsyncTask that writes AlarmClockItem objects to text file (json array).
+ * @see AlarmClockItem
+ */
 public class ExportAlarmsTask extends ExportTask
 {
+    public static final String FILEEXT = ".json";
+    public static final String MIMETYPE = "application/octet-stream";
+
     public ExportAlarmsTask(Context context, String exportTarget)
     {
         super(context, exportTarget);
@@ -46,8 +51,8 @@ public class ExportAlarmsTask extends ExportTask
 
     private void initTask()
     {
-        ext = ".json";
-        mimeType = "text/plain";
+        ext = FILEEXT;
+        mimeType = MIMETYPE;
     }
 
     private AlarmClockItem[] items = null;
