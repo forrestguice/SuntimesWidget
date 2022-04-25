@@ -18,32 +18,28 @@
 
 package com.forrestguice.suntimeswidget.alarmclock;
 
-import android.content.ContentValues;
 import android.content.Context;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 
-import org.json.JSONObject;
-
 import java.io.BufferedOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
 
 /**
  * AsyncTask that writes AlarmClockItem objects to text file (json array).
  * @see AlarmClockItem
  */
-public class ExportAlarmsTask extends ExportTask
+public class AlarmClockItemExportTask extends ExportTask
 {
     public static final String FILEEXT = ".json";
     public static final String MIMETYPE = "application/octet-stream";
 
-    public ExportAlarmsTask(Context context, String exportTarget)
+    public AlarmClockItemExportTask(Context context, String exportTarget)
     {
         super(context, exportTarget);
         initTask();
     }
-    public ExportAlarmsTask(Context context, String exportTarget, boolean useExternalStorage, boolean saveToCache)
+    public AlarmClockItemExportTask(Context context, String exportTarget, boolean useExternalStorage, boolean saveToCache)
     {
         super(context, exportTarget, useExternalStorage, saveToCache);
         initTask();
@@ -72,14 +68,8 @@ public class ExportAlarmsTask extends ExportTask
             out.write("[".getBytes());
             for (int i=0; i<items.length; i++)
             {
-                ContentValues values = items[i].asContentValues(true);
-                HashMap<String,String> map = new HashMap<>();
-                for (String key : values.keySet()) {
-                    map.put(key, values.getAsString(key));
-                }
-
-                JSONObject json = new JSONObject(map);
-                out.write(json.toString().getBytes());
+                String jsonString = AlarmClockItemImportTask.AlarmClockItemJson.toJson(items[i]);
+                out.write(jsonString.getBytes());
                 if (i != items.length-1) {
                     out.write(", ".getBytes());
                 }
@@ -89,5 +79,6 @@ public class ExportAlarmsTask extends ExportTask
         }
         return false;
     }
+
 
 }

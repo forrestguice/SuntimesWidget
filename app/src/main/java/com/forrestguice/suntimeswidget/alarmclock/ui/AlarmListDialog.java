@@ -74,8 +74,8 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
-import com.forrestguice.suntimeswidget.alarmclock.ExportAlarmsTask;
-import com.forrestguice.suntimeswidget.alarmclock.ImportAlarmsTask;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemExportTask;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemImportTask;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEventIcons;
@@ -476,7 +476,7 @@ public class AlarmListDialog extends DialogFragment
             AlarmClockItem[] items = adapter.getItems().toArray(new AlarmClockItem[0]);
             if (items.length > 0)
             {
-                exportTask = new ExportAlarmsTask(context, "SuntimesAlarms", true, true);    // export to external cache
+                exportTask = new AlarmClockItemExportTask(context, "SuntimesAlarms", true, true);    // export to external cache
                 exportTask.setItems(items);
                 exportTask.setTaskListener(exportListener);
                 exportTask.execute();
@@ -487,7 +487,7 @@ public class AlarmListDialog extends DialogFragment
         return false;
     }
 
-    protected ExportAlarmsTask exportTask = null;
+    protected AlarmClockItemExportTask exportTask = null;
     private ExportTask.TaskListener exportListener = new ExportTask.TaskListener()
     {
         public void onStarted()
@@ -499,7 +499,7 @@ public class AlarmListDialog extends DialogFragment
         }
 
         @Override
-        public void onFinished(ExportAlarmsTask.ExportResult results)
+        public void onFinished(AlarmClockItemExportTask.ExportResult results)
         {
             setRetainInstance(false);
             exportTask = null;
@@ -550,7 +550,7 @@ public class AlarmListDialog extends DialogFragment
 
         } else {
             Intent intent = new Intent((Build.VERSION.SDK_INT >= 19 ? Intent.ACTION_OPEN_DOCUMENT : Intent.ACTION_GET_CONTENT));
-            intent.setType(ExportAlarmsTask.MIMETYPE);
+            intent.setType(AlarmClockItemExportTask.MIMETYPE);
             startActivityForResult(intent, REQUEST_IMPORT_URI);
         }
     }
@@ -561,14 +561,14 @@ public class AlarmListDialog extends DialogFragment
             Log.e("ImportAlarms", "Already busy importing/exporting! ignoring request");
 
         } else if (context != null) {
-            importTask = new ImportAlarmsTask(context);
+            importTask = new AlarmClockItemImportTask(context);
             importTask.setTaskListener(importListener);
             importTask.execute(uri);
         }
     }
 
-    protected ImportAlarmsTask importTask = null;
-    private ImportAlarmsTask.TaskListener importListener =  new ImportAlarmsTask.TaskListener()
+    protected AlarmClockItemImportTask importTask = null;
+    private AlarmClockItemImportTask.TaskListener importListener =  new AlarmClockItemImportTask.TaskListener()
     {
         @Override
         public void onStarted()
@@ -580,7 +580,7 @@ public class AlarmListDialog extends DialogFragment
         }
 
         @Override
-        public void onFinished(ImportAlarmsTask.TaskResult result)
+        public void onFinished(AlarmClockItemImportTask.TaskResult result)
         {
             setRetainInstance(false);
             importTask = null;
