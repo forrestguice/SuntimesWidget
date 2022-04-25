@@ -186,19 +186,19 @@ public class AlarmClockItem implements Parcelable
 
     public void fromContentValues(Context context, ContentValues alarm)
     {
-        rowID = alarm.getAsLong(AlarmDatabaseAdapter.KEY_ROWID);
+        rowID = (alarm.containsKey(AlarmDatabaseAdapter.KEY_ROWID) ? alarm.getAsLong(AlarmDatabaseAdapter.KEY_ROWID) : -1L);
         type = AlarmType.valueOf(alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_TYPE), AlarmType.ALARM);
-        enabled = (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_ENABLED) == 1);
+        enabled = alarm.containsKey(AlarmDatabaseAdapter.KEY_ALARM_ENABLED) && (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_ENABLED) == 1);
         label = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_LABEL);
 
-        repeating = (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_REPEATING) == 1);
+        repeating = alarm.containsKey(AlarmDatabaseAdapter.KEY_ALARM_REPEATING) && (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_REPEATING) == 1);
         setRepeatingDays(alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_REPEATING_DAYS));
 
-        alarmtime = alarm.getAsLong(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_ADJUSTED);
-        timestamp = alarm.getAsLong(AlarmDatabaseAdapter.KEY_ALARM_DATETIME);
-        hour = alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_HOUR);
-        minute = alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_MINUTE);
-        offset = alarm.getAsLong(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_OFFSET);
+        alarmtime = (alarm.containsKey(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_ADJUSTED) ? alarm.getAsLong(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_ADJUSTED) : -1L);
+        timestamp = (alarm.containsKey(AlarmDatabaseAdapter.KEY_ALARM_DATETIME) ? alarm.getAsLong(AlarmDatabaseAdapter.KEY_ALARM_DATETIME) : -1L);
+        hour = (alarm.containsKey(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_HOUR) ? alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_HOUR) : -1);
+        minute = (alarm.containsKey(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_MINUTE) ? alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_MINUTE) : -1);
+        offset = (alarm.containsKey(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_OFFSET) ? alarm.getAsLong(AlarmDatabaseAdapter.KEY_ALARM_DATETIME_OFFSET) : 0);
 
         String locLat = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_LATITUDE);
         String locLon = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_LONGITUDE);
@@ -217,7 +217,7 @@ public class AlarmClockItem implements Parcelable
         event = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_SOLAREVENT);
         timezone = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_TIMEZONE);
 
-        vibrate = (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_VIBRATE) == 1);
+        vibrate = alarm.containsKey(AlarmDatabaseAdapter.KEY_ALARM_VIBRATE) && (alarm.getAsInteger(AlarmDatabaseAdapter.KEY_ALARM_VIBRATE) == 1);
         ringtoneName = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_NAME);
         ringtoneURI = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_RINGTONE_URI);
         actionID0 = alarm.getAsString(AlarmDatabaseAdapter.KEY_ALARM_ACTION0);
@@ -230,7 +230,7 @@ public class AlarmClockItem implements Parcelable
         if (withRowID) {
             values.put(AlarmDatabaseAdapter.KEY_ROWID, rowID);
         }
-        values.put(AlarmDatabaseAdapter.KEY_ALARM_TYPE, type.name());
+        values.put(AlarmDatabaseAdapter.KEY_ALARM_TYPE, type != null ? type.name() : null);
         values.put(AlarmDatabaseAdapter.KEY_ALARM_ENABLED, (enabled ? 1 : 0));
         values.put(AlarmDatabaseAdapter.KEY_ALARM_LABEL, label);
         values.put(AlarmDatabaseAdapter.KEY_ALARM_REPEATING, (repeating ? 1 : 0));
