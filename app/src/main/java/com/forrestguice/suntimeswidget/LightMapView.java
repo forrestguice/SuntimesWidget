@@ -792,8 +792,8 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             colorNautical = ContextCompat.getColor(context, R.color.graphColor_nautical_dark);
             colorAstro = ContextCompat.getColor(context, R.color.graphColor_astronomical_dark);
             colorNight = ContextCompat.getColor(context, R.color.graphColor_night_dark);
-            colorPointFill = ContextCompat.getColor(context, R.color.sunIcon_color_noon_dark);
-            colorPointStroke = ContextCompat.getColor(context, R.color.sunIcon_color_noonBorder_dark);
+            colorPointFill = ContextCompat.getColor(context, R.color.graphColor_pointFill_dark);
+            colorPointStroke = ContextCompat.getColor(context, R.color.graphColor_pointStroke_dark);
         }
 
         public void initDefaultLight(Context context)
@@ -803,8 +803,8 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
             colorNautical = ContextCompat.getColor(context, R.color.graphColor_nautical_light);
             colorAstro = ContextCompat.getColor(context, R.color.graphColor_astronomical_light);
             colorNight = ContextCompat.getColor(context, R.color.graphColor_night_light);
-            colorPointFill = ContextCompat.getColor(context, R.color.sunIcon_color_noon_light);
-            colorPointStroke = ContextCompat.getColor(context, R.color.sunIcon_color_noonBorder_light);
+            colorPointFill = ContextCompat.getColor(context, R.color.graphColor_pointFill_light);
+            colorPointStroke = ContextCompat.getColor(context, R.color.graphColor_pointStroke_light);
         }
     }
 

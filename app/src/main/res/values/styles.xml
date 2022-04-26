@@ -36,8 +36,8 @@
         <item name="graphColor_civil">@color/graphColor_civil_light</item>
         <item name="graphColor_nautical">@color/graphColor_nautical_light</item>
         <item name="graphColor_astronomical">@color/graphColor_astronomical_light</item>
-        <item name="graphColor_pointFill">@color/sunIcon_color_noon_light</item>
-        <item name="graphColor_pointStroke">@color/sunIcon_color_noonBorder_light</item>
+        <item name="graphColor_pointFill">@color/graphColor_pointFill_light</item>
+        <item name="graphColor_pointStroke">@color/graphColor_pointStroke_light</item>
 
         <item name="sunriseIconSmall">@drawable/ic_sunrise_light</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large_light</item>
@@ -164,8 +164,8 @@
         <item name="graphColor_civil">@color/graphColor_civil_dark</item>
         <item name="graphColor_nautical">@color/graphColor_nautical_dark</item>
         <item name="graphColor_astronomical">@color/graphColor_astronomical_dark</item>
-        <item name="graphColor_pointFill">@color/sunIcon_color_setting_dark</item>
-        <item name="graphColor_pointStroke">@color/sunIcon_color_noon_light</item>
+        <item name="graphColor_pointFill">@color/graphColor_pointFill_dark</item>
+        <item name="graphColor_pointStroke">@color/graphColor_pointStroke_dark</item>
 
         <item name="sunriseIconSmall">@drawable/ic_sunrise</item>
         <item name="sunriseIconLarge">@drawable/ic_sunrise_large</item>
