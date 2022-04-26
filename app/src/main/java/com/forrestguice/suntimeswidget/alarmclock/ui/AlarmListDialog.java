@@ -451,19 +451,22 @@ public class AlarmListDialog extends DialogFragment
         task.setTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener()
         {
             @Override
-            public void onFinished(Boolean result, AlarmClockItem item)
+            public void onFinished(Boolean result, AlarmClockItem[] items)
             {
                 if (result)
                 {
-                    if (listener != null) {
-                        listener.onAlarmAdded(item);
-                    }
+                    for (AlarmClockItem item : items)
+                    {
+                        if (listener != null) {
+                            listener.onAlarmAdded(item);
+                        }
 
-                    setSelectedRowID(item.rowID);
-                    reloadAdapter();
+                        setSelectedRowID(item.rowID);
+                        reloadAdapter();
 
-                    if (item.enabled) {
-                        context.sendBroadcast( AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, item.getUri()) );
+                        if (item.enabled) {
+                            context.sendBroadcast( AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, item.getUri()) );
+                        }
                     }
                 }
             }
