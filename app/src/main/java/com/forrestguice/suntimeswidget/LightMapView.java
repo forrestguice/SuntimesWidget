@@ -529,8 +529,10 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
                 // draw now marker
                 if (colors.option_drawNow > 0)
                 {
-                    int pointRadius = Math.min( (int)Math.ceil(c.getWidth() / 96d),      // a circle that is 1/2 hr wide
-                            (int)Math.ceil(c.getHeight() / 4d) );    // a circle that is 1/2 the height of the graph
+                    int pointRadius = (colors.option_drawNow_pointSizePx <= 0)
+                            ? Math.min( (int)Math.ceil(c.getWidth() / 96d),      // a circle that is 1/2 hr wide
+                                        (int)Math.ceil(c.getHeight() / 4d) )     // a circle that is 1/2 the height of the graph
+                            : colors.option_drawNow_pointSizePx;
                     int pointStroke = (int)Math.ceil(pointRadius / 3d);
 
                     switch (colors.option_drawNow) {
@@ -747,12 +749,13 @@ public class LightMapView extends android.support.v7.widget.AppCompatImageView
     public static class LightMapColors
     {
         public static final int DRAW_NONE = 0;
-        public static final int DRAW_SUN1 = 1;
-        public static final int DRAW_SUN2 = 2;
+        public static final int DRAW_SUN1 = 1;    // solid stroke
+        public static final int DRAW_SUN2 = 2;    // dashed stroke
 
         public int colorDay, colorCivil, colorNautical, colorAstro, colorNight;
         public int colorPointFill, colorPointStroke;
         public int option_drawNow = DRAW_SUN1;
+        public int option_drawNow_pointSizePx = -1;    // when set, used a fixed point size
 
         public long offsetMinutes = 0;
         public long now = -1L;

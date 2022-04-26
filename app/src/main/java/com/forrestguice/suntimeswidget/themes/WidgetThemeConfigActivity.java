@@ -810,6 +810,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             colors.colorNautical = chooseColorNautical.getColor();
             colors.colorAstro = chooseColorAstro.getColor();
             colors.colorNight = chooseColorNight.getColor();
+            colors.option_drawNow = LightMapView.LightMapColors.DRAW_SUN1;
+            colors.option_drawNow_pointSizePx = SuntimesUtils.dpToPixels(this, 8);
 
             int dpWidth = 256;
             int dpHeight = 64;
