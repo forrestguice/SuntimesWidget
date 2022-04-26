@@ -33,25 +33,17 @@
             app:showAsAction="never"
             android:orderInCategory="510" />
 
-        <item android:id="@+id/action_file"
-            android:icon="?attr/icActionShare"
-            android:title="@string/configAction_shareAlarms"
+        <item android:id="@+id/action_export"
+            android:icon="?attr/icActionSave"
+            android:title="@string/configAction_exportAlarms"
             app:showAsAction="never"
-            android:orderInCategory="520">
+            android:orderInCategory="520" />
 
-            <menu>
-                <item android:id="@+id/action_export"
-                    android:icon="?attr/icActionSave"
-                    android:title="@string/configAction_exportAlarms"
-                    app:showAsAction="never" />
-
-                <item android:id="@+id/action_import"
-                    android:icon="?attr/icActionCopy"
-                    android:title="@string/configAction_importAlarms"
-                    app:showAsAction="never" />
-            </menu>
-
-        </item>
+        <item android:id="@+id/action_import"
+            android:icon="?attr/icActionCopy"
+            android:title="@string/configAction_importAlarms"
+            app:showAsAction="never"
+            android:orderInCategory="530" />
 
     </group>
 </menu>
