@@ -161,6 +161,8 @@ public class SunPosLayout_3X1_0 extends SunPosLayout
         colors.colorNautical = theme.getNauticalColor();
         colors.colorAstro = theme.getAstroColor();
         colors.colorNight = theme.getNightColor();
+        colors.colorPointFill = theme.getGraphPointFillColor();
+        colors.colorPointStroke = theme.getGraphPointStrokeColor();
     }
 
 }

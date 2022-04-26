@@ -810,6 +810,9 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             colors.colorNautical = chooseColorNautical.getColor();
             colors.colorAstro = chooseColorAstro.getColor();
             colors.colorNight = chooseColorNight.getColor();
+            colors.colorPointFill = chooseColorNoonIconFill.getColor();
+            colors.colorPointStroke = chooseColorNoonIconStroke.getColor();
+
             colors.option_drawNow = LightMapView.LightMapColors.DRAW_SUN1;
             colors.option_drawNow_pointSizePx = SuntimesUtils.dpToPixels(this, 8);
 
@@ -1581,6 +1584,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 this.themeNauticalColor = chooseColorNautical.getColor();
                 this.themeAstroColor = chooseColorAstro.getColor();
                 this.themeNightColor = chooseColorNight.getColor();
+                this.themeGraphPointFillColor = chooseColorNoonIconFill.getColor();                 // TODO: separate ui
+                this.themeGraphPointStrokeColor = chooseColorNoonIconStroke.getColor();             // TODO: separate ui
 
                 this.themeSpringColor = chooseColorSpring.getColor();
                 this.themeSummerColor = chooseColorSummer.getColor();

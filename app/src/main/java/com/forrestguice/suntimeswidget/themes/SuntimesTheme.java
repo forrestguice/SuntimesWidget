@@ -38,6 +38,8 @@ import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_DAYCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_DISPLAYSTRING;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_FALLCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_GRAPH_POINT_FILL_COLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_GRAPH_POINT_STROKE_COLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_ISDEFAULT;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_BACKGROUNDCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_FOREGROUNDCOLOR;
@@ -156,6 +158,8 @@ public class SuntimesTheme
     protected int themeNauticalColor;
     protected int themeAstroColor;
     protected int themeNightColor;
+    protected int themeGraphPointFillColor;
+    protected int themeGraphPointStrokeColor;
 
     protected int themeSpringColor;
     protected int themeSummerColor;
@@ -241,6 +245,8 @@ public class SuntimesTheme
         this.themeNauticalColor = otherTheme.themeNauticalColor;
         this.themeAstroColor = otherTheme.themeAstroColor;
         this.themeNightColor = otherTheme.themeNightColor;
+        this.themeGraphPointFillColor = otherTheme.themeGraphPointFillColor;
+        this.themeGraphPointStrokeColor = otherTheme.themeGraphPointStrokeColor;
 
         this.themeSpringColor = otherTheme.themeSpringColor;
         this.themeSummerColor = otherTheme.themeSummerColor;
@@ -336,6 +342,8 @@ public class SuntimesTheme
         this.themeNauticalColor = themes.getInt( theme + THEME_NAUTICALCOLOR, defaultTheme.themeNauticalColor );
         this.themeAstroColor = themes.getInt( theme + THEME_ASTROCOLOR, defaultTheme.themeAstroColor );
         this.themeNightColor = themes.getInt( theme + THEME_NIGHTCOLOR, defaultTheme.themeNightColor );
+        this.themeGraphPointFillColor = themes.getInt( theme + THEME_GRAPH_POINT_FILL_COLOR, defaultTheme.themeGraphPointFillColor );
+        this.themeGraphPointStrokeColor = themes.getInt( theme + THEME_GRAPH_POINT_STROKE_COLOR, defaultTheme.themeGraphPointStrokeColor );
 
         this.themeSpringColor = themes.getInt( theme + THEME_SPRINGCOLOR, defaultTheme.themeSpringColor );
         this.themeSummerColor = themes.getInt( theme + THEME_SUMMERCOLOR, defaultTheme.themeSummerColor );
@@ -420,6 +428,8 @@ public class SuntimesTheme
         themePrefs.putInt(themePrefix + THEME_NAUTICALCOLOR, this.themeNauticalColor);
         themePrefs.putInt(themePrefix + THEME_ASTROCOLOR, this.themeAstroColor);
         themePrefs.putInt(themePrefix + THEME_NIGHTCOLOR, this.themeNightColor);
+        themePrefs.putInt(themePrefix + THEME_GRAPH_POINT_FILL_COLOR, this.themeGraphPointFillColor);
+        themePrefs.putInt(themePrefix + THEME_GRAPH_POINT_STROKE_COLOR, this.themeGraphPointStrokeColor);
 
         themePrefs.putInt(themePrefix + THEME_SPRINGCOLOR, this.themeSpringColor);
         themePrefs.putInt(themePrefix + THEME_SUMMERCOLOR, this.themeSummerColor);
@@ -504,6 +514,8 @@ public class SuntimesTheme
         values.put(THEME_NAUTICALCOLOR, this.themeNauticalColor);
         values.put(THEME_ASTROCOLOR, this.themeAstroColor);
         values.put(THEME_NIGHTCOLOR, this.themeNightColor);
+        values.put(THEME_GRAPH_POINT_FILL_COLOR, this.themeGraphPointFillColor);
+        values.put(THEME_GRAPH_POINT_STROKE_COLOR, this.themeGraphPointStrokeColor);
 
         values.put(THEME_SPRINGCOLOR, this.themeSpringColor);
         values.put(THEME_SUMMERCOLOR, this.themeSummerColor);
@@ -833,6 +845,12 @@ public class SuntimesTheme
     public int getNightColor()
     {
         return themeNightColor;
+    }
+    public int getGraphPointFillColor() {
+        return themeGraphPointFillColor;
+    }
+    public int getGraphPointStrokeColor() {
+        return themeGraphPointStrokeColor;
     }
 
     public int getSpringColor()

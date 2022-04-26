@@ -141,6 +141,8 @@ public class LightTheme extends SuntimesTheme
         this.themeNauticalColor = ContextCompat.getColor(context, THEMEDEF_NAUTICALCOLOR_ID);
         this.themeAstroColor = ContextCompat.getColor(context, THEMEDEF_ASTROCOLOR_ID);
         this.themeNightColor = ContextCompat.getColor(context, THEMEDEF_NIGHTCOLOR_ID);
+        this.themeGraphPointFillColor = ContextCompat.getColor(context, R.color.graphColor_pointFill_light);
+        this.themeGraphPointStrokeColor = ContextCompat.getColor(context, R.color.graphColor_pointStroke_light);
 
         this.themeSpringColor = ContextCompat.getColor(context, THEMEDEF_SPRINGCOLOR_ID);
         this.themeSummerColor = ContextCompat.getColor(context, THEMEDEF_SUMMERCOLOR_ID);
