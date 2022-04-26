@@ -102,6 +102,7 @@ public class AlarmListDialog extends DialogFragment
     protected RecyclerView list;
     protected AlarmListDialogAdapter adapter;
     protected ProgressBar progress;
+    protected View progressLayout;
 
     @Override
     public void onCreate(Bundle savedState)
@@ -123,7 +124,8 @@ public class AlarmListDialog extends DialogFragment
         View content = inflater.cloneInContext(contextWrapper).inflate(R.layout.layout_dialog_alarmlist, parent, false);
 
         progress = (ProgressBar) content.findViewById(R.id.progress);
-        progress.setVisibility(View.GONE);
+        progressLayout = content.findViewById(R.id.progressLayout);
+        showProgress(false);
 
         emptyView = content.findViewById(android.R.id.empty);
         emptyView.setOnClickListener(onEmptyViewClick);
@@ -186,6 +188,16 @@ public class AlarmListDialog extends DialogFragment
                     }
                 }
                 break;
+        }
+    }
+
+    protected void showProgress(boolean visible)
+    {
+        if (progress != null) {
+            progress.setVisibility(visible ? View.VISIBLE : View.GONE);
+        }
+        if (progressLayout != null) {
+            progressLayout.setVisibility(visible ? View.VISIBLE : View.GONE);
         }
     }
 
@@ -493,9 +505,7 @@ public class AlarmListDialog extends DialogFragment
         public void onStarted()
         {
             setRetainInstance(true);
-            if (progress != null) {
-                progress.setVisibility(View.VISIBLE);
-            }
+            showProgress(true);
         }
 
         @Override
@@ -503,9 +513,7 @@ public class AlarmListDialog extends DialogFragment
         {
             setRetainInstance(false);
             exportTask = null;
-            if (progress != null) {
-                progress.setVisibility(View.GONE);
-            }
+            showProgress(false);
 
             if (results.getResult())
             {
@@ -574,9 +582,7 @@ public class AlarmListDialog extends DialogFragment
         public void onStarted()
         {
             setRetainInstance(true);
-            if (progress != null) {
-                progress.setVisibility(View.VISIBLE);
-            }
+            showProgress(true);
         }
 
         @Override
@@ -584,9 +590,7 @@ public class AlarmListDialog extends DialogFragment
         {
             setRetainInstance(false);
             importTask = null;
-            if (progress != null) {
-                progress.setVisibility(View.GONE);
-            }
+            showProgress(false);
 
             if (result.getResult())
             {
