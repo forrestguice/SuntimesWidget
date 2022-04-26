@@ -9,18 +9,16 @@
             app:showAsAction="never"
             android:orderInCategory="500">
 
-            <menu >
+            <menu>
                 <group android:checkableBehavior="single">
 
                     <item android:id="@+id/sortByAlarmTime"
                         android:title="@string/configAction_sortAlarms_by_time"
-                        android:icon="?attr/icActionSort"
-                        android:checkable="true" />
+                        android:icon="?attr/icActionSort" />
 
                     <item android:id="@+id/sortByCreation"
                         android:title="@string/configAction_sortAlarms_by_creation"
-                        android:icon="?attr/icActionSort"
-                        android:checkable="true" />
+                        android:icon="?attr/icActionSort" />
 
                 </group>
             </menu>

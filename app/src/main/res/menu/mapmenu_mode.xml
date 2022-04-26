@@ -2,35 +2,30 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group android:id="@+id/mapOption_group_projection">
+    <group android:id="@+id/mapOption_group_projection" android:checkableBehavior="single">
         <item android:id="@+id/action_worldmap_simplerectangular"
             android:title="@string/widgetMode_sunPosMap_simplerectangular"
             android:icon="?attr/icActionMap"
-            android:checkable="true"
             app:showAsAction="never" />
 
         <item android:id="@+id/action_worldmap_bluemarble"
             android:title="@string/widgetMode_sunPosMap_bluemarble"
             android:icon="?attr/icActionMap"
-            android:checkable="true"
             app:showAsAction="never" />
 
         <item android:id="@+id/action_worldmap_simpleazimuthal"
             android:title="@string/widgetMode_sunPosMap_simpleazimuthal"
             android:icon="?attr/icActionMap"
-            android:checkable="true"
             app:showAsAction="never" />
 
         <item android:id="@+id/action_worldmap_simpleazimuthal_south"
             android:title="@string/widgetMode_sunPosMap_simpleazimuthal_south"
             android:icon="?attr/icActionMap"
-            android:checkable="true"
             app:showAsAction="never" />
 
         <item android:id="@+id/action_worldmap_simpleazimuthal_location"
             android:title="@string/widgetMode_sunPosMap_simpleazimuthal_location"
             android:icon="?attr/icActionMap"
-            android:checkable="true"
             app:showAsAction="never" />
     </group>
 

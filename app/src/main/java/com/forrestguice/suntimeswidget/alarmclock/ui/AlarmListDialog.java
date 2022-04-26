@@ -173,11 +173,14 @@ public class AlarmListDialog extends DialogFragment
     @Override
     public void onPrepareOptionsMenu(Menu menu)
     {
-        int sortValue = AlarmSettings.loadPrefAlarmSort(getActivity());
-        MenuItem sort_alarmtime = menu.findItem(R.id.sortByAlarmTime);
-        MenuItem sort_creation = menu.findItem(R.id.sortByCreation);
-        sort_alarmtime.setChecked(sortValue == AlarmSettings.SORT_BY_ALARMTIME);
-        sort_creation.setChecked(sortValue == AlarmSettings.SORT_BY_CREATION);
+        MenuItem selectedItem;
+        switch (AlarmSettings.loadPrefAlarmSort(getActivity())) {
+            case AlarmSettings.SORT_BY_ALARMTIME: selectedItem = menu.findItem(R.id.sortByAlarmTime); break;
+            case AlarmSettings.SORT_BY_CREATION: default: selectedItem = menu.findItem(R.id.sortByCreation); break;
+        }
+        if (selectedItem != null) {
+            selectedItem.setChecked(true);
+        }
     }
 
     @Override
