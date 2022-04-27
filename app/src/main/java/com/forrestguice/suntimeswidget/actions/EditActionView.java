@@ -79,6 +79,7 @@ public class EditActionView extends LinearLayout
     protected EditText edit_label, edit_desc;
 
     protected EditText text_launchActivity;
+    protected EditText text_launchPackage;
     protected Spinner spinner_launchType;
     protected ImageButton button_menu;
     protected ImageButton button_load;
@@ -136,6 +137,7 @@ public class EditActionView extends LinearLayout
         edit_desc = (EditText) findViewById(R.id.appwidget_action_desc_edit);
 
         text_launchActivity = (EditText) findViewById(R.id.appwidget_action_launch);
+        text_launchPackage = (EditText) findViewById(R.id.appwidget_action_launch_package);
 
         button_menu = (ImageButton) findViewById(R.id.appwidget_action_launch_menu);
         button_menu.setOnClickListener(onMenuButtonClicked);
@@ -257,18 +259,28 @@ public class EditActionView extends LinearLayout
 
         if (!launchClassName.trim().isEmpty())
         {
-            Class<?> launchClass;
-            try {
-                launchClass = Class.forName(launchClassName);
-                launchIntent = new Intent(getContext(), launchClass);
+            String launchPackageName = text_launchPackage.getText().toString();
 
-            } catch (ClassNotFoundException e) {
-                Log.e(TAG, "testIntent: " + launchClassName + " cannot be found! " + e);
-                Snackbar snackbar = Snackbar.make(this, getContext().getString(R.string.startaction_failed_toast, launchType), Snackbar.LENGTH_LONG);
-                SuntimesUtils.themeSnackbar(getContext(), snackbar, null);
-                snackbar.show();
-                return;
+            if (launchPackageName != null && !launchPackageName.trim().isEmpty())
+            {
+                launchIntent = new Intent();
+                launchIntent.setClassName(launchPackageName, launchClassName);
+
+            } else {
+                Class<?> launchClass;
+                try {
+                    launchClass = Class.forName(launchClassName);
+                    launchIntent = new Intent(getContext(), launchClass);
+
+                } catch (Exception e) {
+                    Log.e(TAG, "testIntent: " + launchClassName + " cannot be found! " + e);
+                    Snackbar snackbar = Snackbar.make(this, getContext().getString(R.string.startaction_failed_toast, launchType), Snackbar.LENGTH_LONG);
+                    SuntimesUtils.themeSnackbar(getContext(), snackbar, null);
+                    snackbar.show();
+                    return;
+                }
             }
+
         } else {
             launchIntent = new Intent();
         }
@@ -402,7 +414,7 @@ public class EditActionView extends LinearLayout
      */
     public void saveIntent(Context context, int appWidgetId, @Nullable String id, @Nullable String title, @Nullable String desc)
     {
-        WidgetActions.saveActionLaunchPref(context, title, desc, getIntentColor(), getIntentTags().toArray(new String[0]), appWidgetId, id, getIntentClass(), getIntentType().name(), getIntentAction(), getIntentData(), getIntentDataType(), getIntentExtras());
+        WidgetActions.saveActionLaunchPref(context, title, desc, getIntentColor(), getIntentTags().toArray(new String[0]), appWidgetId, id, getIntentClass(), getIntentPackage(), getIntentType().name(), getIntentAction(), getIntentData(), getIntentDataType(), getIntentExtras());
         lastLoadedID = id;
     }
 
@@ -416,6 +428,7 @@ public class EditActionView extends LinearLayout
         String title = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TITLE);
         String desc = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
         String launchString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, null);
+        String packageString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE);
         String typeString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_TYPE);
         String actionString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION);
         String dataString = WidgetActions.loadActionLaunchPref(context, appWidgetId, id, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
@@ -427,6 +440,7 @@ public class EditActionView extends LinearLayout
         setIntentTitle(title);
         setIntentDesc(desc);
         setIntentClass(launchString);
+        setIntentPackage(packageString);
         setIntentAction((actionString != null ? actionString : ""));
         setIntentData((dataString != null ? dataString : ""));
         setIntentDataType((mimeType != null ? mimeType : ""));
@@ -452,6 +466,7 @@ public class EditActionView extends LinearLayout
         text_launchData.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH_DATA);
         text_launchDataType.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH_DATATYPE);
         text_launchExtras.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH_EXTRAS);
+        text_launchPackage.setText(WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE);
         text_launchActivity.setText(WidgetActions.PREF_DEF_ACTION_LAUNCH);
         text_launchActivity.selectAll();
         text_launchActivity.requestFocus();
@@ -489,6 +504,18 @@ public class EditActionView extends LinearLayout
     {
         text_launchActivity.setText(className);
     }
+
+    /**
+     * getIntentPackage
+     */
+    public String getIntentPackage() {
+        return text_launchPackage.getText().toString();
+    }
+    public void setIntentPackage( String packageName )
+    {
+        text_launchPackage.setText(packageName);
+    }
+
 
     /**
      * getIntentType
@@ -599,6 +626,7 @@ public class EditActionView extends LinearLayout
         setIntentDesc(other.getIntentDesc());
         setIntentType(other.getIntentType().name());
         setIntentClass(other.getIntentClass());
+        setIntentPackage(other.getIntentPackage());
         setIntentAction(other.getIntentAction());
         setIntentData(other.getIntentData());
         setIntentDataType(other.getIntentDataType());

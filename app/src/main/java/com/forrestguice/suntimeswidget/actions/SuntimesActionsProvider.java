@@ -44,6 +44,7 @@ import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.CO
 import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.COLUMN_ACTION_EXTRAS;
 import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.COLUMN_ACTION_MIMETYPE;
 import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.COLUMN_ACTION_NAME;
+import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.COLUMN_ACTION_PACKAGE;
 import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.COLUMN_ACTION_PROVIDER_VERSION;
 import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.COLUMN_ACTION_PROVIDER_VERSION_CODE;
 import static com.forrestguice.suntimeswidget.actions.SuntimesActionsContract.COLUMN_ACTION_TAGS;
@@ -175,6 +176,7 @@ public class SuntimesActionsProvider extends ContentProvider
                 case COLUMN_ACTION_DESC:
                 case COLUMN_ACTION_TYPE:
                 case COLUMN_ACTION_CLASS:
+                case COLUMN_ACTION_PACKAGE:
                 case COLUMN_ACTION_ACTION:
                 case COLUMN_ACTION_DATA:
                 case COLUMN_ACTION_MIMETYPE:
