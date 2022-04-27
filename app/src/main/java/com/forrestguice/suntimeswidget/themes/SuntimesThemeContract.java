@@ -20,7 +20,7 @@ package com.forrestguice.suntimeswidget.themes;
 
 /**
  * WidgetThemeProviderContract
- * @version 1 (0.1.0)
+ * @version 3 (0.1.2)
  *
  * Supported URIs have the form: "content://AUTHORITY/query"
  * ..where [AUTHORITY] is "suntimeswidget.theme.provider"
