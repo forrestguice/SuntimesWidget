@@ -24,6 +24,8 @@
     <string name="configAction_viewDate">View date</string>
     <string name="configAction_viewDateWith">View date</string>
     <string name="configAction_share">Share</string>
+    <string name="configAction_export">Export</string>
+    <string name="configAction_import">Import</string>
     <string name="configAction_sunDialog">Sun Position</string>
     <string name="configAction_equinoxDialog">Solstice / Equinox</string>
     <string name="configAction_worldMap">World Map</string>
@@ -34,7 +36,6 @@
     <string name="configAction_options">Options</string>
     <string name="configAction_settings">Settings</string>
     <string name="configAction_aboutWidget">About</string>
-
 
     <!-- Shortcuts -->
 
@@ -614,8 +615,8 @@
     <string name="configAction_loadAction">Load</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteAction">Delete</string>         <!-- button (contentDescription) -->
     <string name="configAction_clearActions">Clear All</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportActions">Export</string>         <!-- button (contentDescription) -->
-    <string name="configAction_importActions">Import</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportActions">@string/configAction_export</string>         <!-- button (contentDescription) -->
+    <string name="configAction_importActions">@string/configAction_import</string>         <!-- button (contentDescription) -->
 
     <!-- App Setting: WidgetThemes -->
     <string name="configLabel_widgetThemeList">Themes</string>
@@ -625,9 +626,9 @@
     <string name="configAction_editTheme">Edit</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteTheme">Delete</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Copy</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportThemes">Export</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
+    <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->  <!-- export many themes -->
     <string name="configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
-    <string name="configAction_importThemes">Import</string>    <!-- button (contentDescription) -->
+    <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
     <string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
     <string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_<xliff:g id="#">%2$s</xliff:g></string>   <!-- copied theme id -->
@@ -763,8 +764,8 @@
     <string name="configAction_deleteAlarm">Delete</string>               <!-- button (contentDescription) -->
     <string name="configAction_clearAlarms">Clear</string>                <!-- action button / menu item -->
     <string name="configAction_shareAlarms">@string/configAction_share</string>                <!-- action button / menu item -->  <!-- TODO -->
-    <string name="configAction_exportAlarms">Export</string>                <!-- action button / menu item -->  <!-- TODO -->
-    <string name="configAction_importAlarms">Import</string>                <!-- action button / menu item -->  <!-- TODO -->
+    <string name="configAction_exportAlarms">@string/configAction_export</string>                <!-- action button / menu item -->
+    <string name="configAction_importAlarms">@string/configAction_import</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms">Sort</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_time">Alarm Time</string>                <!-- action button / menu item -->
     <string name="configAction_sortAlarms_by_creation">Creation Date</string>                <!-- action button / menu item -->
@@ -832,7 +833,7 @@
     <string name="clearalarms_dialog_cancel">Cancel</string>    <!-- button -->
     <string name="clearalarms_toast_success">Alarms cleared.</string> <!-- toast msg -->
 
-    <string name="importalarms_toast_success">Imported %s alarms.</string> <!-- toast msg -->    <!-- TODO -->
+    <string name="importalarms_toast_success">Imported %s alarms.</string> <!-- toast msg -->
 
     <string name="alarmlabel_dialog_title">Label</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Apply</string>        <!-- button -->
@@ -968,8 +969,8 @@
     <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
     <string name="configAction_deletePlace">Delete</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Clear</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportPlaces">Export</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->
+    <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
 
     <!-- App Setting: UI -->
