@@ -453,12 +453,14 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         String desc2 = "desc2";
         int color2 = Color.BLUE;
         String value2 = "com.forrestguice.suntimeswidget.SuntimesActivity";
+        String package2 = "com.forrestguice.suntimeswidget";
         String action2 = "ACTION2";
         String data2 = "DATA2";
         String mime2 = "text/plain";
         String extras2 = "EXTRAS2";
-        WidgetActions.saveActionLaunchPref(context, title2, desc2, color2, null, appWidgetId, null, value2, WidgetActions.LaunchType.ACTIVITY.name(), action2, data2, mime2, extras2);
+        WidgetActions.saveActionLaunchPref(context, title2, desc2, color2, null, appWidgetId, null, value2, package2, WidgetActions.LaunchType.ACTIVITY.name(), action2, data2, mime2, extras2);
         String pref2_value = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, null);
+        String pref2_package = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE);
         String pref2_action = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION);
         String pref2_data = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
         String pref2_mime = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE);
@@ -467,6 +469,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         String pref2_desc = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
         int pref2_color = Integer.parseInt(WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR));
         assertTrue("pref value should be " + value2 + " but was " + pref2_value, pref2_value.equals(value2));
+        assertTrue("pref package should be " + value2 + " but was " + pref2_package, pref2_package.equals(package2));
         assertTrue("pref action should be " + action2 + " but was " + pref2_action, pref2_action.equals(action2));
         assertTrue("pref data should be " + data2 + " but was " + pref2_data, pref2_data.equals(data2));
         assertTrue("pref datatype should be " + mime2 + " but was " + pref2_mime, pref2_mime.equals(mime2));
@@ -479,12 +482,14 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         String desc1 = "desc1";
         int color1 = Color.YELLOW;
         String value1 = "test value 1";
+        String package1 = "some.package.name";
         String action1 = "ACTION1";
         String data1 = "DATA1";
         String mime1 = "text/html";
         String extras1 = "EXTRAS1";
-        WidgetActions.saveActionLaunchPref(context, title1, desc1, color1, null, appWidgetId, null, value1, WidgetActions.LaunchType.ACTIVITY.name(), action1, data1, mime1, extras1);
+        WidgetActions.saveActionLaunchPref(context, title1, desc1, color1, null, appWidgetId, null, value1, package1, WidgetActions.LaunchType.ACTIVITY.name(), action1, data1, mime1, extras1);
         String pref1_value = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, null);
+        String pref1_package = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE);
         String pref1_action = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION);
         String pref1_data = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
         String pref1_mime = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE);
@@ -493,6 +498,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         String pref1_desc = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
         int pref1_color = Integer.parseInt(WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR));
         assertTrue("pref value should be " + value1 + " but was " + pref1_value, pref1_value.equals(value1));
+        assertTrue("pref package should be " + package1 + " but was " + pref1_package, pref1_package.equals(package1));
         assertTrue("pref action should be " + action1 + " but was " + pref1_action, pref1_action.equals(action1));
         assertTrue("pref data should be " + data1 + " but was " + pref1_data, pref1_data.equals(data1));
         assertTrue("pref datatype should be " + mime1 + " but was " + pref1_mime, pref1_mime.equals(mime1));
@@ -504,6 +510,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         String value0 = "com.forrestguice.suntimeswidget.SuntimesActivity";
         WidgetActions.deleteActionLaunchPref(context, appWidgetId, null);
         String pref0_value = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, null);
+        String pref0_package = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_PACKAGE);
         String pref0_action = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_ACTION);
         String pref0_data = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATA);
         String pref0_mime = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DATATYPE);
@@ -512,6 +519,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         String pref0_desc = WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_DESC);
         int pref0_color = Integer.parseInt(WidgetActions.loadActionLaunchPref(context, appWidgetId, null, WidgetActions.PREF_KEY_ACTION_LAUNCH_COLOR));
         assertTrue("pref value should be default (" + value0 + ") but was " + pref0_value, pref0_value.equals(value0) && value0.equals(WidgetActions.PREF_DEF_ACTION_LAUNCH));
+        assertTrue("pref package should be default (empty) but was " + pref0_package, pref0_package.equals(""));
         assertTrue("pref action should be default (empty) but was " + pref0_action, pref0_action.equals(""));
         assertTrue("pref data should be default (empty) but was " + pref0_data, pref0_data.equals(""));
         assertTrue("pref datatype should be default (empty) but was " + pref0_mime, pref0_mime.equals(""));
