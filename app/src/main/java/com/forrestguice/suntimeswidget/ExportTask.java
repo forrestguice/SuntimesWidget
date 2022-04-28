@@ -34,6 +34,8 @@ import java.util.Comparator;
 @SuppressWarnings("Convert2Diamond")
 public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.ExportResult>
 {
+    public static final String FILE_PROVIDER_AUTHORITY = "com.forrestguice.suntimeswidget.fileprovider";
+
     public static final long MIN_WAIT_TIME = 2000;
     public static final long CACHE_MAX = 256000;
 

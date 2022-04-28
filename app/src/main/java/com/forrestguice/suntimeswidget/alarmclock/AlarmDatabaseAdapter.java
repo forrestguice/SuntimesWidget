@@ -38,6 +38,7 @@ import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -668,6 +669,7 @@ public class AlarmDatabaseAdapter
         private boolean flag_add = false;
         private boolean flag_withState = true;
         private AlarmClockItem lastItem;
+        private AlarmClockItem[] items = null;
 
         public AlarmUpdateTask(@NonNull Context context)
         {
@@ -707,6 +709,7 @@ public class AlarmDatabaseAdapter
                 updated = updated && itemUpdated;
             }
             db.close();
+            this.items = Arrays.copyOf(items, items.length);
             return updated;
         }
 
@@ -714,8 +717,10 @@ public class AlarmDatabaseAdapter
         protected void onPostExecute(Boolean result)
         {
             Log.d(TAG, "Item Saved: " + lastItem.rowID + ":" + (lastItem.state != null ? lastItem.state.getState() : null));
-            if (listener != null)
+            if (listener != null) {
                 listener.onFinished(result, lastItem);
+                listener.onFinished(result, items);
+            }
         }
 
         protected AlarmItemTaskListener listener = null;
@@ -728,6 +733,7 @@ public class AlarmDatabaseAdapter
     public static abstract class AlarmItemTaskListener
     {
         public void onFinished(Boolean result, AlarmClockItem item) {}
+        public void onFinished(Boolean result, @Nullable AlarmClockItem[] items) {}
     }
 
     /**
