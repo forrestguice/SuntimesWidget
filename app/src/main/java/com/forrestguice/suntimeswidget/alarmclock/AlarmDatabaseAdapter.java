@@ -260,6 +260,18 @@ public class AlarmDatabaseAdapter
         String[] query = (fullEntry) ? QUERY_ALARMS_FULLENTRY : QUERY_ALARMS_MINENTRY;
         return getAllAlarms(n, query, selection, selectionArgs);
     }
+    public Cursor getAllAlarms(int n, int alarmState)    // TODO: test
+    {
+        String selection = KEY_STATE + " = ?";
+        String[] selectionArgs = new String[] { Integer.toString(alarmState) };
+
+        Cursor cursor =  (n > 0) ? database.query( TABLE_ALARMSTATE, QUERY_ALARMSTATE_FULLENTRY, selection, selectionArgs, null, null, "_id DESC", n+"" )
+                : database.query( TABLE_ALARMS, QUERY_ALARMSTATE_FULLENTRY, selection, selectionArgs, null, null, "_id DESC" );
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
     public Cursor getAllAlarms(int n, String[] columns, @Nullable String selection, @Nullable String[] selectionArgs)
     {
         Cursor cursor =  (n > 0) ? database.query( TABLE_ALARMS, columns, selection, selectionArgs, null, null, "_id DESC", n+"" )
@@ -887,10 +899,15 @@ public class AlarmDatabaseAdapter
             param_enabledOnly = value;
         }
 
+        private Integer param_withAlarmState = null;
+        public void setParam_withAlarmState(int state) {
+            param_withAlarmState = state;
+        }
+
         private Long param_nowMillis = null;    // list all items, else find next upcoming from now
         public void setParam_nowMillis( Long value ) {
             param_nowMillis = value;
-    }
+        }
 
         @Override
         protected Long[] doInBackground(Void... voids)
@@ -902,10 +919,14 @@ public class AlarmDatabaseAdapter
                 alarmIds.add(db.findUpcomingAlarmId(param_nowMillis));
 
             } else {
-                Cursor cursor = db.getAllAlarms(0, false, param_enabledOnly);
+                Cursor cursor = (param_withAlarmState != null)
+                        ? db.getAllAlarms(0, param_withAlarmState)
+                        : db.getAllAlarms(0, false, param_enabledOnly);
+
                 while (!cursor.isAfterLast())
                 {
-                    alarmIds.add(cursor.getLong(cursor.getColumnIndex(AlarmDatabaseAdapter.KEY_ROWID)));
+                    String index = (param_withAlarmState != null) ? AlarmDatabaseAdapter.KEY_STATE_ALARMID : AlarmDatabaseAdapter.KEY_ROWID;
+                    alarmIds.add(cursor.getLong(cursor.getColumnIndex(index)));
                     cursor.moveToNext();
                 }
             }

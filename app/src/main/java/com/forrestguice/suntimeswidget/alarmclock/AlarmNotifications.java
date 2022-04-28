@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2021 Forrest Guice
+    Copyright (C) 2018-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -39,9 +39,11 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Vibrator;
+import android.provider.AlarmClock;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -86,6 +88,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final String ACTION_SILENT = "suntimeswidget.alarm.silent";            // silence an alarm (but don't dismiss it)
     public static final String ACTION_DISMISS = "suntimeswidget.alarm.dismiss";          // dismiss an alarm
     public static final String ACTION_SNOOZE = "suntimeswidget.alarm.snooze";            // snooze an alarm
+    public static final String ACTION_SNOOZE0 = "android.intent.action.SNOOZE_ALARM";    // AlarmClock.ACTION_SNOOZE_ALARM (api23+)
     public static final String ACTION_SCHEDULE = "suntimeswidget.alarm.schedule";        // enable (schedule) an alarm
     public static final String ACTION_RESCHEDULE = "suntimeswidget.alarm.reschedule";    // reschedule; same as schedule but prev alarmtime is replaced.
     public static final String ACTION_RESCHEDULE1 = ACTION_RESCHEDULE + "1";             // reschedule + 1; advance schedule by 1 cycle (prev alarmtime used as basis for scheduling)
@@ -290,6 +293,14 @@ public class AlarmNotifications extends BroadcastReceiver
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    protected static void findSoundingAlarms(final Context context, @Nullable final AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener onFinished)
+    {
+        AlarmDatabaseAdapter.AlarmListTask findTask = new AlarmDatabaseAdapter.AlarmListTask(context);
+        findTask.setParam_withAlarmState(AlarmState.STATE_SOUNDING);
+        findTask.setAlarmItemTaskListener(onFinished);
+        findTask.execute();
+    }
 
     /**
      * Find the alarm expected to trigger next and cache its ID in prefs.
@@ -1014,7 +1025,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     }
 
                     AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
-                    itemTask.addAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), action));
+                    itemTask.addAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), action, intent.getExtras()));
                     itemTask.execute(ContentUris.parseId(data));
 
                 } else {
@@ -1067,6 +1078,24 @@ public class AlarmNotifications extends BroadcastReceiver
                         Log.d(TAG, "TIME_SET received");
                         stopSelf(startId);
                         // TODO: reschedule alarms (but only when deltaT is >reminderPeriod to avoid rescheduling alarms dismissed early)
+
+                    } else if (AlarmNotifications.ACTION_SNOOZE0.equals(action)) {    // TODO: test
+                        Log.d(TAG, "ACTION_SNOOZE0: snooze sounding alarm");
+                        AlarmNotifications.stopAlert();
+                        findSoundingAlarms(getApplicationContext(), new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
+                            @Override
+                            public void onItemsLoaded(Long[] ids)
+                            {
+                                for (long id : ids) {
+                                    Uri uri = ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, id);
+                                    Intent snoozeIntent = AlarmNotifications.getAlarmIntent(getApplicationContext(), ACTION_SNOOZE, uri);
+                                    if (Build.VERSION.SDK_INT >= 23) {
+                                        snoozeIntent.putExtra(AlarmClock.EXTRA_ALARM_SNOOZE_DURATION, intent.getIntExtra(AlarmClock.EXTRA_ALARM_SNOOZE_DURATION, -1));
+                                    }
+                                    sendBroadcast(snoozeIntent);
+                                }
+                            }
+                        });
 
                     } else if (AlarmNotifications.ACTION_DELETE.equals(action)) {
                         Log.d(TAG, "ACTION_DELETE: clear all");
@@ -1128,11 +1157,16 @@ public class AlarmNotifications extends BroadcastReceiver
 
         /**
          */
-        private AlarmDatabaseAdapter.AlarmItemTaskListener createAlarmOnReceiveListener(final Context context, final String action)
-        {
-            return createAlarmOnReceiveListener(context, action, null);
+        private AlarmDatabaseAdapter.AlarmItemTaskListener createAlarmOnReceiveListener(final Context context, final String action) {
+            return createAlarmOnReceiveListener(context, action, null, null);
         }
-        private AlarmDatabaseAdapter.AlarmItemTaskListener createAlarmOnReceiveListener(final Context context, final String action, final @Nullable AlarmDatabaseAdapter.AlarmItemTaskListener chained)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener createAlarmOnReceiveListener(final Context context, final String action, @Nullable final Bundle bundle) {
+            return createAlarmOnReceiveListener(context, action, bundle, null);
+        }
+        private AlarmDatabaseAdapter.AlarmItemTaskListener createAlarmOnReceiveListener(final Context context, final String action, final @Nullable AlarmDatabaseAdapter.AlarmItemTaskListener chained) {
+            return createAlarmOnReceiveListener(context, action, null, chained);
+        }
+        private AlarmDatabaseAdapter.AlarmItemTaskListener createAlarmOnReceiveListener(final Context context, final String action, @Nullable final Bundle extras, final @Nullable AlarmDatabaseAdapter.AlarmItemTaskListener chained)
         {
             return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
@@ -1309,7 +1343,23 @@ public class AlarmNotifications extends BroadcastReceiver
                                 Log.i(TAG, "Snoozing: " + item.rowID);
                                 cancelAlarmTimeouts(context, item);
 
-                                long snoozeUntil = Calendar.getInstance().getTimeInMillis() + AlarmSettings.loadPrefAlarmSnooze(context);
+                                long snoozeDurationMs = AlarmSettings.loadPrefAlarmSnooze(context);
+                                if (Build.VERSION.SDK_INT >= 23)
+                                {
+                                    if (extras != null && extras.containsKey(AlarmClock.EXTRA_ALARM_SNOOZE_DURATION))
+                                    {
+                                        int snoozeDurationMinutes = extras.getInt(AlarmClock.EXTRA_ALARM_SNOOZE_DURATION, -1);
+                                        if (snoozeDurationMinutes > 0)
+                                        {
+                                            if (snoozeDurationMinutes > 59) {
+                                                snoozeDurationMinutes = 59;
+                                            }
+                                            snoozeDurationMs = snoozeDurationMinutes * 60 * 1000;
+                                        }
+                                    }
+                                }
+
+                                long snoozeUntil = Calendar.getInstance().getTimeInMillis() + snoozeDurationMs;
                                 addAlarmTimeout(context, ACTION_SHOW, item.getUri(), snoozeUntil);
 
                                 item.modified = true;
