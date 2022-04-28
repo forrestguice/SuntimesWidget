@@ -363,11 +363,7 @@ public class AlarmListDialog extends DialogFragment
                 {
                     Context context = getActivity();
                     if (context != null) {
-                        for (AlarmClockItem item : items) {
-                            if (item != null) {
-                                addAlarm(context, item);
-                            }
-                        }
+                        addAlarm(context, items.toArray(new AlarmClockItem[0]));
                     }
                 }
             });
@@ -444,8 +440,15 @@ public class AlarmListDialog extends DialogFragment
         return alarm;
     }
 
-
-    public AlarmClockItem addAlarm(final Context context, AlarmClockItem... alarm)
+    /**
+     * Add AlarmClockItem(s) to the alarms database.
+     * @param items an array of one or more AlarmClockItem
+     * @return an array of added items (rowID updated)
+     */
+    public void addAlarm(final Context context, AlarmClockItem... items) {
+        addAlarm(context, null, items);
+    }
+    public void addAlarm(final Context context, final @Nullable AlarmDatabaseAdapter.AlarmItemTaskListener l, AlarmClockItem... items)
     {
         AlarmDatabaseAdapter.AlarmUpdateTask task = new AlarmDatabaseAdapter.AlarmUpdateTask(context, true, true);
         task.setTaskListener(new AlarmDatabaseAdapter.AlarmItemTaskListener()
@@ -460,20 +463,21 @@ public class AlarmListDialog extends DialogFragment
                         if (listener != null) {
                             listener.onAlarmAdded(item);
                         }
-
-                        setSelectedRowID(item.rowID);
-                        reloadAdapter();
-
                         if (item.enabled) {
                             context.sendBroadcast( AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SCHEDULE, item.getUri()) );
                         }
                     }
+                    setSelectedRowID((items.length == 1) ? items[0].rowID : -1L);
+                    reloadAdapter();
+                }
+                if (l != null) {
+                    l.onFinished(result, items);
                 }
             }
         });
-        task.execute(alarm);
-        return alarm[0];
+        task.execute(items);
     }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -598,13 +602,20 @@ public class AlarmListDialog extends DialogFragment
             if (result.getResult())
             {
                 AlarmClockItem[] items = result.getItems();
-                addAlarm(getActivity(), items);
+                addAlarm(getActivity(), new AlarmDatabaseAdapter.AlarmItemTaskListener()
+                {
+                    @Override
+                    public void onFinished(Boolean result, @Nullable AlarmClockItem[] items) {
+                        if (isAdded()) {
+                            offerUndoImport(getActivity(), new ArrayList<AlarmClockItem>(Arrays.asList(items)));
+                        }
+                    }
+                }, items);
 
-                if (isAdded()) {
-                    //String successMessage = getString(R.string.msg_import_success, result.getUri().toString());
-                    //Toast.makeText(getActivity(), successMessage, Toast.LENGTH_LONG).show();
-                    offerUndoImport(getActivity(), new ArrayList<AlarmClockItem>(Arrays.asList(items)));
-                }
+                /*if (isAdded()) {
+                    String successMessage = getString(R.string.msg_import_success, result.getUri().toString());
+                    Toast.makeText(getActivity(), successMessage, Toast.LENGTH_LONG).show();
+                }*/
                 return;    // finished import
 
             } else {
@@ -633,7 +644,7 @@ public class AlarmListDialog extends DialogFragment
                     if (context != null) {
                         for (AlarmClockItem item : items) {
                             if (item != null) {
-                                // TODO: remove item (undo import)
+                                context.sendBroadcast(AlarmNotifications.getAlarmIntent(getActivity(), AlarmNotifications.ACTION_DELETE, item.getUri()));
                             }
                         }
                     }

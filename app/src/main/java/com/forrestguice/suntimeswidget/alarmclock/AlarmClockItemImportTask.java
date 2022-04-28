@@ -256,6 +256,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
                 try {
                     AlarmClockItem item = new AlarmClockItem();
                     item.fromContentValues(context, toContentValues(map));
+                    AlarmNotifications.updateAlarmTime(context, item);
                     return item;
 
                 } catch (Exception e) {
