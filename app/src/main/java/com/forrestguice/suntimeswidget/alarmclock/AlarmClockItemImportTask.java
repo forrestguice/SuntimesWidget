@@ -207,7 +207,8 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
         {
             if (Build.VERSION.SDK_INT >= 11)
             {
-                JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF_8"));
+                //noinspection CharsetObjectCanBeUsed
+                JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
                 reader.setLenient(true);
                 try {
                     readAlarmClockItems(context, reader, items);
