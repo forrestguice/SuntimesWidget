@@ -260,22 +260,24 @@ public class AlarmDatabaseAdapter
         String[] query = (fullEntry) ? QUERY_ALARMS_FULLENTRY : QUERY_ALARMS_MINENTRY;
         return getAllAlarms(n, query, selection, selectionArgs);
     }
+
     public Cursor getAllAlarms(int n, int alarmState)    // TODO: test
     {
         String selection = KEY_STATE + " = ?";
         String[] selectionArgs = new String[] { Integer.toString(alarmState) };
 
-        Cursor cursor =  (n > 0) ? database.query( TABLE_ALARMSTATE, QUERY_ALARMSTATE_FULLENTRY, selection, selectionArgs, null, null, "_id DESC", n+"" )
-                : database.query( TABLE_ALARMS, QUERY_ALARMSTATE_FULLENTRY, selection, selectionArgs, null, null, "_id DESC" );
+        Cursor cursor =  (n > 0) ? database.query( TABLE_ALARMSTATE, QUERY_ALARMSTATE_FULLENTRY, selection, selectionArgs, null, null, KEY_STATE_ALARMID + " DESC", n+"" )
+                                 : database.query( TABLE_ALARMSTATE, QUERY_ALARMSTATE_FULLENTRY, selection, selectionArgs, null, null, KEY_STATE_ALARMID + " DESC" );
         if (cursor != null) {
             cursor.moveToFirst();
         }
         return cursor;
     }
+
     public Cursor getAllAlarms(int n, String[] columns, @Nullable String selection, @Nullable String[] selectionArgs)
     {
-        Cursor cursor =  (n > 0) ? database.query( TABLE_ALARMS, columns, selection, selectionArgs, null, null, "_id DESC", n+"" )
-                                 : database.query( TABLE_ALARMS, columns, selection, selectionArgs, null, null, "_id DESC" );
+        Cursor cursor =  (n > 0) ? database.query( TABLE_ALARMS, columns, selection, selectionArgs, null, null, KEY_ROWID + " DESC", n+"" )
+                                 : database.query( TABLE_ALARMS, columns, selection, selectionArgs, null, null, KEY_ROWID + " DESC" );
         if (cursor != null) {
             cursor.moveToFirst();
         }
