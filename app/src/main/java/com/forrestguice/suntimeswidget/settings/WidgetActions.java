@@ -75,10 +75,10 @@ public class WidgetActions
     public static final String PREF_KEY_ACTION_LAUNCH_TAGS = SuntimesActionsContract.COLUMN_ACTION_TAGS;
 
     public static final String PREF_KEY_ACTION_LAUNCH = SuntimesActionsContract.COLUMN_ACTION_CLASS;
-    public static final String PREF_DEF_ACTION_LAUNCH = "com.forrestguice.suntimeswidget.SuntimesActivity";
+    public static final String PREF_DEF_ACTION_LAUNCH = SuntimesActivity.class.getName();
 
     public static final String PREF_KEY_ACTION_LAUNCH_PACKAGE = SuntimesActionsContract.COLUMN_ACTION_PACKAGE;
-    public static final String PREF_DEF_ACTION_LAUNCH_PACKAGE = "com.forrestguice.suntimeswidget";
+    public static final String PREF_DEF_ACTION_LAUNCH_PACKAGE = "";
 
     public static final String PREF_KEY_ACTION_LAUNCH_ACTION = SuntimesActionsContract.COLUMN_ACTION_ACTION;
     public static final String PREF_DEF_ACTION_LAUNCH_ACTION = "";

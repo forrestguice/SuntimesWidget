@@ -1928,7 +1928,7 @@
         <b>Package:</b> A package name.<br/><small>e.g. <em>app.package.name</em></small>
         <br/>
         <br/>
-        <b>Class:</b> A fully qualified class name.<br/><small>e.g. <em>suntimeswidget.SuntimesActivity</em></small>
+        <b>Class:</b> A fully qualified class name.<br/><small>e.g. <em>app.package.name.MainActivity</em></small>
         <br/>
         <br/>
         <b>Data:</b> A Uri that contains or points to attached data. Supports <em>%s</em>ubstitutions. <small>e.g. <em>geo:%lat,%lon</em></small>
