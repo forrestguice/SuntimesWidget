@@ -87,6 +87,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final String ACTION_SHOW = "suntimeswidget.alarm.show";                // sound an alarm
     public static final String ACTION_SILENT = "suntimeswidget.alarm.silent";            // silence an alarm (but don't dismiss it)
     public static final String ACTION_DISMISS = "suntimeswidget.alarm.dismiss";          // dismiss an alarm
+    public static final String ACTION_DISMISS0 = "android.intent.action.DISMISS_ALARM";  // AlarmClock.ACTION_DISMISS_ALARM (api23+)
     public static final String ACTION_SNOOZE = "suntimeswidget.alarm.snooze";            // snooze an alarm
     public static final String ACTION_SNOOZE0 = "android.intent.action.SNOOZE_ALARM";    // AlarmClock.ACTION_SNOOZE_ALARM (api23+)
     public static final String ACTION_SCHEDULE = "suntimeswidget.alarm.schedule";        // enable (schedule) an alarm
@@ -293,6 +294,14 @@ public class AlarmNotifications extends BroadcastReceiver
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    protected static void findEnabledAlarms(final Context context, @Nullable final AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener onFinished)
+    {
+        AlarmDatabaseAdapter.AlarmListTask findTask = new AlarmDatabaseAdapter.AlarmListTask(context);
+        findTask.setParam_enabledOnly(true);
+        findTask.setAlarmItemTaskListener(onFinished);
+        findTask.execute();
+    }
 
     protected static void findSoundingAlarms(final Context context, @Nullable final AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener onFinished)
     {
@@ -974,6 +983,11 @@ public class AlarmNotifications extends BroadcastReceiver
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static final String ALARM_SEARCH_MODE_ALL = "android.all";
+    public static final String ALARM_SEARCH_MODE_LABEL = "android.label";
+    public static final String ALARM_SEARCH_MODE_NEXT = "android.next";
+    public static final String ALARM_SEARCH_MODE_TIME = "android.time";
+
     /**
      * NotificationService
      */
@@ -995,7 +1009,8 @@ public class AlarmNotifications extends BroadcastReceiver
                     {
                         Log.d(TAG, "ACTION_SHOW");
 
-                    } else if (AlarmNotifications.ACTION_DISMISS.equals(action)) {
+                    } else if (AlarmNotifications.ACTION_DISMISS.equals(action) || AlarmNotifications.ACTION_DISMISS0.equals(action)) {
+                        action = AlarmNotifications.ACTION_DISMISS;
                         Log.d(TAG, "ACTION_DISMISS: " + data);
                         AlarmNotifications.stopAlert();
 
@@ -1078,6 +1093,49 @@ public class AlarmNotifications extends BroadcastReceiver
                         Log.d(TAG, "TIME_SET received");
                         stopSelf(startId);
                         // TODO: reschedule alarms (but only when deltaT is >reminderPeriod to avoid rescheduling alarms dismissed early)
+
+                    } else if (AlarmNotifications.ACTION_DISMISS0.equals(action)) {    // TODO: test
+                        Log.d(TAG, "ACTION_DISMISS0: dismiss active alarm(s)");
+                        AlarmNotifications.stopAlert();
+
+                        String searchMode = null;
+                        if (Build.VERSION.SDK_INT >= 23) {
+                            searchMode = intent.getStringExtra(AlarmClock.EXTRA_ALARM_SEARCH_MODE);
+                        }
+                        if (searchMode == null) {
+                            searchMode = ALARM_SEARCH_MODE_NEXT;
+                        }
+                        switch (searchMode)
+                        {
+                            case ALARM_SEARCH_MODE_ALL:    // AlarmClock.ALARM_SEARCH_MODE_ALL (api23+)
+                                findEnabledAlarms(getApplicationContext(), new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
+                                    public void onItemsLoaded(Long[] ids) {
+                                        for (long id : ids) {
+                                            sendBroadcast(AlarmNotifications.getAlarmIntent(getApplicationContext(), ACTION_DISMISS, ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, id)));
+                                        }
+                                    }
+                                });
+                                break;
+                            case ALARM_SEARCH_MODE_LABEL: // TODO
+                            case ALARM_SEARCH_MODE_TIME:  // TODO
+                            case ALARM_SEARCH_MODE_NEXT:
+                            default:
+                                findSoundingAlarms(getApplicationContext(), new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
+                                    @Override
+                                    public void onItemsLoaded(Long[] ids) {
+                                        if (ids.length > 0) {
+                                            sendBroadcast(AlarmNotifications.getAlarmIntent(getApplicationContext(), ACTION_DISMISS, ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, ids[0])));
+                                        } else {
+                                            findUpcomingAlarm(getApplicationContext(), new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
+                                                public void onItemsLoaded(Long[] ids) {
+                                                    sendBroadcast(AlarmNotifications.getAlarmIntent(getApplicationContext(), ACTION_DISMISS, ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, ids[0])));
+                                                }
+                                            });
+                                        }
+                                    }
+                                });
+                                break;
+                        }
 
                     } else if (AlarmNotifications.ACTION_SNOOZE0.equals(action)) {    // TODO: test
                         Log.d(TAG, "ACTION_SNOOZE0: snooze sounding alarm");
