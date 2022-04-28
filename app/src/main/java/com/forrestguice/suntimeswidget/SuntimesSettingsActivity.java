@@ -1142,7 +1142,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
 
                     try {
                         //Uri shareURI = Uri.fromFile(results.getExportFile());  // this URI works until api26 (throws FileUriExposedException)
-                        Uri shareURI = FileProvider.getUriForFile(myParent, "com.forrestguice.suntimeswidget.fileprovider", results.getExportFile());
+                        Uri shareURI = FileProvider.getUriForFile(myParent, ExportTask.FILE_PROVIDER_AUTHORITY, results.getExportFile());
                         shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
 
                         String successMessage = myParent.getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());

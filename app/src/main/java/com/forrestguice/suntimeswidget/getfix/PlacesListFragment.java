@@ -57,6 +57,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
+import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
@@ -972,7 +973,7 @@ public class PlacesListFragment extends Fragment
 
                     try {
                         //Uri shareURI = Uri.fromFile(results.getExportFile());  // this URI works until api26 (throws FileUriExposedException)
-                        Uri shareURI = FileProvider.getUriForFile(context, "com.forrestguice.suntimeswidget.fileprovider", results.getExportFile());
+                        Uri shareURI = FileProvider.getUriForFile(context, ExportTask.FILE_PROVIDER_AUTHORITY, results.getExportFile());
                         shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
 
                         String successMessage = context.getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());

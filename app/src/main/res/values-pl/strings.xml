@@ -23,6 +23,8 @@
     <string name="configAction_viewDate">Wyświetl datę</string>
     <string name="configAction_viewDateWith">Wyświetl datę</string>
     <string name="configAction_share">Udostępnij</string>
+    <string name="configAction_export">Eksportuj</string>
+    <string name="configAction_import">Importuj</string>
     <string name="configAction_sunDialog">Pozycja Słońca</string>
     <string name="configAction_equinoxDialog">Przesilenie / równonoc</string>
     <string name="configAction_worldMap">Mapa świata</string>
@@ -563,8 +565,8 @@
     <string name="configAction_loadAction">Wywołaj</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteAction">Usuń</string>         <!-- button (contentDescription) -->
     <string name="configAction_clearActions">Wyczyść wszystkie</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportActions">Eksportuj</string>         <!-- button (contentDescription) -->
-    <string name="configAction_importActions">Importuj</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportActions">@string/configAction_export</string>         <!-- button (contentDescription) -->
+    <string name="configAction_importActions">@string/configAction_import</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: Themes -->
     <string name="configLabel_widgetThemeList">Skórki widżetu</string>
@@ -574,9 +576,9 @@
     <string name="configAction_editTheme">Edytuj</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteTheme">Usuń</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Kopiuj</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportThemes">Eksportuj</string>    <!-- button (contentDescription) -->
+    <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
     <string name="configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
-    <string name="configAction_importThemes">Importuj</string>    <!-- button (contentDescription) -->
+    <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
     <!--<string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>-->                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
@@ -774,6 +776,8 @@
     <string name="clearalarms_dialog_cancel">Anuluj</string>    <!-- button -->
     <string name="clearalarms_toast_success">Usunięto wszystkie alarmy.</string> <!-- toast msg -->
 
+    <string name="importalarms_toast_success">Imported %s alarms.</string> <!-- toast msg -->    <!-- TODO -->
+
     <string name="alarmlabel_dialog_title">Etykieta</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Zastosuj</string>        <!-- button -->
     <string name="alarmlabel_dialog_cancel">Anuluj</string>    <!-- button -->
@@ -905,8 +909,8 @@
     <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
     <string name="configAction_deletePlace">Usuń</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Czyść</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportPlaces">Eksportuj</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">Importuj</string>       <!-- button (contentDescription) -->
+    <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interfejs użytkownika</string>                       <!-- group title -->

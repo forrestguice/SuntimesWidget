@@ -29,7 +29,19 @@
             android:icon="?attr/icActionDelete"
             android:title="@string/configAction_clearAlarms"
             app:showAsAction="never"
-            android:orderInCategory="501" />
+            android:orderInCategory="510" />
+
+        <item android:id="@+id/action_export"
+            android:icon="?attr/icActionSave"
+            android:title="@string/configAction_exportAlarms"
+            app:showAsAction="never"
+            android:orderInCategory="520" />
+
+        <item android:id="@+id/action_import"
+            android:icon="?attr/icActionCopy"
+            android:title="@string/configAction_importAlarms"
+            app:showAsAction="never"
+            android:orderInCategory="530" />
 
     </group>
 </menu>

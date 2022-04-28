@@ -22,6 +22,8 @@
     <string name="configAction_viewDate">Montri daton</string>
     <string name="configAction_viewDateWith">Montri daton</string>
     <string name="configAction_share">Kunhavigi</string>
+    <string name="configAction_export">Elporti</string>
+    <string name="configAction_import">Enporti</string>
     <string name="configAction_sunDialog">Pozicio de Suno</string>
     <string name="configAction_equinoxDialog">Solstico / ekvinokso</string>
     <string name="configAction_worldMap">Mondmapo</string>
@@ -556,8 +558,8 @@
     <string name="configAction_loadAction">Lanĉi</string>         <!-- button (contentDescription) --> 
     <string name="configAction_deleteAction">Forigi</string>         <!-- button (contentDescription) -->
     <string name="configAction_clearActions">Forigi ĉiujn</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportActions">Elporti</string>         <!-- button (contentDescription) -->
-    <string name="configAction_importActions">Enporti</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportActions">@string/configAction_export</string>         <!-- button (contentDescription) -->
+    <string name="configAction_importActions">@string/configAction_import</string>         <!-- button (contentDescription) -->
 
     <!-- Widget Setting: Themes -->
     <string name="configLabel_widgetThemeList">Fenestraĵa etoso</string>
@@ -567,9 +569,9 @@
     <string name="configAction_editTheme">Redakti</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteTheme">Forigi</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Kopii</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportThemes">Elporti</string>    <!-- button (contentDescription) -->
+    <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
     <string name="configAction_shareTheme">@string/configAction_share</string>      <!-- button (contentDescription) -->  <!-- export (share) one theme -->
-    <string name="configAction_importThemes">Enporti</string>    <!-- button (contentDescription) -->
+    <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
     <!--<string name="addtheme_custname">theme_<xliff:g id="#">%1$s</xliff:g></string>-->                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName">%1$s</xliff:g>_copy<xliff:g id="#">%2$s</xliff:g></string>-->   <!-- copied theme id -->
@@ -767,6 +769,8 @@
     <string name="clearalarms_dialog_cancel">Nuligi</string>    <!-- button -->
     <string name="clearalarms_toast_success">Forigis ĉiujn alarmojn.</string> <!-- toast msg -->
 
+    <string name="importalarms_toast_success">Imported %s alarms.</string> <!-- toast msg -->    <!-- TODO -->
+
     <string name="alarmlabel_dialog_title">Etikedo</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Apliki</string>        <!-- button -->
     <string name="alarmlabel_dialog_cancel">Nuligi</string>    <!-- button -->
@@ -889,8 +893,8 @@
     <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
     <string name="configAction_deletePlace">Forigi</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Forigi ĉiujn</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportPlaces">Elporti</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">Enporti</string>       <!-- button (contentDescription) -->
+    <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Fasado</string>                       <!-- group title -->

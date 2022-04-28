@@ -23,6 +23,8 @@
     <string name="configAction_viewDate">Vedi la data</string>
     <string name="configAction_viewDateWith">Vedi la data</string>
     <string name="configAction_share">Condividi</string>
+    <string name="configAction_export">Esporta</string>
+    <string name="configAction_import">Importa</string>
     <string name="configAction_sunDialog">Posizione del sole</string>
     <string name="configAction_equinoxDialog">Solstizio / Equinozio</string>
     <string name="configAction_worldMap">Mappa mondiale</string>
@@ -570,8 +572,8 @@
     <string name="configAction_loadAction">Carica</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteAction">Elimina</string>         <!-- button (contentDescription) -->
     <string name="configAction_clearActions">Rimuovi tutto</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportActions">Esporta</string>         <!-- button (contentDescription) -->
-    <string name="configAction_importActions">Importa</string>         <!-- button (contentDescription) -->
+    <string name="configAction_exportActions">@string/configAction_export</string>         <!-- button (contentDescription) -->
+    <string name="configAction_importActions">@string/configAction_import</string>         <!-- button (contentDescription) -->
 
     <!-- App Setting: WidgetThemes -->
     <string name="configLabel_widgetThemeList">Temi per i widget</string>
@@ -581,8 +583,8 @@
     <string name="configAction_editTheme">Modifica</string>         <!-- button (contentDescription) -->
     <string name="configAction_deleteTheme">Elimina</string>     <!-- button (contentDescription) -->
     <string name="configAction_copyTheme">Copia</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportThemes">Esporta</string>    <!-- button (contentDescription) -->
-    <string name="configAction_importThemes">Importa</string>    <!-- button (contentDescription) -->
+    <string name="configAction_exportThemes">@string/configAction_export</string>    <!-- button (contentDescription) -->
+    <string name="configAction_importThemes">@string/configAction_import</string>    <!-- button (contentDescription) -->
 
     <string name="addtheme_custname">tema_<xliff:g id="#" >%1$s</xliff:g></string>                                        <!-- suggested new theme id -->
     <!--<string name="addtheme_copyname"><xliff:g id="themeName" >%1$s</xliff:g>_<xliff:g id="#" >%2$s</xliff:g></string>-->   <!-- copied theme id -->
@@ -782,6 +784,8 @@
     <string name="clearalarms_dialog_cancel">Cancella</string>    <!-- button -->
     <string name="clearalarms_toast_success">Allarmi eliminati.</string> <!-- toast msg -->
 
+    <string name="importalarms_toast_success">Imported %s alarms.</string> <!-- toast msg -->    <!-- TODO -->
+
     <string name="alarmlabel_dialog_title">Etichetta</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Applica</string>        <!-- button -->
     <string name="alarmlabel_dialog_cancel">Cancella</string>    <!-- button -->
@@ -905,8 +909,8 @@
     <string name="configAction_sharePlace">@string/configAction_share</string>          <!-- button (contentDescription) -->
     <string name="configAction_deletePlace">Elimina</string>        <!-- button (contentDescription) -->
     <string name="configAction_clearPlaces">Rimuovi tutto</string>         <!-- button (contentDescription) -->
-    <string name="configAction_exportPlaces">Esporta</string>       <!-- button (contentDescription) -->
-    <string name="configAction_importPlaces">Import</string>       <!-- button (contentDescription) -->  <!-- TODO -->
+    <string name="configAction_exportPlaces">@string/configAction_export</string>       <!-- button (contentDescription) -->
+    <string name="configAction_importPlaces">@string/configAction_import</string>       <!-- button (contentDescription) -->
 
     <!-- App Setting: UI -->
     <string name="configLabel_ui">Interfaccia utente</string>                       <!-- group title -->
