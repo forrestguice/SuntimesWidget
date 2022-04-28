@@ -18,10 +18,12 @@
 
 package com.forrestguice.suntimeswidget.alarmclock;
 
+import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.util.JsonReader;
 import android.util.Log;
@@ -203,16 +205,23 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
 
         public static void readAlarmClockItems(Context context, InputStream in, ArrayList<AlarmClockItem> items) throws IOException
         {
-            JsonReader reader = new JsonReader(new InputStreamReader(in, StandardCharsets.UTF_8));
-            reader.setLenient(true);
-            try {
-                readAlarmClockItems(context, reader, items);
-            } finally {
-                reader.close();
+            if (Build.VERSION.SDK_INT >= 11)
+            {
+                JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF_8"));
+                reader.setLenient(true);
+                try {
+                    readAlarmClockItems(context, reader, items);
+                } finally {
+                    reader.close();
+                    in.close();
+                }
+            } else {
+                Log.w(TAG, "Unsupported; skipping import");
                 in.close();
             }
         }
 
+        @TargetApi(11)
         protected static void readAlarmClockItems(Context context, JsonReader reader, ArrayList<AlarmClockItem> items) throws IOException
         {
             switch (reader.peek()) {
@@ -222,6 +231,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
             }
         }
 
+        @TargetApi(11)
         protected static void readAlarmClockItemArray(Context context, JsonReader reader, ArrayList<AlarmClockItem> items) throws IOException
         {
             try {
@@ -236,6 +246,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
         }
 
         @Nullable
+        @TargetApi(11)
         protected static AlarmClockItem readAlarmClockItem(Context context, JsonReader reader)
         {
             Map<String, Object> map = readJsonObject(reader);
@@ -291,6 +302,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
         }
 
         @Nullable
+        @TargetApi(11)
         protected static Map<String, Object> readJsonObject(JsonReader reader)
         {
             try {
@@ -323,6 +335,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
             }
         }
 
+        @TargetApi(11)
         protected static void skipJsonObject(JsonReader reader) throws IOException
         {
             reader.beginObject();
@@ -332,6 +345,7 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
             reader.endObject();
         }
 
+        @TargetApi(11)
         protected static void skipJsonArray(JsonReader reader) throws IOException
         {
             reader.beginArray();
@@ -344,8 +358,16 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
         public static HashMap<String,String> toMap(ContentValues values)
         {
             HashMap<String,String> map = new HashMap<>();
-            for (String key : values.keySet()) {
-                map.put(key, values.getAsString(key));
+            if (Build.VERSION.SDK_INT >= 11)
+            {
+                for (String key : values.keySet()) {
+                    map.put(key, values.getAsString(key));
+                }
+            } else {
+                for (Map.Entry<String,Object> entry : values.valueSet()) {
+                    Object value = entry.getValue();
+                    map.put(entry.getKey(), ((value != null) ? value.toString() : null));
+                }
             }
             return map;
         }
