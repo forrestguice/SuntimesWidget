@@ -26,7 +26,6 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
-import com.forrestguice.suntimeswidget.calculator.core.Location;
 
 import org.json.JSONObject;
 import org.junit.Before;
@@ -40,7 +39,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem.AlarmType.ALARM;
-import static com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem.AlarmType.NOTIFICATION;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.fail;
@@ -59,7 +57,7 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
     @Test
     public void test_readAlarmClockItems0()
     {
-        AlarmClockItem[] items0 = createTestItems();
+        AlarmClockItem[] items0 = AlarmDatabaseAdapterTest.createTestItems();
         int n = items0.length;
 
         // to json array
@@ -91,7 +89,7 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
     @Test
     public void test_readAlarmClockItems1()
     {
-        AlarmClockItem[] items = createTestItems();
+        AlarmClockItem[] items = AlarmDatabaseAdapterTest.createTestItems();
         AlarmClockItem item0 = items[0];
         String json0 = AlarmClockItemImportTask.AlarmClockItemJson.toJson(item0);
         AlarmClockItem item1 = items[1];
@@ -123,7 +121,7 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
     @Test
     public void test_readAlarmClockItems2()
     {
-        AlarmClockItem[] items = createTestItems();
+        AlarmClockItem[] items = AlarmDatabaseAdapterTest.createTestItems();
         AlarmClockItem item0 = items[0];
         ContentValues values0 = item0.asContentValues(true);
 
@@ -202,49 +200,6 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
                 fail("IOException! " + e);
             }
         }
-    }
-
-    protected AlarmClockItem[] createTestItems()
-    {
-        Location location0 = new Location(TESTLOC_0_LABEL, TESTLOC_0_LAT, TESTLOC_0_LON);
-        Location location1 = new Location(TESTLOC_1_LABEL, TESTLOC_1_LAT, TESTLOC_1_LON, TESTLOC_1_ALT);
-
-        String[] events = new String[] {"SUNRISE", "SUNSET", "CIVILRISE", null, "MOONRISE", "MOONSET"};
-        boolean[] enabled = new boolean[] {true, false, false, true, true, false};
-        boolean[] vibrate = new boolean[] {false, true, true, true, false, false};
-        boolean[] repeating = new boolean[] {false, false, true, true, false, false};
-        Location[] locations = new Location[] {location0, location0, location1, location1, location0, null};
-        String[] timezones = new String[] {TESTTZID_0, TESTTZID_1, TESTTZID_2, TESTTZID_1, TESTTZID_2, null};
-        String[] repeatDays = new String[] {"", "0,1", "0,1,2,3", "1,2", null, "0,1,2,3,4,5,6"};
-        AlarmClockItem.AlarmType[] types = new AlarmClockItem.AlarmType[] { ALARM, ALARM, NOTIFICATION, null, ALARM, ALARM };
-        int[] hours = new int[] {6, 18, 5, 19, 12, 6};
-        int[] minutes = new int[] {30, 10, 0, 1, 59, 6};
-
-        int n = events.length;
-        AlarmClockItem[] items = new AlarmClockItem[n];
-        for (int i=0; i<n; i++)
-        {
-            items[i] = new AlarmClockItem();
-            items[i].rowID = i;
-            items[i].label = "TEST" + i;
-            items[i].type = types[i];
-            items[i].setEvent(events[i]);
-            items[i].location = locations[i];
-            items[i].timezone = timezones[i];
-            items[i].repeating = repeating[i];
-            items[i].hour = hours[i];
-            items[i].minute = minutes[i];
-            items[i].setRepeatingDays(repeatDays[i]);
-            items[i].alarmtime = i;
-            items[i].offset = i;
-            items[i].vibrate = vibrate[i];
-            items[i].ringtoneName = "TEST_RING" + i;
-            items[i].ringtoneURI = "content://TEST_RING" + i;
-            items[i].actionID0 = null;
-            items[i].actionID1 = "TEST_ACTION" + i;
-            items[i].enabled = enabled[i];
-        }
-        return items;
     }
 
     protected void test_equals(AlarmClockItem item0, AlarmClockItem item)

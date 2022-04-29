@@ -262,7 +262,7 @@ public class AlarmDatabaseAdapter
         return getAllAlarms(n, query, selection, selectionArgs);
     }
 
-    public Cursor getAllAlarms(int n, int alarmState)    // TODO: test
+    public Cursor getAllAlarms(int n, int alarmState)
     {
         String selection = KEY_STATE + " = ?";
         String[] selectionArgs = new String[] { Integer.toString(alarmState) };
