@@ -261,60 +261,20 @@ public class AlarmClockActivity extends AppCompatActivity
 
         if (param_action != null)
         {
-            if (param_action.equals(ACTION_SET_ALARM))
-            {
-                AlarmClockItem.AlarmType param_type = AlarmClockItem.AlarmType.valueOf(intent.getStringExtra(AlarmClockActivity.EXTRA_ALARMTYPE), AlarmClockItem.AlarmType.ALARM);
-                String param_label = intent.getStringExtra(EXTRA_MESSAGE);
-                int param_hour = intent.getIntExtra(EXTRA_HOUR, -1);
-                int param_minute = intent.getIntExtra(EXTRA_MINUTES, -1);
-                String param_timezone = intent.getStringExtra(AlarmClockActivity.EXTRA_TIMEZONE);
-
-                ArrayList<Integer> param_days = AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS;
-                boolean param_vibrate = AlarmSettings.loadPrefVibrateDefault(this);
-                Uri param_ringtoneUri = AlarmSettings.getDefaultRingtoneUri(this, param_type);
-                String param_ringtoneName = AlarmSettings.getDefaultRingtoneName(this, param_type);
-                if (Build.VERSION.SDK_INT >= 19)
-                {
-                    param_vibrate = intent.getBooleanExtra(EXTRA_VIBRATE, param_vibrate);
-
-                    String param_ringtoneUriString = intent.getStringExtra(EXTRA_RINGTONE);
-                    if (param_ringtoneUriString != null) {
-                        param_ringtoneUri = (param_ringtoneUriString.equals(VALUE_RINGTONE_SILENT) ? null : Uri.parse(param_ringtoneUriString));
-                        param_ringtoneName = AlarmSettings.getRingtoneName(context, param_ringtoneUri);    // TODO: may block
-                    }
-
-                    ArrayList<Integer> repeatOnDays = intent.getIntegerArrayListExtra(EXTRA_DAYS);
-                    if (repeatOnDays != null) {
-                        param_days = repeatOnDays;
-                    }
-                }
-
-                String param_event = intent.getStringExtra(AlarmClockActivity.EXTRA_SOLAREVENT);
-                if (!AlarmEvent.isValidEventID(context, param_event)) {
-                    Log.w(TAG, "handleIntent: ignoring invalid event " + param_event);
-                    param_event = null;
-                }
-
-                intent.setExtrasClassLoader(getClassLoader());
-                Location param_location = locationFromIntentExtras(context, intent);
-
-                boolean param_skipUI = false;
-                if (Build.VERSION.SDK_INT >= 11) {
-                    param_skipUI = intent.getBooleanExtra(EXTRA_SKIP_UI, false);
-                }
-                if (param_skipUI) {   // TODO: support date
-                    list.createAlarm(context, param_type, param_label, param_event, param_location, -1L, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_ringtoneName, param_days, true);
-                } else {
-                    AlarmClockItem item = AlarmListDialog.createAlarm(context, param_type, param_label, param_event, param_location, -1L, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_ringtoneName, param_days);
-                    AlarmNotifications.updateAlarmTime(context, item);
-                    showAlarmEditActivity(item, null, REQUEST_ADDALARM, true);
-                }
+            if (param_action.equals(ACTION_SET_ALARM)) {
+                handleIntent_setAlarm(context, intent);
 
             } else if (param_action.equals(ACTION_ADD_ALARM)) {
                 showAddDialog(AlarmClockItem.AlarmType.ALARM);
 
             } else if (param_action.equals(ACTION_ADD_NOTIFICATION)) {
                 showAddDialog(AlarmClockItem.AlarmType.NOTIFICATION);
+
+            } else if (param_action.equals(ACTION_DISMISS_ALARM)) {
+                handleIntent_dismissAlarms(intent, param_data);
+
+            } else if (param_action.equals(ACTION_SNOOZE_ALARM)) {
+                handleIntent_snoozeAlarm(intent);
 
             } else if (param_action.equals(AlarmNotifications.ACTION_DELETE)) {
                 if (param_data != null) {
@@ -336,6 +296,133 @@ public class AlarmClockActivity extends AppCompatActivity
             Log.d(TAG, "handleIntent: selected id: " + selectedID);
             list.setSelectedRowID(selectedID);
         }
+    }
+
+    protected void handleIntent_setAlarm(Context context, Intent intent)
+    {
+        Log.i(TAG, "ACTION_SET_ALARM");
+        AlarmClockItem.AlarmType param_type = AlarmClockItem.AlarmType.valueOf(intent.getStringExtra(AlarmClockActivity.EXTRA_ALARMTYPE), AlarmClockItem.AlarmType.ALARM);
+        String param_label = intent.getStringExtra(EXTRA_MESSAGE);
+        int param_hour = intent.getIntExtra(EXTRA_HOUR, -1);
+        int param_minute = intent.getIntExtra(EXTRA_MINUTES, -1);
+        String param_timezone = intent.getStringExtra(AlarmClockActivity.EXTRA_TIMEZONE);
+
+        ArrayList<Integer> param_days = AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS;
+        boolean param_vibrate = AlarmSettings.loadPrefVibrateDefault(this);
+        Uri param_ringtoneUri = AlarmSettings.getDefaultRingtoneUri(this, param_type);
+        String param_ringtoneName = AlarmSettings.getDefaultRingtoneName(this, param_type);
+        if (Build.VERSION.SDK_INT >= 19)
+        {
+            param_vibrate = intent.getBooleanExtra(EXTRA_VIBRATE, param_vibrate);
+
+            String param_ringtoneUriString = intent.getStringExtra(EXTRA_RINGTONE);
+            if (param_ringtoneUriString != null) {
+                param_ringtoneUri = (param_ringtoneUriString.equals(VALUE_RINGTONE_SILENT) ? null : Uri.parse(param_ringtoneUriString));
+                param_ringtoneName = AlarmSettings.getRingtoneName(context, param_ringtoneUri);    // TODO: may block
+            }
+
+            ArrayList<Integer> repeatOnDays = intent.getIntegerArrayListExtra(EXTRA_DAYS);
+            if (repeatOnDays != null) {
+                param_days = repeatOnDays;
+            }
+        }
+
+        String param_event = intent.getStringExtra(AlarmClockActivity.EXTRA_SOLAREVENT);
+        if (!AlarmEvent.isValidEventID(context, param_event)) {
+            Log.w(TAG, "handleIntent: ignoring invalid event " + param_event);
+            param_event = null;
+        }
+
+        intent.setExtrasClassLoader(getClassLoader());
+        Location param_location = locationFromIntentExtras(context, intent);
+
+        boolean param_skipUI = false;
+        if (Build.VERSION.SDK_INT >= 11) {
+            param_skipUI = intent.getBooleanExtra(EXTRA_SKIP_UI, false);
+        }
+        if (param_skipUI) {   // TODO: support date
+            list.createAlarm(context, param_type, param_label, param_event, param_location, -1L, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_ringtoneName, param_days, true);
+        } else {
+            AlarmClockItem item = AlarmListDialog.createAlarm(context, param_type, param_label, param_event, param_location, -1L, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_ringtoneName, param_days);
+            AlarmNotifications.updateAlarmTime(context, item);
+            showAlarmEditActivity(item, null, REQUEST_ADDALARM, true);
+        }
+    }
+
+    protected void handleIntent_dismissAlarms(Intent intent, Uri param_data)
+    {
+        Log.i(TAG, "ACTION_DISMISS_ALARM");
+        Long alarmID = (param_data != null) ? ContentUris.parseId(param_data) : null;
+        if (alarmID != null) {
+            sendBroadcast(AlarmNotifications.getAlarmIntent(getApplicationContext(), AlarmNotifications.ACTION_DISMISS, ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, alarmID)));
+
+        } else {
+            String searchMode = intent.getStringExtra(EXTRA_ALARM_SEARCH_MODE);
+            if (searchMode == null) {
+                searchMode = ALARM_SEARCH_MODE_NEXT;
+            }
+            switch (searchMode)
+            {
+                case ALARM_SEARCH_MODE_ALL:    // AlarmClock.ALARM_SEARCH_MODE_ALL (api23+)
+                    handleIntent_dismissAllAlarms();
+                    break;
+
+                case ALARM_SEARCH_MODE_LABEL: // TODO
+                case ALARM_SEARCH_MODE_TIME:  // TODO
+                case ALARM_SEARCH_MODE_NEXT:
+                default:
+                    handleIntent_dismissNextAlarm();
+                    break;
+            }
+        }
+    }
+
+    protected void handleIntent_dismissAllAlarms()
+    {
+        AlarmNotifications.findEnabledAlarms(getApplicationContext(), new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
+            public void onItemsLoaded(Long[] ids) {
+                for (long id : ids) {
+                    sendBroadcast(AlarmNotifications.getAlarmIntent(getApplicationContext(), AlarmNotifications.ACTION_DISMISS, ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, id)));
+                }
+            }
+        });
+    }
+
+    protected void handleIntent_dismissNextAlarm()
+    {
+        AlarmNotifications.findSoundingAlarms(getApplicationContext(), new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
+            @Override
+            public void onItemsLoaded(Long[] ids) {
+                if (ids.length > 0) {
+                    sendBroadcast(AlarmNotifications.getAlarmIntent(getApplicationContext(), AlarmNotifications.ACTION_DISMISS, ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, ids[0])));
+                } else {
+                    AlarmNotifications.findUpcomingAlarm(getApplicationContext(), new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
+                        public void onItemsLoaded(Long[] ids) {
+                            if (ids.length > 0 && ids[0] != null) {
+                                sendBroadcast(AlarmNotifications.getAlarmIntent(getApplicationContext(), AlarmNotifications.ACTION_DISMISS, ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, ids[0])));
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    protected void handleIntent_snoozeAlarm(final Intent intent)
+    {
+        Log.i(TAG, "ACTION_SNOOZE_ALARM");
+        AlarmNotifications.findSoundingAlarms(getApplicationContext(), new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
+            @Override
+            public void onItemsLoaded(Long[] ids)
+            {
+                for (long id : ids) {
+                    Uri uri = ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, id);
+                    Intent snoozeIntent = AlarmNotifications.getAlarmIntent(getApplicationContext(), AlarmNotifications.ACTION_SNOOZE, uri);
+                    snoozeIntent.putExtra(EXTRA_ALARM_SNOOZE_DURATION, intent.getIntExtra(EXTRA_ALARM_SNOOZE_DURATION, -1));
+                    sendBroadcast(snoozeIntent);
+                }
+            }
+        });
     }
 
     protected static Location locationFromIntentExtras(Context context, Intent intent)

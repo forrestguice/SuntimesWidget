@@ -222,6 +222,16 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
+            <intent-filter>
+                <action android:name="android.intent.action.DISMISS_ALARM" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.SNOOZE_ALARM" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
         </activity>
 
         <!--<activity
@@ -276,8 +286,6 @@
         <receiver android:name=".alarmclock.AlarmNotifications">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.DISMISS_ALARM" />
-                <action android:name="android.intent.action.SNOOZE_ALARM" />
                 <!--<action android:name="android.intent.action.TIME_SET" />-->
             </intent-filter>
             <intent-filter>
