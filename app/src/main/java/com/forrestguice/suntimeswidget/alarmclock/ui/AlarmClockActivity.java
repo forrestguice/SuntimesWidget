@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2018-2020 Forrest Guice
+    Copyright (C) 2018-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -56,7 +56,6 @@ import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesSettingsActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesWarning;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
@@ -82,10 +81,32 @@ public class AlarmClockActivity extends AppCompatActivity
 {
     public static final String TAG = "AlarmReceiverList";
 
+    public static final String ACTION_SHOW_ALARMS = "android.intent.action.SHOW_ALARMS";            // AlarmClock.ACTION_SHOW_ALARMS (api19+)
+
+    public static final String ACTION_SET_ALARM = AlarmClock.ACTION_SET_ALARM;
+    public static final String EXTRA_MESSAGE = AlarmClock.EXTRA_MESSAGE;
+    public static final String EXTRA_HOUR = AlarmClock.EXTRA_HOUR;
+    public static final String EXTRA_MINUTES = AlarmClock.EXTRA_MINUTES;
+    public static final String EXTRA_DAYS = "android.intent.extra.alarm.DAYS";                      // AlarmClock.EXTRA_DAYS (api19+)
+    public static final String EXTRA_VIBRATE = "android.intent.extra.alarm.VIBRATE";                // AlarmClock.EXTRA_VIBRATE (api19+)
+    public static final String EXTRA_SKIP_UI = "android.intent.extra.alarm.SKIP_UI";                // AlarmClock.EXTRA_SKIP_UI (api11+)
+    public static final String EXTRA_RINGTONE = "android.intent.extra.alarm.RINGTONE";              // AlarmClock.EXTRA_RINGTONE (api19+)
+    public static final String VALUE_RINGTONE_SILENT = "silent";                                    // AlarmClock.VALUE_RINGTONE_SILENT (api19+)
+
+    public static final String ACTION_DISMISS_ALARM = "android.intent.action.DISMISS_ALARM";        // AlarmClock.ACTION_DISMISS_ALARM (api23+)
+    public static final String EXTRA_ALARM_SEARCH_MODE = "android.intent.extra.alarm.SEARCH_MODE";  // AlarmClock.EXTRA_ALARM_SEARCH_MODE;
+    public static final String ALARM_SEARCH_MODE_ALL = "android.all";
+    public static final String ALARM_SEARCH_MODE_LABEL = "android.label";
+    public static final String ALARM_SEARCH_MODE_NEXT = "android.next";
+    public static final String ALARM_SEARCH_MODE_TIME = "android.time";
+
+    public static final String ACTION_SNOOZE_ALARM = "android.intent.action.SNOOZE_ALARM";          // AlarmClock.ACTION_SNOOZE_ALARM (api23+)
+    public static final String EXTRA_ALARM_SNOOZE_DURATION = "android.intent.extra.alarm.SNOOZE_DURATION";  // minutes; AlarmClock.EXTRA_ALARM_SNOOZE_DURATION;
+
     public static final String ACTION_ADD_ALARM = "suntimes.action.alarmclock.ADD_ALARM";
     public static final String ACTION_ADD_NOTIFICATION = "suntimes.action.alarmclock.ADD_NOTIFICATION";
 
-    private static final String[] SUNTIMES_ALARMS_ACTIONS = new String[] {ACTION_ADD_ALARM, ACTION_ADD_NOTIFICATION};
+    private static final String[] SUNTIMES_ALARMS_ACTIONS = new String[] {ACTION_ADD_ALARM, ACTION_ADD_NOTIFICATION};    // legacy action map
     private static final HashMap<String, String> SUNTIMES_ALARMS_ACTION_MAP = SuntimesActivity.createLegacyActionMap(SUNTIMES_ALARMS_ACTIONS);
 
     public static final String EXTRA_SHOWBACK = "showBack";
@@ -240,12 +261,12 @@ public class AlarmClockActivity extends AppCompatActivity
 
         if (param_action != null)
         {
-            if (param_action.equals(AlarmClock.ACTION_SET_ALARM))
+            if (param_action.equals(ACTION_SET_ALARM))
             {
                 AlarmClockItem.AlarmType param_type = AlarmClockItem.AlarmType.valueOf(intent.getStringExtra(AlarmClockActivity.EXTRA_ALARMTYPE), AlarmClockItem.AlarmType.ALARM);
-                String param_label = intent.getStringExtra(AlarmClock.EXTRA_MESSAGE);
-                int param_hour = intent.getIntExtra(AlarmClock.EXTRA_HOUR, -1);
-                int param_minute = intent.getIntExtra(AlarmClock.EXTRA_MINUTES, -1);
+                String param_label = intent.getStringExtra(EXTRA_MESSAGE);
+                int param_hour = intent.getIntExtra(EXTRA_HOUR, -1);
+                int param_minute = intent.getIntExtra(EXTRA_MINUTES, -1);
                 String param_timezone = intent.getStringExtra(AlarmClockActivity.EXTRA_TIMEZONE);
 
                 ArrayList<Integer> param_days = AlarmRepeatDialog.PREF_DEF_ALARM_REPEATDAYS;
@@ -254,15 +275,15 @@ public class AlarmClockActivity extends AppCompatActivity
                 String param_ringtoneName = AlarmSettings.getDefaultRingtoneName(this, param_type);
                 if (Build.VERSION.SDK_INT >= 19)
                 {
-                    param_vibrate = intent.getBooleanExtra(AlarmClock.EXTRA_VIBRATE, param_vibrate);
+                    param_vibrate = intent.getBooleanExtra(EXTRA_VIBRATE, param_vibrate);
 
-                    String param_ringtoneUriString = intent.getStringExtra(AlarmClock.EXTRA_RINGTONE);
+                    String param_ringtoneUriString = intent.getStringExtra(EXTRA_RINGTONE);
                     if (param_ringtoneUriString != null) {
-                        param_ringtoneUri = (param_ringtoneUriString.equals(AlarmClock.VALUE_RINGTONE_SILENT) ? null : Uri.parse(param_ringtoneUriString));
+                        param_ringtoneUri = (param_ringtoneUriString.equals(VALUE_RINGTONE_SILENT) ? null : Uri.parse(param_ringtoneUriString));
                         param_ringtoneName = AlarmSettings.getRingtoneName(context, param_ringtoneUri);    // TODO: may block
                     }
 
-                    ArrayList<Integer> repeatOnDays = intent.getIntegerArrayListExtra(AlarmClock.EXTRA_DAYS);
+                    ArrayList<Integer> repeatOnDays = intent.getIntegerArrayListExtra(EXTRA_DAYS);
                     if (repeatOnDays != null) {
                         param_days = repeatOnDays;
                     }
@@ -279,7 +300,7 @@ public class AlarmClockActivity extends AppCompatActivity
 
                 boolean param_skipUI = false;
                 if (Build.VERSION.SDK_INT >= 11) {
-                    param_skipUI = intent.getBooleanExtra(AlarmClock.EXTRA_SKIP_UI, false);
+                    param_skipUI = intent.getBooleanExtra(EXTRA_SKIP_UI, false);
                 }
                 if (param_skipUI) {   // TODO: support date
                     list.createAlarm(context, param_type, param_label, param_event, param_location, -1L, param_hour, param_minute, param_timezone, param_vibrate, param_ringtoneUri, param_ringtoneName, param_days, true);
@@ -856,11 +877,11 @@ public class AlarmClockActivity extends AppCompatActivity
         Calendar calendar1 = Calendar.getInstance(TimeZone.getDefault());
         calendar1.setTimeInMillis(calendar0.getTimeInMillis());
 
-        Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
+        Intent alarmIntent = new Intent(ACTION_SET_ALARM);
         alarmIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        alarmIntent.putExtra(AlarmClock.EXTRA_MESSAGE, label);
-        alarmIntent.putExtra(AlarmClock.EXTRA_HOUR, ((timezone == null) ? hour : calendar1.get(Calendar.HOUR_OF_DAY)));
-        alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES, ((timezone == null) ? minutes : calendar1.get(Calendar.MINUTE)));
+        alarmIntent.putExtra(EXTRA_MESSAGE, label);
+        alarmIntent.putExtra(EXTRA_HOUR, ((timezone == null) ? hour : calendar1.get(Calendar.HOUR_OF_DAY)));
+        alarmIntent.putExtra(EXTRA_MINUTES, ((timezone == null) ? minutes : calendar1.get(Calendar.MINUTE)));
         alarmIntent.putExtra(AlarmClockActivity.EXTRA_TIMEZONE, timezone);
         alarmIntent.putExtra(AlarmClockActivity.EXTRA_SOLAREVENT, event);
         alarmIntent.putExtra(AlarmClockActivity.EXTRA_ALARMTYPE, type.name());
