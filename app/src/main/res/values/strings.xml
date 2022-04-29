@@ -1141,6 +1141,8 @@
     <string name="configActionDesc_prevCard">Show previous card</string>
     <string name="configActionDesc_showCard">@string/configAction_viewDate</string>
     <string name="configActionDesc_setAlarmForNote">Set alarm for note</string>
+    <string name="configActionDesc_alarmSnooze">@string/alarmAction_snooze</string>
+    <string name="configActionDesc_alarmDismiss">@string/alarmAction_dismiss</string>
     <string name="configActionDesc_alarmList">Alarm List</string>
     <string name="configActionDesc_themeList">Theme List</string>
     <string name="configActionDesc_actionList">Action List</string>
@@ -1172,13 +1174,15 @@
         <item>@string/app_name</item>
         <item>@string/app_name</item>
 
-        <item>@string/app_name</item>
+        <item>@string/app_name_alarmclock</item>
         <item>@string/app_name</item>
         <item>@string/app_name</item>
         <item>@string/app_name</item>
 
         <item>@string/configAction_showCalendar</item>
         <item>@string/configAction_mapLocation</item>
+        <item>@string/app_name_alarmclock</item>
+        <item>@string/app_name_alarmclock</item>
     </string-array>
     <string-array name="tapActions_display">    <!-- must be in same order as enum TapActions -->
         <item>@string/configActionDesc_doNothing</item>
@@ -1211,6 +1215,8 @@
 
         <item>@string/configActionDesc_showCalendar</item>
         <item>@string/configActionDesc_mapLocation</item>
+        <item>@string/configActionDesc_alarmSnooze</item>
+        <item>@string/configActionDesc_alarmDismiss</item>
     </string-array>
 
     <!-- App Setting: time zone sort modes -->

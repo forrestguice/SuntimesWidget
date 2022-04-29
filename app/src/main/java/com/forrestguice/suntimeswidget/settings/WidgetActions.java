@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2019-2021 Forrest Guice
+    Copyright (C) 2019-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -37,6 +37,8 @@ import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.SuntimesWidgetListActivity;
 import com.forrestguice.suntimeswidget.actions.ActionListActivity;
 import com.forrestguice.suntimeswidget.actions.SuntimesActionsContract;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
@@ -605,7 +607,9 @@ public class WidgetActions
         OPEN_WIDGET_LIST("Suntimes", "Widget List", new String[] {TAG_DEFAULT, TAG_SUNTIMES}, true),
 
         SHOW_CALENDAR("Calendar", "Show calendar", new String[] {TAG_DEFAULT}, true),
-        SHOW_MAP("Map", "Show map", new String[] {TAG_DEFAULT}, true);
+        SHOW_MAP("Map", "Show map", new String[] {TAG_DEFAULT}, true),
+        SNOOZE_ALARM("Suntimes Alarms", "Snooze", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true),
+        DISMISS_ALARM("Suntimes Alarms", "Dismiss", new String[] {TAG_DEFAULT, TAG_SUNTIMESALARMS}, true);
 
         private String title, desc;
         private String[] tags;
@@ -673,6 +677,20 @@ public class WidgetActions
 
                     switch (action)
                     {
+                        case SNOOZE_ALARM:
+                            launchType = LaunchType.BROADCAST;
+                            launchString = null;
+                            launchAction = AlarmNotifications.ACTION_SNOOZE0;
+                            launchExtras = AlarmNotifications.EXTRA_ALARM_SNOOZE_DURATION + "=" + (AlarmSettings.PREF_DEF_ALARM_SNOOZE / (1000 * 60));
+                            break;
+
+                        case DISMISS_ALARM:
+                            launchType = LaunchType.BROADCAST;
+                            launchString = null;
+                            launchAction = AlarmNotifications.ACTION_DISMISS0;
+                            launchExtras = AlarmNotifications.EXTRA_ALARM_SEARCH_MODE + "=" + AlarmNotifications.ALARM_SEARCH_MODE_NEXT;
+                            break;
+
                         case SHOW_CALENDAR:
                             launchString = null;
                             launchAction = Intent.ACTION_VIEW;
