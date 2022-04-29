@@ -43,7 +43,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Vibrator;
-import android.provider.AlarmClock;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -99,6 +98,13 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static final String EXTRA_NOTIFICATION_ID = "notificationID";
     public static final String ALARM_NOTIFICATION_TAG = "suntimesalarm";
+
+    public static final String EXTRA_ALARM_SNOOZE_DURATION =  "android.intent.extra.alarm.SNOOZE_DURATION";  // minutes; AlarmClock.EXTRA_ALARM_SNOOZE_DURATION;
+    public static final String EXTRA_ALARM_SEARCH_MODE = "android.intent.extra.alarm.SEARCH_MODE";  // AlarmClock.EXTRA_ALARM_SEARCH_MODE;
+    public static final String ALARM_SEARCH_MODE_ALL = "android.all";
+    public static final String ALARM_SEARCH_MODE_LABEL = "android.label";
+    public static final String ALARM_SEARCH_MODE_NEXT = "android.next";
+    public static final String ALARM_SEARCH_MODE_TIME = "android.time";
 
     private static SuntimesUtils utils = new SuntimesUtils();
 
@@ -983,11 +989,6 @@ public class AlarmNotifications extends BroadcastReceiver
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static final String ALARM_SEARCH_MODE_ALL = "android.all";
-    public static final String ALARM_SEARCH_MODE_LABEL = "android.label";
-    public static final String ALARM_SEARCH_MODE_NEXT = "android.next";
-    public static final String ALARM_SEARCH_MODE_TIME = "android.time";
-
     /**
      * NotificationService
      */
@@ -1100,7 +1101,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                         String searchMode = null;
                         if (Build.VERSION.SDK_INT >= 23) {
-                            searchMode = intent.getStringExtra(AlarmClock.EXTRA_ALARM_SEARCH_MODE);
+                            searchMode = intent.getStringExtra(EXTRA_ALARM_SEARCH_MODE);
                         }
                         if (searchMode == null) {
                             searchMode = ALARM_SEARCH_MODE_NEXT;
@@ -1148,7 +1149,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                     Uri uri = ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, id);
                                     Intent snoozeIntent = AlarmNotifications.getAlarmIntent(getApplicationContext(), ACTION_SNOOZE, uri);
                                     if (Build.VERSION.SDK_INT >= 23) {
-                                        snoozeIntent.putExtra(AlarmClock.EXTRA_ALARM_SNOOZE_DURATION, intent.getIntExtra(AlarmClock.EXTRA_ALARM_SNOOZE_DURATION, -1));
+                                        snoozeIntent.putExtra(EXTRA_ALARM_SNOOZE_DURATION, intent.getIntExtra(EXTRA_ALARM_SNOOZE_DURATION, -1));
                                     }
                                     sendBroadcast(snoozeIntent);
                                 }
@@ -1404,9 +1405,9 @@ public class AlarmNotifications extends BroadcastReceiver
                                 long snoozeDurationMs = AlarmSettings.loadPrefAlarmSnooze(context);
                                 if (Build.VERSION.SDK_INT >= 23)
                                 {
-                                    if (extras != null && extras.containsKey(AlarmClock.EXTRA_ALARM_SNOOZE_DURATION))
+                                    if (extras != null && extras.containsKey(EXTRA_ALARM_SNOOZE_DURATION))
                                     {
-                                        int snoozeDurationMinutes = extras.getInt(AlarmClock.EXTRA_ALARM_SNOOZE_DURATION, -1);
+                                        int snoozeDurationMinutes = extras.getInt(EXTRA_ALARM_SNOOZE_DURATION, -1);
                                         if (snoozeDurationMinutes > 0)
                                         {
                                             if (snoozeDurationMinutes > 59) {
