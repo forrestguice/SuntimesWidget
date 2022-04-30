@@ -5,8 +5,10 @@
 * adds support for standard AlarmClock intents to SuntimesAlarms; `android.intent.action.SHOW_ALARMS`, `android.intent.action.DISMISS_ALARM` (`EXTRA_ALARM_SEARCH_MODE`), and `android.intent.action.SNOOZE_ALARM` (`android.intent.extra.alarm.SNOOZE_DURATION`).
 * extends the widget action dialog to suggest package and class names from installed apps (#546).
 * fixes bug where widget actions that use an explicit intent fail to launch (#546).
+* fixes bug where the sun position and map animations runs in the background (#582).
 * fixes bug in sun position widget where the theme colors aren't applied; fixes default lightmap colors (#589).
 * fixes bug where single-select menu items are displayed as checkboxes instead of radio buttons (#590).
+* fixes issue with 'Advanced' settings discoverability (#581).
 * updates translation to Polish and Esperanto (eo, pl) (#585 by Verdulo).
 * updates translation to Brazilian Portuguese (pt-br) (#587 by naoliv).
 
