@@ -111,7 +111,7 @@ public class AlarmNotifications extends BroadcastReceiver
         Uri data = intent.getData();
         Log.d(TAG, "onReceive: " + action + ", " + data);
         if (action != null) {
-            context.startService(NotificationService.getNotificationIntent(context, action, data));
+            context.startService(NotificationService.getNotificationIntent(context, action, data, intent.getExtras()));
         } else Log.w(TAG, "onReceive: null action!");
     }
 
@@ -1135,11 +1135,14 @@ public class AlarmNotifications extends BroadcastReceiver
             return null;
         }
 
-        private static Intent getNotificationIntent(Context context, String action, Uri data)
+        private static Intent getNotificationIntent(Context context, String action, Uri data, @Nullable Bundle extras)
         {
             Intent intent = new Intent(context, NotificationService.class);
             intent.setAction(action);
             intent.setData(data);
+            if (extras != null) {
+                intent.putExtras(extras);
+            }
             return intent;
         }
 
