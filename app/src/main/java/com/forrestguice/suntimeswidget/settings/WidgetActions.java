@@ -487,7 +487,7 @@ public class WidgetActions
                     if (value.endsWith("L") || value.endsWith("l"))
                     {
                         try {
-                            intent.putExtra(key, Long.parseLong(value));  // long
+                            intent.putExtra(key, Long.parseLong(value.substring(0, value.length()-1)));  // long
                             Log.i(TAG, "applyExtras: applied " + extra + " (long)");
 
                         } catch (NumberFormatException e) {

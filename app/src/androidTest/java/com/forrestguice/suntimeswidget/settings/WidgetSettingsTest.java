@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.test.rule.ActivityTestRule;
@@ -527,6 +528,21 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         assertTrue("pref title should be default", pref0_title.equals(WidgetActions.PREF_DEF_ACTION_LAUNCH_TITLE));
         assertTrue("pref desc should be default", pref0_desc.equals(WidgetActions.PREF_DEF_ACTION_LAUNCH_DESC));
         assertTrue("pref color should be default", pref0_color == WidgetActions.PREF_DEF_ACTION_LAUNCH_COLOR);
+    }
+
+    @Test
+    public void test_actionApplyExtras()
+    {
+        Intent intent0 = new Intent();
+        String extraString0 = "one=1&two=2L&three=3d&four=4f&string=string&bool=true&L=L";
+        WidgetActions.applyExtras(context, intent0, extraString0, null);
+        assertEquals(1, intent0.getIntExtra("one", -1));
+        assertEquals(2L, intent0.getLongExtra("two", -1L));
+        assertEquals(3d, intent0.getDoubleExtra("three", -1d));
+        assertEquals(4f, intent0.getFloatExtra("four", -1f));
+        assertEquals("string", intent0.getStringExtra("string"));
+        assertEquals("L", intent0.getStringExtra("L"));
+        assertTrue("bool", intent0.getBooleanExtra("bool", false));
     }
 
     @Test
