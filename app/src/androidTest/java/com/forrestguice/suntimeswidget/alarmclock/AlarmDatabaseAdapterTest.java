@@ -24,7 +24,6 @@ import android.database.Cursor;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
-import android.util.Log;
 
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 
@@ -151,7 +150,7 @@ public class AlarmDatabaseAdapterTest
         long[] rowID = populateDatabase();
         HashMap<Long, AlarmClockItem> map = mapDatabase(rowID);
 
-        Cursor cursor0 = db.getAllAlarms(0, AlarmState.STATE_TIMEOUT);       // expected result is 0; all items should be state NONE
+        Cursor cursor0 = db.getAllAlarmsByState(0, AlarmState.STATE_TIMEOUT);       // expected result is 0; all items should be state NONE
         assertTrue("cursor should be at first", cursor0.getPosition() == 0);
         assertTrue("cursor should have 0 entries (has " + cursor0.getCount() + ")", cursor0.getCount() == 0);
 
@@ -163,7 +162,7 @@ public class AlarmDatabaseAdapterTest
             verifyAlarmState(db.getAlarmState(rowID[i]), rowID[i], alarmState);
         }
 
-        Cursor cursor1 = db.getAllAlarms(0, AlarmState.STATE_TIMEOUT);
+        Cursor cursor1 = db.getAllAlarmsByState(0, AlarmState.STATE_SOUNDING, AlarmState.STATE_TIMEOUT);    // SOUNDING or TIMEOUT
         assertTrue("cursor should be at first", cursor1.getPosition() == 0);
         assertTrue("cursor should have " + map.size() + " entries (has " + cursor1.getCount() + ")", cursor1.getCount() == map.size());
 

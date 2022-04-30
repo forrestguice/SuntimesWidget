@@ -262,13 +262,18 @@ public class AlarmDatabaseAdapter
         return getAllAlarms(n, query, selection, selectionArgs);
     }
 
-    public Cursor getAllAlarms(int n, int alarmState)
+    public Cursor getAllAlarmsByState(int n, int... alarmState)
     {
-        String selection = KEY_STATE + " = ?";
-        String[] selectionArgs = new String[] { Integer.toString(alarmState) };
+        StringBuilder selection = new StringBuilder(KEY_STATE + " = ?");
+        String[] selectionArgs = new String[alarmState.length];
+        selectionArgs[0] = Integer.toString(alarmState[0]);
+        for (int i=1; i<alarmState.length; i++) {
+            selection.append(" OR " + KEY_STATE + " = ?");
+            selectionArgs[i] = Integer.toString(alarmState[i]);
+        }
 
-        Cursor cursor =  (n > 0) ? database.query( TABLE_ALARMSTATE, QUERY_ALARMSTATE_FULLENTRY, selection, selectionArgs, null, null, KEY_STATE_ALARMID + " DESC", n+"" )
-                                 : database.query( TABLE_ALARMSTATE, QUERY_ALARMSTATE_FULLENTRY, selection, selectionArgs, null, null, KEY_STATE_ALARMID + " DESC" );
+        Cursor cursor =  (n > 0) ? database.query( TABLE_ALARMSTATE, QUERY_ALARMSTATE_FULLENTRY, selection.toString(), selectionArgs, null, null, KEY_STATE_ALARMID + " DESC", n+"" )
+                                 : database.query( TABLE_ALARMSTATE, QUERY_ALARMSTATE_FULLENTRY, selection.toString(), selectionArgs, null, null, KEY_STATE_ALARMID + " DESC" );
         if (cursor != null) {
             cursor.moveToFirst();
         }
@@ -907,14 +912,18 @@ public class AlarmDatabaseAdapter
             param_enabledOnly = value;
         }
 
-        private Integer param_withAlarmState = null;
-        public void setParam_withAlarmState(int state) {
-            param_withAlarmState = state;
+        private int[] param_withAlarmState = null;
+        public void setParam_withAlarmState(int... state) {
+            param_withAlarmState = Arrays.copyOf(state, state.length);
         }
 
         private Long param_nowMillis = null;    // list all items, else find next upcoming from now
         public void setParam_nowMillis( Long value ) {
             param_nowMillis = value;
+        }
+
+        protected boolean passesFilter(Cursor cursor, long rowID) {
+            return true;
         }
 
         @Override
@@ -928,13 +937,16 @@ public class AlarmDatabaseAdapter
 
             } else {
                 Cursor cursor = (param_withAlarmState != null)
-                        ? db.getAllAlarms(0, param_withAlarmState)
+                        ? db.getAllAlarmsByState(0, param_withAlarmState)
                         : db.getAllAlarms(0, false, param_enabledOnly);
 
                 while (!cursor.isAfterLast())
                 {
                     String index = (param_withAlarmState != null) ? AlarmDatabaseAdapter.KEY_STATE_ALARMID : AlarmDatabaseAdapter.KEY_ROWID;
-                    alarmIds.add(cursor.getLong(cursor.getColumnIndex(index)));
+                    long alarmId = cursor.getLong(cursor.getColumnIndex(index));
+                    if (passesFilter(cursor, alarmId)) {
+                        alarmIds.add(alarmId);
+                    }
                     cursor.moveToNext();
                 }
             }

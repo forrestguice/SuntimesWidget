@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -61,6 +62,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmDatabaseAdapter;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmSettings;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmState;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
@@ -99,6 +101,7 @@ public class AlarmClockActivity extends AppCompatActivity
     public static final String ALARM_SEARCH_MODE_LABEL = "android.label";
     public static final String ALARM_SEARCH_MODE_NEXT = "android.next";
     public static final String ALARM_SEARCH_MODE_TIME = "android.time";
+    public static final String EXTRA_IS_PM = "android.intent.extra.alarm.IS_PM";                    // AlarmClock.EXTRA_IS_PM (api23+)
 
     public static final String ACTION_SNOOZE_ALARM = "android.intent.action.SNOOZE_ALARM";          // AlarmClock.ACTION_SNOOZE_ALARM (api23+)
     public static final String EXTRA_ALARM_SNOOZE_DURATION = "android.intent.extra.alarm.SNOOZE_DURATION";  // minutes; AlarmClock.EXTRA_ALARM_SNOOZE_DURATION;
@@ -351,9 +354,9 @@ public class AlarmClockActivity extends AppCompatActivity
 
     protected void handleIntent_dismissAlarms(Intent intent, Uri param_data)
     {
-        Log.i(TAG, "ACTION_DISMISS_ALARM");
         Long alarmID = (param_data != null) ? ContentUris.parseId(param_data) : null;
         if (alarmID != null) {
+            Log.i(TAG, "ACTION_DISMISS_ALARM: " + param_data);
             sendBroadcast(AlarmNotifications.getAlarmIntent(getApplicationContext(), AlarmNotifications.ACTION_DISMISS, ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, alarmID)));
 
         } else {
@@ -364,13 +367,23 @@ public class AlarmClockActivity extends AppCompatActivity
             switch (searchMode)
             {
                 case ALARM_SEARCH_MODE_ALL:    // AlarmClock.ALARM_SEARCH_MODE_ALL (api23+)
+                    Log.i(TAG, "ACTION_DISMISS_ALARM: All");
                     handleIntent_dismissAllAlarms();
                     break;
 
-                case ALARM_SEARCH_MODE_LABEL: // TODO
-                case ALARM_SEARCH_MODE_TIME:  // TODO
+                case ALARM_SEARCH_MODE_LABEL:
+                    Log.i(TAG, "ACTION_DISMISS_ALARM: Label");
+                    handleIntent_dismissAlarmByLabel(intent);
+                    break;
+
+                case ALARM_SEARCH_MODE_TIME:
+                    Log.i(TAG, "ACTION_DISMISS_ALARM: Time");
+                    handleIntent_dismissAlarmByTime(intent);
+                    break;
+
                 case ALARM_SEARCH_MODE_NEXT:
                 default:
+                    Log.i(TAG, "ACTION_DISMISS_ALARM: Next");
                     handleIntent_dismissNextAlarm();
                     break;
             }
@@ -388,17 +401,71 @@ public class AlarmClockActivity extends AppCompatActivity
         });
     }
 
+    protected void handleIntent_dismissAlarmByTime(Intent intent)
+    {
+        /*int hour = intent.getIntExtra(EXTRA_HOUR, -1);
+        if (hour >= 0)
+        {
+            int minutes = intent.getIntExtra(EXTRA_MINUTES, 0);
+            boolean isPM = intent.getBooleanExtra(EXTRA_IS_PM, false);
+            // TODO: search and dismiss by time; hour, minutes, isPM
+
+        } else {*/
+            Log.w(TAG, "dismissAlarmByTime: not implemented.. falling back to dismissNextAlarm.");
+            handleIntent_dismissNextAlarm();
+        //}
+    }
+
+    protected void handleIntent_dismissAlarmByLabel(Intent intent)
+    {
+        final String search = intent.getStringExtra(EXTRA_MESSAGE);
+        if (search != null && !search.trim().isEmpty())
+        {
+            AlarmDatabaseAdapter.AlarmListTask findTask = createFindAlarmsByLabelTask(this, search);
+            findTask.setParam_enabledOnly(true);
+            findTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
+                public void onItemsLoaded(Long[] ids) {
+                    for (long id : ids) {
+                        sendBroadcast(AlarmNotifications.getAlarmIntent(getApplicationContext(), AlarmNotifications.ACTION_DISMISS, ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, id)));
+                    }
+                }
+            });
+            findTask.execute();
+
+        } else {
+            Log.w(TAG, "dismissAlarmByLabel: missing search term.. falling back to dismissNextAlarm.");
+            handleIntent_dismissNextAlarm();
+        }
+    }
+    private static AlarmDatabaseAdapter.AlarmListTask createFindAlarmsByLabelTask(Context context, @NonNull final String search)
+    {
+        return new AlarmDatabaseAdapter.AlarmListTask(context)
+        {
+            @Override
+            protected boolean passesFilter(Cursor cursor, long rowID) {
+                int index = cursor.getColumnIndex(AlarmDatabaseAdapter.KEY_ALARM_LABEL);
+                String label = (index >= 0) ? cursor.getString(index) : null;
+                return (label != null && label.toLowerCase().contains(search.toLowerCase()));
+            }
+        };
+    }
+
     protected void handleIntent_dismissNextAlarm()
     {
-        AlarmNotifications.findSoundingAlarms(getApplicationContext(), new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
+        AlarmDatabaseAdapter.AlarmListTask findTask = new AlarmDatabaseAdapter.AlarmListTask(this);
+        findTask.setParam_withAlarmState(AlarmState.STATE_SOUNDING, AlarmState.STATE_SNOOZING);
+        findTask.setAlarmItemTaskListener(new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener()
+        {
             @Override
             public void onItemsLoaded(Long[] ids) {
                 if (ids.length > 0) {
-                    sendBroadcast(AlarmNotifications.getAlarmIntent(getApplicationContext(), AlarmNotifications.ACTION_DISMISS, ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, ids[0])));
+                    for (long id : ids) {    // dismiss all sounding or snoozing alarms
+                        sendBroadcast(AlarmNotifications.getAlarmIntent(getApplicationContext(), AlarmNotifications.ACTION_DISMISS, ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, id)));
+                    }
                 } else {
                     AlarmNotifications.findUpcomingAlarm(getApplicationContext(), new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
                         public void onItemsLoaded(Long[] ids) {
-                            if (ids.length > 0 && ids[0] != null) {
+                            if (ids.length > 0 && ids[0] != null) {    // dismiss next upcoming alarm
                                 sendBroadcast(AlarmNotifications.getAlarmIntent(getApplicationContext(), AlarmNotifications.ACTION_DISMISS, ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, ids[0])));
                             }
                         }
@@ -406,6 +473,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 }
             }
         });
+        findTask.execute();
     }
 
     protected void handleIntent_snoozeAlarm(final Intent intent)

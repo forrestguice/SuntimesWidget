@@ -1181,8 +1181,8 @@
 
         <item>@string/configAction_showCalendar</item>
         <item>@string/configAction_mapLocation</item>
-        <item>@string/app_name_alarmclock</item>
-        <item>@string/app_name_alarmclock</item>
+        <item>@string/configLabel_alarmClock</item>
+        <item>@string/configLabel_alarmClock</item>
     </string-array>
     <string-array name="tapActions_display">    <!-- must be in same order as enum TapActions -->
         <item>@string/configActionDesc_doNothing</item>
