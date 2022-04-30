@@ -478,7 +478,9 @@ public class AlarmClockActivity extends AppCompatActivity
 
     protected void handleIntent_snoozeAlarm(final Intent intent)
     {
-        Log.i(TAG, "ACTION_SNOOZE_ALARM");
+        final int minutes = intent.getIntExtra(EXTRA_ALARM_SNOOZE_DURATION, -1);
+        Log.i(TAG, "ACTION_SNOOZE_ALARM: " + minutes + " minutes");
+
         AlarmNotifications.findSoundingAlarms(getApplicationContext(), new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
             @Override
             public void onItemsLoaded(Long[] ids)
@@ -486,7 +488,7 @@ public class AlarmClockActivity extends AppCompatActivity
                 for (long id : ids) {
                     Uri uri = ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, id);
                     Intent snoozeIntent = AlarmNotifications.getAlarmIntent(getApplicationContext(), AlarmNotifications.ACTION_SNOOZE, uri);
-                    snoozeIntent.putExtra(EXTRA_ALARM_SNOOZE_DURATION, intent.getIntExtra(EXTRA_ALARM_SNOOZE_DURATION, -1));
+                    snoozeIntent.putExtra(EXTRA_ALARM_SNOOZE_DURATION, minutes);
                     sendBroadcast(snoozeIntent);
                 }
             }

@@ -824,7 +824,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     builder.setCategory( NotificationCompat.CATEGORY_ALARM );
                     builder.setPriority( NotificationCompat.PRIORITY_MAX );
                     SuntimesUtils.initDisplayStrings(context);
-                    SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(0, AlarmSettings.loadPrefAlarmSnooze(context));
+                    SuntimesUtils.TimeDisplayText snoozeText = utils.timeDeltaLongDisplayString(System.currentTimeMillis()-5000, alarm.alarmtime);
                     notificationMsg = context.getString(R.string.alarmAction_snoozeMsg, snoozeText.getValue());
                     notificationIcon = R.drawable.ic_action_snooze;
                     builder.setFullScreenIntent(alarmFullscreen, true);       // at discretion of system to use this intent (or to show a heads up notification instead)
@@ -1015,7 +1015,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         showAlarmSilencedToast(getApplicationContext());
 
                     } else if (AlarmNotifications.ACTION_SNOOZE.equals(action)) {
-                        Log.d(TAG, "ACTION_SNOOZE: " + data);
+                        Log.d(TAG, "ACTION_SNOOZE: " + data + " :: " + intent.getIntExtra(AlarmClockActivity.EXTRA_ALARM_SNOOZE_DURATION, -1));
                         AlarmNotifications.stopAlert();
 
                     } else if (AlarmNotifications.ACTION_TIMEOUT.equals(action)) {
@@ -1338,6 +1338,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 if (extras != null && extras.containsKey(AlarmClockActivity.EXTRA_ALARM_SNOOZE_DURATION))
                                 {
                                     int snoozeDurationMinutes = extras.getInt(AlarmClockActivity.EXTRA_ALARM_SNOOZE_DURATION, -1);
+                                    Log.i(TAG, "Snoozing: override duration: " + snoozeDurationMinutes + " minutes");
                                     if (snoozeDurationMinutes > 0) {
                                         if (snoozeDurationMinutes > 59) {
                                             snoozeDurationMinutes = 59;
@@ -1351,7 +1352,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                                 item.modified = true;
                                 AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
-                                updateItem.setTaskListener(onSnoozeState(context));
+                                updateItem.setTaskListener(onSnoozeState(context, snoozeUntil));
                                 updateItem.execute(item);    // write state
                             }
 
@@ -1429,7 +1430,7 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmItemTaskListener onSnoozeState(final Context context)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener onSnoozeState(final Context context, final long snoozeUntil)
         {
             return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
@@ -1439,6 +1440,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     if (item.type == AlarmClockItem.AlarmType.ALARM)
                     {
                         Log.d(TAG, "State Saved (onSnooze)");
+                        item.alarmtime = snoozeUntil;
                         Notification notification = AlarmNotifications.createNotification(context, item);
                         if (notification != null) {
                             startForeground((int) item.rowID, notification);  // update notification
