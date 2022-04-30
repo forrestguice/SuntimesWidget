@@ -1,5 +1,15 @@
 ### ~
 
+### v0.14.4 (2022-05-02)
+* adds import/export to SuntimesAlarms (#588); save and load alarms/notifications as JSON.
+* adds support for standard AlarmClock intents to SuntimesAlarms; `android.intent.action.SHOW_ALARMS`, `android.intent.action.DISMISS_ALARM` (`EXTRA_ALARM_SEARCH_MODE`), and `android.intent.action.SNOOZE_ALARM` (`android.intent.extra.alarm.SNOOZE_DURATION`).
+* extends the widget action dialog to suggest package and class names from installed apps (#546).
+* fixes bug where widget actions that use an explicit intent fail to launch (#546).
+* fixes bug in sun position widget where the theme colors aren't applied; fixes default lightmap colors (#589).
+* fixes bug where single-select menu items are displayed as checkboxes instead of radio buttons (#590).
+* updates translation to Polish and Esperanto (eo, pl) (#585 by Verdulo).
+* updates translation to Brazilian Portuguese (pt-br) (#587 by naoliv).
+
 ### v0.14.3 (2022-04-11)
 * adds click to solar noon field; opens the lightmap dialog (#562).
 * changes click on sunrise/sunset headers; opens the lightmap dialog if configured to show azimuth (#562).
