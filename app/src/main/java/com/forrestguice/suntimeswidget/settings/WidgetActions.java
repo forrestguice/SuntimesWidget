@@ -514,6 +514,16 @@ public class WidgetActions
                             intent.putExtra(key, value);  // string
                             Log.w(TAG, "applyExtras: fallback " + extra + " (float)");
                         }
+
+                    } else {
+                        try {
+                            intent.putExtra(key, Integer.parseInt(value));  // int
+                            Log.i(TAG, "applyExtras: applied " + extra + " (int)");
+
+                        } catch (NumberFormatException e) {
+                            intent.putExtra(key, value);  // string
+                            Log.w(TAG, "applyExtras: fallback " + extra + " (int)");
+                        }
                     }
 
                 } else {
