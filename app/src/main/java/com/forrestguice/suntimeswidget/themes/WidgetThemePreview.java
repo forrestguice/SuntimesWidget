@@ -259,8 +259,8 @@ public class WidgetThemePreview
             options.sunShadowColor = values.getAsInteger(SuntimesThemeContract.THEME_MAP_SHADOWCOLOR);
             options.moonLightColor = values.getAsInteger(SuntimesThemeContract.THEME_MAP_HIGHLIGHTCOLOR);
 
-            options.sunFillColor = values.getAsInteger(SuntimesThemeContract.THEME_NOONICON_FILL_COLOR);
-            options.sunStrokeColor = values.getAsInteger(SuntimesThemeContract.THEME_NOONICON_STROKE_COLOR);
+            options.sunFillColor = values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_FILL_COLOR);
+            options.sunStrokeColor = values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_STROKE_COLOR);
             options.sunScale = 24;      // extra large so preview of colors is visible
 
             options.moonFillColor = values.getAsInteger(SuntimesThemeContract.THEME_MOONFULLCOLOR);

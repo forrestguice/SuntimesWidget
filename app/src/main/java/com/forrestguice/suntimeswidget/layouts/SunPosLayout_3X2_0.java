@@ -24,9 +24,11 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.ColorUtils;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.forrestguice.suntimeswidget.LightMapView;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
@@ -120,7 +122,7 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
         WorldMapWidgetSettings.WorldMapWidgetMode mapMode = getMapMode(context, appWidgetId);
         WorldMapTask.WorldMapProjection projection = createProjectionForMode(context, mapMode, options);
 
-        boolean showLocation = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, getMapTag());
+        boolean showLocation = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_LOCATION, WorldMapWidgetSettings.MAPTAG_3x2);
         if (showLocation) {
             Location location = dataset.location();
             options.locations = new double[][] {{location.getLatitudeAsDouble(), location.getLongitudeAsDouble()}};
@@ -149,14 +151,25 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
         options.sunShadowColor = theme.getMapShadowColor();
         options.moonLightColor = theme.getMapHighlightColor();
 
-        options.sunFillColor = theme.getNoonIconColor();
-        options.sunStrokeColor = theme.getNoonIconStrokeColor();
+        options.sunFillColor = theme.getGraphPointFillColor();
+        options.sunStrokeColor = theme.getGraphPointStrokeColor();
 
         options.moonFillColor = theme.getMoonFullColor();
         options.moonStrokeColor = theme.getMoonWaningColor();
 
-        options.showMoonLight = true;
-        options.showMajorLatitudes = false;
+        options.gridXColor = options.moonLightColor;
+        options.gridYColor = options.moonLightColor;
+        options.locationFillColor = theme.getActionColor();
+
+        options.latitudeColors[0] = ColorUtils.setAlphaComponent(options.sunShadowColor, 255);
+        options.latitudeColors[1] = ColorUtils.setAlphaComponent(options.moonLightColor, 255);
+        options.latitudeColors[2] = ColorUtils.setAlphaComponent(options.moonLightColor, 255);
+
+        options.showSunShadow = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_SUNSHADOW, WorldMapWidgetSettings.MAPTAG_3x2);             // uses app setting // TODO: from widget settings
+        options.showMoonLight = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MOONLIGHT, WorldMapWidgetSettings.MAPTAG_3x2);             // uses app setting // TODO: from widget settings
+        options.showMajorLatitudes = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MAJORLATITUDES, WorldMapWidgetSettings.MAPTAG_3x2);   // uses app setting // TODO: from widget settings
+        options.showGrid = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_MINORGRID, WorldMapWidgetSettings.MAPTAG_3x2);                  // uses app setting // TODO: from widget settings
+        options.showDebugLines = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_DEBUGLINES, WorldMapWidgetSettings.MAPTAG_3x2);           // uses app setting // TODO: from widget settings
     }
 
     public WorldMapWidgetSettings.WorldMapWidgetMode getMapMode(Context context, int appWidgetId) {

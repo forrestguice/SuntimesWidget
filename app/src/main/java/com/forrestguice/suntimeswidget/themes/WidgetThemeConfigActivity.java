@@ -848,8 +848,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             options.sunShadowColor = chooseColorMapShadow.getColor();
             options.moonLightColor = chooseColorMapHighlight.getColor();
 
-            options.sunFillColor = chooseColorNoonIconFill.getColor();
-            options.sunStrokeColor = chooseColorNoonIconStroke.getColor();
+            options.sunFillColor = chooseColorPointFill.getColor();
+            options.sunStrokeColor = chooseColorPointStroke.getColor();
             options.sunScale = 24;      // extra large so preview of colors is visible
 
             options.moonFillColor = chooseColorMoonFull.getColor();
