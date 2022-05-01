@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget;
 
 import android.appwidget.AppWidgetManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.ArrayAdapter;
@@ -147,7 +148,15 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     }
     protected WidgetModeAdapter createAdapter_widgetMode3x1()
     {
-        WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSunPos3x1.values());
+        WidgetModeAdapter adapter = new WidgetModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.WidgetModeSunPos3x1.values()) {
+            @Override
+            protected void modifyThemeValues(int position, ContentValues values) {
+                if (position >=0 && position < WidgetSettings.WidgetModeSunPos3x1.values().length) {
+                    WidgetSettings.WidgetModeSunPos3x1 mode = WidgetSettings.WidgetModeSunPos3x1.values()[position];
+                    values.put(WidgetSettings.PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x1, mode.name());
+                }
+            }
+        };
         adapter.setDropDownViewResource(R.layout.layout_listitem_layouts);
         adapter.setThemeValues(themeValues);
         return adapter;

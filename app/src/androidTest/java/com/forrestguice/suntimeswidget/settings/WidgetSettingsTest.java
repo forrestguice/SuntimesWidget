@@ -737,6 +737,10 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         WidgetSettings.WidgetModeSunPos3x1 pref2 = WidgetSettings.loadSunPos3x1ModePref(context, appWidgetId);
         assertTrue("pref should be LIGHTMAP but was " + pref2, pref2.equals(WidgetSettings.WidgetModeSunPos3x1.MODE3x1_LIGHTMAP));
 
+        WidgetSettings.saveSunPos3x1ModePref(context, appWidgetId, WidgetSettings.WidgetModeSunPos3x1.MODE3x1_LIGHTMAP_SMALL);
+        WidgetSettings.WidgetModeSunPos3x1 pref1 = WidgetSettings.loadSunPos3x1ModePref(context, appWidgetId);
+        assertTrue("pref should be LIGHTMAP1 but was " + pref1, pref1.equals(WidgetSettings.WidgetModeSunPos3x1.MODE3x1_LIGHTMAP_SMALL));
+
         WidgetSettings.deleteSunPos3x1ModePref(context, appWidgetId);
         WidgetSettings.WidgetModeSunPos3x1 pref0 = WidgetSettings.loadSunPos3x1ModePref(context, appWidgetId);
         assertTrue("pref should be default (LIGHTMAP) but was " + pref0, pref0.equals(WidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS3x1) && pref0.equals(WidgetSettings.WidgetModeSunPos3x1.MODE3x1_LIGHTMAP));

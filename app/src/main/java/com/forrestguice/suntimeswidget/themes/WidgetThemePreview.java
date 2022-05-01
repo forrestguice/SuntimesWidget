@@ -47,6 +47,7 @@ import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_7;
 import com.forrestguice.suntimeswidget.layouts.MoonLayout_1x1_8;
 import com.forrestguice.suntimeswidget.layouts.PositionLayout;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_0;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X2_0;
 import com.forrestguice.suntimeswidget.layouts.SuntimesLayout;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
@@ -176,7 +177,17 @@ public class WidgetThemePreview
             updatePreview_moon(previewLayout, values);
 
         } else if (WidgetSettings.WidgetModeSunPos3x1.supportsLayout(layoutID)) {
-            updatePreview_position0(previewLayout, values, 128, 32);
+            WidgetSettings.WidgetModeSunPos3x1 mode;
+            try {
+                mode = WidgetSettings.WidgetModeSunPos3x1.valueOf(values.getAsString(WidgetSettings.PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x1));
+            } catch (IllegalArgumentException e) {
+                mode = WidgetSettings.WidgetModeSunPos3x1.MODE3x1_LIGHTMAP;
+            }
+            switch (mode) {
+                case MODE3x1_LIGHTMAP_SMALL: updatePreview_position0(previewLayout, values, 128, SunPosLayout_3X1_0.HEIGHT_SMALL - 4); break;
+                case MODE3x1_LIGHTMAP_MEDIUM: updatePreview_position0(previewLayout, values, 128, SunPosLayout_3X1_0.HEIGHT_MEDIUM - 4); break;
+                case MODE3x1_LIGHTMAP: default: updatePreview_position0(previewLayout, values, 128, SunPosLayout_3X1_0.HEIGHT_LARGE - 4); break;
+            }
 
         } else if (WorldMapWidgetSettings.WorldMapWidgetMode.supportsLayout(layoutID)) {
             WorldMapWidgetSettings.WorldMapWidgetMode mode = WorldMapWidgetSettings.WorldMapWidgetMode.findMode(layoutID);

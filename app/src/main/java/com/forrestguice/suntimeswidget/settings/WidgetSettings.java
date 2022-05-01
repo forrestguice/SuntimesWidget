@@ -47,6 +47,8 @@ import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_0;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_1;
 
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_0;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_1;
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_2;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
@@ -495,7 +497,9 @@ public class WidgetSettings
      */
     public static enum WidgetModeSunPos3x1 implements WidgetModeDisplay
     {
-        MODE3x1_LIGHTMAP("Lightmap", R.layout.layout_widget_sunpos_3x1_0);
+        MODE3x1_LIGHTMAP("Lightmap", R.layout.layout_widget_sunpos_3x1_0),
+        MODE3x1_LIGHTMAP_MEDIUM("Lightmap (medium)", R.layout.layout_widget_sunpos_3x1_0),
+        MODE3x1_LIGHTMAP_SMALL("Lightmap (small)", R.layout.layout_widget_sunpos_3x1_0);
 
         private final int layoutID;
         private String displayString;
@@ -529,6 +533,8 @@ public class WidgetSettings
         public static void initDisplayStrings( Context context )
         {
             MODE3x1_LIGHTMAP.setDisplayString(context.getString(R.string.widgetMode3x1_lightmap_large));
+            MODE3x1_LIGHTMAP_MEDIUM.setDisplayString(context.getString(R.string.widgetMode3x1_lightmap_medium));
+            MODE3x1_LIGHTMAP_SMALL.setDisplayString(context.getString(R.string.widgetMode3x1_lightmap_small));
         }
 
         public static boolean supportsLayout(int layoutID)
@@ -1651,6 +1657,8 @@ public class WidgetSettings
     {
         WidgetModeSunPos3x1 mode = loadSunPos3x1ModePref(context, appWidgetId);
         switch (mode) {
+            case MODE3x1_LIGHTMAP_SMALL: return new SunPosLayout_3X1_2();
+            case MODE3x1_LIGHTMAP_MEDIUM: return new SunPosLayout_3X1_1();
             case MODE3x1_LIGHTMAP: default: return new SunPosLayout_3X1_0();
         }
     }
@@ -2927,6 +2935,7 @@ public class WidgetSettings
         WidgetModeSun1x1.initDisplayStrings(context);
         WidgetModeSun2x1.initDisplayStrings(context);
         WidgetModeSunPos1x1.initDisplayStrings(context);
+        WidgetModeSunPos3x1.initDisplayStrings(context);
         WidgetModeMoon1x1.initDisplayStrings(context);
         WidgetModeMoon2x1.initDisplayStrings(context);
         WidgetModeMoon3x1.initDisplayStrings(context);
