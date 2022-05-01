@@ -46,6 +46,7 @@ import com.forrestguice.suntimeswidget.layouts.SunPosLayout;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_0;
 import com.forrestguice.suntimeswidget.layouts.SunPosLayout_1X1_1;
 
+import com.forrestguice.suntimeswidget.layouts.SunPosLayout_3X1_0;
 import com.forrestguice.suntimeswidget.themes.defaults.DarkTheme;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
@@ -92,6 +93,9 @@ public class WidgetSettings
 
     public static final String PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS1x1 = "widgetmode_sunpos1x1";
     public static final WidgetModeSunPos1x1 PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS1x1 = WidgetModeSunPos1x1.MODE1x1_ALTAZ;
+
+    public static final String PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x1 = "widgetmode_sunpos3x1";
+    public static final WidgetModeSunPos3x1 PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS3x1 = WidgetModeSunPos3x1.MODE3x1_LIGHTMAP;
 
     public static final String PREF_KEY_APPEARANCE_WIDGETMODE_MOON1x1 = "widgetmode_moon1x1";
     public static final WidgetModeMoon1x1 PREF_DEF_APPEARANCE_WIDGETMODE_MOON1x1 = WidgetModeMoon1x1.MODE1x1_RISESET;
@@ -1621,6 +1625,45 @@ public class WidgetSettings
         prefs.apply();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void saveSunPos3x1ModePref(Context context, int appWidgetId, WidgetModeSunPos3x1 mode)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.putString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x1, mode.name());
+        prefs.apply();
+    }
+    public static WidgetModeSunPos3x1 loadSunPos3x1ModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_WIDGET, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        String modeString = prefs.getString(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x1, PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS3x1.name());
+        try {
+            return WidgetModeSunPos3x1.valueOf(modeString);
+        } catch (IllegalArgumentException e) {
+            Log.w("loadSunPos3x1ModePref", "Failed to load value '" + modeString + "'; using default '" + PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS3x1.name() + "'.");
+            return PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS3x1;
+        }
+    }
+    public static SunPosLayout loadSunPos3x1ModePref_asLayout(Context context, int appWidgetId)
+    {
+        WidgetModeSunPos3x1 mode = loadSunPos3x1ModePref(context, appWidgetId);
+        switch (mode) {
+            case MODE3x1_LIGHTMAP: default: return new SunPosLayout_3X1_0();
+        }
+    }
+    public static void deleteSunPos3x1ModePref(Context context, int appWidgetId)
+    {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_WIDGET, 0).edit();
+        String prefs_prefix = PREF_PREFIX_KEY + appWidgetId + PREF_PREFIX_KEY_APPEARANCE;
+        prefs.remove(prefs_prefix + PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x1);
+        prefs.apply();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static void saveMoon1x1ModePref(Context context, int appWidgetId, WidgetModeMoon1x1 mode)
     {
@@ -2814,6 +2857,7 @@ public class WidgetSettings
 
         deleteSun1x1ModePref(context, appWidgetId);
         deleteSunPos1x1ModePref(context, appWidgetId);
+        deleteSunPos3x1ModePref(context, appWidgetId);
         deleteMoon1x1ModePref(context, appWidgetId);
         deleteAllowResizePref(context, appWidgetId);
         deleteScaleTextPref(context, appWidgetId);

@@ -154,6 +154,28 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
     }
 
     @Override
+    protected void saveWidgetMode3x1(Context context)
+    {
+        if (spinner_3x1mode != null) {
+            WidgetSettings.WidgetModeSunPos3x1 mode = (WidgetSettings.WidgetModeSunPos3x1) spinner_3x1mode.getSelectedItem();
+            WidgetSettings.saveSunPos3x1ModePref(context, appWidgetId, mode);
+        }
+    }
+
+    @Override
+    protected void loadWidgetMode3x1(Context context)
+    {
+        if (spinner_3x1mode != null)
+        {
+            WidgetSettings.WidgetModeSunPos3x1 mode = WidgetSettings.loadSunPos3x1ModePref(context, appWidgetId);
+            int pos = searchForIndex(spinner_3x1mode, mode);
+            if (pos >= 0) {
+                spinner_3x1mode.setSelection(pos);
+            }
+        }
+    }
+
+    @Override
     protected void initWidgetMode3x2(Context context)
     {
         if (spinner_3x2mode != null) {
