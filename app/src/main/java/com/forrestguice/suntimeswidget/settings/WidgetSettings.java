@@ -524,7 +524,7 @@ public class WidgetSettings
 
         public static void initDisplayStrings( Context context )
         {
-            //MODE3x1_LIGHTMAP.setDisplayString(context.getString(R.string.widgetMode1x1_altaz));   // TODO
+            MODE3x1_LIGHTMAP.setDisplayString(context.getString(R.string.widgetMode3x1_lightmap_large));
         }
 
         public static boolean supportsLayout(int layoutID)
