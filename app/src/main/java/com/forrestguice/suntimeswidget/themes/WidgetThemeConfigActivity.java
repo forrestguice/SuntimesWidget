@@ -95,6 +95,8 @@ import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_DAYCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_DISPLAYSTRING;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_FALLCOLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_GRAPH_POINT_FILL_COLOR;
+import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_GRAPH_POINT_STROKE_COLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_BACKGROUNDCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_FOREGROUNDCOLOR;
 import static com.forrestguice.suntimeswidget.themes.SuntimesThemeContract.THEME_MAP_HIGHLIGHTCOLOR;
@@ -199,7 +201,7 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
     private ColorChooser chooseColorNoon, chooseColorNoonIconFill, chooseColorNoonIconStroke;
     private ColorChooser chooseColorSet, chooseColorSetIconFill, chooseColorSetIconStroke;
     private ColorChooser chooseColorTitle, chooseColorText, chooseColorTime, chooseColorSuffix, chooseColorAction, chooseColorAccent;
-    private ColorChooser chooseColorDay, chooseColorCivil, chooseColorNautical, chooseColorAstro, chooseColorNight;
+    private ColorChooser chooseColorDay, chooseColorCivil, chooseColorNautical, chooseColorAstro, chooseColorNight, chooseColorPointFill, chooseColorPointStroke;
     private ColorChooser chooseColorSpring, chooseColorSummer, chooseColorFall, chooseColorWinter;
     private ColorChooser chooseColorMoonrise, chooseColorMoonset;
     private ColorChooser chooseColorMoonWaning, chooseColorMoonNew, chooseColorMoonWaxing, chooseColorMoonFull;
@@ -380,6 +382,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         chooseColorNautical = createColorChooser(context, R.id.chooser_nauticalColor, THEME_NAUTICALCOLOR, PREVIEWID_SUNPOS_3x1);
         chooseColorAstro = createColorChooser(context, R.id.chooser_astroColor, THEME_ASTROCOLOR, PREVIEWID_SUNPOS_3x1);
         chooseColorNight = createColorChooser(context, R.id.chooser_nightColor, THEME_NIGHTCOLOR, PREVIEWID_SUNPOS_3x1);
+        chooseColorPointFill = createColorChooser(context, R.id.chooser_pointFill, THEME_GRAPH_POINT_FILL_COLOR, PREVIEWID_SUNPOS_3x1);
+        chooseColorPointStroke = createColorChooser(context, R.id.chooser_pointStroke, THEME_GRAPH_POINT_STROKE_COLOR, PREVIEWID_SUNPOS_3x1);
 
         // map colors
         chooseColorMapBackground = createColorChooser(context, R.id.chooser_mapBackgroundColor, THEME_MAP_BACKGROUNDCOLOR, PREVIEWID_SUNPOS_3x2);
@@ -810,8 +814,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             colors.colorNautical = chooseColorNautical.getColor();
             colors.colorAstro = chooseColorAstro.getColor();
             colors.colorNight = chooseColorNight.getColor();
-            colors.colorPointFill = chooseColorNoonIconFill.getColor();
-            colors.colorPointStroke = chooseColorNoonIconStroke.getColor();
+            colors.colorPointFill = chooseColorPointFill.getColor();
+            colors.colorPointStroke = chooseColorPointStroke.getColor();
 
             colors.option_drawNow = LightMapView.LightMapColors.DRAW_SUN1;
             colors.option_drawNow_pointSizePx = SuntimesUtils.dpToPixels(this, 8);
@@ -1488,6 +1492,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
             chooseColorNautical.setColor(theme.getNauticalColor());
             chooseColorAstro.setColor(theme.getAstroColor());
             chooseColorNight.setColor(theme.getNightColor());
+            chooseColorPointFill.setColor(theme.getGraphPointFillColor());
+            chooseColorPointStroke.setColor(theme.getGraphPointStrokeColor());
 
             chooseColorSpring.setColor(theme.getSpringColor());
             chooseColorSummer.setColor(theme.getSummerColor());
@@ -1584,8 +1590,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
                 this.themeNauticalColor = chooseColorNautical.getColor();
                 this.themeAstroColor = chooseColorAstro.getColor();
                 this.themeNightColor = chooseColorNight.getColor();
-                this.themeGraphPointFillColor = chooseColorNoonIconFill.getColor();                 // TODO: separate ui
-                this.themeGraphPointStrokeColor = chooseColorNoonIconStroke.getColor();             // TODO: separate ui
+                this.themeGraphPointFillColor = chooseColorPointFill.getColor();
+                this.themeGraphPointStrokeColor = chooseColorPointStroke.getColor();
 
                 this.themeSpringColor = chooseColorSpring.getColor();
                 this.themeSummerColor = chooseColorSummer.getColor();
@@ -1659,6 +1665,8 @@ public class WidgetThemeConfigActivity extends AppCompatActivity
         values.put(THEME_NAUTICALCOLOR, chooseColorNautical.getColor());
         values.put(THEME_ASTROCOLOR, chooseColorAstro.getColor());
         values.put(THEME_NIGHTCOLOR, chooseColorNight.getColor());
+        values.put(THEME_GRAPH_POINT_FILL_COLOR, chooseColorPointFill.getColor());
+        values.put(THEME_GRAPH_POINT_STROKE_COLOR, chooseColorPointStroke.getColor());
 
         values.put(THEME_SPRINGCOLOR, chooseColorSpring.getColor());
         values.put(THEME_SUMMERCOLOR, chooseColorSummer.getColor());
