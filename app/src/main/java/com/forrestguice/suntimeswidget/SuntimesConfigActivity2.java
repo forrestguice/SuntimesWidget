@@ -154,6 +154,8 @@ public class SuntimesConfigActivity2 extends SuntimesConfigActivity0
                 if (position >=0 && position < WidgetSettings.WidgetModeSunPos3x1.values().length) {
                     WidgetSettings.WidgetModeSunPos3x1 mode = WidgetSettings.WidgetModeSunPos3x1.values()[position];
                     values.put(WidgetSettings.PREF_KEY_APPEARANCE_WIDGETMODE_SUNPOS3x1, mode.name());
+                    //values.put("option_drawNow", LightMapView.LightMapColors.DRAW_NONE);
+                    values.put("option_drawNow_pointSizePx", SuntimesUtils.dpToPixels(SuntimesConfigActivity2.this, 4));
                 }
             }
         };

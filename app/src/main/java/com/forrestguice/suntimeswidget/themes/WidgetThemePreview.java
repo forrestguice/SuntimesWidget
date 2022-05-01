@@ -216,6 +216,15 @@ public class WidgetThemePreview
             colors.colorNautical = values.getAsInteger(SuntimesThemeContract.THEME_NAUTICALCOLOR);
             colors.colorAstro = values.getAsInteger(SuntimesThemeContract.THEME_ASTROCOLOR);;
             colors.colorNight = values.getAsInteger(SuntimesThemeContract.THEME_NIGHTCOLOR);;
+            colors.colorPointFill = values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_FILL_COLOR);
+            colors.colorPointStroke = values.getAsInteger(SuntimesThemeContract.THEME_GRAPH_POINT_STROKE_COLOR);
+
+            if (values.getAsInteger("option_drawNow") != null) {
+                colors.option_drawNow = values.getAsInteger("option_drawNow");
+            }
+            if (values.getAsInteger("option_drawNow_pointSizePx") != null) {
+                colors.option_drawNow_pointSizePx = values.getAsInteger("option_drawNow_pointSizePx");
+            }
 
             LightMapView.LightMapTask drawTask = new LightMapView.LightMapTask();
             drawTask.setListener(new LightMapView.LightMapTaskListener()
