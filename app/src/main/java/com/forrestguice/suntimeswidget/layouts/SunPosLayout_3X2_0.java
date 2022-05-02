@@ -22,6 +22,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.ColorUtils;
@@ -38,6 +39,7 @@ import com.forrestguice.suntimeswidget.map.WorldMapEquiazimuthal1;
 import com.forrestguice.suntimeswidget.map.WorldMapEquiazimuthal2;
 import com.forrestguice.suntimeswidget.map.WorldMapEquirectangular;
 import com.forrestguice.suntimeswidget.map.WorldMapTask;
+import com.forrestguice.suntimeswidget.map.WorldMapView;
 import com.forrestguice.suntimeswidget.map.WorldMapWidgetSettings;
 import com.forrestguice.suntimeswidget.themes.SuntimesTheme;
 
@@ -71,26 +73,33 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
 
     public static WorldMapTask.WorldMapProjection createProjectionForMode(Context context, WorldMapWidgetSettings.WorldMapWidgetMode mapMode, WorldMapTask.WorldMapOptions options)
     {
+        options.tintForeground = WorldMapWidgetSettings.loadWorldMapPref(context, 0, WorldMapWidgetSettings.PREF_KEY_WORLDMAP_TINTMAP, mapMode.getMapTag());
+        if (!options.tintForeground) {
+            options.foregroundColor = Color.TRANSPARENT;    // override color assigned by themeViews
+        }
+
+        options.center = WorldMapWidgetSettings.loadWorldMapCenter(context, 0, mapMode.getMapTag(), mapMode.getProjectionCenter());
+        Drawable background = WorldMapView.loadBackgroundDrawable(context, mapMode.getMapTag(), options.center);
+
         WorldMapTask.WorldMapProjection projection;
         switch (mapMode)
         {
             case EQUIAZIMUTHAL_SIMPLE:
-                options.map = ContextCompat.getDrawable(context, R.drawable.worldmap2);
+                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap2);
                 options.map_night = null;
                 options.hasTransparentBaseMap = true;
                 projection = new WorldMapEquiazimuthal();
                 break;
 
             case EQUIAZIMUTHAL_SIMPLE1:
-                options.map = ContextCompat.getDrawable(context, R.drawable.worldmap3);
+                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap3);
                 options.map_night = null;
                 options.hasTransparentBaseMap = true;
                 projection = new WorldMapEquiazimuthal1();
                 break;
 
             case EQUIAZIMUTHAL_SIMPLE2:
-                options.center = WorldMapWidgetSettings.PREF_DEF_WORLDMAP_CENTER;          // TODO: widget allows reconfigure center
-                options.map = ContextCompat.getDrawable(context, R.drawable.worldmap4);    // TODO: widget allows reconfigure background
+                options.map = background;  // ContextCompat.getDrawable(context, R.drawable.worldmap4);
                 options.map_night = null;
                 options.hasTransparentBaseMap = true;
                 projection = new WorldMapEquiazimuthal2();
@@ -106,7 +115,7 @@ public class SunPosLayout_3X2_0 extends SunPosLayout
 
             case EQUIRECTANGULAR_SIMPLE:
             default:
-                options.map = ContextCompat.getDrawable(context, R.drawable.worldmap);
+                options.map = (background != null) ? background : ContextCompat.getDrawable(context, R.drawable.worldmap);
                 options.map_night = null;
                 options.hasTransparentBaseMap = true;
                 projection = new WorldMapEquirectangular();
