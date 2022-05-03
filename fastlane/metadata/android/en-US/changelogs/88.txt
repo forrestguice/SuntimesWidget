@@ -1,0 +1,8 @@
+- adds import/export to SuntimesAlarms (#588).
+- extends the position widget (reduced height), and map widgets (configuration).
+- extends the action editor to suggest package/class names (#546).
+- fixes bug where widget actions fail to launch (#546).
+- fixes bug where widget theme colors aren't applied (#589).
+- fixes bug where animations run in the background (#582).
+- updates translation to Polish and Esperanto.
+- updates translation to Brazilian Portuguese.
