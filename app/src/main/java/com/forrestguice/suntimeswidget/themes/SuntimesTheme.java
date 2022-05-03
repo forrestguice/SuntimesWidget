@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
@@ -644,9 +645,8 @@ public class SuntimesTheme
 
     public ThemeDescriptor themeDescriptor()
     {
-        if (descriptor == null)
-        {
-            descriptor = new ThemeDescriptor(this.themeName, this.themeDisplayString, this.themeVersion);
+        if (descriptor == null) {
+            descriptor = new ThemeDescriptor(this.themeName, this.themeDisplayString, this.themeVersion, this.themeBackground.name(), this.themeBackgroundColor);
         }
         return descriptor;
     }
@@ -1020,12 +1020,12 @@ public class SuntimesTheme
             }
         }
 
-        public ThemeDescriptor(String name, String displayString, int version)
+        public ThemeDescriptor(String name, String displayString, int version, @Nullable String backgroundName, @Nullable Integer backgroundColor)
         {
             this.name = name;
             this.displayString = displayString;
-            this.backgroundName = null;
-            this.backgroundColor = Color.TRANSPARENT;
+            this.backgroundName = backgroundName;
+            this.backgroundColor = (backgroundColor == null ? Color.TRANSPARENT : backgroundColor);
             this.version = version;
             this.isDefault = false;
         }

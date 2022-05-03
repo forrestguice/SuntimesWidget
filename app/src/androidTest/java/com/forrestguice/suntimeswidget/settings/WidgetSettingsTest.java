@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.settings;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.test.rule.ActivityTestRule;
@@ -530,6 +531,21 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     }
 
     @Test
+    public void test_actionApplyExtras()
+    {
+        Intent intent0 = new Intent();
+        String extraString0 = "one=1&two=2L&three=3d&four=4f&string=string&bool=true&L=L";
+        WidgetActions.applyExtras(context, intent0, extraString0, null);
+        assertEquals(1, intent0.getIntExtra("one", -1));
+        assertEquals(2L, intent0.getLongExtra("two", -1L));
+        assertEquals(3d, intent0.getDoubleExtra("three", -1d));
+        assertEquals(4f, intent0.getFloatExtra("four", -1f));
+        assertEquals("string", intent0.getStringExtra("string"));
+        assertEquals("L", intent0.getStringExtra("L"));
+        assertTrue("bool", intent0.getBooleanExtra("bool", false));
+    }
+
+    @Test
     public void test_StringSetPref()
     {
         Context context = activityRule.getActivity();
@@ -712,6 +728,22 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
         WidgetSettings.deleteSunPos1x1ModePref(context, appWidgetId);
         WidgetSettings.WidgetModeSunPos1x1 pref0 = WidgetSettings.loadSunPos1x1ModePref(context, appWidgetId);
         assertTrue("pref should be default (ALTAZ) but was " + pref0, pref0.equals(WidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS1x1) && pref0.equals(WidgetSettings.WidgetModeSunPos1x1.MODE1x1_ALTAZ));
+    }
+
+    @Test
+    public void test_3x1SunPosModePref()
+    {
+        WidgetSettings.saveSunPos3x1ModePref(context, appWidgetId, WidgetSettings.WidgetModeSunPos3x1.MODE3x1_LIGHTMAP);
+        WidgetSettings.WidgetModeSunPos3x1 pref2 = WidgetSettings.loadSunPos3x1ModePref(context, appWidgetId);
+        assertTrue("pref should be LIGHTMAP but was " + pref2, pref2.equals(WidgetSettings.WidgetModeSunPos3x1.MODE3x1_LIGHTMAP));
+
+        WidgetSettings.saveSunPos3x1ModePref(context, appWidgetId, WidgetSettings.WidgetModeSunPos3x1.MODE3x1_LIGHTMAP_SMALL);
+        WidgetSettings.WidgetModeSunPos3x1 pref1 = WidgetSettings.loadSunPos3x1ModePref(context, appWidgetId);
+        assertTrue("pref should be LIGHTMAP1 but was " + pref1, pref1.equals(WidgetSettings.WidgetModeSunPos3x1.MODE3x1_LIGHTMAP_SMALL));
+
+        WidgetSettings.deleteSunPos3x1ModePref(context, appWidgetId);
+        WidgetSettings.WidgetModeSunPos3x1 pref0 = WidgetSettings.loadSunPos3x1ModePref(context, appWidgetId);
+        assertTrue("pref should be default (LIGHTMAP) but was " + pref0, pref0.equals(WidgetSettings.PREF_DEF_APPEARANCE_WIDGETMODE_SUNPOS3x1) && pref0.equals(WidgetSettings.WidgetModeSunPos3x1.MODE3x1_LIGHTMAP));
     }
 
     @Test

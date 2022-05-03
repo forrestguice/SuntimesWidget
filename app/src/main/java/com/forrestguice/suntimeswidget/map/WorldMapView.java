@@ -160,7 +160,7 @@ public class WorldMapView extends android.support.v7.widget.AppCompatImageView
     }
 
     @Nullable
-    protected static Drawable loadBackgroundDrawable(Context context, String mapTag, double[] center)
+    public static Drawable loadBackgroundDrawable(Context context, String mapTag, double[] center)
     {
         String backgroundString = WorldMapWidgetSettings.loadWorldMapBackground(context, 0, mapTag, center);
         Drawable drawable = loadDrawableFromUri(context, backgroundString);

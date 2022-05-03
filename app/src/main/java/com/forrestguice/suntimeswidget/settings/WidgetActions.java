@@ -487,7 +487,7 @@ public class WidgetActions
                     if (value.endsWith("L") || value.endsWith("l"))
                     {
                         try {
-                            intent.putExtra(key, Long.parseLong(value));  // long
+                            intent.putExtra(key, Long.parseLong(value.substring(0, value.length()-1)));  // long
                             Log.i(TAG, "applyExtras: applied " + extra + " (long)");
 
                         } catch (NumberFormatException e) {
@@ -513,6 +513,16 @@ public class WidgetActions
                         } catch (NumberFormatException e) {
                             intent.putExtra(key, value);  // string
                             Log.w(TAG, "applyExtras: fallback " + extra + " (float)");
+                        }
+
+                    } else {
+                        try {
+                            intent.putExtra(key, Integer.parseInt(value));  // int
+                            Log.i(TAG, "applyExtras: applied " + extra + " (int)");
+
+                        } catch (NumberFormatException e) {
+                            intent.putExtra(key, value);  // string
+                            Log.w(TAG, "applyExtras: fallback " + extra + " (int)");
                         }
                     }
 

@@ -441,6 +441,10 @@
     <string name="widgetMode1x1_distance">Current distance</string>     <!-- setting -->
     <string name="widgetMode1x1_apsis">Next apogee or perigee</string>     <!-- setting -->
 
+    <string name="widgetMode3x1_lightmap_large">Lightmap</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode3x1_lightmap_medium">Lightmap (medium)</string>     <!-- setting -->    <!-- TODO -->
+    <string name="widgetMode3x1_lightmap_small">Lightmap (small)</string>     <!-- setting -->    <!-- TODO -->
+
     <string name="widgetMode_sunPosMap_simplerectangular">Basic</string>  <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal">Polar [north]</string>     <!-- setting -->
     <string name="widgetMode_sunPosMap_simpleazimuthal_south">Polar [south]</string>     <!-- setting -->
