@@ -1,14 +1,18 @@
 ### ~
 
-### v0.14.4 (2022-05-02)
-* adds import/export to SuntimesAlarms (#588); save and load alarms/notifications as JSON.
-* adds support for standard AlarmClock intents to SuntimesAlarms; `android.intent.action.SHOW_ALARMS`, `android.intent.action.DISMISS_ALARM` (`EXTRA_ALARM_SEARCH_MODE`), and `android.intent.action.SNOOZE_ALARM` (`android.intent.extra.alarm.SNOOZE_DURATION`).
-* extends the widget action dialog to suggest package and class names from installed apps (#546).
+### v0.14.4 (2022-05-03)
+* adds import/export to SuntimesAlarms (#588); save and load alarms as JSON.
+* adds widget layouts (3x1 sun position); show the lightmap graph with reduced height (#589).
+* extends map widgets to use the dialog configuration; shared options for center/background/tint, sunlight/moonlight, location, latitudes, and graticule (#493).
+* extends the widget action dialog to suggest package/class names (#546).
 * fixes bug where widget actions that use an explicit intent fail to launch (#546).
-* fixes bug where the sun position and map animations runs in the background (#582).
-* fixes bug in sun position widget where the theme colors aren't applied; fixes default lightmap colors (#589).
+* fixes bug where widget action extras are not correctly applied (#546); ints omitted, longs applied as String.
+* fixes bug where the sun position dialog and map dialog animations run in the background (#582).
+* fixes bug in sun position widgets where the theme colors aren't applied; fixes default colors (#589); adds graph pointFill and pointStroke colors.
 * fixes bug where single-select menu items are displayed as checkboxes instead of radio buttons (#590).
+* fixes bug where the widget theme spinner fails to show the background preview.
 * fixes issue with 'Advanced' settings discoverability (#581).
+* fixes SuntimesAlarms intent-filter to support standard AlarmClock intents; `android.intent.action.SHOW_ALARMS`, `android.intent.action.DISMISS_ALARM` (`EXTRA_ALARM_SEARCH_MODE`), and `android.intent.action.SNOOZE_ALARM` (`android.intent.extra.alarm.SNOOZE_DURATION`); adds 'snooze alarm' and 'dismiss alarm' default actions.
 * updates translation to Polish and Esperanto (eo, pl) (#585 by Verdulo).
 * updates translation to Brazilian Portuguese (pt-br) (#587 by naoliv).
 
