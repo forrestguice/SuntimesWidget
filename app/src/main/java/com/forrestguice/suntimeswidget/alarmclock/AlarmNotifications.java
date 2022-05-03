@@ -32,6 +32,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.icu.text.MessageFormat;
 import android.media.AudioManager;
@@ -93,6 +94,7 @@ public class AlarmNotifications extends BroadcastReceiver
     public static final String ACTION_DISABLE = "suntimeswidget.alarm.disable";          // disable an alarm
     public static final String ACTION_TIMEOUT = "suntimeswidget.alarm.timeout";          // timeout an alarm
     public static final String ACTION_DELETE = "suntimeswidget.alarm.delete";            // delete an alarm
+    public static final String ACTION_UPDATE_UI = "suntimeswidget.alarm.ui.update";
 
     public static final String EXTRA_NOTIFICATION_ID = "notificationID";
     public static final String ALARM_NOTIFICATION_TAG = "suntimesalarm";
@@ -418,9 +420,17 @@ public class AlarmNotifications extends BroadcastReceiver
 
     public static Intent getFullscreenBroadcast(Uri data)
     {
-        Intent intent = new Intent(AlarmDismissActivity.ACTION_UPDATE);
+        Intent intent = new Intent(ACTION_UPDATE_UI);
         intent.setData(data);
         return intent;
+    }
+
+    public static IntentFilter getUpdateBroadcastIntentFilter()
+    {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ACTION_UPDATE_UI);
+        filter.addDataScheme("content");
+        return filter;
     }
 
     public static Intent getAlarmListIntent(Context context, Long selectedAlarmId)
