@@ -28,7 +28,7 @@ public class DarkThemeTrans extends DarkTheme
     public static final String THEMEDEF_NAME = "dark_transparent";
     public static final String THEMEDEF_DISPLAYSTRING = "Dark (transparent)";
     public static final int THEMEDEF_VERSION = BuildConfig.VERSION_CODE;
-    public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION);
+    public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION, ThemeBackground.TRANSPARENT.name(), null);
 
     public static final ThemeBackground THEMEDEF_BACKGROUND = ThemeBackground.TRANSPARENT;
     public static final boolean THEMEDEF_TITLEBOLD = true;

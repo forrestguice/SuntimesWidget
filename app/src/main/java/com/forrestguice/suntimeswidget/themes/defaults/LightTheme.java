@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.themes.defaults;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 
 import com.forrestguice.suntimeswidget.BuildConfig;
@@ -30,7 +31,7 @@ public class LightTheme extends SuntimesTheme
     public static final String THEMEDEF_NAME = "light";
     public static final String THEMEDEF_DISPLAYSTRING = "Light";
     public static final int THEMEDEF_VERSION = BuildConfig.VERSION_CODE;
-    public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION);
+    public static final ThemeDescriptor THEMEDEF_DESCRIPTOR = new ThemeDescriptor(THEMEDEF_NAME, THEMEDEF_DISPLAYSTRING, THEMEDEF_VERSION, ThemeBackground.LIGHT.name(), Color.LTGRAY);
 
     public static final ThemeBackground THEMEDEF_BACKGROUND = ThemeBackground.LIGHT;
     public static final int THEMEDEF_BACKGROUND_COLOR_ID = R.color.widget_bg_light;
