@@ -20,10 +20,12 @@ package com.forrestguice.suntimeswidget.alarmclock.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -170,6 +172,7 @@ public class AlarmClockActivity extends AppCompatActivity
     public void onStart()
     {
         super.onStart();
+        registerReceiver(updateBroadcastReceiver, AlarmNotifications.getUpdateBroadcastIntentFilter());
     }
 
     @Override
@@ -235,7 +238,29 @@ public class AlarmClockActivity extends AppCompatActivity
         }
     }
 
+    private final BroadcastReceiver updateBroadcastReceiver = new BroadcastReceiver()
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            String action = intent.getAction();
+            Uri data = intent.getData();
+            Log.d(TAG, "updateReceiver.onReceive: " + data + " :: " + action);
 
+            if (action != null)
+            {
+                if (action.equals(AlarmNotifications.ACTION_UPDATE_UI))
+                {
+                    if (data != null)
+                    {
+                        long alarmID = ContentUris.parseId(data);
+                        list.reloadAdapter(alarmID);
+
+                    } else Log.e(TAG, "updateReceiver.onReceive: null data!");
+                } else Log.e(TAG, "updateReceiver.onReceive: unrecognized action: " + action);
+            } else Log.e(TAG, "updateReceiver.onReceive: null action!");
+        }
+    };
 
     @Override
     public void onNewIntent( Intent intent )
