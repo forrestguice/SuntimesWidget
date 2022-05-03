@@ -713,6 +713,11 @@ public class AlarmListDialog extends DialogFragment
         private AlarmDatabaseAdapter db;
         private WeakReference<Context> contextRef;
 
+        private boolean option_includeState = true;
+        public void setOption_includeState(boolean value) {
+            option_includeState = value;
+        }
+
         public AlarmListTask(Context context)
         {
             contextRef = new WeakReference<>(context);
@@ -729,6 +734,7 @@ public class AlarmListDialog extends DialogFragment
             db.open();
             Cursor cursor = (rowIds == null || rowIds.length <= 0 || rowIds[0] == null)
                           ? db.getAllAlarms(0, true) : db.getAlarm(rowIds[0]);
+
             while (!cursor.isAfterLast())
             {
                 ContentValues entryValues = new ContentValues();
@@ -738,6 +744,21 @@ public class AlarmListDialog extends DialogFragment
                 if (!item.enabled) {
                     AlarmNotifications.updateAlarmTime(contextRef.get(), item);
                 }
+
+                if (option_includeState)
+                {
+                    Cursor cursor1 = db.getAlarmState(item.rowID);
+                    if (cursor1 != null) {
+                        cursor1.moveToFirst();
+                        if (!cursor1.isAfterLast()) {
+                            ContentValues stateValues = new ContentValues();
+                            DatabaseUtils.cursorRowToContentValues(cursor1, stateValues);
+                            item.state = new AlarmState(stateValues);
+                        }
+                        cursor1.close();
+                    }
+                }
+
                 items.add(item);
                 publishProgress(item);
 
