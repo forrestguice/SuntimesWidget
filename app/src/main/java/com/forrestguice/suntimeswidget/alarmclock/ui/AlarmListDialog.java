@@ -23,6 +23,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
@@ -59,6 +60,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
@@ -1004,6 +1006,12 @@ public class AlarmListDialog extends DialogFragment
             if (holder.button_delete != null) {
                 holder.button_delete.setOnClickListener(deleteButtonListener(position));
             }
+            if (holder.button_dismiss != null) {
+                holder.button_dismiss.setOnClickListener(dismissButtonListener(position));
+            }
+            if (holder.button_snooze != null) {
+                holder.button_snooze.setOnClickListener(snoozeButtonListener(position));
+            }
             if (holder.text_note != null) {
                 holder.text_note.setOnClickListener(noteListener(position, holder));
             }
@@ -1033,6 +1041,12 @@ public class AlarmListDialog extends DialogFragment
             }
             if (holder.button_delete != null) {
                 holder.button_delete.setOnClickListener(null);
+            }
+            if (holder.button_dismiss != null) {
+                holder.button_dismiss.setOnClickListener(null);
+            }
+            if (holder.button_snooze != null) {
+                holder.button_snooze.setOnClickListener(null);
             }
             if (holder.text_note != null) {
                 holder.text_note.setOnClickListener(null);
@@ -1094,6 +1108,32 @@ public class AlarmListDialog extends DialogFragment
                 @Override
                 public void onClick(View v) {
                     AlarmEditDialog.confirmDeleteAlarm(contextRef.get(), items.get(position), onDeleteConfirmed(contextRef.get(), items.get(position)));
+                }
+            };
+        }
+
+        private View.OnClickListener dismissButtonListener(final int position)
+        {
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    if (context != null) {
+                        context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_DISMISS, items.get(position).getUri()));
+                    }
+                }
+            };
+        }
+
+        private View.OnClickListener snoozeButtonListener(final int position)
+        {
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    if (context != null) {
+                        context.sendBroadcast(AlarmNotifications.getAlarmIntent(context, AlarmNotifications.ACTION_SNOOZE, items.get(position).getUri()));
+                    }
                 }
             };
         }
@@ -1311,6 +1351,8 @@ public class AlarmListDialog extends DialogFragment
         public TextView text_offset;
         public ImageButton overflow;
         public ImageButton button_delete;
+        public Button button_snooze;
+        public Button button_dismiss;
         public SwitchCompat switch_enabled;
         public CheckBox check_enabled;
 
@@ -1355,6 +1397,8 @@ public class AlarmListDialog extends DialogFragment
             text_offset = (TextView) view.findViewById(R.id.text_datetime_offset);
             overflow = (ImageButton) view.findViewById(R.id.overflow_menu);
             button_delete = (ImageButton) view.findViewById(R.id.button_delete);
+            button_dismiss = (Button) view.findViewById(R.id.button_dismiss);
+            button_snooze = (Button) view.findViewById(R.id.button_snooze);
 
             if (Build.VERSION.SDK_INT >= 14) {
                 switch_enabled = (SwitchCompat) view.findViewById(R.id.switch_enabled);        // switch used by api >= 14 (otherwise null)
@@ -1432,8 +1476,15 @@ public class AlarmListDialog extends DialogFragment
             Drawable offsetIcon = SuntimesUtils.createImageSpan(context, offsetIconResID, offsetIconSize, offsetIconSize, iconColor).getDrawable().mutate();
 
             // background
-            view.animatedBackground = false;
             int resBackground = item.enabled ? res_backgroundOn : res_backgroundOff;
+            int alarmState = (item.state != null) ? item.state.getState() : AlarmState.STATE_NONE;
+            switch(alarmState)
+            {
+                default:
+                    view.animatedBackground = false;
+                    break;
+            }
+
             view.cardBackdrop.setBackgroundColor( isSelected ? ColorUtils.setAlphaComponent(color_selected, 170) : color_notselected);  // 66% alpha
             if (resBackground != res_backgroundCurrent)
             {
@@ -1603,12 +1654,54 @@ public class AlarmListDialog extends DialogFragment
                 view.text_offset.setTextColor(item.enabled ? color_on : color_off);
             }
 
+            // extended controls
+            switch(alarmState)
+            {
+                case AlarmState.STATE_SNOOZING:
+                    view.text_note.setVisibility(View.GONE);
+                    view.button_dismiss.setVisibility(View.VISIBLE);
+                    view.button_snooze.setVisibility(View.GONE);
+                    break;
+                case AlarmState.STATE_SOUNDING:
+                    view.text_note.setVisibility(View.GONE);
+                    view.button_dismiss.setVisibility(View.VISIBLE);
+                    view.button_snooze.setVisibility(View.VISIBLE);
+                    break;
+                case AlarmState.STATE_TIMEOUT:
+                    view.text_note.setVisibility(View.VISIBLE);
+                    view.button_dismiss.setVisibility(View.VISIBLE);
+                    view.button_snooze.setVisibility(View.GONE);
+                default:
+                    view.text_note.setVisibility(View.VISIBLE);
+                    view.button_dismiss.setVisibility(View.GONE);
+                    view.button_snooze.setVisibility(View.GONE);
+                    break;
+            }
+
             // extended tray
             if (view.cardTray != null) {
                 view.cardTray.setVisibility(isSelected ? View.VISIBLE : View.GONE);
             }
-            if (view.text_note != null) {
-                view.text_note.setText(isSelected ? AlarmEditViewHolder.displayAlarmNote(context, item, isSchedulable) : "");
+            if (view.text_note != null)
+            {
+                if (isSelected)
+                {
+                    switch (alarmState)
+                    {
+                        case AlarmState.STATE_SOUNDING:
+                        case AlarmState.STATE_SNOOZING:
+                            view.text_note.setText("");
+                            break;
+                        case AlarmState.STATE_TIMEOUT:
+                            view.text_note.setText(context.getString(R.string.alarmAction_timeout));
+                            break;
+                        case AlarmState.STATE_NONE: default:
+                            view.text_note.setText(AlarmEditViewHolder.displayAlarmNote(context, item, isSchedulable));
+                            break;
+                    }
+                } else {
+                    view.text_note.setText("");
+                }
             }
         }
 

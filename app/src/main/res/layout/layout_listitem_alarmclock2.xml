@@ -213,6 +213,20 @@
                 android:gravity="center_vertical|start"
                 tools:text="15m from now" />
 
+            <Button android:id="@+id/button_snooze"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="4dp"
+                android:drawableLeft="?attr/icActionSnooze" android:drawablePadding="2dp"
+                android:scaleX="0.92" android:scaleY="0.92"
+                android:text="@string/alarmAction_snooze" />
+
+            <Button android:id="@+id/button_dismiss"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:drawableLeft="?attr/icActionDismiss" android:drawablePadding="2dp"
+                android:scaleX="0.92" android:scaleY="0.92"
+                android:text="@string/alarmAction_dismiss" />
+
             <View android:background="@null" android:layout_height="1dp" android:layout_width="0dp" android:layout_weight="1" />
 
             <ImageButton android:id="@+id/button_delete"
