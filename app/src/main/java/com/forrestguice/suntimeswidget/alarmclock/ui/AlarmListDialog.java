@@ -29,7 +29,9 @@ import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -973,6 +975,20 @@ public class AlarmListDialog extends DialogFragment
             holder.isSelected = false;
         }
 
+        @Override
+        public void onViewAttachedToWindow(AlarmListDialogItem holder)
+        {
+            super.onViewAttachedToWindow(holder);
+            holder.startBackgroundAnimation(contextRef.get());
+        }
+
+        @Override
+        public void onViewDetachedFromWindow(AlarmListDialogItem holder)
+        {
+            super.onViewDetachedFromWindow(holder);
+            holder.stopBackgroundAnimation(contextRef.get());
+        }
+
         private void attachClickListeners(@NonNull final AlarmListDialogItem holder, final int position)
         {
             if (holder.card != null) {
@@ -1307,6 +1323,9 @@ public class AlarmListDialog extends DialogFragment
         public int res_backgroundOn = R.drawable.card_alarmitem_enabled_dark1;
         public int res_backgroundOff = R.drawable.card_alarmitem_disabled_dark1;
 
+        public boolean animatedBackground = false;
+        public int res_backgroundCurrent = -1;
+
         public int color_on = Color.CYAN;
         public int color_off = Color.GRAY, color_off1 = Color.WHITE;
         public int color_press = Color.MAGENTA;
@@ -1413,11 +1432,18 @@ public class AlarmListDialog extends DialogFragment
             Drawable offsetIcon = SuntimesUtils.createImageSpan(context, offsetIconResID, offsetIconSize, offsetIconSize, iconColor).getDrawable().mutate();
 
             // background
+            view.animatedBackground = false;
+            int resBackground = item.enabled ? res_backgroundOn : res_backgroundOff;
             view.cardBackdrop.setBackgroundColor( isSelected ? ColorUtils.setAlphaComponent(color_selected, 170) : color_notselected);  // 66% alpha
-            if (Build.VERSION.SDK_INT >= 16) {
-                view.card.setBackground(item.enabled ? ContextCompat.getDrawable(context, res_backgroundOn) : ContextCompat.getDrawable(context, res_backgroundOff));
-            } else {
-                view.card.setBackgroundDrawable(item.enabled ? ContextCompat.getDrawable(context, res_backgroundOn) : ContextCompat.getDrawable(context, res_backgroundOff));
+            if (resBackground != res_backgroundCurrent)
+            {
+                res_backgroundCurrent = resBackground;    // don't set background unless actually changed (avoids interrupting running animations)
+                Drawable background = ContextCompat.getDrawable(context, resBackground).mutate();
+                if (Build.VERSION.SDK_INT >= 16) {
+                    view.card.setBackground(background);
+                } else {
+                    view.card.setBackgroundDrawable(background);
+                }
             }
 
             // enabled / disabled
@@ -1618,6 +1644,65 @@ public class AlarmListDialog extends DialogFragment
                     ? SuntimesUtils.createImageSpan(context, res_iconAction, iconDimen, iconDimen, item.enabled ? color_on : 0)
                     : SuntimesUtils.createImageSpan(context, res_iconAction, iconDimen, iconDimen, color_off, PorterDuff.Mode.MULTIPLY);
             return SuntimesUtils.createSpan(context, "[icon]", "[icon]", icon);
+        }
+
+        public void startBackgroundAnimation(Context context)
+        {
+            if (this.animatedBackground && this.card != null)
+            {
+                Drawable background = card.getBackground();
+                if (background != null)
+                {
+                    Log.d("DEBUG", "starting background animation: " + this);
+                    if (background instanceof StateListDrawable) {
+                        AlarmListDialogItem.startStateListAnimations(context, (StateListDrawable) background);
+                    } else if (background instanceof AnimationDrawable) {
+                        AlarmListDialogItem.startAnimatedDrawable(context, (AnimationDrawable) background);
+                    }
+                }
+            }
+        }
+
+        public void stopBackgroundAnimation(Context context)
+        {
+            if (this.animatedBackground && this.card != null)
+            {
+                Drawable background = this.card.getBackground();
+                if (background != null)
+                {
+                    Log.d("DEBUG", "stopping background animation: " + this);
+                    if (background instanceof StateListDrawable) {
+                        AlarmListDialogItem.stopStateListAnimations(context, (StateListDrawable) background);
+                    } else if (background instanceof AnimationDrawable) {
+                        ((AnimationDrawable) background).stop();
+                    }
+                }
+            }
+        }
+
+        public static void startStateListAnimations(Context context, @NonNull StateListDrawable drawable)
+        {
+            Drawable current = drawable.getCurrent();
+            if (current instanceof AnimationDrawable) {
+                startAnimatedDrawable(context, (AnimationDrawable)((AnimationDrawable) current).mutate());
+            }
+        }
+
+        public static void stopStateListAnimations(Context context, @NonNull StateListDrawable drawable)
+        {
+            Drawable current = drawable.getCurrent();
+            if (current instanceof AnimationDrawable) {
+                ((AnimationDrawable) current).stop();
+            }
+        }
+
+        public static void startAnimatedDrawable(Context context, AnimationDrawable animated)
+        {
+            Resources r = context.getResources();
+            animated.setEnterFadeDuration(r.getInteger(R.integer.anim_alarmitem_fadeIn_duration));
+            animated.setExitFadeDuration(r.getInteger(R.integer.anim_alarmitem_fadeOut_duration));
+            animated.setOneShot(false);
+            animated.setVisible(true, true);
         }
     }
 
