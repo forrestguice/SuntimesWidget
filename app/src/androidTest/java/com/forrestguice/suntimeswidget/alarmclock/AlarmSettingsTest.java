@@ -25,7 +25,6 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesActivity;
@@ -40,6 +39,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.fail;
 
 @SuppressWarnings("ConstantConditions")
@@ -141,6 +141,32 @@ public class AlarmSettingsTest extends SuntimesActivityTestBase
         prefs.remove(AlarmSettings.PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION);
         prefs.remove(AlarmSettings.PREF_KEY_ALARM_RINGTONE_NAME_NOTIFICATION);
         prefs.apply();
+    }
+
+    @Test
+    public void test_upcomingAlarmID()
+    {
+        Long value0 = 10L;
+        AlarmSettings.saveUpcomingAlarmId(context, value0);
+        assertEquals(value0, AlarmSettings.loadUpcomingAlarmId(context));
+
+        AlarmSettings.saveUpcomingAlarmId(context, null);
+        assertNull(AlarmSettings.loadUpcomingAlarmId(context));
+    }
+
+    @Test
+    public void test_alarmSort()
+    {
+        AlarmSettings.savePrefAlarmSort(context, AlarmSettings.SORT_BY_ALARMTIME);
+        assertEquals(AlarmSettings.SORT_BY_ALARMTIME, AlarmSettings.loadPrefAlarmSort(context));
+
+        AlarmSettings.savePrefAlarmSort(context, AlarmSettings.SORT_BY_CREATION);
+        assertEquals(AlarmSettings.SORT_BY_CREATION, AlarmSettings.loadPrefAlarmSort(context));
+
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.remove(AlarmSettings.PREF_KEY_ALARM_SORT);
+        prefs.apply();
+        assertEquals(AlarmSettings.PREF_DEF_ALARM_SORT, AlarmSettings.loadPrefAlarmSort(context));
     }
 
 }
