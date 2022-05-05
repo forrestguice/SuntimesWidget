@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <gradient android:type="linear" android:angle="270"
+                android:startColor="@color/alarm_sounding_bg0_dark"
+                android:endColor="@color/alarm_sounding_bg1_dark" />
+        </shape>
+    </item>
+</layer-list>

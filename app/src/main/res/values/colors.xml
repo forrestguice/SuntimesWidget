@@ -44,6 +44,9 @@
     <color name="alarm_enabled_dark">@color/text_accent_dark</color>
     <color name="alarm_enabled_bg_dark">@color/grey_900</color>
     <color name="alarm_disabled_bg_dark">@color/grey_800</color>
+    <color name="alarm_sounding_bg0_dark">@color/grey_900</color>
+    <color name="alarm_sounding_bg1_dark">@color/deep_teal_200</color>
+    <color name="alarm_sounding_bg2_dark">@color/alarm_pressed_dark</color>
 
     <!-- tags -->
     <color name="warningTag_dark">#ff9900</color>

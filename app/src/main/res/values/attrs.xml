@@ -19,6 +19,8 @@
     <attr name="alarmColorEnabled" format="reference" />
     <attr name="alarmCardEnabled" format="reference" />
     <attr name="alarmCardDisabled" format="reference" />
+    <attr name="alarmCardSounding" format="reference" />
+    <attr name="alarmCardSnoozing" format="reference" />
     <attr name="gridItemSelected" format="reference" />
     <attr name="selectableItemCard" format="reference" />
 
