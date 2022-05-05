@@ -69,10 +69,10 @@ public class AlarmSettings
     public static final boolean PREF_DEF_ALARM_AUTOVIBRATE = false;
 
     public static final String PREF_KEY_ALARM_RINGTONE_URI_ALARM = "app_alarms_default_alarm_ringtoneuri";     // cached RingtoneManager.getActualDefaultRingtoneUri
-    public static final String PREF_KEY_ALARM_RINGTONE_NAME_ALARM = "app_alarms_default_alarm_ringtoneuri";
+    public static final String PREF_KEY_ALARM_RINGTONE_NAME_ALARM = "app_alarms_default_alarm_ringtonename";
 
     public static final String PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION = "app_alarms_default_notification_ringtoneuri";
-    public static final String PREF_KEY_ALARM_RINGTONE_NAME_NOTIFICATION = "app_alarms_default_notification_ringtoneuri";
+    public static final String PREF_KEY_ALARM_RINGTONE_NAME_NOTIFICATION = "app_alarms_default_notification_ringtonename";
 
     public static final String VALUE_RINGTONE_DEFAULT = "default";
 
