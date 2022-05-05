@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="@color/alarm_snoozing_bg1_dark"
+                android:endColor="@color/alarm_snoozing_bg2_dark"
+                android:angle="45" />
+        </shape>
+    </item>
+</layer-list>
