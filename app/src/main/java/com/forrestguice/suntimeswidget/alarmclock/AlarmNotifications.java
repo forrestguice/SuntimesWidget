@@ -1051,8 +1051,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                         if (!isForegroundService(NotificationService.this, AlarmNotifications.NotificationService.class))
                                         {
                                             Log.d(TAG, "schedule all completed! stopping service...");
-                                            Intent serviceIntent = getServiceIntent(NotificationService.this);
-                                            stopService(serviceIntent);
+                                            stopSelf(startId);
                                         } else Log.d(TAG, "schedule all completed! the foreground service still running.");
                                     }
                                 });
@@ -1593,7 +1592,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     }
                     if (chained != null) {
                         chained.onFinished(true, item);
-                    } else stopSelf();
+                    } else stopSelf(startId);
                 }
             };
         }
@@ -1619,14 +1618,14 @@ public class AlarmNotifications extends BroadcastReceiver
                             public void onItemsLoaded(Long[] ids) {
                                 if (chained != null) {
                                     chained.onFinished(true, item);
-                                } else stopSelf();
+                                } else stopSelf(startId);
                             }
                         });
 
                     } else {
                         if (chained != null) {
                             chained.onFinished(true, item);
-                        } else stopSelf();
+                        } else stopSelf(startId);
                     }
                 }
             };
@@ -1653,13 +1652,13 @@ public class AlarmNotifications extends BroadcastReceiver
                             public void onItemsLoaded(Long[] ids) {
                                 if (chained != null) {
                                     chained.onFinished(true, item);
-                                } else stopSelf();
+                                } else stopSelf(startId);
                             }
                         });
                     } else {
                         if (chained != null) {
                             chained.onFinished(true, item);
-                        } else stopSelf();
+                        } else stopSelf(startId);
                     }
                 }
             };
