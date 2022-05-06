@@ -1018,19 +1018,23 @@ public class AlarmNotifications extends BroadcastReceiver
             }
         }
 
-        public void showNotification(Context context, @NonNull AlarmClockItem item, boolean quiet)
+        public void stopSelf(int startId)
         {
-            AlarmNotifications.showNotification(context, item, quiet);
-            if (notification != null) {
-                restartForeground();
-            }
+            if (notification == null)
+            {
+                Service service = serviceRef.get();
+                if (service != null) {
+                    Log.i(TAG, "stopSelf: stopping service");
+                    service.stopSelf(startId);
+                }
+            } else Log.w(TAG, "stopSelf: skipping due to active foreground notification");
         }
-        public void dismissNotification(Context context, int notificationID)
-        {
+
+        public void showNotification(Context context, @NonNull AlarmClockItem item, boolean quiet) {
+            AlarmNotifications.showNotification(context, item, quiet);
+        }
+        public void dismissNotification(Context context, int notificationID) {
             AlarmNotifications.dismissNotification(context, notificationID);
-            if (notification != null) {
-                restartForeground();
-            }
         }
     }
 
@@ -1110,7 +1114,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                         if (!isForegroundService(NotificationService.this, AlarmNotifications.NotificationService.class))
                                         {
                                             Log.d(TAG, "schedule all completed! stopping service...");
-                                            stopSelf(startId);
+                                            notifications.stopSelf(startId);
                                         } else Log.d(TAG, "schedule all completed! the foreground service still running.");
                                     }
                                 });
@@ -1140,7 +1144,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                     } else if (Intent.ACTION_TIME_CHANGED.equals(action)) {
                         Log.d(TAG, "TIME_SET received");
-                        stopSelf(startId);
+                        notifications.stopSelf(startId);
                         // TODO: reschedule alarms (but only when deltaT is >reminderPeriod to avoid rescheduling alarms dismissed early)
 
                     } else if (AlarmNotifications.ACTION_DELETE.equals(action)) {
@@ -1651,7 +1655,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     }
                     if (chained != null) {
                         chained.onFinished(true, item);
-                    } else stopSelf(startId);
+                    } else notifications.stopSelf(startId);
                 }
             };
         }
@@ -1677,14 +1681,14 @@ public class AlarmNotifications extends BroadcastReceiver
                             public void onItemsLoaded(Long[] ids) {
                                 if (chained != null) {
                                     chained.onFinished(true, item);
-                                } else stopSelf(startId);
+                                } else notifications.stopSelf(startId);
                             }
                         });
 
                     } else {
                         if (chained != null) {
                             chained.onFinished(true, item);
-                        } else stopSelf(startId);
+                        } else notifications.stopSelf(startId);
                     }
                 }
             };
@@ -1711,13 +1715,13 @@ public class AlarmNotifications extends BroadcastReceiver
                             public void onItemsLoaded(Long[] ids) {
                                 if (chained != null) {
                                     chained.onFinished(true, item);
-                                } else stopSelf(startId);
+                                } else notifications.stopSelf(startId);
                             }
                         });
                     } else {
                         if (chained != null) {
                             chained.onFinished(true, item);
-                        } else stopSelf(startId);
+                        } else notifications.stopSelf(startId);
                     }
                 }
             };
