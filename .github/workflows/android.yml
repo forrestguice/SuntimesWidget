@@ -23,8 +23,13 @@ jobs:
       run: chmod +x ./gradlew
     - name: Build with Gradle
       run: ./gradlew build
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v1
+    - name: Upload artifacts (apk)
+      uses: actions/upload-artifact@v3.0.0
       with:
         name: app
-        path: app/build/outputs/apk/debug/app-debug.apk   
+        path: app/build/outputs/apk/debug/app-debug.apk
+    - name: Upload artifacts (lint results)
+      uses: actions/upload-artifact@v3.0.0
+      with:
+        name: lint-results.html
+        path: app/build/reports/lint-results.html
