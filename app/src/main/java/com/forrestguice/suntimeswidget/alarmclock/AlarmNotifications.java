@@ -988,7 +988,7 @@ public class AlarmNotifications extends BroadcastReceiver
         public static final String TAG = "AlarmReceiverService";
 
         @Override
-        public int onStartCommand(final Intent intent, int flags, int startId)
+        public int onStartCommand(final Intent intent, int flags, final int startId)
         {
             super.onStartCommand(intent, flags, startId);
             if (intent != null)
@@ -1031,7 +1031,7 @@ public class AlarmNotifications extends BroadcastReceiver
                     }
 
                     AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
-                    itemTask.addAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), action, intent.getExtras()));
+                    itemTask.addAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), startId, action, intent.getExtras()));
                     itemTask.execute(ContentUris.parseId(data));
 
                 } else {
@@ -1073,7 +1073,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 for (long id : ids)
                                 {
                                     AlarmDatabaseAdapter.AlarmItemTask itemTask = new AlarmDatabaseAdapter.AlarmItemTask(getApplicationContext());
-                                    itemTask.addAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), AlarmNotifications.ACTION_RESCHEDULE, notifyObserver));
+                                    itemTask.addAlarmItemTaskListener(createAlarmOnReceiveListener(getApplicationContext(), startId, AlarmNotifications.ACTION_RESCHEDULE, notifyObserver));
                                     itemTask.execute(id);
                                 }
                             }
@@ -1148,16 +1148,16 @@ public class AlarmNotifications extends BroadcastReceiver
 
         /**
          */
-        private AlarmDatabaseAdapter.AlarmItemTaskListener createAlarmOnReceiveListener(final Context context, final String action) {
-            return createAlarmOnReceiveListener(context, action, null, null);
+        private AlarmDatabaseAdapter.AlarmItemTaskListener createAlarmOnReceiveListener(final Context context, final int startId, final String action) {
+            return createAlarmOnReceiveListener(context, startId, action, null, null);
         }
-        private AlarmDatabaseAdapter.AlarmItemTaskListener createAlarmOnReceiveListener(final Context context, final String action, @Nullable final Bundle bundle) {
-            return createAlarmOnReceiveListener(context, action, bundle, null);
+        private AlarmDatabaseAdapter.AlarmItemTaskListener createAlarmOnReceiveListener(final Context context, int startId, final String action, @Nullable final Bundle bundle) {
+            return createAlarmOnReceiveListener(context, startId, action, bundle, null);
         }
-        private AlarmDatabaseAdapter.AlarmItemTaskListener createAlarmOnReceiveListener(final Context context, final String action, final @Nullable AlarmDatabaseAdapter.AlarmItemTaskListener chained) {
-            return createAlarmOnReceiveListener(context, action, null, chained);
+        private AlarmDatabaseAdapter.AlarmItemTaskListener createAlarmOnReceiveListener(final Context context, int startId, final String action, final @Nullable AlarmDatabaseAdapter.AlarmItemTaskListener chained) {
+            return createAlarmOnReceiveListener(context, startId, action, null, chained);
         }
-        private AlarmDatabaseAdapter.AlarmItemTaskListener createAlarmOnReceiveListener(final Context context, final String action, @Nullable final Bundle extras, final @Nullable AlarmDatabaseAdapter.AlarmItemTaskListener chained)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener createAlarmOnReceiveListener(final Context context, final int startId, final String action, @Nullable final Bundle extras, final @Nullable AlarmDatabaseAdapter.AlarmItemTaskListener chained)
         {
             return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
@@ -1199,7 +1199,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                                 item.modified = true;
                                 AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
-                                updateItem.setTaskListener(onDismissedState(context, nextAction, item.getUri()));
+                                updateItem.setTaskListener(onDismissedState(context, startId, nextAction, item.getUri()));
                                 updateItem.execute(item);    // write state
                             }
 
@@ -1221,7 +1221,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                                 item.modified = true;
                                 AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
-                                updateItem.setTaskListener(onTimeoutState(context));
+                                updateItem.setTaskListener(onTimeoutState(context, startId));
                                 updateItem.execute(item);  // write state
                             }
 
@@ -1237,7 +1237,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 item.enabled = false;
                                 item.modified = true;
                                 AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
-                                updateItem.setTaskListener(onDisabledState(context));
+                                updateItem.setTaskListener(onDisabledState(context, startId));
                                 updateItem.execute(item);    // write state
                             }
 
@@ -1251,7 +1251,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 cancelAlarmTimeouts(context, item);
 
                                 AlarmDatabaseAdapter.AlarmDeleteTask deleteTask = new AlarmDatabaseAdapter.AlarmDeleteTask(context);
-                                deleteTask.setTaskListener(onDeletedState(context));
+                                deleteTask.setTaskListener(onDeletedState(context, startId));
                                 deleteTask.execute(item.rowID);
                             }
 
@@ -1307,14 +1307,14 @@ public class AlarmNotifications extends BroadcastReceiver
                                     if (verySoon)
                                     {
                                         Log.i(TAG, "Scheduling: " + item.rowID + " :: very soon");
-                                        onScheduledState = onScheduledSoonState(context, chained);
+                                        onScheduledState = onScheduledSoonState(context, startId, chained);
                                     } else {
                                         Log.i(TAG, "Scheduling: " + item.rowID + " :: distant");
-                                        onScheduledState = onScheduledDistantState(context, chained);
+                                        onScheduledState = onScheduledDistantState(context, startId, chained);
                                     }
                                 } else {
                                     Log.i(TAG, "Scheduling: " + item.rowID);
-                                    onScheduledState = onScheduledNotification(context, chained);
+                                    onScheduledState = onScheduledNotification(context, startId, chained);
                                 }
 
                                 if (AlarmState.transitionState(item.state, nextState))
@@ -1352,7 +1352,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                                 item.modified = true;
                                 AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
-                                updateItem.setTaskListener(onSnoozeState(context, snoozeUntil));
+                                updateItem.setTaskListener(onSnoozeState(context, startId, snoozeUntil));
                                 updateItem.execute(item);    // write state
                             }
 
@@ -1382,7 +1382,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                                 item.modified = true;
                                 AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
-                                updateItem.setTaskListener(onShowState(context));
+                                updateItem.setTaskListener(onShowState(context, startId));
                                 updateItem.execute(item);     // write state
                             }
                         }
@@ -1391,7 +1391,7 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmItemTaskListener onDismissedState(final Context context, final String nextAction, final Uri data)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener onDismissedState(final Context context, final int startId, final String nextAction, final Uri data)
         {
             return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
@@ -1430,7 +1430,7 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmItemTaskListener onSnoozeState(final Context context, final long snoozeUntil)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener onSnoozeState(final Context context, final int startId, final long snoozeUntil)
         {
             return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
@@ -1451,7 +1451,7 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmItemTaskListener onTimeoutState(final Context context)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener onTimeoutState(final Context context, final int startId)
         {
             return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
@@ -1471,7 +1471,7 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmItemTaskListener onShowState(final Context context)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener onShowState(final Context context, final int startId)
         {
             return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
@@ -1496,7 +1496,7 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmItemTaskListener onDisabledState(final Context context)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener onDisabledState(final Context context, final int startId)
         {
             return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
@@ -1521,7 +1521,7 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener onDeletedState(final Context context)
+        private AlarmDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener onDeletedState(final Context context, final int startId)
         {
             return new AlarmDatabaseAdapter.AlarmDeleteTask.AlarmClockDeleteTaskListener()
             {
@@ -1579,7 +1579,7 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmItemTaskListener onScheduledNotification(final Context context, @Nullable final AlarmDatabaseAdapter.AlarmItemTaskListener chained)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener onScheduledNotification(final Context context, final int startId, @Nullable final AlarmDatabaseAdapter.AlarmItemTaskListener chained)
         {
             return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
@@ -1598,7 +1598,7 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmItemTaskListener onScheduledDistantState(final Context context, @Nullable final AlarmDatabaseAdapter.AlarmItemTaskListener chained)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener onScheduledDistantState(final Context context, final int startId, @Nullable final AlarmDatabaseAdapter.AlarmItemTaskListener chained)
         {
             return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
@@ -1632,7 +1632,7 @@ public class AlarmNotifications extends BroadcastReceiver
             };
         }
 
-        private AlarmDatabaseAdapter.AlarmItemTaskListener onScheduledSoonState(final Context context, final @Nullable AlarmDatabaseAdapter.AlarmItemTaskListener chained)
+        private AlarmDatabaseAdapter.AlarmItemTaskListener onScheduledSoonState(final Context context, final int startId, final @Nullable AlarmDatabaseAdapter.AlarmItemTaskListener chained)
         {
             return new AlarmDatabaseAdapter.AlarmItemTaskListener()
             {
