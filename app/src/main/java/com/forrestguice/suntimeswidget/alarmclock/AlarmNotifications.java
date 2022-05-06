@@ -72,6 +72,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -949,10 +950,6 @@ public class AlarmNotifications extends BroadcastReceiver
      * Use this method to display the notification without a foreground service.
      * @see NotificationService to display a notification that lives longer than the receiver.
      */
-    public static void showNotification(Context context, @NonNull AlarmClockItem item)
-    {
-        showNotification(context, item, false);
-    }
     public static void showNotification(Context context, @NonNull AlarmClockItem item, boolean quiet)
     {
         Notification notification = createNotification(context, item);
@@ -961,6 +958,7 @@ public class AlarmNotifications extends BroadcastReceiver
             int notificationID = (int)item.rowID;
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
             notificationManager.notify(ALARM_NOTIFICATION_TAG, notificationID, notification);
+            Log.d("DEBUG", "showNotification: " + notificationID);
         }
         if (!quiet) {
             startAlert(context, item);
@@ -970,11 +968,70 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.cancel(ALARM_NOTIFICATION_TAG, notificationID);
+        Log.d("DEBUG", "dismissNotification: " + notificationID);
     }
     public static void dismissNotifications(Context context)
     {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.cancelAll();
+        Log.d("DEBUG", "dismissNotification: ALL");
+    }
+
+    /**
+     * ForegroundNotifications
+     */
+    public static final class ForegroundNotifications
+    {
+        protected int notificationID = 0;
+        protected Notification notification = null;
+        protected WeakReference<Service> serviceRef;
+
+        public ForegroundNotifications(Service service) {
+            serviceRef = new WeakReference<>(service);
+        }
+
+        public void startForeground(int id, Notification notification)
+        {
+            this.notificationID = id;
+            this.notification = notification;
+
+            Service service = serviceRef.get();
+            if (service != null) {
+                service.startForeground(id, notification);
+            }
+        }
+        public void stopForeground( boolean removeNotification )
+        {
+            this.notificationID = 0;
+            this.notification = null;
+
+            Service service = serviceRef.get();
+            if (service != null) {
+                service.stopForeground(removeNotification);
+            }
+        }
+        public void restartForeground()
+        {
+            Service service = serviceRef.get();
+            if (service != null && notification != null && notificationID != 0) {
+                service.startForeground(notificationID, notification);
+            }
+        }
+
+        public void showNotification(Context context, @NonNull AlarmClockItem item, boolean quiet)
+        {
+            AlarmNotifications.showNotification(context, item, quiet);
+            if (notification != null) {
+                restartForeground();
+            }
+        }
+        public void dismissNotification(Context context, int notificationID)
+        {
+            AlarmNotifications.dismissNotification(context, notificationID);
+            if (notification != null) {
+                restartForeground();
+            }
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -986,6 +1043,8 @@ public class AlarmNotifications extends BroadcastReceiver
     public static class NotificationService extends Service
     {
         public static final String TAG = "AlarmReceiverService";
+
+        private final ForegroundNotifications notifications = new ForegroundNotifications(this);
 
         @Override
         public int onStartCommand(final Intent intent, int flags, final int startId)
@@ -1367,16 +1426,16 @@ public class AlarmNotifications extends BroadcastReceiver
                                     cancelAlarmTimeouts(context, item);
                                     addAlarmTimeouts(context, item.getUri());
 
-                                    dismissNotification(context, (int)item.rowID);
+                                    notifications.dismissNotification(context, (int)item.rowID);
                                     Notification notification = AlarmNotifications.createNotification(context, item);
                                     if (notification != null) {
-                                        startForeground((int) item.rowID, notification);
+                                        notifications.startForeground((int) item.rowID, notification);
                                     }
                                     AlarmNotifications.startAlert(context, item);
 
                                 } else {
                                     Log.i(TAG, "Show: " + item.rowID + "(Notification)");
-                                    showNotification(context, item);
+                                    notifications.showNotification(context, item, false);
                                 }
 
                                 item.modified = true;
@@ -1413,8 +1472,8 @@ public class AlarmNotifications extends BroadcastReceiver
 
                     final Intent serviceIntent = getServiceIntent(context);
                     startService(serviceIntent);                                   // keep service running after stopping foreground notification
-                    stopForeground(true );
-                    dismissNotification(context, (int)item.rowID);                 // dismiss upcoming reminders
+                    notifications.stopForeground(true );
+                    notifications.dismissNotification(context, (int)item.rowID);                 // dismiss upcoming reminders
 
                     if (nextAction == null)
                     {
@@ -1442,7 +1501,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         item.alarmtime = snoozeUntil;
                         Notification notification = AlarmNotifications.createNotification(context, item);
                         if (notification != null) {
-                            startForeground((int) item.rowID, notification);  // update notification
+                            notifications.startForeground((int) item.rowID, notification);  // update notification
                         }
                         context.sendBroadcast(getFullscreenBroadcast(item.getUri()));  // update fullscreen activity
                     }
@@ -1462,7 +1521,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         Log.d(TAG, "State Saved (onTimeout)");
                         Notification notification = AlarmNotifications.createNotification(context, item);
                         if (notification != null) {
-                            startForeground((int)item.rowID, notification);  // update notification
+                            notifications.startForeground((int)item.rowID, notification);  // update notification
                         }
                         context.sendBroadcast(getFullscreenBroadcast(item.getUri()));  // update fullscreen activity
                     }
@@ -1509,9 +1568,9 @@ public class AlarmNotifications extends BroadcastReceiver
                     findUpcomingAlarm(context, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {    // find upcoming alarm (then finish)
                         @Override
                         public void onItemsLoaded(Long[] ids) {
-                            stopForeground(true);     // remove notification (will kill running tasks)
+                            notifications.stopForeground(true);     // remove notification (will kill running tasks)
                             context.startActivity(getAlarmListIntent(context, item.rowID));   // open the alarm list
-                            dismissNotification(context, (int)item.rowID);                    // dismiss upcoming reminders
+                            notifications.dismissNotification(context, (int)item.rowID);                    // dismiss upcoming reminders
                             context.sendBroadcast(getFullscreenBroadcast(item.getUri()));     // dismiss fullscreen activity
                             stopService(serviceIntent);
                         }
@@ -1535,8 +1594,8 @@ public class AlarmNotifications extends BroadcastReceiver
                         @Override
                         public void onItemsLoaded(Long[] ids)
                         {
-                            stopForeground(true);                                      // dismiss active notification (will kill running tasks)
-                            dismissNotification(context, itemID.intValue());                                                                   // dismiss upcoming reminders
+                            notifications.stopForeground(true);                                      // dismiss active notification (will kill running tasks)
+                            notifications.dismissNotification(context, itemID.intValue());                                                                   // dismiss upcoming reminders
                             context.sendBroadcast(getFullscreenBroadcast(ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, itemID)));     // dismiss fullscreen activity
 
                             Intent alarmListIntent = getAlarmListIntent(context, itemID);
@@ -1565,7 +1624,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         public void onItemsLoaded(Long[] ids)
                         {
                             context.sendBroadcast(getFullscreenBroadcast(null));     // dismiss fullscreen activity
-                            stopForeground(true);                         // dismiss active notifications
+                            notifications.stopForeground(true);                         // dismiss active notifications
                             dismissNotifications(context);                                // dismiss upcoming reminders
 
                             Intent alarmListIntent = getAlarmListIntent(context, itemID);
@@ -1611,7 +1670,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         addAlarmTimeout(context, ACTION_SCHEDULE, item.getUri(), transitionAt);
                         addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);
                         //context.startActivity(getAlarmListIntent(context, item.rowID));   // open the alarm list
-                        dismissNotification(context, (int)item.rowID);
+                        notifications.dismissNotification(context, (int)item.rowID);
 
                         findUpcomingAlarm(context, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
                             @Override
@@ -1644,7 +1703,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);
 
                         if (AlarmSettings.loadPrefAlarmUpcoming(context) > 0) {
-                            showNotification(context, item, true);             // show upcoming reminder
+                            notifications.showNotification(context, item, true);             // show upcoming reminder
                         }
 
                         findUpcomingAlarm(context, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {
