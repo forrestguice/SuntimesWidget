@@ -1440,7 +1440,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                                 item.modified = true;
                                 AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
-                                updateItem.setTaskListener(onShowState(context));
+                                updateItem.setTaskListener(onShowState(context, startId));
                                 updateItem.execute(item);     // write state
                             }
                         }
