@@ -1480,7 +1480,7 @@ public class AlarmNotifications extends BroadcastReceiver
                         findUpcomingAlarm(context, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {    // find upcoming alarm (then finish)
                             @Override
                             public void onItemsLoaded(Long[] ids) {
-                                stopService(serviceIntent);
+                                stopSelf();    // TODO
                             }
                         });
                     }
@@ -1572,7 +1572,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             context.startActivity(getAlarmListIntent(context, item.rowID));   // open the alarm list
                             notifications.dismissNotification(context, (int)item.rowID);                    // dismiss upcoming reminders
                             context.sendBroadcast(getFullscreenBroadcast(item.getUri()));     // dismiss fullscreen activity
-                            stopService(serviceIntent);
+                            stopSelf();  // TODO
                         }
                     });
                 }
@@ -1601,7 +1601,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             Intent alarmListIntent = getAlarmListIntent(context, itemID);
                             alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
                             context.startActivity(alarmListIntent);   // open the alarm list
-                            stopService(serviceIntent);
+                            stopSelf();  // TODO
                         }
                     });
                 }
@@ -1630,7 +1630,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             Intent alarmListIntent = getAlarmListIntent(context, itemID);
                             alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
                             context.startActivity(alarmListIntent);   // open the alarm list
-                            stopService(serviceIntent);
+                            stopSelf();
                         }
                     });
                 }
