@@ -1033,8 +1033,20 @@ public class AlarmNotifications extends BroadcastReceiver
         public void showNotification(Context context, @NonNull AlarmClockItem item, boolean quiet) {
             AlarmNotifications.showNotification(context, item, quiet);
         }
-        public void dismissNotification(Context context, int notificationID) {
+        public void dismissNotification(Context context, int notificationID)
+        {
             AlarmNotifications.dismissNotification(context, notificationID);
+            if (this.notificationID == notificationID) {
+                stopForeground(true);
+            }
+        }
+
+        public void dismissNotifications(Context context)
+        {
+            AlarmNotifications.dismissNotifications(context);
+            if (notification != null) {
+                stopForeground(true);
+            }
         }
     }
 
@@ -1171,9 +1183,15 @@ public class AlarmNotifications extends BroadcastReceiver
                             clearTask.execute();
                         }
 
-                    } else Log.w(TAG, "onStartCommand: null data!");
+                    } else {
+                        Log.w(TAG, "onStartCommand: null data!");
+                        notifications.stopSelf(startId);
+                    }
                 }
-            } else Log.w(TAG, "onStartCommand: null intent!");
+            } else {
+                Log.w(TAG, "onStartCommand: null intent!");
+                notifications.stopSelf(startId);
+            }
 
             return START_STICKY;
         }
@@ -1474,17 +1492,13 @@ public class AlarmNotifications extends BroadcastReceiver
                         context.sendBroadcast(getAlarmIntent(context, nextAction, data));    // trigger followup action
                     }
 
-                    final Intent serviceIntent = getServiceIntent(context);
-                    startService(serviceIntent);                                   // keep service running after stopping foreground notification
-                    notifications.stopForeground(true );
-                    notifications.dismissNotification(context, (int)item.rowID);                 // dismiss upcoming reminders
-
                     if (nextAction == null)
                     {
                         findUpcomingAlarm(context, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {    // find upcoming alarm (then finish)
                             @Override
                             public void onItemsLoaded(Long[] ids) {
-                                stopSelf();    // TODO
+                                notifications.dismissNotification(context, (int)item.rowID);
+                                notifications.stopSelf(startId);
                             }
                         });
                     }
@@ -1566,17 +1580,13 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onFinished(Boolean result, final AlarmClockItem item)
                 {
                     Log.d(TAG, "State Saved (onDisabled)");
-                    final Intent serviceIntent = getServiceIntent(context);
-                    startService(serviceIntent);  // keep service running after stopping foreground notification
-
                     findUpcomingAlarm(context, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {    // find upcoming alarm (then finish)
                         @Override
                         public void onItemsLoaded(Long[] ids) {
-                            notifications.stopForeground(true);     // remove notification (will kill running tasks)
-                            context.startActivity(getAlarmListIntent(context, item.rowID));   // open the alarm list
-                            notifications.dismissNotification(context, (int)item.rowID);                    // dismiss upcoming reminders
-                            context.sendBroadcast(getFullscreenBroadcast(item.getUri()));     // dismiss fullscreen activity
-                            stopSelf();  // TODO
+                            context.startActivity(getAlarmListIntent(context, item.rowID));         // open the alarm list
+                            context.sendBroadcast(getFullscreenBroadcast(item.getUri()));           // dismiss fullscreen activity
+                            notifications.dismissNotification(context, (int)item.rowID);
+                            notifications.stopSelf(startId);
                         }
                     });
                 }
@@ -1591,21 +1601,16 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onFinished(Boolean result, final Long itemID)
                 {
                     Log.d(TAG, "Alarm Deleted (onDeleted)");
-                    final Intent serviceIntent = getServiceIntent(context);
-                    startService(serviceIntent);  // keep service running after stopping foreground notification
-
                     findUpcomingAlarm(context, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {    // find upcoming alarm (then finish)
                         @Override
                         public void onItemsLoaded(Long[] ids)
                         {
-                            notifications.stopForeground(true);                                      // dismiss active notification (will kill running tasks)
-                            notifications.dismissNotification(context, itemID.intValue());                                                                   // dismiss upcoming reminders
                             context.sendBroadcast(getFullscreenBroadcast(ContentUris.withAppendedId(AlarmClockItem.CONTENT_URI, itemID)));     // dismiss fullscreen activity
-
                             Intent alarmListIntent = getAlarmListIntent(context, itemID);
                             alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
-                            context.startActivity(alarmListIntent);   // open the alarm list
-                            stopSelf();  // TODO
+                            context.startActivity(alarmListIntent);                                                                             // open the alarm list
+                            notifications.dismissNotification(context, itemID.intValue());
+                            notifications.stopSelf(startId);
                         }
                     });
                 }
@@ -1620,20 +1625,15 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onFinished(Boolean result, final Long itemID)
                 {
                     Log.d(TAG, "Alarms Cleared (onCleared)");
-                    final Intent serviceIntent = getServiceIntent(context);
-                    startService(serviceIntent);  // keep service running after stopping foreground notification
-
                     findUpcomingAlarm(context, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {    // clear upcoming alarm (then finish)
                         @Override
                         public void onItemsLoaded(Long[] ids)
                         {
                             context.sendBroadcast(getFullscreenBroadcast(null));     // dismiss fullscreen activity
-                            notifications.stopForeground(true);                         // dismiss active notifications
-                            dismissNotifications(context);                                // dismiss upcoming reminders
-
                             Intent alarmListIntent = getAlarmListIntent(context, itemID);
                             alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
-                            context.startActivity(alarmListIntent);   // open the alarm list
+                            context.startActivity(alarmListIntent);                                 // open the alarm list
+                            notifications.dismissNotifications(context);
                             stopSelf();
                         }
                     });
