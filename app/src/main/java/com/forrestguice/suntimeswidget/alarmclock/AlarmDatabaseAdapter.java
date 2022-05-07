@@ -721,7 +721,7 @@ public class AlarmDatabaseAdapter
         @Override
         protected void onPostExecute(Boolean result)
         {
-            Log.d(TAG, "Item Saved: " + lastItem.rowID + ":" + (lastItem.state != null ? lastItem.state.getState() : null));
+            Log.d(TAG, "Item Saved: " + (lastItem != null ? lastItem.rowID + ":" + (lastItem.state != null ? lastItem.state.getState() : null) : "null"));
             if (listener != null) {
                 listener.onFinished(result, lastItem);
                 listener.onFinished(result, items);
