@@ -715,7 +715,7 @@ public class AlarmNotifications extends BroadcastReceiver
     }
     private static final int PRIORITY_CATEGORY_ALARMS = 1 << 5;  // TODO: use constants added in api28
 
-    private static boolean isPlaying = false;
+    protected static boolean isPlaying = false;
     private static MediaPlayer player = null;
     private static Vibrator vibrator = null;
     private static AudioManager audioManager;
@@ -1643,7 +1643,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 @Override
                 public void onFinished(Boolean result, final Long itemID)
                 {
-                    Log.d(TAG, "Alarms Cleared (onCleared)");
+                    Log.d(TAG, "Alarms Cleared (on Cleared)");
                     findUpcomingAlarm(context, new AlarmDatabaseAdapter.AlarmListTask.AlarmListTaskListener() {    // clear upcoming alarm (then finish)
                         @Override
                         public void onItemsLoaded(Long[] ids)
