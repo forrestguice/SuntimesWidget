@@ -1018,15 +1018,20 @@ public class AlarmNotifications extends BroadcastReceiver
             }
         }
 
-        public void stopSelf(int startId)
+        public void stopSelf() {
+            stopSelf(null);
+        }
+        public void stopSelf(@Nullable Integer startId)
         {
             if (notification == null)
             {
                 Service service = serviceRef.get();
                 if (service != null) {
                     Log.i(TAG, "stopSelf: stopping service");
-                    service.stopSelf(startId);
                     t_hasCalledStopSelf = true;
+                    if (startId != null)
+                        service.stopSelf(startId);
+                    else service.stopSelf();
                 }
             } else Log.w(TAG, "stopSelf: skipping due to active foreground notification");
         }
@@ -1062,7 +1067,7 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         public static final String TAG = "AlarmReceiverService";
 
-        private final ForegroundNotifications notifications = new ForegroundNotifications(this);
+        protected final ForegroundNotifications notifications = new ForegroundNotifications(this);
 
         @Override
         public int onStartCommand(final Intent intent, int flags, final int startId)
@@ -1125,11 +1130,8 @@ public class AlarmNotifications extends BroadcastReceiver
                                 {
                                     @Override
                                     public void onObservedAll() {
-                                        if (!isForegroundService(NotificationService.this, AlarmNotifications.NotificationService.class))
-                                        {
-                                            Log.d(TAG, "schedule all completed! stopping service...");
-                                            notifications.stopSelf(startId);
-                                        } else Log.d(TAG, "schedule all completed! the foreground service still running.");
+                                        Log.d(TAG, "schedule all completed");
+                                        notifications.stopSelf(startId);
                                     }
                                 });
 
@@ -1251,6 +1253,8 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onFinished(final Boolean result, final AlarmClockItem item)
                 {
                     if (context == null) {
+                        Log.w(TAG, "context is null!");
+                        stopSelf(startId);
                         return;
                     }
 
@@ -1287,7 +1291,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
                                 updateItem.setTaskListener(onDismissedState(context, startId, nextAction, item.getUri()));
                                 updateItem.execute(item);    // write state
-                            }
+                            } else notifications.stopSelf(startId);
 
                         } else if (action.equals(ACTION_SILENT) && item.type == AlarmClockItem.AlarmType.ALARM) {
                             ////////////////////////////////////////////////////////////////////////////
@@ -1295,6 +1299,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             ////////////////////////////////////////////////////////////////////////////
                             Log.i(TAG, "Silenced: " + item.rowID);
                             cancelAlarmTimeout(context, ACTION_SILENT, item.getUri());    // cancel upcoming silence timeout; if user silenced alarm there may be another silence scheduled
+                            notifications.stopSelf(startId);
 
                         } else if (action.equals(ACTION_TIMEOUT ) && item.type == AlarmClockItem.AlarmType.ALARM) {
                             ////////////////////////////////////////////////////////////////////////////
@@ -1309,7 +1314,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
                                 updateItem.setTaskListener(onTimeoutState(context, startId));
                                 updateItem.execute(item);  // write state
-                            }
+                            } else notifications.stopSelf(startId);
 
                         } else if (action.equals(ACTION_DISABLE)) {
                             ////////////////////////////////////////////////////////////////////////////
@@ -1325,7 +1330,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
                                 updateItem.setTaskListener(onDisabledState(context, startId));
                                 updateItem.execute(item);    // write state
-                            }
+                            } else notifications.stopSelf(startId);
 
                         } else if (action.equals(ACTION_DELETE)) {
                             ////////////////////////////////////////////////////////////////////////////
@@ -1339,7 +1344,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 AlarmDatabaseAdapter.AlarmDeleteTask deleteTask = new AlarmDatabaseAdapter.AlarmDeleteTask(context);
                                 deleteTask.setTaskListener(onDeletedState(context, startId));
                                 deleteTask.execute(item.rowID);
-                            }
+                            } else notifications.stopSelf(startId);
 
                         } else if (action.equals(ACTION_SCHEDULE) || (action.startsWith(ACTION_RESCHEDULE))) {
                             ////////////////////////////////////////////////////////////////////////////
@@ -1409,7 +1414,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                     updateItem.setTaskListener(onScheduledState);
                                     updateItem.execute(item);  // write state
                                 }
-                            }
+                            } else notifications.stopSelf(startId);
 
                         } else if (action.equals(ACTION_SNOOZE) && item.type == AlarmClockItem.AlarmType.ALARM) {
                             ////////////////////////////////////////////////////////////////////////////
@@ -1440,7 +1445,7 @@ public class AlarmNotifications extends BroadcastReceiver
                                 AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
                                 updateItem.setTaskListener(onSnoozeState(context, startId, snoozeUntil));
                                 updateItem.execute(item);    // write state
-                            }
+                            } else notifications.stopSelf(startId);
 
                         } else if (action.equals(ACTION_SHOW)) {
                             ////////////////////////////////////////////////////////////////////////////
@@ -1470,8 +1475,16 @@ public class AlarmNotifications extends BroadcastReceiver
                                 AlarmDatabaseAdapter.AlarmUpdateTask updateItem = new AlarmDatabaseAdapter.AlarmUpdateTask(context);
                                 updateItem.setTaskListener(onShowState(context, startId));
                                 updateItem.execute(item);     // write state
-                            }
+                            } else notifications.stopSelf(startId);
+                        } else {
+                            // unrecognized action
+                            Log.w(TAG, "unrecognized action: " + action);
+                            notifications.stopSelf(startId);
                         }
+                    } else {
+                        // null alarm item (not found)
+                        Log.w(TAG, "item not found!");
+                        notifications.stopSelf(startId);
                     }
                 }
             };
@@ -1640,7 +1653,7 @@ public class AlarmNotifications extends BroadcastReceiver
                             alarmListIntent.setAction(AlarmNotifications.ACTION_DELETE);
                             context.startActivity(alarmListIntent);                                 // open the alarm list
                             notifications.dismissNotifications(context);
-                            stopSelf();
+                            notifications.stopSelf();
                         }
                     });
                 }
