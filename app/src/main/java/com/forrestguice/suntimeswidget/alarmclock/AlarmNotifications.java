@@ -38,6 +38,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 
+import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -403,8 +404,7 @@ public class AlarmNotifications extends BroadcastReceiver
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static Intent getServiceIntent(Context context)
-    {
+    public static Intent getServiceIntent(Context context) {
         return new Intent(context, NotificationService.class);
     }
 
@@ -1026,9 +1026,11 @@ public class AlarmNotifications extends BroadcastReceiver
                 if (service != null) {
                     Log.i(TAG, "stopSelf: stopping service");
                     service.stopSelf(startId);
+                    t_hasCalledStopSelf = true;
                 }
             } else Log.w(TAG, "stopSelf: skipping due to active foreground notification");
         }
+        protected static boolean t_hasCalledStopSelf = false;   // used by test framework
 
         public void showNotification(Context context, @NonNull AlarmClockItem item, boolean quiet) {
             AlarmNotifications.showNotification(context, item, quiet);
@@ -1210,9 +1212,13 @@ public class AlarmNotifications extends BroadcastReceiver
 
         @Nullable
         @Override
-        public IBinder onBind(Intent intent)
-        {
-            return null;
+        public IBinder onBind(Intent intent) {
+            return new LocalBinder();
+        }
+        protected class LocalBinder extends Binder {
+            NotificationService getService() {
+                return NotificationService.this;
+            }
         }
 
         private static Intent getNotificationIntent(Context context, String action, Uri data, @Nullable Bundle extras)
@@ -2128,26 +2134,6 @@ public class AlarmNotifications extends BroadcastReceiver
         data.setLocation(location);
         data.setTodayIs(Calendar.getInstance());
         return data;
-    }
-
-    /**
-     * based on solutions at https://stackoverflow.com/questions/6452466/how-to-determine-if-an-android-service-is-running-in-the-foreground
-     */
-    private static boolean isForegroundService(Context context, @NonNull Class<?> service)
-    {
-        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        if (activityManager != null)
-        {
-            String className = service.getName();
-            List<ActivityManager.RunningServiceInfo> services = activityManager.getRunningServices(Integer.MAX_VALUE);
-            for (ActivityManager.RunningServiceInfo s : services)
-            {
-                if (className.equals(s.service.getClassName())) {
-                    return s.foreground;
-                }
-            }
-        }
-        return false;
     }
 
 }
