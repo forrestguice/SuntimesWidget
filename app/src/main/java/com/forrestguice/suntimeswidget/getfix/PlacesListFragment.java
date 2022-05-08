@@ -421,6 +421,7 @@ public class PlacesListFragment extends Fragment
                     emptyView.setVisibility(results.isEmpty() ? View.VISIBLE : View.GONE);
                 }
                 listView.setVisibility(results.isEmpty() ? View.GONE : View.VISIBLE);
+                dismissProgress();
 
                 adapter.setSelectedRowID(selectedRowID);
                 adapter.setValues(results);
@@ -882,7 +883,9 @@ public class PlacesListFragment extends Fragment
                 public void onClick(View v)
                 {
                     Context context = getActivity();
-                    if (context != null) {
+                    if (context != null)
+                    {
+                        showProgress(context, null, null);
                         for (PlaceItem item : deletedItems) {
                             item.rowID = -1;    // re-add item
                         }
@@ -894,6 +897,7 @@ public class PlacesListFragment extends Fragment
                             @Override
                             public void onFinished(List<PlaceItem> results)
                             {
+                                // dismissProgress();    // dismissed by reloadAdapter
                                 setSelectedRowID(-1);
                                 reloadAdapter();
                                 dismissEditPlaceDialog();
