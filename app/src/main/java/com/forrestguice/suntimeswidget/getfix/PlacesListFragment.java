@@ -496,12 +496,18 @@ public class PlacesListFragment extends Fragment
         if (progressView != null) {
             progressView.setVisibility(View.VISIBLE);
         }
+        if (listener != null) {
+            listener.onToggleProgress(true);
+        }
     }
 
     public void dismissProgress()
     {
         if (progressView != null) {
             progressView.setVisibility(View.GONE);
+        }
+        if (listener != null) {
+            listener.onToggleProgress(false);
         }
     }
 
@@ -1192,6 +1198,8 @@ public class PlacesListFragment extends Fragment
         boolean onItemEdit(PlaceItem item);
         void onItemPicked(PlaceItem item);
         void onActionModeFinished();
+        void onToggleProgress(boolean value);
+        void onLiftAppBar(boolean value);
     }
 
     public interface AdapterListener {
