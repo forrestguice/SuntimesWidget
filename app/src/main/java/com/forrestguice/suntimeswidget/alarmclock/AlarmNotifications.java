@@ -504,7 +504,7 @@ public class AlarmNotifications extends BroadcastReceiver
         }
     }
 
-    private static void startAlert(Context context, @NonNull Uri soundUri, final boolean isAlarm) throws IOException
+    protected static void startAlert(Context context, @NonNull Uri soundUri, final boolean isAlarm) throws IOException
     {
         final long fadeInMillis = (isAlarm ? AlarmSettings.loadPrefAlarmFadeIn(context) : 0);
         final int streamType = (isAlarm ? AudioManager.STREAM_ALARM : AudioManager.STREAM_NOTIFICATION);
@@ -527,7 +527,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
                     if (fadeInMillis > 0) {
                         startFadeIn(fadeInMillis);
-                    } else player.setVolume(1, 1);
+                    } else player.setVolume(1, t_volume = 1);
 
                     mediaPlayer.start();
                 }
@@ -540,6 +540,7 @@ public class AlarmNotifications extends BroadcastReceiver
         }
     }
 
+    protected static boolean isVibrating = false;
     private static Handler vibrationHandler;
     private static Runnable vibration;
     private static Runnable vibrate(final long[] pattern, final int repeat)
@@ -551,10 +552,11 @@ public class AlarmNotifications extends BroadcastReceiver
             {
                 if (isPlaying && vibrator != null)
                 {
+                    isVibrating = true;
                     vibrator.vibrate(pattern, -1);   // manually loop vibration; this triggers a (re)start if vibration was stopped by screen-off.
                     if (isPlaying && repeat >= 0) {             // TODO: better workaround?
                         vibrationHandler.postDelayed(vibration, vibrationLength(pattern));
-                    }
+                    } else isVibrating = false;
                 }
             }
         };
@@ -567,7 +569,7 @@ public class AlarmNotifications extends BroadcastReceiver
         }
         return length;
     }
-    private static void startVibration(@NonNull final Context context, @NonNull final AlarmClockItem alarm)
+    protected static void startVibration(@NonNull final Context context, @NonNull final AlarmClockItem alarm)
     {
         if (vibrationHandler == null) {
             vibrationHandler = new Handler();
@@ -576,7 +578,9 @@ public class AlarmNotifications extends BroadcastReceiver
         vibrationHandler.post(vibrate(AlarmSettings.loadPrefVibratePattern(context, alarm.type), repeatFrom));
     }
 
-    private static int FADEIN_STEP_MILLIS = 50;
+    public static int FADEIN_STEP_MILLIS = 50;
+    protected static boolean isFadingIn = false;
+    protected static float t_volume = 0;
     private static Handler fadeHandler;
     private static Runnable fadein;
     private static Runnable fadeIn(final long duration)    // TODO: use VolumeShaper for api 26+
@@ -588,14 +592,15 @@ public class AlarmNotifications extends BroadcastReceiver
             @Override
             public void run()
             {
+                isFadingIn = true;
                 elapsed += FADEIN_STEP_MILLIS;
                 float volume = elapsed / (float) duration;
-                player.setVolume(volume, volume);
+                player.setVolume(volume, t_volume = 1);
 
                 //Log.d("DEBUG", "fadeIn: " + elapsed + ":" + volume);
                 if ((elapsed + FADEIN_STEP_MILLIS) <= duration) {
                     fadeHandler.postDelayed(fadein, FADEIN_STEP_MILLIS);
-                }
+                } else isFadingIn = false;
             }
         };
     }
@@ -604,7 +609,7 @@ public class AlarmNotifications extends BroadcastReceiver
         if (fadeHandler == null) {
             fadeHandler = new Handler();
         }
-        player.setVolume(0, 0);
+        player.setVolume(0, t_volume = 0);
         fadeHandler.postDelayed(fadeIn(duration), FADEIN_STEP_MILLIS);
     }
 
@@ -637,7 +642,7 @@ public class AlarmNotifications extends BroadcastReceiver
         isPlaying = false;
     }
 
-    private static boolean passesInterruptionFilter(Context context, @NonNull AlarmClockItem item)
+    protected static boolean passesInterruptionFilter(Context context, @NonNull AlarmClockItem item)
     {
         if (Build.VERSION.SDK_INT >= 23)
         {
@@ -716,10 +721,10 @@ public class AlarmNotifications extends BroadcastReceiver
     private static final int PRIORITY_CATEGORY_ALARMS = 1 << 5;  // TODO: use constants added in api28
 
     protected static boolean isPlaying = false;
-    private static MediaPlayer player = null;
-    private static Vibrator vibrator = null;
-    private static AudioManager audioManager;
-    private static void initPlayer(final Context context, @SuppressWarnings("SameParameterValue") boolean reinit)
+    protected static MediaPlayer player = null;
+    protected static Vibrator vibrator = null;
+    protected static AudioManager audioManager;
+    protected static void initPlayer(final Context context, @SuppressWarnings("SameParameterValue") boolean reinit)
     {
         if (vibrator == null || reinit) {
             vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
@@ -737,7 +742,7 @@ public class AlarmNotifications extends BroadcastReceiver
                 @Override
                 public boolean onError(MediaPlayer mediaPlayer, int what, int extra)
                 {
-                    Log.e(TAG, "onError: MediaPlayer error " + what);
+                    Log.e(TAG, "onError: MediaPlayer error " + what);   // TODO: cache last error
                     return false;
                 }
             });

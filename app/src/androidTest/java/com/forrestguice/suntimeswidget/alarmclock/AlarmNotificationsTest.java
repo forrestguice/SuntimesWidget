@@ -19,15 +19,21 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.app.ActivityManager;
+import android.app.AlarmManager;
 import android.content.ComponentName;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.IBinder;
+import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ServiceTestRule;
@@ -43,13 +49,16 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.concurrent.TimeoutException;
 
+import static android.test.MoreAsserts.assertNotEqual;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 
 @SuppressWarnings("ConstantConditions")
@@ -389,6 +398,119 @@ public class AlarmNotificationsTest
         assertTrue(intent.hasExtra(AlarmNotifications.EXTRA_NOTIFICATION_ID));
         assertEquals(alarmID, intent.getIntExtra(AlarmNotifications.EXTRA_NOTIFICATION_ID, -1));
         assertEquals(flags, intent.getFlags());
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Test
+    public void test_initPlayer()
+    {
+        AlarmNotifications.audioManager = null;
+        AlarmNotifications.vibrator = null;
+        AlarmNotifications.player = null;
+        AlarmNotifications.initPlayer(mockContext, false);
+        verify_initPlayer();
+    }
+    public void verify_initPlayer()
+    {
+        assertNotNull(AlarmNotifications.audioManager);
+        assertNotNull(AlarmNotifications.vibrator);
+        assertNotNull(AlarmNotifications.player);
+        assertNotEqual(0, AlarmNotifications.player.getAudioSessionId());
+    }
+
+    @Test
+    public void test_startAlertUri_notification()
+    {
+        String defaultSound = RingtoneManager.getActualDefaultRingtoneUri(mockContext, RingtoneManager.TYPE_NOTIFICATION).toString();
+        test_startAlertUri_notification(defaultSound);
+    }
+    public void test_startAlertUri_notification(String uri)
+    {
+        assertFalse(AlarmNotifications.isPlaying);    // test pre-conditions
+        assertFalse(AlarmNotifications.isFadingIn);
+
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(mockContext).edit();
+        prefs.putInt(AlarmSettings.PREF_KEY_ALARM_FADEIN, 0).apply();
+
+        AlarmNotifications.initPlayer(mockContext, true);    // player must be initialized first
+        verify_initPlayer();
+        try {
+            AlarmNotifications.startAlert(mockContext, Uri.parse(uri), false);
+        } catch (Exception e) {
+            Assert.fail("failed to startAlert: " + e);
+        }
+
+        long now = System.currentTimeMillis();
+        while (System.currentTimeMillis() < (now + 500)) {
+            /* give it a second; the call to mediaPlayer.start is async */
+        }
+        assertTrue(AlarmNotifications.player.isPlaying());
+        assertFalse(AlarmNotifications.player.isLooping());
+        assertEquals(1f, AlarmNotifications.t_volume);
+        assertFalse(AlarmNotifications.isFadingIn);
+
+        now = System.currentTimeMillis();
+        while (System.currentTimeMillis() < (now + 3000)) {
+            /* give it a few seconds for the sound to finish */
+        }
+        assertFalse(AlarmNotifications.player.isPlaying());
+    }
+
+    @Test
+    public void test_startAlertUri_alarm()
+    {
+        String defaultSound = RingtoneManager.getActualDefaultRingtoneUri(mockContext, RingtoneManager.TYPE_ALARM).toString();
+        test_startAlertUri_alarm(defaultSound, true);
+        test_startAlertUri_alarm(defaultSound, false);
+    }
+    public void test_startAlertUri_alarm(String uri, boolean fadeIn)
+    {
+        // pre-conditions
+        assertFalse(AlarmNotifications.isPlaying);
+        assertFalse(AlarmNotifications.isFadingIn);
+        assertFalse(AlarmNotifications.isVibrating);
+
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(mockContext).edit();
+        prefs.putInt(AlarmSettings.PREF_KEY_ALARM_FADEIN, fadeIn ? 3000 : 0).apply();
+
+        AlarmNotifications.initPlayer(mockContext, true);    // player must be initialized first
+        verify_initPlayer();
+        AlarmNotifications.t_volume = 0;
+        try {
+            AlarmNotifications.startAlert(mockContext, Uri.parse(uri), true);
+            assertFalse(AlarmNotifications.isPlaying);    // startAlert(Uri) doesn't toggle isPlaying (or call startVibration)
+        } catch (IOException e) {
+            Assert.fail("failed to startAlert: " + e);
+        }
+
+        long now = System.currentTimeMillis();
+        while (System.currentTimeMillis() < (now + 1000)) {
+            /* give it a second; mediaPlayer.start is async */
+        }
+        assertTrue(AlarmNotifications.player.isPlaying());
+        assertTrue(AlarmNotifications.player.isLooping());
+        assertEquals(fadeIn, AlarmNotifications.isFadingIn);
+
+        now = System.currentTimeMillis();
+        if (fadeIn) {
+            float volume = AlarmNotifications.t_volume;
+            while (System.currentTimeMillis() < (now + 3000)) {
+                /* wait for fade to finish */
+                assertTrue(AlarmNotifications.t_volume >= volume);
+                volume = AlarmNotifications.t_volume;
+            }
+        }
+        assertFalse(AlarmNotifications.isFadingIn);
+        assertEquals(1f, AlarmNotifications.t_volume);
+
+        // stopAlert
+        AlarmNotifications.isPlaying = true;
+        AlarmNotifications.stopAlert(true);
+        assertFalse(AlarmNotifications.isPlaying);
+        assertFalse(AlarmNotifications.isVibrating);
+        assertFalse(AlarmNotifications.player.isPlaying());
     }
 
 }
