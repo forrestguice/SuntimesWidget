@@ -36,6 +36,7 @@ import android.database.Cursor;
 import android.icu.text.MessageFormat;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.RingtoneManager;
 import android.net.Uri;
 
 import android.os.Binder;
@@ -74,6 +75,7 @@ import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.security.Security;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -504,8 +506,14 @@ public class AlarmNotifications extends BroadcastReceiver
         }
     }
 
-    protected static void startAlert(Context context, @NonNull Uri soundUri, final boolean isAlarm) throws IOException
+    protected static void startAlert(Context context, @NonNull final Uri soundUri, final boolean isAlarm) throws IOException, IllegalArgumentException, SecurityException, IllegalStateException
     {
+        if (soundUri == null) {
+            throw new IOException("URI must not be null!");
+        } else if (soundUri.toString().trim().isEmpty()) {
+            throw new IOException("URI must not be empty!");
+        }
+
         final long fadeInMillis = (isAlarm ? AlarmSettings.loadPrefAlarmFadeIn(context) : 0);
         final int streamType = (isAlarm ? AudioManager.STREAM_ALARM : AudioManager.STREAM_NOTIFICATION);
         player.setAudioStreamType(streamType);
@@ -530,12 +538,13 @@ public class AlarmNotifications extends BroadcastReceiver
                     } else player.setVolume(1, t_volume = 1);
 
                     mediaPlayer.start();
+                    Log.i(TAG, "startAlert: playing " + soundUri);
                 }
             });
             player.prepareAsync();
 
-        } catch (IOException e) {
-            Log.e(TAG, "startAlert: failed to setDataSource! " + soundUri.toString());
+        } catch (IOException | IllegalArgumentException | SecurityException | NullPointerException e) {
+            Log.e(TAG, "startAlert: failed to setDataSource! " + soundUri + " .. " + e);
             throw e;
         }
     }
@@ -724,6 +733,7 @@ public class AlarmNotifications extends BroadcastReceiver
     protected static MediaPlayer player = null;
     protected static Vibrator vibrator = null;
     protected static AudioManager audioManager;
+    protected static int t_player_error = 0, t_player_error_extra = 0;
     protected static void initPlayer(final Context context, @SuppressWarnings("SameParameterValue") boolean reinit)
     {
         if (vibrator == null || reinit) {
@@ -742,7 +752,9 @@ public class AlarmNotifications extends BroadcastReceiver
                 @Override
                 public boolean onError(MediaPlayer mediaPlayer, int what, int extra)
                 {
-                    Log.e(TAG, "onError: MediaPlayer error " + what);   // TODO: cache last error
+                    t_player_error = what;
+                    t_player_error_extra = extra;
+                    Log.e(TAG, "onError: MediaPlayer error " + what + " (" + extra + ")");
                     return false;
                 }
             });

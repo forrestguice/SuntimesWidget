@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -40,6 +41,7 @@ import android.support.test.rule.ServiceTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
+import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity;
 
@@ -421,51 +423,40 @@ public class AlarmNotificationsTest
     }
 
     @Test
-    public void test_startAlertUri_notification()
+    public void test_startAlertUri_notification0()
     {
-        String defaultSound = RingtoneManager.getActualDefaultRingtoneUri(mockContext, RingtoneManager.TYPE_NOTIFICATION).toString();
-        test_startAlertUri_notification(defaultSound);
-    }
-    public void test_startAlertUri_notification(String uri)
-    {
-        assertFalse(AlarmNotifications.isPlaying);    // test pre-conditions
-        assertFalse(AlarmNotifications.isFadingIn);
+        //Uri defaultSound = RingtoneManager.getActualDefaultRingtoneUri(mockContext, RingtoneManager.TYPE_NOTIFICATION);
+        //test_startAlertUri_notification(defaultSound);
 
-        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(mockContext).edit();
-        prefs.putInt(AlarmSettings.PREF_KEY_ALARM_FADEIN, 0).apply();
-
-        AlarmNotifications.initPlayer(mockContext, true);    // player must be initialized first
-        verify_initPlayer();
-        try {
-            AlarmNotifications.startAlert(mockContext, Uri.parse(uri), false);
-        } catch (Exception e) {
-            Assert.fail("failed to startAlert: " + e);
-        }
-
-        long now = System.currentTimeMillis();
-        while (System.currentTimeMillis() < (now + 500)) {
-            /* give it a second; the call to mediaPlayer.start is async */
-        }
-        assertTrue(AlarmNotifications.player.isPlaying());
-        assertFalse(AlarmNotifications.player.isLooping());
-        assertEquals(1f, AlarmNotifications.t_volume);
-        assertFalse(AlarmNotifications.isFadingIn);
-
-        now = System.currentTimeMillis();
-        while (System.currentTimeMillis() < (now + 3000)) {
-            /* give it a few seconds for the sound to finish */
-        }
-        assertFalse(AlarmNotifications.player.isPlaying());
+        Uri fallbackSound = Uri.parse("android.resource://" + mockContext.getPackageName() + "/" + R.raw.notifysound);
+        test_startAlertUri_notification(fallbackSound);
     }
 
     @Test
-    public void test_startAlertUri_alarm()
+    public void test_startAlertUri_alarm0()
     {
-        String defaultSound = RingtoneManager.getActualDefaultRingtoneUri(mockContext, RingtoneManager.TYPE_ALARM).toString();
+        Uri defaultSound = RingtoneManager.getActualDefaultRingtoneUri(mockContext, RingtoneManager.TYPE_ALARM);
         test_startAlertUri_alarm(defaultSound, true);
         test_startAlertUri_alarm(defaultSound, false);
     }
-    public void test_startAlertUri_alarm(String uri, boolean fadeIn)
+    @Test
+    public void test_startAlertUri_invalid()
+    {
+        String[] invalid = new String[] {"", " ", "content", "content://", "content://media/dne", "http://", "https://"};    // expecting IOException
+        test_startAlertUri_exception(null, false);
+        for (String value : invalid) {
+            test_startAlertUri_exception(Uri.parse(value), true);
+            test_startAlertUri_exception(Uri.parse(value), false);
+        }
+
+        String[] invalid1 = new String[] {"invalid", "invalid://", "geo://33,-111"};    // expecting error codes
+        for (String value : invalid1) {
+            test_startAlertUri_errorCode(Uri.parse(value), true, MediaPlayer.MEDIA_ERROR_UNKNOWN);
+            test_startAlertUri_errorCode(Uri.parse(value), false, MediaPlayer.MEDIA_ERROR_UNKNOWN);
+        }
+    }
+
+    public void test_startAlertUri_alarm(Uri uri, boolean fadeIn)
     {
         // pre-conditions
         assertFalse(AlarmNotifications.isPlaying);
@@ -475,13 +466,14 @@ public class AlarmNotificationsTest
         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(mockContext).edit();
         prefs.putInt(AlarmSettings.PREF_KEY_ALARM_FADEIN, fadeIn ? 3000 : 0).apply();
 
+        AlarmNotifications.t_player_error = AlarmNotifications.t_player_error_extra = 0;
         AlarmNotifications.initPlayer(mockContext, true);    // player must be initialized first
         verify_initPlayer();
         AlarmNotifications.t_volume = 0;
         try {
-            AlarmNotifications.startAlert(mockContext, Uri.parse(uri), true);
+            AlarmNotifications.startAlert(mockContext, uri, true);
             assertFalse(AlarmNotifications.isPlaying);    // startAlert(Uri) doesn't toggle isPlaying (or call startVibration)
-        } catch (IOException e) {
+        } catch (Exception e) {
             Assert.fail("failed to startAlert: " + e);
         }
 
@@ -489,6 +481,7 @@ public class AlarmNotificationsTest
         while (System.currentTimeMillis() < (now + 1000)) {
             /* give it a second; mediaPlayer.start is async */
         }
+        assertEquals(0, AlarmNotifications.t_player_error);
         assertTrue(AlarmNotifications.player.isPlaying());
         assertTrue(AlarmNotifications.player.isLooping());
         assertEquals(fadeIn, AlarmNotifications.isFadingIn);
@@ -511,6 +504,72 @@ public class AlarmNotificationsTest
         assertFalse(AlarmNotifications.isPlaying);
         assertFalse(AlarmNotifications.isVibrating);
         assertFalse(AlarmNotifications.player.isPlaying());
+    }
+
+    public void test_startAlertUri_notification(Uri uri)
+    {
+        assertFalse(AlarmNotifications.isPlaying);    // test pre-conditions
+        assertFalse(AlarmNotifications.isFadingIn);
+
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(mockContext).edit();
+        prefs.putInt(AlarmSettings.PREF_KEY_ALARM_FADEIN, 0).apply();
+
+        AlarmNotifications.t_player_error = AlarmNotifications.t_player_error_extra = 0;
+        AlarmNotifications.initPlayer(mockContext, true);    // player must be initialized first
+        verify_initPlayer();
+        try {
+            AlarmNotifications.startAlert(mockContext, uri, false);
+        } catch (Exception e) {
+            Assert.fail("failed to startAlert: " + e);
+        }
+
+        long now = System.currentTimeMillis();
+        while (System.currentTimeMillis() < (now + 500)) {
+            /* give it a second; the call to mediaPlayer.start is async */
+        }
+        assertEquals(0, AlarmNotifications.t_player_error);
+        assertTrue(AlarmNotifications.player.isPlaying());
+        assertFalse(AlarmNotifications.player.isLooping());
+        assertEquals(1f, AlarmNotifications.t_volume);
+        assertFalse(AlarmNotifications.isFadingIn);
+
+        now = System.currentTimeMillis();
+        while (System.currentTimeMillis() < (now + 5000)) {
+            /* give it a few seconds for the sound to finish */
+        }
+        assertFalse(AlarmNotifications.player.isPlaying());
+    }
+
+    public void test_startAlertUri_exception(Uri uri, boolean isAlarm)
+    {
+        AlarmNotifications.initPlayer(mockContext, true);
+        verify_initPlayer();
+        try {
+            AlarmNotifications.startAlert(mockContext, uri, isAlarm);
+            Assert.fail("should have failed with IOException or SecurityException.. uri: " + uri);    // this line should be unreachable
+        } catch (IOException | SecurityException e) { /* EMPTY */ }
+        assertFalse(AlarmNotifications.player.isPlaying());
+    }
+
+    public void test_startAlertUri_errorCode(Uri uri, boolean isAlarm, Integer code)
+    {
+        AlarmNotifications.t_player_error = AlarmNotifications.t_player_error_extra = 0;
+        AlarmNotifications.initPlayer(mockContext, true);
+        verify_initPlayer();
+        try {
+            AlarmNotifications.startAlert(mockContext, uri, isAlarm);
+        } catch (Exception e) {
+            Assert.fail("failed to startAlert: uri: " + uri + ", " + e);
+        }
+        long now = System.currentTimeMillis();
+        while (System.currentTimeMillis() < (now + 500)) {
+            /* give it a second; mediaPlayer.start is async */
+        }
+        assertNotEqual(0, AlarmNotifications.t_player_error);    // expecting some error code
+        assertFalse(AlarmNotifications.player.isPlaying());
+        if (code != null) {
+            assertEquals((int)code, AlarmNotifications.t_player_error);
+        }
     }
 
 }
