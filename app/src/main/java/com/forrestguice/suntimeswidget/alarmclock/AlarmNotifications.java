@@ -485,15 +485,17 @@ public class AlarmNotifications extends BroadcastReceiver
                 soundUri = AlarmSettings.getDefaultRingtoneUri(context, alarm.type, true);
             }
 
+            boolean isAlarm = (alarm.type == AlarmClockItem.AlarmType.ALARM);
             try {
-                startAlert(context, soundUri, (alarm.type == AlarmClockItem.AlarmType.ALARM));
+                startAlert(context, soundUri, isAlarm);
 
-            } catch (IOException e) {    // fallback to default
-                Uri defaultUri = AlarmSettings.getDefaultRingtoneUri(context, alarm.type, true);
+            } catch (IOException | IllegalArgumentException | SecurityException | NullPointerException e) {    // fallback to default
+                Uri defaultUri = RingtoneManager.getActualDefaultRingtoneUri(context, isAlarm ? RingtoneManager.TYPE_ALARM : RingtoneManager.TYPE_NOTIFICATION);
+
                 try {
-                    startAlert(context, defaultUri, (alarm.type == AlarmClockItem.AlarmType.ALARM));
-                } catch (IOException e1) {
-                    Log.e(TAG, "startAlert: failed to setDataSource to default! " + defaultUri.toString());
+                    startAlert(context, defaultUri, isAlarm);
+                } catch (IOException | IllegalArgumentException | SecurityException | NullPointerException e1) {    // default failed too..
+                    Log.e(TAG, "startAlert: failed to setDataSource to default! " + defaultUri.toString() + " .. " + e);
                 }
             }
         }
