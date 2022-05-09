@@ -1471,7 +1471,7 @@ public class AlarmListDialog extends DialogFragment
                 float eventIconSize = context.getResources().getDimension(R.dimen.eventIcon_width);
                 if (event != null)
                 {
-                    boolean northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && (item.location.getLatitudeAsDouble() < 0);
+                    boolean northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && (item.location != null) && (item.location.getLatitudeAsDouble() < 0);
                     Drawable eventIcon = SolarEventIcons.getIconDrawable(context, event, (int)eventIconSize, (int)eventIconSize, northward);
                     view.text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, event));
                     view.text_event.setCompoundDrawables(eventIcon, null, null, null);
@@ -1515,7 +1515,7 @@ public class AlarmListDialog extends DialogFragment
             {
                 boolean showLocation = (item.getEventItem(context).requiresLocation() || (item.getEvent() == null && item.timezone != null));
                 view.text_location.setVisibility(showLocation ? View.VISIBLE : View.INVISIBLE);
-                view.text_location.setText(item.location.getLabel());
+                view.text_location.setText(item.location != null ? item.location.getLabel() : "");
                 view.text_location.setTextColor(item.enabled ? color_on : color_off);
 
                 Drawable[] d = SuntimesUtils.tintCompoundDrawables(view.text_location.getCompoundDrawables(), (item.enabled ? color_on : color_off));
