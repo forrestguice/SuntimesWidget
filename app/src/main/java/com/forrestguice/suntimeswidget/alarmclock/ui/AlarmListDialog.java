@@ -97,6 +97,7 @@ public class AlarmListDialog extends DialogFragment
     public static final String EXTRA_SELECTED_ROWID = "selectedRowID";
 
     public static final int REQUEST_IMPORT_URI = 100;
+    public static final int REQUEST_EXPORT_URI = 200;
 
     protected View emptyView;
     protected RecyclerView list;
@@ -179,6 +180,16 @@ public class AlarmListDialog extends DialogFragment
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode)
         {
+            case REQUEST_EXPORT_URI:
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    Uri uri = (data != null ? data.getData() : null);
+                    if (uri != null) {
+                        exportAlarms(getActivity(), uri);
+                    }
+                }
+                break;
+
             case REQUEST_IMPORT_URI:
                 if (resultCode == Activity.RESULT_OK)
                 {
@@ -492,21 +503,48 @@ public class AlarmListDialog extends DialogFragment
             return false;
         }
 
+        String exportTarget = "SuntimesAlarms";
         AlarmListDialogAdapter adapter = getAdapter();
         if (context != null && adapter != null)
         {
             AlarmClockItem[] items = adapter.getItems().toArray(new AlarmClockItem[0]);
             if (items.length > 0)
             {
-                exportTask = new AlarmClockItemExportTask(context, "SuntimesAlarms", true, true);    // export to external cache
-                exportTask.setItems(items);
-                exportTask.setTaskListener(exportListener);
-                exportTask.execute();
-                return true;
+                if (Build.VERSION.SDK_INT >= 19)
+                {
+                    Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    intent.setType(AlarmClockItemExportTask.MIMETYPE);
+                    intent.putExtra(Intent.EXTRA_TITLE, exportTarget + AlarmClockItemExportTask.FILEEXT);
+                    startActivityForResult(intent, REQUEST_EXPORT_URI);
 
+                } else {
+                    exportTask = new AlarmClockItemExportTask(context, exportTarget, true, true);    // export to external cache
+                    exportTask.setItems(items);
+                    exportTask.setTaskListener(exportListener);
+                    exportTask.execute();
+                }
+                return true;
             } else return false;
         }
         return false;
+    }
+
+    protected void exportAlarms(Context context, @NonNull Uri uri)
+    {
+        if (exportTask != null && importTask != null) {
+            Log.e("ExportAlarms", "Already busy importing/exporting! ignoring request");
+
+        } else {
+            AlarmClockItem[] items = adapter.getItems().toArray(new AlarmClockItem[0]);
+            if (items.length > 0)
+            {
+                exportTask = new AlarmClockItemExportTask(context, uri);    // export directly to uri
+                exportTask.setItems(items);
+                exportTask.setTaskListener(exportListener);
+                exportTask.execute();
+            }
+        }
     }
 
     protected AlarmClockItemExportTask exportTask = null;
@@ -525,33 +563,28 @@ public class AlarmListDialog extends DialogFragment
             exportTask = null;
             showProgress(false);
 
+            File file = results.getExportFile();
+            String path = ((file != null) ? file.getAbsolutePath() : results.getExportUri().toString());
+
             if (results.getResult())
             {
-                Intent shareIntent = new Intent();
-                shareIntent.setAction(Intent.ACTION_SEND);
-                shareIntent.setType(results.getMimeType());
-                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-                try {
-                    Uri shareURI = FileProvider.getUriForFile(getActivity(), ExportTask.FILE_PROVIDER_AUTHORITY, results.getExportFile());
-                    shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
-                    startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.msg_export_to)));
-
-                    if (isAdded()) {
-                        String successMessage = getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());
-                        Toast.makeText(getActivity(), successMessage, Toast.LENGTH_LONG).show();
-                    }
-                    return;     // successful export ends here...
-
-                } catch (Exception e) {
-                    Log.e("ExportAlarms", "Failed to share file URI! " + e);
+                if (isAdded()) {
+                    String successMessage = getString(R.string.msg_export_success, path);
+                    Toast.makeText(getActivity(), successMessage, Toast.LENGTH_LONG).show();
+                    // TODO: use a snackbar instead; offer 'copy path' action
                 }
+
+                if (Build.VERSION.SDK_INT >= 19) {
+                    if (results.getExportUri() == null) {
+                        ExportTask.shareResult(getActivity(), results.getExportFile(), results.getMimeType());
+                    }
+                } else {
+                    ExportTask.shareResult(getActivity(), results.getExportFile(), results.getMimeType());
+                }
+                return;
             }
 
-            if (isAdded())
-            {
-                File file = results.getExportFile();   // export failed
-                String path = ((file != null) ? file.getAbsolutePath() : "<path>");
+            if (isAdded()) {
                 String failureMessage = getString(R.string.msg_export_failure, path);
                 Toast.makeText(getActivity(), failureMessage, Toast.LENGTH_LONG).show();
             }
