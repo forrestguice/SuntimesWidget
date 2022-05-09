@@ -19,14 +19,18 @@
 package com.forrestguice.suntimeswidget;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -41,6 +45,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
 
     protected WeakReference<Context> contextRef;
 
+    protected Uri exportUri = null;
     protected String exportTarget;
     protected File exportFile;
     protected int numEntries;
@@ -70,6 +75,14 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         this.exportTarget = exportTarget;
         this.saveToCache = saveToCache;
         this.useExternalStorage = useExternalStorage;
+    }
+    public ExportTask(Context context, String exportTarget, Uri exportUri)
+    {
+        this.contextRef = new WeakReference<Context>(context);
+        this.exportTarget = exportTarget;
+        this.exportUri = exportUri;
+        this.saveToCache = false;
+        this.useExternalStorage = false;
     }
 
     /**
@@ -139,7 +152,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         if (context == null)
         {
             Log.w("ExportTask", "Reference (weak) to context is null at start of doInBackground; cancelling...");
-            return new ExportResult(false, null, "");
+            return new ExportResult(false, exportUri, null, "");
         }
 
         long startTime = System.currentTimeMillis();
@@ -161,7 +174,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
 
                 } catch (IOException e) {
                     Log.w("ExportTask", "Canceling export; failed to create external temp file.");
-                    return new ExportResult(false, null, "");
+                    return new ExportResult(false, null, null, "");
                 }
 
             } else {                 // save to: external download dir
@@ -173,7 +186,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
                 if (targetExists && !overwriteTarget)
                 {
                     Log.w("ExportTask", "Canceling export; the target already exists (and overwrite flag is false). " + exportFile.getAbsolutePath());
-                    return new ExportResult(false, exportFile, mimeType);
+                    return new ExportResult(false, exportUri,  exportFile, mimeType);
 
                 } else if (targetExists) {
                     int c = 0;
@@ -193,12 +206,16 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
 
             } catch (IOException e) {
                 Log.w("ExportTask", "Canceling export; failed to create internal temp file.");
-                return new ExportResult(false, null, "");
+                return new ExportResult(false, exportUri, null, "");
             }
+
+        } else if (exportUri != null) {    // save to user provided URI
+            Log.d("ExportTask", "saving to uri: " + exportUri);
+            exportFile = null;
 
         } else {
             Log.w("ExportTask", "Canceling export; external storage is unavailable.");
-            return new ExportResult(false, null, "");
+            return new ExportResult(false, exportUri, null, "");
         }
 
         //
@@ -207,7 +224,10 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         boolean exported = false;
         BufferedOutputStream out = null;
         try {
-            out = new BufferedOutputStream(new FileOutputStream(exportFile));
+            out = new BufferedOutputStream((exportUri != null)
+                            ? context.getContentResolver().openOutputStream(exportUri)
+                            : new FileOutputStream(exportFile)
+            );
             exported = export(context, out);
 
         } catch (IOException e) {
@@ -236,7 +256,7 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         {
             endTime = System.currentTimeMillis();
         }
-        return new ExportResult(exported, exportFile, mimeType);
+        return new ExportResult(exported, exportUri, exportFile, mimeType);
     }
 
     protected abstract boolean export(Context context, BufferedOutputStream out) throws IOException;
@@ -258,15 +278,19 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
      */
     public static class ExportResult
     {
-        public ExportResult( boolean result, File exportFile, String mimeType )
+        public ExportResult( boolean result, Uri exportUri, File exportFile, String mimeType )
         {
             this.result = result;
+            this.exportUri = exportUri;
             this.exportFile = exportFile;
             this.mimeType = mimeType;
         }
 
         private final boolean result;
         public boolean getResult() { return result; }
+
+        private final Uri exportUri;
+        public Uri getExportUri() { return exportUri; }
 
         private final File exportFile;
         public File getExportFile() { return exportFile; }
@@ -390,6 +414,25 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         if (taskListener != null)
         {
             taskListener.onFinished(result);
+        }
+    }
+
+    /**
+     */
+    public static void shareResult(Context context, File file, String mimeType)
+    {
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.setType(mimeType);
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        try {
+            Uri shareURI = FileProvider.getUriForFile(context, ExportTask.FILE_PROVIDER_AUTHORITY, file);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
+            context.startActivity(Intent.createChooser(shareIntent, context.getResources().getText(R.string.msg_export_to)));
+
+        } catch (Exception e) {
+            Log.e("ExportTask", "shareResult: Failed to share file URI! " + e);
         }
     }
 }
