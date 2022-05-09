@@ -638,7 +638,8 @@ public class AlarmListDialog extends DialogFragment
         View view = getView();
         if (context != null && view != null)
         {
-            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.importalarms_toast_success, items.size() + ""), Snackbar.LENGTH_INDEFINITE);
+            String plural = context.getResources().getQuantityString(R.plurals.alarmPlural, items.size(), items.size());
+            Snackbar snackbar = Snackbar.make(view, context.getString(R.string.importalarms_toast_success, plural), Snackbar.LENGTH_INDEFINITE);
             snackbar.setAction(context.getString(R.string.configAction_undo), new View.OnClickListener() {
                 @Override
                 public void onClick(View v)
