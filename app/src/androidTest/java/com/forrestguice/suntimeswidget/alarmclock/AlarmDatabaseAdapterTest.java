@@ -268,6 +268,9 @@ public class AlarmDatabaseAdapterTest
         db.open();
         for (AlarmClockItem alarm : alarms)
         {
+            if (alarm.type == null) {
+                continue;
+            }
             long id = db.addAlarm(alarm.asContentValues(false));
             assertTrue("ID should be >= 0 (was " + id + ")", id != -1);
             count++;
