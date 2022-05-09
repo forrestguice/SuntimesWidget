@@ -19,6 +19,7 @@
 package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.content.Context;
+import android.net.Uri;
 
 import com.forrestguice.suntimeswidget.ExportTask;
 
@@ -42,6 +43,11 @@ public class AlarmClockItemExportTask extends ExportTask
     public AlarmClockItemExportTask(Context context, String exportTarget, boolean useExternalStorage, boolean saveToCache)
     {
         super(context, exportTarget, useExternalStorage, saveToCache);
+        initTask();
+    }
+    public AlarmClockItemExportTask(Context context, Uri exportUri)
+    {
+        super(context, exportUri);
         initTask();
     }
 

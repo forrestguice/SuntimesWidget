@@ -76,10 +76,10 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         this.saveToCache = saveToCache;
         this.useExternalStorage = useExternalStorage;
     }
-    public ExportTask(Context context, String exportTarget, Uri exportUri)
+    public ExportTask(Context context, Uri exportUri)
     {
         this.contextRef = new WeakReference<Context>(context);
-        this.exportTarget = exportTarget;
+        this.exportTarget = null;
         this.exportUri = exportUri;
         this.saveToCache = false;
         this.useExternalStorage = false;
