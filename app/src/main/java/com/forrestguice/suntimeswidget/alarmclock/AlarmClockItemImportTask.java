@@ -227,7 +227,11 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
         {
             switch (reader.peek()) {
                 case BEGIN_ARRAY: readAlarmClockItemArray(context, reader, items); break;
-                case BEGIN_OBJECT: items.add(readAlarmClockItem(context, reader)); break;
+                case BEGIN_OBJECT: AlarmClockItem item = readAlarmClockItem(context, reader);
+                    if (item != null) {
+                        items.add(item);
+                    }
+                    break;
                 default: reader.skipValue(); break;
             }
         }

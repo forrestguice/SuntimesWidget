@@ -70,6 +70,10 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
         }
         s.append("]");
 
+        for (AlarmClockItem item : items0) {
+            AlarmNotifications.updateAlarmTime(mockContext, item);
+        }
+
         // and back again
         InputStream in = new ByteArrayInputStream(s.toString().getBytes());
         ArrayList<AlarmClockItem> items = new ArrayList<>();
@@ -95,6 +99,9 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
         AlarmClockItem item1 = items[1];
         String json1 = AlarmClockItemImportTask.AlarmClockItemJson.toJson(item1);
 
+        AlarmNotifications.updateAlarmTime(mockContext, items[0]);
+        AlarmNotifications.updateAlarmTime(mockContext, items[1]);
+
         test_import(json0, items[0]);                                                   // valid (single obj)
         test_import("[" + json0 + "]", items[0]);                             // valid (array; single obj)
         test_import("[" + json0 + ", " + json1 + "]", items[0], items[1]);    // valid (array; unique)
@@ -109,7 +116,7 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
         test_import("[" + json0 + ", " + json1, items[0], items[1]);          // invalid (array; missing end bracket .. should read objects anyway)
         test_import(json0 + ", " + json1 + "]", items[0]);                    // invalid (array; missing start bracket .. should read first object only)
 
-        test_import(json0.substring(0, json0.length()-1), items[0]);                    // invalid (single obj; missing end-bracket)
+        test_import(json0.substring(0, json0.length()-1), null);                    // invalid (single obj; missing end-bracket)
         test_import(json0.substring(1, json0.length()-1), null);               // invalid (single obj; missing brackets)
         test_import(json0 + ", " + json1, items[0]);                          // invalid (multiple objs outside array .. should read first object only)
         test_import(json0 + json1, items[0]);                                 // invalid (multiple objs outside array, missing separator .. should read first object only)
@@ -189,7 +196,7 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
             assertEquals((oracle != null ? oracle.length : 0), items.size());
             if (oracle != null && expected) {
                 for (int i = 0; i < oracle.length; i++) {
-                    test_equals(items.get(i), oracle[i]);
+                    test_equals( oracle[i], items.get(i));
                 }
             }
             if (!expected) {   // when !expected, the following line shouldn't be reached..
