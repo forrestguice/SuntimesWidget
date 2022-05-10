@@ -35,7 +35,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -112,6 +111,13 @@ public class AlarmClockItemImportTask extends AsyncTask<Uri, AlarmClockItem, Ala
                 items = null;
                 error = e;
             }
+        }
+
+        for (AlarmClockItem item : items)
+        {
+            // TODO: check existing ringtoneURI first .. is it playable? then no need to overwrite with the default
+            item.ringtoneURI = AlarmSettings.VALUE_RINGTONE_DEFAULT;
+            item.ringtoneName = AlarmSettings.VALUE_RINGTONE_DEFAULT;
         }
 
         Log.d(getClass().getSimpleName(), "doInBackground: waiting");

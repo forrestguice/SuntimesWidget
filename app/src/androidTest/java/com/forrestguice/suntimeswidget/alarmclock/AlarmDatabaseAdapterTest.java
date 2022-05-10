@@ -344,13 +344,13 @@ public class AlarmDatabaseAdapterTest
         Location location0 = new Location(TESTLOC_0_LABEL, TESTLOC_0_LAT, TESTLOC_0_LON);
         Location location1 = new Location(TESTLOC_1_LABEL, TESTLOC_1_LAT, TESTLOC_1_LON, TESTLOC_1_ALT);
 
-        String[] events = new String[] {"SUNRISE", "SUNSET", "CIVILRISE", null, "MOONRISE", "MOONSET"};
+        String[] events = new String[] {"SUNRISE", "SUNSET", "MORNING_CIVIL", null, "MOONRISE", "MOONSET"};
         boolean[] enabled = new boolean[] {true, false, false, true, true, false};
         boolean[] vibrate = new boolean[] {false, true, true, true, false, false};
         boolean[] repeating = new boolean[] {false, false, true, true, false, false};
         Location[] locations = new Location[] {location0, location0, location1, location1, location0, null};
         String[] timezones = new String[] {TESTTZID_0, TESTTZID_1, TESTTZID_2, TESTTZID_1, TESTTZID_2, null};
-        String[] repeatDays = new String[] {"", "0,1", "0,1,2,3", "1,2", null, "0,1,2,3,4,5,6"};
+        String[] repeatDays = new String[] {"", "1", "0,1,2,3", "1,2", null, "1,2,3,4,5,6"};   // 0 is invalid value
         AlarmClockItem.AlarmType[] types = new AlarmClockItem.AlarmType[] { ALARM, ALARM, NOTIFICATION, null, ALARM, ALARM };
         int[] hours = new int[] {6, 18, 5, 19, 12, 6};
         int[] minutes = new int[] {30, 10, 0, 1, 59, 6};
