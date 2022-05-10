@@ -82,6 +82,27 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
     }
 
     @Test
+    public void test_getCreateFileIntent()
+    {
+        if (Build.VERSION.SDK_INT >= 19)
+        {
+            String mimeType0 = "text/*";
+            String filename0 = "testfile.txt";
+            Intent intent0 = ExportTask.getCreateFileIntent(filename0, mimeType0);
+
+            assertEquals(Intent.ACTION_CREATE_DOCUMENT, intent0.getAction());
+            assertEquals("failed to set mimeType", mimeType0, intent0.getType());
+            assertTrue("has category: " + Intent.CATEGORY_OPENABLE, intent0.hasCategory(Intent.CATEGORY_OPENABLE));
+            assertTrue("has extra: " + Intent.EXTRA_TITLE, intent0.hasExtra(Intent.EXTRA_TITLE));
+            assertEquals(filename0, intent0.getStringExtra(Intent.EXTRA_TITLE));
+
+            int flags0 = intent0.getFlags();
+            assertNotEqual("failed to set FLAG_GRANT_PERSISTABLE_URI_PERMISSION", 0, ((flags0 & Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)));
+            assertNotEqual("failed to set FLAG_GRANT_WRITE_URI_PERMISSION", 0, ((flags0 & Intent.FLAG_GRANT_WRITE_URI_PERMISSION)));
+        }
+    }
+
+    @Test
     public void test_readAlarmClockItems0()
     {
         AlarmClockItem[] items0 = AlarmDatabaseAdapterTest.createTestItems();

@@ -512,10 +512,8 @@ public class AlarmListDialog extends DialogFragment
             {
                 if (Build.VERSION.SDK_INT >= 19)
                 {
-                    Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-                    intent.addCategory(Intent.CATEGORY_OPENABLE);
-                    intent.setType(AlarmClockItemExportTask.MIMETYPE);
-                    intent.putExtra(Intent.EXTRA_TITLE, exportTarget + AlarmClockItemExportTask.FILEEXT);
+                    String filename = exportTarget + AlarmClockItemExportTask.FILEEXT;
+                    Intent intent = ExportTask.getCreateFileIntent(filename, AlarmClockItemExportTask.MIMETYPE);
                     startActivityForResult(intent, REQUEST_EXPORT_URI);
 
                 } else {

@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -452,6 +453,18 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
 
         intent.setType(mimeType);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        return intent;
+    }
+
+    @TargetApi(19)
+    public static Intent getCreateFileIntent(String suggestedFileName, String mimeType)
+    {
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.putExtra(Intent.EXTRA_TITLE, suggestedFileName);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType(mimeType);
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
         return intent;
     }
 }
