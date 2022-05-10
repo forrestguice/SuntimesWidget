@@ -20,11 +20,14 @@ package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 
+import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 
 import org.json.JSONObject;
@@ -38,9 +41,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static android.test.MoreAsserts.assertNotEqual;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem.AlarmType.ALARM;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 
 @LargeTest
@@ -52,6 +58,27 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
     @Before
     public void setup() {
         mockContext = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
+    }
+
+    @Test
+    public void test_getOpenFileIntent()
+    {
+        String mimeType0 = "text/*";
+        Intent intent0 = ExportTask.getOpenFileIntent(mimeType0);
+        int flags0 = intent0.getFlags();
+
+        if (Build.VERSION.SDK_INT >= 19)
+        {
+            assertEquals(Intent.ACTION_OPEN_DOCUMENT, intent0.getAction());
+            assertTrue("has category: " + Intent.CATEGORY_OPENABLE, intent0.hasCategory(Intent.CATEGORY_OPENABLE));
+            assertTrue("has extra: " + Intent.EXTRA_ALLOW_MULTIPLE, intent0.hasExtra(Intent.EXTRA_ALLOW_MULTIPLE));
+            assertFalse(intent0.getBooleanExtra(Intent.EXTRA_ALLOW_MULTIPLE, true));
+            assertNotEqual("failed to set FLAG_GRANT_PERSISTABLE_URI_PERMISSION", 0, ((flags0 & Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)));
+        } else {
+            assertEquals(Intent.ACTION_GET_CONTENT, intent0.getAction());
+        }
+        assertEquals("failed to set mimeType", mimeType0, intent0.getType());
+        assertNotEqual("failed to set FLAG_GRANT_READ_URI_PERMISSION", 0, ((flags0 & Intent.FLAG_GRANT_READ_URI_PERMISSION)));
     }
 
     @Test

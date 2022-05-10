@@ -917,24 +917,7 @@ public class PlacesListFragment extends Fragment
     {
         if (context != null)
         {
-            Intent intent;
-            if (Build.VERSION.SDK_INT >= 19)
-            {
-                intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
-
-            } else {
-                intent = new Intent(Intent.ACTION_GET_CONTENT);
-            }
-
-            if (Build.VERSION.SDK_INT >= 11) {
-                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-            }
-
-            intent.setType("text/*");
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Intent intent = ExportTask.getOpenFileIntent("text/*");
             startActivityForResult(intent, IMPORT_REQUEST);
             return true;
         }
