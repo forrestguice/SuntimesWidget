@@ -37,6 +37,8 @@ import com.forrestguice.suntimeswidget.R;
 
 import java.lang.ref.WeakReference;
 
+import static android.content.ContentResolver.SCHEME_ANDROID_RESOURCE;
+
 /**
  * AlarmSettings
  */
@@ -263,6 +265,11 @@ public class AlarmSettings
             }
         }
         return retValue;
+    }
+
+    public static Uri getFallbackRingtoneUri(Context context, AlarmClockItem.AlarmType type) {
+        return Uri.parse(SCHEME_ANDROID_RESOURCE + "://" + context.getPackageName() + "/"
+                + (type == AlarmClockItem.AlarmType.ALARM ? R.raw.alarmsound : R.raw.notifysound));
     }
 
     public static Uri getDefaultRingtoneUri(Context context, AlarmClockItem.AlarmType type) {

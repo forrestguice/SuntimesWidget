@@ -425,11 +425,9 @@ public class AlarmNotificationsTest
     @Test
     public void test_startAlertUri_notification0()
     {
-        //Uri defaultSound = RingtoneManager.getActualDefaultRingtoneUri(mockContext, RingtoneManager.TYPE_NOTIFICATION);
-        //test_startAlertUri_notification(defaultSound);
-
-        Uri fallbackSound = Uri.parse("android.resource://" + mockContext.getPackageName() + "/" + R.raw.notifysound);
-        test_startAlertUri_notification(fallbackSound);
+        test_startAlertUri_notification(RingtoneManager.getActualDefaultRingtoneUri(mockContext, RingtoneManager.TYPE_NOTIFICATION));
+        test_startAlertUri_notification(AlarmSettings.getFallbackRingtoneUri(mockContext, AlarmClockItem.AlarmType.NOTIFICATION));
+        test_startAlertUri_notification(AlarmSettings.getFallbackRingtoneUri(mockContext, AlarmClockItem.AlarmType.ALARM));
     }
 
     @Test
