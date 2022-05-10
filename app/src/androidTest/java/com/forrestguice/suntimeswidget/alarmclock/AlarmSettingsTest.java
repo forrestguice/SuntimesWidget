@@ -39,6 +39,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.fail;
 
@@ -90,6 +91,21 @@ public class AlarmSettingsTest extends SuntimesActivityTestBase
             if (set.contains(key)) {
                 fail("AlarmSettings key is not unique! " + key);
             } else set.add(key);
+        }
+    }
+
+    @Test
+    public void test_getRingtoneName()
+    {
+        Uri[] test_uri = new Uri[] {
+                Uri.parse("content://dne"), Uri.parse("invalid"), Uri.parse(""), null,
+                RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_ALARM),
+                RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_NOTIFICATION)
+        };
+        for (Uri uri : test_uri)
+        {
+            String name = AlarmSettings.getRingtoneName(context, uri);
+            assertNotNull(name);
         }
     }
 
