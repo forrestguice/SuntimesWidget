@@ -33,7 +33,7 @@ import java.io.IOException;
 public class AlarmClockItemExportTask extends ExportTask
 {
     public static final String FILEEXT = ".json";
-    public static final String MIMETYPE = "application/octet-stream";
+    public static final String MIMETYPE = "application/json";
 
     public AlarmClockItemExportTask(Context context, String exportTarget)
     {
