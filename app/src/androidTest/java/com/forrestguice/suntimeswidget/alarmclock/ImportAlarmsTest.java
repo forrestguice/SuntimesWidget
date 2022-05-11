@@ -46,6 +46,7 @@ import static com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem.AlarmTyp
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 
@@ -100,6 +101,13 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
             assertNotEqual("failed to set FLAG_GRANT_PERSISTABLE_URI_PERMISSION", 0, ((flags0 & Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)));
             assertNotEqual("failed to set FLAG_GRANT_WRITE_URI_PERMISSION", 0, ((flags0 & Intent.FLAG_GRANT_WRITE_URI_PERMISSION)));
         }
+    }
+
+    @Test
+    public void test_getFileName()
+    {
+        String filename0 = ExportTask.getFileName(null, null);
+        assertNull(filename0);
     }
 
     @Test

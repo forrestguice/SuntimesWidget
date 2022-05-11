@@ -19,12 +19,17 @@
 package com.forrestguice.suntimeswidget;
 
 import android.annotation.TargetApi;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.OpenableColumns;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 
@@ -467,4 +472,22 @@ public abstract class ExportTask extends AsyncTask<Object, Object, ExportTask.Ex
         intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
         return intent;
     }
+
+    @Nullable
+    public static String getFileName(@Nullable ContentResolver resolver, @Nullable Uri uri)
+    {
+        if (resolver != null && uri != null)
+        {
+            Cursor cursor = resolver.query(uri, null, null, null, null);
+            if (cursor != null)
+            {
+                cursor.moveToFirst();
+                String filename = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                cursor.close();
+                return filename;
+            }
+        }
+        return null;
+    }
+
 }
