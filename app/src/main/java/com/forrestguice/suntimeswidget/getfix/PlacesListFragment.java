@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2020 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -35,7 +35,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.FileProvider;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
@@ -82,6 +81,7 @@ public class PlacesListFragment extends Fragment
     public static final String DIALOG_EDITPLACE = "placedialog";
 
     public static final int IMPORT_REQUEST = 100;
+    public static final int EXPORT_REQUEST = 200;
 
     protected FragmentListener listener;
     protected PlacesListAdapter adapter;
@@ -160,6 +160,16 @@ public class PlacesListFragment extends Fragment
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode)
         {
+            case EXPORT_REQUEST:
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    Uri uri = (data != null ? data.getData() : null);
+                    if (uri != null) {
+                        exportPlaces(getActivity(), uri);
+                    }
+                }
+                break;
+
             case IMPORT_REQUEST:
                 if (resultCode == Activity.RESULT_OK)
                 {
@@ -938,10 +948,28 @@ public class PlacesListFragment extends Fragment
 
     public void exportPlaces(Context context)
     {
-        ExportPlacesTask task = new ExportPlacesTask(context, "SuntimesPlaces", true, true);  // export to external cache
+        String exportTarget = "SuntimesPlaces";
+        if (Build.VERSION.SDK_INT >= 19)
+        {
+            String filename = exportTarget + ExportPlacesTask.FILEEXT;
+            Intent intent = ExportTask.getCreateFileIntent(filename, ExportPlacesTask.MIMETYPE);
+            startActivityForResult(intent, EXPORT_REQUEST);
+
+        } else {
+            ExportPlacesTask task = new ExportPlacesTask(context, exportTarget, true, true);  // export to external cache
+            task.setTaskListener(exportPlacesListener);
+            task.execute();
+        }
+    }
+
+    public void exportPlaces(Context context, @NonNull Uri uri)
+    {
+        Log.i("exportPlaces", "Starting export task: " + uri);
+        ExportPlacesTask task = new ExportPlacesTask(context, uri);
         task.setTaskListener(exportPlacesListener);
         task.execute();
     }
+
     private ExportPlacesTask.TaskListener exportPlacesListener = new ExportPlacesTask.TaskListener()
     {
         @Override
@@ -963,34 +991,31 @@ public class PlacesListFragment extends Fragment
             Context context = getActivity();
             if (context != null)
             {
+                File file = results.getExportFile();
+                String path = ((file != null) ? file.getAbsolutePath()
+                        : ExportTask.getFileName(context.getContentResolver(), results.getExportUri()));
+
                 if (results.getResult())
                 {
-                    Intent shareIntent = new Intent();
-                    shareIntent.setAction(Intent.ACTION_SEND);
-                    shareIntent.setType(results.getMimeType());
-                    shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-                    try {
-                        //Uri shareURI = Uri.fromFile(results.getExportFile());  // this URI works until api26 (throws FileUriExposedException)
-                        Uri shareURI = FileProvider.getUriForFile(context, ExportTask.FILE_PROVIDER_AUTHORITY, results.getExportFile());
-                        shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
-
-                        String successMessage = context.getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());
+                    if (isAdded()) {
+                        String successMessage = context.getString(R.string.msg_export_success, path);
                         Toast.makeText(context, successMessage, Toast.LENGTH_LONG).show();
-
-                        context.startActivity(Intent.createChooser(shareIntent, context.getResources().getText(R.string.msg_export_to)));
-                        return;   // successful export ends here...
-
-                    } catch (Exception e) {
-                        Log.e("ExportPlaces", "Failed to share file URI! " + e);
                     }
 
+                    if (Build.VERSION.SDK_INT >= 19) {
+                        if (results.getExportUri() == null) {
+                            ExportTask.shareResult(context, file, results.getMimeType());
+                        }
+                    } else {
+                        ExportTask.shareResult(context, file, results.getMimeType());
+                    }
+                    return;
                 }
 
-                File file = results.getExportFile();    // export failed
-                String path = ((file != null) ? file.getAbsolutePath() : "<path>");
-                String failureMessage = context.getString(R.string.msg_export_failure, path);
-                Toast.makeText(context, failureMessage, Toast.LENGTH_LONG).show();
+                if (isAdded()) {
+                    String failureMessage = context.getString(R.string.msg_export_failure, path);
+                    Toast.makeText(context, failureMessage, Toast.LENGTH_LONG).show();
+                }
             }
         }
     };
