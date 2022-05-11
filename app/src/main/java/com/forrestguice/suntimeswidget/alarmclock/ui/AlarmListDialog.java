@@ -561,30 +561,34 @@ public class AlarmListDialog extends DialogFragment
             exportTask = null;
             showProgress(false);
 
-            File file = results.getExportFile();
-            String path = ((file != null) ? file.getAbsolutePath() : results.getExportUri().toString());
-
-            if (results.getResult())
+            Context context = getActivity();
+            if (context != null)
             {
-                if (isAdded()) {
-                    String successMessage = getString(R.string.msg_export_success, path);
-                    Toast.makeText(getActivity(), successMessage, Toast.LENGTH_LONG).show();
-                    // TODO: use a snackbar instead; offer 'copy path' action
-                }
+                File file = results.getExportFile();
+                String path = ((file != null) ? file.getAbsolutePath() : ExportTask.getFileName(getContext().getContentResolver(), results.getExportUri()));
 
-                if (Build.VERSION.SDK_INT >= 19) {
-                    if (results.getExportUri() == null) {
+                if (results.getResult())
+                {
+                    if (isAdded()) {
+                        String successMessage = getString(R.string.msg_export_success, path);
+                        Toast.makeText(getActivity(), successMessage, Toast.LENGTH_LONG).show();
+                        // TODO: use a snackbar instead; offer 'copy path' action
+                    }
+
+                    if (Build.VERSION.SDK_INT >= 19) {
+                        if (results.getExportUri() == null) {
+                            ExportTask.shareResult(getActivity(), results.getExportFile(), results.getMimeType());
+                        }
+                    } else {
                         ExportTask.shareResult(getActivity(), results.getExportFile(), results.getMimeType());
                     }
-                } else {
-                    ExportTask.shareResult(getActivity(), results.getExportFile(), results.getMimeType());
+                    return;
                 }
-                return;
-            }
 
-            if (isAdded()) {
-                String failureMessage = getString(R.string.msg_export_failure, path);
-                Toast.makeText(getActivity(), failureMessage, Toast.LENGTH_LONG).show();
+                if (isAdded()) {
+                    String failureMessage = getString(R.string.msg_export_failure, path);
+                    Toast.makeText(getActivity(), failureMessage, Toast.LENGTH_LONG).show();
+                }
             }
         }
     };
