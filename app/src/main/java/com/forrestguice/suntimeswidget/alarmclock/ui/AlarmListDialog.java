@@ -99,6 +99,8 @@ public class AlarmListDialog extends DialogFragment
     public static final int REQUEST_IMPORT_URI = 100;
     public static final int REQUEST_EXPORT_URI = 200;
 
+    public static final String DIALOG_IMPORT_WARNING = "importwarning";
+
     protected View emptyView;
     protected RecyclerView list;
     protected AlarmListDialogAdapter adapter;
@@ -607,15 +609,26 @@ public class AlarmListDialog extends DialogFragment
         }
     }
 
-    protected void importAlarms(Context context, @NonNull Uri uri)
+    protected void importAlarms(final Context context, @NonNull final Uri uri)
     {
         if (importTask != null && exportTask != null) {
             Log.e("ImportAlarms", "Already busy importing/exporting! ignoring request");
 
         } else if (context != null) {
-            importTask = new AlarmClockItemImportTask(context);
-            importTask.setTaskListener(importListener);
-            importTask.execute(uri);
+            DialogInterface.OnClickListener onWarningAcknowledged = new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    importTask = new AlarmClockItemImportTask(context);
+                    importTask.setTaskListener(importListener);
+                    importTask.execute(uri);
+                }
+            };
+            if (!AppSettings.checkDialogDoNotShowAgain(context, DIALOG_IMPORT_WARNING)) {
+                AppSettings.buildAlertDialog(DIALOG_IMPORT_WARNING, getLayoutInflater(),
+                        R.drawable.ic_action_warning, context.getString(R.string.dialog_title_caution),
+                        context.getString(R.string.importalarms_msg_warning), onWarningAcknowledged).show();
+            } else onWarningAcknowledged.onClick(null, DialogInterface.BUTTON_POSITIVE);
         }
     }
 

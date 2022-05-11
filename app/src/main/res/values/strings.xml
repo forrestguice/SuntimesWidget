@@ -839,6 +839,8 @@
     <string name="clearalarms_dialog_cancel">Cancel</string>    <!-- button -->
     <string name="clearalarms_toast_success">Alarms cleared.</string> <!-- toast msg -->
 
+    <string name="importalarms_title_warning">Import Warning</string> <!-- toast msg -->
+    <string name="importalarms_msg_warning">Imported alarms might revert some settings to defaults.\nYou may need to (re)select sounds and actions.</string> <!-- toast msg -->  <!-- TODO -->
     <string name="importalarms_toast_success">Imported <xliff:g id="alarmPlural">%s</xliff:g>.</string> <!-- toast msg -->
     <plurals name="alarmPlural">
         <item quantity="one">%d alarm</item>
@@ -2002,6 +2004,8 @@
 
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_title_caution">Caution</string>   <!-- TODO -->
+    <string name="dialog_msg_donotshowagain">Do not show this message again</string>  <!-- checkbox text -->     <!-- TODO -->
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>
