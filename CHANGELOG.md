@@ -1,5 +1,12 @@
 ### ~
 
+### v0.14.5 (2022-05-14)
+* fixes bug "default alarm sound fails to play" (#593).
+* fixes bug "sounding/snoozing notification is unexpectedly canceled" (#594).
+* fixes bug where alarm import is unable to select previously exported files (#588).
+* adds export file selection (alarms/places/themes) using Storage Access Framework (api19+) (older devices still use `ACTION_SEND`).
+* adds import warning dialog; alarm sounds and actions may revert to defaults (not retained).
+
 ### v0.14.4 (2022-05-03)
 * adds import/export to SuntimesAlarms (#588); save and load alarms as JSON.
 * adds widget layouts (3x1 sun position); show the lightmap graph with reduced height (#589).

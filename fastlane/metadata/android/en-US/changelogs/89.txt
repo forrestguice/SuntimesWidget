@@ -1,0 +1,1 @@
+- fixes bug "default alarm sound fails to play" (#593).
