@@ -533,6 +533,8 @@ public class AlarmNotifications extends BroadcastReceiver
             throw new IOException("URI must not be null!");
         } else if (soundUri.toString().trim().isEmpty()) {
             throw new IOException("URI must not be empty!");
+        } else if (!isValidSoundUri(soundUri)) {
+            throw new IOException("URI is not valid! " + soundUri);
         }
 
         final long fadeInMillis = (isAlarm ? AlarmSettings.loadPrefAlarmFadeIn(context) : 0);
@@ -570,11 +572,12 @@ public class AlarmNotifications extends BroadcastReceiver
         }
     }
 
-    public static boolean isValidSoundUri(@NonNull Uri uri) {
-        String scheme = uri.getScheme();                                   // must be..
-        return scheme.equals(ContentResolver.SCHEME_CONTENT)                  // content:/
-                || scheme.equals(ContentResolver.SCHEME_FILE)                 // file:/
-                || scheme.equals(ContentResolver.SCHEME_ANDROID_RESOURCE);    // android.resource:/
+    public static boolean isValidSoundUri(@Nullable Uri uri) {
+        String scheme = (uri != null ? uri.getScheme() : null);
+        return scheme != null
+                && (scheme.equals(ContentResolver.SCHEME_CONTENT)              // content:/
+                || scheme.equals(ContentResolver.SCHEME_FILE)                  // file:/
+                || scheme.equals(ContentResolver.SCHEME_ANDROID_RESOURCE));    // android.resource:/
     }
 
     protected static boolean isVibrating = false;

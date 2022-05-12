@@ -423,6 +423,23 @@ public class AlarmNotificationsTest
     }
 
     @Test
+    public void test_isValidSoundUri()
+    {
+        String[] invalid = new String[] {"", " ", "http://", "https://", "invalid", "invalid://", "geo://33,-111"};
+        assertFalse(AlarmNotifications.isValidSoundUri(null));
+        for (String uriString : invalid) {
+            Uri uri = Uri.parse(uriString);
+            assertFalse(AlarmNotifications.isValidSoundUri(uri));
+        }
+
+        String[] valid = new String[] {"content://some/path", "file://some/path", "android.resource://some/path"};
+        for (String uriString : valid) {
+            Uri uri = Uri.parse(uriString);
+            assertTrue(AlarmNotifications.isValidSoundUri(uri));
+        }
+    }
+
+    @Test
     public void test_startAlertUri_notification0()
     {
         test_startAlertUri_notification(RingtoneManager.getActualDefaultRingtoneUri(mockContext, RingtoneManager.TYPE_NOTIFICATION));
@@ -440,17 +457,12 @@ public class AlarmNotificationsTest
     @Test
     public void test_startAlertUri_invalid()
     {
-        String[] invalid = new String[] {"", " ", "content", "content://", "content://media/dne", "http://", "https://"};    // expecting IOException
+        String[] invalid = new String[] {"", " ", "content", "content://", "content://media/dne", "http://", "https://",
+                                         "invalid", "invalid://", "geo://33,-111", "file://dne"};    // expecting IOException
         test_startAlertUri_exception(null, false);
         for (String value : invalid) {
             test_startAlertUri_exception(Uri.parse(value), true);
             test_startAlertUri_exception(Uri.parse(value), false);
-        }
-
-        String[] invalid1 = new String[] {"invalid", "invalid://", "geo://33,-111"};    // expecting error codes
-        for (String value : invalid1) {
-            test_startAlertUri_errorCode(Uri.parse(value), true, MediaPlayer.MEDIA_ERROR_UNKNOWN);
-            test_startAlertUri_errorCode(Uri.parse(value), false, MediaPlayer.MEDIA_ERROR_UNKNOWN);
         }
     }
 
@@ -545,7 +557,7 @@ public class AlarmNotificationsTest
         try {
             AlarmNotifications.startAlert(mockContext, uri, isAlarm);
             Assert.fail("should have failed with IOException or SecurityException.. uri: " + uri);    // this line should be unreachable
-        } catch (IOException | SecurityException e) { /* EMPTY */ }
+        } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException e) { /* EMPTY */ }
         assertFalse(AlarmNotifications.player.isPlaying());
     }
 
