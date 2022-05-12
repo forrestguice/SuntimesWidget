@@ -226,11 +226,15 @@ public class AlarmSettings
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    @NonNull
     public static String getRingtoneName(Context context, Uri ringtoneUri)
     {
+        String ringtoneName = "";
         Ringtone ringtone = RingtoneManager.getRingtone(context, ringtoneUri);      // TODO: getRingtone takes up to 100ms!
-        String ringtoneName = ringtone.getTitle(context);
-        ringtone.stop();
+        if (ringtone != null) {
+            ringtoneName = ringtone.getTitle(context);
+            ringtone.stop();
+        }
         return ringtoneName;
     }
 
