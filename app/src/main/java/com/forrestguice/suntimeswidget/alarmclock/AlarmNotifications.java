@@ -499,19 +499,19 @@ public class AlarmNotifications extends BroadcastReceiver
             try {
                 startAlert(context, soundUri, isAlarm);  // (0)
 
-            } catch (IOException | IllegalArgumentException | SecurityException | NullPointerException e) {    // fallback to default
+            } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e) {    // fallback to default
                 Log.e(TAG, "startAlert: failed to play " + soundUri.toString() + " ..(0) " + e);
                 Uri defaultUri = RingtoneManager.getActualDefaultRingtoneUri(context, isAlarm ? RingtoneManager.TYPE_ALARM : RingtoneManager.TYPE_NOTIFICATION);
                 try {
                     startAlert(context, defaultUri, isAlarm);  // (1)
 
-                } catch (IOException | IllegalArgumentException | SecurityException | NullPointerException e1) {    // default failed too..
+                } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e1) {    // default failed too..
                     Log.e(TAG, "startAlert: failed to play " + defaultUri.toString() + " ..(1) " + e);
                     Uri fallbackUri = RingtoneManager.getActualDefaultRingtoneUri(context, isAlarm ? RingtoneManager.TYPE_ALARM : RingtoneManager.TYPE_NOTIFICATION);
                     try {
                         startAlert(context, fallbackUri, isAlarm);  // (2)
 
-                    } catch (IOException | IllegalArgumentException | SecurityException | NullPointerException e2) {
+                    } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e2) {
                         Log.e(TAG, "startAlert: failed to play " + fallbackUri.toString() + " ..(2) " + e);
                         Toast.makeText(context, context.getString(R.string.alarmAction_alertFailedMsg), Toast.LENGTH_SHORT).show();
                     }
@@ -566,7 +566,7 @@ public class AlarmNotifications extends BroadcastReceiver
             });
             player.prepareAsync();
 
-        } catch (IOException | IllegalArgumentException | SecurityException | NullPointerException e) {
+        } catch (IOException | IllegalArgumentException | IllegalStateException | SecurityException | NullPointerException e) {
             Log.e(TAG, "startAlert: failed to setDataSource! " + soundUri + " .. " + e);
             throw e;
         }

@@ -440,6 +440,88 @@ public class AlarmNotificationsTest
     }
 
     @Test
+    public void test_startAlert_valid()
+    {
+        AlarmClockItem alarm0 = new AlarmClockItem();
+        alarm0.type = AlarmClockItem.AlarmType.ALARM;
+        alarm0.vibrate = false;    // TODO: test vibrate
+        alarm0.ringtoneURI = null;                                                                           // silent alarm
+
+        AlarmClockItem alarm1 = new AlarmClockItem(alarm0);
+        alarm1.ringtoneURI = AlarmSettings.VALUE_RINGTONE_DEFAULT;                                           // default alarm
+
+        AlarmClockItem alarm2 = new AlarmClockItem(alarm0);
+        alarm2.ringtoneURI = AlarmSettings.getFallbackRingtoneUri(mockContext, alarm2.type).toString();      // fallback alarm
+
+        AlarmClockItem notify0 = new AlarmClockItem();
+        notify0.type = AlarmClockItem.AlarmType.NOTIFICATION;
+        alarm0.vibrate = false;    // TODO: test vibrate
+        notify0.ringtoneURI = null;                                                                          // silent notification
+
+        AlarmClockItem notify1 = new AlarmClockItem(notify0);
+        notify1.ringtoneURI = AlarmSettings.VALUE_RINGTONE_DEFAULT;                                          // default notification
+
+        AlarmClockItem notify2 = new AlarmClockItem(notify0);
+        notify2.ringtoneURI = AlarmSettings.getFallbackRingtoneUri(mockContext, notify2.type).toString();    // fallback notification
+
+        AlarmClockItem[] items = new AlarmClockItem[] { alarm0, alarm1, alarm2, notify0, notify1, notify2 };
+        for (AlarmClockItem item : items) {
+            test_startAlert(item);
+        }
+    }
+
+    @Test
+    public void test_startAlert_invalid()
+    {
+        AlarmClockItem alarm0 = new AlarmClockItem();
+        alarm0.type = AlarmClockItem.AlarmType.ALARM;
+        alarm0.vibrate = false;    // TODO: test vibrate
+        alarm0.ringtoneURI = "invalid://sound/uri";
+
+        AlarmClockItem alarm1 = new AlarmClockItem(alarm0);
+        alarm1.ringtoneURI = "content://media/dne";
+
+        AlarmClockItem alarm2 = new AlarmClockItem(alarm0);
+        alarm2.ringtoneURI = "geo://33,-112";
+
+        AlarmClockItem alarm3 = new AlarmClockItem(alarm0);
+        alarm3.ringtoneURI = "invalid";
+
+        AlarmClockItem notify0 = new AlarmClockItem(alarm0);
+        notify0.type = AlarmClockItem.AlarmType.NOTIFICATION;
+
+        AlarmClockItem notify1 = new AlarmClockItem(notify0);
+        notify1.type = null;
+
+        AlarmClockItem[] items = new AlarmClockItem[] { alarm0, alarm1, alarm2, alarm3, notify0, notify1 };
+        for (AlarmClockItem item : items) {
+            test_startAlert(item);
+        }
+    }
+
+    public void test_startAlert(AlarmClockItem item)
+    {
+        assertTrue("test requires disabling do-not-disturb", AlarmNotifications.passesInterruptionFilter(mockContext, item));
+        assertFalse(AlarmNotifications.isPlaying);
+
+        AlarmNotifications.t_player_error = 0;
+        AlarmNotifications.startAlert(mockContext, item);
+        verify_initPlayer();
+        assertTrue(AlarmNotifications.isPlaying);
+        assertEquals(item.vibrate, AlarmNotifications.isVibrating);
+
+        long now = System.currentTimeMillis();
+        while (System.currentTimeMillis() < (now + 250)) { /* empty */ }
+        assertEquals((item.ringtoneURI != null), AlarmNotifications.player.isPlaying());
+        assertEquals(0, AlarmNotifications.t_player_error);
+
+        AlarmNotifications.stopAlert();
+        assertFalse(AlarmNotifications.isPlaying);
+        assertFalse(AlarmNotifications.player.isPlaying());
+        assertFalse(AlarmNotifications.isVibrating);
+    }
+
+    @Test
     public void test_startAlertUri_notification0()
     {
         test_startAlertUri_notification(RingtoneManager.getActualDefaultRingtoneUri(mockContext, RingtoneManager.TYPE_NOTIFICATION));
