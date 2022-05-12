@@ -469,6 +469,7 @@ public class AlarmNotifications extends BroadcastReceiver
         }
         isPlaying = true;
 
+        boolean isAlarm = (alarm.type == AlarmClockItem.AlarmType.ALARM);
         boolean passesFilter = passesInterruptionFilter(context, alarm);
         if (!passesFilter) {
             Log.w(TAG, "startAlert: blocked by `Do Not Disturb`: " + alarm.rowID);
@@ -485,7 +486,16 @@ public class AlarmNotifications extends BroadcastReceiver
                 soundUri = AlarmSettings.getDefaultRingtoneUri(context, alarm.type, true);
             }
 
-            boolean isAlarm = (alarm.type == AlarmClockItem.AlarmType.ALARM);
+            if (!isValidSoundUri(soundUri)) {
+                Log.w(TAG, "startAlert: rejecting sound uri: " + soundUri.toString() + ".. replacing with default.");
+                soundUri = RingtoneManager.getActualDefaultRingtoneUri(context, isAlarm ? RingtoneManager.TYPE_ALARM : RingtoneManager.TYPE_NOTIFICATION);
+
+                if (!isValidSoundUri(soundUri)) {
+                    Log.w(TAG, "startAlert: rejecting sound uri: " + soundUri.toString() + ".. replacing with fallback.");
+                    soundUri = AlarmSettings.getFallbackRingtoneUri(context, alarm.type);
+                }
+            }
+
             try {
                 startAlert(context, soundUri, isAlarm);
 
@@ -549,6 +559,13 @@ public class AlarmNotifications extends BroadcastReceiver
             Log.e(TAG, "startAlert: failed to setDataSource! " + soundUri + " .. " + e);
             throw e;
         }
+    }
+
+    public static boolean isValidSoundUri(@NonNull Uri uri) {
+        String scheme = uri.getScheme();                                   // must be..
+        return scheme.equals(ContentResolver.SCHEME_CONTENT)                  // content:/
+                || scheme.equals(ContentResolver.SCHEME_FILE)                 // file:/
+                || scheme.equals(ContentResolver.SCHEME_ANDROID_RESOURCE);    // android.resource:/
     }
 
     protected static boolean isVibrating = false;
