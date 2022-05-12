@@ -598,37 +598,37 @@ public class AlarmListDialog extends DialogFragment
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void importAlarms(Context context)
+    public void importAlarms(final Context context)
     {
         if (importTask != null && exportTask != null) {
             Log.e("ImportAlarms", "Already busy importing/exporting! ignoring request");
 
         } else {
-            Intent intent = ExportTask.getOpenFileIntent(AlarmClockItemExportTask.MIMETYPE);
-            startActivityForResult(intent, REQUEST_IMPORT_URI);
+            DialogInterface.OnClickListener onWarningAcknowledged = new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = ExportTask.getOpenFileIntent(AlarmClockItemExportTask.MIMETYPE);
+                    startActivityForResult(intent, REQUEST_IMPORT_URI);
+                }
+            };
+            if (!AppSettings.checkDialogDoNotShowAgain(context, DIALOG_IMPORT_WARNING)) {
+                AppSettings.buildAlertDialog(DIALOG_IMPORT_WARNING, getLayoutInflater(),
+                        R.drawable.ic_action_warning, context.getString(android.R.string.dialog_alert_title),
+                        context.getString(R.string.importalarms_msg_warning), onWarningAcknowledged).show();
+            } else onWarningAcknowledged.onClick(null, DialogInterface.BUTTON_POSITIVE);
         }
     }
 
-    protected void importAlarms(final Context context, @NonNull final Uri uri)
+    protected void importAlarms(final Context context, @NonNull Uri uri)
     {
         if (importTask != null && exportTask != null) {
             Log.e("ImportAlarms", "Already busy importing/exporting! ignoring request");
 
         } else if (context != null) {
-            DialogInterface.OnClickListener onWarningAcknowledged = new DialogInterface.OnClickListener()
-            {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    importTask = new AlarmClockItemImportTask(context);
-                    importTask.setTaskListener(importListener);
-                    importTask.execute(uri);
-                }
-            };
-            if (!AppSettings.checkDialogDoNotShowAgain(context, DIALOG_IMPORT_WARNING)) {
-                AppSettings.buildAlertDialog(DIALOG_IMPORT_WARNING, getLayoutInflater(),
-                        R.drawable.ic_action_warning, context.getString(R.string.dialog_title_caution),
-                        context.getString(R.string.importalarms_msg_warning), onWarningAcknowledged).show();
-            } else onWarningAcknowledged.onClick(null, DialogInterface.BUTTON_POSITIVE);
+            importTask = new AlarmClockItemImportTask(context);
+            importTask.setTaskListener(importListener);
+            importTask.execute(uri);
         }
     }
 

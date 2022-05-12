@@ -608,6 +608,7 @@ public class AppSettings
         }
         dialog.setMessage(message)
                 .setView(dialogView)
+                .setIcon(iconResId)
                 .setCancelable(false)
                 .setPositiveButton(context.getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
                     @Override
