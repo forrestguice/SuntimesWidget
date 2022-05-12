@@ -839,7 +839,13 @@
     <string name="clearalarms_dialog_cancel">Cancel</string>    <!-- button -->
     <string name="clearalarms_toast_success">Alarms cleared.</string> <!-- toast msg -->
 
-    <string name="importalarms_toast_success">Imported %s alarms.</string> <!-- toast msg -->
+    <string name="importalarms_title_warning">Import Warning</string> <!-- toast msg -->
+    <string name="importalarms_msg_warning">Imported alarms might revert some settings to defaults.\n\nYou may need to (re)select sounds and actions.</string> <!-- toast msg -->  <!-- TODO -->
+    <string name="importalarms_toast_success">Imported <xliff:g id="alarmPlural">%s</xliff:g>.</string> <!-- toast msg -->
+    <plurals name="alarmPlural">
+        <item quantity="one">%d alarm</item>
+        <item quantity="other">%d alarms</item>
+    </plurals>   <!-- TODO -->
 
     <string name="alarmlabel_dialog_title">Label</string>        <!-- dialog title -->
     <string name="alarmlabel_dialog_ok">Apply</string>        <!-- button -->
@@ -1733,7 +1739,7 @@
     <string name="themesexport_dialog_message">Exporting themes to file.</string>
 
     <!-- Dialog: Import / Export -->
-    <string name="msg_export_success">Temporary copy at <xliff:g id="filepath">%s</xliff:g></string>
+    <string name="msg_export_success">Saved to <xliff:g id="filepath">%s</xliff:g></string>   <!-- TODO: update -->
     <string name="msg_export_failure">Export to <xliff:g id="filepath">%s</xliff:g> failed!</string>
     <string name="msg_export_to">Export with</string>  <!-- title displayed over "share action" chooser -->
 
@@ -1998,6 +2004,7 @@
 
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_msg_donotshowagain">Do not show this message again</string>  <!-- checkbox text -->     <!-- TODO -->
 
     <!-- calculator implementations -->
     <string name="calculator_displayString_sunrisesunsetlib">github.com/mikereedell/sunrisesunsetlib-java</string>

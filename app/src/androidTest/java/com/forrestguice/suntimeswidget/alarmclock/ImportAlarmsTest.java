@@ -20,11 +20,14 @@ package com.forrestguice.suntimeswidget.alarmclock;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.RenamingDelegatingContext;
 
+import com.forrestguice.suntimeswidget.ExportTask;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
 
 import org.json.JSONObject;
@@ -38,9 +41,13 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static android.test.MoreAsserts.assertNotEqual;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem.AlarmType.ALARM;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 
 @LargeTest
@@ -52,6 +59,55 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
     @Before
     public void setup() {
         mockContext = new RenamingDelegatingContext(InstrumentationRegistry.getTargetContext(), "test_");
+    }
+
+    @Test
+    public void test_getOpenFileIntent()
+    {
+        String mimeType0 = "text/*";
+        Intent intent0 = ExportTask.getOpenFileIntent(mimeType0);
+        int flags0 = intent0.getFlags();
+
+        if (Build.VERSION.SDK_INT >= 19)
+        {
+            assertEquals(Intent.ACTION_OPEN_DOCUMENT, intent0.getAction());
+            assertTrue("has category: " + Intent.CATEGORY_OPENABLE, intent0.hasCategory(Intent.CATEGORY_OPENABLE));
+            assertTrue("has extra: " + Intent.EXTRA_ALLOW_MULTIPLE, intent0.hasExtra(Intent.EXTRA_ALLOW_MULTIPLE));
+            assertFalse(intent0.getBooleanExtra(Intent.EXTRA_ALLOW_MULTIPLE, true));
+            assertNotEqual("failed to set FLAG_GRANT_PERSISTABLE_URI_PERMISSION", 0, ((flags0 & Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)));
+        } else {
+            assertEquals(Intent.ACTION_GET_CONTENT, intent0.getAction());
+        }
+        assertEquals("failed to set mimeType", mimeType0, intent0.getType());
+        assertNotEqual("failed to set FLAG_GRANT_READ_URI_PERMISSION", 0, ((flags0 & Intent.FLAG_GRANT_READ_URI_PERMISSION)));
+    }
+
+    @Test
+    public void test_getCreateFileIntent()
+    {
+        if (Build.VERSION.SDK_INT >= 19)
+        {
+            String mimeType0 = "text/*";
+            String filename0 = "testfile.txt";
+            Intent intent0 = ExportTask.getCreateFileIntent(filename0, mimeType0);
+
+            assertEquals(Intent.ACTION_CREATE_DOCUMENT, intent0.getAction());
+            assertEquals("failed to set mimeType", mimeType0, intent0.getType());
+            assertTrue("has category: " + Intent.CATEGORY_OPENABLE, intent0.hasCategory(Intent.CATEGORY_OPENABLE));
+            assertTrue("has extra: " + Intent.EXTRA_TITLE, intent0.hasExtra(Intent.EXTRA_TITLE));
+            assertEquals(filename0, intent0.getStringExtra(Intent.EXTRA_TITLE));
+
+            int flags0 = intent0.getFlags();
+            assertNotEqual("failed to set FLAG_GRANT_PERSISTABLE_URI_PERMISSION", 0, ((flags0 & Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)));
+            assertNotEqual("failed to set FLAG_GRANT_WRITE_URI_PERMISSION", 0, ((flags0 & Intent.FLAG_GRANT_WRITE_URI_PERMISSION)));
+        }
+    }
+
+    @Test
+    public void test_getFileName()
+    {
+        String filename0 = ExportTask.getFileName(null, null);
+        assertNull(filename0);
     }
 
     @Test
@@ -69,6 +125,10 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
             }
         }
         s.append("]");
+
+        for (AlarmClockItem item : items0) {
+            AlarmNotifications.updateAlarmTime(mockContext, item);
+        }
 
         // and back again
         InputStream in = new ByteArrayInputStream(s.toString().getBytes());
@@ -95,6 +155,9 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
         AlarmClockItem item1 = items[1];
         String json1 = AlarmClockItemImportTask.AlarmClockItemJson.toJson(item1);
 
+        AlarmNotifications.updateAlarmTime(mockContext, items[0]);
+        AlarmNotifications.updateAlarmTime(mockContext, items[1]);
+
         test_import(json0, items[0]);                                                   // valid (single obj)
         test_import("[" + json0 + "]", items[0]);                             // valid (array; single obj)
         test_import("[" + json0 + ", " + json1 + "]", items[0], items[1]);    // valid (array; unique)
@@ -109,7 +172,7 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
         test_import("[" + json0 + ", " + json1, items[0], items[1]);          // invalid (array; missing end bracket .. should read objects anyway)
         test_import(json0 + ", " + json1 + "]", items[0]);                    // invalid (array; missing start bracket .. should read first object only)
 
-        test_import(json0.substring(0, json0.length()-1), items[0]);                    // invalid (single obj; missing end-bracket)
+        test_import(json0.substring(0, json0.length()-1), null);                    // invalid (single obj; missing end-bracket)
         test_import(json0.substring(1, json0.length()-1), null);               // invalid (single obj; missing brackets)
         test_import(json0 + ", " + json1, items[0]);                          // invalid (multiple objs outside array .. should read first object only)
         test_import(json0 + json1, items[0]);                                 // invalid (multiple objs outside array, missing separator .. should read first object only)
@@ -189,7 +252,7 @@ public class ImportAlarmsTest extends SuntimesActivityTestBase
             assertEquals((oracle != null ? oracle.length : 0), items.size());
             if (oracle != null && expected) {
                 for (int i = 0; i < oracle.length; i++) {
-                    test_equals(items.get(i), oracle[i]);
+                    test_equals( oracle[i], items.get(i));
                 }
             }
             if (!expected) {   // when !expected, the following line shouldn't be reached..

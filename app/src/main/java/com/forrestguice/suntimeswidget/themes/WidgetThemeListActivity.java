@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2017-2019 Forrest Guice
+    Copyright (C) 2017-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -36,7 +36,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v4.content.FileProvider;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
@@ -82,6 +82,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
     public static final int PICK_THEME_REQUEST = 1;
     public static final int IMPORT_REQUEST = 100;
+    public static final int EXPORT_REQUEST = 200;
 
     public static final String ADAPTER_MODIFIED = "isModified";
     public static final String PARAM_SELECTED = "selected";
@@ -337,7 +338,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
     /**
      * @param context a context used to access resources
      */
-    private boolean exportThemes(Context context, SuntimesTheme.ThemeDescriptor[] themes)
+    protected boolean exportThemes(Context context, SuntimesTheme.ThemeDescriptor... themes)         // TODO: use SAF for single-theme export
     {
         if (context != null)
         {
@@ -355,6 +356,44 @@ public class WidgetThemeListActivity extends AppCompatActivity
         }
         return false;
     }
+    protected boolean exportThemes(Context context)
+    {
+        if (isImporting || isExporting) {
+            Log.e("exportThemes", "Already busy importing/exporting! ignoring request");
+            return false;
+        }
+
+        if (context != null)
+        {
+            String exportTarget = "SuntimesThemes";
+            if (Build.VERSION.SDK_INT >= 19)
+            {
+                String filename = exportTarget + ExportThemesTask.FILEEXT;
+                Intent intent = ExportTask.getCreateFileIntent(filename, ExportThemesTask.MIMETYPE);
+                startActivityForResult(intent, EXPORT_REQUEST);
+
+            } else {
+                exportTask = new ExportThemesTask(context, exportTarget, true, true);    // export to external cache
+                exportTask.setDescriptors(WidgetThemes.values());
+                exportTask.setTaskListener(exportThemesListener);
+                exportTask.execute();
+            }
+            return true;
+        } else return false;
+    }
+    protected void exportThemes(Context context, @NonNull Uri uri)
+    {
+        if (isImporting || isExporting) {
+            Log.e("exportThemes", "Busy! Already importing/exporting.. ignoring request");
+            return;
+        }
+
+        Log.i("exportThemes", "Starting export with uri: " + uri);
+        exportTask = new ExportThemesTask(context, uri);
+        exportTask.setDescriptors(WidgetThemes.values());
+        exportTask.setTaskListener(exportThemesListener);
+        exportTask.execute();
+    }
 
     /**
      */
@@ -367,8 +406,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
                 return false;
 
             } else {
-                Intent intent = new Intent((Build.VERSION.SDK_INT >= 19 ? Intent.ACTION_OPEN_DOCUMENT : Intent.ACTION_GET_CONTENT));
-                intent.setType("text/*");
+                Intent intent = ExportTask.getOpenFileIntent(ExportThemesTask.MIMETYPE);
                 startActivityForResult(intent, IMPORT_REQUEST);
                 return true;
             }
@@ -470,31 +508,25 @@ public class WidgetThemeListActivity extends AppCompatActivity
             isExporting = false;
             dismissProgress();
 
+            File file = results.getExportFile();
+            String path = ((file != null) ? file.getAbsolutePath() : ExportTask.getFileName(getContentResolver(), results.getExportUri()));
+
             if (results.getResult())
             {
-                Intent shareIntent = new Intent();
-                shareIntent.setAction(Intent.ACTION_SEND);
-                shareIntent.setType(results.getMimeType());
-                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                String successMessage = getString(R.string.msg_export_success, path);
+                Toast.makeText(getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
+                // TODO: use a snackbar instead; offer 'copy path' action
 
-                try {
-                    //Uri shareURI = Uri.fromFile(results.getExportFile());  // this URI works until api26 (throws FileUriExposedException)
-                    Uri shareURI = FileProvider.getUriForFile(WidgetThemeListActivity.this, ExportTask.FILE_PROVIDER_AUTHORITY, results.getExportFile());
-                    shareIntent.putExtra(Intent.EXTRA_STREAM, shareURI);
-
-                    String successMessage = getString(R.string.msg_export_success, results.getExportFile().getAbsolutePath());
-                    Toast.makeText(getApplicationContext(), successMessage, Toast.LENGTH_LONG).show();
-
-                    startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.msg_export_to)));
-                    return;     // successful export ends here...
-
-                } catch (Exception e) {
-                    Log.e("ExportThemes", "Failed to share file URI! " + e);
+                if (Build.VERSION.SDK_INT >= 19) {
+                    if (results.getExportUri() == null) {
+                        ExportTask.shareResult(WidgetThemeListActivity.this, results.getExportFile(), results.getMimeType());
+                    }
+                } else {
+                    ExportTask.shareResult(WidgetThemeListActivity.this, results.getExportFile(), results.getMimeType());
                 }
+                return;
             }
 
-            File file = results.getExportFile();   // export failed
-            String path = ((file != null) ? file.getAbsolutePath() : "<path>");
             String failureMessage = getString(R.string.msg_export_failure, path);
             Toast.makeText(getApplicationContext(), failureMessage, Toast.LENGTH_LONG).show();
         }
@@ -553,7 +585,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
                 return true;
 
             case R.id.exportThemes:
-                exportThemes(this, WidgetThemes.values());
+                exportThemes(this);
                 return true;
 
             case R.id.action_help:
@@ -655,7 +687,7 @@ public class WidgetThemeListActivity extends AppCompatActivity
                         return true;
 
                     case R.id.exportTheme:
-                        exportThemes(WidgetThemeListActivity.this, new SuntimesTheme.ThemeDescriptor[] { theme.themeDescriptor()} );
+                        exportThemes(WidgetThemeListActivity.this, theme.themeDescriptor() );
                         return true;  // TODO: messages
                 }
             }
@@ -681,6 +713,16 @@ public class WidgetThemeListActivity extends AppCompatActivity
 
             case EDIT_THEME_REQUEST:
                 onEditThemeResult(resultCode, data);
+                break;
+
+            case EXPORT_REQUEST:
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    Uri uri = (data != null ? data.getData() : null);
+                    if (uri != null) {
+                        exportThemes(this, uri);
+                    }
+                }
                 break;
 
             case IMPORT_REQUEST:
