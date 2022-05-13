@@ -849,7 +849,7 @@ public class AlarmNotifications extends BroadcastReceiver
 
         String notificationTitle = (alarm.label == null || alarm.label.isEmpty() ? emptyLabel : alarm.label);
         String notificationMsg = eventDisplay;
-        int notificationIcon = ((alarm.type == AlarmClockItem.AlarmType.ALARM) ? R.drawable.ic_action_alarms : R.drawable.ic_action_notification);
+        int notificationIcon = alarm.getIcon();
         int notificationColor = ContextCompat.getColor(context, R.color.sunIcon_color_setting_dark);
 
         builder.setDefaults( Notification.DEFAULT_LIGHTS );

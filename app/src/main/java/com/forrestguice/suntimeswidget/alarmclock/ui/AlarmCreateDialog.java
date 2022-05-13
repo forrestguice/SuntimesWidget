@@ -501,10 +501,11 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
                 view = inflater.inflate(layout, parent, false);
             }
 
-            int[] iconAttr = { R.attr.icActionAlarm, R.attr.icActionNotification };
+            int[] iconAttr = { R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.icActionNotification1 };
             TypedArray typedArray = getContext().obtainStyledAttributes(iconAttr);
             int res_iconAlarm = typedArray.getResourceId(0, R.drawable.ic_action_alarms);
             int res_iconNotification = typedArray.getResourceId(1, R.drawable.ic_action_notification);
+            int res_iconNotification1 = typedArray.getResourceId(2, R.drawable.ic_action_notification1);
             typedArray.recycle();
 
             ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
@@ -513,7 +514,13 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             if (alarmType != null)
             {
                 icon.setImageDrawable(null);
-                icon.setBackgroundResource(alarmType == AlarmClockItem.AlarmType.ALARM ? res_iconAlarm : res_iconNotification);
+                int backgroundResource;
+                switch (alarmType) {
+                    case NOTIFICATION: backgroundResource = res_iconNotification; break;
+                    case NOTIFICATION1: backgroundResource = res_iconNotification1; break;
+                    case ALARM: default: backgroundResource = res_iconAlarm; break;
+                }
+                icon.setBackgroundResource(backgroundResource);
                 text.setText(alarmType.getDisplayString());
             } else {
                 icon.setImageDrawable(null);

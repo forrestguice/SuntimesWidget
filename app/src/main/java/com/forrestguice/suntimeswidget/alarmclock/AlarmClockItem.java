@@ -47,6 +47,7 @@ public class AlarmClockItem implements Parcelable
 
     public static final int ICON_ALARM = R.drawable.ic_action_alarms;
     public static final int ICON_NOTIFICATION = R.drawable.ic_action_notification;
+    public static final int ICON_NOTIFICATION1 = R.drawable.ic_action_notification1;
 
     public long rowID = -1L;
     public AlarmType type = AlarmType.ALARM;
@@ -303,8 +304,8 @@ public class AlarmClockItem implements Parcelable
     {
         switch (this.type) {
             case ALARM: return ICON_ALARM;
-            case NOTIFICATION: case NOTIFICATION1:
-            default: return ICON_NOTIFICATION;
+            case NOTIFICATION1: return ICON_NOTIFICATION1;
+            case NOTIFICATION: default: return ICON_NOTIFICATION;
         }
     }
 

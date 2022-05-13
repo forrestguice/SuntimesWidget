@@ -15,7 +15,7 @@
 
         <item android:id="@+id/alarmTypeNotification1"
             android:title="@string/alarmMode_notification1"
-            android:icon="?attr/icActionNotification"
+            android:icon="?attr/icActionNotification1"
             app:showAsAction="never" />
 
     </group>

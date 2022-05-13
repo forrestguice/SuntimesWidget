@@ -92,7 +92,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     public View chip_action1;
     public TextView text_action1;
 
-    public int res_icAlarm, res_icNotification;
+    public int res_icAlarm, res_icNotification, res_icNotification1;
     public int res_icSoundOn, res_icSoundOff;
     public int res_colorEnabled;
     public int res_icOffset;
@@ -144,7 +144,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     @SuppressLint("ResourceType")
     public void themeHolder(Context context)
     {
-        int[] attrs = { R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.icActionSoundEnabled, R.attr.icActionSoundDisabled, R.attr.alarmColorEnabled, R.attr.icActionTimeReset };
+        int[] attrs = { R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.icActionSoundEnabled, R.attr.icActionSoundDisabled, R.attr.alarmColorEnabled, R.attr.icActionTimeReset, R.attr.icActionNotification1 };
         TypedArray a = context.obtainStyledAttributes(attrs);
         res_icAlarm = a.getResourceId(0, R.drawable.ic_action_extension);
         res_icNotification = a.getResourceId(1, R.drawable.ic_action_notification);
@@ -152,6 +152,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
         res_icSoundOff = a.getResourceId(3, R.drawable.ic_action_sounddisabled);
         res_colorEnabled = a.getResourceId(4, R.color.alarm_enabled_dark);
         res_icOffset = a.getResourceId(5, R.drawable.ic_action_timereset);;
+        res_icNotification1 = a.getResourceId(6, R.drawable.ic_action_notification1);
         a.recycle();
     }
 
@@ -164,7 +165,13 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item, Calendar.getInstance(), false);
             float iconSize = context.getResources().getDimension(R.dimen.eventIcon_width);
 
-            menu_type.setImageDrawable(ContextCompat.getDrawable(context, (item.type == AlarmClockItem.AlarmType.ALARM ? res_icAlarm : res_icNotification)));
+            int menuDrawable;
+            switch (item.type) {
+                case NOTIFICATION: menuDrawable = res_icNotification; break;
+                case NOTIFICATION1: menuDrawable = res_icNotification1; break;
+                case ALARM: default:  menuDrawable = res_icAlarm; break;
+            }
+            menu_type.setImageDrawable(ContextCompat.getDrawable(context, menuDrawable));
             menu_type.setContentDescription(item.type.getDisplayString());
 
             edit_label.setText(item.getLabel(context));

@@ -1330,6 +1330,7 @@ public class AlarmListDialog extends DialogFragment
 
         public int res_iconAlarm = R.drawable.ic_action_alarms;
         public int res_iconNotification = R.drawable.ic_action_notification;
+        public int res_iconNotification1 = R.drawable.ic_action_notification1;
         public int res_iconSoundOn = R.drawable.ic_action_soundenabled;
         public int res_iconSoundOff = R.drawable.ic_action_sounddisabled;
         public int res_iconVibrate = R.drawable.ic_action_vibration;
@@ -1402,7 +1403,7 @@ public class AlarmListDialog extends DialogFragment
                             R.attr.icActionExtension, R.attr.icActionVibrationEnabled, R.attr.gridItemSelected,
                             R.attr.alarmCardEnabled, R.attr.alarmCardDisabled,
                             R.attr.alarmColorEnabled, android.R.attr.textColorSecondary, android.R.attr.textColorPrimary,
-                            R.attr.buttonPressColor };
+                            R.attr.buttonPressColor, R.attr.icActionNotification1 };
             TypedArray a = context.obtainStyledAttributes(attrs);
             res_iconAlarm = a.getResourceId(0, R.drawable.ic_action_alarms);
             res_iconNotification = a.getResourceId(1, R.drawable.ic_action_notification);
@@ -1417,6 +1418,7 @@ public class AlarmListDialog extends DialogFragment
             color_off = ContextCompat.getColor(context, a.getResourceId(10, android.R.color.secondary_text_dark));
             color_off1 = ContextCompat.getColor(context, a.getResourceId(11, android.R.color.primary_text_dark));
             color_press = ContextCompat.getColor(context, a.getResourceId(12, R.color.btn_tint_pressed_dark));
+            res_iconNotification1 = a.getResourceId(13, R.drawable.ic_action_notification1);
             a.recycle();
         }
 
@@ -1462,8 +1464,15 @@ public class AlarmListDialog extends DialogFragment
             }
 
             // type button
-            if (view.typeButton != null) {
-                view.typeButton.setImageDrawable(ContextCompat.getDrawable(context, (item.type == AlarmClockItem.AlarmType.ALARM ? res_iconAlarm : res_iconNotification)));
+            if (view.typeButton != null)
+            {
+                int typeDrawable;
+                switch (item.type) {
+                    case NOTIFICATION: typeDrawable = res_iconNotification; break;
+                    case NOTIFICATION1: typeDrawable = res_iconNotification1; break;
+                    case ALARM: default: typeDrawable = res_iconAlarm; break;
+                }
+                view.typeButton.setImageDrawable(ContextCompat.getDrawable(context, typeDrawable));
                 view.typeButton.setContentDescription(item.type.getDisplayString());
 
                 ImageViewCompat.setImageTintList(view.typeButton, SuntimesUtils.colorStateList(
