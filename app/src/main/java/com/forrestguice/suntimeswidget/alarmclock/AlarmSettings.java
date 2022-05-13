@@ -64,6 +64,9 @@ public class AlarmSettings
     public static final String PREF_KEY_ALARM_UPCOMING = "app_alarms_upcomingMillis";
     public static final int PREF_DEF_ALARM_UPCOMING = 1000 * 60 * 60 * 10;  // 10 hours
 
+    public static final String PREF_KEY_ALARM_AUTODISMISS = "app_alarms_notifyDismissMillis";
+    public static final int PREF_DEF_ALARM_AUTODISMISS = 1000 * 30;  // 30 seconds
+
     public static final String PREF_KEY_ALARM_AUTOENABLE = "app_alarms_autoenable";
     public static final boolean PREF_DEF_ALARM_AUTOENABLE = false;
 
@@ -130,6 +133,14 @@ public class AlarmSettings
         if (Build.VERSION.SDK_INT >= 11) {
             return prefs.getInt(PREF_KEY_ALARM_TIMEOUT, PREF_DEF_ALARM_TIMEOUT);
         } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_TIMEOUT, PREF_DEF_ALARM_TIMEOUT);
+    }
+
+    public static long loadPrefAlarmAutoDismiss(Context context)
+    {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        if (Build.VERSION.SDK_INT >= 11) {
+            return prefs.getInt(PREF_KEY_ALARM_AUTODISMISS, PREF_DEF_ALARM_AUTODISMISS);
+        } else return loadStringPrefAsLong(prefs, PREF_KEY_ALARM_AUTODISMISS, PREF_DEF_ALARM_AUTODISMISS);
     }
 
     public static boolean loadPrefAlarmAutoEnable(Context context)

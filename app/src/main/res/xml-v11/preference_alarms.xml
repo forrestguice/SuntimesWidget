@@ -59,6 +59,19 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/alarmMode_notification1"
+        android:key="app_alarms_category2">
+
+        <com.forrestguice.suntimeswidget.settings.MillisecondPickerPreference
+            android:key="app_alarms_notifyDismissMillis"
+            android:title="@string/configLabel_alarms_autoDismissAfter"
+            android:summary="@string/configLabel_alarms_autoDismissAfter_summary"
+            android:defaultValue="@string/def_app_alarms_autodismiss"
+            app:mode="seconds" app:minValue="5" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/configLabel_alarmSounds" >
 
         <Preference

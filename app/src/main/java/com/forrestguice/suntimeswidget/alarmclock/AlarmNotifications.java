@@ -260,7 +260,7 @@ public class AlarmNotifications extends BroadcastReceiver
             AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
             if (alarmManager != null)
             {
-                long dismissAfterMillis = 1000 * 30;   // TODO: from prefs
+                long dismissAfterMillis = AlarmSettings.loadPrefAlarmAutoDismiss(context);
                 if (dismissAfterMillis > 0)
                 {
                     Log.d(TAG, "addNotificationTimeouts: dismiss after " + dismissAfterMillis);
