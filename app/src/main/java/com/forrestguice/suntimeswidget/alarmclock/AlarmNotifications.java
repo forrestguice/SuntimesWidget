@@ -1579,6 +1579,10 @@ public class AlarmNotifications extends BroadcastReceiver
                         WidgetActions.startIntent(context.getApplicationContext(), 0, item.getActionID(AlarmClockItem.ACTIONID_DISMISS), data, null, Intent.FLAG_ACTIVITY_NEW_TASK);
                     }
 
+                    if (item.type == AlarmClockItem.AlarmType.NOTIFICATION1) {
+                        notifications.dismissNotification(context, (int)item.rowID);
+                    }
+
                     if (nextAction != null) {
                         context.sendBroadcast(getAlarmIntent(context, nextAction, data));    // trigger followup action
                     }
