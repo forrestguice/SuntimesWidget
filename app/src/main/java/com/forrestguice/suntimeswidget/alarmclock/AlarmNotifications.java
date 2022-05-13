@@ -1744,7 +1744,8 @@ public class AlarmNotifications extends BroadcastReceiver
                 public void onFinished(Boolean result, AlarmClockItem item)
                 {
                     if (item.type == AlarmClockItem.AlarmType.NOTIFICATION
-                            || item.type == AlarmClockItem.AlarmType.NOTIFICATION1)
+                            || item.type == AlarmClockItem.AlarmType.NOTIFICATION1
+                            || item.type == AlarmClockItem.AlarmType.NOTIFICATION2)
                     {
                         Log.d(TAG, "State Saved (onScheduledNotification)");
                         addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);

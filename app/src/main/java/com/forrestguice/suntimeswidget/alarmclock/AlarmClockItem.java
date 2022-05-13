@@ -48,6 +48,7 @@ public class AlarmClockItem implements Parcelable
     public static final int ICON_ALARM = R.drawable.ic_action_alarms;
     public static final int ICON_NOTIFICATION = R.drawable.ic_action_notification;
     public static final int ICON_NOTIFICATION1 = R.drawable.ic_action_notification1;
+    public static final int ICON_NOTIFICATION2 = R.drawable.ic_action_notification2;
 
     public long rowID = -1L;
     public AlarmType type = AlarmType.ALARM;
@@ -304,6 +305,7 @@ public class AlarmClockItem implements Parcelable
     {
         switch (this.type) {
             case ALARM: return ICON_ALARM;
+            case NOTIFICATION2: return ICON_NOTIFICATION2;
             case NOTIFICATION1: return ICON_NOTIFICATION1;
             case NOTIFICATION: default: return ICON_NOTIFICATION;
         }
@@ -313,7 +315,7 @@ public class AlarmClockItem implements Parcelable
     {
         switch(type) {
             case ALARM: return context.getString(R.string.alarmMode_alarm);
-            case NOTIFICATION: case NOTIFICATION1:
+            case NOTIFICATION: case NOTIFICATION1: case NOTIFICATION2:
             default: return context.getString(R.string.alarmMode_notification);
         }
     }
@@ -457,7 +459,8 @@ public class AlarmClockItem implements Parcelable
     {
         ALARM("Alarm"),
         NOTIFICATION("Notification"),
-        NOTIFICATION1("Quick Notification");
+        NOTIFICATION1("Notification (ephemeral)"),
+        NOTIFICATION2("Notification (persistent)");
 
         private String displayString;
 
@@ -486,6 +489,7 @@ public class AlarmClockItem implements Parcelable
             ALARM.setDisplayString(context.getString(R.string.alarmMode_alarm));
             NOTIFICATION.setDisplayString(context.getString(R.string.alarmMode_notification));
             NOTIFICATION1.setDisplayString(context.getString(R.string.alarmMode_notification1));
+            NOTIFICATION2.setDisplayString(context.getString(R.string.alarmMode_notification2));
         }
 
         public static AlarmType valueOf(String value, AlarmType defaultType)

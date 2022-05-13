@@ -295,6 +295,7 @@ public class AlarmEditDialog extends DialogFragment
                 {
                     case R.id.alarmTypeNotification: item.type = AlarmClockItem.AlarmType.NOTIFICATION; break;
                     case R.id.alarmTypeNotification1: item.type = AlarmClockItem.AlarmType.NOTIFICATION1; break;
+                    case R.id.alarmTypeNotification2: item.type = AlarmClockItem.AlarmType.NOTIFICATION2; break;
                     case R.id.alarmTypeAlarm: default: item.type = AlarmClockItem.AlarmType.ALARM; break;
                 }
                 if (listener != null) {

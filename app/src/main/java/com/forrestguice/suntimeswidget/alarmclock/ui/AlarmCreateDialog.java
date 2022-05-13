@@ -506,6 +506,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             int res_iconAlarm = typedArray.getResourceId(0, R.drawable.ic_action_alarms);
             int res_iconNotification = typedArray.getResourceId(1, R.drawable.ic_action_notification);
             int res_iconNotification1 = typedArray.getResourceId(2, R.drawable.ic_action_notification1);
+            int res_iconNotification2 = typedArray.getResourceId(3, R.drawable.ic_action_notification2);
             typedArray.recycle();
 
             ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
@@ -518,6 +519,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
                 switch (alarmType) {
                     case NOTIFICATION: backgroundResource = res_iconNotification; break;
                     case NOTIFICATION1: backgroundResource = res_iconNotification1; break;
+                    case NOTIFICATION2: backgroundResource = res_iconNotification2; break;
                     case ALARM: default: backgroundResource = res_iconAlarm; break;
                 }
                 icon.setBackgroundResource(backgroundResource);
