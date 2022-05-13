@@ -427,7 +427,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         boolean isSchedulable = AlarmNotifications.updateAlarmTime(context, item);
 
         if (text_title != null) {
-            text_title.setText(context.getString(alarmType == AlarmClockItem.AlarmType.NOTIFICATION ? R.string.configAction_addNotification : R.string.configAction_addAlarm));
+            text_title.setText(context.getString(alarmType == AlarmClockItem.AlarmType.ALARM ? R.string.configAction_addAlarm : R.string.configAction_addNotification));
         }
         if (spin_type != null) {
             spin_type.setSelection(alarmType.ordinal(), false);
@@ -513,7 +513,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
             if (alarmType != null)
             {
                 icon.setImageDrawable(null);
-                icon.setBackgroundResource(alarmType == AlarmClockItem.AlarmType.NOTIFICATION ? res_iconNotification : res_iconAlarm);
+                icon.setBackgroundResource(alarmType == AlarmClockItem.AlarmType.ALARM ? res_iconAlarm : res_iconNotification);
                 text.setText(alarmType.getDisplayString());
             } else {
                 icon.setImageDrawable(null);

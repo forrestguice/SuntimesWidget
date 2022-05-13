@@ -293,23 +293,14 @@ public class AlarmEditDialog extends DialogFragment
             {
                 switch (menuItem.getItemId())
                 {
-                    case R.id.alarmTypeNotification:
-                        item.type = AlarmClockItem.AlarmType.NOTIFICATION;
-                        if (listener != null) {
-                            listener.onTypeChanged(item);
-                        }
-                        notifyItemChanged();
-                        return true;
-
-                    case R.id.alarmTypeAlarm:
-                    default:
-                        item.type = AlarmClockItem.AlarmType.ALARM;
-                        if (listener != null) {
-                            listener.onTypeChanged(item);
-                        }
-                        notifyItemChanged();
-                        return true;
+                    case R.id.alarmTypeNotification: item.type = AlarmClockItem.AlarmType.NOTIFICATION; break;
+                    case R.id.alarmTypeAlarm: default: item.type = AlarmClockItem.AlarmType.ALARM; break;
                 }
+                if (listener != null) {
+                    listener.onTypeChanged(item);
+                }
+                notifyItemChanged();
+                return true;
             }
         });
 
