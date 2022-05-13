@@ -85,6 +85,7 @@
         <item name="icActionCalendar">@drawable/ic_calendar_light</item>
         <item name="icActionNotification">@drawable/ic_action_notification_light</item>
         <item name="icActionNotification1">@drawable/ic_action_notification1_light</item>
+        <item name="icActionNotification2">@drawable/ic_action_notification2_light</item>
         <item name="icActionVibrationEnabled">@drawable/ic_action_vibration_light</item>
         <item name="icActionSoundEnabled">@drawable/ic_action_soundenabled_light</item>
         <item name="icActionSoundDisabled">@drawable/ic_action_sounddisabled_light</item>
@@ -214,6 +215,7 @@
         <item name="icActionCalendar">@drawable/ic_calendar</item>
         <item name="icActionNotification">@drawable/ic_action_notification</item>
         <item name="icActionNotification1">@drawable/ic_action_notification1</item>
+        <item name="icActionNotification2">@drawable/ic_action_notification2</item>
         <item name="icActionVibrationEnabled">@drawable/ic_action_vibration</item>
         <item name="icActionSoundEnabled">@drawable/ic_action_soundenabled</item>
         <item name="icActionSoundDisabled">@drawable/ic_action_sounddisabled</item>
