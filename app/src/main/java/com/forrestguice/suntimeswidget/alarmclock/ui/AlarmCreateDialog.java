@@ -406,7 +406,6 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             Log.d("DEBUG", "onItemSelected: " + position);
             setAlarmType((AlarmClockItem.AlarmType) parent.getItemAtPosition(position));
-            updateViews(getActivity());
         }
 
         @Override
@@ -887,6 +886,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
                 fragment.setType(getAlarmType());
             }
         }
+        updateViews(getContext());
     }
     public AlarmClockItem.AlarmType getAlarmType() {
         return (AlarmClockItem.AlarmType) getArguments().getSerializable(EXTRA_ALARMTYPE);
