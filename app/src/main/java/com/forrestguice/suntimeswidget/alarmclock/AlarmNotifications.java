@@ -1715,7 +1715,8 @@ public class AlarmNotifications extends BroadcastReceiver
                 @Override
                 public void onFinished(Boolean result, AlarmClockItem item)
                 {
-                    if (item.type == AlarmClockItem.AlarmType.NOTIFICATION)
+                    if (item.type == AlarmClockItem.AlarmType.NOTIFICATION
+                            || item.type == AlarmClockItem.AlarmType.NOTIFICATION1)
                     {
                         Log.d(TAG, "State Saved (onScheduledNotification)");
                         addAlarmTimeout(context, ACTION_SHOW, item.getUri(), item.alarmtime);

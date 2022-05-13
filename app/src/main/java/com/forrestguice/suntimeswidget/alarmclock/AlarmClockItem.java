@@ -301,12 +301,20 @@ public class AlarmClockItem implements Parcelable
 
     public int getIcon()
     {
-        return ((type == AlarmClockItem.AlarmType.NOTIFICATION) ? ICON_NOTIFICATION : ICON_ALARM);
+        switch (this.type) {
+            case ALARM: return ICON_ALARM;
+            case NOTIFICATION: case NOTIFICATION1:
+            default: return ICON_NOTIFICATION;
+        }
     }
 
     public String getLabel(Context context)
     {
-        return getLabel((type == AlarmClockItem.AlarmType.ALARM) ? context.getString(R.string.alarmMode_alarm) : context.getString(R.string.alarmMode_notification));
+        switch(type) {
+            case ALARM: return context.getString(R.string.alarmMode_alarm);
+            case NOTIFICATION: case NOTIFICATION1:
+            default: return context.getString(R.string.alarmMode_notification);
+        }
     }
 
     /*public String getLabelAlt(Context context)
@@ -447,7 +455,8 @@ public class AlarmClockItem implements Parcelable
     public static enum AlarmType
     {
         ALARM("Alarm"),
-        NOTIFICATION("Notification");
+        NOTIFICATION("Notification"),
+        NOTIFICATION1("Quick Notification");
 
         private String displayString;
 
@@ -475,6 +484,7 @@ public class AlarmClockItem implements Parcelable
         {
             ALARM.setDisplayString(context.getString(R.string.alarmMode_alarm));
             NOTIFICATION.setDisplayString(context.getString(R.string.alarmMode_notification));
+            NOTIFICATION1.setDisplayString(context.getString(R.string.alarmMode_notification1));
         }
 
         public static AlarmType valueOf(String value, AlarmType defaultType)

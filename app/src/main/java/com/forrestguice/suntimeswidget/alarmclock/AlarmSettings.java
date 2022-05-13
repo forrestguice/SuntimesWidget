@@ -188,6 +188,7 @@ public class AlarmSettings
         switch (type)
         {
             case NOTIFICATION:
+            case NOTIFICATION1:
             case ALARM:
             default:                    // TODO
                 return new long[] {0, 400, 200, 400, 800};   // 0 immediate start, 400ms buzz, 200ms break, 400ms buzz, 800ms break [repeat]
@@ -305,6 +306,7 @@ public class AlarmSettings
                 key_name = PREF_KEY_ALARM_RINGTONE_NAME_ALARM;
                 break;
             case NOTIFICATION:
+            case NOTIFICATION1:
             default:
                 uri = RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_NOTIFICATION);
                 key_uri = PREF_KEY_ALARM_RINGTONE_URI_NOTIFICATION;

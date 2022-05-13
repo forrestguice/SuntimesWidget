@@ -913,6 +913,9 @@ public class AlarmItemArrayAdapter extends ArrayAdapter<AlarmClockItem>
                     case R.id.alarmTypeNotification:
                         return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION);
 
+                    case R.id.alarmTypeNotification1:
+                        return changeAlarmType(item, AlarmClockItem.AlarmType.NOTIFICATION1);
+
                     case R.id.alarmTypeAlarm:
                     default:
                         return changeAlarmType(item, AlarmClockItem.AlarmType.ALARM);

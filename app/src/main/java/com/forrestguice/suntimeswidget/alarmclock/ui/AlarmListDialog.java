@@ -1210,6 +1210,9 @@ public class AlarmListDialog extends DialogFragment
                         case R.id.alarmTypeNotification:
                             return changeAlarmType(context, position, AlarmClockItem.AlarmType.NOTIFICATION);
 
+                        case R.id.alarmTypeNotification1:
+                            return changeAlarmType(context, position, AlarmClockItem.AlarmType.NOTIFICATION1);
+
                         case R.id.alarmTypeAlarm:
                         default:
                             return changeAlarmType(context, position, AlarmClockItem.AlarmType.ALARM);
