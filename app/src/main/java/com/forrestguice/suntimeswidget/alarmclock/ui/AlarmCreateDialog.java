@@ -501,7 +501,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
                 view = inflater.inflate(layout, parent, false);
             }
 
-            int[] iconAttr = { R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.icActionNotification1 };
+            int[] iconAttr = { R.attr.icActionAlarm, R.attr.icActionNotification, R.attr.icActionNotification1, R.attr.icActionNotification2 };
             TypedArray typedArray = getContext().obtainStyledAttributes(iconAttr);
             int res_iconAlarm = typedArray.getResourceId(0, R.drawable.ic_action_alarms);
             int res_iconNotification = typedArray.getResourceId(1, R.drawable.ic_action_notification);
