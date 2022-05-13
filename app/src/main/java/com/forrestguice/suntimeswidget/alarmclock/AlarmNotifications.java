@@ -251,6 +251,27 @@ public class AlarmNotifications extends BroadcastReceiver
         } else Log.e(TAG, "addAlarmTimeout: context is null!");
     }
 
+
+    protected static void addNotificationTimeouts(Context context, Uri data)
+    {
+        Log.d(TAG, "addNotificationTimeouts: " + data);
+        if (context != null)
+        {
+            AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+            if (alarmManager != null)
+            {
+                long dismissAfterMillis = 1000 * 30;   // TODO: from prefs
+                if (dismissAfterMillis > 0)
+                {
+                    Log.d(TAG, "addNotificationTimeouts: dismiss after " + dismissAfterMillis);
+                    long dismissedAt = Calendar.getInstance().getTimeInMillis() + dismissAfterMillis;
+                    addAlarmTimeout(context, alarmManager, ACTION_DISMISS, data, dismissedAt, AlarmManager.RTC_WAKEUP);
+                }
+
+            } else Log.e(TAG, "addNotificationTimeouts: AlarmManager is null!");
+        } else Log.e(TAG, "addNotificationTimeouts: context is null!");
+    }
+
     protected static void cancelAlarmTimeouts(Context context, AlarmClockItem item)
     {
         cancelAlarmTimeouts(context, item.getUri());
@@ -265,6 +286,7 @@ public class AlarmNotifications extends BroadcastReceiver
         cancelAlarmTimeouts(context, new String[] {
                 AlarmNotifications.ACTION_SILENT,
                 AlarmNotifications.ACTION_TIMEOUT,
+                AlarmNotifications.ACTION_DISMISS,
                 AlarmNotifications.ACTION_SHOW,
                 AlarmNotifications.ACTION_SCHEDULE }, data);
     }
@@ -1501,9 +1523,9 @@ public class AlarmNotifications extends BroadcastReceiver
                             ////////////////////////////////////////////////////////////////////////////
                             if (AlarmState.transitionState(item.state, AlarmState.STATE_SOUNDING))
                             {
+                                Log.i(TAG, "Show: " + item.rowID + " (" + item.type + ")");
                                 if (item.type == AlarmClockItem.AlarmType.ALARM)
                                 {
-                                    Log.i(TAG, "Show: " + item.rowID + "(Alarm)");
                                     cancelAlarmTimeouts(context, item);
                                     addAlarmTimeouts(context, item.getUri());
 
@@ -1515,7 +1537,9 @@ public class AlarmNotifications extends BroadcastReceiver
                                     AlarmNotifications.startAlert(context, item);
 
                                 } else {
-                                    Log.i(TAG, "Show: " + item.rowID + "(Notification)");
+                                    if (item.type == AlarmClockItem.AlarmType.NOTIFICATION1) {
+                                        addNotificationTimeouts(context, item.getUri());
+                                    }
                                     notifications.showNotification(context, item, false);
                                 }
 
