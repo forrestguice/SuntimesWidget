@@ -58,6 +58,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmClockActivity;
 import com.forrestguice.suntimeswidget.alarmclock.ui.AlarmDismissActivity;
@@ -445,6 +446,13 @@ public class AlarmNotifications extends BroadcastReceiver
     {
         Intent intent = new Intent(AlarmDismissActivity.ACTION_UPDATE);
         intent.setData(data);
+        return intent;
+    }
+
+    public static Intent getSuntimesIntent(Context context)
+    {
+        Intent intent = new Intent(context, SuntimesActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         return intent;
     }
 
@@ -929,6 +937,28 @@ public class AlarmNotifications extends BroadcastReceiver
                     builder.setOngoing(false);
                     break;
             }
+
+        } else if (alarm.type == AlarmClockItem.AlarmType.NOTIFICATION2) {
+            // NOTIFICATION (persistent reminder)
+            PendingIntent pendingView1 = PendingIntent.getActivity(context, alarm.hashCode(), getSuntimesIntent(context), PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingDisable = PendingIntent.getBroadcast(context, alarm.hashCode(), getAlarmIntent(context, ACTION_DISABLE, alarm.getUri()), PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingAction = null;
+            if (alarm.hasActionID(AlarmClockItem.ACTIONID_MAIN))
+            {
+                SuntimesData data = getData(context, alarm);
+                data.calculate();
+                Intent actionIntent = WidgetActions.createIntent(context.getApplicationContext(), 0, alarm.getActionID(AlarmClockItem.ACTIONID_MAIN), data, null);
+                pendingAction = (actionIntent != null ? PendingIntent.getBroadcast(context, alarm.hashCode(), actionIntent, PendingIntent.FLAG_UPDATE_CURRENT) : null);
+            }
+            //notificationMsg = "TODO";   // TODO: reminder notification text
+
+            builder.setWhen(alarm.alarmtime);
+            builder.setCategory( NotificationCompat.CATEGORY_REMINDER );
+            builder.setPriority( NotificationCompat.PRIORITY_HIGH );
+            builder.setOngoing(true);
+            builder.setAutoCancel(false);
+            builder.setContentIntent((pendingAction != null) ? pendingAction : pendingView1);
+            builder.addAction(R.drawable.ic_action_cancel, context.getString(R.string.alarmAction_dismiss), pendingDisable);
 
         } else {
             // NOTIFICATION
