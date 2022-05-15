@@ -704,6 +704,7 @@ public class AlarmClockActivity extends AppCompatActivity
             AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentById(R.id.createAlarmFragment);
             AlarmClockItem item = AlarmCreateDialog.createAlarm(dialog, dialog.getAlarmType());
             AlarmNotifications.updateAlarmTime(dialog.getActivity(), item);
+            dialog.saveSettings(AlarmClockActivity.this);
             ViewCompat.setTransitionName(dialog.text_time, "transition_" + item.rowID);
             showAlarmEditActivity(item, dialog.text_time, REQUEST_ADDALARM, true);
         }
@@ -763,7 +764,7 @@ public class AlarmClockActivity extends AppCompatActivity
         }
     };
 
-    protected void showAddDialog(AlarmClockItem.AlarmType type)
+    protected void showAddDialog(@Nullable AlarmClockItem.AlarmType type)
     {
         list.clearSelection();
 
@@ -771,7 +772,9 @@ public class AlarmClockActivity extends AppCompatActivity
         AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentById(R.id.createAlarmFragment);
         if (dialog != null) {
             dialog.loadSettings(AlarmClockActivity.this);
-            dialog.setAlarmType(type);
+            if (type != null) {
+                dialog.setAlarmType(type);
+            }
             dialog.setOnAcceptedListener(onAddAlarmAccepted);
             dialog.setOnCanceledListener(onAddAlarmCanceled);
             dialog.setOnNeutralListener(onAddAlarmNeutral);
@@ -924,7 +927,7 @@ public class AlarmClockActivity extends AppCompatActivity
     private View.OnClickListener onFabMenuClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            showAddDialog(AlarmClockItem.AlarmType.ALARM);
+            showAddDialog(null);
         }
     };
 
