@@ -46,6 +46,7 @@ import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.TESTTZID_
 import static com.forrestguice.suntimeswidget.SuntimesActivityTestBase.TESTTZID_2;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem.AlarmType.ALARM;
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem.AlarmType.NOTIFICATION;
+import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -254,11 +255,17 @@ public class AlarmDatabaseAdapterTest
         // TODO: more columns
     }
 
-    protected void verifyAlarmState(Cursor cursor, long rowID, ContentValues values)
+    public static void verifyAlarmState(Cursor cursor, long rowID, ContentValues values)
     {
         assertTrue("alarmID should match", cursor.getInt(0) == rowID);
         assertTrue("alarmID should match", cursor.getInt(0) == values.getAsInteger(AlarmDatabaseAdapter.KEY_STATE_ALARMID));
         assertTrue("state should match", cursor.getInt(1) == values.getAsInteger(AlarmDatabaseAdapter.KEY_STATE));
+    }
+
+    public static void verifyAlarmState(Cursor cursor, long rowId, int state)
+    {
+        assertEquals("alarmID should match", rowId, cursor.getInt(0));
+        assertEquals("state should match", state, cursor.getInt(1));
     }
 
     @Test
