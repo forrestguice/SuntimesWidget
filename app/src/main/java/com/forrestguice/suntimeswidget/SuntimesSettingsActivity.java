@@ -435,7 +435,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
         {
             if (key.equals(AppSettings.PREF_KEY_LOCALE) || key.equals(AppSettings.PREF_KEY_LOCALE_MODE)
-                    || key.equals(AppSettings.PREF_KEY_APPEARANCE_THEME) || key.endsWith(WidgetSettings.PREF_KEY_GENERAL_UNITS_LENGTH))
+                    || key.equals(AppSettings.PREF_KEY_APPEARANCE_THEME))
             {
                 //Log.d("SettingsActivity", "Locale change detected; restarting activity");
                 updateLocale();
@@ -574,6 +574,7 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
             // the pref activity saves to: com.forrestguice.suntimeswidget_preferences.xml,
             // ...but this is a widget setting (belongs in com.forrestguice.suntimeswidget.xml)
             WidgetSettings.saveLengthUnitsPref(this, 0, WidgetSettings.getLengthUnit(sharedPreferences.getString(key, WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH.name())));
+            rebuildActivity();
             return;
         }
     }
