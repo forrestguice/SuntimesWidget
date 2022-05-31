@@ -414,6 +414,9 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
 
     private void updateViews(Context context)
     {
+        if (context == null || !isAdded()) {
+            return;
+        }
         detachListeners();
 
         if (btn_alarms != null) {
@@ -784,7 +787,7 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     }
 
     public int getMode() {
-        return tabs.getSelectedTabPosition();
+        return (tabs != null ? tabs.getSelectedTabPosition() : getArguments().getInt(EXTRA_MODE, 0));
     }
 
     public String getEvent()
@@ -795,7 +798,9 @@ public class AlarmCreateDialog extends BottomSheetDialogFragment
     public Location getLocation()
     {
         Location location = getArguments().getParcelable(EXTRA_LOCATION);
-        return (location != null ? location : WidgetSettings.loadLocationPref(getActivity(), 0));
+        return (location != null ? location
+                                 : isAdded() ? WidgetSettings.loadLocationPref(getActivity(), 0)
+                                             : WidgetSettings.loadLocationDefault());
     }
     public void setEvent( String event, Location location )
     {
