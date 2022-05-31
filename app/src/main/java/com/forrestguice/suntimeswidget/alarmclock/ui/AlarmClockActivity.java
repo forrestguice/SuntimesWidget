@@ -700,11 +700,12 @@ public class AlarmClockActivity extends AppCompatActivity
         @Override
         public void onClick(DialogInterface d, int which)
         {
+            Context context = AlarmClockActivity.this;
             FragmentManager fragments = getSupportFragmentManager();
             AlarmCreateDialog dialog = (AlarmCreateDialog) fragments.findFragmentById(R.id.createAlarmFragment);
-            AlarmClockItem item = AlarmCreateDialog.createAlarm(dialog, dialog.getAlarmType());
-            AlarmNotifications.updateAlarmTime(dialog.getActivity(), item);
-            dialog.saveSettings(AlarmClockActivity.this);
+            AlarmClockItem item = AlarmCreateDialog.createAlarm(context, dialog, dialog.getAlarmType());
+            AlarmNotifications.updateAlarmTime(context, item);
+            dialog.saveSettings(context);
             ViewCompat.setTransitionName(dialog.text_time, "transition_" + item.rowID);
             showAlarmEditActivity(item, dialog.text_time, REQUEST_ADDALARM, true);
         }
