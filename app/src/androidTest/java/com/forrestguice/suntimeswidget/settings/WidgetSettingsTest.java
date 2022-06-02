@@ -80,7 +80,7 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
     public void test_lengthUnitsPref()
     {
         Context context = activityRule.getActivity();
-        int appWidgetId = Integer.MAX_VALUE;
+        int appWidgetId = 0;
 
         WidgetSettings.saveLengthUnitsPref(context, appWidgetId, WidgetSettings.LengthUnit.METRIC);
         WidgetSettings.LengthUnit units3 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
@@ -92,12 +92,21 @@ public class WidgetSettingsTest extends SuntimesActivityTestBase
 
         WidgetSettings.deleteLengthUnitsPref(context, appWidgetId);
         WidgetSettings.LengthUnit units0 = WidgetSettings.loadLengthUnitsPref(context, appWidgetId);
-        assertTrue("units should be default (metric) but was " + units0, units0 == WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH);
+        assertTrue("units should be default (" + WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH + ") but was " + units0, units0 == WidgetSettings.PREF_DEF_GENERAL_UNITS_LENGTH);
 
         double meters0 = Math.PI;
         double feet0 = WidgetSettings.LengthUnit.metersToFeet(meters0);
         double meters1 = WidgetSettings.LengthUnit.feetToMeters(feet0);
         assertTrue("conversion should make round trip", (meters1-meters0 < 0.1));
+
+        WidgetSettings.saveLengthUnitsPref(context, 0, WidgetSettings.LengthUnit.METRIC);
+        WidgetSettings.saveLengthUnitsPref(context, Integer.MAX_VALUE, WidgetSettings.LengthUnit.IMPERIAL);
+        assertEquals(WidgetSettings.LengthUnit.IMPERIAL, WidgetSettings.loadLengthUnitsPref(context, Integer.MAX_VALUE));
+
+        WidgetSettings.deleteLengthUnitsPref(context, Integer.MAX_VALUE);
+        assertEquals(WidgetSettings.loadLengthUnitsPref(context, 0), WidgetSettings.loadLengthUnitsPref(context, Integer.MAX_VALUE));
+        WidgetSettings.saveLengthUnitsPref(context, 0, WidgetSettings.LengthUnit.IMPERIAL);
+        assertEquals(WidgetSettings.loadLengthUnitsPref(context, 0), WidgetSettings.loadLengthUnitsPref(context, Integer.MAX_VALUE));
     }
 
     @Test
