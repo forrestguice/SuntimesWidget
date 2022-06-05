@@ -2,7 +2,7 @@
 
 ### v0.14.6 (2022-06-04)
 * fixes crash when changing an alarm's time/event (#605).
-* fixes bug where despite setting units to metric the altitude is displayed in feet (#604); [Android Go]
+* fixes bug where units setting is ignored (altitude displayed in feet) (#604); [Android Go]
 * updates translation to Czech (cs) (#606 by utaxiu).
 
 ### v0.14.5 (2022-05-14)
