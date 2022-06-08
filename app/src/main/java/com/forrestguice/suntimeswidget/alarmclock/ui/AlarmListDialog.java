@@ -943,26 +943,38 @@ public class AlarmListDialog extends DialogFragment
 
         protected List<AlarmClockItem> sortItems(List<AlarmClockItem> items)
         {
-            final long now = Calendar.getInstance().getTimeInMillis();
-            final int sortMode = AlarmSettings.loadPrefAlarmSort(contextRef.get());
-            Collections.sort(items, new Comparator<AlarmClockItem>()
-            {
-                @Override
-                public int compare(AlarmClockItem o1, AlarmClockItem o2)
-                {
-                    switch (sortMode)
-                    {
-                        case AlarmSettings.SORT_BY_ALARMTIME:                // nearest alarm time first
-                            return compareLong((o1.timestamp + o1.offset) - now, (o2.timestamp + o2.offset) - now);
-
-                        case AlarmSettings.SORT_BY_CREATION:
-                        default: return compareLong(o2.rowID, o1.rowID);    // newest items first
-                    }
-                }
-            });
+            sortItems(items, AlarmSettings.loadPrefAlarmSort(contextRef.get()));
             return items;
         }
 
+        public static List<AlarmClockItem> sortItems(List<AlarmClockItem> items, final int sortMode)
+        {
+            final long now = Calendar.getInstance().getTimeInMillis();
+            switch (sortMode)
+            {
+                case AlarmSettings.SORT_BY_ALARMTIME:    // nearest alarm time first
+                    Collections.sort(items, new Comparator<AlarmClockItem>() {
+                        @Override
+                        public int compare(AlarmClockItem o1, AlarmClockItem o2) {
+                            return compareLong((o1.timestamp + o1.offset) - now, (o2.timestamp + o2.offset) - now);
+                        }
+                    });
+                    break;
+
+                case AlarmSettings.SORT_BY_CREATION:    // newest items first
+                default:
+                    Collections.sort(items, new Comparator<AlarmClockItem>() {
+                        @Override
+                        public int compare(AlarmClockItem o1, AlarmClockItem o2) {
+                            return compareLong(o2.rowID, o1.rowID);
+                        }
+                    });
+                    break;
+            }
+            return items;
+        }
+
+        @SuppressWarnings("UseCompareMethod")
         static int compareLong(long x, long y) {
             return (x < y) ? -1 : ((x == y) ? 0 : 1);    // copied from Long.compare to support api < 19
         }
