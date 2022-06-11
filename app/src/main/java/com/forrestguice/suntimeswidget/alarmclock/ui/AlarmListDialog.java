@@ -900,8 +900,8 @@ public class AlarmListDialog extends DialogFragment
                 }
 
             } else {
-                items.add(item);
-                notifyDataSetChanged();
+                items.add(0, item);
+                sortItems();
             }
         }
 
