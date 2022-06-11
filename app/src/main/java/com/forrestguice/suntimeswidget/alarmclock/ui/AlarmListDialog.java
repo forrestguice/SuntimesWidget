@@ -509,7 +509,7 @@ public class AlarmListDialog extends DialogFragment
         AlarmListDialogAdapter adapter = getAdapter();
         if (context != null && adapter != null)
         {
-            AlarmClockItem[] items = adapter.getItems().toArray(new AlarmClockItem[0]);
+            AlarmClockItem[] items = getItemsForExport();
             if (items.length > 0)
             {
                 if (Build.VERSION.SDK_INT >= 19)
@@ -536,7 +536,7 @@ public class AlarmListDialog extends DialogFragment
             Log.e("ExportAlarms", "Already busy importing/exporting! ignoring request");
 
         } else {
-            AlarmClockItem[] items = adapter.getItems().toArray(new AlarmClockItem[0]);
+            AlarmClockItem[] items = getItemsForExport();
             if (items.length > 0)
             {
                 exportTask = new AlarmClockItemExportTask(context, uri);    // export directly to uri
@@ -545,6 +545,14 @@ public class AlarmListDialog extends DialogFragment
                 exportTask.execute();
             }
         }
+    }
+
+    protected AlarmClockItem[] getItemsForExport()
+    {
+        List<AlarmClockItem> itemList = adapter.getItems();
+        AlarmListDialogAdapter.sortItems(itemList, AlarmSettings.SORT_BY_CREATION);   // list is displayed youngest -> oldest
+        Collections.reverse(itemList);                                                // should be reversed for export (so import encounters/adds older items first)
+        return itemList.toArray(new AlarmClockItem[0]);
     }
 
     protected AlarmClockItemExportTask exportTask = null;
