@@ -146,6 +146,11 @@ public class AlarmTimeDialog extends DialogFragment
         modePicker.setAdapter(modeAdapter);
 
         timePicker = (TimePicker)dialogContent.findViewById(R.id.timepicker);
+        if (timePicker != null) {
+            timePicker.setSaveFromParentEnabled(false);    // fixes crash #482 (https://issuetracker.google.com/issues/36936584)
+            timePicker.setSaveEnabled(true);
+        }
+
         locationPicker = (TextView) dialogContent.findViewById(R.id.locationPicker);
         datePicker = (TextView) dialogContent.findViewById(R.id.datePicker);
         setTimeChangedListener();
