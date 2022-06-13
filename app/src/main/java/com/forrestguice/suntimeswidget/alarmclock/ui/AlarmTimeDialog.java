@@ -22,6 +22,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -147,7 +148,9 @@ public class AlarmTimeDialog extends DialogFragment
 
         timePicker = (TimePicker)dialogContent.findViewById(R.id.timepicker);
         if (timePicker != null) {
-            timePicker.setSaveFromParentEnabled(false);    // fixes crash #482 (https://issuetracker.google.com/issues/36936584)
+            if (Build.VERSION.SDK_INT >= 11) {
+                timePicker.setSaveFromParentEnabled(false);    // fixes crash #482 (https://issuetracker.google.com/issues/36936584)
+            }
             timePicker.setSaveEnabled(true);
         }
 
