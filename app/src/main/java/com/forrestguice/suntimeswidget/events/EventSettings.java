@@ -18,6 +18,7 @@
 
 package com.forrestguice.suntimeswidget.events;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -29,7 +30,9 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -38,6 +41,8 @@ public class EventSettings
     public static final String PREFS_EVENTS = "suntimes.events";
     public static final String PREF_PREFIX_KEY = WidgetSettings.PREF_PREFIX_KEY;
     public static final String PREF_PREFIX_KEY_EVENT = "_event_";
+
+    public static final String PREF_KEY_EVENT_ID = "id";  //SuntimesEventsContract.COLUMN_ACTION_TYPE;  // TODO: contract class
 
     public static final String PREF_KEY_EVENT_URI = "uri"; // SuntimesEventContract.COLUMN_EVENT_URI;  // TODO: contract class
     public static String PREF_DEF_EVENT_URI = null;
@@ -88,33 +93,106 @@ public class EventSettings
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * EventAlias
+     */
+    public static final class EventAlias
+    {
+        public EventAlias(@NonNull EventType type, @NonNull String id, @Nullable String label, @Nullable Integer color, @Nullable String uri)
+        {
+            this.type = type;
+            this.id = id;
+            this.label = (label != null ? label : id);
+            this.color = (color != null ? color : PREF_DEF_EVENT_COLOR);
+            this.uri = uri;
+        }
+
+        public EventAlias( EventAlias other )
+        {
+            this.type = other.type;
+            this.id = other.id;
+            this.label = other.label;
+            this.color = other.color;
+            this.uri = other.uri;
+        }
+
+        public EventAlias( ContentValues values )
+        {
+            this.type = EventType.valueOf(values.getAsString(PREF_KEY_EVENT_TYPE));
+            this.id = values.getAsString(PREF_KEY_EVENT_ID);
+            this.label = values.getAsString(PREF_KEY_EVENT_LABEL);
+            this.color = values.getAsInteger(PREF_KEY_EVENT_COLOR);
+            this.uri = values.getAsString(PREF_KEY_EVENT_URI);
+        }
+
+        public ContentValues toContentValues()
+        {
+            ContentValues values = new ContentValues();
+            values.put(PREF_KEY_EVENT_TYPE, this.type.name());
+            values.put(PREF_KEY_EVENT_ID, this.id);
+            values.put(PREF_KEY_EVENT_LABEL, this.label);
+            values.put(PREF_KEY_EVENT_COLOR, this.color);
+            values.put(PREF_KEY_EVENT_URI, this.uri);
+            return values;
+        }
+
+        private final EventType type;
+        public EventType getType() {
+            return type;
+        }
+
+        private final String id;
+        public String getID() {
+            return id;
+        }
+
+        private final String uri;
+        public String getUri() {
+            return uri;
+        }
+
+        private final String label;
+        public String getLabel() {
+            return label;
+        }
+
+        private final Integer color;
+        public Integer getColor() {
+            return color;
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
     public static void saveEvent(Context context, @NonNull EventType type, @Nullable String id, @Nullable String label, @Nullable Integer color, @NonNull String uri)
     {
-        boolean hasID = true;
         if (id == null) {
             int i = 0;
             do {
                 id = PREF_DEF_EVENT_ID + i;
                 i++;
             } while (hasEvent(context, id));
-            hasID = false;
         }
+        saveEvent(context, new EventAlias(type, id, label, color, uri));
+    }
+    public static void saveEvent(Context context, EventAlias event)
+    {
+        String id = event.getID();
+        EventType type = event.getType();
 
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_EVENTS, 0).edit();
         String prefs_prefix0 = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
-        prefs.putString(prefs_prefix0 + PREF_KEY_EVENT_URI, uri);
+        prefs.putString(prefs_prefix0 + PREF_KEY_EVENT_URI, event.getUri());
         prefs.putString(prefs_prefix0 + PREF_KEY_EVENT_TYPE, type.name());
-        prefs.putString(prefs_prefix0 + PREF_KEY_EVENT_LABEL, (label != null ? label : id));
-        prefs.putInt(prefs_prefix0 + PREF_KEY_EVENT_COLOR, (color != null ? color : PREF_DEF_EVENT_COLOR));
+        prefs.putString(prefs_prefix0 + PREF_KEY_EVENT_LABEL, event.getLabel());
+        prefs.putInt(prefs_prefix0 + PREF_KEY_EVENT_COLOR, event.getColor());
         prefs.apply();
 
-        if (hasID)
-        {
-            Set<String> eventList = loadEventList(context, type);
-            eventList.add(id);
-            putStringSet(prefs, PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + type.name() + "_" + PREF_KEY_EVENT_LIST, eventList);
-            prefs.apply();
-        }
+        Set<String> eventList = loadEventList(context, type);
+        eventList.add(id);
+        putStringSet(prefs, PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + type.name() + "_" + PREF_KEY_EVENT_LIST, eventList);
+        prefs.apply();
     }
 
     public static Set<String> loadEventList(Context context, EventType type)
@@ -124,7 +202,8 @@ public class EventSettings
         Set<String> eventList = getStringSet(prefs, listKey, null);
         return (eventList != null) ? new TreeSet<String>(eventList) : new TreeSet<String>();
     }
-    public static String loadEvent(Context context, @NonNull String id, @Nullable String key)
+
+    public static String loadEventValue(Context context, @NonNull String id, @Nullable String key)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
         String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
@@ -135,6 +214,9 @@ public class EventSettings
         } else {
             switch (key)
             {
+                case PREF_KEY_EVENT_ID:
+                    return id;
+
                 case PREF_KEY_EVENT_TYPE:
                     return prefs.getString(prefs_prefix + PREF_KEY_EVENT_TYPE, PREF_DEF_EVENT_TYPE.name());
 
@@ -149,6 +231,26 @@ public class EventSettings
             }
             return null;
         }
+    }
+
+    public static EventAlias loadEvent(Context context, @NonNull String id)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
+        return new EventAlias(getType(context, id), id,
+                loadEventValue(context, id, PREF_KEY_EVENT_LABEL),
+                prefs.getInt(prefs_prefix + PREF_KEY_EVENT_COLOR, PREF_DEF_EVENT_COLOR),
+                loadEventValue(context, id, PREF_KEY_EVENT_URI));
+    }
+
+    public static List<EventAlias> loadEvents(Context context, EventType type)
+    {
+        Set<String> events = loadEventList(context, type);
+        ArrayList<EventAlias> list = new ArrayList<>();
+        for (String id : events) {
+            list.add(loadEvent(context, id));
+        }
+        return list;
     }
 
     public static void deleteEvent(Context context, @NonNull String id)
@@ -188,6 +290,9 @@ public class EventSettings
             return PREF_DEF_EVENT_TYPE;
         }
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     public static Set<String> getStringSet(SharedPreferences prefs, String key, @Nullable Set<String> defValues)    // TODO: needs test
     {
