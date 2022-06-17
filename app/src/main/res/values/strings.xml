@@ -760,6 +760,11 @@
     <string name="widgetLabel_distance">Distance</string>           <!-- label -->
 
     <!--
+         CUSTOM EVENTS
+    -->
+    <string name="eventType_sun_elevation">Sun (elevation)</string>   <!-- TODO -->
+
+    <!--
          ALARM CLOCK
     -->
     <string name="configLabel_alarmClock">Alarms</string>            <!-- group title -->
