@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2022 Forrest Guice
+    This file is part of SuntimesWidget.
+
+    SuntimesWidget is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    SuntimesWidget is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/SunsetTimeWidget_dark"
+    android:background="?attr/dialogBackgroundAlt"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginBottom="8dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp">
+
+    <LinearLayout
+        android:id="@+id/edit_label_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" android:paddingTop="@dimen/settingsGroup_padding">
+
+        <LinearLayout android:id="@+id/controlPanel0"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical">
+
+            <ImageButton android:id="@+id/cancel_button" style="@style/ActionButton"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:src="?attr/icActionBack"
+                android:contentDescription="@string/dialog_cancel" />
+
+        </LinearLayout>
+
+        <EditText android:id="@+id/edit_label"
+            android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:textAppearance="?attr/textAppearanceSmallPopupMenu"
+            android:hint="Event Label" android:inputType="text"
+            android:paddingLeft="5dp" android:paddingRight="5dp"
+            android:layout_gravity="center_vertical" />
+
+        <LinearLayout android:id="@+id/controlPanel1"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical">
+
+            <ImageButton android:id="@+id/save_button" style="@style/ActionButton"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:src="?attr/icActionSave"
+                android:contentDescription="@string/configAction_savePlace" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical">
+
+        <EditText android:id="@+id/edit_event_id"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1"
+            android:textAppearance="?attr/textAppearanceSmallPopupMenu"
+            android:hint="Event ID" android:inputType="text"
+            android:paddingLeft="5dp" android:paddingRight="5dp"
+            android:layout_gravity="center_vertical" />
+
+        <EditText android:id="@+id/edit_uri"
+            android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1"
+            android:textAppearance="?attr/textAppearanceSmallPopupMenu"
+            android:hint="Event Uri" android:inputType="text"
+            android:paddingLeft="5dp" android:paddingRight="5dp"
+            android:layout_gravity="center_vertical" />
+
+        <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
+            android:id="@+id/chooser_eventColor"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            app:hintText="@string/configHint_themeColorSunrise"
+            app:labelText="Color" app:reverse="false" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="?attr/dialogFrame" android:visibility="gone"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center_vertical|end"
+        android:paddingLeft="?dialogPreferredPadding" android:paddingRight="?dialogPreferredPadding"
+        android:paddingTop="8dp" android:paddingBottom="8dp">
+
+        <Button
+            style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+            android:id="@+id/dialog_button_cancel"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/saveaction_dialog_cancel"
+            tools:ignore="ButtonOrder" />
+
+        <Button
+            style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+            android:id="@+id/dialog_button_accept"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/saveaction_dialog_ok" />
+
+    </LinearLayout>
+
+</LinearLayout>
