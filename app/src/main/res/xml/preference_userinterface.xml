@@ -68,6 +68,17 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="@string/configLabel_ui_fields1">
+
+        <Preference
+            android:key="manage_events"
+            android:title="Manage Events"
+            android:summary="Add or remove custom events"
+            android:persistent="false" />
+
+    </PreferenceCategory>
+
     <!--<PreferenceCategory
         android:title="@string/configLabel_ui_showheaders">
     </PreferenceCategory>-->

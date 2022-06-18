@@ -65,6 +65,7 @@ import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
+import com.forrestguice.suntimeswidget.events.EventListActivity;
 import com.forrestguice.suntimeswidget.getfix.BuildPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.ExportPlacesTask;
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
@@ -1330,6 +1331,11 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         loadPref_ui_themeOverride(this, overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
 
         updatePref_ui_themeOverride(AppSettings.loadThemePref(this), overrideTheme_dark, overrideTheme_light);
+
+        Preference manage_events = findPreference("manage_events");
+        if (manage_events != null) {
+            manage_events.setOnPreferenceClickListener(getOnManageEventsClickedListener(context));
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -1370,6 +1376,11 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
         initPref_ui_themeOverride(activity, overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
         loadPref_ui_themeOverride(activity, overrideTheme_dark, AppSettings.PREF_KEY_APPEARANCE_THEME_DARK);
 
+        Preference manage_events = fragment.findPreference("manage_events");
+        if (manage_events != null) {
+            manage_events.setOnPreferenceClickListener(getOnManageEventsClickedListener(fragment.getActivity()));
+        }
+
         updatePref_ui_themeOverride(AppSettings.loadThemePref(activity), overrideTheme_dark, overrideTheme_light);
     }
 
@@ -1387,6 +1398,17 @@ public class SuntimesSettingsActivity extends PreferenceActivity implements Shar
                 } else return false;
             }
         });
+    }
+
+    public static Preference.OnPreferenceClickListener getOnManageEventsClickedListener(final Context context)
+    {
+        return new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                context.startActivity(new Intent(context, EventListActivity.class));
+                return false;
+            }
+        };
     }
 
     private static Preference.OnPreferenceChangeListener onOverrideThemeChanged(final Activity activity, final ActionButtonPreference overridePref, final int requestCode)
