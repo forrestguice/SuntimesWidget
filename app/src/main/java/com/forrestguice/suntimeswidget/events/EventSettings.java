@@ -160,19 +160,30 @@ public class EventSettings
         public Integer getColor() {
             return color;
         }
+
+        public String toString() {
+            return label != null ? label : id;
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    public static String suggestEventID(Context context)
+    {
+        String id;
+        int i = 0;
+        do {
+            id = PREF_DEF_EVENT_ID + i;
+            i++;
+        } while (hasEvent(context, id));
+        return id;
+    }
+
     public static void saveEvent(Context context, @NonNull EventType type, @Nullable String id, @Nullable String label, @Nullable Integer color, @NonNull String uri)
     {
         if (id == null) {
-            int i = 0;
-            do {
-                id = PREF_DEF_EVENT_ID + i;
-                i++;
-            } while (hasEvent(context, id));
+            id = suggestEventID(context);
         }
         saveEvent(context, new EventAlias(type, id, label, color, uri));
     }
