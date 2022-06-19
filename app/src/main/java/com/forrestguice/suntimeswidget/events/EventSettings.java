@@ -28,6 +28,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 import java.util.ArrayList;
@@ -35,6 +36,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
 
 public class EventSettings
 {
@@ -146,10 +149,13 @@ public class EventSettings
             return id;
         }
 
-        private final String uri;
+        /**
+         * @return a partial AlarmEvent uri (needs rising/setting suffix to be complete)
+         */
         public String getUri() {
             return uri;
         }
+        private final String uri;
 
         private final String label;
         public String getLabel() {
@@ -163,6 +169,10 @@ public class EventSettings
 
         public String toString() {
             return label != null ? label : id;
+        }
+
+        public String getAliasUri() {
+            return AlarmAddon.getEventCalcUri(AUTHORITY, getID());
         }
     }
 
@@ -180,12 +190,14 @@ public class EventSettings
         return id;
     }
 
-    public static void saveEvent(Context context, @NonNull EventType type, @Nullable String id, @Nullable String label, @Nullable Integer color, @NonNull String uri)
+    public static EventAlias saveEvent(Context context, @NonNull EventType type, @Nullable String id, @Nullable String label, @Nullable Integer color, @NonNull String uri)
     {
         if (id == null) {
             id = suggestEventID(context);
         }
-        saveEvent(context, new EventAlias(type, id, label, color, uri));
+        EventAlias alias = new EventAlias(type, id, label, color, uri);
+        saveEvent(context, alias);
+        return alias;
     }
     public static void saveEvent(Context context, EventAlias event)
     {
