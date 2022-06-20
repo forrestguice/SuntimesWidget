@@ -2081,6 +2081,11 @@ public class AlarmNotifications extends BroadcastReceiver
             if (cursor != null)
             {
                 cursor.moveToFirst();
+                if (cursor.isAfterLast()) {
+                    Log.e(TAG, "updateAlarmTime: failed to query alarm time; result is missing (no rows) :: " + uri_calc);
+                    return null;
+                }
+
                 int i_eventTime = cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_TIMEMILLIS);
                 Long eventTimeMillis = i_eventTime >= 0 ? cursor.getLong(i_eventTime) : null;
                 cursor.close();
