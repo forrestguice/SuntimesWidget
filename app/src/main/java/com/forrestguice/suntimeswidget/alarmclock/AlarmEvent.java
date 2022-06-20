@@ -33,6 +33,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 
 import java.util.ArrayList;
@@ -344,8 +345,13 @@ public class AlarmEvent
 
     public static AlarmEventAdapter createAdapter(Context context, boolean northward)
     {
-        SolarEvents.SolarEventsAdapter solarEventsAdapter = SolarEvents.createAdapter(context, northward);
         ArrayList<AlarmEventItem> items = new ArrayList<>();
+        for (EventSettings.EventAlias alias : EventSettings.loadEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION)) {
+            items.add(new AlarmEventItem(alias.getAliasUri() + AlarmEventProvider.ElevationEvent.SUFFIX_RISING, context.getContentResolver()));
+            items.add(new AlarmEventItem(alias.getAliasUri() + AlarmEventProvider.ElevationEvent.SUFFIX_SETTING, context.getContentResolver()));
+        }
+
+        SolarEvents.SolarEventsAdapter solarEventsAdapter = SolarEvents.createAdapter(context, northward);
         for (SolarEvents event : solarEventsAdapter.getChoices()) {
             items.add(new AlarmEventItem(event));
         }
