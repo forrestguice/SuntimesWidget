@@ -48,6 +48,7 @@ import android.widget.Toast;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 
 import java.lang.ref.WeakReference;
 import java.util.Collections;
@@ -196,7 +197,7 @@ public class EventListHelper
 
     protected void initAdapter(Context context)
     {
-        List<EventSettings.EventAlias> events = EventSettings.loadEvents(context, EventSettings.EventType.SUN_ELEVATION);
+        List<EventSettings.EventAlias> events = EventSettings.loadEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION);
         Collections.sort(events, new Comparator<EventSettings.EventAlias>() {
             @Override
             public int compare(EventSettings.EventAlias o1, EventSettings.EventAlias o2) {

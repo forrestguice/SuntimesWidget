@@ -26,6 +26,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.forrestguice.suntimeswidget.SuntimesActivity;
 import com.forrestguice.suntimeswidget.SuntimesActivityTestBase;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,13 +48,13 @@ public class EventSettingsTest extends SuntimesActivityTestBase
     @Test
     public void test_eventAlias()
     {
-        EventSettings.EventType type0 = EventSettings.EventType.SUN_ELEVATION;
+        AlarmEventProvider.EventType type0 = AlarmEventProvider.EventType.SUN_ELEVATION;
         String id0 = "TEST0";
         String label0 = "label0";
         String uri0 = "uri0";
         Integer color0 = Color.GREEN;
 
-        EventSettings.EventAlias alias0 = new EventSettings.EventAlias(EventSettings.EventType.SUN_ELEVATION, id0, label0, color0, uri0);
+        EventSettings.EventAlias alias0 = new EventSettings.EventAlias(AlarmEventProvider.EventType.SUN_ELEVATION, id0, label0, color0, uri0);
         verify_eventAlias(type0, id0, label0, color0, uri0, alias0);
 
         EventSettings.EventAlias alias1 = new EventSettings.EventAlias(alias0);
@@ -69,7 +70,7 @@ public class EventSettingsTest extends SuntimesActivityTestBase
     {
         Context context = activityRule.getActivity();
 
-        EventSettings.EventType type0 = EventSettings.EventType.SUN_ELEVATION;
+        AlarmEventProvider.EventType type0 = AlarmEventProvider.EventType.SUN_ELEVATION;
         String id0 = "TEST0";
         String label0 = "label0";
         String uri0 = "uri0";
@@ -81,7 +82,7 @@ public class EventSettingsTest extends SuntimesActivityTestBase
         Set<String> list0 = EventSettings.loadEventList(context, type0);
         assertFalse(list0.contains(id0));
 
-        EventSettings.EventAlias alias0 = new EventSettings.EventAlias(EventSettings.EventType.SUN_ELEVATION, id0, label0, color0, uri0);
+        EventSettings.EventAlias alias0 = new EventSettings.EventAlias(AlarmEventProvider.EventType.SUN_ELEVATION, id0, label0, color0, uri0);
         verify_eventAlias(type0, id0, label0, color0, uri0, alias0);
 
         EventSettings.saveEvent(context, alias0);
@@ -100,7 +101,7 @@ public class EventSettingsTest extends SuntimesActivityTestBase
         assertFalse(list2.contains(id0));
     }
 
-    protected void verify_eventAlias(EventSettings.EventType type, String id, String label, Integer color, String uri, EventSettings.EventAlias alias)
+    protected void verify_eventAlias(AlarmEventProvider.EventType type, String id, String label, Integer color, String uri, EventSettings.EventAlias alias)
     {
         assertEquals(type, alias.getType());
         assertEquals(id, alias.getID());
