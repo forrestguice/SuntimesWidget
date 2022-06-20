@@ -23,20 +23,26 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.settings.EditBottomSheetDialog;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChooser;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChooserView;
 
+import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
+
 public class EditEventDialog extends EditBottomSheetDialog
 {
     /* EventType */
-    protected EventSettings.EventType type = EventSettings.PREF_DEF_EVENT_TYPE;
-    public EventSettings.EventType getEventType() {
+    protected AlarmEventProvider.EventType type = EventSettings.PREF_DEF_EVENT_TYPE;
+    public AlarmEventProvider.EventType getEventType() {
         return type;
     }
 
@@ -102,6 +108,8 @@ public class EditEventDialog extends EditBottomSheetDialog
     protected EditText edit_eventID, edit_label, edit_uri;
     protected ColorChooser choose_color;
 
+    protected EditText edit_angle;
+
     @Override
     protected void initViews(Context context, View dialogContent, @Nullable Bundle savedState)
     {
@@ -143,6 +151,12 @@ public class EditEventDialog extends EditBottomSheetDialog
                 }
             });
         }
+
+        edit_angle = (EditText) dialogContent.findViewById(R.id.edit_event_angle);
+        if (edit_angle != null) {
+            edit_angle.addTextChangedListener(angleWatcher);
+        }
+        edit_angle.setText("-6");    // TODO
 
         if (eventID == null) {
             eventID = EventSettings.suggestEventID(context);
@@ -205,6 +219,23 @@ public class EditEventDialog extends EditBottomSheetDialog
         @Override
         public void afterTextChanged(Editable s) {
             checkInput();
+        }
+    };
+
+    private TextWatcher angleWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            try {
+                int angle = Integer.parseInt(s.toString());
+                setEventUri(AlarmAddon.getEventCalcUri(AUTHORITY, AlarmEventProvider.SunElevationEvent.NAME_PREFIX + angle));
+            } catch (NumberFormatException e) {
+                Log.e("EditEventDialog", "not an angle: " + e);
+            }
         }
     };
 

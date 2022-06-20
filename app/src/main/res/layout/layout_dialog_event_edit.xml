@@ -68,11 +68,38 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <LinearLayout android:layout_margin="8dp"
         android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical">
 
+        <LinearLayout android:orientation="horizontal"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView android:labelFor="@+id/edit_event_angle"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+                android:text="Angle:" />
+
+            <EditText android:id="@+id/edit_event_angle"
+                android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:minWidth="100dp"
+                android:textAppearance="?attr/textAppearanceSmallPopupMenu"
+                android:hint="Angle" android:inputType="text"
+                android:paddingLeft="5dp" android:paddingRight="5dp"
+                android:layout_gravity="center_vertical" />
+
+        </LinearLayout>
+
+        <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
+            android:id="@+id/chooser_eventColor"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            app:hintText="@string/configHint_themeColorSunrise"
+            app:labelText="Color" app:reverse="false" />
+
+
         <EditText android:id="@+id/edit_event_id"
-            android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1"
+            android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1"
             android:textAppearance="?attr/textAppearanceSmallPopupMenu"
             android:hint="Event ID" android:inputType="text"
             android:paddingLeft="5dp" android:paddingRight="5dp"
@@ -84,13 +111,6 @@
             android:hint="Event Uri" android:inputType="text"
             android:paddingLeft="5dp" android:paddingRight="5dp"
             android:layout_gravity="center_vertical" />
-
-        <com.forrestguice.suntimeswidget.settings.colors.ColorChooserView
-            android:id="@+id/chooser_eventColor"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            app:hintText="@string/configHint_themeColorSunrise"
-            app:labelText="Color" app:reverse="false" />
 
     </LinearLayout>
 
