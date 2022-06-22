@@ -18,23 +18,30 @@
 
 package com.forrestguice.suntimeswidget.events;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
+
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
-import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.settings.EditBottomSheetDialog;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChooser;
 import com.forrestguice.suntimeswidget.settings.colors.ColorChooserView;
+import com.forrestguice.suntimeswidget.views.ViewUtils;
 
 import static com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract.AUTHORITY;
 
@@ -85,7 +92,7 @@ public class EditEventDialog extends EditBottomSheetDialog
     /* Event Uri */
     protected String uri = null;
     public String getEventUri() {
-        return (edit_uri != null ? edit_uri.getText().toString() : uri);
+        return uri;
     }
     public void setEventUri(String value) {
         uri = value;
@@ -98,16 +105,27 @@ public class EditEventDialog extends EditBottomSheetDialog
     public EventSettings.EventAlias getEvent() {
         return new EventSettings.EventAlias(type, getEventID(), getEventLabel(), getEventColor(), getEventUri());
     }
-    public void setEvent(EventSettings.EventAlias event) {
+    public void setEvent(EventSettings.EventAlias event)
+    {
+        type = event.getType();
         setEventID(event.getID());
         setEventLabel(event.getLabel());
         setEventColor(event.getColor());
         setEventUri(event.getUri());
+        updateViews(getActivity(), type);
     }
 
     protected EditText edit_eventID, edit_label, edit_uri;
     protected ColorChooser choose_color;
 
+    @SuppressLint("SetTextI18n")
+    protected void setAngle(int value ) {
+        angle = value;
+        if (edit_angle != null) {
+            edit_angle.setText(Integer.toString(angle));
+        }
+    }
+    private int angle = 0;
     protected EditText edit_angle;
 
     @Override
@@ -131,6 +149,7 @@ public class EditEventDialog extends EditBottomSheetDialog
         ColorChooserView colorView = (ColorChooserView) dialogContent.findViewById(R.id.chooser_eventColor);
         choose_color = new ColorChooser(context, colorView.getLabel(), colorView.getEdit(), colorView.getButton(), "event");
         choose_color.setFragmentManager(getChildFragmentManager());
+        choose_color.setCollapsed(true);
 
         ImageButton cancelButton = (ImageButton) dialogContent.findViewById(R.id.cancel_button);
         if (cancelButton != null) {
@@ -156,7 +175,6 @@ public class EditEventDialog extends EditBottomSheetDialog
         if (edit_angle != null) {
             edit_angle.addTextChangedListener(angleWatcher);
         }
-        edit_angle.setText("-6");    // TODO
 
         if (eventID == null) {
             eventID = EventSettings.suggestEventID(context);
@@ -165,7 +183,6 @@ public class EditEventDialog extends EditBottomSheetDialog
             }
         }
 
-        updateViews(context);
         super.initViews(context, dialogContent, savedState);
     }
 
@@ -176,6 +193,28 @@ public class EditEventDialog extends EditBottomSheetDialog
         edit_label.setText(label != null ? label : eventID);
         edit_uri.setText(uri != null ? uri : "");
         choose_color.setColor(color);
+        updateViews(context, getEventType());
+    }
+
+    protected void updateViews(Context context, AlarmEventProvider.EventType type)
+    {
+        switch (type)
+        {
+            case SUN_ELEVATION:
+                if (edit_angle != null)
+                {
+                    if (uri != null) {
+                        AlarmEventProvider.SunElevationEvent event0 = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(uri).getLastPathSegment());
+                        setAngle(event0.getAngle());
+                    }
+                }
+                break;
+
+            case DATE:
+            case SOLAREVENT:
+            default:
+                break;
+        }
     }
 
     @Override
@@ -243,4 +282,24 @@ public class EditEventDialog extends EditBottomSheetDialog
     protected int getLayoutID() {
         return R.layout.layout_dialog_event_edit;
     }
+
+    @Override
+    protected void expandSheet(DialogInterface dialog)
+    {
+        if (dialog == null) {
+            return;
+        }
+
+        BottomSheetDialog bottomSheet = (BottomSheetDialog) dialog;
+        FrameLayout layout = (FrameLayout) bottomSheet.findViewById(android.support.design.R.id.design_bottom_sheet);  // for AndroidX, resource is renamed to com.google.android.material.R.id.design_bottom_sheet
+        if (layout != null)
+        {
+            BottomSheetBehavior behavior = BottomSheetBehavior.from(layout);
+            behavior.setHideable(false);
+            behavior.setSkipCollapsed(true);
+            ViewUtils.initPeekHeight(getDialog(), R.id.layout_dialog_content0);
+            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }
+    }
+
 }
