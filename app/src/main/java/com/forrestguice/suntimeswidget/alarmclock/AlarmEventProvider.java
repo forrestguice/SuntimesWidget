@@ -612,15 +612,16 @@ public class AlarmEventProvider extends ContentProvider
             if (isElevationEvent(eventName))
             {
                 int angle;
-                boolean rising = eventName.endsWith(SUFFIX_RISING);
+                boolean hasSuffix = eventName.endsWith(SUFFIX_RISING) || eventName.endsWith(SUFFIX_SETTING);
                 try {
-                    String angleString = eventName.substring(4, eventName.length() - 1);
+                    String angleString = eventName.substring(4, eventName.length() - (hasSuffix ? 1 : 0));
                     angle = Integer.parseInt(angleString);
 
                 } catch (Exception e) {
                     Log.e("ElevationEvent", "createEvent: bad angle: " + e);
-                    angle = -6;
+                    return null;
                 }
+                boolean rising = eventName.endsWith(SUFFIX_RISING);
                 return new SunElevationEvent(angle, rising);
             } else return null;
         }
