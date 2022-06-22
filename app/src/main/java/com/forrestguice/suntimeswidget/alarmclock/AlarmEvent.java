@@ -348,14 +348,13 @@ public class AlarmEvent
     public static AlarmEventAdapter createAdapter(Context context, boolean northward)
     {
         ArrayList<AlarmEventItem> items = new ArrayList<>();
-        for (EventSettings.EventAlias alias : EventSettings.loadEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION)) {
-            items.add(new AlarmEventItem(alias.getAliasUri() + AlarmEventProvider.ElevationEvent.SUFFIX_RISING, context.getContentResolver()));
-            items.add(new AlarmEventItem(alias.getAliasUri() + AlarmEventProvider.ElevationEvent.SUFFIX_SETTING, context.getContentResolver()));
-        }
-
         SolarEvents.SolarEventsAdapter solarEventsAdapter = SolarEvents.createAdapter(context, northward);
         for (SolarEvents event : solarEventsAdapter.getChoices()) {
             items.add(new AlarmEventItem(event));
+        }
+        for (EventSettings.EventAlias alias : EventSettings.loadEvents(context, AlarmEventProvider.EventType.SUN_ELEVATION)) {
+            items.add(new AlarmEventItem(alias.getAliasUri() + AlarmEventProvider.ElevationEvent.SUFFIX_RISING, context.getContentResolver()));
+            items.add(new AlarmEventItem(alias.getAliasUri() + AlarmEventProvider.ElevationEvent.SUFFIX_SETTING, context.getContentResolver()));
         }
         return new AlarmEventAdapter(context, items);
     }
