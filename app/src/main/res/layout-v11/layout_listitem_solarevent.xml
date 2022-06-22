@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright (C) 2014 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -27,14 +27,27 @@
         android:src="@drawable/ic_noon_large"
         tools:ignore="contentDescription" />
 
-    <TextView android:id="@android:id/text1"
-        style="?android:attr/dropDownItemStyle"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:singleLine="true" android:textStyle="bold" android:duplicateParentState="true"
-        tools:text="text" android:layout_marginLeft="8dp" android:layout_marginRight="8dp"
+    <LinearLayout android:orientation="vertical"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@android:id/icon1" android:layout_toEndOf="@android:id/icon1" />
+        android:layout_toRightOf="@android:id/icon1" android:layout_toEndOf="@android:id/icon1"
+        android:layout_marginLeft="8dp" android:layout_marginRight="8dp">
+
+        <TextView android:id="@android:id/text1"
+            style="?android:attr/dropDownItemStyle"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:singleLine="true" android:textStyle="bold" android:duplicateParentState="true"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            tools:text="text" />
+
+        <TextView android:id="@android:id/text2" android:visibility="visible"
+            style="?android:attr/dropDownItemStyle"
+            android:textAppearance="?android:attr/textAppearanceSmall" android:textSize="12sp"
+            android:singleLine="true" android:duplicateParentState="true"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            tools:text="text2" />
+
+    </LinearLayout>
 
 </RelativeLayout>
 
