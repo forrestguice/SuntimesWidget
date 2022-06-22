@@ -503,21 +503,10 @@ public class EventListHelper
             }
 
             ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
-            if (icon != null)
-            {
-                icon.setScaleType(ImageView.ScaleType.FIT_CENTER);
-
-                int[] attrs = { R.attr.icActionExtension };    // TODO: icon based on type, use color
-                TypedArray a = getContext().obtainStyledAttributes(attrs);
-                icon.setImageDrawable(ContextCompat.getDrawable(getContext(), a.getResourceId(0, R.drawable.ic_action_extension)));
-                a.recycle();
+            if (icon != null) {
+                icon.setBackgroundColor(item.getColor());
             }
             return view;
-        }
-
-        private int getColorForPosition(int position) {
-            EventSettings.EventAlias item = getItem(position);
-            return item != null ? item.getColor() : EventSettings.PREF_DEF_EVENT_COLOR;
         }
     }
 
