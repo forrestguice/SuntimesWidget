@@ -91,6 +91,7 @@
         <item name="icActionWarning">@drawable/ic_action_warning_light</item>
         <item name="icActionError">@drawable/ic_action_error_light</item>
         <item name="icActionWidgets">@drawable/ic_action_widget_light</item>
+        <item name="icActionEvents">@drawable/ic_action_widget_light</item>    <!-- TODO -->
         <item name="icActionAppearance">@drawable/ic_palette_light</item>
         <item name="icActionExtension">@drawable/ic_action_extension_light</item>
         <item name="icActionAltitude">@drawable/baseline_terrain_black_18</item>
@@ -219,6 +220,7 @@
         <item name="icActionWarning">@drawable/ic_action_warning</item>
         <item name="icActionError">@drawable/ic_action_error</item>
         <item name="icActionWidgets">@drawable/ic_action_widget</item>
+        <item name="icActionEvents">@drawable/ic_action_widget</item>    <!-- TODO -->
         <item name="icActionAppearance">@drawable/ic_palette</item>
         <item name="icActionExtension">@drawable/ic_action_extension</item>
         <item name="icActionAltitude">@drawable/baseline_terrain_white_18</item>
