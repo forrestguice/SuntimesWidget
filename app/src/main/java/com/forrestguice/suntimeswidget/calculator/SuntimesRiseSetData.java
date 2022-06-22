@@ -233,6 +233,7 @@ public class SuntimesRiseSetData extends SuntimesData
         this.layoutID = layoutID;
         this.compareMode = other.compareMode();
         this.timeMode = other.timeMode();
+        this.angle = other.angle;
 
         this.sunriseCalendarToday = other.sunriseCalendarToday();
         this.sunsetCalendarToday = other.sunsetCalendarToday();

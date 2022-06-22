@@ -157,6 +157,7 @@ public class SuntimesRiseSetData2 extends SuntimesRiseSetData
         this.layoutID = layoutID;
         this.compareMode = other.compareMode();
         this.timeMode = other.timeMode();
+        this.angle = other.angle;
 
         this.dayLengthToday = other.dayLengthToday();
         this.dayLengthOther = other.dayLengthOther();
