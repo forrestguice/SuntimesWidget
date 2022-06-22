@@ -405,7 +405,7 @@ public class EventListHelper
     public void showHelp()
     {
         HelpDialog helpDialog = new HelpDialog();
-        helpDialog.setContent(contextRef.get().getString(R.string.help_widgetlist));
+        helpDialog.setContent(contextRef.get().getString(R.string.help_eventlist));
         helpDialog.show(fragmentManager, DIALOGTAG_HELP);
     }
 

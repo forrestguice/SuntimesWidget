@@ -775,11 +775,11 @@
     <string name="configAction_exportEvents">@string/configAction_export</string>           <!-- button (contentDescription) -->
 
 
-    <string name="delevent_dialog_msg">Are you sure you want to delete %1$s (%2$s)?</string>    <!-- TODO -->
+    <string name="delevent_dialog_msg">Are you sure you want to delete %1$s (%2$s)?\n\nAny alarms, notifications, or widgets using this event may no longer function and should be reassigned.</string>    <!-- TODO -->
     <string name="delevent_dialog_ok">Delete</string>    <!-- TODO -->
     <string name="delevent_dialog_cancel">@string/dialog_cancel</string>
 
-    <string name="clearevents_dialog_msg">Are you sure you want to clear custom events?</string>   <!-- TODO -->
+    <string name="clearevents_dialog_msg">Are you sure you want to clear custom events?\n\nAny alarms, notifications, or widgets using these events may no longer function and should be reassigned.</string>   <!-- TODO -->
     <string name="clearevents_dialog_ok">Clear</string>   <!-- TODO -->
     <string name="clearevents_dialog_cancel">@string/dialog_cancel</string>
     <string name="clearevents_toast">Custom events cleared.</string>   <!-- TODO -->
@@ -1993,6 +1993,12 @@
           To <b>add</b> or <b>remove</b> a widget you must navigate to the home screen.<br/><br/>
           To <b>reconfigure</b> an existing widget you can select from the following list.<br/>
     ]]></string>
+    <string name="help_eventlist"><![CDATA[
+          Custom events can be displayed by the app, by widgets, or used to schedule alarms and notifications.\n
+          \n
+          [Icon Add] Add a custom event.\n
+          [Icon Edit] Edit or [Icon Delete] delete events.
+    ]]></string>    <!-- TODO -->
     <!--<string name="help_alarmclock" />-->
     <string name="help_themelist">
           [Icon Add] Add a new theme or [Icon Copy] copy from an existing theme.\n
