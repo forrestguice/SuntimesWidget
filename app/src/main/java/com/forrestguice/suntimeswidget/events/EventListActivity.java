@@ -34,14 +34,16 @@ import android.view.View;
 import com.forrestguice.suntimeswidget.HelpDialog;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.SuntimesUtils;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
 public class EventListActivity extends AppCompatActivity
 {
-    public static final int PICK_EVENT_REQUEST = 1;
+    public static final int PICK_EVENT_REQUEST = 121;
 
     public static final String SELECTED_EVENTID = "eventID";
+    public static final String SELECTED_EVENTURI = "eventUri";
     public static final String ADAPTER_MODIFIED = "isModified";
     public static final String PARAM_SELECTED = "selected";
     public static final String PARAM_NOSELECT = "noselect";
@@ -98,6 +100,7 @@ public class EventListActivity extends AppCompatActivity
         public void onClick(View v) {
             Intent intent = new Intent();
             intent.putExtra(SELECTED_EVENTID, helper.getEventID());
+            intent.putExtra(SELECTED_EVENTURI, helper.getAliasUri());
             intent.putExtra(ADAPTER_MODIFIED, helper.isAdapterModified());
             setResult(Activity.RESULT_OK, intent);
             finish();

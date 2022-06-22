@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2019 Forrest Guice
+    Copyright (C) 2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -55,9 +55,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * LoadActionDialog
- */
 public class EventListHelper
 {
     public static final String DIALOGTAG_ADD = "add";
@@ -104,7 +101,9 @@ public class EventListHelper
     }
 
     public void setSelected( String eventID ) {
-        adapter.setSelected(selectedItem = adapter.findItemByID(eventID));
+        Log.d("DEBUG", "setSelected: " + eventID);
+        selectedItem = adapter.findItemByID(eventID);
+        adapter.setSelected(selectedItem);
     }
 
     public void onRestoreInstanceState(Bundle savedState)
@@ -144,6 +143,14 @@ public class EventListHelper
         if (list != null) {
             EventSettings.EventAlias selected = adapter.getSelected();
             return selected != null ? selected.getID() : null;
+        } else return null;
+    }
+
+    public String getAliasUri()
+    {
+        if (list != null) {
+            EventSettings.EventAlias selected = adapter.getSelected();
+            return selected != null ? selected.getAliasUri() : null;
         } else return null;
     }
 
@@ -257,7 +264,7 @@ public class EventListHelper
                     return true;
 
                 case R.id.editEvent:
-                    editEvent();
+                    editEvent(getEventID());
                     return true;
 
                 case R.id.clearEvents:
@@ -265,7 +272,7 @@ public class EventListHelper
                     return true;
 
                 case R.id.deleteEvent:
-                    deleteEvent();
+                    deleteEvent(getEventID());
                     return true;
 
                 case R.id.helpEvents:
@@ -292,10 +299,9 @@ public class EventListHelper
         saveDialog.show(fragmentManager, DIALOGTAG_ADD);
     }
 
-    protected void editEvent()
+    protected void editEvent(final String eventID)
     {
         final Context context = contextRef.get();
-        final String eventID = getEventID();
         if (eventID != null && !eventID.trim().isEmpty() && context != null)
         {
             final EditEventDialog saveDialog = new EditEventDialog();
@@ -365,10 +371,9 @@ public class EventListHelper
         }
     }
 
-    protected void deleteEvent()
+    protected void deleteEvent(final String eventID)
     {
         final Context context = contextRef.get();
-        final String eventID = getEventID();
         if (eventID != null && !eventID.trim().isEmpty() && context != null)
         {
             AlertDialog.Builder dialog = new AlertDialog.Builder(context);
@@ -485,6 +490,7 @@ public class EventListHelper
             }
 
             if (selectedItem != null && item.getID().equals(selectedItem.getID())) {
+                Log.d("DEBUG", "getItemView: " + selectedItem.getID());
                 view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.text_accent_dark));
             } else view.setBackgroundColor(Color.TRANSPARENT);
 
@@ -529,6 +535,7 @@ public class EventListHelper
             {
                 if (item != null)
                 {
+                    setSelected(item.getID());
                     actionModeCallback.setItem(item);
                     actionMode = list.startActionModeForChild(view, actionModeCallback);
                     if (actionMode != null) {
@@ -569,16 +576,17 @@ public class EventListHelper
 
         protected void onDestroyActionMode() {
             actionMode = null;
+            setSelected(null);
         }
 
         protected boolean onPrepareActionMode(Menu menu)
         {
-            String eventID = getEventID();
-            boolean isModifiable = (eventID != null && !eventID.trim().isEmpty());
-
             SuntimesUtils.forceActionBarIcons(menu);
             MenuItem selectItem = menu.findItem(R.id.selectEvent);
             selectItem.setVisible( !disallowSelect );
+
+            String eventID = event.getID();
+            boolean isModifiable = (eventID != null && !eventID.trim().isEmpty());
 
             MenuItem deleteItem = menu.findItem(R.id.deleteEvent);
             MenuItem editItem = menu.findItem(R.id.editEvent);
@@ -600,17 +608,16 @@ public class EventListHelper
                         return true;
 
                     case R.id.deleteEvent:
-                        deleteEvent();
+                        deleteEvent(event.getID());
                         return true;
 
                     case R.id.editEvent:
-                        editEvent();
+                        editEvent(event.getID());
                         return true;
                 }
             }
             return false;
         }
-
     }
 
     private class EventAliasActionMode extends EventAliasActionModeBase implements android.support.v7.view.ActionMode.Callback
@@ -631,9 +638,11 @@ public class EventListHelper
             return onPrepareActionMode(menu);
         }
         @Override
-        public boolean onActionItemClicked(android.support.v7.view.ActionMode mode, MenuItem item) {
+        public boolean onActionItemClicked(android.support.v7.view.ActionMode mode, MenuItem item)
+        {
+            boolean result = onActionItemClicked(item);
             mode.finish();
-            return onActionItemClicked(item);
+            return result;
         }
     }
 
@@ -656,9 +665,11 @@ public class EventListHelper
             return onPrepareActionMode(menu);
         }
         @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item)
+        {
+            boolean result = onActionItemClicked(item);
             mode.finish();
-            return onActionItemClicked(item);
+            return result;
         }
     }
 
