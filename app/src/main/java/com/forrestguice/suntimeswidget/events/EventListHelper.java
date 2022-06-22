@@ -204,7 +204,7 @@ public class EventListHelper
                 return o1.getID().compareTo(o2.getID());
             }
         });
-        adapter = new EventDisplayAdapter(context, R.layout.layout_listitem_actions, events.toArray(new EventSettings.EventAlias[0]));
+        adapter = new EventDisplayAdapter(context, R.layout.layout_listitem_events, events.toArray(new EventSettings.EventAlias[0]));
         list.setAdapter(adapter);
     }
 
@@ -491,10 +491,10 @@ public class EventListHelper
             TextView primaryText = (TextView)view.findViewById(android.R.id.text1);
             primaryText.setText(item.toString());
 
-            //TextView secondaryText = (TextView)view.findViewById(android.R.id.text2);
-            //if (secondaryText != null) {
-            //    secondaryText.setText(item.desc != null && !item.desc.trim().isEmpty() ? item.desc : item.id);
-            //}
+            TextView secondaryText = (TextView)view.findViewById(android.R.id.text2);
+            if (secondaryText != null) {
+                secondaryText.setText(item.getSummary(getContext()));
+            }
 
             ImageView icon = (ImageView) view.findViewById(android.R.id.icon1);
             if (icon != null)

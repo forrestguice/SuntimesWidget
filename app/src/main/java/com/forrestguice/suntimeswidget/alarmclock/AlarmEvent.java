@@ -317,7 +317,9 @@ public class AlarmEvent
 
             TextView textView2 = (TextView) view.findViewById(android.R.id.text2);
             if (textView2 != null) {
-                textView2.setText(item.getSummary());
+                String summary = item.getSummary();
+                textView2.setText(summary);
+                textView2.setVisibility(summary != null ? View.VISIBLE : View.GONE);
             }
 
             return view;

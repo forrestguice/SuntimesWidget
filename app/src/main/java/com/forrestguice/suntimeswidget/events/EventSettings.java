@@ -21,7 +21,9 @@ package com.forrestguice.suntimeswidget.events;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,6 +31,7 @@ import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmAddon;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -77,6 +80,7 @@ public class EventSettings
             this.label = (label != null ? label : id);
             this.color = (color != null ? color : PREF_DEF_EVENT_COLOR);
             this.uri = uri;
+            this.summary = null;
         }
 
         public EventAlias( EventAlias other )
@@ -86,6 +90,7 @@ public class EventSettings
             this.label = other.label;
             this.color = other.color;
             this.uri = other.uri;
+            this.summary = other.summary;
         }
 
         public EventAlias( ContentValues values )
@@ -95,6 +100,7 @@ public class EventSettings
             this.label = values.getAsString(PREF_KEY_EVENT_LABEL);
             this.color = values.getAsInteger(PREF_KEY_EVENT_COLOR);
             this.uri = values.getAsString(PREF_KEY_EVENT_URI);
+            this.summary = null;
         }
 
         public ContentValues toContentValues()
@@ -134,6 +140,32 @@ public class EventSettings
         private final Integer color;
         public Integer getColor() {
             return color;
+        }
+
+        private String summary;
+        public String getSummary(Context context) {
+            if (summary == null) {
+                summary = resolveSummary(context);
+            }
+            return summary;
+        }
+        protected String resolveSummary(Context context)
+        {
+            String retValue = null;
+            String uri = getUri();
+            if (uri != null && !uri.trim().isEmpty())
+            {
+                Cursor cursor = context.getContentResolver().query(Uri.parse(uri), new String[] { AlarmEventContract.COLUMN_EVENT_SUMMARY }, null, null, null);
+                if (cursor != null)
+                {
+                    cursor.moveToFirst();
+                    if (!cursor.isAfterLast()) {
+                        retValue = cursor.getString(cursor.getColumnIndex(AlarmEventContract.COLUMN_EVENT_SUMMARY));
+                    }
+                    cursor.close();
+                }
+            }
+            return retValue;
         }
 
         public String toString() {

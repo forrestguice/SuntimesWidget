@@ -443,7 +443,7 @@ public class AlarmEventProvider extends ContentProvider
                     break;
                 case COLUMN_EVENT_SUMMARY:
                 default:
-                    row[i] = null;
+                    row[i] = event.getEventSummary(context);
                     break;
             }
         }
@@ -566,6 +566,7 @@ public class AlarmEventProvider extends ContentProvider
         protected abstract String getEventTitle(Context context);
         protected abstract String getEventPhrase(Context context);
         protected abstract String getEventGender(Context context);
+        protected abstract String getEventSummary(Context context);
     }
 
     /**
@@ -595,6 +596,11 @@ public class AlarmEventProvider extends ContentProvider
         @Override
         protected String getEventGender(Context context) {
             return "other";   // TODO: custom twilight / angle gender
+        }
+
+        @Override
+        protected String getEventSummary(Context context) {
+            return "Sun (" + getAngle() + "°)";   // TODO: ii18n
         }
 
         public static boolean isElevationEvent(String eventName) {
