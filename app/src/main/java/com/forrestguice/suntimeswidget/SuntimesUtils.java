@@ -1327,12 +1327,12 @@ public class SuntimesUtils
     {
         switch (event)
         {
-            case MORNING_ASTRONOMICAL: case EVENING_ASTRONOMICAL: return -18d;
-            case MORNING_NAUTICAL: case EVENING_NAUTICAL: return -12d;
-            case MORNING_BLUE8: case EVENING_BLUE8: return -8d;
-            case MORNING_CIVIL: case EVENING_CIVIL: return -6d;
-            case MORNING_BLUE4: case EVENING_BLUE4: return -4d;
-            case MORNING_GOLDEN: case EVENING_GOLDEN: return 6d;
+            case MORNING_ASTRONOMICAL: case EVENING_ASTRONOMICAL: return  WidgetSettings.TimeMode.ASTRONOMICAL.angle();
+            case MORNING_NAUTICAL: case EVENING_NAUTICAL: return  WidgetSettings.TimeMode.NAUTICAL.angle();
+            case MORNING_BLUE8: case EVENING_BLUE8: return WidgetSettings.TimeMode.BLUE8.angle();
+            case MORNING_CIVIL: case EVENING_CIVIL: return WidgetSettings.TimeMode.CIVIL.angle();
+            case MORNING_BLUE4: case EVENING_BLUE4: return WidgetSettings.TimeMode.BLUE4.angle();
+            case MORNING_GOLDEN: case EVENING_GOLDEN: return WidgetSettings.TimeMode.GOLD.angle();
             case SUNRISE: case SUNSET: return 0d;
             case NOON:
                 SuntimesCalculator calculator = data.calculator();

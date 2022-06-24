@@ -1255,23 +1255,24 @@ public class WidgetSettings
      */
     public static enum TimeMode
     {
-        OFFICIAL("Actual", "Actual Time"),
-        CIVIL("Civil", "Civil Twilight"),
-        NAUTICAL("Nautical", "Nautical Twilight"),
-        ASTRONOMICAL("Astronomical", "Astronomical Twilight"),
-        NOON("Noon", "Solar Noon"),
-        GOLD("Golden", "Golden Hour"),
-        BLUE8("Blue", "Blue Hour"),      // 8 deg; morning start, evening end
-        BLUE4("Blue", "Blue Hour");      // 4 deg; morning end, evening start
+        OFFICIAL("Actual", "Actual Time", null),
+        CIVIL("Civil", "Civil Twilight", -6d),
+        NAUTICAL("Nautical", "Nautical Twilight", -12d),
+        ASTRONOMICAL("Astronomical", "Astronomical Twilight", -18d),
+        NOON("Noon", "Solar Noon", null),
+        GOLD("Golden", "Golden Hour", 6d),
+        BLUE8("Blue", "Blue Hour", -8d),      // 8 deg; morning start, evening end
+        BLUE4("Blue", "Blue Hour", -4d);      // 4 deg; morning end, evening start
 
         public static boolean shortDisplayStrings = false;
         private String longDisplayString;
         private String shortDisplayString;
 
-        private TimeMode(String shortDisplayString, String longDisplayString)
+        private TimeMode(String shortDisplayString, String longDisplayString, Double angle)
         {
             this.shortDisplayString = shortDisplayString;
             this.longDisplayString = longDisplayString;
+            this.angle = angle;
         }
 
         public String toString()
@@ -1326,6 +1327,13 @@ public class WidgetSettings
 
             BLUE4.setDisplayStrings( context.getString(R.string.timeMode_blue4_short),
                     context.getString(R.string.timeMode_blue4) );
+        }
+
+
+        private Double angle;
+        @Nullable
+        public Double angle() {
+            return angle;
         }
     }
 
