@@ -74,8 +74,9 @@
         <Preference
             android:key="manage_events"
             android:title="Manage Events"
+            android:icon="?attr/icActionEvents"
             android:summary="Add or remove custom events"
-            android:persistent="false" />
+            android:persistent="false" />    <!-- TODO: i18n -->
 
     </PreferenceCategory>
 
