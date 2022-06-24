@@ -35,6 +35,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -91,6 +92,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.TimeZone;
 
+import static com.forrestguice.suntimeswidget.events.EventListActivity.PICK_EVENT_REQUEST;
 import static com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity.PICK_THEME_REQUEST;
 
 /**
@@ -131,6 +133,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
     protected Spinner spinner_timeMode;
     protected TimeModeAdapter spinner_timeModeAdapter;
+    protected ImageButton button_timeModeMenu;
 
     protected Spinner spinner_riseSetOrder;
     protected ImageButton button_riseSetOrderHelp;
@@ -478,6 +481,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
         spinner_timeMode = (Spinner) findViewById(R.id.appwidget_general_timeMode);
         checkbox_timeModeOverride = (CheckBox) findViewById(R.id.appwidget_general_timeMode_override);
         button_timeModeHelp = (ImageButton) findViewById(R.id.appwidget_general_timeMode_helpButton);
+        button_timeModeMenu = (ImageButton) findViewById(R.id.appwidget_general_timeMode_moreButton);
         initTimeMode(context);
 
         //
@@ -1124,13 +1128,74 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                     helpDialog.show(getSupportFragmentManager(), DIALOGTAG_HELP);
                 }
             });
+            button_timeModeHelp.setVisibility(View.GONE);
+        }
+
+        if (button_timeModeMenu != null) {
+            button_timeModeMenu.setOnClickListener(onTimeModeMenuButtonClicked);
+            button_timeModeMenu.setVisibility(View.VISIBLE);
         }
 
         showOptionTimeModeOverride(false);
         showOptionTrackingMode(false);
     }
 
+    private View.OnClickListener onTimeModeMenuButtonClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showTimeModeMenu(SuntimesConfigActivity0.this, v);
+        }
+    };
 
+    protected void showTimeModeMenu(Context context, View v)
+    {
+        PopupMenu menu = new PopupMenu(context, v);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.timemode_overflow, menu.getMenu());
+        menu.setOnMenuItemClickListener(onTimeModeMenuClicked);
+        SuntimesUtils.forceActionBarIcons(menu.getMenu());
+        prepareTimeModeMenu(context, menu.getMenu());
+        menu.show();
+    }
+
+    protected void prepareTimeModeMenu(Context context, Menu menu) {
+    }
+
+    protected PopupMenu.OnMenuItemClickListener onTimeModeMenuClicked = new PopupMenu.OnMenuItemClickListener()
+    {
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem)
+        {
+            switch (menuItem.getItemId())
+            {
+                case R.id.action_manage_events:
+                    launchEventEditor(SuntimesConfigActivity0.this);
+                    return true;
+
+                case R.id.action_help:
+                    button_timeModeHelp.callOnClick();
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+    };
+
+    protected Intent eventEditorIntent(Context context)
+    {
+        Intent intent = new Intent(context, EventListActivity.class);
+        WidgetSettings.RiseSetDataMode item = (WidgetSettings.RiseSetDataMode) spinner_timeMode.getSelectedItem();
+        intent.putExtra(EventListActivity.PARAM_SELECTED, item.name());
+        return intent;
+    }
+
+    protected void launchEventEditor(Context context)
+    {
+        Intent configEventsIntent = eventEditorIntent(context);
+        startActivityForResult(configEventsIntent, PICK_EVENT_REQUEST);
+        overridePendingTransition(R.anim.transition_next_in, R.anim.transition_next_out);
+    }
 
     protected int insertEventAliasIntoTimeModeAdapter(Context context, String eventID)
     {
@@ -2082,6 +2147,10 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
                 onLocationResult(resultCode, data);
                 break;
 
+            case PICK_EVENT_REQUEST:
+                onPickEventResult(resultCode, data);
+                break;
+
             case PICK_THEME_REQUEST:
                 onPickThemeResult(resultCode, data);
                 break;
@@ -2095,6 +2164,19 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             Location location = data.getParcelableExtra(PlacesActivity.EXTRA_LOCATION);
             if (location != null) {
                 locationConfig.loadSettings(SuntimesConfigActivity0.this, LocationConfigView.bundleData(location.getUri(), location.getLabel(), LocationConfigView.LocationViewMode.MODE_CUSTOM_SELECT));
+            }
+        }
+    }
+
+    protected void onPickEventResult(int resultCode, Intent data)
+    {
+        Context context = SuntimesConfigActivity0.this;
+        if (resultCode == Activity.RESULT_OK && data != null)
+        {
+            String eventID = data.getStringExtra(EventListActivity.SELECTED_EVENTID);
+            if (eventID != null) {
+                int position = insertEventAliasIntoTimeModeAdapter(context, eventID);
+                spinner_timeMode.setSelection(position);
             }
         }
     }
