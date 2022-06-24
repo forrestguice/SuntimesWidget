@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2014-2018 Forrest Guice
+    Copyright (C) 2014-2022 Forrest Guice
     This file is part of SuntimesWidget.
 
     SuntimesWidget is free software: you can redistribute it and/or modify
@@ -19,9 +19,12 @@
 package com.forrestguice.suntimeswidget.calculator;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import com.forrestguice.suntimeswidget.R;
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
+import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -77,6 +80,23 @@ public class SuntimesRiseSetData extends SuntimesData
     {
         timeMode = mode;
         angle = null;
+    }
+
+    protected WidgetSettings.RiseSetDataMode dataMode;
+    public void setDataMode(WidgetSettings.RiseSetDataMode value)
+    {
+        dataMode = value;
+        if (dataMode instanceof WidgetSettings.EventAliasTimeMode)
+        {
+            EventSettings.EventAlias alias = ((WidgetSettings.EventAliasTimeMode) dataMode).getEvent();
+            AlarmEventProvider.SunElevationEvent event = AlarmEventProvider.SunElevationEvent.valueOf(Uri.parse(alias.getUri()).getLastPathSegment());
+            this.angle = (event == null ? null : event.getAngle());
+        }
+        WidgetSettings.TimeMode mode = dataMode.getTimeMode();
+        this.timeMode = ((mode != null) ? mode : WidgetSettings.PREF_DEF_GENERAL_TIMEMODE);
+    }
+    public WidgetSettings.RiseSetDataMode dataMode() {
+        return dataMode;
     }
 
     /**
@@ -253,7 +273,7 @@ public class SuntimesRiseSetData extends SuntimesData
     protected void initFromSettings(Context context, int appWidgetId, String calculatorName)
     {
         super.initFromSettings(context, appWidgetId, calculatorName);
-        this.timeMode = WidgetSettings.loadTimeModePref(context, appWidgetId);
+        setDataMode(WidgetSettings.loadTimeModePref(context, appWidgetId));
         this.compareMode = WidgetSettings.loadCompareModePref(context, appWidgetId);
     }
 

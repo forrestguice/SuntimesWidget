@@ -27,6 +27,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -58,6 +59,7 @@ import android.widget.TextView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 
+import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
 import com.forrestguice.suntimeswidget.calculator.CalculatorProvider;
 import com.forrestguice.suntimeswidget.calculator.SuntimesData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
@@ -65,6 +67,8 @@ import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptor;
 import com.forrestguice.suntimeswidget.calculator.SuntimesCalculatorDescriptorListAdapter;
+import com.forrestguice.suntimeswidget.events.EventListActivity;
+import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.getfix.GetFixUI;
 
 import com.forrestguice.suntimeswidget.getfix.PlacesActivity;
@@ -83,6 +87,7 @@ import com.forrestguice.suntimeswidget.themes.WidgetThemeListActivity;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -1082,10 +1087,9 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (spinner_timeMode != null)
         {
-            //final ArrayAdapter<WidgetSettings.TimeMode> spinner_timeModeAdapter;
-            //spinner_timeModeAdapter = new ArrayAdapter<WidgetSettings.TimeMode>(this, R.layout.layout_listitem_oneline, WidgetSettings.TimeMode.values());
-            spinner_timeModeAdapter = new TimeModeAdapter(this, R.layout.layout_listitem_oneline, WidgetSettings.TimeMode.values());
-            spinner_timeModeAdapter.setDropDownViewResource(R.layout.layout_listitem_one_line_colortab);
+            ArrayList<WidgetSettings.RiseSetDataMode> items = new ArrayList<WidgetSettings.RiseSetDataMode>(Arrays.asList(WidgetSettings.TimeMode.values()));
+            spinner_timeModeAdapter = new TimeModeAdapter(this, R.layout.layout_listitem_events, items);
+            spinner_timeModeAdapter.setDropDownViewResource(R.layout.layout_listitem_events_dropdown);
             spinner_timeModeAdapter.setThemeValues(themeValues);
             spinner_timeMode.setAdapter(spinner_timeModeAdapter);
 
@@ -1128,14 +1132,40 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
 
 
 
+    protected int insertEventAliasIntoTimeModeAdapter(Context context, String eventID)
+    {
+        for (int i=0; i<spinner_timeModeAdapter.getCount(); i++) {
+            if (spinner_timeModeAdapter.getItem(i).name().equals(eventID)) {
+                return i;
+            }
+        }
+
+        if (EventSettings.hasEvent(context, eventID))
+        {
+            EventSettings.EventAlias event = EventSettings.loadEvent(SuntimesConfigActivity0.this, eventID);
+            if (event.getType() == AlarmEventProvider.EventType.SUN_ELEVATION)
+            {
+                WidgetSettings.EventAliasTimeMode item = new WidgetSettings.EventAliasTimeMode(event);
+                spinner_timeModeAdapter.insert(item, 0);
+                return 0;
+            } else {
+                Log.w("onPickEvent", "event has wrong type! expected " + AlarmEventProvider.EventType.SUN_ELEVATION + ", found " + event.getType());
+            }
+        }
+        return -1;
+    }
 
     /**
      * @param context a context used to access shared prefs
      */
     protected void loadTimeMode(Context context)
     {
-        WidgetSettings.TimeMode timeMode = WidgetSettings.loadTimeModePref(context, appWidgetId);
-        spinner_timeMode.setSelection(spinner_timeModeAdapter.getPosition(timeMode));
+        WidgetSettings.RiseSetDataMode timeMode = WidgetSettings.loadTimeModePref(context, appWidgetId);
+        int position = spinner_timeModeAdapter.getPosition(timeMode);
+        if (position < 0) {
+            position = insertEventAliasIntoTimeModeAdapter(context, timeMode.name());
+        }
+        spinner_timeMode.setSelection(position);
     }
 
     /**
@@ -1143,8 +1173,8 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
      */
     protected void saveTimeMode(Context context)
     {
-        WidgetSettings.TimeMode timeMode = spinner_timeModeAdapter.getItem(spinner_timeMode.getSelectedItemPosition());
-        WidgetSettings.saveTimeModePref(context, appWidgetId, ((timeMode != null) ? timeMode : WidgetSettings.PREF_DEF_GENERAL_TIMEMODE));
+        WidgetSettings.RiseSetDataMode item = spinner_timeModeAdapter.getItem(spinner_timeMode.getSelectedItemPosition());
+        WidgetSettings.saveTimeModePref(context, appWidgetId, ((item!= null) ? item : WidgetSettings.PREF_DEF_GENERAL_TIMEMODE));
     }
 
     /**
@@ -2150,7 +2180,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     {
         if (spinner_timeMode != null && spinner_timeModeAdapter != null)
         {
-            WidgetSettings.TimeMode selected = (WidgetSettings.TimeMode) spinner_timeMode.getSelectedItem();
+            WidgetSettings.RiseSetDataMode selected = (WidgetSettings.RiseSetDataMode) spinner_timeMode.getSelectedItem();
             spinner_timeModeAdapter.setThemeValues(themeValues);
             spinner_timeMode.setAdapter(spinner_timeModeAdapter);
             spinner_timeMode.setSelection(spinner_timeModeAdapter.getPosition(selected));
@@ -2362,23 +2392,23 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
     /**
      * TimeModeAdapter
      */
-    public static class TimeModeAdapter extends ArrayAdapter<WidgetSettings.TimeMode>
+    public static class TimeModeAdapter extends ArrayAdapter<WidgetSettings.RiseSetDataMode>
     {
         private int resourceID, dropDownResourceID;
-        private WidgetSettings.TimeMode[] objects;
         private ContentValues themeValues = null;
+        private final SuntimesUtils utils = new SuntimesUtils();
 
         public TimeModeAdapter(@NonNull Context context, int resource) {
             super(context, resource);
             init(context, resource);
         }
 
-        public TimeModeAdapter(@NonNull Context context, int resource, @NonNull WidgetSettings.TimeMode[] objects) {
+        public TimeModeAdapter(@NonNull Context context, int resource, @NonNull WidgetSettings.RiseSetDataMode[] objects) {
             super(context, resource, objects);
             init(context, resource);
         }
 
-        public TimeModeAdapter(@NonNull Context context, int resource, @NonNull List<WidgetSettings.TimeMode> objects) {
+        public TimeModeAdapter(@NonNull Context context, int resource, @NonNull List<WidgetSettings.RiseSetDataMode> objects) {
             super(context, resource, objects);
             init(context, resource);
         }
@@ -2413,7 +2443,7 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             LayoutInflater layoutInflater = LayoutInflater.from(getContext());
             View view = (convertView == null) ? layoutInflater.inflate(resID, parent, false) : convertView;
 
-            WidgetSettings.TimeMode item = getItem(position);
+            WidgetSettings.RiseSetDataMode item = getItem(position);
             if (item == null) {
                 Log.w("getItemView", "item at position " + position + " is null.");
                 return view;
@@ -2422,24 +2452,52 @@ public class SuntimesConfigActivity0 extends AppCompatActivity
             Object tag = view.getTag();
             if (tag == null || !tag.equals(item.name()))
             {
-                TextView primaryText = (TextView)view.findViewById(android.R.id.text1);
-                primaryText.setText(item.toString());
+                TextView text1 = (TextView)view.findViewById(android.R.id.text1);
+                text1.setText(item.toString());
 
-                View colorTab = view.findViewById(R.id.icon1);
+                TextView text2 = (TextView)view.findViewById(android.R.id.text2);
+                if (text2 != null)
+                {
+                    String summary = getSummaryForMode(view.getContext(), item);
+                    text2.setText(summary);
+                    text2.setVisibility(summary != null ? View.VISIBLE : View.GONE);
+                }
+
+                View colorTab = view.findViewById(android.R.id.icon1);
+                colorTab = (colorTab != null ? colorTab : view.findViewById(R.id.icon1));
                 if (colorTab != null && themeValues != null) {
-                    colorTab.setBackgroundColor(getColorForMode(item));
+                    colorTab.setBackgroundColor(getColorForMode(view.getContext(), item));
                 }
                 view.setTag(item.name());
             }
             return view;
         }
 
-        private int getColorForMode(WidgetSettings.TimeMode mode)
+        private String getSummaryForMode(Context context, WidgetSettings.RiseSetDataMode item)
         {
-            if (themeValues == null) {
-                 return Color.TRANSPARENT;
+            WidgetSettings.TimeMode timeMode = item.getTimeMode();
+            if (timeMode != null)
+            {
+                Double angle = timeMode.angle();
+                return angle != null ? utils.formatAsDegrees(angle, 1) : null;
+
+            } else if (EventSettings.hasEvent(context, item.name())) {
+                String eventID = EventSettings.getEventUriLastPathSegment(context, item.name());
+                AlarmEventProvider.SunElevationEvent event = AlarmEventProvider.SunElevationEvent.valueOf(eventID);
+                return utils.formatAsDegrees(event.getAngle(), 1);
+
+            } else return null;
+        }
+
+        private int getColorForMode(Context context, WidgetSettings.RiseSetDataMode item)
+        {
+            if (themeValues == null || item == null) {
+                return Color.TRANSPARENT;
             }
-            switch (mode)
+            if (item.getTimeMode() == null) {
+                return EventSettings.getColor(context, item.name());
+            }
+            switch (item.getTimeMode())
             {
                 case ASTRONOMICAL: return themeValues.getAsInteger(SuntimesThemeContract.THEME_ASTROCOLOR);
                 case NAUTICAL: case BLUE8: return themeValues.getAsInteger(SuntimesThemeContract.THEME_NAUTICALCOLOR);
