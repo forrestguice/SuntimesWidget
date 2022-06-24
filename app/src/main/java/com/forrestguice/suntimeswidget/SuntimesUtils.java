@@ -77,6 +77,7 @@ import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetData;
 import com.forrestguice.suntimeswidget.calculator.SuntimesRiseSetDataset;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.calculator.core.SuntimesCalculator;
+import com.forrestguice.suntimeswidget.events.EventSettings;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings.TimeFormatMode;
@@ -86,7 +87,6 @@ import java.text.DateFormatSymbols;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
@@ -94,7 +94,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.IllegalFormatConversionException;
-import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -1230,10 +1229,21 @@ public class SuntimesUtils
         }
 
         WidgetSettings.TimeMode timeMode = data.timeMode();
-        WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
+        String modeDisplayShort = timeMode.getShortDisplayString();
+        String modeDisplayLong = timeMode.getLongDisplayString();
 
-        displayString = displayString.replaceAll(modePatternShort, timeMode.getShortDisplayString());
-        displayString = displayString.replaceAll(modePattern, timeMode.getLongDisplayString());
+        WidgetSettings.RiseSetDataMode timeModeItem = data.dataMode();
+        if (timeModeItem instanceof WidgetSettings.EventAliasTimeMode) {
+            String label = EventSettings.loadEventValue(context, timeModeItem.name(), EventSettings.PREF_KEY_EVENT_LABEL);
+            if (label != null) {
+                modeDisplayLong = modeDisplayShort = label;
+            }
+        }
+
+        displayString = displayString.replaceAll(modePatternShort, modeDisplayShort);
+        displayString = displayString.replaceAll(modePattern, modeDisplayLong);
+
+        WidgetSettings.RiseSetOrder order = WidgetSettings.loadRiseSetOrderPref(context, data.appWidgetID());
         displayString = displayString.replaceAll(orderPattern, order.toString());
 
         for (SolarEvents event : events)
@@ -1260,7 +1270,7 @@ public class SuntimesUtils
                     displayString = displayString.replaceAll(pattern_eT, calendarTimeShortDisplayString(context, eventTime, true).toString());
                 }
                 if (displayString.contains(pattern_eA)) {
-                    Double angle = getDegreesForEvent(event, d);
+                    Double angle = (data.angle() != null ? Double.valueOf(data.angle()) : getDegreesForEvent(event, d));
                     displayString = displayString.replaceAll(pattern_eA, (angle != null ? formatAsDegrees(angle, 1) : ""));
                 }
 
