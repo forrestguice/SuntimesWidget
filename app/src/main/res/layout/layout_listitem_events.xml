@@ -5,7 +5,10 @@
 
     <LinearLayout android:id="@+id/icon_layout"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:orientation="vertical" android:gravity="center" android:layout_margin="8dp"
+        android:orientation="vertical" android:gravity="center"
+        android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp" android:layout_marginRight="4dp"
+        android:layout_marginStart="8dp" android:layout_marginEnd="4dp"
         android:layout_alignParentLeft="true" android:layout_alignParentStart="true">
 
         <ImageView android:id="@android:id/icon1"
