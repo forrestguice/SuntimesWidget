@@ -302,6 +302,19 @@ public class EventSettings
         return prefs.contains(prefs_prefix + PREF_KEY_EVENT_TYPE);
     }
 
+    public static String getEventUriLastPathSegment(Context context, @NonNull String id)
+    {
+        String eventUri = EventSettings.loadEventValue(context, id, EventSettings.PREF_KEY_EVENT_URI);
+        return Uri.parse(eventUri).getLastPathSegment();
+    }
+
+    public static int getColor(Context context, @NonNull String id)
+    {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
+        String prefs_prefix = PREF_PREFIX_KEY + 0 + PREF_PREFIX_KEY_EVENT + id + "_";
+        return prefs.getInt(prefs_prefix + PREF_KEY_EVENT_COLOR, PREF_DEF_EVENT_COLOR);
+    }
+
     public static AlarmEventProvider.EventType getType(Context context, @NonNull String id)
     {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_EVENTS, 0);
