@@ -76,13 +76,14 @@ public class SuntimesRiseSetData extends SuntimesData
     public void setTimeMode( WidgetSettings.TimeMode mode )
     {
         timeMode = mode;
+        angle = null;
     }
 
     /**
      * Property: sun angle (overrides time mode)
      */
     protected Integer angle = null;
-    public int angle() {
+    public Integer angle() {
         return angle;
     }
     public void setAngle( int value ) {
