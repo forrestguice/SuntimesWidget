@@ -40,7 +40,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEvent;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventContract;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmNotifications;
-import com.forrestguice.suntimeswidget.settings.SolarEventIcons;
+import com.forrestguice.suntimeswidget.events.EventIcons;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetActions;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
@@ -191,13 +191,13 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
             if (event != null)
             {
                 boolean northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && (item.location.getLatitudeAsDouble() < 0);
-                Drawable eventIcon = SolarEventIcons.getIconDrawable(context, event, (int)iconSize, (int)iconSize, northward);
-                text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, event));
+                Drawable eventIcon = EventIcons.getIconDrawable(context, event, (int)iconSize, (int)iconSize, northward);
+                text_event.setCompoundDrawablePadding(EventIcons.getIconDrawablePadding(context, event));
                 text_event.setCompoundDrawables(eventIcon, null, null, null);
 
             } else {
-                Drawable eventIcon = SolarEventIcons.getIconDrawable(context, SolarEventIcons.getIconTag(context, item), (int)iconSize, (int)iconSize);
-                text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, item.timezone));
+                Drawable eventIcon = EventIcons.getIconDrawable(context, EventIcons.getIconTag(context, item), (int)iconSize, (int)iconSize);
+                text_event.setCompoundDrawablePadding(EventIcons.getIconDrawablePadding(context, item.timezone));
                 text_event.setCompoundDrawables(eventIcon, null, null, null);
             }
 

@@ -16,7 +16,7 @@
     along with SuntimesWidget.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.forrestguice.suntimeswidget.settings;
+package com.forrestguice.suntimeswidget.events;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -35,10 +35,11 @@ import android.util.Log;
 import com.forrestguice.suntimeswidget.R;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItem;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmEventProvider;
-import com.forrestguice.suntimeswidget.events.EventSettings;
+import com.forrestguice.suntimeswidget.settings.SolarEvents;
+import com.forrestguice.suntimeswidget.settings.WidgetTimezones;
 
 @SuppressWarnings("Convert2Diamond")
-public class SolarEventIcons
+public class EventIcons
 {
     @SuppressLint("ResourceType")
     public static int getIconResID(Context context, SolarEvents event, boolean northward)
@@ -187,10 +188,10 @@ public class SolarEventIcons
     }
 
     public static Drawable getIconDrawable(Context context, String tag, int width, int height) {
-        return getIconDrawable(context, SolarEventIcons.getIconResID(context, tag), width, height, getIconScale(tag), getIconDrawableInset(context, tag), SolarEventIcons.getIconTint(context, tag));
+        return getIconDrawable(context, EventIcons.getIconResID(context, tag), width, height, getIconScale(tag), getIconDrawableInset(context, tag), EventIcons.getIconTint(context, tag));
     }
     public static Drawable getIconDrawable(Context context, @NonNull SolarEvents event, int width, int height, boolean northward) {
-        return getIconDrawable(context, SolarEventIcons.getIconResID(context, event, northward), width, height, getIconScale(event), getIconDrawableInset(context, event), SolarEventIcons.getIconTint(context, event));
+        return getIconDrawable(context, EventIcons.getIconResID(context, event, northward), width, height, getIconScale(event), getIconDrawableInset(context, event), EventIcons.getIconTint(context, event));
     }
     public static Drawable getIconDrawable(Context context, int resID, int width, int height, float[] scale, int inset, Integer tint)
     {
@@ -244,7 +245,7 @@ public class SolarEventIcons
     public static final String getIconTag(Context context, @Nullable String uriString)
     {
         if (uriString == null) {
-            return SolarEventIcons.TAG_TZ + WidgetTimezones.TZID_SYSTEM;
+            return EventIcons.TAG_TZ + WidgetTimezones.TZID_SYSTEM;
         }
         String tag;
         Uri uri = Uri.parse(uriString);
@@ -259,10 +260,10 @@ public class SolarEventIcons
                     eventID = eventID.substring(0, eventID.length()-1);
                 }
                 if (EventSettings.hasEvent(context, eventID)) {
-                    tag = SolarEventIcons.TAG_ALIAS + eventID + suffix;
+                    tag = EventIcons.TAG_ALIAS + eventID + suffix;
                 } else tag = null;
-            } else tag = SolarEventIcons.TAG_TZ + WidgetTimezones.TZID_SYSTEM;
-        } else tag = SolarEventIcons.TAG_TZ + WidgetTimezones.TZID_SYSTEM;
+            } else tag = EventIcons.TAG_TZ + WidgetTimezones.TZID_SYSTEM;
+        } else tag = EventIcons.TAG_TZ + WidgetTimezones.TZID_SYSTEM;
 
         return tag;
     }
@@ -270,7 +271,7 @@ public class SolarEventIcons
     public static final String getIconTag(Context context, AlarmClockItem item)
     {
         return (item.timezone != null)
-                ? SolarEventIcons.TAG_TZ + item.timezone
+                ? EventIcons.TAG_TZ + item.timezone
                 : getIconTag(context, item.getEvent());
     }
 }

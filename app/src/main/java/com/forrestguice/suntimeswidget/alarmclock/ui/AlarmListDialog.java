@@ -39,7 +39,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ImageViewCompat;
@@ -78,7 +77,7 @@ import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemExportTask;
 import com.forrestguice.suntimeswidget.alarmclock.AlarmClockItemImportTask;
 import com.forrestguice.suntimeswidget.calculator.core.Location;
 import com.forrestguice.suntimeswidget.settings.AppSettings;
-import com.forrestguice.suntimeswidget.settings.SolarEventIcons;
+import com.forrestguice.suntimeswidget.events.EventIcons;
 import com.forrestguice.suntimeswidget.settings.SolarEvents;
 import com.forrestguice.suntimeswidget.settings.WidgetSettings;
 
@@ -1506,18 +1505,18 @@ public class AlarmListDialog extends DialogFragment
                 if (event != null)
                 {
                     boolean northward = WidgetSettings.loadLocalizeHemispherePref(context, 0) && (item.location != null) && (item.location.getLatitudeAsDouble() < 0);
-                    Drawable eventIcon = SolarEventIcons.getIconDrawable(context, event, (int)eventIconSize, (int)eventIconSize, northward);
-                    view.text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, event));
+                    Drawable eventIcon = EventIcons.getIconDrawable(context, event, (int)eventIconSize, (int)eventIconSize, northward);
+                    view.text_event.setCompoundDrawablePadding(EventIcons.getIconDrawablePadding(context, event));
                     view.text_event.setCompoundDrawables(eventIcon, null, null, null);
 
                 } else {
-                    String tag = SolarEventIcons.getIconTag(context, item);
-                    Drawable eventIcon = SolarEventIcons.getIconDrawable(context, tag, (int)eventIconSize, (int)eventIconSize);
-                    Integer tint = SolarEventIcons.getIconTint(context, tag);
+                    String tag = EventIcons.getIconTag(context, item);
+                    Drawable eventIcon = EventIcons.getIconDrawable(context, tag, (int)eventIconSize, (int)eventIconSize);
+                    Integer tint = EventIcons.getIconTint(context, tag);
                     if (tint == null) {    // re-tint uncolored icons
-                        SolarEventIcons.tintDrawable(eventIcon, item.enabled ? color_on : color_off);
+                        EventIcons.tintDrawable(eventIcon, item.enabled ? color_on : color_off);
                     }
-                    text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, item.timezone));
+                    text_event.setCompoundDrawablePadding(EventIcons.getIconDrawablePadding(context, item.timezone));
                     text_event.setCompoundDrawables(eventIcon, null, null, null);
                 }
             }
