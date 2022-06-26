@@ -26,7 +26,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -186,9 +185,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
 
             text_location.setText(item.location.getLabel());
             text_repeat.setText( displayRepeating(context, item, selected));
-
             text_event.setText(displayEvent(context, item));
-            Log.d("DEBUG", "set event text: " + text_event.getText());
 
             SolarEvents event = SolarEvents.valueOf(item.getEvent(), null);
             if (event != null)
@@ -199,7 +196,7 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
                 text_event.setCompoundDrawables(eventIcon, null, null, null);
 
             } else {
-                Drawable eventIcon = SolarEventIcons.getIconDrawable(context, item.timezone, (int)iconSize, (int)iconSize);
+                Drawable eventIcon = SolarEventIcons.getIconDrawable(context, SolarEventIcons.getIconTag(context, item), (int)iconSize, (int)iconSize);
                 text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, item.timezone));
                 text_event.setCompoundDrawables(eventIcon, null, null, null);
             }

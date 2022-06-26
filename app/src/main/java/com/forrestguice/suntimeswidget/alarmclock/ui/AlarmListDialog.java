@@ -1511,8 +1511,10 @@ public class AlarmListDialog extends DialogFragment
                     view.text_event.setCompoundDrawables(eventIcon, null, null, null);
 
                 } else {
-                    Drawable eventIcon = SolarEventIcons.getIconDrawable(context, item.timezone, (int)eventIconSize, (int)eventIconSize);
-                    if (item.timezone == null) {
+                    String tag = SolarEventIcons.getIconTag(context, item);
+                    Drawable eventIcon = SolarEventIcons.getIconDrawable(context, tag, (int)eventIconSize, (int)eventIconSize);
+                    Integer tint = SolarEventIcons.getIconTint(context, tag);
+                    if (tint == null) {    // re-tint uncolored icons
                         SolarEventIcons.tintDrawable(eventIcon, item.enabled ? color_on : color_off);
                     }
                     text_event.setCompoundDrawablePadding(SolarEventIcons.getIconDrawablePadding(context, item.timezone));
