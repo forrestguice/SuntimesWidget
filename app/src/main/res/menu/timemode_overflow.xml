@@ -5,7 +5,7 @@
 
         <item android:id="@+id/action_manage_events"
             android:icon="?attr/icActionEvents"
-            android:title="Custom Events"
+            android:title="@string/configAction_manageEvents"
             app:showAsAction="never" />
 
         <item android:id="@+id/action_help"

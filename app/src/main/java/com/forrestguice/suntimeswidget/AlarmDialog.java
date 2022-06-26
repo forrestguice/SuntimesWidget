@@ -453,7 +453,7 @@ public class AlarmDialog extends BottomSheetDialogFragment
                 item.setIcon(icon);
             }
 
-            MenuItem item0 = menu.add(0, -1, 0, "Custom Events");    // TODO: i18n
+            MenuItem item0 = menu.add(0, -1, 0, context.getString(R.string.configAction_manageEvents));
             item0.setIcon(icon1);
 
             SuntimesUtils.forceActionBarIcons(menu);
