@@ -414,9 +414,26 @@ public class AlarmEditViewHolder extends RecyclerView.ViewHolder
     public static CharSequence displayEvent(Context context, AlarmClockItem item)
     {
         String eventString = item.getEvent();
-        if (eventString != null) {
+        if (eventString != null)
+        {
             AlarmEvent.AlarmEventItem eventItem = item.getEventItem(context);
-            return eventItem.getTitle();
+            String summary = eventItem.getSummary();
+            if (summary != null)
+            {
+                int[] attrs = { R.attr.text_disabledColor };
+                TypedArray a = context.obtainStyledAttributes(attrs);
+                int color = ContextCompat.getColor(context, a.getResourceId(0, R.color.text_disabled_dark));
+                a.recycle();
+
+                summary = context.getString(R.string.configLabel_event_item_desc, summary);
+                String displayString = context.getString(R.string.configLabel_event_item, eventItem.getTitle(), summary);
+                SpannableString s = SuntimesUtils.createRelativeSpan(null, displayString, summary, 0.75f);
+                s = SuntimesUtils.createColorSpan(s, displayString, summary, color);
+                return s;
+
+            } else {
+                return eventItem.getTitle();
+            }
 
         } else if (item.timezone != null) {
             Calendar adjustedTime = Calendar.getInstance(AlarmClockItem.AlarmTimeZone.getTimeZone(item.timezone, item.location));

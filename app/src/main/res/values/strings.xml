@@ -765,8 +765,8 @@
     <string name="eventType_sun_elevation">Sun (elevation)</string>   <!-- TODO -->
     <string name="eventlist_dialog_title">Custom Events</string>   <!-- TODO -->
 
-    <string name="configLabel_event_item">%1$s %2$s</string>
-    <string name="configLabel_event_item_desc">(%1$s)</string>
+    <string name="configLabel_event_item">%1$s\n%2$s</string>
+    <string name="configLabel_event_item_desc">%1$s</string>
 
     <string name="configAction_selectEvent">Select</string>           <!-- button (contentDescription) -->  <!-- TODO -->
     <string name="configAction_addEvent">Add</string>           <!-- button (contentDescription) -->  <!-- TODO -->
